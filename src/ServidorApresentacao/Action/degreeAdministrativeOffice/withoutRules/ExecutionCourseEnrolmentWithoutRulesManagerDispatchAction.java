@@ -38,6 +38,7 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.ExecutionDegreesFormat;
+import Util.PeriodState;
 import Util.TipoCurso;
 import framework.factory.ServiceManagerServiceFactory;
 
@@ -107,9 +108,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 			return mapping.findForward("globalEnrolment");
 		}
 
-		ComparatorChain comparator = new ComparatorChain();
-		comparator.addComparator(new BeanComparator("year"), true);
-		Collections.sort(executionYears, comparator);
+		sortExecutionYears(executionYears, (DynaActionForm) form);
 
 		List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
 		request.setAttribute("executionYears", executionYearLabels);
@@ -117,7 +116,22 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		return mapping.findForward("prepareEnrollmentChooseStudentWithoutRules");
 	}
 	
-	private List buildLabelValueBeanForJsp(List infoExecutionYears)
+    private void sortExecutionYears(List executionYears, DynaActionForm form) {
+        ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("year"), true);
+		Collections.sort(executionYears, comparator);
+		
+		int size = executionYears.size();
+		for (int i = (size - 1); i >= 0; i--) {
+		    InfoExecutionYear infoExecutionYear = (InfoExecutionYear) executionYears.get(i);
+		    if (infoExecutionYear.getState().equals(PeriodState.CURRENT)) {
+		        form.set("executionYear", infoExecutionYear.getYear());
+		        break;
+		    }
+		}
+    }
+
+    private List buildLabelValueBeanForJsp(List infoExecutionYears)
 	{
 		List executionYearLabels = new ArrayList();
 		CollectionUtils.collect(infoExecutionYears, new Transformer()

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import DataBeans.InfoDegreeInfo;
+import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.DegreeInfo;
 import Dominio.ICurso;
@@ -35,8 +36,9 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
         return "EditDegreeInfoByExecutionDegree";
     }
 
-    public boolean run(Integer infoExecutionDegreeId, Integer infoDegreeInfoId,
+    public InfoDegreeInfo run(Integer infoExecutionDegreeId, Integer infoDegreeInfoId,
             InfoDegreeInfo infoDegreeInfo) throws FenixServiceException {
+        IDegreeInfo degreeInfo = null;
         try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
@@ -72,7 +74,7 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
             //DegreeInfo
             IPersistentDegreeInfo persistentDegreeInfo = suportePersistente
                     .getIPersistentDegreeInfo();
-            IDegreeInfo degreeInfo = (IDegreeInfo) persistentDegreeInfo
+            degreeInfo = (IDegreeInfo) persistentDegreeInfo
                     .readByOID(DegreeInfo.class, infoDegreeInfoId, true);
 
             //verify if the record found is in this execution period
@@ -130,7 +132,7 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
             e.printStackTrace();
             throw new FenixServiceException(e);
         }
-        return true;
+        return Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
     }
 
     private boolean verifyExecutionYear(Timestamp lastModificationDate,

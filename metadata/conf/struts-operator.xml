@@ -50,7 +50,7 @@
 					attribute="personForm"
 					type="ServidorApresentacao.Action.operator.FindPersonAction"
 					path="/findPerson"
-					input="/findPerson.do?method=prepare&amp;page=0"
+					input="/findPerson.do?method=prepareFindPerson&amp;page=0"
 					parameter="method"
 					scope="request"
 					validate="true">

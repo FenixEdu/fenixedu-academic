@@ -31,7 +31,7 @@
                  dynamic="true">
             <form-property name="page" type="java.lang.Integer" />
 
-        	<form-property name="identificationDocumentType" type="java.lang.String" />
+        	<!--<form-property name="identificationDocumentType" type="java.lang.String" />
         	<form-property name="identificationDocumentNumber" type="java.lang.String" />
         	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
         	<form-property name="name" type="java.lang.String" />
@@ -50,12 +50,6 @@
         	<form-property name="addressMunicipality" type="java.lang.String" />
         	<form-property name="addressDistrict" type="java.lang.String" />
         	<form-property name="telephone" type="java.lang.String" />
-        	<form-property name="mobilePhone" type="java.lang.String" />
-        	<form-property name="workPhone" type="java.lang.String" />
-        	<form-property name="email" type="java.lang.String" />
-        	<form-property name="availableEmail" type="java.lang.String" />
-        	<form-property name="webSite" type="java.lang.String" />
-        	<form-property name="availableWebSite" type="java.lang.String" />
         	<form-property name="contributorNumber" type="java.lang.String" />
         	<form-property name="occupation" type="java.lang.String" />
         	<form-property name="birthDay" type="java.lang.String" /> 
@@ -68,7 +62,14 @@
             <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
         	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
         	<form-property name="username" type="java.lang.String" /> 
-        	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
+        	<form-property name="areaOfAreaCode" type="java.lang.String" /> -->
+        	
+        	<form-property name="mobilePhone" type="java.lang.String" />
+        	<form-property name="workPhone" type="java.lang.String" />
+        	<form-property name="email" type="java.lang.String" />
+        	<form-property name="availableEmail" type="java.lang.String" />
+        	<form-property name="webSite" type="java.lang.String" />
+        	<form-property name="availableWebSite" type="java.lang.String" />
       </form-bean>
 
 	  <!-- Dynamic-FormBean for Qualification Edit-->
@@ -107,6 +108,7 @@
 	  	type="org.apache.struts.validator.DynaValidatorForm"
 	    dynamic="true">
 	    	<form-property name="name" type="java.lang.String"/>
+	    	<form-property name="startIndex" type="java.lang.String"/>
 	    	<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
 	  </form-bean> 
     </form-beans>

@@ -479,23 +479,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return queryList(queryCriteria);
     }
 
-    protected List queryList(Query query) throws ExcepcaoPersistencia {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
-
-        List list = (List) pb.getCollectionByQuery(query);
-        if (list != null) {
-            if (!list.isEmpty()
-                    && (list.get(0) instanceof MasterDegreeCandidate
-                            || list.get(0) instanceof CandidateSituation
-                            || list.get(0) instanceof Summary || list.get(0) instanceof Pessoa || list
-                            .get(0) instanceof Advisory)) {
-                lockReadWithReplacement(list, pb);
-
-            }
-            lockRead(list);
-        }
-        return list;
-    }
+    
 
     /**
      * @param list
@@ -638,6 +622,31 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         lockRead(list);
         return list;
     }
+    
+   
+    
+    
+    
+    protected List queryList(Query query) throws ExcepcaoPersistencia {
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+
+        List list = (List) pb.getCollectionByQuery(query);
+        if (list != null) {
+            if (!list.isEmpty()
+                    && (list.get(0) instanceof MasterDegreeCandidate
+                            || list.get(0) instanceof CandidateSituation
+                            || list.get(0) instanceof Summary || list.get(0) instanceof Pessoa || list
+                            .get(0) instanceof Advisory)) {
+                lockReadWithReplacement(list, pb);
+
+            }
+            lockRead(list);
+        }
+        return list;
+    }
+
+   
+   
 
     public List readInterval(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan,
             Integer startIndex) throws ExcepcaoPersistencia {

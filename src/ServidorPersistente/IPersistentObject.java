@@ -56,8 +56,8 @@ public interface IPersistentObject
 
     public int count(Class classToQuery, Criteria criteria);
 
-    public Iterator readSpanIterator(Class classToQuery, Criteria criteria,
-            Integer numberOfElementsInSpan, Integer spanNumber);
+//    public Iterator readSpanIterator(Class classToQuery, Criteria criteria,
+//            Integer numberOfElementsInSpan, Integer spanNumber);
     
     public Iterator readIteratorByCriteria(Class classToQuery, Criteria criteria);
     public IDomainObject materialize(IDomainObject domainObject);

@@ -4,6 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="org.apache.commons.collections.CollectionUtils" %>
+<%@ page import="org.apache.commons.collections.Predicate" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="DataBeans.teacher.InfoOldPublication" %>
 <logic:present name="infoSiteTeachersInformation">	
 	<logic:present name="infoExecutionDegree">
 		<table width="90%" border="0" cellpadding="0" cellspacing="0">
@@ -112,14 +116,35 @@
 			<logic:present name="infoSiteTeacherInformation" property="infoOldCientificPublications">
 				<% 	if (infoSiteTeacherInformation.getInfoOldCientificPublications().size() > 0){
 						numberOfFields++; 
-					 	requiredFields++; 
-					} 
+						
+						InfoOldPublication infoOldPublication = (InfoOldPublication) CollectionUtils.find(infoSiteTeacherInformation.getInfoOldCientificPublications(), new Predicate(){ 
+							public boolean evaluate(Object arg0){
+								InfoOldPublication elem = (InfoOldPublication) arg0;
+								if(StringUtils.deleteWhitespace(elem.getPublication()).length() == 0){
+									return false;
+								}
+								return true;
+						}});
+						if(infoOldPublication != null){
+							requiredFields++; 
+						}
+					}
 				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
 				<% 	if (infoSiteTeacherInformation.getInfoOldDidacticPublications().size() > 0){
 						numberOfFields++; 
-					 	requiredFields++; 
+						InfoOldPublication infoOldPublication = (InfoOldPublication) CollectionUtils.find(infoSiteTeacherInformation.getInfoOldDidacticPublications(), new Predicate(){ 
+								public boolean evaluate(Object arg0){
+									InfoOldPublication elem = (InfoOldPublication) arg0;
+									if(StringUtils.deleteWhitespace(elem.getPublication()).length() == 0){
+										return false;
+									}
+									return true;
+						}});
+						if(infoOldPublication != null){
+							requiredFields++; 
+						}
 					}
 				 %>
 			</logic:present>

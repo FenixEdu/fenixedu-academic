@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import Dominio.IGuideEntry;
 import Util.DocumentType;
 import Util.GraduationType;
 
@@ -167,4 +168,28 @@ public class InfoGuideEntry extends InfoObject
         quantity = integer;
     }
 
+    
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IGuideEntry guideEntry) {
+        super.copyFromDomain(guideEntry);
+        if(guideEntry != null) {
+            setDescription(guideEntry.getDescription());
+            setDocumentType(guideEntry.getDocumentType());
+            setGraduationType(guideEntry.getGraduationType());
+            setPrice(guideEntry.getPrice());
+            setQuantity(guideEntry.getQuantity());
+        }
+    }
+    
+    public static InfoGuideEntry newInfoFromDomain(IGuideEntry guideEntry) {
+        InfoGuideEntry infoGuideEntry = null;
+        if(guideEntry != null) {
+            infoGuideEntry = new InfoGuideEntry();
+            infoGuideEntry.copyFromDomain(guideEntry);
+        }
+        
+        return infoGuideEntry;
+    }
 }

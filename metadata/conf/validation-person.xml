@@ -219,6 +219,13 @@
 		</field>	    	              
 
     </form>
-    
+        
+   <form name="findPersonForm">   	
+  	  <field property="name" depends="required" page="1">
+      	<arg0 key="label.name" />
+  	  </field>       	
+  	  <field property="startIndex" depends="integer" page="1">
+  	  </field> 		    		
+	</form> 
   </formset>
 </form-validation>

@@ -241,7 +241,8 @@ public abstract class SessionConstants {
 	public static final String LIST_ADVISORY = "LIST_ADVISORY";
 	
 	public static final String LIST_SMS_DELIVERY_REPORTS = "LIST_SMS_DELIVERY_REPORTS";
-	
+
+	public static final int LIMIT_FINDED_PERSONS = 20;	
 
 	// -------------------------------------------------------------------------------
 	//    SOP Constants - For Context

@@ -53,6 +53,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.SmartDataSetGeneratorForLEECTestBattery;
+import Util.enrollment.EnrollmentCondition;
 
 /**
  * @author Nuno Correia
@@ -236,6 +237,7 @@ public class GeraXml extends FenixUtil {
                 enrolment.setExecutionPeriod(executionPeriod);
                 enrolment.setEnrollmentState(enrolmentState);
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
+                enrolment.setCondition(EnrollmentCondition.FINAL);
             } catch (RuntimeException e1) {
                 System.out
                         .println("Disciplina não encontrada no planos curricular: "

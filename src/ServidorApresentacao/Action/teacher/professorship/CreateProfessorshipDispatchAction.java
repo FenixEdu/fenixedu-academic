@@ -11,21 +11,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionYear;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.PeriodState;
 
 /**
  * @author jpvl
@@ -76,7 +81,8 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
 
     private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException
     {
-        Object[] arguments = {null, null};
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod)request.getAttribute("infoExecutionPeriod");
+        Object[] arguments = {infoExecutionPeriod.getInfoExecutionYear(), null};
         List executionDegrees = (List) executeService(
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", request, arguments);
 
@@ -103,25 +109,71 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
         Object[] arguments = {teacherNumber};
         InfoTeacher infoTeacher = (InfoTeacher) executeService("ReadTeacherByNumber", request, arguments);
 
-        InfoExecutionYear executionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear",
-                request, null);
-        request.setAttribute("executionYear", executionYear);
-
         request.setAttribute("infoTeacher", infoTeacher);
     }
 
-    private void prepareFirstStep(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
+    private void prepareFirstStep(DynaValidatorForm teacherExecutionCourseForm, HttpServletRequest request)
             throws FenixServiceException
     {
+        IUserView userView = SessionUtils.getUserView(request);
         prepareConstants(teacherExecutionCourseForm, request);
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
-        List executionPeriodList = (List) executeService("ReadExecutionPeriodsByExecutionYear", request,
-                new Object[]{infoExecutionYear});
-        request.setAttribute("executionPeriodList", executionPeriodList);
+        
+        List executionPeriodsNotClosed =
+            (List) ServiceUtils.executeService(userView, "ReadNotClosedExecutionPeriods", null);
+
+        setChoosedExecutionPeriod(request, executionPeriodsNotClosed, teacherExecutionCourseForm);
+
+        BeanComparator initialDateComparator = new BeanComparator("beginDate");
+        Collections.sort(executionPeriodsNotClosed, new ReverseComparator(initialDateComparator));
+
+        request.setAttribute("executionPeriods", executionPeriodsNotClosed);
 
     }
 
-    private void prepareSecondStep(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
+    private void setChoosedExecutionPeriod(
+            HttpServletRequest request,
+            List executionPeriodsNotClosed,
+            DynaValidatorForm teacherExecutionCourseForm)
+        {
+        	Integer executionPeriodIdValue = null;
+        	try {
+        	executionPeriodIdValue = Integer.valueOf((String) teacherExecutionCourseForm.get("executionPeriodId"));
+        	} catch(Exception e) {
+        	    //do nothing
+        	}
+        	final Integer executionPeriodId = executionPeriodIdValue;
+            InfoExecutionPeriod infoExecutionPeriod = null;
+            if (executionPeriodId == null)
+            {
+                infoExecutionPeriod =
+                    (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate()
+                {
+
+                    public boolean evaluate(Object input)
+                    {
+                        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+
+                        return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
+                    }
+                });
+            } else
+            {
+                infoExecutionPeriod =
+                    (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate()
+                {
+
+                    public boolean evaluate(Object input)
+                    {
+                        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+
+                        return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+                    }
+                });
+
+            }
+            request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
+        }
+    private void prepareSecondStep(DynaValidatorForm teacherExecutionCourseForm, HttpServletRequest request)
             throws FenixServiceException
     {
         prepareFirstStep(teacherExecutionCourseForm, request);
@@ -129,7 +181,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
         request.setAttribute("executionDegrees", executionDegrees);
     }
 
-    private void prepareThirdStep(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
+    private void prepareThirdStep(DynaValidatorForm teacherExecutionCourseForm, HttpServletRequest request)
             throws FenixServiceException
     {
         prepareSecondStep(teacherExecutionCourseForm, request);
@@ -149,7 +201,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
     public ActionForward showExecutionDegreeExecutionCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+        DynaValidatorForm teacherExecutionCourseForm = (DynaValidatorForm) form;
         prepareFirstStep(teacherExecutionCourseForm, request);
 
         prepareThirdStep(teacherExecutionCourseForm, request);
@@ -167,7 +219,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+        DynaValidatorForm teacherExecutionCourseForm = (DynaValidatorForm) form;
         prepareSecondStep(teacherExecutionCourseForm, request);
         return mapping.findForward("second-step");
     }
@@ -175,14 +227,9 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
     public ActionForward showExecutionYearExecutionPeriods(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+        DynaValidatorForm teacherExecutionCourseForm = (DynaValidatorForm) form;
 
         prepareFirstStep(teacherExecutionCourseForm, request);
-
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
-        List executionPeriodList = (List) executeService("ReadExecutionPeriodsByExecutionYear", request,
-                new Object[]{infoExecutionYear});
-        request.setAttribute("executionPeriodList", executionPeriodList);
 
         return mapping.findForward("second-step");
     }

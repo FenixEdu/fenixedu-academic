@@ -6,6 +6,8 @@
 
 <html:form action="/findPerson" focus="name">
 <html:hidden property="method" value="findPerson" />
+<html:hidden property="startIndex" value="1" />
+<html:hidden property="page" value="1" />
 <table>
 	<tr>
 		<td colspan="2" class="infoop">

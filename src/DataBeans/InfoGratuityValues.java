@@ -3,6 +3,8 @@ package DataBeans;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.IGratuityValues;
+
 /**
  * @author Fernanda Quitério 10/Jan/2004
  *  
@@ -278,4 +280,27 @@ public class InfoGratuityValues extends InfoObject
 		this.startPayment = startPayment;
 	}
 
+    public void copyFromDomain(IGratuityValues gratuityValues) {
+        super.copyFromDomain(gratuityValues);
+        if(gratuityValues != null) {
+            setAnualValue(gratuityValues.getAnualValue());
+            setScholarShipValue(gratuityValues.getScholarShipValue());
+            setFinalProofValue(gratuityValues.getFinalProofValue());
+            setCourseValue(gratuityValues.getCourseValue());
+            setCreditValue(gratuityValues.getCreditValue());
+            setProofRequestPayment(gratuityValues.getProofRequestPayment());
+            setStartPayment(gratuityValues.getStartPayment());
+            setEndPayment(gratuityValues.getEndPayment());
+            setWhen(gratuityValues.getWhen());
+        }        
+    }
+    
+    public static InfoGratuityValues newInfoFromDomain(IGratuityValues gratuityValues) {
+        InfoGratuityValues infoGratuityValues = null;
+        if(gratuityValues != null) {
+            infoGratuityValues = new InfoGratuityValues();
+            infoGratuityValues.copyFromDomain(gratuityValues);
+        }
+        return infoGratuityValues;
+    }
 }

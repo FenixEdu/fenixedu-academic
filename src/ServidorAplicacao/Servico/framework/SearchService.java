@@ -55,7 +55,7 @@ public abstract class SearchService implements IService
                 return infoObject;
             }
         });
-
+        
         return infoList;
     }
 

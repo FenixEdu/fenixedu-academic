@@ -909,6 +909,7 @@ public class Pessoa extends DomainObject implements IPessoa {
 		result += "\n  - Address District : " + distritoMorada;
 		result += "\n  - Telephone : " + telefone;
 		result += "\n  - MobilePhone : " + telemovel;
+		result += "\n  - WorkPhone : " + workPhone;
 		result += "\n  - E-Mail : " + email;
 		result += "\n  - HomePage : " + enderecoWeb;
 		result += "\n  - Contributor Number : " + numContribuinte;

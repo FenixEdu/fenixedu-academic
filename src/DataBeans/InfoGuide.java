@@ -7,6 +7,7 @@ package DataBeans;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.IGuide;
 import Util.GuideRequester;
 import Util.PaymentType;
 
@@ -312,5 +313,33 @@ public class InfoGuide extends InfoObject {
     public void setInfoReimbursementGuides(List reimbursementGuides)
     {
         this.infoReimbursementGuides = reimbursementGuides;
+    }
+    
+    
+    
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IGuide guide) {
+        super.copyFromDomain(guide);
+        if(guide != null) {
+            setCreationDate(guide.getCreationDate());
+            setNumber(guide.getNumber());
+            setPaymentDate(guide.getPaymentDate());
+            setPaymentType(guide.getPaymentType());
+            setRemarks(guide.getRemarks());
+            setTotal(guide.getTotal());
+            setVersion(guide.getVersion());
+            setYear(guide.getYear());
+        }
+    }
+    
+    public static InfoGuide newInfoFromDomain(IGuide guide) {
+        InfoGuide infoGuide = null;
+        if(guide != null) {
+            infoGuide = new InfoGuide();
+            infoGuide.copyFromDomain(guide);
+        }
+        return infoGuide;
     }
 }

@@ -468,8 +468,6 @@
             <forward name="showForm" path="searchProfessorships"/>
             <forward name="showProfessorships" path="showProfessorships"/>
         </action>
-        
-        <action path="/showServices" forward="showServices"/>
 
 	<action path="/viewFinalDegreeWorkProposals" forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0"/>
 

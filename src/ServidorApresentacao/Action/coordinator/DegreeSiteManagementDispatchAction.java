@@ -146,7 +146,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
 		try
 		{
-			ServiceManagerServiceFactory.executeService(
+			infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(
 				userView,
 				"EditDegreeInfoByExecutionDegree",
 				args);
@@ -175,6 +175,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 			return (new ActionForward(mapping.getInput()));
 		}
 
+
+		request.setAttribute("infoDegreeID", infoDegreeInfo.getInfoDegree().getIdInternal());
 		return mapping.findForward("editOK");
 	}
 
@@ -381,6 +383,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 		}
 
 		request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+		request.setAttribute("infoDegreeID", infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
 		return mapping.findForward("editOK");
 	}
 

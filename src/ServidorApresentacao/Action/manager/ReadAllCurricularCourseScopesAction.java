@@ -52,7 +52,7 @@ public class ReadAllCurricularCourseScopesAction extends FenixAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		if (curricularCourseScopes != null) {
+		if (curricularCourseScopes != null && !curricularCourseScopes.isEmpty()) {
 			ComparatorChain comparatorChain = new ComparatorChain();
 			comparatorChain.addComparator(new BeanComparator("beginDate.time"));
 			Collections.sort(curricularCourseScopes, comparatorChain);

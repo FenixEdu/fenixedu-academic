@@ -17,6 +17,7 @@
         	<tr>
     			<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
     			<td class="listClasses-header"><bean:message key="label.person.name" /></td>
+    			<td class="listClasses-header"><bean:message key="label.masterDegree.gratuity.SCPlan" /></td>
     		</tr>
      	<logic:iterate id="studentCP" name="studentList">
         	<bean:define id="studentLink">
@@ -31,6 +32,9 @@
             </td>
             <td class="listClasses">
     	        <bean:write name="studentCP" property="infoStudent.infoPerson.nome"/>
+    	    </td>    	    
+            <td class="listClasses">
+    	        <bean:write name="studentCP" property="currentState.stringPt"/>
     	    </td>
         </logic:iterate>
       	</table>    	

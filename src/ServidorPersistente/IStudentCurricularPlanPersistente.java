@@ -20,108 +20,109 @@ import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
-public interface IStudentCurricularPlanPersistente extends IPersistentObject
-{
+public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 
     public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(
-        Integer number,
-        TipoCurso degreeType)
-        throws ExcepcaoPersistencia;
+            Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia;
+
     /**
-	 * @param studentNumber
-	 * @param degreeType
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
+     * @param studentNumber
+     * @param degreeType
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
     public IStudentCurricularPlan readActiveStudentCurricularPlan(
-        Integer studentNumber,
-        TipoCurso degreeType)
-        throws ExcepcaoPersistencia;
-
-   
-    /**
-	 * @param studentCurricularPlan
-	 * @throws ExcepcaoPersistencia
-	 */
-    public void delete(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+            Integer studentNumber, TipoCurso degreeType)
+            throws ExcepcaoPersistencia;
 
     /**
-	 * @param studentNumber
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
-    public List readAllFromStudent(int studentNumber /* , StudentType studentType */
+     * @param studentCurricularPlan
+     * @throws ExcepcaoPersistencia
+     */
+    public void delete(IStudentCurricularPlan studentCurricularPlan)
+            throws ExcepcaoPersistencia;
+
+    /**
+     * @param studentNumber
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    public List readAllFromStudent(int studentNumber /*
+                                                      * , StudentType
+                                                      * studentType
+                                                      */
     ) throws ExcepcaoPersistencia;
 
     /**
-	 * @param studentNumber
-	 * @param degreeType
-	 * @param specialization
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
+     * @param studentNumber
+     * @param degreeType
+     * @param specialization
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
     public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(
-        Integer studentNumber,
-        TipoCurso degreeType,
-        Specialization specialization)
-        throws ExcepcaoPersistencia;
+            Integer studentNumber, TipoCurso degreeType,
+            Specialization specialization) throws ExcepcaoPersistencia;
 
     /**
-	 * @param degreeCurricularPlan
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
-    public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
-        throws ExcepcaoPersistencia;
+     * @param degreeCurricularPlan
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    public List readByDegreeCurricularPlan(
+            IDegreeCurricularPlan degreeCurricularPlan)
+            throws ExcepcaoPersistencia;
 
     /**
-	 * @param username
-	 * @return List with the Student's Curricular Plans
-	 * @throws ExcepcaoPersistencia
-	 */
+     * @param username
+     * @return List with the Student's Curricular Plans
+     * @throws ExcepcaoPersistencia
+     */
     public List readByUsername(String username) throws ExcepcaoPersistencia;
 
     /**
-	 * @param number
-	 * @param degreeType
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
-    public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType)
-        throws ExcepcaoPersistencia;
+     * @param number
+     * @param degreeType
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    public List readByStudentNumberAndDegreeType(Integer number,
+            TipoCurso degreeType) throws ExcepcaoPersistencia;
 
     public List readAllByDegreeCurricularPlanAndState(
-        IDegreeCurricularPlan degreeCurricularPlan,
-        StudentCurricularPlanState state)
-        throws ExcepcaoPersistencia;
+            IDegreeCurricularPlan degreeCurricularPlan,
+            StudentCurricularPlanState state) throws ExcepcaoPersistencia;
 
     /**
-	 * @param branch
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
+     * @param branch
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
     public List readByBranch(IBranch branch) throws ExcepcaoPersistencia;
 
     /**
-	 * @param branch
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
-    //	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws
-	// ExcepcaoPersistencia;
+     * @param branch
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    //	public List readByCurricularCourseScope(ICurricularCourseScope
+    // curricularCourseScope) throws
+    // ExcepcaoPersistencia;
+    public List readAllByStudentAntState(IStudent student,
+            StudentCurricularPlanState state) throws ExcepcaoPersistencia;
 
-    public List readAllByStudentAntState(IStudent student, StudentCurricularPlanState state)
-        throws ExcepcaoPersistencia;
     public IStudentCurricularPlan readByStudentDegreeCurricularPlanAndState(
-        IStudent student,
-        IDegreeCurricularPlan degreeCurricularPlan,
-        StudentCurricularPlanState state)
-        throws ExcepcaoPersistencia;
+            IStudent student, IDegreeCurricularPlan degreeCurricularPlan,
+            StudentCurricularPlanState state) throws ExcepcaoPersistencia;
 
-    public List readAllActiveStudentCurricularPlan(Integer studentNumber) throws ExcepcaoPersistencia;
+    public List readAllActiveStudentCurricularPlan(Integer studentNumber)
+            throws ExcepcaoPersistencia;
 
-    public List readAllByStudentAndDegreeCurricularPlan(
-        IStudent student,
-        IDegreeCurricularPlan degreeCurricularPlan)
-        throws ExcepcaoPersistencia;
+    public List readAllByStudentAndDegreeCurricularPlan(IStudent student,
+            IDegreeCurricularPlan degreeCurricularPlan)
+            throws ExcepcaoPersistencia;
+
+    public List readAllByDegreeCurricularPlanAndSpecialization(
+            IDegreeCurricularPlan degreeCurricularPlan, Specialization specialization)
+            throws ExcepcaoPersistencia;
 }

@@ -269,7 +269,14 @@ public class StudentsGratuityListAction extends DispatchAction
 		catch (FenixServiceException exception)
 		{
 			exception.printStackTrace();
-			errors.add("noList", new ActionError(exception.getLocalizedMessage()));
+			if(exception.getMessage().startsWith("error.impossible.noGratuityValues.degreeName")) {
+			    String msgError = exception.getMessage().substring(0, exception.getMessage().indexOf(">"));
+			    String nameExecutionDegree = exception.getMessage().substring(exception.getMessage().indexOf(">")+1, exception.getMessage().length());
+			    
+			    errors.add("gratuityValues", new ActionError(msgError, nameExecutionDegree));
+			} else {
+			    errors.add("noList", new ActionError(exception.getLocalizedMessage()));
+			}
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}

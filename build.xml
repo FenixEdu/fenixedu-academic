@@ -32,6 +32,7 @@
     	<property file="build.properties" />
 		<ant antfile="build_jboss.xml" target="clean-all"/> 
 		<ant antfile="build_jboss.xml" target="compile-standalone"/>
+    	<ant antfile="build_jboss.xml" target="includeJ2EEjar"/>
 		<mkdir dir="deploy"/>
 		<zip destfile="deploy/${app.name}.war" basedir="build/standalone"/>
     </target>

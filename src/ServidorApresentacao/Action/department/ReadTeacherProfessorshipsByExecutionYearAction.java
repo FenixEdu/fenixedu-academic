@@ -20,6 +20,7 @@ import DataBeans.teacher.professorship.DetailedProfessorship;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import Util.PeriodState;
 
 /**
  * @author jpvl
@@ -37,8 +38,9 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
             HttpServletRequest request) throws FenixServiceException
     {
+        
         List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(userView,
-                "ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[]{teacherId, null});
+                "ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[]{teacherId, actionForm.get("executionYearId")});
         return detailedInfoProfessorshipList;
     }
 
@@ -67,7 +69,9 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
         dynaForm.set("idInternal", infoTeacher.getIdInternal());
         dynaForm.set("teacherId", infoTeacher.getIdInternal());
-        dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+        if(dynaForm.get("executionYearId") == null) {
+            dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
+        }
 
         List detailedProfessorshipList = (List) request.getAttribute("detailedProfessorshipList");
 
@@ -100,8 +104,20 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
             throws FenixServiceException
     {
 
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
-                "ReadCurrentExecutionYear", null);
+        List executionYears = (List) ServiceUtils.executeService(userView, "ReadNotClosedExecutionYears", null);
+        
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                InfoExecutionYear infoExecutionYearElem = (InfoExecutionYear)arg0;
+                if(infoExecutionYearElem.getState().equals(PeriodState.CURRENT)) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+//        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
+//                "ReadCurrentExecutionYear", null);
 
         Object args[] = {userView.getUtilizador()};
         InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
@@ -117,5 +133,6 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
                 .equals(teacherDepartment)));
 
         request.setAttribute("executionYear", infoExecutionYear);
+        request.setAttribute("executionYears", executionYears);
     }
 }

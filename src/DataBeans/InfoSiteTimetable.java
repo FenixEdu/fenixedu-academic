@@ -9,26 +9,26 @@ import java.util.List;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
-public class InfoSiteTimetable extends DataTranferObject implements ISiteComponent {
+public class InfoSiteTimetable extends DataTranferObject implements
+        ISiteComponent {
 
-private List lessons;
+    private List lessons;
 
+    /**
+     * @return
+     */
+    public List getLessons() {
+        return lessons;
+    }
 
-/**
- * @return
- */
-public List getLessons() {
-	return lessons;
-}
-
-/**
- * @param list
- */
-public void setLessons(List list) {
-	lessons = list;
-}
+    /**
+     * @param list
+     */
+    public void setLessons(List list) {
+        lessons = list;
+    }
 
 }

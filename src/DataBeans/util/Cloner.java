@@ -5478,7 +5478,7 @@ public abstract class Cloner
 
     	if (infoPublicationTeachers == null) {
     		return publication;
-    	} else {
+    	} 
     		publicationTeachers =
     			(
     					List) CollectionUtils
@@ -5491,7 +5491,7 @@ public abstract class Cloner
 
     		publication.setPublicationTeachers(publicationTeachers);
     		return publication;
-    	}
+    	
     	
     }
 

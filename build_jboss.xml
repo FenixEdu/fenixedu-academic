@@ -31,7 +31,7 @@
     <property name="deploy.jar.app-server" value="fenix-application-server.jar"/>
     <property name="deploy.sar.app-server" value="fenix-application-server.sar"/>
     <property name="deploy.jar.web-client" value="fenix-web-client.jar"/>
-    <property name="deploy.war.web-client" value="fenix-web-client.war"/>
+    <property name="deploy.war.web-client" value="${app.name}.war"/>
     <property name="deploy.jar.standalone" value="fenix-standalone.jar"/>
     <property name="deploy.war.standalone" value="fenix-standalone.war"/>
 	
@@ -112,6 +112,7 @@
 		<copy todir="${build.app-server}">
 			<fileset dir="${lib}" >
 				<include name="*.*"/>
+				<exclude name="servlet.jar"/>
 				<exclude name="jta.jar"/>
 			</fileset>
 		</copy>
@@ -310,10 +311,13 @@
     		depends="jar-app-server"
             description="Deploys server to jboss">
 		<delete file="${env.JBOSS_HOME}/server/all/deploy/${deploy.jar.app-server}"/>
+    	<delete file="${env.JBOSS_HOME}/server/default/deploy/${deploy.jar.app-server}"/>
 		<sleep seconds="5"/>
 		<copy file="${deploy.jars}/${deploy.jar.app-server}"
 			  tofile="${env.JBOSS_HOME}/server/all/deploy/${deploy.jar.app-server}"/>
-	</target>
+		<copy file="${deploy.jars}/${deploy.jar.app-server}"
+			  tofile="${env.JBOSS_HOME}/server/default/deploy/${deploy.jar.app-server}"/>
+    </target>
 
     <target name="clean-web-client"
     		description="Removes any generated files for the web-client">
@@ -321,6 +325,7 @@
     </target>
 
 	<target name="prepare-web-client"
+			depends="compile-app-server"
 			description="Copy configuration files to compile dir">
 		<!-- Create build directories as needed -->
 		<mkdir dir="${build.web-client}"/>
@@ -358,9 +363,11 @@
 				<exclude name="servlet.jar"/>
 			</fileset>
 		</copy>
+<!--
 		<copy todir="${build.web-client.webinf.libs}">
                         <fileset dir="${env.JBOSS_HOME}/client">
                                 <include name="*.jar"/>
+-->
 <!--
 			<fileset dir="${env.JBOSS_HOME}/lib">
 				<include name="jboss-common.jar"/>
@@ -373,8 +380,10 @@
 				<include name="jboss.jar"/>
 				<include name="log4j.jar"/>
 -->
+<!--
 			</fileset>
 		</copy>
+-->
 		<copy todir="${build.web-client.webinf.classes}">
 			<fileset dir="${build.app-server}" >
 				<include name="**/$*"/>
@@ -473,6 +482,11 @@
     <target name="war-web-client"
     		depends="compile-web-client"
             description="Creates a war for the fenix web client">
+        <mkdir dir="${deploy.jars}"/>
+		<zip destfile="${deploy.jars}/${deploy.war.web-client}"
+			 basedir="${build.web-client}"
+			/>
+<!--
 		<copy todir="${libs.web}">
 			<fileset dir="${env.JBOSS_HOME}/client">
 				<include name="*.jar"/>
@@ -492,9 +506,22 @@
 			<classes dir="${build.web-client.webinf.classes}"/>
 		</war>
 		<delete file="${libs.web}/jboss-j2ee.jar"/>
+-->
 	</target>
 
     <target name="deploy-web-client"
+    		depends="war-web-client"
+            description="Deploys web client to web server">
+		<delete file="${env.JBOSS_HOME}/server/all/deploy/${deploy.war.web-client}"/>
+    	<delete file="${env.JBOSS_HOME}/server/default/deploy/${deploy.war.web-client}"/>
+		<sleep seconds="5"/>
+		<copy file="${deploy.jars}/${deploy.war.web-client}"
+			  tofile="${env.JBOSS_HOME}/server/all/deploy/${deploy.war.web-client}"/>
+		<copy file="${deploy.jars}/${deploy.war.web-client}"
+			  tofile="${env.JBOSS_HOME}/server/default/deploy/${deploy.war.web-client}"/>
+	</target>
+
+    <target name="deploy-web-client-to-tomcat"
     		depends="compile-web-client"
             description="Deploys web client to web server">
 
@@ -574,8 +601,19 @@
 		<delete file="${libs.web}/jboss-j2ee.jar"/>
 	</target>
 
+    <target name="includeJ2EEjar"
+            description="Copies j2ee jar to deploy dir.">
+
+		<copy todir="${build.standalone.webinf.libs}">
+			<fileset dir="${env.JBOSS_HOME}/client">
+				<include name="jboss-j2ee.jar"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	
     <target name="deploy-standalone"
-    		depends="compile-standalone"
+    		depends="compile-standalone, includeJ2EEjar"
             description="Deploys standalone application to web server">
 
 		<!-- Run this externally so it doesn't fail when

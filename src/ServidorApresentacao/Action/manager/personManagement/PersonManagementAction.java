@@ -95,15 +95,15 @@ public class PersonManagementAction extends FenixDispatchAction
 			e.printStackTrace();
 			errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
 		}
-		if(personListFinded == null || personListFinded.size() <= 0) {
+		if(personListFinded == null || personListFinded.size()  < 2) {
 			errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
 		}
 		if(!errors.isEmpty()){
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-				
-		request.setAttribute("personListFinded", personListFinded);
+		
+		request.setAttribute("personListFinded", personListFinded.get(1));
 		
 		return mapping.findForward("displayPerson");
 	}

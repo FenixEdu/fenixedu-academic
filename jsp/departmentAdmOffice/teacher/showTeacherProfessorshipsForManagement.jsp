@@ -11,10 +11,29 @@
 		</logic:equal>
 	</logic:present>
 </p>
-
 <logic:messagesPresent>
 	<html:errors />
 </logic:messagesPresent>
+<html:form action="/showTeacherProfessorshipsForManagement">
+	<html:hidden property="idInternal" />	
+	<table width="100%">
+		<tr>
+			<td class="infoop">
+				<bean:message key="message.courses.chooseExecutionYear"/>
+			</td>
+		</tr>
+		<tr><td><br /></td></tr>
+		<tr>
+			<td>
+				<bean:message key="label.executionYear"/>:
+				<html:select property="executionYearId" onchange="this.form.submit();">
+					<html:options collection="executionYears" property="idInternal" labelProperty="year"/>
+				</html:select>
+			</td>
+		</tr>
+	</table>	
+</html:form>
+<br />
 <logic:notEmpty name="detailedProfessorshipList" >	
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
 		<html:hidden property="idInternal" />	
@@ -51,7 +70,7 @@
 					<td class="listClasses" style="text-align:left">
 						<bean:write name="infoExecutionCourse" property="nome"/>
 					</td>
-					<td class="listClasses" style="text-align:left">
+					<td class="listClasses" style="text-align:left">&nbsp;
 						<bean:define id="infoDegreeList" name="detailedProfessorship" property="infoDegreeList" />
 						<bean:size id="degreeSizeList" name="infoDegreeList"/>
 						<logic:iterate id="infoDegree" name="infoDegreeList" indexId="index">
@@ -99,7 +118,7 @@
 		<logic:present role="role.department.credits.manager">
 			<logic:equal name="isDepartmentManager" value="true">
 			 	<html:submit styleClass="inputbutton">
-			 		<bean:message key="button.update"/>
+			 		<bean:message key="button.save"/>
 			 	</html:submit>
 			</logic:equal>
 		</logic:present>		 	

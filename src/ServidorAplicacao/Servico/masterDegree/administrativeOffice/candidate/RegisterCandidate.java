@@ -54,6 +54,7 @@ import Util.StudentCurricularPlanState;
 import Util.StudentState;
 import Util.StudentType;
 import Util.TipoCurso;
+import Util.enrollment.EnrollmentCondition;
 
 /**
  * 
@@ -221,6 +222,7 @@ public class RegisterCandidate implements IService {
                         .readActualExecutionPeriod());
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setEvaluations(new ArrayList());
+                enrolment.setCondition(EnrollmentCondition.FINAL);
 
                 IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
                 sp.getIPersistentEnrolmentEvaluation().simpleLockWrite(

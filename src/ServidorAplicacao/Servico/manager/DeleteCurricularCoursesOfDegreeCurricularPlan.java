@@ -11,10 +11,12 @@ import commons.CollectionUtils;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
+import Dominio.ICurriculum;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentWrittenEvaluationCurricularCourseScope;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.CurricularCourseScopeOJB;
@@ -45,6 +47,8 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
                     .getIPersistentCurricularCourse();
             IPersistentWrittenEvaluationCurricularCourseScope persistentWrittenEvaluationCurricularCourseScope = sp
                     .getIPersistentWrittenEvaluationCurricularCourseScope();
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+            
             Iterator iter = curricularCoursesIds.iterator();
             List undeletedCurricularCourses = new ArrayList();
             List executionCourses, scopes;
@@ -55,6 +59,12 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
                 curricularCourse = (ICurricularCourse) persistentCurricularCourse
                         .readByOID(CurricularCourse.class, curricularCourseId);
                 if (curricularCourse != null) {
+                    //delete curriculum
+                    ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+                    if(curriculum != null) {
+                        persistentCurriculum.delete(curriculum);
+                    }
+                    
                     executionCourses = curricularCourse
                             .getAssociatedExecutionCourses();
                     if (executionCourses == null || executionCourses.isEmpty()) {

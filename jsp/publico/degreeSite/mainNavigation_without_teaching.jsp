@@ -7,7 +7,7 @@
 <ul class="treemenu">
 	<li><a href="http://www.ist.utl.pt/pt/informacoes/">Informação</a></li>
   <li><a href="http://www.ist.utl.pt/pt/estrutura_interna/">Estrutura</a></li>
-  <li><html:link page="/showServices.do">Serviços</html:link></li>
+  <li><a href="http://www.ist.utl.pt/html/servicos/serv.shtml">Serviços</a></li>
   <li><a href="http://www.ist.utl.pt/pt/ensino/">Ensino</a></li>	
   <li><a href="http://www.ist.utl.pt/pt/investigacao/">I &amp; D</a></li>
 </ul>

@@ -8,7 +8,7 @@
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/><br />
-	<b><bean:message key="label.executionYear" /> </b> <bean:write name="executionYear" property="year" /> <br />
+	<%--<b><bean:message key="label.executionYear" /> </b> <bean:write name="executionYear" property="year" /> <br />--%>
 <%--	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>) --%>
@@ -28,7 +28,7 @@
 	</h2>
 	<html:select property="executionPeriodId" onchange="this.form.method.value='showExecutionDegrees';this.form.submit();">
 		<option></option>
-		<html:options collection="executionPeriodList" labelProperty="name" property="idInternal"/>
+		<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
 	</html:select>
 	
 	<logic:present name="executionDegrees">

@@ -81,7 +81,7 @@ public class ChangeApplicationInfo implements IService {
         try {
             IService service = new ChangePersonalInfo();
             //XXX: WARNING: call of another service inside a service.
-            ((ChangePersonalInfo) service).run(infoPerson, userView);
+            ((ChangePersonalInfo) service).run( userView,infoPerson);
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException(
                     "Persistence layer error");

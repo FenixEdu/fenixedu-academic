@@ -13,12 +13,15 @@
 
 package ServidorApresentacao.Action.masterDegree.coordinator;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -50,6 +53,10 @@ public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.ba
 	  } catch (FenixServiceException e) {
 		  throw new FenixActionException(e);
 	  }
+	  
+	  ComparatorChain comparatorChain = new ComparatorChain();
+	  comparatorChain.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+	  Collections.sort(degrees, comparatorChain);
 
       session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
       

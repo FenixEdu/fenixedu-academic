@@ -381,5 +381,132 @@
 	        <arg0 key="label.masterDegree.gratuity.executionYear" />
 		</field> 
 	</form>	
+    
+    <form name="findPersonForm">
+    	<field property="name" depends="requiredif" page="1">
+	        <arg0 key="error.manager.oneItem.findPerson" />
+			<var>
+				<var-name>field[0]</var-name>
+			    <var-value>username</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[0]</var-name>
+			    <var-value>NULL</var-value>
+			</var>  
+			<var>
+				<var-name>field[1]</var-name>
+			    <var-value>documentIdNumber</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[1]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 
+			<var>
+				<var-name>field[2]</var-name>
+			    <var-value>email</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[2]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 	
+			<var>
+			    <var-name>fieldJoin</var-name>
+			    <var-value>AND</var-value>
+  			</var>		        
+		</field> 
+    	<field property="username" depends="requiredif" page="1">
+	        <arg0 key="error.manager.oneItem.findPerson" />
+			<var>
+				<var-name>field[0]</var-name>
+			    <var-value>name</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[0]</var-name>
+			    <var-value>NULL</var-value>
+			</var>  
+			<var>
+				<var-name>field[1]</var-name>
+			    <var-value>documentIdNumber</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[1]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 
+			<var>
+				<var-name>field[2]</var-name>
+			    <var-value>email</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[2]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 	
+			<var>
+			    <var-name>fieldJoin</var-name>
+			    <var-value>AND</var-value>
+  			</var>	
+		</field> 
+    	<field property="documentIdNumber" depends="requiredif" page="1">
+	        <arg0 key="error.manager.oneItem.findPerson" />
+			<var>
+				<var-name>field[0]</var-name>
+			    <var-value>name</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[0]</var-name>
+			    <var-value>NULL</var-value>
+			</var>  
+			<var>
+				<var-name>field[1]</var-name>
+			    <var-value>username</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[1]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 
+			<var>
+				<var-name>field[2]</var-name>
+			    <var-value>email</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[2]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 	
+			<var>
+			    <var-name>fieldJoin</var-name>
+			    <var-value>AND</var-value>
+  			</var>	
+		</field> 
+    	<field property="email" depends="requiredif" page="1">
+	        <arg0 key="error.manager.oneItem.findPerson" />
+			<var>
+				<var-name>field[0]</var-name>
+			    <var-value>name</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[0]</var-name>
+			    <var-value>NULL</var-value>
+			</var>  
+			<var>
+				<var-name>field[1]</var-name>
+			    <var-value>username</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[1]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 
+			<var>
+				<var-name>field[2]</var-name>
+			    <var-value>documentIdNumber</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[2]</var-name>
+			    <var-value>NULL</var-value>
+			</var> 	
+			<var>
+			    <var-name>fieldJoin</var-name>
+			    <var-value>AND</var-value>
+  			</var>	
+		</field> 
+	</form>
     </formset>
 </form-validation>

@@ -253,7 +253,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
                                             .getDegree().getIdInternal())) {
                         return "noAuthorization";
                     }
-                    IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+                    /*IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
                             .getIStudentCurricularPlanPersistente();
                     List activeStudentCurricularPlans = persistentStudentCurricularPlan
                             .readAllActiveStudentCurricularPlan(studentCurricularPlan
@@ -272,7 +272,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
                     }
                     if (!hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan) {
                         return "noAuthorization";
-                    }
+                    }*/
                 } catch (Exception e) {
                     return "noAuthorization";
                 }

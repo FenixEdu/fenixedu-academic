@@ -159,6 +159,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
         auxEnrolment.setStudentCurricularPlan(
         	enrolment.getStudentCurricularPlan());
         try {
+            auxEnrolment.setCondition(enrolment.getCondition());
         	auxEnrolment.setEnrolmentEvaluationType(
         		enrolment.getEnrolmentEvaluationType());
         	auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());

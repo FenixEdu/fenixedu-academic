@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.IBibliographicReference;
@@ -26,7 +27,6 @@ import Dominio.ISummary;
 import Dominio.ISupportLesson;
 import Dominio.ITurno;
 import Dominio.gesdis.ICourseReport;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -54,31 +54,12 @@ import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 29/Nov/2003
  *  
  */
-public class MergeExecutionCourses implements IServico {
+public class MergeExecutionCourses implements IService {
 
     /**
      *  
      */
     public MergeExecutionCourses() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-
-        return "MergeExecutionCourses";
-    }
-
-    private static MergeExecutionCourses _servico = new MergeExecutionCourses();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static MergeExecutionCourses getService() {
-        return _servico;
     }
 
     public void run(Integer executionCourseDestinationId,
@@ -88,13 +69,11 @@ public class MergeExecutionCourses implements IServico {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = ps
                     .getIPersistentExecutionCourse();
-            IExecutionCourse destination = new ExecutionCourse(
-                    executionCourseDestinationId);
-            IExecutionCourse source = new ExecutionCourse(
-                    executionCourseSourceId);
+            IExecutionCourse destination;
+            IExecutionCourse source;
             destination = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseSourceId,
-                            true);
+                    .readByOID(ExecutionCourse.class,
+                            executionCourseDestinationId, true);
             source = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseSourceId);
             if (!isMergeAllowed(destination, source, ps)) {
@@ -113,7 +92,6 @@ public class MergeExecutionCourses implements IServico {
 
             destination.getAssociatedCurricularCourses().addAll(
                     source.getAssociatedCurricularCourses());
-
             persistentExecutionCourse.deleteExecutionCourse(source);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -125,11 +103,6 @@ public class MergeExecutionCourses implements IServico {
             IExecutionCourse source, ISuportePersistente ps) {
 
         boolean distributedTestAuthorization = false;
-        //        boolean slideAuthorization = false;
-        //        IFileSuport fileSuport = FileSuport.getInstance();
-
-        //        slideAuthorization =
-        // fileSuport.getDirectorySize(source.getSlideName()) <= 0;
 
         IPersistentMetadata persistentMetadata = ps.getIPersistentMetadata();
         IPersistentDistributedTest persistentDistributedTest = ps
@@ -144,6 +117,7 @@ public class MergeExecutionCourses implements IServico {
 
         } catch (ExcepcaoPersistencia e1) {
             //ignore
+           
         }
 
         return destination != null
@@ -151,7 +125,6 @@ public class MergeExecutionCourses implements IServico {
                 && source.getExecutionPeriod().equals(
                         destination.getExecutionPeriod())
                 && source != destination && distributedTestAuthorization;
-        //            && slideAuthorization;
     }
 
     /**

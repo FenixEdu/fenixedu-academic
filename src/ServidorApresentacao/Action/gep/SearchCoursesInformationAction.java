@@ -28,14 +28,12 @@ import ServidorApresentacao.Action.framework.SearchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.mapping.framework.SearchActionMapping;
-import Util.TipoCurso;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
-public class SearchCoursesInformationAction extends SearchAction
-{
+public class SearchCoursesInformationAction extends SearchAction {
 
     /*
      * (non-Javadoc)
@@ -44,23 +42,19 @@ public class SearchCoursesInformationAction extends SearchAction
      *      javax.servlet.http.HttpServletRequest, java.util.Collection)
      */
     protected void doAfterSearch(SearchActionMapping mapping, HttpServletRequest request,
-            Collection result) throws Exception
-    {
+            Collection result) throws Exception {
         final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute("infoExecutionDegree");
 
         //      sort the execution course list
         ComparatorChain comparatorChain1 = new ComparatorChain();
-        comparatorChain1.addComparator(new Comparator()
-        {
+        comparatorChain1.addComparator(new Comparator() {
 
             private List getInfoScopes(List infoCurricularCourses,
-                    InfoExecutionDegree infoExecutionDegree)
-            {
+                    InfoExecutionDegree infoExecutionDegree) {
                 Iterator iter = infoCurricularCourses.iterator();
                 List infoScopes = new ArrayList();
-                while (iter.hasNext())
-                {
+                while (iter.hasNext()) {
                     InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
                     if (infoExecutionDegree == null
                             || infoExecutionDegree.getInfoDegreeCurricularPlan().equals(
@@ -70,8 +64,7 @@ public class SearchCoursesInformationAction extends SearchAction
                 return infoScopes;
             }
 
-            public int compare(Object o1, Object o2)
-            {
+            public int compare(Object o1, Object o2) {
                 InfoSiteCourseInformation information1 = (InfoSiteCourseInformation) o1;
                 InfoSiteCourseInformation information2 = (InfoSiteCourseInformation) o2;
                 List infoScopes1 = getInfoScopes(information1.getInfoCurricularCourses(),
@@ -79,11 +72,9 @@ public class SearchCoursesInformationAction extends SearchAction
                 List infoScopes2 = getInfoScopes(information2.getInfoCurricularCourses(),
                         infoExecutionDegree);
                 ComparatorChain comparatorChain2 = new ComparatorChain();
-                comparatorChain2.addComparator(new Comparator()
-                {
+                comparatorChain2.addComparator(new Comparator() {
 
-                    public int compare(Object o1, Object o2)
-                    {
+                    public int compare(Object o1, Object o2) {
                         InfoCurricularCourseScope infoScope1 = (InfoCurricularCourseScope) o1;
                         InfoCurricularCourseScope infoScope2 = (InfoCurricularCourseScope) o2;
                         return infoScope1.getInfoCurricularSemester().getInfoCurricularYear().getYear()
@@ -92,11 +83,9 @@ public class SearchCoursesInformationAction extends SearchAction
                                                 .getYear());
                     }
                 });
-                comparatorChain2.addComparator(new Comparator()
-                {
+                comparatorChain2.addComparator(new Comparator() {
 
-                    public int compare(Object o1, Object o2)
-                    {
+                    public int compare(Object o1, Object o2) {
                         InfoCurricularCourseScope infoScope1 = (InfoCurricularCourseScope) o1;
                         InfoCurricularCourseScope infoScope2 = (InfoCurricularCourseScope) o2;
                         return infoScope1.getInfoCurricularSemester().getSemester().compareTo(
@@ -104,11 +93,9 @@ public class SearchCoursesInformationAction extends SearchAction
                     }
                 });
 
-                comparatorChain2.addComparator(new Comparator()
-                {
+                comparatorChain2.addComparator(new Comparator() {
 
-                    public int compare(Object o1, Object o2)
-                    {
+                    public int compare(Object o1, Object o2) {
                         InfoCurricularCourseScope infoScope1 = (InfoCurricularCourseScope) o1;
                         InfoCurricularCourseScope infoScope2 = (InfoCurricularCourseScope) o2;
                         if (infoScope1.getInfoBranch().getAcronym() == null
@@ -126,11 +113,9 @@ public class SearchCoursesInformationAction extends SearchAction
             }
         });
 
-        comparatorChain1.addComparator(new Comparator()
-        {
+        comparatorChain1.addComparator(new Comparator() {
 
-            public int compare(Object o1, Object o2)
-            {
+            public int compare(Object o1, Object o2) {
                 InfoSiteCourseInformation information1 = (InfoSiteCourseInformation) o1;
                 InfoSiteCourseInformation information2 = (InfoSiteCourseInformation) o2;
 
@@ -138,11 +123,9 @@ public class SearchCoursesInformationAction extends SearchAction
                 List infoCurricularCourses2 = getInfoCurricularCourses(information2);
 
                 ComparatorChain comparatorChain = new ComparatorChain();
-                comparatorChain.addComparator(new Comparator()
-                {
+                comparatorChain.addComparator(new Comparator() {
 
-                    public int compare(Object o1, Object o2)
-                    {
+                    public int compare(Object o1, Object o2) {
                         InfoCurricularCourse infoCurricularCourse1 = (InfoCurricularCourse) o1;
                         InfoCurricularCourse infoCurricularCourse2 = (InfoCurricularCourse) o2;
                         return infoCurricularCourse1.getName()
@@ -163,18 +146,15 @@ public class SearchCoursesInformationAction extends SearchAction
              * @param information1
              * @return
              */
-            private List getInfoCurricularCourses(InfoSiteCourseInformation information1)
-            {
+            private List getInfoCurricularCourses(InfoSiteCourseInformation information1) {
                 List infoCurricularCourses = information1.getInfoCurricularCourses();
-                return (List) CollectionUtils.select(infoCurricularCourses, new Predicate()
-                {
+                return (List) CollectionUtils.select(infoCurricularCourses, new Predicate() {
 
-                    public boolean evaluate(Object arg0)
-                    {
+                    public boolean evaluate(Object arg0) {
                         InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) arg0;
                         return infoExecutionDegree == null
-                        || infoCurricularCourse.getInfoDegreeCurricularPlan().equals(
-                                infoExecutionDegree.getInfoDegreeCurricularPlan());
+                                || infoCurricularCourse.getInfoDegreeCurricularPlan().equals(
+                                        infoExecutionDegree.getInfoDegreeCurricularPlan());
                     }
                 });
             }
@@ -186,24 +166,21 @@ public class SearchCoursesInformationAction extends SearchAction
      * (non-Javadoc)
      * 
      * @see ServidorApresentacao.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
-     *      javax.servlet.http.HttpServletRequest,
-     *      org.apache.struts.action.ActionForm)
+     *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
      */
     protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request,
-            ActionForm form) throws Exception
-    {
+            ActionForm form) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
-        if (!request.getParameter("executionDegreeId").equals("all"))
-        {
+        if (!request.getParameter("executionDegreeId").equals("all")) {
             Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
-            Object[] args = {executionDegreeId};
+            Object[] args = { executionDegreeId };
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
                     userView, "ReadExecutionDegreeByOID", args);
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
         }
-        
+
         String basic = request.getParameter("basic");
         if (basic != null && basic.length() > 0)
             request.setAttribute("basic", basic);
@@ -216,8 +193,7 @@ public class SearchCoursesInformationAction extends SearchAction
      *      org.apache.struts.action.ActionForm)
      */
     protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
-            throws Exception
-    {
+            throws Exception {
         Integer executionDegreeId = null;
 
         if (!request.getParameter("executionDegreeId").equals("all"))
@@ -231,32 +207,28 @@ public class SearchCoursesInformationAction extends SearchAction
             basic = Boolean.FALSE;
         }
 
-        return new Object[]{executionDegreeId, basic};
+        return new Object[] { executionDegreeId, basic };
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see ServidorApresentacao.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
-     *      javax.servlet.http.HttpServletRequest,
-     *      org.apache.struts.action.ActionForm)
+     *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
      */
     protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
-            ActionForm form) throws Exception
-    {
+            ActionForm form) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
-                "ReadCurrentExecutionYear", new Object[]{});
+                "ReadCurrentExecutionYear", new Object[] {});
 
-        Object[] args = {infoExecutionYear, TipoCurso.LICENCIATURA_OBJ};
+        Object[] args = { infoExecutionYear, null };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(userView,
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
-        Collections.sort(infoExecutionDegrees, new Comparator()
-        {
+        Collections.sort(infoExecutionDegrees, new Comparator() {
 
-            public int compare(Object o1, Object o2)
-            {
+            public int compare(Object o1, Object o2) {
                 InfoExecutionDegree infoExecutionDegree1 = (InfoExecutionDegree) o1;
                 InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) o2;
                 return infoExecutionDegree1.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
@@ -265,10 +237,10 @@ public class SearchCoursesInformationAction extends SearchAction
                                         .getNome());
             }
         });
-        
+
         infoExecutionDegrees = buildLabelValueBeans(infoExecutionDegrees);
-        
+
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
     }
-    
+
 }

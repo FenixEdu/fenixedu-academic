@@ -54,9 +54,10 @@
 	<logic:present name="siteView" property="component">
 		<bean:define id="component" name="siteView" property="component"/>
 		<bean:define id="lessonList" name="component" property="lessons" />
-	<app:gerarHorario name="lessonList" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/> 
+		
+	<app:gerarHorario name="lessonList" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/>
 	</logic:present>	
-	<logic:notPresent name="lessonList" >
+	<logic:notPresent name="siteView" property="component" >
 		<bean:message key="message.public.notfound.timeTable"/>
-	</logic:notPresent>	
+	</logic:notPresent>
 

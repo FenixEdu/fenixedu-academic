@@ -24,10 +24,12 @@
 	<strong>Se pretende consultar informação relativa a disciplinas de 4º ou 5º em 2003/2004 ou 5ª em 2004/2005 do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong>
 	<br />
 	
-	<strong><font color="#FF0000">Aviso:</font></strong>
+<&--	<strong><font color="#FF0000">Aviso:</font></strong>
 	<br />
 	<strong>Já estão disponíveis os <font color="#FF0000">horários provisórios</font> para o 1º semestre de 2004/2005 </strong>
-	<br /><br />
+	<br />
+--%>	
+	<br />
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   		<tr>

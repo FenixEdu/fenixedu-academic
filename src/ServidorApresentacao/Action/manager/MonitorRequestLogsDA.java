@@ -183,9 +183,9 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		}
 		if (i_start != i_end) {
 			return new Integer(line.substring(i_start, i_end));
-		} else {
+		} 
 			return null;
-		}
+		
 	}
 
 	private String getRequestPath(String line) {

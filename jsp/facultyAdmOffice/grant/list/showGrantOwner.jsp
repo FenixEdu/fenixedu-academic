@@ -513,7 +513,7 @@
 	<table border="1">
 	<tr>
 		<td>
-	<br/><b><bean:message key="message.grant.contract.number"/>&nbsp;<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b>
+	<br/><b><bean:message key="label.grant.contract.information"/>&nbsp;<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/></b>
 	<table>
 		<tr>
 			<td align="left">

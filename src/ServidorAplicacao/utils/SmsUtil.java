@@ -75,11 +75,11 @@ public class SmsUtil
 		this.uri = properties.getProperty("host.uri");
 		this.port = (new Integer(properties.getProperty("host.port"))).intValue();
 		this.protocol = properties.getProperty("protocol");
-		this.username = properties.getProperty("username");
-		this.password = properties.getProperty("password");
+		this.username = properties.getProperty("username").trim();
+		this.password = properties.getProperty("password").trim();
 		this.monthlySmsLimit = (new Integer(properties.getProperty("monthlySmsLimit"))).intValue();
-		this.deliveryUsername = properties.getProperty("deliveryUsername");
-		this.deliveryPassword = properties.getProperty("deliveryPassword");
+		this.deliveryUsername = properties.getProperty("deliveryUsername").trim();
+		this.deliveryPassword = properties.getProperty("deliveryPassword").trim();
 		this.deliveryHost = properties.getProperty("deliveryHost");
 		this.deliveryPort = (new Integer(properties.getProperty("deliveryHost.port"))).intValue();
 		this.deliveryUri = properties.getProperty("deliveryHost.uri");

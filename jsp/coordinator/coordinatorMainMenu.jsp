@@ -51,7 +51,7 @@
 			<ul>
 				<li>
 					<html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0">
-					<bean:message key="link.coordinator.studentListByDegree" /></html:link><br>
+					<bean:message key="link.coordinator.studentListByDegree" /></html:link>
 		        	<br/>
 					<br/>
 				</li>
@@ -67,6 +67,7 @@
 	
 	<%-- Start of Degree Coordinator Options --%>
 	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
+		<br /><br />
 		<ul>
 			<li>
 				<html:link page="/executionCoursesInformation.do?method=prepareChoice">
@@ -101,6 +102,7 @@
 	</logic:notEqual> 
 	
 	<%-- Start of Common Options --%>
+	<br /><br />
 	<ul>
 		<li>
 			<bean:define id="infoExecutionDegreeCode" name="infoExecutionDegree" property="idInternal"/>

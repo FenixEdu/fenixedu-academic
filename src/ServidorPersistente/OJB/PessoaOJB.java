@@ -7,6 +7,7 @@
 package ServidorPersistente.OJB;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -20,6 +21,11 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
+
+/**
+ * @author Tânia Pousão
+ *
+ */
 public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 
     public PessoaOJB() {
@@ -144,8 +150,14 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
         return new Integer(count(Pessoa.class, criteria));
     }
 
-    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email,
-            String username, String documentIdNumber) throws ExcepcaoPersistencia {
+      /*
+     * This method return a list with 2 elements.
+     * The first is a Integer with the number of elements returned by the main search, 
+     * The second is a list with the elemts returned by the limited search. 
+     */
+    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber, Integer startIndex, Integer numberOfElementsInSpan)
+        throws ExcepcaoPersistencia
+    {
         List personList = null;
 
         Criteria criteria = new Criteria();
@@ -184,4 +196,57 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 
     public void alterarPessoa(String numDocId, TipoDocumentoIdentificacao tipoDocId, IPessoa pessoa) {
     }
+    
+    /*
+     * This method return a list with 2 elements.
+     * The first is a Integer with the number of elements returned by the main search, 
+     * The second is a list with the elemts returned by the limited search. 
+     */
+    public List findActivePersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber, Integer startIndex, Integer numberOfElementsInSpan)
+        throws ExcepcaoPersistencia
+    {
+        List result = new ArrayList();
+        
+        List personList = null;
+
+        Criteria criteria = new Criteria();
+
+        if (name != null && name.length() > 0)
+        {
+            criteria.addLike("nome", name);
+        }
+
+        if (email != null && email.length() > 0)
+        {
+            criteria.addLike("email", email);
+        }
+
+        if (username != null && username.length() > 0)
+        {
+            criteria.addLike("username", username);
+        }
+        criteria.addNotLike("username", "INA%");
+        
+        if (documentIdNumber != null && documentIdNumber.length() > 0)
+        {
+        	criteria.addLike("numeroDocumentoIdentificacao", documentIdNumber);
+        }                
+        criteria.addOrderBy("nome");
+
+        result.add(0, new Integer(count(Pessoa.class, criteria)));
+        
+        if(startIndex == null && numberOfElementsInSpan == null) {
+            personList = queryList(Pessoa.class, criteria); 
+        } else  if(startIndex != null && numberOfElementsInSpan != null) {       
+            personList = readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex);
+        }               
+        result.add(personList);        
+        
+        return result;
+    }
+
+   
+    
+    
+    
 }

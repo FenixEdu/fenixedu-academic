@@ -10,8 +10,7 @@
 <span class="error"><html:errors/></span>
   <bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
   <html:form action="/changePersonalInfoDispatchAction?method=change">
-  <html:hidden property="name" />
-  <html:hidden property="username" />
+
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
         <table width="100%" cellspacing="0">
       		<tr>
@@ -194,9 +193,12 @@
                 </tr>
          	<% }else { %>
 --%>
-      	   	    <html:hidden property="page" value="1"/>
+    	   	    <html:hidden property="page" value="1"/>
 
-              	<html:hidden property="sex" />
+<%--                	
+				<html:hidden property="name" />
+				<html:hidden property="username" />
+				<html:hidden property="sex" />
               	<html:hidden property="identificationDocumentType" />
               	<html:hidden property="identificationDocumentNumber" />
               	<html:hidden property="identificationDocumentIssuePlace" />
@@ -225,12 +227,12 @@
               	<html:hidden property="idExpirationDateDay" />
               	<html:hidden property="idExpirationDateMonth" />
               	<html:hidden property="idExpirationDateYear" />
-              	<html:hidden property="areaOfAreaCode" />
+              	<html:hidden property="areaOfAreaCode" />--%>
 				<tr>
 					<td class="infoop" ><span class="emphasis-box">info</span>
          			<td class="infoop">
  						<strong>A informação que vai alterar terá efeito apenas nesta aplicação</strong> e tem como objectivo, 
-         				serem enviadas mensagens de correio electrónico e sms.
+         				serem enviadas mensagens de correio electrónico e sms e ainda .
          				<br/>
          				As alterações dos seus dados pessoais com efeitos administrativos devem ser feitas directamente na secção de pessoal, secretaria de graduação
          				ou secretaria de pós-graduação, consoante o seu caso. 
@@ -249,7 +251,8 @@
           <!-- Work Phome -->
           <tr>
             <td width="15%"><bean:message key="label.person.workPhone" /></td>
-            <td><html:text property="workPhone"/>&nbsp;<code>*</code></td>
+            <td><html:text property="workPhone"/>&nbsp;
+			<bean:message key="label.person.publicData" /></td>
           </tr>
           <!-- E-Mail -->
           <tr>
@@ -266,8 +269,6 @@
 	        	<html:checkbox property="availableWebSite" value="true"/></td>
           </tr>
    	</table>
-<br />
-<bean:message key="label.person.publicData" />
 <br /><br />
 <html:submit property="Alterar" styleClass="inputbutton">Alterar Dados</html:submit>
 <html:reset property="Reset" styleClass="inputbutton">Dados Originais</html:reset>

@@ -236,4 +236,26 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
         return queryList(StudentCurricularPlan.class, criteria);
     }
 
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IStudentCurricularPlanPersistente#readAllBySeveralDegreeCurricularPlansAndSpecialization(java.util.List, Util.Specialization)
+     */
+    public List readAllByDegreeCurricularPlanAndSpecialization(IDegreeCurricularPlan degreeCurricularPlan, Specialization specialization) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+
+        criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
+        
+		if (specialization != null && specialization.getSpecialization() != null)
+		{
+			criteria.addEqualTo(
+				"specialization",
+				specialization.getSpecialization());
+		}
+		else //all specialization required, but not records with  specialization null
+		{
+			criteria.addNotNull("specialization");
+		}
+        
+        return queryList(StudentCurricularPlan.class, criteria);
+    }
+
 }

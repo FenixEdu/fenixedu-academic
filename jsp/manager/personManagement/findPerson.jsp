@@ -6,6 +6,7 @@
 
 <html:form action="/findPerson" focus="username">
 <html:hidden property="method" value="findPerson" />
+<html:hidden property="page" value="1" />
 <table>
 	<tr>
 		<td colspan="2" class="infoop">
@@ -58,7 +59,7 @@
 </table>
 
 <html:submit styleClass="inputbutton">
-	<bean:message key="button.save"/>
+	<bean:message key="button.search"/>
 </html:submit>
 <html:reset  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
