@@ -61,10 +61,12 @@ public class CurriculumDispatchAction extends DispatchAction {
 		BeanComparator curricularYear = new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year");
 		BeanComparator semester = new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester");
 		BeanComparator courseName = new BeanComparator("infoCurricularCourseScope.infoCurricularCourse.name");
+		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(curricularYear);
 		chainComparator.addComparator(semester);
 		chainComparator.addComparator(courseName);
+		chainComparator.addComparator(executionYear);
 		
 		Collections.sort(result, chainComparator);
 
