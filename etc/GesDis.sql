@@ -41,7 +41,7 @@ drop table if exists item;
 create table item (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
-   `ORDER` int(11) unsigned,
+   ITEM_ORDER int(11) unsigned,
    INFORMATION text,
    URGENT int(11) unsigned,
    KEY_SECTION int(11) unsigned not null default '0',
@@ -76,7 +76,7 @@ drop table if exists section;
 create table section (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
-   `ORDER` int(11) unsigned,
+   SECTION_ORDER int(11) unsigned,
    KEY_SITE int(10) unsigned not null default '0',
    KEY_SUPERIOR_SECTION int(10) unsigned not null default '0',
    LAST_MODIFIED_DATE date,

@@ -354,6 +354,7 @@
         >
 	        <fileset dir="${sql}">
 			  <include name="*.sql" /> 
+			  <exclude name="GesDis-*.sql" /> 
 			  <exclude name="ciapl*.sql" /> 
 			  <exclude name="test*.sql" /> 
   			</fileset>

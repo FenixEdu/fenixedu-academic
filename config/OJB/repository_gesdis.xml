@@ -130,7 +130,7 @@
       />
       <field-descriptor id="3"
          name="order"
-         column="ORDER"
+         column="SECTION_ORDER"
          jdbc-type="INTEGER"
       />
       <field-descriptor id="4"
@@ -203,7 +203,7 @@
       />
       <field-descriptor id="3"
          name="order"
-         column="ORDER"
+         column="ITEM_ORDER"
          jdbc-type="INTEGER"
       />
       <field-descriptor id="4"
