@@ -20,6 +20,7 @@
 			<td align="center"><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
+			<td align="center"><u><bean:message key="label.curricular.course.branch"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.enrolment.state"/></u></td>
 		</tr>
 		<logic:iterate id="infoEnrolment" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent" indexId="index">
@@ -33,6 +34,14 @@
 				<td align="center">
 					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
 				</td>
+				<logic:notEqual name="infoEnrolment" property="infoCurricularCourseScope.infoBranch.name" value="">
+        			<td align="center">
+        				<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoBranch.name"/>
+        			</td>
+				</logic:notEqual>
+				<logic:equal name="infoEnrolment" property="infoCurricularCourseScope.infoBranch.name" value="">
+        			<td align="center">&nbsp;</td>
+				</logic:equal>
 				<td align="center">
 					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
 						<bean:message key="message.enrolment.state.aproved"/>
@@ -71,6 +80,7 @@
 				<td align="left"><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
 				<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
 				<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
+				<td align="center"><u><bean:message key="label.curricular.course.branch"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<tr>
@@ -89,6 +99,14 @@
 					<td align="center">
 						<bean:write name="curricularScope" property="infoCurricularSemester.semester"/>
 					</td>
+					<logic:notEqual name="curricularScope" property="infoBranch.name" value="">
+    					<td align="center">
+    						<bean:write name="curricularScope" property="infoBranch.name"/>
+    					</td>
+					</logic:notEqual>
+    				<logic:equal name="curricularScope" property="infoBranch.name" value="">
+            			<td align="center">&nbsp;</td>
+    				</logic:equal>
 				</tr>
 			</logic:iterate>
 		</table>
@@ -97,3 +115,9 @@
 		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 	</html:form>
 </logic:notEqual>
+
+<logic:equal name="sizeToBeEnroled" value="0">
+	<logic:equal name="sizeAprovedAndEnroled" value="0">
+		<b><bean:message key="message.no.curricular.courses" arg0="<%= degreeName.toString() %>"/></b>
+	</logic:equal>
+</logic:equal>

@@ -660,7 +660,10 @@ public abstract class EnrolmentContextManager {
 		degreeCurricularPlanCriteria.setName(executionDegree.getCurricularPlan().getName());
 		degreeCurricularPlanCriteria.setState(executionDegree.getCurricularPlan().getState());
 
-		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
+//		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
+		IDegreeCurricularPlan degreeCurricularPlanTemp = new DegreeCurricularPlan();
+		degreeCurricularPlanTemp.setIdInternal(executionDegree.getCurricularPlan().getIdInternal());
+		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(degreeCurricularPlanTemp, false);
 
 		IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 

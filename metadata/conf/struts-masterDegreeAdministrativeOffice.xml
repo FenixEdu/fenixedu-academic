@@ -10,6 +10,27 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
       
+		<form-bean name="getStudentByNumberAndDegreeTypeForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="studentOID" type="java.lang.Integer"/>
+			<form-property name="infoExecutionDegree" type="java.lang.String"/>
+			<form-property name="curricularYears" type="java.lang.Integer[]"/>
+			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
+		</form-bean>
+
+		<form-bean name="curricularCourseEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="studentOID" type="java.lang.Integer"/>
+		</form-bean>
 
       <!-- Dynamic-FormBean para Selecionar Documento -->
 <!--      <form-bean name="posicaoFormBean"
@@ -364,6 +385,46 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
+      <action path="/enrollment" forward="/enrollment/chooseStudentForEnrollment.jsp"/>
+
+		<action	name="getStudentByNumberAndDegreeTypeForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareStudentDataForEnrolmentWithoutRulesDispatchAction"
+				path="/prepareStudentForEnrollment"
+				input="/prepareStudentForEnrollment.do?method=error&amp;page=0"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="startCurricularCourseEnrolmentWithoutRules" path="/enrollment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
+			<forward name="error" path="/enrollment/chooseStudentForEnrollment.jsp"/>
+		</action>
+
+		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareEnrolmentContextDispatchAction"
+				path="/prepareEnrolmentContext"
+				input="/prepareEnrolmentContext.do?method=error&amp;page=0"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="showAvailableCurricularCourses" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
+			<forward name="error" path="/prepareStudentForEnrollment.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=1"/>
+			<forward name="home" path="df.page.main"/>
+		</action>
+
+		<action	name="curricularCourseEnrollmentForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
+				path="/curricularCourseEnrolmentWithoutRulesManager"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			<forward name="beginTransaction" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=error"/>
+			<forward name="showAvailableCurricularCourses" path="/enrollment/showAvailableCurricularCourses.jsp"/>
+			<forward name="verifyEnrolment" path="/enrollment/verifyEnrollment.jsp"/>
+			<forward name="acceptEnrolment" path="/enrollment/acceptEnrollment.jsp"/>
+			<forward name="error" path="/prepareStudentForEnrollment.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=0"/>
+		</action>
 
       <action path="/printGuidePage"
 		      parameter="method"

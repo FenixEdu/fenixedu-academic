@@ -52,7 +52,9 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 
 		// ATTENTION: ifs order matters...
 		if (AuthorizationUtils.containsRole(roles, RoleType.DEGREE_ADMINISTRATIVE_OFFICE) ||
-			AuthorizationUtils.containsRole(roles, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+			AuthorizationUtils.containsRole(roles, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) ||
+//			TODO DAVID-RICARDO: Posso dar acesso a este RoleType?
+			AuthorizationUtils.containsRole(roles, RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 			authorizedRequester = true;
 		} else if (AuthorizationUtils.containsRole(roles, RoleType.COORDINATOR)) {
 
