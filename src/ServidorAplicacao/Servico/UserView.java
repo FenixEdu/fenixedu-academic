@@ -17,6 +17,8 @@ public class UserView implements IUserView, Serializable {
 	private Collection roles;
 	private ICandidateView candidateView;
 
+	private String fullName;
+
 	public UserView(String utilizador, Collection roles) {
 		setUtilizador(utilizador);
 		this.roles = roles;
@@ -71,6 +73,20 @@ public class UserView implements IUserView, Serializable {
 	 */
 	public void setCandidateView(ICandidateView view) {
 		candidateView = view;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getFullName() {
+		return fullName;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setFullName(String string) {
+		fullName = string;
 	}
 
 }

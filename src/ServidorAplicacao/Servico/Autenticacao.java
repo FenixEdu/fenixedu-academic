@@ -81,6 +81,7 @@ public class Autenticacao implements IServico {
 				}
 			}
 			UserView userView = new UserView(pessoa.getUsername(), roles);
+			userView.setFullName(pessoa.getNome());
 			
 			// Check if the Person is a Candidate
 			

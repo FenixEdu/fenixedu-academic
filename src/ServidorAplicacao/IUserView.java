@@ -10,6 +10,7 @@ import Util.RoleType;
 public interface IUserView { 
 	/*Acrecentado por Fernanda Quitério & Tania Pousão */
 	String getUtilizador();
+	public String getFullName();
 	Collection getRoles();
 	ICandidateView getCandidateView();
 	boolean hasRoleType(RoleType roleType);

@@ -20,11 +20,9 @@
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />
-<div id="logged">
-	<div class="user"><strong>Logged as:</strong> Bruno Monteiro</div>
-	<div class="info">29.08.2003</div>
-	<div class="clear"></div>
-</div>
+
+<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
+
 <!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
