@@ -6,6 +6,8 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IMasterDegreeProofVersion;
@@ -23,31 +25,55 @@ import Util.State;
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *
  */
-public class MasterDegreeProofVersionOJB extends ObjectFenixOJB implements IPersistentMasterDegreeProofVersion {
+public class MasterDegreeProofVersionOJB
+	extends ObjectFenixOJB
+	implements IPersistentMasterDegreeProofVersion
+{
 
 	/** Creates a new instance of MasterDegreeProofVersionOJB */
-	public MasterDegreeProofVersionOJB() {
+	public MasterDegreeProofVersionOJB()
+	{
 	}
 
-	public IMasterDegreeProofVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) throws ExcepcaoPersistencia {
+	public IMasterDegreeProofVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis)
+		throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 
 		criteria.addEqualTo("masterDegreeThesis.idInternal", masterDegreeThesis.getIdInternal());
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeProofVersion storedMasterDegreeProofVersion = (IMasterDegreeProofVersion) queryObject(MasterDegreeThesisDataVersion.class,
-				criteria);
+		IMasterDegreeProofVersion storedMasterDegreeProofVersion =
+			(IMasterDegreeProofVersion) queryObject(MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeProofVersion;
 	}
 
-	public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+	public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+		throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 
-		criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
+		criteria.addEqualTo(
+			"masterDegreeThesis.studentCurricularPlan.idInternal",
+			studentCurricularPlan.getIdInternal());
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeProofVersion storedMasterDegreeProofVersion = (IMasterDegreeProofVersion) queryObject(
-				MasterDegreeProofVersion.class, criteria);
+		IMasterDegreeProofVersion storedMasterDegreeProofVersion =
+			(IMasterDegreeProofVersion) queryObject(MasterDegreeProofVersion.class, criteria);
 
 		return storedMasterDegreeProofVersion;
+	}
+
+	public List readNotActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo(
+			"masterDegreeThesis.studentCurricularPlan.idInternal",
+			studentCurricularPlan.getIdInternal());
+		criteria.addNotEqualTo("currentState", new Integer(State.ACTIVE));
+		List result = queryList(MasterDegreeProofVersion.class, criteria);
+
+		return result;
 	}
 }

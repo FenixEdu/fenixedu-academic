@@ -4,6 +4,8 @@
  */
 package ServidorPersistente;
 
+import java.util.List;
+
 import Dominio.IMasterDegreeProofVersion;
 import Dominio.IMasterDegreeThesis;
 import Dominio.IStudentCurricularPlan;
@@ -14,7 +16,12 @@ import Dominio.IStudentCurricularPlan;
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *
  */
-public interface IPersistentMasterDegreeProofVersion extends IPersistentObject {
-	public IMasterDegreeProofVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) throws ExcepcaoPersistencia;
-	public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+public interface IPersistentMasterDegreeProofVersion extends IPersistentObject
+{
+	public IMasterDegreeProofVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis)
+		throws ExcepcaoPersistencia;
+	public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+		throws ExcepcaoPersistencia;
+	public List readNotActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+		throws ExcepcaoPersistencia;
 }

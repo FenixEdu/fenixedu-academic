@@ -4,6 +4,8 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IMasterDegreeThesis;
@@ -20,43 +22,69 @@ import Util.State;
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *
  */
-public class MasterDegreeThesisDataVersionOJB extends ObjectFenixOJB implements IPersistentMasterDegreeThesisDataVersion {
+public class MasterDegreeThesisDataVersionOJB
+	extends ObjectFenixOJB
+	implements IPersistentMasterDegreeThesisDataVersion
+{
 
 	/** Creates a new instance of MasterDegreeProofVersionOJB */
-	public MasterDegreeThesisDataVersionOJB() {
+	public MasterDegreeThesisDataVersionOJB()
+	{
 	}
 
-	public IMasterDegreeThesisDataVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) throws ExcepcaoPersistencia {
+	public IMasterDegreeThesisDataVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis)
+		throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 
 		criteria.addEqualTo("masterDegreeThesis.idInternal", masterDegreeThesis.getIdInternal());
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
-				MasterDegreeThesisDataVersion.class, criteria);
+		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
+			(IMasterDegreeThesisDataVersion) queryObject(MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeThesisDataVersion;
 	}
 
-	public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+	public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+		throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 
-		criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
+		criteria.addEqualTo(
+			"masterDegreeThesis.studentCurricularPlan.idInternal",
+			studentCurricularPlan.getIdInternal());
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
-				MasterDegreeThesisDataVersion.class, criteria);
+		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
+			(IMasterDegreeThesisDataVersion) queryObject(MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeThesisDataVersion;
 	}
 
-	public IMasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) throws ExcepcaoPersistencia {
+	public IMasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle)
+		throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 
 		criteria.addEqualTo("dissertationTitle", dissertationTitle);
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
-				MasterDegreeThesisDataVersion.class, criteria);
+		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
+			(IMasterDegreeThesisDataVersion) queryObject(MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeThesisDataVersion;
+	}
+
+	public List readNotActivesVersionsByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo(
+			"masterDegreeThesis.studentCurricularPlan.idInternal",
+			studentCurricularPlan.getIdInternal());
+		criteria.addNotEqualTo("currentState", new Integer(State.ACTIVE));
+		List result = (List) queryList(MasterDegreeThesisDataVersion.class, criteria);
+
+		return result;
 	}
 
 }
