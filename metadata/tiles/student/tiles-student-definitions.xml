@@ -55,7 +55,7 @@
 	</definition>
 	<definition name="definition.candidacyLimitReached" extends="definition.student.masterPage">
 		<put name="body" value="/student/candidacyLimitReached_bd.jsp"/>
-	</definition>.
+	</definition>
 	<definition name="definition.showCandidacyDetails" extends="definition.student.masterPage">
 		<put name="body" value="/student/showCandidacyDetails_bd.jsp"/>
 	</definition>
