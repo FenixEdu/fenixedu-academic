@@ -5,9 +5,11 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <span class="error"><html:errors property="error.default" /></span>
+
 <logic:present name="<%= SessionConstants.INFO_EVALUATION %>" >	
 <bean:define id="evaluation" name="<%= SessionConstants.INFO_EVALUATION %>" />
 </logic:present>	
+
  <span class="error"><html:errors property="evaluationElements"/></span>
 <h2><bean:message key="label.evaluation"/></h2> 
 <table >
@@ -19,11 +21,17 @@
 	</td>
 	
 </tr>
-<tr>	
+<tr>
+	<logic:present name="evaluation">
 	<td>
 		<html:textarea name="evaluation" property="evaluationElements" cols="50" rows="8"/>
 	</td>
-	
+	</logic:present>	
+	<logic:notPresent name="evaluation">
+	<td>
+		<html:textarea  property="evaluationElements" cols="50" rows="8"/>
+	</td>
+	</logic:notPresent>
 </tr>
 <tr></tr>
 <html:hidden property="method" value="editEvaluation" />
