@@ -17,7 +17,7 @@ import Dominio.ITutor;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter;
-import ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod;
+import ServidorAplicacao.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCoordinator;
