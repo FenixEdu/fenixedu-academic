@@ -6,11 +6,12 @@ import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseScope;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
+import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
+import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWStudentClass;
 import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -24,7 +25,7 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 
 	private static PersistentMiddlewareSupportOJB instance = null;
 
-	public static synchronized PersistentMiddlewareSupportOJB getInstance() throws PersistentMiddlewareSupportException {
+	public static synchronized PersistentMiddlewareSupportOJB getInstance() {
 		if (instance == null) {
 			instance = new PersistentMiddlewareSupportOJB();
 		}
@@ -40,7 +41,7 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	}
 
 	/** Creates a new instance of SuportePersistenteOJB */
-	private PersistentMiddlewareSupportOJB() throws PersistentMiddlewareSupportException {
+	private PersistentMiddlewareSupportOJB() {
 	}
 
 
@@ -90,4 +91,13 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 		return new MWUniversityOJB();
 	}
 
+	public IPersistentMWEquivalenciasIleec getIPersistentMWEquivalenciasIleec()
+	{
+		return new MWEquivalenciaIleecOJB();
+	}
+
+	public IPersistentMWDisciplinasIleec getIPersistentMWDisciplinasIleec()
+	{
+		return new MWDisciplinaIleecOJB();
+	}
 }

@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWPrecedenciasDisciplinaDisciplinaIleec
+public class MWPrecedenciaDisciplinaDisciplinaIleec
 {
 
 	private Integer idDisciplina;
@@ -33,9 +33,9 @@ public class MWPrecedenciasDisciplinaDisciplinaIleec
 	public boolean equals(Object obj)
 	{
 		boolean result = false;
-		if (obj instanceof MWPrecedenciasDisciplinaDisciplinaIleec)
+		if (obj instanceof MWPrecedenciaDisciplinaDisciplinaIleec)
 		{
-			MWPrecedenciasDisciplinaDisciplinaIleec mwpddi = (MWPrecedenciasDisciplinaDisciplinaIleec) obj;
+			MWPrecedenciaDisciplinaDisciplinaIleec mwpddi = (MWPrecedenciaDisciplinaDisciplinaIleec) obj;
 			result = getIdDisciplina().equals(mwpddi.getIdDisciplina()) && getIdPrecedente().equals(mwpddi.getIdPrecedente());
 		}
 		return result;

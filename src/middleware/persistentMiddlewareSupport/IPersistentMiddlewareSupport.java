@@ -24,4 +24,6 @@ public interface IPersistentMiddlewareSupport {
 	public IPersistentMWDegreeTranslation getIPersistentMWDegreeTranslation();
 	public IPersistentMWCurricularCourseOutsideStudentDegree getIPersistentMWCurricularCourseOutsideStudentDegree();
 	public IPersistentMWUniversity getIPersistentMWUniversity();
+	public IPersistentMWEquivalenciasIleec getIPersistentMWEquivalenciasIleec();
+	public IPersistentMWDisciplinasIleec getIPersistentMWDisciplinasIleec();
 }

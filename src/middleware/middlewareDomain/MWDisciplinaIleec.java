@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWDisciplinasIleec
+public class MWDisciplinaIleec
 {
 	private String codigoDisciplina;
 	private Integer funciona;
@@ -152,8 +152,8 @@ public class MWDisciplinasIleec
 
 	public boolean equals(Object obj) {
 		boolean result = false;
-		if (obj instanceof MWDisciplinasIleec) {
-			MWDisciplinasIleec mwDisciplinasIleec = (MWDisciplinasIleec) obj;
+		if (obj instanceof MWDisciplinaIleec) {
+			MWDisciplinaIleec mwDisciplinasIleec = (MWDisciplinaIleec) obj;
 			result = this.getCodigoDisciplina().equals(mwDisciplinasIleec.getCodigoDisciplina());
 		}
 		return result;

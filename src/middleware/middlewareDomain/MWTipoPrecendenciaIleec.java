@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWTiposPrecendenciaIleec
+public class MWTipoPrecendenciaIleec
 {
     private String descricao;
     private Integer tipoPrecedencia;
@@ -32,9 +32,9 @@ public class MWTiposPrecendenciaIleec
     public boolean equals(Object obj)
     {
         boolean result = false;
-        if (obj instanceof MWTiposPrecendenciaIleec)
+        if (obj instanceof MWTipoPrecendenciaIleec)
         {
-            MWTiposPrecendenciaIleec mwtpi = (MWTiposPrecendenciaIleec) obj;
+            MWTipoPrecendenciaIleec mwtpi = (MWTipoPrecendenciaIleec) obj;
             result = getTipoPrecedencia().equals(mwtpi.getTipoPrecedencia()) && getDescricao().equals(mwtpi.getDescricao());
             }
         return result;

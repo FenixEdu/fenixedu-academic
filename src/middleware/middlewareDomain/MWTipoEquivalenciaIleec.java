@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWTiposEquivalenciaIleec
+public class MWTipoEquivalenciaIleec
 {
 	private String descricao;
 	private Integer tipoEquivalencia;
@@ -33,9 +33,9 @@ public class MWTiposEquivalenciaIleec
 	public boolean equals(Object obj)
 	{
 		boolean result = false;
-		if (obj instanceof MWTiposEquivalenciaIleec)
+		if (obj instanceof MWTipoEquivalenciaIleec)
 		{
-			MWTiposEquivalenciaIleec mwepi = (MWTiposEquivalenciaIleec) obj;
+			MWTipoEquivalenciaIleec mwepi = (MWTipoEquivalenciaIleec) obj;
 			result = getTipoEquivalencia().equals(mwepi.getTipoEquivalencia()) && getDescricao().equals(mwepi.getDescricao());
 		}
 		return result;

@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWGruposIleec
+public class MWGrupoIleec
 {
     private Integer idAreaEspecializacao;
     private Integer idAreaSecundaria;
@@ -71,9 +71,9 @@ public class MWGruposIleec
     public boolean equals(Object obj)
     {
         boolean result = false;
-        if (obj instanceof MWGruposIleec)
+        if (obj instanceof MWGrupoIleec)
         {
-            MWGruposIleec mwgi = (MWGruposIleec) obj;
+            MWGrupoIleec mwgi = (MWGrupoIleec) obj;
             result = this.getIdAreaEspecializacao().equals(mwgi.getIdAreaEspecializacao()) &&
             		this.getIdAreaSecundaria().equals(mwgi.getIdAreaSecundaria()) &&
             		this.getMaxCreditos().equals(mwgi.getMaxCreditos()) &&
