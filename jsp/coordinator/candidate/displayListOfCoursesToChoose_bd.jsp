@@ -116,15 +116,13 @@
 	<%--							<html:multibox property='<%= "selection[" + index.intValue() + "]" %>'>
 	--%>						<html:multibox property="selection" >	
 	
-									<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.idInternal"/>
+									<bean:write name="candidateEnrolment" property="infoCurricularCourse.idInternal"/>
 								</html:multibox>
 							</td>
 							<td>
-								<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
-							</td>
-							<td>
-								<bean:write name="candidateEnrolment" property="infoCurricularCourseScope.infoBranch.name"/> <br/>
-							</td>
+								<bean:write name="candidateEnrolment" property="infoCurricularCourse.name"/>
+							</td> 
+							
 						</tr>
 					</logic:iterate>
 				</logic:present>
