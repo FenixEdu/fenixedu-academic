@@ -13,7 +13,7 @@
     <li><bean:message key="link.masterDegree.administrativeOffice.listing" /></li>
 	<blockquote>
 		<li><html:link page="/listMasterDegrees.do?method=chooseDegreeFromList&jspTitle=title.studentListByDegree&page=0"><bean:message key="link.studentListByDegree" /></html:link></dd>
-		<li><html:link page="/chooseExecutionYearToListCourseStudents.do?method=prepareChooseExecutionYear&jspTitle=title.studentListByCourse&page=0"><bean:message key="link.studentListByCourse" /></html:link></dd>
+		<li><html:link page="/listCourseStudents.do?method=chooseDegreeFromList&jspTitle=title.studentListByCourse&page=0"><bean:message key="link.studentListByCourse" /></html:link></dd>
 	</blockquote>
 </ul>
 

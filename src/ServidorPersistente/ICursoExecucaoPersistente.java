@@ -167,7 +167,6 @@ public interface ICursoExecucaoPersistente extends IPersistentObject
         IExecutionYear executionYear,
         TipoCurso degreeType)
         throws ExcepcaoPersistencia;
-
     /**
 	 * @param executionCourse
 	 * @param degree
@@ -186,6 +185,17 @@ public interface ICursoExecucaoPersistente extends IPersistentObject
         
 	public List readByDegreeAndExecutionYearList(String degreeCode, IExecutionYear executionYear)
 			   throws ExcepcaoPersistencia;
+		/**
+	 * @param name
+	 * @param executionYear
+	 * @return The Execution Degree for this Execution Year and Degree Curricular Plan name
+	 * @throws ExcepcaoPersistencia
+	 */
+	public ICursoExecucao readByDegreeCurricularPlanNameAndExecutionYear(
+			String name,
+			IExecutionYear executionYear)
+	throws ExcepcaoPersistencia;
 	
+		
 	public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia;
 }

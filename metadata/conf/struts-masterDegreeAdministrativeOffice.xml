@@ -948,10 +948,10 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.CourseListingDispatchAction"
 			  >
-	   <!-- TO UPDATE -->
 	         <forward name="DisplayMasterDegreeList" path="/lists/displayMasterDegrees.jsp"/>
 	         <forward name="MasterDegreeReady" path="/lists/displayCurricularPlanByChosenMasterDegree.jsp"/> 
-	         <forward name="CurricularPlanReady" path="/lists/displayStudentListByDegree.jsp"/> 
+	         <forward name="PrepareSuccess" path="/lists/chooseCurricularCourseToCourseStudentList.jsp"/>  
+	         <forward name="Success" path="/lists/displayStudentListByCourse.jsp"/> 
 	  </action>
 
 <!-- ////////////////// CHECK UTILITY ON STUDENTS LISTINGS BEFORE DELETING ///////////////////// -->
@@ -1328,7 +1328,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         
 	         <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
@@ -1362,7 +1362,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
@@ -1377,7 +1377,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
@@ -1435,13 +1435,12 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="ChooseSuccess" path="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0"/>
-      
   <!--  chooseMasterDegreeToCandidateStudyPlan.do?method=prepareSelectCandidates&amp;page=0"/>-->
       </action>
 
@@ -1793,13 +1792,12 @@
       		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+   		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 	         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
 	         <forward name="PrepareSuccess" path="/candidate/chooseExecutionYear.jsp"/>  
 	         <forward name="ChooseSuccess" path="/candidateRegistration.do?method=getCandidateList"/>
-	         
       </action>
       
 

@@ -117,7 +117,16 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
         } else
             throw new Exception();
     }
-
+    
+    public ActionForward prepareList(
+            ActionMapping mapping,
+            ActionForm form,
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws Exception
+    {
+        return  getStudentsFromDCP(mapping, form, request, response);
+    }
     /**
      * 
      * @param mapping

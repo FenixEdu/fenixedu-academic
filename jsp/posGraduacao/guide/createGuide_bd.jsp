@@ -8,6 +8,7 @@
 <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request">
    <table>
     <html:form action="/createGuideDispatchAction?method=requesterChosen">
+    <html:hidden property="<%=SessionConstants.EXECUTION_DEGREE_OID %>" value="<%= pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID).toString()%>"/>
       <!-- Degree -->
 	  <tr>
    		<td align="center" class="infoselected" colspan="2">

@@ -64,13 +64,17 @@ public class ReadCurricularCoursesByDegree implements IServico
 				sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 
 			// Read degree
-
 			ICursoExecucao cursoExecucao =
-				sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(
+				sp.getICursoExecucaoPersistente().readByDegreeCurricularPlanNameAndExecutionYear(
 					degreeName,
 					executionYear);
 
-			if (cursoExecucao.getCurricularPlan().getCurricularCourses() == null
+			if(cursoExecucao == null) {
+				System.out.println("cursoExecucao null");
+			}
+			if (cursoExecucao == null 
+					|| cursoExecucao.getCurricularPlan() == null 
+					|| cursoExecucao.getCurricularPlan().getCurricularCourses() == null
 				|| cursoExecucao.getCurricularPlan().getCurricularCourses().size() == 0)
 			{
 				throw new NonExistingServiceException();

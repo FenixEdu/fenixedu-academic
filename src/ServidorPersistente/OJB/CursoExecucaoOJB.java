@@ -136,7 +136,7 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
         throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionYear.year ", executionYear.getYear());
+        criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.name", nameDegreeCurricularPlan);
         criteria.addEqualTo("curricularPlan.degree.sigla", degreeInitials);
         return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
@@ -156,7 +156,7 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
         throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionYear.year ", executionYear.getYear());
+        criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.degree.sigla", degreeCode);
 		//criteria.addEqualTo("curricularPlan.name", degreeCode);
         return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
@@ -166,7 +166,7 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 		   throws ExcepcaoPersistencia
 	   {
 		   Criteria criteria = new Criteria();
-		   criteria.addEqualTo("executionYear.year ", executionYear.getYear());
+		   criteria.addEqualTo("executionYear.year", executionYear.getYear());
 		   criteria.addEqualTo("curricularPlan.degree.sigla", degreeCode);
 		   return queryList(CursoExecucao.class, criteria);
 	   }
@@ -175,7 +175,7 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
         throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionYear.year ", executionYear.getYear());
+        criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.degree.idInternal", degree.getIdInternal());
         return queryList(CursoExecucao.class, criteria);
     }
@@ -317,7 +317,18 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
         criteria.addEqualTo("coordinatorsList.teacher.idInternal", teacher.getIdInternal());
         return queryList(CursoExecucao.class, criteria, true);
     }
+    
+	public ICursoExecucao readByDegreeCurricularPlanNameAndExecutionYear(String name, IExecutionYear executionYear)
+    throws ExcepcaoPersistencia
+    {
+    	Criteria criteria = new Criteria();
 
+    	criteria.addEqualTo("academicYear", executionYear.getIdInternal());
+    	criteria.addLike("curricularPlan.name", name);
+
+    	return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+
+    }
 	public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();

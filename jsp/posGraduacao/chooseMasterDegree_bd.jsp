@@ -7,14 +7,13 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
-	<br />
 </logic:present>
 <span class="error"><html:errors/></span>
 <br />
 <logic:present name="<%= SessionConstants.DEGREE_LIST %>">
 	<logic:present name="executionYear" >
-	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
-	<br />
+		<b><bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:</b><bean:write name="executionYear" />
+		<br /><br />
 	</logic:present>
 	<bean:message key="title.masterDegree.administrativeOffice.chooseMasterDegree" />
 	<br /><br />

@@ -8,8 +8,9 @@
 
    <span class="error"><html:errors/></span>
 
+	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
   <bean:define id="masterDegreeCPlanList" name="<%= SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST %>" scope="request" />
-  <bean:define id="link">/listMasterDegrees.do?method=getStudentsFromDCP<%= "&" %>page=0<%= "&" %>curricularPlanID=</bean:define>
+  <bean:define id="link"><%=path%>.do?method=prepareList<%= "&" %>page=0<%= "&" %>curricularPlanID=</bean:define>
   	<p>
     <h3><%= ((List) masterDegreeCPlanList).size()%> <bean:message key="label.masterDegree.administrativeOffice.curricularPlanFound"/></h3>        
     <% if (((List) masterDegreeCPlanList).size() != 0) { %>
