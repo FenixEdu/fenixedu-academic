@@ -25,9 +25,6 @@ public class CurricularCourse implements ICurricularCourse {
 
 	private List associatedExecutionCourses;
 	private List scopes;
-//	private List associatedBranches;
-//	private List associatedCurricularSemesters;
-
 
 	public CurricularCourse() {
 
@@ -47,8 +44,6 @@ public class CurricularCourse implements ICurricularCourse {
 
 		setAssociatedExecutionCourses(null);
 		setScopes(null);
-//		setAssociatedBranches(null);
-//		setAssociatedCurricularSemesters(null);
 	}
 
 	/**
@@ -106,25 +101,23 @@ public class CurricularCourse implements ICurricularCourse {
 		boolean resultado = false;
 		if (obj instanceof ICurricularCourse) {
 			ICurricularCourse dc = (ICurricularCourse) obj;
-			resultado = getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan()) &&
-									getName().equals(dc.getName()) &&
-									getCode().equals(dc.getCode());
+			resultado =
+				getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan())
+					&& getName().equals(dc.getName())
+					&& getCode().equals(dc.getCode());
 		}
 		return resultado;
 	}
 
 	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.internalCode + "; ";
-		result += "name = " + this.name + "; ";
-		result += "code = " + this.code + "; ";
-		result += "credits=" + credits + "; ";
-		result += "theoreticalHours = " + theoreticalHours + "; ";
-		result += "praticalHours = " + praticalHours + "; ";
-		result += "theoPratHours = " + theoPratHours + "; ";
-		result += "labHours = " + labHours + "]\n";
-
-		return result;
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer
+			.append("[")
+			.append(this.getClass())
+			.append(":")
+			.append("idInternal = ")
+			.append(this.internalCode).append(";name = ").append(this.name).append(";code = ").append(this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan());
+		return stringBuffer.toString();
 	}
 
 	/**
@@ -142,7 +135,6 @@ public class CurricularCourse implements ICurricularCourse {
 	public Double getCredits() {
 		return credits;
 	}
-
 
 	/**
 	 * Returns the degreeCurricularPlan.
@@ -336,36 +328,6 @@ public class CurricularCourse implements ICurricularCourse {
 		this.theoreticalHours = theoreticalHours;
 	}
 
-//	/**
-//	 * @return List
-//	 */
-//	public List getAssociatedBranches() {
-//		return associatedBranches;
-//	}
-//
-//	/**
-//	 * @return List
-//	 */
-//	public List getAssociatedCurricularSemesters() {
-//		return associatedCurricularSemesters;
-//	}
-//
-//	/**
-//	 * Sets the associatedBranches.
-//	 * @param associatedBranches The associatedBranches to set
-//	 */
-//	public void setAssociatedBranches(List associatedBranches) {
-//		this.associatedBranches = associatedBranches;
-//	}
-//
-//	/**
-//	 * Sets the associatedCurricularSemesters.
-//	 * @param associatedCurricularSemesters The associatedCurricularSemesters to set
-//	 */
-//	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters) {
-//		this.associatedCurricularSemesters = associatedCurricularSemesters;
-//	}
-
 	/**
 	 * @return List
 	 */
@@ -385,7 +347,7 @@ public class CurricularCourse implements ICurricularCourse {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return name.hashCode()+code.hashCode();		
+		return name.hashCode() + code.hashCode();
 	}
 
 }
