@@ -11,6 +11,7 @@
 <html:form action="/prepareStudentForMasterDegreeThesisAndProof.do">
 	<html:hidden property="method" value="getStudentAndDegreeTypeForThesisOperations"/>
 	<html:hidden property="degreeType" value="2"/>
+	<html:hidden property="page" value="1"/>
 	<table border="0">
 		<tr>
 			<td align="left"><bean:message key="label.choose.student"/>&nbsp;</td>
