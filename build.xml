@@ -1008,7 +1008,6 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	<target name="validate-xml">
 	
 		<xmlvalidate warn="false" failonerror="false">
-				<fileset dir="${sql}" includes="testDataSetEnrolmentContextManager.xml"/>
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
