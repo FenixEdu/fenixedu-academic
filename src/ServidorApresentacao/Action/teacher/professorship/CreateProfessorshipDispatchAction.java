@@ -52,7 +52,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
 
         Object arguments[] = {infoProfessorship};
 
-        executeService("InsertProfessorShip", request, arguments);
+        executeService("InsertProfessorShipByDepartment", request, arguments);
 
         return mapping.findForward("final-step");
     }

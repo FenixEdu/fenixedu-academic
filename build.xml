@@ -26,4 +26,13 @@
 		<ant antfile="build_tomcat.xml" target="reload"/>
     </target>
 
+    <target name="deploy-webapp"
+    		description="Deploys application to web server">
+    	<property file="build.properties" />
+		<ant antfile="build_jboss.xml" target="clean-all"/> 
+		<ant antfile="build_jboss.xml" target="compile-standalone"/>
+		<mkdir dir="deploy"/>
+		<zip destfile="deploy/${app.name}.war" basedir="build/standalone"/>
+    </target>
+
 </project>
