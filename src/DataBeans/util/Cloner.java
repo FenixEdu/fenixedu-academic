@@ -367,7 +367,7 @@ public abstract class Cloner
             Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
 
         copyObjectProperties(shift, infoShift);
-
+     
         shift.setDisciplinaExecucao(executionCourse);
 
         return shift;

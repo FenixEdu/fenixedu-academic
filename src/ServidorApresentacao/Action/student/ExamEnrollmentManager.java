@@ -1,7 +1,7 @@
 /*
  * Created on 27/Mai/2003
- *
  * 
+ *  
  */
 package ServidorApresentacao.Action.student;
 
@@ -17,7 +17,9 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -26,96 +28,118 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
- *
+ *  
  */
-public class ExamEnrollmentManager extends FenixDispatchAction {
+public class ExamEnrollmentManager extends FenixDispatchAction
+{
 
-	public ActionForward viewExamsToEnroll(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward viewExamsToEnroll(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object[] args = { userView.getUtilizador()};
-		SiteView siteView = null;
-		try {
-			siteView =
-				(SiteView) ServiceUtils.executeService(
-					userView,
-					"ReadExamsByStudent",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("siteView", siteView);
+        Object[] args = { userView.getUtilizador()};
+        SiteView siteView = null;
+        try
+        {
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadExamsByStudent", args);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        if (request.getAttribute("alreadyEnrolledError") != null)
+        {
+            ActionErrors actionErrors = new ActionErrors();
+            ActionError actionError =
+                new ActionError((String) request.getAttribute("alreadyEnrolledError"));
+            actionErrors.add("alreadyEnrolledError", actionError);
+            saveErrors(request, actionErrors);
+        }
 
-		return mapping.findForward("sucess");
-	}
+        request.setAttribute("siteView", siteView);
 
-	public ActionForward enrollStudent(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+        return mapping.findForward("sucess");
+    }
 
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward enrollStudent(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		String examIdString = request.getParameter("objectCode");
-		Integer examId = new Integer(examIdString);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object[] args = { userView.getUtilizador(), examId };
+        String examIdString = request.getParameter("objectCode");
+        Integer examId = new Integer(examIdString);
 
-		try {
+        Object[] args = { userView.getUtilizador(), examId };
 
-			ServiceUtils.executeService(userView, "EnrollStudentInExam", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try
+        {
 
-		return viewExamsToEnroll(mapping, form, request, response);
-	}
+            ServiceUtils.executeService(userView, "EnrollStudentInExam", args);
+        }
+        catch (ExistingServiceException e)
+        {
+            request.setAttribute("alreadyEnrolledError", "error.alreadyEnrolledError");
+        }
+        catch (InvalidArgumentsServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-	public ActionForward unEnrollStudent(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+        return viewExamsToEnroll(mapping, form, request, response);
+    }
 
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward unEnrollStudent(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		String examIdString = request.getParameter("objectCode");
-		Integer examId = new Integer(examIdString);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object[] args = { userView.getUtilizador(), examId };
+        String examIdString = request.getParameter("objectCode");
+        Integer examId = new Integer(examIdString);
 
-		try {
+        Object[] args = { userView.getUtilizador(), examId };
 
-			ServiceUtils.executeService(
-				userView,
-				"UnEnrollStudentInExam",
-				args);
-		} catch (notAuthorizedServiceDeleteException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(
-				"notAuthorizedUnEnrollment",
-				new ActionError("error.notAuthorizedUnEnrollment"));
-			saveErrors(request, actionErrors);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        try
+        {
 
-		return viewExamsToEnroll(mapping, form, request, response);
-	}
+            ServiceUtils.executeService(userView, "UnEnrollStudentInExam", args);
+        }
+        catch (notAuthorizedServiceDeleteException e)
+        {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(
+                "notAuthorizedUnEnrollment",
+                new ActionError("error.notAuthorizedUnEnrollment"));
+            saveErrors(request, actionErrors);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+
+        return viewExamsToEnroll(mapping, form, request, response);
+    }
 
 }

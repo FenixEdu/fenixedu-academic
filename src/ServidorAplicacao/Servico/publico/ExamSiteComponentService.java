@@ -6,12 +6,12 @@ package ServidorAplicacao.Servico.publico;
 
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.SiteView;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.ExamSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -26,36 +26,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class ExamSiteComponentService implements IServico
+public class ExamSiteComponentService implements IService
 {
 
-    private static ExamSiteComponentService _servico = new ExamSiteComponentService();
-
-    /**
-	 * The actor of this class.
-	 */
-
-    private ExamSiteComponentService()
+    public ExamSiteComponentService()
     {
 
-    }
-
-    /**
-	 * Returns Service Name
-	 */
-    public String getNome()
-    {
-        return "ExamSiteComponentService";
-    }
-
-    /**
-	 * Returns the _servico.
-	 * 
-	 * @return ReadExecutionCourse
-	 */
-    public static ExamSiteComponentService getService()
-    {
-        return _servico;
     }
 
     public Object run(
@@ -102,7 +78,8 @@ public class ExamSiteComponentService implements IServico
                     executionDegree,
                     curricularYears);
             siteView = new SiteView(bodyComponent);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }

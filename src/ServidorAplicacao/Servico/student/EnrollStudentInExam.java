@@ -1,11 +1,11 @@
 package ServidorAplicacao.Servico.student;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IStudent;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -18,64 +18,53 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
+ *  
  */
 
-public class EnrollStudentInExam implements IServico {
+public class EnrollStudentInExam implements IService
+{
 
-	private static EnrollStudentInExam _servico = new EnrollStudentInExam();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static EnrollStudentInExam getService() {
-		return _servico;
-	}
+    public EnrollStudentInExam()
+    {
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private EnrollStudentInExam() {
-	}
+    public Boolean run(String username, Integer examId) throws FenixServiceException
+    {
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "EnrollStudentInExam";
-	}
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+            IStudent student = persistentStudent.readByUsername(username);
+            IPersistentExam persistentExam = sp.getIPersistentExam();
+            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+            IExam exam = new Exam();
+            exam.setIdInternal(examId);
+            exam = (IExam) persistentExam.readByOId(exam, true);
+            if (exam == null || student == null)
+            {
 
-	public Boolean run(String username, Integer examId)
-		throws FenixServiceException {
+                throw new InvalidArgumentsServiceException();
+            }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-			IStudent student = persistentStudent.readByUsername(username);
-			IPersistentExam persistentExam = sp.getIPersistentExam();
-			IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-			IExam exam = new Exam();
-			exam.setIdInternal(examId);
-			exam = (IExam) persistentExam.readByOId(exam, true);
-			if (exam == null || student == null) {
+            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam, student);
+            if (examStudentRoom != null)
+            {
+                throw new ExistingServiceException();
+            }
+            examStudentRoom = new ExamStudentRoom();
+            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+            examStudentRoom.setExam(exam);
+            examStudentRoom.setStudent(student);
 
-				throw new InvalidArgumentsServiceException();
-			}
-			
-			IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam,student);
-			if (examStudentRoom != null){
-				throw new ExistingServiceException();
-			}
-			examStudentRoom = new ExamStudentRoom();
-			persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
-			examStudentRoom.setExam(exam);
-			examStudentRoom.setStudent(student);
-				
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
 
-		return new Boolean(true);
+        return new Boolean(true);
 
-	}
+    }
 
 }
