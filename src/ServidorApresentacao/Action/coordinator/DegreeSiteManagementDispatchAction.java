@@ -187,8 +187,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         degreeInfoForm.set("markMin", convertDouble2String(infoDegreeInfo.getMarkMin()));
         degreeInfoForm.set("markMax", convertDouble2String(infoDegreeInfo.getMarkMax()));
         degreeInfoForm.set("markAverage", convertDouble2String(infoDegreeInfo.getMarkAverage()));
-        degreeInfoForm.set("lastModificationDate", infoDegreeInfo.getLastModificationDate().toString());
-
+        
+        if(infoDegreeInfo.getLastModificationDate() != null) {
+            degreeInfoForm.set("lastModificationDate", infoDegreeInfo.getLastModificationDate().toString());
+        }
+        
         //information in english
         degreeInfoForm.set("descriptionEn", infoDegreeInfo.getDescriptionEn());
         degreeInfoForm.set("objectivesEn", infoDegreeInfo.getObjectivesEn());

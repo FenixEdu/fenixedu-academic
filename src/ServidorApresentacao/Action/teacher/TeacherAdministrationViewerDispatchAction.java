@@ -326,7 +326,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
-		System.out.println("-->viewObjectives");
         ISiteComponent objectivesComponent = new InfoSiteObjectives();
         readSiteView(request, objectivesComponent, null, null, null);
         return mapping.findForward("viewObjectives");
@@ -338,8 +337,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
-		System.out.println("-->prepareEditObjectives");
-        ISiteComponent objectivesComponent = new InfoCurriculum();
+	    ISiteComponent objectivesComponent = new InfoCurriculum();
 
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);
@@ -352,9 +350,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		{
 			throw e1;
 		}
-		
-		System.out.println("-->vai filtrar");
-		
+	
 		//Filter if the course is of the AERO degree
 		Object args[] = { curricularCourseCode };        
 		GestorServicos serviceManager = GestorServicos.manager();
@@ -408,8 +404,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
-		System.out.println("-->editObjectives");
-        HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);
@@ -448,8 +443,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
-		System.out.println("-->viewProgram");
-        ISiteComponent programComponent = new InfoSitePrograms();
+		ISiteComponent programComponent = new InfoSitePrograms();
         readSiteView(request, programComponent, null, null, null);
         return mapping.findForward("viewProgram");
     }
@@ -461,8 +455,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
-		System.out.println("-->prepareEditProgram");
-        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+		String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);
 		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		
@@ -519,8 +512,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpServletResponse response)
         throws FenixActionException
     {
-		System.out.println("-->editProgram");
-        HttpSession session = request.getSession(false);
+	    HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
         Integer curricularCourseCode = new Integer(curricularCourseCodeString);

@@ -33,15 +33,13 @@ public class CourseOfTheExpectedDegree implements IServico
 
     public Boolean run(Integer curricularCourseCode) throws FenixServiceException
     {
-		System.out.println("CourseOfTheExpectedDegree Service");
         boolean result = false;
         
         try
         {
             result =
                 CurricularCourseAeroDegree(curricularCourseCode)
-                    && CurricularCourseNotBasic(curricularCourseCode);
-            System.out.println("CourseOfTheExpectedDegree: result = " + result);
+                    && CurricularCourseNotBasic(curricularCourseCode);            
 
         } catch (Exception e)
         {
