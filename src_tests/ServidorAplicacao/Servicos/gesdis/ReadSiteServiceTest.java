@@ -140,7 +140,7 @@ public class ReadSiteServiceTest extends TestCaseReadServices {
 		List infoSections = new ArrayList();	
 		InfoSite infoSite = new InfoSite( infoExecutionCourse);
 		infoSections.add(new InfoSection( "Seccao1deTFCI", new Integer(0), infoSite, null, null, null));
-		infoSite.setSections(infoSections);
+		infoSite.setInfoSections(infoSections);
 		return infoSite;
 
 	}
