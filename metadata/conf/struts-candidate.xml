@@ -31,7 +31,7 @@
 	<form-property name="maritalStatus" type="java.lang.String" />
 	<form-property name="specialization" type="java.lang.String" />
 	<form-property name="nationality" type="java.lang.String" />
-	<form-property name="average" type="java.lang.Double" />
+	<form-property name="average" type="java.lang.String" />
  	<form-property name="country" type="java.lang.String" />
 	<form-property name="candidateNumber" type="java.lang.Integer" />
 	<form-property name="applicationYear" type="java.lang.Integer" />
