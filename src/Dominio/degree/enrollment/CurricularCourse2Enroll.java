@@ -20,6 +20,7 @@ public class CurricularCourse2Enroll implements Serializable {
     private Integer accumulatedWeight;
     
     
+    
 
     /**
      * 

@@ -6,6 +6,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -23,7 +24,7 @@ public class ShowAvailableCurricularCourses extends
     public InfoStudentEnrollmentContext run(Integer executionDegreeId,
             Integer studentCurricularPlanId, Integer studentNumber)
             throws FenixServiceException {
-        try {
+        try { 
 
             IStudent student = getStudent(studentNumber);
 
@@ -42,7 +43,7 @@ public class ShowAvailableCurricularCourses extends
                             throw new FenixServiceException("degree");
                         }
                     }
-                    throw new FenixServiceException("enrolmentPeriod");
+                    throw new OutOfCurricularCourseEnrolmentPeriod(enrolmentPeriod.getStartDate(),enrolmentPeriod.getEndDate());
 
                 }
                 throw new ExistingServiceException("studentCurricularPlan");
