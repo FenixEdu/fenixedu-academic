@@ -4,6 +4,9 @@
 package ServidorAplicacao.Filtro;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,9 +24,8 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 
     private int EXECUTION_PERIOD_ENROLMENT_FENIX = 81;
 
-    private int EXECUTION_PERIOD_ENROLMENT_PREVIOUS = 80;
-
-    private int EXECUTION_PERIOD_ENROLMENT_PREVIOUS_PREVIOUS = 2;
+    private Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER,
+            01).getTime();
 
     /*
      * (non-Javadoc)
@@ -36,7 +38,8 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
         ServiceParameters parameters = request.getServiceParameters();
 
         TipoCurso degreeType = (TipoCurso) parameters.getParameter(0);
-        // should be replaced with: 'parameters.getParameter("degreeType")',
+        // FIXME: should be replaced with:
+        // 'parameters.getParameter("degreeType")',
         // when the services starts to genereate stubs
 
         List newRes = new ArrayList();
@@ -48,8 +51,7 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
             }
 
             // master degree extra execution periods
-            if ((executionPeriod.getIdInternal().intValue() == EXECUTION_PERIOD_ENROLMENT_PREVIOUS
-                    || executionPeriod.getIdInternal().intValue() == EXECUTION_PERIOD_ENROLMENT_PREVIOUS_PREVIOUS)
+            if (executionPeriod.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
                     && degreeType != null && degreeType.equals(TipoCurso.MESTRADO_OBJ)) {
                 newRes.add((executionPeriod));
             }
