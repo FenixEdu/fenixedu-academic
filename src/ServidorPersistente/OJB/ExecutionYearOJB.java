@@ -1,6 +1,7 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -55,16 +56,14 @@ public class ExecutionYearOJB
 	public ArrayList readAllExecutionYear() throws ExcepcaoPersistencia {
 		try {
 
-			IExecutionYear executionYear = null;
 			String oqlQuery =
 				"select all from " + ExecutionYear.class.getName();
-
 			query.create(oqlQuery);
-
-			ArrayList result = (ArrayList) query.execute();
-			lockRead(result);
-
-			return result;
+			Collection result = (Collection) query.execute();
+			lockRead((List) result);
+			ArrayList teste = new ArrayList();
+			teste.addAll(result);
+			return teste;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

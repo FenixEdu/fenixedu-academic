@@ -17,6 +17,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+
 /**
  * @author tfc130
  */
@@ -50,7 +51,7 @@ public class ApagarTurnoFormAction extends FenixAction {
 	  	if (!infoTurnos.isEmpty())
 	  		sessao.setAttribute("infoTurnosDeDisciplinaExecucao",infoTurnos);
 	  }
-	  
+	
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

@@ -298,55 +298,6 @@ _disciplinaExecucao1 =
     verifyNoActionErrors();
   }
 
-// NUNCA OCORRE...
-/*
-  public void testUnsuccessfulApagarAula() {
-  	// Necessario para colocar form manipularAulasForm em sessao
-  	setRequestPathInfo("/sop", "/manipularAulasForm");
-  	addRequestParameter("indexAula", new Integer(0).toString());
-  	actionPerform();
-
-  	// define mapping de origem
-  	setRequestPathInfo("", "/apagarAula");
-
-  	// coloca credenciais na sessao
-  	HashSet privilegios = new HashSet();
-  	privilegios.add("ApagarAula");
-  	privilegios.add("LerAulasDeDisciplinaExecucao");
-  	privilegios.add("LerDisciplinasExecucaoDeCursoExecucaoEAnoCurricular");
-  	IUserView userView = new UserView("user", privilegios);
-
-  	getSession().setAttribute("UserView", userView);
-
-  	try {
-  		GestorServicos gestor = GestorServicos.manager();
-  		InfoDisciplinaExecucao iDE = new InfoDisciplinaExecucao(_disciplinaExecucao1.getNome(), _disciplinaExecucao1.getSigla(),
-  																_disciplinaExecucao1.getPrograma(),
-  																 new InfoDegreeExecucao (_disciplinaExecucao1.getCursoExecucao().getAnoLectivo(),
-  																							   new InfoDegree(_disciplinaExecucao1.getCursoExecucao().getCurso().getSigla(),
-  																													_disciplinaExecucao1.getCursoExecucao().getCurso().getSigla())));
-
-  		getSession().setAttribute("infoDisciplinaExecucao", iDE);
-  		Object argsLerAulas[] = new Object[1];
-  		argsLerAulas[0] = iDE;
-  		ArrayList infoAulas = (ArrayList) gestor.executar(userView, "LerAulasDeDisciplinaExecucao", argsLerAulas);
-  		getSession().setAttribute("listaAulas", infoAulas);
-
-  		InfoLesson infoAula = (InfoLesson) infoAulas.get(0);
-  		getSession().setAttribute("infoAula", infoAula);
-
-
-  	} catch (Exception ex) {
-  		System.out.println("Erro na invocacao do servico " + ex);
-  	}
-
-    actionPerform();
-    verifyForwardPath("/naoExecutado.do");
-    
-    verifyActionErrors(new String[] {"ServidorAplicacao.NotExecutedException"});
-  }
-*/  
-
   protected void ligarSuportePersistente() {
     try {
       _suportePersistente = SuportePersistenteOJB.getInstance();

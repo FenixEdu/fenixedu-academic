@@ -7,6 +7,7 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -24,8 +25,22 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
     }  
     
     public void apagarTodosOsPlanosCurriculares() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
-        super.deleteAll(oqlQuery);
+        try {
+			String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			Iterator iter = result.iterator();
+			while (iter.hasNext()){
+				IPlanoCurricularCurso curricularPlan= (IPlanoCurricularCurso) iter.next();
+				delete(curricularPlan);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ExcepcaoPersistencia();
+			
+		}
+       
     }
     
     public void escreverPlanoCurricular(IPlanoCurricularCurso planoCurricularCurso) throws ExcepcaoPersistencia {

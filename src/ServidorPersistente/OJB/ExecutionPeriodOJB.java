@@ -1,6 +1,7 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,16 +60,18 @@ public class ExecutionPeriodOJB
 	public ArrayList readAllExecutionPeriod() throws ExcepcaoPersistencia {
 		try {
 
-			IExecutionPeriod executionPeriod = null;
+			
 			String oqlQuery =
 				"select all from " + ExecutionPeriod.class.getName();
 
 			query.create(oqlQuery);
 
-			List result = (List) query.execute();
-			lockRead(result);
-
-			return (ArrayList) executionPeriod;
+		//	ArrayList result = (ArrayList) query.execute();
+		
+			ArrayList teste = new ArrayList();
+			teste.addAll((Collection)query.execute());
+			lockRead(teste);
+			return  teste;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
