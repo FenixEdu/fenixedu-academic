@@ -153,7 +153,7 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 			sp.confirmarTransaccao();
 
 			// verificar as alteracoes da bd
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 		}
 		catch (FenixServiceException ex) {
 			fail("Insert the Summary of a Site" + ex);

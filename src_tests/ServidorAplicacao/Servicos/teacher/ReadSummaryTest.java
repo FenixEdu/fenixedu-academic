@@ -104,7 +104,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTest {
 
 			assertTrue(newSummary.compareTo(oldSummary));
 			// verifica se a base de dados nao foi alterada
-			compareDataSet(getDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 		}
 		catch (FenixServiceException ex) {
 			fail("Reading the Summary of a Site" + ex);

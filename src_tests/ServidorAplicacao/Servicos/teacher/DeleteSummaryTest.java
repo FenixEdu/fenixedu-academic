@@ -73,7 +73,7 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTest {
 				getNameOfServiceToBeTested(),
 				getAuthorizeArguments());
 
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 		}
 		catch (FenixServiceException ex) {
 			fail("Deleting the Summary of a Site" + ex);
