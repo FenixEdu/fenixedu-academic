@@ -11,7 +11,6 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
  */
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import junit.framework.Test;
@@ -61,7 +60,7 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
-		Date date = calendar.getTime();
+		Timestamp date = new Timestamp(calendar.getTime().getTime());
 
 		//infoSite
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
@@ -80,7 +79,7 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		argsEditAnnouncement[0] = infoSite;
 
 		//infoAnnouncement
-		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1",(Timestamp) date,(Timestamp) date, "information1", infoSite);
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1", date, date, "information1", infoSite);
 		argsEditAnnouncement[1] = infoAnnouncement;
 
 		//title
@@ -101,7 +100,7 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
-		Date date = calendar.getTime();
+		Timestamp date = new Timestamp(calendar.getTime().getTime());
 
 		//infoSite
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
@@ -120,7 +119,7 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		argsEditAnnouncement[0] = infoSite;
 
 		//infoAnnouncement
-		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("unexistingAnnouncement",(Timestamp) date,(Timestamp) date, "information1", infoSite);
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("unexistingAnnouncement", date, date, "information1", infoSite);
 		argsEditAnnouncement[1] = infoAnnouncement;
 
 		//title

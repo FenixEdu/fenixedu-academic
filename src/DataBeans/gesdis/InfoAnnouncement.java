@@ -14,7 +14,6 @@ public class InfoAnnouncement {
 	private Timestamp creationDate;
 	private Timestamp lastModifiedDate;
 	private String information;
-//	private InfoSite site;	
 	private InfoSite infoSite;
 
 	public InfoAnnouncement() {
@@ -22,7 +21,7 @@ public class InfoAnnouncement {
 
 	public InfoAnnouncement(String title, Timestamp creationDate, Timestamp lastModifiedDate, String information, InfoSite infoSite) {
 		this.title = title;
-		this.creationDate = (Timestamp)creationDate;
+		this.creationDate = creationDate;
 		this.lastModifiedDate = lastModifiedDate;
 		this.information = information;
 		this.infoSite = infoSite;
@@ -67,14 +66,14 @@ public class InfoAnnouncement {
 	public String getInformation() {
 		return information;
 	}
-
-/**
- * @return InfoSite
- */
-public InfoSite getInfoSite() {
-	return infoSite;
-}
-
+	
+	/**
+	 * @return InfoSite
+	 */
+	public InfoSite getInfoSite() {
+		return infoSite;
+	}
+	
 	/**
 	 * @return Timestamp
 	 */
@@ -105,13 +104,13 @@ public InfoSite getInfoSite() {
 		this.information = information;
 	}
 
-/**
- * Sets the infoSite.
- * @param infoSite The infoSite to set
- */
-public void setInfoSite(InfoSite infoSite) {
-	this.infoSite = infoSite;
-}
+	/**
+	 * Sets the infoSite.
+	 * @param infoSite The infoSite to set
+	 */
+	public void setInfoSite(InfoSite infoSite) {
+		this.infoSite = infoSite;
+	}
 
 	/**
 	 * Sets the lastModifiedDate.

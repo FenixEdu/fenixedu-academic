@@ -59,11 +59,11 @@ public class EditAnnouncement implements IServico {
     public final String getNome() {
         return "EditAnnouncement";
     }
-    private void checkIfAnnouncementExists(String oldAnnouncementTitle, Date date, String announcementTitle, ISite announcementSite) throws FenixServiceException {
+    private void checkIfAnnouncementExists(String oldAnnouncementTitle, Timestamp date, String announcementTitle, ISite announcementSite) throws FenixServiceException {
 		IAnnouncement announcement = null;
         if (oldAnnouncementTitle.equals(announcementTitle) == false) {
         	try {
-            	announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(announcementTitle,(Timestamp) date, announcementSite);
+            	announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(announcementTitle, date, announcementSite);
 			} catch (ExcepcaoPersistencia excepcaoPersistencia){
 				throw new FenixServiceException(excepcaoPersistencia.getMessage());
 			}

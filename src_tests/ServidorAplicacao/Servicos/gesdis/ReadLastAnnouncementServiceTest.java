@@ -2,7 +2,6 @@ package ServidorAplicacao.Servicos.gesdis;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -148,9 +147,8 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
-		Date date = calendar.getTime();
+		Timestamp date = new Timestamp(calendar.getTime().getTime());
 
-//		announcement = new Announcement("announcement2deTFCI", date, date, "information2", site);
 		InfoAnnouncement infoAnnouncement = null;
 		try {		
 			SuportePersistenteOJB.getInstance().iniciarTransaccao();
@@ -158,10 +156,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 				SuportePersistenteOJB
 					.getInstance()
 					.getIPersistentAnnouncement()
-					.readAnnouncementByTitleAndCreationDateAndSite(
-						"announcement2deTFCI",
-			(Timestamp)date,
-						site);
+					.readAnnouncementByTitleAndCreationDateAndSite("announcement2deTFCI", date, site);
 			infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
 			SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

@@ -2,7 +2,6 @@ package ServidorPersistente.OJB;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import junit.framework.Test;
@@ -167,11 +166,11 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		
-		Date date = calendar.getTime();
+		Timestamp date = new Timestamp(calendar.getTime().getTime());
 		
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", (Timestamp)date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testDeleteAllAnnouncements: readAnnouncementByTitleAndDateAndSite");
@@ -191,7 +190,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", (Timestamp)date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testDeleteAllAnnouncements: readAnnouncementByTitleAndDateAndSite");
@@ -212,10 +211,10 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		
-		Date date = calendar.getTime();
+		Timestamp date = new Timestamp(calendar.getTime().getTime());
         try {
             persistentSupport.iniciarTransaccao();
-            announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI",(Timestamp) date, this.site);
+            announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia excepcaoPersistencia) {
             fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
@@ -231,7 +230,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", (Timestamp)date, site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", date, site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
@@ -252,10 +251,10 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		
-		Date date = calendar.getTime();		
+		Timestamp date = new Timestamp(calendar.getTime().getTime());		
         try {
             persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI",(Timestamp) date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite existing");
@@ -275,7 +274,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", (Timestamp)date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex) {
 			fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite unexisting");
