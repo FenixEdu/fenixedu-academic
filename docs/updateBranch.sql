@@ -1,2 +1,0 @@
-alter table BRANCH add SPECIALIZATION_CREDITS int(11);
-alter table BRANCH add SECONDARY_CREDITS int(11);
