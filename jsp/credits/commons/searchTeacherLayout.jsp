@@ -11,7 +11,7 @@
 </p>
 <html:errors />
 <bean:define id="path" name="<%= Globals.MAPPING_KEY %>" property="path" type="java.lang.String"/>
-<html:form action="<%= path %>">
+<html:form action="<%= path %>" focus="teacherNumber">
 	<input type="hidden" name="method" value="doSearch"/>
 	<input type="hidden" name="page" value="1"/>
 	<html:hidden property="executionPeriodId"/>
