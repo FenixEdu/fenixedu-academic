@@ -1,0 +1,789 @@
+
+class Dominio.PaymentPhase {
+	Double value;
+	Integer ackOptLock;
+	Integer idInternal;
+	String description;
+	Integer keyGratuityValues;
+}
+
+class Dominio.WorkLocation {
+	Integer ackOptLock;
+	String name;
+	Integer idInternal;
+}
+
+class Dominio.transactions.Transaction {
+}
+
+class Dominio.Guide {
+	Integer keyContributor;
+	Integer idInternal;
+	String remarks;
+	Integer version;
+	Double total;
+	Integer ackOptLock;
+	Integer year;
+	Integer keyPerson;
+	Integer keyExecutionDegree;
+	Integer number;
+}
+
+class Dominio.GratuitySituation {
+	Integer ackOptLock;
+	Integer exemptionPercentage;
+	Integer idInternal;
+	String exemptionDescription;
+	Double totalValue;
+	Integer keyStudentCurricularPlan;
+	Double exemptionValue;
+	Integer keyEmployee;
+	Integer keyGratuityValues;
+	Double remainingValue;
+}
+
+class Dominio.transactions.PaymentTransaction {
+}
+
+class Dominio.reimbursementGuide.ReimbursementGuideSituation {
+	Integer ackOptLock;
+	Integer keyReimbursementGuide;
+	Integer idInternal;
+	String remarks;
+	Integer keyEmployee;
+}
+
+class Dominio.transactions.ReimbursementTransaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyReimbursementGuideEntry;
+	String remarks;
+	Integer keyPersonAccount;
+	Integer keyResponsiblePerson;
+}
+
+class Dominio.ExternalPerson {
+	Integer keyWorkLocation;
+	Integer keyPerson;
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
+class Dominio.CandidateSituation {
+	Integer ackOptLock;
+	Integer idInternal;
+	String remarks;
+	Integer candidateKey;
+}
+
+
+class Dominio.Gratuity {
+	Integer ackOptLock;
+	Integer idInternal;
+	String remarks;
+	Integer keyStudentCurricularPlan;
+}
+
+
+class Dominio.gratuity.masterDegree.SibsPaymentFile {
+	Integer ackOptLock;
+	Integer idInternal;
+	String filename;
+}
+
+class Dominio.GuideEntry {
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyGuide;
+	Double price;
+	String description;
+	Integer quantity;
+}
+
+class Dominio.transactions.GratuityTransaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyGuideEntry;
+	String remarks;
+	Integer keyGratuitySituation;
+	Integer keyPersonAccount;
+	Integer keyResponsiblePerson;
+}
+
+class Dominio.InsuranceValue {
+	Integer keyExecutionYear;
+	Integer ackOptLock;
+	Integer idInternal;
+	Double annualValue;
+}
+
+class Dominio.MasterDegreeThesisDataVersion {
+	Integer keyMasterDegreeThesis;
+	Integer ackOptLock;
+	Integer idInternal;
+	String dissertationTitle;
+	Integer keyEmployee;
+}
+
+class Dominio.Price {
+	String description;
+	Integer ackOptLock;
+	Integer internalCode;
+	Double price;
+}
+
+class Dominio.GuideSituation {
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyGuide;
+	String remarks;
+}
+
+
+class Dominio.CandidateEnrolment {
+	Integer curricularCourseKey;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer masterDegreeCandidateKey;
+}
+
+class Dominio.MasterDegreeCandidate {
+	Integer idInternal;
+	Double average;
+	String specializationArea;
+	Integer majorDegreeYear;
+	String majorDegreeSchool;
+	Integer executionDegreeKey;
+	Integer personKey;
+	Integer substituteOrder;
+	Double givenCredits;
+	String givenCreditsRemarks;
+	Integer ackOptLock;
+	String majorDegree;
+	Integer candidateNumber;
+}
+
+class Dominio.MasterDegreeProofVersion {
+	Integer keyMasterDegreeThesis;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer attachedCopiesNumber;
+	Integer keyEmployee;
+}
+
+class Dominio.MasterDegreeThesis {
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyStudentCurricularPlan;
+}
+
+class Dominio.transactions.SmsTransaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyGuideEntry;
+	String remarks;
+	Integer keyPersonAccount;
+	Integer keyResponsiblePerson;
+}
+
+class Dominio.GratuityValues {
+	Double scholarShipValue;
+	Integer idInternal;
+	Double courseValue;
+	Boolean proofRequestPayment;
+	Integer ackOptLock;
+	Double anualValue;
+	Double creditValue;
+	Double finalProofValue;
+	Integer keyExecutionDegree;
+	Integer keyEmployee;
+}
+
+class Dominio.Coordinator {
+	Integer keyExecutionDegree;
+	Integer keyTeacher;
+	Integer ackOptLock;
+	Integer idInternal;
+	Boolean responsible;
+}
+
+class Dominio.reimbursementGuide.ReimbursementGuideEntry {
+	String justification;
+	Double value;
+	Integer ackOptLock;
+	Integer keyReimbursementGuide;
+	Integer idInternal;
+	Integer keyGuideEntry;
+}
+
+class Dominio.sms.SentSms {
+	Integer keyPerson;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer destinationNumber;
+}
+
+class Dominio.gratuity.masterDegree.SibsPaymentFileEntry {
+	Integer studentNumber;
+	Integer keySibsPaymentFile;
+	Integer year;
+	Integer ackOptLock;
+	Integer idInternal;
+	Double payedValue;
+}
+
+class Dominio.transactions.InsuranceTransaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer idInternal;
+	Integer keyGuideEntry;
+	String remarks;
+	Integer keyPersonAccount;
+	Integer keyExecutionYear;
+	Integer ackOptLock;
+	Integer keyResponsiblePerson;
+	Integer keyStudent;
+}
+
+class Dominio.PersonAccount {
+	Double balance;
+	Integer ackOptLock;
+	Integer keyPerson;
+	Integer idInternal;
+}
+
+class Dominio.Contributor {
+	Integer contributorNumber;
+	Integer ackOptLock;
+	String contributorAddress;
+	String contributorName;
+	Integer idInternal;
+}
+
+class Dominio.reimbursementGuide.ReimbursementGuide {
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyGuide;
+	Integer number;
+}
+
+
+relation  {
+	Dominio.GratuitySituation playsRole gratuitySituation {
+		multiplicity *;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlanGratuitySituation;
+}
+
+relation ??? {
+	Dominio.transactions.SmsTransaction playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole transactionList {
+		multiplicity *;
+	}
+	Dominio.GratuitySituation playsRole gratuitySituation;
+}
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideSituations {
+		multiplicity *;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+}
+relation ??? {
+	Dominio.GratuitySituation playsRole historicList {
+		multiplicity *;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeProofVersions {
+		multiplicity *;
+	}
+	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
+}
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+
+relation ??? {
+	Dominio.MasterDegreeCandidate playsRole coordinatorsList {
+		multiplicity *;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole historicList {
+		multiplicity *;
+	}
+	Dominio.Employee playsRole employee;
+}
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole transactions {
+		multiplicity *;
+	}
+	Dominio.PersonAccount playsRole personAccount;
+}
+
+relation ??? {
+	Dominio.MasterDegreeProofVersion playsRole historicList {
+		multiplicity *;
+	}
+	Dominio.Employee playsRole responsibleEmployee;
+}
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole studentCurricularPlans {
+		multiplicity *;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation ??? {
+	Dominio.CandidateEnrolment playsRole scopes {
+		multiplicity *;
+	}
+	Dominio.CurricularCourse playsRole curricularCourse;
+}
+
+relation ??? {
+	Dominio.InsuranceValue playsRole executionPeriods {
+		multiplicity *;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation ??? {
+	Dominio.CandidateSituation playsRole situations {
+		multiplicity *;
+	}
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidate;
+}
+
+relation ??? {
+	Dominio.Gratuity playsRole enrolments {
+		multiplicity *;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole transactions {
+		multiplicity *;
+	}
+	Dominio.PersonAccount playsRole personAccount;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+		multiplicity *;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+}
+
+relation ??? {
+	Dominio.PaymentPhase playsRole paymentPhaseList {
+		multiplicity *;
+	}
+	Dominio.GratuityValues playsRole gratuityValues;
+}
+relation ??? {
+	Dominio.Guide playsRole coordinatorsList {
+		multiplicity *;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.GratuityValues playsRole historicList {
+		multiplicity *;
+	}
+	Dominio.Employee playsRole employee;
+}
+
+relation ??? {
+	Dominio.transactions.ReimbursementTransaction playsRole transactions {
+		multiplicity *;
+	}
+	Dominio.PersonAccount playsRole personAccount;
+}
+relation ??? {
+	Dominio.GratuityValues playsRole coordinatorsList {
+		multiplicity *;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.CandidateEnrolment playsRole situations {
+		multiplicity *;
+	}
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidate;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole guideEntries {
+		multiplicity *;
+	}
+	Dominio.Guide playsRole guide;
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+
+relation ??? {
+	Dominio.GuideSituation playsRole guideEntries {
+		multiplicity *;
+	}
+	Dominio.Guide playsRole guide;
+}
+
+relation ??? {
+	Dominio.GratuitySituation playsRole paymentPhaseList {
+		multiplicity *;
+	}
+	Dominio.GratuityValues playsRole gratuityValues;
+}
+
+relation ??? {
+	Dominio.Coordinator playsRole professorships {
+		multiplicity *;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole executionPeriods {
+		multiplicity *;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation ??? {
+	Dominio.transactions.SmsTransaction playsRole transactions {
+		multiplicity *;
+	}
+	Dominio.PersonAccount playsRole personAccount;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesis playsRole enrolments {
+		multiplicity *;
+	}
+	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole historicList {
+		multiplicity *;
+	}
+	Dominio.Employee playsRole responsibleEmployee;
+}
+
+relation ??? {
+	Dominio.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
+		multiplicity *;
+	}
+	Dominio.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
+}
+
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+	Dominio.GuideEntry playsRole guideEntry;
+}
+
+relation ??? {
+	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
+		multiplicity *;
+	}
+	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
+}
+
+relation ??? {
+	Dominio.Coordinator playsRole coordinatorsList {
+		multiplicity *;
+	}
+	Dominio.CursoExecucao playsRole executionDegree;
+}
+
+relation ??? {
+	Dominio.GuideEntry playsRole guideEntries {
+		multiplicity *;
+	}
+	Dominio.Guide playsRole guide;
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.transactions.InsuranceTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.GratuitySituation playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.transactions.GratuityTransaction playsRole transactionList {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.transactions.GratuityTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.PersonAccount playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.transactions.Transaction playsRole transactions {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.transactions.ReimbursementTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.transactions.SmsTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole responsiblePerson;
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesis playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeCandidate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.CandidateSituation playsRole situations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExternalPerson playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+}
+
+
+relation ??? {
+	Dominio.MasterDegreeCandidate playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
+relation ??? {
+	Dominio.GratuityValues playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.PaymentPhase playsRole paymentPhaseList {
+		multiplicity *;
+	}
+}
+
+
+relation ??? {
+	Dominio.MasterDegreeThesis playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+		multiplicity *;
+	}
+}
+
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole guiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.GuideEntry playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.gratuity.masterDegree.SibsPaymentFile playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
+		multiplicity *;
+	}
+}
+
+
+relation ??? {
+	Dominio.MasterDegreeProofVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole juries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.ExternalPerson playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.WorkLocation playsRole workLocation;
+}
+
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExternalPerson playsRole externalGuiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.transactions.ReimbursementTransaction playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
+}
+
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideEntry playsRole guideEntries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExternalPerson playsRole externalAssistentGuiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.GuideSituation playsRole guideSituations {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Teacher playsRole assistentGuiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.Guide playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Contributor playsRole contributor;
+}
+
+relation ??? {
+	Dominio.MasterDegreeProofVersion playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.ExternalPerson playsRole externalJuries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	Dominio.sms.SentSms playsRole ??? {
+		multiplicity ???;
+	}
+	Dominio.Pessoa playsRole person;
+}
+
