@@ -19,10 +19,12 @@ import Dominio.ISite;
 import Dominio.Section;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac2
@@ -77,7 +79,13 @@ public class InsertSection implements IServico {
 				}
 
 			}
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+		} 
+		catch (ExistingPersistentException excepcaoPersistencia) {
+
+							throw new ExistingServiceException(excepcaoPersistencia);
+						}
+		
+		catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
@@ -176,7 +184,13 @@ public class InsertSection implements IServico {
 
 			persistentSection.lockWrite(section);
 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+		} 
+		catch (ExistingPersistentException excepcaoPersistencia) {
+
+					throw new ExistingServiceException(excepcaoPersistencia);
+				}
+		
+		catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

@@ -98,7 +98,12 @@ public class EditItem implements IServico {
 
 					}
 				}
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+		} catch (ExistingPersistentException excepcaoPersistencia) {
+
+		throw new ExistingServiceException(excepcaoPersistencia);
+	}
+		
+		catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
