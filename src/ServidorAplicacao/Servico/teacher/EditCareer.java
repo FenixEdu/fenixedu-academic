@@ -52,10 +52,10 @@ public class EditCareer extends EditDomainObjectService
         return persistentCareer;
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoCareer)
+    protected IDomainObject clone2DomainObject(InfoObject infoObject)
     {
-        ICareer Career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoCareer);
-        return Career;
+        ICareer career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoObject);
+        return career;
     }
 
 }

@@ -29,7 +29,7 @@ public abstract class DeleteDomainObjectService implements IServico
             IDomainObject domainObject =
                 (IDomainObject) persistentObject.readByOID(getDomainObjectClass(), objectId);
 
-            if (domainObject != null && canDelete(domainObject))
+            if ((domainObject != null) && canDelete(domainObject, sp))
             {
                 persistentObject.deleteByOID(getDomainObjectClass(), objectId);
                 return Boolean.TRUE;
@@ -51,7 +51,7 @@ public abstract class DeleteDomainObjectService implements IServico
 	 * @param newDomainObject
 	 * @return
 	 */
-    protected boolean canDelete(IDomainObject newDomainObject)
+    protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         return true;
     }

@@ -7,30 +7,34 @@ package ServidorAplicacao.Servico.teacher;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.teacher.InfoCareer;
+import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.teacher.Career;
 import Dominio.teacher.ICareer;
+import Dominio.teacher.IWeeklyOcupation;
+import Dominio.teacher.WeeklyOcupation;
 import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.IPersistentCareer;
+import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareer extends ReadDomainObjectService
+public class ReadWeeklyOcupation extends ReadDomainObjectService
 {
-    private static ReadCareer service = new ReadCareer();
+    private static ReadWeeklyOcupation service = new ReadWeeklyOcupation();
 
-    public static ReadCareer getService()
+    public static ReadWeeklyOcupation getService()
     {
         return service;
     }
 
-    public ReadCareer()
+    public ReadWeeklyOcupation()
     {
     }
 
@@ -41,7 +45,7 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     public String getNome()
     {
-        return "ReadCareer";
+        return "ReadWeeklyOcupation";
     }
 
     /*
@@ -51,7 +55,7 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected Class getDomainObjectClass()
     {
-        return Career.class;
+        return WeeklyOcupation.class;
     }
 
     /*
@@ -61,8 +65,8 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
     {
-        IPersistentCareer persistentCareer = sp.getIPersistentCareer();
-        return persistentCareer;
+        IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
+        return persistentWeeklyOcupation;
     }
 
     /*
@@ -72,8 +76,8 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected InfoObject clone2InfoObject(IDomainObject domainObject)
     {
-        InfoCareer infoCareer = Cloner.copyICareer2InfoCareer((ICareer) domainObject);
-        return infoCareer;
+        InfoWeeklyOcupation infoWeeklyOcupation = Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation((IWeeklyOcupation) domainObject);
+        return infoWeeklyOcupation;
     }
 
     /*
@@ -83,7 +87,7 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected ISiteComponent getISiteComponent(InfoObject infoObject)
     {
-        InfoCareer infoCareer = (InfoCareer) infoObject;
-        return infoCareer;
+        InfoWeeklyOcupation infoWeeklyOcupation = (InfoWeeklyOcupation) infoObject;
+        return infoWeeklyOcupation;
     }
 }

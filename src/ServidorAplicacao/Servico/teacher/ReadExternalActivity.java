@@ -7,30 +7,31 @@ package ServidorAplicacao.Servico.teacher;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.teacher.InfoCareer;
+import DataBeans.teacher.InfoExternalActivity;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
-import Dominio.teacher.Career;
-import Dominio.teacher.ICareer;
+import Dominio.teacher.ExternalActivity;
+import Dominio.teacher.IExternalActivity;
 import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.teacher.IPersistentCareer;
+import ServidorPersistente.teacher.IPersistentExternalActivity;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareer extends ReadDomainObjectService
+public class ReadExternalActivity extends ReadDomainObjectService
 {
-    private static ReadCareer service = new ReadCareer();
+    private static ReadExternalActivity service = new ReadExternalActivity();
 
-    public static ReadCareer getService()
+    public static ReadExternalActivity getService()
     {
         return service;
     }
 
-    public ReadCareer()
+    public ReadExternalActivity()
     {
     }
 
@@ -41,7 +42,7 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     public String getNome()
     {
-        return "ReadCareer";
+        return "ReadExternalActivity";
     }
 
     /*
@@ -51,7 +52,7 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected Class getDomainObjectClass()
     {
-        return Career.class;
+        return ExternalActivity.class;
     }
 
     /*
@@ -61,8 +62,8 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
     {
-        IPersistentCareer persistentCareer = sp.getIPersistentCareer();
-        return persistentCareer;
+        IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
+        return persistentExternalActivity;
     }
 
     /*
@@ -72,8 +73,8 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected InfoObject clone2InfoObject(IDomainObject domainObject)
     {
-        InfoCareer infoCareer = Cloner.copyICareer2InfoCareer((ICareer) domainObject);
-        return infoCareer;
+        InfoExternalActivity infoExternalActivity = Cloner.copyIExternalActivity2InfoExternalActivity((IExternalActivity) domainObject);
+        return infoExternalActivity;
     }
 
     /*
@@ -83,7 +84,7 @@ public class ReadCareer extends ReadDomainObjectService
 	 */
     protected ISiteComponent getISiteComponent(InfoObject infoObject)
     {
-        InfoCareer infoCareer = (InfoCareer) infoObject;
-        return infoCareer;
+        InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoObject;
+        return infoExternalActivity;
     }
 }

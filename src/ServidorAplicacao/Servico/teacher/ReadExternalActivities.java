@@ -9,38 +9,38 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.SiteView;
-import DataBeans.teacher.InfoCareer;
+import DataBeans.teacher.InfoExternalActivity;
 import DataBeans.teacher.InfoSiteCareers;
+import DataBeans.teacher.InfoSiteExternalActivities;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
-import Dominio.teacher.ICareer;
+import Dominio.teacher.IExternalActivity;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.teacher.IPersistentCareer;
-import Util.CareerType;
+import ServidorPersistente.teacher.IPersistentExternalActivity;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareers implements IServico
+public class ReadExternalActivities implements IServico
 {
-    private static ReadCareers service = new ReadCareers();
+    private static ReadExternalActivities service = new ReadExternalActivities();
 
     /**
 	 *  
 	 */
-    public ReadCareers()
+    public ReadExternalActivities()
     {
 
     }
 
-    public static ReadCareers getService()
+    public static ReadExternalActivities getService()
     {
 
         return service;
@@ -53,10 +53,10 @@ public class ReadCareers implements IServico
 	 */
     public String getNome()
     {
-        return "ReadCareers";
+        return "ReadExternalActivities";
     }
 
-    public SiteView run(CareerType careerType, String user) throws FenixServiceException
+    public SiteView run(String user) throws FenixServiceException
     {
         try
         {
@@ -65,23 +65,20 @@ public class ReadCareers implements IServico
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
-            IPersistentCareer persistentCareer = persistentSuport.getIPersistentCareer();
-            List careers;
-
-            careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
+            IPersistentExternalActivity persistentExternalActivity = persistentSuport.getIPersistentExternalActivity();
+            List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
 
             List result = new ArrayList();
-            Iterator iter = careers.iterator();
+            Iterator iter = externalActivities.iterator();
             while (iter.hasNext())
             {
-                ICareer career = (ICareer) iter.next();
-                InfoCareer infoCareer = Cloner.copyICareer2InfoCareer(career);
-                result.add(infoCareer);
+                IExternalActivity externalActivity = (IExternalActivity) iter.next();
+                InfoExternalActivity infoExternalActivity = Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+                result.add(infoExternalActivity);
             }
 
-            InfoSiteCareers bodyComponent = new InfoSiteCareers();
-            bodyComponent.setInfoCareers(result);
-            bodyComponent.setCareerType(careerType);
+            InfoSiteExternalActivities bodyComponent = new InfoSiteExternalActivities();
+            bodyComponent.setInfoExternalActivities(externalActivities);
 
             SiteView siteView = new SiteView(bodyComponent);
             return siteView;

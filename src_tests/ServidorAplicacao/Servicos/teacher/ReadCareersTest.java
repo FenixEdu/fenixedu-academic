@@ -6,15 +6,12 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
-import DataBeans.InfoSiteSummaries;
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoSiteCareers;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import Util.CareerType;
-import Util.TipoAula;
 
 /**
  * @author Leonor Almeida
@@ -68,7 +65,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
         int tipoCareer = CareerType.PROFESSIONAL;
         CareerType careerType = new CareerType(tipoCareer);
 
-        Object[] args = { careerType, userView };
+        Object[] args = { careerType, userView.getUtilizador() };
         return args;
     }
 
@@ -84,7 +81,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             SiteView result = null;
             CareerType careerType = null;
 
-            Object[] args = { careerType, userView };
+            Object[] args = { careerType, userView.getUtilizador() };
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
@@ -111,7 +108,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             String[] args = { "maria", "pass", getApplication()};
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView };
+            Object[] serviceArgs = { careerType, userView.getUtilizador() };
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
@@ -137,7 +134,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             SiteView result = null;
             CareerType careerType = new CareerType(CareerType.PROFESSIONAL);
 
-            Object[] args = { careerType, userView };
+            Object[] args = { careerType, userView.getUtilizador() };
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
@@ -164,7 +161,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             String[] args = { "maria", "pass", getApplication()};
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView };
+            Object[] serviceArgs = { careerType, userView.getUtilizador() };
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
@@ -190,7 +187,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             SiteView result = null;
             CareerType careerType = new CareerType(CareerType.TEACHING);
 
-            Object[] args = { careerType, userView };
+            Object[] args = { careerType, userView.getUtilizador() };
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
@@ -217,7 +214,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             String[] args = { "maria", "pass", getApplication()};
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView };
+            Object[] serviceArgs = { careerType, userView.getUtilizador() };
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
@@ -226,7 +223,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             assertEquals(infoSiteCareers.getCareerType(), careerType);
 
             List infoCareers = infoSiteCareers.getInfoCareers();
-            assertEquals(infoCareers.size(), 0);
+            assertTrue(infoCareers.isEmpty());
 
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());

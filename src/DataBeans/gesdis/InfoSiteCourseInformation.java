@@ -15,7 +15,7 @@ import DataBeans.InfoObject;
  * @author Sergio Montelobo
  *
  */
-public class InfoSiteCourseReport
+public class InfoSiteCourseInformation
 	extends InfoObject
 	implements ISiteComponent {
 	
@@ -27,7 +27,7 @@ public class InfoSiteCourseReport
 	private List infoBibliographicReferences;
 	private InfoCourseReport infoCourseReport;
 	
-	public InfoSiteCourseReport() {
+	public InfoSiteCourseInformation() {
 	}
 	
 	/**

@@ -6,11 +6,7 @@ package ServidorAplicacao.Servicos.teacher;
 
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoCareer;
-import DataBeans.util.Cloner;
-import Dominio.teacher.ICareer;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**

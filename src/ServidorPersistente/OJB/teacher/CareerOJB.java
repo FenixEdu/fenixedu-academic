@@ -16,72 +16,46 @@ import Dominio.teacher.TeachingCareer;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.teacher.IPersistentCareer;
+import Util.CareerType;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class CareerOJB extends ObjectFenixOJB implements IPersistentCareer {
+public class CareerOJB extends ObjectFenixOJB implements IPersistentCareer
+{
 
-	/**
+    /**
 	 *  
 	 */
-	public CareerOJB() {
-		super();
-	}
+    public CareerOJB()
+    {
+        super();
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorPersistente.teacher.IPersistentCareer#readAllByTeacher(Dominio.ITeacher)
 	 */
-	public List readAllByTeacher(ITeacher teacher)
-		throws ExcepcaoPersistencia {
+    public List readAllByTeacherAndCareerType(ITeacher teacher, CareerType careerType)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        if (careerType != null)
+        {
+            if (careerType.equals(new CareerType(CareerType.PROFESSIONAL)))
+            {
+                criteria.addEqualTo("ojbConcreteClass", ProfessionalCareer.class.getName());
+            } else
+            {
+                criteria.addEqualTo("ojbConcreteClass", TeachingCareer.class.getName());
+            }
+        }
+        List careers = queryList(Career.class, criteria);
 
-		List careers = new ArrayList();
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-		careers = queryList(Career.class, criteria);
-
-		return careers;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.teacher.IPersistentCareer#readAllProfessionalCareersByTeacher(Dominio.ITeacher)
-	 */
-	public List readAllProfessionalCareersByTeacher(ITeacher teacher)
-		throws ExcepcaoPersistencia {
-
-		List professionalCareers = new ArrayList();
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-		criteria.addEqualTo(
-			"ojbConcreteClass",
-			ProfessionalCareer.class.getName());
-		professionalCareers = queryList(Career.class, criteria);
-
-		return professionalCareers;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.teacher.IPersistentCareer#readAllTeachingCareerByTeacher(Dominio.ITeacher)
-	 */
-	public List readAllTeachingCareerByTeacher(ITeacher teacher)
-		throws ExcepcaoPersistencia {
-		
-			List teachingCareers = new ArrayList();
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-			criteria.addEqualTo(
-				"ojbConcreteClass",
-				TeachingCareer.class.getName());
-			teachingCareers = queryList(Career.class, criteria);
-
-			return teachingCareers;
-	}
+        return careers;
+    }
 }

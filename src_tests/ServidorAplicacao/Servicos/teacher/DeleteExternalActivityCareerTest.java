@@ -12,25 +12,30 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
+public class DeleteExternalActivityCareerTest extends ServiceNeedsAuthenticationTestCase
 {
 
     /**
 	 *  
 	 */
-    public DeleteCareerTest(String testName)
+    public DeleteExternalActivityCareerTest(String testName)
     {
         super(testName);
     }
 
     protected String getDataSetFilePath()
     {
-        return "etc/datasets/servicos/teacher/testDeleteCareerDataSet.xml";
+        return "etc/datasets/servicos/teacher/testDeleteExternalActivityDataSet.xml";
+    }
+
+    protected String getExpectedDataSetFilePath()
+    {
+        return "etc/datasets/servicos/teacher/testExpectedDeleteExternalActivityDataSet.xml";
     }
 
     protected String getNameOfServiceToBeTested()
     {
-        return "DeleteCareer";
+        return "DeleteExternalActivity";
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser()
@@ -66,9 +71,8 @@ public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
         return Autenticacao.EXTRANET;
     }
 
-    public void testDeleteProfessionalCareer()
+    public void testSuccessfull()
     {
-
         try
         {
             Boolean result = null;
@@ -77,29 +81,10 @@ public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
             result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
             assertTrue(result.booleanValue());
-            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteProfessionalCareerDataSet.xml");
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
         } catch (Exception ex)
         {
-            fail("Deleting the ProfessionalCareer of a Teacher " + ex);
+            fail("Deleting a ExternalActivity of a Teacher " + ex);
         }
     }
-
-    public void testDeleteTeachingCareer()
-    {
-
-        try
-        {
-            Boolean result = null;
-            Object[] args = { new Integer(2)};
-
-            result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
-
-            assertTrue(result.booleanValue());
-            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteTeachingCareerDataSet.xml");
-        } catch (Exception ex)
-        {
-            fail("Deleting the ProfessionalCareer of a Teacher " + ex);
-        }
-    }
-
 }

@@ -18,40 +18,44 @@ import Util.CareerType;
 public class InfoSiteCareers extends InfoObject implements ISiteComponent
 {
 
-	private List infoCareers;
-	private CareerType careerType;
+    private List infoCareers;
+    private CareerType careerType;
 
-	/**
+    public InfoSiteCareers()
+    {
+    }
+
+    /**
 	 * @return Returns the careerType.
 	 */
-	public CareerType getCareerType()
-	{
-		return careerType;
-	}
+    public CareerType getCareerType()
+    {
+        return careerType;
+    }
 
-	/**
+    /**
 	 * @param careerType
-	 *                    The careerType to set.
+	 *            The careerType to set.
 	 */
-	public void setCareerType(CareerType careerType)
-	{
-		this.careerType = careerType;
-	}
+    public void setCareerType(CareerType careerType)
+    {
+        this.careerType = careerType;
+    }
 
-	/**
+    /**
 	 * @return Returns the infoCareers.
 	 */
-	public List getInfoCareers()
-	{
-		return infoCareers;
-	}
+    public List getInfoCareers()
+    {
+        return infoCareers;
+    }
 
-	/**
+    /**
 	 * @param infoCareers
-	 *                    The infoCareers to set.
+	 *            The infoCareers to set.
 	 */
-	public void setInfoCareers(List infoCareers)
-	{
-		this.infoCareers = infoCareers;
-	}
+    public void setInfoCareers(List infoCareers)
+    {
+        this.infoCareers = infoCareers;
+    }
 }

@@ -29,12 +29,20 @@ public abstract class EditDomainObjectService implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = getIPersistentObject(sp);
             IDomainObject oldDomainObject = clone2DomainObject(infoObject);
-            IDomainObject newDomainObject = (IDomainObject) oldDomainObject.getClass().newInstance();
 
-            newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
-            
-            if (canCreate(oldDomainObject))
+            if (canCreate(oldDomainObject, sp))
             {
+                /**
+                 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
+                 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
+                 * Without this two lines the test above doesn't run.
+                 */
+                sp.confirmarTransaccao();
+                sp.iniciarTransaccao();
+                /************************************************************************************************/
+                
+                IDomainObject newDomainObject = (IDomainObject) oldDomainObject.getClass().newInstance();
+                newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
                 persistentObject.simpleLockWrite(newDomainObject);
                 PropertyUtils.copyProperties(newDomainObject, oldDomainObject);
                 return Boolean.TRUE;
@@ -55,24 +63,24 @@ public abstract class EditDomainObjectService implements IServico
 	 * @param domainObject
 	 * @return
 	 */
-    protected boolean canCreate(IDomainObject domainObject) throws FenixServiceException
+    protected boolean canCreate(IDomainObject domainObject, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
         return true;
     }
 
     /**
-     * 
-     * @param sp
-     * @return
-     */
+	 * @param sp
+	 * @return
+	 */
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp);
-    
+
     /**
-     * This method invokes the Cloner to convert from InfoObject to IDomainObject 
-     * 
-     * @param infoObject
-     * @return
-     */
+	 * This method invokes the Cloner to convert from InfoObject to IDomainObject
+	 * 
+	 * @param infoObject
+	 * @return
+	 */
     protected abstract IDomainObject clone2DomainObject(InfoObject infoObject);
 
 }
