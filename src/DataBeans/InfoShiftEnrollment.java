@@ -5,21 +5,148 @@
 package DataBeans;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * @author Tânia Pousão
- * 
  * This class keeps all information usefull for shift enrollment use case
- *  
+ * @author Tânia Pousão
  */
-public class InfoShiftEnrollment extends InfoObject
+public class InfoShiftEnrollment
 {
-	InfoStudent infoStudent;
-	List infoExecutionDegreesList;
-	List infoExecutionDegreesLabelsList;
-	InfoExecutionDegree infoExecutionDegree;
-	List infoExecutionCoursesList;
-	List infoAttendingCourses;
+	
+	
+	/**
+	 * Execution courses that student attends
+	 */
+	private List infoAttendingCourses;
+	
+	/**
+	 * execution courses that belongs to execution degree selected
+	 */
+	private List infoExecutionCoursesList;
+	
+	/**
+	 * execution degree selected
+	 */
+	private InfoExecutionDegree infoExecutionDegree;
+	
+	/**
+	 * TODO: explain this.
+	 */
+	private List infoExecutionDegreesLabelsList;
+	
+	/**
+	 * executionDegrees present.
+	 */
+	private List infoExecutionDegreesList;
+    
+	/**
+	 * Student enrolling
+	 */
+	private InfoStudent infoStudent;
+	
+
+	/**
+	 * @return Returns the infoAttendingCourses.
+	 */
+	public List getInfoAttendingCourses()
+	{
+		return infoAttendingCourses;
+	}
+
+	/**
+	 * @return Returns the infoExecutionCoursesList.
+	 */
+	public List getInfoExecutionCoursesList()
+	{
+		return infoExecutionCoursesList;
+	}
+
+	/**
+	 * @return Returns the infoExecutionDegree.
+	 */
+	public InfoExecutionDegree getInfoExecutionDegree()
+	{
+		return infoExecutionDegree;
+	}
+
+	/**
+	 * @return Returns the infoExecutionDegreesLabelsList.
+	 */
+	public List getInfoExecutionDegreesLabelsList()
+	{
+		return infoExecutionDegreesLabelsList;
+	}
+
+	/**
+	 * @return Returns the infoExecutionDegreesList.
+	 */
+	public List getInfoExecutionDegreesList()
+	{
+		return infoExecutionDegreesList;
+	}
+
+	/**
+	 * @return Returns the infoStudent.
+	 */
+	public InfoStudent getInfoStudent()
+	{
+		return infoStudent;
+	}
+
+	/**
+	 * @param infoAttendingCourses
+	 *            The infoAttendingCourses to set.
+	 */
+	public void setInfoAttendingCourses(List infoAttendingCourses)
+	{
+		this.infoAttendingCourses = infoAttendingCourses;
+	}
+
+	/**
+	 * @param infoExecutionCoursesList
+	 *            The infoExecutionCoursesList to set.
+	 */
+	public void setInfoExecutionCoursesList(List infoExecutionCoursesList)
+	{
+		this.infoExecutionCoursesList = infoExecutionCoursesList;
+	}
+
+	/**
+	 * @param infoExecutionDegree
+	 *            The infoExecutionDegree to set.
+	 */
+	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree)
+	{
+		this.infoExecutionDegree = infoExecutionDegree;
+	}
+
+	/**
+	 * @param infoExecutionDegreesLabelsList
+	 *            The infoExecutionDegreesLabelsList to set.
+	 */
+	public void setInfoExecutionDegreesLabelsList(List infoExecutionDegreesLabelsList)
+	{
+		this.infoExecutionDegreesLabelsList = infoExecutionDegreesLabelsList;
+	}
+
+	/**
+	 * @param infoExecutionDegreesList
+	 *            The infoExecutionDegreesList to set.
+	 */
+	public void setInfoExecutionDegreesList(List infoExecutionDegreesList)
+	{
+		this.infoExecutionDegreesList = infoExecutionDegreesList;
+	}
+
+	/**
+	 * @param infoStudent
+	 *            The infoStudent to set.
+	 */
+	public void setInfoStudent(InfoStudent infoStudent)
+	{
+		this.infoStudent = infoStudent;
+	}
 
 	public String toString()
 	{
@@ -53,108 +180,6 @@ public class InfoShiftEnrollment extends InfoObject
 		string.append("]");
 
 		return string.toString();
-	}
-
-	/**
-	 * @return Returns the infoStudent.
-	 */
-	public InfoStudent getInfoStudent()
-	{
-		return infoStudent;
-	}
-
-	/**
-	 * @param infoStudent
-	 *            The infoStudent to set.
-	 */
-	public void setInfoStudent(InfoStudent infoStudent)
-	{
-		this.infoStudent = infoStudent;
-	}
-
-	/**
-	 * @return Returns the infoExecutionDegreesLabelsList.
-	 */
-	public List getInfoExecutionDegreesLabelsList()
-	{
-		return infoExecutionDegreesLabelsList;
-	}
-
-	/**
-	 * @param infoExecutionDegreesLabelsList
-	 *            The infoExecutionDegreesLabelsList to set.
-	 */
-	public void setInfoExecutionDegreesLabelsList(List infoExecutionDegreesLabelsList)
-	{
-		this.infoExecutionDegreesLabelsList = infoExecutionDegreesLabelsList;
-	}
-
-	/**
-	 * @return Returns the infoAttendingCourses.
-	 */
-	public List getInfoAttendingCourses()
-	{
-		return infoAttendingCourses;
-	}
-
-	/**
-	 * @param infoAttendingCourses
-	 *            The infoAttendingCourses to set.
-	 */
-	public void setInfoAttendingCourses(List infoAttendingCourses)
-	{
-		this.infoAttendingCourses = infoAttendingCourses;
-	}
-
-	/**
-	 * @return Returns the infoExecutionCoursesList.
-	 */
-	public List getInfoExecutionCoursesList()
-	{
-		return infoExecutionCoursesList;
-	}
-
-	/**
-	 * @param infoExecutionCoursesList
-	 *            The infoExecutionCoursesList to set.
-	 */
-	public void setInfoExecutionCoursesList(List infoExecutionCoursesList)
-	{
-		this.infoExecutionCoursesList = infoExecutionCoursesList;
-	}
-
-	/**
-	 * @return Returns the infoExecutionDegree.
-	 */
-	public InfoExecutionDegree getInfoExecutionDegree()
-	{
-		return infoExecutionDegree;
-	}
-
-	/**
-	 * @param infoExecutionDegree
-	 *            The infoExecutionDegree to set.
-	 */
-	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree)
-	{
-		this.infoExecutionDegree = infoExecutionDegree;
-	}
-
-	/**
-	 * @return Returns the infoExecutionDegreesList.
-	 */
-	public List getInfoExecutionDegreesList()
-	{
-		return infoExecutionDegreesList;
-	}
-
-	/**
-	 * @param infoExecutionDegreesList
-	 *            The infoExecutionDegreesList to set.
-	 */
-	public void setInfoExecutionDegreesList(List infoExecutionDegreesList)
-	{
-		this.infoExecutionDegreesList = infoExecutionDegreesList;
 	}
 
 }
