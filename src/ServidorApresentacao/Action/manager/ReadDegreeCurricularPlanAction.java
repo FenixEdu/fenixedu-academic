@@ -3,6 +3,9 @@
  */
 package ServidorApresentacao.Action.manager;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,7 +44,8 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
 					
-				Integer degreeCurricularPlanId = (Integer) readDegreeForm.get("degreeCurricularPlanId");				
+				Integer degreeCurricularPlanId = (Integer) readDegreeForm.get("degreeCurricularPlanId");
+//				Integer degreeId = (Integer) readDegreeForm.get("degreeId");				
 					
 				Object args[] = { degreeCurricularPlanId };
 				
@@ -63,7 +67,33 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 						return mapping.findForward("readDegree");
 				}
 				
+				// in case the degreeCurricularPlan really exists
+				List executionDegrees = null;
+				try {		
+						executionDegrees = (List) manager.executar(
+													userView,
+													"ReadExecutionDegreesService",
+													args);	
+				} catch (FenixServiceException e) {
+						throw new FenixActionException(e);
+				}		
+				Collections.sort(executionDegrees);
+								
+				List curricularCourses = null;
+				try {		
+						curricularCourses = (List) manager.executar(
+													userView,
+													"ReadCurricularCoursesService",
+													args);	
+				} catch (FenixServiceException e) {
+						throw new FenixActionException(e);
+				}		
+//				Collections.sort(curricularCourses);
+			
+				request.setAttribute("curricularCoursesList", curricularCourses);
+				request.setAttribute("executionDegreesList", executionDegrees);
 //				request.setAttribute("degreeId", degreeId);
+				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);					
 				return mapping.findForward("viewDegreeCurricularPlan");
 	}

@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author  tfc130
  */
-public class InfoExecutionDegree extends InfoObject implements Serializable {
+public class InfoExecutionDegree extends InfoObject implements Serializable, Comparable {
 	private InfoExecutionYear infoExecutionYear;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	private InfoTeacher infoCoordinator;
@@ -116,6 +116,11 @@ public class InfoExecutionDegree extends InfoObject implements Serializable {
 	 */
 	public void setTemporaryExamMap(Boolean temporary) {
 		temporaryExamMap = temporary;
+	}
+	
+	public int compareTo(Object arg0) {	
+		InfoExecutionDegree executionDegree = (InfoExecutionDegree) arg0;
+		return this.compareTo(executionDegree);
 	}
 
 }
