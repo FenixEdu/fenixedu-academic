@@ -2689,7 +2689,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="ChainForReadingStudentCurricula"/>
         </filterChains>
     </service>
     <service>
