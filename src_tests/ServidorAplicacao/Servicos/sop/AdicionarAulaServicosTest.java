@@ -235,7 +235,7 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 	      } catch (Exception ex) {
 	      	fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
 	      }
-	  }
+	}
 
 	private void ligarSuportePersistente(String nomeTurno, DiaSemana diaSemana, Calendar inicio, Calendar fim) {
 

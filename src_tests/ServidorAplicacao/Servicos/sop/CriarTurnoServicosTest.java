@@ -13,113 +13,127 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.ITurno;
+import Dominio.Turno;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class CriarTurnoServicosTest extends TestCaseServicos {
-    public CriarTurnoServicosTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(CriarTurnoServicosTest.class);
-        
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
+public class CriarTurnoServicosTest extends TestCaseServicosWithAuthorization {
+	
+	private InfoShift infoShift = null;
 
-    // write new existing turno
-  public void testUnauthorizedCreateTurno() {
-    Object argsCriarTurno[] = new Object[1];
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
-    InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-                                                        _disciplinaExecucao1.getSigla(),
-                                                        _disciplinaExecucao1.getPrograma(),
-                                                        infoLicenciaturaExecucao,
-                                                        _disciplinaExecucao1.getTheoreticalHours(),
-                                                        _disciplinaExecucao1.getPraticalHours(),
-                                                        _disciplinaExecucao1.getTheoPratHours(),
-                                                        _disciplinaExecucao1.getLabHours());
-    argsCriarTurno[0] = new InfoShift(new String("turno1"), new TipoAula(TipoAula.TEORICA), new Integer(100), iDE);
+	public CriarTurnoServicosTest(java.lang.String testName) {
+		super(testName);
+	}
 
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView2, "CriarTurno", argsCriarTurno);
-        fail("testUnauthorizedCreateTurno");
-      } catch (Exception ex) {
-        assertNull("testUnauthorizedCreateTurno", result);
-      }
-  }
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
 
-    // write new existing turno
-  public void testCreateExistingTurno() {
-    Object argsCriarTurno[] = new Object[1];
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
-	InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
- 														_disciplinaExecucao1.getSigla(),
- 														_disciplinaExecucao1.getPrograma(),
- 														infoLicenciaturaExecucao,
- 														_disciplinaExecucao1.getTheoreticalHours(),
- 														_disciplinaExecucao1.getPraticalHours(),
- 														_disciplinaExecucao1.getTheoPratHours(),
- 														_disciplinaExecucao1.getLabHours());
-    argsCriarTurno[0] = new InfoShift(new String("turno1"), new TipoAula(TipoAula.TEORICA), new Integer(100), iDE);
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "CriarTurno", argsCriarTurno);
-        fail("testCreateExistingTurno");
-      } catch (Exception ex) {
-      	assertNull("testCreateExistingTurno", result);
-      }
-  }
+	public static Test suite() {
+		TestSuite suite = new TestSuite(CriarTurnoServicosTest.class);
 
-    // write new non-existing turno
-  public void testCreateNonExistingTurno() {
-    Object argsCriarTurno[] = new Object[1];
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
-	InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-														_disciplinaExecucao1.getSigla(),
-														_disciplinaExecucao1.getPrograma(),
-														infoLicenciaturaExecucao,
-														_disciplinaExecucao1.getTheoreticalHours(),
-														_disciplinaExecucao1.getPraticalHours(),
-														_disciplinaExecucao1.getTheoPratHours(),
-														_disciplinaExecucao1.getLabHours());
-    argsCriarTurno[0] = new InfoShift(new String("turno3"), new TipoAula(TipoAula.TEORICA), new Integer(100), iDE);
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "CriarTurno", argsCriarTurno);
-        assertEquals("testCreateNonExistingTurno", Boolean.TRUE.booleanValue(),
-                                                   ((Boolean) result).booleanValue());
-      } catch (Exception ex) {
-      	fail("testCreateNonExistingTurno");
-      }
-  }
-    
+		return suite;
+	}
+
+	protected void setUp() {
+		super.setUp();
+	}
+
+	protected void tearDown() {
+		super.tearDown();
+	}
+
+	// unauthorized write turno
+	public void testUnauthorizedCreateTurno() {
+		super.testUnauthorizedExecutionOfService("CriarTurno");
+	}
+
+	// write existing turno
+	public void testCreateExistingTurno() {
+
+		this.ligarSuportePersistente(true);
+
+		Object argsCriarTurno[] = { this.infoShift };
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, "CriarTurno", argsCriarTurno);
+			fail("testCreateExistingTurno");
+		} catch (Exception ex) {
+			assertNull("testCreateExistingTurno", result);
+		}
+	}
+
+	// write new non-existing turno
+	public void testCreateNonExistingTurno() {
+
+		this.ligarSuportePersistente(false);
+
+		Object argsCriarTurno[] = { this.infoShift };
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, "CriarTurno", argsCriarTurno);
+			assertEquals("testCreateNonExistingTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
+		} catch (Exception ex) {
+			fail("testCreateNonExistingTurno");
+		}
+	}
+
+	private void ligarSuportePersistente(boolean existing) {
+
+		ISuportePersistente sp = null;
+
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+
+			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+
+			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
+
+			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
+			
+			ITurnoPersistente itp = sp.getITurnoPersistente();
+			ITurno it = null;
+
+			if(existing) {
+				it = itp.readByNameAndExecutionCourse("turno1", ide);
+			} else {
+				it = new Turno("turnoXPTO", new TipoAula(TipoAula.TEORICA), new Integer(100), ide);
+			}
+
+//			System.out.println(it.toString());
+			
+			this.infoShift = Cloner.copyIShift2InfoShift(it);
+
+//			System.out.println(this.infoShift.toString());
+
+			sp.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia excepcao) {
+			try {
+				sp.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("ligarSuportePersistente: cancelarTransaccao");
+			}
+			fail("ligarSuportePersistente: confirmarTransaccao");
+		}
+	}
 }
