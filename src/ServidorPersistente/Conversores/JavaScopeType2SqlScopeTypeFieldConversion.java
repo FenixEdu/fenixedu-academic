@@ -2,7 +2,7 @@ package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.HasAlternativeSemester;
+import Util.ScopeType;
 
 /**
  * @author dcs-rjao
@@ -10,12 +10,12 @@ import Util.HasAlternativeSemester;
  * 19/Mar/2003
  */
 
-public class JavaHasAlternativeSemester2SqlHasAlternativeSemesterFieldConversion implements FieldConversion {
+public class JavaScopeType2SqlScopeTypeFieldConversion implements FieldConversion {
 
 	public Object javaToSql(Object source) {
-		if (source instanceof HasAlternativeSemester) {
-			HasAlternativeSemester src = (HasAlternativeSemester) source;
-			return src.getState();
+		if (source instanceof ScopeType) {
+			ScopeType src = (ScopeType) source;
+			return src.getType();
 		} else {
 			return source;
 		}
@@ -24,7 +24,7 @@ public class JavaHasAlternativeSemester2SqlHasAlternativeSemesterFieldConversion
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
-			return new HasAlternativeSemester(src);
+			return new ScopeType(src);
 		} else {
 			return source;
 		}

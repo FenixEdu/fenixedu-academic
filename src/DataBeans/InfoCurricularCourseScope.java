@@ -8,7 +8,7 @@ package DataBeans;
 
 import java.io.Serializable;
 
-import Util.HasAlternativeSemester;
+import Util.ScopeType;
 
 /**
  *
@@ -18,7 +18,7 @@ public class InfoCurricularCourseScope implements Serializable {
 	private InfoCurricularCourse infoCurricularCourse;
 	private InfoCurricularSemester infoCurricularSemester;
 	private InfoBranch infoBranch;
-	HasAlternativeSemester hasAlternativeSemester;
+	ScopeType scopeType;
 
 
 	public InfoCurricularCourseScope() {}
@@ -89,26 +89,17 @@ public class InfoCurricularCourseScope implements Serializable {
 	}
 
 	/**
-	 * @return HasAlternativeSemester
+	 * @return ScopeType
 	 */
-	public HasAlternativeSemester getHasAlternativeSemester() {
-		return hasAlternativeSemester;
+	public ScopeType getScopeType() {
+		return scopeType;
 	}
 
 	/**
-	 * Sets the hasAlternativeSemester.
-	 * @param hasAlternativeSemester The hasAlternativeSemester to set
+	 * Sets the scopeType.
+	 * @param scopeType The scopeType to set
 	 */
-	public void setHasAlternativeSemester(HasAlternativeSemester hasAlternativeSemester) {
-		this.hasAlternativeSemester = hasAlternativeSemester;
+	public void setScopeType(ScopeType hasAlternativeSemester) {
+		this.scopeType = hasAlternativeSemester;
 	}
-
-	public boolean hasAlternativeSemester() {
-		if(this.hasAlternativeSemester.getState().intValue() == HasAlternativeSemester.FALSE){
-			return false;
-		}else{
-			return true;
-		}
-	}
-
 }

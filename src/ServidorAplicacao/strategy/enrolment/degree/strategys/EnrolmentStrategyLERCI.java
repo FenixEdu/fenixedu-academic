@@ -33,6 +33,7 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterSemesterRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
+//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 		enrolmentRule = new EnrolmentFilterNACandNDRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 

@@ -1,6 +1,6 @@
 package Dominio;
 
-import Util.HasAlternativeSemester;
+import Util.ScopeType;
 
 
 /**
@@ -13,12 +13,10 @@ public interface ICurricularCourseScope {
 	public IBranch getBranch();
 	public ICurricularCourse getCurricularCourse();
 	public ICurricularSemester getCurricularSemester();
-	public HasAlternativeSemester getHasAlternativeSemester();
+	public ScopeType getScopeType();
 	
 	public void setBranch(IBranch branch);
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
 	public void setCurricularSemester(ICurricularSemester curricularSemester);
-	public void setHasAlternativeSemester(HasAlternativeSemester hasAlternativeSemester);
-	
-	public boolean hasAlternativeSemester();
+	public void setScopeType(ScopeType scopeType);
 }

@@ -1,4 +1,3 @@
-import DataBeans.InfoCurricularCourseScope;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -30,16 +29,29 @@ public class InscTeste {
 			System.out.println(infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 
 
-			for(int i = 0; i < 2; i++) {
-				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-				infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-			}
+//			for(int i = 0; i < 6; i++) {
+//				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
+//				infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//			}
 
+//			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
+//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//
+//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(1);
+//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(2);
+//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(3);
+//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
+//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
+//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 
-			Object serviceArgs2[] = {infoEnrolmentContext};
-			result = gestor.executar(userView, "ValidateActualEnrolment", serviceArgs2);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
+//			Object serviceArgs2[] = {infoEnrolmentContext};
+//			result = gestor.executar(userView, "ValidateActualEnrolment", serviceArgs2);
+//			infoEnrolmentContext = (InfoEnrolmentContext) result;
+//			System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

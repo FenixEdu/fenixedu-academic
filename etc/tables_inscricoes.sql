@@ -171,7 +171,7 @@ create table CURRICULAR_COURSE_SCOPE (
    PRATICAL_HOURS double default '0',
    THEO_PRAT_HOURS double default '0',
    LAB_HOURS double default '0',
-   HAS_ALTERNATIVE_SEMESTER int(11) not null,
+   SCOPE_TYPE int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 )type=InnoDB;

@@ -44,7 +44,7 @@ public abstract class EnrolmentContextManager {
 
 		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-		final IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+		IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
 		List degreeCurricularPlanCurricularCourses = studentActiveCurricularPlan.getDegreeCurricularPlan().getCurricularCourses();
 
@@ -80,12 +80,14 @@ public abstract class EnrolmentContextManager {
 			}
 		});
 
-		List studentCurricularPlanCurricularCourses = (List) CollectionUtils.select(computeScopesOfCurricularCourses(degreeCurricularPlanCurricularCourses), new Predicate() {
-			public boolean evaluate(Object obj) {
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-				return (curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch())) || (curricularCourseScope.getBranch().getName().equals(""));
-			}
-		});
+//		List studentCurricularPlanCurricularCourses = (List) CollectionUtils.select(computeScopesOfCurricularCourses(degreeCurricularPlanCurricularCourses), new Predicate() {
+//			public boolean evaluate(Object obj) {
+//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
+//				return (curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch())) || (curricularCourseScope.getBranch().getName().equals(""));
+//			}
+//		});
+
+		List studentCurricularPlanCurricularCourses = computeStudentCurricularPlanCurricularCourses(degreeCurricularPlanCurricularCourses, studentActiveCurricularPlan, semester);
 
 		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(studentCurricularPlanCurricularCourses);
 		enrolmentContext.setStudent(student);
@@ -99,25 +101,38 @@ public abstract class EnrolmentContextManager {
 		return enrolmentContext;
 	}
 
+
+	public static List computeStudentCurricularPlanCurricularCourses(List degreeCurricularPlanCurricularCourses, IStudentCurricularPlan studentActiveCurricularPlan, Integer semester) {
+
+		List scopesOfCurricularCourses = computeScopesOfCurricularCourses(degreeCurricularPlanCurricularCourses);
+		Iterator iteratorScopesOfCurricularCourses = scopesOfCurricularCourses.iterator();
+		List aux = new ArrayList();
+		while (iteratorScopesOfCurricularCourses.hasNext()) {
+			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopesOfCurricularCourses.next();
+			if( (curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch())) || (curricularCourseScope.getBranch().getName().equals("")) ) {
+				if(!aux.contains(curricularCourseScope.getCurricularCourse())) {
+					aux.add(curricularCourseScope.getCurricularCourse());
+				}
+			}
+		}
+		return aux;
+	}
+
+
+
+
+
+
+
+
 	private static List computeCurricularCoursesScopesNotYetDoneByStudent(
 		List curricularCoursesFromStudentDegreeCurricularPlan,
 		List aprovedCurricularCoursesFromStudent)
 		throws ExcepcaoPersistencia {
 
+		List scopesNotDone = new ArrayList();
+
 		List coursesNotDone = (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
-
-//		Iterator iteratorCourses = coursesNotDone.iterator();
-//		while (iteratorCourses.hasNext()) {
-//			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCourses.next();
-//			List scopes = curricularCourse.getScopes();
-//			Iterator iteratorScopes = scopes.iterator();
-//			while (iteratorScopes.hasNext()) {
-//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
-//				scopesNotDone.add(curricularCourseScope);
-//			}
-//		}
-
-//		return scopesNotDone;
 
 		return computeScopesOfCurricularCourses(coursesNotDone);
 	}

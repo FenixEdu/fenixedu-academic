@@ -13,7 +13,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
  * 3/Abr/2003
  */
 
-// NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser chamada DEPOIS das regras do BRANCH e do SEMESTER
+// NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
