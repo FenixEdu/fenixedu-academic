@@ -1,22 +1,22 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.thesis;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.thesis;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoExternalPerson;
-import DataBeans.InfoMasterDegreeProofVersion;
-import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.InfoTeacher;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import Util.MasterDegreeClassification;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)

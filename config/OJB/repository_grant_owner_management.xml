@@ -3,10 +3,10 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ********************************************** -->
-<!-- Definitions for Dominio.grant.owner.GrantOwner -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.owner.GrantOwner -->
 <!-- ********************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.owner.GrantOwner"
+   	  class="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner"
    	  table="GRANT_OWNER"
    >
       <field-descriptor 
@@ -44,13 +44,13 @@
 	/>
 	<reference-descriptor
 		name="person"
-		class-ref="Dominio.Person"
+		class-ref="net.sourceforge.fenixedu.domain.Person"
 		proxy="true">
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>   
 	<collection-descriptor
 			name="grantContracts"
-			element-class-ref="Dominio.grant.contract.GrantContract"
+			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyGrantOwner"/>
 	</collection-descriptor>    
@@ -59,11 +59,11 @@
    
    
 <!-- **************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantContract -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantContract -->
 <!-- **************************************************** -->
 
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantContract"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
    	  table="GRANT_CONTRACT"
    >
       <field-descriptor 
@@ -111,25 +111,25 @@
 	/>
 	<reference-descriptor
 		name="grantOwner"
-		class-ref="Dominio.grant.owner.GrantOwner"
+		class-ref="net.sourceforge.fenixedu.domain.grant.owner.GrantOwner"
 		proxy="true">
 		<foreignkey field-ref="keyGrantOwner"/>
 	</reference-descriptor> 
 	<reference-descriptor
 		name="grantType"
-		class-ref="Dominio.grant.contract.GrantType"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantType"
 		proxy="true">
 		<foreignkey field-ref="keyGrantType"/>
 	</reference-descriptor> 
 	<reference-descriptor
 		name="grantCostCenter"
-		class-ref="Dominio.grant.contract.GrantCostCenter"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		proxy="true">
 		<foreignkey field-ref="costCenterKey"/>
 	</reference-descriptor> 		
 	<collection-descriptor
 			name="contractRegimes"
-			element-class-ref="Dominio.grant.contract.GrantContractRegime"
+			element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyGrantContract"/>
 	</collection-descriptor>    
@@ -139,11 +139,11 @@
    
 
 <!-- ************************************************************ -->
-<!-- Definitions for Dominio.grant.contract.GrantContractMovement -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement -->
 <!-- ************************************************************ -->
 
   <class-descriptor
-   	  class="Dominio.grant.contract.GrantContractMovement"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement"
    	  table="GRANT_CONTRACT_MOVEMENT"
    >
       <field-descriptor 
@@ -181,7 +181,7 @@
 	/>
 	<reference-descriptor
 		name="grantContract"
-		class-ref="Dominio.grant.contract.GrantContract"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		proxy="true">
 		<foreignkey field-ref="keyGrantContract"/>
 	</reference-descriptor> 
@@ -191,11 +191,11 @@
 
     
 <!-- ********************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantContractRegime -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime -->
 <!-- ********************************************************** -->
 
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantContractRegime"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
    	  table="GRANT_CONTRACT_REGIME"
    >
       <field-descriptor 
@@ -264,19 +264,19 @@
 		/>
 	<reference-descriptor
 		name="teacher"
-		class-ref="Dominio.Teacher"
+		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor> 
 	<reference-descriptor
 		name="grantContract"
-		class-ref="Dominio.grant.contract.GrantContract"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		proxy="true">
 		<foreignkey field-ref="keyGrantContract"/>
 	</reference-descriptor> 
 	<reference-descriptor
 		name="grantCostCenter"
-		class-ref="Dominio.grant.contract.GrantCostCenter"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		proxy="true">
 		<foreignkey field-ref="costCenterKey"/>
 	</reference-descriptor> 		
@@ -284,10 +284,10 @@
 
    
 <!-- ************************************************ -->
-<!-- Definitions for Dominio.grant.contract.GrantType -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantType -->
 <!-- ************************************************ -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantType"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantType"
    	  table="GRANT_TYPE"
    >
       <field-descriptor 
@@ -342,10 +342,10 @@
    
    
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantOrientationTeacher -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher -->
 <!-- ************************************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantOrientationTeacher"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher"
    	  table="GRANT_ORIENTATION_TEACHER"
    >
       <field-descriptor 
@@ -383,13 +383,13 @@
 	/>
 	<reference-descriptor
 		name="orientationTeacher"
-		class-ref="Dominio.Teacher"
+		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="grantContract"
-		class-ref="Dominio.grant.contract.GrantContract"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		proxy="true">
 		<foreignkey field-ref="keyContract"/>
 	</reference-descriptor> 
@@ -397,20 +397,20 @@
    
    
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantPaymentEntity      -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity      -->
 <!-- ************************************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantPaymentEntity"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity"
    >
-    <extent-class class-ref="Dominio.grant.contract.GrantProject" />
-    <extent-class class-ref="Dominio.grant.contract.GrantCostCenter" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantProject" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter" />
    </class-descriptor>
 	
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantProject            -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantProject            -->
 <!-- ************************************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantProject"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantProject"
    	  table="GRANT_PAYMENT_ENTITY"
    >
       <field-descriptor 
@@ -453,13 +453,13 @@
 	  />
 	  <reference-descriptor
 		name="responsibleTeacher"
-		class-ref="Dominio.Teacher"
+		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyResponsibleTeacher"/>
 	  </reference-descriptor>
 	  <reference-descriptor
 		name="grantCostCenter"
-		class-ref="Dominio.grant.contract.GrantCostCenter"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
 		proxy="true">
 		<foreignkey field-ref="keyGrantCostCenter"/>
 	  </reference-descriptor>
@@ -467,10 +467,10 @@
    </class-descriptor>
 
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantCostCenter         -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter         -->
 <!-- ************************************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantCostCenter"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
    	  table="GRANT_PAYMENT_ENTITY"
    >
       <field-descriptor 
@@ -508,7 +508,7 @@
 	  />
 	  <reference-descriptor
 		name="responsibleTeacher"
-		class-ref="Dominio.Teacher"
+		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyResponsibleTeacher"/>
 	  </reference-descriptor>
@@ -516,10 +516,10 @@
 
    
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantPart               -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantPart               -->
 <!-- ************************************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantPart"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
    	  table="GRANT_PART"
    >
       <field-descriptor 
@@ -557,28 +557,28 @@
 	 />
 	 <reference-descriptor
 		name="grantPaymentEntity"
-		class-ref="Dominio.grant.contract.GrantPaymentEntity">
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity">
 		<foreignkey field-ref="keyGrantPaymentEntity"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="grantSubsidy"
-		class-ref="Dominio.grant.contract.GrantSubsidy"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy"
 		proxy="true">
 		<foreignkey field-ref="keyGrantSubsidy"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="responsibleTeacher"
-		class-ref="Dominio.Teacher"
+		class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyResponsibleTeacher"/>
 	</reference-descriptor>
    </class-descriptor>
 
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantSubsidy            -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy            -->
 <!-- ************************************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantSubsidy"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy"
    	  table="GRANT_SUBSIDY"
    >
       <field-descriptor 
@@ -631,7 +631,7 @@
 	 />
 	<reference-descriptor
 		name="grantContract"
-		class-ref="Dominio.grant.contract.GrantContract"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		proxy="true">
 		<foreignkey field-ref="keyGrantContract"/>
 	</reference-descriptor>
@@ -640,10 +640,10 @@
 
 
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantInsurance          -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance          -->
 <!-- ************************************************************** -->
    <class-descriptor
-   	  class="Dominio.grant.contract.GrantInsurance"
+   	  class="net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance"
    	  table="GRANT_INSURANCE"
    >
       <field-descriptor 
@@ -686,12 +686,12 @@
 	 />
 	 <reference-descriptor
 		name="grantPaymentEntity"
-		class-ref="Dominio.grant.contract.GrantPaymentEntity">
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity">
 		<foreignkey field-ref="keyGrantPaymentEntity"/>
 	</reference-descriptor>
 	<reference-descriptor
 		name="grantContract"
-		class-ref="Dominio.grant.contract.GrantContract"
+		class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContract"
 		proxy="true"
 		refresh="true">
 		<foreignkey field-ref="keyGrantContract"/>

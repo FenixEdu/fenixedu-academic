@@ -2,14 +2,14 @@
  * Created on 03/Set/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import Dominio.IExecutionCourse;
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseCreateServices;
 
 /**
  * @author asnr and scpo

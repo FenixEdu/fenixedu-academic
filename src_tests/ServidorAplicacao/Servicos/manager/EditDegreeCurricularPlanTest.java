@@ -1,10 +1,10 @@
 /*
  * Created on 3/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
-import DataBeans.InfoDegreeCurricularPlan;
-import Util.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 
 /**
  * @author lmac1

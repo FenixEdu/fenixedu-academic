@@ -1,14 +1,14 @@
 /*
  * Created on 2/Out/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseNeedAuthorizationServices;
 
 /**
  * @author lmac1

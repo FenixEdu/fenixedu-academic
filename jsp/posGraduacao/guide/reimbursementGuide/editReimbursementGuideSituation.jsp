@@ -3,10 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DataBeans.InfoGuide" %>
-<%@ page import="DataBeans.InfoGuideEntry" %>
-<%@ page import="Util.ReimbursementGuideState" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
+<%@ page import="net.sourceforge.fenixedu.util.ReimbursementGuideState" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <bean:define id="reimbursementGuide" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
 <bean:define id="days" name="<%= SessionConstants.MONTH_DAYS_KEY %>" scope="request"/>

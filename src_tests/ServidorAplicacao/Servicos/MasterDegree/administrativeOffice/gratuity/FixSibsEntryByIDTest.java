@@ -1,8 +1,8 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.gratuity;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.gratuity;
 
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)

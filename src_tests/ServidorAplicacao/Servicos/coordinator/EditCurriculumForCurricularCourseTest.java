@@ -1,18 +1,18 @@
-package ServidorAplicacao.Servicos.coordinator;
+package net.sourceforge.fenixedu.applicationTier.Servicos.coordinator;
 
-import framework.factory.ServiceManagerServiceFactory;
-import DataBeans.InfoCurriculum;
-import Dominio.CurricularCourse;
-import Dominio.Curriculum;
-import Dominio.ICurricularCourse;
-import Dominio.ICurriculum;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentCurriculum;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério 21/Nov/2003

@@ -2,7 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="DataBeans.InfoCurricularCourseScope, Util.Data, java.util.Map, java.lang.Integer" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.lang.Integer" %>
+
 <h2><bean:message key="label.coordinator.degreeCurricular.history"/></h2>
 <span class="error"><html:errors/></span>
 <logic:present name="curricularCourseScopesHashMap">

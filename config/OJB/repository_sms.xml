@@ -3,9 +3,9 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.sms.SentSms -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.sms.SentSms -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.sms.SentSms" table="SENT_SMS">
+<class-descriptor class="net.sourceforge.fenixedu.domain.sms.SentSms" table="SENT_SMS">
 	
 	<field-descriptor
 		name="idInternal"
@@ -31,21 +31,21 @@
 	    name="sendDate"
 	    column="SEND_DATE"
 	    jdbc-type="TIMESTAMP"
-	    conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>     
 
 	<field-descriptor 
 	    name="deliveryDate"
 	    column="DELIVERY_DATE"
 	    jdbc-type="TIMESTAMP"
-	    conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
 	   
 	<field-descriptor 
 	    name="deliveryType"
 	    column="DELIVERY_TYPE"
 	    jdbc-type="INTEGER"
-	    conversion="ServidorPersistente.Conversores.JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion"   			   		
+	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion"   			   		
 	/>  
 		   
 	<field-descriptor
@@ -57,7 +57,7 @@
 	
 	<reference-descriptor
        	name="person"
-       	class-ref="Dominio.Person"
+       	class-ref="net.sourceforge.fenixedu.domain.Person"
        	proxy="true"
 		refresh="true"
     >

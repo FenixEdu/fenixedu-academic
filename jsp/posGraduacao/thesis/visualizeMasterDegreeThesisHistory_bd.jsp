@@ -2,11 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoStudent" %>
-<%@ page import="DataBeans.InfoTeacher" %>
-<%@ page import="DataBeans.InfoExternalPerson" %>
-<%@ page import="DataBeans.InfoEmployee" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEmployee" %>
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 <bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" scope="request"/>

@@ -1,12 +1,12 @@
-package ServidorAplicacao.Servicos.manager.gratuity;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager.gratuity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
-import ServidorAplicacao.Servicos.manager.ManagerBaseTest;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.manager.ManagerBaseTest;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)

@@ -4,7 +4,7 @@
  * Created on 2003/04/02
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -16,14 +16,14 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExamsMap;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseRequeiersAuthorizationServices;
 
 public class ReadExamsMapServiceTest extends TestCaseRequeiersAuthorizationServices {
 

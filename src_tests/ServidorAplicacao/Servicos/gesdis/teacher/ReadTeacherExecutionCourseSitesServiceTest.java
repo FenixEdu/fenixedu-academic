@@ -4,17 +4,17 @@
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.Servicos.gesdis.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.gesdis.teacher;
 
-import DataBeans.InfoPerson;
-import DataBeans.InfoTeacher;
-import DataBeans.util.Cloner;
-import Dominio.IPessoa;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IPessoa;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author jmota

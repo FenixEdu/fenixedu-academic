@@ -2,25 +2,25 @@
  * Created on 17/Mar/2003 by jpvl
  *
  */
-package ServidorAplicacao.Servicos.person;
+package net.sourceforge.fenixedu.applicationTier.Servicos.person;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoRole;
-import Dominio.IPessoa;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.InvalidPasswordServiceException;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
-import ServidorAplicacao.security.PasswordEncryptor;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.RoleType;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.IPessoa;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseNeedAuthorizationServices;
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.RoleType;
 
 /**
  * @author jpvl

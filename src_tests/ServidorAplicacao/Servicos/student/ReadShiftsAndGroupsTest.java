@@ -3,7 +3,7 @@
  * Created on 29/09/2003
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * @author asnr and scpo
@@ -13,20 +13,20 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoShift;
-import DataBeans.InfoSiteGroupsByShift;
-import DataBeans.InfoSiteShift;
-import DataBeans.InfoSiteShiftsAndGroups;
-import DataBeans.InfoSiteStudentGroup;
-import DataBeans.util.Cloner;
-import Dominio.IStudentGroup;
-import Dominio.ITurno;
-import Dominio.StudentGroup;
-import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteGroupsByShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.ITurno;
+import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.Turno;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public class ReadShiftsAndGroupsTest extends TestCaseReadServices {
 

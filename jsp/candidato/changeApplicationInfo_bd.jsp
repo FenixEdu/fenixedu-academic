@@ -1,9 +1,9 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.RoleType" %>
-<%@ page import="ServidorAplicacao.IUserView" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.RoleType" %>
+<%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView" %>
   <body>
    <span class="error"><html:errors/></span> 
    <table width="100%" cellspacing="0">

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 <table width="50%" border="0" align="center" cellpadding="0" cellspacing="2">
 	<tr>

@@ -2,7 +2,7 @@
  * Created on 25/Set/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,15 +13,15 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.IMetadata;
-import Dominio.IQuestion;
-import Dominio.Metadata;
-import Dominio.Question;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.domain.IMetadata;
+import net.sourceforge.fenixedu.domain.IQuestion;
+import net.sourceforge.fenixedu.domain.Metadata;
+import net.sourceforge.fenixedu.domain.Question;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

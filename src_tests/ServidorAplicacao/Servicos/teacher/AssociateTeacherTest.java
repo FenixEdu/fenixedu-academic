@@ -1,10 +1,10 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseCreateServices;
 
 /**
  * @author Fernanda Quitério

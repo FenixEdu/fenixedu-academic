@@ -1,5 +1,5 @@
 <class-descriptor
-		class="Dominio.support.GlossaryEntry"
+		class="net.sourceforge.fenixedu.domain.support.GlossaryEntry"
 		table="GLOSSARY_ENTRY"
 		>
 	<field-descriptor

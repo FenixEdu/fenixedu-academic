@@ -9,7 +9,7 @@
 		<html:hidden property="method" value="prepareForm"/>
 	   <p>Ano Lectivo: 		
 		<html:select property="executionYearId" onchange="this.form.submit()">
-			<logic:iterate id="executionYear" name="executionYears" type="DataBeans.InfoExecutionYear"> 
+			<logic:iterate id="executionYear" name="executionYears" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear"> 
 				<bean:define    id="executionYearId"   name="executionYear" property="idInternal"/>
 					<html:option value="<%= executionYearId.toString() %>">  
 						<bean:write name="executionYear" property="year"/>

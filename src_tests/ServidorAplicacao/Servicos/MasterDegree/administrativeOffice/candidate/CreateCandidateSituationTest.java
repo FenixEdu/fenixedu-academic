@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.candidate;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.candidate;
 
 /**
  * @author Nuno Nunes & Joana Mota
@@ -7,34 +7,34 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoPerson;
-import DataBeans.InfoRole;
-import DataBeans.util.Cloner;
-import Dominio.ICandidateSituation;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionYear;
-import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionDegree;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.RoleType;
-import Util.SituationName;
-import Util.State;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ICandidateSituation;
+import net.sourceforge.fenixedu.domain.ICurso;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.IPessoa;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.util.SituationName;
+import net.sourceforge.fenixedu.util.State;
 
 public class CreateCandidateSituationTest extends TestCaseServicos {
 

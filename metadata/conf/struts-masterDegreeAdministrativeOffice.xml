@@ -772,12 +772,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
     
@@ -800,7 +800,7 @@
 
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
-			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
 			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=2&amp;page=0"
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
@@ -815,15 +815,15 @@
 		</action>		
 
 		<action	name="getStudentByNumberAndDegreeTypeForThesisForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.PrepareStudentDataForThesisOperationsDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.PrepareStudentDataForThesisOperationsDispatchAction"
 				path="/prepareStudentForMasterDegreeThesisAndProof"
 				input="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp?page=2"
 				parameter="method"
 				scope="request"
 				validate="true">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="success" path="/thesis/indexThesis.jsp"/>
 			<forward name="createThesis" path="/thesis/indexCreateThesis.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
@@ -831,75 +831,75 @@
 
       <action path="/printGuidePage"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction" 
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" 
 			  >
 	         <forward name="Success" path="/guide/printGuidePage.jsp"/> 
       </action>
  	  <action path="/printGuidePages"
 		      parameter="method"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.VoidAction" 
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.VoidAction" 
 			  >
 	         <forward name="Success" path="/guide/printGuidePage.jsp"/> 
       </action>
       <action path="/candidateSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/candidateIndex.jsp"/> 
       </action>
 
       <action path="/listingSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/lists/indexLists.jsp"/> 
       </action>
             
 	  <action path="/contributorSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/contributor/indexContributor.jsp"/> 
       </action>
 
 	  <action path="/guideSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/guide/indexGuide.jsp"/> 
       </action>
       
       <action path="/thesisSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/> 
       </action>
       
       <action path="/externalPersonSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="df.page.externalPersonIndex"/> 
       </action>
       
       <action path="/studentSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/student/indexStudent.jsp"/> 
       </action>
 	  
 	  <action path="/guideListingSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
       </action>    
  
  	  <action path="/marksSection"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/marksManagement/indexMarksManagement.jsp"/> 
       </action>
@@ -913,11 +913,11 @@
 		      parameter="method"
 		      scope="request"
 		      input="/lists/displayCurricularPlanByChosenMasterDegree.jsp"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.MasterDegreeListingDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.MasterDegreeListingDispatchAction"
 			  >
-			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 	                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>			  
 	         <forward name="DisplayMasterDegreeList" path="/lists/displayMasterDegrees.jsp"/>
 	         <forward name="MasterDegreeReady" path="/lists/displayCurricularPlanByChosenMasterDegree.jsp"/> 
 	         <forward name="CurricularPlanReady" path="/lists/displayStudentListByDegree.jsp"/> 
@@ -932,7 +932,7 @@
         <action path="/studentCurriculum"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.student.CurriculumDispatchActionForMasterDegreeAdministrativeOffice">
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchActionForMasterDegreeAdministrativeOffice">
 	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
  			 <forward name="NotAuthorized" path="/student/notAuthorized.jsp" />
 	  </action>
@@ -944,7 +944,7 @@
 		      path="/chooseExecutionYearToListCourseStudents"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
               validate="true">
 	         <forward name="PrepareSuccess" path="/lists/chooseExecutionYearToCourseStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCourseStudentList.do?method=prepareChooseMasterDegree&amp;page=0"/>  
@@ -957,7 +957,7 @@
 		      name="chooseMasterDegreeForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/lists/chooseMasterDegreeToCourseStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseCurricularCourseToCourseStudentList.do?method=prepareChooseCurricularCourse"/>
@@ -967,7 +967,7 @@
       <action path="/chooseCurricularCourseToCourseStudentList"
       		  input="/lists/chooseCurricularCourseToCourseStudentList.jsp"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseCurricularCourseDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/lists/chooseCurricularCourseToCourseStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/lists/displayStudentListByCourse.jsp"/> 
@@ -981,7 +981,7 @@
 	  <action path="/listCourseStudents"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.CourseListingDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.CourseListingDispatchAction"
 			  >
 	         <forward name="DisplayMasterDegreeList" path="/lists/displayMasterDegrees.jsp"/>
 	         <forward name="MasterDegreeReady" path="/lists/displayCurricularPlanByChosenMasterDegree.jsp"/> 
@@ -997,7 +997,7 @@
 		      path="/chooseExecutionYear2DegreeStudentList"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
               validate="true">
 	         <forward name="PrepareSuccess" path="/lists/chooseExecutionYearToDegreeStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToDegreeStudentList.do?method=prepareChooseMasterDegree&amp;page=0"/>  
@@ -1010,7 +1010,7 @@
 		      name="chooseMasterDegreeForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/lists/chooseMasterDegreeToDegreeStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/displayStudentListByDegree.do?method=prepareReading&amp;page=0"/>
@@ -1024,11 +1024,11 @@
 		      path="/chooseExecutionYear"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>	
              <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegrees.jsp"/>
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="CreateReady" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>  
@@ -1038,11 +1038,11 @@
 			      parameter="method"
 			      scope="request"
 			      input="/chooseExecutionYear.do?method=chooseDegreeFromList&amp;page=0"
-	              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+	              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
 				  >
-				<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+				<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-	                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+	                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>			  
 		         <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegrees.jsp"/>
 		         <forward name="PrepareSuccess" path="/candidate/chooseExecutionYear.jsp"/> 
 		         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegree.jsp"/>
@@ -1060,11 +1060,11 @@
 		      path="/createCandidateDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareSuccess" path="/createCandidate.jsp"/>  
 	         <forward name="CreateSuccess" path="/createCandidateSuccess.jsp"/>  
       </action>
@@ -1076,7 +1076,7 @@
 		      path="/visualizeCandidates"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
               validate="true">
 	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
 	         <forward name="ActionReady" path="/visualizePersonCandidateList.jsp"/>  
@@ -1091,11 +1091,11 @@
 		      path="/editCandidates"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
 	         <forward name="ActionReady" path="/editCandidate.do?method=prepareEdit&amp;page=0"/>  
 	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
@@ -1107,11 +1107,11 @@
 		      path="/editCandidate"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/changeCandidate.jsp"/>  
 	         <forward name="ChangeSuccess" path="/visualizeCandidate.jsp"/>  
 	         <forward name="ChangePasswordSuccess" path="/guide/informationTemplate1.jsp"/>  
@@ -1123,14 +1123,14 @@
 		      path="/studentGuideDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.StudentGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.StudentGuideDispatchAction"
               validate="true">
-       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+       		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-       		 <exception type="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+       		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException"
 		                key="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>                        
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>                        
 	         <forward name="CreateStudentGuideReady" path="/guide/createGuideReady.jsp"/>
 	  </action>
 
@@ -1144,10 +1144,10 @@
 	      validate="true"
 		 parameter="method"
   	         scope="request"
-      	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.CreateContributorDispatchAction">
-   		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.CreateContributorDispatchAction">
+   		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
             key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
       	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
       	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
       </action>
@@ -1159,7 +1159,7 @@
 		      path="/visualizeContributors"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
               validate="true">
 	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
 	         <forward name="ActionReady" path="/contributor/visualizeContributor.jsp"/>  
@@ -1173,11 +1173,11 @@
 		      path="/editContributors"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
 	         <forward name="ActionReady" path="/editContributor.do?method=prepareEdit&amp;page=0" />  
 	         <forward name="ChooseContributor" path="/contributor/selectContributorFromList.jsp"/>  
@@ -1190,11 +1190,11 @@
 		      path="/editContributor"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="EditReady" path="/contributor/editContributor.jsp"/>  
 	         <forward name="EditSuccess" path="/contributor/editContributorSuccess.jsp"/>  
       </action>
@@ -1209,14 +1209,14 @@
 		      path="/createGuideDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-     		 <exception type="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException"
 		                key="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
               
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
@@ -1231,11 +1231,11 @@
 		      path="/chooseGuideDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/guide/chooseGuide.jsp"/> 
 	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
 	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
@@ -1249,17 +1249,17 @@
 		      path="/editGuideInformation"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
               validate="true">
-       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+       		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-       		 <exception type="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+       		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException"
 		                key="ServidorApresentacao.Action.exceptions.NoChangeMadeActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+       		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
          <forward name="PrepareReady" path="/guide/editGuideInformation.jsp"/> 
          <forward name="EditInformationSuccess" path="/guide/visualizeGuide.jsp"/> 
       </action>
@@ -1273,11 +1273,11 @@
 		      path="/editGuideSituation"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
 			  validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.NonValidChangeActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonValidChangeActionException"
 		                key="ServidorApresentacao.Action.exceptions.NonValidChangeActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="EditReady" path="/guide/editGuideSituation.jsp"/>  
 	         <forward name="SituationChanged" path="/guide/changeSuccess.jsp"/>  
       </action>
@@ -1290,17 +1290,17 @@
 		      path="/createGuideReadyDispatchAction"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException"
 		                key="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
 	         <forward name="CreateStudentGuide" path="/guide/guideMenu.jsp"/>  
@@ -1310,7 +1310,7 @@
 
 
       <action path="/backErrorPage"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/guide/backErrorPage.jsp"/> 
       </action>
@@ -1322,7 +1322,7 @@
 		      path="/guideListingByYear"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.GuideListingDispatchAction"
               validate="true">
 	         <forward name="PrepareReady" path="/guide/chooseGuideYear.jsp"/> 
 	         <forward name="ShowGuideList" path="/guide/showGuideList.jsp"/> 
@@ -1337,11 +1337,11 @@
 		      path="/guideListingByPerson"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.GuideListingDispatchAction"
               validate="true">
-              <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+              <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 	    		         key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-    	        		 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+    	        		 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareSuccess" path="/guide/choosePerson.jsp"/> 
 	         <forward name="ShowGuideList" path="/guide/showGuideList.jsp"/> 
       </action>
@@ -1354,7 +1354,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         
 	         <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
@@ -1367,11 +1367,11 @@
 		      parameter="method"
 		      scope="request"
 		      input="/chooseExecutionYear.do?method=chooseDegreeFromList&amp;page=0"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CreateCandidateDispatchAction"
 			  >
-			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 	                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>			  
 	         <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegrees.jsp"/>
 	         <forward name="PrepareSuccess" path="/candidate/chooseExecutionYear.jsp"/> 
 	         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegree.jsp"/>
@@ -1388,7 +1388,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
@@ -1403,7 +1403,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
@@ -1418,7 +1418,7 @@
 		      name="chooseMasterDegreeForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/chooseMasterDegreeToSelectCandidates.jsp"/>  
 			 <forward name="ChooseSuccess" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates&amp;page=0"/>
@@ -1431,7 +1431,7 @@
 		      name="chooseCandidateSituationForm"
 		      parameter="method"
 		      scope="session"
-              type="ServidorApresentacao.Action.masterDegree.commons.candidate.SelectCandidatesDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.candidate.SelectCandidatesDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListBySituation.jsp"/>  
 	         <forward name="CancelConfirmation" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates"/>  
@@ -1448,7 +1448,7 @@
 		</action>
 
       <action path="/backErrorCandidateApprovalPage"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/candidate/backErrorPage.jsp"/> 
       </action>
@@ -1461,7 +1461,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+		      type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 			 <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
@@ -1477,7 +1477,7 @@
 		      name="chooseMasterDegreeForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/chooseMasterDegreeToSelectCandidates.jsp"/>  
 			 <forward name="ChooseSuccess" path="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0"/>
@@ -1490,7 +1490,7 @@
 		      name="chooseSecondMasterDegreeForm"
 		      parameter="method"
 		      scope="session"
-		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
+		      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListToMakeStudyPlan.jsp"/>  
 	         <forward name="PrepareSecondChooseMasterDegreeReady" path="/candidate/secondChooseMasterDegree.jsp"/>
@@ -1510,11 +1510,11 @@
 		      parameter="method"
 		      scope="request"
 		      validate="true"
-		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
+		      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
 			  >
-		   <exception type="ServidorApresentacao.Action.exceptions.NoChoiceMadeActionException"
+		   <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException"
 			          key="ServidorApresentacao.Action.exceptions.NoChoiceMadeActionException"
-			          handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			          handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
     
 	         <forward name="PrepareSuccess" path="/candidate/displayListOfCoursesToChoose.jsp"/>  
 	         <forward name="ChooseSuccess" path="/candidate/displayCandidateEnrolments.jsp"/>
@@ -1534,7 +1534,7 @@
 		      name="chooseExecutionYearForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/guide/chooseExecutionYearToCreateGuide.jsp"/>  
 	         <forward name="ChooseSuccess" path="/createGuideDispatchAction.do?method=prepare&amp;page=0"/> 
@@ -1543,7 +1543,7 @@
       <!-- Print Guide -->
       <action path="/printGuide"
 		      parameter="method"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.PrintGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.PrintGuideDispatchAction"
 			  >
 	         <forward name="PrintReady" path="/guide/printGuide.jsp"/> 
 	         <forward name="PrintOneGuide" path="/guide/guideTemplate1.jsp"/> 
@@ -1554,11 +1554,11 @@
       <!-- Print Declaration -->
       <action path="/printDeclaration"
 		      parameter="method"
-              type="ServidorApresentacao.Action.certificate.PrintDeclarationDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.certificate.PrintDeclarationDispatchAction"
 			  >
-			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrintReady" path="/certificate/printDeclarationPage.jsp"/> 
       </action>
 
@@ -1570,11 +1570,11 @@
 	      	  validate="true"
 		      parameter="method"
   	          scope="request"
-              type="ServidorApresentacao.Action.certificate.PrintCertificateDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.certificate.PrintCertificateDispatchAction"
 			  >
-			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
 	         <forward name="insucesso" path="/chooseCertificateInfoAction.do?method=prepare"/> 
 	         
@@ -1589,10 +1589,10 @@
 	      	  validate="true"
 			  parameter="method"
   	          scope="request"
-      	      type="ServidorApresentacao.Action.certificate.ChooseDeclarationInfoAction">
-   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.certificate.ChooseDeclarationInfoAction">
+   		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
       	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
    		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForDeclaration"/>     	  		  
       	 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
@@ -1606,13 +1606,13 @@
 	      	  validate="true"
 		      parameter="method"
   	          scope="request"
-      	      type="ServidorApresentacao.Action.certificate.ChooseCertificateInfoAction">
-   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.certificate.ChooseCertificateInfoAction">
+   		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-         <exception	type="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+         <exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException"
 			key="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
-			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
 		  <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForCertificate"/>     	  		  
       	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
@@ -1627,13 +1627,13 @@
 	      	  validate="true"
 			  parameter="method"
   	          scope="request"
-      	      type="ServidorApresentacao.Action.certificate.ChooseFinalResultInfoAction">
-   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.certificate.ChooseFinalResultInfoAction">
+   		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-         <exception type="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FinalResulUnreachedActionException"
             key="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
       	 <forward name="PrepareReady" path="/certificate/chooseFinalResult.jsp"/>
    		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForCertificate"/>     	  		  
       	 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
@@ -1646,7 +1646,7 @@
       		  input="chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToManageMarks.do?method=prepareChooseMasterDegree"/> 
@@ -1657,7 +1657,7 @@
       		  input="/marksManagement/chooseMasterDegreeToManageMarks.jsp"
 		      attribute="chooseMasterDegreeForm"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseMasterDegreeToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" 
@@ -1668,7 +1668,7 @@
       <action path="/chooseCurricularCourseToManageMarks"
       		  input="/marksManagement/chooseCurricularCourseToManageMarks.jsp"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseCurricularCourseDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" path="/marksManagement/showMarksManagementMenu.jsp"/> 
@@ -1679,7 +1679,7 @@
       <action path="/marksManagement"
       		  input="/marksManagement/chooseCurricularCourseToManageMarks.jsp"
 		      parameter="method"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.MarksManagementDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement.MarksManagementDispatchAction"
 			  >
 
 	         <forward name="showMasterDegrees" path="/marksManagement/chooseMasterDegreeToManageMarks.jsp"/>  
@@ -1695,7 +1695,7 @@
       	      name="studentNumberForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ChangeMarkDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement.ChangeMarkDispatchAction"
               validate="true">
 
 	         <forward name="editStudentNumber" path="/marksManagement/editMarkStudent.jsp"/> 
@@ -1711,7 +1711,7 @@
       	      name="studentNumberForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ShowMarkDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement.ShowMarkDispatchAction"
               validate="true">
 	         <forward name="displayStudentList" path="/marksManagement/displayStudentList.jsp"/> 
 	         <forward name="NoStudents" path="/marksManagement.do?method=getStudentMarksList"/>  
@@ -1723,12 +1723,12 @@
       	      name="marksSubmissionForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.SubmitMarksAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement.SubmitMarksAction"
               validate="true">
               
-              <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+              <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	  	key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               	handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               	handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />       
 	         <forward name="MarksSubmission" path="/marksManagement/marksSubmission.jsp"/> 
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement.do?method=getStudentMarksList"/> 	         
@@ -1739,7 +1739,7 @@
       	      name="marksSubmissionForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ConfirmMarksAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement.ConfirmMarksAction"
               validate="false">
               
 	         <forward name="MarksConfirmationMenu" path="/marksManagement/marksConfirmationMenu.jsp"/> 
@@ -1751,7 +1751,7 @@
       
 	  <action path="/studentGratuity"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/student/chooseStudent.jsp"/> 
       </action>
@@ -1761,11 +1761,11 @@
       	      name="chooseStudentForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.commons.student.ChooseStudentDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.student.ChooseStudentDispatchAction"
               validate="false">
-     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
               
 	         <forward name="ShowCurricularPlans" path="/student/showCurricularPlans.jsp"/> 
 	         <forward name="StudentCurricularPlanChosen" path="/gratuityOperations.do?method=getInformation&amp;page=0"/> 
@@ -1779,11 +1779,11 @@
       	      name="chooseStudentForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
               validate="false">
-     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
               
 	         <forward name="ShowGratuityInformation" path="/gratuityChange.do?method=prepareChange&amp;page=0"/> 
       </action>
@@ -1794,14 +1794,14 @@
       	      name="gratuityChangeForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
               
 	         <forward name="ShowGratuityInformationReady" path="/student/showGratuityInformation.jsp"/> 
 	         <forward name="ShowGratuityInformation" path="/gratuityChange.do?method=prepareChange&amp;page=0"/> 	         
@@ -1814,7 +1814,7 @@
       		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCandidateRegistration.do?method=prepareChooseMasterDegree"/> 
@@ -1824,7 +1824,7 @@
       		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      parameter="method"
-   		      type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+   		      type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
 	         <forward name="MasterDegreeReady" path="/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"/>
@@ -1838,7 +1838,7 @@
       		  input="/candidate/chooseMasterDegreeToSelectCandidates.jsp"
 		      attribute="chooseMasterDegreeForm"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/chooseMasterDegreeToSelectCandidates.jsp"/>  
 	         <forward name="ChooseSuccess"  path="/candidateRegistration.do?method=getCandidateList"/>
@@ -1850,20 +1850,20 @@
       	      name="candidateRegistrationForm"
 		      parameter="method"
 		      scope="session"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
 
-			<exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
 		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-            <exception type="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+            <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException"
 			            key="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
-			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>            
+			            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>            
 	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
 	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
@@ -1877,26 +1877,26 @@
       	      name="candidateRegistrationForm"
 		      parameter="method"
 		      scope="session"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
 
-			<exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
 		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-            <exception type="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+            <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException"
 			            key="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
-			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception type="ServidorApresentacao.Action.exceptions.GratuityValuesNotDefinedActionException"
+			            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuityValuesNotDefinedActionException"
 			            key="ServidorApresentacao.Action.exceptions.GratuityValuesNotDefinedActionException"
-			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>												
+			            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>												
 	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
 	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
@@ -1912,7 +1912,7 @@
       	      name="changePersonalInfoForm"
       		  parameter="method"
       		  scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
 			  >
 	         <forward name="Success" path="/student/visualizePersonalStudentInfo.jsp"/> 
       </action>
@@ -1921,7 +1921,7 @@
       	      name="changePersonalInfoForm"
       		  parameter="method"
       		  scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.ReadPersonInfoOfStudentsAction"
 			  >
 	         <forward name="Success" path="/student/editStudentInfo.jsp"/> 
       </action>
@@ -1933,16 +1933,16 @@
       	      name="changePersonalInfoForm"     
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.EditStudentInfoDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.EditStudentInfoDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
+                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/> 
 	         <forward name="Success" path="/student/visualizePersonalStudentInfo.jsp"/>  
        </action>
       <!-- end of edit student information -->
 		<action	name="seeStudentAndCurricularPlansForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentAndCurricularPlansDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentAndCurricularPlansDispatchAction"
 				path="/seeStudentAndCurricularPlans"
 				parameter="method"
 				scope="request"
@@ -1951,21 +1951,21 @@
 			<forward name="start" path="df.page.searchStudents"/>
 			<forward name="viewStudents" path="df.page.viewStudents"/>
 		</action>
-		<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentCurricularPlansAction"
+		<action	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentCurricularPlansAction"
 				path="/seeStudentCurricularPlans"
 				scope="request"
 				validate="false">
 			<forward name="viewStudentCurricularPlans" path="df.page.viewStudentCurricularPlans"/>
 		</action>
 		
-	  <action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.ShowStudentCurricularCoursePlanAction"
+	  <action	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.ShowStudentCurricularCoursePlanAction"
 				path="/showStudentCurricularCoursePlan"
 				scope="request">
 			<forward name="ShowStudentCurricularCoursePlan" path="df.page.showStudentCurricularCoursePlan"/>
 	 </action>	
 	 	 
   	 <action	name="chooseGuideStateForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingByStateDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.GuideListingByStateDispatchAction"
 				path="/guideListingByState"
 				parameter="method"
 				scope="request"
@@ -1974,7 +1974,7 @@
 			<forward name="PrepareSuccess" path="df.page.searchGuideByState"/>
 			<forward name="ShowList" path="df.page.showSearchGuideListResult"/>
 	</action>
-	<action  type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.EditStudentCurricularCoursePlan"
+	<action  type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.EditStudentCurricularCoursePlan"
 	 		 path="/editStudentCurricularPlan"		 
 	 		 parameter="method"
 	 		 name="studentCurricularPlanForm" 
@@ -1983,7 +1983,7 @@
 	 		<forward name="editStudentCurricularCoursePlan" path="df.page.editStudentCurricularCoursePlan"/>
 			<forward name="ShowStudentCurricularCoursePlan" path="/showStudentCurricularCoursePlan.do"/>					
 	 </action>
-	 <action  type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.EditStudentCurricularCoursePlan"
+	 <action  type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.EditStudentCurricularCoursePlan"
 	 		 path="/alterStudentCurricularPlan"		 
 	 		 parameter="method"
 	 		 name="studentCurricularPlanForm" 
@@ -1996,37 +1996,37 @@
 
 	<!-- create master degree thesis -->
 	<action		name="createMasterDegreeThesisForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisDispatchAction"
 				path="/createMasterDegreeThesis"
 				parameter="method"
 				scope="request"
 				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/createMasterDegreeThesis.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 	</action>
 	
 	<action		name="createMasterDegreeThesisForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisLookupDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisLookupDispatchAction"
 				path="/createMasterDegreeThesisLookup"
 				parameter="method"
 				scope="request"
 				input="/createMasterDegreeThesis.do?page=0&amp;method=reloadForm"
 				validate="true">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.RequiredGuidersActionException"
 						key="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
-			<exception	type="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>	
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.GuiderAlreadyChosenActionException"
 						key="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>											
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>											
 			<forward name="start" path="/thesis/createMasterDegreeThesis.jsp"/>
 			<forward name="success" path="/thesis/createSuccessScreen.jsp"/>
 			<forward name="cancel" path="/thesis/indexThesis.jsp"/>
@@ -2036,37 +2036,37 @@
 
 	<!-- change master degree thesis -->
 	<action		name="changeMasterDegreeThesisForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeThesisDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeThesisDispatchAction"
 				path="/changeMasterDegreeThesis"
 				parameter="method"
 				scope="request"
 				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/changeMasterDegreeThesis.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 	</action>
 
 	<action		name="changeMasterDegreeThesisForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeThesisLookupDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeThesisLookupDispatchAction"
 				path="/changeMasterDegreeThesisLookup"
 				parameter="method"
 				scope="request"
 				input="/changeMasterDegreeThesis.do?page=0&amp;method=reloadForm"
 				validate="true">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.RequiredGuidersActionException"
 						key="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
-			<exception	type="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>	
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.GuiderAlreadyChosenActionException"
 						key="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>											
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>											
 			<forward name="start" path="/thesis/changeMasterDegreeThesis.jsp"/>
 			<forward name="success" path="/thesis/changeSuccessScreen.jsp"/>
 			<forward name="cancel" path="/thesis/indexThesis.jsp"/>
@@ -2075,45 +2075,45 @@
 	</action>
 	
 	<!-- visualize master degree thesis -->
-	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeThesisDispatchAction"
+	<action		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeThesisDispatchAction"
 				path="/visualizeMasterDegreeThesis"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/visualizeMasterDegreeThesis.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 	</action>
 	
 	<!-- visualize master degree thesis history -->
-	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeThesisHistoryDispatchAction"
+	<action		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeThesisHistoryDispatchAction"
 				path="/visualizeMasterDegreeThesisHistory"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/visualizeMasterDegreeThesisHistory.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 	</action>
 	
 	<!-- change master degree proof -->
 	<action		name="changeMasterDegreeProofForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProofDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProofDispatchAction"
 				path="/changeMasterDegreeProof"
 				parameter="method"
 				scope="request"
 				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException"
 						key="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.GratuitySituationNotRegularizedActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuitySituationNotRegularizedActionException"
 						key="ServidorApresentacao.Action.exceptions.GratuitySituationNotRegularizedActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>			
 			<forward name="start" path="/thesis/changeMasterDegreeProof.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 			<forward name="errorScholarshipNotFinished" path="/thesis/indexThesis.jsp"/>
@@ -2121,24 +2121,24 @@
 	</action>
 
 	<action		name="changeMasterDegreeProofForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProofLookupDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProofLookupDispatchAction"
 				path="/changeMasterDegreeProofLookup"
 				parameter="method"
 				scope="request"
 				input="/changeMasterDegreeProof.do?page=0&amp;method=reloadForm"
 				validate="true">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.RequiredJuriesActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.RequiredJuriesActionException"
 						key="ServidorApresentacao.Action.exceptions.RequiredJuriesActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException"
 						key="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/changeMasterDegreeProof.jsp"/>
 			<forward name="success" path="/thesis/changeProofSuccessScreen.jsp"/>
 			<forward name="cancel" path="/thesis/indexThesis.jsp"/>					
@@ -2146,16 +2146,16 @@
 	</action>
 	
 	<!-- visualize master degree proof -->
-	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeProofDispatchAction"
+	<action		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeProofDispatchAction"
 				path="/visualizeMasterDegreeProof"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException"
 						key="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/visualizeMasterDegreeProof.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 			<forward name="errorScholarshipNotFinished" path="/thesis/indexThesis.jsp"/>
@@ -2163,13 +2163,13 @@
 	</action>	
 
 	<!-- visualize master degree proof history -->
-	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeProofHistoryDispatchAction"
+	<action		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeProofHistoryDispatchAction"
 				path="/visualizeMasterDegreeProofHistory"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/visualizeMasterDegreeProofHistory.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 			<forward name="errorNonExistingProofVersion" path="/thesis/indexThesis.jsp"/>
@@ -2177,14 +2177,14 @@
 	
 	<!-- insert external person -->
 	<action		name="insertExternalPersonForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.InsertExternalPersonDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.InsertExternalPersonDispatchAction"
 				path="/insertExternalPerson"
 				input="/insertExternalPerson.do?page=0&amp;method=prepare"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="df.page.insertExternalPerson"/>
 			<forward name="error" path="df.page.insertExternalPerson_Error"/>
 			<forward name="success" path="df.page.insertExternalPerson_Success"/>			
@@ -2192,14 +2192,14 @@
 	
 	<!-- edit external person -->
 	<action		name="editExternalPersonForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.EditExternalPersonDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.EditExternalPersonDispatchAction"
 				path="/editExternalPerson"
 				input="/editExternalPerson.do?page=0&amp;method=prepare"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="df.page.editExternalPerson"/>
 			<forward name="error" path="df.page.editExternalPerson_Error"/>
 			<forward name="success" path="df.page.editExternalPerson_Success"/>			
@@ -2207,14 +2207,14 @@
 	
 	<!-- visualize external persons -->
 	<action		name="visualizeExternalPersonsForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.VisualizeExternalPersonsDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.VisualizeExternalPersonsDispatchAction"
 				path="/visualizeExternalPersons"
 				input="/visualizeExternalPersons.do?page=0&amp;method=prepare"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="df.page.visualizeExternalPersons"/>
 			<forward name="error" path="df.page.showExternalPersons_Error"/>
 			<forward name="success" path="df.page.showExternalPersons"/>			
@@ -2222,41 +2222,41 @@
 	
 	<!-- find external persons -->
 	<action		name="findExternalPersonForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.FindExternalPersonDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.FindExternalPersonDispatchAction"
 				path="/findExternalPerson"
 				input="/findExternalPerson.do?page=0&amp;method=prepare"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="df.page.findExternalPerson"/>
 			<forward name="error" path="df.page.showExternalPersons_Error"/>
 			<forward name="success" path="df.page.showExternalPersons"/>			
 	</action>	
 		
 	<!-- view external person -->
-	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.ViewExternalPersonDispatchAction"
+	<action		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.ViewExternalPersonDispatchAction"
 				path="/viewExternalPerson"
 				parameter="method"
 				scope="request">
-			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="df.page.viewExternalPerson"/>
 	</action>
 		
 	<!-- insert work location -->
 	<action		name="insertWorkLocationForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.workLocation.InsertWorkLocationDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.workLocation.InsertWorkLocationDispatchAction"
 				path="/insertWorkLocation"
 				parameter="method"
 				scope="request"
 				input="df.page.insertWorkLocation"
 				validate="true">
-		<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 					key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="error" path="df.page.insertWorkLocation" />
 		<forward name="success" path="df.page.insertWorkLocation_success" />
 		<forward name="start" path="df.page.insertWorkLocation" />
@@ -2264,22 +2264,22 @@
     
     <!-- edit work location -->
     <action		name="editWorkLocationForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.workLocation.EditWorkLocationDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson.workLocation.EditWorkLocationDispatchAction"
 				path="/editWorkLocation"
 				parameter="method"
 				scope="request"
 				input="/editWorkLocation.do?page=0&amp;method=prepare"
 				validate="true">
-		<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 					key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="error" path="df.page.editWorkLocation" />
 		<forward name="success" path="df.page.editWorkLocation_success" />
 		<forward name="start" path="df.page.editWorkLocation" />
 		<forward name="errorLocationAlreadyExists" path="/editWorkLocation.do?page=0&amp;method=prepare" />  
 	</action>	
 	
-	<action type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"
+	<action type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"
 			name="createReimbursementGuide"
 			path="/reimbursementGuideDA"
 			parameter="method"
@@ -2292,89 +2292,89 @@
 	
 	<!-- create reimbursement guide -->
 	<action	name="createReimbursementGuideForm"
-			type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuideDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuideDispatchAction"
 			path="/createReimbursementGuide"
 			input="/createReimbursementGuide.do?page=0&amp;method=prepare"
 			parameter="method"
 			scope="request">
-		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 					key="ServidorApresentacao.Action.exceptions.FenixActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
-		<exception type="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>					
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException"
 					key="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>														
-		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>														
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
 					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>																								
 		<forward name="start" path="df.page.createReimbursementGuide"/>
 		<forward name="error" path="df.page.reimbursementGuide_Error"/>
 		<forward name="success" path="df.page.createReimbursementGuide_Success"/>			
 	</action>	
 	
 	<!-- view reimbursement guides -->
-	<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuidesDispatchAction"
+	<action	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuidesDispatchAction"
 			path="/viewReimbursementGuides"
 			input="/viewReimbursementGuides.do?page=0&amp;method=view"
 			parameter="method"
 			scope="request">
-		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 					key="ServidorApresentacao.Action.exceptions.FenixActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
-		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>					
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
 					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>																								
 		<forward name="start" path="df.page.viewReimbursementGuides"/>
 		<forward name="error" path="df.page.reimbursementGuide_Error"/>		
 	</action>	
 	
 	<!-- view reimbursement guide details -->
-	<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuideDetailsDispatchAction"
+	<action	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuideDetailsDispatchAction"
 			path="/viewReimbursementGuideDetails"
 			input="/viewReimbursementGuideDetails.do?page=0&amp;method=view"
 			parameter="method"
 			scope="request">
-		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 					key="ServidorApresentacao.Action.exceptions.FenixActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
-		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>					
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
 					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>																								
 		<forward name="start" path="df.page.viewReimbursementGuideDetails"/>
 		<forward name="error" path="df.page.reimbursementGuide_Error"/>		
 	</action>	
 	
 	<!-- print reimbursement guide -->
-	<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.PrintReimbursementGuideDispatchAction"
+	<action	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.PrintReimbursementGuideDispatchAction"
 			path="/printReimbursementGuide"
 			input="/printReimbursementGuide.do?page=0&amp;method=print"
 			parameter="method"
 			scope="request">
-		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 					key="ServidorApresentacao.Action.exceptions.FenixActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
-		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>					
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
 					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>																								
 		<forward name="start" path="/guide/reimbursementGuide/reimbursementGuideTemplate1.jsp"/>
 		<forward name="error" path="df.page.reimbursementGuide_Error"/>		
 	</action>	
 	
 	<!-- edit reimbursement guide situation -->
 	<action	name="editReimbursementGuideSituationForm"
-			type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.EditReimbursementGuideSituationDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.EditReimbursementGuideSituationDispatchAction"
 			path="/editReimbursementGuideSituation"
 			input="/editReimbursementGuideSituation.do?page=0&amp;method=prepare"
 			parameter="method"
 			scope="request">
-		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 					key="ServidorApresentacao.Action.exceptions.FenixActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
-		<exception type="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>					
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException"
 					key="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>														
-		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>														
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
 					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>																								
 		<forward name="start" path="df.page.editReimbursementGuideSituation"/>
 		<forward name="error" path="df.page.reimbursementGuide_Error"/>
 		<forward name="success" path="df.page.editReimbursementGuideSituation_Success"/>			
@@ -2383,14 +2383,14 @@
 	
 	<!-- ++++++++++++++++++++++++++++++Gratuity Section+++++++++++++++++++++++++++++++++++++++++++++ -->
 	<action path="/gratuitySection"
-	type="ServidorApresentacao.Action.commons.VoidAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 	parameter="method"
 	>
 		<forward name="Success" path="firstPageGratuitySection"/>
 	</action>
 	
 	<action path="/readStudent"
-	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
 	parameter="method"
 	name="chooseStudentGratuityForm"
 	validate="true"
@@ -2403,7 +2403,7 @@
 	</action>
 
 	<action path="/manageExemptionGratuity"
-	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
 	parameter="method"
 	name="exemptionGratuityForm"
 	validate="true"
@@ -2415,7 +2415,7 @@
 	</action>
 	
 	<action path="/manageExemptionGratuityLA"
-	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityLAAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityLAAction"
 	parameter="method"
 	name="exemptionGratuityForm"
 	validate="true"
@@ -2426,7 +2426,7 @@
 	</action>
 	
 	<action path="/insertGratuityDataDA"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataDispatchAction"
 		name="insertGratuityDataForm"	 	
 		parameter="method"
 		scope="request"	
@@ -2437,7 +2437,7 @@
 	</action>
 
 	<action path="/insertGratuityDataLA"
-	 	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataLookupDispatchAction"
+	 	type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataLookupDispatchAction"
 		name="insertGratuityDataForm"		
  		parameter="method"
 		scope="request"	
@@ -2449,7 +2449,7 @@
 	</action>
 	
 	<action path="/studentsGratuityList"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
 		parameter="method"
 		name="studentsGratuityListForm"
 		scope="request"
@@ -2461,89 +2461,89 @@
 	</action>
 
 	<action path="/studentSituation"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentSituationDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.StudentSituationDispatchAction"
 		parameter="method"
 		name="studentSituationForm"
 		scope="request"
 		validate="true"
 		input="/studentSituation.do?method=chooseStudent&amp;page=0"
 	>
-		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="chooseStudent" path="chooseStudentForStudentSituation" />
 		<forward name="success" path="studentSituation"/>
 	</action>
 	
 	<action path="/payGratuity"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.PayGratuityDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.PayGratuityDispatchAction"
 		parameter="method"
 		name="payGratuityForm"
 		scope="request"
 		input="/payGratuity.do?method=chooseContributor&amp;page=0"
 	>
-		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="chooseContributor" path="chooseContributorForPayGratuity" />
 		<forward name="confirmPayment" path="confirmPayment" />
 		<forward name="paymentSuccess" path="paymentSuccess"/>
 	</action>
 	
 	<action path="/gratuitySituationDetails"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.GratuitySituationDetailsDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.GratuitySituationDetailsDispatchAction"
 		parameter="method"
 		name="createGuideFromTransactionsForm"
 		scope="request"		
 	>
-		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="showDetails" path="gratuitySituationDetails" />
 	</action>
 	
 	<action path="/createGuideFromTransactions"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.CreateGuideFromTransactionsDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.CreateGuideFromTransactionsDispatchAction"
 		parameter="method"
 		name="createGuideFromTransactionsForm"
 		scope="request"
 		input="/createGuideFromTransactionsForm.do?method=chooseContributor&amp;page=0"
 	>
-		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="chooseContributor" path="chooseContributorForCreateGuideFromTransactions" />
 		<forward name="confirmCreate" path="confirmCreateGuideFromTransactions" />
 		<forward name="createSuccess" path="createGuideFromTransactionsSuccess"/>
 	</action>
 	
 	<action path="/editInsuranceValue"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.EditInsuranceValueDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.EditInsuranceValueDispatchAction"
 		parameter="method"
 		name="editInsuranceForm"
 		scope="request"
 		validate="true"
 		input="/editInsuranceValue.do?method=chooseExecutionYear&amp;page=0"
 	>
-		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="chooseExecutionYear" path="chooseExecutionYear" />
 		<forward name="defineInsuranceValue" path="defineInsuranceValue" />
 		<forward name="defineSuccess" path="defineInsuranceValueSuccess"/>
 	</action>
 	
 	<action path="/fixSibsPaymentFileEntries"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.FixSibsConflictsDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.FixSibsConflictsDispatchAction"
 		parameter="method"
 		name="fixSibsPaymentFileEntriesForm"
 		scope="request"
 		validate="true"
 		input="/fixSibsPaymentFileEntries.do?method=prepare&amp;page=0"
 	>
-		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 		<forward name="show" path="showSibsPaymentFileEntries" />
 	</action>
 	
@@ -2551,11 +2551,11 @@
 	  <action path="/chooseDataToCreateGuide"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseDataToCreateGuideDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.ChooseDataToCreateGuideDispatchAction"
 			  >
-			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 	                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>			  
 	         <forward name="DisplayMasterDegreeList" path="/guide/chooseMasterDegreeToCreateGuide.jsp"/>
 	         <forward name="DisplayMasterDegreeCurricularPlanList" path="/guide/chooseMasterDegreeCurricularPlanToCreateGuide.jsp"/>
 	         <forward name="DisplayExecutionDegreeList" path="/guide/chooseExecutionDegreeToCreateGuide.jsp"/>
@@ -2566,7 +2566,7 @@
     
     
     <!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

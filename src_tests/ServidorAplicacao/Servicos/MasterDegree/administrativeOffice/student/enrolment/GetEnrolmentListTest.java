@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.enrolment;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.student.enrolment;
 
 /**
  * 
@@ -7,15 +7,15 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.enr
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.util.Cloner;
-import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.Servicos.TestCaseReadServicesIntranet;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrollmentState;
-import Util.Specialization;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServicesIntranet;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.EnrollmentState;
+import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
 

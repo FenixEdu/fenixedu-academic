@@ -8,13 +8,13 @@
 
 	<!-- ========== Action Mapping Definitions ============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-		<action type="ServidorApresentacao.Action.externalServices.InfoGroupsByExecutionCourse"
+		<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.InfoGroupsByExecutionCourse"
             	path="/infoGroupsByExecutionCourse"
 		        scope="request"
 				validate="true">
 	    </action>
 
-		<action type="ServidorApresentacao.Action.externalServices.StudentInfoByUsername"
+		<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.StudentInfoByUsername"
 	            path="/infoStudent"
 	        	scope="request"
 				validate="true">

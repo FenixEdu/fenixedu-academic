@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
   <bean:define id="studentList" name="<%= SessionConstants.STUDENT_LIST %>" scope="request" />
   <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />

@@ -1,6 +1,6 @@
-package ServidorAplicacao.Servicos;
+package net.sourceforge.fenixedu.applicationTier.Servicos;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author dcs-rjao at 21/Fev/2003

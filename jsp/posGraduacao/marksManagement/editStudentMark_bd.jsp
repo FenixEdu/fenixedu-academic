@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="Util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
 
 <span class="error"><html:errors/></span>
@@ -26,7 +26,7 @@
  <bean:define id="enrolmentEvaluationCode" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" />     
  
     <table>  
- 	    <logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation"  >   
+ 	    <logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation"  >   
 			<html:hidden name="enrolmentEvaluation" property="idInternal" />
 			<bean:define id="studentCode" name="enrolmentEvaluation" property="idInternal" />
 			<html:hidden property="studentPosition" value="<%= pageContext.findAttribute("studentCode").toString() %>" />
@@ -42,7 +42,7 @@
 	</table>
 	<br />
 	<table>
-	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" indexId="evaluationId"  >
+	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" indexId="evaluationId"  >
     		<tr>									
 				<td align="left">
 					<bean:message key="label.mark" />:

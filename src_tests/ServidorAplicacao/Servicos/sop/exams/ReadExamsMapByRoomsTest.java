@@ -2,21 +2,21 @@
  * Created on 2004/04/20
  *
  */
-package ServidorAplicacao.Servicos.sop.exams;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop.exams;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoRoomExamsMap;
-import DataBeans.RoomKey;
-import ServidorAplicacao.Servico.manager.ReadExecutionPeriod;
-import ServidorAplicacao.Servico.sop.LerSala;
-import ServidorAplicacao.Servico.sop.exams.ReadExamsMapByRooms;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
+import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.sop.LerSala;
+import net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExamsMapByRooms;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo

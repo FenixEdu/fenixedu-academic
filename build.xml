@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project basedir="." default="compile-proj" name="Fenix Build File">
+<project basedir="." default="compile" name="Fenix Build File">
 
     <target name="clean-all"
     		description="Removes any generated files">
-		<ant antfile="build_jboss.xml" target="clean-all"/>
+		<ant antfile="build_compile.xml" target="clean-all"/>
     </target>
 
     <target name="prepare"
     		description="Copy configuration files to compile dir">
-		<ant antfile="build_jboss.xml" target="prepare-standalone"/>
+		<ant antfile="build_compile.xml" target="prepare"/>
     </target>
 
     <target name="install"
     		description="Deploys application to web server">
-		<ant antfile="build_jboss.xml" target="deploy-standalone"/>
+		<ant antfile="build_compile.xml" target="install"/>
     </target>
 
     <target name="reload"
     		description="Deploys application to web server">
-    	<ant antfile="build_jboss.xml" target="compile-standalone"/>
+    	<ant antfile="build_compile.xml" target="compile"/>
 		<ant antfile="build_tomcat.xml" target="reload"/>
     </target>
 
@@ -30,17 +30,17 @@
     <target name="deploy-webapp"
     		description="Deploys application to web server">
     	<property file="build.properties" />
-		<ant antfile="build_jboss.xml" target="clean-all"/> 
-		<ant antfile="build_jboss.xml" target="compile-standalone"/>
-    	<ant antfile="build_jboss.xml" target="includeJ2EEjar"/>
+		<ant antfile="build_compile.xml" target="clean-all"/> 
+		<ant antfile="build_compile.xml" target="compile"/>
+    	<ant antfile="build_compile.xml" target="includeJ2EEjar"/>
 		<mkdir dir="deploy"/>
-		<zip destfile="deploy/${app.name}.war" basedir="build/standalone"/>
+		<zip destfile="deploy/${app.name}.war" basedir="build"/>
     </target>
 
 
-    <target name="compile-proj"
+    <target name="compile"
     		description="Compiles standalone application">
-		<ant antfile="build_jboss.xml" target="compile-standalone"/>
+		<ant antfile="build_compile.xml" target="compile"/>
     </target>
 
 </project>

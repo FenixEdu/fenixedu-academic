@@ -2,8 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="ServidorApresentacao.Action.masterDegree.utils.SessionConstants" %>
-<%@ page import="DataBeans.sibs.InfoSibsPaymentFileEntry" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.sibs.InfoSibsPaymentFileEntry" %>
 
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.gratuity.fixConflicts"/></h2>
 

@@ -6,11 +6,11 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <%@ page import="java.lang.String" %>
-<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoExecutionPeriod" %>
-<%@ page import="DataBeans.InfoLesson"%>
-<%@ page import="DataBeans.InfoShift"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
 
 <%@ page import="java.util.Calendar" %>
 

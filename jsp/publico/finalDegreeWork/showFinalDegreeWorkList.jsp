@@ -109,7 +109,7 @@
 						<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/>
 					</td>
 					<td bgcolor="#eae7e4" align="center" rowspan="2">
-			        	<html:link page="<%= "/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((DataBeans.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+			        	<html:link page="<%= "/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
 							<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 				        </html:link>
 					</td>

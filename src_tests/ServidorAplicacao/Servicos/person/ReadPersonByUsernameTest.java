@@ -2,21 +2,21 @@
  * Created on 17/Mar/2003 by jpvl
  *
  */
-package ServidorAplicacao.Servicos.person;
+package net.sourceforge.fenixedu.applicationTier.Servicos.person;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoPerson;
-import DataBeans.InfoRole;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidPasswordServiceException;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import Util.RoleType;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseNeedAuthorizationServices;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.RoleType;
 
 /**
  * @author jpvl

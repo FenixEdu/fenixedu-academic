@@ -1,5 +1,5 @@
 
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.guide;
 
 /**
  * 
@@ -10,24 +10,24 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoRole;
-import Dominio.IGuide;
-import Dominio.IGuideSituation;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentGuide;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.PaymentType;
-import Util.RoleType;
-import Util.SituationOfGuide;
-import Util.State;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.IGuideSituation;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.PaymentType;
+import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.util.State;
 
 public class ChangeGuideSituationTest extends TestCaseServicos {
 

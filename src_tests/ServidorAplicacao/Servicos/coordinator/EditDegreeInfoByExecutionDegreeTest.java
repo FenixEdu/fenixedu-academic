@@ -1,21 +1,21 @@
-package ServidorAplicacao.Servicos.coordinator;
+package net.sourceforge.fenixedu.applicationTier.Servicos.coordinator;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoDegreeInfo;
-import Dominio.CursoExecucao;
-import Dominio.DegreeInfo;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeInfo;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.IPersistentExecutionDegree;
-import ServidorPersistente.IPersistentDegreeInfo;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
+import net.sourceforge.fenixedu.domain.CursoExecucao;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão Create on 7/Nov/2003

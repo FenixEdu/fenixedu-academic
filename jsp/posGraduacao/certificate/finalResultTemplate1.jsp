@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT%>" />
 <bean:define id="conclusionDate" name="<%= SessionConstants.CONCLUSION_DATE %>" scope="session" />
 <bean:define id="date" name="<%= SessionConstants.DATE %>" scope="session" />

@@ -1,15 +1,15 @@
 /*
  * Created on 19/Abr/2004
  */
-package ServidorAplicacao.Servicos.sop.exams;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop.exams;
 
 import java.util.List;
 
-import ServidorAplicacao.Servico.sop.exams.SearchRooms;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.SearchRooms;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo

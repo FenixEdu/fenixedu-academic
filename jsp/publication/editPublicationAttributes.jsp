@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -48,7 +48,7 @@
 	<html:hidden property="method" value="edit"/>
 	
 	<logic:present name="infoAuthorsList">
-		<logic:iterate id="infoAuthor" name="infoAuthorsList" type="DataBeans.publication.InfoAuthor">
+		<logic:iterate id="infoAuthor" name="infoAuthorsList" type="net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor">
 			<bean:define id="authorIdInserted" name="infoAuthor" property="idInternal"/>
 			<html:hidden property="authorsIds" value="<%= pageContext.findAttribute("authorIdInserted").toString() %>"/>
 		</logic:iterate>
@@ -60,11 +60,11 @@
 					<td class="listClasses-header"><bean:message key="message.publications.table.organisation" />
 					</td>
 				</tr>
-				<logic:iterate id="infoAuthor" name="infoAuthorsList" type="DataBeans.publication.InfoAuthor">
+				<logic:iterate id="infoAuthor" name="infoAuthorsList" type="net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor">
 					<tr>
 						<td class="listClasses" style="text-align:center">
 							<logic:notEmpty name="infoAuthor" property="infoPessoa">
-								<bean:define id="infoPessoa" name="infoAuthor" property="infoPessoa" type="DataBeans.InfoPerson"/>
+								<bean:define id="infoPessoa" name="infoAuthor" property="infoPessoa" type="net.sourceforge.fenixedu.dataTransferObject.InfoPerson"/>
 								<bean:write name="infoPessoa" property="nome"/>
 							</logic:notEmpty>
 							<logic:empty name="infoAuthor" property="infoPessoa">

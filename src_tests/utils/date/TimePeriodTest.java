@@ -2,14 +2,14 @@
  * Created on Dec 26, 2003 by jpvl
  *
  */
-package utils.date;
+package net.sourceforge.fenixedu.utils.date;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import junit.framework.TestCase;
 
-import Util.date.TimePeriod;
+import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 /**
  * @author jpvl

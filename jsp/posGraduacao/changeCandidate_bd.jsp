@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.RoleType" %>
-<%@ page import="Util.Data" %>
-<%@ page import="Util.SituationName" %>
-<%@ page import="DataBeans.InfoRole" %>
-<%@ page import="DataBeans.InfoMasterDegreeCandidate" %>
-<%@ page import="ServidorAplicacao.Servico.UserView" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.RoleType" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.util.SituationName" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRole" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
+<%@ page import="net.sourceforge.fenixedu.applicationTier.Servico.UserView" %>
 <html:form action="/editCandidate?method=change">
 <html:hidden property="page" value="1"/>  
    	  <html:hidden property="candidateID" />  

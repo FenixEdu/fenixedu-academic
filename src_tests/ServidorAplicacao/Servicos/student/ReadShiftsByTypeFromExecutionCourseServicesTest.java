@@ -1,13 +1,13 @@
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.util.Cloner;
-import Dominio.IExecutionCourse;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoAula;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.TipoAula;
 
 public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseReadServices {
     public ReadShiftsByTypeFromExecutionCourseServicesTest(java.lang.String testName) {

@@ -9,7 +9,7 @@
 <%--method=post"--%>
  <html:form action="/writeMarks.do?method=loadFile" enctype="multipart/form-data">
  
- 	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>--%>
+ 	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>--%>
 	<html:file property="theFile" />
 	<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 	<html:hidden property="evaluationCode" value="<%= pageContext.findAttribute("evaluationCode").toString()%>" /> 

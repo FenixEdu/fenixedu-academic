@@ -2,12 +2,12 @@
  * Created on 13/Jan/2004
  *  
  */
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.gratuity;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.gratuity;
 
-import DataBeans.InfoGratuityValues;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão

@@ -4,7 +4,7 @@
  *
  */
 
-package ServidorAplicacao.Filtros.publication;
+package net.sourceforge.fenixedu.applicationTier.Filtros.publication;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,14 +12,14 @@ import java.util.Collection;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoRole;
-import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorAplicacao.Filtro.publication.PublicationAuthorAuthorizationFilter;
-import ServidorAplicacao.Filtros.FilterTestCase;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.publication.DeletePublication;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.RoleType;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.publication.PublicationAuthorAuthorizationFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtros.FilterTestCase;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.publication.DeletePublication;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.RoleType;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a>& <a

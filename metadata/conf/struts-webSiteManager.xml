@@ -47,12 +47,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
     
@@ -71,7 +71,7 @@
       <!-- Sections -->
       <action path="/sectionsManagement" 
       	parameter="method"
-      	type="ServidorApresentacao.Action.webSiteManager.SectionsManagementAction"
+      	type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SectionsManagementAction"
       	input="/index.jsp">
       	
       	<forward name="sectionsMenu" path="/sectionsFirstPage.jsp"/>
@@ -81,7 +81,7 @@
 
       <action path="/itemsManagement" 
       	parameter="method"
-      	type="ServidorApresentacao.Action.webSiteManager.ItemsManagementAction" 
+      	type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ItemsManagementAction" 
       	name="itemForm" 
       	scope="request"
       	validate="true"
@@ -95,7 +95,7 @@
 
 	  <action path="/listItemsManagement" 
       	parameter="method"
-      	type="ServidorApresentacao.Action.webSiteManager.ItemsManagementAction" 
+      	type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ItemsManagementAction" 
       	name="itemForm" 
       	scope="request"
       	validate="false"
@@ -107,7 +107,7 @@
 
 	  <action path="/editItemsManagement" 
       	parameter="method"
-      	type="ServidorApresentacao.Action.webSiteManager.ItemsManagementAction" 
+      	type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ItemsManagementAction" 
       	name="itemForm" 
       	scope="request"
       	validate="true"
@@ -120,7 +120,7 @@
 
       <action path="/sectionsConfiguration" 
       	parameter="method"
-      	type="ServidorApresentacao.Action.webSiteManager.SectionsManagementAction"
+      	type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SectionsManagementAction"
       	name="sectionForm"
       	scope="request"
       	validate="true"
@@ -135,7 +135,7 @@
 
     
     <!-- ========== Controller Configuration ================================ -->
-	 <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+	 <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor"/>
 	     
     <!-- ========== Message Resources Definitions ============================ -->
     

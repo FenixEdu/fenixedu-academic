@@ -2,19 +2,20 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.CurricularCourseType" %>
-<%@ page import="Util.EnrollmentState" %>
-<%@ page import="Util.EnrollmentStateSelectionType" %>
-<%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
-<%@ page import="DataBeans.InfoEnrolment" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.CurricularCourseType" %>
+<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.util.EnrollmentStateSelectionType" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 <%@ page import="java.util.List" %>
 
-<%@ page import="DataBeans.util.InfoStudentCurricularPlansWithSelectedEnrollments" %>
-<%@ page import="DataBeans.InfoStudentCurricularPlan" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
 
   <span class="error"><html:errors/></span>
 
-	<bean:define id="infoStudentCPs" name="studentCPs" scope="request" type="DataBeans.util.InfoStudentCurricularPlansWithSelectedEnrollments" />
+	<bean:define id="infoStudentCPs" name="studentCPs" scope="request" type="net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments" />
 	<bean:define id="selectedStudentCPs" name="infoStudentCPs" property="infoStudentCurricularPlans" />
 
 	<bean:size id="numCPs" name="selectedStudentCPs"/>

@@ -1,15 +1,15 @@
-package ServidorAplicacao.Servicos;
+package net.sourceforge.fenixedu.applicationTier.Servicos;
 
 import junit.framework.TestCase;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import Tools.dbaccess;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.tools.dbaccess;
 
 public class TestCaseServicos extends TestCase {
     protected IUserView _userView = null;

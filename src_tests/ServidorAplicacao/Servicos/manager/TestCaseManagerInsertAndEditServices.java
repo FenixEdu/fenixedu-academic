@@ -1,16 +1,16 @@
 /*
  * Created on 3/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseNeedAuthorizationServices;
 
 /**
  * @author lmac1

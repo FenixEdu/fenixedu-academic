@@ -3,9 +3,9 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.transactions.GratuityTransaction -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.transactions.GratuityTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.transactions.GratuityTransaction" table="GRATUITY_TRANSACTION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.GratuityTransaction" table="GRATUITY_TRANSACTION">
 	
 	<field-descriptor
 		name="idInternal"
@@ -44,14 +44,14 @@
 	     name="paymentType"
 	     column="PAYMENT_TYPE"
 	     jdbc-type="INTEGER"
-	     conversion="ServidorPersistente.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
+	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
 	/>
 	
 	<field-descriptor 
 	     name="transactionType"
 	     column="TRANSACTION_TYPE"
 	     jdbc-type="INTEGER"
-	     conversion="ServidorPersistente.Conversores.JavaTransactionType2SqlTransactionTypeFieldConversion"
+	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTransactionType2SqlTransactionTypeFieldConversion"
 	/>
 	
 	<field-descriptor
@@ -87,7 +87,7 @@
 		
 	<reference-descriptor
        	name="personAccount"
-       	class-ref="Dominio.PersonAccount"
+       	class-ref="net.sourceforge.fenixedu.domain.PersonAccount"
        	proxy="true"
 		refresh="true"
     >
@@ -96,7 +96,7 @@
 	
 	<reference-descriptor
        	name="responsiblePerson"
-       	class-ref="Dominio.Person"
+       	class-ref="net.sourceforge.fenixedu.domain.Person"
        	proxy="true"
 		refresh="true"
     >
@@ -105,7 +105,7 @@
 	
 	<reference-descriptor
        	name="guideEntry"
-       	class-ref="Dominio.GuideEntry"
+       	class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
        	proxy="true"
 		refresh="true"
     >
@@ -114,7 +114,7 @@
 	
 	<reference-descriptor
        	name="gratuitySituation"
-       	class-ref="Dominio.GratuitySituation"
+       	class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
        	proxy="true"
 		refresh="true"
     >

@@ -1,17 +1,17 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide.reimbursementGuide;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoGuide;
-import DataBeans.InfoGuideEntry;
-import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideEntry;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
-import ServidorAplicacao.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
-import ServidorAplicacao.Servico.exceptions.guide.RequiredJustificationServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
+import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.RequiredJustificationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)

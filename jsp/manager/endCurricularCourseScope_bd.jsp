@@ -10,7 +10,7 @@
 				<h3><bean:message key="label.manager.curricularCourse.administrating"/></h3>
 			</td>
 			<td>
-				<bean:define id="curricularCourse" name="infoCurricularCourseScope" property="infoCurricularCourse" type="DataBeans.InfoCurricularCourse"/>
+				<bean:define id="curricularCourse" name="infoCurricularCourseScope" property="infoCurricularCourse" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse"/>
 				<h2><b><bean:write name="curricularCourse" property="name" /></b></h2>
 			</td>
 		</logic:present>		

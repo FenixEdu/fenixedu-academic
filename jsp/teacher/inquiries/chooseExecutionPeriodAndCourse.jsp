@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import = "java.util.Iterator" %>
-<%@ page import = "DataBeans.inquiries.InfoOldInquiriesTeachersRes" %>
+<%@ page import = "net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes" %>
 <%@ page import = "java.util.List" %>
 
 
@@ -29,7 +29,7 @@
 					<html:option key="label.inquiries.allExecutionPeriods" bundle="INQUIRIES_RESOURCES" value='<%= value %>'/>
 			
 					<logic:notEmpty name="executionPeriodList">
-						<logic:iterate id="executionPeriod" name="executionPeriodList" type="DataBeans.InfoExecutionPeriod"> 
+						<logic:iterate id="executionPeriod" name="executionPeriodList" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod"> 
 							<bean:define id="currentPeriodId" name="executionPeriod" property="idInternal"/>
 							<html:option value="<%= currentPeriodId.toString() %>">
 								<bean:write name="executionPeriod" property="semester"/>
@@ -95,7 +95,7 @@
 					<%= oldInquiriesTeachersRes.getExecutionPeriod().getInfoExecutionYear().getYear() %>
 				</td>
 				<td class="listClasses">
-					<logic:iterate id="oldInquirieRes" name="oldInquiriesTeachersResList" type="DataBeans.inquiries.InfoOldInquiriesTeachersRes">
+					<logic:iterate id="oldInquirieRes" name="oldInquiriesTeachersResList" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes">
 						&nbsp;
 						<html:link page="/viewOldInquiriesTeachersResults.do?method=viewResults"  paramId="oldInquiryTeacherId" paramName="oldInquirieRes" paramProperty="idInternal">
 							<bean:write name="oldInquirieRes" property="classType"/>

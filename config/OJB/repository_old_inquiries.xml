@@ -1,7 +1,7 @@
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.inquiries.OldInquiriesSummary -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.inquiries.OldInquiriesSummary"
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
                   table="OLD_INQUIRIES_SUMMARY">
 	<field-descriptor
 		name="idInternal"
@@ -30,7 +30,7 @@
 	/>
 	<reference-descriptor
 	  name="executionPeriod"
-	  class-ref="Dominio.ExecutionPeriod">
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
 	  <foreignkey field-ref="keyExecutionPeriod"/>
    </reference-descriptor>
 	            
@@ -46,7 +46,7 @@
 	/>
 	<reference-descriptor
 	  name="degree"
-	  class-ref="Dominio.Degree">
+	  class-ref="net.sourceforge.fenixedu.domain.Degree">
 	  <foreignkey field-ref="keyDegree"/>
    </reference-descriptor>
     
@@ -267,10 +267,10 @@
 
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.inquiries.OldInquiriesTeachersRes -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes -->
 <!-- ******************************************************************************************************************************* -->
 
-<class-descriptor class="Dominio.inquiries.OldInquiriesTeachersRes"
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
                   table="OLD_INQUIRIES_TEACHERS_RES">
 
 	<field-descriptor
@@ -300,7 +300,7 @@
 	/>
 	<reference-descriptor
 	  name="executionPeriod"
-	  class-ref="Dominio.ExecutionPeriod">
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
 	  <foreignkey field-ref="keyExecutionPeriod"/>
    </reference-descriptor>
 	            
@@ -316,7 +316,7 @@
 	/>
 	<reference-descriptor
 	  name="degree"
-	  class-ref="Dominio.Degree">
+	  class-ref="net.sourceforge.fenixedu.domain.Degree">
 	  <foreignkey field-ref="keyDegree"/>
    </reference-descriptor>
     
@@ -369,7 +369,7 @@
 	/>
 	<reference-descriptor
 	  name="teacher"
-	  class-ref="Dominio.Teacher">
+	  class-ref="net.sourceforge.fenixedu.domain.Teacher">
 	  <foreignkey field-ref="keyTeacher"/>
    </reference-descriptor>
 
@@ -630,9 +630,9 @@
 
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.inquiries.OldInquiriesCoursesRes -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.inquiries.OldInquiriesCoursesRes"
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
                   table="OLD_INQUIRIES_COURSES_RES">
 	<field-descriptor
 		name="idInternal"
@@ -667,7 +667,7 @@
 	/>
 	<reference-descriptor
 	  name="executionPeriod"
-	  class-ref="Dominio.ExecutionPeriod">
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
 	  <foreignkey field-ref="keyExecutionPeriod"/>
    </reference-descriptor>
 	                	 
@@ -678,7 +678,7 @@
 	/>
 	<reference-descriptor
 	  name="degree"
-	  class-ref="Dominio.Degree">
+	  class-ref="net.sourceforge.fenixedu.domain.Degree">
 	  <foreignkey field-ref="keyDegree"/>
    </reference-descriptor>
     

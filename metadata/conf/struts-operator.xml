@@ -35,12 +35,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
     
@@ -57,28 +57,28 @@
       <action path="/index" forward="/index.jsp"/>
 			<action	name="personForm"
 					attribute="personForm"
-					type="ServidorApresentacao.Action.operator.FindPersonAction"
+					type="net.sourceforge.fenixedu.presentationTier.Action.operator.FindPersonAction"
 					path="/findPerson"
 					input="/findPerson.do?method=prepareFindPerson&amp;page=0"
 					parameter="method"
 					scope="request"
 					validate="true">
-				<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+				<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 							key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-							handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+							handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 				<forward name="choosePerson" path="/password/choosePersonPage.jsp"/>
 				<forward name="confirmPasswordChange" path="/password/confirmPasswordChange.jsp"/>
 			</action>
 	      
-			<action	type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"
+			<action	type="net.sourceforge.fenixedu.presentationTier.Action.commons.password.GenerateNewPasswordDispatchAction"
 					path="/generateNewPassword"
 					input="/generateNewPassword.do?method=prepare&amp;page=0"
 					parameter="method"
 					scope="request"
 					validate="true">
-				<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+				<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 							key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-							handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+							handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 				<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
 			</action>
 
@@ -87,7 +87,7 @@
 					validate="true"
 					input="/submitPhoto.do?method=preparePhotoUpload&amp;page=0"
 					name="submitPhotoForm"
-					type="ServidorApresentacao.Action.operator.SubmitPhotoAction"
+					type="net.sourceforge.fenixedu.presentationTier.Action.operator.SubmitPhotoAction"
 					scope="request">
 				<forward name="chooseFile" path="/photo/submitPhoto.jsp"/>
 			</action>
@@ -98,7 +98,7 @@
 
     
     <!-- ========== Controller Configuration ================================ -->
-	 <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+	 <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor"/>
 	     
     <!-- ========== Message Resources Definitions ============================ -->
     

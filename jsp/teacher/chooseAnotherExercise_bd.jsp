@@ -47,7 +47,7 @@
 		<td class="listClasses-header"><bean:message key="label.test.difficulty"/></td>
 		<td width="90" class="listClasses-header"><bean:message key="label.test.quantidadeExercicios"/></td>
 	</tr>
-	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="DataBeans.InfoMetadata">
+	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="net.sourceforge.fenixedu.dataTransferObject.InfoMetadata">
 	<tr>
 		<logic:notEqual name="metadata" property="description" value="">
 			<td class="listClasses"><bean:write name="metadata" property="description"/></td>

@@ -1,8 +1,8 @@
 <%@ page language="java" %>
 <%@ page import="org.apache.struts.action.Action" %>
-<%@ page import ="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoRoomOccupation" %>
-<%@ page import="DataBeans.InfoViewExamByDayAndShift" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift" %>
 <%@ page import="java.util.Calendar" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

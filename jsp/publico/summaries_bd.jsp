@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <logic:present name="siteView"> 
 	<bean:define id="component" name="siteView" property="component"/>
@@ -52,7 +52,7 @@
 	</html:form>
 
 
-	<logic:iterate id="summary" name="component" property="infoSummaries" type="DataBeans.InfoSummary">
+	<logic:iterate id="summary" name="component" property="infoSummaries" type="net.sourceforge.fenixedu.dataTransferObject.InfoSummary">
 		<bean:define id="summaryCode" name="summary" property="idInternal" />
 		<div id="summary">
 			<logic:present name="summary" property="infoShift">

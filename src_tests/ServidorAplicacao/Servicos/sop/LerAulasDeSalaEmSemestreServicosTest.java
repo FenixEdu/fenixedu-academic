@@ -4,25 +4,25 @@
  * Created on 29 de Outubro de 2002, 15:49
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * @author tfc130
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoRoom;
-import DataBeans.util.Cloner;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoSala;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.TipoSala;
 
 public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices {
 

@@ -2,19 +2,19 @@
  * Created on 9/Set/2003
  *  
  */
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
-import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Susana Fernandes

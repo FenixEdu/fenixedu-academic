@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><html:errors/></span>
 <p>
@@ -28,7 +28,7 @@
 							</td>
 						</tr>
 			
-						<logic:iterate id="executionCourse" name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>" type="DataBeans.InfoExecutionCourse">
+						<logic:iterate id="executionCourse" name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
 							<bean:define id="infoExecutionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 							<tr>	 			
 								<td class="listClasses" style="text-align:left"><bean:write name="executionCourse" property="nome"/>

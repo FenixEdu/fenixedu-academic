@@ -2,7 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.CurricularCourseType, DataBeans.enrollment.InfoCurricularCourse2Enroll" %>
+<%@ page import="net.sourceforge.fenixedu.util.CurricularCourseType" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll" %>
 
 <script type="text/javascript" language="JavaScript">
 <!--
@@ -149,7 +150,7 @@
 		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></a></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
-		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
+		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 			<bean:define id="onclick">
 				if (this.checked == false) {this.form.method.value='unenrollFromCurricularCourse'; disableAllElementsInUnenrollment(this.form,'unenrolledCurricularCourses','enrolledCurricularCoursesAfter');this.form.submit();}
 			</bean:define>

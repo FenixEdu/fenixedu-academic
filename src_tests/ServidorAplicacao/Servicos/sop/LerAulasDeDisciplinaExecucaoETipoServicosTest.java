@@ -5,7 +5,7 @@
  * Created on 28 de Outubro de 2002, 18:36
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -13,12 +13,12 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.ExecutionCourseKeyAndLessonType;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import Util.TipoAula;
+import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseKeyAndLessonType;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.util.TipoAula;
 
 public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseReadServices {
 

@@ -1,9 +1,9 @@
 <!-- Please keep user defined mappings in this file only
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
-<!-- Definitions for Dominio.Advisory -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Advisory -->
    <class-descriptor
-   	  class="Dominio.Advisory"
+   	  class="net.sourceforge.fenixedu.domain.Advisory"
    	  table="ADVISORY"
    >
       <field-descriptor id="1"
@@ -22,7 +22,7 @@
          name="created"
          column="CREATED"
          jdbc-type="TIMESTAMP"
-         conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
       />      
       <field-descriptor id="4"
          name="subject"

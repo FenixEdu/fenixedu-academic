@@ -7,7 +7,7 @@
 	<logic:present name="selectedCases" >
 		<logic:present name="unselectedCases" >
 			<logic:present name="hiddenSelectedCases" >
-				<bean:define id="equivalency" type="DataBeans.Seminaries.InfoEquivalency" scope="request" name="equivalency"/>
+				<bean:define id="equivalency" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency" scope="request" name="equivalency"/>
 				<bean:define id="selectedCases" type="java.util.List" scope="request" name="selectedCases"/>
 				<bean:define id="unselectedCases" type="java.util.List" scope="request" name="unselectedCases"/>
 				<bean:define id="hiddenSelectedCases" type="java.util.List" scope="request" name="hiddenSelectedCases"/>
@@ -77,7 +77,7 @@
 					</tr>
 					<tr>
 						<td>
-							<logic:iterate id="selectedCase" type="DataBeans.Seminaries.InfoCaseStudy" name="hiddenSelectedCases">
+							<logic:iterate id="selectedCase" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy" name="hiddenSelectedCases">
 								<html:hidden property="hiddenSelectedCases" value="<%=selectedCase.getIdInternal().toString()%>"/>
 							</logic:iterate>
 						</td>

@@ -1,18 +1,18 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.guide;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import DataBeans.InfoContributor;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoGuide;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import Util.GuideRequester;
-import Util.SituationOfGuide;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)

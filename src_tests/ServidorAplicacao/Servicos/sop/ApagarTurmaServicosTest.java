@@ -5,7 +5,7 @@
  * Created on 27 de Outubro de 2002, 18:19
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -13,25 +13,25 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoClass;
-import DataBeans.util.Cloner;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import Dominio.ITurma;
-import Dominio.Turma;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionDegree;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ICurso;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ITurma;
+import net.sourceforge.fenixedu.domain.Turma;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseDeleteAndEditServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public class ApagarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 

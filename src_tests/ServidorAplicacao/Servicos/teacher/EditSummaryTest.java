@@ -1,19 +1,19 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.Calendar;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import Dominio.ISummary;
-import Dominio.Summary;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentSummary;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoAula;
+import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.TipoAula;
 
 /**
  * @author Leonor Almeida

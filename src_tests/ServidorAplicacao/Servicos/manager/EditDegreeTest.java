@@ -1,14 +1,14 @@
 /*
  * Created on 3/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import DataBeans.InfoDegree;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author lmac1

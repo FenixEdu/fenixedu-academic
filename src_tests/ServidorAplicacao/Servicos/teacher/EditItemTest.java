@@ -1,9 +1,9 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
-import framework.factory.ServiceManagerServiceFactory;
-import DataBeans.InfoItem;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt

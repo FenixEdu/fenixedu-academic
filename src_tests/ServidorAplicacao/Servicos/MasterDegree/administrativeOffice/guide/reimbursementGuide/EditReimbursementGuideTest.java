@@ -1,14 +1,14 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide.reimbursementGuide;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import Util.ReimbursementGuideState;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.util.ReimbursementGuideState;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)

@@ -1,16 +1,16 @@
-package ServidorAplicacao.Servicos.coordinator;
+package net.sourceforge.fenixedu.applicationTier.Servicos.coordinator;
 
-import framework.factory.ServiceManagerServiceFactory;
-import DataBeans.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 
-import Dominio.DegreeCurricularPlan;
-import Dominio.IDegreeCurricularPlan;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão Create on 7/Nov/2003

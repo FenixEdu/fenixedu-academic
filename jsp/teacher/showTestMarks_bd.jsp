@@ -7,7 +7,7 @@
 <logic:present name="siteView">
 	
 	<bean:define id="component" name="siteView" property="component"/>
-	<bean:define id="distributedTest" name="component" property="infoDistributedTest" type="DataBeans.InfoDistributedTest"/>
+	<bean:define id="distributedTest" name="component" property="infoDistributedTest" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest"/>
 	<bean:define id="infoStudentTestQuestionList" name="component" property="infoStudentTestQuestionList"/>
 	<bean:define id="maximumMark" name="component" property="maximumMark"/>
 	
@@ -25,7 +25,7 @@
 	<bean:define id="finalMark" value="0"/>
 	<bean:define id="questionNumber" name="distributedTest" property="numberOfQuestions"/>
 	<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
-		<logic:iterate id="studentTestQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestionMark" indexId="index">
+		<logic:iterate id="studentTestQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestionMark" indexId="index">
 			<logic:equal name="index" value="0">
 				<h2><bean:write name="distributedTest" property="title"/></h2>
 				<br/>

@@ -34,7 +34,7 @@
 		<td class="listClasses-header"><bean:message key="label.test.lastModifiedDate"/></td>
 		<td width="100" class="listClasses-header"><bean:message key="label.test.numberOfQuestions"/></td>
 	</tr>
-	<logic:iterate id="tests" name="component" property="infoTests" type="DataBeans.InfoTest">
+	<logic:iterate id="tests" name="component" property="infoTests" type="net.sourceforge.fenixedu.dataTransferObject.InfoTest">
 	<tr>
 		<td class="listClasses"><bean:write name="tests" property="title"/></td>
 		<td class="listClasses"><bean:write name="tests" property="creationDateFormatted"/></td>

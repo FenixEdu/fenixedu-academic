@@ -1,8 +1,8 @@
-package ServidorAplicacao.Servicos.commons.workLocation;
+package net.sourceforge.fenixedu.applicationTier.Servicos.commons.workLocation;
 
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)

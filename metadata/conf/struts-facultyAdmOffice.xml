@@ -326,12 +326,12 @@
 		<exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/> 
 	</global-exceptions>
 
@@ -341,7 +341,7 @@
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-    	<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction" name="voidForm">
+    	<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm">
     		<forward name="Success" path="index"/>
     	</action>
     	
@@ -351,8 +351,8 @@
 	   			name="teacherSearchForm" 
 	   			scope="request"
 	   			parameter="method"
-	   			type="ServidorApresentacao.Action.framework.SearchAction"
-	   			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+	   			type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction"
+	   			className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
 			<set-property property="serviceName" value="FindTeachersService"/>
   			<set-property property="objectAttribute" value="infoTeacher"/>
   			<set-property property="listAttribute" value="infoTeacherList"/>
@@ -362,7 +362,7 @@
     		<forward name="list-many" path=""/>
     	</action>
 	   	<action path="/listManagementPositions" 
-	   			type="ServidorApresentacao.Action.credits.managementPosition.ListTeacherManagementPositionsAction">
+	   			type="net.sourceforge.fenixedu.presentationTier.Action.credits.managementPosition.ListTeacherManagementPositionsAction">
    			<forward name="successfull-read" path="listTeacherManagementPositions"/>
     	</action>
 
@@ -372,8 +372,8 @@
 	   			name="teacherSearchForm" 
 	   			scope="request"
 	   			parameter="method"
-	   			type="ServidorApresentacao.Action.framework.SearchAction"
-	   			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+	   			type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction"
+	   			className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
 			<set-property property="serviceName" value="FindTeachersService"/>
   			<set-property property="objectAttribute" value="infoTeacher"/>
   			<set-property property="listAttribute" value="infoTeacherList"/>
@@ -383,16 +383,16 @@
     		<forward name="list-many" path=""/>
     	</action>
 	   	<action path="/listServiceExemptions" 
-	   			type="ServidorApresentacao.Action.credits.serviceExemption.ListTeacherServiceExemptionsAction">
+	   			type="net.sourceforge.fenixedu.presentationTier.Action.credits.serviceExemption.ListTeacherServiceExemptionsAction">
    			<forward name="successfull-read" path="listTeacherServiceExemptions"/>
     	</action>
 
     <!-- == USE CASE: Edit Teacher Management Position =============================================== -->	
         <action path="/CRUDManagementPosition" name="ManagementPositionForm" 
             input="/CRUDManagementPosition.do?method=prepareEdit&amp;page=0" 
-            type="ServidorApresentacao.Action.credits.managementPosition.CRUDManagementPositionAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.managementPosition.CRUDManagementPositionAction" 
             parameter="method" scope="request" 
-            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
             <set-property property="editService" value="EditManagementPositionService"/>
             <set-property property="deleteService" value="DeleteManagementPositionService"/>
             <set-property property="readService" value="ReadManagementPositionByOidService"/>
@@ -401,7 +401,7 @@
             <set-property property="infoObjectClassName" 
                 value="DataBeans.credits.InfoManagementPositionCreditLine" />
 			
-			<exception key="error.credits.nonExistingManagementPosition" type="ServidorAplicacao.Servico.exceptions.NonExistingServiceException" path="/prepareManagementPositionsManagement.do?method=doSearch" />	
+			<exception key="error.credits.nonExistingManagementPosition" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException" path="/prepareManagementPositionsManagement.do?method=doSearch" />	
 
             <forward name="show-form" path="editManagementPosition"/>
             <forward name="successfull-edit" 
@@ -414,9 +414,9 @@
     <!-- == USE CASE: Edit Teacher Service Excemption =============================================== -->	
         <action path="/CRUDServiceExemption" name="ServiceExemptionForm" 
             input="/CRUDServiceExemption.do?method=prepareEdit&amp;page=0" 
-            type="ServidorApresentacao.Action.credits.serviceExemption.CRUDServiceExemptionAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.serviceExemption.CRUDServiceExemptionAction" 
             parameter="method" scope="request" 
-            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
             <set-property property="editService" value="EditServiceExemptionService"/>
             <set-property property="deleteService" value="DeleteServiceExemptionService"/>
             <set-property property="readService" value="ReadServiceExemptionByOidService"/>
@@ -438,8 +438,8 @@
             name="teacherSearchForm" 
             scope="request" 
             parameter="method" 
-            type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -449,19 +449,19 @@
             <forward name="list-many" path=""/>
         </action>
         <action path="/prepareTeacherCreditsSheet" 
-            type="ServidorApresentacao.Action.credits.PrepareReadTeacherCreditsSheetAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.PrepareReadTeacherCreditsSheetAction">
             <forward name="successfull-prepare" path="listTeacherCredits"/>
         </action>
         <action path="/showTeacherCreditsSheet" 
-            type="ServidorApresentacao.Action.credits.ReadTeacherCreditsSheetAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ReadTeacherCreditsSheetAction">
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
         <!-- =======================================================================  -->
     	<!-- ==  USE CASE : Manage Professorships ================================== -->
         <action path="/teacherSearchForExecutionCourseAssociation" input="search-for-teacherExecutionCourseAssociation-management" 
             name="teacherSearchForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -473,8 +473,8 @@
 		
 		<action path="/showTeacherProfessorshipsForManagement" input="show-teacher-professorships-for-management" 
             name="teacherExecutionCourseResponsabilities" scope="request" 
-            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0"/>
             <forward name="list-professorships" path="show-teacher-professorships-for-management"/>
@@ -483,16 +483,16 @@
         <action path="/updateTeacherExecutionYearExecutionCourseResponsabilities" 
             input="show-teacher-professorships-for-management" 
             name="teacherExecutionCourseResponsabilities" scope="request" 
-            type="ServidorApresentacao.Action.teacher.professorship.UpdateProfessorshipHoursAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.UpdateProfessorshipHoursAction">
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
                 key="message.professorship.invalidCategory" 
                 path="/showTeacherProfessorshipsForManagement.do"/>
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
                 key="message.professorship.numberOfResponsibleForExceeded" 
                 path="/showTeacherProfessorshipsForManagement.do" 
-                handler="ServidorApresentacao.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
+                handler="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
             <forward name="successfull-update" path="/showTeacherProfessorshipsForManagement.do"/>
         </action>
 
@@ -502,9 +502,9 @@
 			name="searchGrantOwnerForm" 
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.owner.SearchGrantOwnerAction"
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.SearchGrantOwnerAction"
      		validate="true"
-   			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+   			className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
 			<set-property property="serviceName" value="SearchGrantOwner"/>
   			<set-property property="objectAttribute" value="infoGrantOwner"/>
   			<set-property property="listAttribute" value="infoGrantOwnerList"/>
@@ -521,7 +521,7 @@
 			scope="request"
    			parameter="method"
 		    validate="true"
-   			type="ServidorApresentacao.Action.grant.owner.SearchGrantOwnerByNumberAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.SearchGrantOwnerByNumberAction">
    			<forward name="search-succesfull" path="searchGrantOwnerResult"/>
    			<forward name="search-unSuccesfull" path="/searchGrantOwner.do?page=0&amp;method=searchForm"/>
     </action>
@@ -533,7 +533,7 @@
 			scope="request"
    			parameter="method"
    			validate="true"
-   			type="ServidorApresentacao.Action.grant.owner.EditGrantOwnerAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.EditGrantOwnerAction">
    			<forward name="edit-grant-owner-form" path="editGrantOwnerForm"/>
    			<forward name="grant-owner-main" path="searchGrantOwnerForm"/>
   			<forward name="manage-grant-owner" path="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"/> 
@@ -546,7 +546,7 @@
 			name="voidForm" 
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.owner.ManageGrantOwnerAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.ManageGrantOwnerAction">
   			<forward name="manage-grant-owner" path="manageGrantOwner"/> 
     </action>
 
@@ -556,7 +556,7 @@
 			name="voidForm" 
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantContractAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantContractAction">
   			<forward name="manage-grant-contract" path="manageGrantContract"/> 
     </action>
 
@@ -568,7 +568,7 @@
 			scope="request"
    			parameter="method"
    			validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantContractAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantContractAction">
   			<forward name="edit-grant-contract" path="editGrantContractForm"/>
   			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
   			<forward name="search-main-page" path="searchGrantOwner"/>
@@ -581,7 +581,7 @@
 			scope="request"
    			parameter="method"
    			validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantSubsidyAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantSubsidyAction">
   			<forward name="edit-grant-subsidy" path="editGrantSubsidyForm"/>
   			<forward name="manage-grant-subsidy" path="/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm"/>
     </action>
@@ -592,7 +592,7 @@
 			name="voidForm" 
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantSubsidyAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantSubsidyAction">
   			<forward name="manage-grant-subsidy" path="manageGrantSubsidy"/> 
     </action>
     
@@ -602,7 +602,7 @@
 			name="voidForm" 
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.qualification.ManageGrantQualificationAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.qualification.ManageGrantQualificationAction">
   			<forward name="manage-grant-qualification" path="manageGrantQualification"/> 
     </action>
 
@@ -613,7 +613,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.qualification.EditGrantQualificationAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.qualification.EditGrantQualificationAction">
   			<forward name="edit-grant-qualification" path="editGrantQualificationForm"/>
   			<forward name="manage-grant-qualification" path="/manageGrantQualification.do?method=prepareManageGrantQualificationForm"/>
     </action>
@@ -625,7 +625,7 @@
 			name="voidForm"
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantTypeAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantTypeAction">
   			<forward name="manage-grant-type" path="manageGrantType"/> 
     </action>
 
@@ -636,7 +636,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantTypeAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantTypeAction">
   			<forward name="edit-grant-type" path="editGrantTypeForm"/>
   			<forward name="manage-grant-type" path="/manageGrantType.do?method=prepareManageGrantTypeForm"/>
     </action>
@@ -647,7 +647,7 @@
 			name="voidForm"
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantPartAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantPartAction">
   			<forward name="manage-grant-part" path="manageGrantPart"/> 
     </action>
 
@@ -658,7 +658,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantPartAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantPartAction">
   			<forward name="edit-grant-part" path="editGrantPartForm"/>
   			<forward name="manage-grant-part" path="/manageGrantPart.do?method=prepareManageGrantPart"/>
     </action>
@@ -669,7 +669,7 @@
 			name="voidForm"
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantContractRegimeAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantContractRegimeAction">
   			<forward name="manage-grant-contract-regime" path="manageGrantContractRegime"/> 
     </action>
 
@@ -680,7 +680,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantContractRegimeAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantContractRegimeAction">
   			<forward name="edit-grant-contract-regime" path="editGrantContractRegime"/>
   			<forward name="manage-grant-contract-regime" path="/manageGrantContractRegime.do?method=prepareManageGrantContractRegime"/>
     </action>
@@ -692,7 +692,7 @@
 			scope="request"
    			parameter="method"
    			validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantInsuranceAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantInsuranceAction">
   			<forward name="edit-grant-insurance" path="editGrantInsuranceForm"/>
   			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
     </action>
@@ -703,7 +703,7 @@
 			name="voidForm"
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantContractMovementAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantContractMovementAction">
   			<forward name="manage-grant-contract-movement" path="manageGrantContractMovement"/> 
     </action>
 
@@ -714,7 +714,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantContractMovementAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantContractMovementAction">
   			<forward name="edit-grant-contract-movement" path="editGrantContractMovementForm"/>
   			<forward name="manage-grant-contract-movement" path="/manageGrantContractMovement.do?method=prepareManageGrantContractMovement"/>
     </action>
@@ -726,7 +726,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.teacher.ShowAllTeachersAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ShowAllTeachersAction">
   			<forward name="show-teachers" path="/grant/contract/showTeachers.jsp"/>
     </action>
     <!-- ===================== USE CASE: SHOW PAYMENT ENTITIES LIST ============================== -->
@@ -736,7 +736,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.ShowAllGrantPaymentEntitiesAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ShowAllGrantPaymentEntitiesAction">
   			<forward name="show-payment-entities" path="/grant/contract/showGrantPaymentEntities.jsp"/>
     </action>
 
@@ -746,7 +746,7 @@
 			name="voidForm"
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantCostCenterAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantCostCenterAction">
   			<forward name="manage-grant-costcenter" path="manageGrantCostCenter"/> 
     </action>
 
@@ -757,7 +757,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantCostCenterAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantCostCenterAction">
   			<forward name="edit-grant-costcenter" path="editGrantCostCenterForm"/>
   			<forward name="manage-grant-costcenter" path="/manageGrantCostCenter.do?method=prepareManageGrantCostCenter"/>
     </action>
@@ -768,7 +768,7 @@
 			name="voidForm"
 			scope="request"
    			parameter="method"
-   			type="ServidorApresentacao.Action.grant.contract.ManageGrantProjectAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantProjectAction">
   			<forward name="manage-grant-project" path="manageGrantProject"/> 
     </action>
 
@@ -779,7 +779,7 @@
 			scope="request"
    			parameter="method"
      		validate="true"
-   			type="ServidorApresentacao.Action.grant.contract.EditGrantProjectAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantProjectAction">
   			<forward name="edit-grant-project" path="editGrantProjectForm"/>
   			<forward name="manage-grant-project" path="/manageGrantProject.do?method=prepareManageGrantProject"/>
     </action>
@@ -793,7 +793,7 @@
 			scope="request"
    			parameter="method"
 		    validate="true"
-   			type="ServidorApresentacao.Action.grant.list.ListGrantOwnerAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.list.ListGrantOwnerAction">
    			<forward name="list-grant-owner" path="listGrantOwner"/>
    			<forward name="show-grant-owner" path="showGrantOwner"/>
     </action>
@@ -805,7 +805,7 @@
 			scope="request"
    			parameter="method"
 		    validate="true"
-   			type="ServidorApresentacao.Action.grant.list.ListGrantContractByCriteriaAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.list.ListGrantContractByCriteriaAction">
    			<forward name="select-criteria" path="selectCriteria"/>
    			<forward name="list-byCriteria-grant-contract" path="listGrantContractByCriteria"/>
    			<forward name="show-grant-owner" path="showGrantOwner"/>
@@ -819,7 +819,7 @@
 			scope="request"
    			parameter="method"
 		    validate="true"
-   			type="ServidorApresentacao.Action.grant.stat.GrantOwnerStatsAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.stat.GrantOwnerStatsAction">
    			<forward name="grantowner-stats-options" path="grantOwnerStatsOptions"/>
    			<forward name="grantowner-stats-results" path="grantOwnerStatsResults"/>
     </action>
@@ -831,7 +831,7 @@
 			scope="request"
    			parameter="method"
 		    validate="true"
-   			type="ServidorApresentacao.Action.grant.correction.CorrectGrantOwnerAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.correction.CorrectGrantOwnerAction">
    			<forward name="correct-grant-owner" path="correctGrantOwner"/>
     </action>
 
@@ -842,7 +842,7 @@
 			scope="request"
    			parameter="method"
 		    validate="true"
-   			type="ServidorApresentacao.Action.grant.correction.CorrectGrantContractAction">
+   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.correction.CorrectGrantContractAction">
    			<forward name="correct-grant-contract-delete" path="correctDeleteGrantContract"/>
    			<forward name="correct-grant-contract-change-number" path="correctChangeNumberGrantContract"/>
    			<forward name="correct-grant-contract-move" path="correctMoveGrantContract"/>
@@ -852,7 +852,7 @@
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.FacultyAdmOfficeResources" null="false"/>

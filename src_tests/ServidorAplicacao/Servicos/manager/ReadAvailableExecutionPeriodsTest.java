@@ -1,7 +1,7 @@
 /*
  * Created on 15/Set/2003
  */
-package ServidorAplicacao.Servicos.manager;
+package net.sourceforge.fenixedu.applicationTier.Servicos.manager;
 
 import java.util.ArrayList;
 import java.util.List;

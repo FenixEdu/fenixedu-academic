@@ -1,15 +1,15 @@
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CurricularCourseGroup -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularCourseGroup">
-    <extent-class class-ref="Dominio.AreaCurricularCourseGroup"/>
-    <extent-class class-ref="Dominio.OptionalCurricularCourseGroup"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseGroup">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup"/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.AreaCurricularCourseGroup -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.AreaCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+<class-descriptor class="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -26,7 +26,7 @@
 		name="areaType"
 		column="AREA_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="minimumCredits"
@@ -56,13 +56,13 @@
 	/>
 	<reference-descriptor
 			name="branch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
@@ -70,7 +70,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="scientificAreas"
-			element-class-ref="Dominio.ScientificArea"
+			element-class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
@@ -79,9 +79,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.OptionalCurricularCourseGroup -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.OptionalCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+<class-descriptor class="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -122,13 +122,13 @@
 	/>
 	<reference-descriptor
 			name="branch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
@@ -136,7 +136,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="scientificAreas"
-			element-class-ref="Dominio.ScientificArea"
+			element-class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>

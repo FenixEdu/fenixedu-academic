@@ -4,7 +4,7 @@
  * Created on 11 de Novembro de 2002, 18:14
  */
 
-package Tools;
+package net.sourceforge.fenixedu.tools;
 
 /**
  * @author tfc130

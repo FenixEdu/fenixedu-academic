@@ -3,12 +3,12 @@
  *  
  */
 
-package ServidorAplicacao.Servicos.person.qualification;
+package net.sourceforge.fenixedu.applicationTier.Servicos.person.qualification;
 
-import framework.factory.ServiceManagerServiceFactory;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Barbosa

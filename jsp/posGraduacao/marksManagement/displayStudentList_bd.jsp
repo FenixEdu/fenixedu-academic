@@ -3,13 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="Util.Data" %>
-<%@ page import="DataBeans.InfoEnrolment" %>
-<%@ page import="Util.StudentCurricularPlanState" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
+<%@ page import="net.sourceforge.fenixedu.util.StudentCurricularPlanState" %>
 <h2><bean:message key="label.students.listMarks"/></h2>
 <logic:present name="studentList">
 	<table width="100%">
-		<logic:iterate id="oneInfoEnrollment" name="studentList" length="1" type="DataBeans.InfoEnrolment">
+		<logic:iterate id="oneInfoEnrollment" name="studentList" length="1" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 			<tr>
 				<td class="infoselected">
 					<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
@@ -41,7 +41,7 @@
     			<td class="listClasses-header"><bean:message key="label.employee"  /></td>
     			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
     		</tr>
-     		<logic:iterate id="enrolment" name="studentList" type="DataBeans.InfoEnrolment">
+     		<logic:iterate id="enrolment" name="studentList" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
      		   <% if (((InfoEnrolment) enrolment).getInfoStudentCurricularPlan().getCurrentState().equals(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE))) { %>
 	        		<tr>
 			        	<td class="listClasses">

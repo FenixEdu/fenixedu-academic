@@ -1,16 +1,16 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoSiteSummaries;
-import DataBeans.SiteView;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import Util.TipoAula;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.util.TipoAula;
 
 /**
  * @author Leonor Almeida

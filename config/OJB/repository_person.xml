@@ -1,7 +1,7 @@
 <!-- ***********************************
-     Definitions for Dominio.Person 
+     Definitions for net.sourceforge.fenixedu.domain.Person 
      *********************************** -->
-<class-descriptor class="Dominio.Person"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Person"
 				  proxy="dynamic"
                   table="PERSON">
     <field-descriptor
@@ -181,19 +181,19 @@
         name="tipoDocumentoIdentificacao"
         column="TYPE_ID_DOCUMENT"
         jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaTipoDocId2SqlTipoDocIdFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoDocId2SqlTipoDocIdFieldConversion"
     />
     <field-descriptor
         name="sexo"
         column="SEX"
         jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaSexo2SqlSexoFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSexo2SqlSexoFieldConversion"
     />
     <field-descriptor
         name="estadoCivil"
         column="MARITAL_STATUS"
         jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEstadoCivil2SqlEstadoCivilFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEstadoCivil2SqlEstadoCivilFieldConversion"
     />
 	<field-descriptor
         name="availablePhoto"
@@ -202,14 +202,14 @@
     />
     <reference-descriptor
          name="pais"
-         class-ref="Dominio.Country"
+         class-ref="net.sourceforge.fenixedu.domain.Country"
          proxy="false"
     >
          <foreignkey field-ref="chavePais"/>
     </reference-descriptor>
     <collection-descriptor
          name="personRoles"
-         element-class-ref="Dominio.Role"
+         element-class-ref="net.sourceforge.fenixedu.domain.Role"
          proxy="true"
          collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          indirection-table = "PERSON_ROLE"
@@ -222,7 +222,7 @@
 
     <collection-descriptor
          name="manageableDepartmentCredits"
-         element-class-ref="Dominio.Department"
+         element-class-ref="net.sourceforge.fenixedu.domain.Department"
          proxy="true"
          indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"
          auto-retrieve="true"
@@ -236,7 +236,7 @@
 
     <collection-descriptor
          name="advisories"
-         element-class-ref="Dominio.Advisory"
+         element-class-ref="net.sourceforge.fenixedu.domain.Advisory"
          proxy="true"
          indirection-table = "PERSON_ADVISORY"
          auto-retrieve="true"
@@ -247,7 +247,7 @@
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_ADVISORY" />
     	<query-customizer
-	    	class="ServidorPersistente.customQueries.AdvisoryFilter">
+	    	class="net.sourceforge.fenixedu.persistenceTier.customQueries.AdvisoryFilter">
 	    </query-customizer>
       </collection-descriptor>    
 </class-descriptor>

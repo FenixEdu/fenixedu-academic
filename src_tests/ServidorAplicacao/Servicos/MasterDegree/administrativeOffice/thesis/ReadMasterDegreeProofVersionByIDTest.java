@@ -1,18 +1,18 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.thesis;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.thesis;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoMasterDegreeProofVersion;
-import DataBeans.InfoTeacher;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
-import Util.MasterDegreeClassification;
-import Util.State;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+import net.sourceforge.fenixedu.util.State;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

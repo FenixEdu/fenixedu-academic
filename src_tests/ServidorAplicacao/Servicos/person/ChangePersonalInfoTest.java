@@ -2,7 +2,7 @@
  * Created on 17/Mar/2003 by jpvl
  *
  */
-package ServidorAplicacao.Servicos.person;
+package net.sourceforge.fenixedu.applicationTier.Servicos.person;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,24 +10,24 @@ import java.util.Collection;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoCountry;
-import DataBeans.InfoPerson;
-import DataBeans.InfoRole;
-import DataBeans.util.Cloner;
-import Dominio.IPessoa;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidPasswordServiceException;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EstadoCivil;
-import Util.RoleType;
-import Util.Sexo;
-import Util.TipoDocumentoIdentificacao;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IPessoa;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseNeedAuthorizationServices;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.EstadoCivil;
+import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.util.Sexo;
+import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
  * @author jpvl

@@ -5,11 +5,11 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoGuideSituation" %>
-<%@ page import="Util.State" %>
-<%@ page import="Util.Data" %>
-<%@ page import="Util.SituationOfGuide" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
+<%@ page import="net.sourceforge.fenixedu.util.State" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
 
    <span class="error"><html:errors/></span>
 

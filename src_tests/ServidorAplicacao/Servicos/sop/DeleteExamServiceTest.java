@@ -4,7 +4,7 @@
  * Created on 2003/03/28
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -14,10 +14,10 @@ import java.util.Calendar;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExam;
-import DataBeans.InfoViewExamByDayAndShift;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
-import Util.Season;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseDeleteAndEditServices;
+import net.sourceforge.fenixedu.util.Season;
 
 public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 

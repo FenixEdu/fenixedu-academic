@@ -17,12 +17,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
     
@@ -45,7 +45,7 @@
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
-     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     

@@ -1,27 +1,27 @@
-package ServidorAplicacao.Servicos.publico;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publico;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.util.Cloner;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionCourse;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionDegree;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ICurso;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author tfc130

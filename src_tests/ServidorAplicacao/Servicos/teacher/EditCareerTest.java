@@ -2,17 +2,17 @@
  * Created on 13/Nov/2003
  *  
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
-import framework.factory.ServiceManagerServiceFactory;
-import DataBeans.InfoTeacher;
-import DataBeans.teacher.InfoCareer;
-import DataBeans.teacher.InfoCategory;
-import DataBeans.teacher.InfoProfessionalCareer;
-import DataBeans.teacher.InfoTeachingCareer;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Leonor Almeida

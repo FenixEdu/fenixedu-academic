@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>  
-<%@ page import="Util.EvaluationType" %>
+<%@ page import="net.sourceforge.fenixedu.util.EvaluationType" %>
 
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="evaluations" name="component" property="infoEvaluations" />

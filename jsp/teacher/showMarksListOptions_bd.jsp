@@ -28,7 +28,7 @@
 		<span class="error"><html:errors/></span><br/><br/>
 	</logic:messagesPresent>
 	
- 	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>--%>
+ 	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>--%>
 	<html:file property="theFile" style='margin-left:20px'/>
 	<html:hidden property="method" value="loadFile" />
 	<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />

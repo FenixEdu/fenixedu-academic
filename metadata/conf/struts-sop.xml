@@ -168,7 +168,7 @@
       </form-bean>
 
 	  <form-bean name="salaFormBean"
-                 type="DataBeans.InfoRoom"
+                 type="net.sourceforge.fenixedu.dataTransferObject.InfoRoom"
                  dynamic="true">
       </form-bean>
       
@@ -499,12 +499,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -536,7 +536,7 @@
 		<action path="/manageSchedules" forward="/manageSchedules.jsp"/>
 
       <action path="/principalSalas" 
-              type="ServidorApresentacao.Action.base.FenixForwardAction" 
+              type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
               parameter="/sop/principalSalas.jsp"/>
     
 
@@ -546,15 +546,15 @@
       <!-- action definitions -->
       <!-- AUTORIZACAO -->
       <action name="autenticacaoSOPForm"
-              type="ServidorApresentacao.Action.sop.AutenticacaoSOPFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AutenticacaoSOPFormAction"
               path="/autenticacaoSOPForm"
               input="/autenticacaoSOP.jsp"
               scope="request"
               attribute="autenticacaoSOPForm">
-        <exception type="ServidorAplicacao.NotExecutedException"
+        <exception type="net.sourceforge.fenixedu.applicationTier.NotExecutedException"
                    key="ServidorAplicacao.NotExecutedException"
                    path="/autenticacaoSOP.do"/>
-        <exception type="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao"
                    key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
                    path="/autenticacaoSOP.do"/>
         <forward name="SOP"
@@ -568,7 +568,7 @@
 	<action path="/chooseExecutionPeriod"
 			name="pagedIndexForm"
 			input="/chooseExecutionPeriod.do?method=prepare"
-    		type="ServidorApresentacao.Action.sop.ExecutionPeriodDA"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ExecutionPeriodDA"
     		parameter="method"
     		validate="true"
     		scope="request"
@@ -582,7 +582,7 @@
       
 	  <!-- Choose Context for Timetables Management-->
       <action path="/prepararEscolherContexto"
-              type="ServidorApresentacao.Action.sop.PrepararEscolherContextoFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEscolherContextoFormAction"
               scope="request">
           <forward name="Sucesso" path="/escolherContexto.jsp"/>
       </action>
@@ -592,8 +592,8 @@
               name="escolherContextoForm"
               path="/escolherContextoForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.EscolherContextoFormAction">
-        <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EscolherContextoFormAction">
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente"
                    key="ServidorAplicacao.Servico.ExcepcaoInexistente"
                    path="/sop/paginaPrincipal.do"/>
         <forward name="Sucesso" path="/gestaoHorarios.do"/>
@@ -605,7 +605,7 @@
      <!-- LISTAGENS -->
 	<action parameter="method"
 			path="/viewAllClassesSchedulesDA"
-    		type="ServidorApresentacao.Action.sop.ViewAllClassesSchedulesDA"			
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewAllClassesSchedulesDA"			
 			name="chooseViewAllClassesSchedulesContextForm"
 			input="/viewAllClassesSchedulesDA.do?method=choose&amp;page=0" 
     		validate="true"
@@ -617,7 +617,7 @@
      
 	<action parameter="method"
 			path="/viewAllRoomsSchedulesDA"
-    		type="ServidorApresentacao.Action.sop.ViewAllRoomsSchedulesDA"			
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewAllRoomsSchedulesDA"			
 			name="chooseViewAllRoomsSchedulesContextForm"
 			input="/viewAllRoomsSchedulesDA.do?method=choose&amp;page=0" 
     		validate="true"
@@ -629,7 +629,7 @@
 
 	 <!-- AULAS -->
       <action path="/prepararAula"
-              type="ServidorApresentacao.Action.sop.PrepararAulaFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararAulaFormAction"
               scope="request">
           <forward name="Sucesso" path="/criarAula.jsp"/>
       </action>
@@ -639,28 +639,28 @@
               name="aulaForm"
               path="/criarAulaForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.LessonManagerDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.LessonManagerDispatchAction"
               parameter="operation"
               validate="true"
               >
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-		<exception type="ServidorApresentacao.Action.exceptions.InterceptingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException"
 				   key="ServidorApresentacao.Action.exceptions.InterceptingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-        <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
         		   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />           
 		<forward name="Criar" path="/prepararAula.do"/>
 		<forward name="Atribuir Sala" path="/chooseLessonRoom.jsp"/>
       </action>
 
       <action path="/escolherAulas"
-              type="ServidorApresentacao.Action.sop.EscolherAulasFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EscolherAulasFormAction"
               scope="request">
           <forward name="Sucesso" path="/manipularAulas.jsp"/>
       </action>
@@ -670,7 +670,7 @@
               name="manipularAulasForm"
               path="/manipularAulasForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ManipularAulasFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManipularAulasFormAction">
          <forward name="Editar" path="/prepararEditarAula.do"/>
          <forward name="Apagar" path="/apagarAula.do"/>
          <forward name="Voltar" path="/gestaoHorarios.do"/>
@@ -678,7 +678,7 @@
 
       <action path="/apagarAula"
               input="/manipularAulas.jsp"
-              type="ServidorApresentacao.Action.sop.ApagarAulaFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ApagarAulaFormAction">
           <forward name="Sucesso" path="/manipularAulas.jsp"/>
       </action>
 
@@ -686,7 +686,7 @@
      	     attribute="aulaForm"
              name="aulaForm"
              validate="false"
-             type="ServidorApresentacao.Action.sop.PrepararEditarAulaFormAction"
+             type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEditarAulaFormAction"
              input="manipularAulas.jsp"
              scope="request">
          <forward name="Sucesso" path="/editarAula.jsp"/>
@@ -694,22 +694,22 @@
 
      <action attribute="aulaForm"
              path="/editarAulaForm"
-             type="ServidorApresentacao.Action.sop.LessonManagerDispatchAction"
+             type="net.sourceforge.fenixedu.presentationTier.Action.sop.LessonManagerDispatchAction"
              parameter="operation"
              name="aulaForm"
              scope="request"
              input="/editarAulaForm.do?operation=input">
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-		<exception type="ServidorApresentacao.Action.exceptions.InterceptingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException"
 				   key="ServidorApresentacao.Action.exceptions.InterceptingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-        <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
         		   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
          <forward name="Guardar" path="/escolherAulas.do"/>
          <forward name="Sucesso" path="/escolherAulas.do"/>
@@ -719,7 +719,7 @@
 
       <!-- Gestao de Salas -->
       <action path="/prepararSalaForm"
-              type="ServidorApresentacao.Action.sop.PrepararCriarSalaFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararCriarSalaFormAction"
               scope="request"
 	      parameter="method">
 	      
@@ -732,11 +732,11 @@
               input="/prepararSalaForm.do?method=prepareCreate"
 			  name="roomForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.CriarSalaFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.CriarSalaFormAction"
               validate="true">
-         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />
         <forward name="Sucesso" path="/principalSalas.do"/>
       </action>
@@ -747,12 +747,12 @@
               path="/searchEmptyRoomsDA"
               scope="request"
               parameter="method"
-              type="ServidorApresentacao.Action.sop.SearchEmptyRoomsDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.SearchEmptyRoomsDispatchAction"
               validate="true"
               >
-         <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException"
          	   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />
               <forward name="showSearchResult" path="/showEmptyRooms.jsp"/>
               <forward name="searchPage" path="/searchEmptyRooms.jsp"/>              
@@ -763,7 +763,7 @@
               name="roomForm"
               path="/pesquisarSala"
               scope="request"
-              type="ServidorApresentacao.Action.sop.SelectRoomsFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.SelectRoomsFormAction"
               validate="false">
         <forward name="Sucess" path="/manipularSalas.jsp" />
       </action>
@@ -773,10 +773,10 @@
               name="indexForm"
               path="/manipularSalas"
               scope="session"
-              type="ServidorApresentacao.Action.sop.ManipularSalasAction">
-        <exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManipularSalasAction">
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException"
          	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />      
         <forward name="SalaApagada" path="/manipularSalas.jsp" />
 		<forward name="VerSala" path="/viewRoom.do" />
@@ -789,10 +789,10 @@
 	          path="/editarSala"
 	          name="roomForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.EditarSalaAction">
-         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditarSalaAction">
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          		    key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                     />
         <forward name="Sucesso" path="/pesquisarSalas.jsp" />
       </action>
@@ -802,13 +802,13 @@
               name="pesquisarSalaForm"
               path="/pesquisarSalas"
               scope="request"
-              type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectRoomsFormAction">
         <forward name="Sucesso" path="/manipularSalas.jsp" />
         <forward name="Voltar" path="/principalSalas.do"/>
       </action>
       
       <action path="/prepareViewRoomOcupation"
-              type="ServidorApresentacao.Action.publico.SelectSemesterAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectSemesterAction"
               >
           <forward name="Sucess" path="/chooseSemester.jsp"/>
       </action>
@@ -818,7 +818,7 @@
               name="indexForm"
       		  path="/viewRoom"
               scope="session"
-              type="ServidorApresentacao.Action.sop.ViewRoomFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewRoomFormAction">
           <forward name="Sucess" path="/sopViewRoom.jsp"/>
       </action>
 <!-- Angela -->
@@ -826,17 +826,17 @@
 	<action 
 		path="/viewSite"	
 		parameter="method"
-        type="ServidorApresentacao.Action.sop.SiteViewerDispatchAction">  
+        type="net.sourceforge.fenixedu.presentationTier.Action.sop.SiteViewerDispatchAction">  
 
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 			       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-			       handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
-		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+			       handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" /> 
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 	               key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>  
-		<exception type="ServidorApresentacao.Action.exceptions.NonExistingAssociatedCurricularCoursesActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>  
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAssociatedCurricularCoursesActionException"
 			       key="ServidorApresentacao.Action.exceptions.NonExistingAssociatedCurricularCoursesActionException"
-			       handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+			       handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" /> 
         <forward name="erro" path="/executionCourseNotFound.jsp"/>
      	<forward name="sucess" path="/viewExecutionCourse.jsp"/>  
       
@@ -846,7 +846,7 @@
       
 	  <!-- TURNOS -->
       <action path="/prepararCriarTurno"
-              type="ServidorApresentacao.Action.sop.PrepararCriarTurnoFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararCriarTurnoFormAction"
               scope="request">
           <forward name="Sucesso" path="/criarTurno.jsp"/>
       </action>
@@ -855,10 +855,10 @@
               name="criarTurnoForm"
               path="/criarTurnoForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.CriarTurnoFormAction">
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.CriarTurnoFormAction">
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />              
         <forward name="Sucesso" path="/gestaoHorarios.do"/> 
       </action>
@@ -868,13 +868,13 @@
               name="shiftNameForm"
               path="/viewClassesWithShift"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ViewClassesWithShift"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewClassesWithShift"
               validate="false">
 	        <forward name="sucess" path="/viewClassesWithShift.jsp"/> 
       </action>
      
     <action path="/prepararManipularTurnos"
-              type="ServidorApresentacao.Action.sop.PrepararManipularTurnosFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararManipularTurnosFormAction"
               scope="request">
           <forward name="Sucesso" path="/manipularTurnos.jsp"/>
       </action>
@@ -884,7 +884,7 @@
               name="manipularTurnosForm"
               path="/manipularTurnosForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ManipularTurnosFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManipularTurnosFormAction">
         <forward name="Ver Turno" path="/prepararVerTurno.do"/>
         <forward name="Editar Turno" path="/prepararEditarTurno.do"/>
         <forward name="Apagar Turno" path="/apagarTurno.do"/>
@@ -894,13 +894,13 @@
       
       <action path="/apagarTurno"
               input="/manipularTurnos.jsp"
-              type="ServidorApresentacao.Action.sop.ApagarTurnoFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ApagarTurnoFormAction">
           <forward name="Sucesso" path="/manipularTurnos.jsp"/>
       </action>
 
      <action path="/prepararVerTurno"
              input="/manipularTurnos.jsp"
-             type="ServidorApresentacao.Action.sop.PrepararVerTurnoFormAction">
+             type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararVerTurnoFormAction">
          <forward name="Sucesso" path="/verTurno.jsp"/>
      </action>
 
@@ -908,7 +908,7 @@
       		  attribute="editarTurnoForm"
       		  name="editarTurnoForm"
       		  validate="false"
-              type="ServidorApresentacao.Action.sop.PrepararEditarTurnoFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEditarTurnoFormAction"
               input="manipularTurnos.jsp"
               scope="request">
           <forward name="Sucesso" path="/editarTurno.jsp"/>
@@ -919,16 +919,16 @@
               name="editarTurnoForm"
               path="/editarTurnoForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.EditarTurnoFormAction">
-         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditarTurnoFormAction">
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />     
         <forward name="Guardar" path="/prepararManipularTurnos.do"/>
       </action>
 
       <action path="/prepararEditarAulasDeTurno"
-              type="ServidorApresentacao.Action.sop.PrepararEditarAulasDeTurnoFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararEditarAulasDeTurnoFormAction"
               scope="request">
           <forward name="Sucesso" path="/editarAulasDeTurno.jsp"/>
       </action>
@@ -938,7 +938,7 @@
               name="editarAulasDeTurnoForm"
               path="/editarAulasDeTurnoForm"
               scope="session"
-              type="ServidorApresentacao.Action.sop.EditarAulasDeTurnoFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditarAulasDeTurnoFormAction"
               validate="false"
               >
         <forward name="Adicionar Aulas" path="/prepararAdicionarAulasDeTurno.do"/>
@@ -950,14 +950,14 @@
       		  path="/removerAulaDeTurno"
               scope="request"      		  
               input="/prepararEditarAulasDeTurno.do"
-              type="ServidorApresentacao.Action.sop.RemoverAulaDeTurnoFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.RemoverAulaDeTurnoFormAction"
               validate="true"
               >
           <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
       </action>
 
       <action path="/prepararAdicionarAulasDeTurno"
-              type="ServidorApresentacao.Action.sop.PrepararAdicionarAulasDeTurnoFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararAdicionarAulasDeTurnoFormAction"
               scope="request">
           <forward name="Sucesso" path="/adicionarAulas.jsp"/>
       </action>
@@ -968,17 +968,17 @@
               name="adicionarAulasForm"
               path="/adicionarAulasForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.AdicionarAulasFormAction">
-          <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AdicionarAulasFormAction">
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
           	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />
         <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
       </action>
 
      <action path="/prepararVerAlunosDeTurno"
              input="/manipularTurnos.jsp"
-             type="ServidorApresentacao.Action.sop.PrepararVerAlunosDeTurnoFormAction">
+             type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararVerAlunosDeTurnoFormAction">
          <forward name="Sucesso" path="/verAlunosDeTurno.jsp"/>
      </action>
 
@@ -986,7 +986,7 @@
      <!-- TURMAS -->      
       <action parameter="method"
 		      path="/ClassesManagerDA"
-              type="ServidorApresentacao.Action.sop.ClassesManagerDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ClassesManagerDispatchAction"
 		>
         <forward name="listClasses" path="/listClasses.jsp"/>
       </action>
@@ -995,12 +995,12 @@
      		 input="/viewTimeTable.jsp"
      		 name="classForm"
 		     path="/ClassManagerDA"
-             type="ServidorApresentacao.Action.sop.ClassManagerDispatchAction"
+             type="net.sourceforge.fenixedu.presentationTier.Action.sop.ClassManagerDispatchAction"
              validate="true"
              scope="request">
-          <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
           			 key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                     handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                     handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
            />
              <forward name="viewTimeTable" path="/viewTimeTable.jsp"/>
 	         <forward name="listClasses" path="ClassesManagerDA.do?method=listClasses"/>             
@@ -1009,12 +1009,12 @@
       <action parameter="method"
       	      input = "/viewShiftList.jsp"
 		      path="/ClassShiftManagerDA"
-              type="ServidorApresentacao.Action.sop.ClassShiftManagerDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ClassShiftManagerDispatchAction"
               validate="false"
 		>
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 			   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />
 	         <forward name="viewClassShiftList" path="/viewShiftList.jsp"/>  
 	         <forward name="viewAvailableShiftList" path="/viewShiftList.jsp"/>  
@@ -1027,7 +1027,7 @@
 		      input="/escolherDisciplinaExecucao.jsp"
               path="/escolherDisciplinaExecucaoForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExecutionCourseAction"
               validate="true">
         <forward name="forwardChoose" path="/escolherAulas.do"/>
         <forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>        
@@ -1038,7 +1038,7 @@
       		  input="/escolherDisciplinaExecucao.jsp"
               path="/chooseExecutionCourse"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExecutionCourseAction"
               validate="true"
               >
         <forward name="forwardChoose" path="/ClassShiftManagerDA.do?method=listAvailableShifts"/>
@@ -1050,7 +1050,7 @@
               name="chooseExecutionCourseForm"
               path="/escolherDisciplinaETipoForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExecutionCourseAction"
               validate="true"
               >
         <forward name="forwardChoose" path="/prepararManipularTurnos.do"/>
@@ -1062,7 +1062,7 @@
 	<action path="/chooseDayAndShiftForm"
 			input="/chooseDayAndShiftForm.do?method=prepare&amp;nextPage=viewExams&amp;page=0"
 			name="chooseDayAndShiftForm"
-            type="ServidorApresentacao.Action.sop.ChooseExamDayAndShiftDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExamDayAndShiftDispatchAction"
             parameter="method"
             scope="request"
             validate="true"
@@ -1074,7 +1074,7 @@
 
 	<action path="/viewExamsDayAndShiftForm"		
 			input="/viewExamsDayAndShift.jsp"
-            type="ServidorApresentacao.Action.sop.ViewExamsByDayAndShiftDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
             name="examForm"
             validate="false"
@@ -1087,7 +1087,7 @@
 	
     <action	input="/viewEmptyRoomsInDayAndShift.jsp"
       		path="/viewEmptyRoomsInDayAndShift"
-			type="ServidorApresentacao.Action.sop.ViewEmptyRoomsInDayAndShiftAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewEmptyRoomsInDayAndShiftAction"
         	>
 		<forward name="View" path="/viewEmptyRoomsInDayAndShift.jsp"/>
       </action>
@@ -1099,7 +1099,7 @@
             path="/chooseExamsContextDA"
             scope="request"
             validate="true"
-            type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchAction"
             >
         <forward name="chooseExamsContext" path="/chooseExamsContext.jsp"/>
         <forward name="createExam" path="/chooseExecutionCourseForm.do"/>
@@ -1108,24 +1108,24 @@
     </action>
 
 	<action path="/addExecutionCourseToExam"
-    		type="ServidorApresentacao.Action.sop.AddExecutionCourseToExamAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddExecutionCourseToExamAction"
     		input="/viewExamsByDayAndShift.jsp"
     		>
-    	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
         		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
         		   />
     	<forward name="Sucess" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	</action>
 	
 	<action path="/viewExamsByDegreeAndCurricularYear"
-    		type="ServidorApresentacao.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
     		>
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
 
 	<action path="/viewAllExamsByDegreeAndCurricularYear"
-    		type="ServidorApresentacao.Action.sop.ViewAllExamsByDegreeAndCurricularYearAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewAllExamsByDegreeAndCurricularYearAction"
     		>
     	<forward name="Sucess" path="/viewAllExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
@@ -1136,7 +1136,7 @@
     		name="chooseExecutionCourseForm"
 			input="/chooseExecutionCourse.jsp"
             scope="request"
-            type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExecutionCourseAction"
             validate="false">
         <forward name="forwardChoose" path="/createExam.do?method=prepare&amp;page=0"/>
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
@@ -1146,7 +1146,7 @@
     		name="chooseExecutionCourseForm"
 			input="/chooseExecutionCourse.jsp"
             scope="request"
-            type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExecutionCourseAction"
             validate="false">
         <forward name="forwardChoose" path="/addExecutionCourseToExam.do"/>
         <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
@@ -1155,12 +1155,12 @@
 	<action path="/createExam"
 			name="examForm"
 			input="/createExam.do?method=prepare&amp;page=0"
-    		type="ServidorApresentacao.Action.sop.CreateExamActionDA"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.CreateExamActionDA"
             parameter="method"
     		>
-    	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
         		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
         		   />
     	<forward name="showCreateForm" path="/createExam.jsp"/>
     	<forward name="Sucess" path="/mainExams.do?method=prepare&amp;page=0"/>
@@ -1170,15 +1170,15 @@
 	<action path="/editExam"
 			name="examForm"
 			input="/editExam.jsp"
-    		type="ServidorApresentacao.Action.sop.EditExamAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditExamAction"
     		>
-    	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
         		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
         		   />
-    	<exception type="ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException"
+    	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingRoomsActionException"
         		   key="ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
         		   />
     	<forward name="viewExamsByDayAndShift" path="/viewExamsDayAndShiftForm.do?method=view"/>
     	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
@@ -1190,14 +1190,14 @@
             path="/chooseExamsMapContextDA"
             scope="request"
             validate="true"
-            type="ServidorApresentacao.Action.sop.ChooseExamsMapContextDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExamsMapContextDA"
             >
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
         <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
     </action>
 
     <action path="/viewExamsMap"
-            type="ServidorApresentacao.Action.sop.ViewExamsMapDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsMapDA"
             parameter="method"
             name="examForm"
             validate="false"
@@ -1210,7 +1210,7 @@
 	<action path="/defineExamComment"
 			name="examCommentForm"
 			input="/defineExamComment.jsp"
-    		type="ServidorApresentacao.Action.sop.DefineExamCommentActionDA"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.DefineExamCommentActionDA"
     		parameter="method"
     		validate="false"
     		scope="request"
@@ -1222,7 +1222,7 @@
 	<action path="/mainExams"
 			name="pagedIndexForm"
 			input="/mainExams.do?method=prepare"
-    		type="ServidorApresentacao.Action.sop.ExecutionPeriodDA"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ExecutionPeriodDA"
     		parameter="method"
     		validate="true"
     		scope="request"
@@ -1233,7 +1233,7 @@
 
     <action parameter="method"
             path="/editExamRooms"
-            type="ServidorApresentacao.Action.sop.EditExamRoomsDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.EditExamRoomsDA"
 			name="editExamRoomsForm"
 			input="/editExamRooms.do?method=prepare"
 			validate="false"
@@ -1244,7 +1244,7 @@
     </action>
 
       <action path="/consultRoomsForExams"
-              type="ServidorApresentacao.Action.sop.ConsultRoomsForExamDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ConsultRoomsForExamDA"
               scope="request"
 		      parameter="method">
           <forward name="Search Rooms" path="/searchRoomsForExams.jsp"/>
@@ -1255,7 +1255,7 @@
               name="roomForm"
               path="/chooseRoomToViewForExams"
               scope="request"
-              type="ServidorApresentacao.Action.sop.SelectRoomsFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.SelectRoomsFormAction"
               validate="false">
         <forward name="Sucess" path="/listRoomsForExams.jsp" />
       </action>
@@ -1265,10 +1265,10 @@
               name="indexForm"
               path="/selectRoomToViewForExams"
               scope="request"
-              type="ServidorApresentacao.Action.sop.ManipularSalasAction">
-        <exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManipularSalasAction">
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException"
          	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                />
 		<forward name="VerSala" path="/viewRoomForExams.do" />
       </action>
@@ -1279,14 +1279,14 @@
       		  path="/viewRoomForExams"
               scope="session"
               validate="true"
-              type="ServidorApresentacao.Action.sop.ViewRoomForExamsFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewRoomForExamsFormAction">
           <forward name="Sucess" path="/viewRoomForExams.jsp"/>
       </action>
 
 	<action   path="/listClasses"
               name="shiftForm"
               attribute="shiftForm"
-              type="ServidorApresentacao.Action.sop.AddShiftsToClassesDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddShiftsToClassesDA"
               parameter="method"
               scope="request">
           <forward name="showClasses" path="/addShiftToClasses.jsp"/>
@@ -1296,14 +1296,14 @@
 			  name="addShiftToClasses"	
       		  path="/addShiftToClasses"
               scope="request"
-              type="ServidorApresentacao.Action.sop.AddShiftsToClassesDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddShiftsToClassesDA"
               parameter="method"
               validate="true">
            <forward name="sucess" path="/gestaoHorarios.do"/>         
       </action>
 
       <action path="/consultAllRoomsForExams"
-              type="ServidorApresentacao.Action.sop.ViewAllRoomsForExamsFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewAllRoomsForExamsFormAction"
               >
           <forward name="Sucess" path="/viewAllRoomsForExams.jsp"/>
       </action>
@@ -1311,7 +1311,7 @@
 	<!-- ========== SCHEDULE MANAGMENT ========== -->
 	<action path="/chooseContext"
 			input="/chooseContext.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ChooseContextDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseContextDA"
             name="chooseScheduleContextForm"
             parameter="method"
             scope="request"
@@ -1323,15 +1323,15 @@
 
 	<action path="/manageShifts"
 			input="/manageShifts.do?method=listShifts&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageShiftsDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageShiftsDA"
             name="createShiftForm"
             parameter="method"
             scope="request"
             validate="true"
             >
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
     	<forward name="ShowShiftList" path="/manageShifts.jsp"/>
     	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
@@ -1339,15 +1339,15 @@
 
 	<action path="/manageShift"
 			input="/manageShift.do?method=prepareEditShift&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageShiftDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageShiftDA"
             name="createShiftForm"
             parameter="method"
             scope="request"
             validate="true"
             >
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
     	<forward name="EditShift" path="/manageShift.jsp"/>
     	<forward name="ViewStudentsEnroled" path="/viewStudentsEnroledInShift.jsp"/>
@@ -1355,22 +1355,22 @@
 
 	<action path="/manageShiftStudents"
 			input="/manageShift.do?method=prepareEditShift&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageShiftDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageShiftDA"
             name="changShiftOfStudents"
             parameter="method"
             scope="request"
             validate="true"
             >
-		<exception type="ServidorAplicacao.Servico.sop.ChangeStudentsShift$UnableToTransferStudentsException"
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.sop.ChangeStudentsShift$UnableToTransferStudentsException"
 				   key="message.unable.to.transfer.students"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
     	<forward name="Continue" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
 	</action>
 
 	<action path="/manageLesson"
 			input="/manageLesson.do?method=findInput&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageLessonDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageLessonDA"
             name="manageLessonForm"
             parameter="method"
             scope="request"
@@ -1384,30 +1384,30 @@
 
 	<action path="/manageClasses"
 			input="/manageClasses.do?method=listClasses&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageClassesDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageClassesDA"
             name="classForm"
             parameter="method"
             scope="request"
             validate="true"
             >
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
     	<forward name="ShowClassList" path="/manageClasses.jsp"/>
 	</action>
 
 	<action path="/manageClass"
 			input="/manageClass.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageClassDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageClassDA"
             name="classForm"
             parameter="method"
             scope="request"
             validate="true"
             >
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
     	<forward name="EditClass" path="/manageClass.jsp"/>
     	<forward name="AddShifts" path="/addShifts.jsp"/>
@@ -1416,7 +1416,7 @@
 
 	<action path="/addShifts"
 			input="/manageClass.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.AddShiftsDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddShiftsDA"
             name="selectMultipleItemsForm"
             parameter="method"
             scope="request"
@@ -1427,7 +1427,7 @@
 
 	<action path="/addClasses"
 			input="/manageShift.do?method=prepareEditShift&amp;page=0"
-            type="ServidorApresentacao.Action.sop.AddClassesDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddClassesDA"
             name="selectMultipleItemsForm"
             parameter="method"
             scope="request"
@@ -1439,7 +1439,7 @@
 
 	<action path="/deleteShifts"
 			input="/manageShifts.do?method=listShifts&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageShiftsDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageShiftsDA"
             name="selectMultipleItemsForm"
             parameter="method"
             scope="request"
@@ -1450,7 +1450,7 @@
 
 	<action path="/manageShiftMultipleItems"
 			input="/manageShift.do?method=prepareEditShift&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageShiftDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageShiftDA"
             name="selectMultipleItemsForm"
             parameter="method"
             scope="request"
@@ -1461,7 +1461,7 @@
 
 	<action path="/deleteClasses"
 			input="/manageClasses.do?method=listClasses&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageClassesDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageClassesDA"
             name="selectMultipleItemsForm"
             parameter="method"
             scope="request"
@@ -1472,7 +1472,7 @@
 
 	<action path="/removeShifts"
 			input="/manageClass.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageClassDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageClassDA"
             name="selectMultipleItemsForm"
             parameter="method"
             scope="request"
@@ -1483,7 +1483,7 @@
 
 	<action path="/manageExecutionCourses"
 			input="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageExecutionCoursesDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageExecutionCoursesDA"
             name="searchExecutionCourse"
             parameter="method"
             scope="request"
@@ -1498,7 +1498,7 @@
 
 	<action path="/manageExecutionCourse"
 			input="/manageExecutionCourse.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.ManageExecutionCourseDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageExecutionCourseDA"
             name="editExecutionCourseForm"
             parameter="method"
             scope="request"
@@ -1512,7 +1512,7 @@
 				input="/siteViewerError.jsp"
 				scope="request"
 				parameter="method"
-				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
 			<forward name="roomViewer" path="/sopViewRoom.jsp"/>
 		</action>
 		
@@ -1521,7 +1521,7 @@
 	<action path="/mainExamsNew"
 			name="pagedIndexForm"
 			input="/mainExamsNew.do?method=prepare"
-    		type="ServidorApresentacao.Action.sop.ExecutionPeriodDA"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ExecutionPeriodDA"
     		parameter="method"
     		validate="true"
     		scope="request"
@@ -1535,12 +1535,12 @@
             path="/chooseDegreeAndYearContext"
             scope="request"
             validate="true"
-            type="ServidorApresentacao.Action.sop.exams.ChooseDegreeAndYearContextDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.ChooseDegreeAndYearContextDA"
             name="showExamsManagementForm"
             >
-		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				   key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
         <forward name="chooseDegreeAndYearContext" path="df.page.chooseDegreeAndYear"/>
         <forward name="viewExamsMap" path="/showExamsManagement.do?method=view"/>
@@ -1549,14 +1549,14 @@
 	<action path="/showExamsManagement"
 			name="examNewForm"
 			input="/chooseDegreeAndYearContext.do?method=prepare"
-            type="ServidorApresentacao.Action.sop.exams.ShowExamsManagement"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.ShowExamsManagement"
             parameter="method"
             scope="request"
             validate="false"
             >
-		<exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
             key="error.exams.period.undefined" 
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
 		<!--<forward name="viewExamsMap" path="viewExamsMapOld"/>-->
         <forward name="viewExamsMap" path="df.page.viewExamsMap"/>
         <forward name="createExamByCourse" path="/createExamNew.do?method=prepare&amp;page=0&amp;nextPage=showExamsManagement"/>
@@ -1567,7 +1567,7 @@
  
  	<action path="/chooseExamsContext"
 			input="/chooseExamsContext.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.ChooseExamsContextDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.ChooseExamsContextDA"
             name="chooseExamsContextForm"
             parameter="method"
             scope="request"
@@ -1578,7 +1578,7 @@
  
 	<action path="/chooseExamsPeriodContext"
 			input="/chooseExamsPeriodContext.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.ChooseExamsExecutionPeriodContextDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.ChooseExamsExecutionPeriodContextDA"
             name="chooseExamsExecutionPeriodForm"
             parameter="method"
             scope="request"
@@ -1589,7 +1589,7 @@
 	
 	<action path="/createExamNew"
 			input="/createExamNew.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.CreateExamDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.CreateExamDA"
             name="examNewForm"
             attribute="examNewForm"
             parameter="method"
@@ -1606,7 +1606,7 @@
    	
 	<action path="/chooseExecutionCourseForExams"
 			input="/chooseExecutionCourseForExams.do?page=0"
-            type="ServidorApresentacao.Action.sop.exams.ChooseExecutionCourseAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.ChooseExecutionCourseAction"
             name="examNewForm"
             parameter="method"
             scope="request"
@@ -1618,7 +1618,7 @@
 	
     <action path="/associateExecutionCourseToExam"
 			input="/associateExecutionCourseToExam.do?page=0"
-            type="ServidorApresentacao.Action.sop.exams.AssociateExecutionCourseToExamAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.AssociateExecutionCourseToExamAction"
             name="examNewForm"
             attribute="examNewForm"
             parameter="method"
@@ -1631,7 +1631,7 @@
 
 	<action path="/defineComment"
 			input="/defineComment.do?page=0"
-            type="ServidorApresentacao.Action.sop.exams.DefineCommentAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.DefineCommentAction"
             name="examCommentForm"
             parameter="method"
             scope="request"
@@ -1644,7 +1644,7 @@
 		
 	<action path="/associateRoomToExam"
 			input="/associateRoomToExam.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.AssociateRoomToExamDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.AssociateRoomToExamDA"
             name="examNewForm"
             parameter="method"
             scope="request"
@@ -1656,7 +1656,7 @@
    	
 	<action path="/roomSearch"
 			input="/roomSearch.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.RoomSearchDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.RoomSearchDA"
             name="roomSearchForm"
             parameter="method"
             scope="request"
@@ -1668,7 +1668,7 @@
    	
 	<action path="/roomExamSearch"
 			input="/roomExamSearch.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.RoomExamSearchDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.RoomExamSearchDA"
             name="roomExamSearchForm"
             parameter="method"
             scope="request"
@@ -1681,22 +1681,22 @@
 
 	<action path="/ExamSearchByDegreeAndYear"
 			input="/ExamSearchByDegreeAndYear.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.ExamSearchByDegreeAndYear"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.ExamSearchByDegreeAndYear"
             name="examSearchByDegreeAndYearForm"
             parameter="method"
             scope="request"
             validate="true"
             >
-		<exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
             key="error.exams.period.undefined" 
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
     	<forward name="show" path="df.page.selectDegreeAndYear"/>
     	<forward name="showExamsMap" path="df.page.degreeYearExamsMap"/>
    	</action>  
    	  
 	<action path="/ExamSearchByDate"
 			input="/ExamSearchByDate.do?method=prepare&amp;page=0"
-            type="ServidorApresentacao.Action.sop.exams.ExamSearchByDate"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.exams.ExamSearchByDate"
             name="examSearchByDateForm"
             parameter="method"
             scope="request"
@@ -1709,7 +1709,7 @@
 	<!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
        		name="executionYearDegreeCurricularPlanForm"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
        		validate="true"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		scope="request"
@@ -1719,7 +1719,7 @@
        	</action>
 
 		<action path="/showCurriculumHistoric"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
        		scope="request"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		parameter="method">
@@ -1728,7 +1728,7 @@
  
 		<!-- ========== Merge Execution Courses ========== -->	
 		<action	name="chooseDegreesForExecutionCourseMerge"
-				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
 				path="/chooseDegreesForExecutionCourseMerge"
 				parameter="method"
 				scope="request"
@@ -1737,33 +1737,33 @@
 			<forward name="chooseExecutionCourses" path="df.page.chooseExecutionCoursesForExecutionCourseMerge"/>
 		</action>	
 		<action	name="mergeExecutionCoursesForm"
-				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
 				path="/mergeExecutionCoursesForm"
 				parameter="method"
 				scope="request"
 				validate="false"
 				input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
-			<exception type="ServidorAplicacao.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
 				   key="message.merge.execution.courses.sourceIsSameAsDestination"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
 			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
 		</action>	
 
-		<action type="ServidorApresentacao.Action.sop.ManageBuildingsDA"
+		<action type="net.sourceforge.fenixedu.presentationTier.Action.sop.ManageBuildingsDA"
 				path="/manageBuildings"
 				input="/manageBuildings.do?method=prepare"
 				name="buildingForm"
 				parameter="method"
 				scope="request"
 				validate="false">
-			<exception type="ServidorAplicacao.Servico.exceptions.ExistingServiceException"
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException"
 				   key="message.building.exists"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-			<exception type="ServidorAplicacao.Servico.exceptions.NotEmptyServiceException"
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotEmptyServiceException"
 				   key="message.building.not.empty"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
 			<forward name="viewBuildings" path="/manageBuildings.jsp"/>
 		</action>
@@ -1771,7 +1771,7 @@
 
     
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
     
     <!-- ========== Message Resources Definitions ============================ -->

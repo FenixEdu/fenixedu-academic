@@ -39,7 +39,7 @@
 							<bean:write name="motivation"/>
 						</td>
 					</tr>
-					<logic:iterate indexId="index" name="cases" type="DataBeans.Seminaries.InfoCaseStudy" id="caseStudy">
+					<logic:iterate indexId="index" name="cases" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy" id="caseStudy">
 						<tr>
 							<td>
 								<b><bean:message key="label.seminaries.showCandidacy.Case"/> <%=index.intValue()+1 %></b>

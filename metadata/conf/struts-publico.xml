@@ -88,7 +88,7 @@
       </form-bean>
 
       <form-bean name="salaFormBean"
-                 type="DataBeans.InfoSala"
+                 type="net.sourceforge.fenixedu.dataTransferObject.InfoSala"
                  dynamic="true">
       </form-bean>
 
@@ -174,12 +174,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -205,7 +205,7 @@
 	<action path="/index"
 			name="pagedIndexForm"
 			input="/index.do?method=prepare&amp;page=0"
-    		type="ServidorApresentacao.Action.publico.InitiateSessionDispatchAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.InitiateSessionDispatchAction"
     		parameter="method"
     		validate="true"
     		scope="request"
@@ -216,7 +216,7 @@
 	<action path="/indexNew"
 			name="pagedIndexForm"
 			input="/index.do?method=prepare&amp;page=0"
-    		type="ServidorApresentacao.Action.publico.InitiateSessionDispatchAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.InitiateSessionDispatchAction"
     		parameter="method"
     		validate="true"
     		scope="request"
@@ -227,7 +227,7 @@
 	<action parameter="method"
             path="/consultTimeTables"
             scope="request"
-            type="ServidorApresentacao.Action.publico.ConsultTimeTablesDispatchAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ConsultTimeTablesDispatchAction">
     	<forward name="criteriaPage" path="/consultTimeTablesCriterias.jsp"/>
         <forward name="showTimeTables" path="/viewClasses.do"/>
 	</action>
@@ -239,7 +239,7 @@
               path="/chooseContextDA"
               scope="request"
               validate="true"
-              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchAction"
               >
         <forward name="chooseContext" path="/chooseContext.jsp"/>
         <forward name="classSearch" path="/viewClasses.do"/>
@@ -252,7 +252,7 @@
               path="/chooseContextDANew"
               scope="request"
               validate="false"
-              type="ServidorApresentacao.Action.commons.ChooseContextDispatchActionNew"
+              type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchActionNew"
               >
         <forward name="prepare" path="/chooseContextDANew.do?method=nextPagePublic&amp;page=0&amp;nextPage=classSearch&amp;inputPage=chooseContext"/>
         <forward name="chooseContext" path="/chooseContext.jsp"/>
@@ -263,13 +263,13 @@
 
 	<!-- Turmas -->	
 	<action path="/viewClasses"
-              type="ServidorApresentacao.Action.publico.ViewClassesAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassesAction"
               >
           <forward name="Sucess" path="/viewClasses.jsp"/>
       </action>
       
       <action path="/viewClassesNew"
-              type="ServidorApresentacao.Action.publico.ViewClassesActionNew"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassesActionNew"
               name="chooseSearchContextForm"
               validate="false"
               >
@@ -278,7 +278,7 @@
 
 	<action path="/viewClassTimeTableWithClassNameAndDegreeInitialsAction"
 			name="classTimeTableWithClassNameAndDegreeInitialsForm"
-			type="ServidorApresentacao.Action.publico.ViewClassTimeTableWithClassNameAndDegreeInitialsAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassTimeTableWithClassNameAndDegreeInitialsAction"
 			validate="false"
 			>
 		<forward name="Sucess" path="/viewClassTimeTable.do"/>
@@ -287,7 +287,7 @@
 	<!-- Turnos -->
 	
 	<action path="/prepareSelectExecutionCourseAction"
-            type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareSelectExecutionCourseAction">
           <forward name="sucess" path="/prepareSelectExecutionCourse.jsp"/>
           
       </action>
@@ -296,20 +296,20 @@
 		name="chooseExecutionCourseForm"
 		input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch"
 		parameter="method"
-        type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">    
      		<forward name="sucess" path="/executionCourseSite.jsp"/> 
    	</action>
 
 
 	  <!-- SALAS -->
       <action path="/prepareConsultRooms"
-              type="ServidorApresentacao.Action.publico.PrepareConsultRoomsFormAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareConsultRoomsFormAction"
               >
           <forward name="Sucess" path="/consultRooms.jsp"/>
       </action>
 
        <action path="/prepareConsultRoomsNew"
-              type="ServidorApresentacao.Action.publico.PrepareConsultRoomsDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareConsultRoomsDispatchAction"
               name="chooseContextForm"
               parameter="method"
               >
@@ -323,7 +323,7 @@
               path="/chooseRoomsForm"
               scope="request"
               validate="true"
-              type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectRoomsFormAction">
         <forward name="list" path="/chooseRoom.jsp"/>
         <forward name="one" path="/siteViewer.do?method=roomViewer"/>        
       </action>
@@ -334,7 +334,7 @@
               path="/chooseRoomsFormNew"
               scope="request"
               validate="true"
-              type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectRoomsFormAction">
         <forward name="list" path="chooseRoom"/>
         <forward name="one" path="/siteViewerRoomNew.do?method=roomViewer"/>        
       </action>
@@ -345,7 +345,7 @@
               path="/viewRoom"
               scope="request"
               validate="true"
-              type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
         <forward name="roomViewer" path="/viewRoom.jsp"/>
       </action>
 
@@ -355,24 +355,24 @@
 	              path="/viewRoomNew"
 	              scope="request"
 	              validate="true"
-	              type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+	              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
 	        <forward name="roomViewer" path="/siteViewerRoomNew.do?method=roomViewer"/>
       </action>
       <action path="/prepareViewRoomOcupation"
-              type="ServidorApresentacao.Action.publico.SelectSemesterAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectSemesterAction"
               >
           <forward name="Sucess" path="/chooseSemester.jsp"/>
       </action>
 
       <action input="/viewClassTimeTable.jsp"
       		  path="/viewClassTimeTable"
-              type="ServidorApresentacao.Action.publico.ViewClassTimeTableAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassTimeTableAction"
               >
           <forward name="Sucess" path="/viewClassTimeTable.jsp"/>
       </action>
       <action input="viewClassTimeTable"
       		  path="/viewClassTimeTableNew"
-              type="ServidorApresentacao.Action.publico.ViewClassTimeTableActionNew"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassTimeTableActionNew"
               name="chooseSearchContextForm"
               validate="false"
               >
@@ -382,7 +382,7 @@
       <action 
               input="/viewShifts.jsp"
       		  path="/viewShiftTimeTable"
-             type="ServidorApresentacao.Action.publico.ViewShiftTimeTableAction"
+             type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewShiftTimeTableAction"
               >
           <forward name="Sucess" path="/viewShiftTimeTable.jsp"/>
       </action>
@@ -396,7 +396,7 @@
 		input="/executionCourseNotFound.jsp"
 		parameter="method"
 		validate="true"
-        type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">    
      <forward name="sucess" path="executionCourseSite"/>   
    	</action>
    	
@@ -406,7 +406,7 @@
 		input="/executionCourseNotFoundNew.jsp"
 		parameter="method"
 		validate="true"
-        type="ServidorApresentacao.Action.publico.SiteViewerDispatchActionNew">    
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchActionNew">    
      <forward name="sucess" path="/executionCourseSiteNew.jsp"/>   
    	</action>
    	
@@ -417,7 +417,7 @@
 		input="/executionCourseNotFound.jsp"
 		parameter="method"
 		validate="true"
-        type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
+        type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">    
      <forward name="sucess" path="/executionCourseSite.jsp"/>   
    	</action>
 	
@@ -428,7 +428,7 @@
 	<action path="/chooseDayAndShiftForm"
 			input="/chooseDayAndShift.jsp"
 			name="chooseDayAndShiftForm"
-            type="ServidorApresentacao.Action.sop.ChooseExamDayAndShiftDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ChooseExamDayAndShiftDispatchAction"
             parameter="method"
             scope="request"
             validate="true"
@@ -439,7 +439,7 @@
 
 	<action path="/viewExamsDayAndShiftForm"
 			input="/viewExamsDayAndShift.jsp"
-            type="ServidorApresentacao.Action.sop.ViewExamsByDayAndShiftDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
             name="examForm"
             validate="false"
@@ -457,7 +457,7 @@
             path="/chooseExamsContextDA"
             scope="request"
             validate="true"
-            type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchAction"
             >
         <forward name="chooseExamsContext" path="/chooseExamsContext.jsp"/>
         <forward name="createExam" path="/chooseExecutionCourseForm.do"/>
@@ -466,7 +466,7 @@
     </action>
 
 	<action path="/viewExamsByDegreeAndCurricularYear"
-    		type="ServidorApresentacao.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
     		>
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
@@ -477,7 +477,7 @@
             path="/chooseExamsMapContextDA"
             scope="request"
             validate="false"
-            type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChooseExamsMapContextDA"
             >
 		<forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
         <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
@@ -488,7 +488,7 @@
             path="/chooseExamsMapContextDANew"
             scope="request"
             validate="true"
-            type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDANew"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChooseExamsMapContextDANew"
             >
         <forward name="prepare" path="/chooseExamsMapContextDANew.do?method=choose&amp;page=0"/>
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
@@ -496,35 +496,35 @@
     </action>
 
     <action path="/viewExamsMap"
-            type="ServidorApresentacao.Action.publico.ViewExamsMapDA"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewExamsMapDA"
             parameter="method"
             name="examForm"
             validate="false"
 			input="/notFound.do"
             >
-			<exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
                 key="error.exams.period.undefined" 
-                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
         <forward name="viewExamsMap" path="viewExamsMapOld"/>
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
         <forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
     </action>
     <action path="/viewExamsMapNew"
-            type="ServidorApresentacao.Action.publico.ViewExamsMapDANew"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewExamsMapDANew"
             parameter="method"
             name="examForm"
             validate="false"
 			input="/notFound.do"
             >
-            <exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
                 key="error.exams.period.undefined" 
-                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
         <forward name="viewExamsMap" path="viewExamsMap"/>
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
     </action>
 
     <action path="/viewPublishedMarks"
-            type="ServidorApresentacao.Action.publico.ViewPublishedMarksAction"
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewPublishedMarksAction"
             parameter="method"
             >
         <forward name="viewPublishedMarks" path="/executionCourseSite.jsp"/>
@@ -539,7 +539,7 @@
 				scope="request"
               	validate="false"
 				parameter="method"
-				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
 			<forward name="roomViewer" path="/viewRoom.jsp"/>
 			<forward name="executionCourseViewer" path="viewExecutionCourse"/>
 		</action>
@@ -547,7 +547,7 @@
 				input="/siteViewerError.jsp"
 				scope="request"
 				parameter="method"
-				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
 			<forward name="roomViewer" path="viewRoomNew"/>
 			<forward name="executionCourseViewer" path="viewExecutionCourse"/>
 		</action>
@@ -555,7 +555,7 @@
 				input="/siteViewerError.jsp"
 				scope="request"
 				parameter="method"
-				type="ServidorApresentacao.Action.publico.SiteViewerDispatchActionNew">
+				type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchActionNew">
 			<forward name="roomViewer" path="viewRoom"/>
 			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
 		</action>
@@ -564,12 +564,12 @@
 			path="/viewExecutionCourse"
 			parameter="method"
 			validate="true"
-            type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
           <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
     </action>
 
 	<!-- by gedl September the 11th, 2003 -->
-    <action type="ServidorApresentacao.Action.publico.ShowStudentGroupInfo"
+    <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowStudentGroupInfo"
 			name="showStudentGroupInfoForm"
             path="/showStudentGroupInfo"
 	        scope="request"
@@ -578,27 +578,27 @@
      	 
     
     <action path="/fileDownload" 
-      		  type="ServidorApresentacao.Action.fileManager.FileRetrievingAction" >
+      		  type="net.sourceforge.fenixedu.presentationTier.Action.fileManager.FileRetrievingAction" >
       		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
      </action>	 
      
      <!-- For degrees´s Site-->
     <action path="/showDegrees" 
-     		type="ServidorApresentacao.Action.publico.ShowDegreesAction" 
+     		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" 
      		parameter="method"
      		>
 	     <forward  name="showDegrees" path="showDegrees"/>  		  
      </action>	 
       <!-- For degrees´s Site-->
     <action path="/showDegreesNew" 
-     		type="ServidorApresentacao.Action.publico.ShowDegreesAction" 
+     		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" 
      		parameter="method"
      		>
 	     <forward  name="showDegrees" path="showDegrees"/>  		  
      </action>	 
    
     <action path="/showDegreeSite" name="viewDegreeEvaluationForm"
-     		type="ServidorApresentacao.Action.publico.ShowDegreeSiteAction" 
+     		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeSiteAction" 
      		parameter="method"
      		input="/showDegrees.do?method=nonMaster"
      		>
@@ -612,7 +612,7 @@
      </action>
      
      <action path="/showDegreeCurricularPlan" 
-     		type="ServidorApresentacao.Action.publico.ShowDegreeCurricularPlanAction" 
+     		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeCurricularPlanAction" 
      		parameter="method"
      		 name="chooseContextDegreeForm"
      		input="/showDegreeSite.do?method=showCurricularPlan"
@@ -621,7 +621,7 @@
 	     <forward  name="showDegreeCurricularPlanEnglish" path="showDegreeCurricularPlanEnglish"/>
      </action>
       <action path="/showDegreeCurricularPlanNew" 
-     		type="ServidorApresentacao.Action.publico.ShowDegreeCurricularPlanAction" 
+     		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeCurricularPlanAction" 
      		parameter="method"
      		 name="chooseContextDegreeForm"
      		input="/degreeSite/errorExecutionDegree.jsp"
@@ -632,7 +632,7 @@
      </action>
  <!--   "/showDegreeSite.do?method=showCurricularPlan"  -->
      <action path="/showCourseSite"
-     type="ServidorApresentacao.Action.publico.ShowCourseSiteAction"
+     type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowCourseSiteAction"
      parameter="method"
      name="chooseContextDegreeForm"
      validate="false"
@@ -644,7 +644,7 @@
      </action>
               
         <action path="/searchProfessorships" name="teachersBodyForm" 
-            type="ServidorApresentacao.Action.publico.teachersBody.ShowTeachersBodyDispatchAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.publico.teachersBody.ShowTeachersBodyDispatchAction" 
             parameter="method" >
             <forward name="showForm" path="searchProfessorships"/>
             <forward name="showProfessorships" path="showProfessorships"/>
@@ -653,7 +653,7 @@
 	<action path="/viewFinalDegreeWorkProposals" forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0"/>
 
 	<action path="/finalDegreeWorks"
-			type="ServidorApresentacao.Action.publico.FinalDegreeWorkProposalsDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.publico.FinalDegreeWorkProposalsDispatchAction"
 			input="/finalDegreeWorks.do?method=prepareSearch&amp;page=0"
 			name="finalDegreeWorksForm"
 			parameter="method"
@@ -665,13 +665,13 @@
 	</action>
 
 	<action path="/smsController" 
-		type="ServidorApresentacao.Action.publico.sms.SmsControllerDispatchAction" 
+		type="net.sourceforge.fenixedu.presentationTier.Action.publico.sms.SmsControllerDispatchAction" 
 		parameter="method" >	
 	</action>
 
 	<!-- DEEC Department application  -->
 	<action path="/getEncryptedPassword"
-			type="ServidorApresentacao.Action.publico.GetEncryptedPassword"			
+			type="net.sourceforge.fenixedu.presentationTier.Action.publico.GetEncryptedPassword"			
 			scope="request"
 			validate="false"
 			>		
@@ -680,7 +680,7 @@
 
       <action path="/support"
 		      input="/support.do?method=prepare&amp;page=0"
-              type="ServidorApresentacao.Action.manager.ManageFAQDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageFAQDA"
               parameter="method"
               >
           <forward name="Manage" path="df.page.support-faq"/>
@@ -688,14 +688,14 @@
 
       <action path="/supportGlossary"
 		      input="/supportGlossary.do?method=prepare&amp;page=0"
-              type="ServidorApresentacao.Action.manager.ManageGlossaryDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageGlossaryDA"
               parameter="method"
               >
           <forward name="Manage" path="df.page.support-glossary"/>
       </action>
       
       <action path="/prepareConsultCurricularPlanNew"
-              type="ServidorApresentacao.Action.publico.PrepareConsultCurricularPlanDispatchAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareConsultCurricularPlanDispatchAction"
               name="chooseContextDegreeForm"
               parameter="method"
               >    
@@ -703,26 +703,26 @@
           <forward name="choose" path="/prepareSelectExecutionCourseActionNew.do"/>
       </action>
       <action path="/prepareSelectExecutionCourseActionNew"
-              type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareSelectExecutionCourseAction">
          <forward name="sucess" path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0"/>     
       </action>
 
 	<action path="/showExecutionCourseSites"
-			type="ServidorApresentacao.Action.publico.ShowExecutionCourseSitesDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowExecutionCourseSitesDispatchAction"
 			parameter="method"
 			scope="request"
 			>
 		<forward name="show-exeution-course-site-list" path="df.page.showDegreeCurricularPlanSites"/>
 	</action>
 	<action path="/showClasses"
-			type="ServidorApresentacao.Action.publico.ShowClassesDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowClassesDispatchAction"
 			parameter="method"
 			scope="request"
 			>
 		<forward name="show-classes-list" path="df.page.showClassesList"/>
 	</action>
 	<action path="/viewAllExamsByDegreeAndCurricularYear"
-    		type="ServidorApresentacao.Action.publico.ViewAllExamsByDegreeAndCurricularYearAction"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewAllExamsByDegreeAndCurricularYearAction"
     		>
     	<forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
 	</action>
@@ -730,7 +730,7 @@
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->
-	  <!--<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor" />-->
+	  <!--<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor" />-->
     
     <!-- ========== Message Resources Definitions ============================ -->
     

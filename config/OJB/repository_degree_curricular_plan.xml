@@ -1,12 +1,12 @@
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DegreeCurricularPlan --> 
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlan --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DegreeCurricularPlan" table="DEGREE_CURRICULAR_PLAN">
-	<extent-class class-ref="Dominio.DegreeCurricularPlanLEEC"/>
-    <extent-class class-ref="Dominio.DegreeCurricularPlanLEIC"/>
-    <extent-class class-ref="Dominio.DegreeCurricularPlanLEICTAGUS"/>
-    <extent-class class-ref="Dominio.DegreeCurricularPlanLEC"/>
-    <extent-class class-ref="Dominio.DegreeCurricularPlanLEM"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" table="DEGREE_CURRICULAR_PLAN">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM"/>
 
 	<field-descriptor
 		name="ojbConcreteClass"
@@ -29,7 +29,7 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="initialDate"
@@ -67,7 +67,7 @@
 		name="markType"
 		column="MARK_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="numerusClausus"
@@ -97,27 +97,27 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Degree"
+			class-ref="net.sourceforge.fenixedu.domain.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
-			element-class-ref="Dominio.Branch"
+			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
-			element-class-ref="Dominio.CurricularCourseEquivalence"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
@@ -125,9 +125,9 @@
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DegreeCurricularPlanLEEC --> 
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DegreeCurricularPlanLEEC" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -149,7 +149,7 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="initialDate"
@@ -187,7 +187,7 @@
 		name="markType"
 		column="MARK_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="numerusClausus"
@@ -217,27 +217,27 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Degree"
+			class-ref="net.sourceforge.fenixedu.domain.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
             refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
-			element-class-ref="Dominio.Branch"
+			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
             refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
-			element-class-ref="Dominio.CurricularCourseEquivalence"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
             refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
@@ -245,9 +245,9 @@
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DegreeCurricularPlanLEIC --> 
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -269,7 +269,7 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="initialDate"
@@ -307,7 +307,7 @@
 		name="markType"
 		column="MARK_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="numerusClausus"
@@ -337,20 +337,20 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Degree"
+			class-ref="net.sourceforge.fenixedu.domain.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
-			element-class-ref="Dominio.Branch"
+			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true"
             refresh="true"
             >
@@ -358,16 +358,16 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
-			element-class-ref="Dominio.CurricularCourseEquivalence"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DegreeCurricularPlanLEICTAGUS --> 
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DegreeCurricularPlanLEICTAGUS" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -389,7 +389,7 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="initialDate"
@@ -427,7 +427,7 @@
 		name="markType"
 		column="MARK_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="numerusClausus"
@@ -457,20 +457,20 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Degree"
+			class-ref="net.sourceforge.fenixedu.domain.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
-			element-class-ref="Dominio.Branch"
+			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true"
             refresh="true"
             >
@@ -478,16 +478,16 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
-			element-class-ref="Dominio.CurricularCourseEquivalence"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DegreeCurricularPlanLEC --> 
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DegreeCurricularPlanLEC" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -509,7 +509,7 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="initialDate"
@@ -547,7 +547,7 @@
 		name="markType"
 		column="MARK_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="numerusClausus"
@@ -577,20 +577,20 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Degree"
+			class-ref="net.sourceforge.fenixedu.domain.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
-			element-class-ref="Dominio.Branch"
+			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true"
             refresh="true"
             >
@@ -598,16 +598,16 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
-			element-class-ref="Dominio.CurricularCourseEquivalence"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DegreeCurricularPlanLEM --> 
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DegreeCurricularPlanLEM" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -629,7 +629,7 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="initialDate"
@@ -667,7 +667,7 @@
 		name="markType"
 		column="MARK_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
 	/>
 	<field-descriptor
 		name="numerusClausus"
@@ -697,20 +697,20 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Degree"
+			class-ref="net.sourceforge.fenixedu.domain.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="curricularCourses"
-			element-class-ref="Dominio.CurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
-			element-class-ref="Dominio.Branch"
+			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true"
             refresh="true"
             >
@@ -718,7 +718,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
-			element-class-ref="Dominio.CurricularCourseEquivalence"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>

@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
 
 <bean:define id="title" name="<%= SessionConstants.PAGE_TITLE %>" scope="request" type="java.lang.String"/>
 	

@@ -1,0 +1,13 @@
+/*
+ * Created on Oct 27, 2003
+ *
+ */
+package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
+
+/**
+ * @author Ana & Ricardo
+ *  
+ */
+public interface IExamsMapRenderer {
+    public abstract StringBuffer render();
+}

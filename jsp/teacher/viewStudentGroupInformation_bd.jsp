@@ -6,8 +6,8 @@
 
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="DataBeans.InfoLesson"%>
-<%@ page import="DataBeans.InfoShift"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
 
 <%@ page import="java.util.Calendar" %>
 

@@ -4,7 +4,7 @@
  * Created on February 26th, 2003, 16:51
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * 
@@ -12,8 +12,8 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class ReadDisciplinesByStudentTest extends TestCaseReadServices {
 

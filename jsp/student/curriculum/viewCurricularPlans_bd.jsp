@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="ServidorAplicacao.IUserView" %>
-<%@ page import="DataBeans.InfoStudentCurricularPlan" %>
-<%@ page import="DataBeans.InfoStudent" %>
-<%@ page import="DataBeans.InfoPerson" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoPerson" %>
 
 <span class="error"><html:errors/></span>
 <bean:define id="studentCPList" name="studentCPs" scope="request" />

@@ -2,11 +2,11 @@
  * Created on 7/Out/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
-import framework.factory.ServiceManagerServiceFactory;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt

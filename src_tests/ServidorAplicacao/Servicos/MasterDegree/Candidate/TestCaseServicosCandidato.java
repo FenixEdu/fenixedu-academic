@@ -5,16 +5,16 @@
  *  
  */
 
-package ServidorAplicacao.Servicos.MasterDegree.Candidate;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.Candidate;
 
 import junit.framework.TestCase;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentDepartment;
-import ServidorPersistente.IPersistentMasterDegreeCandidate;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Tools.dbaccess;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.tools.dbaccess;
 
 public class TestCaseServicosCandidato extends TestCase {
     protected ISuportePersistente suportePersistente = null;

@@ -1,7 +1,7 @@
 <!-- ******************************** -->
-<!-- Definitions for Dominio.Metadata -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Metadata -->
 <!-- ******************************** -->
-<class-descriptor class="Dominio.Metadata"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Metadata"
 				  proxy="dynamic"
                   table="METADATA">
 	<field-descriptor id="1"
@@ -35,7 +35,7 @@
 		name="learningTime"
  		column="LEARNINGTIME"
 		jdbc-type="TIME"
-        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
     />
     <field-descriptor id="7"
 		name="level"
@@ -75,16 +75,16 @@
 	/>
     <collection-descriptor
 		name="visibleQuestions"
-		element-class-ref="Dominio.Question"
+		element-class-ref="net.sourceforge.fenixedu.domain.Question"
 		refresh="true"
 		proxy="true">
 		<inverse-foreignkey field-ref="keyMetadata"/>
-		<query-customizer class="ServidorPersistente.customQueries.QuestionFilter">
+		<query-customizer class="net.sourceforge.fenixedu.persistenceTier.customQueries.QuestionFilter">
 	    </query-customizer>
 	</collection-descriptor>
 	<reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.ExecutionCourse"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
          proxy="true"
     >
     <foreignkey field-ref="keyExecutionCourse"/>
@@ -92,9 +92,9 @@
 </class-descriptor>
 
 <!-- ******************************** -->
-<!-- Definitions for Dominio.Question -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Question -->
 <!-- ******************************** -->
-<class-descriptor class="Dominio.Question"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Question"
 				  proxy="dynamic"
                   table="XML_DOCUMENTS">
     <field-descriptor id="1"
@@ -132,7 +132,7 @@
       />
 	<reference-descriptor
          name="metadata"
-         class-ref="Dominio.Metadata"
+         class-ref="net.sourceforge.fenixedu.domain.Metadata"
          proxy="true"
     > 
 	<foreignkey field-ref="keyMetadata"/>
@@ -140,9 +140,9 @@
 </class-descriptor>
 
 <!-- **************************** -->
-<!-- Definitions for Dominio.Test -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Test -->
 <!-- **************************** -->
-<class-descriptor class="Dominio.Test"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Test"
 				  proxy="dynamic"
                   table="TESTS">
     <field-descriptor id="1"
@@ -171,13 +171,13 @@
         name="creationDate"
         column="CREATION_DATE"
         jdbc-type="TIMESTAMP"
-        conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor id="6"
         name="lastModifiedDate"
         column="LAST_MODIFICATION_DATE"
         jdbc-type="TIMESTAMP"
-        conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
    <field-descriptor id="7"
         name="keyTestScope"
@@ -192,7 +192,7 @@
       />
 	<reference-descriptor
          name="testScope"
-         class-ref="Dominio.TestScope"
+         class-ref="net.sourceforge.fenixedu.domain.TestScope"
          proxy="true"
     > 
 	<foreignkey field-ref="keyTestScope"/>
@@ -200,9 +200,9 @@
 </class-descriptor>
 
 <!-- ************************************ -->
-<!-- Definitions for Dominio.TestQuestion -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.TestQuestion -->
 <!-- ************************************ -->
-<class-descriptor class="Dominio.TestQuestion"
+<class-descriptor class="net.sourceforge.fenixedu.domain.TestQuestion"
 				  proxy="dynamic"
                   table="TEST_QUESTION">
     <field-descriptor id="1"
@@ -236,7 +236,7 @@
         name="correctionFormula"
         column="CORRECTION_FORMULA"
         jdbc-type="INTEGER"
-        conversion="ServidorPersistente.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion"
 	/>
       <field-descriptor
       	name="ackOptLock"
@@ -246,14 +246,14 @@
       />
 	<reference-descriptor
          name="question"
-         class-ref="Dominio.Question"
+         class-ref="net.sourceforge.fenixedu.domain.Question"
          proxy="true"
     > 
 	<foreignkey field-ref="keyQuestion"/>
 	</reference-descriptor>
 	<reference-descriptor
          name="test"
-         class-ref="Dominio.Test"
+         class-ref="net.sourceforge.fenixedu.domain.Test"
          proxy="true"
     > 
 	<foreignkey field-ref="keyTest"/>
@@ -261,9 +261,9 @@
 </class-descriptor>
 
 <!-- *************************************** -->
-<!-- Definitions for Dominio.DistributedTest -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DistributedTest -->
 <!-- *************************************** -->
-<class-descriptor class="Dominio.DistributedTest"
+<class-descriptor class="net.sourceforge.fenixedu.domain.DistributedTest"
 				  proxy="dynamic"
                   table="DISTRIBUTED_TESTS">
     <field-descriptor id="1"
@@ -287,43 +287,43 @@
         name="beginDate"
         column="TEST_BEGIN_DATE"
         jdbc-type="DATE"
-        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 	<field-descriptor id="5"
         name="beginHour"
         column="TEST_BEGIN_HOUR"
         jdbc-type="TIME"
-        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
 	/>
    <field-descriptor id="6"
         name="endDate"
         column="TEST_END_DATE"
         jdbc-type="DATE"
-        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 	<field-descriptor id="7"
         name="endHour"
         column="TEST_END_HOUR"
         jdbc-type="TIME"
-        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
 	/>
    <field-descriptor id="8"
         name="testType"
         column="TEST_TYPE"
         jdbc-type="INTEGER"
-        conversion="ServidorPersistente.Conversores.TestType2EnumTestTypeFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TestType2EnumTestTypeFieldConversion"
 	/>
    <field-descriptor id="9"
         name="correctionAvailability"
         column="CORRECTION_AVAILABILITY"
         jdbc-type="INTEGER"
-        conversion="ServidorPersistente.Conversores.CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion"
 	/>
  	<field-descriptor id="10"
         name="imsFeedback"
         column="IMS_FEEDBACK"
         jdbc-type="INTEGER"
-        conversion="ServidorPersistente.Conversores.Int2BooleanFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Int2BooleanFieldConversion"
  	/>
  	<field-descriptor id="11"
          name="numberOfQuestions"
@@ -337,14 +337,14 @@
 	/>
 	 <collection-descriptor
 		name="studentLogs"
-		element-class-ref="Dominio.StudentTestLog"
+		element-class-ref="net.sourceforge.fenixedu.domain.StudentTestLog"
 		auto-delete="true"
 		proxy="true">
 		<inverse-foreignkey field-ref="keyDistributedTest"/>
 	</collection-descriptor>
 	 <collection-descriptor
 		name="studentQuestions"
-		element-class-ref="Dominio.StudentTestQuestion"
+		element-class-ref="net.sourceforge.fenixedu.domain.StudentTestQuestion"
 		auto-delete="true"
 		proxy="true">
 		<inverse-foreignkey field-ref="keyDistributedTest"/>
@@ -357,7 +357,7 @@
       />
 	<reference-descriptor
          name="testScope"
-         class-ref="Dominio.TestScope"
+         class-ref="net.sourceforge.fenixedu.domain.TestScope"
          proxy="true"
     > 
 	<foreignkey field-ref="keyTestScope"/>
@@ -365,9 +365,9 @@
 </class-descriptor>
 
 <!-- ******************************************* -->
-<!-- Definitions for Dominio.StudentTestQuestion -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentTestQuestion -->
 <!-- ******************************************* -->
-<class-descriptor class="Dominio.StudentTestQuestion"
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentTestQuestion"
 				  proxy="dynamic"
                   table="STUDENT_TEST_QUESTION">
     <field-descriptor
@@ -416,7 +416,7 @@
         name="correctionFormula"
         column="CORRECTION_FORMULA"
         jdbc-type="INTEGER"
-        conversion="ServidorPersistente.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion"
 	/>
       <field-descriptor
       	name="ackOptLock"
@@ -427,27 +427,27 @@
      <reference-descriptor
         name="student"
         proxy="true"
-        class-ref="Dominio.Student">
+        class-ref="net.sourceforge.fenixedu.domain.Student">
 	     <foreignkey field-ref="keyStudent"/>
      </reference-descriptor>
      <reference-descriptor
         name="distributedTest"
         proxy="true"
-        class-ref="Dominio.DistributedTest">
+        class-ref="net.sourceforge.fenixedu.domain.DistributedTest">
      	<foreignkey field-ref="keyDistributedTest"/>
      </reference-descriptor>
      <reference-descriptor
         name="question"
         proxy="true"
-        class-ref="Dominio.Question">
+        class-ref="net.sourceforge.fenixedu.domain.Question">
      	<foreignkey field-ref="keyQuestion"/>
      </reference-descriptor>
 </class-descriptor>
 
 <!-- ************************************** -->
-<!-- Definitions for Dominio.StudentTestLog -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentTestLog -->
 <!-- ************************************** -->
-<class-descriptor class="Dominio.StudentTestLog"
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentTestLog"
 				  proxy="dynamic"
                   table="STUDENT_TEST_LOG">
     <field-descriptor id="1"
@@ -471,7 +471,7 @@
         name="date"
         column="DATE"
         jdbc-type="TIMESTAMP"
-        conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor id="5"
          name="event"
@@ -486,14 +486,14 @@
       />
     <reference-descriptor
          name="student"
-         class-ref="Dominio.Student"
+         class-ref="net.sourceforge.fenixedu.domain.Student"
          proxy="true"
     >
 	<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>
 	<reference-descriptor
          name="distributedTest"
-         class-ref="Dominio.DistributedTest"
+         class-ref="net.sourceforge.fenixedu.domain.DistributedTest"
          proxy="true"
     >
 	<foreignkey field-ref="keyDistributedTest"/>
@@ -501,10 +501,10 @@
 </class-descriptor>
 
 <!-- ********************************** -->
-<!-- Definitions for Dominio.OnLineTest -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.OnLineTest -->
 <!-- ********************************** -->
    <class-descriptor
-   	  class="Dominio.OnlineTest"
+   	  class="net.sourceforge.fenixedu.domain.OnlineTest"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -537,7 +537,7 @@
       />
 	  <collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			proxy="true"
 			auto-retrieve="true"
@@ -550,7 +550,7 @@
 	</collection-descriptor>
 	<reference-descriptor
          name="distributedTest"
-         class-ref="Dominio.DistributedTest"
+         class-ref="net.sourceforge.fenixedu.domain.DistributedTest"
          proxy="true"
     >
 		<foreignkey field-ref="keyDistributedTest"/>
@@ -559,12 +559,12 @@
 </class-descriptor>
 
 <!-- ********************************* -->
-<!-- Definitions for Dominio.TestScope -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.TestScope -->
 <!-- ********************************* -->
-<class-descriptor class="Dominio.TestScope"
+<class-descriptor class="net.sourceforge.fenixedu.domain.TestScope"
                   table="TEST_SCOPE"
                   proxy="dynamic"
-                  row-reader="ServidorPersistente.rowReaders.TestScopeRowReader" 
+                  row-reader="net.sourceforge.fenixedu.persistenceTier.rowReaders.TestScopeRowReader" 
                   >
     <field-descriptor id="1"
         name="idInternal"
@@ -593,9 +593,9 @@
 
 
 <!-- *********************************************** -->
-<!-- Definitions for Dominio.DistributedTestAdvisory -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DistributedTestAdvisory -->
 <!-- *********************************************** -->
-<class-descriptor class="Dominio.DistributedTestAdvisory"
+<class-descriptor class="net.sourceforge.fenixedu.domain.DistributedTestAdvisory"
                   table="DISTRIBUTED_TEST_ADVISORY"
                   proxy="dynamic">
     <field-descriptor id="1"
@@ -623,14 +623,14 @@
       />
 	<reference-descriptor
          name="distributedTest"
-         class-ref="Dominio.DistributedTest"
+         class-ref="net.sourceforge.fenixedu.domain.DistributedTest"
          proxy="true"
     >
     <foreignkey field-ref="keyDistributedTest"/>
     </reference-descriptor>
     <reference-descriptor
          name="advisory"
-         class-ref="Dominio.Advisory"
+         class-ref="net.sourceforge.fenixedu.domain.Advisory"
          proxy="true"
     >
     <foreignkey field-ref="keyAdvisory"/>

@@ -2,10 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.CurricularCourseType" %>
-<%@ page import="Util.EnrollmentState" %>
-<%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
-<%@ page import="DataBeans.InfoEnrolment" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.CurricularCourseType" %>
+<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 
   <span class="error"><html:errors/></span>
 

@@ -6,10 +6,10 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="Util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
 --%>
 <logic:present name="siteView">
-<bean:define id="curricularCourses" name="siteView" property="component" type="DataBeans.InfoSiteAssociatedCurricularCourses"/>
+<bean:define id="curricularCourses" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses"/>
     <span class="error"><html:errors/></span>
 
     <table>        

@@ -3,9 +3,9 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.transactions.InsuranceTransaction -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.transactions.InsuranceTransaction" table="INSURANCE_TRANSACTION">
+<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction" table="INSURANCE_TRANSACTION">
 	
 	<field-descriptor
 		name="idInternal"
@@ -44,14 +44,14 @@
 	     name="paymentType"
 	     column="PAYMENT_TYPE"
 	     jdbc-type="INTEGER"
-	     conversion="ServidorPersistente.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
+	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
 	/>
 	
 	<field-descriptor 
 	     name="transactionType"
 	     column="TRANSACTION_TYPE"
 	     jdbc-type="INTEGER"
-	     conversion="ServidorPersistente.Conversores.JavaTransactionType2SqlTransactionTypeFieldConversion"
+	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTransactionType2SqlTransactionTypeFieldConversion"
 	/>
 	
 	<field-descriptor
@@ -93,7 +93,7 @@
 		
 	<reference-descriptor
        	name="personAccount"
-       	class-ref="Dominio.PersonAccount"
+       	class-ref="net.sourceforge.fenixedu.domain.PersonAccount"
        	proxy="true"
 		refresh="true"
     >
@@ -102,7 +102,7 @@
 	
 	<reference-descriptor
        	name="responsiblePerson"
-       	class-ref="Dominio.Person"
+       	class-ref="net.sourceforge.fenixedu.domain.Person"
        	proxy="true"
 		refresh="true"
     >
@@ -111,7 +111,7 @@
 	
 	<reference-descriptor
        	name="guideEntry"
-       	class-ref="Dominio.GuideEntry"
+       	class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
        	proxy="true"
 		refresh="true"
     >
@@ -120,7 +120,7 @@
 	
 	<reference-descriptor
        	name="executionYear"
-       	class-ref="Dominio.ExecutionYear"
+       	class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
        	proxy="true"
 		refresh="true"
     >
@@ -129,7 +129,7 @@
 	
 	<reference-descriptor
        	name="student"
-       	class-ref="Dominio.Student"
+       	class-ref="net.sourceforge.fenixedu.domain.Student"
        	proxy="true"
 		refresh="true"
     >

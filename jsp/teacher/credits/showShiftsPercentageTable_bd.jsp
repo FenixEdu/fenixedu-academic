@@ -2,9 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants,  
-				 java.util.Calendar, DataBeans.InfoLesson" %>
-
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="java.util.Calendar" %> 
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
 			 
 <bean:define id="infoShiftsPercentageList" name="infoShiftPercentageList" scope="request" />
 

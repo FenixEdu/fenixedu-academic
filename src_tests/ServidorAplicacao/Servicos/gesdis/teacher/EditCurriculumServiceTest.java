@@ -2,13 +2,13 @@
  * Created on 18/Mar/2003
  *
  */
-package ServidorAplicacao.Servicos.gesdis.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.gesdis.teacher;
 
-import DataBeans.InfoCurriculum;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseDeleteAndEditServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author jmota

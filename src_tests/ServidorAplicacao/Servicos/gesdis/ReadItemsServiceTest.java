@@ -9,27 +9,27 @@
  * @author lmac2
  */
 
-package ServidorAplicacao.Servicos.gesdis;
+package net.sourceforge.fenixedu.applicationTier.Servicos.gesdis;
 
 import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.util.Cloner;
-import Dominio.IExecutionCourse;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import Dominio.ISection;
-import Dominio.ISite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentSection;
-import ServidorPersistente.IPersistentSite;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public class ReadItemsServiceTest extends TestCaseReadServices {
 

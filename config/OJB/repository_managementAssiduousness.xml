@@ -1,6 +1,6 @@
 <!-- Definitions for . -->
 <class-descriptor 
-  class="Dominio.managementAssiduousness.MoneyCostCenter"
+  class="net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter"
   table="MONEY_COST_CENTER"
 >
 	<field-descriptor
@@ -50,17 +50,17 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
   	<reference-descriptor
          name="costCenter"
-         class-ref="Dominio.CostCenter"
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
          <foreignkey field-ref="costCenterKey"/>
   	</reference-descriptor>
     <reference-descriptor
       	name="whoEmployee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="false"
 		refresh="true">
         <foreignkey field-ref="who"/>
@@ -68,7 +68,7 @@
 </class-descriptor>
 
 <class-descriptor 
-  class="Dominio.managementAssiduousness.ExtraWork"
+  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork"
   table="EXTRA_WORK"
 >
 	<field-descriptor
@@ -93,13 +93,13 @@
 		name="beginHour" 
 		column="BEGIN_HOUR" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
 		name="endHour" 
 		column="END_HOUR" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
 	<field-descriptor
 	    name="mealSubsidy"
@@ -110,31 +110,31 @@
 		name="diurnalFirstHour" 
 		column="DIURNAL_FIRST_HOUR" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
 		name="diurnalAfterSecondHour" 
 		column="DIURNAL_AFTER_SECOND_HOUR" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
 		name="nocturnalFirstHour" 
 		column="NOCTURNAL_FIRST_HOUR" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
 		name="nocturnalAfterSecondHour" 
 		column="NOCTURNAL_AFTER_SECOND_HOUR" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
 		name="restDay" 
 		column="REST_DAY" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
 	<field-descriptor
   		name="mealSubsidyAuthorized" 
@@ -174,18 +174,18 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
     <reference-descriptor
       	name="employee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="false"
 		refresh="true">
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
     <reference-descriptor
       	name="whoEmployee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="false"
 		refresh="true">
         <foreignkey field-ref="who"/>
@@ -193,7 +193,7 @@
 </class-descriptor>
 
 <class-descriptor 
-  class="Dominio.managementAssiduousness.ExtraWorkRequests"
+  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests"
   table="EXTRA_WORK_REQUESTS"
 >
 	<field-descriptor
@@ -303,36 +303,36 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
     <reference-descriptor
       	name="employee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="true">
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
   	<reference-descriptor
          name="costCenter"
-         class-ref="Dominio.CostCenter"
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
          <foreignkey field-ref="costCenterKey"/>
   	</reference-descriptor>
   	<reference-descriptor
          name="costCenterMoney"
-         class-ref="Dominio.CostCenter"
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
          <foreignkey field-ref="costCenterMoneyKey"/>
   	</reference-descriptor>
     <reference-descriptor
       	name="whoEmployee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="true">
         <foreignkey field-ref="who"/>
     </reference-descriptor> 
 </class-descriptor>
 
 <class-descriptor 
-  class="Dominio.managementAssiduousness.ExtraWorkCompensation"
+  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation"
   table="EXTRA_WORK_COMPENSATION"
 >
 	<field-descriptor
@@ -387,18 +387,18 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
     <reference-descriptor
       	name="employee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="false"
 		refresh="true">
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
     <reference-descriptor
       	name="whoEmployee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="false"
 		refresh="true">
         <foreignkey field-ref="who"/>
@@ -407,7 +407,7 @@
 
 
 <class-descriptor 
-  class="Dominio.managementAssiduousness.ExtraWorkHistoric"
+  class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric"
   table="EXTRA_WORK_HISTORIC"
 >
 	<field-descriptor
@@ -442,13 +442,13 @@
 		name="hoursExtraWorkPerYear" 
 		column="HOURS_EXTRAWORK_PER_YEAR" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
 		name="hoursExtraWorkPerDay" 
 		column="HOURS_EXTRAWORK_PER_DAY" 
 		jdbc-type="TIME"
-    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+    	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
 	/> 
 	<field-descriptor
 	   	name="employeeKey"
@@ -464,18 +464,18 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>   
     <reference-descriptor
       	name="employee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="false"
 		refresh="true">
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
     <reference-descriptor
       	name="whoEmployee"
-       	class-ref="Dominio.Employee"
+       	class-ref="net.sourceforge.fenixedu.domain.Employee"
        	proxy="false"
 		refresh="true">
         <foreignkey field-ref="who"/>

@@ -5,7 +5,7 @@
  * Created on 24 de Outubro de 2002, 12:00
  */
 
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.candidate;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.candidate;
 
 /**
  * 
@@ -13,10 +13,10 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.candidate;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public class ReadCandidateListTest extends TestCaseReadServices {
 

@@ -2,32 +2,32 @@
  * Created on 12/Ago/2003
  *  
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
-import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoQuestion;
-import DataBeans.InfoSiteTestQuestion;
-import DataBeans.InfoTestQuestion;
-import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
-import Dominio.IQuestion;
-import Dominio.ITest;
-import Dominio.ITestQuestion;
-import Dominio.Question;
-import Dominio.Test;
-import Dominio.TestQuestion;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentQuestion;
-import ServidorPersistente.IPersistentTest;
-import ServidorPersistente.IPersistentTestQuestion;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import UtilTests.ParseQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IQuestion;
+import net.sourceforge.fenixedu.domain.ITest;
+import net.sourceforge.fenixedu.domain.ITestQuestion;
+import net.sourceforge.fenixedu.domain.Question;
+import net.sourceforge.fenixedu.domain.Test;
+import net.sourceforge.fenixedu.domain.TestQuestion;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentQuestion;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentTest;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentTestQuestion;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 /**
  * @author Susana Fernandes

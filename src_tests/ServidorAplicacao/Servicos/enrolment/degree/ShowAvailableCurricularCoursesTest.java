@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.enrolment.degree;
+package net.sourceforge.fenixedu.applicationTier.Servicos.enrolment.degree;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,19 +20,19 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoEnrolment;
-import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentStudentCurricularPlan;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Tools.dbaccess;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.tools.dbaccess;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Correia

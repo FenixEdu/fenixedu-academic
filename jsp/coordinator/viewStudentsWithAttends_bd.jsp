@@ -2,17 +2,17 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="Util.TipoAula" %>
-<%@ page import="Util.EnrolmentEvaluationType" %>
-<%@ page import="Util.AttendacyStateSelectionType" %>
-<%@ page import="DataBeans.InfoExecutionCourse" %>
-<%@ page import="DataBeans.InfoDegreeCurricularPlan" %>
-<%@ page import="DataBeans.InfoDegree" %>
-<%@ page import="DataBeans.InfoGroupProperties" %>
-<%@ page import="DataBeans.InfoStudentGroup" %>
-<%@ page import="DataBeans.InfoLesson" %>
-<%@ page import="DataBeans.InfoAttendsSummary" %>
-<%@ page import="DataBeans.InfoForReadStudentsWithAttendsByExecutionCourse" %>
+<%@ page import="net.sourceforge.fenixedu.util.TipoAula" %>
+<%@ page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationType" %>
+<%@ page import="net.sourceforge.fenixedu.util.AttendacyStateSelectionType" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.GregorianCalendar" %>
@@ -52,8 +52,8 @@ function cleanSelect(checkboxes) {
 </script>
 
 
-<bean:define id="studentsComponent" name="siteView" property="component" type="DataBeans.InfoForReadStudentsWithAttendsByExecutionCourse"/>
-<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
+<bean:define id="studentsComponent" name="siteView" property="component" type="net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse"/>
+<bean:define id="commonComponent" name="siteView" property="commonComponent" type="net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon"/>
 <bean:define id="classTypes" type="java.util.List" name="studentsComponent" property="classTypes" />
 <bean:define id="groupsProperties"	type="List" name="studentsComponent" property="infoGroupProperties"/>
 <bean:define id="executionCourse"	type="InfoExecutionCourse" name="studentsComponent" property="infoExecutionCourse"/>
@@ -144,9 +144,9 @@ function cleanSelect(checkboxes) {
 					</td>
 				</tr>
 		
-				<logic:iterate id="dcp" type="DataBeans.InfoDegreeCurricularPlan" name="degreeCurricularPlans">
+				<logic:iterate id="dcp" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" name="degreeCurricularPlans">
 					<bean:define id="dcpID" name="dcp" property="idInternal"/>
-					<bean:define id="degree" type="DataBeans.InfoDegree" name="dcp" property="infoDegree"/>
+					<bean:define id="degree" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" name="dcp" property="infoDegree"/>
 					<tr>
 						<td>
 							<%
@@ -178,7 +178,7 @@ function cleanSelect(checkboxes) {
 				</tr>	
 				
 				<bean:define id="shifts" name="studentsComponent" property="infoShifts" />
-				<logic:iterate type="DataBeans.InfoShift" name="shifts" id="shift">
+				<logic:iterate type="net.sourceforge.fenixedu.dataTransferObject.InfoShift" name="shifts" id="shift">
 					<tr>
 							<%
 								String text = new String();
@@ -298,7 +298,7 @@ function cleanSelect(checkboxes) {
 		<tr>
 		   <logic:present name="groupsProperties">
 			<logic:notEmpty name="groupsProperties">
-				<logic:iterate name="groupsProperties" id="gp" type="DataBeans.InfoGroupProperties">
+				<logic:iterate name="groupsProperties" id="gp" type="net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties">
 					<td class="listClasses-header">
 					<bean:write name="gp" property="name"/>
 					</td>
@@ -306,7 +306,7 @@ function cleanSelect(checkboxes) {
 			</logic:notEmpty>
 		   </logic:present>
 		   
-			<logic:iterate id="classType" type="Util.TipoAula" name="classTypes">
+			<logic:iterate id="classType" type="net.sourceforge.fenixedu.util.TipoAula" name="classTypes">
 			  <td class="listClasses-header" >
 				<bean:define id="classTypeInt" name="classType" property="tipo"/>
 
@@ -329,8 +329,8 @@ function cleanSelect(checkboxes) {
 
 		<bean:define id="attendacies" name="studentsComponent" property="infoAttends"/>
 
-    	<logic:iterate id="attend" type="DataBeans.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups" name="attendacies"> 
-			<bean:define id="attendacy" type="DataBeans.InfoFrequenta" name="attend" property="infoAttends"/>
+    	<logic:iterate id="attend" type="net.sourceforge.fenixedu.dataTransferObject.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups" name="attendacies"> 
+			<bean:define id="attendacy" type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta" name="attend" property="infoAttends"/>
 			<tr>
 				<logic:equal name="viewPhoto" value="true">
 					<td class="listClasses">
@@ -373,8 +373,8 @@ function cleanSelect(checkboxes) {
 					</logic:notPresent>
 				</td>
 				<td class="listClasses">
-					<bean:define id="infoDCP" type="DataBeans.InfoDegreeCurricularPlan" name="attend" property="attendingStudentInfoDCP"/>
-					<bean:define id="degree" type="DataBeans.InfoDegree" name="infoDCP" property="infoDegree"/>
+					<bean:define id="infoDCP" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" name="attend" property="attendingStudentInfoDCP"/>
+					<bean:define id="degree" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree" name="infoDCP" property="infoDegree"/>
 					
 					<%
 						String sigla = degree.getSigla();
@@ -464,13 +464,13 @@ function cleanSelect(checkboxes) {
 		            <bean:define id="map" name="attend" property="infoShifts" type="java.util.Map"/>
 
 					<% 
-					if (((DataBeans.InfoShift)map.get(classType.getSiglaTipoAula()))==null){
+					if (((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get(classType.getSiglaTipoAula()))==null){
 					%>
 						<bean:message key="label.notAvailable"/>
 					<%
 		            }
 		            else{
-		            	out.print(((DataBeans.InfoShift)map.get(classType.getSiglaTipoAula())).getNome());
+		            	out.print(((net.sourceforge.fenixedu.dataTransferObject.InfoShift)map.get(classType.getSiglaTipoAula())).getNome());
 					}
 					%>
 		          </td>
@@ -495,7 +495,7 @@ function cleanSelect(checkboxes) {
 	<logic:iterate id="enrollmentNumber" name="attendsSummary" property="numberOfEnrollments">
 		<tr>
 			<td class="listClasses"><bean:write name="enrollmentNumber"/></td>
-			<td class="listClasses"><%= ((DataBeans.InfoAttendsSummary)attendsSummary).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
+			<td class="listClasses"><%= ((net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary)attendsSummary).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
 		</tr>
 	</logic:iterate> 
 </table>

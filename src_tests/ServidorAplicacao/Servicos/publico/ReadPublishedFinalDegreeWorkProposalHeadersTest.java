@@ -2,9 +2,9 @@
  * Created on 2004/04/09
  *
  */
-package ServidorAplicacao.Servicos.publico;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publico;
 
-import ServidorAplicacao.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
 
 /**
  * @author Luis Cruz

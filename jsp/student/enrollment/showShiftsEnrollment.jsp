@@ -64,7 +64,7 @@
 				</td>
 			</tr>
 			<bean:define id="elem" value="" type="java.lang.String"/>
-			<logic:iterate id="infoShift" name="infoShiftEnrollment" property="infoShiftEnrollment" type="DataBeans.InfoShift">
+			<logic:iterate id="infoShift" name="infoShiftEnrollment" property="infoShiftEnrollment" type="net.sourceforge.fenixedu.dataTransferObject.InfoShift">
 				<%-- COURSES --%>
 				<logic:present name="elem">
 					<logic:notEqual name="elem" value="<%=infoShift.getInfoDisciplinaExecucao().getNome()%>">

@@ -26,12 +26,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -43,18 +43,18 @@
 	<action-mappings type="org.apache.struts.action.ActionMapping">
    
    	<action path="/index" 
-      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
+      		  type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
       		  forward="/index.jsp"/>
     
     <action path="/gratuitySection"
-	type="ServidorApresentacao.Action.commons.VoidAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
 	parameter="method"
 	>
 		<forward name="Success" path="firstPageGratuitySection"/>
 	</action>
 	
     <action path="/studentsGratuityList"
-		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
 		parameter="method"
 		name="studentsGratuityListForm"
 		scope="request"
@@ -68,7 +68,7 @@
  	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	

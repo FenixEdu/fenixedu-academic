@@ -1,4 +1,4 @@
-<class-descriptor class="Dominio.Building" table="BUILDING">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Building" table="BUILDING">
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -20,7 +20,7 @@
      <collection-descriptor
 			name="rooms"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Room"
+			element-class-ref="net.sourceforge.fenixedu.domain.Room"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">
@@ -29,7 +29,7 @@
 </class-descriptor>
 
 <class-descriptor
-   	  class="Dominio.Room"
+   	  class="net.sourceforge.fenixedu.domain.Room"
    	  table="ROOM"
    >
       <field-descriptor id="1"
@@ -53,7 +53,7 @@
          name="tipo"
          column="TYPE"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.TipoSala2EnumTipoSalaFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoSala2EnumTipoSalaFieldConversion"
       />
       <field-descriptor id="6"
          name="capacidadeNormal"
@@ -78,15 +78,15 @@
       />
       <reference-descriptor
          name="building"
-         class-ref="Dominio.Building"
+         class-ref="net.sourceforge.fenixedu.domain.Building"
       >
          <foreignkey field-ref="keyBuilding"/>
       </reference-descriptor>
 </class-descriptor>
 
-<!-- Definitions for Dominio.SchoolClass -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClass -->
 <class-descriptor
-   	  class="Dominio.SchoolClass"
+   	  class="net.sourceforge.fenixedu.domain.SchoolClass"
    	  table="CLASS"
    >
       <field-descriptor id="1"
@@ -124,20 +124,20 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.ExecutionDegree"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
       >
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
       <reference-descriptor
          name="executionPeriod"
-         class-ref="Dominio.ExecutionPeriod"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
       >
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>      
      <collection-descriptor
 			name="associatedShifts"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Shift"
+			element-class-ref="net.sourceforge.fenixedu.domain.Shift"
 			indirection-table="CLASS_SHIFT"
 			proxy="true"
 			auto-retrieve="true"
@@ -147,9 +147,9 @@
 	</collection-descriptor>      
 </class-descriptor>
 
-<!-- Definitions for Dominio.Shift -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Shift -->
    <class-descriptor
-   	  class="Dominio.Shift"
+   	  class="net.sourceforge.fenixedu.domain.Shift"
    	  table="SHIFT"
    >
       <field-descriptor id="1"
@@ -175,7 +175,7 @@
          name="tipo"
          column="TYPE"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.TipoAula2EnumTipoAulaFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
       />
       <field-descriptor id="5"
          name="lotacao"
@@ -195,7 +195,7 @@
       />
       <reference-descriptor
          name="disciplinaExecucao"
-         class-ref="Dominio.ExecutionCourse"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 		 refresh="true"
 		 auto-retrieve="true"
 		 >
@@ -204,7 +204,7 @@
      <collection-descriptor
 			name="associatedShiftProfessorship"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
-			element-class-ref="Dominio.ShiftProfessorship"
+			element-class-ref="net.sourceforge.fenixedu.domain.ShiftProfessorship"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">
@@ -213,7 +213,7 @@
      <collection-descriptor
 			name="associatedLessons"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
-			element-class-ref="Dominio.Lesson"
+			element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">
@@ -222,7 +222,7 @@
 	<!-- collection-class="org.apache.ojb.broker.util.collections.ManageableVector" -->
      <collection-descriptor
 			name="associatedClasses"
-			element-class-ref="Dominio.SchoolClass"
+			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
 			indirection-table="CLASS_SHIFT"
 			proxy="true"
 			auto-retrieve="true"
@@ -232,7 +232,7 @@
 	</collection-descriptor>
      <collection-descriptor
 			name="studentShifts"
-			element-class-ref="Dominio.ShiftStudent"
+			element-class-ref="net.sourceforge.fenixedu.domain.ShiftStudent"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">
@@ -240,9 +240,9 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<!-- Definitions for Dominio.Lesson -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Lesson -->
    <class-descriptor
-   	  class="Dominio.Lesson"
+   	  class="net.sourceforge.fenixedu.domain.Lesson"
    	  table="LESSON"
    >
       <field-descriptor id="1"
@@ -256,19 +256,19 @@
          name="diaSemana"
          column="WEEKDAY"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
       />
       <field-descriptor id="3"
          name="inicio"
          column="START_TIME"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor id="4"
          name="fim"
          column="END_TIME"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor id="5"
          name="chaveSala"
@@ -290,7 +290,7 @@
          name="tipo"
          column="TYPE"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.TipoAula2EnumTipoAulaFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
       />
       <field-descriptor id="8"
          name="keyExecutionPeriod"
@@ -310,33 +310,33 @@
       />
       <reference-descriptor
          name="sala"
-         class-ref="Dominio.Room"
+         class-ref="net.sourceforge.fenixedu.domain.Room"
       >
          <foreignkey field-ref="chaveSala"/>
       </reference-descriptor>
       <reference-descriptor
          name="shift"
-         class-ref="Dominio.Shift"
+         class-ref="net.sourceforge.fenixedu.domain.Shift"
       >
          <foreignkey field-ref="keyShift"/>
       </reference-descriptor>
 	 <reference-descriptor
          name="executionPeriod"
-         class-ref="Dominio.ExecutionPeriod"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
       >
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>     
    	  <reference-descriptor
          name="roomOccupation"
-         class-ref="Dominio.RoomOccupation"
+         class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
       >
          <foreignkey field-ref="keyRoomOccupation"/>
       </reference-descriptor>     
 </class-descriptor>
 
-<!-- Definitions for Dominio.SchoolClassShift -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClassShift -->
 <class-descriptor
-   	  class="Dominio.SchoolClassShift"
+   	  class="net.sourceforge.fenixedu.domain.SchoolClassShift"
    	  table="CLASS_SHIFT"
    >
       <field-descriptor id="1"
@@ -364,14 +364,14 @@
       />
       <reference-descriptor
          name="turma"
-         class-ref="Dominio.SchoolClass"
+         class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
          proxy="true"
       >
          <foreignkey field-ref="chaveTurma"/>
       </reference-descriptor>      
       <reference-descriptor
          name="turno"
-         class-ref="Dominio.Shift"
+         class-ref="net.sourceforge.fenixedu.domain.Shift"
          proxy="true"
       >
          <foreignkey field-ref="chaveTurno"/>
@@ -381,9 +381,9 @@
    
       
  
-<!-- Definitions for Dominio.ShiftStudent -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ShiftStudent -->
    <class-descriptor
-   	  class="Dominio.ShiftStudent"
+   	  class="net.sourceforge.fenixedu.domain.ShiftStudent"
    	  table="SHIFT_STUDENT"
    >
       <field-descriptor
@@ -408,19 +408,19 @@
       />
       <reference-descriptor
          name="shift"
-         class-ref="Dominio.Shift">
+         class-ref="net.sourceforge.fenixedu.domain.Shift">
       <foreignkey field-ref="keyShift"/>
       </reference-descriptor>      
          <reference-descriptor
          name="student"
-         class-ref="Dominio.Student">
+         class-ref="net.sourceforge.fenixedu.domain.Student">
       <foreignkey field-ref="keyStudent"/>
       </reference-descriptor>      
    </class-descriptor>         
 
-<!-- Definitions for Dominio.Attends -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Attends -->
    <class-descriptor
-   	  class="Dominio.Attends"
+   	  class="net.sourceforge.fenixedu.domain.Attends"
    	  table="ATTEND"
    >
       <field-descriptor id="1"
@@ -453,21 +453,21 @@
       />
       <reference-descriptor
          name="aluno"
-         class-ref="Dominio.Student"
+         class-ref="net.sourceforge.fenixedu.domain.Student"
          proxy="false"
       >
          <foreignkey field-ref="chaveAluno"/>
       </reference-descriptor> 
       <reference-descriptor
          name="disciplinaExecucao"
-         class-ref="Dominio.ExecutionCourse"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
          proxy="true"
       >
          <foreignkey field-ref="chaveDisciplinaExecucao"/>
       </reference-descriptor> 
       <reference-descriptor
          name="enrolment"
-         class-ref="Dominio.Enrolment"
+         class-ref="net.sourceforge.fenixedu.domain.Enrolment"
          proxy="true"
       >
          <foreignkey field-ref="keyEnrolment"/>
@@ -475,7 +475,7 @@
 
 	  <collection-descriptor 
 			name="attendInAttendsSet" 
-			element-class-ref="Dominio.AttendInAttendsSet"
+			element-class-ref="net.sourceforge.fenixedu.domain.AttendInAttendsSet"
 			proxy="true">
 			<inverse-foreignkey field-ref="keyAttend"/>
       </collection-descriptor>
@@ -483,7 +483,7 @@
    </class-descriptor>   
 
 
-<class-descriptor class="Dominio.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
       					autoincrement="true"/>
       <field-descriptor name="keyExam" column="KEY_EVALUATION"  jdbc-type="INTEGER"/>      
@@ -495,20 +495,20 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-      <reference-descriptor name="exam" class-ref="Dominio.Exam" proxy="false">
+      <reference-descriptor name="exam" class-ref="net.sourceforge.fenixedu.domain.Exam" proxy="false">
          <foreignkey field-ref="keyExam"/>
       </reference-descriptor> 
-      <reference-descriptor name="student" class-ref="Dominio.Student" proxy="false">
+      <reference-descriptor name="student" class-ref="net.sourceforge.fenixedu.domain.Student" proxy="false">
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor> 
-      <reference-descriptor name="room" class-ref="Dominio.Room" proxy="false">
+      <reference-descriptor name="room" class-ref="net.sourceforge.fenixedu.domain.Room" proxy="false">
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor> 
 </class-descriptor>
 	
-<!-- Definitions for Dominio.FinalEvaluation -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.FinalEvaluation -->
    <class-descriptor
-   	  class="Dominio.FinalEvaluation"
+   	  class="net.sourceforge.fenixedu.domain.FinalEvaluation"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -536,7 +536,7 @@
       />
 	  <collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			proxy="true"
 			auto-retrieve="true"
@@ -549,9 +549,9 @@
 	</class-descriptor>
 
 
-<!-- Definitions for Dominio.Mark -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Mark -->
    <class-descriptor
-   	  class="Dominio.Mark"
+   	  class="net.sourceforge.fenixedu.domain.Mark"
    	  table="MARK">
       <field-descriptor
          name="idInternal"
@@ -588,23 +588,23 @@
       />
       <reference-descriptor
          name="attend"
-         class-ref="Dominio.Attends"
+         class-ref="net.sourceforge.fenixedu.domain.Attends"
          proxy="true"
       >
          <foreignkey field-ref="keyAttend"/>
       </reference-descriptor> 
       <reference-descriptor
          name="evaluation"
-         class-ref="Dominio.Evaluation"
+         class-ref="net.sourceforge.fenixedu.domain.Evaluation"
       >
          <!-- proxy="true" -->
          <foreignkey field-ref="keyEvaluation"/>
       </reference-descriptor> 
 </class-descriptor> 
 
-<!-- Definitions for Dominio.ExamExecutionCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ExamExecutionCourse -->
    <class-descriptor
-   	  class="Dominio.ExamExecutionCourse"
+   	  class="net.sourceforge.fenixedu.domain.ExamExecutionCourse"
    	  table="EXAM_EXECUTION_COURSE"
    >
       <field-descriptor id="1"
@@ -632,21 +632,21 @@
       />
       <reference-descriptor
          name="exam"
-         class-ref="Dominio.Exam"
+         class-ref="net.sourceforge.fenixedu.domain.Exam"
       >
          <foreignkey field-ref="keyExam"/>
       </reference-descriptor> 
       <reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.ExecutionCourse"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
       >
          <foreignkey field-ref="keyExecutionCourse"/>
       </reference-descriptor>
    </class-descriptor>
    
-<!-- Definitions for Dominio.EvaluationExecutionCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.EvaluationExecutionCourse -->
    <class-descriptor
-   	  class="Dominio.EvaluationExecutionCourse"
+   	  class="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse"
    	  table="EXAM_EXECUTION_COURSE"
    >
       <field-descriptor id="1"
@@ -674,21 +674,21 @@
       />
       <reference-descriptor
          name="evaluation"
-         class-ref="Dominio.Evaluation"
+         class-ref="net.sourceforge.fenixedu.domain.Evaluation"
       >
          <foreignkey field-ref="keyEvaluation"/>
       </reference-descriptor> 
       <reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.ExecutionCourse"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
       >
          <foreignkey field-ref="keyExecutionCourse"/>
       </reference-descriptor>
    </class-descriptor>
    
-<!-- Definitions for Dominio.RoomOccupation -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.RoomOccupation -->
    <class-descriptor
-   	  class="Dominio.RoomOccupation"
+   	  class="net.sourceforge.fenixedu.domain.RoomOccupation"
    	  table="ROOM_OCCUPATION"
    >
       <field-descriptor id="1"
@@ -702,19 +702,19 @@
          name="startTime"
          column="START_TIME"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor id="3"
          name="endTime"
          column="END_TIME"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
      <field-descriptor id="4"
          name="dayOfWeek"
          column="WEEKDAY"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
       />
       <field-descriptor id="5"
          name="keyRoom"
@@ -744,22 +744,22 @@
       />
       <reference-descriptor
          name="room"
-         class-ref="Dominio.Room"
+         class-ref="net.sourceforge.fenixedu.domain.Room"
       >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor>
       <reference-descriptor
          name="period"
-         class-ref="Dominio.Period"
+         class-ref="net.sourceforge.fenixedu.domain.Period"
       >
          <foreignkey field-ref="keyPeriod"/>
       </reference-descriptor>
    </class-descriptor>
 
 
-<!-- Definitions for Dominio.Period -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Period -->
    <class-descriptor
-   	  class="Dominio.Period"
+   	  class="net.sourceforge.fenixedu.domain.Period"
    	  table="PERIOD"
    >
       <field-descriptor id="1"
@@ -773,13 +773,13 @@
          name="startDate"
          column="START_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor id="3"
          name="endDate"
          column="END_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor id="4"
          name="keyPeriod"
@@ -794,14 +794,14 @@
       />
       <reference-descriptor
          name="nextPeriod"
-         class-ref="Dominio.Period"
+         class-ref="net.sourceforge.fenixedu.domain.Period"
       >
          <foreignkey field-ref="keyPeriod"/>
       </reference-descriptor>
       <collection-descriptor
          name="roomOccupations"
          collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         element-class-ref="Dominio.RoomOccupation"
+         element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
          proxy="true"
          auto-retrieve="true"
          refresh="true"
@@ -810,13 +810,13 @@
       </collection-descriptor>
    </class-descriptor>
 
-<!-- Definitions for Dominio.Evaluation -->
-<class-descriptor class="Dominio.Evaluation" table="EVALUATION">
-    <extent-class class-ref="Dominio.Exam" />
-    <extent-class class-ref="Dominio.WrittenTest" />
-    <extent-class class-ref="Dominio.WrittenEvaluation" />
-    <extent-class class-ref="Dominio.FinalEvaluation" />
-    <extent-class class-ref="Dominio.OnlineTest" />
+<!-- Definitions for net.sourceforge.fenixedu.domain.Evaluation -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Evaluation" table="EVALUATION">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.Exam" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenTest" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.FinalEvaluation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.OnlineTest" />
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -838,9 +838,9 @@
 </class-descriptor>
 
 
-<!-- Definitions for Dominio.WrittenTest -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.WrittenTest -->
    <class-descriptor
-   	  class="Dominio.WrittenTest"
+   	  class="net.sourceforge.fenixedu.domain.WrittenTest"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -859,43 +859,43 @@
          name="day"
          column="DAY"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="beginning"
          column="BEGINNING"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="end"
          column="END"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="enrollmentBeginDay"
          column="ENROLLMENT_BEGIN_DAY"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="enrollmentBeginTime"
          column="ENROLLMENT_BEGIN_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
        <field-descriptor
          name="enrollmentEndDay"
          column="ENROLLMENT_END_DAY"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="enrollmentEndTime"
          column="ENROLLMENT_END_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="publishmentMessage"
@@ -910,7 +910,7 @@
       />
    <collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			proxy="true"
 			auto-retrieve="true"
@@ -923,7 +923,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="associatedRoomOccupation"
-			element-class-ref="Dominio.RoomOccupation"
+			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
 			proxy="true"
 			auto-retrieve="true"
@@ -939,9 +939,9 @@
 
 
 
-<!-- Definitions for Dominio.Exam -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Exam -->
    <class-descriptor
-   	  class="Dominio.Exam"
+   	  class="net.sourceforge.fenixedu.domain.Exam"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -960,49 +960,49 @@
          name="day"
          column="DAY"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="beginning"
          column="BEGINNING"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="end"
          column="END"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="season"
          column="SEASON"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.Season2EnumSeasonFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Season2EnumSeasonFieldConversion"
       />
       <field-descriptor
          name="enrollmentBeginDay"
          column="ENROLLMENT_BEGIN_DAY"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="enrollmentBeginTime"
          column="ENROLLMENT_BEGIN_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
        <field-descriptor
          name="enrollmentEndDay"
          column="ENROLLMENT_END_DAY"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="enrollmentEndTime"
          column="ENROLLMENT_END_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="publishmentMessage"
@@ -1017,7 +1017,7 @@
       />
 	<collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			proxy="true"
@@ -1032,7 +1032,7 @@
 	<collection-descriptor
 			name="associatedRoomOccupation"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
-			element-class-ref="Dominio.RoomOccupation"
+			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
 			proxy="true"
 			auto-retrieve="true"
@@ -1045,7 +1045,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="associatedCurricularCourseScope"
-			element-class-ref="Dominio.CurricularCourseScope"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			proxy="true"
@@ -1059,9 +1059,9 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<!-- Definitions for Dominio.WrittenEvaluation -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.WrittenEvaluation -->
    <class-descriptor
-   	  class="Dominio.WrittenEvaluation"
+   	  class="net.sourceforge.fenixedu.domain.WrittenEvaluation"
    	  table="EVALUATION"
    >
       <field-descriptor
@@ -1080,43 +1080,43 @@
          name="day"
          column="DAY"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="beginning"
          column="BEGINNING"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="end"
          column="END"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="enrollmentBeginDay"
          column="ENROLLMENT_BEGIN_DAY"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="enrollmentBeginTime"
          column="ENROLLMENT_BEGIN_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
        <field-descriptor
          name="enrollmentEndDay"
          column="ENROLLMENT_END_DAY"
         jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
          name="enrollmentEndTime"
          column="ENROLLMENT_END_TIME"
         jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
          name="publishmentMessage"
@@ -1131,7 +1131,7 @@
       />
 	<collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			proxy="true"
@@ -1145,7 +1145,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="associatedCurricularCourseScope"
-			element-class-ref="Dominio.CurricularCourseScope"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
 			proxy="true"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -1159,7 +1159,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 			name="associatedRoomOccupation"
-			element-class-ref="Dominio.RoomOccupation"
+			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			proxy="true"
@@ -1173,8 +1173,8 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<!-- Definitions for Dominio.WrittenEvaluationCurricularCourseScope -->
-<class-descriptor class="Dominio.WrittenEvaluationCurricularCourseScope"
+<!-- Definitions for net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope"
                   table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE">
    <field-descriptor
         name="idInternal"
@@ -1204,7 +1204,7 @@
       />
       <reference-descriptor
          name="writtenEvaluation"
-         class-ref="Dominio.WrittenEvaluation"
+         class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation"
          proxy="false"
 	  >
          <foreignkey field-ref="keyWrittenEvaluation"/>
@@ -1212,7 +1212,7 @@
       
      <reference-descriptor
          name="curricularCourseScope"
-         class-ref="Dominio.CurricularCourseScope"
+         class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
          proxy="false"
 	  >
          <foreignkey field-ref="keyCurricularCourseScope"/>

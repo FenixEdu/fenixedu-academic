@@ -37,12 +37,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -55,12 +55,12 @@
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-		<action path="/index" type="ServidorApresentacao.Action.credits.IndexAction">
+		<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.credits.IndexAction">
 			<forward name="creditsManager" path="df.index"></forward>
 			<forward name="creditsManagerDepartment" path="department.teacher.list"></forward>			
 		</action>
 	   
-	   	<action path="/teacherSearch" type="ServidorApresentacao.Action.credits.TeacherSearchDispatchAction" 
+	   	<action path="/teacherSearch" type="net.sourceforge.fenixedu.presentationTier.Action.credits.TeacherSearchDispatchAction" 
 	   			name="teacherSearchForm"
 	   			input="/index.do"
 	   			parameter="method"
@@ -71,7 +71,7 @@
 		<!-- Actions for Teacher credits -->
 		<action path="/creditsManagement" name="creditsTeacherForm" 
 				input="/creditsManagement.do?page=0&amp;method=prepare"
-				type="ServidorApresentacao.Action.teacher.credits.TeacherCreditsDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.teacher.credits.TeacherCreditsDispatchAction"
 				parameter="method"
 				validate="true"
 				scope="request">
@@ -84,7 +84,7 @@
 			path="/executionCourseShiftsPercentageManager"
 			parameter="method"
 			scope="request"
-			type="ServidorApresentacao.Action.teacher.credits.ProfessorShipShiftPercentageDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.teacher.credits.ProfessorShipShiftPercentageDispatchAction"
 			validate="false">
 		   <forward name="showTable" path="shift.percentage.form"/>
 		   <forward name="acceptSuccess" path="/creditsManagement.do?page=0&amp;method=prepare" redirect="true"/>
@@ -94,7 +94,7 @@
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 

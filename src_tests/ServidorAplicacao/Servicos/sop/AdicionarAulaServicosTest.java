@@ -5,7 +5,7 @@
  * Created on 26 de Outubro de 2002, 19:45
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -13,31 +13,31 @@ package ServidorAplicacao.Servicos.sop;
  */
 import java.util.Calendar;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoLesson;
-import DataBeans.InfoShift;
-import DataBeans.InfoShiftServiceResult;
-import DataBeans.util.Cloner;
-import Dominio.IAula;
-import Dominio.IExecutionCourse;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import Dominio.ISala;
-import Dominio.ITurno;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.ISalaPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurnoPersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.DiaSemana;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IAula;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ISala;
+import net.sourceforge.fenixedu.domain.ITurno;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseNeedAuthorizationServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 

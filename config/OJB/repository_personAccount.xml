@@ -3,9 +3,9 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.PersonAccount -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.PersonAccount -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.PersonAccount" table="PERSON_ACCOUNT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.PersonAccount" table="PERSON_ACCOUNT">
 	
 	<field-descriptor
 		name="idInternal"
@@ -36,7 +36,7 @@
 	
 	<reference-descriptor
        	name="person"
-       	class-ref="Dominio.Person"
+       	class-ref="net.sourceforge.fenixedu.domain.Person"
        	proxy="true"
 		refresh="true"
     >
@@ -45,7 +45,7 @@
 	
 	<collection-descriptor
 		name="transactions"
-		element-class-ref="Dominio.transactions.Transaction"
+		element-class-ref="net.sourceforge.fenixedu.domain.transactions.Transaction"
 		refresh="true"
 		auto-retrieve="true"
 		auto-update="false"

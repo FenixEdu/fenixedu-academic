@@ -2,7 +2,7 @@
  * Created on Nov 10, 2003
  *  
  */
-package ServidorAplicacao.Servicos;
+package net.sourceforge.fenixedu.applicationTier.Servicos;
 
 import java.beans.Beans;
 import java.util.ArrayList;

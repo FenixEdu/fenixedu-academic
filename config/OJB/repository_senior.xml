@@ -1,6 +1,6 @@
-<!-- Definitions for Dominio.student.Senior -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.student.Senior -->
 <class-descriptor
-	class="Dominio.student.Senior"
+	class="net.sourceforge.fenixedu.domain.student.Senior"
 	table="SENIOR"
 >
 	<field-descriptor 
@@ -68,7 +68,7 @@
 	/>
 	<reference-descriptor 
 			name="student" 
-			class-ref="Dominio.Student" 
+			class-ref="net.sourceforge.fenixedu.domain.Student" 
 			proxy="false">
 		<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>

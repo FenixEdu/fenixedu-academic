@@ -104,12 +104,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -134,21 +134,21 @@
 		<action path="/cantEnroll" forward="definition.cant.enroll"/>		
    		
 		<!-- ****************** Index **************************** -->
-		<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
+		<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
 			<forward name="Success" path="df.page.main"/>
 		</action>
 		<!-- ****************** LEEC Enrollment **************************** -->
 		<action	path="/curricularCoursesEnrollment"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
 				name="curricularCoursesEnrollmentForm"				
 				parameter="method"
 				scope="request"
 				validate="true"
 				input="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent">
 
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixTransactionExceptionHandler"/>
 				
 			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
 			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareEnrollmentChooseStudent"/>
@@ -163,16 +163,16 @@
 		<action path="/prepareEnrollmentChooseStudent" forward="df.page.prepareImprovmentEnrollmentChooseStudent"/>
 		
 		<action	path="/improvmentEnrollment"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.improvment.ImprovmentEnrolmentDispacthAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.improvment.ImprovmentEnrolmentDispacthAction"
 				name="improvmentEnrolmentForm"				
 				parameter="method"
 				scope="request"
 				validate="true"
 				input="/prepareEnrollmentChooseStudent.do">
 
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixTransactionExceptionHandler"/>
 
 			<forward name="prepareEnrolmentViewEnrolments" path="df.page.prepareEnrolmentViewEnrolments"/>
 			<forward name="viewEnrolments" path="/improvmentEnrollment.do?method=start&amp;page=0"/>
@@ -180,13 +180,13 @@
 		
 		<!-- ****************** View Student Curriculum **************************** -->
 		<action path="/viewStudentCurriculum"
-		      	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
+		      	type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
               	parameter="method">
 			<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
       	</action>
       	
 		<action path="/viewCurriculum"
-		      	type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
+		      	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
               	parameter="method"
 		      	name="studentCurricularPlanAndEnrollmentsSelectionForm"
 				scope="request"
@@ -198,14 +198,14 @@
 		
 		<!-- ****************** View Student Schedule **************************** -->
 		<action path="/viewStudentSchedule"
-		      	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentScheduleAction">
+		      	type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ViewStudentScheduleAction">
 			<forward name="sucess" path="/../student/classTimeTable.jsp"/>        	
       	</action>
       	
       	
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
-			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
 			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
@@ -222,7 +222,7 @@
 
 		<!-- =================== Change student areas =================== -->
 		<action path="/changeStudentAreas"
-			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.ChangeStudentAreasDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules.ChangeStudentAreasDispatchAction"
 			input="/changeStudentAreas.do?method=error&amp;page=0&amp;degreeType=1"
 			name="changeStudentAreasForm"
 			scope="request"
@@ -236,21 +236,21 @@
        	
        	<action path="/generateDeclaration" 
 			name="studentNumberForm"    		
-			type="ServidorApresentacao.Action.degreeAdministrativeOffice.RegistrationDeclaration"
+			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.RegistrationDeclaration"
 			input="/generateDeclaration.do?method=prepare&amp;page=0"
 			validate="true"
 			scope="request"
 			parameter="method"
 			>
-			<exception	type="ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration$NonExistingStudentServiceException"
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.ReadInfoRegistrationDeclaration$NonExistingStudentServiceException"
 				key="error.no.student.found"
-				handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration$NonExistingEnrollmentServiceException"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.ReadInfoRegistrationDeclaration$NonExistingEnrollmentServiceException"
 				key="error.student.no.current.enrollment"
-				handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration$NonExistingEnrollmentServiceException"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.ReadInfoRegistrationDeclaration$NonExistingEnrollmentServiceException"
 				key="error.student.activeCurricularPlan.nonExistent"
-				handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>			
 			<forward name="prepare" path="df.page.prepareDeclaration"/>
 	       	<forward name="sucess" path="df.page.generateDeclaration"/>
        	</action>
@@ -259,7 +259,7 @@
        	
        	<action path="/generateEnrollmentsDeclaration" 
 			name="studentsNumbersBetweenForm"    		
-			type="ServidorApresentacao.Action.degreeAdministrativeOffice.EnrollmentDeclarations"
+			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.EnrollmentDeclarations"
 			input="/generateEnrollmentsDeclaration.do?method=prepare&amp;page=0"
 			validate="true"
 			scope="request"
@@ -273,7 +273,7 @@
        	<!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
        		name="executionYearDegreeCurricularPlanForm"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
        		validate="true"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		scope="request"
@@ -283,7 +283,7 @@
        	</action>
 
 		<action path="/showCurriculumHistoric"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
        		scope="request"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		parameter="method">
@@ -293,7 +293,7 @@
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions =========================== -->
 	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" null="false"/>

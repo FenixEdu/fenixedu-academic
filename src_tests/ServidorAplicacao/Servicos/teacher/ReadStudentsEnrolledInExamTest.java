@@ -1,19 +1,19 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoExam;
-import DataBeans.InfoExamStudentRoom;
-import DataBeans.InfoSiteTeacherStudentsEnrolledList;
-import DataBeans.InfoStudent;
-import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import ServidorAplicacao.Servicos.UtilsTestCase;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExamStudentRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnrolledList;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.applicationTier.Servicos.UtilsTestCase;
 
 /**
  * @author João Mota

@@ -1,18 +1,18 @@
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoRole;
-import DataBeans.InfoSiteMarks;
-import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseServices;
-import Util.RoleType;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
+import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServices;
+import net.sourceforge.fenixedu.util.RoleType;
 
 /**
  * @author Tânia Pousão

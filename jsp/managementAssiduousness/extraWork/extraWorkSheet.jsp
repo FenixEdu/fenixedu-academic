@@ -1,6 +1,6 @@
 <%@page contentType="text/html"%>
 <%@ page import="java.util.Calendar"%>
-<%@ page import="Util.DiaSemana" %>
+<%@ page import="net.sourceforge.fenixedu.util.DiaSemana" %>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -78,7 +78,7 @@
 		SimpleDateFormat simpleDayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		simpleDayDateFormat.setLenient(false); 
 	%>
-	<logic:iterate id="infoExtraWork" name="infoExtraWorkList" indexId="indice" type="DataBeans.managementAssiduousness.InfoExtraWork">		
+	<logic:iterate id="infoExtraWork" name="infoExtraWorkList" indexId="indice" type="net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork">		
 		<bean:define id="isPar">
 			<%= indice.intValue() % 2  %>
 		</bean:define>

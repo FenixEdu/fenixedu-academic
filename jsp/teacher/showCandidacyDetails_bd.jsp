@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 
 <bean:define id="cases" type="java.util.List" name="cases"/>
-<bean:define id="student" type="DataBeans.InfoStudent"  name="student"/>
-<bean:define id="curricularCourse" type="DataBeans.InfoCurricularCourse"  name="curricularCourse"/>
+<bean:define id="student" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudent"  name="student"/>
+<bean:define id="curricularCourse" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse"  name="curricularCourse"/>
 <bean:define id="motivation" type="java.lang.String"  name="motivation"/>
-<bean:define id="seminary" type="DataBeans.Seminaries.InfoSeminary"  name="seminary"/>
-<bean:define id="modality" type="DataBeans.Seminaries.InfoModality"  name="modality"/>
+<bean:define id="seminary" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary"  name="seminary"/>
+<bean:define id="modality" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality"  name="modality"/>
 
 <logic:present name="cases">
 	<logic:present name="student">
@@ -56,7 +56,7 @@
 						<td><strong><bean:message key="label.seminaries.showCandidacy.Motivation"/>:</strong></td>
 						<td><bean:write name="motivation"/></td>
 					</tr>
-					<logic:iterate indexId="index" type="DataBeans.Seminaries.InfoCaseStudy" name="cases" id="caseStudy">
+					<logic:iterate indexId="index" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy" name="cases" id="caseStudy">
 					<tr>
 						<td><strong><bean:message key="label.seminaries.showCandidacy.Case"/> <%=index.intValue()+1 %></strong></td>
 						<td><bean:write name="caseStudy" property="code"/> - <bean:write name="caseStudy" property="name"/></td>

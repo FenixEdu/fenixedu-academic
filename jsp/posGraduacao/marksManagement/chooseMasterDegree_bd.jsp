@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.students.listMarks" /></h2>
 <span class="error"><html:errors/></span>
 <logic:present name="<%=SessionConstants.MASTER_DEGREE_LIST%>">
@@ -11,7 +11,7 @@
 	<br /><br />
 	<table>
 	   <!-- Master Degrees -->
-		<logic:iterate id="degreeElem" name="<%=SessionConstants.MASTER_DEGREE_LIST%>" type="DataBeans.InfoDegree">
+		<logic:iterate id="degreeElem" name="<%=SessionConstants.MASTER_DEGREE_LIST%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoDegree">
 			<tr>
 				<td>
 					<html:link page="<%= "/marksManagement.do?method=prepareChooseDegreeCurricularPlan&amp;degreeId=" + degreeElem.getIdInternal()%>">

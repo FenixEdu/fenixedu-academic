@@ -1,7 +1,7 @@
 <!-- ************************************* -->
-<!-- Definitions for Dominio.PersonProject -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.PersonProject -->
 <!-- ************************************* -->
-<class-descriptor class="Dominio.projectsManagement.ProjectAccess"
+<class-descriptor class="net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess"
 				  proxy="dynamic"
                   table="PROJECT_ACCESS">
 	<field-descriptor
@@ -30,13 +30,13 @@
 		name="beginDate"
 		column="BEGIN_DATE"
     	jdbc-type="DATE"
-        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
     <field-descriptor
 		name="endDate"
 		column="END_DATE"
 		jdbc-type="DATE"
-        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+        conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
     />
 	<field-descriptor
 		name="ackOptLock"
@@ -46,7 +46,7 @@
 	/>
 	<reference-descriptor
          name="person"
-         class-ref="Dominio.Person"
+         class-ref="net.sourceforge.fenixedu.domain.Person"
          proxy="true"
     >
     <foreignkey field-ref="keyPerson"/>

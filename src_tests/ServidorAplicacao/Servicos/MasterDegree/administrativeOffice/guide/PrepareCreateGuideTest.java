@@ -1,27 +1,27 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.guide;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoGuide;
-import DataBeans.InfoRole;
-import DataBeans.util.Cloner;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionYear;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.GuideRequester;
-import Util.RoleType;
-import Util.Specialization;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ICurso;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.util.Specialization;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)

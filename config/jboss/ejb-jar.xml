@@ -13,11 +13,11 @@
 	<enterprise-beans>
 		<session>
 			<ejb-name>ServiceManager</ejb-name>
-			<home>ServidorAplicacao.ServiceManagerHome</home>
-			<local-home>ServidorAplicacao.ServiceManagerLocalHome</local-home>
-			<remote>ServidorAplicacao.ServiceManager</remote>
-			<local>ServidorAplicacao.ServiceManagerLocal</local>
-			<ejb-class>ServidorAplicacao.ServiceManagerBean</ejb-class>
+			<home>net.sourceforge.fenixedu.applicationTier.ServiceManagerHome</home>
+			<local-home>net.sourceforge.fenixedu.applicationTier.ServiceManagerLocalHome</local-home>
+			<remote>net.sourceforge.fenixedu.applicationTier.ServiceManager</remote>
+			<local>net.sourceforge.fenixedu.applicationTier.ServiceManagerLocal</local>
+			<ejb-class>net.sourceforge.fenixedu.applicationTier.ServiceManagerBean</ejb-class>
 			<session-type>Stateless</session-type>
 			<transaction-type>Container</transaction-type>
 		</session>

@@ -3,14 +3,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.students.listMarks"/></h2>
 
 <logic:present name="infoSiteEnrolmentEvaluation">
 	<bean:define id="studentmMarksListComponent" name="infoSiteEnrolmentEvaluation"  />
 	<table width="100%">
 		<logic:iterate id="enrolment" name="studentmMarksListComponent" length="1">	
-			<logic:iterate id="enrollmentEvaluationElem" name="enrolment" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" length="1">	
+			<logic:iterate id="enrollmentEvaluationElem" name="enrolment" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" length="1">	
 				<tr>
 					<td class="infoselected">
 						<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
@@ -46,7 +46,7 @@
 			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
 		</tr>
 		<logic:iterate id="enrolment" name="studentmMarksListComponent" >	
-			<logic:iterate id="enrolmentEvaluation" name="enrolment" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" indexId="evaluationId" >		
+			<logic:iterate id="enrolmentEvaluation" name="enrolment" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" indexId="evaluationId" >		
     				 <bean:define id="enrolmentEvaluationCode" name="enrolmentEvaluation" property="idInternal"/>   		
     	  	   <logic:notEmpty name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" >
     				 <bean:define id="teacherName" name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" /> 

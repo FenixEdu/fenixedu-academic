@@ -7,7 +7,7 @@
 <%@ page import="org.apache.commons.collections.CollectionUtils" %>
 <%@ page import="org.apache.commons.collections.Predicate" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
-<%@ page import="DataBeans.teacher.InfoOldPublication" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication" %>
 <logic:present name="infoSiteTeachersInformation">	
 	<h2>
 		<bean:message key="title.gep.teachersInformation"
@@ -97,7 +97,7 @@
 		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.lastModificationDate" bundle="GEP_RESOURCES"/></td> 
 	    </tr>
 	    <% HashMap statistics = new HashMap(); %>
-   		<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation" type="DataBeans.teacher.InfoSiteTeacherInformation">
+   		<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation" type="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation">
    			<% int numberOfFields = 0; 
    			   int requiredFields = 0;%>
 			<logic:present name="infoSiteTeacherInformation" property="infoQualifications">
@@ -187,8 +187,8 @@
 					    </td>
 					    <td  class="listClasses" >
 					    	<bean:write name="infoExecutionCourse" property="nome" />
-					    	<% if (((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses() != null &&
-					    		((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
+					    	<% if (((net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses() != null &&
+					    		((net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
 					    	 	){%>
 					    	(<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %>					    	
 					    </td>
@@ -226,8 +226,8 @@
 				    	<td  class="listClasses">
 				    	
 				    		<bean:write name="infoExecutionCourse" property="nome" />
-				    		<% if (((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses() != null &&
-						    	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
+				    		<% if (((net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses() != null &&
+						    	 ((net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
 						    	 ){%>
 					    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 				    	 	
 				    	 </td> 

@@ -4,7 +4,7 @@
  * Created on December 21st, 2002, 21:27
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * 
@@ -12,11 +12,11 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
-import DataBeans.InfoShiftEnrolment;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEnrolment;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 public class ReadShiftEnrolmentTest extends TestCaseServicos {
 

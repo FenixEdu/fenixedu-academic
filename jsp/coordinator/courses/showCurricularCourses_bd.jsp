@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -47,7 +47,7 @@
 				</td>
 			</tr>
 
-			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>" type="DataBeans.InfoExecutionCourse">
+			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
 				<bean:define id="executionCourseOID" name="executionCourse" property="idInternal"/>
 				<bean:define id="evaluated" name="executionCourse" property="infoSiteEvaluationStatistics.evaluated" type="java.lang.Integer"/>
 				<bean:define id="enrolled" name="executionCourse" property="infoSiteEvaluationStatistics.enrolled" type="java.lang.Integer"/>

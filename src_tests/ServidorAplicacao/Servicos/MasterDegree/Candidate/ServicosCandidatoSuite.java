@@ -5,7 +5,7 @@
  * Created on 2 de Dezembro de 2002, 17:18
  */
 
-package ServidorAplicacao.Servicos.MasterDegree.Candidate;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.Candidate;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -2,13 +2,13 @@
  * Created on 12/Nov/2003
  *  
  */
-package ServidorAplicacao.Servicos.gesdis;
+package net.sourceforge.fenixedu.applicationTier.Servicos.gesdis;
 
-import framework.factory.ServiceManagerServiceFactory;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Leonor Almeida

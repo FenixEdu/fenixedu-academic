@@ -11,14 +11,14 @@
 <html:hidden property="method" value="showDistributedTests"/>
 <html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
 	
-	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="DataBeans.InfoInquiryStatistics"/>
-	<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="DataBeans.InfoStudentTestQuestion"/>
+	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="net.sourceforge.fenixedu.dataTransferObject.InfoInquiryStatistics"/>
+	<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion"/>
 
 
-	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
+	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
-	<bean:define id="student" name="testQuestion" property="student" type="DataBeans.InfoStudent"/>
-	<bean:define id="person" name="student" property="infoPerson" type="DataBeans.InfoPerson"/>
+	<bean:define id="student" name="testQuestion" property="student" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudent"/>
+	<bean:define id="person" name="student" property="infoPerson" type="net.sourceforge.fenixedu.dataTransferObject.InfoPerson"/>
 	<bean:define id="studentCode" name="person" property="username"/>
 	<bean:define id="studentId" name="student" property="idInternal"/>
 	
@@ -30,11 +30,11 @@
 	<br/>
 
 	<table width="100%" border="0" cellpadding="0" cellspacing="10">
-	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="DataBeans.InfoInquiryStatistics">
-		<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="DataBeans.InfoStudentTestQuestion"/>
+	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="net.sourceforge.fenixedu.dataTransferObject.InfoInquiryStatistics">
+		<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion"/>
 		<bean:define id="index" value="0"/>
 		<tr><td><hr></td></tr>
-		<bean:define id="question" name="testQuestion" property="question" type="DataBeans.InfoQuestion"/>
+		<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.InfoQuestion"/>
 		<bean:define id="questionCode" name="question" property="idInternal"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
 		<bean:define id="questionType" name="question" property="questionType.type"/>

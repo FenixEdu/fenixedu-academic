@@ -1,8 +1,8 @@
 <!-- Classes SOP... para passar os dados da base de dados SOP para o FENIX -->
 
-<!-- Definitions for Dominio.SOPAtribuicaoDisciplinas -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.SOPAtribuicaoDisciplinas -->
    <class-descriptor
-   	  class="Dominio.SOPAtribuicaoDisciplinas"
+   	  class="net.sourceforge.fenixedu.domain.SOPAtribuicaoDisciplinas"
    	  table="SOPATRIBUICAO_DISCIPLINAS"
    >
       <field-descriptor id="1"
@@ -50,9 +50,9 @@
       />
    </class-descriptor>
 
-<!-- Definitions for Dominio.SOPAulas -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.SOPAulas -->
    <class-descriptor
-   	  class="Dominio.SOPAulas"
+   	  class="net.sourceforge.fenixedu.domain.SOPAulas"
    	  table="SOPAULAS"
    >
       <field-descriptor id="1"
@@ -115,9 +115,9 @@
       />
    </class-descriptor>
 
-<!-- Definitions for Dominio.SOPDisciplinas -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.SOPDisciplinas -->
    <class-descriptor
-   	  class="Dominio.SOPDisciplinas"
+   	  class="net.sourceforge.fenixedu.domain.SOPDisciplinas"
    	  table="SOPDISCIPLINAS"
    >
       <field-descriptor id="1"
@@ -146,7 +146,7 @@
    </class-descriptor>
 
    <class-descriptor
-   	  class="Dominio.CurricularCourseLoad"
+   	  class="net.sourceforge.fenixedu.domain.CurricularCourseLoad"
    	  table="CARGAS_CURRICULARES"
    >
       <field-descriptor id="1"

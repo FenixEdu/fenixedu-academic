@@ -65,7 +65,7 @@
 
 <!--
 	  <form-bean name="studentTestForm" 
-		type="ServidorApresentacao.formbeans.tests.TestForm">
+		type="net.sourceforge.fenixedu.presentationTier.formbeans.tests.TestForm">
         <form-property name="testCode" type="java.lang.String"/>
       </form-bean>
 -->      
@@ -167,12 +167,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
     
@@ -186,7 +186,7 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
 	<!-- page fronting actions -->
 		<action path="/cantEnroll" forward="definition.cant.enroll"/>
-	    <action type="ServidorApresentacao.Action.commons.VoidAction"
+	    <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
         	path="/index">
         	<forward name="Success" path="df.page.main"/>
         </action>
@@ -195,12 +195,12 @@
 
 
       <!-- SHIFT ENROLMENT -->
-      <action type="ServidorApresentacao.Action.student.ViewEnrolmentAction" path="/viewEnrolment">
+      <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewEnrolmentAction" path="/viewEnrolment">
         <forward name="sucess" path="/viewEnrolment.jsp"/>
       </action>
 
       <action name="selectShiftEnrolmentForm"
-              type="ServidorApresentacao.Action.student.ShowShiftListAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowShiftListAction"
               path="/viewShiftsList"
               input="/viewEnrolment.jsp"
               validate="true">
@@ -212,7 +212,7 @@
 				name="studentCurricularPlanAndEnrollmentsSelectionForm"
 				scope="request"		
               parameter="method"
-		      type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction">
+		      type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction">
 <!--        <forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>-->
         <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         <forward name="NotAuthorized" path="df.page.notAuthorized"/>
@@ -222,18 +222,18 @@
       <!-- Student Shift Enrolment Manager-->
 	  <action path="/studentShiftEnrollmentManager"
 	  	name="studentShiftEnrollmentForm"
-        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrollmentManagerDispatchAction"
+        type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.ShiftStudentEnrollmentManagerDispatchAction"
 		input="prepare-enrollment-view-warning"
         parameter="method"
         scope="request"
         validate="false">
-			<exception type="ServidorAplicacao.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
+			<exception type="net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
 					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
 			/>
-			<exception type="ServidorAplicacao.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
+			<exception type="net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
 					key="error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
 			/>
         <forward name="prepareEnrollmentViewWarning" path="prepare-enrollment-view-warning"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
@@ -243,18 +243,18 @@
       
    	  <action path="/studentShiftEnrollmentManagerLoockup"
 	  	name="studentShiftEnrollmentForm"
-        type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrollmentManagerLookupDispatchAction"
+        type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.ShiftStudentEnrollmentManagerLookupDispatchAction"
 		input="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning" 
 		parameter="method"
         scope="request"
         validate="false">
-			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
 			/>
-			<exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException"
 					key="error.transaction.enrolment"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
 			/>
         <forward name="beginTransaction" path="/studentShiftEnrollmentManager.do?method=start&amp;firstTime=true"/>
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
@@ -264,7 +264,7 @@
       </action>
       
 	  <action path="/enrollStudentInShifts"
-        type="ServidorApresentacao.Action.student.enrollment.EnrollStudentInShiftsAction"
+        type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.EnrollStudentInShiftsAction"
 	  	name="studentShiftEnrollmentForm"
         scope="request"
         validate="false"
@@ -273,19 +273,19 @@
       </action>
       
       <action 
-        type="ServidorApresentacao.Action.student.ViewStudentTimeTable"
+        type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentTimeTable"
         path="/studentTimeTable">
         <forward name="sucess" path="/classTimeTable.jsp"/>
       </action>
       
       <action 
-        type="ServidorApresentacao.Action.commons.VoidAction"
+        type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
         path="/studentShiftEnrollmentOptions"
         scope="request">
         <forward name="Success" path="shift-enrolment-options"/>
       </action>
       
-      <action type="ServidorApresentacao.Action.student.ShiftEnrollmentAction"
+      <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ShiftEnrollmentAction"
               path="/shiftEnrollment"
               input="/viewShiftsList.do"
               scope="request"
@@ -294,19 +294,19 @@
         <forward name="sucess" path="/viewEnrollment.do"/>
       </action>
       
-       <action type="ServidorApresentacao.Action.student.ExamEnrollmentManager"
+       <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ExamEnrollmentManager"
               path="/examEnrollmentManager"
               parameter="method">
         <forward name="sucess" path="/viewExams.jsp"/>
       </action>
 
-      <action type="ServidorApresentacao.Action.Seminaries.ListAllSeminaries"
+      <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ListAllSeminaries"
               path="/listAllSeminaries"
               validate="true">
         <forward name="listSeminaries" path="/viewSeminaries.jsp"/>
       </action>
 
-      <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyOptions"
+      <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacyOptions"
               path="/candidacyOptions"
               validate="true">
         <forward name="candidaciesLimitReached" path="/listAllSeminaries.do"/>
@@ -314,14 +314,14 @@
         <forward name="invalidQueryString" path="naoAutorizado.do"/>
       </action>
 
-	  <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyForm"
+	  <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacyForm"
               path="/fillCandidacy"
               validate="true">
         <forward name="showCandidacyFormNonCompleteModality" path="/viewCandidacyForm.jsp"/>
         <forward name="invalidQueryString" path="naoAutorizado.do"/>
       </action>
 
-	  	  <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacySecondForm"
+	  	  <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacySecondForm"
               path="/submitCandidacyFirstInfo"
               input="/viewCandidacyForm.jsp"
               scope="request"
@@ -332,7 +332,7 @@
         <forward name="invalidQueryString" path="naoAutorizado.do"/>
       </action>
 
-  	  <action type="ServidorApresentacao.Action.Seminaries.ManageCaseStudyChoices"
+  	  <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ManageCaseStudyChoices"
               path="/manageCaseStudyChoices"
               scope="request"
 			  name="seminaryCandidacySecondFormNonComplete">
@@ -341,14 +341,14 @@
         <forward name="invalidQueryString" path="naoAutorizado.do"/>
       </action>
 
-  	  <action type="ServidorApresentacao.Action.Seminaries.CancelCandidacy"
+  	  <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.CancelCandidacy"
               path="/cancelCandidacy"
               scope="request">
         <forward name="candidacyCanceled" path="/listAllSeminaries.do"/>
         <forward name="invalidQueryString" path="naoAutorizado.do"/>
       </action>
 
-  	  <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyDetails"
+  	  <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacyDetails"
               path="/candidacyDetails"
               scope="request">
         <forward name="showCandidacyDetails" path="/showCandidacyDetails.jsp"/>
@@ -357,14 +357,14 @@
 
       <!-- VIEW SCHEDULE -->
 <!--      <action 
-              type="ServidorApresentacao.Action.student.ViewScheduleAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewScheduleAction"
               path="/viewSchedule"
               >
         <forward name="sucess"
                  path="/viewSchedule.jsp"/>
       </action>
       <action
-              type="ServidorApresentacao.Action.student.ViewShiftScheduleAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewShiftScheduleAction"
               path="/viewShiftSchedule"
               input="/viewShiftsList.do"
               scope="request"
@@ -379,7 +379,7 @@
       
       
       <action 
-              type="ServidorApresentacao.Action.student.GrauMestreAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.GrauMestreAction"
               path="/obtainCertificateTipo1"
              >
         
@@ -394,7 +394,7 @@
       </action>
       
       <action 
-              type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowDisciplineListAction"
               path="/obtainCertificateTipo3"
               
              >
@@ -406,7 +406,7 @@
       </action>
       
       <action 
-              type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowDisciplineListAction"
               path="/obtainCertificateTipo4"
               
              >
@@ -419,7 +419,7 @@
       
      
     	<action 
-              type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowDisciplineListAction"
               path="/obtainCertificateTipo5"
               
              >
@@ -431,7 +431,7 @@
       </action>
       
       <action 
-              type="ServidorApresentacao.Action.student.PrepararEscolherCertidoesAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.PrepararEscolherCertidoesAction"
               path="/chooseObtainCertificate"
               
              >
@@ -447,7 +447,7 @@
       		  name="escolherCertidaoForm"
       		  input="/chooseObtainCertificate.jsp"
               path="/escolherCertidaoForm"
-              type="ServidorApresentacao.Action.student.EscolherCertidoesAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.student.EscolherCertidoesAction">
         <forward name="Tipo1" path="/obtainCertificateTipo1.do"/>
         <forward name="Tipo2" path="/obtainCertificateTipo1.do"/>
         <forward name="Tipo3" path="/obtainCertificateTipo3.do"/>
@@ -458,7 +458,7 @@
  	-->
  			<!-- GROUPS -->
  	   
- 	   <action type="ServidorApresentacao.Action.student.ViewEnroledExecutionCoursesAction"
+ 	   <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewEnroledExecutionCoursesAction"
               path="/viewEnroledExecutionCourses"
               name="enroledExecutionCoursesForm"
               scope="request"
@@ -467,7 +467,7 @@
         <forward name="sucess" path="view-Enroled-ExecutionCourses"/>
       </action>
       
- 	<action type="ServidorApresentacao.Action.student.ViewExecutionCourseProjectsAction"
+ 	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewExecutionCourseProjectsAction"
               path="/viewExecutionCourseProjects"
               scope="request"
               name="enroledExecutionCoursesForm"
@@ -478,7 +478,7 @@
       </action>
  	
  	
- 	<action type="ServidorApresentacao.Action.student.ViewShiftsAndGroupsAction"
+ 	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewShiftsAndGroupsAction"
               path="/viewShiftsAndGroups"
               scope="request"
               name="enroledExecutionCoursesForm"
@@ -488,7 +488,7 @@
 		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
       </action>
 
-	<action type="ServidorApresentacao.Action.student.ViewStudentsAndGroupsByShiftAction"
+	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentsAndGroupsByShiftAction"
               path="/viewStudentsAndGroupsByShift"
               scope="request"
              validate="true">
@@ -496,7 +496,7 @@
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
       </action>
 
-	<action type="ServidorApresentacao.Action.student.ViewStudentsAndGroupsWithoutShiftAction"
+	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentsAndGroupsWithoutShiftAction"
               path="/viewStudentsAndGroupsWithoutShift"
               scope="request"
              validate="true">
@@ -505,7 +505,7 @@
       </action>	
 
 
-	<action type="ServidorApresentacao.Action.student.ViewAllStudentsAndGroupsAction"
+	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewAllStudentsAndGroupsAction"
               path="/viewAllStudentsAndGroups"
               scope="request"
              validate="true">
@@ -514,7 +514,7 @@
       </action>	
 
 
-      	<action type="ServidorApresentacao.Action.student.ViewStudentGroupInformationAction"
+      	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentGroupInformationAction"
               path="/viewStudentGroupInformation"
               scope="request"
               name="enroledExecutionCoursesForm"
@@ -526,7 +526,7 @@
       
 
 
-	<action type="ServidorApresentacao.Action.student.UnEnrollStudentInGroupDispatchAction"
+	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.UnEnrollStudentInGroupDispatchAction"
             path="/removeGroupEnrolment"
             scope="request"
             validate="true"
@@ -538,7 +538,7 @@
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
     </action>
 
-      <action type="ServidorApresentacao.Action.student.GroupStudentEnrolmentDispatchAction"
+      <action type="net.sourceforge.fenixedu.presentationTier.Action.student.GroupStudentEnrolmentDispatchAction"
         path="/groupStudentEnrolment"
         name="enroledExecutionCoursesForm"
         parameter="method"
@@ -550,7 +550,7 @@
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
       </action>
       
-       <action type="ServidorApresentacao.Action.student.GroupEnrolmentDispatchAction"
+       <action type="net.sourceforge.fenixedu.presentationTier.Action.student.GroupEnrolmentDispatchAction"
         path="/groupEnrolment"
         name="groupEnrolmentForm"
         parameter="method"
@@ -563,7 +563,7 @@
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
       </action>
       
-      	<action type="ServidorApresentacao.Action.student.EditStudentGroupShiftDispatchAction"
+      	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.EditStudentGroupShiftDispatchAction"
             path="/editStudentGroupShift"
             scope="request"
             validate="true"
@@ -575,7 +575,7 @@
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
     </action>
-    <action type="ServidorApresentacao.Action.student.EnrollStudentGroupShiftDispatchAction"
+    <action type="net.sourceforge.fenixedu.presentationTier.Action.student.EnrollStudentGroupShiftDispatchAction"
             path="/enrollStudentGroupShift"
             scope="request"
             validate="true"
@@ -587,7 +587,7 @@
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
     </action>
-    <action type="ServidorApresentacao.Action.student.UnEnrollStudentGroupShiftDispatchAction"
+    <action type="net.sourceforge.fenixedu.presentationTier.Action.student.UnEnrollStudentGroupShiftDispatchAction"
             path="/unEnrollStudentGroupShift"
             scope="request"
             validate="true"
@@ -609,7 +609,7 @@
 			input="/studentTests.do?method=prepareToDoTest"
 			scope="request"
 			parameter="method"
-			type="ServidorApresentacao.Action.student.StudentTestsAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.StudentTestsAction"
 			validate="false">
 			<forward name="testsFirstPage" path="tests-First-Page"/>
 			<forward name="doTest" path="do-Test"/>
@@ -621,14 +621,14 @@
 		
       <action path="/studentGaugingTestResults"
 			scope="request"
-			type="ServidorApresentacao.Action.student.gaugingTests.physics.ViewGaugingTestsResults"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.gaugingTests.physics.ViewGaugingTestsResults"
 			>
 			<forward name="viewGaugingTestsResults" path="definition.gaugingTestResults"/>
 		</action>  
     
     	<!-- *********************  Enrollment ********************** -->
     	<action	path="/studentCurricularCoursesEnrollment"
-				type="ServidorApresentacao.Action.student.enrollment.StudentCurricularCoursesEnrollmentDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.StudentCurricularCoursesEnrollmentDispatchAction"
 				name="curricularCoursesEnrollmentForm"				
 				parameter="method"
 				scope="request"
@@ -636,18 +636,18 @@
 			<forward name="curricularCoursesEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
 		</action>
     	<action	path="/curricularCoursesEnrollment"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
 				name="curricularCoursesEnrollmentForm"				
 				parameter="method"
 				scope="request"
 				validate="true"
 				input="df.page.main">
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.exceptions.ExistingServiceException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixTransactionExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException"
 						key="error.message.no.valid.student.for.enrollmnt"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixTransactionExceptionHandler"/>
 			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
 			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
 			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
@@ -658,79 +658,79 @@
         
     
     	<action	path="/warningFirst"
-				type="ServidorApresentacao.Action.commons.VoidAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
         	<forward name="Success" path="df.page.warning"/>
 		</action>
 
 		<action	path="/finalDegreeWorkCandidacy"
-				type="ServidorApresentacao.Action.student.finalDegreeWork.FinalDegreeWorkCandidacyDA"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork.FinalDegreeWorkCandidacyDA"
 				name="finalDegreeWorkCandidacyForm"
 				parameter="method"
 				scope="request"
 				validate="true"
 				input="df.page.finalDegreeWork.candidacy">
-			<exception	type="ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$CandidacyPeriodNotDefinedException"
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$CandidacyPeriodNotDefinedException"
 						key="error.message.CandidacyPeriodNotDefinedException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$OutOfCandidacyPeriodException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$OutOfCandidacyPeriodException"
 						key="error.message.OutOfCandidacyPeriodException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$InsufficientCompletedCoursesException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$InsufficientCompletedCoursesException"
 						key="error.message.InsufficientCompletedCoursesException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MaximumNumberOfProposalCandidaciesPerGroupUndefinedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MaximumNumberOfProposalCandidaciesPerGroupUndefinedException"
 						key="error.message.MaximumNumberOfProposalCandidaciesPerGroupUndefinedException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MaximumNumberOfProposalCandidaciesPerGroupReachedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MaximumNumberOfProposalCandidaciesPerGroupReachedException"
 						key="error.message.MaximumNumberOfProposalCandidaciesPerGroupReachedException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MaximumNumberOfStudentsUndefinedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MaximumNumberOfStudentsUndefinedException"
 						key="error.message.MaximumNumberOfStudentsUndefinedException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MaximumNumberOfStudentsReachedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MaximumNumberOfStudentsReachedException"
 						key="error.message.MaximumNumberOfStudentsReachedException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.RemoveStudentFromFinalDegreeWorkStudentGroup$GroupProposalCandidaciesExistException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.RemoveStudentFromFinalDegreeWorkStudentGroup$GroupProposalCandidaciesExistException"
 						key="error.message.GroupProposalCandidaciesExistException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.EstablishFinalDegreeWorkStudentGroup$GroupStudentCandidaciesExistException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.EstablishFinalDegreeWorkStudentGroup$GroupStudentCandidaciesExistException"
 						key="error.message.GroupStudentCandidaciesExistException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.EstablishFinalDegreeWorkStudentGroup$GroupProposalCandidaciesExistException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.EstablishFinalDegreeWorkStudentGroup$GroupProposalCandidaciesExistException"
 						key="error.message.GroupProposalCandidaciesExistException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MinimumNumberOfStudentsUndefinedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MinimumNumberOfStudentsUndefinedException"
 						key="error.message.MinimumNumberOfStudentsUndefinedException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MinimumNumberOfStudentsNotReachedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MinimumNumberOfStudentsNotReachedException"
 						key="error.message.MinimumNumberOfStudentsNotReachedException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumNumberOfCompletedCoursesUndefinedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumNumberOfCompletedCoursesUndefinedException"
 						key="error.message.InsufficientCompletedCoursesException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumNumberOfCompletedCoursesNotReachedException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumNumberOfCompletedCoursesNotReachedException"
 						key="error.message.InsufficientCompletedCoursesException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showCandidacyForm" path="df.page.finalDegreeWork.candidacy"/>
 			<forward name="showSelectProposalsForm" path="df.page.finalDegreeWork.selectProposals"/>
 		</action>
 
 		<action	path="/finalDegreeWorkAttribution"
-				type="ServidorApresentacao.Action.student.finalDegreeWork.FinalDegreeWorkAttributionDA"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork.FinalDegreeWorkAttributionDA"
 				name="finalDegreeWorkAttributionForm"
 				parameter="method"
 				scope="request"
 				validate="true"
 				input="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0">
-			<exception	type="ServidorAplicacao.Servico.student.ConfirmAttributionOfFinalDegreeWork$NoAttributionToConfirmException"
+			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork$NoAttributionToConfirmException"
 						key="error.message.NoAttributionToConfirmException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showFinalDegreeWorkList" path="df.page.finalDegreeWork.attribution"/>
 			<forward name="prepareShowFinalDegreeWorkList" path="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"/>
 		</action>
 
 		<!-- SENIOR INFORMATION -->
-      	<action type="ServidorApresentacao.Action.student.SeniorInformationAction"
+      	<action type="net.sourceforge.fenixedu.presentationTier.Action.student.SeniorInformationAction"
 			path="/seniorInformation"
 			name="seniorInfoForm"
 			parameter="method"
@@ -744,7 +744,7 @@
 
     
     <!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.StudentResources" null="false"/>

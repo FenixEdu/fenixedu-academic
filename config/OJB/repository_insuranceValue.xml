@@ -3,9 +3,9 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.InsuranceValue -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.InsuranceValue -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.InsuranceValue" table="INSURANCE_VALUE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.InsuranceValue" table="INSURANCE_VALUE">
 	
 	<field-descriptor
 		name="idInternal"
@@ -42,7 +42,7 @@
 	
 	<reference-descriptor
        	name="executionYear"
-       	class-ref="Dominio.ExecutionYear"
+       	class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
        	proxy="true"
 		refresh="true"
     >

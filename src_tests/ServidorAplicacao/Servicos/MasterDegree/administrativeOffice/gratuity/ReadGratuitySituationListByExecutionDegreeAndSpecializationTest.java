@@ -2,9 +2,9 @@
  * Created on 23/Jan/2004
  *
  */
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.gratuity;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.gratuity;
 
-import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 
 /**
  * @author Tânia Pousão

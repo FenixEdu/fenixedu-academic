@@ -3,7 +3,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.publico.executionCourseSitePage" 
-		controllerClass="ServidorApresentacao.tiles.controller.PublicTilesComponentController" 
+		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		page="/publicGesDisLayout_2col.jsp" >
 	<put name="title" value="" />	
   	<put name="serviceName" value="Instituto Superior Técnico" />

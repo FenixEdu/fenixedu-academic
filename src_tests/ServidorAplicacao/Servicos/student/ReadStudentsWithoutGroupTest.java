@@ -3,7 +3,7 @@
  * Created on 03/09/2003
  */
 
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 /**
  * 
@@ -14,14 +14,14 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoSiteStudentsWithoutGroup;
-import DataBeans.util.Cloner;
-import Dominio.IStudent;
-import Dominio.Student;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
 

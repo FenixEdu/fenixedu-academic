@@ -1,8 +1,8 @@
 <%@ page language="java" %>
-<%@ page import ="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DataBeans.InfoExecutionCourseAndExams" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseAndExams" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

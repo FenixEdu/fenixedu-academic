@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
-<%@ page import="DataBeans.InfoLesson"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
 
 <logic:present name="siteView" property="commonComponent">

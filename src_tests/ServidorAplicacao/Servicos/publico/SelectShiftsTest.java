@@ -1,16 +1,16 @@
-package ServidorAplicacao.Servicos.publico;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publico;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import DataBeans.InfoShift;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author João Mota

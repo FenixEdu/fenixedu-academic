@@ -13,7 +13,7 @@
 	</definition>
 	
 	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
-				controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
+				controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyProfessorships">
 		<put name="title" value=""/>
 	    <put name="link" value=""/>
    	    <put name="professorshipList" />

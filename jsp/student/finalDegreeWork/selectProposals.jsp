@@ -45,7 +45,7 @@
 							<bean:write name="finalDegreeWorkProposalHeader" property="proposalNumber"/> 
 						</td>
 						<td class="listClasses" rowspan="2">
-				        	<html:link target="_blank" href="<%= request.getContextPath() + "/publico/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((DataBeans.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+				        	<html:link target="_blank" href="<%= request.getContextPath() + "/publico/finalDegreeWorks.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
 								<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 					        </html:link>
 						</td>

@@ -1,11 +1,11 @@
 /*
  * Created on 1/Abr/2004
  */
-package ServidorAplicacao.Servicos.sop.exams;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop.exams;
 
 import java.util.Calendar;
 
-import ServidorAplicacao.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
 
 /**
  * @author Ana e Ricardo

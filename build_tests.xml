@@ -557,7 +557,7 @@
 	
 	<target name="generate-leec-dataset"  >
 		
-		<java classname="Util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
+		<java classname="net.sourceforge.fenixedu.util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -739,7 +739,7 @@
 	
 	<target name="generate-leec-dataset"  >
 		
-		<java classname="Util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
+		<java classname="net.sourceforge.fenixedu.util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -915,7 +915,7 @@
 	
 	<target name="generate-leec-dataset"  >
 		
-		<java classname="Util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
+		<java classname="net.sourceforge.fenixedu.util.GeraXml" fork="yes" failonerror="true" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>

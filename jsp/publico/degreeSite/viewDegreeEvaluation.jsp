@@ -2,10 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.TipoCurso" %>
-<%@ page import="Util.InquiriesUtil" %>
-<%@ page import="Util.NumberUtils" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
+<%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
 
@@ -43,7 +43,7 @@
 							
 							<html:select property="executionPeriodId" onchange="this.form.submit()">
 								<html:option value="">Escolher</html:option>		
-								<logic:iterate id="executionPeriod" name="executionPeriodList" type="DataBeans.InfoExecutionPeriod"> 
+								<logic:iterate id="executionPeriod" name="executionPeriodList" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod"> 
 									<bean:define    id="currentPeriodId"   name="executionPeriod" property="idInternal"/>
 									<html:option value="<%= currentPeriodId.toString() %>">
 										<bean:write name="executionPeriod" property="semester"/>&ordm; Semestre
@@ -153,7 +153,7 @@
 
 			</tr>
 				
-			<logic:iterate id="inquirySummary" name="oldInquiriesSummaries" type="DataBeans.inquiries.InfoOldInquiriesSummary">
+			<logic:iterate id="inquirySummary" name="oldInquiriesSummaries" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary">
 
 				<bean:define id="gepCourseName" name="inquirySummary" property="gepCourseName" type="java.lang.String"/>
 

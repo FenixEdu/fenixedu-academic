@@ -5,7 +5,7 @@
  * Created on 26 de Agosto de 2002, 0:49
  */
 
-package ServidorAplicacao.Servicos;
+package net.sourceforge.fenixedu.applicationTier.Servicos;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

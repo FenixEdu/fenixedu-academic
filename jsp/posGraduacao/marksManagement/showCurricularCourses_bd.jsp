@@ -10,7 +10,7 @@
 	</logic:equal>
 	<logic:notEqual name="listSize" value="0">
 		<table width="100%">
-			<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="DataBeans.InfoCurricularCourse" length="1">
+			<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse" length="1">
 				<tr>
 					<td class="infoselected">
 						<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
@@ -32,7 +32,7 @@
 				</td>
 			</tr>
 			<!-- Curricular Course -->
-			<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="DataBeans.InfoCurricularCourse">
+			<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse">
 			   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
 					<tr>
 						<td>

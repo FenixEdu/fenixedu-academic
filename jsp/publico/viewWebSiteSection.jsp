@@ -2,11 +2,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="java.util.Calendar, Util.Mes, DataBeans.InfoWebSiteItem" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="net.sourceforge.fenixedu.util.Mes" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem" %>
 <span class="error"><html:errors/></span>
 <logic:present name="infoWebSiteSection">
 	<table width="100%" align="center">
-		<logic:iterate id="item" name="infoWebSiteSection" property="infoItemsList" type="DataBeans.InfoWebSiteItem">
+		<logic:iterate id="item" name="infoWebSiteSection" property="infoItemsList" type="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem">
 			<tr>
 				<td align="left">
 					<bean:write name="item" property="title"/>

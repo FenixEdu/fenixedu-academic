@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.Student -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Student -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.Student" table="STUDENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Student" table="STUDENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -23,13 +23,13 @@
 		name="state"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaStudentState2SqlStudentStateFieldConversion"         
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentState2SqlStudentStateFieldConversion"         
 	/>
 	<field-descriptor
 		name="degreeType"
 		column="DEGREE_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"         
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"         
 	/>
 	<field-descriptor
 		name="studentKindKey"
@@ -60,7 +60,7 @@
 		name="entryPhase"
 		column="ENTRY_PHASE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.EntryPhase2SqlEntryPhaseFieldConversion"         
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.EntryPhase2SqlEntryPhaseFieldConversion"         
 	/>
 	<field-descriptor
 		name="ackOptLock"
@@ -90,26 +90,26 @@
 	/>
 	<reference-descriptor
 			name="person"
-			class-ref="Dominio.Person"
+			class-ref="net.sourceforge.fenixedu.domain.Person"
 			proxy="false"
 			refresh="true">
 		<foreignkey field-ref="personKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="studentKind"
-			class-ref="Dominio.StudentKind"
+			class-ref="net.sourceforge.fenixedu.domain.StudentKind"
 			proxy="false">
 		<foreignkey field-ref="studentKindKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="registrationYear"
-			class-ref="Dominio.ExecutionYear"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
 			proxy="true">
 		<foreignkey field-ref="keyRegistrationYear"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="studentCurricularPlans"
-			element-class-ref="Dominio.StudentCurricularPlan"
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="studentKey"/>

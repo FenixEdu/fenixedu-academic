@@ -29,7 +29,7 @@
 	<td>
 		<bean:define id="itemOrder" name="item" property="itemOrder" type="java.lang.Integer"/>
 		<html:select name="item" property="itemOrder" size="1">
-			<logic:iterate id="otherItem" name="items" type="DataBeans.InfoItem">
+			<logic:iterate id="otherItem" name="items" type="net.sourceforge.fenixedu.dataTransferObject.InfoItem">
 				<bean:define id="otherItemOrder" type="java.lang.String"><%= String.valueOf(otherItem.getItemOrder().intValue()) %></bean:define>
 				<bean:define id="selected" value=""></bean:define>
 				<logic:equal name="otherItemOrder" value="<%= String.valueOf(itemOrder.intValue() + 1) %>">

@@ -1,5 +1,5 @@
 <class-descriptor
-   	  class="Dominio.finalDegreeWork.Proposal"
+   	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
    	  table="FINAL_DEGREE_WORK_PROPOSAL"
    >
       <field-descriptor
@@ -114,7 +114,7 @@
          name="degreeType"
          column="DEGREE_TYPE"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
       />
       <field-descriptor
          name="observations"
@@ -135,7 +135,7 @@
          name="status"
          column="STATUS"
          jdbc-type="INTEGER"
-         conversion="ServidorPersistente.Conversores.JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion"
       />
       <field-descriptor
          name="keyGroupAttributedByTeacher"
@@ -149,32 +149,32 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.ExecutionDegree">
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
       <reference-descriptor
          name="orientator"
-         class-ref="Dominio.Teacher">
+         class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyOrientator"/>
       </reference-descriptor>
       <reference-descriptor
          name="coorientator"
-         class-ref="Dominio.Teacher">
+         class-ref="net.sourceforge.fenixedu.domain.Teacher">
          <foreignkey field-ref="keyCoorientator"/>
       </reference-descriptor>
       <reference-descriptor
          name="groupAttributedByTeacher"
-         class-ref="Dominio.finalDegreeWork.Group">
+         class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Group">
          <foreignkey field-ref="keyGroupAttributedByTeacher"/>
       </reference-descriptor>
       <reference-descriptor
          name="groupAttributed"
-         class-ref="Dominio.finalDegreeWork.Group">
+         class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Group">
          <foreignkey field-ref="keyGroupAttributed"/>
       </reference-descriptor>
 	<collection-descriptor
 			name="branches"
-			element-class-ref="Dominio.Branch"
+			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH"
 			auto-retrieve="true"
 			refresh="true"
@@ -184,7 +184,7 @@
 	</collection-descriptor>
 	<collection-descriptor
          name="groupProposals"
-         element-class-ref="Dominio.finalDegreeWork.GroupProposal"
+         element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
          collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          auto-retrieve="true"
          refresh="true"
@@ -194,7 +194,7 @@
 </class-descriptor>
 
 <class-descriptor
-   	  class="Dominio.finalDegreeWork.Scheduleing"
+   	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
    	  table="FINAL_DEGREE_WORK_SCHEDULEING"
    >
       <field-descriptor
@@ -224,49 +224,49 @@
          name="startOfProposalPeriodDate"
          column="START_OF_PROPOSAL_PERIOD_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
       />      
       <field-descriptor
          name="startOfProposalPeriodTime"
          column="START_OF_PROPOSAL_PERIOD_TIME"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />      
       <field-descriptor
          name="endOfProposalPeriodDate"
          column="END_OF_PROPOSAL_PERIOD_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
       />
       <field-descriptor
          name="endOfProposalPeriodTime"
          column="END_OF_PROPOSAL_PERIOD_TIME"
 		 jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
       <field-descriptor
          name="startOfCandidacyPeriodDate"
          column="START_OF_CANDIDACY_PERIOD_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
       />      
       <field-descriptor
          name="startOfCandidacyPeriodTime"
          column="START_OF_CANDIDACY_PERIOD_TIME"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />      
       <field-descriptor
          name="endOfCandidacyPeriodDate"
          column="END_OF_CANDIDACY_PERIOD_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"
       />
       <field-descriptor
          name="endOfCandidacyPeriodTime"
          column="END_OF_CANDIDACY_PERIOD_TIME"
          jdbc-type="TIME"
-         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Time2DateFieldConversion"
       />
       <field-descriptor
       	name="minimumNumberOfCompletedCourses"
@@ -290,13 +290,13 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.ExecutionDegree">
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
 </class-descriptor>
 
 <class-descriptor
-   	  class="Dominio.finalDegreeWork.Group"
+   	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.Group"
    	  table="FINAL_DEGREE_WORK_GROUP"
    >
       <field-descriptor
@@ -319,12 +319,12 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.ExecutionDegree">
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
 	<collection-descriptor
 			name="groupStudents"
-			element-class-ref="Dominio.finalDegreeWork.GroupStudent"
+			element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			auto-retrieve="true"
 			refresh="true"
@@ -333,7 +333,7 @@
 	</collection-descriptor>
 	<collection-descriptor
          name="groupProposals"
-         element-class-ref="Dominio.finalDegreeWork.GroupProposal"
+         element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
          collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
          auto-retrieve="true"
          refresh="true"
@@ -343,7 +343,7 @@
 </class-descriptor>
 
 <class-descriptor
-   	  class="Dominio.finalDegreeWork.GroupProposal"
+   	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
    	  table="FINAL_DEGREE_WORK_GROUP_PROPOSAL"
    >
       <field-descriptor
@@ -376,18 +376,18 @@
       />
       <reference-descriptor
          name="finalDegreeDegreeWorkGroup"
-         class-ref="Dominio.finalDegreeWork.Group">
+         class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Group">
          <foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
       </reference-descriptor>
       <reference-descriptor
          name="finalDegreeWorkProposal"
-         class-ref="Dominio.finalDegreeWork.Proposal">
+         class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal">
          <foreignkey field-ref="keyFinalDegreeWorkProposal"/>
       </reference-descriptor>
 </class-descriptor>
 
 <class-descriptor
-   	  class="Dominio.finalDegreeWork.GroupStudent"
+   	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent"
    	  table="FINAL_DEGREE_WORK_GROUP_STUDENT"
    >
       <field-descriptor
@@ -420,17 +420,17 @@
       />
       <reference-descriptor
          name="finalDegreeDegreeWorkGroup"
-         class-ref="Dominio.finalDegreeWork.Group">
+         class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Group">
          <foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
       </reference-descriptor>
       <reference-descriptor
          name="student"
-         class-ref="Dominio.Student">
+         class-ref="net.sourceforge.fenixedu.domain.Student">
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor>
       <reference-descriptor
          name="finalDegreeWorkProposalConfirmation"
-         class-ref="Dominio.finalDegreeWork.Proposal">
+         class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal">
          <foreignkey field-ref="keyFinalDegreeWorkProposalConfirmation"/>
       </reference-descriptor>
 </class-descriptor>

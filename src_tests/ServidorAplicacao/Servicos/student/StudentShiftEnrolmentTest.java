@@ -6,21 +6,21 @@
  * Created on 18/Dez/2003
  *
  */
-package ServidorAplicacao.Servicos.student;
+package net.sourceforge.fenixedu.applicationTier.Servicos.student;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoShift;
-import DataBeans.InfoStudent;
-import DataBeans.util.Cloner;
-import Dominio.IExecutionCourse;
-import Dominio.IStudent;
-import Dominio.ITurno;
-import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ITurno;
+import net.sourceforge.fenixedu.domain.Turno;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author jpvl

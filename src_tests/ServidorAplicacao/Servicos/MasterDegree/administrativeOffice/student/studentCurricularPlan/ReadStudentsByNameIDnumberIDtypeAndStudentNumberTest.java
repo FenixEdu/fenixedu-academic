@@ -1,20 +1,20 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.studentCurricularPlan;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.student.studentCurricularPlan;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Tools.dbaccess;
-import Util.TipoDocumentoIdentificacao;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.tools.dbaccess;
+import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
  * @author David Santos 2/Out/2003

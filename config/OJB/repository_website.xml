@@ -3,10 +3,10 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.WebSite -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.WebSite -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.WebSite" table="WEBSITE">
-	<extent-class class-ref="Dominio.SiteIST" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.WebSite" table="WEBSITE">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.SiteIST" />
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -43,9 +43,9 @@
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.SiteIST -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.SiteIST -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.SiteIST" table="WEBSITE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.SiteIST" table="WEBSITE">
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -86,8 +86,8 @@
 <!-- ******************************************************************************************************************************* -->
    
    
-<!-- Definitions for Dominio.WebSiteSection -->
-   <class-descriptor class="Dominio.WebSiteSection" table="WEBSITE_SECTION">
+<!-- Definitions for net.sourceforge.fenixedu.domain.WebSiteSection -->
+   <class-descriptor class="net.sourceforge.fenixedu.domain.WebSiteSection" table="WEBSITE_SECTION">
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -138,7 +138,7 @@
       />
       <reference-descriptor
          name="webSite"
-         class-ref="Dominio.WebSite"
+         class-ref="net.sourceforge.fenixedu.domain.WebSite"
          proxy="false"
       >
          <foreignkey field-ref="keyWebSite"/>
@@ -150,8 +150,8 @@
 <!--  WEBSITE_ITEM  -->
 <!-- ******************************************************************************************************************************* -->
 
-<!-- Definitions for Dominio.WebSite_Item -->
-   <class-descriptor class="Dominio.WebSiteItem" table="WEBSITE_ITEM">
+<!-- Definitions for net.sourceforge.fenixedu.domain.WebSite_Item -->
+   <class-descriptor class="net.sourceforge.fenixedu.domain.WebSiteItem" table="WEBSITE_ITEM">
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -238,14 +238,14 @@
       />
       <reference-descriptor
          name="editor"
-         class-ref="Dominio.Person"
+         class-ref="net.sourceforge.fenixedu.domain.Person"
          proxy="false"
       >
          <foreignkey field-ref="keyEditor"/>
       </reference-descriptor>
       <reference-descriptor
          name="webSiteSection"
-         class-ref="Dominio.WebSiteSection"
+         class-ref="net.sourceforge.fenixedu.domain.WebSiteSection"
          proxy="false"
       >
          <foreignkey field-ref="keyWebSiteSection"/>

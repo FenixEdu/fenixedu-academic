@@ -2,11 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoStudent" %>
-<%@ page import="DataBeans.InfoTeacher" %>
-<%@ page import="DataBeans.InfoMasterDegreeProofVersion" %>
-<%@ page import="DataBeans.InfoEmployee" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEmployee" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 
@@ -198,7 +198,7 @@
 				InfoStudent infoStudent = (InfoStudent) student;
 			%>
 			
-			<logic:iterate id="masterDegreeProofVersion" name="masterDegreeProofHistory" type="DataBeans.InfoMasterDegreeProofVersion" >
+			<logic:iterate id="masterDegreeProofVersion" name="masterDegreeProofHistory" type="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion" >
 				
 				
 				<%

@@ -52,7 +52,7 @@
 					    <td  class="listClasses" >
 					    	<bean:write name="infoExecutionCourse" property="nome" />
 					    	 <% if (
-					    	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
+					    	 ((net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
 					    	 ){%>
 					    	 (<bean:message key="label.teachersInformation.responsible"/>) <% }  %> 
 					    	 </td>
@@ -78,7 +78,7 @@
 				    	<td  class="listClasses" >
 				    		<bean:write name="infoExecutionCourse" property="nome" />
 					    	 <% if (
-					    	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
+					    	 ((net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
 					    	 ){%>
 					    	 (<bean:message key="label.teachersInformation.responsible"/>) <% }  %> 
 				    	 </td> 

@@ -3,7 +3,7 @@
  * 
  */
 
-package ServidorAplicacao.Servicos.gesdis;
+package net.sourceforge.fenixedu.applicationTier.Servicos.gesdis;
 
 /**
  * @author Ivo Brandão
@@ -14,9 +14,9 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class ReadSitesTest extends TestCaseReadServices {
 

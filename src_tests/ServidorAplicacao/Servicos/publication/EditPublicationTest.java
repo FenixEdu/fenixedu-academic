@@ -3,22 +3,22 @@
  *
  */
 
-package ServidorAplicacao.Servicos.publication;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publication;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoPerson;
-import DataBeans.publication.InfoAuthor;
-import DataBeans.publication.InfoPublication;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.ExcepcaoInexistente;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.publication.EditarPublication;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.publication.EditarPublication;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Carlos Pereira & Francisco Passos

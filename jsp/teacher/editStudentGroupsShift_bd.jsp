@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <%@ page import="java.lang.String" %>
-<%@ page import="DataBeans.InfoLesson"%>
-<%@ page import="DataBeans.InfoShift"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
 <%@ page import="java.util.Calendar" %>
 
 

@@ -74,12 +74,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
     
@@ -103,11 +103,11 @@
    		 	input="/index.do"
    			parameter="method"
    			validate="true"
-   			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+   			type="net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration.SchoolRegistrationAction"
       	    >
-      	    <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+      	    <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
 						
       	    <forward name="beginTransaction" path="/index.do" />
@@ -119,12 +119,12 @@
             parameter="method"
             input="/changePassword.do?method=start&amp;page=0"
             validate="true"
-      	    type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+      	    type="net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration.SchoolRegistrationAction"
       	    >
       	    
-      	    <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+      	    <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
 						
       		<forward name="beginTransaction" path="/index.do" />
@@ -135,13 +135,13 @@
 			parameter="method"
 			name="schoolRegistrationForm"
 			validate="true"
-			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration.SchoolRegistrationAction"
 			input="/viewPersonalInfo.do?method=visualizeFirstTimeStudentPersonalInfoAction&amp;page=0&amp;error=true"
 			>
 
-			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
 						
 			<forward name="beginTransaction" path="/index.do" />
@@ -152,12 +152,12 @@
 			parameter="method"
 			name="schoolRegistrationForm"
 			validate="true"
-			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration.SchoolRegistrationAction"
 			input="/showStudentInquiry.do?method=viewInquiryQuestions&amp;page=0"
 			>
-			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
 
 			<forward name="beginTransaction" path="/index.do" />
@@ -169,13 +169,13 @@
 			parameter="method"
 			name="schoolRegistrationForm"
 			validate="true"
-			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration.SchoolRegistrationAction"
 			input="/residenceCandidacy.do?method=residenceCandidacy&amp;page=0"
 			>
 			
-			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
 
 			<forward name="beginTransaction" path="/viewEnrollments.do?method=viewStudentEnrollments" />
@@ -186,11 +186,11 @@
 			parameter="method"
 			validate="true"
 			name="schoolRegistrationForm"
-			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration.SchoolRegistrationAction"
 			>
-			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
 
 			<forward name="declarations" path="definition.schoolRegistration.declarations" />
@@ -198,11 +198,11 @@
 		</action>
 		
 		<action path="/studentTimeTable"
-        	type="ServidorApresentacao.Action.student.ViewStudentTimeTable"
+        	type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentTimeTable"
         	>
-			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
         	<forward name="sucess" path="definition.schoolRegistration.schedule"/>
         </action>
@@ -210,24 +210,24 @@
        	<action path="/declaration" 
        		parameter="method"
        		name="schoolRegistrationForm"
-			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration.SchoolRegistrationAction"
 			>
-			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException"
 				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
 	       	<forward name="sucess" path="definition.schoolRegistration.printDeclaration"/>
        	</action>
 
 		<!--<action path="/logoff" 
-			type="ServidorApresentacao.Action.commons.LogOffAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction"
 		    name="schoolRegistrationForm">
             <forward name="Success" path="definition.schoolRegistration.logout" contextRelative="true"/>
         </action> -->
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.SchoolRegistrationResources" null="false"/>

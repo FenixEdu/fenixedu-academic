@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="DataBeans.InfoWebSiteItem, java.sql.Timestamp" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem, java.sql.Timestamp" %>
 
 <bean:define id="sectionsList" name="infoWebSite" property="sections" />
 <h2><bean:message key="label.sections.configuration"/></h2>

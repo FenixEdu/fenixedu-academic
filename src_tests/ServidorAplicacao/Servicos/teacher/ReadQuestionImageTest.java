@@ -2,9 +2,9 @@
  * Created on 12/Ago/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
 
 /**
  * @author Susana Fernandes

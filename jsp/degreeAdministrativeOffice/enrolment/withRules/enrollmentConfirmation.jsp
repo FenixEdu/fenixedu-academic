@@ -2,9 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.EnrollmentState, Util.CurricularCourseType" %>
-<%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
-<%@ page import="DataBeans.InfoEnrolment" %>
+<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.util.CurricularCourseType" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 
 <h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
@@ -110,7 +111,7 @@
 		</td>
 		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
 	</tr>
-	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
+	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
 		<tr>
 			<td class="listClasses">
 				<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>

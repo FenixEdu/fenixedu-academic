@@ -2,9 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.TipoCurso" %>
-<%@ page import="Util.DegreeCurricularPlanState" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.util.DegreeCurricularPlanState" %>
 
 <p><span class="error"><html:errors/></span></p>
 

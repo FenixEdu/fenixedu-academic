@@ -458,12 +458,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -477,7 +477,7 @@
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
     <!-- page fronting actions  -->
-    <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="df.page.main-page"/>
+    <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" forward="df.page.main-page"/>
   
    
     	<!--=====Actions for Degrees==== -->
@@ -486,17 +486,17 @@
 	 <!-- Action for reading all degrees  -->
       <action path="/readDegrees"
              input="mainPageInput.do"
-      	     type="ServidorApresentacao.Action.manager.ReadDegreesAction">
+      	     type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadDegreesAction">
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
       
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
               input="/readDegrees.do"
-      	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
-      	  <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadDegreeAction">
+      	  <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
           /> 
           <forward name="readDegrees" path="/readDegrees.do"/> 	  
       	  <forward name="viewDegree" path="df.page.read-degree"/>  
@@ -510,11 +510,11 @@
 		input="/insertDegree.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertDegreeDispatchAction"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="insertDegree" path="df.page.insert-degree"/>
        <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>	
@@ -525,7 +525,7 @@
       		 name="degreeForm"
       		 input="/readDegreesInput.do"
       		 scope="request"
-      	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction"
+      	     type="net.sourceforge.fenixedu.presentationTier.Action.manager.DeleteDegreesAction"
 			 validate="true">
       	  <forward name="readDegrees" path="/readDegrees.do"/>      	      
       </action>
@@ -537,15 +537,15 @@
 		input="/editDegree.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EditDegreeDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.EditDegreeDispatchAction"
         validate="true"> 
-         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    /> 
-          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                  handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                  handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                   />
        <forward name="editDegree" path="df.page.edit-degree"/>
        <forward name="readDegree" path="/readDegree.do"/>     
@@ -561,10 +561,10 @@
     <!-- Action for reading a degree curricular plan -->
     <action path="/readDegreeCurricularPlan"
          	input="/readDegree.do"
-         	type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
-          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadDegreeCurricularPlanAction">
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
           /> 
      <forward name="viewDegreeCurricularPlan" path="df.page.read-degree-curricular-plan"/>  
      <forward name="readDegree" path="/readDegree.do"/> 	      
@@ -577,17 +577,17 @@
 		input="/insertDegreeCurricularPlan.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertDegreeCurricularPlanDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertDegreeCurricularPlanDispatchAction"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException"
          	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                  handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                  handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="insertDegreeCurricularPlan" path="df.page.insert-degree-curricular-plan"/>
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
@@ -598,7 +598,7 @@
       	 name="degreeCurricularPlanForm"
       	 input="/readDegreeInput.do"
       	 scope="request"
-         type="ServidorApresentacao.Action.manager.DeleteDegreeCurricularPlansAction">
+         type="net.sourceforge.fenixedu.presentationTier.Action.manager.DeleteDegreeCurricularPlansAction">
         <forward name="readDegree" path="/readDegree.do"/>      	      
       </action>
       
@@ -609,19 +609,19 @@
 		input="/editDegreeCurricularPlan.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EditDegreeCurricularPlanDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.EditDegreeCurricularPlanDispatchAction"
         validate="true">  
-         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    /> 
-         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-         <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException"
          	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
        <forward name="editDegreeCP" path="df.page.edit-degree-curricular-plan"/>
        <forward name="readDegreeCP" path="/readDegreeCurricularPlan.do"/>    
@@ -637,10 +637,10 @@
   
     <action path="/readCurricularCourse"
         input="/readDegreeCurricularPlan.do"
-        type="ServidorApresentacao.Action.manager.ReadCurricularCourseAction">
-         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+        type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadCurricularCourseAction">
+         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    /> 
       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>  
       <forward name="viewCurricularCourse" path="df.page.read-curricular-course"/> 	      
@@ -653,17 +653,17 @@
 		input="/insertCurricularCourse.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertCurricularCourseDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertCurricularCourseDispatchAction"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
-		<exception type="ServidorAplicacao.Servico.manager.InsertCurricularCourseAtDegreeCurricularPlan$ExistingAcronymException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/> 
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertCurricularCourseAtDegreeCurricularPlan$ExistingAcronymException"
 					key="message.manager.existing.curricular.course.acronym"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                   />
        <forward name="insertCurricularCourse" path="df.page.insert-curricular-course"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
@@ -676,7 +676,7 @@
       	name="curricularCourseForm"
       	input="/readDegreeCurricularPlan.do"
       	scope="request"
-      	type="ServidorApresentacao.Action.manager.DeleteCurricularCoursesAction">
+      	type="net.sourceforge.fenixedu.presentationTier.Action.manager.DeleteCurricularCoursesAction">
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
     </action>	  
       
@@ -687,19 +687,19 @@
 		input="/editCurricularCourse.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EditCurricularCourseDA"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.EditCurricularCourseDA"
         validate="true">  
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-                     <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                     <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                  handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                  handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                   />
-				  <exception type="ServidorAplicacao.Servico.manager.EditCurricularCourse$ExistingAcronymException"
+				  <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurricularCourse$ExistingAcronymException"
 					key="message.manager.existing.curricular.course.acronym"
-					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                   />
        <forward name="editCurricularCourse" path="df.page.edit-curricular-course"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	
@@ -717,15 +717,15 @@
 		input="/editCurricularCourseScope.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EditCurricularCourseScopeDA"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.EditCurricularCourseScopeDA"
         validate="true">  
-          <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
              key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
           />
        <forward name="editCurricularCourseScope" path="df.page.edit-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
@@ -739,14 +739,14 @@
 		input="/insertCurricularCourseScope.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertCurricularCourseScopeDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertCurricularCourseScopeDispatchAction"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
              	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="insertCurricularCourseScope" path="df.page.insert-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>    
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
@@ -760,14 +760,14 @@
 		input="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertCurricularCourseScopeFromAnotherDA"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertCurricularCourseScopeFromAnotherDA"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
              	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="insertCurricularCourseScope" path="df.page.insert-from-other-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
        <forward name="readDegree" path="/readDegree.do"/>     	      
@@ -780,19 +780,19 @@
 		input="/endCurricularCourseScope.do?method=prepareEnd&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EndCurricularCourseScopeDA"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.EndCurricularCourseScopeDA"
         validate="true">  
-          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
              key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
           />
-          <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException"
              key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
-             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
           />
-          <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+          <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException"
              key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
           />
        <forward name="endCurricularCourseScope" path="df.page.end-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
@@ -800,10 +800,10 @@
 	
 	<action path="/readAllCurricularCourseScopes"
 		input="/readcurricularCourse.do"
-		type="ServidorApresentacao.Action.manager.ReadAllCurricularCourseScopesAction">
-	 	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadAllCurricularCourseScopesAction">
+	 	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 			key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
 		/> 
   		<forward name="viewCurricularCourseScopes" path="df.page.read-curricular-course-scopes"/> 	      
 	</action>	
@@ -819,14 +819,14 @@
 		input="/insertExecutionDegree.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertExecutionDegreeDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertExecutionDegreeDispatchAction"
 		validate="true">
-		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="insertExecutionDegree" path="df.page.insert-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
@@ -839,14 +839,14 @@
 		input="/editExecutionDegree.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EditExecutionDegreeDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.EditExecutionDegreeDispatchAction"
         validate="true">  
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/> 
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="editExecutionDegree" path="df.page.edit-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
@@ -860,18 +860,18 @@
       	attribute="executionDegreeForm"
       	input="/readDegreeCurricularPlanInput.do"
       	scope="request"
-      	type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">
+      	type="net.sourceforge.fenixedu.presentationTier.Action.manager.DeleteExecutionDegreesAction">
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
     </action>
     	
     <!-- Action for reading execution periods to associate execution courses to a curricular course -->
           <action path="/readExecutionPeriodToAssociateExecutionCoursesAction"
           input="/readDegreeCurricularPlan.do"
-              type="ServidorApresentacao.Action.manager.ReadExecutionPeriodToAssociateExecutionCoursesAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadExecutionPeriodToAssociateExecutionCoursesAction"
               scope="request">
-               <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+               <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
           <forward name="viewExecutionPeriods" path="df.page.read-execution-periods"/>
       </action>
      
@@ -882,14 +882,14 @@
       	input="/associateExecutionCourseToCurricularCourse.do?method=prepare&amp;page=0"
       	parameter="method"
       	scope="request"
-      	type="ServidorApresentacao.Action.manager.AssociateExecutionCourseToCurricularCourseDA"
+      	type="net.sourceforge.fenixedu.presentationTier.Action.manager.AssociateExecutionCourseToCurricularCourseDA"
       	validate="true">
-      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+      	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="viewExecutionCoursesToAssociate" path="df.page.read-execution-courses"/>  
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/> 
        <forward name="readAvailableExecutionPeriods" path="/readExecutionPeriodToAssociateExecutionCoursesAction.do"/>   
@@ -903,11 +903,11 @@
 	    name="curricularCourseForm"
 	    input="/readCurricularCourse.do"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.DissociateExecutionCourseAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.DissociateExecutionCourseAction"
         validate="true"> 
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>  	          
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>  	          
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
 	</action>
 	
@@ -919,10 +919,10 @@
 		input="/editCurriculum.do?method=prepareEdit&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.EditCurriculumDA">
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.EditCurriculumDA">
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="editCurriculum" path="df.page.edit-curriculum"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
@@ -936,13 +936,13 @@
 		input="/manageBranches.do?method=showBranches&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.ManageBranchesDA">  
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageBranchesDA">  
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="readDegree" path="/readDegree.do"/>
        <forward name="manageBranches" path="df.page.manage-branches"/>
        <forward name="insertBranch" path="df.page.insert-branch"/>
@@ -956,7 +956,7 @@
 	    name="teacherForm"
 	    input="/readCurricularCourse.do"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.ReadTeacherInChargeAction">         
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadTeacherInChargeAction">         
        <forward name="readExecutionCourseTeachers" path="df.page.read-execution-course-teachers"/>      	      
 	</action>
 	
@@ -967,11 +967,11 @@
 	    input="/insertProfessorShipByNumber.do?method=prepareInsert&amp;page=0"
 		scope="request"
 		parameter="method"
-		type="ServidorApresentacao.Action.manager.InsertProfessorShipByNumberDA"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertProfessorShipByNumberDA"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>   
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>   
        <forward name="insertProfessorShip" path="df.page.insert-professorShip-by-number"/>
        <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>      	      
 	</action>
@@ -982,10 +982,10 @@
       	name="teacherForm"
       	input="/readTeacherInCharge.do"
       	scope="request"
-      	type="ServidorApresentacao.Action.manager.SaveTeachersBodyAction">
-      	<exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+      	type="net.sourceforge.fenixedu.presentationTier.Action.manager.SaveTeachersBodyAction">
+      	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException"
          	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
     </action>
@@ -996,17 +996,17 @@
       	name="curricularCourseScopeForm"
       	input="/readCurricularCourse.do"
       	scope="request"
-      	type="ServidorApresentacao.Action.manager.DeleteCurricularCourseScopeAction">
-      	<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+      	type="net.sourceforge.fenixedu.presentationTier.Action.manager.DeleteCurricularCourseScopeAction">
+      	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.CantDeleteActionException"
          	       key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
     </action>
 
 	<!--FALTA EXCEPCES PARA AS QUE SE SEGUEM-->
     <action path="/readExecutionPeriods"
           input="mainPageInput.do"
-              type="ServidorApresentacao.Action.manager.ReadExecutionPeriodsAction"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadExecutionPeriodsAction"
               scope="request">
           <forward name="readExecutionPeriods" path="df.page.read-execution-periods-to-choose"/>
       </action>
@@ -1018,7 +1018,7 @@
 		path="/readExecutionCourses"
 		input="/readExecutionPeriods.do"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.ReadExecutionCoursesAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadExecutionCoursesAction"
         validate="true">
        <forward name="readExecutionCourses" path="df.page.read-execution-courses-to-choose"/>      	      
 	</action>
@@ -1029,14 +1029,14 @@
 		input="/insertExecutionCourse.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertExecutionCourseDA"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertExecutionCourseDA"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="insertExecutionCourse" path="df.page.insert-execution-course"/>
        <forward name="readExecutionCourses" path="/readExecutionCourses.do"/> 
          <forward name="readExecutionPeriods" path="/readExecutionPeriods.do"/>    	      
@@ -1046,11 +1046,11 @@
 		path="/createSite"
 		input="/readCurricularCourse.do"
 		scope="request"
-		type="ServidorApresentacao.Action.manager.CreateSiteInExecutionCourseAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.CreateSiteInExecutionCourseAction"
         validate="true">
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>    	      
 	</action>
 	<!-- Action for deleting execution courses --> 
@@ -1059,37 +1059,37 @@
       	  name="executionCourseForm"
       	  
       	  scope="request"
-      	  type="ServidorApresentacao.Action.manager.DeleteExecutionCoursesAction">
+      	  type="net.sourceforge.fenixedu.presentationTier.Action.manager.DeleteExecutionCoursesAction">
       	  <forward name="readExecutionCourses" path="/readExecutionCourses.do"/>      	      
       </action>
 	
       <!--Input actions-->  
      <action path="/readDegreesInput"
      		scope="request"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.read-degrees"/>      	      
       </action>
       
       <action path="/readDegreeInput"
      		scope="request"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.read-degree"/>      	      
       </action>
       
       <action path="/mainPageInput"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.main-page"/>      	      
       </action>
       
       <action path="/readDegreeCurricularPlanInput"
      		scope="request"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.read-degree-curricular-plan"/>      	      
       </action>
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
       <action path="/manageExecutionPeriods"
-              type="ServidorApresentacao.Action.manager.ManageExecutionPeriodsDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageExecutionPeriodsDA"
               parameter="method"
               scope="request"
               >
@@ -1100,17 +1100,17 @@
 			  name="createExecutionPeriodForm"
       		  path="/createExecutionPeriodForm"
               scope="request"
-              type="ServidorApresentacao.Action.manager.ManageExecutionPeriodsDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageExecutionPeriodsDA"
               parameter="method"
               validate="true"
               >
-        <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException"
          	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
         <forward name="Sucess" path="/manageExecutionPeriods.do?method=prepare"/>
       </action>
@@ -1118,7 +1118,7 @@
 	<!-- ========== CACHE MANIPULATION ========== -->
       <action path="/manageCache"
 		      input="/manageCache.do?method=prepare"
-              type="ServidorApresentacao.Action.manager.ManageCacheDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageCacheDA"
               parameter="method"
 			  name="cacheForm"
               >
@@ -1129,7 +1129,7 @@
 	<!-- ========== FAQ MANIPULATION ========== -->
       <action path="/manageFAQs"
 		      input="/manageFAQs.do?method=prepare&amp;page=0"
-              type="ServidorApresentacao.Action.manager.ManageFAQDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageFAQDA"
               parameter="method"
 			  name="faqForm"
 			  scope="request"
@@ -1138,7 +1138,7 @@
       </action>
       <action path="/manageFAQSections"
 		      input="/manageFAQs.do?method=prepare&amp;page=0"
-              type="ServidorApresentacao.Action.manager.ManageFAQDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageFAQDA"
               parameter="method"
 			  name="faqSectionForm"
 			  scope="request"
@@ -1149,7 +1149,7 @@
 	<!-- ========== Glossary MANIPULATION ========== -->
       <action path="/manageGlossary"
 		      input="/manageGlossary.do?method=prepare"
-              type="ServidorApresentacao.Action.manager.ManageGlossaryDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageGlossaryDA"
               parameter="method"
 			  name="glossaryForm"
  			  scope="request"
@@ -1159,7 +1159,7 @@
 
 	<!-- ========== SERVICE MONITORING MANIPULATION ========== -->
       <action path="/monitorServices"
-              type="ServidorApresentacao.Action.manager.MonitorServicesDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.MonitorServicesDA"
               parameter="method"
               >
           <forward name="Show" path="df.page.monitor-services"/>
@@ -1167,7 +1167,7 @@
 
 	<!-- ========== USER MONITORING MANIPULATION ========== -->
       <action path="/monitorUsers"
-              type="ServidorApresentacao.Action.manager.MonitorUsersDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.MonitorUsersDA"
               parameter="method"
               >
           <forward name="Show" path="df.page.monitor-users"/>
@@ -1175,7 +1175,7 @@
 
 	<!-- ========== SYSTEM MONITORING ========== -->
       <action path="/monitorSystem"
-              type="ServidorApresentacao.Action.manager.MonitorSystemDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.MonitorSystemDA"
               parameter="method"
               >
           <forward name="Show" path="df.page.monitor-system"/>
@@ -1183,7 +1183,7 @@
 
 	<!-- ========== REQUEST MONITORING ========== -->
       <action path="/monitorRequestLogs"
-              type="ServidorApresentacao.Action.manager.MonitorRequestLogsDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.MonitorRequestLogsDA"
               parameter="method"
 			  name="monitorRequestLogsPathForm"
               validate="false"
@@ -1196,7 +1196,7 @@
       <action path="/manageAdvisories"
       		  name="advisoryForm"
 		      input="/manageAdvisories.do?method=prepare"
-              type="ServidorApresentacao.Action.manager.ManageAdvisoriesDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageAdvisoriesDA"
               parameter="method"
               validate="true"
               scope="request"
@@ -1208,7 +1208,7 @@
       <action path="/manageRoles"
       		  name="rolesForm"
 		      input="/manageRoles.do?method=prepare&amp;page=0"
-              type="ServidorApresentacao.Action.manager.ManageRolesDA"
+              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageRolesDA"
               parameter="method"
               validate="true"
               scope="request"
@@ -1219,15 +1219,15 @@
 
 	<action	name="newPasswordForm"
 				attribute="newPasswordForm"
-				type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.commons.password.GenerateNewPasswordDispatchAction"
 				path="/generateNewPassword"
 				input="/generateNewPassword.do?method=prepare&amp;page=0"
 				parameter="method"
 				scope="request"
 				validate="true">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="PrepareSuccess" path="df.page.choosePerson"/>
 			<forward name="Confirm" path="df.page.confirmPasswordChange"/>
 			<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
@@ -1236,7 +1236,7 @@
 		
 		<!-- ================== TEACHERS MANAGEMENT ======================-->
 		<action path="/teachersManagement"
-				type="ServidorApresentacao.Action.manager.teachersManagement.TeachersManagementAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeachersManagementAction"
 				parameter="method"
 				name="teacherManagementForm"
 				scope="request"
@@ -1248,7 +1248,7 @@
 		</action>
 		
 		<action path="/dissociateProfShipsAndRespFor"
-				type="ServidorApresentacao.Action.manager.teachersManagement.DissociateProfShipsAndRespForDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.DissociateProfShipsAndRespForDispatchAction"
 				parameter="method"
 				name="teacherManagementForm"
 				scope="request"
@@ -1261,7 +1261,7 @@
 		
 		<!-- ========== Merge Execution Courses ========== -->	
 	<action	name="chooseDegreesForExecutionCourseMerge"
-				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
 				path="/chooseDegreesForExecutionCourseMerge"
 				parameter="method"
 				scope="request"
@@ -1270,7 +1270,7 @@
 			<forward name="chooseExecutionCourses" path="df.page.chooseExecutionCoursesForExecutionCourseMerge"/>
 	</action>	
 		<action	name="mergeExecutionCoursesForm"
-				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
 				path="/mergeExecutionCoursesForm"
 				parameter="method"
 				scope="request"
@@ -1280,7 +1280,7 @@
 	
 	<!-- ========== Manage coordinators of a execution degree ========== -->
 	<action path="/insertCoordinator"
-		type="ServidorApresentacao.Action.manager.ManageCoordinatorsAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageCoordinatorsAction"
 		name="coordinatorForm"
 		parameter="method"
 		scope="request"
@@ -1291,7 +1291,7 @@
 		<forward name="insertCoordinator" path="insertCoordinator" />
 	</action>	
 	<action path="/manageCoordinators"
-		type="ServidorApresentacao.Action.manager.ManageCoordinatorsAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageCoordinatorsAction"
 		name="coordinatorForm"
 		parameter="method"
 		scope="request"
@@ -1305,7 +1305,7 @@
 	
 	<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
 	<action path="/executionCourseManagement"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.ExecutionCourseManagementAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseManagementAction"
 			parameter="method">
 
 		<forward name="firstPage" path="df.executionCourseManagement.page.firstPage"/>
@@ -1313,24 +1313,24 @@
 	</action>
 	
 	<action path="/insertExecutionCourse"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.InsertExecutionCourseDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.InsertExecutionCourseDispatchAction"
 			parameter="method"
 			name="insertExecutionCourseForm"
 			scope="request"
 			input="/insertExecutionCourse.do?method=prepareInsertExecutionCourse&amp;page=0">
-        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 
 		<forward name="insertExecutionCourse" path="df.executionCourseManagement.page.insertExecutionCourse"/>
 		<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
 	</action>
 
 	<action path="/editExecutionCourseChooseExPeriod"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
 			parameter="method"
 			name="executionCourseForm"
 			scope="request"
@@ -1340,7 +1340,7 @@
 		<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
 	</action>
 	<action path="/editExecutionCourseChooseExDegree"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
 			parameter="method"
 			name="executionCourseForm"
 			scope="request"
@@ -1351,7 +1351,7 @@
 		<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
 	</action>
 	<action path="/editExecutionCourse"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
 			parameter="method"
 			name="executionCourseForm"
 			scope="request"
@@ -1363,7 +1363,7 @@
 		<forward name="viewExecutionCourse" path="df.executionCourseManagement.viewExecutionCourse"/>
 	</action>	
 	<action path="/editExecutionCourseManageCurricularCourses"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseManageCurricularCoursesDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseManageCurricularCoursesDispatchAction"
 			parameter="method"
 			name="executionCourseForm"
 			scope="request"
@@ -1375,7 +1375,7 @@
 	</action>
 
 	<action path="/editExecutionCourseTransferCurricularCourses"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseTransferCurricularCoursesDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseTransferCurricularCoursesDispatchAction"
 			parameter="method"
 			name="executionCourseTransferCurricularCourseForm"
 			scope="request"
@@ -1385,7 +1385,7 @@
 	</action>
 
 	<action path="/seperateExecutionCourse"
-			type="ServidorApresentacao.Action.manager.executionCourseManagement.SeperateExecutionCourseDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.SeperateExecutionCourseDispatchAction"
 			parameter="method"
 			name="sepeateExecutionCourseForm"
 			scope="request"
@@ -1397,7 +1397,7 @@
 	
 	<!-- ========== PERSON MANAGEMENT ========== -->
 	<action path="/personManagement"
-	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
 	parameter="method"
 	scope="request"
 	input="findPerson"
@@ -1406,7 +1406,7 @@
 	</action>
 	
 	<action path="/findPerson"
-	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
 	parameter="method"
 	scope="request"
 	name="findPersonForm"
@@ -1417,7 +1417,7 @@
 	</action>
 	
 	<action path="/displayEmployee"	
-	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
+	type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
 	parameter="method"
 	scope="request"
 	name="findEmployeeForm"
@@ -1427,7 +1427,7 @@
 	
 	<!-- ========== GENERATE FILES ABOUT GRATUITY ========== -->	
 	<action path="/generateFiles"
-		type="ServidorApresentacao.Action.manager.generateFiles.GenerateFilesAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.generateFiles.GenerateFilesAction"
 		parameter="method"
 		scope="request"
 		name="chooseForGenerateFilesForm"
@@ -1439,7 +1439,7 @@
 	</action>
 
 	<action path="/uploadFiles"
-		type="ServidorApresentacao.Action.manager.uploadFiles.UploadFilesAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.uploadFiles.UploadFilesAction"
 		parameter="method"
 		scope="request"
 		name="chooseForUploadFilesForm"
@@ -1457,7 +1457,7 @@
 			path="/managePrecedences"
 			input="df.page.manage.precedences"
 			scope="request"
-			type="ServidorApresentacao.Action.manager.precedences.ReadPrecedencesFromDegreeCurricularPlanAction">
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.precedences.ReadPrecedencesFromDegreeCurricularPlanAction">
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
 	
@@ -1465,7 +1465,7 @@
 			path="/deletePrecedence"
 			input="df.page.manage.precedences"
 			scope="request"
-			type="ServidorApresentacao.Action.manager.precedences.DeletePrecedenceFromDegreeCurricularPlanAction">
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.precedences.DeletePrecedenceFromDegreeCurricularPlanAction">
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
 	
@@ -1473,7 +1473,7 @@
 			path="/deleteRestriction"
 			input="df.page.manage.precedences"
 			scope="request"
-			type="ServidorApresentacao.Action.manager.precedences.DeleteRestrictionFromDegreeCurricularPlanAction">
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.precedences.DeleteRestrictionFromDegreeCurricularPlanAction">
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
 	
@@ -1483,7 +1483,7 @@
 			parameter="method"
 			scope="request"
 			name="mergePrecedencesForm"
-			type="ServidorApresentacao.Action.manager.precedences.MakePrecedenceConjunctionForDegreeCurricularPlanDA">
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.precedences.MakePrecedenceConjunctionForDegreeCurricularPlanDA">
        <forward name="showFirstPage" path="df.page.manage.precedenceConjunctionFirstPage"/>
        <forward name="showSecondPage" path="df.page.manage.precedenceConjunctionSecondPage"/>
        <forward name="backToBeginig" path="df.page.manage.precedences"/>
@@ -1491,7 +1491,7 @@
 	
 	<action path="/makeSimplePrecedence" 
 		input="/managePrecedences.do"
-		type="ServidorApresentacao.Action.manager.precedences.MakeSimplePrecedenceAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.precedences.MakeSimplePrecedenceAction"
 		name="insertRestrictionForm"
 		parameter="method"
 		scope="request"
@@ -1505,7 +1505,7 @@
 
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"
-		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCourseGroupManagementDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourseGroupManagement.CurricularCourseGroupManagementDispatchAction"
 		parameter="method"
 		name="curricularCourseGroupForm"
 		scope="request"
@@ -1518,7 +1518,7 @@
         </forward>
      </action>
         <action path="/manageCurricularCourseGroup"
-		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCoursesGroupManagementDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourseGroupManagement.CurricularCoursesGroupManagementDispatchAction"
 		parameter="method"
 		name="curricularCoursesGroupForm"
 		scope="request"
@@ -1531,7 +1531,7 @@
 			validate="true"
 			input="/generateNewStudentsPasswords.do?method=prepareGeneratePasswords&amp;page=0"
 			name="generateNewPasswordsForm"
-			type="ServidorApresentacao.Action.manager.personManagement.GenerateNewStudentsPasswordsAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.GenerateNewStudentsPasswordsAction"
 			scope="request">
 		<forward name="prepare" path="/password/generateNewStudentsPassword.jsp"/>
 		<forward name="success" path="/password/severalNewPasswordsTemplate.jsp"/>
@@ -1540,7 +1540,7 @@
         
 	<!-- ========== GUIDE MANAGEMENT ========== -->	
 	<action path="/guideManagement"
-		type="ServidorApresentacao.Action.manager.guideManagement.GuideManagementDispatchAction"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.guideManagement.GuideManagementDispatchAction"
 		parameter="method"
 		scope="request"
 		name="editGuideForm"
@@ -1555,7 +1555,7 @@
 				validate="true"
 				input="/studentsManagement.do?method=show&amp;page=0"
 				name="studentCurricularPlanForm"
-				type="ServidorApresentacao.Action.manager.ManageStudentCurricularPlanDA"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageStudentCurricularPlanDA"
 				scope="request">
 			<forward name="show" path="show-student-curricular-plan"/>
 		</action>
@@ -1563,7 +1563,7 @@
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.ManagerResources" null="false"/>

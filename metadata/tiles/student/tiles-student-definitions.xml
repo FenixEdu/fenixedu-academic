@@ -21,7 +21,7 @@
 	<definition name="definition.myExams" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewExams_bd.jsp"/>
 	</definition>
-	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyExamRooms">
+	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyExamRooms">
 	</definition>
 	<definition name="definition.cant.enroll" extends="definition.student.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/commons/cantEnroll.jsp"/>

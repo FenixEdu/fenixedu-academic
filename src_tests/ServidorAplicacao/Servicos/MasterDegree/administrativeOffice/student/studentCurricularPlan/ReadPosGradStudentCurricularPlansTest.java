@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.studentCurricularPlan;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.student.studentCurricularPlan;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,16 +15,16 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
-import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Tools.dbaccess;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.tools.dbaccess;
 
 /**
  * @author João Mota 2/Out/2003

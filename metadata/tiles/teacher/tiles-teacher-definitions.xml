@@ -53,7 +53,7 @@
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
 	</definition>
-	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
+	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyProfessorships">
 		<put name="title" value=""/>
 	    <put name="link" value=""/>
    	    <put name="professorshipList" />

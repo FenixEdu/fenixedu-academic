@@ -2,18 +2,18 @@
  * Created on 19/Set/2003
  *
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoStudentTestLog;
-import Dominio.IStudentTestLog;
-import Dominio.StudentTestLog;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestLog;
+import net.sourceforge.fenixedu.domain.IStudentTestLog;
+import net.sourceforge.fenixedu.domain.StudentTestLog;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Susana Fernandes

@@ -1,8 +1,8 @@
 <!-- Please keep user defined mappings in this file only
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
-<!-- Definitions for Dominio.Campus -->
-<class-descriptor class="Dominio.Campus" table="CAMPUS">
+<!-- Definitions for net.sourceforge.fenixedu.domain.Campus -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Campus" table="CAMPUS">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"

@@ -30,8 +30,8 @@
 	<html:hidden property="distributedTestCode" value="<%= request.getParameter("distributedTestCode") %>"/>
 
 	<logic:present name="infoStudentTestQuestionList">
-		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
+		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest"/>
 		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
 		<html:hidden property="testInformation" name="distributedTest" property="testInformation"/>
 		<bean:define id="testType" name="distributedTest" property="testType.type"/>
@@ -55,8 +55,8 @@
 	</logic:present>
 	<logic:notPresent name="infoStudentTestQuestionList">
 		<bean:define id="infoStudentTestQuestionList" name="infoSiteStudentTestFeedback" property="infoStudentTestQuestionList"/>
-		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion" indexId="questionIndex">
-			<bean:define id="question" name="testQuestion" property="question" type="DataBeans.InfoQuestion"/>
+		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion" indexId="questionIndex">
+			<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.InfoQuestion"/>
 			<bean:define id="questionType" name="question" property="questionType.type"/>
 			<bean:define id="questionCode" name="question" property="idInternal"/>
 			<html:hidden property='<%="questionCode"+questionIndex%>' value="<%= questionCode.toString() %>"/>
@@ -80,7 +80,7 @@
 			</logic:notEmpty>
 			
 		</logic:iterate>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest"/>
 		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
 		<html:hidden property="testInformation" name="distributedTest" property="testInformation"/>
 		<bean:define id="testType" name="distributedTest" property="testType.type"/>

@@ -2,9 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="DataBeans.InfoTeacher" %>
-<%@ page import="Util.InquiriesUtil" %>
-<%@ page import="Util.NumberUtils" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
+<%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
+<%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 <h2>
 	<bean:message key="title.teacher.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
@@ -45,7 +45,7 @@
  --%>
  
 <logic:present name="oldInquiryTeachersResList">
-	<logic:iterate id="oldInquiryTeachersRes" name="oldInquiryTeachersResList" type="DataBeans.inquiries.InfoOldInquiriesTeachersRes"> 
+	<logic:iterate id="oldInquiryTeachersRes" name="oldInquiryTeachersResList" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes"> 
 		<br/>
 		<br/>
 		<h3>

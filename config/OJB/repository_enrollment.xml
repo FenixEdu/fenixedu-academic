@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.Enrolment -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Enrolment -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.Enrolment" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Enrolment" table="ENROLMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -28,19 +28,19 @@
 		name="enrollmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
 		name="condition"
 		column="FNL_TMP_STATE"
 		jdbc-type="VARCHAR"
-		conversion="ServidorPersistente.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
 	/>
 	<field-descriptor
 		name="enrolmentEvaluationType"
 		column="EVALUATION_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
       <field-descriptor
       	name="ackOptLock"
@@ -52,7 +52,7 @@
 		name="creationDate"
 		column="CREATION_DATE"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
     <field-descriptor
 		name="createdBy"
@@ -61,21 +61,21 @@
 	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
-			class-ref="Dominio.StudentCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			proxy="true"
             refresh="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true"
             refresh="true">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 	<reference-descriptor 
 			name="executionPeriod"
-			class-ref="Dominio.ExecutionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			proxy="true"
             refresh="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
@@ -84,18 +84,18 @@
 			name="evaluations"
 			proxy="true"
 			refresh="true"
-			element-class-ref="Dominio.EnrolmentEvaluation">
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
-	<extent-class class-ref="Dominio.EnrolmentInOptionalCurricularCourse"/>
-	<extent-class class-ref="Dominio.EnrolmentInExtraCurricularCourse"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse"/>
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse"/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EnrolmentInOptionalCurricularCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -122,19 +122,19 @@
 		name="enrollmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
 		name="condition"
 		column="FNL_TMP_STATE"
 		jdbc-type="VARCHAR"
-		conversion="ServidorPersistente.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
 	/>
 	<field-descriptor
 		name="enrolmentEvaluationType"
 		column="EVALUATION_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
       <field-descriptor
       	name="ackOptLock"
@@ -146,7 +146,7 @@
 		name="creationDate"
 		column="CREATION_DATE"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
     <field-descriptor
 		name="createdBy"
@@ -155,19 +155,19 @@
 	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
-			class-ref="Dominio.StudentCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 	<reference-descriptor 
 			name="executionPeriod"
-			class-ref="Dominio.ExecutionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			proxy="true"
             refresh="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
@@ -176,16 +176,16 @@
 			name="evaluations"
 			proxy="true"
 			refresh="true"
-			element-class-ref="Dominio.EnrolmentEvaluation">
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EnrolmentInExtraCurricularCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EnrolmentInExtraCurricularCourse" table="ENROLMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse" table="ENROLMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -212,19 +212,19 @@
 		name="enrollmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
 		name="condition"
 		column="FNL_TMP_STATE"
 		jdbc-type="VARCHAR"
-		conversion="ServidorPersistente.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
 	/>
 	<field-descriptor
 		name="enrolmentEvaluationType"
 		column="EVALUATION_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
       <field-descriptor
       	name="ackOptLock"
@@ -236,7 +236,7 @@
 		name="creationDate"
 		column="CREATION_DATE"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
     <field-descriptor
 		name="createdBy"
@@ -245,19 +245,19 @@
 	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
-			class-ref="Dominio.StudentCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 	<reference-descriptor 
 			name="executionPeriod"
-			class-ref="Dominio.ExecutionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			proxy="true"
             refresh="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
@@ -266,16 +266,16 @@
 			name="evaluations"
 			proxy="true"
 			refresh="true"
-			element-class-ref="Dominio.EnrolmentEvaluation">
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.log.EnrolmentLog -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.log.EnrolmentLog -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.log.EnrolmentLog" table="ENROLMENT_LOG">
+<class-descriptor class="net.sourceforge.fenixedu.domain.log.EnrolmentLog" table="ENROLMENT_LOG">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -303,32 +303,32 @@
 		name="date"
 		column="CREATION_DATE"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor
 		name="action"
 		column="ACTION"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion"
 	/>
 	<reference-descriptor
 			name="student"
-			class-ref="Dominio.Student"
+			class-ref="net.sourceforge.fenixedu.domain.Student"
 			proxy="true">
 		<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
+			class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			proxy="true">
 		<foreignkey field-ref="keyCurricularCourse"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.SecretaryEnrolmentStudent -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.SecretaryEnrolmentStudent" table="SECRETARY_ENROLMENT_STUDENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent" table="SECRETARY_ENROLMENT_STUDENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -351,7 +351,7 @@
 		name="reasonType"
 		column="REASON_TYPE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentReasonFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentReasonFieldConversion"
 	/>	
 	<field-descriptor
 		name="reasonDescription"
@@ -360,7 +360,7 @@
 	/>
 	<reference-descriptor
 			name="student"
-			class-ref="Dominio.Student"
+			class-ref="net.sourceforge.fenixedu.domain.Student"
 			proxy="true">
 		<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>

@@ -3,10 +3,10 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.DegreeObjectives -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DegreeObjectives -->
 <!-- ******************************************************************************************************************************* -->
  <class-descriptor
-   	  class="Dominio.DegreeObjectives"
+   	  class="net.sourceforge.fenixedu.domain.DegreeObjectives"
    	  table="DEGREE_OBJECTIVES"
    >
       <field-descriptor id="1"
@@ -36,13 +36,13 @@
          name="startingDate"
          column="STARTING_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor id="6"
          name="endDate"
          column="END_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor
       	name="ackOptLock"
@@ -52,7 +52,7 @@
       />
       <reference-descriptor
          name="degree"
-         class-ref="Dominio.Degree"
+         class-ref="net.sourceforge.fenixedu.domain.Degree"
          proxy="true"
     >    
 	<foreignkey field-ref="keyDegree"/>

@@ -2,10 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DataBeans.InfoLesson" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson" %>
 	
 	<% ArrayList iA = (ArrayList) request.getAttribute("listaAulas"); %>
 <table width="100%" cellspacing="0">

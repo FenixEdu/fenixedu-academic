@@ -34,12 +34,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -51,11 +51,11 @@
 
   <!-- ========== Action Mapping Definitions ============================== -->
   <action-mappings type="org.apache.struts.action.ActionMapping">
-	<action path="/index" type="ServidorApresentacao.Action.projectsManagement.IndexAction">
+	<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction">
     	<forward name="success" path="/index.jsp"/>
     </action>
     <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
-    <action path="/projectReport" type="ServidorApresentacao.Action.projectsManagement.ProjectReportsDispatchAction" 
+    <action path="/projectReport" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectReportsDispatchAction" 
         parameter="method" scope="request"  validate="true" name="rubricForm" >
         <forward name="index" path="df.page.projectManager"/>
         <forward name="projectList" path="project-List"/>
@@ -73,7 +73,7 @@
     </action>
     <action path="/projectAccess" name="accessForm"
 	    input="/projectAccess.do?method=showPersonAccesses&amp;page=0" scope="request"
-        parameter="method" type="ServidorApresentacao.Action.projectsManagement.ProjectAccessDelegationDispatchAction"
+        parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectAccessDelegationDispatchAction"
         validate="true" >
    		<forward name="choosePerson" path="choose-Person"/>
    		<forward name="showPersonAccesses" path="show-Person-Accesses"/>
@@ -83,7 +83,7 @@
     </action>
     <action path="/projectAccessEdition" name="accessForm"
 	    input="/projectAccess.do?method=prepareEditProjectAccess&amp;page=0" scope="request"
-        parameter="method" type="ServidorApresentacao.Action.projectsManagement.ProjectAccessDelegationDispatchAction"
+        parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectAccessDelegationDispatchAction"
         validate="true" >
         <forward name="showPersonAccesses" path="show-Person-Accesses"/>
    		<forward name="editProjectAccess" path="edit-Project-Access"/>
@@ -91,7 +91,7 @@
   </action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ProjectsManagementResources" null="false"/>
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

@@ -2,18 +2,18 @@
  * Created on Dec 28, 2003
  *  
  */
-package ServidorPersistente.cache;
+package net.sourceforge.fenixedu.persistenceTier.cache;
 
 import java.util.Calendar;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.ExecutionPeriod;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.PersistentObjectOJB;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.cache.logging.CacheLog;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.cache.logging.CacheLog;
 
 /**
  * @author Luis Cruz

@@ -169,7 +169,7 @@
             <xsl:call-template name="packagelist"/>
             <hr size="1" width="95%" align="left"/>
             
-            <!-- For each package create its part -->
+            <!-- For each package net.sourceforge.fenixedu.create its part -->
             <xsl:call-template name="packages"/>
             <hr size="1" width="95%" align="left"/>
             
@@ -184,23 +184,23 @@
     
     <!-- ================================================================== -->
     <!-- Write a list of all packages with an hyperlink to the anchor of    -->
-    <!-- of the package name.                                               -->
+    <!-- of the package net.sourceforge.fenixedu.name.                                               -->
     <!-- ================================================================== -->
     <xsl:template name="packagelist">   
         <h2>Packages</h2>
-        Note: package statistics are not computed recursively, they only sum up all of its testsuites numbers.
+        Note: package net.sourceforge.fenixedu.statistics are not computed recursively, they only sum up all of its testsuites numbers.
         <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
             <xsl:call-template name="testsuite.test.header"/>
             <!-- list all packages recursively -->
-            <xsl:for-each select="./testsuite[not(./@package = preceding-sibling::testsuite/@package)]">
+            <xsl:for-each select="./testsuite[not(./@package net.sourceforge.fenixedu.= preceding-sibling::testsuite/@package)]">
                 <xsl:sort select="@package"/>
-                <xsl:variable name="testsuites-in-package" select="/testsuites/testsuite[./@package = current()/@package]"/>
+                <xsl:variable name="testsuites-in-package" select="/testsuites/testsuite[./@package net.sourceforge.fenixedu.= current()/@package]"/>
                 <xsl:variable name="testCount" select="sum($testsuites-in-package/@tests)"/>
                 <xsl:variable name="errorCount" select="sum($testsuites-in-package/@errors)"/>
                 <xsl:variable name="failureCount" select="sum($testsuites-in-package/@failures)"/>
                 <xsl:variable name="timeCount" select="sum($testsuites-in-package/@time)"/>
                 
-                <!-- write a summary for the package -->
+                <!-- write a summary for the package net.sourceforge.fenixedu.-->
                 <tr valign="top">
                     <!-- set a nice color depending if there is an error/failure -->
                     <xsl:attribute name="class">
@@ -225,13 +225,13 @@
     
     
     <!-- ================================================================== -->
-    <!-- Write a package level report                                       -->
+    <!-- Write a package net.sourceforge.fenixedu.level report                                       -->
     <!-- It creates a table with values from the document:                  -->
     <!-- Name | Tests | Errors | Failures | Time                            -->
     <!-- ================================================================== -->
     <xsl:template name="packages">
-        <!-- create an anchor to this package name -->
-        <xsl:for-each select="/testsuites/testsuite[not(./@package = preceding-sibling::testsuite/@package)]">
+        <!-- create an anchor to this package net.sourceforge.fenixedu.name -->
+        <xsl:for-each select="/testsuites/testsuite[not(./@package net.sourceforge.fenixedu.= preceding-sibling::testsuite/@package)]">
             <xsl:sort select="@package"/>
                 <a name="{@package}"></a>
                 <h3>Package <xsl:value-of select="@package"/></h3>
@@ -239,8 +239,8 @@
                 <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
                     <xsl:call-template name="testsuite.test.header"/>
             
-                    <!-- match the testsuites of this package -->
-                    <xsl:apply-templates select="/testsuites/testsuite[./@package = current()/@package]" mode="print.test"/>
+                    <!-- match the testsuites of this package net.sourceforge.fenixedu.-->
+                    <xsl:apply-templates select="/testsuites/testsuite[./@package net.sourceforge.fenixedu.= current()/@package]" mode="print.test"/>
                 </table>
                 <a href="#top">Back to top</a>
                 <p/>

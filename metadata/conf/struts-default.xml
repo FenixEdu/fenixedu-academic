@@ -28,11 +28,11 @@
 	<global-exceptions>
         <exception type="java.lang.Exception"
 				key="error.Exception"
-            	handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            	handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
-		<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+		<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 				key="error.NotAuthorized"
-				handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+				handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -56,33 +56,33 @@
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
 
         <action path="/home"
-				type="ServidorApresentacao.Action.base.FenixForwardAction" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
             	parameter="/person/index.do"/>
         <action path="/login"
-				type="ServidorApresentacao.Action.AuthenticationAction" 
+				type="net.sourceforge.fenixedu.presentationTier.Action.AuthenticationAction" 
             	name="authenticationForm"
 				input="/loginPage.jsp"
 				scope="request" 
-            	className="ServidorApresentacao.mapping.ActionMappingForAuthentication">
+            	className="net.sourceforge.fenixedu.presentationTier.mapping.ActionMappingForAuthentication">
             <set-property property="application" value="@application@"/>
             <forward name="sucess" path="/home.do"/>
         </action>
         <action path="/logoff"
-				type="ServidorApresentacao.Action.commons.LogOffAction">
+				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
             <forward name="Success" path="/loginPage.jsp"/>
         </action>
-        <action path="/dotIstPortal" type="ServidorApresentacao.Action.base.FenixSwitchAction">
+        <action path="/dotIstPortal" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixSwitchAction">
         </action>
         <action path="/exceptionHandlingAction"
 				parameter="method"
 				name="errorMailForm"
 				scope="request" 
-            	type="ServidorApresentacao.Action.ExceptionHandlingAction" >
+            	type="net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction" >
         </action>
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.certificate;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.student.certificate;
 
 /**
  * 
@@ -7,7 +7,7 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.cer
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseReadServices;
 
 public class ReadCertificateListTest extends TestCaseReadServices {
 

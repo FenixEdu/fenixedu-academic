@@ -2,7 +2,7 @@
  * Created on 06/Out/2003
  *  
  */
-package ServidorAplicacao.Servicos;
+package net.sourceforge.fenixedu.applicationTier.Servicos;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,8 +31,8 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 public abstract class ServiceTestCase extends TestCase {
 

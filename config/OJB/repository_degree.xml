@@ -1,7 +1,7 @@
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.Degree -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Degree -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.Degree" table="DEGREE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Degree" table="DEGREE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -23,7 +23,7 @@
 		name="tipoCurso"
 		column="TYPE_DEGREE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
 	/>
 	<field-descriptor
 		name="ackOptLock"
@@ -38,13 +38,13 @@
 	/>
 	<collection-descriptor
 			name="degreeCurricularPlans"
-			element-class-ref="Dominio.DegreeCurricularPlan"
+			element-class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="degreeInfos"
-			element-class-ref="Dominio.DegreeInfo"
+			element-class-ref="net.sourceforge.fenixedu.domain.DegreeInfo"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeKey"/>
 	</collection-descriptor>    

@@ -2,7 +2,7 @@
  * Created on Oct 15, 2003
  *  
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.text.DecimalFormat;
 import java.util.Iterator;
@@ -15,15 +15,15 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoInquiryStatistics;
-import DataBeans.InfoSiteInquiryStatistics;
-import DataBeans.SiteView;
-import Dominio.StudentTestQuestion;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoInquiryStatistics;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteInquiryStatistics;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.StudentTestQuestion;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

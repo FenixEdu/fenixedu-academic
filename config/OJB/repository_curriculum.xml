@@ -1,7 +1,7 @@
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.Curriculum -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Curriculum -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.Curriculum"
+<class-descriptor class="net.sourceforge.fenixedu.domain.Curriculum"
                   table="CURRICULUM">
     <field-descriptor
         name="idInternal"
@@ -64,7 +64,7 @@
     
     <reference-descriptor    	
          name="curricularCourse"
-         class-ref="Dominio.CurricularCourse"
+         class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
          refresh="true"
          proxy="true"
     >
@@ -73,7 +73,7 @@
     
     <reference-descriptor    	
          name="personWhoAltered"
-         class-ref="Dominio.Person"
+         class-ref="net.sourceforge.fenixedu.domain.Person"
          refresh="true"
          proxy="true"
     >

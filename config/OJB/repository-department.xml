@@ -3,9 +3,9 @@
 <!-- Mapping of User defined classes starts here -->
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.Department -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.Department -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.Department" table="DEPARTMENT">
+<class-descriptor class="net.sourceforge.fenixedu.domain.Department" table="DEPARTMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -31,16 +31,16 @@
       />
 <!--	<collection-descriptor
 			name="disciplinasAssociadas"
-			element-class-ref="Dominio.DepartmentCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
 			proxy="true">
 		<inverse-foreignkey field-ref="chaveDepartamento"/>
 	</collection-descriptor>     -->
 </class-descriptor>   
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DepartmentCourse -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.DepartmentCourse -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DepartmentCourse" table="DEPARTMENT_COURSE">
+<class-descriptor class="net.sourceforge.fenixedu.domain.DepartmentCourse" table="DEPARTMENT_COURSE">
 	<field-descriptor
 		name="codigoInterno"
 		column="ID_INTERNAL"
@@ -71,7 +71,7 @@
       />
 	<reference-descriptor
 			name="departamento"
-			class-ref="Dominio.Department"
+			class-ref="net.sourceforge.fenixedu.domain.Department"
 			proxy="true">
 		<foreignkey field-ref="chaveDepartamento"/>
 	</reference-descriptor>     

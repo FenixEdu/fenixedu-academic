@@ -2,16 +2,16 @@
  * Created on 1/Abr/2004
  *
  */
-package ServidorAplicacao.Servicos.sop.exams;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop.exams;
 
 import java.util.Calendar;
 
-import DataBeans.InfoViewExam;
-import ServidorAplicacao.Servico.sop.exams.ReadExamsByDate;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
+import net.sourceforge.fenixedu.applicationTier.Servico.sop.exams.ReadExamsByDate;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceTestCase;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo

@@ -5,7 +5,7 @@
  * Created on 24 de Outubro de 2002, 12:00
  */
 
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.certificate;
+package net.sourceforge.fenixedu.applicationTier.Servicos.MasterDegree.administrativeOffice.student.certificate;
 
 /**
  * 
@@ -14,18 +14,18 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.cer
 import java.util.ArrayList;
 import java.util.Collection;
 
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoRole;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import Util.RoleType;
-import Util.Specialization;
-import Util.TipoCurso;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.util.RoleType;
+import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class CreateDeclarationServiceTest extends TestCaseServicos {
 

@@ -2,7 +2,7 @@
  * Created on 12/Ago/2003
  *  
  */
-package ServidorAplicacao.Servicos.teacher;
+package net.sourceforge.fenixedu.applicationTier.Servicos.teacher;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,17 +13,17 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import DataBeans.InfoSiteTests;
-import DataBeans.InfoTest;
-import DataBeans.SiteView;
-import DataBeans.util.CopyUtils;
-import Dominio.ITest;
-import Dominio.Test;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTests;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTest;
+import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
+import net.sourceforge.fenixedu.domain.ITest;
+import net.sourceforge.fenixedu.domain.Test;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servicos.ServiceNeedsAuthenticationTestCase;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes

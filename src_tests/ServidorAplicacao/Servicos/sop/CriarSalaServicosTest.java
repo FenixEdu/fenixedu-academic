@@ -5,7 +5,7 @@
  * Created on 24 de Outubro de 2002, 12:00
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -15,9 +15,9 @@ import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoRoom;
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
-import Util.TipoSala;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseCreateServices;
+import net.sourceforge.fenixedu.util.TipoSala;
 
 public class CriarSalaServicosTest extends TestCaseCreateServices {
 

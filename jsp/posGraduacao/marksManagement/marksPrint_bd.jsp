@@ -11,7 +11,7 @@
 				<h2><bean:message key="label.masterDegree.administrativeOffice.gradesList"/></h2><br />
 			</td>	
 		</tr> 
-    	<logic:iterate id="enrollmentEvaluationElem" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" length="1">    		
+    	<logic:iterate id="enrollmentEvaluationElem" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation" length="1">    		
 			<tr>
 				<td width="20%">&nbsp;</td>	
 				<td width="80%">
@@ -56,7 +56,7 @@
 			<th><bean:message key="label.mark" /></th>
 			<th><bean:message key="label.masterDegree.administrativeOffice.rubrica" /></th>
 		</tr>    				
-    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation">    		
+    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation">    		
     		<tr>
 				<td>
 					<bean:write name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.number"/>&nbsp;

@@ -1,8 +1,8 @@
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.ExecutionYear -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.ExecutionYear -->
 <!-- ******************************************************************************************************************************* -->
  <class-descriptor
-         class="Dominio.ExecutionYear"
+         class="net.sourceforge.fenixedu.domain.ExecutionYear"
          table="EXECUTION_YEAR"
     >
        <field-descriptor 
@@ -20,7 +20,7 @@
        <field-descriptor
           name="state"
           column="STATE"
-	      conversion="ServidorPersistente.Conversores.JavaPeriodState2SqlPeriodState"
+	      conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState"
           jdbc-type="VARCHAR"/>       
        <field-descriptor
           name="beginDate"
@@ -42,7 +42,7 @@
       />
       <collection-descriptor
 			name="executionPeriods"
-			element-class-ref="Dominio.ExecutionPeriod"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionYear"/>
 	</collection-descriptor>  

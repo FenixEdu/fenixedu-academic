@@ -1,9 +1,9 @@
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.StudentCurricularPlan -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlan -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.StudentCurricularPlan" table="STUDENT_CURRICULAR_PLAN">
-	<extent-class class-ref="Dominio.StudentCurricularPlanLEEC"/>
-    <extent-class class-ref="Dominio.StudentCurricularPlanLEIC"/>
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlan" table="STUDENT_CURRICULAR_PLAN">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC"/>
 
 	<field-descriptor
 		name="ojbConcreteClass"
@@ -31,7 +31,7 @@
 		name="currentState"
 		column="CURRENT_STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="startDate"
@@ -42,7 +42,7 @@
 		name="specialization"
 		column="SPECIALIZATION"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
 	/>
 	<field-descriptor
 		name="branchKey"
@@ -83,7 +83,7 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor
 		name="ackOptLock"
@@ -93,45 +93,45 @@
 	/>
 	<reference-descriptor
 			name="student"
-			class-ref="Dominio.Student"
+			class-ref="net.sourceforge.fenixedu.domain.Student"
 			proxy="true">
 		<foreignkey field-ref="studentKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.DegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="branch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="employee"
-			class-ref="Dominio.Employee"
+			class-ref="net.sourceforge.fenixedu.domain.Employee"
 			proxy="true">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="enrolments"
-			element-class-ref="Dominio.Enrolment"
+			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>    
 	<collection-descriptor
 			name="notNeedToEnrollCurricularCourses"
-			element-class-ref="Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
     <!--<collection-descriptor
 			name="enrollmentReports"
-			element-class-ref="Dominio.enrollmentReport.EnrollmentReport"
+			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
@@ -139,9 +139,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.StudentCurricularPlanLEEC -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.StudentCurricularPlanLEEC" table="STUDENT_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC" table="STUDENT_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -168,7 +168,7 @@
 		name="currentState"
 		column="CURRENT_STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="startDate"
@@ -179,7 +179,7 @@
 		name="specialization"
 		column="SPECIALIZATION"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
 	/>
 	<field-descriptor
 		name="branchKey"
@@ -225,7 +225,7 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor
 		name="ackOptLock"
@@ -235,51 +235,51 @@
 	/>
 	<reference-descriptor
 			name="student"
-			class-ref="Dominio.Student"
+			class-ref="net.sourceforge.fenixedu.domain.Student"
 			proxy="true">
 		<foreignkey field-ref="studentKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.DegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="branch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="secundaryBranch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="secundaryBranchKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="employee"
-			class-ref="Dominio.Employee"
+			class-ref="net.sourceforge.fenixedu.domain.Employee"
 			proxy="true">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="enrolments"
-			element-class-ref="Dominio.Enrolment"
+			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>    
 	<collection-descriptor
 			name="notNeedToEnrollCurricularCourses"
-			element-class-ref="Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
  <!--   <collection-descriptor
 			name="enrollmentReports"
-			element-class-ref="Dominio.enrollmentReport.EnrollmentReport"
+			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
@@ -287,9 +287,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.StudentCurricularPlanLEIC -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.StudentCurricularPlanLEIC" table="STUDENT_CURRICULAR_PLAN">
+<class-descriptor class="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC" table="STUDENT_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -316,7 +316,7 @@
 		name="currentState"
 		column="CURRENT_STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
 		name="startDate"
@@ -327,7 +327,7 @@
 		name="specialization"
 		column="SPECIALIZATION"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
 	/>
 	<field-descriptor
 		name="branchKey"
@@ -368,7 +368,7 @@
 		name="when"
 		column="WHEN_ALTER"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<field-descriptor
 		name="ackOptLock"
@@ -383,51 +383,51 @@
 	/>
 	<reference-descriptor
 			name="secundaryBranch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="secundaryBranchKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="student"
-			class-ref="Dominio.Student"
+			class-ref="net.sourceforge.fenixedu.domain.Student"
 			proxy="true">
 		<foreignkey field-ref="studentKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.DegreeCurricularPlan"
+			class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="branch"
-			class-ref="Dominio.Branch"
+			class-ref="net.sourceforge.fenixedu.domain.Branch"
 			proxy="true">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="employee"
-			class-ref="Dominio.Employee"
+			class-ref="net.sourceforge.fenixedu.domain.Employee"
 			proxy="true">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="enrolments"
-			element-class-ref="Dominio.Enrolment"
+			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>    
 	<collection-descriptor
 			name="notNeedToEnrollCurricularCourses"
-			element-class-ref="Dominio.degree.enrollment.NotNeedToEnrollInCurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
   <!--  <collection-descriptor
 			name="enrollmentReports"
-			element-class-ref="Dominio.enrollmentReport.EnrollmentReport"
+			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"
 			refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>

@@ -150,12 +150,12 @@
         <exception
 			type="java.lang.Exception"
 			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -164,20 +164,20 @@
     </global-forwards>
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
+        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
             <forward name="Success" path="index"/>
         </action>
 
 	  <!-- USE CASE: Management Teacher Credits =================================== -->
-	  <action path="/creditsManagementIndex" name="executionPeriodForm" type="ServidorApresentacao.Action.credits.IndexAction" >
+	  <action path="/creditsManagementIndex" name="executionPeriodForm" type="net.sourceforge.fenixedu.presentationTier.Action.credits.IndexAction" >
 		<forward name="successfull-read" path="creditsManagementIndex"/>
 	  </action>
 
         <!-- ======= USE CASE: Associate teacher to executionCourse ================= -->
         <action path="/teacherSearchForExecutionCourseAssociation" input="search-for-shift-management" 
             name="teacherSearchForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -189,8 +189,8 @@
 
         <action path="/showTeacherProfessorshipsForManagement" input="show-teacher-professorships-for-management" 
             name="teacherExecutionCourseResponsabilities" scope="request" 
-            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0"/>
             <forward name="list-professorships" path="show-teacher-professorships-for-management"/>
@@ -199,31 +199,31 @@
         <action path="/updateTeacherExecutionYearExecutionCourseResponsabilities" 
             input="show-teacher-professorships-for-management" 
             name="teacherExecutionCourseResponsabilities" scope="request" 
-            type="ServidorApresentacao.Action.teacher.professorship.UpdateTeacherExecutionCourseResponsabilitiesAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.UpdateTeacherExecutionCourseResponsabilitiesAction">
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
                 key="message.professorship.invalidCategory" 
                 path="/showTeacherProfessorshipsForManagement.do"/>
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
                 key="message.professorship.numberOfResponsibleForExceeded" 
                 path="/showTeacherProfessorshipsForManagement.do" 
-                handler="ServidorApresentacao.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
+                handler="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
             <forward name="successfull-update" path="/showTeacherProfessorshipsForManagement.do"/>
         </action>
             <!-- ====================== USE CASE: Remove Professorship ========================== -->
         <action path="/removeProfessorship" 
             input="/showTeacherProfessorshipsForManagement.do" 
             name="teacherExecutionCourseForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.teacher.professorship.RemoveProfessorshipAction" validate="false">
-            <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingShiftProfessorship" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.RemoveProfessorshipAction" validate="false">
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher$ExistingShiftProfessorship" 
                 key="message.existing.shiftProfessorship" 
                 path="/showTeacherProfessorshipsForManagement.do"/>
-            <exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingSupportLesson" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher$ExistingSupportLesson" 
                 key="message.existing.supportLesson" 
                 path="/showTeacherProfessorshipsForManagement.do"/>
                 
-            <exception type="ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException" 
                 key="message.professorship.isResponsibleFor" 
                 path="/showTeacherProfessorshipsForManagement.do"/>
             <forward name="successfull-delete" 
@@ -234,17 +234,17 @@
         <action path="/createProfessorship" 
             input="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" 
             name="teacherExecutionCourseForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.teacher.professorship.CreateProfessorshipDispatchAction" validate="true">
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.CreateProfessorshipDispatchAction" validate="true">
 
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
                 key="message.professorship.invalidCategory" 
                 path="/createProfessorship.do?method=showExecutionDegreeExecutionCourses"/>
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
                 key="message.professorship.numberOfResponsibleForExceeded" 
                 path="/createProfessorship.do?method=showExecutionDegreeExecutionCourses" 
-                handler="ServidorApresentacao.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
+                handler="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
 
             <forward name="first-step" path="createProfessorship"/>
             <forward name="second-step" path="createProfessorship"/>
@@ -259,17 +259,17 @@
         <action path="/courseSummariesManagement" 
             input="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" 
             name="teacherExecutionCourseForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.teacher.professorship.CreateProfessorshipDispatchAction" validate="true">
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.CreateProfessorshipDispatchAction" validate="true">
 
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
                 key="message.professorship.invalidCategory" 
                 path="/createProfessorship.do?method=showExecutionDegreeExecutionCourses"/>
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
                 key="message.professorship.numberOfResponsibleForExceeded" 
                 path="/createProfessorship.do?method=showExecutionDegreeExecutionCourses" 
-                handler="ServidorApresentacao.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
+                handler="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
 
             <forward name="first-step" path="createProfessorship"/>
             <forward name="second-step" path="createProfessorship"/>
@@ -280,8 +280,8 @@
         
         <action path="/teacherSearchForSummariesManagement" input="search-for-shift-management" 
             name="teacherSearchForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersServiceForDepartmentOffice"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -296,8 +296,8 @@
 
         <action path="/showTeacherProfessorshipsForSummariesManagement" input="show-teacher-professorships-for-management" 
             name="teacherExecutionCourseResponsabilities" scope="request" 
-            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0"/>
             <forward name="list-professorships" path="show-teacher-professorships-for-management-summaries"/>
@@ -307,7 +307,7 @@
             input="/teacherSearchForExecutionCourseAssociation" 
             parameter="method" 
             scope="request" 
-            type="ServidorApresentacao.Action.departmentAdmOffice.SummaryManagerAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.SummaryManagerAction" 
             validate="true" >
             <forward name="showSummaries" path="showSummaries" />
         </action>
@@ -315,7 +315,7 @@
         <action name="summaryForm" path="/summariesManager" 
             input="/summariesManager.do?method=showSummaries&amp;page=0" parameter="method" 
             scope="request" 
-            type="ServidorApresentacao.Action.departmentAdmOffice.SummaryManagerAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.SummaryManagerAction" 
             validate="true" >
             <forward name="showSummaries" path="showSummaries" />
             <forward name="insertSummary" path="insertSummary" />
@@ -325,7 +325,7 @@
         <action name="summaryForm" path="/summariesManagerInsertSummary" 
             input="/summariesManager.do?method=prepareInsertSummary&amp;page=0" parameter="method" 
             scope="request" 
-            type="ServidorApresentacao.Action.departmentAdmOffice.SummaryManagerAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.SummaryManagerAction" 
             validate="true" >
             <forward name="showSummaries" path="showSummaries" />
             <forward name="insertSummary" path="insertSummary" />
@@ -335,7 +335,7 @@
         <action name="summaryForm" path="/summariesManagerEditSummary" 
             input="/summariesManager.do?method=prepareEditSummary&amp;page=0" parameter="method" 
             scope="request" 
-            type="ServidorApresentacao.Action.departmentAdmOffice.SummaryManagerAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.SummaryManagerAction" 
             validate="true" >
             <forward name="showSummaries" path="showSummaries" />
             <forward name="insertSummary" path="insertSummary" />
@@ -347,8 +347,8 @@
       
         <action path="/teacherSearchForShiftManagement" input="search-for-shift-management" 
             name="teacherSearchForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -359,8 +359,8 @@
         </action>
         <action path="/showTeacherProfessorships" input="show-teacher-professorships" 
             name="executionPeriodForm" scope="request" 
-            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForShiftManagement.do?method=searchForm&amp;page=0"/>
             <forward name="list-professorships" path="show-teacher-professorships"/>
@@ -368,19 +368,19 @@
         <action path="/manageTeacherShiftProfessorships" 
             input="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm" 
             name="teacherExecutionCourseShiftProfessorshipForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.department.ManageShiftProfessorships">
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ManageShiftProfessorships">
             <exception 
-                type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
                 key="message.overlapping.institution.working.period" 
                 path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
                 key="message.overlapping.lesson.period" 
                 path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
                 key="message.overlapping.support.lesson.period" 
                 path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
             <exception 
-                type="ServidorAplicacao.Servico.credits.AcceptTeacherExecutionCourseShiftPercentage$InvalidProfessorshipPercentage" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.AcceptTeacherExecutionCourseShiftPercentage$InvalidProfessorshipPercentage" 
                 key="message.invalid.professorship.percentage" 
                 path="/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm"/>
             <forward name="show-form" path="show-shift-professorships-percentages"/>
@@ -391,8 +391,8 @@
         <!-- =======  USE CASE : Edit Teacher SUPPORT LESSONS =========== -->
         <action path="/teacherSearchForSupportLessonsManagement" 
             input="search-for-support-lessons-management" name="teacherSearchForm" scope="request" 
-            parameter="method" type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -403,8 +403,8 @@
         </action>
         <action path="/showTeacherProfessorshipsForSupportLessonsManagement" 
             input="show-teacher-professorships" name="professorshipForm" scope="request" 
-            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForSupportLessonsManagement.do?method=searchForm&amp;page=0"/>
             <forward name="list-professorships" 
@@ -412,14 +412,14 @@
         </action>
         <action path="/manageTeacherExecutionCourseSupportLessons" name="professorshipForm" 
             scope="request" 
-            type="ServidorApresentacao.Action.department.supportLessons.ReadTeacherSupportLessonsAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.supportLessons.ReadTeacherSupportLessonsAction">
             <forward name="list-support-lessons" path="show-teacher-execution-course-support-lessons"/>
         </action>
         <action path="/manageSupportLesson" name="supportLessonForm" 
             input="/manageSupportLesson.do?method=prepareEdit&amp;page=0" 
-            type="ServidorApresentacao.Action.teacher.professorship.CRUDSupportLessonAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.CRUDSupportLessonAction" 
             parameter="method" scope="request" 
-            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
             <set-property property="editService" value="EditSupportLessonByOID"/>
             <set-property property="deleteService" value="DeleteSupportLessonByOID"/>
             <set-property property="readService" value="ReadSupportLessonByOID"/>
@@ -428,20 +428,20 @@
             <set-property property="infoObjectClassName" 
                 value="DataBeans.teacher.professorship.InfoSupportLesson" />
             <exception 
-                type="ServidorAplicacao.Servico.teacher.professorship.EditSupportLessonByOID$InvalidPeriodException" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.EditSupportLessonByOID$InvalidPeriodException" 
                 key="message.invalidPeriod" 
                 path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
             <exception 
-                type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
                 key="message.overlapping.institution.working.period" 
                 path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
                 key="message.overlapping.lesson.period" 
                 path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
                 key="message.overlapping.support.lesson.period" 
                 path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
-            <exception type="ServidorAplicacao.Servico.exceptions.ExistingServiceException" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException" 
                 key="message.support.lesson.already.exists" 
                 path="/manageSupportLesson.do?method=prepareEdit&amp;page=0"/>
 				
@@ -458,8 +458,8 @@
         <!-- =======  USE CASE : Edit Teacher DEGREE FINAL PROJECT STUDENT =========== -->
         <action path="/teacherSearchForDFPStudentManagement" input="search-for-dfp-student-management" 
             name="teacherSearchForm" scope="request" parameter="method" 
-            type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -470,9 +470,9 @@
         </action>
         <action path="/manageTeacherDFPStudent" name="teacherDegreeFinalProjectStudentForm" 
             input="/manageTeacherDFPStudent.do?method=list&amp;page=0" 
-            type="ServidorApresentacao.Action.degree.finalProject.CRUDTeacherDegreeFinalProjectStudent" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.degree.finalProject.CRUDTeacherDegreeFinalProjectStudent" 
             parameter="method" scope="request" 
-            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
             <set-property property="editService" value="EditTeacherDegreeFinalProjectStudentByOID"/>
             <set-property property="deleteService" value="DeleteTeacherDegreeFinalProjectStudentByOID"/>
             <set-property property="readService" value="ReadTeacherDegreeFinalProjectStudentByOID"/>
@@ -482,36 +482,36 @@
                 value="DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent" />
 
             <exception 
-                type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException" 
                 key="message.student-not-found" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
 
             <exception 
-                type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$ExecutionPeriodNotFoundServiceException" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$ExecutionPeriodNotFoundServiceException" 
                 key="message.execution-period-not-found" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
 
             <exception 
-                type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentPercentageExceed" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentPercentageExceed" 
                 key="message.teacherDegreeFinalProjectStudent.percentageExceed" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
 
-            <exception type="ServidorAplicacao.Servico.exceptions.ExistingServiceException" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException" 
                 key="message.teacherDegreeFinalProjectStudent.student-already-setted" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
 
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForDFPStudentManagement.do?method=searchForm&amp;page=0"/>
             <exception 
-                type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
                 key="message.overlapping.institution.working.period" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
                 key="message.overlapping.lesson.period" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
 
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
                 key="message.overlapping.support.lesson.period" 
                 path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>
 
@@ -526,8 +526,8 @@
         <!-- =======  USE CASE : Edit Teacher WORK SERVICE ================================== -->
         <action path="/teacherSearchForTeacherInstitutionWorkingTimeManagement" 
             input="search-for-institution-working-time-management" name="teacherSearchForm" 
-            scope="request" parameter="method" type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -539,9 +539,9 @@
         </action>
         <action path="/manageTeacherInstitutionWorkingTime" name="teacherInstitutionWorkingTimeForm" 
             input="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0" 
-            type="ServidorApresentacao.Action.teacher.workingTime.CRUDTeacherInstitutionWorkingTimeAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.workingTime.CRUDTeacherInstitutionWorkingTimeAction" 
             parameter="method" scope="request" 
-            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
             <set-property property="editService" value="EditTeacherInstitutionWorkingTimeByOID"/>
             <set-property property="deleteService" value="DeleteTeacherInstitutionWorkingTimeByOID"/>
             <set-property property="readService" value="ReadTeacherInstitutionWorkingTimeByOID"/>
@@ -549,21 +549,21 @@
             <set-property property="requestAttribute" value="infoTeacherInstitutionWorkingTime" />
             <set-property property="infoObjectClassName" 
                 value="DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime" />
-            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0"/>
             <exception 
-                type="ServidorAplicacao.Servico.teacher.workingTime.EditTeacherInstitutionWorkingTimeByOID$InvalidPeriodException" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime.EditTeacherInstitutionWorkingTimeByOID$InvalidPeriodException" 
                 key="message.invalidPeriod" 
                 path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
             <exception 
-                type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
+                type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingInstitutionWorkingPeriod" 
                 key="message.overlapping.institution.working.period" 
                 path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod" 
                 key="message.overlapping.lesson.period" 
                 path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
-            <exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod" 
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingSupportLessonPeriod" 
                 key="message.overlapping.support.lesson.period" 
                 path="/manageTeacherInstitutionWorkingTime.do?method=prepareEdit&amp;page=0"/>
             <forward name="show-form" path="edit-teacher-institution-working-time"/>
@@ -578,15 +578,15 @@
         <!-- =======================================================================  -->
         <!-- =======  USE CASE : List deparment teachers ===================================== -->
         <action path="/prepareListDepartmentTeachers" 
-            type="ServidorApresentacao.Action.department.PrepareListDepartmentTeachersAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.PrepareListDepartmentTeachersAction" 
 		name="searchTeachersDepartmentForm"
             input="/index.do" scope="request">
             <forward name="successfull-prepare" path="/listDepartmentTeachers.do?method=doSearch"/>
         </action>
         <action path="/listDepartmentTeachers" 
-            type="ServidorApresentacao.Action.department.ListDepartmentTeachersAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ListDepartmentTeachersAction" 
             name="searchTeachersDepartmentForm" input="/index.do" scope="request" parameter="method" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadDepartmentTeachersCreditsDetailsService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -599,8 +599,8 @@
         <!-- =======  USE CASE : Read Teacher Credits Sheet =================================== -->
         <action path="/teacherSearchForTeacherCreditsSheet" 
             input="search-for-institution-working-time-management" name="teacherSearchForm" 
-            scope="request" parameter="method" type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -611,7 +611,7 @@
         </action>
         <action path="/showTeacherCreditsSheet" 
 		name="executionPeriodForm"
-            type="ServidorApresentacao.Action.credits.ReadTeacherCreditsSheetAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ReadTeacherCreditsSheetAction">
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
         <!-- =======================================================================  -->
@@ -619,8 +619,8 @@
         <!-- =======  USE CASE : Read Teacher Other Type Credits =================== -->
         <action path="/teacherSearchForOtherTypeCreditLine" 
             input="search-for-otherTypeCreditLine" name="teacherSearchForm" 
-            scope="request" parameter="method" type="ServidorApresentacao.Action.framework.SearchAction" 
-            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="FindTeachersService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
             <set-property property="listAttribute" value="infoTeacherList"/>
@@ -631,16 +631,16 @@
         </action>
         <action path="/showOtherTypeCreditLines"
 			name="executionPeriodForm"
-            type="ServidorApresentacao.Action.credits.ReadTeacherOtherTypeCreditLinesAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ReadTeacherOtherTypeCreditLinesAction">
             <forward name="successfull-read" path="showOhterTypeCreditLines"/>
         </action>
 		<!-- =======================================================================  -->        
         <!-- =======  USE CASE : Edit and Delete Teacher Other Type Credits ======== -->
         <action path="/crudOtherTypeCreditLine" name="otherTypeCreditLineForm" 
             input="/crudOtherTypeCreditLine.do?method=prepareEdit&amp;page=0" 
-            type="ServidorApresentacao.Action.credits.CRUDOtherTypeCreditLineAction" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.CRUDOtherTypeCreditLineAction" 
             parameter="method" scope="request" 
-            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            className="net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping" validate="true">
             <set-property property="editService" value="EditOtherTypeCreditLineService"/>
             <set-property property="deleteService" value="DeleteOtherTypeCreditLineService"/>
             <set-property property="readService" value="ReadOtherTypeCreditLineByOidService"/>
@@ -660,7 +660,7 @@
 	    <!-- ==================== View Curricular Course Historic ================== -->
        	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
        		name="executionYearDegreeCurricularPlanForm"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
        		validate="true"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		scope="request"
@@ -670,7 +670,7 @@
        	</action>
 
 		<action path="/showCurriculumHistoric"
-       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
        		scope="request"
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		parameter="method">
@@ -678,7 +678,7 @@
        	</action>       
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.DepartmentAdmOfficeResources" null="false"/>
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>

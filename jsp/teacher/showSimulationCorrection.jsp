@@ -38,8 +38,8 @@
 	<html:hidden property="method" value="simulateTest"/>
 	<html:hidden property="doTestSimulation" value="true"/>
 	
-	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
-	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
+	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion"/>
+	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest"/>
 	<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
 	<html:hidden property="testInformation" name="distributedTest" property="testInformation"/>
 	<bean:define id="testType" name="distributedTest" property="testType.type"/>

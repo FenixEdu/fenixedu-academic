@@ -18,7 +18,7 @@
 		<td class="listClasses-header" ><bean:message key="label.enroll" /></td>
 		<td class="listClasses-header" ><bean:message key="label.deadline" /></td>
 	</tr>	
-		<logic:iterate id="seminary" name="listSeminaries" type="DataBeans.Seminaries.InfoSeminary">
+		<logic:iterate id="seminary" name="listSeminaries" type="net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary">
 		<tr>
 			<td class="listClasses"><bean:write name="seminary" property="name"/></td>		
 			<td class="listClasses">

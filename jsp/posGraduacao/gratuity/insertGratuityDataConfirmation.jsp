@@ -125,7 +125,7 @@
 							<td class="listClasses-header">
 								<bean:message key="label.masterDegree.gratuity.description"/></td>
 						</tr>
-						<logic:iterate id="phase" name="infoGratuityValues" property="infoPaymentPhases" type="DataBeans.InfoPaymentPhase" indexId="index">
+						<logic:iterate id="phase" name="infoGratuityValues" property="infoPaymentPhases" type="net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase" indexId="index">
 							<tr>
 								<logic:notEmpty name="phase" property="startDate">
 									<td class="listClasses">

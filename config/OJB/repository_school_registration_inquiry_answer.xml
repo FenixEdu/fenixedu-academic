@@ -1,9 +1,9 @@
 
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.InquiryAnswer -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.InquiryAnswer -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.student.PersonalDataUseInquiryAnswers" table="PERSONAL_DATA_USE_INQUIRY_ANSWERS">
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers" table="PERSONAL_DATA_USE_INQUIRY_ANSWERS">
   <field-descriptor
     name="idInternal"
     column="ID_INTERNAL"
@@ -60,13 +60,13 @@
 
   <reference-descriptor
 	name="student"
-	class-ref="Dominio.Student"
+	class-ref="net.sourceforge.fenixedu.domain.Student"
 	proxy="false">
 	<foreignkey field-ref="keyStudent"/>
   </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor class="Dominio.student.ResidenceCandidacies" table="RESIDENCE_CANDIDACIES">
+<class-descriptor class="net.sourceforge.fenixedu.domain.student.ResidenceCandidacies" table="RESIDENCE_CANDIDACIES">
 	<field-descriptor
     	name="idInternal"
     	column="ID_INTERNAL"
@@ -94,7 +94,7 @@
 		name="creationDate"
 		column="CREATION_DATE"
 		jdbc-type="TIMESTAMP"
-		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 
 	<field-descriptor
@@ -106,7 +106,7 @@
 
 	<reference-descriptor
 		name="student"
-		class-ref="Dominio.Student"
+		class-ref="net.sourceforge.fenixedu.domain.Student"
 		proxy="false">
 		<foreignkey field-ref="keyStudent"/>
 	  </reference-descriptor>

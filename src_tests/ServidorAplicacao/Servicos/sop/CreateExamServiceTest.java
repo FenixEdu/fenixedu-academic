@@ -4,7 +4,7 @@
  * Created on 2003/04/05
  */
 
-package ServidorAplicacao.Servicos.sop;
+package net.sourceforge.fenixedu.applicationTier.Servicos.sop;
 
 /**
  * 
@@ -15,11 +15,11 @@ import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
-import Util.Season;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseCreateServices;
+import net.sourceforge.fenixedu.util.Season;
 
 public class CreateExamServiceTest extends TestCaseCreateServices {
 

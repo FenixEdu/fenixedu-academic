@@ -88,12 +88,12 @@
 					</td>
 					<td class="listClasses" rowspan="2">
 						<logic:equal name="finalDegreeWorkProposalHeader" property="editable" value="true">
-				        	<html:link page="<%= "/finalWorkManagement.do?method=editFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((DataBeans.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+				        	<html:link page="<%= "/finalWorkManagement.do?method=editFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
 								<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 					        </html:link>
 				        </logic:equal>
 						<logic:notEqual name="finalDegreeWorkProposalHeader" property="editable" value="true">
-				        	<html:link page="<%= "/finalWorkManagement.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((DataBeans.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
+				        	<html:link page="<%= "/finalWorkManagement.do?method=viewFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
 								<bean:write name="finalDegreeWorkProposalHeader" property="title"/>
 					        </html:link>
 				        </logic:notEqual>

@@ -11,13 +11,13 @@
 <br/>
 <br/>
 <table width="100%" border="0" cellpadding="0" cellspacing="10">
-	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion">
+	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion">
 		<tr><td><hr></td></tr>
-		<bean:define id="question" name="testQuestion" property="question" type="DataBeans.InfoQuestion"/>
-		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
+		<bean:define id="question" name="testQuestion" property="question" type="net.sourceforge.fenixedu.dataTransferObject.InfoQuestion"/>
+		<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="net.sourceforge.fenixedu.dataTransferObject.InfoDistributedTest"/>
 		<bean:define id="questionCode" name="question" property="idInternal"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
-		<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="Util.tests.CorrectionAvailability"/>
+		<bean:define id="correction" name="testQuestion" property="distributedTest.correctionAvailability" type="net.sourceforge.fenixedu.util.tests.CorrectionAvailability"/>
 		<bean:define id="formula" name="testQuestion" property="correctionFormula.formula"/>
 		<bean:define id="testType" name="testQuestion" property="distributedTest.testType.type"/>
 		<bean:define id="questionType" name="question" property="questionType.type"/>

@@ -3,10 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.Date" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoGuideSituation" %>
-<%@ page import="Util.Data" %>
-<%@ page import="Util.SituationOfGuide" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
+<%@ page import="net.sourceforge.fenixedu.util.Data" %>
+<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
 
    		<bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session"/>  		
    		<bean:define id="guideSituation" name="infoGuide" property="infoGuideSituation"/>  		

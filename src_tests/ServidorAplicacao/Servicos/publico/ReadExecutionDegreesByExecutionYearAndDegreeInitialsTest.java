@@ -1,23 +1,23 @@
-package ServidorAplicacao.Servicos.publico;
+package net.sourceforge.fenixedu.applicationTier.Servicos.publico;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionYear;
-import DataBeans.util.Cloner;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServicos;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionDegree;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ICurso;
+import net.sourceforge.fenixedu.domain.ICursoExecucao;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servicos.TestCaseServicos;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
+import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author tfc130

@@ -202,7 +202,7 @@
 		</logic:notEqual>
 		</div></td>
 	</tr>
-	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="DataBeans.InfoMetadata">
+	<logic:iterate id="metadata" name="component" property="infoMetadatas" type="net.sourceforge.fenixedu.dataTransferObject.InfoMetadata">
 	<tr>
 		<logic:notEqual name="metadata" property="description" value="">
 			<td class="listClasses"><bean:write name="metadata" property="description"/></td>

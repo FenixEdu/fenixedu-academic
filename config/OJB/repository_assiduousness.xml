@@ -1,6 +1,6 @@
 <!-- Definitions for . -->
 <class-descriptor 
-  class="Dominio.Employee"
+  class="net.sourceforge.fenixedu.domain.Employee"
   table="ass_FUNCIONARIO"
 >
   <field-descriptor
@@ -42,12 +42,12 @@
   	jdbc-type="BIT"/>
   <reference-descriptor
          name="person"
-         class-ref="Dominio.Person">
+         class-ref="net.sourceforge.fenixedu.domain.Person">
          <foreignkey field-ref="keyPerson"/>
   </reference-descriptor>
   <collection-descriptor
 	name="historicList"
-	element-class-ref="Dominio.EmployeeHistoric"
+	element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 	auto_retrieve="true"
 	proxy="true">
 	<inverse-foreignkey field-ref="keyEmployee"/>
@@ -55,7 +55,7 @@
 </class-descriptor>
 
 <class-descriptor 
-  class="Dominio.EmployeeNotTeacher"
+  class="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
   table="ass_FUNC_NAO_DOCENTE"
 >
   <field-descriptor
@@ -78,13 +78,13 @@
   />
   <reference-descriptor
   	name="employee"
-  	class-ref="Dominio.Employee">
+  	class-ref="net.sourceforge.fenixedu.domain.Employee">
   	<foreignkey field-ref="keyEmployee"/>
   </reference-descriptor>  
 </class-descriptor>
 
 <class-descriptor 
-  class="Dominio.EmployeeHistoric"
+  class="net.sourceforge.fenixedu.domain.EmployeeHistoric"
   table="ass_FUNCIONARIO_HISTORICO"
 >
   <field-descriptor
@@ -158,45 +158,45 @@
 
   <reference-descriptor
          name="employee"
-         class-ref="Dominio.Employee">
+         class-ref="net.sourceforge.fenixedu.domain.Employee">
          <foreignkey field-ref="keyEmployee"/>
   </reference-descriptor>
   
   <reference-descriptor
          name="responsableEmployee"
-         class-ref="Dominio.Employee">
+         class-ref="net.sourceforge.fenixedu.domain.Employee">
          <foreignkey field-ref="keyResponsableEmployee"/>
   </reference-descriptor>
   
   <reference-descriptor
          name="workingPlaceCostCenter"
-         class-ref="Dominio.CostCenter"
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
          <foreignkey field-ref="keyWorkingPlaceCostCenter"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="mailingCostCenter"
-         class-ref="Dominio.CostCenter"
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
          <foreignkey field-ref="keyMailingCostCenter"/>
   </reference-descriptor>   
 
   <reference-descriptor
          name="salaryCostCenter"
-         class-ref="Dominio.CostCenter">
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter">
          <foreignkey field-ref="keySalaryCostCenter"/>
   </reference-descriptor>
   
   <reference-descriptor
          name="status"
-         class-ref="Dominio.StatusAssiduidade">
+         class-ref="net.sourceforge.fenixedu.domain.StatusAssiduidade">
          <foreignkey field-ref="keyStatus"/>
   </reference-descriptor>  
 </class-descriptor>
 
 <class-descriptor 
-	class="Dominio.CostCenter" 
+	class="net.sourceforge.fenixedu.domain.CostCenter" 
 	table="ass_CENTRO_CUSTO">
   <field-descriptor id="0"
     name="idInternal"
@@ -232,7 +232,7 @@
 <!-- Old classes -->
 
 <class-descriptor 
-  class="Dominio.NonTeacherEmployee"
+  class="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
   table="ass_FUNC_NAO_DOCENTE"
 >
   <field-descriptor id="0"
@@ -255,13 +255,13 @@
   />
   <reference-descriptor
   	name="funcionario"
-  	class-ref="Dominio.Employee">
+  	class-ref="net.sourceforge.fenixedu.domain.Employee">
   	<foreignkey field-ref="chaveFuncionario"/>
   </reference-descriptor>  
 </class-descriptor>
 
 <class-descriptor 
-	class="Dominio.StatusAssiduidade" 
+	class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
 	table="ass_STATUS">
   <field-descriptor 
   	name="codigoInterno" 
@@ -303,7 +303,7 @@
 </class-descriptor>
 
 <!--<class-descriptor 
-  class="Dominio.Funcionario"
+  class="net.sourceforge.fenixedu.domain.Funcionario"
   table="ass_FUNCIONARIO"
 >
   <field-descriptor id="0"
@@ -385,27 +385,27 @@
   />
   <reference-descriptor
          name="person"
-         class-ref="Dominio.Person">
+         class-ref="net.sourceforge.fenixedu.domain.Person">
          <foreignkey field-ref="chavePessoa"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="workingPlaceCostCenter"
-         class-ref="Dominio.CostCenter"
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
          <foreignkey field-ref="chaveCCLocalTrabalho"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="mailingCostCenter"
-         class-ref="Dominio.CostCenter"
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter"
          proxy="true">
          <foreignkey field-ref="chaveCCCorrespondencia"/>
   </reference-descriptor>   
 
   <reference-descriptor
          name="salaryCostCenter"
-         class-ref="Dominio.CostCenter">
+         class-ref="net.sourceforge.fenixedu.domain.CostCenter">
          <foreignkey field-ref="chaveCCVencimento"/>
   </reference-descriptor>    
 </class-descriptor>-->
