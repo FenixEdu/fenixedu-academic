@@ -28,28 +28,31 @@ import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
-public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersistente {
+public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersistente
+{
 
-
-	public List readByStudentAndExecutionPeriod(IStudent student,IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-			Criteria crit = new Criteria();
-			crit.addEqualTo("keyStudent",student.getIdInternal());
-			crit.addEqualTo("shift.disciplinaExecucao.keyExecutionPeriod",executionPeriod.getIdInternal());
-		
-			 return queryList(ShiftStudent.class, crit);
-		}
-
-
-	public List readByStudentAndExecutionCourse(IStudent student,IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+	{
 		Criteria crit = new Criteria();
-		crit.addEqualTo("keyStudent",student.getIdInternal());
-		crit.addEqualTo("shift.chaveDisciplinaExecucao",executionCourse.getIdInternal());
-		
-		 return queryList(ShiftStudent.class, crit);
+		crit.addEqualTo("keyStudent", student.getIdInternal());
+		crit.addEqualTo("shift.disciplinaExecucao.keyExecutionPeriod", executionPeriod.getIdInternal());
+
+		return queryList(ShiftStudent.class, crit);
 	}
 
-	public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno) throws ExcepcaoPersistencia {
-		try {
+	public List readByStudentAndExecutionCourse(IStudent student, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia
+	{
+		Criteria crit = new Criteria();
+		crit.addEqualTo("keyStudent", student.getIdInternal());
+		crit.addEqualTo("shift.chaveDisciplinaExecucao", executionCourse.getIdInternal());
+
+		return queryList(ShiftStudent.class, crit);
+	}
+
+	public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno) throws ExcepcaoPersistencia
+	{
+		try
+		{
 			ITurnoAluno turnoAluno = null;
 			String oqlQuery =
 				"select turnoaluno from "
@@ -74,12 +77,14 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 			if (result.size() != 0)
 				turnoAluno = (ITurnoAluno) result.get(0);
 			return turnoAluno;
-		} catch (QueryException ex) {
+		} catch (QueryException ex)
+		{
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
 
-	public void lockWrite(ITurnoAluno shiftStudentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(ITurnoAluno shiftStudentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException
+	{
 
 		ITurnoAluno shiftStudentFromDB = null;
 
@@ -94,7 +99,10 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 		if (shiftStudentFromDB == null)
 			super.lockWrite(shiftStudentToWrite);
 		// else If the shiftStudent is mapped to the database, then write any existing changes.
-		else if ((shiftStudentToWrite instanceof ShiftStudent) && ((ShiftStudent) shiftStudentFromDB).getIdInternal().equals(((ShiftStudent) shiftStudentToWrite).getIdInternal())) {
+		else if (
+			(shiftStudentToWrite instanceof ShiftStudent)
+				&& ((ShiftStudent) shiftStudentFromDB).getIdInternal().equals(((ShiftStudent) shiftStudentToWrite).getIdInternal()))
+		{
 			super.lockWrite(shiftStudentToWrite);
 			// else Throw an already existing exception
 		} else
@@ -102,15 +110,18 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 	}
 
 	//Not sure if it works...
-	public void simpleLockWrite(ITurnoAluno shiftStudentToWrite) throws ExcepcaoPersistencia {
+	public void simpleLockWrite(ITurnoAluno shiftStudentToWrite) throws ExcepcaoPersistencia
+	{
 		super.lockWrite(shiftStudentToWrite);
 	}
 
-	public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia {
+	public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia
+	{
 		super.delete(turnoAluno);
 	}
 
-	public void deleteAll() throws ExcepcaoPersistencia {
+	public void deleteAll() throws ExcepcaoPersistencia
+	{
 		String oqlQuery = "select all from " + ShiftStudent.class.getName();
 		super.deleteAll(oqlQuery);
 	}
@@ -118,8 +129,10 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 	/**
 	 * FIXME: wrong link from executionCourse to ExecutionDegree
 	 */
-	public ITurno readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse) throws ExcepcaoPersistencia {
-		try {
+	public ITurno readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse) throws ExcepcaoPersistencia
+	{
+		try
+		{
 			String oqlQuery = "select shift from " + ShiftStudent.class.getName();
 			oqlQuery += " where shift.tipo = $1";
 			oqlQuery += " and shift.disciplinaExecucao.licenciaturaExecucao.nome = $2";
@@ -132,7 +145,8 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 			lockRead(result);
 			if (result != null && !(result.isEmpty()))
 				return ((ITurnoAluno) result.get(0)).getShift();
-		} catch (QueryException ex) {
+		} catch (QueryException ex)
+		{
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 		return null;
@@ -140,44 +154,70 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 	/**
 	 * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.ITurno)
 	 */
-	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select shift from "
-					+ ShiftStudent.class.getName()
-					+ " where shift.nome = $1"
-					+ " and shift.disciplinaExecucao.sigla = $2"
-					+ " and shift.disciplinaExecucao.executionPeriod.name = $3"
-					+ " and shift.disciplinaExecucao.executionPeriod.executionYear.year = $4";
-			query.create(oqlQuery);
-			query.bind(shift.getNome());
 
-			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
-			query.bind(executionCourse.getSigla());
-			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+	public List readByShift(ITurno shift) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("shift.nome", shift.getNome());
+		criteria.addEqualTo("shift.disciplinaExecucao.sigla", shift.getDisciplinaExecucao().getSigla());
+		criteria.addEqualTo("shift.disciplinaExecucao.executionPeriod.name", shift.getDisciplinaExecucao().getExecutionPeriod().getName());
+		criteria.addEqualTo(
+			"shift.disciplinaExecucao.executionPeriod.executionYear.year",
+			shift.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
 
-			List result = (List) query.execute();
+		List result = queryList(ShiftStudent.class, criteria);
+		
+		List studentList = new ArrayList();
 
-			lockRead(result);
-			List studentList = new ArrayList();
-
-			Iterator iterator = result.iterator();
-			while (iterator.hasNext()) {
-				ITurnoAluno shiftStudent = (ITurnoAluno) iterator.next();
-				studentList.add(shiftStudent.getStudent());
-			}
-			return studentList;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		Iterator iterator = result.iterator();
+		queryList(ShiftStudent.class, criteria);
+		while (iterator.hasNext())
+		{
+			ITurnoAluno shiftStudent = (ITurnoAluno) iterator.next();
+			studentList.add(shiftStudent.getStudent());
 		}
+		lockRead(studentList);
+		return studentList;
+//		try
+//		{
+//			String oqlQuery =
+//				"select shift from "
+//					+ ShiftStudent.class.getName()
+//					+ " where shift.nome = $1"
+//					+ " and shift.disciplinaExecucao.sigla = $2"
+//					+ " and shift.disciplinaExecucao.executionPeriod.name = $3"
+//					+ " and shift.disciplinaExecucao.executionPeriod.executionYear.year = $4";
+//			query.create(oqlQuery);
+//			query.bind(shift.getNome());
+//
+//			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
+//			query.bind(executionCourse.getSigla());
+//			query.bind(executionCourse.getExecutionPeriod().getName());
+//			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+//
+//			List result = (List) query.execute();
+//
+//			lockRead(result);
+//			List studentList = new ArrayList();
+//
+//			Iterator iterator = result.iterator();
+//			while (iterator.hasNext())
+//			{
+//				ITurnoAluno shiftStudent = (ITurnoAluno) iterator.next();
+//				studentList.add(shiftStudent.getStudent());
+//			}
+//			return studentList;
+//		} catch (QueryException ex)
+//		{
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
 	}
 
-    // by gedl AT rnl DOT ist DOT utl DOT pt, September the 16th, 2003    
-    public List readByShiftID(Integer id) throws ExcepcaoPersistencia
-    {
-        Criteria criteria = new Criteria();        
-        criteria.addEqualTo("key_shift",id);
-        return queryList(ShiftStudent.class, criteria);        
-    } 
+	// by gedl AT rnl DOT ist DOT utl DOT pt, September the 16th, 2003    
+	public List readByShiftID(Integer id) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("key_shift", id);
+		return queryList(ShiftStudent.class, criteria);
+	}
 }
