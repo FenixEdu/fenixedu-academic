@@ -34,7 +34,7 @@ public class SearchGrantOwnerTest
 	 * @see ServiceNeedsAuthenticationTestCase#getApplication()
 	 */
 	protected String getApplication() {
-		return Autenticacao.EXTRANET;
+		return Autenticacao.INTRANET;
 	}
 
 	protected String getNameOfServiceToBeTested() {

@@ -39,7 +39,7 @@ public class CreateGrantOwnerTest
 	* @see ServiceNeedsAuthenticationTestCase#getApplication()
 	*/
 	protected String getApplication() {
-		return Autenticacao.EXTRANET;
+		return Autenticacao.INTRANET;
 	}
 
 	protected String getNameOfServiceToBeTested() {
