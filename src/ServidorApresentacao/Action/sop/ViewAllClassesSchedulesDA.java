@@ -118,10 +118,6 @@ public class ViewAllClassesSchedulesDA extends DispatchAction {
 				}
 			}
 
-			if (selectedInfoExecutionDegrees == null)
-			System.out.println("## É NULL");
-			else System.out.println("## NAO e null, size="+selectedInfoExecutionDegrees.size());
-
 			Object[] args =
 				{ selectedInfoExecutionDegrees, infoExecutionPeriod };
 			List infoViewClassScheduleList =
