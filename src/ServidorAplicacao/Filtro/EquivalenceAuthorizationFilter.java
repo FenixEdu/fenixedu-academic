@@ -51,7 +51,8 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 		// ATTENTION: ifs order matters...
-		if (AuthorizationUtils.containsRole(roles, RoleType.DEGREE_ADMINISTRATIVE_OFFICE)) {
+		if (AuthorizationUtils.containsRole(roles, RoleType.DEGREE_ADMINISTRATIVE_OFFICE) ||
+			AuthorizationUtils.containsRole(roles, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
 			authorizedRequester = true;
 		} else if (AuthorizationUtils.containsRole(roles, RoleType.COORDINATOR)) {
 

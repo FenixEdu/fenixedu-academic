@@ -23,4 +23,4 @@
 				<html:link page="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules"><bean:message key="link.student.enrolment.in.optional.curricular.course.without.rules"/></html:link>
 			</li>
 		</ul>
-<%	} %>
+<%	}%>

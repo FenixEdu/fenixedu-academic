@@ -34,6 +34,7 @@ public class RoleTypeFieldConversion implements FieldConversion {
 			Integer roleTypeId = (Integer) obj;
 			
 			roleType = RoleType.getEnum(roleTypeId.intValue());
+
 			if (roleType == null) {
 				throw new IllegalArgumentException(this.getClass().getName() + ": Illegal role type!(" + obj + ")");
 			}
