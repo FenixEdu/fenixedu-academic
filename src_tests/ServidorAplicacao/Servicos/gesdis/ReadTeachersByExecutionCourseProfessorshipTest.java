@@ -92,7 +92,7 @@ public class ReadTeachersByExecutionCourseProfessorshipTest
 	 */
 	protected int getNumberOfItemsToRetrieve() {
 		
-		return 3;
+		return 2;
 	}
 
 	/* (non-Javadoc)
