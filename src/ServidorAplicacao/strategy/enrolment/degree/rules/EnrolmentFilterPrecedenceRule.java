@@ -41,33 +41,33 @@ public class EnrolmentFilterPrecedenceRule implements IEnrolmentRule {
 					studentActiveCurricularPlan.getDegreeCurricularPlan());
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
-			throw new IllegalStateException("Cannot read from data base");
+			throw new IllegalStateException("Cannot read from database");
 		}
 
-		List curricularCourseScopesToStay = new ArrayList();
+		List curricularCourseScopesNotToStay = new ArrayList();
 
 		List finalCurricularCourseScopesSpan =
 			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		for (int i = 0; i < precedenceList.size(); i++) {
 			IPrecedence precedence = (IPrecedence) precedenceList.get(i);
-			if (precedence.evaluate(enrolmentContext)) {
-				ICurricularCourse curricularCourse =
-					precedence.getCurricularCourse();
+			if (!precedence.evaluate(enrolmentContext)) {
+				ICurricularCourse curricularCourse = precedence.getCurricularCourse();
 					
 					
 				List scopes = curricularCourse.getScopes();	
 				for (int scopeIndex = 0; scopeIndex < scopes.size(); scopeIndex++){
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(scopeIndex);
-					if (! (curricularCourseScopesToStay.contains(curricularCourse))
+					if (! (curricularCourseScopesNotToStay.contains(curricularCourse))
 						&& (finalCurricularCourseScopesSpan.contains(curricularCourseScope))){
-							curricularCourseScopesToStay.add(curricularCourseScope);
+							curricularCourseScopesNotToStay.add(curricularCourseScope);
 						}
 				}
 			}
 		}
 
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(
-			curricularCourseScopesToStay);
+
+		finalCurricularCourseScopesSpan.removeAll(curricularCourseScopesNotToStay);		
+
 		return enrolmentContext;
 	}
 }
