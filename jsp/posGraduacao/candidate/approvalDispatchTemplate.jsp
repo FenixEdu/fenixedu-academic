@@ -41,7 +41,7 @@
 		</tr>
 	    <tr align="right">
 			<td>	
-				<h2>Listas finais de Candidatos</h2>
+				<h2>Despacho de Aceitação</h2>
 			</td>
 		</tr>
 		
@@ -55,9 +55,9 @@
 						<td>      
 							<logic:iterate id="group" name="infoGroup" >
 								<h2><bean:write name="group" property="situationName"/>s</h2>
-						  		<table>
+						  		<table width="100%">
 						        	<logic:iterate id="candidate" name="group" property="candidates">
-						        		<tr>
+						        		<tr width="100%">
 						        			<td><bean:write name="candidate" property="candidateName"/></td>
 						        			<td><bean:write name="candidate" property="situationName"/></td>
 						        			<td><bean:write name="candidate" property="remarks"/></td>
@@ -74,20 +74,24 @@
 			    </table>
 			</td>    
 		</tr>
-		
+
 		<tr valign="bottom">
-	        <td>&nbsp;</td>
-	         <td colspan="2" valign="bottom">
-	           &nbsp;<div align="center">&nbsp;</div>
-	           <div align="center">&nbsp;</div>
-	           <div align="center"><b>O Coordenador</b> <br>
-	            <br>
-	            <br>
-	           </div>
-	          <hr align="center" width="300" size="1">
-	         </td>
+		  <table width="100%">
+		    <tr>
+    	        <td width="20%">&nbsp;</td>
+    	        <td width="40%">&nbsp;</td>
+    	         <td width="90%" colspan="2" valign="bottom">
+    	           &nbsp;<div align="center">&nbsp;</div>
+    	           <div align="center">&nbsp;</div>
+    	           <div align="center"><b>O Coordenador</b> <br>
+    	            <br>
+    	            <br>
+    	           </div>
+    	          <hr align="center" width="300" size="1">
+    	         </td>
+    	     </tr>
+	      </table>
         </tr>
-		
 		
 	</table>
     </body>

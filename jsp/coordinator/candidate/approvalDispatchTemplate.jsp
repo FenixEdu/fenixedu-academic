@@ -76,18 +76,22 @@
 		</tr>
 		
 		<tr valign="bottom">
-	        <td>&nbsp;</td>
-	         <td colspan="2" valign="bottom">
-	           &nbsp;<div align="center">&nbsp;</div>
-	           <div align="center">&nbsp;</div>
-	           <div align="center"><b>O Coordenador</b> <br>
-	            <br>
-	            <br>
-	           </div>
-	          <hr align="center" width="300" size="1">
-	         </td>
+		  <table width="100%">
+		    <tr>
+    	        <td width="20%">&nbsp;</td>
+    	        <td width="40%">&nbsp;</td>
+    	         <td width="90%" colspan="2" valign="bottom">
+    	           &nbsp;<div align="center">&nbsp;</div>
+    	           <div align="center">&nbsp;</div>
+    	           <div align="center"><b>O Coordenador</b> <br>
+    	            <br>
+    	            <br>
+    	           </div>
+    	          <hr align="center" width="300" size="1">
+    	         </td>
+    	     </tr>
+	      </table>
         </tr>
-		
 		
 	</table>
     </body>
