@@ -284,7 +284,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					InfoGuideEntry infoGuideEntry = (InfoGuideEntry) iteratorGuideEntries.next();
 					if (infoGuideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE))
 					{
-						payedValue = payedValue + infoGuideEntry.getPrice().doubleValue();
+						payedValue = payedValue + (infoGuideEntry.getPrice().doubleValue() * infoGuideEntry.getQuantity().intValue());
 					}
 					else if (infoGuideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE))
 					{
