@@ -13,15 +13,15 @@ package ServidorAplicacao.Servico.sop;
  **/
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
+import Dominio.Turno;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class EditarTurno implements IServico {
 
@@ -46,44 +46,34 @@ public class EditarTurno implements IServico {
 		return "EditarTurno";
 	}
 
-	public Object run(InfoShift shiftToEdit, InfoShift turnoNova)
+	public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew)
 		throws FenixServiceException {
 
-		ITurno turno = null;
-		boolean result = false;
+		InfoShift infoShift = null;
+
+		// TODO : if type and/or execution course change, then verifications must be made
+		//        relative to the validity of the hours of associated lessons for the
+		//        corresponding execution course.
 
 		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente sp;
+				sp = SuportePersistenteOJB.getInstance();
 
-			//Copia infoExecutionCourse para DisciplinaExecucao
-			IDisciplinaExecucao executionCourse =
-				Cloner.copyInfoExecutionCourse2ExecutionCourse(
-					shiftToEdit.getInfoDisciplinaExecucao());
-			// fim da cópia 
+			ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, infoShiftOld.getIdInternal());
 
-			turno =
-				sp.getITurnoPersistente().readByNameAndExecutionCourse(
-					shiftToEdit.getNome(),
-					executionCourse);
-			if (turno != null) {
-				// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
-				turno = (ITurno) sp.getITurnoPersistente().readByOId(turno,true);
-				turno.setNome(turnoNova.getNome());
-				turno.setTipo(turnoNova.getTipo());
-				turno.setLotacao(turnoNova.getLotacao());
-				try {
-					sp.getITurnoPersistente().lockWrite(turno);
-				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException(ex);
+			sp.getITurnoPersistente().lockWrite(shift);
 
-				}
-				result = true;
-			}
+			shift.setNome(infoShiftNew.getNome());
+			shift.setTipo(infoShiftNew.getTipo());
+			IDisciplinaExecucao executionCourse = 
+				(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOID(DisciplinaExecucao.class, infoShiftOld.getInfoDisciplinaExecucao().getIdInternal());
+			shift.setDisciplinaExecucao(executionCourse);
+
+			infoShift = Cloner.copyShift2InfoShift(shift);
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
 
-		return new Boolean(result);
+		return infoShift;
 	}
-
 }

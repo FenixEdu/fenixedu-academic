@@ -51,11 +51,11 @@ public class CriarTurno implements IServico {
 		return "CriarTurno";
 	}
 
-	public Boolean run(InfoShift infoTurno)
+	public InfoShift run(InfoShift infoTurno)
 		throws FenixServiceException {
 
 		ITurno turno = null;
-		boolean result = false;
+		InfoShift result = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -90,12 +90,12 @@ public class CriarTurno implements IServico {
 				throw new ExistingServiceException(ex);
 			}
 
-			result = true;
+			result = Cloner.copyIShift2InfoShift(turno);
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 		}
 
-		return new Boolean(result);
+		return result;
 	}
 
 }

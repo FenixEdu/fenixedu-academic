@@ -14,13 +14,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoCurricularYear;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -31,7 +36,8 @@ import Util.TipoAula;
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
-public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
+public class ManageShiftsDA
+	extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
 	public ActionForward listShifts(
 		ActionMapping mapping,
@@ -66,7 +72,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 		/* Sort the list of shifts */
 		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
+		chainComparator.addComparator(
+			new BeanComparator("infoDisciplinaExecucao.nome"));
 		chainComparator.addComparator(new BeanComparator("tipo.tipo"));
 		chainComparator.addComparator(new BeanComparator("nome"));
 		Collections.sort(infoShifts, chainComparator);
@@ -96,29 +103,31 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 		InfoShift infoShift = new InfoShift();
 		infoShift.setAvailabilityFinal(new Integer(0));
-		infoShift.setInfoDisciplinaExecucao(
+		InfoExecutionCourse infoExecutionCourse =
 			RequestUtils.getExecutionCourseBySigla(
 				request,
-				(String) createShiftForm.get("courseInitials")));
+				(String) createShiftForm.get("courseInitials"));
+		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 		infoShift.setInfoLessons(null);
 		infoShift.setLotacao(new Integer(0));
 		infoShift.setNome((String) createShiftForm.get("nome"));
-		infoShift.setTipo(new TipoAula((Integer) createShiftForm.get("tipoAula")));
-
-		System.out.println("Shift to create: " + infoShift);
+		infoShift.setTipo(
+			new TipoAula((Integer) createShiftForm.get("tipoAula")));
 
 		Object argsCriarTurno[] = { infoShift };
 		try {
-			// Get shift id
-			ServiceUtils.executeService(
-				userView,
-				"CriarTurno",
-				argsCriarTurno);
-			
-			// Place shift id & executionCourseID in request.
+			infoShift =
+				(InfoShift) ServiceUtils.executeService(
+					userView,
+					"CriarTurno",
+					argsCriarTurno);
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException("O Turno", ex);
 		}
+
+		request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+
+		request.setAttribute(SessionConstants.SHIFT, infoShift);
 
 		return mapping.findForward("EditShift");
 	}

@@ -30,7 +30,6 @@ public abstract class FenixExecutionCourseAndExecutionDegreeAndCurricularYearCon
 		HttpServletResponse response)
 		throws Exception {
 
-
 		ContextUtils.setExecutionCourseContext(request);
 
 		ActionForward actionForward =

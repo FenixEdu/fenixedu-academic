@@ -1121,9 +1121,23 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
     	<forward name="ShowShiftList" path="/manageShifts.jsp"/>
-    	<forward name="EditShift" path="/manageShifts.do?method=listShifts&amp;page=0"/>
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
 	</action>
 
+	<action path="/manageShift"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageShiftDA"
+            name="createShiftForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="EditShift" path="/manageShift.jsp"/>
+	</action>
 
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"
