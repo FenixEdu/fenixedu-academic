@@ -4,17 +4,20 @@
 <tiles-definitions>
 
 	<definition name="showDegrees" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
 		<put name="body" value="/publico/degreeSite/showDegrees.jsp"/>
 	</definition>	
 	<definition name="showDescription" extends="definition.public.mainPageIST">
-		<put name="" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/degreeSite/showDegreeSiteDescription.jsp" />
 	</definition>
 	<definition name="showAccessRequirements" extends="definition.public.mainPageIST">
-		<put name="body" value="/publico/showDegreeSiteAccessRequirements.jsp" />
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />		
+		<put name="body" value="/publico/degreeSite/showDegreeSiteAccessRequirements.jsp" />
 	</definition>
 	<definition name="showCurricularPlan" extends="definition.public.mainPageIST">
-		<put name="body" value="/publico/showDegreeSiteCurricularPlan.jsp" />
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
+		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlan.jsp" />
 	</definition>
 	<!--<definition name="showDegreeCurricularPlan" extends="definition.public.mainPage">
 		<put name="body" value="/publico/showDegreeCurricularPlan.jsp"/>

@@ -7,9 +7,6 @@
 
 <logic:present name="infoDegreeInfo">
 
-	<table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
-		<tr>	
-			<td width="100%" colspan="3" id="main">
 				<div class="breadcumbs"><a href="/index.shtml">IST</a> > <a href="/html/ensino/ensino.shtml">Ensino</a> &gt; 
 					<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
 				</div>
@@ -54,9 +51,9 @@
 				  	<bean:message key="label.title.coordinator" />&nbsp; 
 					
 						<logic:present name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
-							<bean:define id="homePage" name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb" />						
+							<bean:define id="homepage" name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb" />						
 
-							<a href=" <%= page %>">
+							<a href=" <%= homepage %>">
 							<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />						
 							</a>
 						</logic:present>		
@@ -65,7 +62,7 @@
 							<logic:present name="executionDegree" property="infoCoordinator.infoPerson.email">
 								<bean:define id="email" name="executionDegree" property="infoCoordinator.infoPerson.email" />
 							
-								<a href="mailto: <%= page %>">
+								<a href="mailto: <%= email %>">
 								<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />						
 								</a>											
 							</logic:present>						
@@ -135,9 +132,5 @@
 				  <p><!-- TEXTO - HISTORIAL DA LICENCIATURA --><bean:write name="infoDegreeInfo" property="history" filter="false" /></p>
 				</div>
 				</logic:present>
-				
-		  </td>
-		</tr>
-	</table>
 
 </logic:present>

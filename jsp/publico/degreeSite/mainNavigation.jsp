@@ -1,12 +1,18 @@
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
 <ul class="treemenu">
 	<li><a href="http://www.ist.utl.pt/pt/informacoes/">Informação</a></li>
   <li><a href="http://www.ist.utl.pt/pt/estrutura_interna/">Estrutura</a></li>
   <li><a href="http://www.ist.utl.pt/pt/servicos/">Serviços</a></li>
   <li class="treenode"><a href="">Ensino</a>
 		<ul class="expmenu">
-			<li><a href="/html/ensino/licenciaturas.html">Licenciaturas</a></li>
+			<li><html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>
 			<li><a href="/html/ensino/pos_grad.html">Pós-graduações</a></li>
-			<li><a href="/html/ensino/mestrados.html">Mestrados</a></li>
+			<li><html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.master"/></html:link></li>
 			<li><a href="/html/ensino/doutoramentos.html">Doutoramentos</a></li>
 		</ul>
 	</li>
