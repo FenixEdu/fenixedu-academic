@@ -207,9 +207,7 @@ public class SiglaDataLoader {
 					ICurricularCourseScope scope =
 						(ICurricularCourseScope) iter1.next();
 					Criteria crit = new Criteria();
-//					crit.addEqualTo(
-//						"nome_disc",
-//						fenixCurricularCourse.getName());
+
 					crit.addEqualTo(
 						"codigo_disc",
 					codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
@@ -229,12 +227,6 @@ public class SiglaDataLoader {
 							.getDegreeCurricularPlan()
 							.getDegree()
 							.getIdInternal());
-//					crit.addEqualTo(
-//						"ano_curricular",
-//						scope
-//							.getCurricularSemester()
-//							.getCurricularYear()
-//							.getYear());
 
 					query = new QueryByCriteria(Curr_lic_ingles.class, crit);
 					Collection curricularCourses =
@@ -536,9 +528,7 @@ public class SiglaDataLoader {
 				ICurricularCourseScope scope =
 					(ICurricularCourseScope) iter1.next();
 				Criteria crit = new Criteria();
-//				crit.addEqualTo(
-//					"nome_disc",
-//					nameFixerFenixToSigla(fenixCurricularCourse.getName()));
+
 				crit.addEqualTo(
 					"codigo_disc",
 					codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
@@ -558,12 +548,7 @@ public class SiglaDataLoader {
 						.getDegreeCurricularPlan()
 						.getDegree()
 						.getIdInternal());
-//				crit.addEqualTo(
-//					"ano_curricular",
-//					scope
-//						.getCurricularSemester()
-//						.getCurricularYear()
-//						.getYear());
+
 				query = new QueryByCriteria(Curr_licenciatura.class, crit);
 				Collection curricularCourses =
 					(Collection) broker.getCollectionByQuery(query);
@@ -617,35 +602,7 @@ public class SiglaDataLoader {
 		return siglaCurricularCourses;
 	}
 
-	/**
-	 * @param string
-	 * @return
-	 */
-	private Object nameFixerFenixToSigla(String string) {
-		String result = null;
-		if (string.equals("ASPECTOS QUÍMICO-BIOLÓGICOS DA POLUIÇÃO")) {
-			result = "ASPECTOS QUÍMICOS-BIOLÓGICOS DA POLUIÇÃO";
-		} else if (
-			string.equals(
-				"ARQUITECTURA ORGANIZACIONAL DE SISTEMAS DE INFORMAÇÃO EMPRESARIAIS")) {
-			result =
-				"ARQUITECTURA ORGANIZACIONAL DE SISTEMAS DE INFORMAÇÃO EMPRES";
-		} else if (string.equals("CONTROLO, AUTOMAÇÃO E ROBÓTICA")) {
-			result = "CONTROLO,AUTOMAÇÃO E ROBÓTICA";
-		} else if (
-			string.equals(
-				"CONSTRUÇÃO E MANUTENÇÃO DE INFRA ESTRUTURAS DE TRANSPORTES")) {
-			result =
-				"CONSTRUÇÃO E MANUTENÇÃO DE INFRAESTRUTURAS DE TRANSPORTES";
-		} else if (
-			string.equals(
-				"ESTUDOS DE CIÊNCIA: ARTE, TECNOLOGIA E SOCIEDADE")) {
-			result = "ESTUDOS DE CIENCIA: ARTE,TECNOLOGIA E SOCIEDADE";
-		} else {
-			result = string;
-		}
-		return result;
-	}
+
 
 	/**
 	 * @param string
