@@ -13,7 +13,8 @@
 	</br>
 		<bean:parameter id="ePName" name="ePName" />
 		<bean:parameter id="eYName" name="eYName" />
-		<logic:present name="publico.infoShifts" scope="session">
+
+<logic:present name="publico.infoShifts" >
 			<table align="center" cellspacing='0' cellpadding='10'>
 					<tr class="timeTable_line" align="center">
 						<td class="degreetablestd" rowspan="2">
@@ -110,7 +111,7 @@
 			</table>			
 	</logic:present>
 	
-	<logic:notPresent name="publico.infoShifts" scope="session">
+	<logic:notPresent name="publico.infoShifts" >
 		<bean:message key="message.public.notfound.infoShifts"/>
 	</logic:notPresent>		
 
