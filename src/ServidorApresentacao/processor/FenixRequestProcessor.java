@@ -28,23 +28,32 @@ public class FenixRequestProcessor extends RequestProcessor {
 	protected boolean processPreprocess(
 		HttpServletRequest request,
 		HttpServletResponse response) {
-			HttpSession session = request.getSession(true);
-			String uri = request.getRequestURI();
-			if ((session == null) || (session.isNew())
-				&& (uri.indexOf("login.do") == -1) && (uri.indexOf("/publico/index.do") == -1)) {
-				ActionErrors errors = new ActionErrors ();
+		HttpSession session = request.getSession(true);
+		String uri = request.getRequestURI();
+		if (((uri.indexOf("login.do") == -1)
+			&& (uri.indexOf("/publico/index.do") == -1))) {
 			
-				errors.add("error.invalid.session", new ActionError("error.invalid.session"));
+			if ((session == null) || (session.isNew()) && ((session!= null)&&(!session.getAttributeNames().hasMoreElements()))) {
+				System.out.println("Session!"+ session.isNew());
+				System.out.println(uri);
+				ActionErrors errors = new ActionErrors();
+
+				errors.add(
+					"error.invalid.session",
+					new ActionError("error.invalid.session"));
 				request.setAttribute(Action.ERROR_KEY, errors);
-			
+
 				String uri2Forward = "/loginPage.jsp";
-				String applicationPrefix ="";
-				if (uri.indexOf("publico") != -1){
+				String applicationPrefix = "";
+				if (uri.indexOf("publico") != -1) {
 					applicationPrefix = "/publico";
-					uri2Forward = "/publico/index.do";
+					uri2Forward = "/publico/index.jsp";
 				}
 
-				RequestUtils.selectApplication(applicationPrefix,request, this.getServletContext());
+				RequestUtils.selectApplication(
+					applicationPrefix,
+					request,
+					this.getServletContext());
 
 				try {
 					doForward(uri2Forward, request, response);
@@ -56,8 +65,9 @@ public class FenixRequestProcessor extends RequestProcessor {
 					throw new RuntimeException(e);
 				}
 				return false;
-			} else
-				return true;
+			}
+		}
+		return true;
 	}
 
 }
