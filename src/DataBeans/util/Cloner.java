@@ -462,12 +462,6 @@ public abstract class Cloner
         InfoDegreeCurricularPlan infoDegreeCurricularPlan =
             Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
                 executionDegree.getCurricularPlan());
-        InfoTeacher infoCoordinator = null;
-        //        if (executionDegree.getCoordinator() != null)
-        //        {
-        //            infoCoordinator = Cloner.copyITeacher2InfoTeacher(executionDegree.getCoordinator());
-        //        }
-
         InfoExecutionYear infoExecutionYear =
             Cloner.copyIExecutionYear2InfoExecutionYear(executionDegree.getExecutionYear());
         try
@@ -538,12 +532,6 @@ public abstract class Cloner
         try
         {
             BeanUtils.copyProperties(infoDegree, degree);
-
-            // FIXME : See InfoDegree variables for root cause.
-            if (degree != null && degree.getTipoCurso() != null)
-            {
-                infoDegree.setDegreeTypeString(degree.getTipoCurso().toString());
-            }
         }
         catch (Exception e)
         {
@@ -1477,48 +1465,6 @@ public abstract class Cloner
     }
 
     /**
-     * @param listInfoAnnouncements
-     * @return listIAnnouncements
-     */
-
-    private static List copyListInfoAnnouncements2ListIAnnouncements(List listInfoAnnouncements)
-    {
-        List listAnnouncements = null;
-
-        Iterator iterListInfoAnnouncements = listInfoAnnouncements.iterator();
-
-        while (iterListInfoAnnouncements.hasNext())
-        {
-            InfoAnnouncement infoAnnouncement = (InfoAnnouncement) iterListInfoAnnouncements.next();
-            IAnnouncement announcement = Cloner.copyInfoAnnouncement2IAnnouncement(infoAnnouncement);
-            listAnnouncements.add(announcement);
-        }
-
-        return listAnnouncements;
-    }
-
-    /**
-     * @param listIAnnouncements
-     * @return listInfoAnnouncements
-     */
-
-    private static List copyListIAnnouncements2ListInfoAnnouncements(List listIAnnouncements)
-    {
-        List listInfoAnnouncements = null;
-
-        Iterator iterListIAnnouncements = listIAnnouncements.iterator();
-
-        while (iterListIAnnouncements.hasNext())
-        {
-            IAnnouncement announcement = (IAnnouncement) iterListIAnnouncements.next();
-            InfoAnnouncement infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
-            listInfoAnnouncements.add(infoAnnouncement);
-        }
-
-        return listInfoAnnouncements;
-    }
-
-    /**
      * @param curriculum
      * @return InfoCurriculum
      */
@@ -1962,7 +1908,8 @@ public abstract class Cloner
         copyObjectProperties(curricularCourse, infoCurricularCourse);
 
         curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
-
+        curricularCourse.setScientificArea(scientificArea);
+        
         return curricularCourse;
     }
 
