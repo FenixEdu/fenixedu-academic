@@ -77,6 +77,7 @@
 		  <tr>
             <td valign="top"><bean:message key="label.senior.specialtyField"/></td>
             <td><html:textarea rows="5" cols="65" property="specialtyField"/></td>
+            <td valign="middle" align="center"><bean:message key="label.senior.specialtyFieldFinalWork"/></td>
           </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.professionalInterests"/></td>
@@ -98,8 +99,11 @@
             <td valign="top"><bean:message key="label.senior.professionalExperience"/></td>
             <td><html:textarea rows="5" cols="65" property="professionalExperience"/></td>
           </tr>		  		  
+		  <tr>
+			<td>&nbsp;</td>
+		  </tr>
   		  <tr>
-            <td valign="bottom" align="right" colspan="2">
+            <td valign="bottom" align="right" colspan="3">
 				<bean:message key="label.senior.lastModificationDate"/>
 				<bean:define id="formatDate">
 					<dt:format pattern="dd/MM/yyyy">

@@ -71,6 +71,9 @@
             <td valign="top"><bean:message key="label.senior.professionalExperience"/></td>
             <td><bean:write name="seniorInfoForm" property="professionalExperience"/></td>
           </tr>		  		  
+		  <tr>
+			<td>&nbsp;</td>
+		  </tr>
   		  <tr>
             <td valign="bottom" align="right" colspan="2">
 				<bean:message key="label.senior.lastModificationDate"/>
