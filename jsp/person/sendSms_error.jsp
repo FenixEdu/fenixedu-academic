@@ -12,3 +12,7 @@
 	<html:errors/>
 </span><br/>
 	
+<p />
+<html:link page="/viewSmsDeliveryReports.do">		
+	<bean:message key="link.person.sms.viewDeliveryReports"/>
+</html:link>
