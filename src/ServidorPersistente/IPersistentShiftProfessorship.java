@@ -33,9 +33,6 @@ public interface IPersistentShiftProfessorship extends IPersistentObject {
      * @return
      */
     List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
-    /**
-     * @param professorship
-     * @return
-     */
-    List readByProfessorshipWithDifferentIds(IProfessorship professorship, List shiftProfessorShipsIds) throws ExcepcaoPersistencia;
+    List readByTeacherWithDifferentIds(ITeacher teacher, List shiftProfessorShipsIds) throws ExcepcaoPersistencia;
+    List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;;
 }

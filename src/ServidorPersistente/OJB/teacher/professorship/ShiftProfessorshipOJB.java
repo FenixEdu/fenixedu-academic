@@ -189,13 +189,23 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorship(Dominio.IProfessorship)
      */
-    public List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia
+    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
     {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("professorship.idInternal", professorship.getIdInternal());		
+		criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());		
         return queryList(ShiftProfessorship.class, criteria);
     }
-
+    
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorship(Dominio.IProfessorship)
+     */
+    public List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("professorship.idInternal", professorship.getIdInternal());		
+        return queryList(ShiftProfessorship.class, criteria);
+    }
+    
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentShiftProfessorship#readByExecutionPeriod(Dominio.IExecutionPeriod)
      */
@@ -209,11 +219,11 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorshipWithDifferentIds(Dominio.IProfessorship, java.util.List)
      */
-    public List readByProfessorshipWithDifferentIds(IProfessorship professorship, List shiftProfessorShipsIds) throws ExcepcaoPersistencia
+    public List readByTeacherWithDifferentIds(ITeacher teacher, List shiftProfessorShipsIds) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addNotIn("idInternal", shiftProfessorShipsIds);
-        criteria.addEqualTo("professorship.idInternal", professorship.getIdInternal());		
+        criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());		
         return queryList(ShiftProfessorship.class, criteria);
     }
 }

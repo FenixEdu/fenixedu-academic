@@ -65,20 +65,24 @@ public class CreditsCalculator
         List shiftProfessorshipList = null;
         if (shiftProfessorshipDeleted.isEmpty())
         {
-            shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorship);
+            shiftProfessorshipList = shiftProfessorshipDAO.readByTeacher(professorship.getTeacher());
         } else
         {
             List shiftProfessorshipsIds = TransformationUtils.transformToIds(shiftProfessorshipDeleted);
             shiftProfessorshipList =
-                shiftProfessorshipDAO.readByProfessorshipWithDifferentIds(
-                    professorship,
+                shiftProfessorshipDAO.readByTeacherWithDifferentIds(
+                    professorship.getTeacher(),
                     shiftProfessorshipsIds);
         }
 
+        shiftProfessorshipList.removeAll(shiftProfessorshipAdded);
+        shiftProfessorshipList.addAll(shiftProfessorshipAdded);
+        
         Iterator iterator = shiftProfessorshipList.iterator();
 
         double hours = 0;
 
+        
         while (iterator.hasNext())
         {
             IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iterator.next();
