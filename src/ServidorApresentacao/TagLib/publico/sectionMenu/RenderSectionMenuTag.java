@@ -30,6 +30,7 @@ public class RenderSectionMenuTag extends TagSupport {
 	private String name;
 	private String path;
 	private String activeSectionName;
+	private String renderer;
 	private SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer =
 		new SectionMenuContentRenderer();
 
@@ -63,7 +64,7 @@ public class RenderSectionMenuTag extends TagSupport {
 		JspWriter writer = pageContext.getOut();
 		SectionMenuMap sectionMenuMap=null;
 		if (activeSection == null) {
-			System.out.println("até aqui tudo bem");	
+			
 		 sectionMenuMap = new SectionMenuMap(sections);}
 		else {
 		 sectionMenuMap = new SectionMenuMap(sections,activeSection);	
@@ -72,7 +73,7 @@ public class RenderSectionMenuTag extends TagSupport {
 		SectionMenuMapRenderer renderer =
 			new SectionMenuMapRenderer(
 				sectionMenuMap,
-				this.sectionMenuSlotContentRenderer,getPath());
+				this.sectionMenuSlotContentRenderer,getPath(),getRenderer());
 
 		try {
 			writer.print(renderer.render());
@@ -128,6 +129,20 @@ public class RenderSectionMenuTag extends TagSupport {
 	 */
 	public void setPath(String string) {
 		path = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getRenderer() {
+		return renderer;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setRenderer(String string) {
+		renderer = string;
 	}
 
 }

@@ -10,18 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.gesdis.InfoSection;
-import ServidorApresentacao
-	.TagLib
-	.publico
-	.sectionMenu
-	.renderers
-	.SectionMenuContentRenderer;
-import ServidorApresentacao
-	.TagLib
-	.publico
-	.sectionMenu
-	.renderers
-	.SectionMenuSlotContentRenderer;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuContentRenderer;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuTeacherContentRenderer;
 
 /**
  * @author jmota
@@ -33,15 +24,17 @@ public class SectionMenuMapRenderer {
 	private SectionMenuMap sectionMenuMap;
 	private SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer;
 	private String path;
+	private String renderer;
 	/**
 	 * 
 	 */
 	public SectionMenuMapRenderer(
 		SectionMenuMap sectionMenuMap,
-		SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer, String path) {
+		SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer, String path, String renderer) {
 		setSectionMenuMap(sectionMenuMap);
 		setSectionMenuSlotContentRenderer(sectionMenuSlotContentRenderer);
 		setPath(path);
+		setRenderer(renderer);
 	}
 
 	/**
@@ -84,8 +77,9 @@ public class SectionMenuMapRenderer {
 			while (i!= sections.size()) {
 			
 				InfoSection infoSection = (InfoSection) sections.get(i);
-				SectionMenuSlotContentRenderer sectionMenuSlot =
-					new SectionMenuContentRenderer(infoSection);
+				
+				SectionMenuSlotContentRenderer sectionMenuSlot = getContentRenderer(infoSection,getRenderer());
+					
 				strBuffer.append(sectionMenuSlot.renderSectionLabel(i,getPath()));
 				strBuffer.append(renderSuffix(sections, i));
 				
@@ -138,6 +132,29 @@ public class SectionMenuMapRenderer {
 	 */
 	public void setPath(String string) {
 		path = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getRenderer() {
+		return renderer;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setRenderer(String string) {
+		renderer = string;
+	}
+
+	private SectionMenuSlotContentRenderer getContentRenderer(InfoSection infoSection,String renderer) {
+		SectionMenuSlotContentRenderer slotRenderer= new SectionMenuContentRenderer(infoSection); 
+		if (renderer == null) {}//do nothing
+		else {
+			if (renderer.equals("teacher")){ slotRenderer= new SectionMenuTeacherContentRenderer(infoSection);	} 			
+		}
+		return slotRenderer;
 	}
 
 }
