@@ -9,9 +9,12 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
  
-
-
-
+    <form-bean name="deleteDegreesForm"
+				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">        
+            <form-property name="idInternal" type="java.lang.Integer" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+    </form-bean>  
 
     </form-beans>
 
@@ -67,11 +70,13 @@
       	  <forward name="viewDegree" path="/df.page.read-degree"/>      	      
       </action>
          
-	<!-- Action for deleting a degree -->
+	<!-- Action for deleting a degree --> 
      
-      <action path="/deleteDegree"
-      	     input="readDegreesInput.do"
-      	     type="ServidorApresentacao.Action.manager.DeleteDegreeAction">
+      <action 
+      		 name="deleteDegreesForm"
+      		 input="readDegreesInput.do"
+      	     path="/deleteDegrees"
+      	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
              
 	<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
          	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
@@ -81,12 +86,7 @@
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
       
-       <!--<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
-         	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               />  PARA BAIXO QUANDO TIVER COMPLETO-->
-               
-       	<!-- Action for deleting a set of degrees -->
+      	<!-- Action for deleting a set of degrees -->
        		
        <action path="/degreesToDelete"
       	     input="selectDegreesInput.do"

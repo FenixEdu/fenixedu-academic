@@ -16,6 +16,7 @@ import Util.TipoCurso;
  */
 
 public class Curso extends DomainObject implements ICurso {
+	
 	protected String sigla;
 	protected String nome;
 	protected TipoCurso tipoCurso;

@@ -1,6 +1,5 @@
 package ServidorAplicacao.Servico.manager;
 
-import DataBeans.InfoDegree;
 import Dominio.ICurso;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
@@ -14,32 +13,30 @@ import ServidorPersistente.exceptions.CantDeletePersistentException;
 /**
  * @author lmac1
  */
-public class DeleteDegreeService implements IServico{
+public class DeleteDegreesService implements IServico{
 
-	private static DeleteDegreeService service = new DeleteDegreeService();
+	private static DeleteDegreesService service = new DeleteDegreesService();
 
-	public static DeleteDegreeService getService() {
+	public static DeleteDegreesService getService() {
 		return service;
 	}
 
-	private DeleteDegreeService() {
+	private DeleteDegreesService() {
 	}
 
 	public final String getNome() {
-		return "DeleteDegreeService";
+		return "DeleteDegreesService";
 	}
 
-	public Boolean run(InfoDegree infoDegree)
+	public Boolean run(Integer degreeIdInternal)
 		throws FenixServiceException	 {
 
 		try {
 			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-			String sigla =infoDegree.getSigla();
-			
-			ICurso degree = persistentDegree.readBySigla(sigla);
-			
+			ICurso degree = persistentDegree.readByIdInternal(degreeIdInternal);
+			System.out.println("DEGREE"+degree);
 			if (degree != null)
 				persistentDegree.delete(degree);
 		

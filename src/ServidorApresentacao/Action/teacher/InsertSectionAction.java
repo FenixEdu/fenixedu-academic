@@ -1,9 +1,3 @@
-/*
- * Created on 7/Abr/2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
@@ -32,9 +26,6 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author CIIST
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class InsertSectionAction extends FenixAction {
 

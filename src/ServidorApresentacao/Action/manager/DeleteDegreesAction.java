@@ -10,8 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
@@ -24,7 +24,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author lmac1
  */
-public class DeleteDegreeAction extends FenixAction{
+public class DeleteDegreesAction extends FenixAction{
 	
 	public ActionForward execute(
 				ActionMapping mapping,
@@ -34,25 +34,33 @@ public class DeleteDegreeAction extends FenixAction{
 				throws FenixActionException {
 					
 		HttpSession session = request.getSession(false);
-	
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		String indexString = (String) request.getParameter("index");
-		Integer index = new Integer(indexString);
+		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
 		
+		
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+//		String indexString = (String) request.getParameter("index");
+//		Integer index = new Integer(indexString);
+		
+			
 		List infoDegrees =
 							(List) session.getAttribute(
 								SessionConstants.INFO_DEGREES_LIST);
 								
 		
-		InfoDegree infoDegree = (InfoDegree) infoDegrees.get(index.intValue());		
+//		InfoDegree infoDegree = (InfoDegree) infoDegrees.get(index.intValue());		
 		
-		Object deleteDegreeArguments[] = { infoDegree };
+		Integer degreeIdInternal = (Integer)deleteDegreesForm.get("idInternal");
+	System.out.println("CODIGO INTERNO"+degreeIdInternal);
+		
+		//ESTE SERVICO PASSA A RECEBER O CODIGO INTERNO EM VEZ DO INFO DEGREE
+		
+		Object args[] = { degreeIdInternal };
 		GestorServicos manager = GestorServicos.manager();
+		
 		try {
-			
-			Boolean result = (Boolean) manager.executar(userView, "DeleteDegreeService", deleteDegreeArguments);
-			session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);
-			
+			Boolean result = (Boolean) manager.executar(userView, "DeleteDegreesService", args);
+		session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);	
+			System.out.println("APAGOU OU NAO"+result);
 		} 
 		catch (CantDeleteServiceException e) {
      	    throw new CantDeleteActionException(e);
@@ -60,7 +68,8 @@ public class DeleteDegreeAction extends FenixAction{
 		catch (FenixServiceException fenixServiceException) {
 	    	throw new FenixActionException(fenixServiceException.getMessage());
 			}
-
+			
+	
 			List allInfoDegrees;
 		try{
 			
@@ -72,7 +81,7 @@ public class DeleteDegreeAction extends FenixAction{
 		   }
 		     
 		    Collections.sort(allInfoDegrees);
-			session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
+	       session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
 		    
 		    
         	
