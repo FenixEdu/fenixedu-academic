@@ -18,9 +18,4 @@
 				 property="idInternal"
 				 toScope="request"
 				 scope="request"/>
-
-	<br />
-	######### ShiftOID= 
-	<bean:write name="shiftOID"/>
-
 </logic:present>

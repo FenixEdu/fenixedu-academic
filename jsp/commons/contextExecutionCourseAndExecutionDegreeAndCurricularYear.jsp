@@ -18,9 +18,4 @@
 				 property="idInternal"
 				 toScope="request"
 				 scope="request"/>
-
-	<br />
-	######### ExecutionCourseOID= 
-	<bean:write name="executionCourseOID"/>
-
 </logic:present>

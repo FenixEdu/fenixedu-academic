@@ -16,8 +16,4 @@
 				 property="idInternal"
 				 toScope="request"
 				 scope="request"/>
-
-	######### ExecutionPeriodOID= 
-	<bean:write name="executionPeriodOID"/>
-
 </logic:present>

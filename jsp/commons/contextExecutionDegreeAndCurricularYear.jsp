@@ -18,11 +18,6 @@
 				 property="idInternal"
 				 toScope="request"
 				 scope="request"/>
-
-	<br />
-	######### ExecutionDegreeOID= 
-	<bean:write name="executionDegreeOID"/>
-
 </logic:present>
 
 <logic:present name="<%= SessionConstants.CURRICULAR_YEAR %>" scope="request">
@@ -36,9 +31,4 @@
 				 property="idInternal"
 				 toScope="request"
 				 scope="request"/>
-
-	<br />
-	######### CurricularYearOID= 
-	<bean:write name="curricularYearOID"/>
-
 </logic:present>

@@ -18,8 +18,4 @@
 				 property="idInternal"
 				 toScope="request"
 				 scope="request"/>
-
-	<br />
-	######### classOID= 
-	<bean:write name="classOID"/>
 </logic:present>
