@@ -71,10 +71,13 @@ function selectAll() {
 
 function selectFirst() {
   var i = 0;
-  document.studentShiftEnrolmentForm.wantedCourse.multiple=true;
-  while( i < 1 ) {
-    document.studentShiftEnrolmentForm.wantedCourse.options[i].selected = true;
-    i+=1;
+//  document.studentShiftEnrolmentForm.wantedCourse.multiple=true;
+  while( i <  document.studentShiftEnrolmentForm.wantedCourse.options.length ) {
+  	if (i == 0)
+	    document.studentShiftEnrolmentForm.wantedCourse.options[i].selected = true;
+	else 
+		document.studentShiftEnrolmentForm.wantedCourse.options[i].selected = false;
+    i++;
   } 
 }
 

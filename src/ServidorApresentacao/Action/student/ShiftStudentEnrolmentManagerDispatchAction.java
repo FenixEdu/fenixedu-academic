@@ -26,6 +26,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
@@ -508,18 +509,17 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment =
 			(InfoShiftStudentEnrolment) session.getAttribute(
 				SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
-	    
-		System.out.println("CurrentEnrolment"+infoShiftStudentEnrolment.getCurrentEnrolment());
-		System.out.println("dividedList"+infoShiftStudentEnrolment.getDividedList());
-//		dividedList
-//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
-//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
-//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
-		
-		
-		
-		
-		
+
+		System.out.println(
+			"CurrentEnrolment"
+				+ infoShiftStudentEnrolment.getCurrentEnrolment());
+		System.out.println(
+			"dividedList" + infoShiftStudentEnrolment.getDividedList());
+		//		dividedList
+		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
+		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
+		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
+
 		if (infoShiftStudentEnrolment == null) {
 			throw new FenixTransactionException("Erro. Por favor nao faça isto.");
 			// TODO: tdi-dev (bruno) -> change this to something 'normal'. this is a placeholder
@@ -558,8 +558,10 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		}
 		//request.setAttribute(wantedClass, filter)
 		infoShiftStudentEnrolment.setDividedList(infoShiftDividedList);
-		System.out.println("CurrentEnrolment"+infoShiftStudentEnrolment.getCurrentEnrolment());
-		
+		System.out.println(
+			"CurrentEnrolment"
+				+ infoShiftStudentEnrolment.getCurrentEnrolment());
+
 		session.setAttribute(
 			SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
 			infoShiftStudentEnrolment);
@@ -582,7 +584,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		
+
 		//validateToken(request, form, mapping);
 
 		Integer[] shifts = (Integer[]) ((DynaActionForm) form).get("shifts");
@@ -636,9 +638,40 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 			// TODO: tdi-dev (bruno) -> here we will catch the errors that say "hey, you made a boo boo". or not
 			throw new FenixActionException(e);
 		}
-		session.setAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,infoShiftStudentEnrolment);
+		session.setAttribute(
+			SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
+			infoShiftStudentEnrolment);
 		return mapping.findForward("validateAndConfirmShiftEnrolment");
 		// TODO: tdi-dev (bruno) -> clean up session variable?
+	}
+
+	public ActionForward viewClassTimeTable(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession();
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		String classIdString = request.getParameter("classId");
+		Integer classId = new Integer(classIdString);
+		InfoClass infoClass = new InfoClass();
+		infoClass.setIdInternal(classId);
+		List infoLessons;
+		try {
+			infoLessons =
+				(List) ServiceUtils.executeService(
+					userView,
+					"LerAulasDeTurma",
+					new Object[] { infoClass });
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("infoLessons", infoLessons);
+
+		return mapping.findForward("classTimeTable");
 	}
 
 	/**
@@ -670,7 +703,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 	private void initializeForm(
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment,
 		DynaActionForm form) {
-		
+
 		//		List currentEnrolment = infoShiftStudentEnrolment.getCurrentEnrolment();
 		//		List avaliableShift = infoShiftStudentEnrolment.getAvailableShift();
 		//		InfoStudent infoStudent = infoShiftStudentEnrolment.getInfoStudent();
@@ -680,7 +713,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 				(InfoShiftDividedList) infoShiftStudentEnrolment
 					.getDividedList())
 				.leafSize()
-				 * 2 ]);
+				* 2]);
 		// DANGER: each divided 'sector' has two sublists, each a type of shift . Hardcoding 2 is dangerous
 	}
 }

@@ -33,7 +33,7 @@
 	      <TD>
 	       <bean:write name="infoClass" property="nome"/>
 	      </TD>
-	      <TD>Ver Horário (adicionar link!)
+	      <TD><html:link page="/studentShiftEnrolmentManager.do?method=viewClassTimeTable" paramId="classId" paramName="infoClass" paramProperty="idInternal" target="_blank" >Ver Horário</html:link>
 	      </TD>
 	      <TD>
 	       <html:link page="/studentShiftEnrolmentManager.do?method=showAvailableShifts" paramId="class" paramName="infoClass" paramProperty="nome" >

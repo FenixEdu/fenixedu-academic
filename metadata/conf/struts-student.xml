@@ -172,6 +172,7 @@
         <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
         <forward name="showAvailableShifts" path="show-available-shifts"/>
         <forward name="validateAndConfirmShiftEnrolment" path="validate-confirm-shift-enrolment"/>
+        <forward name="classTimeTable" path="/classTimeTable.jsp"/>
       </action>
       
       <action 

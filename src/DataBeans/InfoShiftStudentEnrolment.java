@@ -228,4 +228,6 @@ public class InfoShiftStudentEnrolment {
 		allowedClasses = list;
 	}
 
+	
+
 }

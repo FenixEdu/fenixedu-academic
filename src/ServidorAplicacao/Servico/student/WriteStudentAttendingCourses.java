@@ -66,11 +66,14 @@ public class WriteStudentAttendingCourses implements IServico {
 	 */
 	public Boolean run(InfoStudent infoStudent, List infoExecutionCourses)
 		throws FenixServiceException {
-
-		if (infoExecutionCourses == null || infoStudent == null) {
+	
+		if ( infoStudent == null) {
 			return new Boolean(false);
 		}
-
+		if (infoExecutionCourses == null){
+			infoExecutionCourses = new ArrayList();
+		}
+		System.out.println(infoExecutionCourses);
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();

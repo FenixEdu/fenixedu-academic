@@ -22,9 +22,11 @@ import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ITurma;
 import Dominio.ITurno;
+import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -57,8 +59,15 @@ public class LerAulasDeTurma implements IServico {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       
       ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
-      
-      ITurma group = Cloner.copyInfoClass2Class(infoClass);
+      ITurmaPersistente persistentDomainClass = sp.getITurmaPersistente();
+	  ITurma group = null;
+      if (infoClass.getIdInternal()!= null){
+      	group = new Turma(infoClass.getIdInternal());
+      	group = (ITurma) persistentDomainClass.readByOId(group,false);
+      }else{
+		group = Cloner.copyInfoClass2Class(infoClass);
+      }
+     
       
       List shiftList = sp.getITurmaTurnoPersistente().readByClass(group);
       
