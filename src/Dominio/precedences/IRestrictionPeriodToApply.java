@@ -8,6 +8,6 @@ import Util.PeriodToApplyRestriction;
 
 public interface IRestrictionPeriodToApply extends IRestriction
 {
-	public abstract PeriodToApplyRestriction getPeriodToApplyRestriction();
-	public abstract void setPeriodToApplyRestriction(PeriodToApplyRestriction periodToApplyRestriction);
+	public PeriodToApplyRestriction getPeriodToApplyRestriction();
+	public void setPeriodToApplyRestriction(PeriodToApplyRestriction periodToApplyRestriction);
 }

@@ -8,6 +8,6 @@ import Dominio.ICurricularCourse;
 
 public interface IRestrictionByCurricularCourse extends IRestriction
 {
-	public abstract ICurricularCourse getPrecedentCurricularCourse();
-	public abstract void setPrecedentCurricularCourse(ICurricularCourse curricularCourse);
+	public ICurricularCourse getPrecedentCurricularCourse();
+	public void setPrecedentCurricularCourse(ICurricularCourse curricularCourse);
 }

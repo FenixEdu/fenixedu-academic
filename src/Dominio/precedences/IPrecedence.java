@@ -16,10 +16,6 @@ public interface IPrecedence extends IDomainObject
 
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
 
-	public Integer getKeyCurricularCourse();
-
-	public void setKeyCurricularCourse(Integer keyCurricularCourse);
-
 	public PrecedenceScopeToApply getPrecedenceScopeToApply();
 
 	public void setPrecedenceScopeToApply(PrecedenceScopeToApply precedenceScopeToApply);

@@ -8,9 +8,9 @@ import Dominio.IDomainObject;
 
 public interface IRestriction extends IDomainObject
 {
-	public abstract IPrecedence getPrecedence();
+	public IPrecedence getPrecedence();
 
-	public abstract void setPrecedence(IPrecedence precedence);
+	public void setPrecedence(IPrecedence precedence);
 
-	public abstract boolean evaluate(PrecedenceContext precedenceContext);
+	public boolean evaluate(PrecedenceContext precedenceContext);
 }
