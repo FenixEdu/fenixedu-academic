@@ -1,8 +1,6 @@
 /*
  * Created on 7/Out/2003
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package ServidorAplicacao.Servicos;
 
@@ -11,10 +9,9 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Luis & Nuno
+ * @author  Luis Egidio, lmre@mega.ist.utl.pt
+ * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public abstract class ServiceNeedsAuthenticationTestCase
 	extends ServiceTestCase {
