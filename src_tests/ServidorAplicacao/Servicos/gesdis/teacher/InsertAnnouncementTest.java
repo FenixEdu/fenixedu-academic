@@ -10,7 +10,6 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
  *
  * @author tfc130
  */
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import junit.framework.Test;
@@ -66,7 +65,7 @@ public class InsertAnnouncementTest extends TestCaseCreateServices {
 				new Double(1.5),
 				new Double(2),
 				infoExecutionPeriod);
-		argsInsertAnnouncement[0] = new InfoSite(null, new ArrayList(), infoExecutionCourse);
+		argsInsertAnnouncement[0] = new InfoSite(infoExecutionCourse);
 
 		//title
 		argsInsertAnnouncement[1] = "newAnnouncement";

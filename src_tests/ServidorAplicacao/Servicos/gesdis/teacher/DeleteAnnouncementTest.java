@@ -9,7 +9,7 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
  * @author Ivo Brandão
  */
 
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class DeleteAnnouncementTest extends TestCaseDeleteAndEditServices {
 				new Double(1.5),
 				new Double(2),
 				infoExecutionPeriod);
-		InfoSite infoSite = new InfoSite(null, new ArrayList(), infoExecutionCourse);
+		InfoSite infoSite = new InfoSite(infoExecutionCourse);
 		argsDeleteAnnouncement[0] = infoSite;
 
 		//infoAnnouncement
