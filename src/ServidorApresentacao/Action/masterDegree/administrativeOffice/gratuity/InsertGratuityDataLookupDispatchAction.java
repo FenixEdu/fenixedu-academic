@@ -29,6 +29,7 @@ import DataBeans.InfoPerson;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
 import framework.factory.ServiceManagerServiceFactory;
@@ -219,8 +220,28 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 			
 			return mapping.getInputForward();
 		}
+		
+		Integer degreeId = new Integer(infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue());
+		
+		infoGratuityValues = null;
+		Object argsRead[] = { degreeId };
+		try
+		{
+			infoGratuityValues =
+			(InfoGratuityValues) ServiceUtils.executeService(
+					userView,
+					"ReadGratuityValuesByExecutionDegree",
+					argsRead);
+		}
+		catch (FenixServiceException ex)
+		{
+			errors.add("gratuityValues", new ActionError(ex.getMessage()));
+			saveErrors(request, errors);
+		}
 
-		return mapping.findForward("pgMainMenu");
+		request.setAttribute("infoGratuityValues", infoGratuityValues);
+		
+		return mapping.findForward("insertConfirmation");
 	}
 
 	private InfoGratuityValues fillGratuity(IUserView userView, DynaValidatorForm actionForm)

@@ -29,18 +29,30 @@
 	<table>
 		<%-- Gratuity Values --%>
 		<tr>
+			<td colspan="2" class="infoop">
+				<bean:message key="message.masterDegree.gratuity.values.help"/>
+			</td>
+		</tr>
+		<tr>
 			<td colspan="2">
+				<br />
 				<b><bean:message key="label.masterDegree.gratuity.values"/></b>
 			</td>
 		</tr>
 		<tr>
 			<td style="text-align:right">
+				<br />
 				<bean:message key="label.masterDegree.gratuity.annual.value"/>:
-				<br /><br />
+				<br />
+				&nbsp;
+				<br />
 			</td>
 			<td>
+				<br />
 				<html:text property="annualValue" />&nbsp;<bean:message key="label.masterDegree.gratuity.euro"/>
-				<br /><br />
+				<br />
+				&nbsp;<i><bean:message key="label.masterDegree.gratuity.or"/></i>&nbsp;
+				<br />
 			</td>
 		</tr>
 		<tr>
@@ -65,9 +77,11 @@
 		</tr>
 		<tr>
 			<td style="text-align:right">
+				<br />
 				<bean:message key="label.masterDegree.gratuity.unitaryValue"/>:
 			</td>
 			<td>
+				<br />
 				<bean:message key="label.masterDegree.gratuity.valueByCourse"/>
 				<html:text property="unitaryValueCourse" />&nbsp;
 				<bean:message key="label.masterDegree.gratuity.euro"/>
@@ -77,12 +91,18 @@
 				<bean:message key="label.masterDegree.gratuity.valueByCredit"/>
 				<html:text property="unitaryValueCredit" />&nbsp;
 				<bean:message key="label.masterDegree.gratuity.euro"/>
+				<br /><br />
 			</td>
 		</tr>
 		<%-- Payment Conditions --%>
 		<tr>
+			<td colspan="2" class="infoop">
+				<bean:message key="message.masterDegree.gratuity.paymentConditions.help"/>
+			</td>
+		</tr>
+		<tr>
 			<td colspan="2">
-				<br /><br /><br />
+				<br />
 				<b><bean:message key="label.masterDegree.gratuity.paymentConditions"/></b>
 			</td>
 		</tr>
@@ -101,13 +121,19 @@
 				<bean:message key="label.masterDegree.gratuity.until"/>&nbsp;
 				<html:text property="finalDateTotalPayment" maxlength="10" size="10"/>
 				<bean:message key="message.dateFormat"/>
+				<br /><br />
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				<br /><br />
 				<html:checkbox property="partialPayment" />
 				<bean:message key="label.masterDegree.gratuity.partialPayment"/>
+				<br />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="infoop">
+				<bean:message key="message.masterDegree.gratuity.registrationPayment.help"/>
 			</td>
 		</tr>
 		<tr>
@@ -133,15 +159,21 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<bean:message key="label.masterDegree.gratuity.value"/>:<html:text property="registrationValue" />
 				&nbsp;<bean:message key="label.masterDegree.gratuity.euro"/>
+				<br /><br /><br />
 			</td>
 		</tr>
 		<%-- Show defined Payment Phases--%>
+		<tr>
+			<td colspan="2" class="infoop">
+				<bean:message key="message.masterDegree.gratuity.paymentPhases.help"/>
+			</td>
+		</tr>
 		<logic:present name="infoPaymentPhases">
 			<bean:size id="numberPayments" name="infoPaymentPhases"/>
 			<logic:greaterThan name="numberPayments" value="0">
 				<tr>
 					<td colspan="2">
-						<br /><br />
+						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<i><bean:message key="label.masterDegree.gratuity.definedPhases"/></i>
 					</td>
@@ -202,7 +234,7 @@
 		<%-- Fields for new Payment Phase --%>
 		<tr>
 			<td colspan="2">
-				<br /><br />
+				<br />
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<i><bean:message key="label.masterDegree.gratuity.phaseDefinition"/></i>
 			</td>

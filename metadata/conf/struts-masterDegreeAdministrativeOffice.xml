@@ -2148,7 +2148,7 @@
 	>
 		<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
 		<forward name="cancel" path="/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear&amp;page=0"/>  
-		<forward name="pgMainMenu" path="/gratuitySection.do"/>  
+		<forward name="insertConfirmation" path="df.page.insertGratuityDataConfirmation"/>  
 	</action>
 	
 	<action path="/studentsGratuityList"

@@ -92,7 +92,10 @@
 	<definition name="df.page.insertGratuityData" extends="definition.masterDegreeAdministrativeOffice.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/insertGratuityData.jsp"/>
 	</definition>	
-		<definition name="chooseStudentList" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+	<definition name="df.page.insertGratuityDataConfirmation" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/insertGratuityDataConfirmation.jsp"/>
+	</definition>			
+	<definition name="chooseStudentList" extends="definition.masterDegreeAdministrativeOffice.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/chooseStudentList.jsp"/>
-	</definition>		
+	</definition>
 </tiles-definitions>

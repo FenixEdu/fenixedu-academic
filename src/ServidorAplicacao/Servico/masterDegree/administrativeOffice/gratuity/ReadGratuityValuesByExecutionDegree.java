@@ -74,7 +74,7 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 		{
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
-
+			
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(executionDegreeID);
 
@@ -124,7 +124,6 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 
 			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
 		}
-
 		return infoGratuityValues;
 	}
 }
