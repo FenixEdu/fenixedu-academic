@@ -59,5 +59,9 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
 	 * @return
 	 */
 	public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia;
+	/**
+	 * @param curricularCourse
+	 */
+	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 
 }

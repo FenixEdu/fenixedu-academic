@@ -166,5 +166,18 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		return queryList(CurricularCourseScope.class, crit);
 
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentCurricularCourseScope#readByCurricularCourse(Dominio.ICurricularCourse)
+	 */
+	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
+	{
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+		
+		return queryList(CurricularCourseScope.class, crit);
+
+		
+	}
 	
 }
