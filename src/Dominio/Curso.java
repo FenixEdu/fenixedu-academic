@@ -36,7 +36,7 @@ public class Curso implements ICurso {
     if (obj instanceof ICurso) {
       ICurso curso = (ICurso)obj;
       resultado = getSigla().equals(curso.getSigla()); 
-    } 
+    }
     return resultado;
   }
   
@@ -112,6 +112,13 @@ public class Curso implements ICurso {
 	 */
 	public void setTipoCurso(TipoCurso tipoCurso) {
 		this.tipoCurso = tipoCurso;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return getSigla().hashCode()+getNome().hashCode();
 	}
 
 }
