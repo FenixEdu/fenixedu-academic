@@ -57,11 +57,12 @@ public class InsertSectionAction extends FenixAction {
 
 		InfoSection parentSection =
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-
+			
 		if (parentSection == null) {
 
 			InfoSection infoSection =
 				new InfoSection(sectionName, order, infoSite);
+			
 
 			Object args[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
@@ -90,11 +91,11 @@ public class InsertSectionAction extends FenixAction {
 			return mapping.findForward("viewSite"); 
 			
 		} else {
-
-			ArrayList infoSectionList =
-				(ArrayList) session.getAttribute(SessionConstants.SECTIONS);
+				
+			
 			InfoSection infoSection =
-				new InfoSection(sectionName, order, infoSite, parentSection);
+				new InfoSection(sectionName, order, infoSite, parentSection);			
+			
 
 			Object args[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
@@ -117,6 +118,7 @@ public class InsertSectionAction extends FenixAction {
 				throw new FenixActionException(
 					fenixServiceException.getMessage());
 			}
+
 
 			Collections.sort(sections);
 			session.setAttribute(SessionConstants.SECTIONS, sections);

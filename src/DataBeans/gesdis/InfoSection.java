@@ -232,12 +232,8 @@ public class InfoSection implements Comparable {
 		
 		if (getSectionDepth().intValue()== section.getSectionDepth().intValue()) {
 			if (getSuperiorInfoSection()==null)  {
-				 if (section.getSuperiorInfoSection()==null) {
-				 	
-				 	return getSectionOrder().intValue()-section.getSectionOrder().intValue();
-					 }
-				 else {return compareTo(section.getSuperiorInfoSection());
-					}}
+				 return getSectionOrder().intValue()-section.getSectionOrder().intValue();
+					 }				
 			else {
 				if (getSuperiorInfoSection().equals(section.getSuperiorInfoSection())) {
 					return getSectionOrder().intValue()-section.getSectionOrder().intValue();

@@ -16,9 +16,9 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISection;
 import Dominio.ISite;
+import Dominio.Section;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
@@ -29,38 +29,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class InsertSection implements IServico {
 
-	
 	private static InsertSection service = new InsertSection();
-	
+
 	public static InsertSection getService() {
 
-		return service;	
+		return service;
 	}
 
-	
-	private InsertSection(){
+	private InsertSection() {
 	}
-
 
 	public final String getNome() {
 
 		return "InsertSection";
 	}
-	
 
-	
-	private void organizeExistingSectionsOrder(ISection superiorSection, ISite site, int insertSectionOrder)
-	throws FenixServiceException {
-		
-		IPersistentSection persistentSection=null;
-		try{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+	private void organizeExistingSectionsOrder(
+		ISection superiorSection,
+		ISite site,
+		int insertSectionOrder)
+		throws FenixServiceException {
+
+		IPersistentSection persistentSection = null;
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
 			persistentSection = persistentSuport.getIPersistentSection();
-		
-			List sectionsList = persistentSection.readBySiteAndSection(site,superiorSection);
-	
-			if (sectionsList!= null) {
-			
+
+			List sectionsList =
+				persistentSection.readBySiteAndSection(site, superiorSection);
+
+			if (sectionsList != null) {
+
 				Iterator iterSections = sectionsList.iterator();
 				while (iterSections.hasNext()) {
 
@@ -68,41 +68,37 @@ public class InsertSection implements IServico {
 					int sectionOrder = iterSection.getSectionOrder().intValue();
 
 					if (sectionOrder >= insertSectionOrder) {
-						iterSection.setSectionOrder(new Integer(sectionOrder+1));
+						iterSection.setSectionOrder(
+							new Integer(sectionOrder + 1));
 						persistentSection.lockWrite(iterSection);
-						
+
 					}
-		   			
+
 				}
 
 			}
-		}
-		catch (ExcepcaoPersistencia excepcaoPersistencia){
-	
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+
 			throw new FenixServiceException(excepcaoPersistencia);
-			}
+		}
 	}
-	
-
-
 
 	//infoItem with an infoSection
-	
+
 	public Boolean run(InfoSection infoSection) throws FenixServiceException {
 
 		ISite site = null;
-		ISection section= null;
-		ISection fatherSection= null;
-		
-		
+		ISection section = null;
+		ISection fatherSection = null;
+
+		IPersistentSection persistentSection = null;
 		try {
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 
-			IPersistentSection persistentSection =
-				persistentSuport.getIPersistentSection();
-				
+			persistentSection = persistentSuport.getIPersistentSection();
+
 			IExecutionYear executionYear =
 				persistentSuport
 					.getIPersistentExecutionYear()
@@ -124,35 +120,46 @@ public class InsertSection implements IServico {
 						.getName(),
 					executionYear);
 			IDisciplinaExecucao executionCourse =
-			persistentSuport.getIDisciplinaExecucaoPersistente()
+				persistentSuport
+					.getIDisciplinaExecucaoPersistente()
 					.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoSection
-						.getInfoSite()
-						.getInfoExecutionCourse()
-						.getSigla(),
-					executionPeriod);
-		
-			site = persistentSuport.getIPersistentSite().readByExecutionCourse(executionCourse);
-			
-			InfoSection fatherInfoSection = infoSection.getSuperiorInfoSection();
+						infoSection
+							.getInfoSite()
+							.getInfoExecutionCourse()
+							.getSigla(),
+						executionPeriod);
+			site =
+				persistentSuport.getIPersistentSite().readByExecutionCourse(
+					executionCourse);
 
-			if(fatherInfoSection != null) 
-				fatherSection = Cloner.copyInfoSection2ISection(fatherInfoSection);
+			InfoSection fatherInfoSection =
+				infoSection.getSuperiorInfoSection();
 
-			ISection existingSection = persistentSection.readBySiteAndSectionAndName(site, fatherSection, infoSection.getName());
-			
-			if (existingSection != null)
-				throw new ExistingServiceException();
-			
-			section = Cloner.copyInfoSection2ISection(infoSection);
-			section.setSite(site);
-			section.setSuperiorSection(fatherSection);
-				
+			if (fatherInfoSection.getSuperiorInfoSection() != null) {
+
+				fatherSection =
+					persistentSection.readBySiteAndSectionAndName(
+						site,
+						Cloner.copyInfoSection2ISection(
+							fatherInfoSection.getSuperiorInfoSection()),
+						fatherInfoSection.getName());
+			} else {
+				fatherSection =
+					persistentSection.readBySiteAndSectionAndName(
+						site,
+						null,
+						fatherInfoSection.getName());
+			}
+			fatherSection.setSite(site);
+
+			section = new Section(infoSection.getName(), site, fatherSection);
+			section.setSectionOrder(infoSection.getSectionOrder());
+
 			organizeExistingSectionsOrder(
 				fatherSection,
 				site,
 				infoSection.getSectionOrder().intValue());
-							
+
 			persistentSection.lockWrite(section);
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -162,4 +169,5 @@ public class InsertSection implements IServico {
 
 		return new Boolean(true);
 	}
+
 }

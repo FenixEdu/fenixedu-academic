@@ -21,12 +21,17 @@
 		<html:text property="order"/>
 	</td>
 </tr>
-
+<tr>
+<td>
 <html:reset  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>			
-    <html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
-	</html:submit>
+</td>
+<td>
+<html:submit styleClass="inputbutton">
+	<bean:message key="button.save"/>
+</html:submit>
+</td>
+</tr>
 </html:form>
 </table>
