@@ -8,6 +8,7 @@ import Dominio.Section;
 import Dominio.Site;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -50,7 +51,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	protected Object[] getAuthorizeArguments() {
-		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(0) };
+		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(0)};
 		return args;
 	}
 
@@ -59,18 +60,20 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	protected Object[] getTestSectionSuccessfullArguments() {
-		Object[] args = { new Integer(27), new Integer(6), "novaSubSeccao", new Integer(0) };
+		Object[] args =
+			{ new Integer(27), new Integer(6), "novaSubSeccao", new Integer(0)};
 		return args;
 	}
 
 	protected Object[] getTestSectionUnsuccessfullArguments() {
-		Object[] args = { new Integer(27), new Integer(9), "novaSubSeccao", new Integer(0) };
+		Object[] args =
+			{ new Integer(27), new Integer(8), "novaSubSeccao", new Integer(0)};
 		return args;
 	}
 
 	public void testInsertExistingSection() {
 
-		Object[] args = { new Integer(27), null, "Seccao1dePO", new Integer(0) };
+		Object[] args = { new Integer(27), null, "Seccao1dePO", new Integer(0)};
 
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
@@ -94,28 +97,37 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	public void testInsertNonExistingSectionBeforeFirst() {
-		
+
 		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(0)};
 
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
-			
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
-			
+
 			ISite iSite = new Site();
 			iSite.setIdInternal(new Integer(4));
-			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			ISection iSection = persistentSection.readBySiteAndSectionAndName(iSite, null, "novaSeccao");
+			iSite =
+				(ISite) persistentSuport.getIPersistentSite().readByOId(
+					iSite,
+					false);
+			IPersistentSection persistentSection =
+				persistentSuport.getIPersistentSection();
+			ISection iSection =
+				persistentSection.readBySiteAndSectionAndName(
+					iSite,
+					null,
+					"novaSeccao");
 			InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
 			assertEquals(infoSection.getName(), "novaSeccao");
 			assertEquals(infoSection.getSectionOrder(), new Integer(0));
 			assertEquals(infoSection.getSuperiorInfoSection(), null);
 
 			persistentSection.delete(iSection);
-			persistentSuport.confirmarTransaccao();			
-			
+			persistentSuport.confirmarTransaccao();
+
 			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSectionBeforeFirstDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingSectionBeforeFirst was SUCCESSFULY runned by class: "
@@ -130,20 +142,29 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	public void testInsertNonExistingSectionInMiddle() {
-		
+
 		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(1)};
 
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
-			
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
-			
+
 			ISite iSite = new Site();
 			iSite.setIdInternal(new Integer(4));
-			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			ISection iSection = persistentSection.readBySiteAndSectionAndName(iSite, null, "novaSeccao");
+			iSite =
+				(ISite) persistentSuport.getIPersistentSite().readByOId(
+					iSite,
+					false);
+			IPersistentSection persistentSection =
+				persistentSuport.getIPersistentSection();
+			ISection iSection =
+				persistentSection.readBySiteAndSectionAndName(
+					iSite,
+					null,
+					"novaSeccao");
 			InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
 			assertEquals(infoSection.getName(), "novaSeccao");
 			assertEquals(infoSection.getSectionOrder(), new Integer(1));
@@ -166,20 +187,29 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	public void testInsertNonExistingSectionBeforeEnd() {
-		
+
 		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(2)};
 
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
-			
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
-			
+
 			ISite iSite = new Site();
 			iSite.setIdInternal(new Integer(4));
-			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			ISection iSection = persistentSection.readBySiteAndSectionAndName(iSite, null, "novaSeccao");
+			iSite =
+				(ISite) persistentSuport.getIPersistentSite().readByOId(
+					iSite,
+					false);
+			IPersistentSection persistentSection =
+				persistentSuport.getIPersistentSection();
+			ISection iSection =
+				persistentSection.readBySiteAndSectionAndName(
+					iSite,
+					null,
+					"novaSeccao");
 			InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
 			assertEquals(infoSection.getName(), "novaSeccao");
 			assertEquals(infoSection.getSectionOrder(), new Integer(2));
@@ -203,7 +233,12 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 
 	public void testInsertExistingSubSection() {
 
-		Object[] args = { new Integer(27), new Integer(6), "SubSeccao1dePO", new Integer(0) };
+		Object[] args =
+			{
+				new Integer(27),
+				new Integer(6),
+				"SubSeccao1dePO",
+				new Integer(0)};
 
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
@@ -227,32 +262,49 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	public void testInsertNonExistingSubSection() {
-		
-		Object[] args = { new Integer(27), new Integer(6), "novaSubSeccao", new Integer(0)};
+
+		Object[] args =
+			{ new Integer(27), new Integer(6), "novaSubSeccao", new Integer(0)};
 
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
-			
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentSuport.iniciarTransaccao();		
+
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
 
 			ISite iSite = new Site();
 			iSite.setIdInternal(new Integer(4));
-			iSite = (ISite) persistentSuport.getIPersistentSite().readByOId(iSite, false);
+			iSite =
+				(ISite) persistentSuport.getIPersistentSite().readByOId(
+					iSite,
+					false);
 
 			ISection iSection = new Section();
 			iSection.setIdInternal(new Integer(6));
-			iSection = (ISection) persistentSuport.getIPersistentSection().readByOId(iSection, false);
-			InfoSection infoSuperiorSection = Cloner.copyISection2InfoSection(iSection);
-			
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			ISection newISection = persistentSection.readBySiteAndSectionAndName(iSite, iSection, "novaSubSeccao");
-			InfoSection infoSection = Cloner.copyISection2InfoSection(newISection);
+			iSection =
+				(ISection) persistentSuport.getIPersistentSection().readByOId(
+					iSection,
+					false);
+			InfoSection infoSuperiorSection =
+				Cloner.copyISection2InfoSection(iSection);
+
+			IPersistentSection persistentSection =
+				persistentSuport.getIPersistentSection();
+			ISection newISection =
+				persistentSection.readBySiteAndSectionAndName(
+					iSite,
+					iSection,
+					"novaSubSeccao");
+			InfoSection infoSection =
+				Cloner.copyISection2InfoSection(newISection);
 
 			assertEquals(infoSection.getName(), "novaSubSeccao");
 			assertEquals(infoSection.getSectionOrder(), new Integer(0));
-			assertEquals(infoSection.getSuperiorInfoSection(), infoSuperiorSection);
-	
+			assertEquals(
+				infoSection.getSuperiorInfoSection(),
+				infoSuperiorSection);
+
 			persistentSection.delete(newISection);
 			persistentSuport.confirmarTransaccao();
 
@@ -267,6 +319,41 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 					+ this.getClass().getName());
 			fail("testInsertNonExistingSubSection");
 		}
+	}
+
+	public void testNonExistingSuperiorSection() {
+
+		Object serviceArguments[] =
+			{
+				new Integer(27),
+				new Integer(100),
+				"novaSubSeccao",
+				new Integer(0)};
+
+		try {
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				serviceArguments);
+
+			fail(
+				getNameOfServiceToBeTested()
+					+ "fail testNonExistingSuperiorSection");
+
+		} catch (NotAuthorizedException ex) {
+			System.out.println(
+				"testNonExistingSuperiorSection was SUCCESSFULY runned by service: "
+					+ getNameOfServiceToBeTested());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testNonExistingSuperiorSection was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("Unable to run service: " + getNameOfServiceToBeTested());
+
+		}
+
 	}
 
 }
