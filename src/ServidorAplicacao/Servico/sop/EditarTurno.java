@@ -286,37 +286,8 @@ public class EditarTurno implements IServico {
 		/**
 		 * 
 		 */
-		private InvalidNewShiftType() {
+		InvalidNewShiftType() {
 			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private InvalidNewShiftType(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private InvalidNewShiftType(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidNewShiftType(Throwable cause) {
-			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private InvalidNewShiftType(String message, Throwable cause) {
-			super(message, cause);
 		}
 
 	}
@@ -330,39 +301,8 @@ public class EditarTurno implements IServico {
 		/**
 		 * 
 		 */
-		private InvalidNewShiftExecutionCourse() {
+		InvalidNewShiftExecutionCourse() {
 			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private InvalidNewShiftExecutionCourse(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private InvalidNewShiftExecutionCourse(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidNewShiftExecutionCourse(Throwable cause) {
-			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private InvalidNewShiftExecutionCourse(
-			String message,
-			Throwable cause) {
-			super(message, cause);
 		}
 
 	}
@@ -376,37 +316,8 @@ public class EditarTurno implements IServico {
 		/**
 		 * 
 		 */
-		private InvalidNewShiftCapacity() {
+		InvalidNewShiftCapacity() {
 			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private InvalidNewShiftCapacity(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private InvalidNewShiftCapacity(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidNewShiftCapacity(Throwable cause) {
-			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private InvalidNewShiftCapacity(String message, Throwable cause) {
-			super(message, cause);
 		}
 
 	}
@@ -425,23 +336,9 @@ public class EditarTurno implements IServico {
 		}
 
 		/**
-		 * @param errorType
-		 */
-		private ExistingShiftException(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private ExistingShiftException(String s) {
-			super(s);
-		}
-
-		/**
 		 * @param cause
 		 */
-		private ExistingShiftException(Throwable cause) {
+		ExistingShiftException(Throwable cause) {
 			super(cause);
 		}
 
@@ -456,29 +353,8 @@ public class EditarTurno implements IServico {
 		/**
 		 * 
 		 */
-		private InvalidFinalAvailabilityException() {
+		InvalidFinalAvailabilityException() {
 			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private InvalidFinalAvailabilityException(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private InvalidFinalAvailabilityException(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidFinalAvailabilityException(Throwable cause) {
-			super(cause);
 		}
 
 	}
