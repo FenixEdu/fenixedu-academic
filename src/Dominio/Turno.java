@@ -20,6 +20,8 @@ public class Turno extends DomainObject implements ITurno {
 	protected Integer _lotacao;
 	protected IDisciplinaExecucao _disciplinaExecucao;
 	private List associatedTeacherProfessorShipPercentage;
+	
+	private List associatedLessons;
 
 	// c�digos internos da base de dados	
 	private Integer chaveDisciplinaExecucao;
@@ -117,6 +119,20 @@ public class Turno extends DomainObject implements ITurno {
 	 */
 	public void setAssociatedTeacherProfessorShipPercentage(List list) {
 		associatedTeacherProfessorShipPercentage = list;
+	}
+
+	/**
+	 * @return List lessons that belong to this shift
+	 */
+	public List getAssociatedLessons() {
+		return associatedLessons;
+	}
+
+	/**
+	 * @param lessons list of lessons that belong to this shift
+	 */
+	public void setAssociatedLessons(List lessons) {
+		associatedLessons = lessons;
 	}
 
 }
