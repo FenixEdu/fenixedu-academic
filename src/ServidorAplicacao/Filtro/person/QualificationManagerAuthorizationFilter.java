@@ -29,213 +29,203 @@ import Util.RoleType;
 public class QualificationManagerAuthorizationFilter extends Filtro
 {
 
-	public final static QualificationManagerAuthorizationFilter instance =
-		new QualificationManagerAuthorizationFilter();
+    public final static QualificationManagerAuthorizationFilter instance =
+        new QualificationManagerAuthorizationFilter();
 
-	/**
+    /**
 	 * The singleton access method of this class.
 	 * 
 	 * @return Returns the instance of this class responsible for the authorization access to services.
 	 */
-	public static Filtro getInstance()
-	{
-		return instance;
-	}
+    public static Filtro getInstance()
+    {
+        return instance;
+    }
 
-	//Role Type of teacher
-	protected RoleType getRoleTypeTeacher()
-	{
-		return RoleType.TEACHER;
-	}
+    //Role Type of teacher
+    protected RoleType getRoleTypeTeacher()
+    {
+        return RoleType.TEACHER;
+    }
 
-	//Role Type of Grant Owner Manager
-	protected RoleType getRoleTypeGrantOwnerManager()
-	{
-		return RoleType.GRANT_OWNER_MANAGER;
-	}
+    //Role Type of Grant Owner Manager
+    protected RoleType getRoleTypeGrantOwnerManager()
+    {
+        return RoleType.GRANT_OWNER_MANAGER;
+    }
 
-	/**
+    /**
 	 * Runs the filter
 	 * 
 	 * @param id
 	 * @param service
 	 * @param arguments
 	 */
-	public void preFiltragem(IUserView id, IServico service, Object[] arguments)
-		throws NotAuthorizedException
-	{
-		try
-		{
-			//Verify if needed fields are null
-			if ((id == null) || (id.getRoles() == null))
-			{
-				throw new NotAuthorizedException();
-			}
+    public void preFiltragem(IUserView id, IServico service, Object[] arguments)
+        throws NotAuthorizedException
+    {
+        try
+        {
+            //Verify if needed fields are null
+            if ((id == null) || (id.getRoles() == null))
+            {
+                throw new NotAuthorizedException();
+            }
 
-			InfoQualification infoqualification = null;
-			try
-			{
-				//Read the qualification
-				//If the id is null and there is a infoqualification as second argument
-				if (arguments[0] == null && arguments[1] != null) //Create!
-					infoqualification = (InfoQualification) arguments[1];
-				else
-					infoqualification = getInfoQualification((Integer) arguments[0]);
+            if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
+                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
+                throw new NotAuthorizedException();
 
-			} catch (Exception e)
-			{
-				throw new NotAuthorizedException();
-			}
+            boolean isNew = (arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0));
 
-			if (infoqualification == null)
-				throw new NotAuthorizedException();
+            if (!isNew)
+            {
+                boolean valid = false;
+                
+                InfoQualification infoQualification = getInfoQualification((Integer) arguments[0]);
 
-			//Verify if:
-			// 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
-			// 2: The user ir a Teacher and the qualification is his own
-			boolean valido = false;
+                if (infoQualification == null)
+                    throw new NotAuthorizedException();
 
-			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-				&& isGrantOwner(infoqualification))
-			{
-				valido = true;
-			}
+                //Verify if:
+                // 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
+                // 2: The user ir a Teacher and the qualification is his own
 
-			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
-				&& isTeacher(infoqualification)
-				&& isOwnQualification(id.getUtilizador(), infoqualification))
-			{
-				valido = true;
-			}
+                if (isGrantOwner(infoQualification))
+                    valid = true;
 
-			if (!valido)
-				throw new NotAuthorizedException();
+                if (isTeacher(infoQualification)
+                    && isOwnQualification(id.getUtilizador(), infoQualification))
+                    valid = true;
 
-		} catch (RuntimeException e)
-		{
-			throw new NotAuthorizedException();
-		}
-	}
+                if (!valid)
+                    throw new NotAuthorizedException();
+            }
+        } catch (RuntimeException e)
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
-	/**
+    /**
 	 * Verifies if the qualification user ir a grant owner
 	 * 
 	 * @param arguments
 	 * @return true or false
 	 */
-	private boolean isGrantOwner(InfoQualification infoqualification)
-	{
-		ISuportePersistente persistentSuport = null;
-		IPersistentGrantOwner persistentGrantOwner = null;
+    private boolean isGrantOwner(InfoQualification infoqualification)
+    {
+        ISuportePersistente persistentSuport = null;
+        IPersistentGrantOwner persistentGrantOwner = null;
 
-		try
-		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
+        try
+        {
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
 
-			//Try to read the grant owner from de database
-			IGrantOwner grantowner = null;
-			grantowner =
-				persistentGrantOwner.readGrantOwnerByPerson(
-					infoqualification.getInfoPerson().getIdInternal());
+            //Try to read the grant owner from de database
+            IGrantOwner grantowner = null;
+            grantowner =
+                persistentGrantOwner.readGrantOwnerByPerson(
+                    infoqualification.getInfoPerson().getIdInternal());
 
-			if (grantowner != null) //The grant owner exists!
-			{
-				return true;
-			}
-			return false;
+            if (grantowner != null) //The grant owner exists!
+            {
+                return true;
+            }
+            return false;
 
-		} catch (Exception e)
-		{
-			return false; //The qualification user is not a grant owner.
-		}
-	}
+        } catch (Exception e)
+        {
+            return false; //The qualification user is not a grant owner.
+        }
+    }
 
-	/**
+    /**
 	 * Verifies if the qualification user ir a teacher
 	 * 
 	 * @param arguments
 	 * @return true or false
 	 */
-	private boolean isTeacher(InfoQualification infoqualification)
-	{
-		ISuportePersistente persistentSuport = null;
-		IPersistentTeacher persistentTeacher = null;
+    private boolean isTeacher(InfoQualification infoqualification)
+    {
+        ISuportePersistente persistentSuport = null;
+        IPersistentTeacher persistentTeacher = null;
 
-		try
-		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentTeacher = persistentSuport.getIPersistentTeacher();
+        try
+        {
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentTeacher = persistentSuport.getIPersistentTeacher();
 
-			//Try to read the teacher from de database
-			ITeacher teacher = null;
-			teacher =
-				persistentTeacher.readTeacherByUsername(infoqualification.getInfoPerson().getUsername());
+            //Try to read the teacher from de database
+            ITeacher teacher = null;
+            teacher =
+                persistentTeacher.readTeacherByUsername(infoqualification.getInfoPerson().getUsername());
 
-			if (teacher != null) //The teacher exists!
-			{
-				return true;
-			}
-			return false; //The qualification user is not a teacher
+            if (teacher != null) //The teacher exists!
+            {
+                return true;
+            }
+            return false; //The qualification user is not a teacher
 
-		} catch (Exception e)
-		{
-			return false;
-		}
-	}
+        } catch (Exception e)
+        {
+            return false;
+        }
+    }
 
-	/**
+    /**
 	 * Verifies if the qualification to be changed is owned by the user that is running the service
 	 * 
 	 * @param arguments
 	 * @return true or false
 	 */
-	private boolean isOwnQualification(String username, InfoQualification infoqualification)
-	{
-		try
-		{
-			if (username.equals(infoqualification.getInfoPerson().getUsername()))
-			{
-				return true;
-			}
-		} catch (Exception e)
-		{
-			return false;
-		}
-		return false;
-	}
+    private boolean isOwnQualification(String username, InfoQualification infoqualification)
+    {
+        try
+        {
+            if (username.equals(infoqualification.getInfoPerson().getUsername()))
+            {
+                return true;
+            }
+        } catch (Exception e)
+        {
+            return false;
+        }
+        return false;
+    }
 
-	/**
+    /**
 	 * Returns the qualification form the database
 	 * 
 	 * @param arguments
 	 * @return infoqualification
 	 */
-	private InfoQualification getInfoQualification(Integer qualificationKey)
-	{
-		ISuportePersistente persistentSuport = null;
-		IPersistentQualification persistentQualification = null;
+    private InfoQualification getInfoQualification(Integer qualificationKey)
+    {
+        ISuportePersistente persistentSuport = null;
+        IPersistentQualification persistentQualification = null;
 
-		try
-		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentQualification = persistentSuport.getIPersistentQualification();
+        try
+        {
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentQualification = persistentSuport.getIPersistentQualification();
 
-			//Try to read the qualification from the database
-			IQualification qualification = null;
-			qualification =
-				(IQualification) persistentQualification.readByOID(
-					Qualification.class,
-					qualificationKey);
+            //Try to read the qualification from the database
+            IQualification qualification = null;
+            qualification =
+                (IQualification) persistentQualification.readByOID(
+                    Qualification.class,
+                    qualificationKey);
 
-			if (qualification == null)
-				return null;
-			else
-				return Cloner.copyIQualification2InfoQualification(qualification);
+            if (qualification == null)
+                return null;
+            else
+                return Cloner.copyIQualification2InfoQualification(qualification);
 
-		} catch (Exception e)
-		{
-			return null;
-		}
-	}
+        } catch (Exception e)
+        {
+            return null;
+        }
+    }
 }

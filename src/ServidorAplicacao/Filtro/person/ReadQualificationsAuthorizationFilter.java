@@ -77,17 +77,21 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
 			//Verify if:
 			// 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
 			// 2: The user ir a Teacher and the qualification is his own
-			if ((!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
-				|| (!isGrantOwner((String) arguments[0])))
+            boolean valid = false;
+            
+			if ((AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
+				&& isGrantOwner((String) arguments[0]))
 			{
-				throw new NotAuthorizedException();
+				valid = true;
 			}
 
-			if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
+			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
 			{
-				throw new NotAuthorizedException();
+				valid = true;
 			}
-
+            
+            if (!valid)
+                throw new NotAuthorizedException(); 
 		} catch (RuntimeException e)
 		{
 			throw new NotAuthorizedException();
