@@ -107,7 +107,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		DynaActionForm sectionForm = (DynaValidatorForm) form;
 		String sectionName = (String) sectionForm.get("name");
 		Integer order = (Integer) sectionForm.get("sectionOrder");
-
+		order=new Integer(order.intValue()-1);
 		HttpSession session = request.getSession();
 
 		String parentName = (String) sectionForm.get("parentSection");
@@ -121,6 +121,29 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		InfoSection oldSection =
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 
+			Object readArgs[] = { infoSite };
+								ArrayList sections;
+			GestorServicos manager = GestorServicos.manager();					
+		if (order.intValue()==-2) {
+			//inserir no fim
+			
+					try {
+						sections =
+							(ArrayList) manager.executar(
+								userView,
+								"ReadSections",
+								readArgs);
+					} catch (FenixServiceException fenixServiceException) {
+						throw new FenixActionException(fenixServiceException.getMessage());
+					}
+			if (sections!=null && sections.size()!=0)		
+			{order=new Integer(sections.size()-2);} 	
+			else {
+				order = new Integer(0);
+			}
+			
+		}
+
 		InfoSection newSection =
 			new InfoSection(
 				sectionName,
@@ -130,7 +153,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
 		//perform edition
 		Object editionArgs[] = { oldSection, newSection };
-		GestorServicos manager = GestorServicos.manager();
+		
 		try {
 			manager.executar(userView, "EditSection", editionArgs);
 		} catch (FenixServiceException fenixServiceException) {
@@ -138,8 +161,8 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		}
 
 		//read sections
-		Object readArgs[] = { infoSite };
-		ArrayList sections;
+		
+		
 		try {
 			sections =
 				(ArrayList) manager.executar(

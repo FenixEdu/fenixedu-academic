@@ -118,6 +118,8 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 		newInfoItem.setInfoSection(infoSection);
 		newInfoItem.setInformation((String) itemForm.get("information"));
 		Integer order = new Integer((String) itemForm.get("itemOrder"));
+		if (items!=null && items.size()!=0 ){
+		
 		switch (order.intValue()) {
 			case -1 :
 				order=new Integer(items.size()- 1);
@@ -126,6 +128,10 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 			default :
 				order= new Integer(order.intValue()-1);
 				break;
+		}
+		}
+		else {
+			order = new Integer(0);
 		}
 		newInfoItem.setItemOrder(order);
 		newInfoItem.setName((String) itemForm.get("name"));
