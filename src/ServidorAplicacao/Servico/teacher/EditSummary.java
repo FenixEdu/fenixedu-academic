@@ -126,10 +126,10 @@ public class EditSummary implements IService
                 }
                 
                 //room
-                summary.setRoom(lesson.getSala());
+                summary.setRoom(lesson.getSala());//not necessary
 
                 //validate da summary's date
-                infoSummary.setSummaryHour(lesson.getInicio());
+                infoSummary.setSummaryHour(lesson.getInicio());//not necessary
                 if (!verifyValidDateSummary(summary.getShift(), infoSummary.getSummaryDate(),
                         infoSummary.getSummaryHour()))
                 {

@@ -63,12 +63,12 @@
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
 				<bean:write name="infoLesson" property="infoSala.nome" />
 			:</td>
-			<td><html:radio name="infoSummary" property="lesson" value="<%= lessonId.toString() %>"/></td>
+			<td><html:radio name="infoSummary" property="lesson" value="<%= lessonId.toString() %>" /></td>
 		</tr>
 	</logic:iterate>
 	<tr>
 		<td><bean:message key="label.extra.lesson" />:</td>
-		<td><html:radio name="infoSummary" property="lesson" value="0"/></td>
+		<td><html:radio name="infoSummary" property="lesson" value="0" /></td>
 	</tr>
 	<tr>
 		<td colspan='2'>&nbsp;</td>
@@ -88,6 +88,7 @@
 				<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
 			</html:select></td>		
 	<tr/>	
+
 	<tr>
 		<td><bean:message key="label.studentNumber.attended.lesson" />:</td>
 		<td><html:text name="infoSummary" property="studentsNumber" size="4"/></td>

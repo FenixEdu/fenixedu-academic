@@ -106,10 +106,12 @@
             <form-property name="bySummaryType" type="java.lang.String"/>  
             <form-property name="byShift" type="java.lang.String"/>
             <form-property name="byTeacher" type="java.lang.String"/>
+            <form-property name="onlyType" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>        
         <form-bean name="summaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="forHidden" type="java.lang.String"/>
             <form-property name="title" type="java.lang.String"/>
             <form-property name="summaryText" type="java.lang.String"/>
             <form-property name="summaryDateInput" type="java.lang.String"/>

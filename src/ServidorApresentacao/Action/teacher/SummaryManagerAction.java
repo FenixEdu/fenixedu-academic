@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -33,6 +35,7 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoAula;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -84,11 +87,9 @@ public class SummaryManagerAction extends
         }
 
         try {
-            //ComparatorChain comparatorChain = new ComparatorChain();
-            //comparatorChain.addComparator(new BeanComparator("summaryDate"),
-            // true);
-            //comparatorChain.addComparator(new BeanComparator("summaryHour"),
-            // true);
+            selectChoices(request, ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+                    .getComponent()), lessonType);
+            	
             Collections.sort(
                     ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
                             .getComponent()).getInfoSummaries(), Collections
@@ -103,6 +104,22 @@ public class SummaryManagerAction extends
         }
         request.setAttribute("siteView", siteView);
         return mapping.findForward("showSummaries");
+    }
+
+    private void selectChoices(HttpServletRequest request, InfoSiteSummaries summaries, Integer lessonType) {
+        if (request.getParameter("onlyType") != null
+                && request.getParameter("onlyType").length() > 0) {
+            if(request.getParameter("onlyType").equals("lesson") && lessonType != null && lessonType.intValue() != 0) {
+              final TipoAula lessonTypeSelect = new TipoAula(lessonType.intValue());
+              List infoShiftsOnlyType = (List) CollectionUtils.select(summaries.getInfoShifts(), new Predicate() {
+
+                public boolean evaluate(Object arg0) {
+                    return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
+                }});                
+            
+               summaries.setInfoShifts(infoShiftsOnlyType);
+            }            
+        }
     }
 
     public ActionForward prepareInsertSummary(ActionMapping mapping,
@@ -140,6 +157,7 @@ public class SummaryManagerAction extends
         try {
             choosenShift(request, ((InfoSiteSummaries) siteView.getComponent())
                     .getInfoShifts());
+            choosenLesson(request);
             preSelectTeacherLogged(form, (InfoSiteSummaries) siteView.getComponent());
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,7 +167,6 @@ public class SummaryManagerAction extends
         return mapping.findForward("insertSummary");
     }
 
-  
     private void choosenShift(HttpServletRequest request, List infoShifts) {
         if (request.getParameter("shift") != null
                 && request.getParameter("shift").length() > 0) {
@@ -179,6 +196,13 @@ public class SummaryManagerAction extends
         }
     }
 
+    private void choosenLesson(HttpServletRequest request) {
+        if (request.getParameter("forHidden") != null
+                && request.getParameter("forHidden").length() > 0) {
+              request.setAttribute("forHidden", request.getParameter("forHidden"));                 
+        }
+    }
+    
     private void preSelectTeacherLogged(ActionForm form, InfoSiteSummaries summaries) {
         if(summaries.getTeacherId() != null) {
             DynaActionForm insertSummaryForm = (DynaActionForm) form;
@@ -209,7 +233,7 @@ public class SummaryManagerAction extends
             actionErrors.add("error.insertSummary", new ActionError(
                     ("error.summary.impossible.insert")));
             saveErrors(request, actionErrors);
-            return prepareEditSummary(mapping, form, request, response);
+            return prepareInsertSummary(mapping, form, request, response);
         }
         return showSummaries(mapping, form, request, response);
     }
@@ -338,6 +362,7 @@ public class SummaryManagerAction extends
 
         try {
             shiftChanged(request, siteView);
+            choosenLesson(request, (InfoSiteSummary) siteView.getComponent());
         } catch (Exception e) {
             e.printStackTrace();
             return mapping.getInputForward();
@@ -346,6 +371,20 @@ public class SummaryManagerAction extends
         request.setAttribute("siteView", siteView);
 
         return mapping.findForward("editSummary");
+    }
+
+    private void choosenLesson(HttpServletRequest request, InfoSiteSummary summary) {
+        // TODO Auto-generated method stub
+        if (request.getParameter("forHidden") != null
+                && request.getParameter("forHidden").length() > 0) {
+              request.setAttribute("forHidden", request.getParameter("forHidden"));                 
+        } else {
+            if(summary.getInfoSummary().getIsExtraLesson().equals(Boolean.TRUE)) {
+            request.setAttribute("forHidden", "false");  
+            } else if(summary.getInfoSummary().getIsExtraLesson().equals(Boolean.FALSE)) {
+                request.setAttribute("forHidden", "t");  
+            } 
+        }
     }
 
     private void shiftChanged(HttpServletRequest request, SiteView siteView) {

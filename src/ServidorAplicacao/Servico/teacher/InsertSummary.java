@@ -114,10 +114,11 @@ public class InsertSummary implements IServico
                 IAula lesson = findlesson(shift, infoSummary);
 
                 //room
-                summary.setRoom(lesson.getSala());
+                summary.setRoom(lesson.getSala());//not necessary
 
                 //validate da summary's date
-                infoSummary.setSummaryHour(lesson.getInicio());
+                infoSummary.setSummaryHour(lesson.getInicio());//not necessary
+                
                 if (!verifyValidDateSummary(shift, infoSummary.getSummaryDate(), infoSummary
                         .getSummaryHour()))
                 {
@@ -139,7 +140,6 @@ public class InsertSummary implements IServico
             if (infoSummary.getInfoProfessorship() != null
                     && infoSummary.getInfoProfessorship().getIdInternal() != null)
             {
-                System.out.println("professor ship");
                 IPersistentProfessorship persistentProfessorship = persistentSuport
                         .getIPersistentProfessorship();
 
