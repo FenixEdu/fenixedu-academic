@@ -3,10 +3,6 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.stud
 import java.util.ArrayList;
 import java.util.List;
 
-import Dominio.IPessoa;
-import Dominio.IStudent;
-import Dominio.Pessoa;
-import Dominio.Student;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -35,23 +31,26 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber implements IServic
 		return "ReadStudentsByNameIDnumberIDtypeAndStudentNumber";
 	}
 
-	public List run(String studentName, Integer studentNumber, String idNumber, TipoDocumentoIdentificacao idType) throws FenixServiceException {
+	public List run(String studentName, String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber) throws FenixServiceException {
 		List result = null;
+		
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			
-			IPessoa personCriteria = new Pessoa();
-			personCriteria.setNumeroDocumentoIdentificacao(idNumber);
-			personCriteria.setTipoDocumentoIdentificacao(idType);
-			personCriteria.setNome(studentName);
+//			IPessoa personCriteria = new Pessoa();
+//			personCriteria.setNumeroDocumentoIdentificacao(idNumber);
+//			personCriteria.setTipoDocumentoIdentificacao(idType);
+//			personCriteria.setNome(studentName);
+//			
+//			IStudent studentCriteria = new Student();
+//			studentCriteria.setNumber(studentNumber);
+//			studentCriteria.setPerson(personCriteria);
+//
+//			result = persistentStudent.readByCriteria(studentCriteria);
 			
-			IStudent studentCriteria = new Student();
-			studentCriteria.setNumber(studentNumber);
-			studentCriteria.setPerson(personCriteria);
+			result = persistentStudent.readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(studentName, idNumber, idType, studentNumber);
 
-			result = persistentStudent.readByCriteria(studentCriteria);
-			
 			if(result == null) {
 				result = new ArrayList();
 			}

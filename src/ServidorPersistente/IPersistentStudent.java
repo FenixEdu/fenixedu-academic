@@ -6,6 +6,7 @@ import Dominio.IPessoa;
 import Dominio.IStudent;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
+import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author dcs-rjao
@@ -61,5 +62,6 @@ public interface IPersistentStudent extends IPersistentObject {
 	 */
 	public List readbyPerson(IPessoa pessoa) throws ExcepcaoPersistencia;
 
+	public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(String studentName, String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber) throws ExcepcaoPersistencia;
 
 }

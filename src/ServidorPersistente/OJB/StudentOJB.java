@@ -23,6 +23,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
+import Util.TipoDocumentoIdentificacao;
 
 public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 
@@ -372,4 +373,28 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 		return queryList(Student.class, criteria);
 	}
 
+	public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(String studentName, String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+
+		if(studentName != null) {
+			criteria.addEqualTo("person.nome", studentName);
+		}
+
+		if(idNumber != null) {
+			criteria.addEqualTo("person.numeroDocumentoIdentificacao", idNumber);
+		}
+
+		if(idType != null) {
+			criteria.addEqualTo("person.tipoDocumentoIdentificacao", idType.getTipo());
+		}
+
+		if(studentNumber != null) {
+			criteria.addEqualTo("number", studentNumber);
+		}
+		
+		criteria.addEqualTo("degreeType", TipoCurso.MESTRADO_OBJ.getTipoCurso());
+
+		return queryList(Student.class, criteria);
+	}
 }
