@@ -26,7 +26,7 @@
 	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
 	<li><bean:message key="link.teachers"/></li>
 </html:link>
-	<html:link page="/logoff.do">
+	<html:link forward="logoff">
 	<li><bean:message key="link.logout"/></li>
 </html:link>
 
