@@ -36,7 +36,7 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 	private String _telefone = null;
 	private String _email = null;
 	private String _numMecanografico = null;
-	
+
 	private String _statusAssiduidade = null;
 
 	private String _siglaCentroCusto = null;
@@ -229,25 +229,18 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 		setTelefone(pessoa.getTelefone());
 		setEmail(pessoa.getEmail());
 		setNumMecanografico(funcionario.getNumeroMecanografico());
-		
+
 		setStatusAssiduidade(statusAssiduidade.getDesignacao());
 
 		setSiglaCentroCusto(centroCusto.getSigla());
-		setDescricaoCentroCusto(
-			centroCusto.getDepartamento()
-				+ "<br>"
-				+ centroCusto.getSeccao1()
-				+ "<br>"
-				+ centroCusto.getSeccao2());
+		setDescricaoCentroCusto(centroCusto.getDepartamento() + "<br>" + centroCusto.getSeccao1() + "<br>" + centroCusto.getSeccao2());
 
 		ListIterator iterador = rotacaoHorario.listIterator();
 		ArrayList listaHorariosDia = new ArrayList();
 		while (iterador.hasNext()) {
-			Horario horarioDia = (Horario)iterador.next();
+			Horario horarioDia = (Horario) iterador.next();
 			listaHorariosDia.add(
-				new AssociarHorarioForm(
-					horarioDia,
-					(ArrayList)listaRegimesRotacao.get(new Integer(horarioDia.getPosicao()))));
+				new AssociarHorarioForm(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao()))));
 		}
 
 		setRotacaoHorario(listaHorariosDia);
@@ -306,13 +299,20 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 				Timestamp dataFim = new Timestamp(calendarFim.getTimeInMillis());
 				setDataFimEscolha(dataFim);
 
+				Calendar calendarioInicioAplicacao = Calendar.getInstance();
+				calendarioInicioAplicacao.setLenient(false);
+				calendarioInicioAplicacao.clear();
+				calendarioInicioAplicacao.set(2003, Calendar.MAY, 1, 00, 00, 00);
+
+				if (calendarInicio.before(calendarioInicioAplicacao)) {
+					errors.add("datas", new ActionError("error.dataValidade.antes1Maio"));
+				}
+
 				if (!(dataInicio.getTime() <= dataFim.getTime())) {
 					errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
 				} else {
 					HttpSession session = request.getSession();
-					session.setAttribute(
-						Constants.INICIO_CONSULTA,
-						new Date(calendarInicio.getTimeInMillis()));
+					session.setAttribute(Constants.INICIO_CONSULTA, new Date(calendarInicio.getTimeInMillis()));
 					session.setAttribute(Constants.FIM_CONSULTA, new Date(calendarFim.getTimeInMillis()));
 				}
 			}
