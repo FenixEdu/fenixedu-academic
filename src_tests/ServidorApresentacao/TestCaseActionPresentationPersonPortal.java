@@ -39,4 +39,11 @@ public abstract class TestCaseActionPresentationPersonPortal extends TestCaseAct
 		return "/WEB-INF/tests/web-person.xml";
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
+	 */
+	protected String getRequestPathInfoPathAction() {
+		return "person";
+	}
+
 }
