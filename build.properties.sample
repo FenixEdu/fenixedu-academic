@@ -119,7 +119,13 @@ slide.config=/home/marvin/workspace/fenix_head/build/standalone/ciapl/WEB-INF/cl
 # Allowed Roles Configuration
 #------------------------------------------------------------------------------
 #
-filter.hostnames= localhost
+#  filter.hostnames: comma seperated list of hostnames. The specified hostname
+#                    can is expected to be anything following the http:// 
+#                    string.
+#  filter.hostname.<hostname>: comma seperated list of RoleTypes that are to
+#                              be provided by the server <hostname>.
+#
+filter.hostnames=localhost
 filter.hostname.localhost=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
 	MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
 	MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
