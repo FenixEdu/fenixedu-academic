@@ -13,13 +13,12 @@
         </td>
     </tr>
 </table>
-<br/><br/>
+<br />
+<br />
 <span class="error"><html:errors/></span>
-
 <bean:define id="deleteConfirm">
 	return confirm('<bean:message key="message.confirm.delete.exam"/>')
 </bean:define>
-
 <logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
 	<table align="center">
 		<tr>
@@ -64,10 +63,10 @@
 						<bean:message key="message.exam.no.rooms"/>
 					</logic:notPresent>					
 				</td>
-				<td>
+				<td class="listClasses">
 					<%= ((InfoViewExamByDayAndShift) infoViewExam).getNumberStudentesAttendingCourse().intValue() - seatsReserved %>
 				</td>
-				<td>
+				<td class="listClasses">
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=edit"><bean:message key="label.edit"/></html:link>;
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=delete" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'><bean:message key="label.delete"/></html:link>
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=addExecutionCourse"><br /><bean:message key="label.add.executionCourse"/></html:link>

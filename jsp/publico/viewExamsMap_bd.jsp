@@ -12,7 +12,11 @@
          </td>
     </tr>
 </table>
-<br/>
+<br />
+<center>
+<font color="red" size="3">Atenção às notas em baixo!<font>
+<center/>
+<br />
 <bean:define id="infoExecutionDegree" name="component" property="infoExecutionDegree" />
 <logic:equal name="infoExecutionDegree" property="temporaryExamMap" value="true">
 	<center>
