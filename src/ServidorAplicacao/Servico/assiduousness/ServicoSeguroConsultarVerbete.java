@@ -861,7 +861,9 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					}
 
 					if (iteradorMarcacoes.nextIndex() < 3) {
-						limita5Horas = true;
+						if (!coincideJustificacoes(entrada, saida)) {
+							limita5Horas = true;
+						}
 					}
 					IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
 					saldo =
@@ -879,6 +881,32 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		}
 
 		limpaListaSaldos(saldo);
+	}
+
+	private boolean coincideJustificacoes(MarcacaoPonto entrada, MarcacaoPonto saida) {
+		Calendar inicioJustificacao = Calendar.getInstance();
+		inicioJustificacao.setTimeInMillis(entrada.getData().getTime());
+		inicioJustificacao.set(Calendar.DAY_OF_MONTH, 1);
+		inicioJustificacao.set(Calendar.MONTH, 0);
+		inicioJustificacao.set(Calendar.YEAR, 1970);
+
+		Calendar fimJustificacao = Calendar.getInstance();
+		fimJustificacao.setTimeInMillis(saida.getData().getTime());
+		fimJustificacao.set(Calendar.DAY_OF_MONTH, 1);
+		fimJustificacao.set(Calendar.MONTH, 0);
+		fimJustificacao.set(Calendar.YEAR, 1970);
+
+		ListIterator iterador = _listaJustificacoes.listIterator();
+		while (iterador.hasNext()) {
+			Justificacao justificacao = (Justificacao) iterador.next();
+
+			if (justificacao.getHoraInicio().equals(inicioJustificacao.getTime())
+				&& justificacao.getHoraFim().equals(fimJustificacao.getTime())) {
+
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void limpaListaSaldos(long saldo) {
