@@ -18,6 +18,7 @@
 <!ENTITY almeida SYSTEM "repository_almeida.xml">
 <!ENTITY posgrad SYSTEM "repository_posgrad.xml">
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
+<!ENTITY teacher-credits SYSTEM "repository_creditsTeacher.xml">
 ]>
 
 
@@ -39,7 +40,8 @@
     &sopload;
     &gesdis;
     &authentication-roles;
+    &teacher-credits;
     &almeida;
     &posgrad;
-
+	
 </descriptor-repository>
