@@ -59,7 +59,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 		ActionError error = null;
 
-		if(!request.getSession(false).getAttributeNames().hasMoreElements()) {
+		if(request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
 			ActionErrors errors = new ActionErrors();
 			error = new ActionError("error.invalid.session");
 			errors.add("error.invalid.session", error);
