@@ -839,7 +839,7 @@
 		column="LAB_HOURS"
 		jdbc-type="DOUBLE"
 	/>
-	<field-descriptor
+<!--	<field-descriptor
 		name="credits"
 		column="CREDITS"
 		jdbc-type="DOUBLE"
@@ -848,7 +848,7 @@
 		name="executionYear"
 		column="EXECUTION_YEAR"
 		jdbc-type="INTEGER"
-	/>
+	/>-->
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
