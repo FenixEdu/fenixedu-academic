@@ -381,7 +381,7 @@ public class EnrolmentEvaluationOJBTest extends TestCaseOJB {
 			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
 			ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
-			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(curricularCourse, curricularSemester, branch, null);
 			IEnrolment enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(studentCurricularPlan,curricularCourseScope);
 			assertNotNull(studentCurricularPlan);
 			assertNotNull(degreeCurricularPlan);
@@ -419,7 +419,7 @@ public class EnrolmentEvaluationOJBTest extends TestCaseOJB {
 			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
 			ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
-			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(curricularCourse, curricularSemester, branch, null);
 			IEnrolment enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(studentCurricularPlan,curricularCourseScope);
 			assertNotNull(studentCurricularPlan);
 			assertNotNull(degreeCurricularPlan);

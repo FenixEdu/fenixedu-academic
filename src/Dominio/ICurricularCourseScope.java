@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.Calendar;
+
 
 
 /**
@@ -20,6 +22,9 @@ public interface ICurricularCourseScope extends IDomainObject {
 	public Double getTheoPratHours();
 	public Double getTheoreticalHours();
 	public Double getCredits();
+	public Double getEctsCredits();
+	public Calendar getBeginDate();
+	public Calendar getEndDate();
 //	public Integer getExecutionYear();
 
 	public void setMaxIncrementNac(Integer integer);
@@ -33,5 +38,8 @@ public interface ICurricularCourseScope extends IDomainObject {
 	public void setTheoPratHours(Double double1);
 	public void setTheoreticalHours(Double double1);
 	public void setCredits(Double double1);
+	public void setEctsCredits(Double double1);
+	public void setBeginDate(Calendar beginDate);
+	public void setEndDate(Calendar endDate);
 //	public void setExecutionYear(Integer integer);
 }

@@ -1,6 +1,6 @@
 package Dominio;
 
-
+import java.util.Calendar;
 
 /**
  * @author dcs-rjao
@@ -13,21 +13,25 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 	private Integer curricularCourseKey;
 	private Integer curricularSemesterKey;
 	private Integer branchKey;
-	
+
 	private ICurricularCourse curricularCourse;
 	private ICurricularSemester curricularSemester;
 	private IBranch branch;
-	
+
 	private Integer maxIncrementNac;
 	private Integer minIncrementNac;
 	private Integer weigth;
-//	private Integer executionYear;
-	
+	//	private Integer executionYear;
+
 	private Double theoreticalHours;
 	private Double praticalHours;
 	private Double theoPratHours;
 	private Double labHours;
 	private Double credits;
+	private Double ectsCredits;
+
+	private Calendar beginDate;
+	private Calendar endDate;
 
 	public CurricularCourseScope() {
 		setIdInternal(null);
@@ -35,15 +39,12 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 		setBranch(null);
 		setCurricularCourse(null);
 		setCurricularSemester(null);
-		
+
 		setBranchKey(null);
 		setCurricularCourseKey(null);
 		setCurricularSemesterKey(null);
+
 	}
-	
-//	public CurricularCourseScope(Integer idInternal){
-//		setIdInternal(idInternal);
-//	}
 
 	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) {
 		this();
@@ -58,11 +59,14 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 
 		if (obj instanceof ICurricularCourseScope) {
 			ICurricularCourseScope ccs = (ICurricularCourseScope) obj;
-			
-			resultado = getCurricularCourse().equals(ccs.getCurricularCourse()) &&
-									getCurricularSemester().equals(ccs.getCurricularSemester()) &&
-									getBranch().equals(ccs.getBranch());
-//									getExecutionYear().equals(ccs.getExecutionYear());
+
+			resultado =
+				getCurricularCourse().equals(ccs.getCurricularCourse())
+					&& getCurricularSemester().equals(ccs.getCurricularSemester())
+					&& getBranch().equals(ccs.getBranch())
+					&& ((getEndDate() == null && ccs.getEndDate() == null)
+						|| (getEndDate() != null && ccs.getEndDate() != null && getEndDate().equals(ccs.getEndDate())));
+			//									getExecutionYear().equals(ccs.getExecutionYear());
 		}
 
 		return resultado;
@@ -73,11 +77,11 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 		result += "idInternal = " + this.getIdInternal() + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "; ";
 		result += "curricularSemester = " + this.curricularSemester + "; ";
-		result += "branch = " + this.branch + "]\n";
+		result += "branch = " + this.branch + "; ";
+		result += "endDate = " + this.endDate + "]\n";
 
 		return result;
 	}
-
 
 	/**
 	 * @return Branch
@@ -233,11 +237,61 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 		credits = double1;
 	}
 
-//	public Integer getExecutionYear() {
-//		return executionYear;
-//	}
-//
-//	public void setExecutionYear(Integer integer) {
-//		executionYear = integer;
-//	}
+	//	public Integer getExecutionYear() {
+	//		return executionYear;
+	//	}
+	//
+	//	public void setExecutionYear(Integer integer) {
+	//		executionYear = integer;
+	//	}
+	/**
+	 * @return
+	 */
+	public Calendar getBeginDate() {
+		return beginDate;
+	}
+
+	/**
+	 * @param beginDate
+	 */
+	public void setBeginDate(Calendar beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate
+	 */
+	public void setEndDate(Calendar endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getEctsCredits() {
+		return ectsCredits;
+	}
+
+	/**
+	 * @param ectsCredits
+	 */
+	public void setEctsCredits(Double ectsCredits) {
+		this.ectsCredits = ectsCredits;
+	}
+
+	public Boolean isActive() {
+		Boolean result = Boolean.FALSE;
+		if (this.endDate == null) {
+			result = Boolean.TRUE;
+		}
+		return result;
+	}
+
 }

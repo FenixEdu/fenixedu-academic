@@ -7,6 +7,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  *
@@ -20,23 +21,29 @@ public class InfoCurricularCourseScope extends InfoObject implements Serializabl
 	private Integer maxIncrementNac;
 	private Integer minIncrementNac;
 	private Integer weigth;
-	
+
 	private Double theoreticalHours;
 	private Double praticalHours;
 	private Double theoPratHours;
 	private Double labHours;
 	private Double credits;
+	private Double ectsCredits;
+	
+	private Calendar beginDate;
+	private Calendar endDate;
 
-	public InfoCurricularCourseScope() {}
-
+	public InfoCurricularCourseScope() {
+	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof InfoCurricularCourseScope) {
 			InfoCurricularCourseScope infoCurricularCourse = (InfoCurricularCourseScope) obj;
-			resultado =	(getInfoBranch().equals(infoCurricularCourse.getInfoBranch())
-					    && getInfoCurricularCourse().equals(infoCurricularCourse.getInfoCurricularCourse())
-					    && getInfoCurricularSemester().equals(infoCurricularCourse.getInfoCurricularSemester()));
+			resultado =
+				(getInfoBranch().equals(infoCurricularCourse.getInfoBranch())
+					&& getInfoCurricularCourse().equals(infoCurricularCourse.getInfoCurricularCourse())
+					&& getEndDate().equals(infoCurricularCourse.getEndDate())
+					&& getInfoCurricularSemester().equals(infoCurricularCourse.getInfoCurricularSemester()));
 		}
 		return resultado;
 	}
@@ -44,9 +51,10 @@ public class InfoCurricularCourseScope extends InfoObject implements Serializabl
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "CurricularCourse = " + this.infoCurricularCourse + "; ";
-		result += "CurricularSemester = " + this.infoCurricularSemester+ "; ";
-		result += "Branch = " + this.infoBranch + "]\n";
-		
+		result += "CurricularSemester = " + this.infoCurricularSemester + "; ";
+		result += "Branch = " + this.infoBranch + "; ";
+		result += "EndDate = " + this.endDate + "]\n";
+
 		return result;
 	}
 	/**
@@ -155,6 +163,56 @@ public class InfoCurricularCourseScope extends InfoObject implements Serializabl
 
 	public void setTheoreticalHours(Double double1) {
 		theoreticalHours = double1;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getBeginDate() {
+		return beginDate;
+	}
+
+	/**
+	 * @param beginDate
+	 */
+	public void setBeginDate(Calendar beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Calendar getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate
+	 */
+	public void setEndDate(Calendar endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getEctsCredits() {
+		return ectsCredits;
+	}
+
+	/**
+	 * @param ectsCredits
+	 */
+	public void setEctsCredits(Double ectsCredits) {
+		this.ectsCredits = ectsCredits;
+	}
+
+	public Boolean isActive() {
+		Boolean result = Boolean.FALSE;
+		if(this.endDate == null) {
+			result = Boolean.TRUE; 
+		}
+		return result;
 	}
 
 }

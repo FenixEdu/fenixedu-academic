@@ -417,7 +417,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
 			ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
-			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(curricularCourse, curricularSemester, branch, null);
 
 			assertNotNull(studentCurricularPlan);
 			assertNotNull(degreeCurricularPlan);
@@ -453,7 +453,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
 			ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
-			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(curricularCourse, curricularSemester, branch, null);
 
 			assertNotNull(studentCurricularPlan);
 			assertNotNull(degreeCurricularPlan);

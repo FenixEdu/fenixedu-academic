@@ -868,7 +868,24 @@
 		column="CREDITS"
 		jdbc-type="DOUBLE"
 	/>
-<!--	<field-descriptor
+	<field-descriptor
+		name="ectsCredits"
+		column="ECTS_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="beginDate"
+		column="BEGIN_DATE"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	/>
+	<field-descriptor
+		name="endDate"
+		column="END_DATE"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	/>
+			<!--	<field-descriptor
 		name="executionYear"
 		column="EXECUTION_YEAR"
 		jdbc-type="INTEGER"

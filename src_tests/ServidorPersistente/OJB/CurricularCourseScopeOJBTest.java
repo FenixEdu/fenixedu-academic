@@ -88,6 +88,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 1.1 : Write Existing CurricularCourseScope\n");
 		this.loadDataFromDB(true);
 		ICurricularCourseScope curricularCourseScope = new CurricularCourseScope(this.curricularCourse, this.curricularSemester, this.branch);
+//	TODO: add end date to constructor
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -109,7 +110,8 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 1.2 : Write Non Existing CurricularCourseScope\n");
 		// CurricularCourseScope inexistente
 		this.loadDataFromDB(false);
-		curricularCourseScope = new CurricularCourseScope(this.curricularCourse, this.curricularSemester, this.branch);
+		curricularCourseScope = new CurricularCourseScope(this.curricularCourse, this.curricularSemester, this.branch
+		);
 		curricularCourseScope.getCurricularCourse().setMandatory(new Boolean(true));
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -123,7 +125,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularCourseScope2 = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(this.curricularCourse, this.curricularSemester, this.branch);
+			curricularCourseScope2 = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(this.curricularCourse, this.curricularSemester, this.branch, null);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing CurricularCourseScope Just Writen Before");
@@ -171,7 +173,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 			
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(this.curricularCourse, this.curricularSemester, this.branch);
+			curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(this.curricularCourse, this.curricularSemester, this.branch, null);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing CurricularCourseScope");
@@ -186,7 +188,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 3.2 : Read Non Existing CurricularCourseScope");
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(this.curricularCourse, this.curricularSemester, this.branch);			
+			curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(this.curricularCourse, this.curricularSemester, this.branch, null);			
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Non Existing CurricularCourseScope");
@@ -206,7 +208,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 			
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(this.curricularCourse, this.curricularSemester, this.branch);
+			curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(this.curricularCourse, this.curricularSemester, this.branch, null);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing CurricularCourseScope");
@@ -224,7 +226,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 		ICurricularCourseScope curricularCourseScope2 = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularCourseScope2 = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(this.curricularCourse, this.curricularSemester, this.branch);
+			curricularCourseScope2 = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(this.curricularCourse, this.curricularSemester, this.branch, null);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing CurricularCourseScope");
