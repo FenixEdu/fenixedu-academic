@@ -304,7 +304,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			}
 			
 			long dateInLongFormat = whenAltered.getTime();
-			dateInLongFormat = dateInLongFormat + mwEnrolment.getIdinternal().longValue();
+			dateInLongFormat = dateInLongFormat + (mwEnrolment.getIdinternal().longValue() * 1000);
 			Date newDate = new Date(dateInLongFormat);
 			enrolmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 			enrolmentEvaluation.setWhen(newDate);
