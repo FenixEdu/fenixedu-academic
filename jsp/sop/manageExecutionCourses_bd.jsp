@@ -9,7 +9,8 @@
 <br />
 <span class="error"><html:errors /></span>
 Nota: Na indicação do nome pode ser fornecido apenas parte do nome da disciplina.<br />
-O caracter <strong>%</strong> é o wildcard.
+Exemplo 1: Para selecionar todas as disciplinas que começam com a letra "A" escreva <strong>A%</strong><br />
+Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong><br />
 <br />
 <br />
 <html:form action="/manageExecutionCourses" focus="executionDegreeOID">

@@ -45,7 +45,7 @@
 		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_extra.properties"
 			 todir="./"
 			 />
-		<move file="build_fenix-tests.properties"
+		<move file="build_fenix-tests_extra.properties"
 			  tofile="build.properties"
 			  />
 		<property file="build.properties"/>
@@ -57,7 +57,7 @@
 		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_intra.properties"
 			 todir="./"
 			 />
-		<move file="build_fenix-tests.properties"
+		<move file="build_fenix-tests_intra.properties"
 			  tofile="build.properties"
 			  />
 		<property file="build.properties"/>
