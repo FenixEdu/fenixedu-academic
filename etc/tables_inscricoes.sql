@@ -166,6 +166,10 @@ create table CURRICULAR_COURSE_SCOPE (
    KEY_CURRICULAR_SEMESTER int(11) not null,
    KEY_CURRICULAR_COURSE int(11) not null,
    KEY_BRANCH int(11) not null, 
+   THEORETICAL_HOURS double default '0',
+   PRATICAL_HOURS double default '0',
+   THEO_PRAT_HOURS double default '0',
+   LAB_HOURS double default '0',
    primary key (ID_INTERNAL),
    unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 )type=InnoDB;
