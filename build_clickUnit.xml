@@ -24,6 +24,11 @@
 		</java>
     </target>
 
+	<target name="delete-artifacts"
+    		description="Deletes roleback file.">
+        <delete file="${roleback.filename}"/>
+    </target>
+
     <target name="do-roleback"
     		depends="reverse-roleback-file"
     		description="Reverts the database state to that of before the test run.">
