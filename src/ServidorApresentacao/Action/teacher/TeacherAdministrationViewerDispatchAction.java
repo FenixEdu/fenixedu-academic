@@ -439,7 +439,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		HttpServletResponse response)
 		throws FenixActionException {
 		//ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
-		System.out.println("-->Ver Site ");
+		//System.out.println("-->Ver Site ");
 			
 		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 		
