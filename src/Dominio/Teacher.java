@@ -16,6 +16,12 @@ public class Teacher extends DomainObject implements ITeacher {
 	/** Creates a new instance of Teacher */
 	public Teacher() {
 	}
+
+	/** Creates a new instance of Teacher */
+	public Teacher(Integer idInternal) {
+		setIdInternal(idInternal);
+	}
+	
 	public Teacher(IPessoa person, Integer teacherNumber) {
 		setPerson(person);
 		setTeacherNumber(teacherNumber);

@@ -26,6 +26,13 @@ public class Announcement  extends DomainObject implements IAnnouncement {
 	/** 
 	 * Construtor
 	 */
+	public Announcement(Integer announcementCode) {
+		setIdInternal(announcementCode);
+	}
+
+	/** 
+	 * Construtor
+	 */
 	public Announcement(String title, Timestamp date, 
 		Timestamp lastModifiedDate, String information, ISite site) {
 			
