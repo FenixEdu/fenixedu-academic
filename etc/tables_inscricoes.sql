@@ -82,6 +82,7 @@ create table BRANCH (
    BRANCH_NAME varchar(255) not null,
    KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
    BRANCH_ACRONYM varchar(50) not null,
+   BRANCH_TYPE varchar(6),
    primary key (ID_INTERNAL),
    unique U1 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
@@ -122,7 +123,7 @@ create table STUDENT_CURRICULAR_PLAN (
    KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
    CURRENT_STATE int(11) not null,
    START_DATE date not null,
-   KEY_BRANCH int(11) not null,
+   KEY_SPECIALIZATION_BRANCH int(11) not null,
    SPECIALIZATION int(11),
    GIVEN_CREDITS float(10,2),
    COMPLETED_COURSES int(11) default 0,
@@ -130,9 +131,10 @@ create table STUDENT_CURRICULAR_PLAN (
    CLASSIFICATION float(10,2),
    OBSERVATIONS text,
    KEY_EMPLOYEE int(11),
-   WHEN_ALTER timestamp(14),  
+   WHEN_ALTER timestamp(14),
+   KEY_SECUNDARY_BRANCH int(11),
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, KEY_BRANCH)
+   unique U1 (KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, KEY_SPECIALIZATION_BRANCH)
 )type=InnoDB;
 
 -- ==================================================================================
