@@ -228,7 +228,7 @@
 	</table>
 	<br/>
 	<br/>
-	<html:link page="/optionalCurricularCoursesEnrollment.do?method=showOptionalCourses"><bean:message key="link.enrolllment.optional.courses"/></html:link>
+	<html:link page="/optionalCurricularCoursesEnrollment.do?method=showOptionalCourses"><bean:message key="link.enrollment.optional.courses"/></html:link>
 	<br/>
 	<br/>
 	<html:submit styleClass="inputbutton">
