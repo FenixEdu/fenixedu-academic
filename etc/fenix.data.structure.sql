@@ -2632,7 +2632,7 @@ DROP TABLE IF EXISTS STUDENT_GROUP;
 CREATE TABLE STUDENT_GROUP (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
   GROUP_NUMBER int(11) unsigned NOT NULL default '0',
-  KEY_SHIFT int(11) unsigned NOT NULL default '0',
+  KEY_SHIFT int(11) default NULL,
   KEY_ATTENDS_SET int(11) unsigned NOT NULL default '0',
   ACK_OPT_LOCK int(11) default NULL,
   PRIMARY KEY  (ID_INTERNAL),
