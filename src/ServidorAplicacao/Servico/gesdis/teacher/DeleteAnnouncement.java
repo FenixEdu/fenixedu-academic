@@ -63,7 +63,7 @@ public class DeleteAnnouncement implements IServico {
 			IAnnouncement announcement =
 				persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(
 					announcementTitle,
-					announcementView.getDate(),
+					announcementView.getCreationDate(),
 					site);
 			
 			if (announcement != null)
