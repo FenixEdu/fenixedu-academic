@@ -23,7 +23,6 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
@@ -31,11 +30,9 @@ import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
-import Util.PeriodState;
 import Util.Specialization;
 import framework.factory.ServiceManagerServiceFactory;
 
@@ -210,7 +207,6 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
 		
-		String degree = (String) gratuityForm.get("degree");
 		Integer degreeId =
 		separateLabel(form, request, "degree", "degreeName");
 

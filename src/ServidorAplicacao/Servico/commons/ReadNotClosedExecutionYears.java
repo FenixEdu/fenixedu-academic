@@ -3,9 +3,9 @@ package ServidorAplicacao.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -18,26 +18,13 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 14/Jan/2004
  *
  */
-public class ReadNotClosedExecutionYears implements IServico
+public class ReadNotClosedExecutionYears implements IService
 {
 
-    private static ReadNotClosedExecutionYears service = new ReadNotClosedExecutionYears();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadNotClosedExecutionYears getService()
-    {
-        return service;
-    }
-
-    /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadNotClosedExecutionYears";
-    }
-
+	public ReadNotClosedExecutionYears()
+	{
+	}
+	
     public List run() throws FenixServiceException
     {
 

@@ -5369,8 +5369,7 @@
     </service>
     <service>
         <name>ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5379,8 +5378,7 @@
     </service>
     <service>
         <name>ReadStudentCurricularPlanInMasterDegree</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlan</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5390,8 +5388,7 @@
     <service>
         <name>ReadGratuitySituationByStudentCurricularPlan</name>
         <description>Retrieves gratuity situation associated with this student</description>
-        <implementationClass> 
-            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlan 
+        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlan 
             </implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
@@ -5401,8 +5398,7 @@
     <service>
         <name>EditGratuitySituationById</name>
         <description>Servive that edit or create a gratuity situatuion</description>
-        <implementationClass> 
-            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById 
+        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById 
             </implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
@@ -5412,8 +5408,7 @@
     <service>
         <name>DeleteGratuitySituationById</name>
         <description>Servive that delete a gratuity situatuion</description>
-        <implementationClass> 
-            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.DeleteGratuitySituationById 
+        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.DeleteGratuitySituationById 
             </implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
@@ -5423,8 +5418,7 @@
     <service>
         <name>ReadGratuityValuesByExecutionDegree</name>
         <description>Retrieves gratuity values associated with this execution degree</description>
-        <implementationClass> 
-            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree 
+        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree 
             </implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
@@ -5434,8 +5428,7 @@
     <service>
         <name>ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear</name>
         <description>Retrieves gratuity values associated with this execution degree</description>
-        <implementationClass> 
-            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear 
+        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear 
             </implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
@@ -5446,8 +5439,7 @@
         <name>InsertGratuityData</name>
         <description>This service create a gratuity data about a execution degree, but if already exists 
             only change it</description>
-        <implementationClass> 
-            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
@@ -5456,11 +5448,8 @@
     <service>
         <name>ReadNotClosedExecutionYears</name>
         <description>Retrieves only current and future execution years</description>
-        <implementationClass>
-            ServidorAplicacao.Servico.commons.ReadNotClosedExecutionYears</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.commons.ReadNotClosedExecutionYears</implementationClass>
         <isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
+        <filterChains/>
     </service>
 </serviceDefinitions>
