@@ -4,240 +4,219 @@
 
 package middleware.almeida;
 
+import java.util.Date;
 
-public class Almeida_aluno  
-{
-  private String bi;
+public class Almeida_aluno {
+	private String bi;
 
-  private String concelho;
+	private String concelho;
 
-  private String cp;
+	private String cp;
 
-  private long curso;
+	private long curso;
 
-  private String distrito;
+	private String distrito;
 
-  private String email;
+	private String email;
 
-  private String freguesia;
+	private String freguesia;
 
-  private String localidadecp;
+	private String localidadecp;
 
-  private String localidademorada;
+	private String localidademorada;
 
-  private String morada;
+	private String morada;
 
-  private String nacionalidade;
+	private String nacionalidade;
 
-  private java.sql.Date nascimento;
+	private Date nascimento;
 
-  private String nome;
+	private String nome;
 
-  private String nomemae;
+	private String nomemae;
 
-  private String nomepai;
+	private String nomepai;
 
-  private long numero;
+	private long numero;
 
-  private long ramo;
+	private long ramo;
 
-  private String sexo;
+	private String sexo;
 
-  private String telefone;
+	private String telefone;
 
-  public String getBi()
-  {
-     return this.bi;
-  }
-  public void setBi(String param)
-  {
-    this.bi = param;
-  }
+	public String getBi() {
+		return this.bi;
+	}
+	public void setBi(String param) {
+		this.bi = param;
+	}
 
+	public String getConcelho() {
+		return this.concelho;
+	}
+	public void setConcelho(String param) {
+		this.concelho = param;
+	}
 
-  public String getConcelho()
-  {
-     return this.concelho;
-  }
-  public void setConcelho(String param)
-  {
-    this.concelho = param;
-  }
+	public String getCp() {
+		return this.cp;
+	}
+	public void setCp(String param) {
+		this.cp = param;
+	}
 
+	public long getCurso() {
+		return this.curso;
+	}
+	public void setCurso(long param) {
+		this.curso = param;
+	}
 
-  public String getCp()
-  {
-     return this.cp;
-  }
-  public void setCp(String param)
-  {
-    this.cp = param;
-  }
+	public String getDistrito() {
+		return this.distrito;
+	}
+	public void setDistrito(String param) {
+		this.distrito = param;
+	}
 
+	public String getEmail() {
+		return this.email;
+	}
+	public void setEmail(String param) {
+		this.email = param;
+	}
 
-  public long getCurso()
-  {
-     return this.curso;
-  }
-  public void setCurso(long param)
-  {
-    this.curso = param;
-  }
+	public String getFreguesia() {
+		return this.freguesia;
+	}
+	public void setFreguesia(String param) {
+		this.freguesia = param;
+	}
 
+	public String getLocalidadecp() {
+		return this.localidadecp;
+	}
+	public void setLocalidadecp(String param) {
+		this.localidadecp = param;
+	}
 
-  public String getDistrito()
-  {
-     return this.distrito;
-  }
-  public void setDistrito(String param)
-  {
-    this.distrito = param;
-  }
+	public String getLocalidademorada() {
+		return this.localidademorada;
+	}
+	public void setLocalidademorada(String param) {
+		this.localidademorada = param;
+	}
 
+	public String getMorada() {
+		return this.morada;
+	}
+	public void setMorada(String param) {
+		this.morada = param;
+	}
 
-  public String getEmail()
-  {
-     return this.email;
-  }
-  public void setEmail(String param)
-  {
-    this.email = param;
-  }
+	public String getNacionalidade() {
+		return this.nacionalidade;
+	}
+	public void setNacionalidade(String param) {
+		this.nacionalidade = param;
+	}
 
+	public Date getNascimento() {
+		return this.nascimento;
+	}
+	public void setNascimento(Date param) {
+		this.nascimento = param;
+	}
 
-  public String getFreguesia()
-  {
-     return this.freguesia;
-  }
-  public void setFreguesia(String param)
-  {
-    this.freguesia = param;
-  }
+	public String getNome() {
+		return this.nome;
+	}
+	public void setNome(String param) {
+		this.nome = param;
+	}
 
+	public String getNomemae() {
+		return this.nomemae;
+	}
+	public void setNomemae(String param) {
+		this.nomemae = param;
+	}
 
-  public String getLocalidadecp()
-  {
-     return this.localidadecp;
-  }
-  public void setLocalidadecp(String param)
-  {
-    this.localidadecp = param;
-  }
+	public String getNomepai() {
+		return this.nomepai;
+	}
+	public void setNomepai(String param) {
+		this.nomepai = param;
+	}
 
+	public long getNumero() {
+		return this.numero;
+	}
+	public void setNumero(long param) {
+		this.numero = param;
+	}
 
-  public String getLocalidademorada()
-  {
-     return this.localidademorada;
-  }
-  public void setLocalidademorada(String param)
-  {
-    this.localidademorada = param;
-  }
+	public long getRamo() {
+		return this.ramo;
+	}
+	public void setRamo(long param) {
+		this.ramo = param;
+	}
 
+	public String getSexo() {
+		return this.sexo;
+	}
+	public void setSexo(String param) {
+		this.sexo = param;
+	}
 
-  public String getMorada()
-  {
-     return this.morada;
-  }
-  public void setMorada(String param)
-  {
-    this.morada = param;
-  }
+	public String getTelefone() {
+		return this.telefone;
+	}
+	public void setTelefone(String param) {
+		this.telefone = param;
+	}
 
+	public String toString() {
+		return " [bi] "
+			+ bi
+			+ " [concelho] "
+			+ concelho
+			+ " [cp] "
+			+ cp
+			+ " [curso] "
+			+ curso
+			+ " [distrito] "
+			+ distrito
+			+ " [email] "
+			+ email
+			+ " [freguesia] "
+			+ freguesia
+			+ " [localidadeCP] "
+			+ localidadecp
+			+ " [localidadeMorada] "
+			+ localidademorada
+			+ " [morada] "
+			+ morada
+			+ " [nacionalidade] "
+			+ nacionalidade
+			+ " [nascimento] "
+			+ nascimento
+			+ " [nome] "
+			+ nome
+			+ " [nomeMae] "
+			+ nomemae
+			+ " [nomePai] "
+			+ nomepai
+			+ " [numero] "
+			+ numero
+			+ " [ramo] "
+			+ ramo
+			+ " [sexo] "
+			+ sexo
+			+ " [telefone] "
+			+ telefone;
 
-  public String getNacionalidade()
-  {
-     return this.nacionalidade;
-  }
-  public void setNacionalidade(String param)
-  {
-    this.nacionalidade = param;
-  }
-
-
-  public java.sql.Date getNascimento()
-  {
-     return this.nascimento;
-  }
-  public void setNascimento(java.sql.Date param)
-  {
-    this.nascimento = param;
-  }
-
-
-  public String getNome()
-  {
-     return this.nome;
-  }
-  public void setNome(String param)
-  {
-    this.nome = param;
-  }
-
-
-  public String getNomemae()
-  {
-     return this.nomemae;
-  }
-  public void setNomemae(String param)
-  {
-    this.nomemae = param;
-  }
-
-
-  public String getNomepai()
-  {
-     return this.nomepai;
-  }
-  public void setNomepai(String param)
-  {
-    this.nomepai = param;
-  }
-
-
-  public long getNumero()
-  {
-     return this.numero;
-  }
-  public void setNumero(long param)
-  {
-    this.numero = param;
-  }
-
-
-  public long getRamo()
-  {
-     return this.ramo;
-  }
-  public void setRamo(long param)
-  {
-    this.ramo = param;
-  }
-
-
-  public String getSexo()
-  {
-     return this.sexo;
-  }
-  public void setSexo(String param)
-  {
-    this.sexo = param;
-  }
-
-
-  public String getTelefone()
-  {
-     return this.telefone;
-  }
-  public void setTelefone(String param)
-  {
-    this.telefone = param;
-  }
-
-
-  public String toString(){
-    return  " [bi] " + bi + " [concelho] " + concelho + " [cp] " + cp + " [curso] " + curso + " [distrito] " + distrito + " [email] " + email + " [freguesia] " + freguesia + " [localidadeCP] " + localidadecp + " [localidadeMorada] " + localidademorada + " [morada] " + morada + " [nacionalidade] " + nacionalidade + " [nascimento] " + nascimento + " [nome] " + nome + " [nomeMae] " + nomemae + " [nomePai] " + nomepai + " [numero] " + numero + " [ramo] " + ramo + " [sexo] " + sexo + " [telefone] " + telefone;
-
-  }
+	}
 }
-
