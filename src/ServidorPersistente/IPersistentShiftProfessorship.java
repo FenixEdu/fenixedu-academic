@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import Util.DiaSemana;
+import Util.TipoCurso;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
@@ -30,4 +31,10 @@ public interface IPersistentShiftProfessorship extends IPersistentObject {
      * @return
      */
     List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia;
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @return
+     */
+    List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher, IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;
 }

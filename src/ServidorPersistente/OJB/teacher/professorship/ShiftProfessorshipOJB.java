@@ -17,8 +17,8 @@ import org.apache.ojb.odmg.HasBroker;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
-import Dominio.ITeacher;
 import Dominio.IShiftProfessorship;
+import Dominio.ITeacher;
 import Dominio.ITurno;
 import Dominio.ShiftProfessorship;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -26,6 +26,7 @@ import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
+import Util.TipoCurso;
 
 /**
  * @author jpvl
@@ -171,5 +172,17 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
         criteria.addAndCriteria(timeCriteria);
 
         return queryList(ShiftProfessorship.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentShiftProfessorship#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
+     */
+    public List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher, IExecutionPeriod executionPeriod, TipoCurso degreeType) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod.getIdInternal());
+		criteria.addEqualTo("professorship.executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso", degreeType);
+        return queryList(ShiftProfessorship.class, criteria, true);
     }
 }
