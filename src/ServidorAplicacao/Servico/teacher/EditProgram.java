@@ -49,7 +49,7 @@ public class EditProgram implements IServico
 		String username)
         throws FenixServiceException
     {
-		System.out.println("-->Service EditProgram");
+
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -95,10 +95,6 @@ public class EditProgram implements IServico
             {
                 curriculum = new Curriculum();
 
-                persistentCurriculum.simpleLockWrite(curriculum);
-
-                curriculum.setCurricularCourse(curricularCourse);
-
                 Calendar today = Calendar.getInstance();
                 curriculum.setLastModificationDate(today.getTime());
             }
@@ -109,16 +105,19 @@ public class EditProgram implements IServico
             if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
                 && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate()))
             {
+            	persistentCurriculum.simpleLockWrite(curriculum);
+            	
                 // let's edit curriculum
                 curriculum.setCurricularCourse(curricularCourse);
 
-				infoCurriculumNew.setProgram(infoCurriculumNew.getProgram());
-				infoCurriculumNew.setProgramEn(infoCurriculumNew.getProgramEn());
+				curriculum.setProgram(infoCurriculumNew.getProgram());
+				curriculum.setProgramEn(infoCurriculumNew.getProgramEn());
 
                 curriculum.setPersonWhoAltered(person);
 
                 Calendar today = Calendar.getInstance();
                 curriculum.setLastModificationDate(today.getTime());
+                System.out.println(".........................");
             } else
             {
                 // creates new information
@@ -133,9 +132,9 @@ public class EditProgram implements IServico
                 newCurriculum.setPersonWhoAltered(person);
 
                 Calendar today = Calendar.getInstance();
-                newCurriculum.setLastModificationDate(today.getTime()); 
+                newCurriculum.setLastModificationDate(today.getTime());
+                System.out.println("--------------------------------");
             }
-
         } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);

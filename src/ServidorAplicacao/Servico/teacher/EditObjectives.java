@@ -127,11 +127,9 @@ public class EditObjectives implements IServico
                 newCurriculum.setCurricularCourse(curricularCourse);
                 newCurriculum.setGeneralObjectives(infoCurriculumNew.getGeneralObjectives());
                 newCurriculum.setOperacionalObjectives(infoCurriculumNew.getOperacionalObjectives());
-                newCurriculum.setProgram(infoCurriculumNew.getProgram());
                 newCurriculum.setGeneralObjectivesEn(infoCurriculumNew.getGeneralObjectivesEn());
                 newCurriculum.setOperacionalObjectivesEn(infoCurriculumNew.getOperacionalObjectivesEn());
-                newCurriculum.setProgramEn(infoCurriculumNew.getProgramEn());
-
+                
                 newCurriculum.setPersonWhoAltered(person);
                 Calendar today = Calendar.getInstance();
                 newCurriculum.setLastModificationDate(today.getTime());
