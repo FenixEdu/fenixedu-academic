@@ -29,3 +29,5 @@ Dominio.ucd
 buildToDeploy.properties
 buildToDeployFenix.properties
 data
+responsavel.sql
+fenix.dump.sql
