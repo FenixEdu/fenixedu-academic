@@ -104,11 +104,20 @@ public class AuthenticationAction extends FenixAction {
 			firstInfoRole = (InfoRole) iterator.next();
 			break;
 		}
-		InfoRole personInfoRole = new InfoRole();
-		personInfoRole.setRoleType(RoleType.PERSON);
-		if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
-			forwardToReturn = buildRoleForward(firstInfoRole);
+		
+		InfoRole firstTimeStudentInfoRole = new InfoRole();
+		firstTimeStudentInfoRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
+		if(userRoles.contains(firstTimeStudentInfoRole)) {
+			forwardToReturn =  buildRoleForward(firstInfoRole);
 		}
+		else {
+			InfoRole personInfoRole = new InfoRole();
+			personInfoRole.setRoleType(RoleType.PERSON);
+			if (numberOfSubApplications == 1 || !userRoles.contains(personInfoRole)) {
+				forwardToReturn = buildRoleForward(firstInfoRole);
+			}
+		}
+		
 		return forwardToReturn;
 	}
 
