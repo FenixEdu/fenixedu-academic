@@ -243,6 +243,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		}
 		catch (NumberFormatException exception)
 		{
+			exception.printStackTrace();
 			errors.add(
 				"noList",
 				new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
