@@ -76,8 +76,8 @@ public class UpdateStudentTestQuestionMark implements IServico
                     infoStudentTestQuestion.setQuestion(
                         parse.parseQuestion(
                             infoStudentTestQuestion.getQuestion().getXmlFile(),
-                            infoStudentTestQuestion.getQuestion()));
-                    infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
+                            infoStudentTestQuestion.getQuestion(), ""));
+                    infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion, "");
                 } catch (Exception e)
                 {
                     throw new FenixServiceException(e);
