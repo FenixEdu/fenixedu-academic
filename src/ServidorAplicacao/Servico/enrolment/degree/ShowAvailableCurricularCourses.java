@@ -16,6 +16,7 @@ import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
@@ -87,6 +88,8 @@ public class ShowAvailableCurricularCourses implements IServico {
 		} catch (IllegalStateException ex) {
 			ex.printStackTrace(System.out);
 			throw new FenixServiceException(ex);
+		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
+			throw e;
 		}
 	}
 
