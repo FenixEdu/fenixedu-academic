@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import DataBeans.InfoCurricularCourse;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
@@ -65,7 +70,15 @@ public class ReadCurricularCoursesByDegree implements IServico {
 			ListIterator iterator = cursoExecucao.getCurricularPlan().getCurricularCourses().listIterator();
 			while (iterator.hasNext()) {
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				infoCurricularCourses.add(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+				InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+				infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
+
+					public Object transform(Object arg0) {
+						ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+						return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+					}
+				}));
+				infoCurricularCourses.add(infoCurricularCourse);
 			}
 
 		} catch (ExcepcaoPersistencia ex) {

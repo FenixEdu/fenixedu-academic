@@ -9,10 +9,9 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
-import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
-import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -58,8 +57,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		return "ReadStudentsAndMarksByCurricularCourse";
 	}
 
-	public InfoSiteEnrolmentEvaluation run(/*String year, */
-	Integer curricularCourseCode) throws FenixServiceException {
+	public InfoSiteEnrolmentEvaluation run(Integer scopeCode) throws FenixServiceException {
 
 		List enrolmentEvaluations = null;
 		InfoTeacher infoTeacher = new InfoTeacher();
@@ -71,14 +69,10 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-			//	get curricular course to obtain curricularCourseScope
-			ICurricularCourse curricularCourse = new CurricularCourse();
-			curricularCourse.setIdInternal(curricularCourseCode);
-			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-
 			//	get curricularCourseScope for enrolmentEvaluation
-			ICurricularCourseScope curricularCourseScope =
-				persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourse(curricularCourse);
+			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+			curricularCourseScope.setIdInternal(scopeCode);
+			curricularCourseScope =	(ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
 
 			//			this becomes necessary to use criteria
 			InfoCurricularCourseScope infoCurricularCourseScope =

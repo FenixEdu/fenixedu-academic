@@ -769,22 +769,21 @@
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseMasterDegreeToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" 
-				path="/marksManagementDispatchAction.do?method=chooseCurricularCourse"/> 
-	         	<!-- path="/chooseCurricularCourseToManageMarks.do?method=prepareChooseCurricularCourse"/> -->
+				path="/chooseCurricularCourseToManageMarks.do?method=prepareChooseCurricularCourse"/>
       </action>
 
       <!-- Choose CurricularCourse To Manage Marks -->
       <action path="/chooseCurricularCourseToManageMarks"
-      		  input="chooseCurricularCourse.jsp"
+      		  input="/marksManagement/chooseCurricularCourseToManageMarks.jsp"
 		      parameter="method"
               type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>  
-	         <forward name="ChooseSuccess" path="/marksSubmission.do?method=prepare"/> 
+	         <forward name="ChooseSuccess" path="/marksManagement/showMarksManagementMenu.jsp"/> 
       </action>
 
 
-      <action path="/marksManagementDispatchAction"
+<!--      <action path="/marksManagementDispatchAction"
       		  input="/marksManagement/chooseMasterDegree.jsp"
       	      name="marksManagementForm"
 		      parameter="method"
@@ -798,7 +797,7 @@
 	         <forward name="ChooseCurricularCourse" path="/marksManagement/chooseCurricularCourse.jsp"/> 
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 
 	         
-      </action> 
+      </action> -->
       
       <action path="/changeMarkDispatchAction"
       		  input="/marksManagement/showMarksManagementMenu.jsp"

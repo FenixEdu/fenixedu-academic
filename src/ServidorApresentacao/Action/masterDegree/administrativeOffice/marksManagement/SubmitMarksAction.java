@@ -33,13 +33,13 @@ public class SubmitMarksAction extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 
-		String executionYear = (String) request.getParameter("executionYear");
-		String degree = request.getParameter("degree");
-		String curricularCourse = request.getParameter("curricularCourse");
-		Integer curricularCourseCode = new Integer(request.getParameter("curricularCourseCode"));
+		String executionYear = getFromRequest("executionYear", request);
+		String degree = getFromRequest("degree", request);
+		String curricularCourse = getFromRequest("curricularCourse", request);
+		Integer scopeCode = new Integer(getFromRequest("scopeCode", request));
 
 		// Get students List			
-		Object args[] = { curricularCourseCode };
+		Object args[] = { scopeCode };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
@@ -61,11 +61,19 @@ public class SubmitMarksAction extends DispatchAction {
 		request.setAttribute("executionYear", executionYear);
 		request.setAttribute("degree", degree);
 		request.setAttribute("curricularCourse", curricularCourse);
-		request.setAttribute("curricularCourseCode", curricularCourseCode);
+		request.setAttribute("scopeCode", scopeCode);
 
 		request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluation);
 
 		return mapping.findForward("MarksSubmission");
 
 	}
+	private String getFromRequest(String parameter, HttpServletRequest request) {
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null) {
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		return parameterString;
+	}
+
 }

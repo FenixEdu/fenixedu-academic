@@ -9,7 +9,7 @@
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
 
-<%-- don't forget to take above parameters - executionYear, degree, curricularCourse and curricularCourseCode - 
+<%-- don't forget to take above parameters - executionYear, degree, curricularCourse and scopeCode - 
 	to actions to maintain jsp state --%>
 <ul>
     <li>
@@ -17,7 +17,7 @@
     		<bean:message key="link.masterDegree.administrativeOffice.marksView" />
     	</html:link>
     </li>
-    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("curricularCourseCode") %>">
+    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksSubmission" />
     	</html:link>
     </li>
