@@ -47,6 +47,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 			(StackTraceElement[]) request.getSession().getAttribute(
 				SessionConstants.EXCEPTION_STACK_TRACE);
 
+		String requestContext= (String) request.getSession().getAttribute(SessionConstants.REQUEST_CONTEXT);
+
 		String sender = "Sender: " + formEmail;
 		String subject = "Error Report - " + formSubject;
 
@@ -54,7 +56,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		mailBody += sender +"\n\n";
 		mailBody += "User Comment: \n" + formBody + "\n\n";
 		mailBody += "Error Origin: \n";
-		mailBody += "Context: \n" + contextGetter(request) + "\n";
+		mailBody += "RequestContext: \n" + requestContext + "\n\n\n";
+		mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
 		mailBody += "Path: " + originalMapping.getPath() + "\n";
 		mailBody += "Name: " + originalMapping.getName() + "\n";
 		mailBody += stackTrace2String(stackTrace);
@@ -101,10 +104,11 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
 //		session.removeAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
 		session.removeAttribute(Globals.ERROR_KEY);
+		session.removeAttribute(SessionConstants.REQUEST_CONTEXT);
 //		session.removeAttribute(SessionConstants.EXCEPTION_STACK_TRACE);
 	}
 
-	private String contextGetter(HttpServletRequest request) {
+	private String sessionContextGetter(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Enumeration sessionContents = session.getAttributeNames();
 		String context = "";
@@ -118,4 +122,5 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
 		return context;
 	}
+	
 }

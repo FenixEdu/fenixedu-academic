@@ -49,4 +49,6 @@ public abstract class SessionConstants {
 	public static final String ORIGINAL_MAPPING_KEY = "original_mapping_key";
 
 	public static final String EXCEPTION_STACK_TRACE = "exception_stack_trace";
+	
+	public static final String REQUEST_CONTEXT="request_context";
 }
