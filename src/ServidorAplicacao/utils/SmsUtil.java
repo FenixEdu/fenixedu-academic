@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -106,7 +108,7 @@ public class SmsUtil
 
 		NameValuePair deliveryUsername = new NameValuePair("deliveryUsername", this.deliveryUsername);
 		NameValuePair deliveryPassword = new NameValuePair("deliveryPassword", this.deliveryPassword);
-		NameValuePair deliveryMethod = new NameValuePair("method", "update");
+		NameValuePair deliveryMethod = new NameValuePair("method", "updateDeliveryReport");
 		NameValuePair deliverySmsId = new NameValuePair("smsId", smsId.toString());
 
 		String deliveryQuery =
@@ -222,6 +224,26 @@ public class SmsUtil
 			throw new SmsSendUtilException();
 		}
 
+	}
+	
+	/**
+	 * 
+	 * @param responseMessage
+	 * @param responseLenght
+	 * @return
+	 */
+	public List splitMessage(StringBuffer message, int messageLenght)
+	{		
+		List responseMessagesList = new ArrayList();
+		while(message.length() > messageLenght){
+			
+			responseMessagesList.add(message.substring(0, messageLenght));
+			message.delete(0, messageLenght);
+			
+		}
+		responseMessagesList.add(message.toString());
+		
+		return responseMessagesList;
 	}
 
 	/**
