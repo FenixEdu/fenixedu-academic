@@ -4,6 +4,8 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -74,6 +76,7 @@ public class EditTeacherInformation implements IServico
     {
         try
         {
+            Date date = Calendar.getInstance().getTime();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentServiceProviderRegime persistentServiceProviderRegime =
@@ -85,6 +88,7 @@ public class EditTeacherInformation implements IServico
             newServiceProviderRegime.setIdInternal(oldServiceProviderRegime.getIdInternal());
             persistentServiceProviderRegime.simpleLockWrite(newServiceProviderRegime);
             PropertyUtils.copyProperties(newServiceProviderRegime, oldServiceProviderRegime);
+            newServiceProviderRegime.setLastModificationDate(date);
 
             IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
             IWeeklyOcupation oldWeeklyOcupation =
@@ -94,6 +98,7 @@ public class EditTeacherInformation implements IServico
             newWeeklyOcupation.setIdInternal(oldWeeklyOcupation.getIdInternal());
             persistentWeeklyOcupation.simpleLockWrite(newWeeklyOcupation);
             PropertyUtils.copyProperties(newWeeklyOcupation, oldWeeklyOcupation);
+            newWeeklyOcupation.setLastModificationDate(date);
 
             IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
             Iterator iter = infoOrientations.iterator();
@@ -105,6 +110,7 @@ public class EditTeacherInformation implements IServico
                 newOrientation.setIdInternal(oldOrientation.getIdInternal());
                 persistentOrientation.simpleLockWrite(newOrientation);
                 PropertyUtils.copyProperties(newOrientation, oldOrientation);
+                newOrientation.setLastModificationDate(date);
             }
             
             IPersistentPublicationsNumber persistentPublicationsNumber = sp.getIPersistentPublicationsNumber();
@@ -117,6 +123,7 @@ public class EditTeacherInformation implements IServico
                 newPublicationsNumber.setIdInternal(oldPublicationsNumber.getIdInternal());
                 persistentPublicationsNumber.simpleLockWrite(newPublicationsNumber);
                 PropertyUtils.copyProperties(newPublicationsNumber, oldPublicationsNumber);
+                newPublicationsNumber.setLastModificationDate(date);
             }
             // TODO: faltam os cargos de gestão
 

@@ -17,7 +17,6 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import Util.CareerType;
 import Util.OldPublicationType;
 
 /**
@@ -45,12 +44,12 @@ public class ReadOldPublicationsAction extends FenixAction
         HttpSession session = request.getSession(false);
 
         String string = request.getParameter("oldPublicationType");
-        CareerType oldPublicationType = null;
+        OldPublicationType oldPublicationType = null;
         IUserView userView = SessionUtils.getUserView(request);
 
         if ((session != null) && (string != null))
         {
-            oldPublicationType = CareerType.getEnum(string);
+            oldPublicationType = OldPublicationType.getEnum(string);
 
             Object[] args = { oldPublicationType, userView.getUtilizador()};
             SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadOldPublications", args);
@@ -64,7 +63,7 @@ public class ReadOldPublicationsAction extends FenixAction
             actionForward = mapping.findForward("show-cientific-form");
         } else
         {
-            actionForward = mapping.findForward("show-didatic-form");
+            actionForward = mapping.findForward("show-didactic-form");
         }
         return actionForward;
     }

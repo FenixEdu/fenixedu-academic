@@ -38,7 +38,7 @@ public class OldPublicationOJB extends ObjectFenixOJB implements IPersistentOldP
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-        criteria.addEqualTo("publicationType", new Integer(oldPublicationType.getValue()));
+        criteria.addEqualTo("oldPublicationType", new Integer(oldPublicationType.getValue()));
         return queryList(OldPublication.class, criteria);
     }
 

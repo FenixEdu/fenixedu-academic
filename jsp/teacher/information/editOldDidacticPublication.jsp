@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
-<html:form action="/oldPublication">
+<html:form action="/oldDidacticPublication">
 <br/>
 <h3>
 	<logic:present name="infoOldPublication">
@@ -21,9 +21,14 @@
 	<logic:notPresent name="infoOldPublication">
 		<bean:message key="message.publications.managementEdit" />
 	</logic:notPresent></p>
+	<span class="error">
+		<html:errors/>
+	</span>
+	<br />
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="infoTeacher#idInternal"/>
+	<html:hidden property="oldPublicationTypeString" value="Didactic"/>
 	<html:hidden property="method" value="edit"/>
 <table>
 	<tr>

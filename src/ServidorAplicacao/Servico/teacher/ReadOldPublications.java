@@ -84,7 +84,7 @@ public class ReadOldPublications implements IServico
             bodyComponent.setOldPublicationType(oldPublicationType);
             bodyComponent.setInfoTeacher(infoTeacher);
 
-            SiteView siteView = new SiteView(null);
+            SiteView siteView = new SiteView(bodyComponent);
             return siteView;
         } catch (ExcepcaoPersistencia e)
         {

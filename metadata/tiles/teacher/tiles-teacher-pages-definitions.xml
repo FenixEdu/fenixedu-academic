@@ -65,10 +65,10 @@
 		<put name="body" value="/teacher/information/externalActivitiesManagement.jsp"></put>
 	</definition>
 	<definition name="view-cientific-old-publications" extends="teacher-information">
-		<put name="body" value="/teacher/information/oldPublicationManagement.jsp"></put>
+		<put name="body" value="/teacher/information/oldCientificPublicationManagement.jsp"></put>
 	</definition>
 	<definition name="view-didactic-old-publications" extends="teacher-information">
-		<put name="body" value="/teacher/information/oldPublicationManagement.jsp"></put>
+		<put name="body" value="/teacher/information/oldDidacticPublicationManagement.jsp"></put>
 	</definition>
 	<definition name="edit-professional-career" extends="teacher-information">
 		<put name="body" value="/teacher/information/editProfessionalCareer.jsp"></put>
@@ -79,7 +79,10 @@
 	<definition name="edit-external-activity" extends="teacher-information">
 		<put name="body" value="/teacher/information/editExternalActivity.jsp"></put>
 	</definition>
-	<definition name="edit-old-publication" extends="teacher-information">
-		<put name="body" value="/teacher/information/editOldPublication.jsp"></put>
+	<definition name="edit-old-cientific-publication" extends="teacher-information">
+		<put name="body" value="/teacher/information/editOldCientificPublication.jsp"></put>
+	</definition>
+	<definition name="edit-old-didactic-publication" extends="teacher-information">
+		<put name="body" value="/teacher/information/editOldDidacticPublication.jsp"></put>
 	</definition>
 </tiles-definitions>

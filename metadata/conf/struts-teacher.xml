@@ -451,6 +451,7 @@
 			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
 			<form-property name="publication" type="java.lang.String" />
 			<form-property name="infoTeacher#idInternal" type="java.lang.Integer"/>
+			<form-property name="oldPublicationTypeString" type="java.lang.String"/>
 		</form-bean>
 
 		<!-- EXTERNAL ACTIVITY FORM -->
@@ -1463,11 +1464,11 @@
 	  
 	  <!-- Read Old Publications -->
 	  <action type="ServidorApresentacao.Action.teacher.ReadOldPublicationsAction"
-	  		path="/readPublications"
-	  		name="readPublicationsForm"
+	  		path="/readOldPublications"
+	  		name="readOldPublicationsForm"
 	  		scope="request">
-	  	<forward name="show-cientific-form" path="view-cientific-oldpublications"/>
-	  	<forward name="show-didatic-form" path="view-didactic-oldpublications"/>
+	  	<forward name="show-cientific-form" path="view-cientific-old-publications"/>
+	  	<forward name="show-didactic-form" path="view-didactic-old-publications"/>
 	  </action>
 	  
 	  <!-- Old Cientific Publication -->
@@ -1485,7 +1486,7 @@
   		<set-property property="oidProperty" value="idInternal"/>
   		<set-property property="requestAttribute" value="infoOldPublication"/>
   		<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoOldPublication" />
-  		<forward name="show-form" path="edit-old-publication"/>
+  		<forward name="show-form" path="edit-old-cientific-publication"/>
   		<forward name="successfull-edit" path="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0"/>
  		<forward name="successfull-delete" path="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0"/>
   		<forward name="successfull-read" path="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0"/>
@@ -1493,8 +1494,8 @@
   	  
 	  <!-- Old Didactic Publication -->
 	  <action type="ServidorApresentacao.Action.framework.CRUDActionByOID"
-	  		path="/oldCientificPublication"
-	  		name="oldCientificPublicationForm"
+	  		path="/oldDidacticPublication"
+	  		name="oldPublicationForm"
 	  		parameter="method"
 	  		scope="request"
 	  		validate="true"
@@ -1506,7 +1507,7 @@
   		<set-property property="oidProperty" value="idInternal"/>
   		<set-property property="requestAttribute" value="infoOldPublication"/>
   		<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoOldPublication" />
-  		<forward name="show-form" path="edit-old-publication"/>
+  		<forward name="show-form" path="edit-old-didactic-publication"/>
   		<forward name="successfull-edit" path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
  		<forward name="successfull-delete" path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
   		<forward name="successfull-read" path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>

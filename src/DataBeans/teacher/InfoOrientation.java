@@ -4,6 +4,8 @@
  */
 package DataBeans.teacher;
 
+import java.util.Date;
+
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import Util.OrientationType;
@@ -19,6 +21,7 @@ public class InfoOrientation extends InfoObject
     private OrientationType orientationType;
     private String description;
     private Integer numberOfStudents;
+    private Date lastModificationDate;
 
     /**
 	 *  
@@ -95,4 +98,20 @@ public class InfoOrientation extends InfoObject
     {
         this.orientationType = orientationType;
     }
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
+    }
+
 }

@@ -98,6 +98,5 @@ create table OLD_PUBLICATION (
 	LAST_MODIFICATION_DATE timestamp(14) not null,
 	PUBLICATION text,
 	KEY_TEACHER integer(11) not null,
-	primary key (ID_INTERNAL),
-	unique U1 (KEY_TEACHER))
+	primary key (ID_INTERNAL))
 	type=InnoDB;

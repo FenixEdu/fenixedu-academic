@@ -3,15 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 <h2><bean:message key="title.teacherInformation"/></h2>
 
 <logic:present name="infoSiteTeacherInformation"> 
 		<table>
 			<tr>
-				<td><bean:message key="message.teacherInformation.name" />
+				<td width="70%"><bean:message key="message.teacherInformation.name" />
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nome" /> </td> 
-				<td><bean:message key="message.teacherInformation.birthDate" />
+				<td width="30%"><bean:message key="message.teacherInformation.birthDate" />
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" /> </td>	
 			</tr>
 			<tr>
@@ -84,7 +85,7 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">4</span>
 			<bean:message key="message.teacherInformation.serviceRegime" />
-			<%--<bean:write name="" property="" />--%>
+			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
@@ -99,7 +100,7 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">5</span>
 			<bean:message key="message.teacherInformation.externalActivities" />
-			<%--<bean:write name="" property="" />--%>
+			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
 		<br />	
@@ -165,7 +166,7 @@
 		<p class="infoop"><span class="emphasis-box">7</span>
 		<bean:message key="message.teacherInformation.ownPublications" /></p>
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldPublications">
+				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
 					<tr>
 						<td class="listClasses">
 							<bean:write name="infoOldPublication" property="publication" />
@@ -177,23 +178,20 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">8</span>
 			<bean:message key="message.teacherInformation.cientificPublications" /></p>
-		<%--<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
-			<tr>
-				<td><html:textarea name="" property=""/></td> 
-			</tr>
-		</table>--%>
-		<!-- VER ACTUALIZAR AS PUBLICACOES -->
-	<%--<table>
-			<logic:iterate id="" name="" property="">
-			<tr>
-				<td><bean:write name="" property="" /></td>
-			</tr>
-			</logic:iterate>
-		</table>--%>
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+					<tr>
+						<td class="listClasses">
+							<bean:write name="infoOldPublication" property="publication" />
+						</td>
+					</tr>
+				</logic:iterate>
+			<br />
+			</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">9</span>
 			<bean:message key="message.teacherInformation.lectureCourses" />
-			<%--<bean:write name="" property="" />--%>
+			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
@@ -227,7 +225,7 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">10</span>
 			<bean:message key="message.teacherInformation.orientations" />
-			<%--<bean:write name="" property="" />--%>
+			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
@@ -267,7 +265,7 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">11</span>
 			<bean:message key="message.teacherInformation.weeklySpendTime" />
-			<%--<bean:write name="" property="" />--%>
+			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
@@ -301,20 +299,14 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">12</span>
 			<bean:message key="message.teacherInformation.managerPosition" />
-			<%--<bean:write name="" property="" />--%>
+			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
-			<tr>
-				<%--	<td><bean:write name="" property=""/></td>--%>
-			</tr>
-		</table>
 		<br />
-		<table>
+		Informação ainda não disponivel
+		<%--<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
-				<td><bean:message key="message.teacherInformation.actualizationDate" /> &nbsp;
-					<%--<bean:write name="" property="" />--%>
-				</td>
+				<td><bean:write name="" property=""/></td>
 			</tr>
-		</table>
+		</table>--%>
 </logic:present>

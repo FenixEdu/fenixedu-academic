@@ -18,6 +18,7 @@ import Util.OldPublicationType;
 public class InfoOldPublication extends InfoObject
 {
 	private OldPublicationType oldPublicationType;
+    private String oldPublicationTypeString;
 	private Date lastModificationDate;
 	private String publication;
 	private InfoTeacher infoTeacher;
@@ -76,6 +77,7 @@ public class InfoOldPublication extends InfoObject
 	public void setOldPublicationType(OldPublicationType oldPublicationType)
 	{
 		this.oldPublicationType = oldPublicationType;
+        this.oldPublicationTypeString = oldPublicationType.getName();
 	}
 
 	/**
@@ -93,5 +95,22 @@ public class InfoOldPublication extends InfoObject
 	{
 		this.publication = publication;
 	}
+
+    /**
+     * @return Returns the oldPublicationTypeString.
+     */
+    public String getOldPublicationTypeString()
+    {
+        return oldPublicationTypeString;
+    }
+
+    /**
+     * @param oldPublicationTypeString The oldPublicationTypeString to set.
+     */
+    public void setOldPublicationTypeString(String oldPublicationTypeString)
+    {
+        this.oldPublicationTypeString = oldPublicationTypeString;
+        this.oldPublicationType = OldPublicationType.getEnum(oldPublicationTypeString);
+    }
 
 }

@@ -4,18 +4,23 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
-<html:form action="/externalActivity">
+<html:form action="/oldCientificPublication">
 <br/>
 <h3>
-<logic:present name="infoExternalActivity">
-<bean:message key="message.externalActivities.edit" />
-</logic:present>
-<logic:notPresent name="infoExternalActivity">
-<bean:message key="message.externalActivities.insertActivity" />
-</logic:notPresent>
+	<logic:present name="infoOldPublication">
+		<bean:message key="message.publications.insertPublication" />
+	</logic:present>
+	<logic:notPresent name="infoOldPublication">
+		<bean:message key="message.publications.editPublication" />
+	</logic:notPresent>
 </h3>
 <p class="infoop"><span class="emphasis-box">1</span>
-<bean:message key="message.externalActivities.managementEdit" /></p>
+	<logic:present name="infoOldPublication">
+		<bean:message key="message.publications.managementInsert" />
+	</logic:present>
+	<logic:notPresent name="infoOldPublication">
+		<bean:message key="message.publications.managementEdit" />
+	</logic:notPresent></p>
 	<span class="error">
 		<html:errors/>
 	</span>
@@ -23,13 +28,14 @@
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="infoTeacher#idInternal"/>
+	<html:hidden property="oldPublicationTypeString" value="Cientific"/>
 	<html:hidden property="method" value="edit"/>
 <table>
 	<tr>
-		<td><bean:message key="message.externalActivities.activity" /></td>
+		<td><bean:message key="message.publications.publication" /></td>
 	</tr>
 	<tr>
-		<td><html:textarea property="activity" cols="90%" rows="4"/></td>
+		<td><html:textarea property="publication" cols="90%" rows="4"/></td>
 	<tr/>
 </table>
 <br/>

@@ -8,12 +8,7 @@
 <bean:define id="infoSiteOldPublications" name="siteView" property="component"/>
 <br/>
 <h3>
-<logic:present name="infoOldPublication">
-<bean:message key="message.authorPublications" />
-</logic:present>
-<logic:notPresent name="infoOldPublication">
 <bean:message key="message.cientificPublications" />
-</logic:notPresent>
 </h3>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.publications.management" /></p>
@@ -29,7 +24,7 @@
 	</td>
 	<td class="listClasses"> 
 		<div class="gen-button">
-			<html:link page="/externalActivity.do?method=prepareEdit&amp;page=0" 
+			<html:link page="/oldCientificPublication.do?method=prepareEdit&amp;page=0" 
 						paramId="idInternal"
 					   paramName="infoOldPublication" 
 					   paramProperty="idInternal">
@@ -39,7 +34,7 @@
 	</td>
 	<td class="listClasses">
 		<div class="gen-button">
-			<html:link page="/externalActivity.do?method=delete&amp;page=0" 
+			<html:link page="/oldCientificPublication.do?method=delete&amp;page=0" 
 					   paramId="idInternal" 
 					   paramName="infoOldPublication" 
 					   paramProperty="idInternal">
@@ -50,15 +45,17 @@
 </tr>
 </logic:iterate>
 </table>
-<br />	
-<div class="gen-button">
-	<html:link page="/externalActivity.do?method=prepareEdit&amp;page=0" 
-			   paramId="infoTeacher#idInternal" 
-			   paramName="infoSiteOldPublications" 
-			   paramProperty="infoTeacher.idInternal" >
-		<bean:message key="message.publications.insert" />
-	</html:link>
-</div>
+<br />
+<logic:lessThan name="infoSiteOldPublications" property="numberOldPublications" value="5">	
+	<div class="gen-button">
+		<html:link page="/oldCientificPublication.do?method=prepareEdit&amp;page=0&amp;oldPublicationType=Cientific" 
+				   paramId="infoTeacher#idInternal" 
+				   paramName="infoSiteOldPublications" 
+				   paramProperty="infoTeacher.idInternal" >
+			<bean:message key="message.publications.insert" />
+		</html:link>
+	</div>
+</logic:lessThan>
 <br />
 <h3>
 <table>

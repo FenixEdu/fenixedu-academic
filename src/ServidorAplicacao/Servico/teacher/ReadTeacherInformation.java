@@ -25,10 +25,12 @@ import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IQualification;
 import Dominio.ITeacher;
 import Dominio.teacher.IExternalActivity;
+import Dominio.teacher.IOldPublication;
 import Dominio.teacher.IOrientation;
 import Dominio.teacher.IProfessionalCareer;
 import Dominio.teacher.IServiceProviderRegime;
@@ -37,6 +39,7 @@ import Dominio.teacher.IWeeklyOcupation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentQualification;
 import ServidorPersistente.IPersistentTeacher;
@@ -44,11 +47,13 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
+import ServidorPersistente.teacher.IPersistentOldPublication;
 import ServidorPersistente.teacher.IPersistentOrientation;
 import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 import Util.CareerType;
+import Util.OldPublicationType;
 import Util.OrientationType;
 import Util.PublicationType;
 
@@ -359,6 +364,43 @@ public class ReadTeacherInformation implements IServico
                     infoPublicationsNumber);
             }
 
+            IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
+            List oldCientificPublications =
+                persistentOldPublication.readAllByTeacherAndOldPublicationType(
+                    teacher,
+                    OldPublicationType.CIENTIFIC);
+            infoSiteTeacherInformation
+                .setInfoOldCientificPublications(
+                    (List) CollectionUtils
+                    .collect(oldCientificPublications, new Transformer()
+            {
+                public Object transform(Object o)
+                {
+                    IOldPublication oldPublication = (IOldPublication) o;
+                    return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
+                }
+            }));
+
+            List oldDidacitcPublications =
+                persistentOldPublication.readAllByTeacherAndOldPublicationType(
+                    teacher,
+                    OldPublicationType.DIDACTIC);
+            infoSiteTeacherInformation
+                .setInfoOldDidacticPublications(
+                    (List) CollectionUtils
+                    .collect(oldDidacitcPublications, new Transformer()
+            {
+                public Object transform(Object o)
+                {
+                    IOldPublication oldPublication = (IOldPublication) o;
+                    return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
+                }
+            }));
+
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            infoSiteTeacherInformation.setInfoExecutionPeriod(Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod));
+            
             // TODO: faltam os cargos de gestão
             return new SiteView(infoSiteTeacherInformation);
         } catch (ExcepcaoPersistencia e)
