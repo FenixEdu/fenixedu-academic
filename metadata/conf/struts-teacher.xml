@@ -1407,10 +1407,13 @@
       		scope="request"
       		validate="true"
       		input="/courseInformation.do?page=0&amp;method=prepareEdit">
-		<forward name="show-form" path="course-information-management"/> 
+  		<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			   key="error.exception.notAuthorized"
+               handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" />
+  		<forward name="show-form" path="course-information-management"/> 
 		<forward name="successfull-read" path="view-course-information"/>
 	  </action>
-      
+		
       <!-- Professional Career -->
       <action type="ServidorApresentacao.Action.framework.CRUDActionByOID"
       		path="/professionalCareer"
