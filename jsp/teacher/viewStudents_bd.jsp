@@ -34,7 +34,7 @@
 						<bean:message key="label.year" arg0="<%= String.valueOf(ano) %>"/>
 						<bean:message key="label.period" arg0="<%= String.valueOf(semestre) %>"/>
 			   </logic:present>
-	   		</h2>
+	   		</h2><br />
 		   </td>
 		</tr> 
 		<tr>

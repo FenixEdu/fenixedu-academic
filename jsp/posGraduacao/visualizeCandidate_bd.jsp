@@ -12,12 +12,8 @@
 
 <bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request" property="infoPerson"/>
 <bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
-
-
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
 <bean:define id="link">/editCandidate.do?method=prepareEdit&candidateID=</bean:define>
-
-
 <br />
 <table>
 	<logic:present name="personalInfo">

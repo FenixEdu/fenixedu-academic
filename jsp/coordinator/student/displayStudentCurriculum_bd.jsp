@@ -6,26 +6,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.EnrolmentState" %>
-
   <span class="error"><html:errors/></span>
-
   <bean:define id="curriculum" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
   <bean:define id="student" name="<%= SessionConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />
-  
-  
   <bean:message key="label.person.name" />
   <bean:write name="student" property="infoStudent.infoPerson.nome"/>
   </br>
-  
   <bean:message key="label.degree" />:
   <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
   </br>
-
   <bean:message key="property.number" />
   <bean:write name="student" property="infoStudent.number"/>
   </br>
   </br>
-  
   <table>
   	<logic:iterate id="enrolment" name="curriculum">
   		<tr>

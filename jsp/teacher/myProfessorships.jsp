@@ -2,9 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-
 <tiles:importAttribute />
-
 <logic:notEmpty name="professorshipList" >	
 	<bean:define id="titleKey">
 		<tiles:getAsString name="title"/>
@@ -24,7 +22,6 @@
 			</bean:define>
 			<logic:iterate name="professorshipList" id="professorship" >
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
-				
 				<tr>
 					<td class="listClasses">
 						<html:link page="<%= link %>" paramId="objectCode" paramName="infoExecutionCourse" paramProperty="idInternal">
@@ -44,5 +41,4 @@
 				</tr>
 			</logic:iterate>
 	 	</table>
-</logic:notEmpty>	 	
-
+</logic:notEmpty>

@@ -9,8 +9,7 @@
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
 </br>
-	</br>
-		
+</br>		
 <logic:present name="siteView" property="component" >
 	<bean:define id="component" name="siteView" property="component"/>
 

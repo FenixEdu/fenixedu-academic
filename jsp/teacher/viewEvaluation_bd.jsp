@@ -25,7 +25,7 @@
 			<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>			
 			<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
 				<br />
-				<table class="infotable"> 	
+				<table width="90%" class="infotable"> 	
 					<tr>
 						<td class="bottomborder">
 							<b><bean:message key="label.exam"/></b>:<bean:write name="evaluation" property="season"/><br />
@@ -55,7 +55,7 @@
 			<%-- finalEvaluation --%>
 			<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">
 				<br />
-				<table class="infotable"> 	
+				<table  width="90%" class="infotable"> 	
 					<tr>
 						<td class="bottomborder" colspan="3">
 							<b><bean:message key="label.finalEvaluation"/></b><br />
