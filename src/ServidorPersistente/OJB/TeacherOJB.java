@@ -7,14 +7,15 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
+
 import Dominio.Employee;
 import Dominio.EmployeeHistoric;
 import Dominio.IDepartment;
 import Dominio.IEmployeeHistoric;
-import Dominio.IExecutionCourse;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -59,42 +60,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         Criteria criteria = new Criteria();
         return queryList(Teacher.class, criteria);
     }
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentTeacher#readTeacherByExecutionCourse()
-	 */
-    public List readTeacherByExecutionCourseProfessorship(IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
-    {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "professorShipsExecutionCourses.executionPeriod.executionYear.year",
-            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-        criteria.addEqualTo("professorShipsExecutionCourses.sigla", executionCourse.getSigla());
-        criteria.addEqualTo(
-            "professorShipsExecutionCourses.executionPeriod.name",
-            executionCourse.getExecutionPeriod().getName());
-        return queryList(Teacher.class, criteria);
-    }
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentTeacher#readTeacherByExecutionCourseResponsibility(Dominio.IDisciplinaExecucao)
-	 */
-    public List readTeacherByExecutionCourseResponsibility(IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
-    {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "responsibleForExecutionCourses.executionPeriod.executionYear.year",
-            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-        criteria.addEqualTo("responsibleForExecutionCourses.sigla", executionCourse.getSigla());
-        criteria.addEqualTo(
-            "responsibleForExecutionCourses.executionPeriod.name",
-            executionCourse.getExecutionPeriod().getName());
-        return queryList(Teacher.class, criteria);
-    }
+    
 
     /*
 	 * (non-Javadoc)
