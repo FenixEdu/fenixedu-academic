@@ -1411,7 +1411,7 @@
 	         <forward name="ShowConfirmation" path="candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
 	         <forward name="ShowResult" path="candidate/candidateRegistered.jsp"/> 
-	         <forward name="Print" path="candidate/candidateRegistrationTemplate.jsp"/> 
+	         <forward name="Print" path="candidate/candidateRegistrationTemplatePrint.jsp"/> 
 	         
       </action>
 
