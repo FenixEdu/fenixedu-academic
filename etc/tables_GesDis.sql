@@ -70,12 +70,14 @@ create table RESPONSIBLEFOR (
 
 #----------------------------
 # Table structure for professorships
+#   Column CREDITS only applies to MASTER DEGREE execution courses.
 #----------------------------
 drop table if exists PROFESSORSHIPS;
 create table PROFESSORSHIPS (
    INTERNAL_CODE integer(11) not null auto_increment,
    KEY_TEACHER int(11) unsigned not null default '0',
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
+   CREDITS float(11, 2) default '0',
    primary key (INTERNAL_CODE),
     UNIQUE KEY U1(KEY_TEACHER, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
