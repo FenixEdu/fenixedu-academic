@@ -247,30 +247,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 
     }
 
-    /**
-     * @param typeFilter
-     * @return
-     */
-    private TipoAula mapFromStringToLessonType(String typeFilter)
-    {
-        TipoAula result = null;
-        if (typeFilter.equals("T"))
-        {
-            result = new TipoAula(TipoAula.TEORICA);
-        } else if (typeFilter.equals("P"))
-        {
-            result = new TipoAula(TipoAula.PRATICA);
-        } else if (typeFilter.equals("TP"))
-        {
-            result = new TipoAula(TipoAula.TEORICO_PRATICA);
-        } else if (typeFilter.equals("L"))
-        {
-            result = new TipoAula(TipoAula.LABORATORIAL);
-        }
-
-        return result;
-    }
-
     public ActionForward curricularCourse(
         ActionMapping mapping,
         ActionForm form,

@@ -20,6 +20,7 @@
 <h2><bean:message key="title.summary.edit" /></h2>
 
 <html:form action="/summariesManager">
+	<html:hidden property="forHidden" value=""/>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="editSummary"/>
 	<html:hidden property="objectCode"/>
@@ -63,12 +64,12 @@
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
 				<bean:write name="infoLesson" property="infoSala.nome" />
 			:</td>
-			<td><html:radio name="infoSummary" property="lesson" value="<%= lessonId.toString() %>" /></td>
+			<td><html:radio name="infoSummary" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareEditSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
 		</tr>
 	</logic:iterate>
 	<tr>
 		<td><bean:message key="label.extra.lesson" />:</td>
-		<td><html:radio name="infoSummary" property="lesson" value="0" /></td>
+		<td><html:radio name="infoSummary" property="lesson" value="0" onclick="this.form.method.value='prepareEditSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.submit();"/></td>
 	</tr>
 	<tr>
 		<td colspan='2'>&nbsp;</td>
@@ -77,17 +78,38 @@
 		<td><bean:message key="label.summaryDate"/></td>
 		<td><html:text name="infoSummary" property="summaryDateInput" size="10" maxlength="10"/><bean:message key="message.dateFormat"/></td>
 	</tr>
-	<tr>
-		<td><bean:message key="label.summaryHour"/></td>
-		<td><html:text name="infoSummary" property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
-	<tr/>	
-	<tr>
-		<td><bean:message key="label.room"/>:</td>
-		<td><html:select name="infoSummary" property="room">
-				<html:option key="label.summary.select" value="" />
-				<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
-			</html:select></td>		
-	<tr/>	
+	
+	<logic:present name="forHidden">
+		<logic:notEqual name="forHidden" value="true">
+		<tr>
+			<td><bean:message key="label.summaryHour"/></td>
+			<td><html:text name="infoSummary" property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
+		<tr/>	
+		<tr>
+			<td><bean:message key="label.room"/>:</td>
+			<td><html:select name="infoSummary" property="room">
+					<html:option key="label.summary.select" value="" />
+					<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
+				</html:select></td>		
+		<tr/>	
+		</logic:notEqual>
+		<logic:equal name="forHidden" value="true">
+			<html:hidden name="infoSummary" property="summaryHourInput"/>
+			<html:hidden name="infoSummary" property="room"/>
+		</logic:equal>
+	</logic:present>
+	<logic:notPresent name="forHidden">		<tr>
+			<td><bean:message key="label.summaryHour"/></td>
+			<td><html:text name="infoSummary" property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
+		<tr/>	
+		<tr>
+			<td><bean:message key="label.room"/>:</td>
+			<td><html:select name="infoSummary" property="room">
+					<html:option key="label.summary.select" value="" />
+					<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
+				</html:select></td>		
+		<tr/>	
+	</logic:notPresent>	
 
 	<tr>
 		<td><bean:message key="label.studentNumber.attended.lesson" />:</td>

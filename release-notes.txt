@@ -9,6 +9,13 @@ NEW FEATURES:
 - Added new feature in Degree Administrative Office portal: Change student areas.
 - Added new feature in Degree Administrative Office, Coordinator and Master Degree Administrative Office portals:
   Make enrollment equivalences for students.
+- new features on summaries of the curricular courses in teacher area and public sites:
+	in teacher area:
+		1. the TeacherAdministrationViewerDispatchAction does not contain the methods that process the requests of the summaries.
+		2. A new action was created (SummaryManagerAction.java)
+		3. All _bd.jsp files were deleted. 
+		4. Now it is used the definitions tiles.
+		5. New service were created and old services where changed.
 
 NOTES:
 ======
@@ -17,6 +24,8 @@ NOTES:
   The file updates_for_deploy_2004-05-26.sql must be runned in the following way:
                           mysql <DBNAME> < updates_for_deploy_2004-05-26.sql > result.sql
                           mysql <DBNAME> < result.sql
+- It is necessary run "changeSummaryTable.sql" but ATTENTION only run the ten first lines! This files add new columns in the SUMMARY 
+  table and change others.
 
 CHANGES:
 ========
