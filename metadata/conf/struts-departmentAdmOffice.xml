@@ -88,9 +88,12 @@
 	 <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
 		<exception type="java.lang.Exception"
-		  	       key="ServidorAplicacao.NotExecutedException"
-		  	       path="/naoExecutado.do"
-		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		  	       key="message.unknown-error"
+		  	       path="/index.do" />
+		<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+		  	       key="message.not-authorized"
+		  	       path="/index.do"/>
+		  	       
 	</global-exceptions>
 
 	<!-- ========== Global Forward Definitions =============================== -->
@@ -217,7 +220,9 @@
 			<set-property property="oidProperty" value="idInternal"/>
 			<set-property property="requestAttribute" value="infoTeacherDegreeFinalProjectStudent" />
 			<set-property property="infoObjectClassName" value="DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent" />
-			
+			<exception type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException"
+		  	       key="message.student-not-found"
+		  	       path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>			
 			<forward name="show-form" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/> 
 			<forward name="successfull-edit" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/> 
 			<forward name="successfull-read" path=""/>
