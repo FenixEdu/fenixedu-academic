@@ -47,8 +47,11 @@ public class ValidateActualEnrolment implements IServico {
 	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) throws FenixServiceException{
 
 		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
-		IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
-		EnrolmentContext enrolmentContext = strategy.validateEnrolment();
+		EnrolmentContext enrolmentContext = EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext);
+		enrolmentContext.getEnrolmentValidationResult().reset();
+		IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
+		
+		enrolmentContext = strategy.validateEnrolment();
 
 		return EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);
 	}
