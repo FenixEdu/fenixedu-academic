@@ -168,7 +168,7 @@
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
       <action path="/candidateSection" forward="/candidateIndex.jsp"/>
-      <action path="/contributorSection" forward="/contributor/index.jsp"/>
+      <action path="/contributorSection" forward="/contributor/indexContributor.jsp"/>
       <action path="/guideSection" forward="/guide/indexGuide.jsp"/>
       <action path="/printGuidePage" forward="/guide/printGuidePage.jsp"/>
       
