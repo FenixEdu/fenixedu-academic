@@ -312,7 +312,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 					(ExecutionCourseShiftEnrollmentDetails) iterator2.next();
 				Collections.sort(
 					details2.getShiftEnrollmentDetailsList(),
-					new BeanComparator("infoShift.nome"));
+					new BeanComparator("infoShift.tipo"));
 
 			}
 
