@@ -124,6 +124,9 @@
 				<bean:message key="label.gep.courseInformation.professorships" bundle="GEP_RESOURCES"/>
 			</td>
 			<td class="listClasses-header">
+				<bean:message key="title.gep.teachersInformationSituation" bundle="GEP_RESOURCES"/>
+			</td>
+			<td class="listClasses-header">
 				<bean:message key="label.gep.courseInformation.lastModificationDate" bundle="GEP_RESOURCES"/>
 			</td>
 			<td class="listClasses-header">
@@ -208,6 +211,14 @@
 									</li>
 								</logic:iterate>
 								</ul>
+							</td>
+							<td class="listClasses" >&nbsp;
+						    	<logic:lessThan name="infoSiteCourseInformation" property="numberOfFieldsFilled" value="5">
+						    		<font color="#FF0000"><bean:write name="infoSiteCourseInformation" property="numberOfFieldsFilled"/>/5</font>
+						    	</logic:lessThan>
+						    	<logic:greaterEqual name="infoSiteCourseInformation" property="numberOfFieldsFilled" value="5">
+						    		<font color="#008000"><bean:write name="infoSiteCourseInformation" property="numberOfFieldsFilled"/>/5</font>
+						    	</logic:greaterEqual>							
 							</td>
 							<td class="listClasses" >&nbsp;
 								<logic:present name="infoSiteCourseInformation" property="lastModificationDate"> 

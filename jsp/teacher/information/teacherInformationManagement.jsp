@@ -70,7 +70,7 @@
 				<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
 				<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
-				<td class="listClasses"><bean:write name="infoQualification" property="mark" /></td>
+				<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>
 			</tr>
 			</logic:iterate>
 		</table>

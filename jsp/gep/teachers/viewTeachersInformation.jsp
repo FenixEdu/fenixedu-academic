@@ -75,50 +75,63 @@
 			<td class="listClasses-header"><bean:message key="label.gep.teacher.category" bundle="GEP_RESOURCES"/> </td> 
 		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses" bundle="GEP_RESOURCES"/></td> 
 		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.degrees" bundle="GEP_RESOURCES"/></td> 
+		    <td class="listClasses-header"><bean:message key="title.gep.teachersInformationSituation" bundle="GEP_RESOURCES"/></td> 
 		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.lastModificationDate" bundle="GEP_RESOURCES"/></td> 
 	    </tr>
 	    
 	    <% HashMap statistics = new HashMap(); %>
    		<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation" type="DataBeans.teacher.InfoSiteTeacherInformation">
-   			<% int numberOfFields = 0; %>
+   			<% int numberOfFields = 0; 
+   			   int requiredFields = 0;%>
 			<logic:present name="infoSiteTeacherInformation" property="infoQualifications">
-				<% if (infoSiteTeacherInformation.getInfoQualifications().size() > 0)
-					 numberOfFields++; 
+				<%	if (infoSiteTeacherInformation.getInfoQualifications().size() > 0){
+						numberOfFields++;
+						requiredFields++; 
+				   	}
 				%>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoProfessionalCareers">
-				<% if (infoSiteTeacherInformation.getInfoProfessionalCareers().size() > 0)
-					  numberOfFields++; 
+				<% 	if (infoSiteTeacherInformation.getInfoProfessionalCareers().size() > 0)
+						numberOfFields++; 
 				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoTeachingCareers">
-				<% if (infoSiteTeacherInformation.getInfoTeachingCareers().size() > 0)
-					  numberOfFields++; 
+				<% 	if (infoSiteTeacherInformation.getInfoTeachingCareers().size() > 0){
+						numberOfFields++; 
+					 	requiredFields++; 
+					}
 				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoExternalActivities">
-				<% if (infoSiteTeacherInformation.getInfoExternalActivities().size() > 0)
-					  numberOfFields++; 
+				<% 	if (infoSiteTeacherInformation.getInfoExternalActivities().size() > 0)
+						numberOfFields++; 
 				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoServiceProviderRegime">
 				<% numberOfFields++; %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoOldCientificPublications">
-				<% if (infoSiteTeacherInformation.getInfoOldCientificPublications().size() > 0)
-					  numberOfFields++; 
+				<% 	if (infoSiteTeacherInformation.getInfoOldCientificPublications().size() > 0){
+						numberOfFields++; 
+					 	requiredFields++; 
+					} 
 				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
-				<% if (infoSiteTeacherInformation.getInfoOldDidacticPublications().size() > 0)
-					  numberOfFields++; 
+				<% 	if (infoSiteTeacherInformation.getInfoOldDidacticPublications().size() > 0){
+						numberOfFields++; 
+					 	requiredFields++; 
+					}
 				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoWeeklyOcupation">
 				<% numberOfFields++; %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoComunicationPublicationsNumber">
-				<% numberOfFields++; %>
+				<% 	numberOfFields++; %>
+				<logic:notEmpty name="infoSiteTeacherInformation" property="infoComunicationPublicationsNumber.national">
+					<%	requiredFields++; %>				
+				</logic:notEmpty>
 			</logic:present>
 			
 			<% if (!statistics.containsKey(new Integer(numberOfFields)))
@@ -165,6 +178,15 @@
 					    	 <logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
 					    	 	<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>&nbsp;
 					    	 </logic:iterate>
+					    </td> 
+					    <td  class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">
+							<bean:define id="fieldsRequired"><%= requiredFields %></bean:define>
+					    	<logic:lessThan name="fieldsRequired" value="5">
+					    		<font color="#FF0000"><%= requiredFields %>/5</font>
+					    	</logic:lessThan>
+					    	<logic:greaterEqual name="fieldsRequired" value="5">
+					    		<font color="#008000"><%= requiredFields %>/5</font>
+					    	</logic:greaterEqual>
 					    </td> 
 					    <td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp; 
 					    	<logic:present  name="infoSiteTeacherInformation" property="lastModificationDate">
