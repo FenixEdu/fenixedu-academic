@@ -1,12 +1,14 @@
-
 package ServidorPersistente;
 
+import java.util.List;
+
+import Dominio.IPessoa;
 
 /**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- * @author Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author João Simas
+ * @author Nuno Barbosa
  */
-public interface IPersistentQualification extends IPersistentObject {
-
+public interface IPersistentQualification extends IPersistentObject
+{
+	public List readQualificationsByPerson(IPessoa person) throws ExcepcaoPersistencia;
 }
