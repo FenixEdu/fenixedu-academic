@@ -49,7 +49,7 @@ public class ReadDegreeAction extends FenixAction  {
 		
 						try {
 							InfoDegree degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
-							session.setAttribute(SessionConstants.INFO_DEGREE,degree);
+							request.setAttribute(SessionConstants.INFO_DEGREE,degree);
 							} 
 						catch (FenixServiceException e) {
 							throw new FenixActionException(e);

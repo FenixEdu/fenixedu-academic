@@ -24,10 +24,20 @@ public class TestCaseServicos extends TestCase {
 
 	public TestCaseServicos(String testName) {
 		super(testName);
-		String argsAutenticacao3[] = {"user", "pass" , getApplication()};
-		String argsAutenticacao4[] = {"julia", "pass" , getApplication()};
+		String[] argsAutenticacao3 = getArgsForAuthorizedUser();
+		String[] argsAutenticacao4 = getArgsForNotAuthorizedUser();
 		this.argsAutenticacao1 = argsAutenticacao3;
-		this.argsAutenticacao2 = argsAutenticacao4;
+		this.argsAutenticacao2 = argsAutenticacao4;	
+	}
+
+	protected String[] getArgsForAuthorizedUser() {
+		String argsAutenticacao3[] = {"user", "pass" , getApplication()};
+		return argsAutenticacao3;
+	}
+
+	protected String[] getArgsForNotAuthorizedUser() {
+		String argsAutenticacao4[] = {"julia", "pass" , getApplication()};
+		return argsAutenticacao4;
 	}
 	
 	protected void setUp() {

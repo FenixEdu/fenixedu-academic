@@ -26,7 +26,8 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 
 		Object[] args = getArgumentsOfServiceToBeTestedUnsuccessfuly();
 
-		if(args != null) {
+		if(args!=null){
+
 			Object result = null;
 			try {
 				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
@@ -45,17 +46,19 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 				System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 				fail("testUnsuccessfulExecutionOfReadService");
 			}
-		}
 	}
-	
+	}	
 //	read existing object
 	public void testSuccessfulExecutionOfReadService() {
 
 		Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
 
-		if(args != null) {
+		if(args == null) {
+			args = new Object[]{};
+		}
 			Object result = null;
 			try {
+				
 				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
 				if(result instanceof Collection) {
 					assertEquals("testSuccessfulExecutionOfReadService", getNumberOfItemsToRetrieve(), ((Collection) result).size());
@@ -69,7 +72,6 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 				System.out.println("testSuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 				fail("testSuccessfulExecutionOfReadService");
 			}
-		}
 	}
 
 	/**

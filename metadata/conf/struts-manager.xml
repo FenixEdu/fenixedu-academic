@@ -71,6 +71,7 @@
 	 <!-- Action for reading all degrees  -->
       <action path="/readDegrees"
              input="mainPageInput.do"
+             scope="request"
       	     type="ServidorApresentacao.Action.manager.ReadDegreesAction">
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
@@ -79,6 +80,7 @@
       <action path="/readDegree"
       	      name="readDegreeForm"
               input="/readDegreesInput.do"
+              scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
       	  <forward name="viewDegree" path="df.page.read-degree"/>      	      
       </action>
