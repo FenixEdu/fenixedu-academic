@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
@@ -312,7 +313,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         //                .getCreditsInSpecializationArea();
         List curricularCourses = infoSEC
                 .getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled();
-
+       
         List curricularCoursesNames = (List) CollectionUtils.collect(
                 curricularCourses, new Transformer()
                 {
@@ -331,7 +332,8 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
                         return curricularCourse.getName();
                     }
                 });
-
+       // System.out.println("para inscrever->"+curricularCoursesNames);
+       
         if (infoSEC.getStudentCurrentSemesterInfoEnrollments() != null)
         {
 
@@ -356,7 +358,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
                         }
                     });
-
+           // System.out.println("inscrição obrigatória->"+forcedEnrollments);
             curricularCoursesNames.addAll(forcedEnrollments);
 
         }
@@ -375,6 +377,8 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
                 .get(0);
 
         // sortCurricularCourses(curricularCoursesNames);
+        Collections.sort(curricularCoursesNames);
+        Collections.sort(expectedCurricularCoursesNames);
         System.out.println("curricularCoursesNames:" + curricularCoursesNames);
         System.out.println("expectedCurricularCoursesNames:"
                 + expectedCurricularCoursesNames);

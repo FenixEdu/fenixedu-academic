@@ -337,19 +337,12 @@ public class SmartDataSetGeneratorForLEECTestBattery
                                 }
 
                             }
-                            if (manyToManyTableName == "DEGREE_CURRICULAR_PLAN")
-                            {
-                                sqlQuery = "SELECT * FROM "
-                                        + manyToManyTableName + " WHERE "
-                                        + fkName + " = " + primaryKeyValue
-                                        + " AND ID_INTERNAL=48";
-                            }
-                            else
-                            {
+                           
+                           
                                 sqlQuery = "SELECT * FROM "
                                         + manyToManyTableName + " WHERE "
                                         + fkName + " = " + primaryKeyValue;
-                            }
+                           
 
                             manyToManyResultSet = stmtManyToMany
                                     .executeQuery(sqlQuery);
