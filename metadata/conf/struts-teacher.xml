@@ -293,12 +293,12 @@
 
 	<!-- Edit Section -->
 	<action name="sectionForm"
-		input="/createSection.jsp"
+		input="/editSection.jsp"
 		path="/editSection"
 		parameter="method"
 		type="ServidorApresentacao.Action.teacher.EditSectionDispatchAction"
         validate="false" >
-       <forward name="editSection" path="/editSection.do?method=edit"/>
+       <forward name="editSection" path="/editSection.jsp"/>
        <forward name="viewSite" path="/viewSite.do"/>
 	</action>
 	
