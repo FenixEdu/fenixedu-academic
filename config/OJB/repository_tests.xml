@@ -192,49 +192,55 @@
         primarykey="true"
         autoincrement="true"
     />
-     <field-descriptor id="2"
+    <field-descriptor id="2"
+        name="testInformation"
+        column="TEST_INFORMATION"
+        jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	/>
+     <field-descriptor id="3"
         name="beginDate"
         column="TEST_BEGIN_DATE"
         jdbc-type="DATE"
         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor id="4"
         name="beginHour"
         column="TEST_BEGIN_HOUR"
         jdbc-type="TIME"
         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
 	/>
-   <field-descriptor id="4"
+   <field-descriptor id="5"
         name="endDate"
         column="TEST_END_DATE"
         jdbc-type="DATE"
         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
 	/>
-	<field-descriptor id="5"
+	<field-descriptor id="6"
         name="endHour"
         column="TEST_END_HOUR"
         jdbc-type="TIME"
         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
 	/>
-   <field-descriptor id="6"
+   <field-descriptor id="7"
         name="testType"
         column="TEST_TYPE"
         jdbc-type="INTEGER"
         conversion="ServidorPersistente.Conversores.TestType2EnumTestTypeFieldConversion"
 	/>
-   <field-descriptor id="7"
+   <field-descriptor id="8"
         name="correctionAvailability"
         column="CORRECTION_AVAILABILITY"
         jdbc-type="INTEGER"
         conversion="ServidorPersistente.Conversores.CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion"
 	/>
-   <field-descriptor id="8"
+   <field-descriptor id="9"
         name="studentFeedback"
         column="STUDENT_FEEDBACK"
         jdbc-type="INTEGER"
         conversion="ServidorPersistente.Conversores.Int2BooleanFieldConversion"
  	/>
-	<field-descriptor id="9"
+	<field-descriptor id="10"
         name="keyTest"
         column="KEY_TEST"
         jdbc-type="INTEGER"
@@ -244,9 +250,69 @@
         class-ref="Dominio.Test"
         proxy="true"
     >
-	<foreignkey field-id-ref="9"/>
+	<foreignkey field-id-ref="10"/>
 	</reference-descriptor>
 	 <attribute
+		attribute-name="cacheable"
+     	attribute-value="false" />
+</class-descriptor>
+
+<!-- ******************************************* -->
+<!-- Definitions for Dominio.StudentTestQuestion -->
+<!-- ******************************************* -->
+<class-descriptor class="Dominio.StudentTestQuestion"
+                  table="STUDENT_TEST_QUESTION">
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"/>
+     <field-descriptor
+        name="keyStudent"
+        column="KEY_STUDENT"
+        jdbc-type="INTEGER"/>
+     <field-descriptor
+        name="keyDistributedTest"
+        column="KEY_DISTRIBUTED_TEST"
+        jdbc-type="INTEGER"/>
+	<field-descriptor id="4"
+         name="keyQuestion"
+         column="KEY_XML_DOCUMENT"
+    	 jdbc-type="INTEGER"/>
+    <field-descriptor
+        name="testQuestionOrder"
+        column="TEST_QUESTION_ORDER"
+        jdbc-type="INTEGER"/>
+    <field-descriptor
+        name="testQuestionValue"
+        column="TEST_QUESTION_VALUE"
+        jdbc-type="INTEGER"/>
+    <field-descriptor
+        name="response"
+        column="RESPONSE"
+        jdbc-type="INTEGER"/>
+    <field-descriptor
+        name="optionShuffle"
+        column="OPTION_SHUFFLE"
+        jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+     <reference-descriptor
+        name="student"
+        class-ref="Dominio.Student">
+     <foreignkey field-ref="keyStudent"/>
+     </reference-descriptor>
+     <reference-descriptor
+        name="distributedTest"
+        class-ref="Dominio.DistributedTest">
+     <foreignkey field-ref="keyDistributedTest"/>
+     </reference-descriptor>
+          <reference-descriptor
+        name="question"
+        class-ref="Dominio.Question">
+     <foreignkey field-ref="keyQuestion"/>
+     </reference-descriptor>
+      <attribute
 		attribute-name="cacheable"
      	attribute-value="false" />
 </class-descriptor>
