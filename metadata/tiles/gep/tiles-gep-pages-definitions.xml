@@ -15,7 +15,7 @@
         <put name="body" value="/gep/teachers/searchTeachersInformation.jsp"/>
     </definition>
     <definition name="view-courses-information" extends="definition.gep.two-column">
-        <put name="body" value="/gep//courses/viewCoursesInformation.jsp"/>
+        <put name="body" value="/gep/courses/viewCoursesInformation.jsp"/>
     </definition>
     <definition name="view-course-information" extends="definition.gep.two-column">
         <put name="body" value="/gep/courses/viewCourseInformation.jsp"/>

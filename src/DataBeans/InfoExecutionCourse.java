@@ -8,6 +8,8 @@ package DataBeans;
 
 import java.util.List;
 
+
+
 /**
  * @author tfc130
  */
@@ -397,4 +399,5 @@ public class InfoExecutionCourse extends InfoObject
         this.hasSite = hasSite;
     }
 
+    
 }

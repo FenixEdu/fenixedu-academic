@@ -34,6 +34,10 @@ public class InfoSiteCourseInformation implements ISiteComponent
     private List infoLessons;
     private List infoBibliographicReferences;
     private InfoCourseReport infoCourseReport;
+    private Integer numberOfTheoLessons;
+    private Integer numberOfPratLessons;
+    private Integer numberOfTheoPratLessons;
+    private Integer numberOfLabLessons;
 
     public InfoSiteCourseInformation()
     {}
@@ -232,4 +236,68 @@ public class InfoSiteCourseInformation implements ISiteComponent
 
         return minDate;
     }
+    /**
+     * @return Returns the numberOfLabLessons.
+     */
+    public Integer getNumberOfLabLessons()
+    {
+        return numberOfLabLessons;
+    }
+
+    /**
+     * @param numberOfLabLessons The numberOfLabLessons to set.
+     */
+    public void setNumberOfLabLessons(Integer numberOfLabLessons)
+    {
+        this.numberOfLabLessons = numberOfLabLessons;
+    }
+
+    /**
+     * @return Returns the numberOfPratLessons.
+     */
+    public Integer getNumberOfPratLessons()
+    {
+        return numberOfPratLessons;
+    }
+
+    /**
+     * @param numberOfPratLessons The numberOfPratLessons to set.
+     */
+    public void setNumberOfPratLessons(Integer numberOfPratLessons)
+    {
+        this.numberOfPratLessons = numberOfPratLessons;
+    }
+
+    /**
+     * @return Returns the numberOfTheoLessons.
+     */
+    public Integer getNumberOfTheoLessons()
+    {
+        return numberOfTheoLessons;
+    }
+
+    /**
+     * @param numberOfTheoLessons The numberOfTheoLessons to set.
+     */
+    public void setNumberOfTheoLessons(Integer numberOfTheoLessons)
+    {
+        this.numberOfTheoLessons = numberOfTheoLessons;
+    }
+
+    /**
+     * @return Returns the numberOfTheoPratLessons.
+     */
+    public Integer getNumberOfTheoPratLessons()
+    {
+        return numberOfTheoPratLessons;
+    }
+
+    /**
+     * @param numberOfTheoPratLessons The numberOfTheoPratLessons to set.
+     */
+    public void setNumberOfTheoPratLessons(Integer numberOfTheoPratLessons)
+    {
+        this.numberOfTheoPratLessons = numberOfTheoPratLessons;
+    }
+
 }

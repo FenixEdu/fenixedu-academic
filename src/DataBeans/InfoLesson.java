@@ -174,11 +174,14 @@ public class InfoLesson extends InfoObject
         if (minutes < 0)
         {
             minutes *= -1;
+            hours = hours -1;
         }
 
         return hours + ":" + minutes;
     }
 
+   
+    
     public Double getTotalDuration()
     {
         Double numberOfLessons = null;
@@ -198,6 +201,7 @@ public class InfoLesson extends InfoObject
         if (minutes < 0)
         {
             minutes *= -1;
+            hours = hours -1;
         }
         double totalDuration = ((hours * numberOfLessons.doubleValue()) + ((minutes * numberOfLessons.doubleValue()) / 60));
         return new Double(totalDuration);

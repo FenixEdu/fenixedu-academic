@@ -342,6 +342,9 @@ public abstract class Cloner
      */
     public static InfoLesson copyILesson2InfoLesson(IAula lesson)
     {
+        if (lesson ==null) {
+            return null;
+        }
         InfoLesson infoLesson = new InfoLesson();
         InfoExecutionCourse infoExecutionCourse =
             (InfoExecutionCourse) Cloner.get(lesson.getDisciplinaExecucao());
@@ -534,7 +537,7 @@ public abstract class Cloner
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoExecutionDegree.setTemporaryExamMap(executionDegree.getTemporaryExamMap());
-        
+
         //added by Tânia Pousão
         InfoCampus infoCampus = Cloner.copyICampus2InfoCampus(executionDegree.getCampus());
         infoExecutionDegree.setInfoCampus(infoCampus);
@@ -4352,7 +4355,7 @@ public abstract class Cloner
     {
     	InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
     	copyObjectProperties(infoGratuityValues, gratuityValues);
-    	
+    
     	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(gratuityValues.getExecutionDegree());
     	InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(gratuityValues.getEmployee());
     	
@@ -4360,8 +4363,7 @@ public abstract class Cloner
     	infoGratuityValues.setInfoEmployee(infoEmployee);
     	
     	return infoGratuityValues;
-    }
-    
+}    
     public static IGratuityValues copyInfoGratuityValues2IGratuityValues(InfoGratuityValues infoGratuityValues) 
     {
     	IGratuityValues gratuityValues = new GratuityValues();
