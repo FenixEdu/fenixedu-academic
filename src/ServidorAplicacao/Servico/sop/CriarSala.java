@@ -84,32 +84,10 @@ public class CriarSala implements IServico {
 		}
 
 		/**
-		 * @param errorType
-		 */
-		private ExistingRoomServiceException(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private ExistingRoomServiceException(String s) {
-			super(s);
-		}
-
-		/**
 		 * @param cause
 		 */
-		private ExistingRoomServiceException(Throwable cause) {
+		ExistingRoomServiceException(Throwable cause) {
 			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private ExistingRoomServiceException(String message, Throwable cause) {
-			super(message, cause);
 		}
 
 	}

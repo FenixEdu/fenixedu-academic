@@ -9,7 +9,6 @@ import Dominio.Teacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCreditsTeacher;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -57,38 +56,37 @@ public class WriteCreditsTeacher implements IServico {
 			creditsTeacher.setExecutionPeriod(executionPeriod);
 
 			// mark teacher's credits for write
-			IPersistentCreditsTeacher creditsTeacherDAO =
-				sp.getIPersistentCreditsTeacher();
-			Integer tfcStudentNumber = infoCredits.getTfcStudentsNumber();
+//			IPersistentCreditsTeacher creditsTeacherDAO =
+//				sp.getIPersistentCreditsTeacher();
+//			Integer tfcStudentNumber = infoCredits.getTfcStudentsNumber();
 			
-			if (tfcStudentNumber == null || tfcStudentNumber.intValue() == 0) {
-				//delete credits because is zero
-//				creditsTeacher =
-//					(ICredits) creditsTeacherDAO.readByUnique(
-//						creditsTeacher,
-//						false);
-//				if (creditsTeacher != null) {
-//					creditsTeacherDAO.delete(creditsTeacher);
-//				}
-			} else {
-////				ICredits creditsTeacherReaded =
+//			if (tfcStudentNumber == null || tfcStudentNumber.intValue() == 0) {
+//				//delete credits because is zero
+////				creditsTeacher =
 ////					(ICredits) creditsTeacherDAO.readByUnique(
 ////						creditsTeacher,
-////						true);
-//				if (creditsTeacherReaded == null) {
-//					creditsTeacherDAO.simpleLockWrite(creditsTeacher);
-//				} else
-//					creditsTeacher = creditsTeacherReaded;
-//
-			}
-			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
+////						false);
+////				if (creditsTeacher != null) {
+////					creditsTeacherDAO.delete(creditsTeacher);
+////				}
+//			} else {
+//////				ICredits creditsTeacherReaded =
+//////					(ICredits) creditsTeacherDAO.readByUnique(
+//////						creditsTeacher,
+//////						true);
+////				if (creditsTeacherReaded == null) {
+////					creditsTeacherDAO.simpleLockWrite(creditsTeacher);
+////				} else
+////					creditsTeacher = creditsTeacherReaded;
+////
+//			}
+//			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
 			creditsTeacher.setAdditionalCredits(infoCredits.getAdditionalCredits());
 			creditsTeacher.setAdditionalCreditsJustification(infoCredits.getAdditionalCreditsJustification());
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException();
-		} finally {
-			return Boolean.TRUE;
 		}
+		return Boolean.TRUE;
 	}
 }

@@ -24,7 +24,6 @@ import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
 import Dominio.ITurno;
 import Dominio.Teacher;
-import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;

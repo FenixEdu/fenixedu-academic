@@ -75,27 +75,10 @@ public class ApagarSala implements IServico {
 		}
 
 		/**
-		 * @param s
-		 */
-		private NotAuthorizedServiceDeleteRoomException(String s) {
-			super(s);
-		}
-
-		/**
 		 * @param cause
 		 */
-		private NotAuthorizedServiceDeleteRoomException(Throwable cause) {
+		NotAuthorizedServiceDeleteRoomException(Throwable cause) {
 			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private NotAuthorizedServiceDeleteRoomException(
-			String message,
-			Throwable cause) {
-			super(message, cause);
 		}
 
 	}

@@ -10,7 +10,6 @@ package ServidorAplicacao.Servico.commons.student;
 import DataBeans.InfoEnrolmentEvaluation;
 import Dominio.Enrolment;
 import Dominio.IEnrolment;
-import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
@@ -67,7 +66,8 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico
 
             enrolment = (IEnrolment) sp.getIPersistentEnrolment().readByOId(enrolmentTemp, false);
 
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }
@@ -79,7 +79,8 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico
             Object args[] = { enrolment };
             enrolmentEvaluation =
                 (InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args);
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             throw new FenixServiceException(e);
         }

@@ -309,31 +309,10 @@ public class CreateLesson implements IServico {
 		}
 
 		/**
-		 * @param errorType
-		 */
-		private InvalidLoadException(int errorType) {
-			super(errorType);
-		}
-
-		/**
 		 * @param s
 		 */
-		private InvalidLoadException(String s) {
+		InvalidLoadException(String s) {
 			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidLoadException(Throwable cause) {
-			super(cause);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidLoadException(String s, Throwable cause) {
-			super(s, cause);
 		}
 
 

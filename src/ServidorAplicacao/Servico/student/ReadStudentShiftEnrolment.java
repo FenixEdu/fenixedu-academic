@@ -729,18 +729,4 @@ public class ReadStudentShiftEnrolment implements IServico
         }
     }
 
-    /**
-     * @author tdi-dev
-     *
-     */
-    private class ShiftTransformerInverse implements Transformer
-    {
-
-        public Object transform(Object arg0)
-        {
-            InfoShift shift = (InfoShift) arg0;
-            return Cloner.copyInfoShift2IShift(shift);
-        }
-    }
-
 }

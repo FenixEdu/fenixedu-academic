@@ -39,7 +39,6 @@ import org.apache.ojb.broker.util.ProxyHelper;
 import org.apache.ojb.broker.util.logging.LoggerFactory;
 import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
-import org.apache.ojb.odmg.TransactionImpl;
 import org.apache.ojb.odmg.TxManagerFactory;
 import org.odmg.Database;
 import org.odmg.Implementation;

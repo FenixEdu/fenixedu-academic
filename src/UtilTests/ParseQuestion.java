@@ -385,7 +385,6 @@ public class ParseQuestion extends DefaultHandler
         List newOptions = new ArrayList();
         for (int i = 0; i < aux.length; i++)
             newOptions = insert2NewList(oldList, newOptions, new Integer(aux[i]).intValue());
-        Iterator it = newOptions.iterator();
         return newOptions;
     }
 

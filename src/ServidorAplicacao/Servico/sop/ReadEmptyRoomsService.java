@@ -157,30 +157,8 @@ public class ReadEmptyRoomsService implements IServico {
 		/**
 		 * 
 		 */
-		private InvalidTimeInterval() {
+		InvalidTimeInterval() {
 			super();
-		}
-
-		/**
-		 * @param s
-		 */
-		private InvalidTimeInterval(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidTimeInterval(Throwable cause) {
-			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private InvalidTimeInterval(String message, Throwable cause) {
-			super(message, cause);
 		}
 
 	}

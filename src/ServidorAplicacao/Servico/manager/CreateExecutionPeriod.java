@@ -142,37 +142,8 @@ public class CreateExecutionPeriod implements IServico {
 		/**
 		 * 
 		 */
-		private InvalidExecutionPeriod() {
+		InvalidExecutionPeriod() {
 			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private InvalidExecutionPeriod(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private InvalidExecutionPeriod(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidExecutionPeriod(Throwable cause) {
-			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private InvalidExecutionPeriod(String message, Throwable cause) {
-			super(message, cause);
 		}
 
 	}
@@ -186,37 +157,8 @@ public class CreateExecutionPeriod implements IServico {
 		/**
 		 * 
 		 */
-		private ExistingExecutionPeriod() {
+		ExistingExecutionPeriod() {
 			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private ExistingExecutionPeriod(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param message
-		 */
-		private ExistingExecutionPeriod(String message) {
-			super(message);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private ExistingExecutionPeriod(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private ExistingExecutionPeriod(Throwable cause) {
-			super(cause);
 		}
 
 	}

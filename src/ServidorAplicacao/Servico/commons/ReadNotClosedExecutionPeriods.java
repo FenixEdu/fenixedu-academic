@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;

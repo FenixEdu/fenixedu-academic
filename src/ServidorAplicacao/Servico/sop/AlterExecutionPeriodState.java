@@ -93,37 +93,8 @@ public class AlterExecutionPeriodState implements IServico {
 		/**
 		 * 
 		 */
-		private InvalidExecutionPeriod() {
+		InvalidExecutionPeriod() {
 			super();
-		}
-
-		/**
-		 * @param errorType
-		 */
-		private InvalidExecutionPeriod(int errorType) {
-			super(errorType);
-		}
-
-		/**
-		 * @param s
-		 */
-		private InvalidExecutionPeriod(String s) {
-			super(s);
-		}
-
-		/**
-		 * @param cause
-		 */
-		private InvalidExecutionPeriod(Throwable cause) {
-			super(cause);
-		}
-
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		private InvalidExecutionPeriod(String message, Throwable cause) {
-			super(message, cause);
 		}
 
 	}

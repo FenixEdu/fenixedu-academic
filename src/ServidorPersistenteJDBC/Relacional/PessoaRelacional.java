@@ -205,10 +205,7 @@ public class PessoaRelacional implements IPessoaPersistente
             SQLe.printStackTrace();
             System.out.println("PessoaRelacional.escreverPapelPessoa: " + SQLe.toString());
         }
-        finally
-        {
-            return resultado;
-        }
+        return resultado;
     }
 
     /**
@@ -337,10 +334,7 @@ public class PessoaRelacional implements IPessoaPersistente
         {
             System.out.println("PessoaRelacional.lerCargos: " + SQLe.toString());
         }
-        finally
-        {
-            return listaCargos;
-        }
+        return listaCargos;
     } /* lerCargos */
 
     /** Le todos os roles associado à Pessoa */
