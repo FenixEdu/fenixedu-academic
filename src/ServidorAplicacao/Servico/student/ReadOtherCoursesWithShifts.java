@@ -93,9 +93,9 @@ public class ReadOtherCoursesWithShifts implements IServico {
 		ICurso c = new Curso();
 		c.setSigla(sCP.getCourseCurricularPlan().getCurso().getSigla());
 		ICursoExecucao cE = new CursoExecucao();
-		cE.setCurso(c);
+	//	cE.setCurso(c);
 		IDisciplinaExecucao dE = new DisciplinaExecucao();
-		dE.setLicenciaturaExecucao(cE);
+	//	dE.setLicenciaturaExecucao(cE);
 		List ldE = sp.getIDisciplinaExecucaoPersistente().readByCriteria(dE);
 		
 		IFrequenta freq = new Frequenta();
@@ -129,14 +129,14 @@ public class ReadOtherCoursesWithShifts implements IServico {
 
 //////////			
 			ICurso degree = new Curso();
-			degree.setSigla(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getSigla());
+//			degree.setSigla(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getSigla());
 			ICursoExecucao executionCoure = new CursoExecucao();
 //			executionCoure.setExecutionYear();
 //			executionCoure.setCurricularPlan();
 			
 			
-			executionCoure.setAnoLectivo(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
-			executionCoure.setCurso(degree);
+//			executionCoure.setAnoLectivo(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
+//			executionCoure.setCurso(degree);
 			IDisciplinaExecucao executionDegree = new DisciplinaExecucao();
 			executionDegree.setSigla(disciplinaExecucao.getSigla());
 			ITurno shift1 = new Turno();
@@ -149,7 +149,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 			//  uma especie de calendário isto será mais dinâmico e terá em conta
 			//  a data actual em que se está a efectuar a inscrição. 
 			// ###################################################################
-			tempClass.setSemestre(new Integer(2));
+//			tempClass.setSemestre(new Integer(2));
 		
 			ITurmaTurno classShift = new TurmaTurno();
 			classShift.setTurma(tempClass);

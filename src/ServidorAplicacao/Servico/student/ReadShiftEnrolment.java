@@ -86,11 +86,11 @@ public class ReadShiftEnrolment implements IServico {
 
 
 		ICurso degree = new Curso();
-		degree.setSigla(de.getLicenciaturaExecucao().getCurso().getSigla());
+//		degree.setSigla(de.getLicenciaturaExecucao().getCurso().getSigla());
 
 		ICursoExecucao executionCoure = new CursoExecucao();
-		executionCoure.setAnoLectivo(de.getLicenciaturaExecucao().getAnoLectivo());
-		executionCoure.setCurso(degree);
+//		executionCoure.setAnoLectivo(de.getLicenciaturaExecucao().getAnoLectivo());
+//		executionCoure.setCurso(degree);
 
 		IDisciplinaExecucao executionDegree = new DisciplinaExecucao();
 		executionDegree.setSigla(de.getSigla());
@@ -105,7 +105,7 @@ public class ReadShiftEnrolment implements IServico {
       	//  uma especie de calendário isto será mais dinâmico e terá em conta
       	//  a data actual em que se está a efectuar a inscrição. 
       	// ###################################################################
-      	tempClass.setSemestre(new Integer(2));
+//      	tempClass.setSemestre(new Integer(2));
 		
 		ITurmaTurno classShift = new TurmaTurno();
 		classShift.setTurma(tempClass);
