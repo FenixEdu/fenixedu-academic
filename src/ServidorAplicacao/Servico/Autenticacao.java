@@ -157,6 +157,10 @@ public class Autenticacao implements IServico {
 			Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);
 			userView.setRoles(roles);	
 		}else if (application.equals("") || application.equalsIgnoreCase(Autenticacao.EXTRANET)){
+			
+			if (userView.getRoles().contains(manager)) {
+				rolesIntranet.remove(manager);	
+			}
 			userView.getRoles().removeAll(rolesIntranet);
 		}
 		return userView;
