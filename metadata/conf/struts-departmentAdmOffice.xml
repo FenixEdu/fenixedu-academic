@@ -91,6 +91,7 @@
 
 			<form-property name="teacherNumber" type="java.lang.String"/>
 			<form-property name="teacherId" type="java.lang.String"/>
+			<form-property name="responsibleFor" type="java.lang.Boolean" initial="false"/>
 			<form-property name="executionDegreeId" type="java.lang.String"/>
 			<form-property name="executionYearId" type="java.lang.String"/>			
 			<form-property name="executionCourseId" type="java.lang.String"/>						
