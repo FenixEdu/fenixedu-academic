@@ -350,6 +350,25 @@ public abstract class Cloner {
 
 	}
 
+	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan();
+
+		InfoDegree infoDegree =
+			Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
+		try {
+			BeanUtils.copyProperties(
+				infoDegreeCurricularPlan,
+				degreeCurricularPlan);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+
+		return infoDegreeCurricularPlan;
+	}
+
 	public static InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(ICursoExecucao executionDegree) {
 
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
@@ -401,24 +420,6 @@ public abstract class Cloner {
 		return infoExecutionYear;
 	}
 
-	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			new InfoDegreeCurricularPlan();
-
-		InfoDegree infoDegree =
-			Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
-		try {
-			BeanUtils.copyProperties(
-				infoDegreeCurricularPlan,
-				degreeCurricularPlan);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-
-		return infoDegreeCurricularPlan;
-	}
 	/**
 	 * Method copyIDegree2InfoDegree.
 	 * @param iCurso

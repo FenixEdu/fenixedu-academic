@@ -21,11 +21,27 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	private Date endDate;
 
 	public DegreeCurricularPlan() {
+		setName(null);
+		setDegree(null);
+		setState(null);
+		setInitialDate(null);
+		setEndDate(null);
 	}
 
-	public DegreeCurricularPlan(String nome, ICurso licenciatura) {
+	public DegreeCurricularPlan(String nome, ICurso degree) {
 		setName(nome);
-		setDegree(licenciatura);
+		setDegree(degree);
+		setState(null);
+		setInitialDate(null);
+		setEndDate(null);
+	}
+
+	public DegreeCurricularPlan(String nome, ICurso degree, DegreeState state, Date initialDate, Date endDate) {
+		setName(nome);
+		setDegree(degree);
+		setState(state);
+		setInitialDate(initialDate);
+		setEndDate(endDate);
 	}
 
 	public boolean equals(Object obj) {
@@ -43,8 +59,8 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		result += "name = " + this.name + "; ";
 		result += "initialDate = " + this.initialDate + "; ";
 		result += "endDate = " + this.endDate + "; ";
-		result += "state = " + this.state.toString() + "; ";
-		result += "degree = " + this.degree.toString() + "]";
+		result += "state = " + this.state + "; ";
+		result += "degree = " + this.degree + "]";
 		return result;
 	}
 
