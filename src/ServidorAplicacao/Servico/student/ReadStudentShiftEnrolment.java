@@ -299,20 +299,20 @@ public class ReadStudentShiftEnrolment implements IServico {
 
     classShifts = removeFullShiftsFromListOfClassShifts(classShifts);
 
-    classShifts = sortClassesByNumberOfCoursesSatisfied(classShifts, courses);
+    List classes = sortClassesByNumberOfCoursesSatisfied(classShifts, courses);
 
-    return getDistinctClassesFromListOfClassShifts(classShifts);
+    return getDistinctClassesFromListOfClasses(classes);
   }
 
   /**
    * @param classShifts
    * @return List with distinct classes (IClass)
    */
-  private List getDistinctClassesFromListOfClassShifts(List classShifts) {
-    Iterator i = classShifts.iterator();
+  private List getDistinctClassesFromListOfClasses(List classes) {
+    Iterator i = classes.iterator();
     List result = new ArrayList();
     while (i.hasNext()) {
-      ITurma thisClass = (ITurma) ((ITurmaTurno) i.next()).getTurma();
+      ITurma thisClass = (ITurma) i.next();
       Iterator resultIterator = result.iterator();
       boolean containsOneOfThese = false;
       while (resultIterator.hasNext()) {
@@ -326,6 +326,10 @@ public class ReadStudentShiftEnrolment implements IServico {
 	result.add(thisClass);
       }
     }
+    for (int  j = 0; j < result.size(); j++) {
+      System.out.println("turma distinta: " + (ITurma) result.get(j));
+    } // end of for (int  = 0;  < ; ++)
+    
     return result;
   }
 
@@ -416,7 +420,7 @@ public class ReadStudentShiftEnrolment implements IServico {
    * @return a <code>List</code> with the sorted classes.
    */
   private List sortClassesByNumberOfCoursesSatisfied(List classShifts, List courses) {
-
+    
     List stats = new ArrayList();
 
     Iterator iter = classShifts.iterator();
@@ -456,16 +460,18 @@ public class ReadStudentShiftEnrolment implements IServico {
     for (int  i = 0;  i < stats.size(); i++) {
       ((Object[])stats.get(i))[1] = new Integer(CollectionUtils.intersection((Collection) ((ArrayList)  ((Object[]) (stats.get(i)))[1] )  , 
 								 (Collection)courses).size());
+      
     } // end of for (int  = 0;  < ; ++)
 
     List result = new ArrayList(stats.size());
     
     Collections.sort(stats, new ObjArrayComparator());
-    for (int  i = 0;  i< result.size(); i++) {
+    
+    for (int  i = 0;  i< stats.size(); i++) {
       result.add(i, ((Object[])stats.get(i))[0]);
     } // end of for (int  = 0;  < ; ++)
     
-    return null;
+    return result;
   }
     
 

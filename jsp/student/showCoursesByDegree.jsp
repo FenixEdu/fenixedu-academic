@@ -5,7 +5,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoDegree"%>
 
-<script language=javascript>
+<SCRIPT TYPE="text/javascript">
 <!--
 
 //TODO: Insert bean instead of integer, to be easily changed from the application
@@ -70,7 +70,7 @@ function selectAll() {
 }
 
 //-->
-</script>
+</SCRIPT>    
 
 <center>
 
@@ -151,7 +151,7 @@ onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';select
 
 
 <br>
-<html:submit value="Continuar inscrição" onclick="selectAll();alert('deu');"/>
+<html:submit value="Continuar inscrição" onclick="selectAll();document.studentShiftEnrolmentForm.method.value='proceedToShiftEnrolment';document.studentShiftEnrolmentForm.submit();"/>
 
 </html:form>
 

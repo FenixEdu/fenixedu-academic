@@ -1,9 +1,10 @@
 package ServidorAplicacao.Servico.student;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoStudent;
-import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
@@ -16,9 +17,6 @@ import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import java.util.Iterator;
-import java.util.List;
-
 
 /**
  * Describe class <code>WriteStudentAttendingCourses</code> here.
@@ -28,7 +26,8 @@ import java.util.List;
  */
 public class WriteStudentAttendingCourses implements IServico {
 
-  private static WriteStudentAttendingCourses _servico = new WriteStudentAttendingCourses();
+  private static WriteStudentAttendingCourses _servico =
+    new WriteStudentAttendingCourses();
 
   /**
    * The actor of this class.
@@ -61,76 +60,95 @@ public class WriteStudentAttendingCourses implements IServico {
    * @return a <code>Boolean</code> to indicate if all went fine.
    * @exception FenixServiceException if an error occurs.
    */
-  public Boolean run(InfoStudent infoStudent,
-		     List infoExecutionCourses) 
-    throws FenixServiceException{
+  public Boolean run(InfoStudent infoStudent, List infoExecutionCourses)
+    throws FenixServiceException {
 
-
-    if ( infoExecutionCourses== null ||  infoExecutionCourses.size() == 0 ||infoStudent == null) {
+    if (infoExecutionCourses == null
+	|| infoExecutionCourses.size() == 0
+	|| infoStudent == null) {
       return new Boolean(false);
     } // end of if ()
 
 
+    //TODO: tdi-dev (edgar.goncalves) -> remove system.out.println's
     boolean result = false;
-
 
     try {
       List executionCourseList = null;
-      
 
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		
+
       //Reads the student from the database
-      IStudent student = sp.getIPersistentStudent().readByNumero(infoStudent.getNumber(), 
-								 infoStudent.getDegreeType());
+      IStudent student =
+        sp.getIPersistentStudent().readByNumero(
+						infoStudent.getNumber(),
+						infoStudent.getDegreeType());
 
       IFrequentaPersistente attendsDAO = sp.getIFrequentaPersistente();
-      
-      //Read every course the student attends to, to delete them...
+
+      //Read every course the student attends to:
       List attendingCourses = attendsDAO.readByStudentId(student.getNumber());
-      Iterator i = attendingCourses.iterator();
-      while ( i.hasNext()) {
-	attendsDAO.delete((IFrequenta) i.next());
-      } // end of while ()
-      
 
+      IDisciplinaExecucaoPersistente executionCourseDAO =
+        sp.getIDisciplinaExecucaoPersistente();
 
-      IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
-      
-      i = infoExecutionCourses.iterator();
-      while ( i.hasNext()) {
-	Integer executionCourseId = new Integer((String) i.next()); 
-	IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
-	executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+      //Gets the database objects for the wanted courses
+      List wantedAttends = new ArrayList();
+      Iterator i = infoExecutionCourses.iterator();
+      while (i.hasNext()) {
+        Integer executionCourseId = new Integer((String) i.next());
+        IDisciplinaExecucao executionCourse =
+          new DisciplinaExecucao(executionCourseId);
+        executionCourse =
+          (IDisciplinaExecucao) executionCourseDAO.readByOId(
+							     executionCourse,
+							     false);
 
-	if ( executionCourse == null) {
-	  System.out.println("Execution course with ID=" + executionCourseId + " does not exist in the database!");
-	  throw new FenixServiceException();
-	} // end of if ()
-	else {
-	  
+        if (executionCourse == null) {
+          System.out.println(
+			     "Execution course with ID="
+			     + executionCourseId
+			     + " does not exist in the database!");
+          throw new FenixServiceException();
+        } // end of if ()
+        else {
+          wantedAttends.add(executionCourse);
+          System.out.println("Adding to the wantedAttends: " + executionCourse.toString());
+        }
+      }
 
-	
-	
-	  IDisciplinaExecucao executionCourseFromDB = executionCourseDAO
-	    .readByExecutionCourseInitialsAndExecutionPeriod(executionCourse.getSigla(), 
-							     executionCourse.getExecutionPeriod());
+      //Delete all courses the student is currently attendin to that he/she doesn't want to:
+      i = attendingCourses.iterator();
+      while (i.hasNext()) {
+        IFrequenta attendEntry = (IFrequenta) i.next();
+        if (!wantedAttends.contains(attendEntry.getDisciplinaExecucao())) {
+          System.out.println("Deleting: " + attendEntry.toString());
+          attendsDAO.delete(attendEntry);
+	i.remove();
+        }
+        wantedAttends.remove(attendEntry.getDisciplinaExecucao());
+      }
 
-	  IFrequenta attendsEntry = new Frequenta();
-	  //FIXME: (tdi-dev:edgar.goncalves) - lockWrite ain't working...
-	  attendsDAO.lockWrite(attendsEntry);
-	  attendsEntry.setAluno(student);
-	  attendsEntry.setDisciplinaExecucao(executionCourseFromDB);
-	  
-	} // end of if () else
-	
+      //Add new courses (without duplicates)
+      i = wantedAttends.iterator();
+      while (i.hasNext()) {
 
+        IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) i.next();
+
+        System.out.println("Adding: " + executionCourse.toString());
+
+        IFrequenta attendsEntry = new Frequenta();
+        //FIXME: (tdi-dev:edgar.goncalves) - lockWrite ain't working...
+
+        attendsEntry.setAluno(student);
+        attendsEntry.setDisciplinaExecucao(executionCourse);
+        attendsDAO.simpleLockWrite(attendsEntry);
       } // end of while ()
 
       result = true;
 
     } catch (ExcepcaoPersistencia e) {
-      
+
       e.printStackTrace();
       throw new FenixServiceException();
     }
