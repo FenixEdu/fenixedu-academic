@@ -52,11 +52,9 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 			year2 = 0;
 			iterator = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 			while (iterator.hasNext()) {
-//				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
-//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(((IEnrolmentInOptionalCurricularCourse) enrolmentContext.getOptionalCurricularCoursesEnrolments().get(0)).getCurricularCourse());
-				
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria( enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse());
+//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse());
+				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(enrolmentInOptionalCurricularCourse.getCurricularCourseScope().getCurricularCourse(), false);
 				year2 =  ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getCurricularSemester().getCurricularYear().getYear().intValue();
 				if (year2 > year) {
 					year = year2;

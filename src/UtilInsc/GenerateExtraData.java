@@ -94,6 +94,7 @@ public class GenerateExtraData {
 			executionDegree.setCoordinator(teacher);
 			executionDegree.setCurricularPlan(oldDegreeCurricularPlan);
 			executionDegree.setExecutionYear(executionYear);
+			executionDegree.setTemporaryExamMap(new Boolean(true));
 			persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
 			persistentExecutionDegree.lockWrite(executionDegree);
 		} catch (ExcepcaoPersistencia e) {
@@ -190,6 +191,7 @@ public class GenerateExtraData {
 				executionDegree.setCoordinator(teacher);
 				executionDegree.setCurricularPlan(degreeCurricularPlan2);
 				executionDegree.setExecutionYear(executionYear);
+				executionDegree.setTemporaryExamMap(new Boolean(true));
 				persistentExecutionDegree.lockWrite(executionDegree);
 			} catch (ExcepcaoPersistencia e1) {
 				e1.printStackTrace(System.out);
@@ -253,6 +255,7 @@ public class GenerateExtraData {
 			curricularCourseToWrite.setDepartmentCourse(null);
 			curricularCourseToWrite.setIdInternal(null);
 			curricularCourseToWrite.setScopes(null);
+			curricularCourseToWrite.setBasic(new Boolean(true));
 
 			curricularCourseToWrite.setLabHours(curricularCourse.getLabHours());
 			curricularCourseToWrite.setPraticalHours(curricularCourse.getPraticalHours());
@@ -336,7 +339,7 @@ public class GenerateExtraData {
 		ICurricularCourse curricularCourseToAssociate = null;
 		IExecutionPeriod executionPeriod = null;
 		try {
-			curricularCourseToAssociate = persistentCurricularCourse.readCurricularCourseByNameAndCode(curricularCourse.getName(), curricularCourse.getCode());
+			curricularCourseToAssociate = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(curricularCourse.getDegreeCurricularPlan().getIdInternal(), curricularCourse.getName(), curricularCourse.getCode());
 			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
