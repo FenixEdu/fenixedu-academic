@@ -75,6 +75,9 @@ public class EnrolmentEvaluationState {
 			case RECTIFICATION :
 				valueS = "RECTIFICATION";
 				break;
+			case FINAL :
+				valueS = "FINAL";
+				break;
 			default :
 				break;
 		}

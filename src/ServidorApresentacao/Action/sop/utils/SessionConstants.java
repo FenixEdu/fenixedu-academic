@@ -169,6 +169,7 @@ public abstract class SessionConstants {
 
 	public static final String NATIONALITY_LIST_KEY = "NATIONALITY_LIST_KEY";
 	public static final String SEX_LIST_KEY ="SEX_LIST_KEY";	
+	public static final String ENROLMENT_EVALUATION_TYPE_LIST ="ENROLMENT_EVALUATION_TYPE_LIST";
 	
 
 	
