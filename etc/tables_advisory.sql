@@ -4,7 +4,7 @@
 drop table if exists ADVISORY;
 create table ADVISORY (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    SENDER varchar(100) not null,
    CREATED TIMESTAMP(8) not null,
    SUBJECT varchar(200) not null,
@@ -20,7 +20,7 @@ create table ADVISORY (
 drop table if exists PERSON_ADVISORY;
 create table PERSON_ADVISORY (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_PERSON int(11) not null,
    KEY_ADVISORY int(11) not null,
    primary key (ID_INTERNAL),

@@ -4,7 +4,7 @@
 drop table if exists PERSON;
 create table PERSON (
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    DOCUMENT_ID_NUMBER varchar(50) not null,
    EMISSION_LOCATION_OF_DOCUMENT_ID varchar(100),
    EMISSION_DATE_OF_DOCUMENT_ID date,
@@ -48,7 +48,7 @@ create table PERSON (
 drop table if exists ROLE;
 create table ROLE(
   ID_INTERNAL int(11) unsigned not null auto_increment,
-   ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   ROLE_TYPE int (11) not null,
   PORTAL_SUB_APPLICATION varchar (100),
   PAGE varchar (100),
@@ -63,7 +63,7 @@ create table ROLE(
 drop table if exists PERSON_ROLE;
 create table PERSON_ROLE(
   ID_INTERNAL int(11) unsigned not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
   KEY_ROLE int(11) not null,
   KEY_PERSON int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
@@ -76,7 +76,7 @@ create table PERSON_ROLE(
 DROP TABLE IF EXISTS STUDENT;
 CREATE TABLE STUDENT (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   NUMBER smallint(10) unsigned NOT NULL default '0',
   KEY_PERSON int(11) unsigned NOT NULL default '0',
   STATE int(11) unsigned NOT NULL default '1',
@@ -93,7 +93,7 @@ CREATE TABLE STUDENT (
 drop table if exists TEACHER;
 create table TEACHER (
    ID_INTERNAL int(11) unsigned not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    TEACHER_NUMBER int(10) unsigned,
    KEY_PERSON int(11) unsigned  not null,
    KEY_CATEGORY int(11) unsigned, 

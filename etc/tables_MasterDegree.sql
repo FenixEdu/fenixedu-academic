@@ -4,7 +4,7 @@
 drop table if exists MASTER_DEGREE_CANDIDATE;
 create table MASTER_DEGREE_CANDIDATE (
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    PERSON_KEY integer(11) not null,
    EXECUTION_DEGREE_KEY integer(11) not null default '0',
    CANDIDATE_NUMBER int(20),
@@ -28,7 +28,7 @@ create table MASTER_DEGREE_CANDIDATE (
 drop table if exists CANDIDATE_SITUATION;
 create table CANDIDATE_SITUATION (
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    DATE date not null default '0001-01-01',
    REMARKS text,
    VALIDATION tinyint(4) not null default '1',
@@ -43,7 +43,7 @@ create table CANDIDATE_SITUATION (
 drop table if exists PRICE; 
 create table PRICE (
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    GRADUATION_TYPE integer(11) not null, 
    DOCUMENT_TYPE integer(11) not null,
    DESCRIPTION varchar(200) not null,
@@ -58,7 +58,7 @@ create table PRICE (
 drop table if exists GUIDE;
 create table GUIDE (
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    NUMBER integer(11) not null default '0',
    YEAR integer(4) not null default '0',
    KEY_CONTRIBUTOR integer(11) not null default '0',
@@ -81,7 +81,7 @@ create table GUIDE (
 drop table if exists GUIDE_ENTRY;
 create table GUIDE_ENTRY(
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_GUIDE integer(11) not null default '0',
    GRADUATION_TYPE integer(11), 
    DOCUMENT_TYPE integer(11) not null,
@@ -99,7 +99,7 @@ create table GUIDE_ENTRY(
 drop table if exists GUIDE_SITUATION;
 create table GUIDE_SITUATION(
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_GUIDE integer(11) not null default '0',
    SITUATION integer(11) not null,
    DATE date not null default '0001-01-01',   
@@ -116,7 +116,7 @@ create table GUIDE_SITUATION(
 drop table if exists REIMBURSEMENT_GUIDE;
 create table REIMBURSEMENT_GUIDE (
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    NUMBER integer(11) not null default '0',
    VALUE float(11,2) not null default '0.00',
    JUSTIFICATION text,
@@ -132,7 +132,7 @@ create table REIMBURSEMENT_GUIDE (
 drop table if exists REIMBURSEMENT_GUIDE_SITUATION;
 create table REIMBURSEMENT_GUIDE_SITUATION (
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    STATE integer(11) not null default '0',
    KEY_REIMBURSEMENT_GUIDE integer(11) not null,
    REMARKS text,
@@ -148,7 +148,7 @@ create table REIMBURSEMENT_GUIDE_SITUATION (
 drop table if exists GRATUITY;
 create table GRATUITY(
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_STUDENT_CURRICULAR_PLAN integer(11) not null,
    STATE integer(11),
    GRATUITY_STATE integer(11),
@@ -163,7 +163,7 @@ create table GRATUITY(
 drop table if exists CANDIDATE_ENROLMENT;
 create table CANDIDATE_ENROLMENT(
    ID_INTERNAL integer(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_MASTER_DEGREE_CANDIDATE integer(11) not null ,
    KEY_CURRICULAR_COURSE_SCOPE integer(11) not null ,
    primary key (ID_INTERNAL),
@@ -176,7 +176,7 @@ create table CANDIDATE_ENROLMENT(
 DROP TABLE IF EXISTS MASTER_DEGREE_THESIS;
 CREATE TABLE MASTER_DEGREE_THESIS (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_STUDENT_CURRICULAR_PLAN int(11) not null, 
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE KEY U1 (KEY_STUDENT_CURRICULAR_PLAN)
@@ -188,7 +188,7 @@ CREATE TABLE MASTER_DEGREE_THESIS (
 DROP TABLE IF EXISTS MASTER_DEGREE_THESIS_DATA_VERSION;
 CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_THESIS int(11) not null,
   KEY_EMPLOYEE int(11) not null,
   DISSERTATION_TITLE varchar(255) not null,
@@ -203,7 +203,7 @@ CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION (
 DROP TABLE IF EXISTS MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER;
 CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_THESIS_DATA_VERSION int(11) not null,
   KEY_EXTERNAL_PERSON int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
@@ -218,7 +218,7 @@ CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER (
 DROP TABLE IF EXISTS MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER;
 CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_THESIS_DATA_VERSION int(11) not null,
   KEY_TEACHER int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
@@ -231,7 +231,7 @@ CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER (
 DROP TABLE IF EXISTS MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER;
 CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_THESIS_DATA_VERSION int(11) not null,
   KEY_TEACHER int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
@@ -244,7 +244,7 @@ CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER (
 DROP TABLE IF EXISTS MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER;
 CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_THESIS_DATA_VERSION int(11) not null,
   KEY_EXTERNAL_PERSON int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
@@ -257,7 +257,7 @@ CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER (
 DROP TABLE if exists EXTERNAL_PERSON;
 CREATE TABLE EXTERNAL_PERSON (
    ID_INTERNAL int(11) unsigned not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_WORK_LOCATION int(11) unsigned not null,
    KEY_PERSON int(11) unsigned  not null, 
    primary key (ID_INTERNAL),
@@ -272,7 +272,7 @@ CREATE TABLE EXTERNAL_PERSON (
 DROP TABLE IF EXISTS MASTER_DEGREE_PROOF_VERSION;
 CREATE TABLE MASTER_DEGREE_PROOF_VERSION (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_THESIS int(11) not null,
   KEY_EMPLOYEE int(11) not null,
   PROOF_DATE DATE,
@@ -290,7 +290,7 @@ CREATE TABLE MASTER_DEGREE_PROOF_VERSION (
 DROP TABLE IF EXISTS MASTER_DEGREE_PROOF_VERSION_JURY;
 CREATE TABLE MASTER_DEGREE_PROOF_VERSION_JURY (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_PROOF_VERSION int(11) not null,
   KEY_TEACHER int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
@@ -303,7 +303,7 @@ CREATE TABLE MASTER_DEGREE_PROOF_VERSION_JURY (
 DROP TABLE IF EXISTS MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY;
 CREATE TABLE MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   KEY_MASTER_DEGREE_PROOF_VERSION int(11) not null,
   KEY_EXTERNAL_PERSON int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
@@ -316,7 +316,7 @@ CREATE TABLE MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY (
 DROP TABLE IF EXISTS WORK_LOCATION;
 CREATE TABLE WORK_LOCATION (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  ACKOPTLOCK int(11),
+  ACK_OPT_LOCK int(11),
   NAME varchar(255) not null,
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE (NAME)

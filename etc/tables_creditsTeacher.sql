@@ -4,7 +4,7 @@
 drop table if exists SHIFT_PROFESSORSHIP;
 create table SHIFT_PROFESSORSHIP (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_PROFESSOR_SHIP int(11) not null,
    KEY_SHIFT int(11) not null,
    PERCENTAGE float not null,
@@ -18,7 +18,7 @@ create table SHIFT_PROFESSORSHIP (
 drop table if exists CREDITS;
 create table CREDITS (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_EXECUTION_PERIOD int(11) not null,
    KEY_TEACHER int(11) not null,
    SUPPORT_LESSONS float,
@@ -36,7 +36,7 @@ create table CREDITS (
 drop table if exists CREDIT_LINE;
 create table CREDIT_LINE (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_TEACHER int(11) not null,
    CREDITS float not null,
    CREDIT_LINE_TYPE int(11) not null,
@@ -53,7 +53,7 @@ create table CREDIT_LINE (
 drop table if exists CREDITS_MANAGER_DEPARTMENT;
 create table CREDITS_MANAGER_DEPARTMENT (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_PERSON int(11) not null,
    KEY_DEPARTMENT int(11) not null,
    primary key (ID_INTERNAL),
@@ -66,7 +66,7 @@ create table CREDITS_MANAGER_DEPARTMENT (
 drop table if exists CATEGORY;
 create table CATEGORY (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    CODE varchar(20) not null,
    LONG_NAME varchar(250) not null,
    SHORT_NAME varchar(50) not null,
@@ -78,7 +78,7 @@ create table CATEGORY (
 drop table if exists TEACHER_DEGREE_FINAL_PROJECT_STUDENT;
 create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    PERCENTAGE float not null default '100.0',
    KEY_STUDENT int(11) not null,
    KEY_TEACHER int(11) not null,   
@@ -93,7 +93,7 @@ create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
 drop table if exists TEACHER_INSTITUTION_WORK_TIME;
 create table TEACHER_INSTITUTION_WORK_TIME (
    ID_INTERNAL int(11) not null auto_increment,
-   ACKOPTLOCK int(11),
+   ACK_OPT_LOCK int(11),
    KEY_TEACHER int(11) not null,
    KEY_EXECUTION_PERIOD int(11) not null,
    WEEKDAY int(11) not null,
