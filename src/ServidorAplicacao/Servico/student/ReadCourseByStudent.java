@@ -41,31 +41,19 @@ public class ReadCourseByStudent implements IServico {
 
 	public Object run(Integer number, TipoCurso degreeType) {
 
-		ArrayList disciplines = new ArrayList();
 		InfoDegree infoDegree = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudent student =
-				sp.getIPersistentStudent().readByNumero(number, degreeType);
+			IStudent student = sp.getIPersistentStudent().readByNumero(number, degreeType);
 			if (student != null) {
 				IStudentCurricularPlan StudentCurricularPlan =
-					sp
-						.getIStudentCurricularPlanPersistente()
-						.readActiveStudentCurricularPlan(
-						number,
-						degreeType);
+					sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(number, degreeType);
 				if (StudentCurricularPlan != null) {
 					infoDegree =
 						new InfoDegree(
-							StudentCurricularPlan
-								.getDegreeCurricularPlan()
-								.getDegree()
-								.getSigla(),
-							StudentCurricularPlan
-								.getDegreeCurricularPlan()
-								.getDegree()
-								.getNome());
+							StudentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
+							StudentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
 				}
 
 			}
