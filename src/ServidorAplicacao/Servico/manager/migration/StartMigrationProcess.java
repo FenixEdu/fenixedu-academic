@@ -54,10 +54,8 @@ public class StartMigrationProcess implements IService
 					action = "recordsToRemove";
 				}
 
-				String fileName1 = fileNameTemp1 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
-				String fileName2 = fileNameTemp2 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
-//				String fileName3 = fileNameTemp3 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
-//				String fileName4 = fileNameTemp4 + "_" + day + "-" + month + "-" + year + "_" + action + ".txt";
+				String fileName1 = fileNameTemp1 + "_" + year + "_" + month + "_" + day + "_" + action + ".txt";
+				String fileName2 = fileNameTemp2 + "_" + year + "_" + month + "_" + day + "_" + action + ".txt";
 				
 				if (method.equals("pastCurriculum"))
 				{

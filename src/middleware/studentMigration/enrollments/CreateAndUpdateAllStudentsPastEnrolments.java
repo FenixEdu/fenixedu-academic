@@ -170,6 +170,8 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		ReportAllPastEnrollmentMigration.report(out);
 		
 		out.close();
+		
+		CreateAndUpdateAllStudentsPastEnrolments.reset();
 	}
 
 	/**
@@ -537,6 +539,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
 
 				CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+
+				UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+				
 			} else {
 				if(CreateAndUpdateAllStudentsPastEnrolments.NEW_ENROLMENTS)
 				{
@@ -549,6 +554,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 					enrolmentEvaluation.setEmployee(CreateAndUpdateAllStudentsPastEnrolments.getEmployee(mwEnrolment, fenixPersistentSuport));
 					enrolmentEvaluation.setCheckSum(null);
 					CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+
+					UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+					
 				}
 			}
 		} else {
@@ -563,6 +571,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				enrolmentEvaluation.setEmployee(CreateAndUpdateAllStudentsPastEnrolments.getEmployee(mwEnrolment, fenixPersistentSuport));
 				enrolmentEvaluation.setCheckSum(null);
 				CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+
+				UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+				
 			} else
 			{
 				if(enrolment.getEvaluations().size() == 1)
@@ -573,11 +584,17 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 					fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolment);
 					fenixPersistentSuport.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrolment.getIdInternal());
 					ReportAllPastEnrollmentMigration.addEnrollmentsDeleted();
+
+					UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+					
 				} else if(enrolment.getEvaluations().size() > 1)
 				{
 					fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
 					fenixPersistentSuport.getIPersistentEnrolmentEvaluation().deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
 					ReportAllPastEnrollmentMigration.addEnrollmentEvaluationsDeleted();
+
+					UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+					
 				}
 			}
 		}
@@ -971,4 +988,16 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			}
 		}
 	}
+
+	private static void reset()
+	{
+		NEW_ENROLMENTS = true;
+		TO_FILE = true;
+		studentCurricularPlansCreated.clear();
+		enrollmentsCreated.clear();
+		enrollmentEvaluationsCreated.clear();
+		curricularCoursesCreated.clear();
+		out = null;
+	}
+
 }

@@ -17,6 +17,7 @@ public interface IPersistentMiddlewareSupport {
 	public IPersistentMWAluno getIPersistentMWAluno();
 	public IPersistentMWBranch getIPersistentMWBranch();
 	public IPersistentMWEnrolment getIPersistentMWEnrolment();
+	public IPersistentMWTreatedEnrollment getIPersistentMWTreatedEnrollment();
 	public IPersistentMWCurricularCourseScope getIPersistentMWCurricularCourseScope();
 	public IPersistentMWCurricularCourse getIPersistentMWCurricularCourse();
 	

@@ -592,6 +592,39 @@
       />
 </class-descriptor>
 
+
+
+
+
+
+
+
+
+<class-descriptor class="middleware.middlewareDomain.MWTreatedEnrollment" table="mw_TREATED_ENROLLMENT">
+	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="number" column="number" jdbc-type="INTEGER"/>
+	<field-descriptor name="enrolmentyear" column="enrolmentYear" jdbc-type="INTEGER"/>
+	<field-descriptor name="curricularcourseyear" column="curricularCourseYear" jdbc-type="INTEGER"/>
+	<field-descriptor name="curricularcoursesemester" column="curricularCourseSemester" jdbc-type="INTEGER"/>
+	<field-descriptor name="season" column="season" jdbc-type="INTEGER"/>
+	<field-descriptor name="coursecode" column="courseCode" jdbc-type="VARCHAR"/>
+	<field-descriptor name="degreecode" column="degreeCode" jdbc-type="INTEGER"/>
+	<field-descriptor name="branchcode" column="branchCode" jdbc-type="INTEGER"/>
+	<field-descriptor name="grade" column="grade" jdbc-type="CHAR"/>
+	<field-descriptor name="teachernumber" column="teacherNumber" jdbc-type="INTEGER"/>
+	<field-descriptor name="examdate" column="examDate" jdbc-type="DATE"/>
+	<field-descriptor name="universitycode" column="universityCode" jdbc-type="CHAR"/>
+	<field-descriptor name="remarks" column="remarks" jdbc-type="CHAR"/>
+	<field-descriptor name="idinternal" column="idinternal" jdbc-type="INTEGER"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+</class-descriptor>
+
+
+
+
+
+
+
 <!-- ********************************************************************************************************************************************** -->
 
 <class-descriptor class="middleware.middlewareDomain.MWAreaCientificaIleec" table="mw_AREAS_CIENTIFICAS_ILEEC">

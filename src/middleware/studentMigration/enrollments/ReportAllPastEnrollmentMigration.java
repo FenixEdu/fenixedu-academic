@@ -329,6 +329,8 @@ public class ReportAllPastEnrollmentMigration
 //		out.println("[INFO] Total CurricularCourseScopes created: [" + ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated + "].");
 		out.println("[INFO] Total Enrolments deleted: [" + ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted + "]");
 		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted + "]");
+		
+		ReportAllPastEnrollmentMigration.reset();
 	}
 
 	/**
@@ -355,4 +357,23 @@ public class ReportAllPastEnrollmentMigration
 //		String degreeName = ReportEnrolment.findDegreeName(degreeCode);
 //		return degreeName;
 //	}
+
+
+	private static void reset()
+	{
+		unknownCurricularCourses.clear();
+		unknownTeachersAndEmployees.clear();
+		notCreatedEnrolmentEvaluations.clear();
+		totalStudentCurricularPlansCreated = 0;
+		totalEnrollmentsCreated = 0;
+		totalEnrollmentEvaluationsCreated = 0;
+		totalCurricularCoursesCreated = 0;
+		totalCurricularCourseScopesCreated = 0;
+		totalEnrollmentsDeleted = 0;
+		totalEnrollmentEvaluationsDeleted = 0;
+		unknownCurricularCoursesTimes = 0;
+		unknownTeachersAndEmployeesTimes = 0;
+		notCreatedEnrolmentEvaluationsTimes = 0;
+		classCastExceptions.clear();
+	}
 }

@@ -18,6 +18,7 @@ import middleware.persistentMiddlewareSupport.IPersistentMWPrecedenciaDisciplina
 import middleware.persistentMiddlewareSupport.IPersistentMWPrecedenciaNumeroDisciplinasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWStudentClass;
 import middleware.persistentMiddlewareSupport.IPersistentMWTipoEquivalenciaIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWTreatedEnrollment;
 import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 
@@ -97,6 +98,10 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	public IPersistentMWUniversity getIPersistentMWUniversity()
 	{
 		return new MWUniversityOJB();
+	}
+
+	public IPersistentMWTreatedEnrollment getIPersistentMWTreatedEnrollment() {
+		return new MWTreatedEnrollmentOJB();
 	}
 
 	public IPersistentMWEquivalenciaIleec getIPersistentMWEquivalenciasIleec()

@@ -453,7 +453,8 @@ public class ReportEnrolment
 				Iterator iterator7 = degreeList.iterator();
 				while(iterator7.hasNext()) {
 					ICurso degree = (ICurso) iterator7.next();
-					out.print(degree.getNome() + "\n\t\t         ");
+					out.println("");
+					out.print(degree.getNome() + "\t\t         ");
 				}
 				out.println("");
 			}
@@ -503,6 +504,8 @@ public class ReportEnrolment
 				out.println("\t" + key + " - " + value);
 			}
 		}
+		
+		ReportEnrolment.reset();
 	}
 
 //	------------------------------------------------------------------------------------------------------------------------------
@@ -559,5 +562,23 @@ public class ReportEnrolment
 		}
 
 		return null;
+	}
+
+	private static void reset()
+	{
+		curricularCoursesFoundInOtherDegree.clear();
+		notFoundExecutionCourse.clear();
+		notFoundCurricularCourseScopes.clear();
+		notFoundCurricularCourses.clear();
+		notFoundAttends.clear();
+		replicatedCurricularCourses.clear();
+		createdAttends.clear();
+		curricularCourses.clear();
+		degrees.clear();
+		enrolmentsMigrated = 0;
+		enrolmentEvaluationsMigrated = 0;
+		enrolmentsDeleted = 0;
+		enrolmentEvaluationsDeleted = 0;
+		smallReport = true;
 	}
 }

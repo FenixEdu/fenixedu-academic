@@ -107,6 +107,31 @@ create table mw_AVERAGE(
 -- )type= InnoDB;
 
 
+drop table if exists mw_TREATED_ENROLLMENT;
+create table mw_TREATED_ENROLLMENT(
+	idinternal integer(11),
+	number integer(11), 
+	enrolmentYear integer(11), 
+	curricularCourseYear integer(11),
+	curricularCourseSemester integer(11),
+	season integer(11), 
+	courseCode varchar(11),
+	degreeCode integer(11),
+	branchCode integer(11),
+	grade varchar(10),
+	teacherNumber integer(11),
+	examDate date,
+	universityCode varchar(10),
+	remarks varchar(255),
+	ACK_OPT_LOCK int(11) not null default '1',
+	ID_INTERNAL integer(11) not null auto_increment,
+	primary key (ID_INTERNAL),
+)type= InnoDB;
+CREATE INDEX mw_TREATED_ENROLLMENT_INDEX_1 on mw_TREATED_ENROLLMENT(number,enrolmentYear,curricularCourseYear,curricularCourseSemester,season,courseCode,degreeCode,branchCode,grade,teacherNumber,examDate,universityCode,remarks);
+CREATE INDEX mw_TREATED_ENROLLMENT_INDEX_2 on mw_TREATED_ENROLLMENT(enrolmentYear,degreeCode);
+CREATE INDEX mw_TREATED_ENROLLMENT_INDEX_3 on mw_TREATED_ENROLLMENT(number);
+CREATE INDEX mw_TREATED_ENROLLMENT_INDEX_4 on mw_TREATED_ENROLLMENT(enrolmentYear);
+
 
 drop table if exists mw_CURRICULAR_COURSE;
 create table mw_CURRICULAR_COURSE(

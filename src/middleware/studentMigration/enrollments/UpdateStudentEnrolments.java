@@ -9,14 +9,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import middleware.middlewareDomain.IMWTreatedEnrollment;
 import middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree;
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MWEnrolment;
 import middleware.middlewareDomain.MWStudent;
+import middleware.middlewareDomain.MWTreatedEnrollment;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
+import middleware.persistentMiddlewareSupport.IPersistentMWTreatedEnrollment;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 
@@ -38,6 +41,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.enrolment.DeleteEnrolment;
 import ServidorAplicacao.Servico.enrolment.WriteEnrolment;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
@@ -52,6 +56,7 @@ import Util.TipoCurso;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
+ * @author David Santos in 28/Out/2003
  */
 
 public class UpdateStudentEnrolments
@@ -72,6 +77,7 @@ public class UpdateStudentEnrolments
 		UpdateStudentEnrolments.TO_FILE = Boolean.valueOf(args[1]).booleanValue();
 		
 		MWStudent oldStudent = null;
+		ISuportePersistente sp = null;
 		try
 		{
 			out = new PrintWriter(System.out, true);
@@ -85,7 +91,7 @@ public class UpdateStudentEnrolments
 			IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 			IPersistentMWAluno persistentMWAluno = mws.getIPersistentMWAluno();
 			IPersistentMWEnrolment persistentEnrolment = mws.getIPersistentMWEnrolment();
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp = SuportePersistenteOJB.getInstance();
 	
 			sp.iniciarTransaccao();
 			executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
@@ -94,7 +100,7 @@ public class UpdateStudentEnrolments
 			out.println("[INFO] Updating a total of [" + numberOfStudents.intValue() + "] student curriculums.");
 			sp.confirmarTransaccao();
 	
-			int numberOfElementsInSpan = 100;
+			int numberOfElementsInSpan = 1;
 			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
 			numberOfSpans = numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 	
@@ -104,7 +110,6 @@ public class UpdateStudentEnrolments
 				sp.clearCache();
 				out.println("[INFO] Reading MWStudents...");
 				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-	
 				sp.confirmarTransaccao();
 	
 				out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
@@ -133,6 +138,8 @@ public class UpdateStudentEnrolments
 		ReportEnrolment.report(out);
 		
 		out.close();
+		
+		UpdateStudentEnrolments.reset();
 	}
 
 	/**
@@ -197,7 +204,7 @@ public class UpdateStudentEnrolments
 				continue;
 			}
 
-			if (!UpdateStudentEnrolments.hasExecutionInGivenPeriod(curricularCourse, executionPeriod, mwEnrolment, sp))
+			if (!UpdateStudentEnrolments.hasExecutionInGivenPeriod(curricularCourse, executionPeriod, sp))
 			{
 				ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 				continue;
@@ -349,6 +356,9 @@ public class UpdateStudentEnrolments
 			enrolmentEvaluation.setObservation(null);
 			enrolmentEvaluation.setPersonResponsibleForGrade(null);
 			enrolmentEvaluation.setWhen(null);
+
+			UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+			
 		} else
 		{
 			Date whenAltered = UpdateStudentEnrolments.getWhenAlteredDate(mwEnrolment);
@@ -383,19 +393,29 @@ public class UpdateStudentEnrolments
 
 					CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
 					ReportEnrolment.addEnrolmentEvaluationMigrated();
+
+					UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+
 				} else {
 					if(UpdateStudentEnrolments.NEW_ENROLMENTS)
 					{
 						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
 						UpdateStudentEnrolments.updateEnrollmentEvaluation(mwEnrolment, enrolment, fenixPersistentSuport, whenAltered, enrolmentEvaluation);
 						CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+
+						UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+						
 					}
 				}
 			} else {
 				if(UpdateStudentEnrolments.NEW_ENROLMENTS)
 				{
+					fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
 					UpdateStudentEnrolments.updateEnrollmentEvaluation(mwEnrolment, enrolment, fenixPersistentSuport, whenAltered, enrolmentEvaluation);
 					CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+
+					UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+					
 				} else
 				{
 					if(enrolment.getEvaluations().size() == 1)
@@ -407,11 +427,17 @@ public class UpdateStudentEnrolments
 						fenixPersistentSuport.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrolment.getIdInternal());
 						UpdateStudentEnrolments.cleanEnrollmentRelations(enrolment, fenixPersistentSuport);
 						ReportEnrolment.addEnrolmentDeleted();
+
+						UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+						
 					} else if(enrolment.getEvaluations().size() > 1)
 					{
 						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
 						fenixPersistentSuport.getIPersistentEnrolmentEvaluation().deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
 						ReportEnrolment.addEnrolmentEvaluationDeleted();
+
+						UpdateStudentEnrolments.writeTreatedMWEnrollment(mwEnrolment);
+						
 					}
 				}
 			}
@@ -665,7 +691,7 @@ public class UpdateStudentEnrolments
 	 * @return
 	 * @throws Throwable
 	 */
-	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp) throws Throwable
+	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, ISuportePersistente sp) throws Throwable
 	{
 		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		if (executionCourse == null)
@@ -828,4 +854,44 @@ public class UpdateStudentEnrolments
 			return mwEnrolment.getCoursecode();
 		}
 	}
+
+
+
+
+	/**
+	 * @param mwEnrolment
+	 * @throws ExcepcaoPersistencia
+	 */
+	protected static void writeTreatedMWEnrollment(MWEnrolment mwEnrolment) throws ExcepcaoPersistencia
+	{
+		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+		IPersistentMWTreatedEnrollment mwTreatedEnrollmentDAO = mws.getIPersistentMWTreatedEnrollment();
+		IMWTreatedEnrollment mwTreatedEnrollment = new MWTreatedEnrollment();
+		mwTreatedEnrollmentDAO.simpleLockWrite(mwTreatedEnrollment);
+		mwTreatedEnrollment.setBranchcode(mwEnrolment.getBranchcode());
+		mwTreatedEnrollment.setCoursecode(mwEnrolment.getCoursecode());
+		mwTreatedEnrollment.setCurricularcoursesemester(mwEnrolment.getCurricularcoursesemester());
+		mwTreatedEnrollment.setCurricularcourseyear(mwEnrolment.getCurricularcourseyear());
+		mwTreatedEnrollment.setDegreecode(mwEnrolment.getDegreecode());
+		mwTreatedEnrollment.setEnrolmentyear(mwEnrolment.getEnrolmentyear());
+		mwTreatedEnrollment.setExamdate(mwEnrolment.getExamdate());
+		mwTreatedEnrollment.setGrade(mwEnrolment.getGrade());
+		mwTreatedEnrollment.setIdinternal(mwEnrolment.getIdinternal());
+		mwTreatedEnrollment.setNumber(mwEnrolment.getNumber());
+		mwTreatedEnrollment.setRemarks(mwEnrolment.getRemarks());
+		mwTreatedEnrollment.setSeason(mwEnrolment.getSeason());
+		mwTreatedEnrollment.setTeachernumber(mwEnrolment.getTeachernumber());
+		mwTreatedEnrollment.setUniversitycode(mwEnrolment.getUniversitycode());
+	}
+
+	private static void reset()
+	{
+		NEW_ENROLMENTS = true;
+		TO_FILE = true;
+		enrollmentsCreated.clear();
+		enrollmentEvaluationsCreated.clear();
+		executionPeriod = null;
+		out = null;
+	}
+
 }
