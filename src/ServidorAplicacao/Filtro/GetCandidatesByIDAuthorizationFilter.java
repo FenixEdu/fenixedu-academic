@@ -15,7 +15,7 @@ import Dominio.IMasterDegreeCandidate;
 import Dominio.ITeacher;
 import Dominio.MasterDegreeCandidate;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -45,7 +45,7 @@ public class GetCandidatesByIDAuthorizationFilter extends Filtro
                         || (id != null && id.getRoles() != null && !hasPrivilege(id, arguments))
                         || (id == null) || (id.getRoles() == null))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

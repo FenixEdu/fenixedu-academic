@@ -10,9 +10,11 @@ import java.util.Map;
 import javax.ejb.CreateException;
 import javax.naming.NamingException;
 
+import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 import ServidorAplicacao.IServiceManagerWrapper;
 import ServidorAplicacao.ServiceManagerHome;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import framework.ejb.EJBHomeFactory;
 
 /**
@@ -110,18 +112,24 @@ public class DynamicServiceManagerEJBDelegate implements InvocationHandler
 		}
 		catch (InvocationTargetException e)
 		{
-			if (e.getTargetException() instanceof RemoteException)
+            
+            if (e.getTargetException().getCause() instanceof FilterChainFailedException)
+            {
+                throw new NotAuthorizedException();
+            }
+			else if (e.getTargetException() instanceof RemoteException)
 			{
 				// Remote exception isn't declared by the
 				// IServiceManagerWrapper method that was called,
 				// so we have to catch it and throw something that is
+                System.out.println("########!!!!!!!!!!!!! N DEVIA ESTAR AQUI !!!!!!!!!!##########");
 				throw new FenixServiceException(e.getTargetException());
 			}
 			else
 			{
 				throw e.getTargetException();
 			}
-		}
+        }
 	}
 
 }

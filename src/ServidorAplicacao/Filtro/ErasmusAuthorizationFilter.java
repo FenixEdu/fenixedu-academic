@@ -13,7 +13,7 @@ import java.util.Collection;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import Util.RoleType;
 
 public class ErasmusAuthorizationFilter extends Filtro
@@ -37,7 +37,7 @@ public class ErasmusAuthorizationFilter extends Filtro
         if (AuthorizationUtils.containsRole(roles, RoleType.ERASUMS)) authorizedRequester = true;
         if (!authorizedRequester)
         {
-            throw new NotAuthorizedException(" -----------> User = " + requester.getUtilizador()
+            throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
                             + "ACCESS NOT GRANTED!");
         }
     }

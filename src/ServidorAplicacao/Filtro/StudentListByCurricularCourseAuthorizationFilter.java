@@ -16,7 +16,7 @@ import Dominio.ICoordinator;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -70,7 +70,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends AccessCont
 			|| (id == null)
 			|| (id.getRoles() == null))
 		{
-			throw new NotAuthorizedException();
+			throw new NotAuthorizedFilterException();
 		}
 	}
 

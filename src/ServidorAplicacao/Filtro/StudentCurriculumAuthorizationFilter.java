@@ -16,7 +16,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -71,7 +71,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 			|| (id == null)
 			|| (id.getRoles() == null))
 		{
-			throw new NotAuthorizedException();
+			throw new NotAuthorizedFilterException();
 		}
 
 	}

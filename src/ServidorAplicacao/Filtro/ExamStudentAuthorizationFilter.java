@@ -19,7 +19,7 @@ import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.ISuportePersistente;
@@ -58,12 +58,12 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
                             || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                             || !attendsExamExecutionCourse(id, arguments))
             {
-                throw new NotAuthorizedException();
+                throw new NotAuthorizedFilterException();
             }
         }
         catch (RuntimeException e)
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

@@ -13,10 +13,9 @@ import org.apache.commons.collections.CollectionUtils;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-
 import DataBeans.InfoRole;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 
 /**
  * @author Tânia Pousão
@@ -79,7 +78,7 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro
 				|| (id == null)
 				|| (id.getRoles() == null))
 		{
-			throw new NotAuthorizedException();
+			throw new NotAuthorizedFilterException();
 		}
 
 	}

@@ -17,7 +17,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
@@ -64,7 +64,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
                         || !lecturesExecutionCourse(id, arguments)
                         || !bibliographicReferenceBelongsExecutionCourse(id, arguments))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

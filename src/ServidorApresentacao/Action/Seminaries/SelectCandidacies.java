@@ -1,6 +1,5 @@
 /*
- * Created on 25/Set/2003, 11:52:14 By Goncalo Luiz gedl [AT] rnl [DOT] ist
- * [DOT] utl [DOT] pt
+ * Created on 25/Set/2003, 11:52:14 By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorApresentacao.Action.Seminaries;
 
@@ -31,20 +30,21 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
- *         25/Set/2003, 11:52:14
+ * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at 25/Set/2003, 11:52:14
  */
 //TODO: this action IS NOT ready to handle multiple seminaries. It will need a
 // select box to select which seminary's candidacies to view
 public class SelectCandidacies extends FenixDispatchAction
 {
-    public ActionForward prepare(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException
+    public ActionForward prepare(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
     {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         List candidacies = null;
         ActionForward destiny = null;
         List candidaciesExtendedInfo = new LinkedList();
@@ -56,85 +56,98 @@ public class SelectCandidacies extends FenixDispatchAction
         try
         {
             seminaryID = new Integer(seminaryIDString);
-        }
-        catch (NumberFormatException ex)
+        } catch (NumberFormatException ex)
         {
             seminaryID = wildcard;
         }
         try
         {
 
-            Object[] argsReadSeminaries = {new Boolean(false)};
-            Object[] argsReadCandidacies = {wildcard, seminaryID, wildcard,
-                    wildcard, wildcard, wildcard, wildcard, wildcard, wildcard,
-                    wildcard, null};
-            seminaries = (List) ServiceManagerServiceFactory
-                    .executeService(userView, "Seminaries.GetAllSeminaries",
-                            argsReadSeminaries);
-            candidacies = (List) ServiceManagerServiceFactory
-                    .executeService(userView, "Seminaries.ReadCandidacies",
-                            argsReadCandidacies);
-            for (Iterator iterator = candidacies.iterator(); iterator.hasNext(); )
+            Object[] argsReadSeminaries = { new Boolean(false)};
+            Object[] argsReadCandidacies =
+                {
+                    wildcard,
+                    seminaryID,
+                    wildcard,
+                    wildcard,
+                    wildcard,
+                    wildcard,
+                    wildcard,
+                    wildcard,
+                    wildcard,
+                    wildcard,
+                    null };
+            seminaries =
+                (List) ServiceManagerServiceFactory.executeService(
+                    userView,
+                    "Seminaries.GetAllSeminaries",
+                    argsReadSeminaries);
+            candidacies =
+                (List) ServiceManagerServiceFactory.executeService(
+                    userView,
+                    "Seminaries.ReadCandidacies",
+                    argsReadCandidacies);
+            for (Iterator iterator = candidacies.iterator(); iterator.hasNext();)
             {
                 InfoStudent student = null;
                 InfoStudentCurricularPlan studentCurricularPlan = null;
                 InfoCandidacy candidacy = (InfoCandidacy) iterator.next();
-                Object[] argsReadStudent = {candidacy.getStudentIdInternal()};
-                student = (InfoStudent) ServiceManagerServiceFactory
-                        .executeService(userView, "student.ReadStudentById",
-                                argsReadStudent);
-                Object[] argsReadCurricularPlan = {student.getNumber(),
-                        student.getDegreeType()};
-                studentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                        .executeService(
-                                userView,
-                                "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                                argsReadCurricularPlan);
+                Object[] argsReadStudent = { candidacy.getStudentIdInternal()};
+                student =
+                    (InfoStudent) ServiceManagerServiceFactory.executeService(
+                        userView,
+                        "student.ReadStudentById",
+                        argsReadStudent);
+                Object[] argsReadCurricularPlan = { student.getNumber(), student.getDegreeType()};
+                studentCurricularPlan =
+                    (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+                        userView,
+                        "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                        argsReadCurricularPlan);
                 //
                 //
                 //
-                Object argsReadStudentCurricularPlans[] = {new UserView(student
-                        .getInfoPerson().getUsername(), new LinkedList())};
+                Object argsReadStudentCurricularPlans[] =
+                    { new UserView(student.getInfoPerson().getUsername(), new LinkedList())};
                 InfoStudentCurricularPlan selectedSCP = null;
-                List cps = (ArrayList) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadStudentCurricularPlansForSeminaries",
-                                argsReadStudentCurricularPlans);
+                List cps =
+                    (ArrayList) ServiceManagerServiceFactory.executeService(
+                        userView,
+                        "ReadStudentCurricularPlansForSeminaries",
+                        argsReadStudentCurricularPlans);
                 long startDate = Long.MAX_VALUE;
-                for (Iterator iter = cps.iterator(); iter.hasNext(); )
+                for (Iterator iter = cps.iterator(); iter.hasNext();)
                 {
-                    InfoStudentCurricularPlan cp = (InfoStudentCurricularPlan) iter
-                            .next();
+                    InfoStudentCurricularPlan cp = (InfoStudentCurricularPlan) iter.next();
                     if (cp.getStartDate().getTime() < startDate)
                     {
                         startDate = cp.getStartDate().getTime();
                         selectedSCP = cp;
                     }
                 }
-                Object getCurriculumArgs[] = {null, selectedSCP.getIdInternal()};
-                List enrollments = (ArrayList) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadStudentCurriculum",
-                                getCurriculumArgs);
+                Object getCurriculumArgs[] = { null, selectedSCP.getIdInternal()};
+                List enrollments =
+                    (ArrayList) ServiceManagerServiceFactory.executeService(
+                        userView,
+                        "ReadStudentCurriculum",
+                        getCurriculumArgs);
                 //
                 //
                 ic = new InfoClassification();
                 int i = 0;
                 float acc = 0;
                 float grade = 0;
-                for (Iterator iter = enrollments.iterator(); iter.hasNext(); )
+                for (Iterator iter = enrollments.iterator(); iter.hasNext();)
                 {
                     InfoEnrolment ie = (InfoEnrolment) iter.next();
-                    String stringGrade = ie.getInfoEnrolmentEvaluation()
-                            .getGrade();
+                    String stringGrade = ie.getInfoEnrolmentEvaluation().getGrade();
 
-                    try
+                    if (stringGrade != null && !stringGrade.equals("RE") && !stringGrade.equals("NA"))
                     {
-                        grade = new Float(stringGrade).floatValue();
+                        Float gradeObject = new Float(stringGrade);
+                        grade = gradeObject.floatValue();
                         acc += grade;
                         i++;
-                    }
-                    catch (NumberFormatException e1)
-                    {
-                        //ignore
                     }
 
                 }
@@ -151,13 +164,12 @@ public class SelectCandidacies extends FenixDispatchAction
                 infoCandidacyDetails.setInfoClassification(ic);
                 infoCandidacyDetails.setStudent(student);
                 if (candidacy.getApproved() == null)
-                        candidacy.setApproved(new Boolean(false));
+                    candidacy.setApproved(new Boolean(false));
                 infoCandidacyDetails.setApproved(candidacy.getApproved());
                 infoCandidacyDetails.setMotivation(candidacy.getMotivation());
                 candidaciesExtendedInfo.add(infoCandidacyDetails);
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             throw new FenixActionException();
         }
@@ -167,8 +179,7 @@ public class SelectCandidacies extends FenixDispatchAction
         return destiny;
     }
 
-    public List getNewSelectedStudents(Integer[] selectedStudents,
-            Integer[] previousUnselected)
+    public List getNewSelectedStudents(Integer[] selectedStudents, Integer[] previousUnselected)
     {
         List newSelectedStudents = new LinkedList();
         for (int i = 0; i < selectedStudents.length; i++)
@@ -185,8 +196,7 @@ public class SelectCandidacies extends FenixDispatchAction
         return newSelectedStudents;
     }
 
-    public List getNewUnselectedStudents(Integer[] selectedStudents,
-            Integer[] previousSelected)
+    public List getNewUnselectedStudents(Integer[] selectedStudents, Integer[] previousSelected)
     {
         List newUnselectedStudents = new LinkedList();
         for (int i = 0; i < previousSelected.length; i++)
@@ -207,13 +217,15 @@ public class SelectCandidacies extends FenixDispatchAction
         return newUnselectedStudents;
     }
 
-    public ActionForward changeSelection(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException
+    public ActionForward changeSelection(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
     {
         HttpSession session = this.getSession(request);
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ActionForward destiny = null;
         DynaActionForm selectCases = (DynaActionForm) form;
         Integer[] selectedStudents = null;
@@ -223,29 +235,29 @@ public class SelectCandidacies extends FenixDispatchAction
         {
             selectedStudents = (Integer[]) selectCases.get("selectedStudents");
             previousSelected = (Integer[]) selectCases.get("previousSelected");
-            previousUnselected = (Integer[]) selectCases
-                    .get("previousUnselected");
-        }
-        catch (Exception ex)
+            previousUnselected = (Integer[]) selectCases.get("previousUnselected");
+        } catch (Exception ex)
         {
             ex.printStackTrace();
             throw new FenixActionException();
         }
-        if (selectedStudents == null || previousSelected == null
-                || previousUnselected == null) { throw new FenixActionException(); }
+        if (selectedStudents == null || previousSelected == null || previousUnselected == null)
+        {
+            throw new FenixActionException();
+        }
         try
         {
             List changedStatusCandidaciesIds = new LinkedList();
-            changedStatusCandidaciesIds.addAll(this.getNewSelectedStudents(
-                    selectedStudents, previousUnselected));
-            changedStatusCandidaciesIds.addAll(this.getNewUnselectedStudents(
-                    selectedStudents, previousSelected));
-            Object[] argsReadCandidacies = {changedStatusCandidaciesIds};
-            ServiceManagerServiceFactory.executeService(userView,
-                    "Seminaries.ChangeCandidacyApprovanceStatus",
-                    argsReadCandidacies);
-        }
-        catch (FenixServiceException ex)
+            changedStatusCandidaciesIds.addAll(
+                this.getNewSelectedStudents(selectedStudents, previousUnselected));
+            changedStatusCandidaciesIds.addAll(
+                this.getNewUnselectedStudents(selectedStudents, previousSelected));
+            Object[] argsReadCandidacies = { changedStatusCandidaciesIds };
+            ServiceManagerServiceFactory.executeService(
+                userView,
+                "Seminaries.ChangeCandidacyApprovanceStatus",
+                argsReadCandidacies);
+        } catch (FenixServiceException ex)
         {
             throw new FenixActionException(ex);
         }

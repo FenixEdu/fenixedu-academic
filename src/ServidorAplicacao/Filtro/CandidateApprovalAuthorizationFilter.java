@@ -15,6 +15,7 @@ import Dominio.IMasterDegreeCandidate;
 import Dominio.ITeacher;
 import Dominio.MasterDegreeCandidate;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -158,7 +159,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro
                                         userView, getServiceCallArguments(request)))
                         || (userView == null) || (userView.getRoles() == null))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
 
     }

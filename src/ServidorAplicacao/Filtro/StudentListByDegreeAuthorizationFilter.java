@@ -16,7 +16,7 @@ import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -48,7 +48,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro
                         || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
                         || (id == null) || (id.getRoles() == null))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

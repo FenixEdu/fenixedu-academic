@@ -8,7 +8,7 @@ package ServidorAplicacao.Filtro;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import Util.RoleType;
 
 /**
@@ -40,7 +40,7 @@ public class SeminaryCoordinatorOrStudentFilter extends Filtro
                         .containsRole(id.getRoles(), getRoleType2())))
                         || (id == null) || (id.getRoles() == null))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

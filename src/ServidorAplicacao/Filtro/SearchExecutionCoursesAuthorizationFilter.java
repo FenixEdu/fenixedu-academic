@@ -17,7 +17,7 @@ import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -42,7 +42,7 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
 			|| (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
 			|| (id == null)
 			|| (id.getRoles() == null)) {
-			throw new NotAuthorizedException();
+			throw new NotAuthorizedFilterException();
 		}
     }
 

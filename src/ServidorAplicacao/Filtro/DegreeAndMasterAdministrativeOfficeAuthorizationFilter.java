@@ -5,6 +5,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import Util.RoleType;
@@ -55,7 +56,7 @@ public class DegreeAndMasterAdministrativeOfficeAuthorizationFilter extends Auth
                     servico,
                     argumentos))
             {
-                throw new NotAuthorizedException();
+                throw new NotAuthorizedFilterException();
             }
         }
         else if (
@@ -70,12 +71,12 @@ public class DegreeAndMasterAdministrativeOfficeAuthorizationFilter extends Auth
                     servico,
                     argumentos))
             {
-                throw new NotAuthorizedException();
+                throw new NotAuthorizedFilterException();
             }
         }
         else
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
 
     }

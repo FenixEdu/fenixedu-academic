@@ -14,7 +14,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
@@ -60,7 +60,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
                         id, arguments)))
                         || (id == null) || (id.getRoles() == null))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

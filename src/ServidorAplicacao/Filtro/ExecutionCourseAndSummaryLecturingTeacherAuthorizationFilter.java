@@ -17,7 +17,7 @@ import Dominio.ISummary;
 import Dominio.ITeacher;
 import Dominio.Summary;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentSummary;
@@ -67,12 +67,12 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
                             || !lecturesExecutionCourse(id, arguments)
                             || !SummaryBelongsExecutionCourse(id, arguments))
             {
-                throw new NotAuthorizedException();
+                throw new NotAuthorizedFilterException();
             }
         }
         catch (RuntimeException ex)
         {
-            throw new NotAuthorizedException(ex.getMessage());
+            throw new NotAuthorizedFilterException(ex.getMessage());
         }
     }
 

@@ -13,6 +13,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCoordinator;
@@ -64,7 +65,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
         }
         catch (RuntimeException e)
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

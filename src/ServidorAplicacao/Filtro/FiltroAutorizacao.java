@@ -11,8 +11,8 @@ package ServidorAplicacao.Filtro;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 public class FiltroAutorizacao extends Filtro
 {
@@ -32,7 +32,7 @@ public class FiltroAutorizacao extends Filtro
         IUserView requester = getRemoteUser(request);
         if (requester == null || !(requester instanceof UserView))
         {
-            throw new FenixServiceException("Invalid user ID");
+            throw new NotAuthorizedFilterException("Invalid user ID");
         }
 
     }

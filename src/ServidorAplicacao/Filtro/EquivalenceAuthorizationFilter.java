@@ -14,7 +14,7 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import Dominio.Student;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -96,7 +96,7 @@ public class EquivalenceAuthorizationFilter extends Filtro
 
         if (!authorizedRequester)
         {
-            throw new NotAuthorizedException(" -----------> User = " + requester.getUtilizador()
+            throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
                             + "ACCESS NOT GRANTED!");
         }
 

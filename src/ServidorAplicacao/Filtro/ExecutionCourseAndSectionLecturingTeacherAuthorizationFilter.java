@@ -17,7 +17,7 @@ import Dominio.ISection;
 import Dominio.ITeacher;
 import Dominio.Section;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentSection;
@@ -65,7 +65,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
                         || !lecturesExecutionCourse(id, arguments)
                         || !sectionBelongsExecutionCourse(id, arguments))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
 
     }

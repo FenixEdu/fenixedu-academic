@@ -10,7 +10,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 import Dominio.ICoordinator;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -56,12 +56,12 @@ public class ResponsibleDegreeCoordinatorAuthorizationFilter extends Authorizati
                             || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                             || !isResponsibleCoordinatorOfExecutionDegree(id, arguments))
             {
-                throw new NotAuthorizedException();
+                throw new NotAuthorizedFilterException();
             }
         }
         catch (RuntimeException e)
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

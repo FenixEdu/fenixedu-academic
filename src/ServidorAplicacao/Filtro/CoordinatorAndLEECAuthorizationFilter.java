@@ -9,6 +9,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 import Dominio.ICoordinator;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IPersistentTeacher;
@@ -62,7 +63,7 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
 			|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
 			|| !coordinatorLEEC(id, argumentos))
 		{
-			throw new NotAuthorizedException();
+			throw new NotAuthorizedFilterException();
 		}
 	}
 

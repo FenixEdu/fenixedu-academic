@@ -15,6 +15,7 @@ import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPessoaPersistente;
@@ -81,7 +82,7 @@ public class CreditsAuthorizationFilter extends Filtro
 
         if (!authorizedRequester)
         {
-            throw new NotAuthorizedException(" -----------> User = " + requester.getUtilizador()
+            throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
                             + "ACCESS NOT GRANTED!");
         }
 

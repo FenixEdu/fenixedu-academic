@@ -20,7 +20,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
@@ -58,7 +58,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro
                         || (id == null) || (id.getRoles() == null)))
                         && (!lecturesExecutionCourse(id, argumentos)))
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException();
         }
     }
 

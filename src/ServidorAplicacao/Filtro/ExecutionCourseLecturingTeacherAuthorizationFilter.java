@@ -14,7 +14,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
@@ -61,12 +61,13 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
                             || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                             || !lecturesExecutionCourse(id, arguments))
             {
-                throw new NotAuthorizedException();
+                throw new NotAuthorizedFilterException();
             }
         }
         catch (RuntimeException e)
         {
-            throw new NotAuthorizedException();
+            throw new NotAuthorizedFilterException
+            ();
         }
     }
 
