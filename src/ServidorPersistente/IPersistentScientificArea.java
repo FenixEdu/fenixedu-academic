@@ -4,6 +4,9 @@
  */
 package ServidorPersistente;
 
+import java.util.List;
+
+import Dominio.IBranch;
 import Dominio.IScientificArea;
 
 /**
@@ -13,4 +16,5 @@ import Dominio.IScientificArea;
 public interface IPersistentScientificArea extends IPersistentObject
 {
 	public IScientificArea readByName(String name) throws ExcepcaoPersistencia;
+	public List readAllByBranch(IBranch branch) throws ExcepcaoPersistencia;
 }

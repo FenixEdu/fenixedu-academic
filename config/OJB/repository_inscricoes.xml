@@ -1449,6 +1449,15 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
+	<collection-descriptor
+			name="curricularCourseGroups"
+			element-class-ref="Dominio.CurricularCourseGroup"
+			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
+			auto-retrieve="true"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_SCIENTIFIC_AREA"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

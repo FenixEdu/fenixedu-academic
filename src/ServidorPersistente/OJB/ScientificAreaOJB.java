@@ -4,8 +4,11 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.IBranch;
 import Dominio.IScientificArea;
 import Dominio.ScientificArea;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -17,7 +20,6 @@ import ServidorPersistente.IPersistentScientificArea;
  */
 public class ScientificAreaOJB extends ObjectFenixOJB implements IPersistentScientificArea
 {
-
     public ScientificAreaOJB()
     {
     }
@@ -29,50 +31,10 @@ public class ScientificAreaOJB extends ObjectFenixOJB implements IPersistentScie
         return (IScientificArea) queryObject(ScientificArea.class, criteria);
     }
 
-//    public void lockWrite(IScientificArea scientificAreaToWrite)
-//        throws ExcepcaoPersistencia, ExistingPersistentException
-//    {
-//
-//        IScientificArea scientificAreaFromDB = null;
-//
-//        // If there is nothing to write, simply return.
-//        if (scientificAreaToWrite == null)
-//        {
-//            return;
-//        }
-//
-//        // Read branch from database.
-//        scientificAreaFromDB = this.readByName(scientificAreaToWrite.getName());
-//
-//        // If branch is not in database, then write it.
-//        if (scientificAreaFromDB == null)
-//        {
-//            super.lockWrite(scientificAreaToWrite);
-//            // else If the branch is mapped to the database, then write any existing changes.
-//        }
-//        else 
-//        	if (
-//            (scientificAreaToWrite instanceof ScientificArea)
-//                && ((ScientificArea) scientificAreaFromDB).getIdInternal().equals(
-//                    ((ScientificArea) scientificAreaToWrite).getIdInternal()))
-//        {
-//            super.lockWrite(scientificAreaToWrite);
-//            // else Throw an already existing exception
-//        }
-//        else
-//            throw new ExistingPersistentException();
-//    }
-//
-//    public void deleteAll() throws ExcepcaoPersistencia
-//    {
-//        try
-//        {
-//            String oqlQuery = "select all from " + ScientificArea.class.getName();
-//            super.deleteAll(oqlQuery);
-//        }
-//        catch (ExcepcaoPersistencia ex)
-//        {
-//            throw ex;
-//        }
-//    }
+    public List readAllByBranch(IBranch branch) throws ExcepcaoPersistencia
+    {
+    	Criteria criteria = new Criteria();
+    	criteria.addEqualTo("curricularCourseGroups.branch.idInternal", branch.getIdInternal());
+    	return queryList(ScientificArea.class, criteria);
+    }
 }

@@ -201,7 +201,7 @@
 
 	<!--<target name="create-and-update-all-students-enrolments" depends="create-and-update-all-past-curriculums">-->
 	<target name="create-and-update-all-students-enrolments" depends="compile-proj">
-		<java classname="middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
+		<java classname="middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="896m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>

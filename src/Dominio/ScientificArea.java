@@ -6,15 +6,18 @@
 
 package Dominio;
 
+import java.util.List;
+
 /**
  * 
  * @author  Nuno Correia
  * @author  Ricardo Rodrigues
  */
 
-public class ScientificArea extends DomainObject implements IScientificArea {
-
+public class ScientificArea extends DomainObject implements IScientificArea
+{
     private String name;
+    private List curricularCourseGroups;
 
 	public ScientificArea()
 	{
@@ -36,19 +39,35 @@ public class ScientificArea extends DomainObject implements IScientificArea {
         this.name = name;
     }
 
-    public String toString()
-    {
-        return "name[" + name + "]";
-    }
+	/**
+	 * @return Returns the curricularCourseGroups.
+	 */
+	public List getCurricularCourseGroups()
+	{
+		return curricularCourseGroups;
+	}
 
-    public boolean equals(Object obj)
-    {
-        boolean result = false;
-        if (obj instanceof IScientificArea)
-        {
+	/**
+	 * @param curricularCourseGroups The curricularCourseGroups to set.
+	 */
+	public void setCurricularCourseGroups(List curricularCourseGroups)
+	{
+		this.curricularCourseGroups = curricularCourseGroups;
+	}
+
+	public String toString()
+	{
+		return "name[" + name + "]";
+	}
+
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
+		if (obj instanceof IScientificArea)
+		{
 			IScientificArea scientificArea = (IScientificArea) obj;
-            result = scientificArea.getName().equals(getName());            
-        }
+			result = scientificArea.getName().equals(getName());            
+		}
 		return result;
-    }
+	}
 }
