@@ -126,6 +126,9 @@
 	   	<action path="/showTeacherProfessorships" input="show-teacher-professorships"
 	   			name="objectOIDForm" scope="request"
 	   			type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsAction">
+			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+								key="message.teacher-not-belong-to-department"
+								path="/teacherSearchForShiftManagement.do?method=searchForm&amp;page=0"/>	   			
    			<forward name="list-professorships" path="show-teacher-professorships"/>
 	   	</action>
 
@@ -159,6 +162,10 @@
 	   	<action path="/showTeacherProfessorshipsForSupportLessonsManagement" input="show-teacher-professorships"
 	   			name="professorshipForm" scope="request"
 	   			type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsAction">
+			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+								key="message.teacher-not-belong-to-department"
+								path="/teacherSearchForSupportLessonsManagement.do?method=searchForm&amp;page=0"/>	   			
+	   			
    			<forward name="list-professorships" path="show-teacher-professorships-for-support-lessons-management"/>
 	   	</action>
 
@@ -220,9 +227,14 @@
 			<set-property property="oidProperty" value="idInternal"/>
 			<set-property property="requestAttribute" value="infoTeacherDegreeFinalProjectStudent" />
 			<set-property property="infoObjectClassName" value="DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent" />
+
 			<exception type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException"
 		  	       key="message.student-not-found"
 		  	       path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>			
+			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+								key="message.teacher-not-belong-to-department"
+								path="/teacherSearchForDFPStudentManagement.do?method=searchForm&amp;page=0"/>	   			
+
 			<forward name="show-form" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/> 
 			<forward name="successfull-edit" path="/manageTeacherDFPStudent.do?page=0&amp;method=list"/> 
 			<forward name="successfull-read" path=""/>
@@ -263,6 +275,10 @@
 			<set-property property="oidProperty" value="idInternal"/>
 			<set-property property="requestAttribute" value="infoTeacherInstitutionWorkingTime" />
 			<set-property property="infoObjectClassName" value="DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime" />
+
+			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+								key="message.teacher-not-belong-to-department"
+								path="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0"/>	   			
 			
 			<forward name="show-form" path="edit-teacher-institution-working-time"/> 
 			<forward name="successfull-edit" path="/manageTeacherInstitutionWorkingTime.do?page=0&amp;method=list"/> 
