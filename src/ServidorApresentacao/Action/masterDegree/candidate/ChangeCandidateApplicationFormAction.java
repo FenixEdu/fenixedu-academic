@@ -140,6 +140,17 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 
 	ActionErrors actionErrors = new ActionErrors();
 
+	// Validate the new Password
+	String password = (String) form.get("password");
+	String reTypePassword = (String) form.get("reTypePassword");
+	
+	if (!password.equals(reTypePassword)){
+		result = false;
+		actionErrors.add("diferentePasswords", new ActionError("errors.different.passwords"));
+	}
+	
+
+
 	Integer month = new Integer(((String) form.get("birthMonth")));
 	Integer day = new Integer(((String) form.get("birthDay")));
 					

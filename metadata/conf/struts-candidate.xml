@@ -46,6 +46,7 @@
         	<form-property name="degreeName" type="java.lang.String" />
         	<form-property name="degreeCode" type="java.lang.String" />
         	<form-property name="password" type="java.lang.String" />
+        	<form-property name="reTypePassword" type="java.lang.String" />
         	<form-property name="majorDegree" type="java.lang.String" />
         	<form-property name="majorDegreeSchool" type="java.lang.String" />
         	<form-property name="majorDegreeYear" type="java.lang.Integer" />

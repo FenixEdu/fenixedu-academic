@@ -139,6 +139,7 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		  changePersonalInfoForm.set("majorDegreeSchool", masterDegreeCandidate.getMajorDegreeSchool()); 
 		  changePersonalInfoForm.set("majorDegreeYear", masterDegreeCandidate.getMajorDegreeYear()); 
 		  changePersonalInfoForm.set("password", masterDegreeCandidate.getPassword()); 
+		  changePersonalInfoForm.set("reTypePassword", masterDegreeCandidate.getPassword()); 
 		  changePersonalInfoForm.set("average", String.valueOf(masterDegreeCandidate.getAverage())); 
 		  changePersonalInfoForm.set("country", masterDegreeCandidate.getInfoCountry().getName());
 		  changePersonalInfoForm.set("specialization", masterDegreeCandidate.getSpecialization());

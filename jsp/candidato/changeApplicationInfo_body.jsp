@@ -93,7 +93,12 @@
         <!-- Password -->
         <tr>
          <td><bean:message key="candidate.password" /></td>
-          <td><html:text property="password"/></td>
+          <td><html:password property="password"/></td>
+        </tr>
+        <!-- Password -->
+        <tr>
+         <td><bean:message key="candidate.reTypePassword" /></td>
+          <td><html:password property="reTypePassword"/></td>
         </tr>
         <!-- Licenciatura -->
         <tr>
