@@ -123,7 +123,7 @@ public class ChooseExamDayAndShiftDispatchActionTest
 		// verify that there are no errors
 		verifyNoActionErrors();
 		// verify correct Forward
-		verifyForward("View Exams");
+		verifyForward("viewExams");
 
 		// -------------------------------------------------------------------------
 		//   verify session contains expected objects
