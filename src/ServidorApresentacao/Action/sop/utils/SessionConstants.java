@@ -14,8 +14,6 @@ package ServidorApresentacao.Action.sop.utils;
  * 
  */
 public abstract class SessionConstants {
-
-
 	
 	// -------------------------------------------------------------------------------
 	//    Degree Administrative Office Constants
@@ -209,6 +207,7 @@ public abstract class SessionConstants {
 	public static final String ALL_INFO_VIEW_ROOM_SCHEDULE  = "ALL_INFO_VIEW_ROOM_SCHEDULE";
 	public static final String INFO_EXECUTION_PERIOD        = "INFO_EXECUTION_PERIOD";
 	public static final String INFO_EXECUTION_DEGREE_LIST   = "INFO_EXECUTION_DEGREE_LIST";
+	public static final String PAVILLIONS_NAMES_LIST        = "PAVILLIONS_NAMES_LIST";
 
 	// -------------------------------------------------------------------------------
 	//    Messy Constants Section - For All Sorts of Purposes

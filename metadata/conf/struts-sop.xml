@@ -254,6 +254,14 @@
         <form-property name="selectAllDegrees" type="java.lang.Boolean"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>      
+
+      <form-bean name="chooseViewAllRoomsSchedulesContextForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="selectedPavillions" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllPavillions" type="java.lang.Boolean"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean> 
       
     </form-beans>
 
@@ -378,10 +386,16 @@
     	<forward name="list" path="/viewAllClassesSchedules.jsp"/>
 	</action>     
      
-	<action path="/viewAllRoomsSchedules"
-    		type="ServidorApresentacao.Action.sop.ViewAllRoomsSchedulesAction"
+	<action parameter="method"
+			path="/viewAllRoomsSchedulesDA"
+    		type="ServidorApresentacao.Action.sop.ViewAllRoomsSchedulesDA"			
+			name="chooseViewAllRoomsSchedulesContextForm"
+			input="/viewAllRoomsSchedulesDA.do?method=choose&amp;page=0" 
+    		validate="true"
+    		scope="request"
     		>
-    	<forward name="Sucess" path="/viewAllRoomsSchedules.jsp"/>
+    	<forward name="choose" path="/choosePavillionsToViewRoomsSchedules.jsp"/>
+    	<forward name="list" path="/viewAllRoomsSchedules.jsp"/>
 	</action>     
 
 	 <!-- AULAS -->

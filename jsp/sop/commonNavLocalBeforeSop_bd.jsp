@@ -8,6 +8,6 @@
 <p class="invisible"><strong>&raquo; Listagens de Horários</strong></p>
 <ul>
   <li><html:link page="/viewAllClassesSchedulesDA.do?method=choose"><bean:message key="link.schedules.listAllByClass"/></html:link></li>
-  <li><html:link page="/viewAllRoomsSchedules.do"><bean:message key="link.schedules.listAllByRoom"/></html:link></li>
+  <li><html:link page="/viewAllRoomsSchedulesDA.do?method=choose"><bean:message key="link.schedules.listAllByRoom"/></html:link></li>
 </ul>
 
