@@ -2,9 +2,7 @@ package ServidorAplicacao.Servico.webSiteManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -15,7 +13,6 @@ import java.util.ListIterator;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-import org.apache.struts.util.MessageResources;
 
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;

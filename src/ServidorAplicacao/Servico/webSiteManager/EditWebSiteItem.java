@@ -52,8 +52,6 @@ public class EditWebSiteItem implements IServico {
 		IWebSiteItem webSiteItem = null;
 		IWebSiteSection webSiteSection = null;
 
-		System.out.println("no servico");
-
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentWebSiteSection persistentWebSiteSection = persistentSuport.getIPersistentWebSiteSection();
@@ -88,15 +86,8 @@ public class EditWebSiteItem implements IServico {
 			webSiteItem.setEditor(person);
 
 			webSiteItem.setExcerpt(infoWebSiteItem.getExcerpt());
-
 			webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
 			webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
-
-			System.out.println("info: " + infoWebSiteItem.getItemBeginDayCalendar().getTime());
-			System.out.println("info: " + infoWebSiteItem.getItemEndDayCalendar().getTime());
-			System.out.println(webSiteItem.getItemBeginDay());
-			System.out.println(webSiteItem.getItemEndDay());
-
 			webSiteItem.setKeyEditor(person.getIdInternal());
 			webSiteItem.setKeyWebSiteSection(webSiteSection.getIdInternal());
 			webSiteItem.setKeywords(infoWebSiteItem.getKeywords());

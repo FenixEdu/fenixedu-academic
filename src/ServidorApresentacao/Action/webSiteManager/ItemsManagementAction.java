@@ -146,7 +146,6 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			calendar.set(Calendar.MONTH, (new Integer(dateTokens[1])).intValue() - 1);
 			calendar.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
 			dateString = calendar.getTime();
-			System.out.println("data convertida: " + calendar.getTime());
 		}
 		return dateString;
 	}
@@ -272,7 +271,6 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		request.setAttribute("objectCode", objectCode);
 		request.setAttribute("itemCode", itemCode);
 		request.setAttribute("infoWebSite", infoWebSite);
-		System.out.println("a sair do action editItemsManagement");
 
 		return mapping.findForward("editItem");
 	}
@@ -299,8 +297,6 @@ public class ItemsManagementAction extends FenixDispatchAction {
 
 		fillInfoWebSiteItem(form, infoWebSiteItem);
 
-		System.out.println("infoWebSiteItem.getItemBeginDayCalendar: " + infoWebSiteItem.getItemBeginDayCalendar().getTime());
-		System.out.println("infoWebSiteItem.getItemEndDayCalendar: " + infoWebSiteItem.getItemEndDayCalendar().getTime());
 		infoWebSiteItem.setIdInternal(itemCode);
 
 		ActionErrors errors = new ActionErrors();

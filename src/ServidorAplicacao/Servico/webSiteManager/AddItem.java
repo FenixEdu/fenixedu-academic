@@ -141,33 +141,8 @@ public class AddItem implements IServico {
 
 				InfoWebSiteSection infoWebSiteSection2 = Cloner.copyIWebSiteSection2InfoWebSiteSection(section);
 
-//				List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
-//				System.out.println("nome da seccao: " + section.getName());
-//				System.out.println(
-//					"tamanho da lista no add item: "
-//						+ webSiteItems.size()
-//						+ "valor do whattosort: "
-//						+ infoWebSiteSection2.getWhatToSort());
-//				BeanComparator beanComparator = getBeanComparator(infoWebSiteSection2);
-//				Collections.sort(webSiteItems, beanComparator);
-//				if (infoWebSiteSection2.getSortingOrder().equals("descendent")) {
-//					Collections.reverse(webSiteItems);
-//				}
-//
-//				List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
-//					public Object transform(Object arg0) {
-//						IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-//						InfoWebSiteItem infoWebSiteItem = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
-//
-//						return infoWebSiteItem;
-//					}
-//				});
-//
-//				infoWebSiteSection2.setInfoItemsList(infoWebSiteItems);
-
 				infoWebSiteSections.add(infoWebSiteSection2);
 			}
-
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
@@ -176,14 +151,4 @@ public class AddItem implements IServico {
 
 		return infoWebSite;
 	}
-
-//	private BeanComparator getBeanComparator(InfoWebSiteSection infoWebSiteSection) {
-//		BeanComparator beanComparator = new BeanComparator("creationDate");
-//		if (infoWebSiteSection.getWhatToSort().equals("ITEM_BEGIN_DAY")) {
-//			beanComparator = new BeanComparator("itemBeginDay");
-//		} else if (infoWebSiteSection.getWhatToSort().equals("ITEM_END_DAY")) {
-//			beanComparator = new BeanComparator("itemEndDay");
-//		}
-//		return beanComparator;
-//	}
 }
