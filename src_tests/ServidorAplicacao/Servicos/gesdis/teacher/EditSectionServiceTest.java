@@ -6,7 +6,6 @@
  */
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
-import DataBeans.gesdis.InfoCurriculum;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
@@ -51,8 +50,7 @@ public class EditSectionServiceTest extends TestCaseDeleteAndEditServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		InfoCurriculum oldCurriculum = new InfoCurriculum();
-		InfoCurriculum newCurriculum = new InfoCurriculum();
+
 		ISuportePersistente sp = null;
 		IDisciplinaExecucao executionCourse = null;
 		InfoSection infoSection = null;
@@ -81,6 +79,7 @@ public class EditSectionServiceTest extends TestCaseDeleteAndEditServices {
 					site,
 					null,
 					"Seccao1dePO");
+					
 			ISection section =
 							persistentSection.readBySiteAndSectionAndName(
 								site,
