@@ -99,5 +99,16 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
 		}
 	}
-    
+	public List readAll()throws ExcepcaoPersistencia {
+	
+			try {
+				String oqlQuery = "select all from " + Announcement.class.getName();
+				query.create(oqlQuery);
+				List result = (List) query.execute();
+				lockRead(result);
+				return result;
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
+		}
 }
