@@ -252,6 +252,12 @@
       </action>
 	
 	
+ 	<action path="/deleteItem"
+ 			 input="/viewSection.jsp"
+              type="ServidorApresentacao.Action.teacher.DeleteItemAction">
+          <forward name="AccessItemManagement" path="/viewSection.do"/>
+    </action>
+	
 	
 	<!-- Actions For Objectives and Program -->
 	<action 

@@ -60,7 +60,10 @@ public class DeleteItem implements IServico {
 			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 
 			persistentItem.delete(deletedItem);
-
+			persistentSuport.confirmarTransaccao();
+			persistentSuport.iniciarTransaccao();
+			
+			
 			List itemsList = null;
 
 			itemsList = persistentItem.readAllItemsBySection(section);
