@@ -320,15 +320,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 	private void fillSituationType(InfoGratuitySituation infoGratuitySituation)
 	{
-		if (infoGratuitySituation.getRemainingValue().doubleValue() > 0)
+		if (infoGratuitySituation.getRemainingValue().longValue() < infoGratuitySituation.getPayedValue().longValue())
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.DEBTOR);
 		}
-		else if (infoGratuitySituation.getRemainingValue().doubleValue() == 0)
+		else if (infoGratuitySituation.getRemainingValue().equals(infoGratuitySituation.getPayedValue()))
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.REGULARIZED);
 		}
-		else if (infoGratuitySituation.getRemainingValue().doubleValue() < 0)
+		else if (infoGratuitySituation.getRemainingValue().longValue() > infoGratuitySituation.getPayedValue().longValue())		
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.CREDITOR);
 		}
