@@ -77,36 +77,6 @@
 		column="NUMBER"
 		jdbc-type="INTEGER"
 	/>
-	 <field-descriptor
-		name="dateBeginContract"
-		column="DATE_BEGIN_CONTRACT"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="dateEndContract"
-		column="DATE_END_CONTRACT"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="dateSendDispatchCC"
-		column="DATE_SEND_DISPATCH_CC"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="dateDispatchCC"
-		column="DATE_DISPATCH_CC"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="dateSendDispatchCD"
-		column="DATE_SEND_DISPATCH_CD"
-		jdbc-type="DATE"
-	/>
-	<field-descriptor
-		name="dateDispatchCD"
-		column="DATE_DISPATCH_CD"
-		jdbc-type="DATE"
-	/>
 	<field-descriptor
 		name="dateAcceptTerm"
 		column="DATE_ACCEPT_TERM"
@@ -197,11 +167,6 @@
 	  <field-descriptor
 		name="dateDispatchCD"
 		column="DATE_DISPATCH_CD"
-		jdbc-type="DATE"
-	  />
-	  <field-descriptor
-		name="dateAcceptTerm"
-		column="DATE_ACCEPT_TERM"
 		jdbc-type="DATE"
 	  />
 	  <field-descriptor

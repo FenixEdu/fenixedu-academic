@@ -20,27 +20,11 @@ public class InfoGrantContractRegime extends InfoObject
 	private Date dateDispatchCC;
 	private Date dateSendDispatchCD;
 	private Date dateDispatchCD;
-	private Date dateAcceptTerm;
 	private InfoTeacher infoTeacher;
 	private InfoGrantContract infoGrantContract;
 
 	public InfoGrantContractRegime()
 	{
-	}
-	/**
-	 * @return Returns the dateAcceptTerm.
-	 */
-	public Date getDateAcceptTerm()
-	{
-		return dateAcceptTerm;
-	}
-	/**
-	 * @param dateAcceptTerm
-	 *            The dateAcceptTerm to set.
-	 */
-	public void setDateAcceptTerm(Date dateAcceptTerm)
-	{
-		this.dateAcceptTerm = dateAcceptTerm;
 	}
 	/**
 	 * @return Returns the dateBeginContract.

@@ -92,7 +92,6 @@ public class ReadGrantContractRegimeByContractAndState implements IService
 			infoGrantContractRegime.setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
 			infoGrantContractRegime.setDateDispatchCC(grantContractRegime.getDateDispatchCC());
 			infoGrantContractRegime.setDateDispatchCD(grantContractRegime.getDateDispatchCD());
-			infoGrantContractRegime.setDateAcceptTerm(grantContractRegime.getDateAcceptTerm());
 			
 			InfoTeacher infoTeacher = null;
 			infoTeacher = Cloner.copyITeacher2InfoTeacher(grantContractRegime.getTeacher());

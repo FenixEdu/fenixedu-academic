@@ -19,7 +19,6 @@ public interface IGrantContractRegime extends IDomainObject
 	public Integer getState();
 	public Date getDateBeginContract();
 	public Date getDateEndContract();
-    public Date getDateAcceptTerm();
     public Date getDateDispatchCC();
     public Date getDateDispatchCD();
     public Date getDateSendDispatchCC();
@@ -30,7 +29,6 @@ public interface IGrantContractRegime extends IDomainObject
     public void setState(Integer state);
 	public void setDateBeginContract(Date dateBeginContract);
 	public void setDateEndContract(Date dateEndContract);
-    public void setDateAcceptTerm(Date dateAcceptTerm);
     public void setDateDispatchCC(Date dateDispatchCC);
     public void setDateDispatchCD(Date dateDispatchCD);
     public void setDateSendDispatchCC(Date dateSendDispatchCC);

@@ -22,7 +22,6 @@ public class GrantContractRegime extends DomainObject implements IGrantContractR
     private Date dateDispatchCC;
     private Date dateSendDispatchCD;
     private Date dateDispatchCD;
-    private Date dateAcceptTerm;
     
     private ITeacher teacher;
     private Integer keyTeacher;
@@ -36,53 +35,8 @@ public class GrantContractRegime extends DomainObject implements IGrantContractR
      */
     public GrantContractRegime()
     {
-    }
+    }    
     
-//    /**
-//     * @see java.lang.Object#equals(java.lang.Object)
-//     */
-//    public boolean equals(Object obj)
-//    {
-//        boolean result = false;
-//        if (obj instanceof IGrantContractRegime)
-//        {
-//        	IGrantContractRegime grantContractRegime = null;
-//        	try
-//			{
-//	            grantContractRegime = (IGrantContractRegime) obj;
-//
-//	            result = ((this.dateBeginContract.equals(grantContractRegime.getDateBeginContract())) &&
-//	            		  (this.keyGrantContract.equals(grantContractRegime.getGrantContract().getIdInternal())));
-//			}
-//        	catch(Exception e)
-//			{
-//        		System.out.println("MERDA!!!");
-//        		System.out.println("This.id_internal: " + this.getIdInternal());
-//        		System.out.println("This.dateBeginContract: " + this.dateBeginContract);
-//        		System.out.println("This.dateBeginContract: " + this.dateBeginContract);
-//        		System.out.println("other.dateBeginContract: " + grantContractRegime.getDateBeginContract());
-//           		System.out.println("other.id_internal: " + grantContractRegime.getIdInternal());
-//        		System.exit(1);
-//			}
-//        }
-//        return result;
-//    }
-    
-    
-	/**
-	 * @return Returns the dateAcceptTerm.
-	 */
-	public Date getDateAcceptTerm()
-	{
-		return dateAcceptTerm;
-	}
-	/**
-	 * @param dateAcceptTerm The dateAcceptTerm to set.
-	 */
-	public void setDateAcceptTerm(Date dateAcceptTerm)
-	{
-		this.dateAcceptTerm = dateAcceptTerm;
-	}
 	/**
 	 * @return Returns the dateBeginContract.
 	 */

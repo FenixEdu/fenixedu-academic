@@ -75,7 +75,6 @@ public class EditGrantContractRegime extends EditDomainObjectService
 			grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
 			grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
 			grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
-			grantContractRegime.setDateAcceptTerm(infoGrantContractRegime.getDateAcceptTerm());
 
 			if(infoGrantContractRegime.getInfoTeacher() != null)
 			{

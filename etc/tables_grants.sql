@@ -31,17 +31,10 @@ CREATE TABLE GRANT_CONTRACT (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
    ACK_OPT_LOCK int(11),
   NUMBER int(11) unsigned NOT NULL default '0',
---  DATE_BEGIN_CONTRACT date default NULL,
---  DATE_END_CONTRACT date default NULL,
---  DATE_SEND_DISPATCH_CC date default NULL,
---  DATE_DISPATCH_CC date default NULL,
---  DATE_SEND_DISPATCH_CD date default NULL,
---  DATE_DISPATCH_CD date default NULL,
   DATE_ACCEPT_TERM date default NULL,
   END_CONTRACT_MOTIVE varchar(255) default NULL,
   KEY_GRANT_OWNER int(11) unsigned NOT NULL default '0',
   KEY_GRANT_TYPE int(11) unsigned NOT NULL default '0',
---  KEY_GRANT_CONTEST int(11) unsigned default NULL,
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE KEY UNIQUE1 (NUMBER,KEY_GRANT_OWNER)
 ) TYPE=InnoDB;
@@ -61,8 +54,6 @@ CREATE TABLE GRANT_CONTRACT_REGIME (
   DATE_DISPATCH_CC date default NULL,
   DATE_SEND_DISPATCH_CD date default NULL,
   DATE_DISPATCH_CD date default NULL,
--- DATE_ACCEPT_TERM date default NULL,
--- KEY_GRANT_TYPE int(11) unsigned NOT NULL default '0',
   KEY_GRANT_CONTRACT int(11) unsigned NOT NULL default '0',
   KEY_TEACHER int(11) unsigned,
   PRIMARY KEY  (ID_INTERNAL)
