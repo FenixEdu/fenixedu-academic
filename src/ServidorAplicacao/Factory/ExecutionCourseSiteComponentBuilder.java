@@ -679,10 +679,12 @@ public class ExecutionCourseSiteComponentBuilder
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
-            IEvaluationMethod evaluationMethod =
-                persistentEvaluationMethod.readByIdExecutionCourse(executionCourse);
-
-            component = Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod);
+            IEvaluationMethod evaluationMethod = persistentEvaluationMethod
+                    .readByIdExecutionCourse(executionCourse);
+            if (evaluationMethod != null)
+            {
+                component = Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod);
+            }
         }
         catch (ExcepcaoPersistencia e)
         {
