@@ -298,19 +298,24 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 		setStatusAssiduidade(statusAssiduidade.getDesignacao());
 
 		setSiglaCentroCusto(centroCusto.getSigla());
-		setDescricaoCentroCusto(centroCusto.getDepartamento() + "<br>" + centroCusto.getSeccao1() + "<br>" + centroCusto.getSeccao2());
+		setDescricaoCentroCusto(
+			centroCusto.getDepartamento() + "<br>" + centroCusto.getSeccao1() + "<br>" + centroCusto.getSeccao2());
 
 		ListIterator iterador = rotacaoHorario.listIterator();
 		ArrayList listaHorariosDia = new ArrayList();
 		while (iterador.hasNext()) {
 			Horario horarioDia = (Horario) iterador.next();
 			AssociarHorarioForm novoHorario = new AssociarHorarioForm();
-			novoHorario = novoHorario.getFormHorarioPreenchido(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao())), null);
+			novoHorario =
+				novoHorario.getFormHorarioPreenchido(
+					horarioDia,
+					(ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao())),
+					null);
 			// o horario vem da base de dados logo tem que se somar uma hora
 			novoHorario.setDuracoesHorario(horarioDia, true);
 			listaHorariosDia.add(novoHorario);
-//				new AssociarHorarioForm(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao()))));
-//				novoHorario.getFormHorarioPreenchido(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao())), null));
+			//				new AssociarHorarioForm(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao()))));
+			//				novoHorario.getFormHorarioPreenchido(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao())), null));
 		}
 
 		setRotacaoHorario(listaHorariosDia);
@@ -335,58 +340,67 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 		int anoFim = 0;
 
 		try {
-			if ((this.getDiaInicioEscolha().length() < 1)
-				|| (this.getMesInicioEscolha().length() < 1)
-				|| (this.getAnoInicioEscolha().length() < 1)
-				|| (this.getDiaFimEscolha().length() < 1)
-				|| (this.getMesFimEscolha().length() < 1)
-				|| (this.getAnoFimEscolha().length() < 1)) {
-				errors.add("dates", new ActionError("error.dataConsulta.invalida"));
+			if ((this.getDiaInicioEscolha() == null)
+				|| (this.getMesInicioEscolha() == null)
+				|| (this.getAnoInicioEscolha() == null)
+				|| (this.getDiaFimEscolha() == null)
+				|| (this.getMesFimEscolha() == null)
+				|| (this.getAnoFimEscolha() == null)) {
+				errors.add("dates", new ActionError("error.campos.obrigatorio"));
 			} else {
-				try {
-					diaInicio = (new Integer(this.getDiaInicioEscolha())).intValue();
-					mesInicio = (new Integer(this.getMesInicioEscolha())).intValue();
-					anoInicio = (new Integer(this.getAnoInicioEscolha())).intValue();
-					diaFim = (new Integer(this.getDiaFimEscolha())).intValue();
-					mesFim = (new Integer(this.getMesFimEscolha())).intValue();
-					anoFim = (new Integer(this.getAnoFimEscolha())).intValue();
-				} catch (java.lang.NumberFormatException e) {
-					errors.add("numero", new ActionError("error.numero.naoInteiro"));
-				}
-
-				Calendar calendarInicio = Calendar.getInstance();
-				Calendar calendarFim = Calendar.getInstance();
-
-				calendarInicio.setLenient(false);
-				calendarInicio.clear();
-				calendarInicio.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
-				Timestamp dataInicio = new Timestamp(calendarInicio.getTimeInMillis());
-				setDataInicioEscolha(dataInicio);
-
-				calendarFim.setLenient(false);
-				calendarFim.clear();
-				calendarFim.set(anoFim, mesFim - 1, diaFim, 23, 59, 59);
-				Timestamp dataFim = new Timestamp(calendarFim.getTimeInMillis());
-				setDataFimEscolha(dataFim);
-				
-				Calendar calendarioInicioAplicacao = Calendar.getInstance();
-				calendarioInicioAplicacao.setLenient(false);
-				calendarioInicioAplicacao.clear();
-				calendarioInicioAplicacao.set(2003, Calendar.MAY, 1, 00, 00, 00);
-
-				if (calendarInicio.before(calendarioInicioAplicacao)) {
-					errors.add("datas", new ActionError("error.dataValidade.antes1Maio"));
-				}
-
-				if (!(dataInicio.getTime() <= dataFim.getTime())) {
-					errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
+				if ((this.getDiaInicioEscolha().length() < 1)
+					|| (this.getMesInicioEscolha().length() < 1)
+					|| (this.getAnoInicioEscolha().length() < 1)
+					|| (this.getDiaFimEscolha().length() < 1)
+					|| (this.getMesFimEscolha().length() < 1)
+					|| (this.getAnoFimEscolha().length() < 1)) {
+					errors.add("dates", new ActionError("error.dataConsulta.invalida"));
 				} else {
-					HttpSession session = request.getSession();
-					session.setAttribute(Constants.INICIO_CONSULTA, new Date(calendarInicio.getTimeInMillis()));
-					session.setAttribute(Constants.FIM_CONSULTA, new Date(calendarFim.getTimeInMillis()));
+					try {
+						diaInicio = (new Integer(this.getDiaInicioEscolha())).intValue();
+						mesInicio = (new Integer(this.getMesInicioEscolha())).intValue();
+						anoInicio = (new Integer(this.getAnoInicioEscolha())).intValue();
+						diaFim = (new Integer(this.getDiaFimEscolha())).intValue();
+						mesFim = (new Integer(this.getMesFimEscolha())).intValue();
+						anoFim = (new Integer(this.getAnoFimEscolha())).intValue();
+					} catch (java.lang.NumberFormatException e) {
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
+					}
+
+					Calendar calendarInicio = Calendar.getInstance();
+					Calendar calendarFim = Calendar.getInstance();
+
+					calendarInicio.setLenient(false);
+					calendarInicio.clear();
+					calendarInicio.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
+					Timestamp dataInicio = new Timestamp(calendarInicio.getTimeInMillis());
+					setDataInicioEscolha(dataInicio);
+
+					calendarFim.setLenient(false);
+					calendarFim.clear();
+					calendarFim.set(anoFim, mesFim - 1, diaFim, 23, 59, 59);
+					Timestamp dataFim = new Timestamp(calendarFim.getTimeInMillis());
+					setDataFimEscolha(dataFim);
+
+					Calendar calendarioInicioAplicacao = Calendar.getInstance();
+					calendarioInicioAplicacao.setLenient(false);
+					calendarioInicioAplicacao.clear();
+					calendarioInicioAplicacao.set(2003, Calendar.MAY, 1, 00, 00, 00);
+
+					if (calendarInicio.before(calendarioInicioAplicacao)) {
+						errors.add("datas", new ActionError("error.dataValidade.antes1Maio"));
+					}
+
+					if (!(dataInicio.getTime() <= dataFim.getTime())) {
+						errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
+					} else {
+						HttpSession session = request.getSession();
+						session.setAttribute(Constants.INICIO_CONSULTA, new Date(calendarInicio.getTimeInMillis()));
+						session.setAttribute(Constants.FIM_CONSULTA, new Date(calendarFim.getTimeInMillis()));
+					}
 				}
 			}
-		} catch (java.lang.IllegalArgumentException e) {
+		} catch (Exception e) {
 			errors.add("horasData", new ActionError("error.dataValidade.incorrecta"));
 		}
 		return errors;
