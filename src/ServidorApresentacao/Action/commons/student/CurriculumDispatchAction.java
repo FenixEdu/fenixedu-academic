@@ -15,8 +15,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
@@ -27,7 +25,7 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
@@ -100,8 +98,8 @@ public class CurriculumDispatchAction extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 		String studentNumber = getStudent(request);
+		InfoStudent infoStudent = null;
 		if(studentNumber == null) {
-			InfoStudent infoStudent = null;
 			try {
 				Object args[] = { userView.getUtilizador() };
 				infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByUsername", args);
@@ -113,7 +111,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 		
 		List result = null;
 		try {
-			Object args[] = { Integer.valueOf(studentNumber), TipoCurso.LICENCIATURA_OBJ };
+			Object args[] = { Integer.valueOf(studentNumber), infoStudent.getDegreeType() };
 			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlans", args);
 		} catch (NonExistingServiceException e) {
 			result = new ArrayList();
