@@ -6,7 +6,7 @@ package DataBeans.inquiries;
 
 import java.lang.reflect.InvocationTargetException;
 
-import DataBeans.InfoDegreeInfo;
+import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoObject;
 import DataBeans.util.CopyUtils;
@@ -28,7 +28,7 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
 	private InfoExecutionPeriod executionPeriod;
 	
 	private Integer keyDegree;
-	private InfoDegreeInfo degree;
+	private InfoDegree degree;
 	
 	private Integer gepCourseId;
 	private String courseCode;
@@ -201,13 +201,13 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
     /**
      * @return Returns the degree.
      */
-    public InfoDegreeInfo getDegree() {
+    public InfoDegree getDegree() {
         return degree;
     }
     /**
      * @param degree The degree to set.
      */
-    public void setDegree(InfoDegreeInfo degree) {
+    public void setDegree(InfoDegree degree) {
         this.degree = degree;
     }
     /**
@@ -621,7 +621,7 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
         
         CopyUtils.copyPropertiesNullConvertion(this, oldInquiriesCoursesRes);
         this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(oldInquiriesCoursesRes.getExecutionPeriod()));
-        this.setDegree(InfoDegreeInfo.newInfoFromDomain(oldInquiriesCoursesRes.getDegree()));
+        this.setDegree(InfoDegree.newInfoFromDomain(oldInquiriesCoursesRes.getDegree()));
         
     }
 

@@ -4,7 +4,7 @@
  */
 package Dominio.inquiries;
 
-import Dominio.IDegreeInfo;
+import Dominio.ICurso;
 import Dominio.IDomainObject;
 import Dominio.IExecutionPeriod;
 
@@ -116,12 +116,12 @@ public interface IOldInquiriesCoursesRes extends IDomainObject {
     /**
      * @return Returns the degree.
      */
-    public IDegreeInfo getDegree();
+    public ICurso getDegree();
 
     /**
      * @param degree The degree to set.
      */
-    public void setDegree(IDegreeInfo degree);
+    public void setDegree(ICurso degree);
 
     /**
      * @return Returns the keyDegree.

@@ -678,7 +678,7 @@
 	/>
 	<reference-descriptor
 	  name="degree"
-	  class-ref="Dominio.DegreeInfo">
+	  class-ref="Dominio.Curso">
 	  <foreignkey field-ref="keyDegree"/>
    </reference-descriptor>
     
