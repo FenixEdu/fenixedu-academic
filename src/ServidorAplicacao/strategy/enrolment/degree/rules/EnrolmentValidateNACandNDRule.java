@@ -55,10 +55,6 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 			}
 		}
 
-
-		// FIXME: David-Ricardo: A regra dos MINCOURSES nao se aplica aos trabalhadores estudantes
-//		if (((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < minCourses) &&
-//			(!enrolmentContext.getStudentActiveCurricularPlan().getStudent().getStudentGroupInfo().getStudentType().equals(new StudentType(StudentType.WORKING_STUDENT))) ) {
 		if ((enrolmentContext.getActualEnrolment().size() + enrolmentContext.getOptionalCurricularCoursesEnrolments().size()) < minCourses) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MINIMUM_CURRICULAR_COURSES_TO_ENROLL, String.valueOf(minCourses));
 		}

@@ -9,7 +9,7 @@ COISAS MESMO PARA FAZER:
 DÚVIDAS:
 ========
 
-1. Onde está o estatuto do estudante?
+1. O incremento dos NAC pertence ao Curricular Course ou a outra tabela?
 2. O que fazer quando o curso está terminado?
 3. Existem cadeiras de opção anuais? Ou seja, posso escolher uma cadeira de opção que dura um ano inteiro? Se não houver, temos de acrescentar mais uma condição ao BIG IF da regra "EnrolmentFilterAllOptionalCoursesRule".
 4. Se se chumbar ao TFC, a próxima inscrição conta como duas acumuladas ou apenas como uma? Se contar como duas temos de alterar as regras de filter e validate dos NACs.
@@ -18,8 +18,10 @@ COISAS PARA FAZER EVENTUALMENTE:
 ================================
 
 1. A lista actualEnrolment do EnrolmentContext passar a ter Enrolments em vez de CurricularCourseScopes.
+2. Optimizar a manipulação de listas nas regras para tornar código mais rápido
 
 O QUE ALTERAMOS DE IMPORTANTE:
 ==============================
 
-1. Criamos uma tabela nova -> DEGREE_ENROLMENT_INFO e alteramos o repository_inscricoes no DegreeCurricularPlan
+1. Criamos uma tabela nova -> DEGREE_ENROLMENT_INFO, a tabela DegreeCurricularPlan agora tem um campo com a chave para esta nova tabela
+1. Criamos uma tabela nova -> STUDENT_GROUP_INFO, a tabela Student agora tem um campo com a chave para esta nova tabela
