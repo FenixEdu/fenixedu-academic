@@ -756,7 +756,7 @@
 	</filterChain>
 	<filterChain>
 		<name>ReadCurriculumHistoricAuthorization</name>
-		<expression>TeacherAuthorization || TimeTableManagerAuthorization || GEPAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentMemberAuthorization &amp;&amp; EmployeeAuthorization)</expression>
+		<expression>TeacherAuthorization || DegreeAdministrativeOfficeAuthorization || TimeTableManagerAuthorization || GEPAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentMemberAuthorization &amp;&amp; EmployeeAuthorization)</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

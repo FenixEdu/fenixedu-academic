@@ -63,6 +63,7 @@
 						</td>
 					</tr>
 				</logic:iterate>
+				<tr><td>&nbsp;</td></tr>
 				<tr>
 					<td>
 						<bean:message key="label.masterDegree.gratuity.anotherOne" />&nbsp;
@@ -75,7 +76,15 @@
 					<td colspan="2">
 						<html:text property="otherValueExemptionGratuity" size="4"/>%
 					</td>
-				</tr>												
+				</tr>	
+				<tr><td>&nbsp;</td></tr>
+				<tr><td><b><bean:message key="label.or" /></b></td></tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td colspan="2">
+						<html:text property="adHocValueExemptionGratuity" size="4"/>&euro;
+					</td>
+				</tr>											
 			</table>
 		</td>
 		<td>

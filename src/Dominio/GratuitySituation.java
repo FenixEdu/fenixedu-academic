@@ -22,6 +22,8 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
     private Double totalValue;
 
     private Integer exemptionPercentage;
+    
+    private Double exemptionValue;
 
     private ExemptionGratuityType exemptionType;
 
@@ -246,4 +248,27 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
      * public boolean equals(Object object) { //TODO: to make return true; }
      */
 
+    /*public String toString() {
+     //TODO: to make
+     return null;
+     }*/
+
+    /*public boolean equals(Object object) {
+     //TODO: to make
+     return true;
+     }*/
+    
+  
+    /**
+     * @return Returns the exemptionValue.
+     */
+    public Double getExemptionValue() {
+        return exemptionValue;
+    }
+    /**
+     * @param exemptionValue The exemptionValue to set.
+     */
+    public void setExemptionValue(Double exemptionValue) {
+        this.exemptionValue = exemptionValue;
+    }
 }

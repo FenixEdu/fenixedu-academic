@@ -15,17 +15,17 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão
- *
+ * 
  */
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class DeleteGratuitySituationById implements IService {
 
     /*
      * This clean the exemption's value, but not delete the object.
-     *  
+     * 
      */
     public Boolean run(Integer gratuitySituationID) throws FenixServiceException {
         ISuportePersistente sp = null;
@@ -42,10 +42,11 @@ public class DeleteGratuitySituationById implements IService {
             }
 
             gratuitySituation.setExemptionPercentage(null);
+            gratuitySituation.setExemptionValue(null);
             gratuitySituation.setExemptionType(null);
             gratuitySituation.setExemptionDescription(null);
-            //            gratuitySituation.setEmployee(null);
-            //            gratuitySituation.setWhen(null);
+            // gratuitySituation.setEmployee(null);
+            // gratuitySituation.setWhen(null);
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException(e);

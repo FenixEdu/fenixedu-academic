@@ -39,7 +39,7 @@
 	</h1>
 
 	<h2 class="greytxt">
-		<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="semester" /><bean:message key="label.ordinal.semester.abbreviation" />
+		<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="semester" /><bean:message key="label.ordinal.semester.abbr" />
 		<bean:write name="<%=SessionConstants.EXECUTION_DEGREE%>" property="infoExecutionYear.year"/>
 	</h2>
 

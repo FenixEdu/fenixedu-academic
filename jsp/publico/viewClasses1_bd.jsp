@@ -18,7 +18,7 @@
 	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
 		<bean:message key="label.curricularPlan"/>
 	</html:link>
-	&nbsp;&gt;&nbsp;<bean:message key="label.turmas"/> 	
+	&nbsp;&gt;&nbsp;<bean:message key="label.classes"/> 	
 </div>	
 
 <%--
@@ -37,7 +37,7 @@
 
 <h2 class="greytxt">
 	<bean:message key="label.curricularPlan"/>
-	<bean:message key="label.the" />
+	<bean:message key="label.of" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 	<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">

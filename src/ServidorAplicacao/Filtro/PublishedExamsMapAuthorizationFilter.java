@@ -2,13 +2,9 @@ package ServidorAplicacao.Filtro;
 
 import java.util.Iterator;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoExam;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteEvaluation;
@@ -48,10 +44,11 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
 	    }
 
 		private void filterUnpublishedInformation(InfoSiteEvaluation infoSiteEvaluation) {
-			CollectionUtils.filter(infoSiteEvaluation.getInfoEvaluations(), new Predicate() {
-				public boolean evaluate(Object arg0) {
-					return !(arg0 instanceof InfoExam);
-				}});
+		    // This code is usefull for when the exams are to be filtered from the public execution course page.
+//			CollectionUtils.filter(infoSiteEvaluation.getInfoEvaluations(), new Predicate() {
+//				public boolean evaluate(Object arg0) {
+//					return !(arg0 instanceof InfoExam);
+//				}});
 		}
 
 		private void filterUnpublishedInformation(InfoExamsMap infoExamsMap) {

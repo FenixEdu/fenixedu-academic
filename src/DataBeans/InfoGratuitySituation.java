@@ -19,6 +19,8 @@ import Util.GratuitySituationType;
 public class InfoGratuitySituation extends InfoObject {
 
     private Integer exemptionPercentage;
+    
+    private Double exemptionValue;
 
     private ExemptionGratuityType exemptionType;
 
@@ -245,6 +247,20 @@ public class InfoGratuitySituation extends InfoObject {
         this.transactionList = transactionList;
     }
 
+    /**
+     * @return Returns the exemptionValue.
+     */
+    public Double getExemptionValue() {
+        return exemptionValue;
+    }
+    
+    /**
+     * @param exemptionValue The exemptionValue to set.
+     */
+    public void setExemptionValue(Double exemptionValue) {
+        this.exemptionValue = exemptionValue;
+    }
+    
     public String toString() {
         String result = new String();
         result += "[InfoGratuitySituation: exemptionPercentage" + this.exemptionPercentage;
@@ -266,6 +282,7 @@ public class InfoGratuitySituation extends InfoObject {
         super.copyFromDomain(gratuitySituation);
         if (gratuitySituation != null) {
             setExemptionPercentage(gratuitySituation.getExemptionPercentage());
+            setExemptionValue(gratuitySituation.getExemptionValue());
             setExemptionDescription(gratuitySituation.getExemptionDescription());
             setExemptionType(gratuitySituation.getExemptionType());
             //setPayedValue(gratuitySituation.getPayedValue());

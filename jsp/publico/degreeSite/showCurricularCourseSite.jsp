@@ -33,14 +33,14 @@
 </div>	
 
 <!-- PÁGINA EM INGLÊS -->
-<div class="version">
+<!--<div class="version">
 	<span class="px10">
 		<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;inEnglish=true&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.getAttribute("degreeCurricularPlanID") %>" >
 			<bean:message key="label.version.english" />
 		</html:link>
 		<img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
 	</span>
-</div> 
+</div> -->
 
 <h1>
 	<bean:write name="infoDegree" property="tipoCurso" />
@@ -58,7 +58,7 @@
 <div class="col_right">
   <table class="box" cellspacing="0">
 		<tr>
-			<td class="box_header"><strong><bean:message key="label.executionCourseSites" /></strong></td>
+			<td class="box_header"><strong><bean:message key="label.courses" /></strong></td>
 		</tr>
 		<tr>
 			<td class="box_cell">

@@ -46,7 +46,7 @@
 		<h2>
 		<span class="greytxt">
 			<bean:message key="label.curricularPlan"/>
-			<bean:message key="label.the" />
+			<bean:message key="label.of" />
 			<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 			<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
 			<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">

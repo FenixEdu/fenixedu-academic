@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -151,6 +154,35 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements 
         newCurricularCourses.addAll(curricularCoursesFromNewSecundaryArea);
 
         return newCurricularCourses;
+    }
+    
+    public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
+
+        List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
+
+        List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
+            public Object transform(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+
+                return enrollment.getCurricularCourse();
+
+            }
+        });
+
+        if (isThisCurricularCoursesInTheList(curricularCourse, result)) {
+            return true;
+        }
+
+        int size = result.size();
+        for (int i = 0; i < size; i++) {
+            ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) result.get(i);
+            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
+            if (curricularCourseEquivalences.contains(curricularCourse)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     /*

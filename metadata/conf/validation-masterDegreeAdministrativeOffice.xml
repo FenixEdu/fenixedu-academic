@@ -766,6 +766,9 @@
 				<var-value>10</var-value>
 			</var>
 		</field>
+        <field property="adHocValueExemptionGratuity" depends="double" page="1">
+  	        <arg0 key="label.exemptionGratuity.value" />
+        </field>		
 	</form>
 <form name="insertGratuityDataForm">
 		<field property="degree" depends="required" page="1">

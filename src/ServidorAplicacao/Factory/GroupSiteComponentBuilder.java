@@ -17,6 +17,7 @@ import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShiftWithInfoLessons;
+import DataBeans.InfoShift;
 import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteShift;
@@ -447,6 +448,10 @@ public class GroupSiteComponentBuilder {
 
         List infoSiteShiftsAndGroups = readShiftsAndGroups(groupPropertiesCode);
         component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
+        
+        InfoGroupProperties infoGroupProperties = readGroupProperties(groupPropertiesCode);
+        component.setInfoGroupProperties(infoGroupProperties);
+        
         return component;
     }
 
@@ -773,6 +778,24 @@ public class GroupSiteComponentBuilder {
         return infoSiteShiftsAndGroups;
     }
 
+    public InfoGroupProperties readGroupProperties(Integer groupPropertiesCode) throws FenixServiceException {
+		
+    		InfoGroupProperties infoGroupProperties = null;
+		try{	
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            	
+			IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
+            		.readByOID(GroupProperties.class, groupPropertiesCode);
+        
+			infoGroupProperties = Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
+        } catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+			throw new FenixServiceException("error.impossibleReadGroupName");
+        }
+
+        return infoGroupProperties;
+    }
+    
     /**
      * @param component
      * @param site
@@ -786,6 +809,10 @@ public class GroupSiteComponentBuilder {
 
         List infoSiteStudents = readStudentGroupInformation(studentGroupCode);
         component.setInfoSiteStudentInformationList(infoSiteStudents);
+        
+        InfoStudentGroup studentGroup = readStudentGroupNumber(studentGroupCode);
+        component.setInfoStudentGroup(studentGroup);
+        
         return component;
     }
 
@@ -842,4 +869,23 @@ public class GroupSiteComponentBuilder {
         return studentGroupAttendInformationList;
     }
 
+    public InfoStudentGroup readStudentGroupNumber(Integer studentGroupCode) throws FenixServiceException {
+    		
+    		InfoStudentGroup infoStudentGroup = null;
+    		try{	
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
+            
+            infoStudentGroup = Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup);
+            
+    		} catch (ExcepcaoPersistencia ex) {
+    			ex.printStackTrace();
+    			throw new FenixServiceException("error.impossibleReadStudentGroupNumber");
+    		}
+
+		return infoStudentGroup;
+    }
+    
 }

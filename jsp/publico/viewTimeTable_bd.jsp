@@ -7,57 +7,70 @@
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
- <logic:present name="siteView" property="commonComponent">
+
+<logic:present name="siteView" property="commonComponent">
  	<bean:define id="commonComponent" name="siteView" property="commonComponent" />
  	<bean:define id="exeCourse" name="commonComponent" property="executionCourse"/>
-<h2><bean:message key="property.executionCourse.curricularHours"/></h2>
-<table class="invisible" cellspacing="0" cellpadding="0" width="90%">
-       <tr> <td class="listClasses">
-          <logic:notEqual name="exeCourse" property="theoreticalHours"  value="0">
+	<h2><bean:message key="label.schedule" /></h2>
+
+	
+	<table class="tab_simple" cellspacing="0" cellpadding="2">
+		<tr>
+			<th colspan="4"><bean:message key="label.hoursPerWeek"/></th>
+		</tr>
+		<tr>
+			<td class="subheader" width="100px"><bean:message key="property.executionCourse.theoreticalHours"/></td>
+			<td class="subheader" width="100px"><bean:message key="property.executionCourse.practicalHours"/></td>
+			<td class="subheader" width="100px"><bean:message key="property.executionCourse.theoreticalPracticalHours"/></td>
+			<td class="subheader" width="100px"><bean:message key="property.executionCourse.labHours"/></td>
+		</tr>
+		<tr>
+			<td>
+				<logic:notEqual name="exeCourse" property="theoreticalHours" value="0">
+					<bean:write name="exeCourse" property="theoreticalHours" />
+				</logic:notEqual>
+				<logic:equal name="exeCourse" property="theoreticalHours" value="0">
+					<bean:message key="label.number0.0" />
+				</logic:equal>
+			</td>	
 			
-				<b><bean:message key="property.executionCourse.theoreticalHours"/><b>
-				<bean:write name="exeCourse" property="theoreticalHours" />
-				<bean:message key="property.hours"/>
+			<td>
+				<logic:notEqual name="exeCourse" property="praticalHours" value="0">
+					<bean:write name="exeCourse" property="praticalHours" />
+				</logic:notEqual>
+				<logic:equal name="exeCourse" property="praticalHours" value="0">
+					<bean:message key="label.number0.0" />
+				</logic:equal>
+			</td>
+
+			<td>
+				<logic:notEqual name="exeCourse" property="theoPratHours" value="0">
+					<bean:write name="exeCourse" property="theoPratHours" />
+				</logic:notEqual>
+				<logic:equal name="exeCourse" property="theoPratHours" value="0">
+					<bean:message key="label.number0.0" />
+				</logic:equal>
+			</td>
 			
-			</logic:notEqual></td>
-			 <td class="listClasses">
-			<logic:notEqual name="exeCourse" property="praticalHours"  value="0">
-			
-				<b><bean:message key="property.executionCourse.practicalHours"/><b>
-				<bean:write name="exeCourse" property="praticalHours" />
-				<bean:message key="property.hours"/>
-			
-			</logic:notEqual></td>
-         </tr>      
-         <tr class="listClasses">
-         	 <td class="listClasses">
-          <logic:notEqual name="exeCourse" property="theoPratHours"  value="0">
-			
-				<b><bean:message key="property.executionCourse.theoreticalPracticalHours"/><b>
-				<bean:write name="exeCourse" property="theoPratHours" />
-			<bean:message key="property.hours"/>
-			
-			</logic:notEqual></td>
-			 <td class="listClasses">
-			<logic:notEqual name="exeCourse" property="labHours"  value="0">
-			
-				<b><bean:message key="property.executionCourse.labHours"/><b>
-				<bean:write name="exeCourse" property="labHours" />
-			<bean:message key="property.hours"/>
-			
-			</logic:notEqual></td>
-         </tr>                     
-            </table>
-		<br/>
-		<br/>
-	</logic:present>	
-	<logic:present name="siteView" property="component">
-		<bean:define id="component" name="siteView" property="component"/>
-		<bean:define id="lessonList" name="component" property="lessons" />
-		
+			<td>
+				<logic:notEqual name="exeCourse" property="labHours" value="0">
+					<bean:write name="exeCourse" property="labHours" />
+				</logic:notEqual>
+				<logic:equal name="exeCourse" property="labHours" value="0">
+					<bean:message key="label.number0.0" />
+				</logic:equal>
+			</td>
+		</tr>
+	</table>
+</logic:present>	
+
+<logic:present name="siteView" property="component">
+	<bean:define id="component" name="siteView" property="component"/>
+	<bean:define id="lessonList" name="component" property="lessons" />		
 	<app:gerarHorario name="lessonList" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/>
-	</logic:present>	
-	<logic:notPresent name="siteView" property="component" >
-		<bean:message key="message.public.notfound.timeTable"/>
-	</logic:notPresent>
+</logic:present>	
+
+<logic:notPresent name="siteView" property="component" >
+	<bean:message key="message.public.notfound.timeTable"/>
+</logic:notPresent>
 

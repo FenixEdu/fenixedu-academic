@@ -89,5 +89,21 @@
 		<put name="body" value="/degreeAdministrativeOffice/declaration/prepareEnrollmentsDeclaration_bd.jsp"/>
 	</definition>
 	
+		<!-- ==================== View Curricular Course Historic ================== -->
+	<definition name="view-degree-curricular-plan-execution-year" 
+		extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
+	</definition>
+
+	<definition name="show-active-curricular-scopes" 
+		extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
+	</definition>
+
+	<definition name="view-curriculum-historic" 
+		extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
+	</definition>
+	
 
 </tiles-definitions>

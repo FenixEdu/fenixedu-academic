@@ -210,6 +210,39 @@ public class Data extends FenixUtil {
         return result;
     }
 
+    
+    /**
+     * Formats date in format dd separator MM separator YYYY
+     * 
+     * @param Date
+     *            to Format
+     * @return String separator
+     *  
+     */
+    public static String format2DayMonthYearWithZeros(java.util.Date date, String separator) {
+        if (date == null)
+            return null;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        String result = new String();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);        
+        if(day < 10)
+            result += ("0" + day);
+        else
+            result += day; 
+        result += separator;
+        int month = calendar.get(Calendar.MONTH) + 1;
+        if(month < 10)
+            result += ("0" + month);
+        else
+            result += month;  
+        result += separator;
+        result += calendar.get(Calendar.YEAR);
+        return result;
+    }
+
+
     /**
      * Formats data in format d-M-YYYY
      * 

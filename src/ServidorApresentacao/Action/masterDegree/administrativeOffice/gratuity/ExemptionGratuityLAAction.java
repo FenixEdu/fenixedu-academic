@@ -28,7 +28,7 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Fernanda Quitério Created on 31/Aug/2004
- *  
+ * 
  */
 public class ExemptionGratuityLAAction extends LookupDispatchAction {
 
@@ -67,7 +67,7 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
                 .get("valueExemptionGratuity"));
         Integer justificationExemptionGratuity = Integer.valueOf((String) exemptionForm
                 .get("justificationExemptionGratuity"));
-
+        Double adHocValueExemptionGratuity = (Double) exemptionForm.get("adHocValueExemptionGratuity");
         String otherValueExemptionGratuityString = (String) exemptionForm
                 .get("otherValueExemptionGratuity");
         Integer otherValueExemptionGratuity = null;
@@ -80,14 +80,20 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
 
         InfoGratuitySituation infoGratuitySituation = fillGratuitySituationFromRequest(userView, request);
 
-        //value
+        // value
         if (valueExemptionGratuity != null) {
             infoGratuitySituation.setExemptionPercentage(valueExemptionGratuity);
             if (otherValueExemptionGratuity != null && valueExemptionGratuity.equals(new Integer(-1))) {
                 infoGratuitySituation.setExemptionPercentage(otherValueExemptionGratuity);
             }
         }
-        //justification
+
+        // adhoc value
+        if (adHocValueExemptionGratuity != null) {
+            infoGratuitySituation.setExemptionValue(adHocValueExemptionGratuity);
+        }
+
+        // justification
         if (justificationExemptionGratuity != null) {
             infoGratuitySituation.setExemptionType(ExemptionGratuityType
                     .getEnum(justificationExemptionGratuity.intValue()));
@@ -119,17 +125,17 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
             infoGratuitySituation.setIdInternal(Integer.valueOf(gratuitySituationID));
         }
 
-        //Student Curricular Plan
+        // Student Curricular Plan
         InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
         infoStudentCurricularPlan.setIdInternal(Integer.valueOf(studentCurricularPlanID));
         infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
-        //Gratuity Values
+        // Gratuity Values
         InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
         infoGratuityValues.setIdInternal(Integer.valueOf(gratuityValuesID));
         infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 
-        //employee who made register
+        // employee who made register
         InfoPerson infoPerson = new InfoPerson();
         infoPerson.setUsername(userView.getUtilizador());
 
@@ -148,10 +154,11 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
 
         InfoGratuitySituation infoGratuitySituation = fillGratuitySituationFromRequest(userView, request);
 
-        //to remove an exemption is equivalent to put 0 in exemption percentage
+        // to remove an exemption is equivalent to put 0 in exemption percentage
         // this is necessary to recalculate remaining value from gratuity
         // situation
         infoGratuitySituation.setExemptionPercentage(new Integer(0));
+        infoGratuitySituation.setExemptionValue(new Double(0));
 
         Object[] args = { infoGratuitySituation };
         try {

@@ -263,7 +263,15 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         List executionDegreeList = null;
         InfoExecutionDegree infoExecutionDegreeSelected = null;
         try {
-            //it is return a list where the first element is the degree
+            
+            //get InfoStudent with InfoPerson to mantain context
+            Object argsStudent[] = {studentNumber, degreeType};
+            infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndDegreeType", argsStudent);
+            if (infoStudent == null) {
+                throw new FenixServiceException();
+            }
+            
+            // it is return a list where the first element is the degree
             // pre-select and the tail is all
             // degrees
             executionDegreeList = (List) ServiceManagerServiceFactory.executeService(userView,

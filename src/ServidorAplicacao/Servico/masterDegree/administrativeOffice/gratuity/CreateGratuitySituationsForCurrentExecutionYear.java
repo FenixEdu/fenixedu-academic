@@ -30,7 +30,7 @@ import Util.TipoCurso;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class CreateGratuitySituationsForCurrentExecutionYear implements IService {
 
@@ -123,7 +123,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
                     studentCurricularPlan);
 
             if (totalValue == null) {
-                //nothing to do
+                // nothing to do
                 return;
             }
 
@@ -132,11 +132,11 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
             totalValue = calculateTotalValueForMasterDegree(gratuityValues);
 
             /* to fix inconsistent data, we are always updating total value */
-            //            if ((totalValue == null) ||
+            // if ((totalValue == null) ||
             // (totalValue.equals(gratuitySituation.getTotalValue()))) {
             if (totalValue == null) {
 
-                //nothing to do
+                // nothing to do
                 return;
 
             }
@@ -169,6 +169,10 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
         if (gratuitySituation.getExemptionPercentage() != null) {
             exemptionValue = gratuitySituation.getTotalValue().doubleValue()
                     * (gratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
+        }
+
+        if (gratuitySituation.getExemptionValue() != null) {
+            exemptionValue += gratuitySituation.getExemptionValue().doubleValue();
         }
 
         List transactionList = gratuitySituation.getTransactionList();
@@ -230,16 +234,16 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
         if (studentCurricularPlan.getSpecialization().equals(Specialization.MESTRADO_TYPE)) {
             totalValue = calculateTotalValueForMasterDegree(gratuityValues);
         }
-        //        else if
+        // else if
         // (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE))
         // {
-        //            totalValue = calculateTotalValueForSpecialization(executionYear,
+        // totalValue = calculateTotalValueForSpecialization(executionYear,
         // gratuityValues,
-        //                    studentCurricularPlan);
-        //        }
+        // studentCurricularPlan);
+        // }
 
         if ((totalValue == null)) {
-            //the student has nothing to pay
+            // the student has nothing to pay
             System.out.println("DATABASE IS INCONSISTENT. TOTAL VALUE SHOULD NEVER BE NULL!!!!");
             return;
         }
@@ -261,10 +265,10 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
         Double annualValue = gratuityValues.getAnualValue();
 
         if ((annualValue != null) && (annualValue.doubleValue() != 0)) {
-            //we have data to calculate using annual value
+            // we have data to calculate using annual value
             totalValue = annualValue;
         } else {
-            //we have to use the components (scholarship + final proof)
+            // we have to use the components (scholarship + final proof)
             // information
             totalValue = new Double(gratuityValues.getScholarShipValue().doubleValue()
                     + (gratuityValues.getFinalProofValue() == null ? 0 : gratuityValues

@@ -654,6 +654,7 @@
         dynamic="true">
       		<form-property name="page" type="java.lang.Integer" initial="0" />
       		<form-property name="valueExemptionGratuity" type="java.lang.String" />
+      		<form-property name="adHocValueExemptionGratuity" type="java.lang.Double" />
       		<form-property name="justificationExemptionGratuity" type="java.lang.String" />      		
       		<form-property name="otherValueExemptionGratuity" type="java.lang.String" />      		
       		<form-property name="otherJustificationExemptionGratuity" type="java.lang.String" />     

@@ -17,6 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.apache.slide.common.SlideException;
 
 import DataBeans.ISiteComponent;
@@ -25,6 +26,8 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoClassWithInfoExecutionDegree;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeCurricularPlanWithDegree;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoEvaluationMethod;
@@ -446,6 +449,8 @@ public class ExecutionCourseSiteComponentBuilder {
         List infoSectionsList = null;
 
         List infoCurricularCourseList = null;
+        List infoCurricularCourseListByDegree = null;
+           
         try {
             // read sections
 
@@ -466,12 +471,14 @@ public class ExecutionCourseSiteComponentBuilder {
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
             infoCurricularCourseList = readCurricularCourses(executionCourse);
+            infoCurricularCourseListByDegree = readCurricularCoursesOrganizedByDegree(executionCourse);
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
         component.setAssociatedDegrees(infoCurricularCourseList);
-        component.setTitle(site.getExecutionCourse().getNome());
+        component.setAssociatedDegreesByDegree(infoCurricularCourseListByDegree);
+        component.setTitle(site.getExecutionCourse().getNome()); 
         component.setMail(site.getMail());
         component.setSections(infoSectionsList);
         InfoExecutionCourse executionCourse;
@@ -913,7 +920,55 @@ public class ExecutionCourseSiteComponentBuilder {
             }
         return infoCurricularCourseList;
     }
-
+    
+    /**
+     * Curricular courses list organized by degree (curricular information in first page).
+     */
+    private List readCurricularCoursesOrganizedByDegree(IExecutionCourse executionCourse) {
+		List infoCurricularCourseScopeList;
+		List infoCurricularCourseList = new ArrayList();	
+		StringBuffer allSiglas = new StringBuffer();
+		
+		if (executionCourse.getAssociatedCurricularCourses() != null) {
+			for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
+				ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
+				.getAssociatedCurricularCourses().get(i);
+				InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
+				infoCurricularCourseScopeList = new ArrayList();
+				for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
+					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
+					.getScopes().get(j);
+					InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
+					infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+				}
+				
+				infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+	
+				String currentSigla = infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();			
+			
+				if (!infoCurricularCourseList.isEmpty() && StringUtils.contains(allSiglas.toString(),currentSigla)) {
+					for (int k = 0; k < infoCurricularCourseList.size(); k++) {
+						String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan) ((InfoCurricularCourse) 
+								((List) infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()).getInfoDegree()).getSigla();
+						if (sigla.equals(currentSigla)) {
+							((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);
+							break;
+						}
+					}
+				} else {
+					List infoCurricularCoursesByDegree = new ArrayList();	
+					infoCurricularCoursesByDegree.add(infoCurricularCourse);
+					infoCurricularCourseList.add(infoCurricularCoursesByDegree);
+					allSiglas.append(currentSigla);
+				}
+			}				
+		}
+		
+		return infoCurricularCourseList;
+	}
+		
+    
+    
     /**
      * @param section
      * @return

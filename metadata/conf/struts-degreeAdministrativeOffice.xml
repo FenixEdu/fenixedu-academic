@@ -88,6 +88,13 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>	
 		
+		<!-- ==================== View Curricular Course Historic ================== -->
+		<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionYearID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>		
+		
 	</form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -234,6 +241,15 @@
 			scope="request"
 			parameter="method"
 			>
+			<exception	type="ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration$NonExistingStudentServiceException"
+				key="error.no.student.found"
+				handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration$NonExistingEnrollmentServiceException"
+				key="error.student.no.current.enrollment"
+				handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration$NonExistingEnrollmentServiceException"
+				key="error.student.activeCurricularPlan.nonExistent"
+				handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			
 			<forward name="prepare" path="df.page.prepareDeclaration"/>
 	       	<forward name="sucess" path="df.page.generateDeclaration"/>
        	</action>
@@ -250,6 +266,27 @@
 			>
 			<forward name="prepare" path="df.page.prepareEnrollmentsDeclaration"/>
 	       	<forward name="sucess" path="df.page.generateEnrollmentsDeclaration"/>
+       	</action>
+       	
+       	
+       	<!-- ==================== View Curricular Course Historic ================== -->
+       	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
+       		name="executionYearDegreeCurricularPlanForm"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		validate="true"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		scope="request"
+       		parameter="method">
+       		<forward name="chooseExecutionYear" path="view-degree-curricular-plan-execution-year"/>
+			<forward name="showActiveCurricularCourses" path="show-active-curricular-scopes"/>
+       	</action>
+
+		<action path="/showCurriculumHistoric"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		scope="request"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		parameter="method">
+       		<forward name="show-report" path="view-curriculum-historic"/>
        	</action>
        	
 	</action-mappings>

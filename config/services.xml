@@ -7926,7 +7926,7 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>
-	<service>
+		<service>
 		<name>ReadNextExecutionPeriod</name>
 		<implementationClass>
 			ServidorAplicacao.Servico.commons.ReadNextExecutionPeriod
@@ -7957,5 +7957,16 @@
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>ReadInfoRegistrationDeclaration</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="DegreeAdministrativeOfficeAuthorization"/>
+		</filterChains>
 	</service>
 </serviceDefinitions>

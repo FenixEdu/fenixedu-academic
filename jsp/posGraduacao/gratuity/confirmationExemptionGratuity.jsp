@@ -41,13 +41,17 @@
 
 <h2><center><bean:message key="message.masterDegree.gratuity.successInsertExemptionGratuity" /></center></h2>
 
-<b><bean:message key="label.exemptionGratuity.value" />:</b>&nbsp;
+<b><bean:message key="label.exemptionGratuity.valuePercentage" />:</b>&nbsp;
 <logic:notEqual name="exemptionGratuity" property="exemptionPercentage" value="-1">
 	<bean:write name="exemptionGratuity" property="exemptionPercentage"/>%		
 </logic:notEqual>
 <logic:equal name="exemptionGratuity" property="exemptionPercentage" value="-1">
 	<bean:write name="exemptionGratuity" property="otherValueExemptionGratuity"/>%		
 </logic:equal>
+<br />
+
+<b><bean:message key="label.exemptionGratuity.valueAdHoc" />:</b>&nbsp;
+<bean:write name="exemptionGratuity" property="exemptionValue"/>&euro;			
 <br />
 
 <b><bean:message key="label.exemptionGratuity.justification" />:</b>&nbsp;

@@ -183,7 +183,7 @@ public final class RenderTimeTableTag extends TagSupport {
                 if (!oddElement) {
                     result.append("<tr>\r\n");
                 }
-                result.append("<td style='vertical-align:top'><b>");
+                result.append("<td width='60px'><b>");
                 result.append(elem.getKey());
                 result.append("</b></td><td  style='vertical-align:top'>-</td><td wrap='wrap'>");
                 result.append(elem.getValue());

@@ -5,7 +5,6 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +19,15 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.student.InfoRegistrationDeclaration;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
-import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 import framework.factory.ServiceManagerServiceFactory;
 
@@ -51,41 +51,21 @@ public class RegistrationDeclaration extends FenixDispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ActionErrors actionErrors = new ActionErrors();
 
-        InfoStudent infoStudent = null;
+        InfoRegistrationDeclaration infoRegistrationDeclaration = null;
 
         DynaActionForm studentForm = (DynaActionForm) form;
         String studentNumber = (String) studentForm.get("studentNumber");
 
         Object args[] = { new Integer(studentNumber), TipoCurso.LICENCIATURA_OBJ };
 
-        infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentByNumberAndDegreeType", args);
+        infoRegistrationDeclaration = (InfoRegistrationDeclaration) ServiceManagerServiceFactory
+                .executeService(userView, "ReadInfoRegistrationDeclaration", args);        
 
-        System.out.println("O info tem: " + infoStudent);
-        if (infoStudent == null) {
-            actionErrors.add("notExistingStudent", new ActionError("error.student.notExist",
-                    studentNumber));
-            saveErrors(request, actionErrors);
-            return prepare(mapping, form, request, response);
-        }
-
-        List scps = (List) ServiceManagerServiceFactory.executeService(userView,
-                "ReadStudentCurricularPlansByNumberAndDegreeType", args);
-
-        InfoStudentCurricularPlan infoSCP = getMostRecentSCP(scps);
-
-        if (infoSCP == null) {
-            actionErrors.add("notExistingActiveSCP", new ActionError("error.student.curricularPlan",
-                    studentNumber));
-            saveErrors(request, actionErrors);
-            return prepare(mapping, form, request, response);
-        }
-
-        String degreeName = infoSCP.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+        String degreeName = infoRegistrationDeclaration.getDegreeName();
 
         final int columnNumber = 73;
 
-        InfoPerson infoPerson = infoStudent.getInfoPerson();
+        InfoPerson infoPerson = infoRegistrationDeclaration.getInfoPerson();
         Calendar calendar = Calendar.getInstance();
 
         String idNumber = infoPerson.getNumeroDocumentoIdentificacao();
@@ -102,9 +82,9 @@ public class RegistrationDeclaration extends FenixDispatchAction {
                 + districtOfBirth.toUpperCase() + " ";
         String partFive = "filho de " + nameOfFather.toUpperCase() + " ";
         String partSix = "e de " + nameOfMother.toUpperCase() + " ";
-        String partSeven = "no ano lectivo " + calendar.get(Calendar.YEAR) + "/"
-                + (calendar.get(Calendar.YEAR) + 1) + " ESTÁ INSCRITO no curso de "
-                + degreeName.toUpperCase() + " deste instituto.";
+        String partSeven = "no ano lectivo "
+                + infoRegistrationDeclaration.getInfoExecutionYear().getYear()
+                + " ESTÁ INSCRITO no curso de " + degreeName.toUpperCase() + " deste instituto.";
         List allMonths = Data.getMonths();
         LabelValueBean label = (LabelValueBean) allMonths.get(calendar.get(Calendar.MONTH) + 1);
         String month = label.getLabel();
@@ -133,24 +113,6 @@ public class RegistrationDeclaration extends FenixDispatchAction {
         request.setAttribute("partEight1", partEight);
 
         return mapping.findForward("sucess");
-    }
-
-    /**
-     * @param scps
-     * @return
-     */
-    private InfoStudentCurricularPlan getMostRecentSCP(List scps) {
-
-        Iterator iterator = scps.iterator();
-        InfoStudentCurricularPlan infoSCP = null;
-        while (iterator.hasNext()) {
-            InfoStudentCurricularPlan tempInfoSCP = (InfoStudentCurricularPlan) iterator.next();
-            if (tempInfoSCP.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ)) {
-                infoSCP = tempInfoSCP;
-                break;
-            }
-        }
-        return infoSCP;
     }
 
     private String completeLine(String line, int columnNumber) {

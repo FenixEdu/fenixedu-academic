@@ -24,12 +24,12 @@
 	</li>
 	<li>
     	<html:link page="<%= "/showExecutionCourseSites.do?method=listSites&amp;degreeOID=" +  request.getAttribute("degreeID") %>" >
-			<bean:message key="label.executionCourseSites"/>
+			<bean:message key="label.courseSites"/>
         </html:link>
 	</li>
 	<li>
     	<html:link page="<%= "/showClasses.do?method=listClasses&amp;degreeOID=" +  request.getAttribute("degreeID") %>" >
-			<bean:message key="label.schedule"/>
+			<bean:message key="label.schedulesByClass"/>
         </html:link>
 	</li>
 	<li>

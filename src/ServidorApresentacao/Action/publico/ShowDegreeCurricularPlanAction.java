@@ -92,12 +92,12 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         /* Criar o bean de anos curricutares */
         List anosCurriculares = new ArrayList();
-        anosCurriculares.add(new LabelValueBean("Todos os anos", ""));
-        anosCurriculares.add(new LabelValueBean("1 º", "1"));
-        anosCurriculares.add(new LabelValueBean("2 º", "2"));
-        anosCurriculares.add(new LabelValueBean("3 º", "3"));
-        anosCurriculares.add(new LabelValueBean("4 º", "4"));
-        anosCurriculares.add(new LabelValueBean("5 º", "5"));
+        anosCurriculares.add(new LabelValueBean("---------", ""));
+        anosCurriculares.add(new LabelValueBean("1", "1"));
+        anosCurriculares.add(new LabelValueBean("2", "2"));
+        anosCurriculares.add(new LabelValueBean("3", "3"));
+        anosCurriculares.add(new LabelValueBean("4", "4"));
+        anosCurriculares.add(new LabelValueBean("5", "5"));
         request.setAttribute("curricularYearList", anosCurriculares);
 
         /* ------------------------------------ */

@@ -80,7 +80,11 @@ public class EditGratuitySituationById implements IService {
             //Update remaining value
             double exemptionValue = gratuitySituation.getTotalValue().doubleValue()
                     * (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
-
+            
+            if(infoGratuitySituation.getExemptionValue() != null){
+                exemptionValue += infoGratuitySituation.getExemptionValue().doubleValue(); 
+            }
+            
             double newRemainingValue = gratuitySituation.getTotalValue().doubleValue() - exemptionValue;
 
             List transactionList = gratuitySituation.getTransactionList();
@@ -124,6 +128,7 @@ public class EditGratuitySituationById implements IService {
 
             gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
             gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
+            gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
             gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
 
             infoGratuitySituation = Cloner

@@ -13,7 +13,7 @@
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
 			<bean:write name="infoDegree" property="sigla" />
 		</html:link>
-		&nbsp;&gt;&nbsp;<bean:message key="label.executionCourseSites"/>		
+		&nbsp;&gt;&nbsp;<bean:message key="label.courseSites"/>		
 	</div>
 
 	<h1>
@@ -23,15 +23,18 @@
 	</h1>
 </logic:present>
 
+<h2 class="greytxt">
+	<bean:message key="label.courseSites"/>		
+</h2>
 
 <ul>
 	<li><a href="#currentSem">
-			<bean:write name="execution_period" property="semester"/><bean:message key="label.ordinal.semester.abbreviation" />
+			<bean:write name="execution_period" property="semester"/><bean:message key="label.ordinal.semester.abbr" />
 			<bean:write name="execution_period" property="infoExecutionYear.year" />
 		</a>
 	</li>
 	<li><a href="#otherSem">
-			<bean:write name="previousInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbreviation" />
+			<bean:write name="previousInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbr" />
 			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />
 		</a>
 	</li>
@@ -41,7 +44,7 @@
 <table class="tab_lay" cellspacing="0" width="90%">
 	<tr>
 		<th colspan="2" scope="col">
-			<bean:write name="execution_period" property="semester"/><bean:message key="label.ordinal.semester.abbreviation" />
+			<bean:write name="execution_period" property="semester"/><bean:message key="label.ordinal.semester.abbr" />
 			<bean:write name="execution_period" property="infoExecutionYear.year" />
 		</th>
 	</tr>
@@ -132,7 +135,7 @@
 <table class="tab_lay" cellspacing="0" width="90%">
 	<tr>
 		<th colspan="2" scope="col">
-			<bean:write name="previousInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbreviation" />
+			<bean:write name="previousInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbr" />
 			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />
 		</th>
 	</tr>

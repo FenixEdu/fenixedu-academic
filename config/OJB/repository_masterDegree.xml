@@ -1527,6 +1527,11 @@
    		jdbc-type="INTEGER"   		
    	/>
    	<field-descriptor
+   		name="exemptionValue"
+   		column="EXEMPTION_VALUE"
+   		jdbc-type="DOUBLE"   		
+   	/>   	
+   	<field-descriptor
    		name="exemptionType"
    		column="EXEMPTION_TYPE"
    		jdbc-type="INTEGER"   	

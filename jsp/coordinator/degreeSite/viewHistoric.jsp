@@ -6,7 +6,7 @@
 <p><span class="error"><html:errors/></span></p>
 
 <h2>
-<bean:message key="label.historic" />&nbsp;<bean:message key="label.the" />&nbsp;<bean:message key="label.site" />&nbsp;<bean:message key="label.the" />&nbsp;<bean:message key="label.degree" />&nbsp;
+<bean:message key="label.historic" />&nbsp;<bean:message key="label.of" />&nbsp;<bean:message key="label.site" />&nbsp;<bean:message key="label.of" />&nbsp;<bean:message key="label.degree" />&nbsp;
 </h2>
 
 <logic:present name="infoExecutionDegrees">
@@ -14,7 +14,7 @@
 	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="idInternal" />
 	<p>
 		<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + pageContext.findAttribute("executionDegreeID") %>" target="_blank">
-			<bean:message key="link.coordinator.degreeSite.viewSite" />&nbsp;<bean:message key="label.the" />&nbsp;<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
+			<bean:message key="link.coordinator.degreeSite.viewSite" />&nbsp;<bean:message key="label.of" />&nbsp;<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
 		</html:link>
 	</p>
 </logic:iterate>

@@ -23,6 +23,8 @@ public interface IGratuitySituation extends IDomainObject {
 
     public Integer getExemptionPercentage();
 
+    public Double getExemptionValue();
+
     public ExemptionGratuityType getExemptionType();
 
     public String getExemptionDescription();
@@ -42,6 +44,8 @@ public interface IGratuitySituation extends IDomainObject {
     public void setTotalValue(Double totalValue);
 
     public void setExemptionPercentage(Integer exemptionPercentage);
+
+    public void setExemptionValue(Double exemptionValue);
 
     public void setExemptionType(ExemptionGratuityType exemptionType);
 

@@ -3,16 +3,19 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-		<definition name="definition.publico.executionCourseSitePage" 
+	<definition name="definition.publico.executionCourseSitePage" 
 		controllerClass="ServidorApresentacao.tiles.controller.PublicTilesComponentController" 
 		page="/publicGesDisLayout_2col.jsp" >
 		<put name="title" value="" />	
 	  	<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+		<put name="lateral_nav" value="/publico/executionCourseLateralNav.jsp"/>
+		<!--<put name="curricular_nav" value="/publico/executionCourseCurricularNav.jsp"/>-->
 	 	<put name="executionCourseName" value="/publico/executionCourseName.jsp"/>
- 		<put name="degrees" value="/publico/associatedDegrees.jsp" />
+		<put name="executionCoursePeriod" value="/publico/executionCoursePeriod.jsp"/>
 	 	<put name="body" value=""/>
-		<put name="navbar" value="/publico/gesdisNavbar.jsp"/>
-  		<put name="footer" value="/publico/commonFooterPub.jsp" />
+		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	
 	<definition name="definition.publico.executionCourseSitePage1" 

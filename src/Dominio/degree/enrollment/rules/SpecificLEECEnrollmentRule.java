@@ -1,10 +1,13 @@
 package Dominio.degree.enrollment.rules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -88,7 +91,7 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
 
         creditsInAnySecundaryArea = getGivenCreditsInAnySecundaryArea(studentCurricularPlan);
 
-        List allCurricularCourses = getSpecializationAndSecundaryAreaCurricularCourses(studentCurricularPlan);
+        Collection allCurricularCourses = getSpecializationAndSecundaryAreaCurricularCourses(studentCurricularPlan);
 
         List specializationAndSecundaryAreaCurricularCoursesToCountForCredits = getSpecializationAndSecundaryAreaCurricularCoursesToCountForCredits(allCurricularCourses);
 
@@ -173,7 +176,7 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
     }
 
     private List getSpecializationAndSecundaryAreaCurricularCoursesToCountForCredits(
-            List allCurricularCourses) {
+            Collection allCurricularCourses) {
 
         return (List) CollectionUtils.select(allCurricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
@@ -769,16 +772,22 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         return curricularCoursesFromCommonAreas;
     }
 
-    private List getSpecializationAndSecundaryAreaCurricularCourses(
+    private Collection getSpecializationAndSecundaryAreaCurricularCourses(
             IStudentCurricularPlan studentCurricularPlan) {
 
         List specializationAreaCurricularCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
         List secundaryAreaCurricularCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
 
-        List allCurricularCourses = new ArrayList();
-        allCurricularCourses.addAll(specializationAreaCurricularCourses);
-        allCurricularCourses.addAll(secundaryAreaCurricularCourses);
-        return allCurricularCourses;
+        Set set = new HashSet();
+        set.addAll(specializationAreaCurricularCourses);
+        set.addAll(secundaryAreaCurricularCourses);
+
+//        List allCurricularCourses = new ArrayList();
+//        allCurricularCourses.addAll(specializationAreaCurricularCourses);   
+//        allCurricularCourses.addAll(secundaryAreaCurricularCourses);
+//        return allCurricularCourses;
+
+        return set;
     }
 
     private List getSpecializationAreaCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {

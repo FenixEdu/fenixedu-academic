@@ -27,6 +27,8 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
 
     private List associatedDegrees;
 
+    private List associatedDegreesByDegree;
+    
     // in reality the associatedDegrees list is a list of curricular courses
 
     public boolean equals(Object objectToCompare) {
@@ -163,4 +165,17 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
         executionCourse = course;
     }
 
+
+	/**
+	 * @return Returns the associatedDegreesByDegree.
+	 */
+	public List getAssociatedDegreesByDegree() {
+		return associatedDegreesByDegree;
+	}
+	/**
+	 * @param associatedDegreesByDegree The associatedDegreesByDegree to set.
+	 */
+	public void setAssociatedDegreesByDegree(List associatedDegreesByDegree) {
+		this.associatedDegreesByDegree = associatedDegreesByDegree;
+	}
 }

@@ -6,54 +6,74 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <html:html xhtml="true">
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="<%= request.getContextPath() %>/CSS/exam_map.css" rel="stylesheet" type="text/css" />
-<logic:present name="<%=SessionConstants.INFO_SITE %>" property="style">
-<bean:define id="style" name="<%=SessionConstants.INFO_SITE %>" property="style"/>	
-<link href="<%= request.getContextPath()+ "/CSS/" + pageContext.findAttribute("style") %>" rel="stylesheet" type="text/css" />	
-</logic:present>
-<logic:notPresent name="<%=SessionConstants.INFO_SITE %>" property="style">
-<link href="<%= request.getContextPath() %>/CSS/gesdis-web.css" rel="stylesheet" type="text/css" />	
-</logic:notPresent>		
 
-<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
-<link href="<%= request.getContextPath() %>/CSS/gesdis-print.css" rel="stylesheet" media="print" type="text/css" />	
-<script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
-<title><tiles:getAsString name="title" ignore="true" /></title>
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
+<link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/print.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/execution_course.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/exam_map.css" />
+
+	
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
+
+<title><tiles:getAsString name="title" ignore="true" /></title> <%-- TITLE --%>
 </head>
+
 <body>
-<%-- Layout component parameters : header, navLocal, body --%>
-<!-- Navbar Lateral e Body Content -->
-<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
-   <tr>
-     <td id="barraist"><a href="http://www.ist.utl.pt"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></a>
-	</td>
-    <td id="principal" width="100%">
-      <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324" height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
-	  <div id="invisible"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
-      <div id="invisible"><tiles:insert attribute="degrees" ignore="true" /></div>
-      <h1><tiles:insert attribute="executionCourseName" ignore="true"/></h1>
-      <br />
-	  <tiles:insert attribute="body" />      
-    </td>	
-    <td id="barranav" bgcolor="#EBEFFA" valign="top">
-      <div id="nav">
-      <tiles:insert attribute="navbarGeral" ignore="true"/>	
-      <tiles:insert attribute="navbar" ignore="true"/>	
-      </div>
-    </td>
-  </tr>
+<!-- BEGIN BROWSER UPGRADE MESSAGE -->
+<div class="browser_upgrade">
+  <p><strong>Aviso:</strong>
+  Se est&aacute; a ler esta mensagem, provavelmente, o browser que utiliza n&atilde;o &eacute; compat&iacute;vel
+  com os &quot;standards&quot; recomendados pela <a href="http://www.w3.org">W3C</a>.
+  Sugerimos vivamente que actualize o seu browser para ter uma melhor experi&ecirc;ncia
+  de utiliza&ccedil;&atilde;o deste &quot;website&quot;.
+  Mais informa&ccedil;&otilde;es em <a href="http://www.webstandards.org/upgrade/">webstandards.org</a>.</p>
+  <p><strong>Warning:</strong> If you are reading this message, probably, your
+    browser is not compliant with the standards recommended by the <a href="http://www.w3.org">W3C</a>. We suggest
+    that you upgrade your browser to enjoy a better user experience of this website.
+    More informations on <a href="http://www.webstandards.org/upgrade/">webstandards.org</a>.</p>
+</div>
+<!-- END BROWSER UPGRADE MESSAGE -->
+
+<!-- SYMBOLSROW -->
+<div id="header">
+	<tiles:insert attribute="symbols_row" ignore="true"/>
+</div>
+
+<!-- PROFILE NAVIGATION -->
+<div id="perfnav">
+	<tiles:insert attribute="profile_navigation" ignore="true"/>
+</div>
+
+<div id="holder">
+<table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td id="latnav_container" width="155px" nowrap="nowrap">
+<!-- LATERAL NAVIGATION -->   
+<div id="latnav">
+	<tiles:insert attribute="lateral_nav" ignore="true"/>	
+</div>
+</td>
+
+<!-- DEGREE SITE -->
+<td width="100%" colspan="3" id="main">
+	<tiles:insert attribute="executionCourseName" ignore="true"/>
+	<tiles:insert attribute="executionCoursePeriod" ignore="true"/>
+	<!-- CONTEXTUAL NAVIGATION -->
+	<tiles:insert attribute="body" ignore="true"/>
+</td>
+
+</tr>
 </table>
-<!--End Navbar Lateral e Body Content -->
-<!-- Footer -->
-<%-- <table width="100%%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="footer"><tiles:insert attribute="footer" ignore="true"/>
-    </td>
-  </tr>
-</table> --%>
-<!--End Footer -->
+</div>
+
+
+<!-- FOOTER --> 
+<div id="footer">
+<tiles:insert attribute="footer" ignore="true"/>
+</div>
 </body>
 </html:html>
-

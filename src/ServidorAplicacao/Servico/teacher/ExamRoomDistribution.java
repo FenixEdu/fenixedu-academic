@@ -67,11 +67,14 @@ public class ExamRoomDistribution implements IService {
 
             if (!enrolledStudents.booleanValue() || exam.getEnrollmentEndDay() == null) {
                 Calendar examDay = exam.getDay();
+                Calendar examTime = exam.getBeginning();
+
+                Calendar examStartInstant = constructCalendarInstance(examDay, examTime); 
                 Calendar today = Calendar.getInstance();
                 //                Calendar twoWeeksBeforeExam = (Calendar) examDay.clone();
                 //                twoWeeksBeforeExam.add(Calendar.DATE, -14);
 
-                if (today.after(examDay)) {
+                if (today.after(examStartInstant)) {
                     throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
                 }
 
@@ -99,9 +102,11 @@ public class ExamRoomDistribution implements IService {
                 endEnrollmentDay.roll(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));
 
                 Calendar examDay = exam.getDay();
+                Calendar examTime = exam.getBeginning();
+                Calendar examStartInstant = constructCalendarInstance(examDay, examTime); 
                 Calendar today = Calendar.getInstance();
 
-                if (today.after(examDay) || today.before(endEnrollmentDay)) {
+                if (today.after(examStartInstant) || today.before(endEnrollmentDay)) {
                     throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
                 }
 
@@ -165,6 +170,17 @@ public class ExamRoomDistribution implements IService {
         }
 
         return result;
+    }
+
+    protected Calendar constructCalendarInstance(Calendar day, Calendar time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, day.get(Calendar.YEAR));
+        calendar.set(Calendar.MONTH, day.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, day.get(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, time.get(Calendar.SECOND));
+        return calendar;
     }
 
     /**
