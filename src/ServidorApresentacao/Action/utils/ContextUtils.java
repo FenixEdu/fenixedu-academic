@@ -37,9 +37,11 @@ public class ContextUtils {
 			executionPeriodOIDString =
 				request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
 		}
-		
+
 		Integer executionPeriodOID = null;
-		if (executionPeriodOIDString != null) {
+		if (executionPeriodOIDString != null
+			&& !executionPeriodOIDString.equals("")
+			&& !executionPeriodOIDString.equals("null")) {
 			executionPeriodOID = new Integer(executionPeriodOIDString);
 		}
 
@@ -58,7 +60,8 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("## executionPeriodOID nao em lado nenhum, vai ler current");				
+			System.out.println(
+				"## executionPeriodOID nao em lado nenhum, vai ler current");
 			// Read current execution period from database
 			try {
 				infoExecutionPeriod =
@@ -70,11 +73,22 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 		}
-		// Place it in request
-		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
-		System.out.println("### ExecutionPeriod in request- "+infoExecutionPeriod);
-		System.out.println("### setExecutionPeriodContext - OUT");		
+
+		if (infoExecutionPeriod != null) {
+			// Place it in request
+			request.setAttribute(
+				SessionConstants.EXECUTION_PERIOD,
+				infoExecutionPeriod);
+			request.setAttribute(
+				SessionConstants.EXECUTION_PERIOD_OID,
+				infoExecutionPeriod.getIdInternal().toString());
+			System.out.println(
+				"### ExecutionPeriod in request- " + infoExecutionPeriod);
+			System.out.println("### setExecutionPeriodContext - OUT");
+		} else {
+			System.out.println(
+				"#### Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");
+		}
 	}
 
 	/**
@@ -84,11 +98,13 @@ public class ContextUtils {
 		String executionDegreeOIDString =
 			(String) request.getAttribute(
 				SessionConstants.EXECUTION_DEGREE_OID);
-		System.out.println("ExecutionDegree from request: " + executionDegreeOIDString);
+		System.out.println(
+			"ExecutionDegree from request: " + executionDegreeOIDString);
 		if (executionDegreeOIDString == null) {
 			executionDegreeOIDString =
 				request.getParameter(SessionConstants.EXECUTION_DEGREE_OID);
-			System.out.println("ExecutionDegree from parameter: " + executionDegreeOIDString);
+			System.out.println(
+				"ExecutionDegree from parameter: " + executionDegreeOIDString);
 		}
 
 		Integer executionDegreeOID = null;
@@ -123,13 +139,14 @@ public class ContextUtils {
 	 */
 	public static void setCurricularYearContext(HttpServletRequest request) {
 		String curricularYearOIDString =
-			(String) request.getAttribute(
-				SessionConstants.CURRICULAR_YEAR_OID);
-		System.out.println("Curricular Year from request: " + curricularYearOIDString);
+			(String) request.getAttribute(SessionConstants.CURRICULAR_YEAR_OID);
+		System.out.println(
+			"Curricular Year from request: " + curricularYearOIDString);
 		if (curricularYearOIDString == null) {
 			curricularYearOIDString =
 				request.getParameter(SessionConstants.CURRICULAR_YEAR_OID);
-			System.out.println("Curricular Year from parameter: " + curricularYearOIDString);
+			System.out.println(
+				"Curricular Year from parameter: " + curricularYearOIDString);
 		}
 
 		Integer curricularYearOID = null;
@@ -166,11 +183,13 @@ public class ContextUtils {
 		String executionCourseOIDString =
 			(String) request.getAttribute(
 				SessionConstants.EXECUTION_COURSE_OID);
-		System.out.println("ExecutionCourse from request: " + executionCourseOIDString);
+		System.out.println(
+			"ExecutionCourse from request: " + executionCourseOIDString);
 		if (executionCourseOIDString == null) {
 			executionCourseOIDString =
 				request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
-			System.out.println("ExecutionCourse from parameter: " + executionCourseOIDString);
+			System.out.println(
+				"ExecutionCourse from parameter: " + executionCourseOIDString);
 		}
 
 		Integer executionCourseOID = null;
@@ -205,12 +224,10 @@ public class ContextUtils {
 	 */
 	public static void setShiftContext(HttpServletRequest request) {
 		String shiftOIDString =
-			(String) request.getAttribute(
-				SessionConstants.SHIFT_OID);
+			(String) request.getAttribute(SessionConstants.SHIFT_OID);
 		System.out.println("Shift from request: " + shiftOIDString);
 		if (shiftOIDString == null) {
-			shiftOIDString =
-				request.getParameter(SessionConstants.SHIFT_OID);
+			shiftOIDString = request.getParameter(SessionConstants.SHIFT_OID);
 			System.out.println("Shift from parameter: " + shiftOIDString);
 		}
 
@@ -235,27 +252,32 @@ public class ContextUtils {
 			}
 
 			// Place it in request
-			request.setAttribute(
-				SessionConstants.SHIFT,
-				infoShift);
+			request.setAttribute(SessionConstants.SHIFT, infoShift);
 		}
 	}
 
-	
 	public static void setSelectedRoomsContext(HttpServletRequest request)
 		throws FenixActionException {
-//		System.out.println("### setSelectedRoomsContext - IN");
+		//		System.out.println("### setSelectedRoomsContext - IN");
 		GestorServicos gestor = GestorServicos.manager();
-	
+
 		Object argsSelectRooms[] =
 			{
 				 new InfoRoom(
 					readRequestValue(request, "selectRoomCriteria_Name"),
 					readRequestValue(request, "selectRoomCriteria_Building"),
-					readIntegerRequestValue(request, "selectRoomCriteria_Floor"),
-					readTypeRoomRequestValue(request, "selectRoomCriteria_Type"),
-					readIntegerRequestValue(request, "selectRoomCriteria_CapacityNormal"),
-					readIntegerRequestValue(request, "selectRoomCriteria_CapacityExame"))};
+					readIntegerRequestValue(
+						request,
+						"selectRoomCriteria_Floor"),
+					readTypeRoomRequestValue(
+						request,
+						"selectRoomCriteria_Type"),
+					readIntegerRequestValue(
+						request,
+						"selectRoomCriteria_CapacityNormal"),
+					readIntegerRequestValue(
+						request,
+						"selectRoomCriteria_CapacityExame"))};
 
 		List selectedRooms = null;
 		try {
@@ -267,27 +289,39 @@ public class ContextUtils {
 		if (selectedRooms != null && !selectedRooms.isEmpty()) {
 			Collections.sort(selectedRooms);
 		}
-		request.setAttribute(SessionConstants.SELECTED_ROOMS,selectedRooms);
+		request.setAttribute(SessionConstants.SELECTED_ROOMS, selectedRooms);
 
 		setRoomSearchCriteriaContext(request);
-		
-//		System.out.println("### setSelectedRoomsContext - OUT");
+
+		//		System.out.println("### setSelectedRoomsContext - OUT");
 	}
-		
+
 	/**
 	 * @param request
 	 */
 	private static void setRoomSearchCriteriaContext(HttpServletRequest request) {
-//		System.out.println("### setRoomSearchCriteriaContext - IN");
+		//		System.out.println("### setRoomSearchCriteriaContext - IN");
 
-		request.setAttribute("selectRoomCriteria_Name", readRequestValue(request, "selectRoomCriteria_Name"));
-		request.setAttribute("selectRoomCriteria_Building", readRequestValue(request, "selectRoomCriteria_Building"));
-		request.setAttribute("selectRoomCriteria_Floor", readRequestValue(request, "selectRoomCriteria_Floor"));
-		request.setAttribute("selectRoomCriteria_Type", readRequestValue(request, "selectRoomCriteria_Type"));
-		request.setAttribute("selectRoomCriteria_CapacityNormal",readRequestValue(request, "selectRoomCriteria_CapacityNormal"));
-		request.setAttribute("selectRoomCriteria_CapacityExame",readRequestValue(request, "selectRoomCriteria_CapacityExame"));
+		request.setAttribute(
+			"selectRoomCriteria_Name",
+			readRequestValue(request, "selectRoomCriteria_Name"));
+		request.setAttribute(
+			"selectRoomCriteria_Building",
+			readRequestValue(request, "selectRoomCriteria_Building"));
+		request.setAttribute(
+			"selectRoomCriteria_Floor",
+			readRequestValue(request, "selectRoomCriteria_Floor"));
+		request.setAttribute(
+			"selectRoomCriteria_Type",
+			readRequestValue(request, "selectRoomCriteria_Type"));
+		request.setAttribute(
+			"selectRoomCriteria_CapacityNormal",
+			readRequestValue(request, "selectRoomCriteria_CapacityNormal"));
+		request.setAttribute(
+			"selectRoomCriteria_CapacityExame",
+			readRequestValue(request, "selectRoomCriteria_CapacityExame"));
 
-//		System.out.println("### setRoomSearchCriteriaContext - OUT");		
+		//		System.out.println("### setRoomSearchCriteriaContext - OUT");		
 	}
 
 	/**
@@ -295,31 +329,35 @@ public class ContextUtils {
 	 */
 	public static void setSelectedRoomIndexContext(HttpServletRequest request) {
 		String selectedRoomIndexString =
-			(String) request.getAttribute(
-				SessionConstants.SELECTED_ROOM_INDEX);
-		System.out.println("SelectedRoomIndex from request: " + selectedRoomIndexString);
+			(String) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
+		System.out.println(
+			"SelectedRoomIndex from request: " + selectedRoomIndexString);
 		if (selectedRoomIndexString == null) {
 			selectedRoomIndexString =
 				request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
-			System.out.println("SelectedRoomIndexString from parameter: " + selectedRoomIndexString);
+			System.out.println(
+				"SelectedRoomIndexString from parameter: "
+					+ selectedRoomIndexString);
 		}
 
 		Integer selectedRoomIndex = null;
 		if (selectedRoomIndexString != null) {
-			selectedRoomIndex = new Integer(selectedRoomIndexString); 
+			selectedRoomIndex = new Integer(selectedRoomIndexString);
 			// Place it in request
-			request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);			
-		}
-		else {
+			request.setAttribute(
+				SessionConstants.SELECTED_ROOM_INDEX,
+				selectedRoomIndex);
+		} else {
 			System.out.println("ERROR: Missing selectedRoomIndex in request");
 		}
 	}
 
-
-// -------------------------------------------------------------------------------
-// Read from request utils
-// -------------------------------------------------------------------------------
-	private static String readRequestValue(HttpServletRequest request, String name) {
+	// -------------------------------------------------------------------------------
+	// Read from request utils
+	// -------------------------------------------------------------------------------
+	private static String readRequestValue(
+		HttpServletRequest request,
+		String name) {
 		String obj = null;
 		if (((String) request.getAttribute(name)) != null
 			&& !((String) request.getAttribute(name)).equals(""))
@@ -329,16 +367,16 @@ public class ContextUtils {
 				&& !request.getParameter(name).equals("")
 				&& !request.getParameter(name).equals("null"))
 			obj = (String) request.getParameter(name);
-			
+
 		if (obj != null) {
 			System.out.println(name + " in request: " + obj);
-		}
-		else {
-			System.out.println("ERROR: Missing (or null) " + name +" in request");
+		} else {
+			System.out.println(
+				"ERROR: Missing (or null) " + name + " in request");
 		}
 		return obj;
 	}
-	
+
 	private static Integer readIntegerRequestValue(
 		HttpServletRequest request,
 		String name) {
@@ -357,5 +395,5 @@ public class ContextUtils {
 			return new TipoSala(obj);
 		else
 			return null;
-	}	
+	}
 }
