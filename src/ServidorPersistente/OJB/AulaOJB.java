@@ -61,6 +61,10 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 	}
 
 	public void lockWrite(IAula aula) throws ExcepcaoPersistencia {
+		// read lesson
+		// if (llesson not in database) then write it
+		// else if (lesson is mapped to the database then write any existing changes)
+		// else throw an AlreadyExists exception.
 		super.lockWrite(aula);
 	}
 
