@@ -11,7 +11,7 @@
 
    <span class="error"><html:errors/></span>
 
-    <bean:define id="versionList" name="<%= SessionConstants.GUIDE_LIST %>" scope="request" />
+    <bean:define id="versionList" name="<%= SessionConstants.GUIDE_LIST %>" scope="session" />
     <bean:define id="guideNumber" name="<%= SessionConstants.GUIDE_NUMBER%>" scope="request" />
     <bean:define id="guideYear" name="<%= SessionConstants.GUIDE_YEAR %>" scope="request" />
     

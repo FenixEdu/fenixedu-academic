@@ -51,6 +51,7 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 			DynaActionForm chooseGuide = (DynaActionForm) form;
 			
 			session.removeAttribute(SessionConstants.GUIDE);
+			session.removeAttribute(SessionConstants.GUIDE_LIST);
 			
 			if (action.equals("visualize")) {
 				session.setAttribute(SessionConstants.ACTION, "label.action.visualizeGuide");
@@ -98,13 +99,13 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 				throw new NonExistingActionException("A Guia", e);
 			}
 
+			session.setAttribute(SessionConstants.GUIDE_LIST, result);
 			if (result.size() == 1) {
 
 				request.setAttribute(SessionConstants.GUIDE, result.get(0));
 				return mapping.findForward("ActionReady");
 			}
 
-			request.setAttribute(SessionConstants.GUIDE_LIST, result);
 			request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
 			request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
 		  
@@ -138,6 +139,7 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 			Object args[] = { guideNumber, guideYear , guideVersion };
 	  
 			InfoGuide infoGuide = null;
+
 			try {
 				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
 			} catch (NonExistingServiceException e) {

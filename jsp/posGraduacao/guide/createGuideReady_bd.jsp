@@ -93,6 +93,7 @@
        </tr>
 	</table>
 
+<%--
 
 	<bean:message key="label.masterDegree.administrativeOffice.payment"/><br>
        <!-- Payment Type -->
@@ -101,6 +102,11 @@
     		<html:radio property="paymentType" value="<%= (new Integer(i)).toString() %>" /> <bean:write name="payment" /><br>
 		<% i++; %>
     	</logic:iterate>
+--%>    	
+    <bean:message key="label.masterDegree.administrativeOffice.payment" />
+    <html:select property="paymentType">
+	    <html:options collection="<%= SessionConstants.PAYMENT_TYPE %>" property="value" labelProperty="label" />
+    </html:select>     
 
    <html:submit property="Criar">Criar Guia</html:submit>
       </html:form>

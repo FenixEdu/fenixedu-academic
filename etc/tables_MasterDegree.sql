@@ -65,6 +65,7 @@ create table GUIDE (
    PAYMENT_TYPE integer(11),
    CREATION_DATE date not null,
    VERSION integer(11) not null default '1',
+   PAYMENT_DATE date,
    primary key (ID_INTERNAL),
    unique u1 (NUMBER, YEAR, VERSION))
    type=InnoDB;

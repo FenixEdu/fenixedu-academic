@@ -30,10 +30,10 @@ public class Contributor implements IContributor{
 	
 	public boolean equals(Object o) {
 		return
-		((o instanceof Contributor) &&
-		(contributorNumber.equals(((Contributor)o).getContributorNumber())) &&
-		(contributorName.equals(((Contributor)o).getContributorName())) &&
-		(contributorAddress.equals(((Contributor)o).getContributorAddress())));
+		((o instanceof IContributor) &&
+		(contributorNumber.equals(((IContributor)o).getContributorNumber())) &&
+		(contributorName.equals(((IContributor)o).getContributorName())) &&
+		(contributorAddress.equals(((IContributor)o).getContributorAddress())));
 
 	}
 

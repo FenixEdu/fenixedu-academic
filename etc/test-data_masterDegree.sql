@@ -30,10 +30,10 @@ INSERT INTO CONTRIBUTOR values (2, 456, 'Nome2', 'Morada2');
 #-----------------------------
 DELETE FROM GUIDE;
 DELETE FROM GUIDE;
-INSERT INTO GUIDE values (1, 1, 2003, 1, 6, 50.02, 'guia1', 1, 10, 1, '2003-4-4', 1);
-INSERT INTO GUIDE values (2, 2, 2003, 1, 6, 25, 'guia2', 1, 10, 2, '2003-4-3', 1);
-INSERT INTO GUIDE values (3, 1, 2002, 2, 6, 45, 'guia3', 1, 10, 1, '2003-4-1', 1);
-INSERT INTO GUIDE values (4, 1, 2002, 1, 6, 66, 'guia1', 1, 10, 1, '2003-4-5', 2);
+INSERT INTO GUIDE values (1, 1, 2003, 1, 6, 50.02, 'guia1', 1, 10, 1, '2003-4-4', 1, '2003-4-4');
+INSERT INTO GUIDE values (2, 2, 2003, 1, 6, 25, 'guia2', 1, 10, 2, '2003-4-3', 1, '2003-4-4');
+INSERT INTO GUIDE values (3, 1, 2002, 2, 6, 45, 'guia3', 1, 10, 1, '2003-4-1', 1, '2003-4-4');
+INSERT INTO GUIDE values (4, 1, 2002, 1, 6, 66, 'guia1', 1, 10, 1, '2003-4-5', 2, '2003-4-4');
 
 
 #-----------------------------

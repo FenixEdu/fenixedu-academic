@@ -80,11 +80,6 @@ public class PrintGuideDispatchAction extends DispatchAction {
 
 	}
 		
-public static void main(String args[]) {
-	
-	
-	
-}
 
 
 	  

@@ -103,6 +103,8 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getCreationDate().toString(), "2003-04-04");
 			assertEquals(guide.getVersion(), new Integer(1));
 			
+			assertEquals(guide.getPaymentDate().toString(), "2003-04-04");
+			
 			guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(2), new Integer(2003), new Integer(1));
 			assertNotNull(guide);
 					
@@ -111,7 +113,7 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getPerson(), person);
 			assertEquals(guide.getContributor(), contributor);
 			assertEquals(guide.getRemarks(), "guia2");
-			assertEquals(guide.getTotal(), new Double(400.04));
+			assertEquals(guide.getTotal(), new Double(25.0));
 			assertEquals(guide.getExecutionDegree(), executionDegree);
 			
 			assertEquals(guide.getGuideEntries().size(), 2);
@@ -120,7 +122,7 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getPaymentType(), PaymentType.ATM_TYPE);
 			assertEquals(guide.getCreationDate().toString(), "2003-04-03");
 			assertEquals(guide.getVersion(), new Integer(1));
-					
+
 
 			guide = persistentGuide.readByNumberAndYearAndVersion(new Integer(5), new Integer(2003), new Integer(1));
 			assertNull(guide);
@@ -213,10 +215,9 @@ public class GuideOJBTest extends TestCaseOJB {
 				IGuide guideBD = persistentGuide.readByNumberAndYearAndVersion(new Integer(2), new Integer(2000), new Integer(2));
 
 				assertNotNull(guideBD);
-
 				assertEquals(guideBD.getRemarks(), guide.getRemarks());
 				assertEquals(guideBD.getTotal(), guide.getTotal());
-				assertEquals(guideBD.getContributor(), guide.getContributor());
+				assertTrue(guideBD.getContributor().equals(guide.getContributor()));
 				assertEquals(guideBD.getPerson(), guide.getPerson());
 				assertEquals(guideBD.getNumber(), guide.getNumber());
 				assertEquals(guideBD.getYear(), guide.getYear());

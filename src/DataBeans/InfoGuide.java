@@ -32,6 +32,8 @@ public class InfoGuide implements Serializable{
 	private Date creationDate;
 	private Integer version;
 	private List infoGuideSituations;
+	private InfoGuideSituation infoGuideSituation;
+	private Date paymentDate;
 
 	public InfoGuide() {}
 	 
@@ -77,6 +79,8 @@ public class InfoGuide implements Serializable{
 	  result += ", paymentType=" + paymentType;
 	  result += ", creationDate=" + creationDate;
 	  result += ", version=" + version;
+	  result += ", infoGuideSituation=" + infoGuideSituation;
+	  result += ", payment Date=" + paymentDate;
 	  result += "]";
 	  return result;
 	}
@@ -265,6 +269,34 @@ public class InfoGuide implements Serializable{
 	 */
 	public void setInfoGuideSituations(List list) {
 		infoGuideSituations = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoGuideSituation getInfoGuideSituation() {
+		return infoGuideSituation;
+	}
+
+	/**
+	 * @param situation
+	 */
+	public void setInfoGuideSituation(InfoGuideSituation situation) {
+		infoGuideSituation = situation;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+
+	/**
+	 * @param date
+	 */
+	public void setPaymentDate(Date date) {
+		paymentDate = date;
 	}
 
 }

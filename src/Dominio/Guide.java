@@ -28,6 +28,7 @@ public class Guide implements IGuide {
   protected ICursoExecucao executionDegree;
   protected PaymentType paymentType;
   protected Date creationDate;
+  protected Date paymentDate;
   protected Integer version;  
     
   protected GuideRequester guideRequester;
@@ -78,6 +79,7 @@ public class Guide implements IGuide {
 	result += ", payment Type=" + paymentType;
 	result += ", creation Date=" + creationDate;
 	result += ", version=" + version;
+	result += ", payment Date=" + paymentDate;
     result += "]";
     return result;
   }
@@ -322,6 +324,20 @@ public class Guide implements IGuide {
 	 */
 	public void setVersion(Integer integer) {
 		version = integer;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+	
+	/**
+	 * @param date
+	 */
+	public void setPaymentDate(Date date) {
+		paymentDate = date;
 	}
 
 }

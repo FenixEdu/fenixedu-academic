@@ -158,6 +158,22 @@
         	<form-property name="situation" type="java.lang.String" />
       </form-bean>
 
+
+	  <!-- Bean to Change the Guide Situation  -->
+      <form-bean name="editGuideForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="remarks" type="java.lang.String" />
+        	<form-property name="guideSituation" type="java.lang.String" />
+        	<form-property name="paymentType" type="java.lang.Integer" />
+        	<form-property name="paymentDateDay" type="java.lang.String" />
+        	<form-property name="paymentDateMonth" type="java.lang.String" />
+			<form-property name="paymentDateYear" type="java.lang.String" />
+      </form-bean>
+
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -308,8 +324,6 @@
       	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
       </action>
 
-      <!-- action to prepare a creation of a guide -->
-
       <!-- action to visualize Contributors -->
       <action attribute="chooseContributorForm"
       		  input="/contributor/chooseContributor.jsp"
@@ -392,39 +406,21 @@
       </action>
 
 
-      <!-- action to choose a guide -->
-      <action attribute="chooseGuideForm"
-      		  input="/guide/chooseGuide.jsp"
-      	      name="chooseGuideForm"
-		      path="/changeGuideDispatchAction"
-		      parameter="method"
-		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
-              validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-	         <forward name="PrepareReady" path="/guide/chooseGuide.jsp"/> 
-	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
-	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
-      </action>
-
-
 
 	  <!-- Action to Edit ONE Guide -->
       <action attribute="editGuideForm"
       		  input="/guide/editGuide.jsp"
       	      name="editGuideForm"
-		      path="/editContributor"
+		      path="/editGuideSituation"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-	         <forward name="EditReady" path="/guide/editContributor.jsp"/>  
-	         <forward name="EditSuccess" path="/guide/editContributorSuccess.jsp"/>  
+	         <forward name="EditReady" path="/guide/editGuideSituation.jsp"/>  
+	         <forward name="EditSuccess" path="/guide/editGuideSituationSuccess.jsp"/>  
       </action>
 
 

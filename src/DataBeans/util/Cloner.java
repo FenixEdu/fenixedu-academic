@@ -3,8 +3,12 @@ package DataBeans.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 
 import org.apache.commons.beanutils.BeanUtils;
+
+import Util.SituationOfGuide;
+import Util.State;
 
 import DataBeans.InfoBranch;
 import DataBeans.InfoCandidateSituation;
@@ -1091,7 +1095,15 @@ public abstract class Cloner {
 		if (guide.getGuideSituations() != null) {
 			Iterator iterator = guide.getGuideSituations().iterator();
 			while (iterator.hasNext()) {
-				infoGuideSituations.add(Cloner.copyIGuideSituation2InfoGuideSituation((IGuideSituation) iterator.next()));
+				InfoGuideSituation infoGuideSituation = Cloner.copyIGuideSituation2InfoGuideSituation((IGuideSituation) iterator.next()); 
+				infoGuideSituations.add(infoGuideSituation);
+				
+				// Check to see if this is the active Situation
+				
+				if (infoGuideSituation.getState().equals(new State(State.ACTIVE))){
+					infoGuide.setInfoGuideSituation(infoGuideSituation);
+				}
+				
 			}
 		}
 		infoGuide.setInfoGuideSituations(infoGuideSituations);

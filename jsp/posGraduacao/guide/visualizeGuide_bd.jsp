@@ -3,8 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.lang.Integer" %>
+
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoGuideSituation" %>
+<%@ page import="DataBeans.InfoGuide" %>
 <%@ page import="Util.State" %>
 <%@ page import="Util.SituationOfGuide" %>
 
@@ -129,10 +133,40 @@
         		</tr>
          	<% } %>
          </logic:iterate>
-
-
-
      </table>
 
+	<br>	
+	<br>
 
+    <bean:define id="arguments"><%= "&" %>page=0<%= "&" %>year=<bean:write name="year"/><%= "&" %>number=<bean:write name="number"/><%= "&" %>version=<bean:write name="version"/>
+    </bean:define>
+	
 
+			<% List guideList = (List) session.getAttribute(SessionConstants.GUIDE_LIST);
+			   InfoGuide guide = (InfoGuide) request.getAttribute(SessionConstants.GUIDE);
+			   if(guide.getVersion().equals(new Integer(guideList.size())) && !guide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.ANNULLED_TYPE)) {
+			%>	
+        	<table>
+        		<tr>
+        		<td width="30%">
+        			<bean:define id="linkChangeSituation">/editGuideSituation.do?method=prepareEditSituation<bean:write name="arguments"/>
+                	</bean:define>
+        			<html:link page='<%= pageContext.findAttribute("linkChangeSituation").toString() %>'>
+        				<bean:message key="link.masterDegree.administrativeOffice.changeGuideSituation" />
+        			</html:link>
+        		</td>
+        		<td width="30%">
+        			<bean:define id="linkChangeInformation">/editGuideInformation.do?method=prepareEditInformation<bean:write name="arguments"/>
+                	</bean:define>
+        			<html:link page='<%= pageContext.findAttribute("linkChangeInformation").toString() %>'>
+        				<bean:message key="link.masterDegree.administrativeOffice.changeGuideInformation" />
+        			</html:link>
+        		</td>
+        		</tr>
+        	</table> 
+        	<% } else { %>
+        		<strong><bean:message key="label.masterDegree.administrativeOffice.nonChangeableGuide" /></strong>
+        	<% } %>
+        	
+
+	

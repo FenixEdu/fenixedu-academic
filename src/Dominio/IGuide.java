@@ -26,6 +26,7 @@ public interface IGuide {
   public Date getCreationDate();
   public Integer getVersion();
   public List getGuideSituations();
+  public Date getPaymentDate();
   
 
   public void setNumber(Integer number);
@@ -41,4 +42,5 @@ public interface IGuide {
   public void setCreationDate(Date creationDate);
   public void setVersion(Integer version);
   public void setGuideSituations(List guideSituations);
+  public void setPaymentDate(Date paymentDate);
 }

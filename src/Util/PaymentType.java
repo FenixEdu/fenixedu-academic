@@ -2,6 +2,8 @@ package Util;
 
 import java.util.ArrayList;
 
+import org.apache.struts.util.LabelValueBean;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -29,6 +31,7 @@ public class PaymentType {
 	public static final String CHEQUE_STRING = "Cheque";
 	public static final String NIB_TRANSFER_STRING = "Transferência Bancária";
 	public static final String POSTAL_STRING = "Vale de Correio";
+	public static final String DEFAULT_STRING = "[Escolha uma Opção]";
 
 
 
@@ -65,17 +68,18 @@ public class PaymentType {
 
 	public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
-//		result.add(new LabelValueBean(PaymentType.CASH_STRING, PaymentType.CASH_STRING));
-//		result.add(new LabelValueBean(PaymentType.ATM_STRING, PaymentType.ATM_STRING));
-//		result.add(new LabelValueBean(PaymentType.CHEQUE_STRING, PaymentType.CHEQUE_STRING));
-//		result.add(new LabelValueBean(PaymentType.NIB_TRANSFER_STRING, PaymentType.NIB_TRANSFER_STRING));
-//		result.add(new LabelValueBean(PaymentType.POSTAL_STRING, PaymentType.POSTAL_STRING));
-		result.add(PaymentType.CASH_STRING);
-		result.add(PaymentType.ATM_STRING);
-		result.add(PaymentType.CHEQUE_STRING);
-		result.add(PaymentType.NIB_TRANSFER_STRING);
-		result.add(PaymentType.POSTAL_STRING);
-			
+		result.add(new LabelValueBean(PaymentType.DEFAULT_STRING, PaymentType.DEFAULT_STRING));
+		result.add(new LabelValueBean(PaymentType.CASH_STRING, PaymentType.CASH_STRING));
+		result.add(new LabelValueBean(PaymentType.ATM_STRING, PaymentType.ATM_STRING));
+		result.add(new LabelValueBean(PaymentType.CHEQUE_STRING, PaymentType.CHEQUE_STRING));
+		result.add(new LabelValueBean(PaymentType.NIB_TRANSFER_STRING, PaymentType.NIB_TRANSFER_STRING));
+		result.add(new LabelValueBean(PaymentType.POSTAL_STRING, PaymentType.POSTAL_STRING));
+//		result.add(PaymentType.CASH_STRING);
+//		result.add(PaymentType.ATM_STRING);
+//		result.add(PaymentType.CHEQUE_STRING);
+//		result.add(PaymentType.NIB_TRANSFER_STRING);
+//		result.add(PaymentType.POSTAL_STRING);
+//			
 		return result;	
 	}
     
