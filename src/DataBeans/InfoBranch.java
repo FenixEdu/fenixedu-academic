@@ -44,7 +44,8 @@ public class InfoBranch extends InfoObject {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "name = " + this.name + "; ";
-		result += "code = " + this.code + "]";
+		result += "code = " + this.code + "; ";
+		result += "idInternal = " + this.getIdInternal() + "]";
 		return result;
 	}
 

@@ -25,6 +25,10 @@ public class Branch extends DomainObject implements IBranch {
 		setDegreeCurricularPlan(null);
 	}
 
+//	TODO: tirar???-ACRESCENTEI PA O READ BY OID FUNCIONAR
+  public Branch(Integer idInternal){setIdInternal(idInternal);}
+
+
 	public Branch(String name, String code) {
 		this();
 		setName(name);

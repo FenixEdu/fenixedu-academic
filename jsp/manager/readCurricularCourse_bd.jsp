@@ -102,10 +102,11 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
-					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
 					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
+					</td>
+					
 				</tr>
 				<logic:iterate id="curricularCourseScope" name="curricularCourseScopesList">
 				
@@ -131,10 +132,11 @@
 						</td>
 						<td class="listClasses"><bean:write name="infoBranch" property="code"/>
 						</td>
-						<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
-						</td>
 						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
 						</td>
+						<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
+						</td>
+						
 						<td>
 							<ul style="list-style-type: square;">
 								<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getAttribute("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>

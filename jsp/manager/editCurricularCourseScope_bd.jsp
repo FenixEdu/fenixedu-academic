@@ -23,26 +23,12 @@
 	
 	
 	<table>
-		<%--<tr>
-			<td>
-				<bean:message key="message.manager.curricular.course.scope.curricularYear"/>
-			</td>
-			<td>
-				<html:select property="curricularYear">
-				<html:option key="option.curricular.course.scope.year1" value="1"/>
-    			<html:option key="option.curricular.course.scope.year2" value="2"/>
-    			<html:option key="option.curricular.course.scope.year3" value="3"/>
-    			<html:option key="option.curricular.course.scope.year4" value="4"/>
-    			<html:option key="option.curricular.course.scope.year5" value="5"/>
-    			</html:select>
-			</td>
-		</tr>--%>
-
+		
 		<tr>
 			<td>
-				<bean:message key="message.manager.curricular.course.scope.curricularSemester"/>
+				<bean:message key="message.manager.curricular.course.scope.YearAndSemester"/>
 			</td>
-			<td><%--ALTERAR APROPERTY YE VER S POSSO TIRAR AS OPTIONS        --%>
+			<td>
 				<html:select property="curricularSemesterId">
 				<html:option key="option.curricular.course.scope.semester.1" value="1"/>
     			<html:option key="option.curricular.course.scope.semester.2" value="2"/>
@@ -62,11 +48,12 @@
 			<td>
 				<bean:message key="message.manager.curricular.course.scope.branchCode"/>
 			</td>
-			<td><%--nao tenho certeza de property--%>
-				<html:text size="60" property="branchCode"/>
-			</td>
 			<td>
-			<span class="error"><html:errors property="branchCode"/></span>
+				<html:select property="branchId">
+				<html:option key="option.curricular.course.scope.branch.1" value="1"/>
+    			<html:option key="option.curricular.course.scope.branch.2" value="2"/>
+    			<html:option key="option.curricular.course.scope.branch.3" value="3"/>
+    			</html:select>
 			</td>
 		</tr>
 

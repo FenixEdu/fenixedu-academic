@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +8,7 @@ import java.util.List;
  * 19/Mar/2003
  */
 
-public class InfoCurricularSemester implements Serializable {
+public class InfoCurricularSemester extends InfoObject{
 
 	private Integer semester;
 	private InfoCurricularYear infoCurricularYear;
@@ -43,7 +42,8 @@ public class InfoCurricularSemester implements Serializable {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "semester = " + this.getSemester() + "; ";
-		result += "infoCurricularYear = " + this.getInfoCurricularYear() + "]";
+		result += "infoCurricularYear = " + this.getInfoCurricularYear() + "; ";
+		result += "idInternal = " + this.getIdInternal() + "]";
 		return result;
 	}
 

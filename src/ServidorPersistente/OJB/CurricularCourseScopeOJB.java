@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourseScope;
@@ -71,125 +72,21 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 	}
 
 	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
-		ICurricularCourse curricularCourse,
-		ICurricularSemester curricularSemester,//ainda JA TA BD ,isso eh o que eu vou ver
-		IBranch branch//este JA ta na BD
-		)
-		throws ExcepcaoPersistencia {
-//TODO:FAZER ISTO COM CRITERIA
+			ICurricularCourse curricularCourse,
+			ICurricularSemester curricularSemester,
+			IBranch branch
+			)
+			throws ExcepcaoPersistencia {
+ 
+				Criteria criteria = new Criteria();
+				criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getInternalID());
+				criteria.addEqualTo("branchKey", branch.getIdInternal());
+				return (ICurricularCourseScope)queryObject(CurricularCourseScope.class, criteria);
 
-		try {
-			ICurricularCourseScope curricularCourseScope = null;
-			
-			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
-			oqlQuery += " where curricularCourseKey= $1";
-			oqlQuery += " and curricularSemesterKey = $2";
-			oqlQuery += " and branchKey = $2";
-			query.create(oqlQuery);
-
-			
-			query.bind(curricularCourse.getIdInternal());
-			query.bind(curricularSemester.getInternalID());
-			query.bind(branch.getIdInternal());
-			
-			System.out.println("OJB"+curricularCourse.getIdInternal()+"OJB"+curricularSemester.getInternalID()+"OJB"+branch.getIdInternal());
-			
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-			
-			if ((result != null) && (result.size() != 0)) {
-				curricularCourseScope = (ICurricularCourseScope) result.get(0);
-			}
-			System.out.println("OJB11111111111111111curricularCourseScope"+curricularCourseScope);
-			return curricularCourseScope;
-
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
-	}
-//	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
-//			ICurricularCourse curricularCourse,
-//			ICurricularSemester curricularSemester,//ainda nao ta ana BD ,isso eh o que eu vou ver
-//			IBranch branch//este ainda nao ta na BD
-//			)
-//			throws ExcepcaoPersistencia {
-//
-//
-//			try {
-//				ICurricularCourseScope curricularCourseScope = null;
-//			
-//				String oqlQuery = "select all from " + Branch.class.getName();
-//				oqlQuery += " where code= $1";
-//				oqlQuery += " and keyDegreeCurricularPlan = $2";
-//				query.create(oqlQuery);
-//
-//				query.bind(branch.getCode());
-//				query.bind(curricularCourse.getDegreeCurricularPlan().getIdInternal());
-//
-//			
-//				List branchResult = (List) query.execute();
-//				try {
-//					lockRead(branchResult);
-//				} catch (ExcepcaoPersistencia ex) {
-//					throw ex;
-//				}
-//			
-//				//so leio pelo semester a chave do year na pratica nao e preciso
-//
-//				if ((branchResult != null) && (branchResult.size() != 0)) {
-//					branch = (IBranch) branchResult.get(0);
-//					String oqlQuery1 = "select all from " + CurricularSemester.class.getName();
-//					oqlQuery1 += " where curricularSemester.semester= $1";
-//					query.create(oqlQuery1);
-//
-//					query.bind(curricularSemester.getSemester());
-//			
-//					List semesterResult = (List) query.execute();
-//					try {
-//						lockRead(semesterResult);
-//					} catch (ExcepcaoPersistencia ex) {
-//						throw ex;
-//					}
-//
-//					if ((semesterResult != null) && (semesterResult.size() != 0)) {
-//						curricularSemester = (ICurricularSemester) semesterResult.get(0);
-//						
-//						String oqlQuery2 = "select all from " + CurricularCourseScope.class.getName();
-//						oqlQuery2 += " where curricularCourseScope.curricularCourseKey= $1";
-//						oqlQuery2 += " where curricularCourseScope.curricularSemesterKey= $2";
-//						oqlQuery2 += " where curricularCourseScope.branchKey= $3";
-//						query.create(oqlQuery2);
-//		
-//						query.bind(curricularCourseScope.getCurricularCourse().getIdInternal());
-//						query.bind(curricularCourseScope.getCurricularSemester().getInternalID());
-//						query.bind(curricularCourseScope.getBranch().getIdInternal());
-//								
-//						List result = (List) query.execute();
-//						try {
-//							lockRead(result);
-//						} catch (ExcepcaoPersistencia ex) {
-//							throw ex;
-//						}
-//			
-//						if ((result != null) && (result.size() != 0)) {
-//							curricularCourseScope = (ICurricularCourseScope) result.get(0);
-//						}
-//
-//			
-//					}
-//				
-//				}
-//
-//				return curricularCourseScope;
-//
-//			} catch (QueryException ex) {
-//				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//			}
-//		}
+
+	
 	public ArrayList readAll() throws ExcepcaoPersistencia {
 
 		try {

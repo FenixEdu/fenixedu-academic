@@ -11,12 +11,10 @@ import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
-import Dominio.DegreeCurricularPlan;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
-import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -24,7 +22,6 @@ import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -47,50 +44,44 @@ public class EditCurricularCourseScope implements IServico {
 	}
 	
 
-	public List run(Integer oldCurricularCourseScopeId, InfoCurricularCourseScope newInfoCurricularCourseScope, Integer curricularCourseId, Integer degreeCPId, Integer curricularSemesterId) throws FenixServiceException {
-	
+	public List run(Integer oldCurricularCourseScopeId, InfoCurricularCourseScope newInfoCurricularCourseScope, Integer curricularCourseId) throws FenixServiceException {
+
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		ICurricularCourseScope oldCurricularCourseScope = null;
 		
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			IPersistentBranch persistentBranch = ps.getIPersistentBranch();
+
 			IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
-//			IPersistentCurricularYear persistentCurricularYear =ps.getIPersistentCurricularYear();
 			
 			persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
 			IPersistentCurricularCourse persistentCurricularCourse = ps.getIPersistentCurricularCourse();
-			IPersistentDegreeCurricularPlan persistentDegreeCP = ps.getIPersistentDegreeCurricularPlan();
+//			IPersistentDegreeCurricularPlan persistentDegreeCP = ps.getIPersistentDegreeCurricularPlan();
 			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(new CurricularCourseScope(oldCurricularCourseScopeId), false);
 			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
 			
 			
 			
-//			ICurricularSemester curricularSemester = new CurricularSemester();
-//			curricularSemester.setIdInternal(curricularSemesterId);			
-			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(new CurricularSemester(curricularSemesterId), false);
-			System.out.println("222222222222222222222222222222"+curricularSemesterId);
-			System.out.println("222222222222222222222222222222"+newCurricularSemester);
+//			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(new CurricularSemester(curricularSemesterId), false);
+//			IDegreeCurricularPlan degreeCP = (IDegreeCurricularPlan) persistentDegreeCP.readByOId(new DegreeCurricularPlan(degreeCPId), false);
+//			String newBranchCode = newInfoCurricularCourseScope.getInfoBranch().getCode();
 			
-			IDegreeCurricularPlan degreeCP = (IDegreeCurricularPlan) persistentDegreeCP.readByOId(new DegreeCurricularPlan(degreeCPId), false);
-
-			String newBranchCode = newInfoCurricularCourseScope.getInfoBranch().getCode();
-//			System.out.println("SERVICO NOVO CODIGO DO BRANCH"+newBranchCode);
-////	VER S O BRANCH EO SEMESTER EXISTEM
-
-			IBranch newBranch = (IBranch) persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCP,newBranchCode);
+			Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
+//			
+//			IBranch branch = new Branch();
+//			branch.setIdInternal(branchId);
+			IBranch newBranch = (IBranch) persistentBranch.readByOId(new Branch(branchId), false);
 	
-			if(newBranch == null){
-				newBranch = new Branch();
-				newBranch.setCode(newBranchCode);
-				
-				
-				///soh por agora->vai passar a aparecer tb no form ou entao eh so pa escolher dos que ha ->ULTIMSA HIPOTESE MAIS PROVAVEL
-				newBranch.setName(newBranchCode);
-				persistentBranch.simpleLockWrite(newBranch);
-				}	
-	
-			System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd"+ newCurricularSemester+"DDDDD"+newBranch+"DDDDD"+curricularCourse);
+	//ha 2 getId tem que ser o do IDomainObject
+			Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
+			
+			
+			//so da com o construtor como ta
+//			ICurricularSemester curricularSemester = new CurricularSemester();
+//			curricularSemester.setIdInternal(curricularSemesterId);
+			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(new CurricularSemester(curricularSemesterId), false);
+			System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd"+ new CurricularSemester(curricularSemesterId)+"DDDDD"+newBranch+"DDDDD"+curricularCourse);
 				
 			ICurricularCourseScope newCurricularCourseScope = 
 			        persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, newCurricularSemester, newBranch );
@@ -111,7 +102,7 @@ System.out.println("AAAAAAAAAAAAAAAAAAaAAAAAAAAAAAnewCurricularCourseScope"+newC
 				oldCurricularCourseScope.setBranch(newBranch);
 				//it already includes the curricular year
 				oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
-				System.out.println("AINDA TA AQUI!!!!!!!!!1SERVICO"+newCurricularSemester.getInternalID());
+				System.out.println("2222222222222222CurricularCourseScopeQUE ESCREVEU NA BD"+oldCurricularCourseScope);
 				
 				persistentCurricularCourseScope.simpleLockWrite(oldCurricularCourseScope);
 				return null;
@@ -120,7 +111,7 @@ System.out.println("AAAAAAAAAAAAAAAAAAaAAAAAAAAAAAnewCurricularCourseScope"+newC
 			List errors = new ArrayList(2);
 			
 			errors.add(0, newCurricularSemester.getSemester());
-			errors.add(1, newBranchCode);	
+			errors.add(1, newBranch.getCode());	
 			
 			return errors;
 			

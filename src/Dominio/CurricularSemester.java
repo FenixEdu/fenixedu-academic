@@ -27,7 +27,7 @@ public class CurricularSemester extends DomainObject implements ICurricularSemes
 		setCurricularYear(null);
 		setScopes(null);
 	}
-//ACRESCENTEI NAO SEI S E BOM MAS E PA O READ BY OID FUNCIONAR
+//TODO: tirar isto-ACRESCENTEI NAO SEI S E BOM MAS E PA O READ BY OID FUNCIONAR
 public CurricularSemester(Integer idInternal){setInternalID(idInternal);}
 
 	public CurricularSemester(Integer semester, ICurricularYear curricularYear) {

@@ -107,9 +107,6 @@
   <!--validation to the form to insert and edit a CurricularCourseScope-->
     <form name="curricularCourseScopeForm">
       
-      <field property="branchCode" depends="required" page="1">
-        <arg0 key="message.manager.curricular.course.scope.branchCode" resource="true" />
-      </field>
       <field property="theoreticalHours" depends="double" page="1" >
         <arg0 key="message.manager.curricular.course.scope.theoreticalHours" resource="true"/>
       </field>

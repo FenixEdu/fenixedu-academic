@@ -44,12 +44,12 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			DynaActionForm dynaForm = (DynaActionForm) form;
 			
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+			
 			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 			Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 			Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 			Integer degreeId = new Integer(request.getParameter("degreeId"));
 			
-
 			InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
 			Object args[] = { curricularCourseScopeId };
@@ -60,9 +60,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
-//			System.out.println("VELHO CURRICULAR COURSEScope"+oldInfoCurricularCourseScope);
+		System.out.println("11111111111111111111111111111VELHO CURRICULAR COURSEScope"+oldInfoCurricularCourseScope);
 			
-
 			if(oldInfoCurricularCourseScope.getTheoreticalHours() != null)
 				dynaForm.set("theoreticalHours", oldInfoCurricularCourseScope.getTheoreticalHours().toString());
 			
@@ -87,26 +86,21 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			if(oldInfoCurricularCourseScope.getWeigth() != null)
 				dynaForm.set("weight", oldInfoCurricularCourseScope.getWeigth().toString());
 			
-			dynaForm.set("branchCode", oldInfoCurricularCourseScope.getInfoBranch().getCode().toString());
-//				
-//			if(oldInfoCurricularCourseScope.getInfoCurricularSemester() != null){
-//				InfoCurricularSemester infoCurricularSemester = oldInfoCurricularCourseScope.getInfoCurricularSemester();
-//				Integer curricularSemesterId = ((ICurricularSemester)(Cloner.copyInfoCurricularSemester2CurricularSemester(infoCurricularSemester))).getIdInternal();
-//				dynaForm.set("curricularSemesterId", curricularSemesterId);
+			dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
 
-//so pa ver se funciona
-//TODO: enviar o id para o link do editar
-Integer curricularSemesterId = new Integer(3);
-  dynaForm.set("curricularSemesterId", curricularSemesterId.toString());
-//				System.out.println("aaaaaaaaaaaaaaaaaaaa"+curricularSemesterId);			}
 
-		System.out.println("1111111111111111111111111111111111111111111111111111111111");
-			
+//			InfoCurricularSemester infoCurricularSemester =oldInfoCurricularCourseScope.getInfoCurricularSemester();
+//			ICurricularSemester curricularSemester=Cloner.copyInfoCurricularSemester2CurricularSemester(infoCurricularSemester);
+
+//TODO:!!!!!!!!!!1111ISTO TA A AVIR A 0 EMBORA ESCREVA BEM NA BD
+			dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
+System.out.println("PREPARE->AAAAAAAAAAAAAAAaaaaaa"+oldInfoCurricularCourseScope.getInfoBranch().getIdInternal()+"BBBBBBBBBBBBBBBBBBBBBBBBBBbbbbb"+oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
+
+
 			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 			request.setAttribute("degreeId", degreeId);
 			request.setAttribute("curricularCourseId", curricularCourseId);
 			request.setAttribute("curricularCourseScopeId", curricularCourseScopeId);
-//			request.setAttribute("infoCurricularCourseScope",oldInfoCurricularCourseScope);
 			return mapping.findForward("editCurricularCourseScope");
 		}
 				
@@ -129,22 +123,9 @@ Integer curricularSemesterId = new Integer(3);
 		Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 		
 		InfoCurricularCourseScope newInfoCurricularCourseScope = new InfoCurricularCourseScope();	
-//			
-//		Object arg[] = { degreeCPId };
-//			
-//		InfoDegreeCurricularPlan infoDegreeCP = null;
-//		GestorServicos manager = GestorServicos.manager();
-//			
-//		try {
-//					infoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", arg);
-//			} catch(FenixServiceException e) {
-//				throw new FenixActionException(e);
-//			}
-			
-//		String curricularYearString = (String) dynaForm.get("curricularYear");
+		
 		String curricularSemesterIdString = (String) dynaForm.get("curricularSemesterId");	    
-		String branchCode = (String) dynaForm.get("branchCode");
-		System.out.println("ATENCAO branchCode"+branchCode);
+		String branchIdString = (String) dynaForm.get("branchId");
 		
 		String theoreticalHoursString = (String) dynaForm.get("theoreticalHours");
 		String praticalHoursString = (String) dynaForm.get("praticalHours");
@@ -155,32 +136,41 @@ Integer curricularSemesterId = new Integer(3);
 		String weightString = (String) dynaForm.get("weight");
 		String creditsString = (String) dynaForm.get("credits");
 		
-//TODO:fazer o mm para o branch
-Integer curricularSemesterId = new Integer(curricularSemesterIdString);
-System.out.println("111111111111111111111111111antes DO READ SEMESTER1111111111111111111111111111111");
-		 Object args1[] = { curricularSemesterId };
-				 GestorServicos manager1 = GestorServicos.manager();
-				 InfoCurricularSemester infoCurricularSemester = null;
-				 try {
-					infoCurricularSemester = (InfoCurricularSemester) manager1.executar(userView, "ReadCurricularSemester", args1);
-				 } catch (FenixServiceException e) {
-					 throw new FenixActionException(e);
-				 }
-		 
-				newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
+		Integer curricularSemesterId = new Integer(curricularSemesterIdString);
 		
-		//			ponho so o que eh unico para poder ler no servico
-				  //pq embora nenhum das propriedades do branch possa tar a null a nivel do java nao tem problema
-				  
-				  //isto deve tar a martelo falar HUGO
+		InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
+		infoCurricularSemester.setIdInternal(curricularSemesterId);
 		
-		if(branchCode.compareTo("") != 0) {
-			  InfoBranch infoBranch = new InfoBranch();			
-			  infoBranch.setCode(branchCode);
-			  newInfoCurricularCourseScope.setInfoBranch(infoBranch);
-		}		
-			
+//		Object args1[] = { curricularSemesterId };
+//				 GestorServicos manager = GestorServicos.manager();
+//				 InfoCurricularSemester infoCurricularSemester = null;
+//				 try {
+//					infoCurricularSemester = (InfoCurricularSemester) manager.executar(userView, "ReadCurricularSemester", args1);
+//				 } catch (FenixServiceException e) {
+//					 throw new FenixActionException(e);
+//				 }
+//		 
+				newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
+				
+				System.out.println("CCCCCCCCCCCCCCCCCCCcccccccccc"+infoCurricularSemester);
+			System.out.println("CCCCCCCCCCCCCCCCCCCcccccccccc"+newInfoCurricularCourseScope);
+
+//		Integer branchId = new Integer(branchCode);
+//		Object args2[] = { branchCode,  degreeCPId};
+//		InfoBranch infoBranch = null;
+//		try {
+//			infoBranch = (InfoBranch) manager.executar(userView, "ReadBranchByDegreeCurricularPlanAndCode", args2);
+//		 } catch (FenixServiceException e) {
+//			 throw new FenixActionException(e);
+//		 }
+		 Integer branchId = new Integer(branchIdString);
+		
+		 InfoBranch infoBranch = new InfoBranch();
+		 infoBranch.setIdInternal(branchId);
+		 
+		newInfoCurricularCourseScope.setInfoBranch(infoBranch);
+				
 		if(theoreticalHoursString.compareTo("") != 0) {
 			Double theoreticalHours = new Double(theoreticalHoursString); 
 			newInfoCurricularCourseScope.setTheoreticalHours(theoreticalHours);
@@ -224,9 +214,17 @@ System.out.println("111111111111111111111111111antes DO READ SEMESTER11111111111
 		}
 		
 		System.out.println("111111111111111ANTES DO EDIT1111111111111111111111111");
-		Object args[] = { oldCurricularCourseScopeId,  newInfoCurricularCourseScope, curricularCourseId, degreeCPId, curricularSemesterId };
+		Object args[] = { oldCurricularCourseScopeId,  newInfoCurricularCourseScope, curricularCourseId};
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
+		
+		System.out.println("1111111111111111oldCurricularCourseScopeId"+oldCurricularCourseScopeId);
+		System.out.println("1111111111111111newInfoCurricularCourseScope"+newInfoCurricularCourseScope);
+		System.out.println("1111111111111111curricularCourseId"+curricularCourseId);
+		System.out.println("1111111111111111degreeCPId"+degreeCPId);
+		System.out.println("1111111111111111curricularSemesterId"+newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
+		
+		
 		try {
 				serviceResult = (List) manager.executar(userView, "EditCurricularCourseScope", args);
 		} catch (FenixServiceException e) {

@@ -53,9 +53,8 @@
 				<form-property name="basic" type="java.lang.String" />
 				<form-property name="departmentCourse" type="java.lang.String" />
 				<!--copiei pq a falta tava a dar erro-->
-					<form-property name="curricularSemesterId" type="java.lang.String" />
-				<form-property name="branchCode" type="java.lang.String" />
-				<form-property name="curricularSemester" type="java.lang.String" />
+				<form-property name="branchId" type="java.lang.String" />
+				<form-property name="curricularSemesterId" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -75,11 +74,11 @@
 				<form-property name="maxIncrementNac" type="java.lang.String" />
 				<form-property name="minIncrementNac" type="java.lang.String" />
 				<form-property name="weight" type="java.lang.String" />
-				<form-property name="branchCode" type="java.lang.String" />
-				<form-property name="curricularSemesterId" type="java.lang.String" />
+				<form-property name="branchId" type="java.lang.String" />
+			
 				<!--deixei pq a falta tava a dar erro-->
-				<form-property name="curricularSemester" type="java.lang.String" />
-				<form-property name="curricularYear" type="java.lang.String" />
+				<form-property name="curricularSemesterId" type="java.lang.String" />
+
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
