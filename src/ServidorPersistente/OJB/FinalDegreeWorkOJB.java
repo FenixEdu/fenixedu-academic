@@ -11,6 +11,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.finalDegreeWork.Group;
 import Dominio.finalDegreeWork.IGroup;
+import Dominio.finalDegreeWork.IProposal;
 import Dominio.finalDegreeWork.IScheduleing;
 import Dominio.finalDegreeWork.Proposal;
 import Dominio.finalDegreeWork.Scheduleing;
@@ -71,5 +72,11 @@ public class FinalDegreeWorkOJB
 		criteria.addEqualTo("groupStudents.student.person.username", username);
 		return (IGroup) queryObject(Group.class, criteria);
 	}
+
+    public IProposal readFinalDegreeWorkAttributedToGroupByTeacher(Integer groupOid) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("groupAttributedByTeacher.idInternal", groupOid);
+		return (IProposal) queryObject(Proposal.class, criteria);
+    }
 
 }

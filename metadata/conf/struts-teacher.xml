@@ -1398,10 +1398,13 @@
 	    <action path="/finalDegreeWorkAttribution"
 	    	type="ServidorApresentacao.Action.teacher.FinalWorkManagementAction"
 	    	parameter="method"
-	    	input="/finalWorkManagement.do?method=prepareFinalWorkInformation&amp;page=0"
+	    	input="/finalWorkManagement.do?method=chooseDegree&amp;page=0"
 	    	name="finalWorkAttributionForm"
 	    	scope="request"
 	    	validate="true">
+			<exception	type="ServidorAplicacao.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork$GroupAlreadyAttributed"
+						key="error.message.GroupAlreadyAttributed"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 				<forward name="sucess" path="/finalWorkManagement.do?method=chooseDegree&amp;page=0"/>
 	    </action>
 	    

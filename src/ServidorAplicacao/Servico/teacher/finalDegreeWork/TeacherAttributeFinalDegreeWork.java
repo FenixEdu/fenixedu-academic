@@ -41,6 +41,11 @@ public class TeacherAttributeFinalDegreeWork implements IService
 			    IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
 			    if (proposal != null && group != null)
 			    {
+			        IProposal proposalAttributedToGroup = persistentFinalWork.readFinalDegreeWorkAttributedToGroupByTeacher(group.getIdInternal());
+			        if (proposalAttributedToGroup != null && !proposalAttributedToGroup.getIdInternal().equals(proposal.getIdInternal())) {
+			            throw new GroupAlreadyAttributed(proposalAttributedToGroup.getProposalNumber().toString());
+			        }
+			        
 			        persistentFinalWork.simpleLockWrite(proposal);
 			        if (proposal.getGroupAttributedByTeacher() == null || !proposal.getGroupAttributedByTeacher().equals(group))
 			        {
@@ -70,5 +75,35 @@ public class TeacherAttributeFinalDegreeWork implements IService
 			throw new FenixServiceException(e);
 		}
 	}
+
+    public class GroupAlreadyAttributed extends FenixServiceException
+    {
+
+        public GroupAlreadyAttributed()
+        {
+            super();
+        }
+
+        public GroupAlreadyAttributed(int errorType)
+        {
+            super(errorType);
+        }
+
+        public GroupAlreadyAttributed(String s)
+        {
+            super(s);
+        }
+
+        public GroupAlreadyAttributed(Throwable cause)
+        {
+            super(cause);
+        }
+
+        public GroupAlreadyAttributed(String message, Throwable cause)
+        {
+            super(message, cause);
+        }
+
+    }
 
 }
