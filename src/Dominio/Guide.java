@@ -100,13 +100,14 @@ public class Guide extends DomainObject implements IGuide {
 	}
 
 	public IGuideSituation getActiveSituation() {
+		if (this.getGuideSituations()!=null) {	
 		Iterator iterator = this.getGuideSituations().iterator();
 		while (iterator.hasNext()) {
 			IGuideSituation guideSituation = (IGuideSituation) iterator.next();
 			if (guideSituation.getState().equals(new State(State.ACTIVE))) {
 				return guideSituation;
 			}
-		}
+		}}
 		return null;
 
 	}
