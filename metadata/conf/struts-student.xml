@@ -154,7 +154,6 @@
       <action 
               type="ServidorApresentacao.Action.student.GrauMestreAction"
               path="/obtainCertificateTipo1"
-              redirect="true"
              >
         
         <forward name="GrauMestre"
@@ -170,19 +169,19 @@
       <action 
               type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
               path="/obtainCertificateTipo3"
-              redirect="true"
+              
              >
         
         <forward name="viewDisciplinesList"
                  path="/student/obtainCertificateTipo3.jsp"
                  contextRelative="true"
-                 redirect="true"/>
+                 />
       </action>
       
       <action 
               type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
               path="/obtainCertificateTipo4"
-              redirect="true"
+              
              >
         
         <forward name="viewDisciplinesList"
@@ -195,19 +194,19 @@
     	<action 
               type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
               path="/obtainCertificateTipo5"
-              redirect="true"
+              
              >
         
         <forward name="viewDisciplinesList"
                  path="/student/obtainCertificateTipo5.jsp"
                  contextRelative="true"
                  redirect="true"/>
-      </action>-->
+      </action>
       
       <action 
               type="ServidorApresentacao.Action.student.PrepararEscolherCertidoesAction"
               path="/chooseObtainCertificate"
-              redirect="true"
+              
              >
         
         <forward name="sucesso"

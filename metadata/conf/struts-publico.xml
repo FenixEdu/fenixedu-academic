@@ -210,7 +210,6 @@
 			path="/viewExecutionCourse"
 			parameter="method"
             type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
-            >
           <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
     </action>
     
