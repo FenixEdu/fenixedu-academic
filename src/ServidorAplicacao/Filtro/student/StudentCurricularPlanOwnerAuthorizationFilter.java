@@ -54,7 +54,6 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
             if (messageException != null)
                 throw new NotAuthorizedFilterException(messageException);
         }
-
     }
 
     /*
