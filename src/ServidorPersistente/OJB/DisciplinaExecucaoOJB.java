@@ -9,6 +9,7 @@ package ServidorPersistente.OJB;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.DisciplinaExecucao;
@@ -120,31 +121,46 @@ public class DisciplinaExecucaoOJB
 		IExecutionPeriod executionPeriod,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
-		try {
+//		try {
 			//FIXME : Curricular Semester is HARDCODED!!! Isto NÂO PODE FICAR ASSIM!!!
-			String oqlQuery =
-				"select all from "
-					+ DisciplinaExecucao.class.getName()
-					+ " where associatedCurricularCourses.scopes.curricularSemester.curricularYear.year = $1"
-					+ " and associatedCurricularCourses.scopes.curricularSemester.semester = $2"
-					+ " and associatedCurricularCourses.degreeCurricularPlan.name = $3"
-					+ " and associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $4"
-					+ " and executionPeriod.name = $5 "
-					+ " and executionPeriod.executionYear.year = $6";
-			query.create(oqlQuery);
-			query.bind(curricularYear);
-			query.bind(executionPeriod.getSemester());
-			query.bind(executionDegree.getCurricularPlan().getName());
-			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
-			query.bind(executionPeriod.getName());
-			query.bind(executionPeriod.getExecutionYear().getYear());
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			ex.printStackTrace(System.out);
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+			
+			
+			Criteria criteria = new Criteria();
+			
+			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",curricularYear);
+			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",executionPeriod.getSemester());
+			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name",executionDegree.getCurricularPlan().getName());
+			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",executionDegree.getCurricularPlan().getDegree().getSigla());
+			criteria.addEqualTo("executionPeriod.name",executionPeriod.getName());
+			criteria.addEqualTo("executionPeriod.executionYear.year",executionPeriod.getExecutionYear().getYear());
+			
+			List executionCourseList = queryList(DisciplinaExecucao.class, criteria); 
+			return executionCourseList;
+			
+			
+//			String oqlQuery =
+//				"select all from "
+//					+ DisciplinaExecucao.class.getName()
+//					+ " where associatedCurricularCourses.scopes.curricularSemester.curricularYear.year = $1"
+//					+ " and associatedCurricularCourses.scopes.curricularSemester.semester = $2"
+//					+ " and associatedCurricularCourses.degreeCurricularPlan.name = $3"
+//					+ " and associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $4"
+//					+ " and executionPeriod.name = $5 "
+//					+ " and executionPeriod.executionYear.year = $6";
+//			query.create(oqlQuery);
+//			query.bind(curricularYear);
+//			query.bind(executionPeriod.getSemester());
+//			query.bind(executionDegree.getCurricularPlan().getName());
+//			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
+//			query.bind(executionPeriod.getName());
+//			query.bind(executionPeriod.getExecutionYear().getYear());
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			return result;
+//		} catch (QueryException ex) {
+//			ex.printStackTrace(System.out);
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
 	}
 	/**
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
