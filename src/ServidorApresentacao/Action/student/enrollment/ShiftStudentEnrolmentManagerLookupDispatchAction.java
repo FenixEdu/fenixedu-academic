@@ -214,7 +214,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
-        if (infoClassEnrollmentDetails == null)
+        if (infoClassEnrollmentDetails == null || infoClassEnrollmentDetails.getInfoClassList().size() == 0)
         {
             errors.add("error", new ActionError("errors.impossible.operation"));
             saveErrors(request, errors);
