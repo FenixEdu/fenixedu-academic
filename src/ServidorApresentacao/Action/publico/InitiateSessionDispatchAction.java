@@ -1,8 +1,6 @@
 /*
  * Created on 6/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorApresentacao.Action.publico;
 
@@ -28,8 +26,6 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Nuno Nunes & David Santos
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 
 public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
@@ -55,7 +51,7 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 			executionPeriods =
 				(ArrayList) ServiceUtils.executeService(
 					null,
-					"ReadPublicExecutionPeriods",
+					"ReadNotClosedPublicExecutionPeriods",
 					argsReadExecutionPeriods);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
@@ -115,7 +111,7 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 			infoExecutionPeriods =
 				(ArrayList) ServiceUtils.executeService(
 					null,
-					"ReadPublicExecutionPeriods",
+					"ReadNotClosedPublicExecutionPeriods",
 					argsReadExecutionPeriods);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();

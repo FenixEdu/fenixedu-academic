@@ -1,15 +1,14 @@
 /*
  * Created on 18/07/2003
- *
  */
 package ServidorAplicacao.Servico.publico;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionPeriod;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -18,48 +17,36 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
  */
-public class ReadPublicExecutionPeriods implements IServico {
+public class ReadPublicExecutionPeriods implements IService
+{
 
-	private static ReadPublicExecutionPeriods service = new ReadPublicExecutionPeriods();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadPublicExecutionPeriods getService() {
-		return service;
-	}
+    public List run() throws FenixServiceException
+    {
 
-	/**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadPublicExecutionPeriods";
-	}
+        List result = new ArrayList();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod executionPeriodDAO = sp
+                    .getIPersistentExecutionPeriod();
 
-	public List run()
-		throws FenixServiceException {
+            List executionPeriods = executionPeriodDAO.readPublic();
 
-		List result = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionPeriod executionPeriodDAO =
-				sp.getIPersistentExecutionPeriod();
+            if (executionPeriods != null)
+            {
+                for (int i = 0; i < executionPeriods.size(); i++)
+                {
+                    result.add(Cloner.get((IExecutionPeriod) executionPeriods
+                            .get(i)));
+                }
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
 
-			List executionPeriods =
-				executionPeriodDAO.readPublic();
-
-			if (executionPeriods != null) {
-				for (int i = 0; i < executionPeriods.size(); i++) {
-					result.add(
-						Cloner.get(
-							(IExecutionPeriod) executionPeriods.get(i)));
-				}
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
-
-		return result;
-	}
+        return result;
+    }
 }

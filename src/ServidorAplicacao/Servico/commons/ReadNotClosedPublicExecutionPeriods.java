@@ -16,9 +16,9 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Luis Cruz & Sara Ribeiro
+ * @author João Mota
  */
-public class ReadNotClosedExecutionPeriods implements IService
+public class ReadNotClosedPublicExecutionPeriods implements IService
 {
 
     public List run() throws FenixServiceException
@@ -32,7 +32,7 @@ public class ReadNotClosedExecutionPeriods implements IService
                     .getIPersistentExecutionPeriod();
 
             List executionPeriods = executionPeriodDAO
-                    .readNotClosedExecutionPeriods();
+                    .readNotClosedPublicExecutionPeriods();
 
             if (executionPeriods != null)
             {

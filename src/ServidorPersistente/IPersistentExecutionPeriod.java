@@ -14,6 +14,10 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  */
 public interface IPersistentExecutionPeriod extends IPersistentObject {
 
+    
+    public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia;
+    
+    
 	/**
 	 * 
 	 * @return ArrayList
