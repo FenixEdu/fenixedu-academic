@@ -113,8 +113,9 @@
 	<p class="infoop"><span class="emphasis-box">2</span>
 	<bean:message key="message.courseInformation.LecturingTeachers" /></p>
 	<style="margin-top:10px">
-	<bean:message key="message.courseInformation.numberOfStudents"/>
+	<bean:message key="message.courseInformation.numberOfStudents"/>:
 	<bean:write name="siteCourseInformation" property="infoExecutionCourse.numberOfAttendingStudents"/>
+	<p><bean:message key="message.courseInformation.specialTeacherWarning"/></p>
 	<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<td class="listClasses-header"> <bean:message key="message.courseInformation.nameOfTeacher"/></td>
@@ -134,7 +135,7 @@
 	<p class="infoop"><span class="emphasis-box">3</span>
 	<bean:message key="message.courseInformation.CourseResults" /></p>
 	<br />
-	Informação ainda não disponível
+	<bean:message key="message.courseInformation.notYetAvailable" />
 	<%--<table border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<td></td>
@@ -265,10 +266,18 @@
 	<p class="infoop"><span class="emphasis-box">9</span>
 	<bean:message key="message.courseInformation.courseReport" /></p>
 	<br />
-	Informação ainda não disponível
-<%--	<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px">
+	<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px">
 		<tr>
-			<td><bean:write name="siteCourseInformation" property="infoCourseReport.report"/></td> 
+			<td>
+				<logic:present name="siteCourseInformation" property="infoCourseReport.report">
+					<logic:notEmpty name="siteCourseInformation" property="infoCourseReport.report">
+						<bean:write name="siteCourseInformation" property="infoCourseReport.report"/>
+					</logic:notEmpty>
+				</logic:present>
+				<logic:empty name="siteCourseInformation" property="infoCourseReport.report">
+						<bean:message key="message.courseInformation.notYetAvailable"/>
+				</logic:empty>
+			</td> 
 		</tr>
-	</table>--%>
+	</table>
 </logic:present>

@@ -393,7 +393,7 @@
 		<put name="body" 
 			value="/publication/ConfirmDeletePublication.jsp"></put>
 	</definition>
-	
+		
 	<definition name="view-authors-form" 
 		extends="teacher-information">
 		<put name="body" 

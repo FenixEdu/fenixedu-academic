@@ -45,59 +45,43 @@
          <br/>
         </logic:notEmpty>
 		
-          <logic:notEmpty name="component" property="lastAnnouncement" >		
-            <table id="anuncios" cellspacing="0" width="90%">
-            	<tr>
-                    <td  class="ultAnuncioAviso"> 
-            		<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
-            		<bean:message key="message.lastAnnouncement"/> 
-                    </td>      
-                </tr>
-                
-                <bean:define id="firstAnnouncement" name="component" property="lastAnnouncement"/>
-                <tr>
-                  <td class="ultAnuncio">
-                   <img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
-	               <html:link  page="<%="/viewSite.do"+"?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-	               <bean:write name="firstAnnouncement" property="title"/>:
-	               </html:link>	
-	               <br/>
-	               <br/>
-	               <bean:write name="firstAnnouncement" property="information" filter="false"/>
-	               <hr>
-	              </td>
-	            </tr>
-	            	            
-	            <!--<tr>		
-	           	 <td class="ultAnuncio-date">	
-	           	   <bean:message key="message.modifiedOn"/>
-	           	   <dt:format pattern="dd-MM-yyyy HH:mm">
-	           		 <bean:write name="firstAnnouncement" property="lastModifiedDate.time"/>
-	           	   </dt:format>
-	           	 </td>
-	            </tr>-->   
-	            
-               <logic:notEmpty name="component" property="lastFiveAnnouncements" >		               
-	             <tr>
-	               <td class="ultAnuncio">
-	                 <logic:iterate id="announcement" name="component" property="lastFiveAnnouncements" type="DataBeans.InfoAnnouncement">
-	                 	<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
-	                   	<html:link  page="<%="/viewSite.do"+"?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-	                   	<bean:write name="announcement" property="title"/>
-	                   	</html:link>
-	                   	<br/>	
-	                 </logic:iterate>     	
-	               </td>
-	             </tr>
-	           </logic:notEmpty>
-	                      
-             </table>
+        <logic:notEmpty name="component" property="lastAnnouncement" >		
+			<bean:define id="announcement" name="component" property="lastAnnouncement"/>
+			<div id="announcs">
+				<h2 class="announcs-head"><bean:message key="label.lastAnnouncements"/></h2>
+				<div class="last-announc">
+					<div class="last-announc-name">
+						<bean:write name="announcement" property="title"/>
+					</div>
+					<div class="last-announc-post-date">
+						<dt:format pattern="dd/MM/yyyy | HH:mm">
+							<bean:write name="announcement" property="lastModifiedDate.time"/>
+						</dt:format>
+					</div>
+					<p class="last-announc-info">
+						<bean:write name="announcement" property="information" filter="false"/>
+					</p>
+				</div>
+				<logic:empty name="component" property="lastAnnouncements" ></div></logic:empty>
+		</logic:notEmpty>
+
+		<logic:notEmpty name="component" property="lastAnnouncements" >		    	
+				<ul>
+				<logic:iterate id="announcement" name="component" property="lastAnnouncements">
+					<bean:define id="announcementId" name ="announcement" property="idInternal" />
+					<li class="more-announc"><span class="more-announc-date"><dt:format pattern="dd/MM/yyyy">
+						<bean:write name="announcement" property="lastModifiedDate.time"/></dt:format> - </span>
+						<html:link  page="<%="/viewSite.do"+"?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode")%>"
+									anchor="<%= announcementId.toString() %>">
+							<bean:write name="announcement" property="title"/>
+						</html:link></li>
+				</logic:iterate>
+				</ul>
+			</div>		    
         </logic:notEmpty>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+<br />
+<br />
+<br />
 
     
      <logic:notEmpty 	name="component" property="alternativeSite" >	

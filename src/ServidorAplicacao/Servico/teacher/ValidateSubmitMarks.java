@@ -66,7 +66,7 @@ public class ValidateSubmitMarks implements IServico {
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = sp
                     .getIPersistentEnrolmentEvaluation();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseCode);
 
             //evaluation
@@ -85,7 +85,11 @@ public class ValidateSubmitMarks implements IServico {
                 public Object transform(Object input) {
                     IFrequenta attend = (IFrequenta) input;
                     IEnrollment enrolment = attend.getEnrolment();
-                    return enrolment == null ? null : enrolment.getIdInternal();
+                    if(enrolment != null) {
+                        if(enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
+                            return enrolment.getIdInternal();
+                    }
+                    return null;
                 }
             });
 

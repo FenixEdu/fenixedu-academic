@@ -105,6 +105,8 @@ public class PublicSiteComponentBuilder {
             throws FenixServiceException {
         List infoLessonList = null;
 
+        IExecutionPeriod infoExecutionPeriod;
+        
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             //ITurnoAulaPersistente shiftLessonDAO =
@@ -113,6 +115,8 @@ public class PublicSiteComponentBuilder {
             Iterator iterator = shiftList.iterator();
             infoLessonList = new ArrayList();
 
+            infoExecutionPeriod = domainClass.getExecutionPeriod();
+            
             while (iterator.hasNext()) {
                 ITurno shift = (ITurno) iterator.next();
                 InfoShift infoShift = copyIShift2InfoShift(shift);
@@ -141,6 +145,8 @@ public class PublicSiteComponentBuilder {
         }
 
         component.setLessons(infoLessonList);
+        component.setExecutionPeriod(infoExecutionPeriod);
+
         return component;
     }
 

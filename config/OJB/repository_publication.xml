@@ -209,4 +209,52 @@
 	</reference-descriptor>
 </class-descriptor>		
   		
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.PublicationTeacher -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.publication.PublicationTeacher" table="PUBLICATION_TEACHER">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyPublication"
+		column="KEY_PUBLICATION"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyTeacher"
+		column="KEY_TEACHER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="publicationArea"
+		column="PUBLICATION_AREA"
+		jdbc-type="VARCHAR"
+		conversion="ServidorPersistente.Conversores.PublicationArea2SqlPublicationAreaFieldConversion"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="teacher"
+			class-ref="Dominio.Teacher"
+			proxy="true"
+			refresh="true">
+		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="publication"
+			class-ref="Dominio.publication.Publication"
+			proxy="true"
+			refresh="true">
+		<foreignkey field-ref="keyPublication"/>
+	</reference-descriptor>
+</class-descriptor>					
 <!-- Mapping of User defined classses ends here -->

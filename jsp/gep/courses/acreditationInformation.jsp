@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page import="java.util.Calendar" %>
 <logic:present name="infoSiteCoursesInformation">
 	<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
 		<logic:present name="infoExecutionDegree">
@@ -70,6 +71,14 @@
 							<td colspan="3">
 								<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
 								https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong><bean:message key="label.ects.executionYear" bundle="GEP_RESOURCES"/></strong>
+							</td>							
+							<td>
+								<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
 							</td>
 						</tr>
 						<tr>
@@ -503,4 +512,6 @@
 			</logic:iterate>
 		</logic:notPresent>
 	</logic:iterate>
+	<% String today = Calendar.getInstance().getTime().toGMTString(); %>
+	<p align="right"><%=today%></p>
 </logic:present>

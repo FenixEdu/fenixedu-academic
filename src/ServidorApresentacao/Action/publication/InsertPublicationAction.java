@@ -26,7 +26,6 @@ import DataBeans.SiteView;
 import DataBeans.publication.InfoAttribute;
 import DataBeans.publication.InfoAuthor;
 import DataBeans.publication.InfoPublication;
-import DataBeans.publication.InfoPublicationType;
 import DataBeans.publication.InfoSiteAttributes;
 import DataBeans.util.Cloner;
 import Dominio.publication.IAuthor;
@@ -54,14 +53,14 @@ public class InsertPublicationAction extends CRUDActionByOID {
      *      javax.servlet.http.HttpServletRequest)
      */
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
 
         ActionForward actionForward = null;
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer publicationTypeId = new Integer(request.getParameter("publicationTypeId"));
+        Integer publicationTypeId = new Integer(request.getParameter("infoPublicationTypeId"));
 
         Integer idInternal = new Integer(request.getParameter("idInternal"));
 
@@ -91,29 +90,22 @@ public class InsertPublicationAction extends CRUDActionByOID {
             List nonRequiredAttributes = (List) ServiceUtils.executeService(userView,
                     "ReadNonRequiredAttributes", args);
 
-            List subTypeList = (List) ServiceUtils.executeService(userView, "ReadPublicationSubtypes",
+            List subTypeList = (List) ServiceUtils.executeService(userView,
+                    "ReadPublicationSubtypes", args);
+
+            List formatList = (List) ServiceUtils.executeService(userView,
+                    "ReadPublicationFormats", args);
+
+            List monthList = (List) ServiceUtils.executeService(userView, "ReadPublicationMonths",
                     args);
 
-            List formatList = (List) ServiceUtils.executeService(userView, "ReadPublicationFormats",
+            List scopeList = (List) ServiceUtils.executeService(userView, "ReadPublicationScopes",
                     args);
-
-            List monthList = (List) ServiceUtils.executeService(userView, "ReadPublicationMonths", args);
-
-            List scopeList = (List) ServiceUtils.executeService(userView, "ReadPublicationScopes", args);
 
             Object argPubType[] = { userView.getUtilizador() };
             List infoPublicationTypes = (List) ServiceUtils.executeService(userView,
                     "ReadPublicationTypes", argPubType);
 
-            //TODO remove when database is updated
-            Iterator iterator = infoPublicationTypes.iterator();
-            while (iterator.hasNext()) {
-                InfoPublicationType infoPublicationType = (InfoPublicationType) iterator.next();
-                if (infoPublicationType.getPublicationType().equalsIgnoreCase("Ad-Hoc")) {
-                    infoPublicationTypes.remove(infoPublicationType);
-                    break;
-                }
-            }
             InfoSiteAttributes bodyComponent = new InfoSiteAttributes();
             bodyComponent.setInfoRequiredAttributes(requiredAttributes);
             bodyComponent.setInfoNonRequiredAttributes(nonRequiredAttributes);
@@ -153,8 +145,8 @@ public class InsertPublicationAction extends CRUDActionByOID {
         try {
 
             IUserView userView = SessionUtils.getUserView(request);
-            InfoPublication infoPublication = (InfoPublication) super.populateInfoObjectFromForm(form,
-                    mapping);
+            InfoPublication infoPublication = (InfoPublication) super.populateInfoObjectFromForm(
+                    form, mapping);
 
             DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -199,19 +191,13 @@ public class InsertPublicationAction extends CRUDActionByOID {
 
         InfoObject infoObject = populateInfoObjectFromForm(form, crudMapping, request);
 
-        /*
-         * if (infoObject == null) { System.out.println("Prepareedit2");
-         * prepareEdit2(mapping, form, request, response); }
-         */
-
         IUserView userView = SessionUtils.getUserView(request);
 
-        //InfoPublication pub = (InfoPublication) infoObject;
         Integer keyPublicationType = (Integer) dynaForm.get("infoPublicationTypeId");
 
         Object[] argReqAtt = { userView.getUtilizador(), keyPublicationType };
-        List requiredAttributes = (List) ServiceUtils.executeService(userView, "ReadRequiredAttributes",
-                argReqAtt);
+        List requiredAttributes = (List) ServiceUtils.executeService(userView,
+                "ReadRequiredAttributes", argReqAtt);
 
         ActionErrors errors = new ActionErrors();
         Iterator iter = requiredAttributes.iterator();
@@ -228,15 +214,15 @@ public class InsertPublicationAction extends CRUDActionByOID {
                         errors.add(infoAttribute.getAttributeType(), new ActionError(
                                 "message.publicationAttribute.notVAlidate."
                                         + infoAttribute.getAttributeType()));
-                    }
-                } else {
+                    }                    
+                }
+                else {
                     Integer valueInteger = (Integer) object;
                     if (valueInteger == null || valueInteger.intValue() == 0) {
                         errors.add(infoAttribute.getAttributeType(), new ActionError(
                                 "message.publicationAttribute.notVAlidate."
                                         + infoAttribute.getAttributeType()));
-
-                    }
+                    }                     
                 }
             }
         }
@@ -260,12 +246,13 @@ public class InsertPublicationAction extends CRUDActionByOID {
             return crudMapping.findForward("Unsuccessfull-edit");
         }
 
-        ServiceUtils.executeService(SessionUtils.getUserView(request), crudMapping.getEditService(),
-                args);
+        ServiceUtils.executeService(SessionUtils.getUserView(request),
+                crudMapping.getEditService(), args);
         return crudMapping.findForward("successfull-edit");
     }
 
-    public List readAuthorsToInsert(List authorsIds, IUserView userView) throws FenixServiceException {
+    public List readAuthorsToInsert(List authorsIds, IUserView userView)
+            throws FenixServiceException {
 
         List newAuthorsIds = new ArrayList();
         Iterator iteratorIds = authorsIds.iterator();
@@ -277,7 +264,8 @@ public class InsertPublicationAction extends CRUDActionByOID {
 
         Object[] args1 = { userView };
 
-        IAuthor author = (IAuthor) ServiceUtils.executeService(userView, "ReadAuthorByKeyPerson", args1);
+        IAuthor author = (IAuthor) ServiceUtils.executeService(userView, "ReadAuthorByKeyPerson",
+                args1);
 
         Object[] args = { newAuthorsIds };
         List authors = (List) ServiceUtils.executeService(userView, "ReadAuthorsToInsert", args);
@@ -325,11 +313,13 @@ public class InsertPublicationAction extends CRUDActionByOID {
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { userView };
 
-        IAuthor author = (IAuthor) ServiceUtils.executeService(userView, "ReadAuthorByKeyPerson", args);
+        IAuthor author = (IAuthor) ServiceUtils.executeService(userView, "ReadAuthorByKeyPerson",
+                args);
 
         List publications = author.getAuthorPublications();
 
-        IPublication publication = Cloner.copyInfoPublication2IPublication((InfoPublication) infoObject);
+        IPublication publication = Cloner
+                .copyInfoPublication2IPublication((InfoPublication) infoObject);
 
         Integer keyPublicationTypeId = ((InfoPublication) infoObject).getKeyPublicationType();
 

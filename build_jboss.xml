@@ -282,6 +282,16 @@
 		    			   property="JdbcAccessClass"/>
 			<replacefilter token="@roleback.filename@"
 		    			   property="roleback.filename"/>
+
+			<replacefilter token="@log4j.email.smtp.host@"
+						   property="log4j.email.smtp.host"/>
+			<replacefilter token="@log4j.email.smtp.from@"
+						   property="log4j.email.smtp.from"/>
+			<replacefilter token="@log4j.email.smtp.to@"
+						   property="log4j.email.smtp.to"/>
+			<replacefilter token="@log4j.email.smtp.subject@"
+						   property="log4j.email.smtp.subject"/>
+
 		</replace>
 	</target>
 
@@ -296,6 +306,7 @@
                encoding="${encoding}">
 			<src path="${src}"/>
        		<include name="constants/**/*.java"/>
+			<include name="commons/**/*.java"/>
        		<include name="DataBeans/**/*.java"/>
        		<include name="Dominio/**/*.java"/>
        		<include name="fileSuport/**/*.java"/>

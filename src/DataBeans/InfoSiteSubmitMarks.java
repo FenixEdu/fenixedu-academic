@@ -1,7 +1,8 @@
 package DataBeans;
 
 import java.util.List;
-import java.util.ListIterator;
+
+import org.apache.log4j.Logger;
 
 /**
  * @author Tânia Pousão
@@ -9,9 +10,10 @@ import java.util.ListIterator;
  *  
  */
 public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteComponent {
+    private static final Logger logger = Logger.getLogger(InfoSiteSubmitMarks.class);
     private InfoEvaluation infoEvaluation;
 
-    private List marksList;
+    private Integer submited;
 
     //errors
     private List notEnrolmented = null;
@@ -22,6 +24,16 @@ public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteCompo
 
     public boolean equals(Object objectToCompare) {
         boolean result = false;
+        
+        if (logger.isDebugEnabled()) {
+            logger.debug("equalsInfoSiteSubmitMarks");
+            try {
+                throw new Exception();
+            }catch(Exception e) {
+                logger.debug(e.getStackTrace().toString());
+            }
+            
+        }
 
         if (objectToCompare instanceof InfoSiteStudents
                 && (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null
@@ -32,17 +44,17 @@ public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteCompo
             result = true;
         }
 
-        if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null
+        if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getSubmited() == null
                 && result == true) {
             return true;
         }
 
-        if (((InfoSiteMarks) objectToCompare).getMarksList() == null || this.getMarksList() == null
-                || ((InfoSiteMarks) objectToCompare).getMarksList().size() != this.getMarksList().size()) {
+        if (((InfoSiteMarks) objectToCompare).getMarksList() == null || this.getSubmited() == null
+                || ((InfoSiteMarks) objectToCompare).getMarksList().size() != this.getSubmited().intValue()) {
             return false;
         }
 
-        ListIterator iter1 = ((InfoSiteMarks) objectToCompare).getMarksList().listIterator();
+        /*ListIterator iter1 = ((InfoSiteMarks) objectToCompare).getMarksList().listIterator();
         ListIterator iter2 = this.getMarksList().listIterator();
         while (result && iter1.hasNext()) {
             InfoMark infoMark1 = (InfoMark) iter1.next();
@@ -50,24 +62,12 @@ public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteCompo
             if (!infoMark1.equals(infoMark2)) {
                 result = false;
             }
-        }
+        }*/
 
         return result;
     }
 
-    /**
-     * @return
-     */
-    public List getMarksList() {
-        return marksList;
-    }
 
-    /**
-     * @param list
-     */
-    public void setMarksList(List list) {
-        marksList = list;
-    }
 
     /**
      * @return
@@ -126,4 +126,16 @@ public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteCompo
         this.mestrado = mestrado;
     }
 
+    /**
+     * @return Returns the nSubmited.
+     */
+    public Integer getSubmited() {
+        return submited;
+    }
+    /**
+     * @param submited The nSubmited to set.
+     */
+    public void setSubmited(Integer submited) {
+        this.submited = submited;
+    }
 }

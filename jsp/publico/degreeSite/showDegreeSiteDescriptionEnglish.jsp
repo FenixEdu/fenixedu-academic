@@ -27,10 +27,13 @@
 		&gt;&nbsp;<bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
 	</div>
 				
-	<!-- PÁGINA EM PORTUGUÊS -->
+	<!-- Pï¿½GINA EM PORTUGUï¿½S -->
 	<div class="version">
 		<span class="px10">
-			<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + pageContext.findAttribute("degreeID").toString()  + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>">portuguese version</html:link> <img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Portuguese version!" width="16" height="12" />
+			<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + pageContext.findAttribute("degreeID").toString()  + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>">
+				<bean:message key="label.version.portuguese" />
+			</html:link>
+			<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Portuguese version!" width="16" height="12" />
 		</span>
 	</div> 
 			  
@@ -110,7 +113,7 @@
 	<!-- COORDINATOR END-->
 			 
 	<div class="degree_imageplacer">
-		<!-- IMAGEM REFERENTE À LICENCIATURA  width="250" height="150"-->
+		<!-- IMAGEM REFERENTE ï¿½ LICENCIATURA  width="250" height="150"-->
 	</div>
 	
 	<br />
@@ -118,7 +121,7 @@
 	<!--<div class="col_left">			 	-->
 		<logic:notEmpty name="infoDegreeInfo" property="descriptionEn" >			 	
 			<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.description.en" /> </h2>
-			<p><!-- BREVE DESCRIÇAO DA LICENCIATURA--><bean:write name="infoDegreeInfo" property="descriptionEn" filter="false" /></p>
+			<p><!-- BREVE DESCRIï¿½AO DA LICENCIATURA--><bean:write name="infoDegreeInfo" property="descriptionEn" filter="false" /></p>
 		</logic:notEmpty>
 				 
   		<logic:notEmpty name="infoDegreeInfo" property="objectivesEn" >
@@ -153,7 +156,7 @@
 	<br /> 				
 	<logic:notEmpty name="infoDegreeInfo" property="professionalExitsEn" >
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.professionalExits.en" /></h2>
-		<p><!-- TEXTO - SAÍDAS PROFISSIONAIS--><bean:write name="infoDegreeInfo" property="professionalExitsEn" filter="false" /></p>  
+		<p><!-- TEXTO - SAï¿½DAS PROFISSIONAIS--><bean:write name="infoDegreeInfo" property="professionalExitsEn" filter="false" /></p>  
 	</logic:notEmpty>
 	<br />
 	<br /> 			  

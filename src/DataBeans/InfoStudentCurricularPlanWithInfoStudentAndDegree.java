@@ -11,7 +11,7 @@ public class InfoStudentCurricularPlanWithInfoStudentAndDegree extends InfoStude
         if (studentCurricularPlan != null) {
             setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
                     .newInfoFromDomain(studentCurricularPlan.getDegreeCurricularPlan()));
-            setInfoStudent(InfoStudent.newInfoFromDomain(studentCurricularPlan.getStudent()));
+            setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(studentCurricularPlan.getStudent()));
         }
     }
 

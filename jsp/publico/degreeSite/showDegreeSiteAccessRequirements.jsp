@@ -8,9 +8,8 @@
 <p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoDegreeInfo">
-
-	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a>
-		&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>
+	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml"><bean:message key="label.school" /></a>
+		&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml"><bean:message key="label.education" /></a>
 		<bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso" />	
 		&nbsp;&gt;&nbsp; 
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>">
@@ -19,29 +18,30 @@
 		&nbsp;&gt;&nbsp;<bean:message key="label.accessRequirements"/>
 	</div>
 	
-	<!-- PÁGINA EM INGLÊS -->
+	<!-- Pï¿½GINA EM INGLï¿½S -->
 	<div class="version">
 		<span class="px10">
-			<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
+			<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >
+				<bean:message key="label.version.english" />
+			</html:link>
+			<img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
 		</span>
 	</div> 
-	<div class="clear"></div> 
 	
 	<h1>
 		<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />
-		&nbsp;em&nbsp;
+			<bean:message key="label.in" />
 		<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
 	</h1>
+	
 	<h2><span class="greytxt"><bean:message key="label.accessRequirements"/></span></h2>
 
-	<br />
 	<!-- NOME(S) DA PROVA(S) DE INGRESSO -->
   <logic:notEmpty name="infoDegreeInfo" property="testIngression">
   	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.testIngression" /></h2>  
 	<p><bean:write name="infoDegreeInfo" property="testIngression" filter="false" /></p>
   </logic:notEmpty>
   
-  	<br />
   <!-- VAGAS -->
  	<logic:notEmpty name="infoDegreeInfo" property="driftsInitial">
 	  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.drifts" /></h2>
@@ -58,8 +58,7 @@
 	  </ul>			
 	</logic:notEmpty>    	  	
 	 
-	 <br />
-	  <!-- CLASSIFICAÇÕES-->
+  <!-- CLASSIFICAï¿½ï¿½ES-->
   <logic:notEmpty name="infoDegreeInfo" property="classifications">
 	  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.classifications" /></h2>
 	 	<bean:write name="infoDegreeInfo" property="classifications" filter="false" />
@@ -98,7 +97,7 @@
 	</logic:empty>	
 	</logic:empty> 
 
-	<br />
+	<div class="clear"></div>
 	<p><span class="px10"><bean:message key="label.information.responsability.information.degree" /></span></p>				 
 
 </logic:present>

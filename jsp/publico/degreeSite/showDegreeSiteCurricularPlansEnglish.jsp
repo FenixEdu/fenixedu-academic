@@ -5,9 +5,11 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.TipoCurso" %>
 <%@ page import="Util.DegreeCurricularPlanState" %>
+
 <p><span class="error"><html:errors/></span></p>
+
 <logic:present name="infoDegreeCurricularPlan">
-	<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> >
+	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> >
 		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
 		<logic:equal name="degreeType" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
 			 <html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino Mestrados</html:link>
@@ -22,10 +24,13 @@
 		 &gt;&nbsp;<bean:message key="label.curricularPlan.en"/>
 	</div>		
 		
-	<%-- PÁGINA EM PORTUGÊS --%>
+	<%-- Pï¿½GINA EM PORTUGï¿½S --%>
 	<div class="version">
 		<span class="px10">
-			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >portuguese version</html:link> <img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Portuguese version!" width="16" height="12" />
+			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >
+				<bean:message key="label.version.portuguese" />
+			</html:link>
+			<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Portuguese version!" width="16" height="12" />
 		</span>	
 	</div>
 	<div class="clear"></div> 
@@ -74,7 +79,7 @@
 			<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
 			<p><html:link page="<%= "/chooseExamsMapContextDA.do?executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&amp;method=choose&amp;index=18&amp;selectAllCurricularYears=on" %>"><bean:message key="link.exams.en" /></html:link>
 		<!--	<bean:message key="text.curricularPlan" /> -->
-			In this area it will find the information relative the dates of evaluation (1ª and 2ª time).
+			In this area it will find the information relative the dates of evaluation (1ï¿½ and 2ï¿½ time).
 
 			
 			<br /><br />
@@ -141,7 +146,7 @@
 	  </table> 
 	</div>
 			
-	<%-- DESCRIÇÃO DO PLANO CURRICULAR(activo e o mais recente) --%>
+	<%-- DESCRIï¿½ï¿½O DO PLANO CURRICULAR(activo e o mais recente) --%>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="descriptionEn">
 		<p><bean:write name="infoDegreeCurricularPlan" property="descriptionEn" filter="false" /></p>
 	</logic:notEmpty>	

@@ -9,8 +9,6 @@ import org.apache.commons.collections.CollectionUtils;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.InfoRole;
 import Dominio.ICoordinator;
 import Dominio.IMasterDegreeCandidate;

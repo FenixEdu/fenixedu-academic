@@ -4,11 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <bean:define id="submitMarksComponent" name="siteView" property="component" type="DataBeans.InfoSiteSubmitMarks"/>
-<bean:size id="sizeSubmitedMark" name="submitMarksComponent" property="marksList" />
-
-<logic:greaterThan name="sizeSubmitedMark" value="0">
+<logic:greaterThan name="submitMarksComponent" property="submited" value="0">
 	<p><h2><bean:message key="label.submitMarksNumber.submit" />
-	<bean:write name="sizeSubmitedMark"/>
+	<bean:write name="submitMarksComponent" property="submited"/>
 	<bean:message key="label.submitMarksNumber.marks" /></h2></p>
 </logic:greaterThan>
 

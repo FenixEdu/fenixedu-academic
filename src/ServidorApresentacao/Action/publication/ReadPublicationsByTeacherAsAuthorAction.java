@@ -43,7 +43,6 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
         String typePublication = request.getParameter("typePublication");
 
         ActionForward actionForward = mapping.findForward("show-cientific-author-form");
-        //DynaActionForm dynaForm = (DynaActionForm) form;
 
         if (session != null) {
 
@@ -65,7 +64,6 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
 
         HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
-        //ActionErrors errors = new ActionErrors();
 
         String typePublication = request.getParameter("typePublication");
 
@@ -74,7 +72,6 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
         Integer publicationId = new Integer(request.getParameter("idPublication"));
 
         ActionForward actionForward = mapping.findForward("show-cientific-Teacher-form");
-        //DynaActionForm dynaForm = (DynaActionForm) form;
 
         if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
             actionForward = mapping.findForward("show-didatic-Teacher-form");
@@ -82,7 +79,8 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
         try {
             if (session != null) {
 
-                Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId };
+                Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId,
+                        typePublication };
                 SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
                         "InsertPublicationInTeacherList", argsToInsertPublicationInTeacherSList);
 
@@ -109,7 +107,6 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
         Integer publicationId = new Integer(request.getParameter("idPublication"));
 
         ActionForward actionForward = mapping.findForward("show-cientific-Teacher-form");
-        //DynaActionForm dynaForm = (DynaActionForm) form;
 
         if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
             actionForward = mapping.findForward("show-didatic-Teacher-form");

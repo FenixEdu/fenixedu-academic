@@ -6,6 +6,8 @@
 
 package ServidorPersistente.OJB;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -337,5 +339,59 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         criteria.addEqualTo("executionCourseProperties.name", executionCoursePropertyName);
         return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
     }
+    
+	public List readByCurricularYearAndExecutionPeriodAndExecutionDegreeList(Integer curricularYear,
+				IExecutionPeriod executionPeriod, List executionDegreeList)
+				throws ExcepcaoPersistencia {
+			Criteria criteria = new Criteria();
+			Criteria criteriaExcutionDegreeName = new Criteria();
+			Criteria criteriaExcutionDegreeSigla = new Criteria();
+		
+			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",
+					curricularYear);
+			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
+					executionPeriod.getSemester());
+			if ((executionDegreeList != null) && (executionDegreeList.size() != 0)) {
+			   List executionArrayName = new ArrayList();
+			   List executionArraySigla = new ArrayList();
+			   Iterator iterator = executionDegreeList.iterator();
+			   System.out.println("NO OJB" + executionDegreeList.size());		 
+			   while (iterator.hasNext()) {
+
+				ICursoExecucao cursoExecucao = (ICursoExecucao)iterator.next();
+
+				executionArrayName.add(cursoExecucao.getCurricularPlan().getName());
+				executionArraySigla.add(cursoExecucao.getCurricularPlan().getDegree().getSigla() );
+			
+			   }
+			   criteriaExcutionDegreeName.addIn("associatedCurricularCourses.degreeCurricularPlan.name", executionArrayName);
+			   criteria.addAndCriteria(criteriaExcutionDegreeName);
+			   criteriaExcutionDegreeSigla.addIn("associatedCurricularCourses.degreeCurricularPlan.degree.sigla", executionArraySigla);
+			   criteria.addAndCriteria(criteriaExcutionDegreeName);
+			   
+		   }
+					
+//					
+//			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
+//					.getCurricularPlan().getName());
+//			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
+//					executionDegree.getCurricularPlan().getDegree().getSigla());
+			criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+			criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+
+			List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
+			return executionCourseList;
+		}
+/*	if ((situations != null) && (situations.size() != 0)) {
+			   List situationsInteger = new ArrayList();
+			   Iterator iterator = situations.iterator();
+			   while (iterator.hasNext()) {
+				   situationsInteger.add(((SituationName) iterator.next()).getSituationName());
+
+			   }
+			   criteriaSituations.addIn("situation", situationsInteger);
+			   criteria.addAndCriteria(criteriaSituations);
+		   }*/
+
 
 }

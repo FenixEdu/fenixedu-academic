@@ -35,7 +35,7 @@
 				<bean:message key="label.curricularPlan"/>
 				</html:link>&gt;&nbsp; 
 				<html:link page="<%= "/chooseContextDANew.do?method=nextPagePublic&nextPage=classSearch&inputPage=chooseContext&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
-					<bean:message key="label.turmas" />
+					<bean:message key="label.classes" />
 				</html:link>&gt;&nbsp; 
 				<%= request.getAttribute("sigla").toString() %>
 		</div>	

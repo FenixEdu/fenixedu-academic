@@ -20,6 +20,7 @@ import Util.EnrolmentEvaluationType;
 public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         IPersistentEnrolmentEvaluation {
 
+
     public void delete(IEnrolmentEvaluation enrolmentEvaluation) throws ExcepcaoPersistencia {
         try {
             super.delete(enrolmentEvaluation);
@@ -131,5 +132,19 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         finalCriteria.addAndCriteria(firstCriteria);
 
         return queryList(EnrolmentEvaluation.class, finalCriteria);
+    }
+    
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentEnrolmentEvaluation#readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(Dominio.IEnrollment, Util.EnrolmentEvaluationState, Util.EnrolmentEvaluationType)
+     */
+    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+            IEnrollment enrolment, EnrolmentEvaluationState temporary_obj,
+            EnrolmentEvaluationType enrolmentEvaluationType) throws ExcepcaoPersistencia{
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolmentEvaluationState", temporary_obj);
+        criteria.addEqualTo("enrolmentEvaluationType", enrolmentEvaluationType);
+        
+        return (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
     }
 }

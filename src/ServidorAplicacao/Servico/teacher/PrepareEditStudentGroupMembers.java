@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -20,7 +18,6 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;

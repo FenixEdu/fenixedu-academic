@@ -11,7 +11,7 @@
 	<bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="request"/>
 	
 	<bean:define id="linkPrintGuide">
-		/printGuide.do?method=print&page=0&year=<bean:write name="guide" property="year" />&number=<bean:write name="guide" property="number" />&version=<bean:write name="guide" property="version" />
+		/printGuide.do?method=print&page=0&year=<bean:write name="guide" property="year" />&number=<bean:write name="guide" property="number" />&version=<bean:write name="guide" property="version" />&copies=2
 	</bean:define>	
 
 	<p>

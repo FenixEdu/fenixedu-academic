@@ -32,4 +32,12 @@ public interface IPersistentEnrolmentEvaluation extends IPersistentObject {
             throws ExcepcaoPersistencia;
 
     public List readAlreadySubmitedMarks(List enrolmentIds) throws ExcepcaoPersistencia;
+
+    /**
+     * @param enrolment
+     * @param temporary_obj
+     * @param enrolmentEvaluationType
+     * @return
+     */
+    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(IEnrollment enrolment, EnrolmentEvaluationState temporary_obj, EnrolmentEvaluationType enrolmentEvaluationType) throws ExcepcaoPersistencia;
 }

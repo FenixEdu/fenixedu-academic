@@ -18,7 +18,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegree;
+import DataBeans.InfoDepartment;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import DataBeans.teacher.professorship.DetailedProfessorship;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -31,24 +33,37 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
  *  
  */
 public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
+	
+	private String makeBodyHeader(String executionYear, Integer semester, Integer teacherType) {
+		
+		String sem = semester.intValue() == 0 ? "Ambos Semestres" : (semester.intValue() + "º Semestre");
+		String teacher = teacherType.intValue() == 0 ? "Todos os Docentes" : "Apenas Responsáveis";		
+		String header = "Ano Lectivo " + executionYear + " - " + sem + " - " + teacher;
+		
+		return header;
+		
+	}
 
     public ActionForward prepareForm(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm executionYearForm = (DynaActionForm) actionForm;
         Integer executionYearId = (Integer) executionYearForm.get("executionYearId");
+        Integer semester = (Integer)executionYearForm.get("semester");
+        Integer teacherType = (Integer)executionYearForm.get("teacherType");
+        
         try {
-
+        	
             Object[] args = { executionYearId };
 
             List executionDegrees = (List) ServiceUtils.executeService(null,
                     "ReadExecutionDegreesByExecutionYearId", args);
 
-            List executionYears = (List) ServiceUtils.executeService(null,
-                    "ReadNotClosedExecutionYears", null);
-
+            List executionYears = (List) ServiceUtils
+                    .executeService(null, "ReadNotClosedExecutionYears", null);
+            
             List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
-
+            
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 //put execution year in the form
                 if (executionYearId == null) {
@@ -57,7 +72,15 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
                     executionYearForm.set("executionYearId", executionYearId);
                 }
-
+                //initialize semester
+                if(semester == null) {
+                	semester = new Integer(0);
+                }
+                //initialize teacherType
+                if(teacherType == null) {
+                	teacherType = new Integer(0);
+                }
+                
                 Collections.sort(executionDegrees, new ComparatorByNameForInfoExecutionDegree());
                 Iterator iter = executionDegrees.iterator();
                 while (iter.hasNext()) {
@@ -73,9 +96,25 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
             }
 
+            Iterator iter = executionYears.iterator();
+            while(iter.hasNext()) {
+            	InfoExecutionYear year = (InfoExecutionYear)iter.next();
+            	if(year.getIdInternal().intValue() == executionYearId.intValue()) {
+                	request.setAttribute("searchDetails", makeBodyHeader(year.getYear(), semester, teacherType));
+                	break;
+            	}
+            }
+            
+            if(semester != null)
+            	request.setAttribute("semester", semester);
+            if(teacherType != null)
+            	request.setAttribute("teacherType", teacherType);
+
+            request.setAttribute("executionYearId", executionYearId);
             request.setAttribute("executionDegrees", executionDegrees);
             request.setAttribute("executionYears", executionYears);
             request.setAttribute("departments", departments);
+
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -104,33 +143,55 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
         DynaActionForm executionDegreeForm = (DynaActionForm) actionForm;
         Integer executionDegreeId = (Integer) executionDegreeForm.get("executionDegreeId");
+        
+        Integer semester = (Integer)executionDegreeForm.get("semester");
+        Integer teacherType = (Integer)executionDegreeForm.get("teacherType");
+        String searchDetails = (String)executionDegreeForm.get("searchDetails");
+        
         try {
 
-            Object[] args = { executionDegreeId };
+            Object[] args = { executionDegreeId, semester, teacherType };
 
             List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(null,
-                    "ReadProfessorshipsAndResponsibilitiesByExecutionDegree", args);
-            Collections.sort(detailedProfessorShipsListofLists, new Comparator() {
+                    "ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod", args);
+            
+            if((detailedProfessorShipsListofLists != null) && (!detailedProfessorShipsListofLists.isEmpty())) {
+            	
 
-                public int compare(Object o1, Object o2) {
+                Collections.sort(detailedProfessorShipsListofLists, new Comparator() {
 
-                    List list1 = (List) o1;
-                    List list2 = (List) o2;
-                    DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
-                    DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+                    public int compare(Object o1, Object o2) {
 
-                    return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
-                            .compareToIgnoreCase(
-                                    dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
-                }
+                        List list1 = (List) o1;
+                        List list2 = (List) o2;
+                        DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
+                        DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
 
-            });
+                        return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
+                                .compareToIgnoreCase(
+                                        dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
+                    }
 
-            request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
+                });
+
+                request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
+            }
+            
+            Object[] oid = { executionDegreeId };
+            InfoExecutionDegree degree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadExecutionDegreeByOID", oid);
+
+            request.setAttribute("searchType", "Consulta Por Curso");
+            request.setAttribute("searchTarget", degree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso() + " em " + 
+            		degree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+            request.setAttribute("searchDetails", searchDetails);
+            request.setAttribute("semester", semester);
+           	request.setAttribute("teacherType", teacherType);
+            
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
+        
         return mapping.findForward("showProfessorships");
     }
 
@@ -140,29 +201,48 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
         DynaActionForm departmentForm = (DynaActionForm) actionForm;
         Integer departmentId = (Integer) departmentForm.get("departmentId");
         Integer executionYearId = (Integer) departmentForm.get("executionYearId");
+
+        Integer semester = (Integer)departmentForm.get("semester");
+        Integer teacherType = (Integer)departmentForm.get("teacherType");
+        String searchDetails = (String)departmentForm.get("searchDetails");
+        
         try {
 
-            Object[] args = { departmentId, executionYearId };
+            Object[] args = { departmentId, executionYearId, semester, teacherType };
 
             List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(null,
-                    "ReadProfessorshipsAndResponsibilitiesByDepartment", args);
-            Collections.sort(detailedProfessorShipsListofLists, new Comparator() {
+                    "ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod", args);
+            
+            if((detailedProfessorShipsListofLists != null) && (!detailedProfessorShipsListofLists.isEmpty())) {
+	
+	
+	            Collections.sort(detailedProfessorShipsListofLists, new Comparator() {
+	
+	                public int compare(Object o1, Object o2) {
+	
+	                    List list1 = (List) o1;
+	                    List list2 = (List) o2;
+	                    DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
+	                    DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+	
+	                    return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
+	                            .compareToIgnoreCase(
+	                                    dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
+	                }
+	
+	            });
 
-                public int compare(Object o1, Object o2) {
-
-                    List list1 = (List) o1;
-                    List list2 = (List) o2;
-                    DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
-                    DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
-
-                    return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
-                            .compareToIgnoreCase(
-                                    dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
-                }
-
-            });
-
-            request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
+	            request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
+            }
+            
+            Object[] oid = { departmentId };
+            InfoDepartment department = (InfoDepartment) ServiceUtils.executeService(null, "ReadDepartmentByOID", oid);
+            
+            request.setAttribute("searchType", "Consulta Por Departmento");
+            request.setAttribute("searchTarget", department.getName());
+            request.setAttribute("searchDetails", searchDetails);
+        	request.setAttribute("semester", semester);
+           	request.setAttribute("teacherType", teacherType);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

@@ -24,7 +24,6 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -55,73 +54,82 @@ public class WriteEnrollment implements IService {
     public void run(Integer executionDegreeId, Integer studentCurricularPlanID,
             Integer curricularCourseID, Integer executionPeriodID,
             CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView)
-            throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentEnrollment enrollmentDAO = persistentSuport.getIPersistentEnrolment();
-            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
-                    .getIStudentCurricularPlanPersistente();
-            IPersistentExecutionPeriod executionPeriodDAO = persistentSuport
-                    .getIPersistentExecutionPeriod();
-            IPersistentCurricularCourse curricularCourseDAO = persistentSuport
-                    .getIPersistentCurricularCourse();
+            throws ExcepcaoPersistencia {
 
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO
-                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseDAO.readByOID(
-                    CurricularCourse.class, curricularCourseID);
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        IPersistentEnrollment enrollmentDAO = persistentSuport.getIPersistentEnrolment();
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
+                .getIStudentCurricularPlanPersistente();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
+        IPersistentCurricularCourse curricularCourseDAO = persistentSuport
+                .getIPersistentCurricularCourse();
 
-            IExecutionPeriod executionPeriod = null;
-            if (executionPeriodID == null) {
-                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            } else {
-                executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
-                        executionPeriodID);
-            }
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO
+                .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+        ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseDAO.readByOID(
+                CurricularCourse.class, curricularCourseID);
 
-            IEnrollment enrollment = enrollmentDAO
-                    .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-                            studentCurricularPlan, curricularCourse, executionPeriod);
-
-            if (enrollment == null) {
-                IEnrollment enrollmentToWrite;
-                if (enrollmentClass == null || enrollmentClass.equals(new Integer(1))
-                        || enrollmentClass.equals(new Integer(0))) {
-
-                    enrollmentToWrite = new Enrolment();
-                } else if (enrollmentClass.equals(new Integer(2))) {
-                    enrollmentToWrite = new EnrolmentInOptionalCurricularCourse();
-                } else {
-                    enrollmentToWrite = new EnrolmentInExtraCurricularCourse();
-                }
-                enrollmentDAO.simpleLockWrite(enrollmentToWrite);
-                enrollmentToWrite.setCurricularCourse(curricularCourse);
-                enrollmentToWrite.setEnrollmentState(EnrollmentState.ENROLLED);
-                enrollmentToWrite.setExecutionPeriod(executionPeriod);
-                enrollmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
-                enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-                enrollmentToWrite.setCreationDate(new Date());
-                enrollmentToWrite.setCondition(getEnrollmentCondition(enrollmentType));
-                enrollmentToWrite.setCreatedBy(userView.getUtilizador());
-
-                createEnrollmentEvaluation(enrollmentToWrite);
-
-                createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod,
-                        enrollmentToWrite);
-            } else {
-                if (enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE)) {
-                    enrollmentDAO.simpleLockWrite(enrollment);
-                    enrollment.setCondition(getEnrollmentCondition(enrollmentType));
-                }
-                if (enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
-                    enrollmentDAO.simpleLockWrite(enrollment);
-                    enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
-                }
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        IExecutionPeriod executionPeriod = null;
+        if (executionPeriodID == null) {
+            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            System.out.println("Obtained execution period for current");
+        } else {
+            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+                    executionPeriodID);
+            System.out.println("Obtained execution period for specified id: " + executionDegreeId);
         }
+
+        IEnrollment enrollment = enrollmentDAO
+                .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(studentCurricularPlan,
+                        curricularCourse, executionPeriod);
+
+        System.out.println("Obtained enrollment for studentCurricularPlan: " + studentCurricularPlan.getIdInternal() 
+                + " curricularCourse " + curricularCourse.getIdInternal()
+                + " executionPeriod " + executionPeriod.getIdInternal());
+
+        if (enrollment == null) {
+
+            System.out.println("Enrollment is null");
+
+            IEnrollment enrollmentToWrite;
+            if (enrollmentClass == null || enrollmentClass.equals(new Integer(1))
+                    || enrollmentClass.equals(new Integer(0))) {
+
+                enrollmentToWrite = new Enrolment();
+            } else if (enrollmentClass.equals(new Integer(2))) {
+                enrollmentToWrite = new EnrolmentInOptionalCurricularCourse();
+            } else {
+                enrollmentToWrite = new EnrolmentInExtraCurricularCourse();
+            }
+            enrollmentDAO.simpleLockWrite(enrollmentToWrite);
+            enrollmentToWrite.setCurricularCourse(curricularCourse);
+            enrollmentToWrite.setEnrollmentState(EnrollmentState.ENROLLED);
+            enrollmentToWrite.setExecutionPeriod(executionPeriod);
+            enrollmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
+            enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+            enrollmentToWrite.setCreationDate(new Date());
+            enrollmentToWrite.setCondition(getEnrollmentCondition(enrollmentType));
+            enrollmentToWrite.setCreatedBy(userView.getUtilizador());
+
+            createEnrollmentEvaluation(enrollmentToWrite);
+
+            createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod,
+                    enrollmentToWrite);
+        } else {
+            System.out.println("Enrollment is not null");
+            if (enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE)) {
+                System.out.println("Enrollment is invisible");
+                enrollmentDAO.simpleLockWrite(enrollment);
+                enrollment.setCondition(getEnrollmentCondition(enrollmentType));
+            }
+            if (enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
+                System.out.println("Enrollment is annulled");
+                enrollmentDAO.simpleLockWrite(enrollment);
+                enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
+            }
+        }
+
+        System.out.println("Reseting attends.");
         resetAttends();
     }
 
@@ -209,7 +217,7 @@ public class WriteEnrollment implements IService {
             enrolmentEvaluation.setObservation(null);
             enrolmentEvaluation.setPersonResponsibleForGrade(null);
             enrolmentEvaluation.setWhen(null);
-            enrolmentEvaluation.setAckOptLock(new Integer(1));
+            // enrolmentEvaluation.setAckOptLock(new Integer(1));
         }
     }
 

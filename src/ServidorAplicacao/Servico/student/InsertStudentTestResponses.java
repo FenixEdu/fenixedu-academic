@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteStudentTestFeedback;
@@ -30,6 +32,7 @@ import Dominio.IStudentTestQuestion;
 import Dominio.Mark;
 import Dominio.StudentTestLog;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servico.exceptions.tests.NotAuthorizedStudentToDoTestException;
 import ServidorAplicacao.strategy.tests.IQuestionCorrectionStrategyFactory;
 import ServidorAplicacao.strategy.tests.QuestionCorrectionStrategyFactory;
@@ -52,13 +55,17 @@ import UtilTests.ParseQuestion;
  */
 public class InsertStudentTestResponses implements IService {
 
+    private static final Logger logger = Logger.getLogger(InsertStudentTestResponses.class);
+
     public InsertStudentTestResponses() {
     }
 
     private String path = new String();
 
-    public InfoSiteStudentTestFeedback run(String userName, Integer studentNumber,
-            Integer distributedTestId, Response[] response, String path) throws FenixServiceException {
+    public InfoSiteStudentTestFeedback run(String userName, Integer studentNumber, Integer distributedTestId, Response[] response, String path)
+            throws FenixServiceException {
+
+        String logIdString = "student nº " + studentNumber + " testId " + distributedTestId;
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
@@ -67,11 +74,11 @@ public class InsertStudentTestResponses implements IService {
             IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
             if (student == null)
                 throw new FenixServiceException();
-            if (!student.getNumber().equals(studentNumber))
+            if (!student.getPerson().getUsername().equalsIgnoreCase(userName))
                 throw new NotAuthorizedStudentToDoTestException();
 
-            IDistributedTest distributedTest = (IDistributedTest) persistentSuport
-                    .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+            IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+                    distributedTestId);
             if (distributedTest == null)
                 throw new FenixServiceException();
             String event = getLogString(response);
@@ -82,65 +89,60 @@ public class InsertStudentTestResponses implements IService {
             List errors = new ArrayList();
 
             if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
-                List studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
-                        .readByStudentAndDistributedTest(student, distributedTest);
+                List studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student,
+                        distributedTest);
                 Iterator it = studentTestQuestionList.iterator();
                 if (studentTestQuestionList.size() == 0)
-                    return null;
-                IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
-                        .getIPersistentStudentTestQuestion();
+                    throw new FenixServiceException();
+                IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
                 ParseQuestion parse = new ParseQuestion();
 
                 while (it.hasNext()) {
                     IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
                     persistentStudentTestQuestion.lockWrite(studentTestQuestion);
 
-                    InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestion
-                            .newInfoFromDomain(studentTestQuestion);
-                    infoStudentTestQuestion.setResponse(response[studentTestQuestion
-                            .getTestQuestionOrder().intValue() - 1]);
+                    InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestion.newInfoFromDomain(studentTestQuestion);
+                    infoStudentTestQuestion.setResponse(response[studentTestQuestion.getTestQuestionOrder().intValue() - 1]);
+
+                    if (logger.isDebugEnabled()) logger.debug(logIdString + "infoStudentTestQuestion.getResonse()= " + getLogString( new Response[] { infoStudentTestQuestion.getResponse() }));
 
                     if (infoStudentTestQuestion.getResponse().isResponsed()) {
                         responseNumber++;
-                        if (studentTestQuestion.getResponse() != null
-                                && distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
+                        if (studentTestQuestion.getResponse() != null && distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
                             //não pode aceitar nova resposta
                         } else {
                             try {
-                                infoStudentTestQuestion = parse.parseStudentTestQuestion(
-                                        infoStudentTestQuestion, this.path);
-                                infoStudentTestQuestion.setQuestion(correctQuestionValues(
-                                        infoStudentTestQuestion.getQuestion(), new Double(
-                                                infoStudentTestQuestion.getTestQuestionValue()
-                                                        .doubleValue())));
+                                infoStudentTestQuestion = parse.parseStudentTestQuestion(infoStudentTestQuestion, this.path);
+                                infoStudentTestQuestion.setQuestion(correctQuestionValues(infoStudentTestQuestion.getQuestion(), new Double(
+                                        infoStudentTestQuestion.getTestQuestionValue().doubleValue())));
                             } catch (Exception e) {
                                 throw new FenixServiceException(e);
                             }
 
-                            IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory
-                                    .getInstance();
+                            IQuestionCorrectionStrategyFactory questionCorrectionStrategyFactory = QuestionCorrectionStrategyFactory.getInstance();
                             IQuestionCorrectionStrategy questionCorrectionStrategy = questionCorrectionStrategyFactory
                                     .getQuestionCorrectionStrategy(infoStudentTestQuestion);
 
-                            String error = questionCorrectionStrategy
-                                    .validResponse(infoStudentTestQuestion);
+                            String error = questionCorrectionStrategy.validResponse(infoStudentTestQuestion);
                             if (error == null) {
-                                if ((!distributedTest.getTestType().equals(
-                                        new TestType(TestType.INQUIRY)))
-                                        && infoStudentTestQuestion.getQuestion()
-                                                .getResponseProcessingInstructions().size() != 0) {
+                                if ((!distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
+                                        && infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions().size() != 0) {
 
-                                    infoStudentTestQuestion = questionCorrectionStrategy
-                                            .getMark(infoStudentTestQuestion);
+                                    infoStudentTestQuestion = questionCorrectionStrategy.getMark(infoStudentTestQuestion);
                                 }
                                 totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
                                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                                 XMLEncoder encoder = new XMLEncoder(out);
+
+                                if (logger.isDebugEnabled()) logger.debug(logIdString + "before write: infoStudentTestQuestion.getResonse()= " + getLogString( new Response[] { infoStudentTestQuestion.getResponse() }));
+
                                 encoder.writeObject(infoStudentTestQuestion.getResponse());
                                 encoder.close();
+                                
+                                if (logger.isDebugEnabled()) logger.debug(logIdString + "out.toString()= " + out.toString());
+
                                 studentTestQuestion.setResponse(out.toString());
-                                studentTestQuestion.setTestQuestionMark(infoStudentTestQuestion
-                                        .getTestQuestionMark());
+                                studentTestQuestion.setTestQuestionMark(infoStudentTestQuestion.getTestQuestionMark());
 
                             } else {
                                 notResponseNumber++;
@@ -157,11 +159,9 @@ public class InsertStudentTestResponses implements IService {
                     }
                 }
                 if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-                    IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest()
-                            .readByDistributedTest(distributedTest);
-                    IFrequenta attend = persistentSuport.getIFrequentaPersistente()
-                            .readByAlunoAndDisciplinaExecucao(student,
-                                    (IExecutionCourse) distributedTest.getTestScope().getDomainObject());
+                    IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTest);
+                    IFrequenta attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,
+                            (IExecutionCourse) distributedTest.getTestScope().getDomainObject());
                     IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
 
                     if (mark == null) {
@@ -173,8 +173,7 @@ public class InsertStudentTestResponses implements IService {
                     persistentSuport.getIPersistentMark().simpleLockWrite(mark);
                 }
 
-                IPersistentStudentTestLog persistentStudentTestLog = persistentSuport
-                        .getIPersistentStudentTestLog();
+                IPersistentStudentTestLog persistentStudentTestLog = persistentSuport.getIPersistentStudentTestLog();
                 IStudentTestLog studentTestLog = new StudentTestLog();
                 studentTestLog.setDistributedTest(distributedTest);
                 studentTestLog.setStudent(student);
@@ -182,7 +181,7 @@ public class InsertStudentTestResponses implements IService {
                 studentTestLog.setEvent(event);
                 persistentStudentTestLog.simpleLockWrite(studentTestLog);
             } else
-                return null;
+                throw new NotAuthorizedException();
             infoSiteStudentTestFeedback.setResponseNumber(new Integer(responseNumber));
             infoSiteStudentTestFeedback.setNotResponseNumber(new Integer(notResponseNumber));
             infoSiteStudentTestFeedback.setErrors(errors);
@@ -227,9 +226,7 @@ public class InsertStudentTestResponses implements IService {
             while (it.hasNext()) {
                 ResponseProcessing responseProcessing = (ResponseProcessing) it.next();
 
-                responseProcessing.setResponseValue(new Double(responseProcessing.getResponseValue()
-                        .doubleValue()
-                        * difValue));
+                responseProcessing.setResponseValue(new Double(responseProcessing.getResponseValue().doubleValue() * difValue));
             }
         }
 
@@ -241,12 +238,10 @@ public class InsertStudentTestResponses implements IService {
         for (int questionNumber = 0; questionNumber < response.length; questionNumber++) {
             if (response[questionNumber] instanceof ResponseLID) {
                 if (((ResponseLID) response[questionNumber]).getResponse() != null) {
-                    for (int responseNumber = 0; responseNumber < ((ResponseLID) response[questionNumber])
-                            .getResponse().length; responseNumber++) {
+                    for (int responseNumber = 0; responseNumber < ((ResponseLID) response[questionNumber]).getResponse().length; responseNumber++) {
                         if (responseNumber != 0)
                             event = event.concat(",");
-                        event = event
-                                .concat(((ResponseLID) response[questionNumber]).getResponse()[responseNumber]);
+                        event = event.concat(((ResponseLID) response[questionNumber]).getResponse()[responseNumber]);
                     }
                 }
             } else if (response[questionNumber] instanceof ResponseSTR) {

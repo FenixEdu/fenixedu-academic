@@ -22,8 +22,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sun.util.calendar.Gregorian;
-
 import DataBeans.InfoAttendWithEnrollment;
 import DataBeans.InfoAttendsSummary;
 import DataBeans.InfoExecutionCourse;

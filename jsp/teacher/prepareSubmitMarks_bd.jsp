@@ -6,8 +6,6 @@
 <span class="error"><html:errors property="error.default" /></span>
 
 <h2><bean:message key="label.submit.listMarks" /></h2>
-
-<span class="error"><bean:message key="message.submit.warning" /></span>
 <br /><br />
 
 <logic:present name="siteView">

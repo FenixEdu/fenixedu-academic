@@ -1,5 +1,5 @@
-<div id="logoist"><img alt="[Logo] Instituto Superior Técnico" height="51" src="<%= request.getContextPath() %>/images/wwwist.gif" width="234" /></div>
-	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login .IST</a> | <a href="http://www.ist.utl.pt/html/instituto/index.shtml#cont">Contactos</a> | <a href="http://www.ist.utl.pt/html/mapadosite/">Mapa do Site</a> </div>
+<div id="logoist"><a href="http://www.ist.utl.pt/"><img alt="[Logo] Instituto Superior Tï¿½Ã©cnico" width="234" height="51" border="0" src="<%= request.getContextPath() %>/images/wwwist.gif" /></a></div>
+<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login .IST</a> | <a href="http://www.ist.utl.pt/html/instituto/index.shtml#cont">Contactos</a> | <a href="http://www.ist.utl.pt/html/mapadosite/">Mapa do Site</a> </div>
 
 <div id="search">
 		<form method="get" action="http://www.google.com/u/wwwist">

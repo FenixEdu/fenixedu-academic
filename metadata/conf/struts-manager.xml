@@ -396,6 +396,25 @@
 			<form-property name="page" type="java.lang.Integer"/>
 	  	</form-bean>
 
+		<form-bean name="executionCourseTransferCurricularCourseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="destinationExecutionDegreeId" type="java.lang.String"/>
+			<form-property name="curricularYear" type="java.lang.String"/>
+			<form-property name="destinationExecutionCourseId" type="java.lang.String"/>
+	  	</form-bean>
+
+		<form-bean
+				name="sepeateExecutionCourseForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="destinationExecutionDegreeId" type="java.lang.String"/>
+			<form-property name="destinationCurricularYear" type="java.lang.String"/>
+			<form-property name="destinationExecutionCourseID" type="java.lang.String"/>
+			<form-property name="shiftIdsToTransfer" type="java.lang.String[]"/>
+			<form-property name="curricularCourseIdsToTransfer" type="java.lang.String[]"/>
+	  	</form-bean>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1318,6 +1337,26 @@
 		<forward name="prepareAssociateCurricularCourseChooseDegreeCurricularPlan" path="df.executionCourseManagement.prepareAssociateCurricularCourseChooseDegreeCurricularPlan"/>
 		<forward name="associateCurricularCourse" path="df.executionCourseManagement.associateCurricularCourse"/>
 	</action>
+
+	<action path="/editExecutionCourseTransferCurricularCourses"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseTransferCurricularCoursesDispatchAction"
+			parameter="method"
+			name="executionCourseTransferCurricularCourseForm"
+			scope="request"
+			input="...">
+		<forward name="showPage" path="df.executionCourseManagement.transferCurricularCourse"/>
+		<forward name="completedTransfer" path="/executionCourseManagement.do?method=firstPage"/>
+	</action>
+
+	<action path="/seperateExecutionCourse"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.SeperateExecutionCourseDispatchAction"
+			parameter="method"
+			name="sepeateExecutionCourseForm"
+			scope="request"
+			input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
+		<forward name="showSeperationPage" path="df.executionCourseManagement.seperateExecutionCourse"/>
+		<forward name="returnFromTransfer" path="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod"/>
+	</action>	
 
 	
 	<!-- ========== PERSON MANAGEMENT ========== -->

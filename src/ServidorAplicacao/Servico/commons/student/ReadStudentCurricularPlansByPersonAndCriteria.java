@@ -17,7 +17,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
-import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import DataBeans.util.InfoStudentCurricularPlansWithSelectedEnrollments;
 import Dominio.IEnrollment;

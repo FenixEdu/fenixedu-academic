@@ -268,9 +268,12 @@ public class StudentsGratuityListAction extends DispatchAction {
             Collections.sort(infoGratuitySituationList, new BeanComparator("remainingValue"));
         } else if (orderingType.equals(new String("insurance"))) {
             Collections.sort(infoGratuitySituationList, new BeanComparator("insurancePayed"));
-        } else if (orderingType.equals(new String("scplan"))) {
+        } else if (orderingType.equals(new String("scplanState"))) {
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.currentState.state"));
+        } else if (orderingType.equals(new String("dcplan"))) {
+            Collections.sort(infoGratuitySituationList, new BeanComparator(
+                    "infoStudentCurricularPlan.infoDegreeCurricularPlan.name"));
         }
     }
 

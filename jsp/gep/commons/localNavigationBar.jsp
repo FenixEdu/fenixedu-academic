@@ -19,6 +19,13 @@
 		<br/>
 		<br/>
 	</li>
+	<li>
+	  	<html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare">
+	  		<bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES" />
+	  	</html:link>
+	  	<br/>
+		<br/>  
+  </li>
 </ul>
 <%--
 Devido às inscrições, as funcionalidades do portal GEP estão temporariamente desactivadas para não causar sobrecarga no servidor.

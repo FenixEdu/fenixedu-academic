@@ -17,7 +17,7 @@
 <logic:iterate id="infoQualification" name="infoSiteQualifications" property="infoQualifications">
 <tr>
 	<td class="listClasses">
-		<dt:format pattern="dd-MM-yyyy">
+		<dt:format pattern="yyyy">
 			<bean:write name="infoQualification" property="date.time" />
 		</dt:format>
 	</td>

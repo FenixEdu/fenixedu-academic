@@ -10,7 +10,6 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
 import pt.utl.ist.berserk.logic.filterManager.IFilter;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 //defines a type of filters
 abstract public class AccessControlFilter implements IFilter {

@@ -25,7 +25,7 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * @author barbosa
  */
 public class QualificationAction extends CRUDActionByOID {
-    private static String format = "dd/MM/yyyy";
+    private static String format = "yyyy";
 
     /*
      * (non-Javadoc)

@@ -125,7 +125,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
     public Double calculateStudentWeightedAverage(IStudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
         float marks = 0;
-        float numberOfWeigths = 0;
+        int numberOfWeigths = 0;
         List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment()
                 .readAllByStudentCurricularPlan(studentCurricularPlan);
 
@@ -202,10 +202,9 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
                 || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("MT03/05"))) {
             Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
             Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
-            infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0)
-                    .intValue()));
-            infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,
-                    0).intValue()));
+            infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage,1).doubleValue()));
+            infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage,1).doubleValue()));
+
 
             if (simpleAverage.floatValue() > weightedAverage.floatValue()) {
                 infoFinalResult.setFinalAverage(String.valueOf(NumberUtils
@@ -234,7 +233,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
                 || (this.getDegreeCurricularPlan().getName().equalsIgnoreCase("ML02/04"))) {
 
             Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
-            infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
+            infoFinalResult.setAverageWeighted(String.valueOf(NumberUtils.formatNumber(weightedAverage, 1).doubleValue()));
             infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(weightedAverage, 0)
                     .intValue()));
             return;
@@ -244,7 +243,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
         Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 
-        infoFinalResult.setAverageSimple(String.valueOf(simpleAverage.intValue()));
+        infoFinalResult.setAverageSimple(String.valueOf(NumberUtils.formatNumber(simpleAverage, 1).doubleValue()));
 
         infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0)
                 .intValue()));

@@ -54,7 +54,7 @@
     <field-descriptor
     	name="lastModificationDate"	
     	column="LAST_MODIFICATION_DATE"
-    	jdbc-type="DATE"    	
+    	jdbc-type="TIMESTAMP"    	
     />    
     <field-descriptor
         name="keyPersonWhoAltered"

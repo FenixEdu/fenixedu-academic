@@ -73,6 +73,8 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         }
 
         strBuffer.append("</table>");
+
+        strBuffer.append("<br style=\"page-break-after:always;\" />");
     }
 
     private void renderExamsForRowOfDays(StringBuffer strBuffer, int week) {
@@ -188,6 +190,8 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         }
 
         strBuffer.append("</table>");
+        System.out.println("Writing the page break!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+        strBuffer.append("<br style=\"page-break-after:always;\" />");
     }
 
     private void renderExamsTableHeader(StringBuffer strBuffer) {

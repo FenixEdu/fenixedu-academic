@@ -24,10 +24,13 @@
 		&gt;&nbsp;<bean:message key="label.accessRequirements.en"/>
 	</div>
 	
-	<!-- PÁGINA EM PORTUGUÊS -->
+	<!-- Pï¿½GINA EM PORTUGUï¿½S -->
 	<div class="version">
 		<span class="px10">
-			<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >portuguese version</html:link> <img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Portuguese version!" width="16" height="12" />
+			<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >
+				<bean:message key="label.version.portuguese" />
+			</html:link>
+			<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Portuguese version!" width="16" height="12" />
 		</span>
 	</div> 
 	<div class="clear"></div> 
@@ -57,7 +60,7 @@
 	  </ul>			
 	</logic:notEmpty>    	  	
 	  	
-  <!-- CLASSIFICAÇÕES-->
+  <!-- CLASSIFICAï¿½ï¿½ES-->
   <logic:notEmpty name="infoDegreeInfo" property="classificationsEn">
 	  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.classifications.en" /></h2>
 	 	<bean:write name="infoDegreeInfo" property="classificationsEn" filter="false" />

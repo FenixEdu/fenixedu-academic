@@ -25,7 +25,7 @@
 </logic:empty>
 <table style="text-align:left" width="100%">
 
-	<logic:iterate id="infoPublication" name="infoSitePublications" property="infoDidaticPublications">
+	<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
 	<tr>
 		<td class="listClasses" style="text-align:left" width="100%">
 			<bean:write name="infoPublication" property="publicationString" />

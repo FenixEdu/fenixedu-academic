@@ -221,10 +221,18 @@ enrollment.faq.url=http://fenix-ashes.ist.utl.pt:8080/confluence/display/FAQ/FAQ
 #   log.image.directory: directory to where dynamic images for log reports
 #                        are generated. It must end with the applications
 #                        context followed by images/logs
+#   log4j.email.smtp.host: 
+#   log4j.email.smtp.from: 
+#   log4j.email.smtp.to: 
+#   log4j.email.smtp.subject: 
 #
 log.profile.dir=/tmp
 log.profile.filename=profileing.log
 log.image.directory=/home/marvin/workspace/fenix_head/build/standalone/ciapl/images/logs
+log4j.email.smtp.host=localhost
+log4j.email.smtp.from=Me
+log4j.email.smtp.to=You
+log4j.email.smtp.subject=Hello
 #
 #
 #------------------------------------------------------------------------------

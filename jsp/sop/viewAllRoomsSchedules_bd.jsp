@@ -68,7 +68,7 @@
 		<br />	
 	   	<bean:define id="lessons" name="viewRoomSchedule" property="roomLessons"/>
 		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
-		<br style="page-break-before:always;" />
+		<br style="page-break-after:always;" />
 	</logic:iterate>
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">

@@ -302,7 +302,7 @@ public class TeacherInformationAction extends DispatchAction {
             dynaForm.set("other", other == null ? new String() : other.toString());
             Integer support = infoWeeklyOcupation.getSupport();
             dynaForm.set("support", support == null ? new String() : support.toString());
-            Integer lecture = infoWeeklyOcupation.getResearch();
+            Integer lecture = infoWeeklyOcupation.getLecture();
             dynaForm.set("lecture", lecture == null ? new String() : lecture.toString());
 
             Iterator iter = infoOrientations.iterator();
@@ -449,7 +449,7 @@ public class TeacherInformationAction extends DispatchAction {
             ActionForm form, HttpServletRequest request) throws FenixServiceException,
             FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
-        Object[] args = { userView.getUtilizador() };
+        Object[] args = { userView.getUtilizador(), new String() };
         SiteView siteView = (SiteView) ServiceUtils.executeService(userView, getReadService(), args);
         return (InfoSiteTeacherInformation) siteView.getComponent();
     }

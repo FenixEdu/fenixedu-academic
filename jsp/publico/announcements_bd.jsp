@@ -9,30 +9,39 @@
 	<logic:empty name="component" property="announcements">
 	<h2><bean:message key="message.announcements.not.available" /></h2>
 	</logic:empty>
-<table border="0" style="text-align: left;">
-        <tbody>
-            <logic:iterate id="announcement" name="component" property="announcements" >
-                <tr>
-                    <td>
-                        <h2>
-                        <img src="<%= request.getContextPath() %>/images/icon_anuncio.gif" alt="" />&nbsp;
-                        <bean:write name="announcement" property="title"/>&nbsp;&nbsp;
-                       <span class="post-date">(<dt:format pattern="dd-MM-yyyy HH:mm"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format>)</span></h2>
+	
+	<table border="0" style="text-align: left;">
+		<tbody>
+			<logic:iterate id="announcement" name="component" property="announcements" >	
+				<bean:define id="announcementId" name ="announcement" property="idInternal" />
+				<tr>
+					<td>
+						<h2>
+							<img src="<%= request.getContextPath() %>/images/icon_anuncio.gif" alt="" />
+							&nbsp;
+							<a class="list-announcs" name="<%= announcementId.toString() %>">
+								<bean:write name="announcement" property="title"/>
+							</a>&nbsp;&nbsp;
+							<span class="post-date">
+								(<dt:format pattern="dd/MM/yyyy HH:mm">
+									<bean:write name="announcement" property="lastModifiedDate.time"/>
+								</dt:format>)
+							</span>
+						</h2>
                     </td>
                 </tr>
+				
                 <tr>
                     <td>
 						<bean:write name="announcement" property="information" filter="false"/>
-                        <br><br>
+                        <br /><br />
                     </td>
-                </tr>
-          
+                </tr>           
             </logic:iterate>
         </tbody>
 </table>
 </logic:present>
+
 <logic:notPresent name="siteView" property="component">
-<h4>
-<bean:message key="message.announcements.not.available" />
-</h4>
+	<h4><bean:message key="message.announcements.not.available" /></h4>
 </logic:notPresent>

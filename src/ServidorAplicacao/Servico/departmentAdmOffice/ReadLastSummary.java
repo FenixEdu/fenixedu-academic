@@ -18,7 +18,6 @@ import Dominio.ISummary;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.utils.summary.SummaryUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSummary;

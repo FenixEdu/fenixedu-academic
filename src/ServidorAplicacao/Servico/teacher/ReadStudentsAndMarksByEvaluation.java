@@ -36,6 +36,7 @@ import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentEvaluationType;
 
 /**
  * @author Tânia Pousão
@@ -51,7 +52,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
             FenixServiceException {
         try {
             ISite site = new Site();
-            IExecutionCourse executionCourse = new ExecutionCourse();
+
             IEvaluation evaluation = new Evaluation();
             InfoEvaluation infoEvaluation = new InfoEvaluation();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -59,7 +60,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
             //Execution Course
 
             IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIPersistentExecutionCourse();
-            executionCourse = (IExecutionCourse) disciplinaExecucaoDAO.readByOID(ExecutionCourse.class,
+            final IExecutionCourse executionCourse = (IExecutionCourse) disciplinaExecucaoDAO.readByOID(ExecutionCourse.class,
                     executionCourseCode);
 
             //Site
@@ -90,6 +91,13 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
                     //InfoFrequenta infoAttend =
                     // Cloner.copyIFrequenta2InfoFrequenta(attend);
                     InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
+                    //Melhoria Alterar isto depois: isto está feio assim  
+                    if(attend.getEnrolment() != null) {
+                        if(!attend.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())) {
+                            infoAttend.getInfoEnrolment().setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT_OBJ);
+                        }
+                    }
+                        
                     return infoAttend;
                 }
             });

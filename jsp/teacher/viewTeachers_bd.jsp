@@ -7,6 +7,7 @@
 	<tr>
 		<td class="infoop">
 			<bean:message key="label.teachers.explanation" />
+			<p><bean:message key="label.teachers.specialTeacherWarning" /></p>
 		</td>
 	</tr>
 </table>

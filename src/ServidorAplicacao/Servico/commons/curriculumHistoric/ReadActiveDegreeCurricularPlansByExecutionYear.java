@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoDegreeCurricularPlanWithDegree;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -40,7 +40,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear implements IService 
                             ICursoExecucao cursoExecucao = (ICursoExecucao) obj;
                             IDegreeCurricularPlan degreeCurricularPlan = cursoExecucao
                                     .getCurricularPlan();
-                            return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+                            return InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
                         }
                     });
 

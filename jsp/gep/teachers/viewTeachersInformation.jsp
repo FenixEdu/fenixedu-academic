@@ -165,7 +165,7 @@
 				<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses" length="1"> 
 					<tr>
 						<td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp;
-							<html:link page="/readTeacherInformation.do" 
+							<html:link page="<%="/readTeacherInformation.do?executionYear=" + pageContext.findAttribute("executionYear")%>" 
 									   paramId="username" 
 									   paramName="infoSiteTeacherInformation" 
 					    				paramProperty="infoTeacher.infoPerson.username">
@@ -174,7 +174,7 @@
 					    	</html:link> 
 					    </td>
 					    <td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp; 
-					    	<html:link page="/readTeacherInformation.do" 
+							<html:link page="<%="/readTeacherInformation.do?executionYear=" + pageContext.findAttribute("executionYear")%>" 
 					    			   paramId="username" 
 					    			   paramName="infoSiteTeacherInformation" 
 					    			   paramProperty="infoTeacher.infoPerson.username"> 

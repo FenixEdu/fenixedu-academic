@@ -111,6 +111,7 @@
 								</tr>
 					
 								<logic:iterate id="curricularCourse" name="curricularCourses" type="DataBeans.InfoCurricularCourse">
+									<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal"/> 
 									<tr>	 			
 										<td class="listClasses" style="text-align:left"><bean:write name="curricularCourse" property="name"/>
 										</td>
@@ -119,8 +120,8 @@
 										<td class="listClasses"><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.name"/>
 										</td>
 										<td class="listClasses">
-										<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal"/> 
-											&nbsp;<html:link page="<%="/editExecutionCourseManageCurricularCourses.do?method=dissociateCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
+											&nbsp;
+											<html:link page="<%="/editExecutionCourseManageCurricularCourses.do?method=dissociateCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
 												<bean:message key="button.manager.teachersManagement.dissociate"/>
 											</html:link>&nbsp;
 										</td>

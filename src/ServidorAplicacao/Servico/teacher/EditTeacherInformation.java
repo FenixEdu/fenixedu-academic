@@ -9,14 +9,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.teacher.InfoOrientation;
 import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
+import Dominio.ITeacher;
+import Dominio.Teacher;
 import Dominio.teacher.IOrientation;
 import Dominio.teacher.IPublicationsNumber;
 import Dominio.teacher.IServiceProviderRegime;
@@ -26,12 +26,14 @@ import Dominio.teacher.PublicationsNumber;
 import Dominio.teacher.ServiceProviderRegime;
 import Dominio.teacher.WeeklyOcupation;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.teacher.IPersistentOrientation;
 import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
+import Util.beanUtils.FenixPropertyUtils;
 
 /**
  * @author Leonor Almeida
@@ -64,6 +66,9 @@ public class EditTeacherInformation implements IService {
             Date date = Calendar.getInstance().getTime();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
+            IPersistentTeacher pteacher = sp.getIPersistentTeacher();
+            ITeacher teacher = (ITeacher) pteacher.readByOID(Teacher.class,infoServiceProviderRegime.getInfoTeacher().getIdInternal());
+            
             IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
                     .getIPersistentServiceProviderRegime();
             Integer serviceProviderRegimeId = infoServiceProviderRegime.getIdInternal();
@@ -75,10 +80,12 @@ public class EditTeacherInformation implements IService {
             if (serviceProviderRegimeToLock == null) {
                 serviceProviderRegimeToLock = new ServiceProviderRegime();
                 persistentServiceProviderRegime.simpleLockWrite(serviceProviderRegimeToLock);
+                serviceProviderRegimeToLock.setTeacher(teacher);
             }
-            Integer ackOptLock = serviceProviderRegimeToLock.getAckOptLock();
-            PropertyUtils.copyProperties(serviceProviderRegimeToLock, newServiceProviderRegime);
-            serviceProviderRegimeToLock.setAckOptLock(ackOptLock);
+            //Integer ackOptLock = serviceProviderRegimeToLock.getAckOptLock();
+            FenixPropertyUtils.copyProperties(serviceProviderRegimeToLock, newServiceProviderRegime);
+            //PropertyUtils.copyProperties(serviceProviderRegimeToLock, newServiceProviderRegime);
+            //serviceProviderRegimeToLock.setAckOptLock(ackOptLock);
             serviceProviderRegimeToLock.setLastModificationDate(date);
 
             IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
@@ -91,12 +98,14 @@ public class EditTeacherInformation implements IService {
             if (weeklyOcupationToLock == null) {
                 weeklyOcupationToLock = new WeeklyOcupation();
                 persistentWeeklyOcupation.simpleLockWrite(weeklyOcupationToLock);
+                weeklyOcupationToLock.setTeacher(teacher);
             }
-            ackOptLock = weeklyOcupationToLock.getAckOptLock();
-            PropertyUtils.copyProperties(weeklyOcupationToLock, newWeeklyOcupation);
-            weeklyOcupationToLock.setAckOptLock(ackOptLock);
+            //ackOptLock = weeklyOcupationToLock.getAckOptLock();
+            FenixPropertyUtils.copyProperties(weeklyOcupationToLock, newWeeklyOcupation);
+            //PropertyUtils.copyProperties(weeklyOcupationToLock, newWeeklyOcupation);
+            //weeklyOcupationToLock.setAckOptLock(ackOptLock);
             weeklyOcupationToLock.setLastModificationDate(date);
-
+            
             IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
             Iterator iter = infoOrientations.iterator();
             while (iter.hasNext()) {
@@ -110,10 +119,12 @@ public class EditTeacherInformation implements IService {
                 if (orientationToLock == null) {
                     orientationToLock = new Orientation();
                     persistentOrientation.simpleLockWrite(orientationToLock);
+                    orientationToLock.setTeacher(teacher);
                 }
-                ackOptLock = orientationToLock.getAckOptLock();
-                PropertyUtils.copyProperties(orientationToLock, newOrientation);
-                orientationToLock.setAckOptLock(ackOptLock);
+                //ackOptLock = orientationToLock.getAckOptLock();
+                FenixPropertyUtils.copyProperties(orientationToLock, newOrientation);
+                //PropertyUtils.copyProperties(orientationToLock, newOrientation);
+                //orientationToLock.setAckOptLock(ackOptLock);
                 orientationToLock.setLastModificationDate(date);
             }
 
@@ -131,10 +142,12 @@ public class EditTeacherInformation implements IService {
                 if (publicationsNumberToLock == null) {
                     publicationsNumberToLock = new PublicationsNumber();
                     persistentPublicationsNumber.simpleLockWrite(publicationsNumberToLock);
+                    publicationsNumberToLock.setTeacher(teacher);
                 }
-                ackOptLock = publicationsNumberToLock.getAckOptLock();
-                PropertyUtils.copyProperties(publicationsNumberToLock, newPublicationsNumber);
-                publicationsNumberToLock.setAckOptLock(ackOptLock);
+                //ackOptLock = publicationsNumberToLock.getAckOptLock();
+                FenixPropertyUtils.copyProperties(publicationsNumberToLock, newPublicationsNumber);
+                //PropertyUtils.copyProperties(publicationsNumberToLock, newPublicationsNumber);
+                //publicationsNumberToLock.setAckOptLock(ackOptLock);
                 publicationsNumberToLock.setLastModificationDate(date);
             }
             // TODO: faltam os cargos de gestão

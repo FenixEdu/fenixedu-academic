@@ -8,16 +8,14 @@
 	<bean:define id="component" name="siteView" property="commonComponent" />
 	<bean:define id="curricularCourses" name="component" property="associatedDegrees" />
 	<div id="associated-degrees">
-
-		<bean:define id="curricularCoursesFiltered" value="" />
+		<bean:define id="curricularCoursesFiltered" value="" />		
 		<logic:iterate id="curricularCourse" name="curricularCourses">
-			<bean:define id="curricularCourseName" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome" />
-	  		<logic:notMatch name="curricularCoursesFiltered" value="<%= curricularCourseName.toString() %>" >	
+			<bean:define id="curricularCourseSigla" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla" />
+			<logic:notMatch name="curricularCoursesFiltered" value="<%= curricularCourseSigla.toString() %>" >	
 				<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" />
-				em 			
-				<bean:write name="curricularCourseName" /><br />
-			
-				<bean:define id="curricularCoursesFiltered" value="<%= curricularCoursesFiltered.toString().concat(curricularCourseName.toString()) %>" />
+				<bean:message key="label.in" /> 			
+				<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome" /><br />			
+				<bean:define id="curricularCoursesFiltered" value="<%= curricularCoursesFiltered.toString().concat(curricularCourseSigla.toString()) %>" />
 			</logic:notMatch>
 		</logic:iterate>
 	</div>

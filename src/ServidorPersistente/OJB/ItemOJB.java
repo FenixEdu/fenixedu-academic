@@ -25,7 +25,7 @@ public class ItemOJB extends PersistentObjectOJB implements IPersistentItem {
 
     public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("section.name", section.getName());
+        crit.addEqualTo("section.idInternal", section.getIdInternal());
         crit.addEqualTo("name", name);
         crit.addEqualTo("section.site.executionCourse.code", section.getSite().getExecutionCourse()
                 .getSigla());
@@ -39,7 +39,7 @@ public class ItemOJB extends PersistentObjectOJB implements IPersistentItem {
 
     public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("section.name", section.getName());
+        crit.addEqualTo("section.idInternal", section.getIdInternal());
         crit.addEqualTo("section.site.executionCourse.code", section.getSite().getExecutionCourse()
                 .getSigla());
         crit.addEqualTo("section.site.executionCourse.executionPeriod.name", section.getSite()

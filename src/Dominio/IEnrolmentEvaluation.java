@@ -61,4 +61,8 @@ public interface IEnrolmentEvaluation extends IDomainObject {
     public abstract void setCheckSum(String checkSum);
 
     public abstract void setObservation(String observation);
+
+    public abstract boolean isNormal();
+
+    public abstract boolean isImprovment();
 }

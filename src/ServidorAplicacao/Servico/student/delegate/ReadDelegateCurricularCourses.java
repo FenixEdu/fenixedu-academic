@@ -87,12 +87,12 @@ public class ReadDelegateCurricularCourses extends SearchService {
         if (delegate.getType().booleanValue()) {
             curricularCourses = persistentCurricularCourse
                     .readExecutedCurricularCoursesByDegreeAndExecutionYear(delegate.getDegree(),
-                            executionYear);
+                            delegate.getExecutionYear());
         } else {
             Integer year = new Integer(delegate.getYearType().getValue());
             curricularCourses = persistentCurricularCourse
                     .readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(delegate.getDegree(),
-                            year, executionYear);
+                            year, delegate.getExecutionYear());
         }
         return curricularCourses;
     }

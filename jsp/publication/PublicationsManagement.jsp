@@ -20,8 +20,8 @@
 		
 		<table class="listClasses" width="100%">
 			<tr>
-				<td>
-					<p align="left"><b><bean:message key="message.publications.warning" /></b></p>
+				<td align="left">
+					<b><bean:message key="message.publications.warning" /></b>
 				</td>
 			</tr>
 		</table>
@@ -38,6 +38,15 @@
 					&nbsp;<bean:write name="infoSitePublications" property="infoTeacher.infoCategory.shortName" /></td>
 			</tr>
 		</table>
+		<br> </br>
+		<table class="listClasses" width="100%">
+			<tr>
+				<td>
+					<p align="left"><bean:message key="message.publications.management.warning" /></p>
+				</td>
+			</tr>
+		</table>
+
 
 		<br />
 		<bean:message key="message.publications.managementEditPublication"/>
@@ -53,7 +62,7 @@
 					<td class="listClasses" style="text-align:left">
 						<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
 						<%-- Tratar isto como uma qualquer publicação e não como sendo especificamente didatica --%>
-						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;publicationTypeId=" + publicationTypeId %>'
+						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;infoPublicationTypeId=" + publicationTypeId %>'
 							paramId="idInternal"
 							paramName="infoPublication" 
 							paramProperty="idInternal">

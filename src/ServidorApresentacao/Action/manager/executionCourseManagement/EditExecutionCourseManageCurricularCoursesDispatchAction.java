@@ -27,6 +27,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.utils.RequestUtils;
 
 /*
  * 
@@ -254,13 +255,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     }
 
     private String getAndSetStringToRequest(HttpServletRequest request, String name) {
-
-        String parameter = request.getParameter(name);
-        if (parameter == null) {
-            parameter = (String) request.getAttribute(name);
-        }
-        request.setAttribute(name, parameter);
-        return parameter;
+        return RequestUtils.getAndSetStringToRequest(request, name);
     }
 
 }

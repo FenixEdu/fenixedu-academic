@@ -24,6 +24,8 @@
 							</td>
 							<td class="listClasses-header">&nbsp;
 							</td>
+							<td class="listClasses-header">&nbsp;
+							</td>
 						</tr>
 			
 						<logic:iterate id="executionCourse" name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>" type="DataBeans.InfoExecutionCourse">
@@ -42,6 +44,11 @@
 									<html:link page="<%="/editExecutionCourse.do?method=deleteExecutionCourse&amp;executionCourseId=" + executionCourseId.toString() + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "~" + pageContext.findAttribute("executionPeriodId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegreeName") + "~" + pageContext.findAttribute("executionDegreeId") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
 										<bean:message key="label.manager.executionCourseManagement.delete"/>
 									</html:link>&nbsp;
+								</td>
+								<td class="listClasses">
+									<html:link page="<%="/seperateExecutionCourse.do?method=prepareTransfer&amp;executionCourseId=" + executionCourseId.toString() %>">
+										<bean:message key="link.manager.seperate.execution_course"/>
+									</html:link>
 								</td>
 			 				</tr>
 			 			</logic:iterate>						

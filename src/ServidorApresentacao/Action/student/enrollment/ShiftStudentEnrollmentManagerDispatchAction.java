@@ -10,7 +10,6 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,7 +49,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
-
+        
         DynaActionForm enrolmentForm = (DynaActionForm) form;
         Integer executionDegreeIdChosen = (Integer) enrolmentForm.get("degree");
 
@@ -58,17 +57,10 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
         InfoShiftEnrollment infoShiftEnrollment = null;
         Object[] args = { Integer.valueOf(studentNumber), executionDegreeIdChosen };
-        try {
-            infoShiftEnrollment = (InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
-                    userView, "PrepareInfoShiftEnrollmentByStudentNumber", args);
-        } catch (FenixServiceException e) {
-            if (e.getMessage() != null) {
-                errors.add("error", new ActionError(e.getMessage()));
-                saveErrors(request, errors);
-                return mapping.getInputForward();
-            }
-        }
-
+       
+        infoShiftEnrollment = (InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
+                userView, "PrepareInfoShiftEnrollmentByStudentNumber", args);
+        
         //inicialize the form with the degree chosen and student number
         enrolmentForm.set("degree", infoShiftEnrollment.getInfoExecutionDegree().getIdInternal());
         enrolmentForm.set("studentId", infoShiftEnrollment.getInfoStudent().getIdInternal());

@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -27,6 +31,7 @@ import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -36,6 +41,7 @@ import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author jpvl
@@ -72,65 +78,25 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
             InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
 
-            //TODO: this semester and curricular year list needs to be
-            // refactored in order to incorporate masters
-            /* Criar o bean de semestres */
-            List semestres = new ArrayList();
-            semestres.add(new LabelValueBean("escolher", ""));
-            semestres.add(new LabelValueBean("1 º", "1"));
-            semestres.add(new LabelValueBean("2 º", "2"));
-            request.setAttribute("semestres", semestres);
+			Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-            /* Criar o bean de anos curricutares */
-            List anosCurriculares = new ArrayList();
-            anosCurriculares.add(new LabelValueBean("escolher", ""));
-            anosCurriculares.add(new LabelValueBean("1 º", "1"));
-            anosCurriculares.add(new LabelValueBean("2 º", "2"));
-            anosCurriculares.add(new LabelValueBean("3 º", "3"));
-            anosCurriculares.add(new LabelValueBean("4 º", "4"));
-            anosCurriculares.add(new LabelValueBean("5 º", "5"));
-            request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
+			Integer degreeId = getFromRequest("degreeID", request);
+			request.setAttribute("degreeID", degreeId);
 
-            /* Cria o form bean com as licenciaturas em execucao. */
-            Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
+			List executionPeriodsLabelValueList = new ArrayList();
+			executionPeriodsLabelValueList = getList(degreeCurricularPlanId);
+			if (executionPeriodsLabelValueList.size() > 1) {	
+					request.setAttribute("lista",executionPeriodsLabelValueList);
 
-            List executionDegreeList = (List) ServiceUtils.executeService(userView,
-                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+			} else {
+					request.removeAttribute("lista");
+			}
+			/*------------------------------------*/
+          
+                return mapping.findForward("prepare");
+          
 
-            List licenciaturas = new ArrayList();
-
-            licenciaturas.add(new LabelValueBean("escolher", ""));
-
-            Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-
-            Iterator iterator = executionDegreeList.iterator();
-
-            int index = 0;
-            while (iterator.hasNext()) {
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-                String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                        .getNome();
-
-                name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                        .toString()
-                        + " em " + name;
-
-                name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
-
-                licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
-            }
-
-            request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
-
-            request.setAttribute(SessionConstants.DEGREES, licenciaturas);
-
-            if (inputPage != null) {
-                return mapping.findForward(inputPage);
-            }
-
-            // TODO : throw a proper exception
-            throw new Exception("SomeOne is messing around with the links");
         }
 
         throw new Exception();
@@ -277,7 +243,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
-
+		ActionErrors errors = new ActionErrors();
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
@@ -288,6 +254,21 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+        
+		List executionPeriodsLabelValueList = new ArrayList();
+		try {
+		executionPeriodsLabelValueList = getList(degreeCurricularPlanId);
+		}catch(Exception e) {
+			throw new FenixActionException(e);
+		}
+		
+		if (executionPeriodsLabelValueList.size() > 1) {			
+			   request.setAttribute("lista",executionPeriodsLabelValueList);
+
+		} else {
+			   request.removeAttribute("lista");
+		}
+        
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
@@ -307,14 +288,39 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         request.setAttribute("curYear", anoCurricular);
         request.setAttribute("semester", semestre);
-        request.setAttribute("index", index);
+        		Integer indice = (Integer)escolherContextoForm.get("indice");
+		if (indice==null)
+			indice = (Integer)getFromRequest("indice", request);
+		request.setAttribute("indice",indice);
+		escolherContextoForm.set("indice",indice);
+		Object argsLerLicenciaturas[] =null;
+		if (indice != null) {
+					InfoExecutionPeriod infoExecutionPeriod2 = new InfoExecutionPeriod();
+		Object args[] = {indice};
+			try {
+				infoExecutionPeriod2 = (InfoExecutionPeriod )ServiceManagerServiceFactory.executeService(null,
+				"ReadExecutionPeriodByOID", args);
+			}catch(FenixServiceException e){
+				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+				saveErrors(request, errors);
+				return (new ActionForward(mapping.getInput()));
+			}
+			 infoExecutionPeriod = infoExecutionPeriod2;
+			 RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod2);
+			 argsLerLicenciaturas= new Object[]{infoExecutionPeriod2.getInfoExecutionYear().getIdInternal()};
+		}else {
+			 argsLerLicenciaturas= new Object[]{infoExecutionPeriod.getInfoExecutionYear().getIdInternal()};
+		}
 
-        Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
+
+
+
+        //Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
         List infoExecutionDegreeList;
         try {
             infoExecutionDegreeList = (List) ServiceUtils.executeService(null,
-                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+                    "ReadExecutionDegreesByExecutionYearId", argsLerLicenciaturas);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -345,9 +351,12 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         }
 
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
-
+		request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
+					   .getInfoDegreeCurricularPlan());
+		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod
+				.getIdInternal().toString());
         String nextPage = request.getParameter("nextPage");
-
         if (nextPage != null) {
             return mapping.findForward(nextPage);
         }
@@ -414,5 +423,45 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         }
         return parameterCode;
     }
+	private List getList(Integer degreeCurricularPlanId) throws Exception{
+		  /*------------------------------------*/      
+				  Object argsLerLicenciaturas[] = {degreeCurricularPlanId};
+				  InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
+				  List infoExecutionDegreeList = new ArrayList();
+				  try {
+					  infoExecutionDegreeList = (List) ServiceUtils.executeService(null,
+								"ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+				  } catch (FenixServiceException e) {
+					  throw new Exception(e);
+				  }
+
+				  List executionPeriodsLabelValueList = new ArrayList();
+				  ComparatorChain comparatorChain = new ComparatorChain();
+				  comparatorChain.addComparator(new BeanComparator("infoExecutionYear.idInternal"));
+		
+				  Collections.sort(infoExecutionDegreeList, comparatorChain);
+				  Collections.reverse(infoExecutionDegreeList);
+				  for (int i = 0; i < infoExecutionDegreeList.size(); i++) {
+					  infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(i);
+					
+					  InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+					  infoExecutionYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+					  Object args[] = {infoExecutionYear};
+					  List infoExecutionPeriodsList = new ArrayList();
+					  try {
+						  infoExecutionPeriodsList = (List) ServiceUtils.executeService(null,
+							   "ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
+					  } catch (FenixServiceException e) {
+						  throw new Exception(e);
+					  }				 
+					  for (int j = 0; j < infoExecutionPeriodsList.size(); j++) {
+						  InfoExecutionPeriod infoExecutionPeriod1 = (InfoExecutionPeriod) infoExecutionPeriodsList.get(j);
+						  executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod1.getName() + " - "
+						  + infoExecutionPeriod1.getInfoExecutionYear().getYear(), "" + infoExecutionPeriod1.getIdInternal()));
+				     	
+					  }
+				  }
+			  return executionPeriodsLabelValueList;
+	  }
 }

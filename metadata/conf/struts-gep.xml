@@ -19,6 +19,14 @@
                    type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
                 <form-property name="executionCourseId" type="java.lang.Integer" />
         </form-bean>
+
+		<!-- ==================== View Curricular Course Historic ================== -->
+		<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionYearID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>		
+		
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -139,6 +147,27 @@
 				/>
 			<forward name="successfull-read" path="view-teaching-report"/>
 	</action>
+
+	    <!-- ==================== View Curricular Course Historic ================== -->
+       	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
+       		name="executionYearDegreeCurricularPlanForm"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		validate="true"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		scope="request"
+       		parameter="method">
+       		<forward name="chooseExecutionYear" path="view-degree-curricular-plan-execution-year"/>
+			<forward name="showActiveCurricularCourses" path="show-active-curricular-scopes"/>
+       	</action>
+
+		<action path="/showCurriculumHistoric"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		scope="request"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		parameter="method">
+       		<forward name="show-report" path="view-curriculum-historic"/>
+       	</action>
+
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
@@ -147,7 +176,7 @@
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 
-            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml"/>
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-gep.xml"/>
     </plug-in>
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
         <set-property property="definitions-config" 

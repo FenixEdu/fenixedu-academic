@@ -6,33 +6,36 @@
 <%@ page import="Util.TipoCurso" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a>
-	&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>	
-	<bean:define id="degreeType" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" property="infoDegree.tipoCurso" />	
-	<bean:define id="infoDegreeCurricularPlan" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN%>"  />	
-	<html:hidden property="<%=SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" value="<%= pageContext.findAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN).toString()%>"/>
+<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml"><bean:message key="label.school" /></a>
+	&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml"><bean:message key="label.education" /></a>	
+	<bean:define id="degreeType" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" property="infoDegree.tipoCurso" />
+	<bean:define id="infoDegreeCurricularPlan" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>"/>
 	&nbsp;&gt;&nbsp;
-	<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") + "&amp;index=" + request.getAttribute("index") %>">
+	<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString()  %>">
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
 	</html:link>
 	&nbsp;&gt;&nbsp;
-	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  + "&amp;index=" + request.getAttribute("index")  %>" >
+	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
 		<bean:message key="label.curricularPlan"/>
 	</html:link>
 	&nbsp;&gt;&nbsp;<bean:message key="label.turmas"/> 	
 </div>	
+
 <%--
-<!-- PÁGINA EM INGLÊS -->
+<!-- PÃï¿½GINA EM INGLÃŠï¿½S -->
 	<div class="version">
 		<span class="px10">
-			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") + "&amp;index=" + request.getAttribute("index") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
+			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
 	</span>	
 	</div>--%>
-	<div class="clear"></div> 
-<h1><bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" /></h1>
 
-<h2>
-<span class="greytxt">
+<h1>
+	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
+	<bean:message key="label.in" />
+	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
+</h1>
+
+<h2 class="greytxt">
 	<bean:message key="label.curricularPlan"/>
 	<bean:message key="label.the" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
@@ -41,47 +44,63 @@
 		<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
 		-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
 	</logic:notEmpty>
-</span>
 </h2>
-<br />
-<logic:present name="classList"  >	
 
-<table align="center">
+<logic:present name="lista" scope="request">
+	<bean:define id="listaNew" name="lista" />
+	<html:form action="/chooseContextDANew.do">
+		<html:hidden property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+		<html:hidden property="page" value="1"/>
+		<html:hidden property="method" value="nextPagePublic"/>
+		<html:hidden property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
+		<html:hidden property="degreeCurricularPlanID" value="<%= pageContext.findAttribute("degreeCurricularPlanID").toString()%>" />
+		<html:hidden property="lista" value="<%= pageContext.findAttribute("listaNew").toString()%>" />
+		<html:hidden property="nextPage" value="classSearch"/>
+		<html:hidden property="inputPage" value="chooseContext"/>
+
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			    <td><bean:message key="property.executionPeriod"/>:</td>
+			    <td>
+					<html:select property="indice" size="1" onchange='this.form.submit();'>
+						<logic:notEmpty name="chooseSearchContextForm" property="indice" >
+							<bean:define id="ind" name="chooseSearchContextForm" property="indice" />	
+						</logic:notEmpty>
+						<html:options property="value" labelProperty="label" collection="lista"/>
+					</html:select>
+			    </td>
+			</tr>
+		</table>
+	</html:form> 
+</logic:present>
+
+<logic:present name="classList">	
+	<table class="tab_lay" cellspacing="0" cellpadding="0" width="50%">
 		<tr>
-			<th class="listClasses-header">
-				<bean:message key="property.name"/>
-			</th>
-			<th class="listClasses-header">
-				<bean:message key="property.context.semester"/>
-			</th>
-			<th class="listClasses-header">
-				<bean:message key="property.context.curricular.year"/> 
-			</th>
+			<th><bean:message key="property.class"/></th>
+			<th><bean:message key="property.context.semester"/></th>
+			<th><bean:message key="property.context.curricular.year"/></th>
 		</tr>		
-	<logic:iterate id="classview" name="classList"  >
+	<logic:iterate id="classview" name="classList" indexId="row">
+		<% String rowColor = row.intValue() % 2 == 0 ? "white" : "bluecell" ; %>
+		<bean:define id="classId" name="classview" property="idInternal"/>
 		<tr>
-		    <bean:define id="classId" name="classview" property="idInternal"/>
-			<td class="listClasses">		
-			<html:link page="<%= "/viewClassTimeTableNew.do?executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;classId="+pageContext.findAttribute("classId") + "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials")+ "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;index=" + request.getAttribute("index") %>" paramId="className" paramName="classview" paramProperty="nome">
-			<jsp:getProperty name="classview" property="nome"/>
-			</html:link>
+		    <td class="<%= rowColor %>">	
+				<html:link page="<%= "/viewClassTimeTableNew.do?executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;classId="+pageContext.findAttribute("classId") + "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials")+ "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" paramId="className" paramName="classview" paramProperty="nome">
+					<jsp:getProperty name="classview" property="nome"/>
+				</html:link>
 			</td>
-			<td class="listClasses">
-			<bean:write name="classview" property="infoExecutionPeriod.name"/>
-			</td>
-			<td class="listClasses">
-			<jsp:getProperty name="classview" property="anoCurricular"/>
-			</td>
+			<td class="<%= rowColor %>"><bean:write name="classview" property="infoExecutionPeriod.semester"/></td>
+			<td class="<%= rowColor %>"><jsp:getProperty name="classview" property="anoCurricular"/></td>
 		</tr>	
 	</logic:iterate>
 </table>
 </logic:present>
+
 <logic:notPresent name="classview"  >	
-<table align="center" border="0" cellpadding="0" cellspacing="0">
-			<tr>
-				<td>
-					<span class="error"><bean:message key="message.public.notfound.classes"/></span>
-				</td>
-			</tr>
-</table>
+	<table align="center" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><span class="error"><bean:message key="message.public.notfound.classes"/></span></td>
+		</tr>
+	</table>
 </logic:notPresent>

@@ -14,14 +14,12 @@ import org.apache.commons.collections.Transformer;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.student.IDelegate;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -56,18 +54,16 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
             IStudent student = persistentStudent.readByUsername(id.getUtilizador());
+            IDelegate delegate = persistentDelegate.readByStudent(student);
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, objectId);
 
-            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
             List degreeDelegates = persistentDelegate.readDegreeDelegateByDegreeAndExecutionYear(
-                    curricularCourse.getDegreeCurricularPlan().getDegree(), executionYear);
+                    curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear());
 
-            IDelegate delegate = persistentDelegate.readByStudent(student);
             // if it's a degree delegate then it's allowed
             if (degreeDelegates.contains(delegate))
                 return true;
@@ -84,7 +80,7 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
                 List delegates = persistentDelegate.readByDegreeAndExecutionYearAndYearType(
-                        curricularCourse.getDegreeCurricularPlan().getDegree(), executionYear,
+                        curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
                         DelegateYearType.getEnum(year.intValue()));
 
                 if (delegates.contains(delegate))

@@ -26,9 +26,9 @@ public interface IExecutionPeriod extends IDomainObject, INode {
 
     PeriodState getState();
 
-    Integer getSemester();
+    public Integer getSemester();
 
-    void setSemester(Integer semester);
+    public void setSemester(Integer semester);
 
     Date getBeginDate();
 

@@ -46,33 +46,28 @@ public class EditDistributedTest implements IService {
     public EditDistributedTest() {
     }
 
-    public Integer run(Integer executionCourseId, Integer distributedTestId, String testInformation,
-            Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour,
-            TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback,
+    public Integer run(Integer executionCourseId, Integer distributedTestId, String testInformation, Calendar beginDate, Calendar beginHour,
+            Calendar endDate, Calendar endHour, TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback,
             String contextPath) throws FenixServiceException {
         this.contextPath = contextPath.replace('\\', '/');
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-                    .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+                    executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
 
-            IPersistentDistributedTest persistentDistributedTest = persistentSuport
-                    .getIPersistentDistributedTest();
-            IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(
-                    DistributedTest.class, distributedTestId, true);
+            IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
+            IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId, true);
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
 
             persistentDistributedTest.simpleLockWrite(distributedTest);
             distributedTest.setTestInformation(testInformation);
             boolean change2EvaluationType = false, change2OtherType = false;
-            if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))
-                    && (!testType.equals(new TestType(TestType.EVALUATION))))
+            if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION)) && (!testType.equals(new TestType(TestType.EVALUATION))))
                 change2OtherType = true;
-            else if ((!distributedTest.getTestType().equals(new TestType(TestType.EVALUATION)))
-                    && testType.equals(new TestType(TestType.EVALUATION)))
+            else if ((!distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) && testType.equals(new TestType(TestType.EVALUATION)))
                 change2EvaluationType = true;
             distributedTest.setTestType(testType);
             distributedTest.setCorrectionAvailability(correctionAvailability);
@@ -88,23 +83,21 @@ public class EditDistributedTest implements IService {
                     || dateComparator.compare(distributedTest.getEndDate(), endDate) != 0
                     || hourComparator.compare(distributedTest.getEndHour(), endHour) != 0) {
 
-                advisory = createTestAdvisory(distributedTest);
-                persistentSuport.getIPersistentAdvisory().simpleLockWrite(advisory);
+                List students = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTest);
                 distributedTest.setBeginDate(beginDate);
                 distributedTest.setBeginHour(beginHour);
                 distributedTest.setEndDate(endDate);
                 distributedTest.setEndHour(endHour);
-                persistentSuport.getIPersistentDistributedTestAdvisory()
-                        .updateDistributedTestAdvisoryDates(distributedTest, endDate.getTime());
-                persistentSuport.getIPersistentDistributedTestAdvisory().simpleLockWrite(
-                        createDistributedTestAdvisory(distributedTest, advisory));
+                advisory = createTestAdvisory(distributedTest);
+                persistentSuport.getIPersistentAdvisory().simpleLockWrite(advisory);
+                persistentSuport.getIPersistentDistributedTestAdvisory().updateDistributedTestAdvisoryDates(distributedTest, endDate.getTime());
+                persistentSuport.getIPersistentDistributedTestAdvisory().simpleLockWrite(createDistributedTestAdvisory(distributedTest, advisory));
             }
 
             if (change2OtherType) {
                 //Change evaluation test to study/inquiry test
                 //delete evaluation and marks
-                IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest()
-                        .readByDistributedTest(distributedTest);
+                IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTest);
                 persistentSuport.getIPersistentMark().deleteByEvaluation(onlineTest);
                 persistentSuport.getIPersistentOnlineTest().delete(onlineTest);
             } else if (change2EvaluationType) {
@@ -116,22 +109,19 @@ public class EditDistributedTest implements IService {
                 List executionCourseList = new ArrayList();
                 executionCourseList.add(executionCourse);
                 onlineTest.setAssociatedExecutionCourses(executionCourseList);
-                List studentList = persistentSuport.getIPersistentStudentTestQuestion()
-                        .readStudentsByDistributedTest(distributedTest);
+                List studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTest);
                 Iterator studentIt = studentList.iterator();
                 while (studentIt.hasNext()) {
                     IStudent student = (IStudent) studentIt.next();
-                    List studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
-                            .readByStudentAndDistributedTest(student, distributedTest);
+                    List studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student,
+                            distributedTest);
                     Iterator studentTestQuestionIt = studentTestQuestionList.iterator();
                     double studentMark = 0;
                     while (studentTestQuestionIt.hasNext()) {
-                        IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentTestQuestionIt
-                                .next();
+                        IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentTestQuestionIt.next();
                         studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();
                     }
-                    IFrequenta attend = persistentSuport.getIFrequentaPersistente()
-                            .readByAlunoAndDisciplinaExecucao(student, executionCourse);
+                    IFrequenta attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
                     if (attend != null) {
                         IMark mark = new Mark();
                         persistentSuport.getIPersistentMark().simpleLockWrite(mark);
@@ -173,31 +163,26 @@ public class EditDistributedTest implements IService {
         IAdvisory advisory = new Advisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender("Docente da disciplina "
-                + ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getNome());
+        advisory.setSender("Docente da disciplina " + ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getNome());
         String msgBeginning;
 
         advisory.setSubject(distributedTest.getTitle() + ": Alteração de datas");
         if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
             msgBeginning = new String("As datas para responder ao <a href='" + this.contextPath
-                    + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                    + distributedTest.getIdInternal()
+                    + "/student/studentTests.do?method=prepareToDoTest&testCode=" + distributedTest.getIdInternal()
                     + "'>questionário</a> foram alteradas. Deverá responder ao questionário entre ");
         else
             msgBeginning = new String("As datas de realização da <a href='" + this.contextPath
-                    + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                    + distributedTest.getIdInternal()
+                    + "/student/studentTests.do?method=prepareToDoTest&testCode=" + distributedTest.getIdInternal()
                     + "'>Ficha de Trabalho</a> foram alteradas. Deverá realizar a ficha entre ");
-        advisory.setMessage(msgBeginning + " as " + getHourFormatted(distributedTest.getBeginHour())
-                + " de " + getDateFormatted(distributedTest.getBeginDate()) + " e as "
-                + getHourFormatted(distributedTest.getEndHour()) + " de "
+        advisory.setMessage(msgBeginning + " as " + getHourFormatted(distributedTest.getBeginHour()) + " de "
+                + getDateFormatted(distributedTest.getBeginDate()) + " e as " + getHourFormatted(distributedTest.getEndHour()) + " de "
                 + getDateFormatted(distributedTest.getEndDate()));
         advisory.setOnlyShowOnce(new Boolean(false));
         return advisory;
     }
 
-    private IDistributedTestAdvisory createDistributedTestAdvisory(IDistributedTest distributedTest,
-            IAdvisory advisory) {
+    private IDistributedTestAdvisory createDistributedTestAdvisory(IDistributedTest distributedTest, IAdvisory advisory) {
         IDistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);

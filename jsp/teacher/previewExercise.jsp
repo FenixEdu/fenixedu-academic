@@ -82,25 +82,24 @@
 		<% } %>
 	</logic:iterate>
 	
-	<bean:define id="indexOption" value="0"/>
 	<bean:define id="cardinality" name="infoQuestion" property="questionType.cardinalityType.type"/>
 	<bean:define id="questionType" name="infoQuestion" property="questionType.type"/>
 	
-	<logic:iterate id="optionBody" name="infoQuestion" property="options" indexId="optionBodyIndex">
+	<logic:iterate id="questionOption" name="infoQuestion" property="options" indexId="indexOption">
+	<logic:iterate id="optionBody" name="questionOption" property="optionContent" indexId="optionBodyIndex">
 		<bean:define id="optionLabel" name="optionBody" property="label"/>
 		<% if (((String)optionLabel).equals("response_label")){ %>
-			<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
 			<%	if(((Integer)questionType).intValue()==1 ){ %> <%-- QuestionType.LID--%>
 				<logic:equal name="optionBodyIndex" value="0">
 					</td></tr></table><table><tr><td>
 				</logic:equal>
 				<%	if(((Integer)cardinality).intValue()==1 ){ %> <%-- Cardinality.SINGLE--%>
 					</td></tr><tr>
-					<td><html:radio property="response" value="<%= indexOption.toString() %>"/></td>
+					<td><html:radio property="response" value="<%= new Integer(indexOption.intValue()+1).toString() %>"/></td>
 					<td>
 				<% }else if(((Integer)cardinality).intValue()==2){ %> <%-- Cardinality.MULTIPLE--%>
 					</td></tr><tr>
-					<td><html:multibox property="response" value="<%= indexOption.toString() %>"></html:multibox></td>
+					<td><html:multibox property="response" value="<%= new Integer(indexOption.intValue()+1).toString()  %>"></html:multibox></td>
 					<td>
 				<%}%>
 			<%}else{ %><%-- QuestionType.STR or QuestionType.NUM--%>
@@ -145,6 +144,7 @@
 		<% } else {%>
 			<bean:write name="optionBody" property="value"/>
 		<% } %>
+	</logic:iterate>
 	</logic:iterate>
 </td></tr></table>
 

@@ -30,6 +30,12 @@ public class InfoEnrolment extends InfoObject {
 
     // to be used to keep the actual enrolment evaluation
     private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
+    
+    //used in the curriculum marks list
+    private InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation;
+    private InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation;
+    private InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation;
+    private InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation;
 
     private List infoEvaluations;
 
@@ -254,5 +260,57 @@ public class InfoEnrolment extends InfoObject {
      */
     public void setCondition(EnrollmentCondition condition) {
         this.condition = condition;
+    }
+    /**
+     * @return Returns the infoImprovmentEnrolmentEvaluation.
+     */
+    public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
+        return infoImprovmentEnrolmentEvaluation;
+    }
+    /**
+     * @param infoImprovmentEnrolmentEvaluation The infoImprovmentEnrolmentEvaluation to set.
+     */
+    public void setInfoImprovmentEnrolmentEvaluation(
+            InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation) {
+        this.infoImprovmentEnrolmentEvaluation = infoImprovmentEnrolmentEvaluation;
+    }
+    /**
+     * @return Returns the infoNormalEnrolmentEvaluation.
+     */
+    public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
+        return infoNormalEnrolmentEvaluation;
+    }
+    /**
+     * @param infoNormalEnrolmentEvaluation The infoNormalEnrolmentEvaluation to set.
+     */
+    public void setInfoNormalEnrolmentEvaluation(
+            InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation) {
+        this.infoNormalEnrolmentEvaluation = infoNormalEnrolmentEvaluation;
+    }
+    /**
+     * @return Returns the infoSpecialSeasonEnrolmentEvaluation.
+     */
+    public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
+        return infoSpecialSeasonEnrolmentEvaluation;
+    }
+    /**
+     * @param infoSpecialSeasonEnrolmentEvaluation The infoSpecialSeasonEnrolmentEvaluation to set.
+     */
+    public void setInfoSpecialSeasonEnrolmentEvaluation(
+            InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation) {
+        this.infoSpecialSeasonEnrolmentEvaluation = infoSpecialSeasonEnrolmentEvaluation;
+    }
+    /**
+     * @return Returns the infoEquivalenceEnrolmentEvaluation.
+     */
+    public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
+        return infoEquivalenceEnrolmentEvaluation;
+    }
+    /**
+     * @param infoEquivalenceEnrolmentEvaluation The infoEquivalenceEnrolmentEvaluation to set.
+     */
+    public void setInfoEquivalenceEnrolmentEvaluation(
+            InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation) {
+        this.infoEquivalenceEnrolmentEvaluation = infoEquivalenceEnrolmentEvaluation;
     }
 }

@@ -23,6 +23,24 @@
 	<filter class= "org.apache.log4j.varia.DenyAllFilter"/>
  </appender >
 
+    <appender name="EMAIL"  class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="512" />
+        <param name="SMTPHost" value="@log4j.email.smtp.host@" />
+        <param name="From" value="@log4j.email.smtp.from@" />
+        <param name="To" value="@log4j.email.smtp.to@" />
+        <param name="Subject" value="@log4j.email.smtp.subject@" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+              value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
+        </layout>
+<!--
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+-->
+    </appender>
+
   <logger name="org.apache.ojb.broker.accesslayer.sql">
   	<level value="error"/>
   	<appender-ref ref="ConsoleAppender"/>
@@ -48,9 +66,15 @@
     <appender-ref ref="profileLog"/>
   </logger>
 
+  <logger name="ServidorAplicacao.Servico.student.InsertStudentTestResponses">
+    <level value="debug"/>
+    <appender-ref ref="ConsoleAppender"/>
+  </logger>
+
   <root>
     <priority value="error"/>    
     <appender-ref ref="ConsoleAppender"/>
+    <appender-ref ref="EMAIL" />
   </root>
 
 </log4j:configuration>

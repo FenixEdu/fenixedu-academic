@@ -106,6 +106,8 @@ public class ReadCourseInformation implements IService {
 
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);
+            infoExecutionCourse.setNumberOfAttendingStudents(new Integer(executionCourse
+                    .getAttendingStudents() == null ? 0 : executionCourse.getAttendingStudents().size()));
 
             infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
@@ -215,26 +217,26 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
 
-            InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
-            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
-            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
-            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
-
-            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
-                    .newInfoFromDomain(executionPeriod);
-            infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
-
-            InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
-            infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
-
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
-                    .newInfoFromDomain(curricularCourse);
-            infoSiteEvaluationInformation.setInfoCurricularCourse(infoCurricularCourse);
-            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(
-                    executionPeriod.getSemester(), curricularCourse, sp));
-            infoSiteEvalutationInformations.add(infoSiteEvaluationInformation);
-        }
+ 	            InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
+	            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+	            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
+	            infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
+	            infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
+	            
+	            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+	                    .newInfoFromDomain(executionPeriod);
+	            infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
+	
+	            InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
+	            infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
+	           
+	            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+	                    .newInfoFromDomain(curricularCourse);
+	            infoSiteEvaluationInformation.setInfoCurricularCourse(infoCurricularCourse);
+	            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(
+	                    executionPeriod, curricularCourse, sp));
+	            infoSiteEvalutationInformations.add(infoSiteEvaluationInformation);
+          }
         return infoSiteEvalutationInformations;
     }
 
@@ -244,7 +246,7 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationsHistory(Integer semester, ICurricularCourse curricularCourse,
+    private List getInfoSiteEvaluationsHistory(IExecutionPeriod executionPeriodToTest, ICurricularCourse curricularCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         List infoSiteEvaluationsHistory = new ArrayList();
         List executionPeriods = (List) CollectionUtils.collect(curricularCourse
@@ -255,12 +257,13 @@ public class ReadCourseInformation implements IService {
             }
 
         });
-        // filter the executionPeriods by semester
-        final Integer historySemester = semester;
+        // filter the executionPeriods by semester;
+        // also, information regarding execution years after the course's execution year must not be shown
+        final IExecutionPeriod historyExecutionPeriod = executionPeriodToTest;
         executionPeriods = (List) CollectionUtils.select(executionPeriods, new Predicate() {
             public boolean evaluate(Object arg0) {
                 IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
-                return executionPeriod.getSemester().equals(historySemester);
+                return (executionPeriod.getSemester().equals(historyExecutionPeriod.getSemester()) && executionPeriod.getExecutionYear().getBeginDate().before(historyExecutionPeriod.getExecutionYear().getBeginDate()));
             }
         });
         Collections.sort(executionPeriods, new Comparator() {

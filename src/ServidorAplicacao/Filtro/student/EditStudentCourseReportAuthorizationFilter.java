@@ -13,7 +13,6 @@ import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.gesdis.IStudentCourseReport;
 import Dominio.gesdis.StudentCourseReport;
@@ -21,7 +20,6 @@ import Dominio.student.IDelegate;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -59,7 +57,6 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
             IPersistentStudentCourseReport persistentStudentCourseReport = sp
                     .getIPersistentStudentCourseReport();
             IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
             IStudent student = persistentStudent.readByUsername(id.getUtilizador());
             IDelegate delegate = persistentDelegate.readByStudent(student);
@@ -74,12 +71,11 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
                 }
             });
             years = removeDuplicates(years);
-            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
             Iterator iter = years.iterator();
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
                 List delegates = persistentDelegate.readByDegreeAndExecutionYearAndYearType(
-                        curricularCourse.getDegreeCurricularPlan().getDegree(), executionYear,
+                        curricularCourse.getDegreeCurricularPlan().getDegree(), delegate.getExecutionYear(),
                         DelegateYearType.getEnum(year.intValue()));
 
                 if (delegates.contains(delegate))

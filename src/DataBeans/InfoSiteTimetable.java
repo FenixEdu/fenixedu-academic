@@ -7,6 +7,8 @@ package DataBeans;
 
 import java.util.List;
 
+import Dominio.IExecutionPeriod;
+
 /**
  * @author João Mota
  * 
@@ -14,7 +16,9 @@ import java.util.List;
  */
 public class InfoSiteTimetable extends DataTranferObject implements ISiteComponent {
 
-    private List lessons;
+	private List lessons;
+
+	private IExecutionPeriod executionPeriod;
 
     /**
      * @return
@@ -30,4 +34,18 @@ public class InfoSiteTimetable extends DataTranferObject implements ISiteCompone
         lessons = list;
     }
 
+    /**
+     * @return
+     */
+    public IExecutionPeriod getExecutionPeriod() {
+        return executionPeriod;
+    }
+
+    /**
+     * @param infoExecutionPeriod
+     */
+    public void setExecutionPeriod(IExecutionPeriod iExecutionPeriod) {
+    	executionPeriod = iExecutionPeriod;
+    }    
+ 
 }

@@ -37,6 +37,12 @@
 			</field>
 		</form>
 		
+		<!-- ****************** Improvment Enrollment **************************** -->
+		<form name="improvmentEnrolmentForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>
 		<!-- ****************** Enrollment Without Rules **************************** -->
 		<form name="curricularCoursesEnrollmentWithoutRuleForm">
 			<field property="studentNumber" depends="required,integer" page="1">

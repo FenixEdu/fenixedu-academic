@@ -28,7 +28,6 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadStudentListByCurricularCourseScope implements IService {
 

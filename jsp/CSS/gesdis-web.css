@@ -176,7 +176,7 @@ body>#nav	{
 	}
 #nav ul li a:hover {
 	text-decoration: none;
-	background-color: #ff9;
+	background-color: #eec; 	/* ECSFP*/
 	}
 .selected	{
 	color: #666;
@@ -184,6 +184,55 @@ body>#nav	{
 	padding: 5px 0 5px 0;
 	background-color: #ccc;
 	}
+	
+/******************************************
+ 	Execution Course Site First Page
+ *******************************************/
+#announcs {
+	background: #eec;
+   	border: none;
+   	padding: 0em 0em 0.5em;
+}
+.announcs-head {
+   	background: #aa7;
+   	color: #fff;
+   	text-indent: 0.5em;
+   	padding: 0.4em 0;
+}
+.last-announc {
+   	padding: 0.3em 0 0 0;
+   	margin: -2px 12px 0.5em 14px; 
+   	border: 1px solid #aa7;
+   	background: #fff;
+}
+.last-announc-name {
+   	font-weight: bold;
+	color: #104284;
+	padding: 0.1em 0.5em 0.1em 0.75em;
+}
+.last-announc-post-date {
+	font: 7pt;
+	color: #666; 
+   	padding: 0.1em 0.5em 0.1em 0.95em;
+}
+p.last-announc-info {
+   	margin: 1em 0.3em 0.75em 0.75em;
+}
+li.more-announc {
+	color: #aa7;
+   	padding: 0.2em;
+}
+.more-announc-date {
+	color: #666;
+}
+a.list-announcs {
+	text-decoration: none;
+	font: 13px "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #333;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
 /******************************************
  	seccao
  *******************************************/	

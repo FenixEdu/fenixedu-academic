@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,8 +22,11 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoDepartment;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoObject;
+import DataBeans.InfoTeacher;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -50,7 +55,7 @@ public class SearchCoursesInformationAction extends SearchAction {
         final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute("infoExecutionDegree");
 
-        //      sort the execution course list
+        // sort the execution course list
         ComparatorChain comparatorChain1 = new ComparatorChain();
         comparatorChain1.addComparator(new Comparator() {
 
@@ -164,8 +169,351 @@ public class SearchCoursesInformationAction extends SearchAction {
             }
         });
         Collections.sort((List) result, comparatorChain1);
+
+        // collect information for the jsp in a especific, proper data bean
+        List infoSiteCoursesInformation = (List) result;
+        HashMap statistics = new HashMap();
+        Integer numberOfCourses = new Integer(infoSiteCoursesInformation.size());
+        List infoCourses = new ArrayList();
+        
+        Iterator infoSiteCoursesInformationIter = infoSiteCoursesInformation.iterator();
+        while (infoSiteCoursesInformationIter.hasNext()) {
+            InfoSiteCourseInformation infoSiteCourseInformation = (InfoSiteCourseInformation) infoSiteCoursesInformationIter
+                    .next();
+
+            // add info to statistics
+            Integer numberOfFields = infoSiteCourseInformation.getNumberOfFieldsFilled();
+			if (!statistics.containsKey(numberOfFields))
+				statistics.put(numberOfFields, new Integer(1));
+			else
+			{
+				int value = ((Integer) statistics.get(numberOfFields)).intValue();
+				value++;
+				statistics.put(numberOfFields, new Integer(value));
+			}
+            
+			InfoCourse infoCourse = new InfoCourse();
+			// iterate through the courses
+            Iterator infoCurricularCourseIterator = infoSiteCourseInformation.getInfoCurricularCourses()
+                    .iterator();
+            while (infoCurricularCourseIterator.hasNext()) {
+                InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) infoCurricularCourseIterator
+                        .next();
+
+                // ignore this iteration if the curricular course doesn't refer to the execution degree's degree curricular plan
+                if (infoExecutionDegree != null && infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal() != infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal())
+                	continue;
+                
+                // set yearSemesterBranch field
+                List yearSemesterBranch = new ArrayList();
+                Iterator infoCurricularCourseScopeIterator = infoCurricularCourse.getInfoScopes()
+                        .iterator();
+                while (infoCurricularCourseScopeIterator.hasNext()) {
+                    InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoCurricularCourseScopeIterator
+                            .next();
+
+                    String year = infoCurricularCourseScope.getInfoCurricularSemester().getInfoCurricularYear().getYear().toString();
+                    String semester = infoCurricularCourseScope.getInfoCurricularSemester().getSemester().toString();
+                    String branch = infoCurricularCourseScope.getInfoBranch().getAcronym();
+                    if(branch == null) branch = new String();
+                    String yearSemesterBranchElement = year + " " + semester  + " " + branch;
+                    yearSemesterBranch.add(yearSemesterBranchElement);
+                }
+                infoCourse.setYearSemesterBranch(yearSemesterBranch);
+
+                // set executionCourseID
+                infoCourse.setExecutionCourseID(infoSiteCourseInformation.getInfoExecutionCourse().getIdInternal());
+                
+                // set curricularCourseNameAndCode field
+                String curricularCourseNameAndCode = infoCurricularCourse.getName() + " - "
+                        + infoCurricularCourse.getCode();
+                infoCourse.setCurricularCourseNameAndCode(curricularCourseNameAndCode);
+
+                // set executionCourseCode
+                String executionCourseCode = infoSiteCourseInformation.getInfoExecutionCourse()
+                        .getSigla();
+                infoCourse.setExecutionCourseCode(executionCourseCode);
+
+                // set executionPeriod
+                infoCourse.setExecutionPeriod(infoSiteCourseInformation.getInfoExecutionCourse().getInfoExecutionPeriod().getName());
+                
+                // set basic field
+                infoCourse.setBasic(infoCurricularCourse.getBasic().booleanValue());
+                
+                // set degree curricular plan name
+                if(infoExecutionDegree == null)
+                    infoCourse.setDegreeCurricularPlanName(infoCurricularCourse.getInfoDegreeCurricularPlan().getName());
+                
+                // set teachers
+                List teachers = new ArrayList();
+                Iterator infoLecturingTeachersIter = infoSiteCourseInformation.getInfoLecturingTeachers()
+                        .iterator();
+                while (infoLecturingTeachersIter.hasNext()) {
+                    InfoTeacher infoTeacher = (InfoTeacher) infoLecturingTeachersIter.next();
+                    
+                    InfoSimpleTeacher teacher = new InfoSimpleTeacher();
+                    teacher.setName(infoTeacher.getInfoPerson().getNome());
+                    teacher.setResponsible(infoSiteCourseInformation.getInfoResponsibleTeachers().contains(infoTeacher));
+                    
+                    Object[] args = { infoTeacher };
+                    IUserView userView = SessionUtils.getUserView(request);
+                    InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(userView, "ReadDepartmentByTeacher", args);
+                    teacher.setDepartment(infoDepartment.getName());
+                    
+                    teachers.add(teacher);
+                }
+                infoCourse.setTeachers(teachers);
+                
+                // set numberFieldsFilled
+                infoCourse.setNumberFieldsFilled(infoSiteCourseInformation.getNumberOfFieldsFilled());
+
+                // set lastModificationDate; mighty be null
+                Date lastModificationDate = infoSiteCourseInformation.getLastModificationDate();
+                if(lastModificationDate != null) infoCourse.setLastModificationDate(lastModificationDate.getTime());
+            }
+            infoCourses.add(infoCourse);
+        }
+
+        request.setAttribute("statistics", statistics);
+        request.setAttribute("numberOfCourses", numberOfCourses);
+        request.setAttribute("infoCourses", infoCourses);
     }
 
+    public class InfoCourse extends InfoObject {
+
+        private List yearSemesterBranch;
+
+        private Integer executionCourseID;
+        
+        private String curricularCourseNameAndCode;
+
+        private String executionCourseCode;
+        
+        private String executionPeriod;
+
+        private boolean basic;
+        
+        private String degreeCurricularPlanName;
+
+        private List teachers;
+
+        private Integer numberFieldsFilled;
+
+        private long lastModificationDate;
+
+        public InfoCourse() {
+        }
+
+        /**
+         * @return Returns the executionCourseID.
+         */
+        public Integer getExecutionCourseID() {
+            return executionCourseID;
+        }
+
+        /**
+         * @param executionCourseID
+         *            The executionCourseID to set.
+         */
+        public void setExecutionCourseID(Integer executionCourseID) {
+            this.executionCourseID = executionCourseID;
+        }
+
+        /**
+         * @return Returns the basic.
+         */
+        public boolean isBasic() {
+            return basic;
+        }
+
+        /**
+         * @param basic
+         *            The basic to set.
+         */
+        public void setBasic(boolean basic) {
+            this.basic = basic;
+        }
+
+        /**
+         * @return Returns the code.
+         */
+        public String getExecutionCourseCode() {
+            return executionCourseCode;
+        }
+
+        /**
+         * @param code
+         *            The code to set.
+         */
+        public void setExecutionCourseCode(String executionCourseCode) {
+            this.executionCourseCode = executionCourseCode;
+        }
+
+        /**
+         * @return Returns the executionPeriod.
+         */
+        public String getExecutionPeriod() {
+            return executionPeriod;
+        }
+
+        /**
+         * @param executionPeriod
+         *            The executionPeriod to set.
+         */
+        public void setExecutionPeriod(String executionPeriod) {
+            this.executionPeriod = executionPeriod;
+        }
+
+        /**
+         * @return Returns the lastModificationDate.
+         */
+        public long getLastModificationDate() {
+            return lastModificationDate;
+        }
+
+        /**
+         * @param lastModificationDate
+         *            The lastModificationDate to set.
+         */
+        public void setLastModificationDate(long lastModificationDate) {
+            this.lastModificationDate = lastModificationDate;
+        }
+
+        /**
+         * @return Returns the degreeCurricularPlanName.
+         */
+        public String getDegreeCurricularPlanName() {
+            return degreeCurricularPlanName;
+        }
+
+        /**
+         * @param degreeCurricularPlanName
+         *            The degreeCurricularPlanName to set.
+         */
+        public void setDegreeCurricularPlanName(String degreeCurricularPlanName) {
+            this.degreeCurricularPlanName = degreeCurricularPlanName;
+        }
+
+        
+        /**
+         * @return Returns the lecturingTeachers.
+         */
+        public List getTeachers() {
+            return teachers;
+        }
+
+        /**
+         * @param lecturingTeachers
+         *            The lecturingTeachers to set.
+         */
+        public void setTeachers(List teachers) {
+            this.teachers = teachers;
+        }
+
+        /**
+         * @return Returns the name.
+         */
+        public String getCurricularCourseNameAndCode() {
+            return curricularCourseNameAndCode;
+        }
+
+        /**
+         * @param name
+         *            The name to set.
+         */
+        public void setCurricularCourseNameAndCode(String curricularCourseNameAndCode) {
+            this.curricularCourseNameAndCode = curricularCourseNameAndCode;
+        }
+
+        /**
+         * @return Returns the numberFieldsFilled.
+         */
+        public Integer getNumberFieldsFilled() {
+            return numberFieldsFilled;
+        }
+
+        /**
+         * @param numberFieldsFilled
+         *            The numberFieldsFilled to set.
+         */
+        public void setNumberFieldsFilled(Integer numberFieldsFilled) {
+            this.numberFieldsFilled = numberFieldsFilled;
+        }
+
+        /**
+         * @return Returns the yearSemesterBranch.
+         */
+        public List getYearSemesterBranch() {
+            return yearSemesterBranch;
+        }
+
+        /**
+         * @param yearSemesterBranch
+         *            The yearSemesterBranch to set.
+         */
+        public void setYearSemesterBranch(List yearSemesterBranch) {
+            this.yearSemesterBranch = yearSemesterBranch;
+        }
+    }
+
+    public class InfoSimpleTeacher extends InfoObject {
+
+        private String name;
+
+        private boolean responsible;
+        
+        private String department;
+
+        public InfoSimpleTeacher() {
+        }
+
+        /**
+         * @return Returns the degreeCurricularPlanName.
+         */
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * @param degreeCurricularPlanName
+         *            The degreeCurricularPlanName to set.
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        /**
+         * @return Returns the responsible.
+         */
+        public boolean isResponsible() {
+            return responsible;
+        }
+
+        /**
+         * @param responsible
+         *            The responsible to set.
+         */
+        public void setResponsible(boolean responsible) {
+            this.responsible = responsible;
+        }
+        
+        /**
+         * @return Returns the department.
+         */
+        public String getDepartment() {
+            return department;
+        }
+
+        /**
+         * @param department
+         *            The department to set.
+         */
+        public void setDepartment(String department) {
+            this.department = department;
+        }
+    }
+
+    
     /*
      * (non-Javadoc)
      * 

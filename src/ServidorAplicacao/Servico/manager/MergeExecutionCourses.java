@@ -59,6 +59,10 @@ import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
  */
 public class MergeExecutionCourses implements IService {
 
+    public class SourceAndDestinationAreTheSameException extends FenixServiceException {
+        private static final long serialVersionUID = 3761968254943244338L;
+    }
+
     public class CONTAINS_STUDENT_PREDICATE implements Predicate {
 
         private IStudent student = null;
@@ -75,10 +79,17 @@ public class MergeExecutionCourses implements IService {
 
     }
 
+    public MergeExecutionCourses() {
+    }
+
     public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+        if (executionCourseDestinationId.equals(executionCourseSourceId)) {
+            throw new SourceAndDestinationAreTheSameException();
+        }
+
+       ISuportePersistente ps = SuportePersistenteOJB.getInstance();
         IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
         IExecutionCourse destination;
         IExecutionCourse source;

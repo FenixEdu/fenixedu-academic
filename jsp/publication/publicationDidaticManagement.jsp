@@ -16,13 +16,13 @@
 	<bean:message key="message.authorPublications" />
 	</h3>
 	<p class="infoop"><span class="emphasis-box">1</span>
-	<logic:notEmpty name="infoSitePublications" property="infoDidaticPublications">
+	<logic:notEmpty name="infoSitePublications" property="infoPublications">
 		<bean:message key="message.publications.management" /></p>
 		<bean:message key="message.publications.managementCleanPublicationTeacher" />
 		<bean:message key="message.publications.managementInsertPublicationTeacher" />
 		<bean:message key="message.publications.managementContinue" />
 	</logic:notEmpty>
-	<logic:empty name="infoSitePublications" property="infoDidaticPublications">
+	<logic:empty name="infoSitePublications" property="infoPublications">
 		<bean:message key="message.publications.management" /></p>
 		<bean:message key="message.publications.managementNoPublications"/><br/>
 		<bean:message key="message.publications.managementInsertPublicationTeacher" />
@@ -30,7 +30,7 @@
 	</logic:empty>
 	<table style="text-align:left" width="100%">
 	
-		<logic:iterate id="infoPublication" name="infoSitePublications" property="infoDidaticPublications">
+		<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
 		<tr>
 			<td class="listClasses" style="text-align:left" width="100%">
 				<bean:write name="infoPublication" property="publicationString" />
@@ -43,7 +43,7 @@
 							   paramId="idPublication" 
 							   paramName="infoPublication" 
 							   paramProperty="idInternal">
-						<bean:message key="label.remove" />
+						<bean:message key="link.publication.remove" />
 					</html:link>
 				</div>
 			</td>
@@ -51,12 +51,12 @@
 		</logic:iterate>
 	</table>
 	<br />
-	<bean:define id="infoPublications" name="infoSitePublications" property="infoDidaticPublications" type="java.util.List"/>
+	<bean:define id="infoPublications" name="infoSitePublications" property="infoPublications" type="java.util.List"/>
 	<bean:size id="infoPublicationsSize"  name="infoPublications"/>
 	<logic:lessThan name="infoPublicationsSize" value="5">
 		<div class="gen-button">
 			<html:link page="/readPublicationsAuthor.do?typePublication=Didatic&amp;page=0&amp;method=readPublicationsAuthor">
-				<bean:message key="message.publications.insert" />
+				<bean:message key="link.publication.add" />
 			</html:link>
 		</div>
 	</logic:lessThan>

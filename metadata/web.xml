@@ -30,6 +30,10 @@
 			<param-name>time</param-name>
 			<param-value>600</param-value>
 		</init-param>
+		<init-param>
+			<param-name>exclude-url-pattern</param-name>
+			<param-value>chooseExamsMapContextDANew.do</param-value>
+		</init-param>
 	</filter>
 <!--
 	<filter>

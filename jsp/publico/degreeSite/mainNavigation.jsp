@@ -20,6 +20,6 @@
 	<li><a href="/html/id/">I &amp; D</a></li>
 	<li><a href="/html/sociedade/">Liga&ccedil;&atilde;o &agrave; Sociedade </a></li>
 	<li><a href="/html/viverist/">Viver no IST</a></li>
-	 <li><a href="http://www.ist.utl.pt/html/recursos/">Recursos</a></li> 
-	<%--	<li><html:link page="<%= "/prepareConsultRoomsNew.do?method=prepare" %>" >Recursos</html:link></li>--%>
+	<%--	 <li><a href="http://www.ist.utl.pt/html/recursos/">Recursos</a></li> --%>
+	<li><html:link page="<%= "/prepareConsultRoomsNew.do?method=prepare" %>" >Recursos</html:link></li>
 </ul>

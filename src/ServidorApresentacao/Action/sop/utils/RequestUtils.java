@@ -278,10 +278,12 @@ public abstract class RequestUtils {
 
             request.setAttribute("nameDegreeCurricularPlan", executionDegree
                     .getInfoDegreeCurricularPlan().getName());
-            request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan()
-                    .getInfoDegree().getSigla());
-            request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan()
-                    .getIdInternal());
+			if (executionDegree.getInfoDegreeCurricularPlan()
+			.getInfoDegree() != null)
+	            request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan()
+	                    .getInfoDegree().getSigla());
+			request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan()
+							   .getIdInternal());
 
         }
 

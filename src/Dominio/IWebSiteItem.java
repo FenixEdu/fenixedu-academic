@@ -59,7 +59,7 @@ public interface IWebSiteItem extends IDomainObject {
 
     public Date getOnlineEndDay();
 
-    public void setOnlineEndDay(Date onlinendDay);
+    public void setOnlineEndDay(Date onlineEndDay);
 
     public Boolean getPublished();
 

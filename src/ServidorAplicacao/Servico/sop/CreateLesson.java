@@ -6,7 +6,7 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Serviï¿½o CreateLesson.
+ * Serviço CreateLesson.
  * 
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -14,8 +14,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
-
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoPeriod;
@@ -29,7 +28,6 @@ import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
 import Dominio.ISala;
 import Dominio.ITurno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -38,30 +36,10 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
+import Util.beanUtils.FenixPropertyUtils;
 
-public class CreateLesson implements IServico {
-    private static CreateLesson _servico = new CreateLesson();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static CreateLesson getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private CreateLesson() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "CreateLesson";
-    }
-
+public class CreateLesson implements IService {
+    
     public InfoLessonServiceResult run(InfoLesson infoLesson, InfoShift infoShift)
             throws FenixServiceException {
         InfoLessonServiceResult result = null;
@@ -114,11 +92,10 @@ public class CreateLesson implements IServico {
 
                         Integer originalID = aula2.getIdInternal();
                         try {
-                            BeanUtils.copyProperties(aula2, aula);
+                            FenixPropertyUtils.copyProperties(aula2, aula);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            throw new FenixServiceException(e);
                         }
-                        aula2.setIdInternal(originalID);
                         /*
                          * ITurnoAula shiftLesson = new TurnoAula();
                          * sp.getITurnoAulaPersistente().simpleLockWrite(shiftLesson);

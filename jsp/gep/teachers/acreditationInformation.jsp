@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<%@ page import="java.util.Calendar" %>
 <logic:present name="infoSiteTeachersInformation">
 	<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation">
 		<h2><bean:message key="label.acred.teacherInfo" bundle="GEP_RESOURCES"/></h2>
@@ -38,7 +39,7 @@
 			<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 				<tr>
 					<td class="listClasses">
-						<dt:format pattern="dd-MM-yyyy">
+						<dt:format pattern="yyyy">
 							<bean:write name="infoQualification" property="date.time" />
 						</dt:format>
 					</td>
@@ -215,4 +216,6 @@
 		</table>
 		<br />
 	</logic:iterate>
+	<% String today = Calendar.getInstance().getTime().toGMTString(); %>
+	<p align="right"><%=today%></p>
 </logic:present>

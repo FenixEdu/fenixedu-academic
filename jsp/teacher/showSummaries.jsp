@@ -142,7 +142,7 @@
 					<bean:write name="summary" property="infoTeacher.infoPerson.nome" />&nbsp;			
 				</logic:notEmpty>
 				<logic:notEmpty name="summary" property="teacherName">
-					<bean:message key="label.teacher.abbreviation" />&nbsp;
+					<!--<bean:message key="label.teacher.abbreviation" />&nbsp;-->
 					<bean:write name="summary" property="teacherName" />&nbsp;			
 				</logic:notEmpty>				
 			</td>
@@ -190,7 +190,7 @@
 				</div>
 				<div class="gen-button">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
-					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
+					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumï¿½rio?')">
 						<bean:message key="button.delete" />
 					</html:link>
 				</div>

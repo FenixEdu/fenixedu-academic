@@ -36,7 +36,7 @@ import Util.TipoCurso;
 
 /**
  * @author Fernanda Quitério 01/07/2003
- *  
+ * 
  */
 public class ReadStudentMarksByCurricularCourse implements IService {
 
@@ -60,7 +60,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                     .getIPersistentEnrolmentEvaluation();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            //read curricularCourse by ID
+            // read curricularCourse by ID
             ICurricularCourse curricularCourse = new CurricularCourse();
             curricularCourse.setIdInternal(curricularCourseID);
             curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
@@ -68,16 +68,16 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
             final ICurricularCourse curricularCourseTemp = curricularCourse;
 
-            //			IStudentCurricularPlan studentCurricularPlan =
-            //				sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-            //					studentNumber,
-            //					TipoCurso.MESTRADO_OBJ);
+            // IStudentCurricularPlan studentCurricularPlan =
+            // sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
+            // studentNumber,
+            // TipoCurso.MESTRADO_OBJ);
             //
-            //			if (studentCurricularPlan == null)
-            //			{
+            // if (studentCurricularPlan == null)
+            // {
             //
-            //				throw new ExistingServiceException();
-            //			}
+            // throw new ExistingServiceException();
+            // }
 
             // get student curricular Plan
             // in case student has school part concluded his curricular plan is
@@ -98,9 +98,27 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                         }
                     });
             if (studentCurricularPlan == null) {
-                throw new ExistingServiceException();
+
+                studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(
+                        studentCurricularPlans, new Predicate() {
+                            public boolean evaluate(Object object) {
+                                IStudentCurricularPlan studentCurricularPlanElem = (IStudentCurricularPlan) object;
+                                if (studentCurricularPlanElem.getDegreeCurricularPlan().getDegree()
+                                        .equals(
+                                                curricularCourseTemp.getDegreeCurricularPlan()
+                                                        .getDegree())) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+
+                if (studentCurricularPlan == null) {
+                    throw new ExistingServiceException();
+                }
+
             }
-            //			}
+            // }
             if (executionYear != null) {
                 enrolment = sp.getIPersistentEnrolment()
                         .readEnrolmentByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan,
@@ -111,20 +129,23 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                         .readByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan,
                                 curricularCourse);
 
+                if (enrollments.isEmpty()) {
+                    throw new ExistingServiceException();
+                }
                 enrolment = (IEnrollment) enrollments.get(0);
             }
 
             if (enrolment != null) {
-                //						ListIterator iter1 = enrolments.listIterator();
-                //						while (iter1.hasNext()) {
-                //							enrolment = (IEnrolment) iter1.next();
+                // ListIterator iter1 = enrolments.listIterator();
+                // while (iter1.hasNext()) {
+                // enrolment = (IEnrolment) iter1.next();
 
                 EnrolmentEvaluationState enrolmentEvaluationState = new EnrolmentEvaluationState(
                         EnrolmentEvaluationState.FINAL);
                 enrolmentEvaluations = persistentEnrolmentEvaluation
                         .readEnrolmentEvaluationByEnrolmentEvaluationState(enrolment,
                                 enrolmentEvaluationState);
-                //				enrolmentEvaluations = enrolment.getEvaluations();
+                // enrolmentEvaluations = enrolment.getEvaluations();
 
                 List infoTeachers = new ArrayList();
                 if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {

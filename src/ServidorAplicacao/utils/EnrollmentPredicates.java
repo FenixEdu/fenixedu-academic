@@ -8,9 +8,8 @@ package ServidorAplicacao.utils;
 
 import org.apache.commons.collections.Predicate;
 
-import Util.EnrollmentState;
-
 import Dominio.IEnrollment;
+import Util.EnrollmentState;
 
 /**
  * @author Andre Fernandes / Joao Brito

@@ -88,8 +88,6 @@ public class CreateFile {
                 writer.newLine();
             }
 
-            System.out.println("file " + file.getAbsolutePath());
-
             writer.close();
 
             return file;

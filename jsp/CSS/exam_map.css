@@ -1,5 +1,4 @@
 .examMapContainer{
-	margin-left: 5px;
 	margin-bottom: 5px;	
 	text-align: left;
 }
@@ -10,65 +9,108 @@
 }
 
 .examMap{
-	border:1px solid #000;
+	border: 1px solid #999;
 }
 
 .examMap_header_first{	
 	color: #fff;
 	font-weight: bold;
-	border-bottom: 1px solid #000;	
-	background: #000;
+	border-bottom: 1px solid #999;	
+	background: #999;
 	text-align: center;	
 	width: 16.7%;
-	}
+}
 
 .examMap_header{
 	color: #fff;
 	font-weight: bold;	
-	border-left: 1px solid #000;
-	border-bottom: 1px solid #000;
-	background: #000;
+	border-left: 1px solid #999;
+	border-bottom: 1px solid #999;
+	background: #999;
 	text-align: center;
 	width: 16.7%;	
-	}
+}
 
 .exam_cell_day_first{	
 	color: #000;
 	text-align: right;
-	background: #EBECED;
-	}
+	background: #ccc;
+	font-size: 10px;
+}
 
 .exam_cell_day{
 	color: #000;
 	text-align: right;
-	border-left: 1px solid #000;
-	background: #EBECED;
+	border-left: 1px solid #999;
+	background: #ccc;
+	font-size: 10px;
 	}
 
 .exam_cell_content{
 	text-align: left;
 	color: #000;
-	border-left: 1px solid #000;
-	border-bottom: 1px solid #000;	
+	border-left: 1px solid #999;
 	background: #EBECED;
-	}
+}
 
 .exam_cell_content_first{
 	text-align: left;
 	color: #000;
-	border-bottom: 1px solid #000;
 	background: #EBECED;
-	}
+}
 
 .exam_cell_content_bottom{
 	text-align: left;
 	color: #000;
-	border-left: 1px solid #000;
+	border-left: 1px solid #999;
 	background: #EBECED;
-	}
+}
 
 .exam_cell_content_first_bottom{
 	text-align: left;
 	color: #000;
 	background: #EBECED;
-	}
+}
+	
+.tab_exams_details { 
+	font-size: 11px;
+	padding: 10px;
+	border: 1px solid #999;
+}
+	
+.tab_exams_details th { 
+	color: #333;
+	padding: 2px;
+	text-align: left; 
+}
+
+.tab_exams_details th.ordYear { 
+	color: #333; 
+	padding: 2px;
+	text-align: left;
+	font-size: 12px;
+	border-bottom: 1px solid #999;
+}
+
+.tab_exams_details td.subheader {
+	color: #333; 
+	text-align: left;
+	padding: 2px;
+ 	font-weight: bold;	
+	border-top: 0px;
+	border-bottom: 1px solid #999;
+}
+
+.tab_exams_details td.firstRow { 
+	text-align: left;
+	padding: 2px; 
+	height: 2em; 
+	border-top: 0px;
+}
+
+.tab_exams_details td.notFirstRow { 
+	text-align: left;
+	padding: 2px; 
+	height: 2em; 
+	border-top: 1px dotted #999;
+}

@@ -154,8 +154,15 @@ public class PrintGuideDispatchAction extends DispatchAction {
                             infoGuide.getCreationDate());
             session.setAttribute(SessionConstants.DATE, formatedDate);
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
+
+            String copies = request.getParameter("copies");
+            if (copies != null && copies.equals("2")) {
+                return mapping.findForward("PrintTwoGuides");
+            }
+
             return mapping.findForward("PrintOneGuide");
         }
         throw new Exception();
     }
+
 }

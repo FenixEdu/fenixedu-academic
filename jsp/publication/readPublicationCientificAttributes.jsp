@@ -126,12 +126,24 @@
 			</logic:equal>
 			
 			<logic:equal name="att" property="attributeType" value="title">
+				<bean:size id="size" name="infoRequiredAttributeList"/>
 				<tr>
 					<td>
-						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.title" />
+						<bean:message key="message.publicationAttribute.required" />
+						<logic:notEqual name="size" value="1">
+							<bean:message key="message.publicationAttribute.title" />
+						</logic:notEqual>
+						<logic:equal name="size" value="1">
+							<bean:message key="message.publications.publication" />
+						</logic:equal>
 					</td>
 					<td>
-						<html:text size="20" property="title"/>
+						<logic:notEqual name="size" value="1">
+							<html:text size="20" property="title"/>
+						</logic:notEqual>	
+						<logic:equal name="size" value="1">
+							<html:textarea cols="50" rows="8" property="title"/>
+						</logic:equal>
 					</td>
 				</tr>
 				<tr></tr>

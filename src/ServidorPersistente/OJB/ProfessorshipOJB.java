@@ -172,6 +172,27 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         return queryList(Professorship.class, criteria, true);
     }
 
+    
+    
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegreeAndExecutionPeriod(Dominio.ICursoExecucao, Dominio.IExecutionPeriod)
+	 */
+	public List readByExecutionDegreeAndExecutionPeriod(
+			ICursoExecucao executionDegree, IExecutionPeriod executionPeriod)
+			throws ExcepcaoPersistencia {
+		
+		Criteria criteria = new Criteria();
+        criteria.addEqualTo(
+                "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+                executionDegree.getCurricularPlan().getIdInternal());
+        /*criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionDegree
+                .getExecutionYear().getIdInternal());*/
+        criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriod
+                .getIdInternal());
+
+        return queryList(Professorship.class, criteria, true);
+	}
+	
     /*
      * (non-Javadoc)
      * 

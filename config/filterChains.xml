@@ -268,6 +268,13 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>ManagerOrSeminariesCoordinatorOrTimeTableManager</name>
+        <expression>ManagerOrSeminariesCoordinator || TimeTableManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>SeminaryCoordinatorOrStudent</name>
         <expression>SeminaryCoordinatorOrStudent</expression>
         <description/>
@@ -414,7 +421,7 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-<filterChain>
+	<filterChain>
         <name>PublicationAuthorAuthorization</name>
         <expression>PublicationAuthorAuthorizationFilter</expression>
         <description/>
@@ -663,6 +670,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+	<filterChain>
+        <name>EnrolmentImprovmentAuthorization</name>
+        <expression>EnrolmentImprovmentAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
     <filterChain>
         <name>EditStudentCourseReportAuthorization</name>
         <expression>EditStudentCourseReportAuthorization</expression>
@@ -742,7 +756,7 @@
 	</filterChain>
 	<filterChain>
 		<name>ReadCurriculumHistoricAuthorization</name>
-		<expression>TeacherAuthorization || TimeTableManagerAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentMemberAuthorization &amp;&amp; EmployeeAuthorization)</expression>
+		<expression>TeacherAuthorization || TimeTableManagerAuthorization || GEPAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentMemberAuthorization &amp;&amp; EmployeeAuthorization)</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
@@ -762,5 +776,18 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
-
+	<filterChain>
+		<name>ConsultExamsMap</name>
+		<expression>TimeTableManagerAuthorization || PublishedExamsMapAuthorization</expression>
+		<description />
+		<invocationTiming>2</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
+	<filterChain>
+		<name>ExecutionDataManipulation</name>
+		<expression>ManagerAuthorization || TimeTableManagerAuthorization </expression>
+		<description />
+		<invocationTiming>2</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
 </filterChainsDefinitions>

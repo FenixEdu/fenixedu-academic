@@ -20,7 +20,7 @@ public class InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree extends I
     public void copyFromDomain(IGratuitySituation gratuitySituation) {
         super.copyFromDomain(gratuitySituation);
         if (gratuitySituation != null) {
-            setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudent
+            setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
                     .newInfoFromDomain(gratuitySituation.getStudentCurricularPlan()));
             setInfoGratuityValues(InfoGratuityValuesWithInfoExecutionDegree
                     .newInfoFromDomain(gratuitySituation.getGratuityValues()));

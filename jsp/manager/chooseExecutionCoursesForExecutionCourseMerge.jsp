@@ -8,6 +8,13 @@
 
 <span class="error"><html:errors/></span>
 
+
+
+<br/>
+<bean:write name="infoExecutionPeriod" property="name" /> - 
+<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" />
+<br/>
+
 <html:form action="/mergeExecutionCoursesForm" >
 	    
 	<html:hidden property="page" value="1"/>
@@ -21,6 +28,9 @@
 	<table cellpadding="1" >
 	<tr >
 	<td valign="top">
+	<bean:write name="sourceInfoDegree" property="nome" /> -
+	<bean:write name="sourceInfoDegree" property="sigla" />
+	<br/>
 	<strong>Escolha a Disciplina Execução de Origem</strong>
 	<br/>	
 	<br/>
@@ -41,6 +51,9 @@
 	</table>
 	</td>
 	<td valign="top">
+	<bean:write name="destinationInfoDegree" property="nome" /> -
+	<bean:write name="destinationInfoDegree" property="sigla" />
+	<br/>
 	<strong>Escolha a Disciplina Execução de Destino</strong>
 	<table>
 	<logic:iterate id="executionCourse" name="destinationExecutionCourses">

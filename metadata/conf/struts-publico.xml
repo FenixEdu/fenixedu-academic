@@ -30,11 +30,13 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         <form-property name="index" type="java.lang.String"/>
-
         <form-property name="curYear" type="java.lang.Integer"/>
         <form-property name="ePName" type="java.lang.String"/>
         <form-property name="eYName" type="java.lang.String"/>
         <form-property name="page" type="java.lang.Integer"/> 
+        <form-property name="degreeID" type="java.lang.Integer"/>
+        <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
+        <form-property name="indice" type="java.lang.Integer"/>
       </form-bean>
       
       <form-bean name="chooseExecutionCourseForm"
@@ -111,6 +113,8 @@
         <form-property name="page" type="java.lang.Integer"/> 
         <form-property name="degreeID" type="java.lang.Integer"/>
         <form-property name="executionDegreeID" type="java.lang.Integer"/>
+        <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
+        <form-property name="indice" type="java.lang.Integer"/>
       </form-bean>
 
     
@@ -132,6 +136,9 @@
         <form-property name="executionYearId" type="java.lang.Integer"/>
         <form-property name="executionDegreeId" type="java.lang.Integer"/>
         <form-property name="departmentId" type="java.lang.Integer"/>
+		<form-property name="semester" type="java.lang.Integer"/>
+		<form-property name="teacherType" type="java.lang.Integer"/>
+		<form-property name="searchDetails" type="java.lang.String"/>
       </form-bean>
 
      <form-bean name="finalDegreeWorksForm"
@@ -230,7 +237,7 @@
         <forward name="executionCourseSearch" path="/prepareSelectExecutionCourseAction.do"/>
       </action>
       
-      <action input="/chooseContextDANew.do?method=preparePublic&amp;page=0&amp;inputPage=chooseContext"
+      <action input="/chooseContextDANew.do?method=prepare&amp;page=0&amp;inputPage=chooseContext"
               name="chooseSearchContextForm"
               parameter="method"
               path="/chooseContextDANew"
@@ -238,6 +245,7 @@
               validate="false"
               type="ServidorApresentacao.Action.commons.ChooseContextDispatchActionNew"
               >
+        <forward name="prepare" path="/chooseContextDANew.do?method=nextPagePublic&amp;page=0&amp;nextPage=classSearch&amp;inputPage=chooseContext"/>
         <forward name="chooseContext" path="/chooseContext.jsp"/>
         <forward name="classSearch" path="/viewClassesNew.do"/>
         <forward name="executionCourseSearch" path="/prepareSelectExecutionCourseAction.do"/>
@@ -253,6 +261,8 @@
       
       <action path="/viewClassesNew"
               type="ServidorApresentacao.Action.publico.ViewClassesActionNew"
+              name="chooseSearchContextForm"
+              validate="false"
               >
           <forward name="Sucess" path="viewClasses"/>
       </action>
@@ -354,7 +364,7 @@
       <action input="viewClassTimeTable"
       		  path="/viewClassTimeTableNew"
               type="ServidorApresentacao.Action.publico.ViewClassTimeTableActionNew"
-              name="chooseContextDegreeForm"
+              name="chooseSearchContextForm"
               validate="false"
               >
           <forward name="Sucess" path="viewClassTimeTable"/>
@@ -457,7 +467,7 @@
             parameter="method"
             path="/chooseExamsMapContextDA"
             scope="request"
-            validate="true"
+            validate="false"
             type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDA"
             >
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
@@ -471,6 +481,7 @@
             validate="true"
             type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDANew"
             >
+         <forward name="prepare" path="/chooseExamsMapContextDANew.do?method=choose&amp;page=0"/>
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
         <forward name="showExamsMap" path="/viewExamsMapNew.do?method=view"/>
     </action>
@@ -481,8 +492,9 @@
             name="examForm"
             validate="false"
             >
-        <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
+        <forward name="viewExamsMap" path="viewExamsMapOld"/>
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
+        <forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
     </action>
     <action path="/viewExamsMapNew"
             type="ServidorApresentacao.Action.publico.ViewExamsMapDANew"
@@ -680,8 +692,26 @@
               type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction">
          <forward name="sucess" path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0"/>     
       </action>
-       
-      
+
+	<action path="/showExecutionCourseSites"
+			type="ServidorApresentacao.Action.publico.ShowExecutionCourseSitesDispatchAction"
+			parameter="method"
+			scope="request"
+			>
+		<forward name="show-exeution-course-site-list" path="df.page.showDegreeCurricularPlanSites"/>
+	</action>
+	<action path="/showClasses"
+			type="ServidorApresentacao.Action.publico.ShowClassesDispatchAction"
+			parameter="method"
+			scope="request"
+			>
+		<forward name="show-classes-list" path="df.page.showClassesList"/>
+	</action>
+	<action path="/viewAllExamsByDegreeAndCurricularYear"
+    		type="ServidorApresentacao.Action.publico.ViewAllExamsByDegreeAndCurricularYearAction"
+    		>
+    	<forward name="Sucess" path="viewAllExamsByDegreeAndCurricularYear"/>
+	</action>
 
      </action-mappings>     
     

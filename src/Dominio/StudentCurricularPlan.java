@@ -303,7 +303,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         }
 
         allEnrollments.addAll(getEnrolments());
-
+       
         return (List) CollectionUtils.select(allEnrollments, new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -655,6 +655,18 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
      */
     public void setEnrollmentReports(List enrollmentReports) {
         this.enrollmentReports = enrollmentReports;
+    }
+    
+    public List getAprovedEnrolmentsInExecutionPeriod(final IExecutionPeriod executionPeriod) {
+        return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                if(enrollment.getEnrollmentState().equals(EnrollmentState.APROVED) && enrollment.getExecutionPeriod().equals(executionPeriod))
+                    return true;
+                else
+                    return false;
+            }
+        });
     }
 
     // -------------------------------------------------------------

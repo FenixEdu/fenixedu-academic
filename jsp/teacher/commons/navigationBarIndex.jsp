@@ -38,7 +38,7 @@
   </li>
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare" %>">
-  		<bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES" />
+  		<bean:message key="link.curriculumHistoric.consult" bundle="CURRICULUM_HISTORIC_RESOURCES" />
   	</html:link>  
   </li>
 </ul>

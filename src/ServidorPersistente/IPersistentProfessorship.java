@@ -94,4 +94,14 @@ public interface IPersistentProfessorship extends IPersistentObject {
      * @return
      */
     public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia;
+    
+    /**
+     * @author João e Rita
+     * @param executionDegree
+     * @param executionPeriod
+     * @return List
+     * @throws ExcepcaoPersistencia
+     */
+    public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao executionDegree, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    
 }

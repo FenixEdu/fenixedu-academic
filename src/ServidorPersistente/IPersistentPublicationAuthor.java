@@ -5,9 +5,6 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentObject;
-
 /**
  * @author Ricardo Rodrigues
  */

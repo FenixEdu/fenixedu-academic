@@ -469,7 +469,23 @@
 			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>		
-      
+
+   		<form-bean name="chooseDegreesForExecutionCourseMerge"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="sourceDegreeId" type="java.lang.Integer" />       
+				<form-property name="destinationDegreeId" type="java.lang.Integer" />
+				<form-property name="executionPeriodId" type="java.lang.Integer" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="mergeExecutionCoursesForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="sourceExecutionCourseId" type="java.lang.Integer" />       
+				<form-property name="destinationExecutionCourseId" type="java.lang.Integer" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>      
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1694,6 +1710,30 @@
        		<forward name="show-report" path="view-curriculum-historic"/>
        	</action>
  
+		<!-- ========== Merge Execution Courses ========== -->	
+		<action	name="chooseDegreesForExecutionCourseMerge"
+				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/chooseDegreesForExecutionCourseMerge"
+				parameter="method"
+				scope="request"
+				validate="false">
+			<forward name="chooseDegreesAndExecutionPeriod" path="df.page.chooseDegreesForExecutionCourseMerge"/>
+			<forward name="chooseExecutionCourses" path="df.page.chooseExecutionCoursesForExecutionCourseMerge"/>
+		</action>	
+		<action	name="mergeExecutionCoursesForm"
+				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/mergeExecutionCoursesForm"
+				parameter="method"
+				scope="request"
+				validate="false"
+				input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
+			<exception type="ServidorAplicacao.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
+				   key="message.merge.execution.courses.sourceIsSameAsDestination"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
+		</action>	
+
     </action-mappings>     
 
     

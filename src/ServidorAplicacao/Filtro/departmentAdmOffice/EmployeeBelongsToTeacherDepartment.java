@@ -140,7 +140,6 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
         if(teacher == null) {
             throw new NotAuthorizedFilterException("error.teacher.not.found");
         }
-   
         return teacher;
     }
 

@@ -4,6 +4,7 @@
 package ServidorAplicacao.Servico.commons.curriculumHistoric;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import Dominio.CurricularCourse;
 import Dominio.ExecutionYear;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
@@ -34,6 +36,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrollmentState;
+import Util.EnrolmentEvaluationType;
 
 /**
  * @author nmgo
@@ -144,6 +147,8 @@ public class ReadCurriculumHistoricReport implements IService {
                     .newInfoFromDomain(enrolmentTemp);
 
             infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
+            
+            setInfoEnrolmentByEnrolmentEvaluationType(infoEnrolment, enrolmentTemp.getEvaluations());
 
             infoEnrollments.add(infoEnrolment);
         }
@@ -151,6 +156,58 @@ public class ReadCurriculumHistoricReport implements IService {
         infoCurriculumHistoricReport.setEnrollments(infoEnrollments);
 
         return infoCurriculumHistoricReport;
+    }
+
+    /**
+     * @param infoEnrolment
+     * @param evaluations
+     */
+    private void setInfoEnrolmentByEnrolmentEvaluationType(InfoEnrolment infoEnrolment, List evaluations) {
+        List normalEnrolmentEvaluations = new ArrayList();
+        List specialSeasonEnrolmentEvaluations = new ArrayList();
+        List improvmentEnrolmentEvaluations = new ArrayList();
+        List equivalenceEnrolmentEvaluations = new ArrayList();
+        
+        Iterator iterator = evaluations.iterator();
+        while(iterator.hasNext()) {
+            IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL_OBJ)
+                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.FIRST_SEASON_OBJ)
+                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SECOND_SEASON_OBJ)
+                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NO_SEASON_OBJ))
+                normalEnrolmentEvaluations.add(enrolmentEvaluation);
+            
+            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+                improvmentEnrolmentEvaluations.add(enrolmentEvaluation);
+            
+            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON_OBJ))
+                specialSeasonEnrolmentEvaluations.add(enrolmentEvaluation);
+            
+            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.EQUIVALENCE_OBJ))
+                equivalenceEnrolmentEvaluations.add(enrolmentEvaluation);
+        }
+        
+        infoEnrolment.setInfoNormalEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(normalEnrolmentEvaluations));
+        infoEnrolment.setInfoImprovmentEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(improvmentEnrolmentEvaluations));
+        infoEnrolment.setInfoSpecialSeasonEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(specialSeasonEnrolmentEvaluations));
+        infoEnrolment.setInfoEquivalenceEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(equivalenceEnrolmentEvaluations));
+    }
+
+    /**
+     * @param normalEnrolmentEvaluations
+     * @return
+     */
+    private InfoEnrolmentEvaluation getLatestInfoEnrolmentEvaluation(List enrolmentEvaluations) {
+        
+        if(enrolmentEvaluations.isEmpty())
+            return null;
+        
+        // This sorts the list ascendingly so we need to reverse it to get
+        // the first object.
+        Collections.sort(enrolmentEvaluations);
+        Collections.reverse(enrolmentEvaluations);
+        
+        return InfoEnrolmentEvaluation.newInfoFromDomain((IEnrolmentEvaluation) enrolmentEvaluations.get(0));
     }
 
 }

@@ -1,8 +1,6 @@
 package ServidorAplicacao.Filtro;
 
 import pt.utl.ist.berserk.ServiceRequest;
-import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
 import ServidorAplicacao.IUserView;
 
 /**

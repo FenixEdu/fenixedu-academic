@@ -3,10 +3,6 @@
  */
 package Util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author André Fernandes / João Brito

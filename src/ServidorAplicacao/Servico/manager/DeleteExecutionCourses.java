@@ -29,7 +29,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author lmac1 modified by Fernanda Quitério
- *  
+ * 
  */
 
 public class DeleteExecutionCourses implements IService {
@@ -85,17 +85,19 @@ public class DeleteExecutionCourses implements IService {
                                     while (iterator.hasNext()) {
                                         professorShip = (IProfessorship) iterator.next();
 
-                                        IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-                                        List summaryList = persistentSummary.readByTeacher(professorShip.getExecutionCourse(), professorShip.getTeacher());
+                                        IPersistentSummary persistentSummary = sp
+                                                .getIPersistentSummary();
+                                        List summaryList = persistentSummary.readByTeacher(professorShip
+                                                .getExecutionCourse(), professorShip.getTeacher());
                                         if (summaryList != null && !summaryList.isEmpty()) {
-                                            for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries.hasNext(); ) {
+                                            for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries
+                                                    .hasNext();) {
                                                 ISummary summary = (ISummary) iteratorSummaries.next();
                                                 persistentSummary.simpleLockWrite(summary);
                                                 summary.setProfessorship(null);
                                                 summary.setKeyProfessorship(null);
                                             }
                                         }
-
 
                                         persistentProfessorShip.delete(professorShip);
                                     }

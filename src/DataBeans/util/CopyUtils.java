@@ -53,7 +53,8 @@ public class CopyUtils {
             List interfacesList = Arrays.asList(interfaces);
 
             if (CollectionUtils.intersection(interfacesNotToCopy, interfacesList).isEmpty()
-                    && !propertyDescriptor.getName().equals("class")) {
+                    && !propertyDescriptor.getName().equals("class")
+                    && !propertyDescriptor.getName().equals("slideName")) {
                 Object value = PropertyUtils.getProperty(sourceBean, propertyDescriptor.getName());
                 // FIXME: Temporary workaround, because OJB RC5 (CVS_HEAD) does
                 // not generate sequence

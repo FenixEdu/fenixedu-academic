@@ -72,4 +72,6 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
     public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia;
 
     public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia;
+	
+	public List readNotClosedPublicExecutionPeriodsByExecutionYears(IExecutionYear executionYear) throws ExcepcaoPersistencia; 
 }

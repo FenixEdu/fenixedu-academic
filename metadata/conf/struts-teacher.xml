@@ -64,7 +64,7 @@
         </form-bean>
         <form-bean name="questionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="questionValue" type="java.lang.String"/>
-            <form-property name="formula" type="java.lang.String" initial="1"/>
+            <form-property name="formula" type="java.lang.String" initial="2"/>
             <form-property name="testCode" type="java.lang.String"/>
             <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="questionOrder" type="java.lang.String"/>
@@ -599,7 +599,7 @@
         <form-bean name="confirmDeletePublicationForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
 			<form-property name="idInternal" type="java.lang.Integer" />
-        </form-bean>
+        </form-bean>        
         
         
         
@@ -1663,7 +1663,6 @@
 			input="/publicationManagement.do">
 			<forward name="show-publications" path="publications-management"/>
 		</action>
-		
 		<!-- Carlos Pereira & Francisco Passos -->
         <action 
 			type="ServidorApresentacao.Action.publication.PrepareDeletePublicationAction" 
@@ -1679,12 +1678,13 @@
 			parameter="method" scope="request" validate="false">
 			<forward name="deleted" path="/publicationManagement.do"/>
 		</action>
-				
+						
 		<!-- PrepareSearchPerson-->
 		<action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
             path="/prepareSearchPerson" name="publicationManagementForm" scope="request"
             parameter="method" input="prepareSearchPerson" validate="false">
             <forward name="show-search-author-form" path="view-authors-form"/>
+			<forward name="show-attributes" path="/readPublicationAttributes.do"/>
         </action>
         
         <!-- InsertAuthorsInPublication-->

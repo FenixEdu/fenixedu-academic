@@ -26,10 +26,13 @@
 		</html:link>&gt;&nbsp;
 		<bean:message key="label.curriculum.en"/>	
 </div>	
-<!-- PÁGINA EM PORTUGUÊS -->
+<!-- Pï¿½GINA EM PORTUGUï¿½S -->
 <div class="version">
 	<span class="px10">
-		<html:link page="<%= "/showDegreeCurricularPlan.do?method=showCurricularPlan&amp;&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >portuguese version</html:link> <img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Poruguese version!" width="16" height="12" />
+		<html:link page="<%= "/showDegreeCurricularPlan.do?method=showCurricularPlan&amp;&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >
+			<bean:message key="label.version.portuguese" />
+		</html:link>
+		<img src="<%= request.getContextPath() %>/images/portugal-flag.gif" alt="Icon: Poruguese version!" width="16" height="12" />
 	</span>	
 </div>
 <div class="clear"></div> 
@@ -58,9 +61,9 @@
 		</logic:iterate>
 	</logic:iterate>
 	<table class="tab_altrow" cellspacing="0" cellpadding="5">
-		<!-- cabeçalho -->
+		<!-- cabeï¿½alho -->
 		<tr>
-			<th colspan="4"><bean:write name="currentYear"/>º&nbsp;<bean:message key="label.curricular.year.en"/></th>
+			<th colspan="4"><bean:write name="currentYear"/>ï¿½&nbsp;<bean:message key="label.curricular.year.en"/></th>
 		</tr>
 		<tr>						
 			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.semester.en"/></td>
@@ -81,9 +84,9 @@
 		<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes"  indexId="row">
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" length="1" >
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
-					<!-- cabeçalho -->
+					<!-- cabeï¿½alho -->
 					<tr>
-						<th colspan="4"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message key="label.curricular.year.en"/></th>
+						<th colspan="4"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>ï¿½&nbsp;<bean:message key="label.curricular.year.en"/></th>
 					</tr>
 					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
 					<tr>						

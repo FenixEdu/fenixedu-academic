@@ -116,11 +116,12 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 
                 return chooseFinal(mapping, form, request, response);
 
-            }
-            request.setAttribute("studentCurricularPlans", infoStudentCurricularPlanList);
-            request.setAttribute("path", "FinalResult");
+            } else {
+                request.setAttribute("studentCurricularPlans", infoStudentCurricularPlanList);
+                request.setAttribute("path", "FinalResult");
 
-            return mapping.findForward("ChooseStudentCurricularPlan");
+                return mapping.findForward("ChooseStudentCurricularPlan");
+            }
 
         }
 
@@ -140,6 +141,8 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
+            DynaActionForm chooseDeclaration = (DynaActionForm) form;
+
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
@@ -266,7 +269,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
                 }
             }
             if ((infoStudentCurricularPlan.getGivenCredits() != null)
-                    && (!infoStudentCurricularPlan.getGivenCredits().equals(new Double(0)))) {
+                    && !infoStudentCurricularPlan.getGivenCredits().equals(new Double(0))) {
                 sum = sum
                         + Double
                                 .parseDouble(String.valueOf(infoStudentCurricularPlan.getGivenCredits()));

@@ -3,8 +3,11 @@ package Util.middleware;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 import Dominio.IEmployee;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
@@ -40,22 +43,29 @@ public class RowMarksFile {
     private Integer teacherNumber = null;
 
     private Date submitDate = null;
+    
+    private String enrollmentYear = null;
+    
 
     public RowMarksFile() {
         setDegreeCode(new Integer(0));
         setCurricularYear(new Integer(0));
         setCurricularSemester(new Integer(0));
         setCurricularSeason(new Integer(0));
-        setCourseCode(new String());
-        setMark(new String());
+        setCourseCode("");
+        setMark("");
         setEvaluationDate(new Date());
         setStudentNumber(new Integer(0));
         setTeacherNumber(new Integer(0));
         setSubmitDate(new Date());
+        setEnrollmentYear("");
     }
 
     public RowMarksFile(IEnrolmentEvaluation enrolmentEvaluation) {
-        Integer code = enrolmentEvaluation.getEnrolment().getStudentCurricularPlan()
+        
+        transform(enrolmentEvaluation);
+        
+        /*Integer code = enrolmentEvaluation.getEnrolment().getStudentCurricularPlan()
                 .getDegreeCurricularPlan().getDegree().getIdInternal();
         if (code.intValue() == 51)
             setDegreeCode(new Integer(24));
@@ -75,7 +85,7 @@ public class RowMarksFile {
                 .getNumber());
         setTeacherNumber(readEmployee(enrolmentEvaluation.getPersonResponsibleForGrade())
                 .getEmployeeNumber());
-        setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
+        setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());*/
 
     }
 
@@ -92,7 +102,7 @@ public class RowMarksFile {
                         enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch(),
                         enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester()).getYear());
         setCurricularSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester());
-        setCurricularSeason(new Integer(0));
+        setCurricularSeason(translateSeason(enrolmentEvaluation));
         setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode());
         setMark(enrolmentEvaluation.getGrade());
         setEvaluationDate(enrolmentEvaluation.getExamDate());
@@ -101,6 +111,33 @@ public class RowMarksFile {
         setTeacherNumber(readEmployee(enrolmentEvaluation.getPersonResponsibleForGrade())
                 .getEmployeeNumber());
         setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
+        setEnrollmentYear(getExecutionYearYear(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getExecutionYear()));
+    }
+
+ 
+
+    /**
+     * @param enrolmentEvaluation
+     * @return
+     */
+    private Integer translateSeason(IEnrolmentEvaluation enrolmentEvaluation) {
+        if(enrolmentEvaluation.isNormal())
+            return new Integer(0);
+        if(enrolmentEvaluation.isImprovment())
+            return new Integer(4);
+        else {
+            //TODO : there are other types, for now the default is 0
+            return new Integer(0);
+        }
+    }
+
+    /**
+     * @param executionYear
+     * @return
+     */
+    private String getExecutionYearYear(IExecutionYear executionYear) {
+        String[] tokens = executionYear.getYear().split("/");
+        return StringUtils.trim(tokens[0]);
     }
 
     private IEmployee readEmployee(IPessoa person) {
@@ -137,6 +174,7 @@ public class RowMarksFile {
         calendar.setTime(submitDate);
         result += calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/"
                 + calendar.get(Calendar.YEAR);
+        result += enrollmentYear;
 
         return result;
     }
@@ -200,6 +238,7 @@ public class RowMarksFile {
             month = "0" + month;
         }
         result += day + "/" + month + "/" + calendar.get(Calendar.YEAR);
+        result += enrollmentYear;
 
         return result;
     }
@@ -308,4 +347,16 @@ public class RowMarksFile {
         teacherNumber = integer;
     }
 
+    /**
+     * @return Returns the enrollmentYear.
+     */
+    public String getEnrollmentYear() {
+        return enrollmentYear;
+    }
+    /**
+     * @param enrollmentYear The enrollmentYear to set.
+     */
+    public void setEnrollmentYear(String enrollmentYear) {
+        this.enrollmentYear = enrollmentYear;
+    }
 }

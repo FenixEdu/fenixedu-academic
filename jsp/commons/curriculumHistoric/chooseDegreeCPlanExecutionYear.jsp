@@ -33,7 +33,7 @@ function changedExecutionYear(){
 		<html:hidden property="page" value="2"/>
 		<strong><bean:message key="label.curriculumHistoric.chooseDegreeCurricularPlan" bundle="CURRICULUM_HISTORIC_RESOURCES"/>:</strong><br />
 		<html:select property="degreeCurricularPlanID">
-			<html:options collection="degreeCurricularPlans" property="idInternal" labelProperty="name" />
+			<html:options collection="degreeCurricularPlans" property="value" labelProperty="label" />
 		</html:select>
 	</logic:notEmpty>
 	<br /><br />

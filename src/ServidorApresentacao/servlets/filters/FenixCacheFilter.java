@@ -19,6 +19,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+
 import ServidorApresentacao.servlets.filters.cache.ResponseCacheOSCacheImpl;
 
 import com.opensymphony.oscache.web.filter.CacheHttpServletResponseWrapper;
@@ -34,6 +36,8 @@ public class FenixCacheFilter implements Filter {
 
     FilterConfig filterConfig;
 
+    String excludePattern;
+
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         this.servletContext = filterConfig.getServletContext();
@@ -44,6 +48,8 @@ public class FenixCacheFilter implements Filter {
         } catch (Exception e) {
             System.out.println("Could not get init paramter 'time', defaulting to 5min.");
         }
+
+        excludePattern = filterConfig.getInitParameter("exclude-url-pattern");
 
         ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(time);
     }
@@ -62,40 +68,46 @@ public class FenixCacheFilter implements Filter {
 
         // customize to match parameters
         String queryString = constructQueryString(request);
+
         StringBuffer id = new StringBuffer(request.getRequestURI());
         if (queryString != null) {
             id.append("?");
             id.append(queryString);
         }
-        // optionally append i18n sensitivity
-        String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
-        if (localeSensitive != null) {
-            StringWriter ldata = new StringWriter();
-            Enumeration locales = request.getLocales();
-            while (locales.hasMoreElements()) {
-                Locale locale = (Locale) locales.nextElement();
-                ldata.write(locale.getISO3Language());
-            }
-            id.append(ldata.toString());
-        }
 
-        ResponseContent respContent = ResponseCacheOSCacheImpl.getInstance().lookup(id.toString());
-        if (respContent != null) {
-            respContent.writeTo(response);
-        } else {
-            CacheHttpServletResponseWrapper cacheResponse = new CacheHttpServletResponseWrapper(response);
-            chain.doFilter(request, cacheResponse);
-            cacheResponse.flushBuffer();
+      	// optionally append i18n sensitivity
+       	String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
+       	if (localeSensitive != null) {
+       		StringWriter ldata = new StringWriter();
+       		Enumeration locales = request.getLocales();
+       		while (locales.hasMoreElements()) {
+       			Locale locale = (Locale) locales.nextElement();
+       			ldata.write(locale.getISO3Language());
+       		}
+       		id.append(ldata.toString());
+       	}
 
-            // Only cache if the response was 200
-            if (cacheResponse.getStatus() == HttpServletResponse.SC_OK) {
-                //Store as the cache content the result of the response
-                ResponseCacheOSCacheImpl.getInstance().cache(id.toString(), cacheResponse.getContent());
-            }
+       	ResponseContent respContent = ResponseCacheOSCacheImpl.getInstance().lookup(id.toString());
+       	if (respContent != null && !matchesExcludePattern(id.toString())) {
+       		respContent.writeTo(response);
+       	} else {
+       		CacheHttpServletResponseWrapper cacheResponse = new CacheHttpServletResponseWrapper(response);
+       		chain.doFilter(request, cacheResponse);
+       		cacheResponse.flushBuffer();
+
+       		// Only cache if the response was 200
+       		if (cacheResponse.getStatus() == HttpServletResponse.SC_OK && !matchesExcludePattern(id.toString())) {
+       			//Store as the cache content the result of the response
+       			ResponseCacheOSCacheImpl.getInstance().cache(id.toString(), cacheResponse.getContent());
+       		}
         }
     }
 
-    private String constructQueryString(HttpServletRequest request) {
+	private boolean matchesExcludePattern(String id) {
+		return StringUtils.contains(id, excludePattern);
+	}
+
+	private String constructQueryString(HttpServletRequest request) {
         StringBuffer queryString = new StringBuffer();
 
         String requestQueryString = request.getQueryString();

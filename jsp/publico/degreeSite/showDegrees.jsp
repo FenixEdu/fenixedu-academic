@@ -27,7 +27,7 @@
 					</logic:equal>				
 				</p>
 			  
-				<table width="100%"  border="0" cellspacing="0" summary="Esta tabela contêm links para as licenciaturas, mestrados, doutoramentos e pós-graduações existentes no IST">
+				<table width="100%"  border="0" cellspacing="0" summary="Esta tabela contï¿½m links para as licenciaturas, mestrados, doutoramentos e pï¿½s-graduaï¿½ï¿½es existentes no IST">
 				  <tr>
 				    <td colspan="2" class="bottom_border"><h2><bean:write name="degreeType" />s<%-- plural --%></h2></td>
 				  </tr>

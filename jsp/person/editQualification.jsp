@@ -35,7 +35,7 @@
 		</tr>
 		<tr>
 			<td>
-				<html:text property="tempDate"/>&nbsp;(dd/mm/aaaa)
+				<html:text property="tempDate"/>&nbsp;(aaaa)
 			</td>
 		<tr/>
 		<tr>

@@ -8,6 +8,7 @@
  */
 package ServidorApresentacao.Action.publico;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,54 +41,67 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
         HttpSession session = request.getSession(true);
 
         if (session != null) {
-            IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
-            //Integer executionPeriodOId = getFromRequest("executionPeriodOID",
-            // request);
-            Integer degreeId = getFromRequest("degreeID", request);
-            request.setAttribute("degreeID", degreeId);
+           IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+            
+		   String[] allCurricularYears = { "1", "2", "3", "4", "5" };
 
-            Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-            request.setAttribute("executionDegreeID", executionDegreeId);
+		   List curricularYears = new ArrayList(allCurricularYears.length);
+		   for (int i = 0; i < allCurricularYears.length; i++)
+			   curricularYears.add(new Integer(allCurricularYears[i]));
 
-            Integer index = getFromRequest("index", request);
-            request.setAttribute("index", index);
+		   request.setAttribute("curricularYearList", curricularYears);
+        	
+          Integer degreeId = getFromRequest("degreeID", request);
+          request.setAttribute("degreeID", degreeId);
 
-            Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+          Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+          request.setAttribute("executionDegreeID", executionDegreeId);
 
-            Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-            request.setAttribute("inEnglish", inEnglish);
-            List curricularYears = (List) request.getAttribute("curricularYearList");
+          Integer degreeCurricularPlanId = (Integer)request.getAttribute("degreeCurricularPlanID");
+          request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod
-                    .getIdInternal().toString());
+          InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+          request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+          request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod
+                .getIdInternal().toString());
+		
+          InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+                .getAttribute(SessionConstants.EXECUTION_DEGREE);
+          InfoExamsMap infoExamsMap = new InfoExamsMap();
+		  InfoExamsMap infoExamsMapFirst = new InfoExamsMap();
+			
+			
+            List infoExamsMapList = new ArrayList();
+            if (infoExecutionDegree == null) {
+				List infoExecutionDegreeList = (List)request.getAttribute(SessionConstants.EXECUTION_DEGREE_LIST);
+				
+				infoExamsMap = getInfoExamsMapList(infoExecutionDegreeList,infoExecutionPeriod,curricularYears,userView,request);					
+				infoExecutionDegree = (InfoExecutionDegree)infoExecutionDegreeList.get(0);
+				for (int i=1;i<infoExecutionDegreeList.size();i++) {	
+					
+					if (infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()!= degreeCurricularPlanId )
+						infoExecutionDegree =  (InfoExecutionDegree)infoExecutionDegreeList.get(i);
+				}
+				request.setAttribute(SessionConstants.INFO_EXAMS_MAP,infoExamsMap);
 
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-                    .getAttribute(SessionConstants.EXECUTION_DEGREE);
-            request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree
-                    .getInfoDegreeCurricularPlan());
-
-            request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-
-            Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-
-            InfoExamsMap infoExamsMap;
-            try {
-                infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
-                        "ReadFilteredExamsMap", args);
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException(e);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+            }else {			
+				infoExamsMap = getInfoExamsMap(infoExecutionDegree,infoExecutionPeriod,curricularYears,userView,request);
+				request.removeAttribute(SessionConstants.INFO_EXAMS_MAP_LIST);
             }
-            request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+			request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+			request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree
+						.getInfoDegreeCurricularPlan());
+			
+			request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree
+						.getInfoDegreeCurricularPlan());
+
+			request.setAttribute(SessionConstants.INFO_EXAMS_MAP,infoExamsMap);
+			return mapping.findForward("viewExamsMap");			
 
         }
 
-        return mapping.findForward("viewExamsMap");
+		throw new FenixActionException();
     }
 
     private Integer getFromRequest(String parameter, HttpServletRequest request) {
@@ -122,5 +136,45 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
         }
         return parameterBoolean;
     }
+    
+    private InfoExamsMap getInfoExamsMap(InfoExecutionDegree infoExecutionDegree,InfoExecutionPeriod infoExecutionPeriod,
+     							 List curricularYears, IUserView userView,HttpServletRequest request)  
+     							 throws FenixActionException{
+	   request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+
+	   Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+
+	   InfoExamsMap infoExamsMap;
+	   try {
+		   infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
+				   "ReadFilteredExamsMap", args);
+	   } catch (NonExistingServiceException e) {
+		   throw new NonExistingActionException(e);
+	   } catch (FenixServiceException e) {
+		   throw new FenixActionException(e);
+	   }
+	   return infoExamsMap;
+	   
+    }
+	private InfoExamsMap getInfoExamsMapList(List infoExecutionDegree,InfoExecutionPeriod infoExecutionPeriod,
+									 List curricularYears, IUserView userView,HttpServletRequest request)  
+									 throws FenixActionException{
+		   request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree.get(0));
+
+		   Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+
+		   InfoExamsMap infoExamsMap;
+		   try {
+			   infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
+					   "ReadFilteredExamsMapList", args);
+		   } catch (NonExistingServiceException e) {
+			   throw new NonExistingActionException(e);
+		   } catch (FenixServiceException e) {
+			   throw new FenixActionException(e);
+		   }
+		   return infoExamsMap;
+	   
+		}
+	
 
 }

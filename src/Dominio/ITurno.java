@@ -57,5 +57,8 @@ public interface ITurno extends IDomainObject {
 
     double hours();
 
-}
+    public List getStudentShifts();
 
+    public void setStudentShifts(List studentShifts);
+
+}

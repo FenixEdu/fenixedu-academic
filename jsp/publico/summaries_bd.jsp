@@ -124,7 +124,7 @@
 					<bean:write name="summary" property="infoTeacher.infoPerson.nome" />&nbsp;			
 				</logic:notEmpty>
 				<logic:notEmpty name="summary" property="teacherName">
-					<bean:message key="label.teacher.abbreviation" />&nbsp;
+					<!--<bean:message key="label.teacher.abbreviation" />&nbsp;-->
 					<bean:write name="summary" property="teacherName" />&nbsp;			
 				</logic:notEmpty>				
 			</td>

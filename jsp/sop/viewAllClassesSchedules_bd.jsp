@@ -29,7 +29,7 @@
 	   	<br/>
 	   	<bean:define id="lessons" name="viewClassSchedule" property="classLessons"/>
 		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div>
-		<br style="page-break-before:always;" />
+		<br style="page-break-after:always;" />
 	</logic:iterate>
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request">

@@ -21,6 +21,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.InfoTeacherWithPersonAndCategory;
 import DataBeans.SiteView;
 import DataBeans.person.InfoQualification;
+import DataBeans.publication.InfoPublication;
 import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoExternalActivity;
 import DataBeans.teacher.InfoOldPublication;
@@ -29,7 +30,6 @@ import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoSiteTeacherInformation;
 import DataBeans.teacher.InfoWeeklyOcupation;
-import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -39,6 +39,7 @@ import Dominio.IQualification;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import Dominio.publication.IPublication;
+import Dominio.publication.IPublicationTeacher;
 import Dominio.teacher.ICareer;
 import Dominio.teacher.IExternalActivity;
 import Dominio.teacher.IOldPublication;
@@ -56,6 +57,7 @@ import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.publication.IPersistentPublicationTeacher;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
 import ServidorPersistente.teacher.IPersistentOldPublication;
@@ -66,6 +68,7 @@ import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 import Util.CareerType;
 import Util.OldPublicationType;
 import Util.OrientationType;
+import Util.PublicationArea;
 import Util.PublicationType;
 import constants.publication.PublicationConstants;
 
@@ -81,7 +84,7 @@ public class ReadTeacherInformation implements IService {
     /**
      * Executes the service.
      */
-    public SiteView run(String user) throws FenixServiceException {
+    public SiteView run(String user, String argExecutionYear) throws FenixServiceException {
         try {
             InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
 
@@ -89,6 +92,24 @@ public class ReadTeacherInformation implements IService {
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+
+            // if no execution year is specified, the info shown should refer to
+            // the previous execution year
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IExecutionYear executionYear = null;
+            if (argExecutionYear.equals("")) {
+                IPersistentExecutionPeriod persistentExecutionPeriod = sp
+                        .getIPersistentExecutionPeriod();
+                IExecutionPeriod actualExecutionPeriod = persistentExecutionPeriod
+                        .readActualExecutionPeriod();
+                IExecutionPeriod previousExecutionPeriod = actualExecutionPeriod
+                        .getPreviousExecutionPeriod();
+
+                // FIXME this will not work on the second semester of an
+                // execution year!!
+                executionYear = previousExecutionPeriod.getExecutionYear();
+            } else
+                executionYear = persistentExecutionYear.readExecutionYearByName(argExecutionYear);
 
             InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
             infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
@@ -118,9 +139,11 @@ public class ReadTeacherInformation implements IService {
             infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(sp, teacher));
 
             infoSiteTeacherInformation
-                    .setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(sp, teacher));
+                    .setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(sp, teacher,
+                            executionYear));
             infoSiteTeacherInformation
-                    .setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(sp, teacher));
+                    .setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(sp, teacher,
+                            executionYear));
 
             IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
             IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
@@ -178,8 +201,11 @@ public class ReadTeacherInformation implements IService {
             //CLONER
             //infoSiteTeacherInformation.setInfoExecutionPeriod(
             //(InfoExecutionPeriod) Cloner.get(executionPeriod));
+
+            // FIXME possible cause of error: this execution period is used for
+            // what?
             infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                    .newInfoFromDomain(executionPeriod));
+                    .newInfoFromDomain((IExecutionPeriod) executionYear.getExecutionPeriods().get(0)));
 
             return new SiteView(infoSiteTeacherInformation);
         } catch (ExcepcaoPersistencia e) {
@@ -192,21 +218,19 @@ public class ReadTeacherInformation implements IService {
      * @param teacher
      * @return
      */
-    private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher)
-            throws ExcepcaoPersistencia {
+    private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher,
+            final IExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
         List responsiblesFor = persistentResponsibleFor.readByTeacher(teacher);
 
-        // filter only the execution courses of the current execution year
+        // filter only the execution courses of the wanted execution year
         responsiblesFor = (List) CollectionUtils.select(responsiblesFor, new Predicate() {
-            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 
             public boolean evaluate(Object o) {
                 IResponsibleFor responsibleFor = (IResponsibleFor) o;
                 IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
                 IExecutionYear executionYear = executionCourse.getExecutionPeriod().getExecutionYear();
-                return executionYear.equals(this.executionYear);
+                return executionYear.equals(wantedExecutionYear);
             }
         });
         List infoExecutionCourses = (List) CollectionUtils.collect(responsiblesFor, new Transformer() {
@@ -255,21 +279,19 @@ public class ReadTeacherInformation implements IService {
         return infoExternalActivities;
     }
 
-    private List getInfoLecturingExecutionCourses(ISuportePersistente sp, ITeacher teacher)
-            throws ExcepcaoPersistencia {
+    private List getInfoLecturingExecutionCourses(ISuportePersistente sp, ITeacher teacher,
+            final IExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
         List professorships = persistentProfessorship.readByTeacher(teacher);
 
-        // filter only the execution courses of the current execution year
+        // filter only the execution courses of the wanted execution year
         professorships = (List) CollectionUtils.select(professorships, new Predicate() {
-            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 
             public boolean evaluate(Object o) {
                 IProfessorship professorship = (IProfessorship) o;
                 IExecutionCourse executionCourse = professorship.getExecutionCourse();
                 IExecutionYear executionYear = executionCourse.getExecutionPeriod().getExecutionYear();
-                return executionYear.equals(this.executionYear);
+                return executionYear.equals(wantedExecutionYear);
             }
         });
         List infoExecutionCourses = (List) CollectionUtils.collect(professorships, new Transformer() {
@@ -400,30 +422,51 @@ public class ReadTeacherInformation implements IService {
     private List getInfoPublications(ISuportePersistente sp, ITeacher teacher, Integer typePublication)
             throws ExcepcaoPersistencia {
 
-        List teacherPublications = teacher.getTeacherPublications();
+        IPersistentPublicationTeacher persistentPublicationTeacher = sp
+                .getIPersistentPublicationTeacher();
 
-        List newPublications = new ArrayList();
+        PublicationArea publicationArea = null;
+        if (PublicationConstants.CIENTIFIC.equals(typePublication))
+            publicationArea = PublicationArea.CIENTIFIC;
+        else
+            publicationArea = PublicationArea.DIDATIC;
+
+        List publicationsTeacher = persistentPublicationTeacher.readByTeacherAndPublicationArea(teacher,
+                publicationArea);
+
         List infoPublications = new ArrayList();
-
-        if ((teacherPublications != null)
-                || (teacherPublications.size() != PublicationConstants.ZERO_VALUE)) {
-            Iterator iterator = teacherPublications.iterator();
-            while (iterator.hasNext()) {
-                IPublication publication = (IPublication) iterator.next();
-                if (publication.getDidatic().intValue() == typePublication.intValue()) {
-                    newPublications.add(publication);
-                }
-            }
-
-            infoPublications = (List) CollectionUtils.collect(newPublications, new Transformer() {
-                public Object transform(Object o) {
-                    IPublication publication = (IPublication) o;
-                    IPublication publication2 = publication;
-                    publication2.setPublicationString(publication.toString());
-                    return Cloner.copyIPublication2InfoPublication(publication2);
-                }
-            });
+        Iterator iter = publicationsTeacher.iterator();
+        while(iter.hasNext()){
+            IPublicationTeacher publicationTeacher = (IPublicationTeacher)iter.next();
+            IPublication publication = publicationTeacher.getPublication();
+            publication.setPublicationString(publicationTeacher.getPublication().toString());
+            infoPublications.add(InfoPublication.newInfoFromDomain(publication));
         }
+//        
+//        List teacherPublications = teacher.getTeacherPublications();
+//
+//        List newPublications = new ArrayList();
+//        List infoPublications = new ArrayList();
+//
+//        if ((teacherPublications != null)
+//                || (teacherPublications.size() != PublicationConstants.ZERO_VALUE)) {
+//            Iterator iterator = teacherPublications.iterator();
+//            while (iterator.hasNext()) {
+//                IPublication publication = (IPublication) iterator.next();
+//                if (publication.getDidatic().intValue() == typePublication.intValue()) {
+//                    newPublications.add(publication);
+//                }
+//            }
+//
+//            infoPublications = (List) CollectionUtils.collect(newPublications, new Transformer() {
+//                public Object transform(Object o) {
+//                    IPublication publication = (IPublication) o;
+//                    IPublication publication2 = publication;
+//                    publication2.setPublicationString(publication.toString());
+//                    return Cloner.copyIPublication2InfoPublication(publication2);
+//                }
+//            });
+//        }
 
         return infoPublications;
     }

@@ -152,7 +152,6 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
-	
     <filter>
         <name>StudentListByCurricularCourseAuthorization</name>
         <implementationClass> 
@@ -647,6 +646,13 @@
             ServidorAplicacao.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
+    </filter>
+	<filter>
+        <name>EnrolmentImprovmentAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.enrollment.EnrolmentImprovmentAuthorization</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
     </filter>  
     <filter>
         <name>MasterDegreeEnrollmentWithoutRulesAuthorization</name>
@@ -748,5 +754,19 @@
     	<implementationClass>ServidorAplicacao.Filtro.student.StudentDegreeCoordinatorAuthorizationFilter</implementationClass>
     	<description/>
     	<isTransactional>true</isTransactional>
+    </filter>
+    <filter>
+        <name>PublishedExamsMapAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.PublishedExamsMapAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+    <filter>
+        <name>ExecutionDataIsForNotYetOpendedPeriod</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.ExecutionDataIsForNotYetOpenedPeriodFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
     </filter>
 </filterDefinitions>

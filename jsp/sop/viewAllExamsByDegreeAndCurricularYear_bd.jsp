@@ -119,6 +119,6 @@
 				</logic:iterate>
 			</table>
 		</logic:present>		
-		<br style="page-break-before:always;" />
+		<br style="page-break-after:always;" />
 	</logic:iterate>
 </logic:present>

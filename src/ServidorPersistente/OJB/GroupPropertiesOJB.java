@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.GroupProperties;
-import Dominio.IAttendsSet;
 import Dominio.IGroupProperties;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGroupProperties;

@@ -22,6 +22,22 @@
 			<bean:message key="label.curricularPlan"/>
         </html:link>
 	</li>
+	<li>
+    	<html:link page="<%= "/showExecutionCourseSites.do?method=listSites&amp;degreeOID=" +  request.getAttribute("degreeID") %>" >
+			<bean:message key="label.executionCourseSites"/>
+        </html:link>
+	</li>
+	<li>
+    	<html:link page="<%= "/showClasses.do?method=listClasses&amp;degreeOID=" +  request.getAttribute("degreeID") %>" >
+			<bean:message key="label.schedule"/>
+        </html:link>
+	</li>
+	<li>
+    	<html:link page="<%= "/chooseExamsMapContextDA.do?method=choose&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
+			<bean:message key="label.exams"/>
+        </html:link>
+	</li>
+	<%--/viewAllExamsByDegreeAndCurricularYear.do?method=listClasses--%>
 </ul>
 </logic:notPresent>
 

@@ -6,7 +6,7 @@
 <h2><bean:message key="title.teacherInformation"/></h2>
 <br/>
 <h3>
-<bean:message key="message.authorPublications" />
+<bean:message key="message.cientificPublications" />
 </h3>
 <logic:messagesPresent>
 		<span class="error"><html:errors/></span>
@@ -25,7 +25,7 @@
 </logic:empty>
 <table style="text-align:left" width="100%">
 
-	<logic:iterate id="infoPublication" name="infoSitePublications" property="infoCientificPublications">
+	<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
 	<tr>
 		<td class="listClasses" style="text-align:left" width="100%">
 			<bean:write name="infoPublication" property="publicationString" />

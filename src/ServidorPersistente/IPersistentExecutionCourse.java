@@ -100,9 +100,12 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
 
     public List readByExecutionPeriodWithNoCurricularCourses(IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
-
     public List readByCurricularYearAndAllExecutionPeriodAndExecutionDegree(Integer curricularYear,
             IExecutionPeriod executionPeriod, ICursoExecucao executionDegree)
-            throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;            
+	public List readByCurricularYearAndExecutionPeriodAndExecutionDegreeList(Integer curricularYear,
+					IExecutionPeriod executionPeriod, List executionDegreeList)
+					throws ExcepcaoPersistencia;
+               
 
 }

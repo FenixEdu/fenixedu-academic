@@ -17,7 +17,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IService {
 

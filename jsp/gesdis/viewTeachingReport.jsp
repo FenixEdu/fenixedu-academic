@@ -92,7 +92,7 @@
 		</tr>
 	</table>
 	<br/>
-	<h3 class="bluetxt"><bean:message key="message.teachingReport.approvalRates"/></h3>
+	<h3 class="bluetxt"><bean:message key="message.teachingReport.approvalRates"/>*</h3>
 	<table width="50%">
 		<tr>
 			<td class="listClasses-header">&nbsp;</td>
@@ -150,8 +150,6 @@
 <h3 class="bluetxt"><bean:message key="message.teachingReport.report"/></h3>
 <p><bean:write name="siteCourseInformation" property="infoCourseReport.report" filter="false"/></p>
 <strong><bean:message key="message.teachingReport.text1"/>
-20/03/2004
-<bean:message key="message.teachingReport.text2"/></strong>
 <br />
 <ul>
 	<li><bean:message key="message.teachingReport.text3"/></li>

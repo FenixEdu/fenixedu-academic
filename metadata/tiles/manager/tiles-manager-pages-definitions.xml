@@ -256,7 +256,14 @@
 		<put name="body" value="/manager/executionCourseManagement/associateCurricularCourse.jsp" />
 		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
-	
+	<definition name="df.executionCourseManagement.transferCurricularCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/transferCurricularCourse.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>
+	<definition name="df.executionCourseManagement.seperateExecutionCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/seperateExecutionCourse.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>
 
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPage" extends="definition.manager.masterPage" >

@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithCoordinators;
+import DataBeans.InfoExecutionYear;
 import Dominio.Curso;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurso;
@@ -107,7 +110,15 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
                 //}
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators
                         .newInfoFromDomain(executionDegree);
+				InfoExecutionYear infoExecutionYear =   InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
+				infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
+				InfoDegreeCurricularPlan infoDegreeCurricularPlan =   InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getCurricularPlan());
+				InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getCurricularPlan().getDegree());
+				infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+                infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+                
+                
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
         } catch (Exception e) {

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -20,10 +22,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularYear;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeCurricularPlanWithCurricularCourseScopes;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -72,7 +76,24 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+        
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso.tipoCurso"));
+        comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
+        comparatorChain.addComparator(new BeanComparator("name"));
+        Collections.sort(degreeCurricularPlans, comparatorChain);
+        
+        
+        List labelValueDegreeCurricularPlans = (List) CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
+           public Object transform(Object obj) {
+               InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) obj;
+               LabelValueBean valueBean = new LabelValueBean(infoDegreeCurricularPlan.getInfoDegree().getNome() + " - " + infoDegreeCurricularPlan.getName(), infoDegreeCurricularPlan.getIdInternal().toString());
+               return valueBean;
+           }
+        });
+        
+        
+        request.setAttribute("degreeCurricularPlans", labelValueDegreeCurricularPlans);
         request.setAttribute("executionYears", executionYears);
         return mapping.findForward("chooseExecutionYear");
     }

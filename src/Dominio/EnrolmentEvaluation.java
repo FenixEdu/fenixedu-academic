@@ -306,4 +306,22 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         return EnrollmentState.APROVED;
     }
 
+    /* (non-Javadoc)
+     * @see Dominio.IEnrolmentEvaluation#isNormal()
+     */
+    public boolean isNormal() {
+        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.NORMAL_OBJ))
+            return true;
+        return false;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IEnrolmentEvaluation#isImprovment()
+     */
+    public boolean isImprovment() {
+        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+            return true;
+        return false;
+    }
+
 }

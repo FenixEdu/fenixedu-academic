@@ -41,7 +41,9 @@ import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.publication.IPersistentAuthor;
 import ServidorPersistente.publication.IPersistentPublication;
 import ServidorPersistente.publication.IPersistentPublicationAttribute;
+import ServidorPersistente.publication.IPersistentPublicationAuthor;
 import ServidorPersistente.publication.IPersistentPublicationFormat;
+import ServidorPersistente.publication.IPersistentPublicationTeacher;
 import ServidorPersistente.publication.IPersistentPublicationType;
 import ServidorPersistente.sms.IPersistentSentSms;
 import ServidorPersistente.student.IPersistentDelegate;
@@ -428,6 +430,11 @@ public interface ISuportePersistente {
     public IPersistentFAQEntries getIPersistentFAQEntries();
 
     public IPersistentGlossaryEntries getIPersistentGlossaryEntries();
+    
+    // Ricardo Rodrigues
+    public IPersistentPublicationAuthor getIPersistentPublicationAuthor();
+
+	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
 
     public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet();
 
@@ -435,5 +442,4 @@ public interface ISuportePersistente {
 
     public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse();
 
-    public IPersistentPublicationAuthor getIPersistentPublicationAuthor();
 }

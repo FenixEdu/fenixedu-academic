@@ -1541,6 +1541,7 @@
 			  >
 	         <forward name="PrintReady" path="/guide/printGuide.jsp"/> 
 	         <forward name="PrintOneGuide" path="/guide/guideTemplate1.jsp"/> 
+			 <forward name="PrintTwoGuides" path="/guide/printGuidePage.jsp"/> 
       </action>
       
       

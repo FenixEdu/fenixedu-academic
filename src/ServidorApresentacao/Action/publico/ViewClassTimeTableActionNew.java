@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -40,9 +41,10 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+		DynaActionForm escolherContextoForm = (DynaActionForm) form;
         String className = request.getParameter("className");
-
+		Integer indice = (Integer) escolherContextoForm.get("indice");
+		escolherContextoForm.set("indice",indice);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
         request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal()

@@ -96,7 +96,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
                 enrolmentEvaluation.setObservation(infoEnrolmentEvaluation.getObservation());
                 enrolmentEvaluation.setPersonResponsibleForGrade(null);
                 enrolmentEvaluation.setWhen(calendario.getTime());
-                enrolmentEvaluation.setAckOptLock(new Integer(1));
+//                enrolmentEvaluation.setAckOptLock(new Integer(1));
                 persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
 
             } else {

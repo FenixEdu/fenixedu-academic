@@ -73,19 +73,19 @@
 			<td><strong><bean:message key="message.studentReport.AP"/></strong></td>
 			<td><bean:write name="approved"/></td>
 		</tr>
-		<% int ap_en = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
+		<% int ap_en = Math.round(((float) approved.intValue() / (float) enrolled.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.studentReport.AP/IN"/></strong></td>
 			<td><%= ap_en %>%</td>
 		</tr>
-		<% int ap_ev = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
+		<% int ap_ev = Math.round(((float) approved.intValue() / (float) evaluated.intValue()) * 100); %>
 		<tr>
 			<td><strong><bean:message key="message.studentReport.AP/AV"/></strong></td>
 			<td><%= ap_ev %>%</td>
 		</tr>
 	</table>
 	<br/>
-	<h3 class="bluetxt"><bean:message key="message.studentReport.approvalRates"/></h3>
+	<h3 class="bluetxt"><bean:message key="message.studentReport.approvalRates"/>*</h3>
 	<table width="50%">
 		<tr>
 			<td class="listClasses-header">&nbsp;</td>
@@ -100,9 +100,9 @@
 				<td class="listClasses">
 					<bean:write name="infoSiteEvaluationStatistics" property="infoExecutionPeriod.infoExecutionYear.year"/>
 				</td>
-				<% int ap_en_h = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
+				<% int ap_en_h = Math.round(((float) approved.intValue() / (float) enrolled.intValue()) * 100); %>
 				<td class="listClasses"><%= ap_en_h %>%</td>
-				<% int ap_ev_h = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
+				<% int ap_ev_h = Math.round(((float) approved.intValue() / (float) evaluated.intValue()) * 100); %>
 				<td class="listClasses"><%= ap_ev_h %>%</td>
 			</tr>
 		</logic:iterate>
@@ -115,9 +115,9 @@
 					<td class="listClasses">
 						<bean:write name="infoCourseHistoric" property="curricularYear"/>
 					</td>
-					<% int ap_en_ch = (int) (((double) approved.intValue() / (double) enrolled.intValue()) * 100); %>
+					<% int ap_en_ch = Math.round(((float) approved.intValue() / (float) enrolled.intValue()) * 100); %>
 					<td class="listClasses"><%= ap_en_ch %>%</td>
-					<% int ap_ev_ch = (int) (((double) approved.intValue() / (double) evaluated.intValue()) * 100); %>
+					<% int ap_ev_ch = Math.round(((float) approved.intValue() / (float) evaluated.intValue()) * 100); %>
 					<td class="listClasses"><%= ap_ev_ch %>%</td>
 				</tr>
 			</logic:iterate>

@@ -175,16 +175,16 @@
       	<arg0 key="label.qualification.mark" />
   	  </field>
   	  <field property="tempDate" depends="required, mask, date" page="1">
-		<msg name="date" key="errors.invalid.date"/>
-		<msg name="mask" key="errors.invalid.date"/>
+		<msg name="date" key="errors.invalid.date.year"/>
+		<msg name="mask" key="errors.invalid.date.year"/>
 		<arg0 key="label.qualification.year" resource="true"/>
 		<var>
 			<var-name>datePattern</var-name>
-			<var-value>dd/MM/yyyy</var-value>
+			<var-value>yyyy</var-value>
 		</var>
 		<var>
 			<var-name>mask</var-name>
-			<var-value>^((.||..)/(.||..)/....)$</var-value>
+			<var-value>^(....)$</var-value>
 		</var>
 	</field>
      <field property="school" depends="required" page="1">

@@ -29,6 +29,8 @@
 	<html:hidden property="typePublication"/>
 	<html:hidden property="method" value="prepareSearchPerson"/>
 
+<div class="infoop"><bean:message key="message.publications.insertPublication.Unstructured"/></div>
+
 <table>
 	<tr>
 		<td><bean:message key="message.publications.publicationType"/> &nbsp;</td>

@@ -27,12 +27,14 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.publication.IPersistentAuthor;
+import ServidorPersistente.publication.IPersistentPublicationTeacher;
 import constants.publication.PublicationConstants;
 
 /**
  * @author TJBF & PFON
  *  
  */
+//TODO remove cloner
 public class ReadAuthorPublicationsToInsert implements IService {
 
     /**
@@ -52,10 +54,15 @@ public class ReadAuthorPublicationsToInsert implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentPublicationTeacher persistentPublicationTeacher = sp.getIPersistentPublicationTeacher();
+            
+            
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher); 
+                //Cloner.copyITeacher2InfoTeacher(teacher);
             infoSitePublications.setInfoTeacher(infoTeacher);
 
+            
             List infoPublications = getInfoPublications(sp, teacher);
 
             List infoPublicationsDidactic = getInfoPublicationsType(infoPublications,
@@ -88,7 +95,7 @@ public class ReadAuthorPublicationsToInsert implements IService {
         List newAuthorPublications = new ArrayList();
         if (author == null) {
             Author newAuthor = new Author();
-            newAuthor.setKeyPerson(keyPerson);
+            //newAuthor.setKeyPerson(keyPerson);
             newAuthor.setPerson(pessoa);
             persistentAuthor.lockWrite(newAuthor);
 

@@ -10,48 +10,37 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   </head>
 <body>
-<div id="darkcontainer">
+<div id="container">
 	<center>
 		<h1><font color="red"><html:errors/></font></h1>
 	</center>
 	<br />
-	<table bgcolor="#000" cellpadding="0" cellspacing="0">
+	<table>
 		<tr>
-			<td bgcolor="#000">
+			<td>
 				<center>
-					<img alt="Logo dotist" src="<%= request.getContextPath() %>/images/fenix_euro_onblack.gif"/>
+					<img alt="Logo dotist" src="<%= request.getContextPath() %>/images/logo-fenix.gif"/>
 				</center>
 			</td>
-			<td bgcolor="#000">
+			<td>
 				<center>
-					<font color="white">
-					    <bean:message key="message.error.help"/>
-					    <html:form action="/exceptionHandlingAction.do?method=sendEmail">
-				    <font/>
+				    <bean:message key="message.error.help"/>
+				    <html:form action="/exceptionHandlingAction.do?method=sendEmail">
 				    <br />
-				    <table align="center"bgcolor="#000" cellpadding="0" cellspacing="0">
-				    	<tr><td bgcolor="#000"><font color="white">
-						    	<bean:message key="property.email"/>
-						    <font/></td>
-					    	<td bgcolor="#000">
-					    		<html:text property="email" value=""/>
-					    	</td>
+				    <table align="center" >
+				    	<tr><td>
+				    	<bean:message key="property.email"/></td><td>
+				    	<html:text property="email" value=""/> </td>
 				    	</tr>
-				    	<tr><td bgcolor="#000"><font color="white">
-						    	<bean:message key="property.subject"/>
-						    <font/></td>
-						    <td bgcolor="#000">
-					   			<html:text property="subject" value=""/>
-					   		</td>
+				    	<tr><td>
+				    	<bean:message key="property.subject"/></td><td>
+				   		<html:text property="subject" value=""/></td>
 				   		</tr>
-				    	<tr><td bgcolor="#000"><font color="white">
-						   		<bean:message key="property.message"/>
-						   	<font/></td>
-						   	<td bgcolor="#000">
-						    	<html:textarea property="body" value=""/>
-						    </td>
+				    	<tr><td>
+				   		<bean:message key="property.message"/></td><td>
+				    	<html:textarea property="body" value=""/></td>
 				    	</tr>	
-				      </table>
+				      </table>	
 				      <center>
 				    	<html:submit >
 				   		 <bean:message key="label.submit"/>

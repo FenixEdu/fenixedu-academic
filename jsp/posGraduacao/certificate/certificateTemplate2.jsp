@@ -8,4 +8,4 @@
 <bean:define id="certificateType" name="<%= SessionConstants.CERTIFICATE_TYPE%>" />
 tem <b><bean:write name="certificateType"/></b> no ano lectivo de <bean:write name="anoLectivo"/>, no curso de 
 <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
-<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/>. 
+<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> iniciado no ano lectivo de <bean:write name="initialExecutionYear"/>. 

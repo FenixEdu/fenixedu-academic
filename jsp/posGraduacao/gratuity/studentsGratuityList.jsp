@@ -78,8 +78,10 @@
 					<center><bean:message key="label.number"/></center></html:link></th>
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=studentName&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.administrativeOffice.studentName"/></center></html:link></th>
-				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=scplan&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
-					<center><bean:message key="label.masterDegree.gratuity.SCPlan"/></center></html:link></th>	
+				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=dcplan&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
+					<center><bean:message key="label.masterDegree.gratuity.DCPlan"/></center></html:link></th>				
+				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=scplanState&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
+					<center><bean:message key="label.masterDegree.gratuity.SCPlanState"/></center></html:link></th>	
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=gratuitySituation&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.state"/></center></html:link></th>
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=notPayedValue&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
@@ -110,6 +112,7 @@
 								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 							<% } %>
 						</td>
+						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
@@ -130,6 +133,7 @@
 								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 							<% } %>							
 						</td>
+						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
 						<td><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>

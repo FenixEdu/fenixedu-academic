@@ -39,7 +39,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
         return (ICurricularCourse) queryObject(CurricularCourse.class, crit);
 
     }
-
+    
     public List readCurricularCoursesByName(String name)
     		throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();

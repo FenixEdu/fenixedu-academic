@@ -38,4 +38,17 @@
     <definition name="view-teaching-report" extends="definition.gep.two-column">
         <put name="body" value="/gesdis/viewTeachingReport.jsp"></put>
     </definition>
+	<!-- ==================== View Curricular Course Historic ================== -->
+	<definition name="view-degree-curricular-plan-execution-year" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
+	</definition>
+	<definition name="show-active-curricular-scopes" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
+	</definition>
+	<definition name="view-curriculum-historic" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
+	</definition>
 </tiles-definitions>

@@ -7,7 +7,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
-import ServidorPersistente.ExcepcaoPersistencia;
 import Util.CurricularCourseType;
 import Util.DegreeCurricularPlanState;
 import Util.TipoCurso;
@@ -26,7 +25,7 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
     
     public List readCurricularCoursesByName(String name)
     		throws ExcepcaoPersistencia;
-    
+
     public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
             Integer degreeCurricularPlanId, String name, String code) throws ExcepcaoPersistencia;
 

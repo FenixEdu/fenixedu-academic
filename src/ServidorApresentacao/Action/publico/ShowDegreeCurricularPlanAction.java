@@ -78,13 +78,16 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             }
         }
 
-        if (executionPeriodsLabelValueList.size() > 1) {
-            request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
-                    executionPeriodsLabelValueList);
+        //		  if (executionPeriodsLabelValueList.size() > 1) {
+        //			  request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
+        //					  executionPeriodsLabelValueList);
+        //
+        //		  } else {
+        //			  request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+        //		  }
 
-        } else {
-            request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
-        }
+        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+
         /*------------------------------------*/
 
         /* Criar o bean de anos curricutares */
@@ -103,12 +106,17 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         // default
         DynaActionForm indexForm = (DynaActionForm) actionForm;
 
+        InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
         InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
+        Integer anoCurricular = (Integer) getFromRequest("curYear", request);
+
         Integer curricularYear = (Integer) indexForm.get("curYear");
+        if (curricularYear == null) {
+            curricularYear = new Integer(0);
+        }
 
         if (selectedExecutionPeriod != null) {
-           
             indexForm.set("indice", (Integer) indexForm.get("indice"));
             indexForm.set("curYear", new Integer(anosCurriculares.indexOf(anosCurriculares
                     .get(curricularYear.intValue()))));

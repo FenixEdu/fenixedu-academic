@@ -163,7 +163,10 @@
       />
       <reference-descriptor
          name="disciplinaExecucao"
-         class-ref="Dominio.ExecutionCourse">
+         class-ref="Dominio.ExecutionCourse"
+		 refresh="true"
+		 auto-retrieve="true"
+		 >
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
      <collection-descriptor
@@ -194,6 +197,14 @@
 			refresh="true">
 		<fk-pointing-to-this-class column="KEY_SHIFT"/>
 		<fk-pointing-to-element-class column="KEY_CLASS"/>
+	</collection-descriptor>
+     <collection-descriptor
+			name="studentShifts"
+			element-class-ref="Dominio.ShiftStudent"
+			proxy="true"
+			auto-retrieve="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="keyShift"/>
 	</collection-descriptor>
 </class-descriptor>
 

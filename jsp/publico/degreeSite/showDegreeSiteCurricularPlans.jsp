@@ -10,11 +10,11 @@
 
 <logic:present name="infoDegreeCurricularPlan">
 
-	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a>
-		&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>
+	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml"><bean:message key="label.school" /></a>
+		&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml"><bean:message key="label.education" /></a>
 		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
 		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID")+ "&amp;index=" + request.getAttribute("index") %>">
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()  %>">
 			<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
 		</html:link>
 		 &nbsp;&gt;&nbsp;<bean:message key="label.curricularPlan"/>
@@ -23,14 +23,16 @@
 	<!-- PÁGINA EM INGLÊS -->
 	<div class="version">
 		<span class="px10">
-			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID")+ "&amp;index=" + request.getAttribute("index") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
+			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;degreeID=" +  request.getAttribute("degreeID")  %>" >
+				<bean:message key="label.version.english" />
+			</html:link>
+			<img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
 	</span>	
 	</div>
-	<div class="clear"></div> 
 	
 	<h1>
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
-		&nbsp;em&nbsp;
+		<bean:message key="label.in" />
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h1>
 
@@ -48,7 +50,6 @@
 	</logic:notEmpty>	
 	</span>
 	</h2>
-	<br />
 
 <div class="col_right">
   <table class="box" cellspacing="0">
@@ -60,13 +61,11 @@
 			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 			<bean:define id="degreeInitials" name="infoDegreeCurricularPlan" property="infoDegree.sigla"/>
 			<bean:define id="nameDegreeCurricularPlan" name="infoDegreeCurricularPlan" property="name"/>
-			<p><html:link page="<%= "/prepareConsultCurricularPlanNew.do?method=prepare&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() +  "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") + "&amp;nameDegreeCurricularPlan=" + pageContext.findAttribute("nameDegreeCurricularPlan") + "&amp;degreeInitials=" + pageContext.findAttribute("degreeInitials") + "&amp;index=" + request.getAttribute("index") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" ><bean:message key="link.curricularPlan" /></html:link>
-			<bean:message key="text.curricularPlan" />
-			<br /><br />
-			</p>
+			<p><html:link page="<%= "/prepareConsultCurricularPlanNew.do?method=prepare&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;nameDegreeCurricularPlan=" + pageContext.findAttribute("nameDegreeCurricularPlan") + "&amp;degreeInitials=" + pageContext.findAttribute("degreeInitials") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" ><bean:message key="link.curricularPlan" /></html:link>
+			<bean:message key="text.curricularPlan" /></p>
 		</td>
 	</tr>
-<!-- Meu -->
+
 	<tr>
 		<td class="box_header"><strong><bean:message key="label.exams" /></strong></td>
 	</tr>
@@ -74,7 +73,7 @@
 		<td class="box_cell">
 			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 			<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
-			<p><html:link page="<%= "/chooseExamsMapContextDANew.do?degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&amp;method=choose&amp;index=" + request.getAttribute("index") + "&amp;selectAllCurricularYears=on" %>"><bean:message key="link.exames" /></html:link>
+			<p><html:link page="<%= "/chooseExamsMapContextDANew.do?degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&amp;method=prepare&amp;selectAllCurricularYears=on" %>"><bean:message key="link.exames" /></html:link>
 			Nesta área encontrará a informação relativa as datas de avaliação (1ª e 2ª época). 
 
 			
@@ -88,7 +87,7 @@
 	<tr>
 		<td class="box_cell">
 			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
-			<p><html:link page="<%= "/chooseContextDANew.do?method=nextPagePublic&nextPage=classSearch&inputPage=chooseContext&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+"&amp;index=" + request.getAttribute("index")  %>" ><bean:message key="link.turmas" /></html:link>
+			<p><html:link page="<%= "/chooseContextDANew.do?method=prepare&nextPage=classSearch&inputPage=chooseContext&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()%>" ><bean:message key="link.turmas" /></html:link>
 			Nesta área encontrará informação relativa as turmas. 
 
 			
@@ -96,7 +95,6 @@
 			</p>
 		</td>
 	</tr>
-<!-- FimMeu -->
 
 
 	<logic:present name="infoDegreeCurricularPlanList">
@@ -124,7 +122,7 @@
 					<logic:iterate id="infoDegreeCurricularPlanElem" name="infoDegreeCurricularPlanList" indexId="index"> 
 						<bean:define id="otherDegreeCurricularPlanID" name="infoDegreeCurricularPlanElem" property="idInternal" />						
 	  					<logic:equal name="infoDegreeCurricularPlanElem" property="state" value="<%= DegreeCurricularPlanState.ACTIVE_OBJ.toString() %>" > <!-- If is active -->
-	  						<li><html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("otherDegreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) +"&amp;index=" + request.getAttribute("index")   %>" >
+	  						<li><html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("otherDegreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
 		  						<logic:notEmpty name="infoDegreeCurricularPlan" property="initialDate">
 								<bean:define id="initialDate" name="infoDegreeCurricularPlanElem" property="initialDate" />		
 								<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")) %>
@@ -145,12 +143,12 @@
   </table> 
 </div>
 				
-	<!-- DESCRIÇÃO DO PLANO CURRICULAR(activo e o mais recente) -->
+	<!-- DESCRIï¿½ï¿½O DO PLANO CURRICULAR(activo e o mais recente) -->
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="description">
 			  <p><bean:write name="infoDegreeCurricularPlan" property="description" filter="false" /></p>
 	</logic:notEmpty>	
 
-	<br />
+	<div class="clear"></div>
 	<p><span class="px10"><bean:message key="label.information.responsability.information.degree" /></span></p>				 
 
 </logic:present>	

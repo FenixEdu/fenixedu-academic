@@ -62,6 +62,18 @@
 			   	<td class="listClasses-header">
 					<bean:message key="label.Degree" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 			   	</td>
+			   	<td class="listClasses-header">
+					<bean:message key="label.normal.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+			   	</td>
+			   	<td class="listClasses-header">
+					<bean:message key="label.special.season.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+			   	</td>
+			   	<td class="listClasses-header">
+					<bean:message key="label.improvment.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+			   	</td>
+			   	<td class="listClasses-header">
+					<bean:message key="label.equivalence.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+			   	</td>
 				<td class="listClasses-header">
 					<bean:message key="label.mark" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
 			   	</td>
@@ -78,12 +90,121 @@
 					 	<bean:write name="enrollment" property="infoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.sigla"/>
 					 </td>
 					 <td class="listClasses">
+					 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation">
+					 		<logic:notPresent name="enrollment" property="infoNormalEnrolmentEvaluation.grade">
+								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+							</logic:notPresent>
+						 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="NA">
+									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="RE">
+									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="AP">
+									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:greaterThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="0">
+									<logic:lessThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="101">
+										<bean:write name="enrollment" property="infoNormalEnrolmentEvaluation.grade"/>
+									</logic:lessThan>
+								</logic:greaterThan>
+							</logic:present>
+						</logic:present>
+						<logic:notPresent name="enrollment" property="infoNormalEnrolmentEvaluation">
+							--
+						</logic:notPresent>
+					 </td>
+					 <td class="listClasses">
+					 	<logic:present name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation">
+					 		<logic:empty name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade">
+								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+							</logic:empty>
+						 	<logic:notEmpty name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="NA">
+									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="RE">
+									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="AP">
+									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:greaterThan name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="0">
+									<logic:lessThan name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade" value="101">
+										<bean:write name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation.grade"/>
+									</logic:lessThan>
+								</logic:greaterThan>
+							</logic:notEmpty>
+						</logic:present>
+						<logic:notPresent name="enrollment" property="infoSpecialSeasonEnrolmentEvaluation">
+							--
+						</logic:notPresent>
+					 </td>
+					 <td class="listClasses">
+					 	<logic:present name="enrollment" property="infoImprovmentEnrolmentEvaluation">
+					 		<logic:empty name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade">
+								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+							</logic:empty>
+						 	<logic:notEmpty name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="NA">
+									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="RE">
+									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="AP">
+									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:greaterThan name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="0">
+									<logic:lessThan name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade" value="101">
+										<bean:write name="enrollment" property="infoImprovmentEnrolmentEvaluation.grade"/>
+									</logic:lessThan>
+								</logic:greaterThan>
+							</logic:notEmpty>
+						</logic:present>
+						<logic:notPresent name="enrollment" property="infoImprovmentEnrolmentEvaluation">
+							--
+						</logic:notPresent>
+					 </td>
+					 <td class="listClasses">
+					 	<logic:present name="enrollment" property="infoEquivalenceEnrolmentEvaluation">
+					 		<logic:empty name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade">
+								<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+							</logic:empty>
+						 	<logic:notEmpty name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade">
+							 	<logic:equal name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="NA">
+									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="RE">
+									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:equal name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="AP">
+									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
+								</logic:equal>
+								<logic:greaterThan name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="0">
+									<logic:lessThan name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade" value="101">
+										<bean:write name="enrollment" property="infoEquivalenceEnrolmentEvaluation.grade"/>
+									</logic:lessThan>
+								</logic:greaterThan>
+							</logic:notEmpty>
+						</logic:present>
+						<logic:notPresent name="enrollment" property="infoEquivalenceEnrolmentEvaluation">
+							--
+						</logic:notPresent>
+					 </td>
+					 <td class="listClasses">
 					 	<logic:notEqual name="enrollment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
 							<bean:message name="enrollment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
 						</logic:notEqual>
 				
 						<logic:equal name="enrollment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
-							<bean:write name="enrollment" property="infoEnrolmentEvaluation.grade"/>
+							<logic:equal name="enrollment" property="infoEnrolmentEvaluation.grade" value="AP">
+								<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
+							</logic:equal>
+							<logic:notEqual name="enrollment" property="infoEnrolmentEvaluation.grade" value="AP">
+								<bean:write name="enrollment" property="infoEnrolmentEvaluation.grade"/>
+							</logic:notEqual>
 						</logic:equal>
 					 </td>
 				</tr>

@@ -174,9 +174,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                     if (infoGratuitySituation.getTotalValue() != null
                             && infoGratuitySituation.getRemainingValue() != null) {
 
+                        double exemption = 0;
+                        if (infoGratuitySituation.getExemptionPercentage() != null) {
+                            exemption = infoGratuitySituation.getTotalValue().doubleValue()
+                                    * infoGratuitySituation.getExemptionPercentage().doubleValue() / 100;
+                        }
+
                         Double payedValue = new Double(infoGratuitySituation.getTotalValue()
                                 .doubleValue()
-                                - infoGratuitySituation.getRemainingValue().doubleValue());
+                                - infoGratuitySituation.getRemainingValue().doubleValue() - exemption);
                         infoGratuitySituation.setPayedValue(payedValue);
 
                         totalPayedValue += payedValue.doubleValue();

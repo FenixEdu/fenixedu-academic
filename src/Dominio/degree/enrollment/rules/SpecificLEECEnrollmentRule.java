@@ -422,6 +422,7 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
                 creditsInScientificArea--;
             } else {
                 creditsInSpecializationGroup += creditsInScientificArea;
+                creditsInScientificArea = 0;
             }
         }
 

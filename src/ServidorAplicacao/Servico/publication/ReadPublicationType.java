@@ -18,16 +18,7 @@ import ServidorPersistente.publication.IPersistentPublicationType;
  * 
  */
 public class ReadPublicationType implements IService {
-
-    /**
-     *  
-     */
-    public ReadPublicationType() {
-      
-    }
-
-    
-
+  
     public IPublicationType run(Integer publicationTypeId) throws FenixServiceException {
         ISuportePersistente sp;
         try {

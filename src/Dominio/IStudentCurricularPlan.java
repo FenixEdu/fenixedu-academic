@@ -127,6 +127,8 @@ public interface IStudentCurricularPlan extends IDomainObject {
     public Integer getCreditsInSpecializationArea();
 
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
+    
+    public List getAprovedEnrolmentsInExecutionPeriod(final IExecutionPeriod executionPeriod);
 
     // -------------------------------------------------------------
     // END: Only for enrollment purposes

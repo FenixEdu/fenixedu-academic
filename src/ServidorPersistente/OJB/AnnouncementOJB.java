@@ -53,5 +53,29 @@ public class AnnouncementOJB extends PersistentObjectOJB implements IPersistentA
         return null;
 
     }
+    
+    /**
+     * except the (real) last one
+     */
+    public List readLastAnnouncementsForSite(ISite site, int n) throws ExcepcaoPersistencia
+	{
+    		Criteria crit = new Criteria();
+    		crit.addEqualTo("site.idInternal", site.getIdInternal());
+    		// [ccfp] - change this method 
+    		crit.addOrderBy("lastModifiedDate", false);
+    		List result = queryList(Announcement.class, crit);
+    		
+    		if (result != null && !result.isEmpty())	 {
+    			if (result.size() < n) {	
+    				return result.subList(1,result.size());
+    			}
+    			else {	
+    				return result.subList(1,n);
+    			}
+    		}
+    		else {
+    			return null;
+    		}
+    }
 
 }

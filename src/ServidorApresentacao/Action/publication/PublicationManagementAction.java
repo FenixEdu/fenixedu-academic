@@ -61,8 +61,14 @@ public class PublicationManagementAction extends FenixAction{
 		        
 		        //date sorting rules for publications
 //		        try {
-		            year1 = Integer.parseInt(infoPublication1.getYear());
-		            year2 = Integer.parseInt(infoPublication2.getYear());
+		        	if(infoPublication1.getYear() != null)
+		        	    year1 = Integer.parseInt(infoPublication1.getYear());
+		        	else
+		        	    year1 = 0;
+		        	if(infoPublication2.getYear() != null)
+		        	    year2 = Integer.parseInt(infoPublication2.getYear());
+		        	else
+		        	    year2 = 0;
 		            
 		            if (year1 < year2)
 		                return -1;
@@ -85,13 +91,7 @@ public class PublicationManagementAction extends FenixAction{
 		    ActionMessages messages = new ActionMessages();
 			messages.add("message1", new ActionMessage(msg));
 			saveMessages(request,messages);
-		}
-		
-
-//		ActionErrors errors = new ActionErrors();
-//		errors.add("error1", new ActionError("message.publications.managementDeleted"));
-//		saveErrors(request,errors);
-		
+		}				
 		return mapping.findForward("show-publications");
 	}
 

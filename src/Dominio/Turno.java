@@ -36,6 +36,8 @@ public class Turno extends DomainObject implements ITurno {
 
     private List associatedClasses;
 
+    private List studentShifts;
+
     // c�digos internos da base de dados
     private Integer chaveDisciplinaExecucao;
 
@@ -103,9 +105,7 @@ public class Turno extends DomainObject implements ITurno {
         boolean resultado = false;
         if (obj instanceof ITurno) {
             ITurno turno = (ITurno) obj;
-            resultado = (getNome().equals(turno.getNome())) && (getTipo().equals(turno.getTipo()))
-                    && (getDisciplinaExecucao().equals(turno.getDisciplinaExecucao()))
-                    && (getLotacao().equals(turno.getLotacao()));
+            resultado = getIdInternal().equals(turno.getIdInternal());
         }
         return resultado;
     }
@@ -219,5 +219,12 @@ public class Turno extends DomainObject implements ITurno {
             hours += lesson.hours();
         }
         return hours;
+    }
+
+    public List getStudentShifts() {
+        return studentShifts;
+    }
+    public void setStudentShifts(List studentShifts) {
+        this.studentShifts = studentShifts;
     }
 }

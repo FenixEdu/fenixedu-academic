@@ -31,7 +31,7 @@
 			<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
 			<tr>
 				<td class="listClasses">
-					<dt:format pattern="dd-MM-yyyy">
+					<dt:format pattern="yyyy">
 						<bean:write name="infoQualification" property="date.time" />
 					</dt:format>
 				</td>
@@ -318,7 +318,7 @@
 			<bean:message key="label.doublePoint" />
 		</p>
 		<br />
-		Informação ainda não disponivel
+		<bean:message key="message.teacherInformation.notYetAvailable" />
 		<%--<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
 				<td><bean:write name="" property=""/></td>

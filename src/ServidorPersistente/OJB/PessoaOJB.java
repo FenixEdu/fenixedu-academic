@@ -53,9 +53,9 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
 
         } else if ((personFromDB1 != null)
                 && (personFromDB2 != null)
-                && (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite)
+                && (((IPessoa) personFromDB1).getIdInternal().equals(((IPessoa) personToWrite)
                         .getIdInternal()))
-                && (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite)
+                && (((IPessoa) personFromDB2).getIdInternal().equals(((IPessoa) personToWrite)
                         .getIdInternal()))) {
 
             super.lockWrite(personFromDB1);
@@ -67,7 +67,7 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         } else if ((personFromDB1 != null)
                 && (personFromDB2 == null)
                 && (personToWrite instanceof Pessoa)
-                && (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite)
+                && (((IPessoa) personFromDB1).getIdInternal().equals(((IPessoa) personToWrite)
                         .getIdInternal()))) {
 
             super.lockWrite(personFromDB1);
@@ -78,13 +78,13 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         } else if ((personFromDB2 != null)
                 && (personFromDB1 == null)
                 && (personToWrite instanceof Pessoa)
-                && (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite)
+                && (((IPessoa) personFromDB2).getIdInternal().equals(((IPessoa) personToWrite)
                         .getIdInternal()))) {
             super.lockWrite(personFromDB1);
             BeanUtils.copyProperties(personFromDB2, personToWrite);
 
             return;
-        }
+        }       
         // else Throw an already existing exception
         throw new ExistingPersistentException();
     }

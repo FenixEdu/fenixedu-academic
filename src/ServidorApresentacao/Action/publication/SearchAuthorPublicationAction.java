@@ -38,6 +38,7 @@ import Dominio.IPessoa;
 import Dominio.Pessoa;
 import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
+import Dominio.publication.IPublicationType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -76,6 +77,10 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
         ActionForward actionForward = null;
 
+        Object args[] = { publicationTypeId };
+        IPublicationType publicationType = (IPublicationType) ServiceUtils.executeService(userView,
+                "ReadPublicationType", args);
+
         if (session != null) {
 
             List infoAuthors = readInfoAuthors(authorsIds, userView);
@@ -84,7 +89,11 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
             dynaForm.set("infoPublicationTypeId", publicationTypeId);
             dynaForm.set("typePublication", typePublication);
             dynaForm.set("teacherId", idTeacher);
-            actionForward = mapping.findForward("show-search-author-form");
+
+            if (publicationType.getPublicationType().equalsIgnoreCase("Unstructured"))
+                actionForward = mapping.findForward("show-attributes");
+            else
+                actionForward = mapping.findForward("show-search-author-form");
         }
 
         return actionForward;

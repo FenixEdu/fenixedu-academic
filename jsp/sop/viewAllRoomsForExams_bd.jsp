@@ -56,7 +56,7 @@
 		<br />
 		<br />	
 		<app:generateExamsMap name="infoExamsMap" user="sop"/>
-		<br style="page-break-before:always;" />
+		<br style="page-break-after:always;" />
 	</logic:iterate>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.INFO_EXAMS_MAP_LIST%>">

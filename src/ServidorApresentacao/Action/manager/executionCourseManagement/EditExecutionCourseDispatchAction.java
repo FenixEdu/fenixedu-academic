@@ -35,6 +35,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.utils.RequestUtils;
 import Util.PeriodState;
 import framework.factory.ServiceManagerServiceFactory;
 
@@ -145,15 +146,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     private void buildCurricularYearLabelValueBean(HttpServletRequest request) {
-
-        //		Create bean for curricular years
-        List curricularYears = new ArrayList();
-        curricularYears.add(new LabelValueBean("escolher", ""));
-        curricularYears.add(new LabelValueBean("1 º", "1"));
-        curricularYears.add(new LabelValueBean("2 º", "2"));
-        curricularYears.add(new LabelValueBean("3 º", "3"));
-        curricularYears.add(new LabelValueBean("4 º", "4"));
-        curricularYears.add(new LabelValueBean("5 º", "5"));
+        List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
         request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
     }
 

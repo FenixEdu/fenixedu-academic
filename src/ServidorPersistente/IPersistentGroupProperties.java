@@ -5,7 +5,6 @@
 package ServidorPersistente;
 import java.util.List;
 
-import Dominio.IAttendsSet;
 import Dominio.IGroupProperties;
 
 /**

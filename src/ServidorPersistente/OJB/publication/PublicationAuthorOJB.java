@@ -9,8 +9,8 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.publication.PublicationAuthor;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentPublicationAuthor;
 import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.publication.IPersistentPublicationAuthor;
 
 /**
  * @author Ricardo Rodrigues

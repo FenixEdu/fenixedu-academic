@@ -153,4 +153,13 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addGreaterThan("endDate", start);
         return queryList(ExecutionPeriod.class, criteria);
     }
+    
+	public List readNotClosedPublicExecutionPeriodsByExecutionYears(IExecutionYear executionYear) throws ExcepcaoPersistencia {
+		   Criteria criteria = new Criteria();
+		   criteria.addNotEqualTo("state", PeriodState.CLOSED);
+		   criteria.addNotEqualTo("state", PeriodState.NOT_OPEN);
+		   criteria.addGreaterThan("semester", new Integer(0));
+		   criteria.addEqualTo("executionYear.idInternal", executionYear.getIdInternal());
+		   return queryList(ExecutionPeriod.class, criteria);
+	 }
 }

@@ -26,6 +26,15 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+
+		<!-- ******************* Improvment Enrollment **************** -->
+		<form-bean name="improvmentEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="studentNumber" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="enrolments" type="java.lang.Integer[]"/>
+			<form-property name="unenrolments" type="java.lang.Integer[]"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 		
 		<!-- ******************* Enrollment Without Rule**************** -->
 		<form-bean name="curricularCoursesEnrollmentWithoutRuleForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -138,6 +147,26 @@
 			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
 			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
 			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
+		</action>
+		
+		<!-- ****************** Improvment Enrollment **************************** -->
+
+		<action path="/prepareEnrollmentChooseStudent" forward="df.page.prepareImprovmentEnrollmentChooseStudent"/>
+		
+		<action	path="/improvmentEnrollment"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.improvment.ImprovmentEnrolmentDispacthAction"
+				name="improvmentEnrolmentForm"				
+				parameter="method"
+				scope="request"
+				validate="true"
+				input="/prepareEnrollmentChooseStudent.do">
+
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+
+			<forward name="prepareEnrolmentViewEnrolments" path="df.page.prepareEnrolmentViewEnrolments"/>
+			<forward name="viewEnrolments" path="/improvmentEnrollment.do?method=start&amp;page=0"/>
 		</action>
 		
 		<!-- ****************** View Student Curriculum **************************** -->

@@ -7,19 +7,15 @@ package ServidorAplicacao.Filtro.enrollment;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
-import Dominio.Enrolment;
-import Dominio.IEnrollment;
 import Dominio.IEnrolmentPeriodInClasses;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
@@ -48,47 +44,30 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
                 .getIStudentCurricularPlanPersistente();
         IPersistentEnrolmentPeriod persistentEnrolmentPeriod = persistentSupport
                 .getIPersistentEnrolmentPeriod();
-        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-        IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
-                .readActiveStudentCurricularPlan(id.getUtilizador(), TipoCurso.LICENCIATURA_OBJ);
+        IStudentCurricularPlan studentCurricularPlan = null;
+
+        studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(id
+                .getUtilizador(), TipoCurso.LICENCIATURA_OBJ);
 
         if (studentCurricularPlan == null) {
             studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(id
                     .getUtilizador(), TipoCurso.MESTRADO_OBJ);
         }
-        Calendar now = Calendar.getInstance();
-        Date startDate = null;
-        Date endDate = null;
+
         if (studentCurricularPlan != null) {
             IEnrolmentPeriodInClasses enrolmentPeriodInClasses = persistentEnrolmentPeriod
                     .readCurrentClassesEnrollmentPeriodForDegreeCurricularPlan(studentCurricularPlan
                             .getDegreeCurricularPlan());
-
             if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDate() == null
                     || enrolmentPeriodInClasses.getEndDate() == null) {
-
-                List enrolment = (List) persistentEnrolment
-                        .readAllByStudentCurricularPlan(studentCurricularPlan);
-                IEnrollment enrolmentPeriodInCurricularCourses = (Enrolment) enrolment.get(0);
-
-                if (enrolmentPeriodInCurricularCourses == null
-                        || enrolmentPeriodInCurricularCourses.getCurricularCourse()
-                                .getDegreeCurricularPlan().getInitialDate() == null
-                        || enrolmentPeriodInCurricularCourses.getCurricularCourse()
-                                .getDegreeCurricularPlan().getEndDate() == null) {
-                    System.out.println("CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan");
-                    throw new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
-                }
-                startDate = enrolmentPeriodInCurricularCourses.getCurricularCourse()
-                        .getDegreeCurricularPlan().getInitialDate();
-                endDate = enrolmentPeriodInCurricularCourses.getCurricularCourse()
-                        .getDegreeCurricularPlan().getEndDate();
-
-            } else {
-                startDate = enrolmentPeriodInClasses.getStartDate();
-                endDate = enrolmentPeriodInClasses.getEndDate();
+                System.out.println("CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan");
+                throw new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
             }
+
+            Calendar now = Calendar.getInstance();
+            Date startDate = enrolmentPeriodInClasses.getStartDate();
+            Date endDate = enrolmentPeriodInClasses.getEndDate();
 
             Integer nowValue = new Integer(comparableDateFormat.format(now.getTime()));
             Integer startDateValue = new Integer(comparableDateFormat.format(startDate));

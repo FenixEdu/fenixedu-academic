@@ -12,38 +12,43 @@
 <bean:define id="infoDegree" name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree" />
 <bean:define id="degreeCurricularPlanID" name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" />
 
-<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > 
-		<bean:define id="degreeType" name="infoDegree" property="tipoCurso" />	
-		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()  %>">
+<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml"><bean:message key="label.school" /></a>
+	<bean:define id="degreeType" name="infoDegree" property="tipoCurso" />	
+	&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml"><bean:message key="label.education" /></a>	
+	&nbsp;&gt;&nbsp;
+	<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()  %>">
 	<!-- &amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "-->
-			<bean:write name="infoDegree" property="sigla" />
-		</html:link>
-		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
+		<bean:write name="infoDegree" property="sigla" />
+	</html:link>
+	&nbsp;&gt;&nbsp;
+	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
 	<!-- &amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + " -->
-			<bean:message key="label.curricularPlan"/>
-		</html:link>
-		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
-			<bean:message key="label.curriculum"/>
-		</html:link>
-		&nbsp;&gt;&nbsp;
-		<bean:write name="infoCurricularCourse" property="name" />	
+		<bean:message key="label.curricularPlan"/>
+	</html:link>
+	&nbsp;&gt;&nbsp;
+	<html:link page="<%= "/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
+		<bean:message key="label.curriculum"/>
+	</html:link>
+	&nbsp;&gt;&nbsp;<bean:write name="infoCurricularCourse" property="name" />	
 </div>	
 
 <!-- PÁGINA EM INGLÊS -->
 <div class="version">
 	<span class="px10">
-		<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;inEnglish=true&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.getAttribute("degreeCurricularPlanID") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
+		<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;inEnglish=true&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.getAttribute("degreeCurricularPlanID") %>" >
+			<bean:message key="label.version.english" />
+		</html:link>
+		<img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
 	</span>
 </div> 
-<div class="clear"></div> 
-<h1><bean:write name="infoDegree" property="tipoCurso" />&nbsp;<bean:write name="infoDegree" property="nome" /></h1>
+
+<h1>
+	<bean:write name="infoDegree" property="tipoCurso" />
+	<bean:message key="label.in" />
+	<bean:write name="infoDegree" property="nome" />
+</h1>
 
 <h2><span class="greytxt"><bean:write name="infoCurricularCourse" property="name" /></span></h2>
-<br />
-
 
 <!-- EXECUTION COURSES LINK  -->
 <logic:present name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
@@ -53,7 +58,7 @@
 <div class="col_right">
   <table class="box" cellspacing="0">
 		<tr>
-			<td class="box_header"><strong><bean:message key="label.courses" /></strong></td>
+			<td class="box_header"><strong><bean:message key="label.executionCourseSites" /></strong></td>
 		</tr>
 		<tr>
 			<td class="box_cell">
@@ -64,7 +69,6 @@
 						<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseID").toString() + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>"  >
 							<bean:write name="infoExecutionCourse" property="nome" />&nbsp;(<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>)
 						</html:link>
-						<br />
 						</p>
 					</logic:notEqual>
 				</logic:iterate>
@@ -77,69 +81,60 @@
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
 <logic:present name="infoCurricularCourse" property="infoScopes">
-<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.scope" />	</h2>
-<p>
+	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.scope" />	</h2>
 	<ul>
 		<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourse" property="infoScopes">
-			<li>
-				<logic:notEmpty name="infoCurricularCourseScope" property="infoBranch.name">
-					<logic:notEqual name="infoCurricularCourseScope" property="infoBranch.name" value="">	
-						<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
-	 				</logic:notEqual>
-				</logic:notEmpty>
+		<li>
+			<logic:notEmpty name="infoCurricularCourseScope" property="infoBranch.name">
+				<logic:notEqual name="infoCurricularCourseScope" property="infoBranch.name" value="">	
+					<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
+	 			</logic:notEqual>
+			</logic:notEmpty>
 				
-				<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year">
-					<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" value="">					
-						<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message key="property.curricularCourse.curricularYear"/>&nbsp;
-		 			</logic:notEqual>
-				</logic:notEmpty>
+			<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year">
+				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" value="">					
+					<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message key="property.curricularCourse.curricularYear"/>&nbsp;
+					</logic:notEqual>
+			</logic:notEmpty>
 				
-				<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.semester">
-					<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="">					
-						<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>º&nbsp;<bean:message key="property.curricularCourse.semester"/>&nbsp;
-	 				</logic:notEqual>
-				</logic:notEmpty>
-			</li>
+			<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.semester">
+				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="">					
+					<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>º&nbsp;<bean:message key="property.curricularCourse.semester"/>&nbsp;
+	 			</logic:notEqual>
+			</logic:notEmpty>
+		</li>
 		</logic:iterate>		
 	</ul>
-</p>
 </logic:present>
 
 <!-- CURRICULAR COURSE INFO -->
 <logic:present name="infoCurriculum" property="generalObjectives">
 <logic:notEmpty name="infoCurriculum" property="generalObjectives">
-		<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
+	<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.generalObjectives" />	</h2>
-		<p>
-			<bean:write name="infoCurriculum" property="generalObjectives" filter="false"/>
-		</p>
-		</logic:notEqual>
+		<p><bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></p>
+	</logic:notEqual>
 </logic:notEmpty>
 </logic:present>
+
 <logic:present name="infoCurriculum" property="operacionalObjectives">
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectives">
-		<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
+	<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.operacionalObjectives" /></h2>
-		<p>
-			<bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/>
-		</p>
-		</logic:notEqual>
+		<p><bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></p>
+	</logic:notEqual>
 </logic:notEmpty> 
 </logic:present>
-<br/>
-<br/>
+
 <logic:present name="infoCurriculum" property="program">
 <logic:notEmpty name="infoCurriculum" property="program">
 	<logic:notEqual name="infoCurriculum" property="program" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.program" /></h2>	
-		<p>
-			<bean:write name="infoCurriculum" property="program" filter="false" />
-		</p>	
+		<p><bean:write name="infoCurriculum" property="program" filter="false" /></p>	
 	</logic:notEqual>
 </logic:notEmpty>
 </logic:present>
-<br/>
-<br/>
+
 
 </logic:present>
 

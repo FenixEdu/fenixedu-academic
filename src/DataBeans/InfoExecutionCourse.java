@@ -6,11 +6,9 @@
 package DataBeans;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
-import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 
 /**
@@ -41,6 +39,8 @@ public class InfoExecutionCourse extends InfoObject {
     protected List associatedInfoEvaluations;
 
     protected Integer numberOfAttendingStudents;
+
+    protected List associatedInfoShifts;
 
     protected String comment;
 
@@ -94,7 +94,7 @@ public class InfoExecutionCourse extends InfoObject {
         setNome(nome);
         setSigla(sigla);
         setPrograma(programa);
-        //		setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
+        // setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
         setTheoreticalHours(theoreticalHours);
         setPraticalHours(praticalHours);
         setTheoPratHours(theoPratHours);
@@ -115,8 +115,8 @@ public class InfoExecutionCourse extends InfoObject {
     }
 
     /**
-     * @deprecated @param
-     *             nome
+     * @deprecated
+     * @param nome
      * @param sigla
      * @param programa
      * @param infoLicenciaturaExecucao
@@ -132,7 +132,7 @@ public class InfoExecutionCourse extends InfoObject {
         setNome(nome);
         setSigla(sigla);
         setPrograma(programa);
-        //	setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
+        // setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
         setTheoreticalHours(theoreticalHours);
         setPraticalHours(praticalHours);
         setTheoPratHours(theoPratHours);
@@ -388,6 +388,14 @@ public class InfoExecutionCourse extends InfoObject {
      */
     public void setInfoSiteEvaluationStatistics(InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
         this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
+    }
+
+    public List getAssociatedInfoShifts() {
+        return associatedInfoShifts;
+    }
+
+    public void setAssociatedInfoShifts(List associatedInfoShifts) {
+        this.associatedInfoShifts = associatedInfoShifts;
     }
 
     public void copyFromDomain(IExecutionCourse executionCourse) {

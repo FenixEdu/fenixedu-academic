@@ -8,9 +8,7 @@ import java.util.Calendar;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoSummary;
-import Dominio.ExecutionCourse;
 import Dominio.IAula;
-import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ISala;
 import Dominio.ISummary;
@@ -23,7 +21,6 @@ import Dominio.Turno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.utils.summary.SummaryUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.IPersistentTeacher;

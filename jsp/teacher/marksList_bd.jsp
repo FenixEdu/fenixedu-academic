@@ -82,7 +82,7 @@
 
 		    	<logic:notEmpty name="markElem" property="infoEnrolment">
 		      		<bean:define id="infoEnrolment" name="markElem" property="infoEnrolment"/>					
-					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType"/>
+					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType" type="Util.EnrolmentEvaluationType"/>
 		  		</logic:notEmpty>
 				<bean:define id="studentMark" value=""/>
 				<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>
@@ -101,7 +101,8 @@
 							<bean:message key="message.notEnroled"/>
 						</logic:empty>	
 						<logic:notEmpty name="markElem" property="infoEnrolment">
-							<bean:write name="evaluationType"/>
+							<bean:define id="aux"><bean:write name="evaluationType"/></bean:define>
+							<bean:message name="aux"/>
 						</logic:notEmpty>
 					</td>
 				
