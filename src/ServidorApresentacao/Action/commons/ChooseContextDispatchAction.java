@@ -176,8 +176,8 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			setExecutionContextPublic(request);
-		//RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+			RequestUtils.setExecutionContext(request);
+		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
 
 		//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
 		/* Criar o bean de semestres */
@@ -337,17 +337,12 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			InfoExecutionPeriod infoExecutionPeriod = null;
-			try {
-				infoExecutionPeriod = setExecutionContextPublic(request);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			infoExecutionPeriod = RequestUtils.setExecutionContext(request);
+			RequestUtils.setExecutionPeriodToRequest(
+				request,
+				infoExecutionPeriod);
 
 			Integer semestre = infoExecutionPeriod.getSemester();
-			//				((InfoExecutionPeriod) session
-			//					.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY))
-			//					.getSemester();
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("curYear");
 
@@ -356,12 +351,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 			request.setAttribute("curYear", anoCurricular);
 			request.setAttribute("semester", semestre);
-			//			InfoExecutionPeriod infoExecutionPeriod =
-			//				RequestUtils.getExecutionPeriodFromRequest(request);
-
-			//			RequestUtils.setExecutionPeriodToRequest(
-			//				request,
-			//				infoExecutionPeriod);
 
 			Object argsLerLicenciaturas[] =
 				{ infoExecutionPeriod.getInfoExecutionYear()};
@@ -462,31 +451,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		return semesterList;
 	}
 
-	//	/**
-	//	 * Method setInfoDegreeList.
-	//	 * @param mapping
-	//	 * @param form
-	//	 * @param request
-	//	 * @param response
-	//	 */
-	//	private List setInfoDegreeList(HttpServletRequest request)
-	//		throws Exception {
-	//
-	//		List infoExecutionDegreeList = null;
-	//		InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
-	//		Object args[] = { infoExecutionPeriod.getInfoExecutionYear()};
-	//		infoExecutionDegreeList =
-	//			(List) ServiceUtils.executeService(
-	//				null,
-	//				"ReadExecutionDegreesByExecutionYear",
-	//				args);
-	//
-	//		request.getSession(false).setAttribute(
-	//			SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
-	//			infoExecutionDegreeList);
-	//
-	//		return infoExecutionDegreeList;
-	//	}
 
 	/**
 	 * Method existencesOfInfoDegree.
@@ -519,7 +483,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 	 * Method setExecutionContext.
 	 * @param request
 	 */
-	// TODO Merge with method setExecutionContextPublic when executionPeriod disapears from SOP portal
+	// TODO When session is removed from SOP, use method with same name from RequestUtils
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws Exception {
 
@@ -539,32 +503,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				infoExecutionPeriod);
 		}
-		return infoExecutionPeriod;
-	}
-
-	private InfoExecutionPeriod setExecutionContextPublic(HttpServletRequest request)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
-
-		// Read executionPeriod from request
-		InfoExecutionPeriod infoExecutionPeriod =
-			RequestUtils.getExecutionPeriodFromRequest(request);
-
-		// If executionPeriod not in request nor in DB, read current
-		if (infoExecutionPeriod == null) {
-			userView = SessionUtils.getUserView(request);
-			infoExecutionPeriod =
-				(InfoExecutionPeriod) ServiceUtils.executeService(
-					userView,
-					"ReadCurrentExecutionPeriod",
-					new Object[0]);
-		}
-
-		// Keep executionPeriod in request
-		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
-
 		return infoExecutionPeriod;
 	}
 

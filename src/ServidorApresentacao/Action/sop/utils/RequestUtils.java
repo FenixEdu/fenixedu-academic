@@ -21,6 +21,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
 import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
@@ -84,12 +85,15 @@ public abstract class RequestUtils {
 			if (year == null) {
 				year = request.getParameter("eYName");
 			}
-			Object[] args = { year };
-			infoExecutionYear =
-				(InfoExecutionYear) ServiceUtils.executeService(
-					null,
-					"ReadExecutionYear",
-					args);
+
+			if (year != null) {
+				Object[] args = { year };
+				infoExecutionYear =
+					(InfoExecutionYear) ServiceUtils.executeService(
+						null,
+						"ReadExecutionYear",
+						args);
+			}
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -115,13 +119,15 @@ public abstract class RequestUtils {
 			if (name == null) {
 				name = request.getParameter("ePName");
 			}
-			Object[] args = { name, infoExecutionYear };
-			infoExecutionPeriod =
-				(InfoExecutionPeriod) ServiceUtils.executeService(
-					null,
-					"ReadExecutionPeriod",
-					args);
 
+			if (name != null & infoExecutionYear != null) {
+				Object[] args = { name, infoExecutionYear };
+				infoExecutionPeriod =
+					(InfoExecutionPeriod) ServiceUtils.executeService(
+						null,
+						"ReadExecutionPeriod",
+						args);
+			}
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -336,5 +342,31 @@ public abstract class RequestUtils {
 		request.setAttribute("ePName", request.getParameter("ePName"));
 		request.setAttribute("eYName", request.getParameter("eYName"));
 	}
-	
+
+	public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
+		throws FenixActionException {
+
+		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
+
+		// Read executionPeriod from request
+		InfoExecutionPeriod infoExecutionPeriod =
+			RequestUtils.getExecutionPeriodFromRequest(request);
+
+		// If executionPeriod not in request nor in DB, read current
+		if (infoExecutionPeriod == null) {
+			userView = SessionUtils.getUserView(request);
+			try {
+				infoExecutionPeriod =
+					(InfoExecutionPeriod) ServiceUtils.executeService(
+						userView,
+						"ReadCurrentExecutionPeriod",
+						new Object[0]);
+			} catch (FenixServiceException e) {
+				e.printStackTrace();
+			}
+		}
+		return infoExecutionPeriod;
+	}
+
 }

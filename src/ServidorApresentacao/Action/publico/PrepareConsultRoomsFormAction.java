@@ -13,6 +13,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoExecutionPeriod;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 import Util.TipoSala;
 
@@ -43,8 +45,8 @@ public class PrepareConsultRoomsFormAction extends Action {
         request.setAttribute("publico.types", types);
         
         // keep selected executionPeriod in request
-        request.setAttribute("ePName",request.getParameter("ePName"));
-		request.setAttribute("eYName",request.getParameter("eYName"));
+        InfoExecutionPeriod infoExecutionPeriod = RequestUtils.setExecutionContext(request);
+        RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
         
       return mapping.findForward("Sucess");
     } else
