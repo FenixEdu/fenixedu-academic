@@ -1443,6 +1443,14 @@
         <foreignkey field-ref="keyGratuityValues"/>
     </reference-descriptor>
     <reference-descriptor
+      	name="employee"
+       	class-ref="Dominio.Employee"
+       	proxy="false"
+		refresh="true"
+    >
+        <foreignkey field-ref="keyEmployee"/>
+    </reference-descriptor>    
+    <reference-descriptor
       	name="studentCurricularPlan"
        	class-ref="Dominio.StudentCurricularPlan"
        	proxy="false"
