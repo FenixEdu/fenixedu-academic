@@ -46,7 +46,9 @@ public class AccessAnnouncementManagement extends FenixAction {
 		
 		InfoSite infoSite = (InfoSite) session.getAttribute("Site");
 
-		Object args[] = {infoSite};
+		Object args[] = new Object[1];
+		args[0] = infoSite;
+		
 		GestorServicos manager = GestorServicos.manager();
 
 		List announcements = (List) manager.executar(userView, "ReadAnnouncements", args);

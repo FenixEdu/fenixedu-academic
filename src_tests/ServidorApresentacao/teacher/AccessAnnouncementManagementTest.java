@@ -44,11 +44,11 @@ public class AccessAnnouncementManagementTest extends TestCaseActionExecution {
 
 		HashMap items = new HashMap();
 
-		InfoSection infoSection = null;
-		InfoSite infoSite = null;
+		InfoSection infoSection = new InfoSection();
+		InfoSite infoSite = new InfoSite();
 
 		//infoSection
-		infoSection = new InfoSection("Seccao1deTFCI", new Integer(0), infoSite);
+		infoSection = new InfoSection("Seccao1deTFCI", new Integer(0), null);
 
 		//infoSite
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
@@ -63,7 +63,7 @@ public class AccessAnnouncementManagementTest extends TestCaseActionExecution {
 				new Double(1.5),
 				new Double(2),
 				infoExecutionPeriod);
-		infoSite = new InfoSite(infoSection, new ArrayList(), infoExecutionCourse, new ArrayList());
+		infoSite = new InfoSite(null, new ArrayList(), infoExecutionCourse, new ArrayList());
 		infoSection.setInfoSite(infoSite);
 		infoSite.setInitialInfoSection(infoSection);
 
@@ -135,7 +135,7 @@ public class AccessAnnouncementManagementTest extends TestCaseActionExecution {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "GestaoDeAnuncios";
+		return "AnnouncementManagement";
 	}
 
 	/**
