@@ -1,5 +1,7 @@
-package middleware.studentMigration;
+package ServidorAplicacao.Servico.manager.migration;
 
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Country;
 import Dominio.IBranch;
 import Dominio.ICountry;
@@ -31,144 +34,190 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Pessoa;
 import Dominio.StudentCurricularPlan;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
 /**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
+ * @author David Santos in Feb 13, 2004
  */
 
-public class UpdateStudent
+public class CreateStudents extends CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans implements IService
 {
-	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 500;
-	
-	public static void main(String args[]) throws Exception {
-
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWAluno persistentAluno = mws.getIPersistentMWAluno();
-		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-		
-		MWStudent mwStudent = null;
-		
-		try {
-			sp.iniciarTransaccao();
-			Integer numberOfStudents = persistentAluno.countAll();
-			System.out.println("Students to update: [" + numberOfStudents.toString() + "]");
-			sp.confirmarTransaccao();
-			int numberOfElementsInSpan = UpdateStudent.NUMBER_OF_ELEMENTS_IN_SPAN;
-			
-			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
-			numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
-			
-			for (int span = 0; span < numberOfSpans; span++)
-			{
-				sp.iniciarTransaccao();
-				sp.clearCache();
-				sp.confirmarTransaccao();
-//				System.gc();
-
-				sp.iniciarTransaccao();
-				System.out.println("Reading Students...");
-				List result = persistentAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-				System.out.println("Updating [" + result.size() + "] students...");
-				sp.confirmarTransaccao();		
-				
-				Iterator iterator = result.iterator();
-				while(iterator.hasNext()) {
-					mwStudent = (MWStudent) iterator.next();
-					sp.iniciarTransaccao();
-					UpdateStudent.updateCorrectStudents(mwStudent, sp);
-					sp.confirmarTransaccao();
-				}
-	
-			}
-		} catch(Throwable e) {
-			System.out.println("Error Migrating Student [" + mwStudent.getNumber() + "]");
+	public CreateStudents()
+	{
+		try
+		{
+			super.persistentSuport = SuportePersistenteOJB.getInstance();
+			super.persistentMiddlewareSuport = PersistentMiddlewareSupportOJB.getInstance();
+		} catch (ExcepcaoPersistencia e)
+		{
 			e.printStackTrace(System.out);
 		}
+
+		super.executionPeriod = null;
+		super.out = null;
+		super.numberOfElementsInSpan = 50;
+		super.maximumNumberOfElementsToConsider = 10000;
 	}
 
-	public static void updateCorrectStudents(MWStudent mwStudent, SuportePersistenteOJB sp) throws Throwable
+	public void run(Boolean toLogToFile, String fileName)
 	{
-		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-		
+		MWStudent mwStudent = null;
+
+		try
+		{
+			super.out = new PrintWriter(System.out, true);
+			if (toLogToFile.booleanValue())
+			{
+				FileOutputStream file = new FileOutputStream(fileName);
+				super.out = new PrintWriter(file);
+			}
+
+			IPersistentMWAluno mwAlunoDAO = super.persistentMiddlewareSuport.getIPersistentMWAluno();
+
+			Integer numberOfStudents = mwAlunoDAO.countAll();
+			super.out.println("[INFO] Updating a total of [" + numberOfStudents.intValue() + "] student curriculums.");
+
+			int numberOfSpans = numberOfStudents.intValue() / super.numberOfElementsInSpan;
+			numberOfSpans = numberOfStudents.intValue() % super.numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
+			int totalElementsConsidered = 0;
+
+			for (int span = 0; span < numberOfSpans && totalElementsConsidered < super.maximumNumberOfElementsToConsider; span++)
+			{
+				super.out.println("[INFO] Reading MWStudents...");
+
+				Iterator iterator = mwAlunoDAO.readAllBySpanIterator(new Integer(span), new Integer(super.numberOfElementsInSpan));
+
+				while (iterator.hasNext())
+				{
+					mwStudent = (MWStudent) mwAlunoDAO.lockIteratorNextObj(iterator);
+
+					this.updateStudents(mwStudent);
+
+					totalElementsConsidered++;
+				}
+			}
+		} catch (Throwable e)
+		{
+			super.out.println("[ERROR 01] Exception migrating student [" + mwStudent.getNumber() + "] enrolments!");
+			e.fillInStackTrace();
+			e.printStackTrace(super.out);
+		}
+
+		super.out.close();
+	}
+
+	/**
+	 * @param mwStudent
+	 * @throws Throwable
+	 */
+	public void updateStudents(MWStudent mwStudent) throws Throwable
+	{
+		IPersistentStudent persistentStudent = super.persistentSuport.getIPersistentStudent();
+
 		IStudent student = persistentStudent.readStudentByNumberAndDegreeType(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
-		
-		if (student == null) {
-			System.out.println("Error Reading Fenix Student [" + mwStudent.getNumber() + "]!");
+
+		if (student == null)
+		{
+			System.out.println("[ERROR 02] Reading Fenix Student [" + mwStudent.getNumber() + "]!");
 			return;
 		}
 
-		IDegreeCurricularPlan degreeCurricularPlan = UpdateStudent.getDegreeCurricularPlan(mwStudent, sp);
-		if (degreeCurricularPlan == null) {
-			System.out.println("Error Reading Fenix degreeCurricularPlan for degree [" + mwStudent.getDegreecode() + "] and student [" + mwStudent.getNumber() + "]!");
+		IDegreeCurricularPlan degreeCurricularPlan = this.getDegreeCurricularPlan(mwStudent);
+		if (degreeCurricularPlan == null)
+		{
+			System.out.println(
+				"[ERROR 03] Reading Fenix degreeCurricularPlan for degree ["
+					+ mwStudent.getDegreecode()
+					+ "] and student ["
+					+ mwStudent.getNumber()
+					+ "]!");
 			return;
 		}
-		IBranch branch = UpdateStudent.getBranch(mwStudent, degreeCurricularPlan, sp);
-		if (branch == null) {
-			System.out.println("Error Reading Fenix branch with code [" + mwStudent.getBranchcode() + "] for student [" + mwStudent.getNumber() + "]!");
+		IBranch branch = this.getBranch(mwStudent, degreeCurricularPlan);
+		if (branch == null)
+		{
+			System.out.println(
+				"[ERROR 04] Reading Fenix branch with code ["
+					+ mwStudent.getBranchcode()
+					+ "] for student ["
+					+ mwStudent.getNumber()
+					+ "]!");
 			return;
 		}
-		
-		IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+
+		IStudentCurricularPlan studentCurricularPlan =
+			super.persistentSuport.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
+				student.getNumber(),
+				TipoCurso.LICENCIATURA_OBJ);
 
 		if (studentCurricularPlan == null)
 		{
-			System.out.println("No Active Student Curricular Plan for Student [" + student.getNumber() + "]!");
-			UpdateStudent.createNewStudentCurricularPlan(student, degreeCurricularPlan, branch, sp);
+			System.out.println("[ERROR 05] No Active Student Curricular Plan for Student [" + student.getNumber() + "]!");
+			this.createNewStudentCurricularPlan(student, degreeCurricularPlan, branch);
 		} else
 		{
 			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(degreeCurricularPlan))
 			{
-				if(!studentCurricularPlan.getDegreeCurricularPlan().getName().equals("LEIC 2003") || !degreeCurricularPlan.getName().equals("LEIC - Currículo Antigo"))
+				if (!studentCurricularPlan.getDegreeCurricularPlan().getName().equals("LEIC 2003")
+					|| !degreeCurricularPlan.getName().equals("LEIC - Currículo Antigo"))
 				{
-					System.out.print("The Student [" + mwStudent.getNumber() + "] has changed his degree!");
-					System.out.println(" [" + studentCurricularPlan.getDegreeCurricularPlan().getName() + " -> " + degreeCurricularPlan.getName() + "]");
+					System.out.print("[INFO] The Student [" + mwStudent.getNumber() + "] has changed his degree!");
+					System.out.println(
+						" ["
+							+ studentCurricularPlan.getDegreeCurricularPlan().getName()
+							+ " -> "
+							+ degreeCurricularPlan.getName()
+							+ "]");
 
-					sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);	
+					super.persistentSuport.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
 					studentCurricularPlan.setCurrentState(StudentCurricularPlanState.INCOMPLETE_OBJ);
-					UpdateStudent.createNewStudentCurricularPlan(student, degreeCurricularPlan, branch, sp);
+					this.createNewStudentCurricularPlan(student, degreeCurricularPlan, branch);
 				}
-			} else if (studentCurricularPlan.getBranch() != null && !studentCurricularPlan.getBranch().equals(branch))
+			} else if (!studentCurricularPlan.getBranch().equals(branch))
 			{
-				sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);	
+				super.persistentSuport.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
 				studentCurricularPlan.setBranch(branch);
-			}		
+			}
 		}
 
 		// If the person has one master degree curricular plan associated then we cannot change his information.
 		// This means that the person has a Degree Student and a Master Degree Student
-		// We admit that in this case the Master Degree information is the most recent one and therefore we won't change 
+		// We admit that in this case the Master Degree information is the most recent one and therefore we won't change
 		// his information
 
 		// All the students associated to this person
-//		List studentList = persistentStudent.readbyPerson(student.getPerson());
-//
-//		if (UpdateStudent.hasMasterDegree(studentList, sp))
-//		{
-//			System.out.println("Master Degree Student Found [Person ID " + student.getPerson().getIdInternal() + "]");
-//		} else
-//		{
-//			// Change all the information
-//			UpdateStudent.updateStudentPerson(student.getPerson(), mwStudent.getMiddlewarePerson());
-//		}
+		List studentList = persistentStudent.readbyPerson(student.getPerson());
+
+		if (this.hasMasterDegree(studentList))
+		{
+			System.out.println("[INFO] Master Degree Student Found [Person ID " + student.getPerson().getIdInternal() + "]");
+		} else
+		{
+			// Change all the information
+			this.updateStudentPerson(student.getPerson(), mwStudent.getMiddlewarePerson());
+		}
 	}
-	
+
 	/**
 	 * @param student
 	 * @param degreeCurricularPlan
 	 * @param branch
-	 * @param sp
+	 * @throws Throwable
 	 */
-	private static void createNewStudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, ISuportePersistente sp) throws Throwable
+	private void createNewStudentCurricularPlan(
+		IStudent student,
+		IDegreeCurricularPlan degreeCurricularPlan,
+		IBranch branch)
+		throws Throwable
 	{
 		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
+		super.persistentSuport.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
 		studentCurricularPlan.setBranch(branch);
+		studentCurricularPlan.setSecundaryBranch(null);
 		studentCurricularPlan.setClassification(new Double(0));
 		studentCurricularPlan.setCompletedCourses(new Integer(0));
 		studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
@@ -179,15 +228,15 @@ public class UpdateStudent
 		studentCurricularPlan.setSpecialization(null);
 		studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
 		studentCurricularPlan.setStudent(student);
+		studentCurricularPlan.setEmployee(null);
+		studentCurricularPlan.setObservations(null);
 	}
-
-	
 
 	/**
 	 * @param mwStudent
-	 * @return the New Degree Curricular Plan
+	 * @return IDegreeCurricularPlan
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWStudent mwStudent, ISuportePersistente sp) throws Throwable
+	private IDegreeCurricularPlan getDegreeCurricularPlan(MWStudent mwStudent) throws Throwable
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws.getIPersistentMWDegreeTranslation();
@@ -197,101 +246,82 @@ public class UpdateStudent
 		if (mwDegreeTranslation != null)
 		{
 			String degreeName = mwDegreeTranslation.getDegree().getNome();
-			IExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
-			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYearAndDegreeType(degreeName, executionPeriod.getExecutionYear(), TipoCurso.LICENCIATURA_OBJ);
+			IExecutionPeriod executionPeriod = super.persistentSuport.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+			ICursoExecucao executionDegree =
+				super.persistentSuport.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYearAndDegreeType(
+					degreeName,
+					executionPeriod.getExecutionYear(),
+					TipoCurso.LICENCIATURA_OBJ);
 			return executionDegree.getCurricularPlan();
-		} else {
-			return null;
-		}
-
-//		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-//		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
-//
-//		MWBranch mwBranch = persistentBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), new Integer(0));
-//		
-//		String degreeName = StringUtils.substringAfter(mwBranch.getDescription(), "DE ");
-//		
-//		if (degreeName.indexOf("TAGUS") != -1) {
-//			degreeName = "Engenharia Informática e de Computadores - Taguspark";
-//		}
-//
-//		IExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
-//		ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYearAndDegreeType(degreeName, executionPeriod.getExecutionYear(), TipoCurso.LICENCIATURA_OBJ);
-//
-//		return executionDegree.getCurricularPlan();
-	}
-
-	private static IBranch getBranch(MWStudent mwStudent, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws Throwable
-	{
-//		IBranch branch = null;
-//		
-//		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-//		IPersistentMWBranch persistentMWBranch = mws.getIPersistentMWBranch();
-//		IPersistentBranch persistentBranch = sp.getIPersistentBranch();
-//
-//		MWBranch mwBranch = persistentMWBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), mwStudent.getBranchcode());
-//
-//		if (mwBranch != null) {
-//			String realBranchCode = null;
-//
-//			if (mwBranch.getDescription().startsWith("CURSO DE ")) {
-//				realBranchCode = new String("");
-//			} else {
-//				realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
-//			}
-//
-//			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
-//
-//		} else {
-//			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(mwStudent.getDegreecode(), mwStudent.getBranchcode(), degreeCurricularPlan, persistentBranch);
-//		}
-//
-//		return branch;
-
-		IBranch branch = null;
-		
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
-		
-		sp.clearCache();
-		MWBranch mwbranch = persistentBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), mwStudent.getBranchcode());
-		
-		if (mwbranch == null) {
-			System.out.println("Aluno " + mwStudent.getNumber());
-			System.out.println("Curso " + mwStudent.getDegreecode());
-			System.out.println("Ramo " + mwStudent.getBranchcode());
 		} else
 		{
-			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+			return null;
 		}
-		
-		if (branch == null) {
-			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+	}
+
+	/**
+	 * @param mwStudent
+	 * @param degreeCurricularPlan
+	 * @return IBranch
+	 * @throws Throwable
+	 */
+	private IBranch getBranch(MWStudent mwStudent, IDegreeCurricularPlan degreeCurricularPlan) throws Throwable
+	{
+		IBranch branch = null;
+
+		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
+
+		super.persistentSuport.clearCache();
+		MWBranch mwbranch = persistentBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), mwStudent.getBranchcode());
+
+		if (mwbranch == null)
+		{
+			System.out.println("[ERROR 08] mwBranch não existente!");
+			System.out.println("[ERROR 08] Aluno " + mwStudent.getNumber());
+			System.out.println("[ERROR 08] Curso " + mwStudent.getDegreecode());
+			System.out.println("[ERROR 08] Ramo " + mwStudent.getBranchcode());
+		} else
+		{
+			branch =
+				super.persistentSuport.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(
+					degreeCurricularPlan,
+					mwbranch.getDescription());
 		}
 
-		if (branch == null) {
-			System.out.println("DCP " + degreeCurricularPlan.getName());
-			System.out.println("Ramo Inexistente " + mwbranch);
+		if (branch == null)
+		{
+			branch = super.persistentSuport.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
 		}
-		
+
+		if (branch == null)
+		{
+			System.out.println("[ERROR 09] DCP " + degreeCurricularPlan.getName());
+			System.out.println("[ERROR 09] Ramo Inexistente " + mwbranch);
+		}
+
 		return branch;
 	}
 
-	public static void updateStudentPerson(IPessoa fenixPersonTemp, MWPerson oldPerson) throws Throwable
+	/**
+	 * @param fenixPersonTemp
+	 * @param oldPerson
+	 * @throws Throwable
+	 */
+	public void updateStudentPerson(IPessoa fenixPersonTemp, MWPerson oldPerson) throws Throwable
 	{
-		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-
 		IPessoa personTemp = new Pessoa();
 		personTemp.setIdInternal(fenixPersonTemp.getIdInternal());
 
-		IPessoa fenixPerson = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, true);
+		IPessoa fenixPerson = (IPessoa) super.persistentSuport.getIPessoaPersistente().readByOId(personTemp, true);
 
-		if (fenixPerson == null) {
-			System.out.println("Person not Found !");
+		if (fenixPerson == null)
+		{
+			System.out.println("[ERROR 06] Person not Found !");
 			return;
 		}
 
-		sp.getIPessoaPersistente().simpleLockWrite(fenixPerson);
+		super.persistentSuport.getIPessoaPersistente().simpleLockWrite(fenixPerson);
 		fenixPerson.setCodigoFiscal(oldPerson.getFinancialrepcode());
 		fenixPerson.setCodigoPostal(oldPerson.getZipcode());
 		fenixPerson.setConcelhoMorada(oldPerson.getMunicipalityofaddress());
@@ -312,29 +342,34 @@ public class UpdateStudent
 		fenixPerson.setNomePai(oldPerson.getFathername());
 		fenixPerson.setNumContribuinte(oldPerson.getFiscalcode());
 		fenixPerson.setNumeroDocumentoIdentificacao(oldPerson.getDocumentidnumber());
-		fenixPerson.setPais(UpdateStudent.getCountry(oldPerson.getCountrycode().toString()));
+		fenixPerson.setPais(this.getCountry(oldPerson.getCountrycode().toString()));
 		fenixPerson.setSexo(PersonUtils.getSex(oldPerson.getSex()));
 		fenixPerson.setTelefone(oldPerson.getPhone());
 		fenixPerson.setTipoDocumentoIdentificacao(PersonUtils.getDocumentIdType(oldPerson.getDocumentidtype()));
 	}
 
-	public static ICountry getCountry(String countryCode) throws Throwable
+	/**
+	 * @param countryCode
+	 * @return ICountry
+	 * @throws Throwable
+	 */
+	public ICountry getCountry(String countryCode) throws Throwable
 	{
 		Criteria criteria = new Criteria();
 
-		if (countryCode.equals("01") ||
-				countryCode.equals("02") ||
-				countryCode.equals("03") ||
-				countryCode.equals("04") ||
-				countryCode.equals("05") ||
-				countryCode.equals("06") ||
-				countryCode.equals("1") ||
-				countryCode.equals("2") ||
-				countryCode.equals("3") ||
-				countryCode.equals("4") ||
-				countryCode.equals("5") ||
-				countryCode.equals("6") ||
-				countryCode.equals("0"))
+		if (countryCode.equals("01")
+			|| countryCode.equals("02")
+			|| countryCode.equals("03")
+			|| countryCode.equals("04")
+			|| countryCode.equals("05")
+			|| countryCode.equals("06")
+			|| countryCode.equals("1")
+			|| countryCode.equals("2")
+			|| countryCode.equals("3")
+			|| countryCode.equals("4")
+			|| countryCode.equals("5")
+			|| countryCode.equals("6")
+			|| countryCode.equals("0"))
 		{
 			criteria.addEqualTo("name", "PORTUGAL");
 		} else if (countryCode.equals("10"))
@@ -374,7 +409,7 @@ public class UpdateStudent
 		{
 			criteria.addEqualTo("name", "HOLANDA");
 		} else if (countryCode.equals("25"))
-		{	
+		{
 			criteria.addEqualTo("name", "IRLANDA");
 		} else if (countryCode.equals("26"))
 		{
@@ -475,21 +510,48 @@ public class UpdateStudent
 		Query query = new QueryByCriteria(Country.class, criteria);
 
 		PersistenceBroker broker = null;
-		try {
-			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-			broker = sp.currentBroker();
-		} catch (Exception e) {
-			System.out.println("Failled obtainning broker.");
+		try
+		{
+			broker = ((SuportePersistenteOJB) super.persistentSuport).currentBroker();
+		} catch (Exception e)
+		{
+			System.out.println("[ERROR 07] Failled obtainning broker.");
 		}
-		
+
 		List result = (List) broker.getCollectionByQuery(query);
-		
+
 		if (result.size() == 0)
-		{	
+		{
 			return null;
 		} else
-		{	
+		{
 			return (ICountry) result.get(0);
 		}
 	}
+
+	/**
+	 * @param studentList
+	 * @return boolean 
+	 */
+	private boolean hasMasterDegree(List studentList) throws Throwable
+	{
+		Iterator iterator = studentList.iterator();
+		while(iterator.hasNext())
+		{
+			IStudent student = (IStudent) iterator.next();
+			
+			List studentCurricularPlanList = super.persistentSuport.getIStudentCurricularPlanPersistente().readAllFromStudent(student.getNumber().intValue());
+			Iterator iterator2 = studentCurricularPlanList.iterator();
+			while(iterator2.hasNext())
+			{
+				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator2.next();
+				if (studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }

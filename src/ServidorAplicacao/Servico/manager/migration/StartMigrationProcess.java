@@ -41,7 +41,8 @@ public class StartMigrationProcess implements IService
 
 				String fileName1 = (String) fileNames.get(0);
 				String fileName2 = (String) fileNames.get(1);
-				
+				String fileName3 = (String) fileNames.get(2);
+
 				if (curriculum.equals("past"))
 				{
 					if (areTheesRecordsToBeWriten)
@@ -67,6 +68,10 @@ public class StartMigrationProcess implements IService
 							new DeleteEnrollmentsInCurrentStudentCurricularPlans();
 						instance.run(Boolean.TRUE, fileName2);
 					}
+				} else if (curriculum.equals("students"))
+				{
+					CreateStudents instance = new CreateStudents();
+					instance.run(Boolean.TRUE, fileName3);
 				}
 			} else
 			{
@@ -90,7 +95,8 @@ public class StartMigrationProcess implements IService
 		properties.load(StartMigrationProcess.class.getResourceAsStream("/migrationLog.properties"));
 		String fileNameTemp1 = properties.getProperty("update.past.enrollments.log.file.name");
 		String fileNameTemp2 = properties.getProperty("update.current.enrollments.log.file.name");
-		
+		String fileNameTemp3 = properties.getProperty("update.students.log.file.name");
+
 		Date date = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(date.getTime());
@@ -112,11 +118,13 @@ public class StartMigrationProcess implements IService
 		String concat = "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + action + ".txt";
 		String fileName1 = fileNameTemp1 + concat;
 		String fileName2 = fileNameTemp2 + concat;
-		
+		String fileName3 = fileNameTemp3 + concat;
+
 		List result = new ArrayList();
 		result.add(0, fileName1);
 		result.add(1, fileName2);
-		
+		result.add(1, fileName3);
+
 		return result;
 	}
 
