@@ -17,7 +17,7 @@ import org.apache.struts.util.MessageResources;
 
 import DataBeans.gesdis.InfoSection;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuContentRenderer;
-import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer;
 
 /**
  * @author jmota
@@ -31,7 +31,7 @@ public class RenderSectionMenuTag extends TagSupport {
 	private String path;
 	private String activeSectionName;
 	private String renderer;
-	private SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer =
+	private ISectionMenuSlotContentRenderer sectionMenuSlotContentRenderer =
 		new SectionMenuContentRenderer();
 
 	public int doStartTag() throws JspException {

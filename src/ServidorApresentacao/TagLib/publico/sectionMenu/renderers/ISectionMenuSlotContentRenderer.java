@@ -13,7 +13,7 @@ package ServidorApresentacao.TagLib.publico.sectionMenu.renderers;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface SectionMenuSlotContentRenderer {
+public interface ISectionMenuSlotContentRenderer {
 	public StringBuffer renderSectionLabel(int i,String path);
 	/**
 	 * 

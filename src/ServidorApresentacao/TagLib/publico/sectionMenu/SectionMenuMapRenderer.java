@@ -10,8 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.gesdis.InfoSection;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionChooserRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuContentRenderer;
-import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuTeacherContentRenderer;
 
 /**
@@ -22,7 +23,7 @@ import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuTeac
  */
 public class SectionMenuMapRenderer {
 	private SectionMenuMap sectionMenuMap;
-	private SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer;
+	private ISectionMenuSlotContentRenderer sectionMenuSlotContentRenderer;
 	private String path;
 	private String renderer;
 	/**
@@ -30,7 +31,7 @@ public class SectionMenuMapRenderer {
 	 */
 	public SectionMenuMapRenderer(
 		SectionMenuMap sectionMenuMap,
-		SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer, String path, String renderer) {
+		ISectionMenuSlotContentRenderer sectionMenuSlotContentRenderer, String path, String renderer) {
 		setSectionMenuMap(sectionMenuMap);
 		setSectionMenuSlotContentRenderer(sectionMenuSlotContentRenderer);
 		setPath(path);
@@ -47,7 +48,7 @@ public class SectionMenuMapRenderer {
 	/**
 	 * @return SectionMenuSlotContentRenderer
 	 */
-	public SectionMenuSlotContentRenderer getSectionMenuSlotContentRenderer() {
+	public ISectionMenuSlotContentRenderer getSectionMenuSlotContentRenderer() {
 		return sectionMenuSlotContentRenderer;
 	}
 
@@ -63,7 +64,7 @@ public class SectionMenuMapRenderer {
 	 * Sets the sectionMenuSlotContentRenderer.
 	 * @param sectionMenuSlotContentRenderer The sectionMenuSlotContentRenderer to set
 	 */
-	public void setSectionMenuSlotContentRenderer(SectionMenuSlotContentRenderer sectionMenuSlotContentRenderer) {
+	public void setSectionMenuSlotContentRenderer(ISectionMenuSlotContentRenderer sectionMenuSlotContentRenderer) {
 		this.sectionMenuSlotContentRenderer = sectionMenuSlotContentRenderer;
 	}
 
@@ -78,7 +79,7 @@ public class SectionMenuMapRenderer {
 			
 				InfoSection infoSection = (InfoSection) sections.get(i);
 				
-				SectionMenuSlotContentRenderer sectionMenuSlot = getContentRenderer(infoSection,getRenderer());
+				ISectionMenuSlotContentRenderer sectionMenuSlot = getContentRenderer(infoSection,getRenderer());
 					
 				strBuffer.append(sectionMenuSlot.renderSectionLabel(i,getPath()));
 				strBuffer.append(renderSuffix(sections, i));
@@ -148,11 +149,16 @@ public class SectionMenuMapRenderer {
 		renderer = string;
 	}
 
-	private SectionMenuSlotContentRenderer getContentRenderer(InfoSection infoSection,String renderer) {
-		SectionMenuSlotContentRenderer slotRenderer= new SectionMenuContentRenderer(infoSection); 
+	private ISectionMenuSlotContentRenderer getContentRenderer(InfoSection infoSection,String renderer) {
+		ISectionMenuSlotContentRenderer slotRenderer= new SectionMenuContentRenderer(infoSection); 
 		if (renderer == null) {}//do nothing
 		else {
-			if (renderer.equals("teacher")){ slotRenderer= new SectionMenuTeacherContentRenderer(infoSection);	} 			
+			if (renderer.equals("teacher")){ 
+				slotRenderer= new SectionMenuTeacherContentRenderer(infoSection);	
+			}
+			if (renderer.equals("sectionChooser")){ 
+				slotRenderer= new SectionChooserRenderer(infoSection);	
+			}
 		}
 		return slotRenderer;
 	}

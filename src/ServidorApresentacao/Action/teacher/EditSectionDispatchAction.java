@@ -2,6 +2,8 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +32,31 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
+			HttpSession session = request.getSession();
+
+			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+
+			InfoSection currentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+			List allSections = (List) session.getAttribute(SessionConstants.SECTIONS);
+			
+			session.removeAttribute("ALL_SECTIONS");
+			
+			//remove parent section, current section and all of it's daughters
+			allSections.remove(currentSection.getSuperiorInfoSection());
+			allSections.remove(currentSection);
+			
+			try {
+				allSections = this.removeDaughters(userView, infoSite, currentSection, allSections);
+			} catch (FenixActionException fenixActionException) {
+				throw fenixActionException;
+			}
+
+			//TODO: add to SessionConstants w/different name
+			session.setAttribute("ALL_SECTIONS", allSections);
+
 			return mapping.findForward("editSection");
-		} 
+		}
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
@@ -42,11 +67,13 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
 		HttpSession session = request.getSession();
 
+		String parentName = (String) sectionForm.get("parentSection");
+
+		System.out.println("parentSection: " + parentName);
+
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 		InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-
-		//TODO: change section parent
 
 		InfoSection newSection = new InfoSection(sectionName, order, infoSite, oldSection.getSuperiorInfoSection());
 
@@ -72,5 +99,43 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		session.setAttribute(SessionConstants.SECTIONS, sections);
 			
 		return mapping.findForward("viewSite");
-	} 
+	}
+	
+	private List removeDaughters(UserView userView, InfoSite infoSite, InfoSection infoSection, List allSections)
+		throws FenixActionException{
+
+		List sections = new ArrayList();
+		Object args[] = { infoSite, infoSection };
+		GestorServicos manager = GestorServicos.manager();
+		try {
+			sections = (List) manager.executar(userView, "ReadSectionsBySiteAndSuperiorSection", args);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		allSections.removeAll(sections);
+		
+		Iterator iterator = sections.iterator();
+		while (iterator.hasNext()){
+			InfoSection infoSection2 = (InfoSection) iterator.next();
+			allSections = removeDaughters(userView, infoSite, infoSection2, allSections);
+		}
+		
+		return allSections;
+	}
+
+	public ActionForward changeParent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException {
+
+			HttpSession session = request.getSession();
+
+			DynaActionForm sectionForm = (DynaValidatorForm) form;
+			String sectionName = (String) sectionForm.get("name");
+			Integer index = (Integer) sectionForm.get("index");
+
+			List allSections = (List) session.getAttribute("ALL_SECTIONS");
+
+			System.out.println("index: " + index + " section.getName: " + ((InfoSection)allSections.get(index.intValue())).getName());
+
+			return mapping.findForward("prepareEditSection");
+		}
 }

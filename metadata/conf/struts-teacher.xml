@@ -80,6 +80,18 @@
         <form-property name="page" type="java.lang.Integer" initial="0" />           
 	</form-bean>    			
 
+	<form-bean name="editSectionForm"
+		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+        dynamic="true">
+        <form-property name="name" type="java.lang.String" /> 
+        <form-property name="sectionOrder" type="java.lang.Integer" />    
+        <!-- to remove -->
+        <form-property name="parentSection" type="java.lang.String" />         
+        <form-property name="index" type="java.lang.Integer" />         
+        
+        <form-property name="page" type="java.lang.Integer" initial="0" />           
+	</form-bean>    			
+
 	<form-bean name="itemForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
         dynamic="true">
@@ -283,7 +295,7 @@
 	</action>
 
 	<!-- Edit Section -->
-	<action name="sectionForm"
+	<action name="editSectionForm"
 		input="/editSection.jsp"
 		path="/editSection"
 		parameter="method"
@@ -291,6 +303,7 @@
 		type="ServidorApresentacao.Action.teacher.EditSectionDispatchAction"
         validate="false" >
        <forward name="editSection" path="/editSection.jsp"/>
+       <forward name="prepareEditSection" path="/editSection.do?method=prepareEdit"/>
        <forward name="viewSite" path="/viewSite.do"/>
 	</action>
 	

@@ -16,7 +16,7 @@ import DataBeans.gesdis.InfoSection;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class SectionMenuContentRenderer extends TagSupport
-	implements SectionMenuSlotContentRenderer {
+	implements ISectionMenuSlotContentRenderer {
 	
 	private InfoSection infoSection;
 	
