@@ -10,6 +10,7 @@ package Dominio;
 public class CurricularCourseEquivalenceRestriction extends DomainObject implements ICurricularCourseEquivalenceRestriction {
 	private ICurricularCourseEquivalence curricularCourseEquivalence;
 	private ICurricularCourse equivalentCurricularCourse;
+	private String yearOfEquivalence;
 
 	private Integer curricularCourseEquivalenceKey;
 	private Integer equivalentCurricularCourseKey;
@@ -59,6 +60,14 @@ public class CurricularCourseEquivalenceRestriction extends DomainObject impleme
 
 	public void setEquivalentCurricularCourseKey(Integer integer) {
 		equivalentCurricularCourseKey = integer;
+	}
+
+	public String getYearOfEquivalence() {
+		return yearOfEquivalence;
+	}
+
+	public void setYearOfEquivalence(String string) {
+		yearOfEquivalence = string;
 	}
 
 }

@@ -190,6 +190,7 @@ drop table if exists ENROLMENT_EQUIVALENCE;
 create table ENROLMENT_EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_ENROLMENT int(11) not null,
+   unique U1 (KEY_ENROLMENT),
    primary key (ID_INTERNAL)
 )type=InnoDB;
 
@@ -202,7 +203,7 @@ create table ENROLMENT_EQUIVALENCE_RESTRICTION (
    KEY_ENROLMENT_EQUIVALENCE int(11) not null,
    KEY_EQUIVALENT_ENROLMENT int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_ENROLMENT_EQUIVALENCE, KEY_EQUIVALENT_ENROLMENT)
+   unique U1 (KEY_EQUIVALENT_ENROLMENT)
 )type=InnoDB;
 
 -- ----------------------------
@@ -258,10 +259,10 @@ CREATE TABLE RESTRICTION (
   NUMBER_OF_CURRICULAR_COURSE_DONE int(11),
   primary key (ID_INTERNAL)) TYPE=InnoDB;
 
-#----------------------------
-# Table structure for EXECUTION_PERIOD
-# State : A = Actual; O= Open; NO= Not open; C= Closed
-#----------------------------
+-- ----------------------------
+--  Table structure for EXECUTION_PERIOD
+--  State : A = Actual; O= Open; NO= Not open; C= Closed
+-- ----------------------------
 drop table if exists EXECUTION_PERIOD;
 create table EXECUTION_PERIOD (
    ID_INTERNAL int(11) not null auto_increment,
@@ -274,9 +275,9 @@ create table EXECUTION_PERIOD (
    type=InnoDB comment="InnoDB free: 373760 kB";
    
    
-#----------------------------
-# Table structure for EXECUTION_YEAR
-#----------------------------
+-- ----------------------------
+--  Table structure for EXECUTION_YEAR
+-- ----------------------------
 drop table if exists EXECUTION_YEAR;
 create table EXECUTION_YEAR (
    ID_INTERNAL int(11) not null auto_increment,
@@ -304,8 +305,9 @@ create table CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_CURRICULAR_COURSE_EQUIVALENCE int(11) not null,
    KEY_EQUIVALENT_CURRICULAR_COURSE int(11) not null,
+   YEAR_OF_EQUIVALENCE varchar(9) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_CURRICULAR_COURSE_EQUIVALENCE, KEY_EQUIVALENT_CURRICULAR_COURSE)
+   unique U1 (KEY_CURRICULAR_COURSE_EQUIVALENCE, KEY_EQUIVALENT_CURRICULAR_COURSE, YEAR_OF_EQUIVALENCE)
 )type=InnoDB;
 
 -- ----------------------------

@@ -14,6 +14,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEquivalenceRestriction;
 import Dominio.EnrolmentEvaluation;
+import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Funcionario;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
@@ -37,6 +38,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
+import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
@@ -178,7 +180,11 @@ public class ConfirmEquivalence implements IServico {
 			InfoStudentCurricularPlan infoStudentCurricularPlan = infoEquivalenceContext.getInfoStudentCurricularPlan();
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
-			newEnrolment = new Enrolment();
+			if(curricularCourseScopeToEnrol.getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)){
+				newEnrolment = new EnrolmentInOptionalCurricularCourse();
+			}else{
+				newEnrolment = new Enrolment();	
+			}
 
 			newEnrolment.setCurricularCourseScope(curricularCourseScopeToEnrol);
 			newEnrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);

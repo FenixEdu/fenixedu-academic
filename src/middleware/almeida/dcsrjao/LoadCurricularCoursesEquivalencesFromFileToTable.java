@@ -35,37 +35,37 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 			loader = new LoadCurricularCoursesEquivalencesFromFileToTable();
 		}
 
-//		logString = "";
-//		loader.before1977 = flag;
-//		if (loader.before1977 == true) {
-//			loader.inputFilename = "equivalenciasLEQBefore1997.txt";
-//		} else {
-//			loader.inputFilename = "equivalenciasLEQAfter1997.txt";
-//		}
-//		ISuportePersistente suportePersistente = null;
-//		try {
-//			suportePersistente = SuportePersistenteOJB.getInstance();
-//			suportePersistente.iniciarTransaccao();
-//			IPersistentCurricularCourseEquivalence persistentCurricularCourseEquivalence = suportePersistente.getIPersistentCurricularCourseEquivalence();
-////			IPersistentCurricularCourseEquivalenceRestriction persistentCurricularCourseEquivalenceRestriction =
-////				suportePersistente.getIPersistentCurricularCourseEquivalenceRestriction();
-//			persistentCurricularCourseEquivalence.deleteAll();
-////			persistentCurricularCourseEquivalenceRestriction.deleteAll();
-//			suportePersistente.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia e) {
-//			try {
-//				suportePersistente.cancelarTransaccao();
-//			} catch (ExcepcaoPersistencia e1) {
-//				logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
-//				logString = loader.report(logString);
-//				loader.writeToFile(logString);
-//				return;
-//			}
-//			logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
-//			logString = loader.report(logString);
-//			loader.writeToFile(logString);
-//			return;
-//		}
+		//		logString = "";
+		//		loader.before1977 = flag;
+		//		if (loader.before1977 == true) {
+		//			loader.inputFilename = "equivalenciasLEQBefore1997.txt";
+		//		} else {
+		//			loader.inputFilename = "equivalenciasLEQAfter1997.txt";
+		//		}
+		//		ISuportePersistente suportePersistente = null;
+		//		try {
+		//			suportePersistente = SuportePersistenteOJB.getInstance();
+		//			suportePersistente.iniciarTransaccao();
+		//			IPersistentCurricularCourseEquivalence persistentCurricularCourseEquivalence = suportePersistente.getIPersistentCurricularCourseEquivalence();
+		////			IPersistentCurricularCourseEquivalenceRestriction persistentCurricularCourseEquivalenceRestriction =
+		////				suportePersistente.getIPersistentCurricularCourseEquivalenceRestriction();
+		//			persistentCurricularCourseEquivalence.deleteAll();
+		////			persistentCurricularCourseEquivalenceRestriction.deleteAll();
+		//			suportePersistente.confirmarTransaccao();
+		//		} catch (ExcepcaoPersistencia e) {
+		//			try {
+		//				suportePersistente.cancelarTransaccao();
+		//			} catch (ExcepcaoPersistencia e1) {
+		//				logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
+		//				logString = loader.report(logString);
+		//				loader.writeToFile(logString);
+		//				return;
+		//			}
+		//			logString = "Erro ao apagar as tabelas CurricularCourseEquivalence e CurricularCourseEquivalenceRestriction";
+		//			logString = loader.report(logString);
+		//			loader.writeToFile(logString);
+		//			return;
+		//		}
 
 		loader.persistentObjectOJB = new PersistentObjectOJBReader();
 		loader.setupDAO();
@@ -99,21 +99,36 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 		loader.printLine(getClassName());
 		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
-		String oldCourse1 = stringTokenizer.nextToken();
-		String oldCourse2 = "";
-		if (oldCourse1.startsWith("+")) {
-			oldCourse2 = stringTokenizer.nextToken();
-			oldCourse1 = oldCourse1.substring(1);
-		}
-		String newCourse = stringTokenizer.nextToken();
+		int numberTokens = stringTokenizer.countTokens();
 
-		List oldCurricularCourse1List = persistentObjectOJB.readListOfCurricularCoursesByNameAndDegreCurricularPlan(oldCourse1, this.oldDegreeCurricularPlan);
+		String oldCourseName1ToGiveEquivalence = stringTokenizer.nextToken();
+		String yearOfEquivalence = "";
+		String newCourseNameToGetEquivalence = "";
+		String oldCourseName2ToGiveEquivalence = "";
+
+		if ((numberTokens > 2) && (!oldCourseName1ToGiveEquivalence.startsWith("+"))) {
+			newCourseNameToGetEquivalence = stringTokenizer.nextToken();
+			yearOfEquivalence = stringTokenizer.nextToken();
+		}
+
+		if ((numberTokens > 2) && (oldCourseName1ToGiveEquivalence.startsWith("+"))) {
+			oldCourseName2ToGiveEquivalence = stringTokenizer.nextToken();
+			oldCourseName1ToGiveEquivalence = oldCourseName1ToGiveEquivalence.substring(1);
+			newCourseNameToGetEquivalence = stringTokenizer.nextToken();
+		}
+				
+		if (numberTokens == 2){
+			newCourseNameToGetEquivalence = stringTokenizer.nextToken();
+		}
+		
+		List oldCurricularCourse1List =
+			persistentObjectOJB.readListOfCurricularCoursesByNameAndDegreCurricularPlan(oldCourseName1ToGiveEquivalence, this.oldDegreeCurricularPlan);
 		if (oldCurricularCourse1List == null) {
 			loader.numberUntreatableElements++;
 			logString += "\nERRO: Na linha ["
 				+ (numberLinesProcessed + 1)
 				+ "] o curricular course "
-				+ oldCourse1
+				+ oldCourseName1ToGiveEquivalence
 				+ " do plano "
 				+ this.oldDegreeCurricularPlan.getName()
 				+ " não existe!";
@@ -122,14 +137,15 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 		}
 
 		List oldCurricularCourse2List = null;
-		if (!oldCourse2.equals("")) {
-			oldCurricularCourse2List = persistentObjectOJB.readListOfCurricularCoursesByNameAndDegreCurricularPlan(oldCourse2, this.oldDegreeCurricularPlan);
+		if (!oldCourseName2ToGiveEquivalence.equals("")) {
+			oldCurricularCourse2List =
+				persistentObjectOJB.readListOfCurricularCoursesByNameAndDegreCurricularPlan(oldCourseName2ToGiveEquivalence, this.oldDegreeCurricularPlan);
 			if (oldCurricularCourse2List == null) {
 				loader.numberUntreatableElements++;
 				logString += "\nERRO: Na linha ["
 					+ (numberLinesProcessed + 1)
 					+ "] o curricular course "
-					+ oldCourse2
+					+ oldCourseName2ToGiveEquivalence
 					+ " do plano "
 					+ this.oldDegreeCurricularPlan.getName()
 					+ " não existe!";
@@ -138,13 +154,14 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 			}
 		}
 
-		ICurricularCourse newCurricularCourse = persistentObjectOJB.readCurricularCourseByNameAndDegreeCurricularPlan(newCourse, this.newDegreeCurricularPlan);
+		ICurricularCourse newCurricularCourse =
+			persistentObjectOJB.readCurricularCourseByNameAndDegreeCurricularPlan(newCourseNameToGetEquivalence, this.newDegreeCurricularPlan);
 		if (newCurricularCourse == null) {
 			loader.numberUntreatableElements++;
 			logString += "\nERRO: Na linha ["
 				+ (numberLinesProcessed + 1)
 				+ "] o curricular course "
-				+ newCourse
+				+ newCourseNameToGetEquivalence
 				+ " do plano "
 				+ this.newDegreeCurricularPlan.getName()
 				+ " não existe!";
@@ -162,11 +179,12 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 
 			oldCurricularCourse1 = (ICurricularCourse) iterator1.next();
 			ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition1 =
-				persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse1, curricularCourseEquivalence);
+				persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse1, curricularCourseEquivalence, yearOfEquivalence);
 			if (curricularCourseEquivalenceRestricition1 == null) {
 				curricularCourseEquivalenceRestricition1 = new CurricularCourseEquivalenceRestriction();
 				curricularCourseEquivalenceRestricition1.setCurricularCourseEquivalence(curricularCourseEquivalence);
 				curricularCourseEquivalenceRestricition1.setEquivalentCurricularCourse(oldCurricularCourse1);
+				curricularCourseEquivalenceRestricition1.setYearOfEquivalence(yearOfEquivalence);
 				writeElement(curricularCourseEquivalenceRestricition1);
 				numberElementsWritten--;
 			} else {
@@ -184,11 +202,12 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 				while (iterator2.hasNext()) {
 					oldCurricularCourse2 = (ICurricularCourse) iterator2.next();
 					ICurricularCourseEquivalenceRestriction curricularCourseEquivalenceRestricition2 =
-						persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse2, curricularCourseEquivalence);
+						persistentObjectOJB.readCurricularCourseEquivalenceRestrictionByUnique(oldCurricularCourse2, curricularCourseEquivalence, yearOfEquivalence);
 					if (curricularCourseEquivalenceRestricition2 == null) {
 						curricularCourseEquivalenceRestricition2 = new CurricularCourseEquivalenceRestriction();
 						curricularCourseEquivalenceRestricition2.setCurricularCourseEquivalence(curricularCourseEquivalence);
 						curricularCourseEquivalenceRestricition2.setEquivalentCurricularCourse(oldCurricularCourse2);
+						curricularCourseEquivalenceRestricition2.setYearOfEquivalence(yearOfEquivalence);
 						writeElement(curricularCourseEquivalenceRestricition2);
 						numberElementsWritten--;
 					} else {
@@ -208,6 +227,7 @@ public class LoadCurricularCoursesEquivalencesFromFileToTable extends LoadAlmeid
 						curricularCourseEquivalenceRestricition1 = new CurricularCourseEquivalenceRestriction();
 						curricularCourseEquivalenceRestricition1.setCurricularCourseEquivalence(curricularCourseEquivalence);
 						curricularCourseEquivalenceRestricition1.setEquivalentCurricularCourse(oldCurricularCourse1);
+						curricularCourseEquivalenceRestricition1.setYearOfEquivalence(yearOfEquivalence);
 						writeElement(curricularCourseEquivalenceRestricition1);
 						numberElementsWritten--;
 					}

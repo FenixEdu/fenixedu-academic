@@ -15,6 +15,10 @@ public interface ICurricularCourseEquivalenceRestriction extends IDomainObject{
 
 	public abstract ICurricularCourseEquivalence getCurricularCourseEquivalence();
 	public abstract ICurricularCourse getEquivalentCurricularCourse();
+	public String getYearOfEquivalence();
+	
 	public abstract void setCurricularCourseEquivalence(ICurricularCourseEquivalence equivalence);
 	public abstract void setEquivalentCurricularCourse(ICurricularCourse course);
+	public void setYearOfEquivalence(String string);
+
 }

@@ -1069,6 +1069,11 @@
 		column="KEY_EQUIVALENT_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="yearOfEquivalence"
+		column="YEAR_OF_EQUIVALENCE"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 		name="equivalentCurricularCourse"
 		class-ref="Dominio.CurricularCourse"

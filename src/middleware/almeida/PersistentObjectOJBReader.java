@@ -24,6 +24,7 @@ import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
+import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEquivalenceRestriction;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
@@ -698,10 +699,13 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public ICurricularCourseEquivalenceRestriction readCurricularCourseEquivalenceRestrictionByUnique(
 		ICurricularCourse equivalentCurricularCourse,
-		ICurricularCourseEquivalence curricularCourseEquivalence) {
+		ICurricularCourseEquivalence curricularCourseEquivalence,
+		String yearOfEquivalence) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("equivalentCurricularCourse.idInternal", equivalentCurricularCourse.getIdInternal());
 		criteria.addEqualTo("curricularCourseEquivalence.idInternal", curricularCourseEquivalence.getIdInternal());
+		criteria.addEqualTo("yearOfEquivalence", yearOfEquivalence);
+		
 		List result = query(CurricularCourseEquivalenceRestriction.class, criteria);
 		if (result.size() == 1) {
 			return (ICurricularCourseEquivalenceRestriction) result.get(0);
@@ -1000,10 +1004,34 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
-	public List readEnrolmentsByCurricularCourseAndStudentCurricularPlan(ICurricularCourse equivalentCurricularCourse, IStudentCurricularPlan newStudentCurricularPlan) {
+	public List readEnrolmentsByCurricularCourseAndStudentCurricularPlan(ICurricularCourse curricularCourse, IStudentCurricularPlan studentCurricularPlan) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("curricularCourseScope.curricularCourse.idInternal", equivalentCurricularCourse.getIdInternal());
-		criteria.addEqualTo("studentCurricularPlanKey", newStudentCurricularPlan.getIdInternal());
+		criteria.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
+		criteria.addEqualTo("studentCurricularPlanKey", studentCurricularPlan.getIdInternal());
+		List result = query(Enrolment.class, criteria);
+		if (result.size() < 0) {
+			return null;
+		}
+		return result;
+	}
+
+	public IEnrolmentEquivalence readEnrolmentEquivalenceByUnique(IEnrolment newEnrolment) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("enrolmentKey", newEnrolment.getIdInternal());
+		List result = query(EnrolmentEquivalence.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolmentEquivalence) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readEnrolmentEquivalenceByUnique mais que um");
+		}
+		return null;
+	}
+
+	public List readEnrolmentsByCurricularCourseAndStudentCurricularPlanAndAcademicYear(ICurricularCourse curricularCourse, IStudentCurricularPlan studentCurricularPlan, String year) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
+		criteria.addEqualTo("studentCurricularPlanKey", studentCurricularPlan.getIdInternal());
+		criteria.addEqualTo("executionPeriod.executionYear.year", year);
 		List result = query(Enrolment.class, criteria);
 		if (result.size() < 0) {
 			return null;

@@ -14,6 +14,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEquivalenceRestriction;
 import Dominio.EnrolmentEvaluation;
+import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IBranch;
@@ -31,6 +32,7 @@ import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
+import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
@@ -50,6 +52,20 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 	private static HashMap error = new HashMap();
 	private static String errorMessage = "";
 	private static String errorDBID = "";
+
+	private int numOfStudentsTotal = 0;
+	private int numOfStudentsBefore1997 = 0;
+	private int numOfStudentsAfter1997 = 0;
+	private int numOfAllAprovedEnrolmentsAfter1997WithEquivalence = 0;
+	private int numOfAllAprovedEnrolmentsAfter1997WithNoEquivalence = 0;
+	private int numOfAllAprovedEnrolmentsAfter1997 = 0;
+	private int numOfAllAprovedEnrolmentsAfter1997ForActualStudent = 0;
+	private int numOfAllAprovedEnrolmentsAfter1997WithEquivalenceForStudentBeingIterated = 0;
+	private int numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated = 0;
+	private Integer numberOfStudentBeingIterated = null;
+	private List studentsNumbersAfter1997WithNotAllEquivalences = new ArrayList();
+	private List studentsNumbersAfter1997WithAllEquivalences = new ArrayList();
+
 	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
 	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
 	private boolean before1977 = true;
@@ -61,7 +77,7 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 	}
 
 	public static void main(String[] args) {
- 
+
 		if (loader == null) {
 			loader = new CreateEnrolmentEquivalences(1);
 		}
@@ -108,14 +124,18 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 		loader.setupDAO();
 		List oldStudentCurricularPlanList = null;
 		oldStudentCurricularPlanList = loader.persistentObjectOJB.readAllStudentCurricularPlansFromDegreeCurricularPlan(loader.oldDegreeCurricularPlan);
+		loader.numOfStudentsTotal = oldStudentCurricularPlanList.size();
 		loader.shutdownDAO();
 
 		IStudentCurricularPlan oldStudentCurricularPlan = null;
 		Iterator iterator = oldStudentCurricularPlanList.iterator();
+		//		for (int i = 0; i < 50; i++) {
 		while (iterator.hasNext()) {
 			oldStudentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+//			oldStudentCurricularPlan = (IStudentCurricularPlan) oldStudentCurricularPlanList.get(i);
 			loader.printIteration(loader.getClassName(), oldStudentCurricularPlan.getIdInternal().longValue());
 			loader.setupDAO();
+			loader.numberOfStudentBeingIterated = oldStudentCurricularPlan.getStudent().getNumber();
 			loader.processOldStudentCurricularPlanIteration(oldStudentCurricularPlan);
 			loader.shutdownDAO();
 		}
@@ -134,16 +154,50 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 		//			loader.shutdownDAO();
 		//		}
 
+		logString += loader.processStatistics();
 		logString += error.toString();
 		loader.migrationEnd(loader.getClassName(), logString);
 	}
 
+	private String processStatistics() {
+		String statistics = "";
+
+		statistics += "\n----------------------------------------------------------------------------------------";
+		statistics += "\n      Numero Total de estudantes: " + this.numOfStudentsTotal;
+		statistics += "\n      Numero de estudantes antes de 1997: " + this.numOfStudentsBefore1997;
+		statistics += "\n      Numero de estudantes depois de 1997: " + this.numOfStudentsAfter1997;
+		statistics += "\n      Numero de inscrições aprovadas depois 1997: " + this.numOfAllAprovedEnrolmentsAfter1997;
+		statistics += "\n      Numero de inscrições aprovadas depois 1997 com equivalencia dada: " + this.numOfAllAprovedEnrolmentsAfter1997WithEquivalence;
+		statistics += "\n      Numero de inscrições aprovadas depois 1997 sem equivalencia dada: " + this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalence;
+		statistics += "\n      Numero de estudantes depois 1997 com todas as equivalencia dadas: " + this.studentsNumbersAfter1997WithAllEquivalences.size();
+		statistics += "\n      \t numeros: " + this.studentsNumbersAfter1997WithAllEquivalences.toString();
+		statistics += "\n																						 ";
+		statistics += "\n      Numero de estudantes depois 1997 sem todas as equivalencia dadas: " + this.studentsNumbersAfter1997WithNotAllEquivalences.size();
+		statistics += "\n      \t numeros: " + this.studentsNumbersAfter1997WithNotAllEquivalences.toString();
+		statistics += "\n----------------------------------------------------------------------------------------";
+
+		return statistics;
+	}
+
 	private void processOldStudentCurricularPlanIteration(IStudentCurricularPlan oldStudentCurricularPlan) {
 		Integer firstEnrolmentYear = persistentObjectOJB.readFirstEnrolmentYearOfStudentCurricularPlan(oldStudentCurricularPlan);
+		
+		if(oldStudentCurricularPlan.getIdInternal().intValue() == 1628){
+			System.out.print("w");
+		}
+		
 		IStudentCurricularPlan newStudentCurricularPlan = null;
-		if (firstEnrolmentYear.intValue() >= 1997) {
-			newStudentCurricularPlan = processNewStudentCurricularPlan(oldStudentCurricularPlan.getStudent());
+		if(firstEnrolmentYear.intValue() < 1997){
+			this.numOfStudentsBefore1997++;
+		}else {
+			this.numOfAllAprovedEnrolmentsAfter1997ForActualStudent = 0;
+			this.numOfAllAprovedEnrolmentsAfter1997WithEquivalenceForStudentBeingIterated = 0;
+			this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated = 0;
+			this.numOfStudentsAfter1997++;
+			this.numOfAllAprovedEnrolmentsAfter1997ForActualStudent = processNumOfAprovedEnrolmentsForActualStudent(oldStudentCurricularPlan);
+			this.numOfAllAprovedEnrolmentsAfter1997 += this.numOfAllAprovedEnrolmentsAfter1997ForActualStudent;
 
+			newStudentCurricularPlan = processNewStudentCurricularPlan(oldStudentCurricularPlan.getStudent());
 			Iterator curricularCourseEquivalencesIterator = this.curricularCourseEquivalencesList.iterator();
 			ICurricularCourseEquivalence curricularCourseEquivalence = null;
 			while (curricularCourseEquivalencesIterator.hasNext()) {
@@ -159,9 +213,16 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 						(ICurricularCourseEquivalenceRestriction) courseEquivalenceRestrictionsIterator.next();
 
 					ICurricularCourse equivalentCurricularCourse = curricularCourseEquivalenceRestriction.getEquivalentCurricularCourse();
-					List enrolmentsInEquivalentCourse =
-						persistentObjectOJB.readEnrolmentsByCurricularCourseAndStudentCurricularPlan(equivalentCurricularCourse, newStudentCurricularPlan);
-					if (enrolmentsInEquivalentCourse != null) {
+					
+					List enrolmentsInEquivalentCourse = null;
+					
+					if(curricularCourseEquivalenceRestriction.getYearOfEquivalence().equals("")){
+						enrolmentsInEquivalentCourse = persistentObjectOJB.readEnrolmentsByCurricularCourseAndStudentCurricularPlan(equivalentCurricularCourse, oldStudentCurricularPlan);
+					}else{
+						enrolmentsInEquivalentCourse = persistentObjectOJB.readEnrolmentsByCurricularCourseAndStudentCurricularPlanAndAcademicYear(equivalentCurricularCourse, oldStudentCurricularPlan, curricularCourseEquivalenceRestriction.getYearOfEquivalence());
+					}
+											
+					if ((enrolmentsInEquivalentCourse != null) && (!enrolmentsInEquivalentCourse.isEmpty())) {
 						enrolmentsInRestrictions.addAll(enrolmentsInEquivalentCourse);
 					}
 				}
@@ -179,24 +240,49 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 						return;
 					}
 
-					IEnrolmentEvaluation enrolmentEvaluation =
-						processEnrolmentEvaluation(newEnrolment, aprovedEnrolmentsInRestrictions);
+					IEnrolmentEvaluation enrolmentEvaluation = processEnrolmentEvaluation(newEnrolment, aprovedEnrolmentsInRestrictions);
 					if (enrolmentEvaluation == null) {
 						return;
 					}
 
-					IEnrolmentEquivalence enrolmentEquivalence =
-						processEnrolmentEquivalence(newEnrolment, aprovedEnrolmentsInRestrictions);
+					IEnrolmentEquivalence enrolmentEquivalence = processEnrolmentEquivalence(newEnrolment, aprovedEnrolmentsInRestrictions);
 					if (enrolmentEquivalence == null) {
 						return;
 					}
 				}
 			}
+
+			processStudentEquivalenceState();
 		}
 	}
-	private IEnrolmentEvaluation processEnrolmentEvaluation(
-		IEnrolment newEnrolment,
-		List aprovedEnrolmentsInRestrictions) {
+	private void processStudentEquivalenceState() {
+		this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated =
+			this.numOfAllAprovedEnrolmentsAfter1997ForActualStudent
+				- this.numOfAllAprovedEnrolmentsAfter1997WithEquivalenceForStudentBeingIterated
+				+ this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated;
+
+		this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalence += this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated;
+		this.numOfAllAprovedEnrolmentsAfter1997WithEquivalence += this.numOfAllAprovedEnrolmentsAfter1997WithEquivalenceForStudentBeingIterated;
+
+		if (this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated > 0) {
+			this.studentsNumbersAfter1997WithNotAllEquivalences.add(this.numberOfStudentBeingIterated);
+		} else {
+			this.studentsNumbersAfter1997WithAllEquivalences.add(this.numberOfStudentBeingIterated);
+		}
+	}
+
+	private int processNumOfAprovedEnrolmentsForActualStudent(IStudentCurricularPlan oldStudentCurricularPlan) {
+
+		final List aprovedEnrolments = (List) CollectionUtils.select(oldStudentCurricularPlan.getEnrolments(), new Predicate() {
+			public boolean evaluate(Object obj) {
+				IEnrolment enrolment = (IEnrolment) obj;
+				return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
+			}
+		});
+		return aprovedEnrolments.size();
+	}
+
+	private IEnrolmentEvaluation processEnrolmentEvaluation(IEnrolment newEnrolment, List aprovedEnrolmentsInRestrictions) {
 		int actualGrade = 0;
 		int maxGrade = 0;
 		List grades = new ArrayList();
@@ -275,118 +361,142 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 					+ "!";
 			errorDBID = "";
 			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated++;
 			numberUntreatableElements++;
 			return null;
 		}
 
 		IEnrolment newEnrolment = persistentObjectOJB.readEnrolmentByUnique(newStudentCurricularPlan, curricularCourseScope, executionPeriod);
 		if (newEnrolment == null) {
-			newEnrolment = new Enrolment();
+			
+			if(curricularCourseToEnrol.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)){
+				newEnrolment = new EnrolmentInOptionalCurricularCourse();
+			}else{
+				newEnrolment = new Enrolment();	
+			}
+			
 			newEnrolment.setCurricularCourseScope(curricularCourseScope);
 			newEnrolment.setExecutionPeriod(executionPeriod);
 			newEnrolment.setStudentCurricularPlan(newStudentCurricularPlan);
 			newEnrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
 			newEnrolment.setEnrolmentState(EnrolmentState.APROVED);
 			writeElement(newEnrolment);
+		} else {
+			errorMessage =
+				"\n O aluno "
+					+ newStudentCurricularPlan.getStudent().getNumber().intValue()
+					+ " já tem uma inscrição por equivalência para a cadeira = "
+					+ curricularCourseScope.getCurricularCourse().getName()
+					+ "!";
+			errorDBID = "";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			this.numOfAllAprovedEnrolmentsAfter1997WithNoEquivalenceForStudentBeingIterated++;
+			numberUntreatableElements++;
+			return null;
 		}
-		// O else não é erro porque existem várias equivalencias para a mesma disciplina, por isso, se o aluno tiver feito
-		// uma equivalencia é criado um enrolment, na iteracao seguinte, já existe um enrolment para outra equivalencia
 
+		this.numOfAllAprovedEnrolmentsAfter1997WithEquivalenceForStudentBeingIterated++;
 		return newEnrolment;
 	}
 
 	private IEnrolmentEquivalence processEnrolmentEquivalence(IEnrolment newEnrolment, List aprovedEnrolmentsInRestrictions) {
-		//		IEnrolmentEquivalence enrolmentEquivalence = persistentObjectOJB.readEnrolmentEquivalenceByUnique(newEnrolment);
-		//		if (enrolmentEquivalence == null) {
+		IEnrolmentEquivalence enrolmentEquivalence = persistentObjectOJB.readEnrolmentEquivalenceByUnique(newEnrolment);
 
-		IEnrolmentEquivalence enrolmentEquivalence = new EnrolmentEquivalence();
-		enrolmentEquivalence.setEnrolment(newEnrolment);
-		writeElement(enrolmentEquivalence);
+		if (enrolmentEquivalence == null) {
+			enrolmentEquivalence = new EnrolmentEquivalence();
+			enrolmentEquivalence.setEnrolment(newEnrolment);
+			writeElement(enrolmentEquivalence);
 
-		Iterator iterator = aprovedEnrolmentsInRestrictions.iterator();
-		while (iterator.hasNext()) {
-			IEnrolment oldEnrolment = (IEnrolment) iterator.next();
-			IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction =
-				persistentObjectOJB.readEnrolmentEquivalenceRestrictionByUnique(oldEnrolment, enrolmentEquivalence);
-			if (enrolmentEquivalenceRestriction == null) {
-				enrolmentEquivalenceRestriction = new EnrolmentEquivalenceRestriction();
-				enrolmentEquivalenceRestriction.setEnrolmentEquivalence(enrolmentEquivalence);
-				enrolmentEquivalenceRestriction.setEquivalentEnrolment(oldEnrolment);
-				writeElement(enrolmentEquivalenceRestriction);
-				numberElementsWritten--;
-			} else {
-				errorMessage =
-					"\n já existe uma restricão entre o enrolment novo = "
-						+ newEnrolment.getIdInternal()
-						+ " e o enrolment antigo = "
-						+ oldEnrolment.getIdInternal()
-						+ "!";
-				errorDBID = "";
-				error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			Iterator iterator = aprovedEnrolmentsInRestrictions.iterator();
+			while (iterator.hasNext()) {
+				IEnrolment oldEnrolment = (IEnrolment) iterator.next();
+				IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction =
+					persistentObjectOJB.readEnrolmentEquivalenceRestrictionByUnique(oldEnrolment, enrolmentEquivalence);
+				if (enrolmentEquivalenceRestriction == null) {
+					enrolmentEquivalenceRestriction = new EnrolmentEquivalenceRestriction();
+					enrolmentEquivalenceRestriction.setEnrolmentEquivalence(enrolmentEquivalence);
+					enrolmentEquivalenceRestriction.setEquivalentEnrolment(oldEnrolment);
+					writeElement(enrolmentEquivalenceRestriction);
+					numberElementsWritten--;
+				} else {
+					errorMessage =
+						"\n já existe uma restricão entre o enrolment novo = "
+							+ newEnrolment.getIdInternal()
+							+ " e o enrolment antigo = "
+							+ oldEnrolment.getIdInternal()
+							+ "!";
+					errorDBID = "";
+					error = loader.setErrorMessage(errorMessage, errorDBID, error);
+				}
 			}
+		} else {
+			errorMessage = "\n já existe uma equivalência para o enrolment" + newEnrolment.getIdInternal() + "!";
+			errorDBID = "";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
 		}
 		return enrolmentEquivalence;
 	}
 
-//	private IEnrolmentEvaluation processEnrolmentEvaluation(
-//		ICurricularCourseEquivalence curricularCourseEquivalence,
-//		IEnrolment newEnrolment,
-//		List enrolmentsFromSameStudentCurricularPlanAsFirstEnrolment) {
-//		int actualGrade = 0;
-//		int maxGrade = 0;
-//		List grades = new ArrayList();
-//
-//		Iterator enrolmentsIterator = enrolmentsFromSameStudentCurricularPlanAsFirstEnrolment.iterator();
-//		while (enrolmentsIterator.hasNext()) {
-//			IEnrolment oldEnrolment = (IEnrolment) enrolmentsIterator.next();
-//			List oldEvaluations = oldEnrolment.getEvaluations();
-//
-//			Iterator evaluationsIterator = oldEvaluations.iterator();
-//			while (evaluationsIterator.hasNext()) {
-//				IEnrolmentEvaluation oldEnrolmentEvaluation = (IEnrolmentEvaluation) evaluationsIterator.next();
-//				try {
-//					if (!oldEnrolmentEvaluation.getGrade().equals("RE")) {
-//						actualGrade = new Integer(oldEnrolmentEvaluation.getGrade()).intValue();
-//					}
-//
-//				} catch (NumberFormatException e) {
-//					errorMessage = "\n Nota " + oldEnrolmentEvaluation.getGrade() + " inválida! Registos: ";
-//					errorDBID = curricularCourseEquivalence.getIdInternal() + ",";
-//					error = loader.setErrorMessage(errorMessage, errorDBID, error);
-//					numberUntreatableElements++;
-//					return null;
-//				}
-//
-//				if (actualGrade > maxGrade) {
-//					maxGrade = actualGrade;
-//				}
-//			}
-//			grades.add(new Integer(maxGrade));
-//		}
-//
-//		IEnrolmentEvaluation equivalentEnrolmentEvaluation = new EnrolmentEvaluation();
-//
-//		Iterator gradeIterator = grades.iterator();
-//		int somaNotas = 0;
-//		int numeroNotas = 0;
-//		int notaFinal = 0;
-//		while (gradeIterator.hasNext()) {
-//			somaNotas = somaNotas + ((Integer) gradeIterator.next()).intValue();
-//			numeroNotas++;
-//		}
-//
-//		notaFinal = somaNotas / numeroNotas;
-//		// NOTE DAVID-RICARDO: Qual a nota quando à mais que um enrolment para equivalencia?
-//		equivalentEnrolmentEvaluation.setGrade("" + notaFinal);
-//		// NOTE DAVID-RICARDO: Quais são os restantes campos quando à mais que um enrolment para equivalencia?
-//		equivalentEnrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
-//		equivalentEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-//		equivalentEnrolmentEvaluation.setEnrolment(newEnrolment);
-//		// TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
-//		equivalentEnrolmentEvaluation.setCheckSum(null);
-//
-//		return equivalentEnrolmentEvaluation;
-//	}
+	//	private IEnrolmentEvaluation processEnrolmentEvaluation(
+	//		ICurricularCourseEquivalence curricularCourseEquivalence,
+	//		IEnrolment newEnrolment,
+	//		List enrolmentsFromSameStudentCurricularPlanAsFirstEnrolment) {
+	//		int actualGrade = 0;
+	//		int maxGrade = 0;
+	//		List grades = new ArrayList();
+	//
+	//		Iterator enrolmentsIterator = enrolmentsFromSameStudentCurricularPlanAsFirstEnrolment.iterator();
+	//		while (enrolmentsIterator.hasNext()) {
+	//			IEnrolment oldEnrolment = (IEnrolment) enrolmentsIterator.next();
+	//			List oldEvaluations = oldEnrolment.getEvaluations();
+	//
+	//			Iterator evaluationsIterator = oldEvaluations.iterator();
+	//			while (evaluationsIterator.hasNext()) {
+	//				IEnrolmentEvaluation oldEnrolmentEvaluation = (IEnrolmentEvaluation) evaluationsIterator.next();
+	//				try {
+	//					if (!oldEnrolmentEvaluation.getGrade().equals("RE")) {
+	//						actualGrade = new Integer(oldEnrolmentEvaluation.getGrade()).intValue();
+	//					}
+	//
+	//				} catch (NumberFormatException e) {
+	//					errorMessage = "\n Nota " + oldEnrolmentEvaluation.getGrade() + " inválida! Registos: ";
+	//					errorDBID = curricularCourseEquivalence.getIdInternal() + ",";
+	//					error = loader.setErrorMessage(errorMessage, errorDBID, error);
+	//					numberUntreatableElements++;
+	//					return null;
+	//				}
+	//
+	//				if (actualGrade > maxGrade) {
+	//					maxGrade = actualGrade;
+	//				}
+	//			}
+	//			grades.add(new Integer(maxGrade));
+	//		}
+	//
+	//		IEnrolmentEvaluation equivalentEnrolmentEvaluation = new EnrolmentEvaluation();
+	//
+	//		Iterator gradeIterator = grades.iterator();
+	//		int somaNotas = 0;
+	//		int numeroNotas = 0;
+	//		int notaFinal = 0;
+	//		while (gradeIterator.hasNext()) {
+	//			somaNotas = somaNotas + ((Integer) gradeIterator.next()).intValue();
+	//			numeroNotas++;
+	//		}
+	//
+	//		notaFinal = somaNotas / numeroNotas;
+	//		// NOTE DAVID-RICARDO: Qual a nota quando à mais que um enrolment para equivalencia?
+	//		equivalentEnrolmentEvaluation.setGrade("" + notaFinal);
+	//		// NOTE DAVID-RICARDO: Quais são os restantes campos quando à mais que um enrolment para equivalencia?
+	//		equivalentEnrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
+	//		equivalentEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+	//		equivalentEnrolmentEvaluation.setEnrolment(newEnrolment);
+	//		// TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
+	//		equivalentEnrolmentEvaluation.setCheckSum(null);
+	//
+	//		return equivalentEnrolmentEvaluation;
+	//	}
 
 	private IExecutionPeriod processExecutionPeriod(long yearLong, long semesterLong) {
 
