@@ -306,6 +306,12 @@
         <arg0 key="errors.missing.username" resource="true" />
       </field>
     </form>
+    
+    <form name="executionDegreeForm">
+      <field property="coordinatorNumber" depends="required, integer" page="1" >
+        <arg0 key="label.manager.executionDegree.coordinator" resource="true"/>
+      </field>
+    </form>
 
     </formset>
 </form-validation>
