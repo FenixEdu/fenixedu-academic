@@ -5,12 +5,13 @@
 <table border="0" style="text-align: left;">
 
     <html:form action="/bibliographicReferenceManager">
+    	<html:hidden property="page" value="0"/>
         <tbody>
             <tr>
-                <td>                                                                    
-                    <html:submit property="method">
-                    	<bean:message key="button.insert"/>                    		
-                    </html:submit>					
+                <td>
+                	<html:submit property="method">			
+                       <bean:message key="button.insert"/>                    		     
+                    </html:submit>                               	                                           				
                 </td>
             </tr>
             <tr>
@@ -54,10 +55,11 @@
                             </html:link>                               	       
                   			<html:link page="/bibliographicReferenceManager.do?method=Apagar" indexId="index" indexed="true">			
                                   <bean:message key="button.delete"/>                    		     
-                            </html:link>                               	                              </td>
+                            </html:link>                               	                       
+                        </td>
                     </tr>
                 </logic:notEqual>
-                               <% index++; %>	
+               <% index++; %>	
             </logic:iterate>
             
             

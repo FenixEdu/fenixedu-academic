@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <html:form action="/bibliographicReferenceManager">
+   	<html:hidden property="page" value="1"/>
     <fieldset style="width: 500; height: 315; padding: 2">
     <legend>
     	<b><u>
@@ -11,19 +12,27 @@
     	</u></b>
     </legend>
     
-    <p><bean:message key="message.bibliographicReferenceTitle"/>
-	<b><html:errors property="title"/></b></p>
+    <bean:message key="message.bibliographicReferenceTitle"/>
+	<b><html:errors property="title"/></b>
     <p><html:textarea rows="4" cols="56" property="title"/></p>
-    <p><bean:message key="message.bibliographicReferenceAuthors"/></p>
+    
+    <bean:message key="message.bibliographicReferenceAuthors"/>
+   	<b><html:errors property="authors"/></b>
     <p><html:textarea rows="4" cols="56" property="authors"/></p>
-    <p><bean:message key="message.bibliographicReferenceReference"/></p>
+
+    <bean:message key="message.bibliographicReferenceReference"/>
+	<b><html:errors property="reference"/></b>
     <p><html:textarea rows="2" cols="56" property="reference"/></p>
-    <p><bean:message key="message.bibliographicReferenceYear"/>
-    <b><html:errors property="year"/></b></p>
+
+    <bean:message key="message.bibliographicReferenceYear"/>
+    <b><html:errors property="year"/></b>
     <p><html:text property="year"/></p>
-    <p><bean:message key="message.bibliographicReferenceOptional"/><b></p>
+    
+    <bean:message key="message.bibliographicReferenceOptional"/>
     <p><html:checkbox property="optional" value="yes"/></p>
-    <p><center>
+    <p>
+    
+    <center>
     
     <logic:equal name="edit" scope="session" value="Inserir">
    	 	<html:submit property="method">

@@ -74,25 +74,25 @@
         <arg0 key="Informacao" resource="false"/>
       </field>
     </form>
-    
-    <!-- Validacao para o formulario de inserir referencia bibliografica -->
-    <form name="docente.inserirReferenciaBibliograficaForm">
-      <field property="titulo" depends="required">
-        <arg0 key="Titulo" resource="false"/>
+      
+	<!-- Validacao para o formulario de bibliografia -->
+    <form name="bibliographicReferenceForm">
+      <field property="title" depends="required" page="1">
+        <arg0 key="message.bibliographicReferenceTitle" resource="true"/>
       </field>
-      <field property="ano" depends="required, integer">
-        <arg0 key="Ano" resource="false"/>
+
+      <field property="authors" depends="required" page="1">
+        <arg0 key="message.bibliographicReferenceAuthors" resource="true"/>
+      </field>
+
+      <field property="reference" depends="required" page="1">
+        <arg0 key="message.bibliographicReferenceReference" resource="true"/>
+      </field>
+
+      <field property="year" depends="required" page="1">
+        <arg0 key="message.bibliographicReferenceYear" resource="true"/>
       </field>
     </form>
-    
-    <form name="docente.editarReferenciaBibliograficaForm">
-      <field property="titulo" depends="required">
-        <arg0 key="Titulo" resource="false"/>
-      </field>
-      <field property="ano" depends="required, integer">
-        <arg0 key="Ano" resource="false"/>
-      </field>
-    </form>
-    
+	    
   </formset>
 </form-validation>

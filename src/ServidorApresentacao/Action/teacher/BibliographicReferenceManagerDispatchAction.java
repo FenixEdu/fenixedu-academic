@@ -7,7 +7,6 @@
 package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +51,9 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpSession session = request.getSession(false);
 
 		DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
+		
+		System.out.println("page depois de insert: "+insertBibliographicReferenceForm.get("page"));
+		
 		String title = (String) insertBibliographicReferenceForm.get("title");
 		String authors =
 			(String) insertBibliographicReferenceForm.get("authors");
@@ -111,6 +113,8 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpSession session = request.getSession(false);
 
 		DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;
+		
+		System.out.println("page depois de edit: "+editBibliographicReferenceForm.get("page"));
 
 		String title = (String) editBibliographicReferenceForm.get("title");
 		String authors = (String) editBibliographicReferenceForm.get("authors");
@@ -238,6 +242,10 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
+		
+		DynaActionForm bibRefForm= (DynaActionForm) form;
+		System.out.println("page: "+bibRefForm.get("page"));
+
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
@@ -273,8 +281,9 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		DynaValidatorForm bibRefForm = (DynaValidatorForm) form;
-
+		DynaValidatorForm referenceForm = (DynaValidatorForm) form;
+				
+		
 		String method = request.getParameter("method");
 		String index = request.getParameter("index");
 
@@ -283,7 +292,7 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpSession session = request.getSession();
 
 		ArrayList referenceList = null;
-		if (method.equals("Editar")) {
+		if (index != null) {
 			Integer indexInt = new Integer(index);
 			referenceList =
 				(ArrayList) session.getAttribute(
@@ -296,20 +305,21 @@ public class BibliographicReferenceManagerDispatchAction
 			session.setAttribute(
 				SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE,
 				infoBibRef);
-
-			DynaValidatorForm referenceForm = (DynaValidatorForm) form;
+							
 			referenceForm.set("title", infoBibRef.getTitle());
 			referenceForm.set("authors", infoBibRef.getAuthors());
 			referenceForm.set("reference", infoBibRef.getReference());
-			referenceForm.set("year", infoBibRef.getYear());
+			referenceForm.set("year", infoBibRef.getYear());						
+			
 			if (infoBibRef.getOptional().equals(new Boolean(true)))
 				referenceForm.set("optional", "1");
 			else
 				referenceForm.set("optional", "0");
-		} else
-			session.removeAttribute("bibliographicReferenceForm");
+		} else {			
+			session.removeAttribute("bibliographicReferenceForm");		
+		}
 		session.setAttribute("edit", method);
-
+		//referenceForm.set("page",new Integer(1));
 		return mapping.findForward("editBibliographicReference");
 	}
 
@@ -317,8 +327,6 @@ public class BibliographicReferenceManagerDispatchAction
 	 * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
 	 */
 	protected Map getKeyMethodMap() {
-
-		System.out.println("fez get");
 		Map map = new HashMap();
 		map.put("button.insert", "prepareEditBibliographicReference");
 		map.put("button.confirmInsert", "createBibliographicReference");
