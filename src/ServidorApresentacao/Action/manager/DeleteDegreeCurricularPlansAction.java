@@ -55,7 +55,7 @@ public class DeleteDegreeCurricularPlansAction extends FenixAction
                 (List) ServiceUtils.executeService(userView, "DeleteDegreeCurricularPlans", args);
         } catch (FenixServiceException fenixServiceException)
         {
-            throw new FenixActionException(fenixServiceException.getMessage());
+            throw new FenixActionException(fenixServiceException);
         }
 
         if (!errorNames.isEmpty())

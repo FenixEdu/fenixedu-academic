@@ -110,7 +110,8 @@ public class DeleteDegreeCurricularPlans implements IServico
 
             return undeletedDegreeCurricularPlansNames;
 
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }

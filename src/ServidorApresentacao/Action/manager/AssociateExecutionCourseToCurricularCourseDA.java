@@ -65,25 +65,10 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 		}
 		catch (FenixServiceException fenixServiceException)
 		{
-			throw new FenixActionException(fenixServiceException.getMessage());
+			throw new FenixActionException(fenixServiceException);
 		}
 
-		//        InfoExecutionPeriod infoExecutionPeriod = null;
-		//
-		//        try
-		//        {
-		//            infoExecutionPeriod =
-		//                (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadExecutionPeriod", args);
-		//
-		//        } catch (NonExistingServiceException e)
-		//        {
-		//            throw new NonExistingActionException(
-		//                e.getMessage(),
-		//                mapping.findForward("readAvailableExecutionPeriods"));
-		//        } catch (FenixServiceException fenixServiceException)
-		//        {
-		//            throw new FenixActionException(fenixServiceException);
-		//        }
+	
 
 		InfoExecutionPeriod infoExecutionPeriod =
 			((InfoExecutionCourse) infoExecutionCoursesList.get(0)).getInfoExecutionPeriod();
@@ -146,7 +131,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 		}
 		catch (FenixServiceException fenixServiceException)
 		{
-			throw new FenixActionException(fenixServiceException.getMessage());
+			throw new FenixActionException(fenixServiceException);
 		}
 
 		return mapping.findForward("readCurricularCourse");

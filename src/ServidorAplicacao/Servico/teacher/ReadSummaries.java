@@ -10,18 +10,23 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
+import DataBeans.ISiteComponent;
+import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSummary;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
+import Dominio.ISite;
 import Dominio.ISummary;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -93,15 +98,16 @@ public class ReadSummaries implements IServico {
 					Cloner.copyISummary2InfoSummary(summary);
 				result.add(infoSummary);
 			}
-			
-			
+			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+			ISite site = persistentSite.readByExecutionCourse(executionCourse);
 			
 			InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
 			bodyComponent.setInfoSummaries(result);
 			bodyComponent.setExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 			bodyComponent.setSummaryType(summaryType);
-		
-			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,bodyComponent);
+            TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder.getInstance();
+            ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+			SiteView siteView = new ExecutionCourseSiteView(commonComponent,bodyComponent);
 			return siteView;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

@@ -70,15 +70,15 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico
                     executionPeriodToRead,
                     false);
 
-            if (executionPeriod == null)
+            if (executionPeriod == null) {
                 throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-
+            }
             allExecutionCoursesFromExecutionPeriod =
                 sp.getIPersistentExecutionCourse().readByExecutionPeriod(executionPeriod);
 
             if (allExecutionCoursesFromExecutionPeriod == null
-                || allExecutionCoursesFromExecutionPeriod.isEmpty())
-                return allExecutionCoursesFromExecutionPeriod;
+                || allExecutionCoursesFromExecutionPeriod.isEmpty()) {
+                return allExecutionCoursesFromExecutionPeriod;}
 
             InfoExecutionCourse infoExecutionCourse = null;
             allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());

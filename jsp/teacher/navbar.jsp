@@ -1,13 +1,15 @@
 <%@ page language="java" %>
-<%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
 <logic:present name="siteView">
 	<bean:define id="component" name="siteView" property="commonComponent" />
 	<bean:define id="executionCourse" name="component" property="executionCourse" />
+     
+      
 	<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 	<ul>
 	<li><html:link page="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.home"/></html:link></li>
