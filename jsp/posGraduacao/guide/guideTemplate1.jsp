@@ -36,7 +36,7 @@
                   </tr>
                   <tr> 
                     <td align="right" valign="top"> <b>Guia de Pagamento Nº: </b> 
-                     <bean:write name="guide" property="number"/> 
+                     <bean:write name="guide" property="number"/>/<bean:write name="guide" property="year"/> 
                     </td>
                   </tr>
                 </table>

@@ -2,21 +2,18 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
       <html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" />
-    </html:link><br>
+    </html:link><br/>
 
       <html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" />
-    </html:link><br>
+    </html:link><br/>
 
 
-	<br>
+	<br/>
   
-  	<bean:message key="label.masterDegree.administrativeOffice.guide" /><br>
-        &nbsp;&nbsp;- <html:link page="/chooseExecutionYearToCreateGuide.do?method=prepareChooseExecutionYear"><bean:message key="link.masterDegree.administrativeOffice.createGuide" /></html:link><br>
-        &nbsp;&nbsp;- <html:link page="/chooseGuideDispatchAction.do?method=prepareChoose&page=0&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /></html:link><br>
-        &nbsp;&nbsp;- <html:link page="/guideListingSection.do"><bean:message key="link.masterDegree.administrativeOffice.guideListing" /></html:link><br>
-	<br>
-	<%--
-	 <html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" />
-    </html:link><br>
---%>
+  	<bean:message key="label.masterDegree.administrativeOffice.guide" /><br/>
+        &nbsp;&nbsp;- <html:link page="/chooseExecutionYearToCreateGuide.do?method=prepareChooseExecutionYear"><bean:message key="link.masterDegree.administrativeOffice.createGuide" /></html:link><br/>
+        &nbsp;&nbsp;- <html:link page="/chooseGuideDispatchAction.do?method=prepareChoose&page=0&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /></html:link><br/>
+        &nbsp;&nbsp;- <html:link page="/guideListingSection.do"><bean:message key="link.masterDegree.administrativeOffice.guideListing" /></html:link><br/>
+		&nbsp;&nbsp;- <html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" /></html:link><br/>
+
    
