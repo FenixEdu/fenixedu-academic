@@ -52,9 +52,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         getExecutionDegree(request);
         Integer degreeCurricularPlanID = null;
+        DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
         if(request.getParameter("degreeCurricularPlanID") != null && !request.getParameter("degreeCurricularPlanID").equals("")){
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+            enrollmentForm.set("degreeCurricularPlanID", degreeCurricularPlanID);
         }
         return mapping.findForward("prepareEnrollmentChooseStudent");
     }
@@ -196,6 +198,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
+        
+        Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
         enrollmentForm.set("studentNumber", studentNumber.toString());
@@ -268,6 +273,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
         Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
+        
+        Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Integer executionDegreeId = getExecutionDegree(request);
         Object[] args = { executionDegreeId, studentCurricularPlanId, specializationArea, secondaryArea };
@@ -315,6 +323,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
+        
+        Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         List toEnrollString = Arrays.asList(curricularCoursesToEnroll);
         List toEnroll = (List) CollectionUtils.collect(toEnrollString, new Transformer() {
@@ -367,6 +378,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
                 .get("enrolledCurricularCoursesBefore");
         Integer[] enrolledCurricularCoursesAfter = (Integer[]) enrollmentForm
                 .get("enrolledCurricularCoursesAfter");
+        
+        Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         List enrollmentsBefore = Arrays.asList(enrolledCurricularCoursesBefore);
         List enrollmentsAfter = Arrays.asList(enrolledCurricularCoursesAfter);
@@ -402,6 +416,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
         Integer studentCurricularPlanId = Integer.valueOf(request
                 .getParameter("studentCurricularPlanId"));
+        
+        Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Integer executionDegreeId = getExecutionDegree(request);
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;

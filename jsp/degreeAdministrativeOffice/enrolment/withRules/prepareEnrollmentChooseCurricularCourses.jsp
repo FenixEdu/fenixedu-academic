@@ -33,6 +33,7 @@
 <html:form action="/curricularCoursesEnrollment">
 	<html:hidden property="method" value="enrollmentConfirmation" />
 	<html:hidden property="studentNumber" />
+	<html:hidden property="degreeCurricularPlanID" />
 	<bean:define id="studentCurricularPlanId" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.idInternal" />
 	<html:hidden property="studentCurricularPlanId" value="<%=studentCurricularPlanId.toString()%>"/>
 	<html:hidden property="courseType"/>
