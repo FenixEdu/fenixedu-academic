@@ -197,7 +197,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		try {
 			manager.executar(userView, "EditCurricularCourseScope", args);
 		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping.findForward("readCurricularCourse"));
+			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {

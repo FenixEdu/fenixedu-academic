@@ -189,7 +189,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
+			throw new NonExistingActionException(e.getMessage(), mapping.findForward("readDegree"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

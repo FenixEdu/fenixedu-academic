@@ -26,9 +26,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -123,9 +125,8 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		String tempExamMap = (String) dynaForm.get("tempExamMap");
-//		if(tempExamMap.compareTo("") != 0)
-			infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMap));
+
+		infoExecutionDegree.setTemporaryExamMap(new Boolean((String) dynaForm.get("tempExamMap")));
 		
 		Object args[] = { infoExecutionDegree };
 		
@@ -136,6 +137,8 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 				 
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException(ex.getMessage(), ex);
+		} catch (NonExistingServiceException exception) {
+			throw new NonExistingActionException(exception.getMessage(), mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

@@ -58,15 +58,22 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IServico {
 				semester.setIdInternal(infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
 				curricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(semester, false);
 			
+				if(curricularSemester == null)
+					throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
+					
 				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal()), false);
+				
 				if(curricularCourse == null)
-					throw new NonExistingServiceException();
+					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 			
 				IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
 				IBranch temporaryBranch = new Branch();
 				temporaryBranch.setIdInternal(infoCurricularCourseScope.getInfoBranch().getIdInternal());
 				branch = (IBranch) persistentBranch.readByOId(temporaryBranch, false);
+				
+				if(branch == null)
+					throw new NonExistingServiceException("message.non.existing.branch", null);
 			
 				IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSuport.getIPersistentCurricularCourseScope();
 				

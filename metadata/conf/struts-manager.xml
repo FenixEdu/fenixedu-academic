@@ -321,8 +321,12 @@
         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
        <forward name="insertCurricularCourse" path="df.page.insert-curricular-course"/>
-       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
+       <forward name="readDegree" path="/readDegree.do"/>    	      
 	</action>
 		
 	<!-- Action for deleting curricular courses --> 
@@ -431,7 +435,10 @@
 		type="ServidorApresentacao.Action.manager.InsertExecutionDegreeDispatchAction">
 		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertExecutionDegree" path="df.page.insert-execution-degree"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>

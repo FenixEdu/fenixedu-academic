@@ -13,6 +13,7 @@ import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
@@ -46,9 +47,11 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
 				Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
-				
 				IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
+				
+				if(degreeCurricularPlan == null)
+					throw new NonExistingServiceException();
 				
 				String name = infoCurricularCourse.getName();
 				String code = infoCurricularCourse.getCode();

@@ -19,9 +19,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CurricularCourseType;
 
@@ -52,12 +54,10 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
 
 		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-//		if (basic.compareTo("") != 0)
-			infoCurricularCourse.setBasic(new Boolean(basic));
+		infoCurricularCourse.setBasic(new Boolean(basic));
 		infoCurricularCourse.setCode((String) dynaForm.get("code"));
 		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-//		if (mandatory.compareTo("") != 0)
-			infoCurricularCourse.setMandatory(new Boolean(mandatory));
+		infoCurricularCourse.setMandatory(new Boolean(mandatory));
 		infoCurricularCourse.setName((String) dynaForm.get("name"));
 
 		infoCurricularCourse.setType(new CurricularCourseType(new Integer(type)));
@@ -71,6 +71,8 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException(ex.getMessage(), ex);
+		} catch (NonExistingServiceException exception) {
+			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

@@ -104,11 +104,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 			request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
 		}
 		
-		Boolean tempExamMap = oldInfoExecutionDegree.getTemporaryExamMap();
-//		if(tempExamMap != null)
-			dynaForm.set("tempExamMap", tempExamMap.toString());
-//		else
-//			dynaForm.set("tempExamMap", "");
+		dynaForm.set("tempExamMap", oldInfoExecutionDegree.getTemporaryExamMap().toString());
 		dynaForm.set("coordinatorId", oldInfoExecutionDegree.getInfoCoordinator().getIdInternal().toString());
 		dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getIdInternal().toString());
 
@@ -138,8 +134,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		infoTeacher.setIdInternal(new Integer(coordinatorIdString));
 		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		
-//		if(tempExamMapString.compareTo("") != 0)
-			infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
+		infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
 
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
@@ -156,7 +151,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException("message.nonExistingExecutionDegree", mapping.findForward("readDegreeCurricularPlan"));
+			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

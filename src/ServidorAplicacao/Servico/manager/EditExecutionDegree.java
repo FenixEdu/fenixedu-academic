@@ -54,31 +54,31 @@ public class EditExecutionDegree implements IServico {
 				execDegree.setIdInternal(infoExecutionDegree.getIdInternal());
 				ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
 		
-				if(oldExecutionDegree != null) {
+				if(oldExecutionDegree == null)
+					throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
+					
+				IPersistentExecutionYear persistentExecutionYear = persistentSuport.getIPersistentExecutionYear();
+				IExecutionYear execYear = new ExecutionYear();
+				execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
+				executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
+				
+				if(executionYear == null)
+					throw new NonExistingServiceException("message.non.existing.execution.year", null);
 
-					IPersistentExecutionYear persistentExecutionYear = persistentSuport.getIPersistentExecutionYear();
-					IExecutionYear execYear = new ExecutionYear();
-					execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
-					executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
+				oldExecutionDegree.setExecutionYear(executionYear);
 
-					oldExecutionDegree.setExecutionYear(executionYear);
+				oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
 
-					Boolean tempExamMap = infoExecutionDegree.getTemporaryExamMap();
-					if (tempExamMap != null)
-						oldExecutionDegree.setTemporaryExamMap(tempExamMap);
-					else
-						oldExecutionDegree.setTemporaryExamMap(null);
+				IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+				InfoTeacher infoTeacher = infoExecutionDegree.getInfoCoordinator();
+				ITeacher teacher = (ITeacher) persistentTeacher.readByOId(new Teacher(infoExecutionDegree.getInfoCoordinator().getIdInternal()), false);
+				
+				if(teacher == null)
+					throw new NonExistingServiceException("message.non.existing.teacher", null);
+					
+				oldExecutionDegree.setCoordinator(teacher);
 
-					IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-					InfoTeacher infoTeacher = infoExecutionDegree.getInfoCoordinator();
-
-					ITeacher teacher = (ITeacher) persistentTeacher.readByOId(new Teacher(infoExecutionDegree.getInfoCoordinator().getIdInternal()), false);
-					oldExecutionDegree.setCoordinator(teacher);
-
-					persistentExecutionDegree.lockWrite(oldExecutionDegree);
-				}
-				else
-					throw new NonExistingServiceException();
+				persistentExecutionDegree.lockWrite(oldExecutionDegree);
 						
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException("O curso execução relativo ao ano " + executionYear.getYear(), ex);

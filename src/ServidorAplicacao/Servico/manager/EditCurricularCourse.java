@@ -39,34 +39,31 @@ public class EditCurricularCourse implements IServico {
 	
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 		ICurricularCourse oldCurricularCourse = null;
+		String newName = "";
+		String newCode = "";
 		
 		try {
+			
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 			oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(newInfoCurricularCourse.getIdInternal()), false);
 			
-			String newName = newInfoCurricularCourse.getName();
-			String newCode = newInfoCurricularCourse.getCode();
+			newName = newInfoCurricularCourse.getName();
+			newCode = newInfoCurricularCourse.getCode();
 		
-			if(oldCurricularCourse != null) {
-				
-				oldCurricularCourse.setName(newName);
-				oldCurricularCourse.setCode(newCode);
-				oldCurricularCourse.setType(newInfoCurricularCourse.getType());
-				oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
-				oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
-				
-				try {
-					persistentCurricularCourse.lockWrite(oldCurricularCourse);
-				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException("A disciplina curricular de nome "+newName+" e sigla "+newCode, ex);
-				}
-			}
-			else
+			if(oldCurricularCourse == null)
 				throw new NonExistingServiceException();
-		
-		
+				
+			oldCurricularCourse.setName(newName);
+			oldCurricularCourse.setCode(newCode);
+			oldCurricularCourse.setType(newInfoCurricularCourse.getType());
+			oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
+			oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
+				
+			persistentCurricularCourse.lockWrite(oldCurricularCourse);
 			
+		} catch (ExistingPersistentException ex) {
+			throw new ExistingServiceException("A disciplina curricular de nome "+newName+" e sigla "+newCode, ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

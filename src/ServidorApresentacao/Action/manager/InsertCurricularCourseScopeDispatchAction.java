@@ -54,7 +54,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			
 			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		
-			
 			Object[] args = { degreeCurricularPlanId };
 			
 			GestorServicos manager = GestorServicos.manager();
@@ -152,7 +151,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			} catch (ExistingServiceException ex) {
 				throw new ExistingActionException(ex.getMessage(), ex);
 			} catch (NonExistingServiceException exception) {
-				throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegreeCurricularPlan"));
+				throw new NonExistingActionException(exception.getMessage(), mapping.findForward("readDegreeCurricularPlan"));
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}

@@ -58,18 +58,15 @@ public class EditDegree implements IServico {
 			persistentDegree = persistentSuport.getICursoPersistente();
 			oldDegree = persistentDegree.readByIdInternal(newInfoDegree.getIdInternal());
 			
-			if(oldDegree != null) {
-			
-				oldDegree.setNome(newInfoDegree.getNome());
-				oldDegree.setSigla(newInfoDegree.getSigla());
-				oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
-
-				persistentDegree.lockWrite(oldDegree);
-				
-			}
-			else
+			if(oldDegree == null)
 				throw new NonExistingServiceException();
-				
+			
+			oldDegree.setNome(newInfoDegree.getNome());
+			oldDegree.setSigla(newInfoDegree.getSigla());
+			oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
+
+			persistentDegree.lockWrite(oldDegree);
+						
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException("O curso com esses dados", ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {

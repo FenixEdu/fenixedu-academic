@@ -44,49 +44,55 @@ public class EditCurricularCourseScope implements IServico {
 
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		ICurricularCourseScope oldCurricularCourseScope = null;
+		ICurricularSemester newCurricularSemester = null;
+		IBranch newBranch = null;
 
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			IPersistentBranch persistentBranch = ps.getIPersistentBranch();
 			IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
 			persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
-
-			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-			curricularCourseScope.setIdInternal(newInfoCurricularCourseScope.getIdInternal());
-
-			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
-
+			
 			Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
-
 			IBranch branch = new Branch();
 			branch.setIdInternal(branchId);
-			IBranch newBranch = (IBranch) persistentBranch.readByOId(branch, false);
+			newBranch = (IBranch) persistentBranch.readByOId(branch, false);
+			
+			if(newBranch == null)
+				throw new NonExistingServiceException("message.non.existing.branch", null);
 
 			Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
-
 			ICurricularSemester curricularSemester = new CurricularSemester();
 			curricularSemester.setIdInternal(curricularSemesterId);
-			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(curricularSemester, false);
+			newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(curricularSemester, false);
 
-			if (oldCurricularCourseScope != null) {
+			if(newCurricularSemester == null)
+				throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
+				
+			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+			curricularCourseScope.setIdInternal(newInfoCurricularCourseScope.getIdInternal());
+			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
+			
+			if(oldCurricularCourseScope == null)
+				throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
 
-				oldCurricularCourseScope.setCredits(newInfoCurricularCourseScope.getCredits());
-				oldCurricularCourseScope.setTheoreticalHours(newInfoCurricularCourseScope.getTheoreticalHours());
-				oldCurricularCourseScope.setPraticalHours(newInfoCurricularCourseScope.getPraticalHours());
-				oldCurricularCourseScope.setTheoPratHours(newInfoCurricularCourseScope.getTheoPratHours());
-				oldCurricularCourseScope.setLabHours(newInfoCurricularCourseScope.getLabHours());
-				oldCurricularCourseScope.setMaxIncrementNac(newInfoCurricularCourseScope.getMaxIncrementNac());
-				oldCurricularCourseScope.setMinIncrementNac(newInfoCurricularCourseScope.getMinIncrementNac());
-				oldCurricularCourseScope.setWeigth(newInfoCurricularCourseScope.getWeigth());
+			oldCurricularCourseScope.setCredits(newInfoCurricularCourseScope.getCredits());
+			oldCurricularCourseScope.setTheoreticalHours(newInfoCurricularCourseScope.getTheoreticalHours());
+			oldCurricularCourseScope.setPraticalHours(newInfoCurricularCourseScope.getPraticalHours());
+			oldCurricularCourseScope.setTheoPratHours(newInfoCurricularCourseScope.getTheoPratHours());
+			oldCurricularCourseScope.setLabHours(newInfoCurricularCourseScope.getLabHours());
+			oldCurricularCourseScope.setMaxIncrementNac(newInfoCurricularCourseScope.getMaxIncrementNac());
+			oldCurricularCourseScope.setMinIncrementNac(newInfoCurricularCourseScope.getMinIncrementNac());
+			oldCurricularCourseScope.setWeigth(newInfoCurricularCourseScope.getWeigth());
 
-				oldCurricularCourseScope.setBranch(newBranch);
-				//it already includes the curricular year
-				oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
+			oldCurricularCourseScope.setBranch(newBranch);
+			//it already includes the curricular year
+			oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
 
-				try {
-					persistentCurricularCourseScope.lockWrite(oldCurricularCourseScope);
-				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException(
+			persistentCurricularCourseScope.lockWrite(oldCurricularCourseScope);
+			
+		} catch (ExistingPersistentException ex) {
+			throw new ExistingServiceException(
 						"O âmbito do "
 							+ newCurricularSemester.getCurricularYear().getYear()
 							+ "º ano/ "
@@ -94,11 +100,6 @@ public class EditCurricularCourseScope implements IServico {
 							+ "º semestre, do ramo"
 							+ newBranch.getCode(),
 						ex);
-				}
-
-			}else
-			throw new NonExistingServiceException();
-
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
