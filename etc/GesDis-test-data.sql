@@ -101,6 +101,7 @@ INSERT INTO ANNOUNCEMENT VALUES (1, 'announcement1', '2003-01-21', '2003-01-21',
 # Records for table BIBLIOGRAPHIC_REFERENCE
 #----------------------------
 
-insert  into BIBLIOGRAPHIC_REFERENCE values (1, 'xpto', 'pedro', 'ref', '2002', 0, 24) ;
-insert  into BIBLIOGRAPHIC_REFERENCE values (2, 'so', 'am', 'ref2', '2004', 0, 25) ;
+DELETE FROM BIBLIOGRAPHIC_REFERENCE;
+INSERT  INTO  BIBLIOGRAPHIC_REFERENCE VALUES  (1, 'xpto', 'pedro', 'ref', '2002', 0, 24) ;
+INSERT  INTO  BIBLIOGRAPHIC_REFERENCE VALUES  (2, 'so', 'am', 'ref2', '2004', 0, 25) ;
 
