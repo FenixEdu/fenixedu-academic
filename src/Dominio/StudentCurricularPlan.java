@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.Date;
 
+import Util.Specialization;
 import Util.StudentCurricularPlanState;
 
 public class StudentCurricularPlan implements IStudentCurricularPlan {
@@ -10,6 +11,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	protected Integer studentKey;
 	protected Integer branchKey;
 	protected Integer degreeCurricularPlanKey;
+	protected Specialization specialization;
 
 	protected IStudent student;
 	protected IBranch branch;
@@ -27,6 +29,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 		setDegreeCurricularPlanKey(null);
 		setStudentKey(null);
 		setBranchKey(null);
+		setSpecialization(null);
 	}
 
 	public StudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, Date startDate, StudentCurricularPlanState currentState) {
@@ -55,6 +58,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 		result += "student = " + this.student + "; ";
 		result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
 		result += "startDate = " + this.startDate + "; ";
+		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
 		return result;
 	}
@@ -199,6 +203,20 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	 */
 	public void setBranchKey(Integer branchKey) {
 		this.branchKey = branchKey;
+	}
+
+	/**
+	 * @return
+	 */
+	public Specialization getSpecialization() {
+		return specialization;
+	}
+
+	/**
+	 * @param specialization
+	 */
+	public void setSpecialization(Specialization specialization) {
+		this.specialization = specialization;
 	}
 
 }

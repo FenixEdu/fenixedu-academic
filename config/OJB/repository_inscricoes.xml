@@ -345,6 +345,12 @@
 		jdbc-type="DATE"
 	/>
 	<field-descriptor
+		name="specialization"
+		column="SPECIALIZATION"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
+	/>
+	<field-descriptor
 		name="branchKey"
 		column="KEY_BRANCH"
 		jdbc-type="INTEGER"

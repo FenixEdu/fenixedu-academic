@@ -8,6 +8,7 @@ package Dominio;
 
 import java.util.Date;
 
+import Util.Specialization;
 import Util.StudentCurricularPlanState;
 
 
@@ -22,11 +23,13 @@ public interface IStudentCurricularPlan {
   public IDegreeCurricularPlan getDegreeCurricularPlan();
   public StudentCurricularPlanState getCurrentState();
   public Date getStartDate();
+  public Specialization getSpecialization();
   
   public void setStudent(IStudent student);
   public void setBranch(IBranch branch);
   public void setDegreeCurricularPlan(IDegreeCurricularPlan courseCurricularPlan);
   public void setCurrentState(StudentCurricularPlanState state);
   public void setStartDate(Date startDate);
+  public void setSpecialization(Specialization specialization);
   
 }

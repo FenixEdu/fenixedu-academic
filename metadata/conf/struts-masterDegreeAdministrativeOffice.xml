@@ -210,7 +210,7 @@
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
-        	<form-property name="requesterNumber" type="java.lang.Integer" />
+        	<form-property name="requesterNumber" type="java.lang.String" />
 			<form-property name="graduationType" type="java.lang.String" />
 			<form-property name="destination" type="java.lang.String[]"/>
       </form-bean>

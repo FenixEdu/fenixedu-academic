@@ -9,6 +9,7 @@ package DataBeans;
 import java.io.Serializable;
 import java.util.Date;
 
+import Util.Specialization;
 import Util.StudentCurricularPlanState;
 
 /**
@@ -22,6 +23,7 @@ public class InfoStudentCurricularPlan implements Serializable {
 	protected InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
+	protected Specialization specialization;
 
 	public InfoStudentCurricularPlan() {
 		setInfoDegreeCurricularPlan(null);
@@ -29,6 +31,7 @@ public class InfoStudentCurricularPlan implements Serializable {
 		setInfoBranch(null);
 		setStartDate(null);
 		setCurrentState(null);
+		setSpecialization(null);
 	}
 
 	public InfoStudentCurricularPlan(
@@ -36,13 +39,15 @@ public class InfoStudentCurricularPlan implements Serializable {
 		InfoDegreeCurricularPlan degreeCurricularPlan,
 		InfoBranch branch,
 		Date startDate,
-		StudentCurricularPlanState currentState) {
+		StudentCurricularPlanState currentState, Specialization specialization) {
 		this();
 		setInfoStudent(student);
 		setInfoDegreeCurricularPlan(degreeCurricularPlan);
 		setInfoBranch(branch);
 		setStartDate(startDate);
 		setCurrentState(currentState);
+		setSpecialization(specialization);
+
 	}
 
 	public boolean equals(Object obj) {
@@ -62,6 +67,7 @@ public class InfoStudentCurricularPlan implements Serializable {
 		result += "student = " + this.infoStudent + "; ";
 		result += "degreeCurricularPlan = " + this.infoDegreeCurricularPlan + "; ";
 		result += "startDate = " + this.startDate + "; ";
+		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
 		return result;
 	}
@@ -139,6 +145,20 @@ public class InfoStudentCurricularPlan implements Serializable {
 	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Specialization getSpecialization() {
+		return specialization;
+	}
+
+	/**
+	 * @param specialization
+	 */
+	public void setSpecialization(Specialization specialization) {
+		this.specialization = specialization;
 	}
 
 }

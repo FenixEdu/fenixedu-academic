@@ -266,7 +266,7 @@
       <field property="graduationType" depends="required" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.graduationType" />
       </field>
-
+      
 	  <field property="posicao" depends="integer" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.requesterNumber" />
       </field>

@@ -85,7 +85,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.DEGREE_TYPE);
 			
 			// Get the Information
-			Integer requesterNumber = (Integer) chooseDeclaration.get("requesterNumber");
+			Integer requesterNumber = new Integer((String) chooseDeclaration.get("requesterNumber"));
 			String graduationType = (String) chooseDeclaration.get("graduationType");
 			
 			// inputs
@@ -105,14 +105,15 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 				throw new NonExistingActionException("A Declaração", e);
 			}
 			
-//			if (infoStudentCurricularPlan == null){
-//			}
-//				return mapping.findForward("ChooseSuccess"); 
-//		    else {
+			if (infoStudentCurricularPlan == null){
+				throw new NonExistingActionException("O aluno");
+			}
 				
+		    else {
+	
 				session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 				return mapping.findForward("ChooseSuccess"); 
-//		    }
+		    }
 			
 		  } else
 		  throw new Exception();   
