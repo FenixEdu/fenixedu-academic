@@ -70,7 +70,7 @@ public class LoadAlmeidaCurramFromFileToTable extends LoadAlmeidaDataToTable {
 			loader.numberUntreatableElements++;
 			logString += "ERRO: Na linha [" + (numberLinesProcessed + 1) + "] os valores lidos do ficheiro são invalidos para a criação de Integers!\n";
 		}
-	
+
 		loader.setupDAO();
 		if (persistentObjectOJB.readAlmeidaCurramByUnique(longCurso, longRamo, longOrient) == null) {
 			Almeida_curram almeida_curram = new Almeida_curram();
@@ -81,7 +81,15 @@ public class LoadAlmeidaCurramFromFileToTable extends LoadAlmeidaDataToTable {
 			almeida_curram.setDescri(descricao);
 			writeElement(almeida_curram);
 		} else {
-			logString += "ERRO(linha[" + (numberLinesProcessed + 1) + "]): o Ramo com do curso " + longCurso + " do ramo = " + longRamo + " da orientacao = " + longOrient + " ja existe!\n";
+			logString += "ERRO(linha["
+				+ (numberLinesProcessed + 1)
+				+ "]): o Ramo com do curso "
+				+ longCurso
+				+ " do ramo = "
+				+ longRamo
+				+ " da orientacao = "
+				+ longOrient
+				+ " ja existe!\n";
 		}
 		loader.shutdownDAO();
 
@@ -96,9 +104,9 @@ public class LoadAlmeidaCurramFromFileToTable extends LoadAlmeidaDataToTable {
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadAlmeidaCurramFromFileToTable.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
-	
+
 	protected String getClassName() {
 		return "LoadAlmeidaCurramFromFileToTable";
 	}

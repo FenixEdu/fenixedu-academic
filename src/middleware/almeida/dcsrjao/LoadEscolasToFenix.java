@@ -30,7 +30,7 @@ public class LoadEscolasToFenix extends LoadDataToFenix {
 			loader = new LoadEscolasToFenix();
 		}
 
-		loader.migrationStart("LoadEscolasToFenix");
+		loader.migrationStart(loader.getClassName());
 		loader.setupDAO();
 		List almeida_currams = loader.persistentObjectOJB.readAllAlmeidaEscolas();
 		loader.shutdownDAO();
@@ -44,7 +44,7 @@ public class LoadEscolasToFenix extends LoadDataToFenix {
 			loader.shutdownDAO();
 		}
 		logString += error.toString();
-		loader.migrationEnd("LoadEscolasToFenix", logString);
+		loader.migrationEnd(loader.getClassName(), logString);
 	}
 
 	private void processEscola(Almeida_escola almeida_escola) {
@@ -64,7 +64,7 @@ public class LoadEscolasToFenix extends LoadDataToFenix {
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadEscolasToFenix.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 	
 	protected String getClassName() {

@@ -55,13 +55,34 @@ public class LoadAlmeidaCurricularCoursesFromFileToTable extends LoadAlmeidaData
 		String creditos = stringTokenizer.nextToken().replace(',', '.');
 		String orientacao = stringTokenizer.nextToken();
 
+		if (codigoCurso.startsWith("0")) {
+			codigoCurso = codigoCurso.substring(1);
+		}
+		
+		if (creditos.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
+			creditos = creditos.substring(1);
+		}
+
+		if (teorica.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
+			teorica = teorica.substring(1);
+		}
+
+		if (pratica.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
+			pratica = pratica.substring(1);
+		}
+
+		if (laboratorio.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
+			laboratorio = laboratorio.substring(1);
+		}
+
+		if (teoricopratica.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
+			teoricopratica = teoricopratica.substring(1);
+		}
+
 		if (codigoDisciplina.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
 			codigoDisciplina = codigoDisciplina.substring(1);
 		}
 
-		if (codigoCurso.startsWith("0")) {
-			codigoCurso = codigoCurso.substring(1);
-		}
 
 		//		if (codigoCurso.equals("1") && codigoRamo.equals("1") && orientacao.equals("0")) {
 		//			codigoRamo = "0";
@@ -87,6 +108,19 @@ public class LoadAlmeidaCurricularCoursesFromFileToTable extends LoadAlmeidaData
 			orientacao = "0";
 		}
 
+		long longCodigoCurso = 0;
+		long longCodigoRamo = 0;
+		long longSemestre = 0;
+		long executionYear = 0;
+		long longAnoCurricular = 0;
+		long longOrientacao = 0;
+		long longTipo = 0;
+		double doubleCreditos = 0;
+		double doubleTeorica = 0;
+		double doubleTeoricopratica = 0;
+		double doublePratica = 0;
+		double doubleLaboratorio = 0;
+
 		try {
 			Integer semester = new Integer(semestreCurricular);
 			if ((semester.intValue() < 1) || (semester.intValue() > 2)) {
@@ -111,47 +145,7 @@ public class LoadAlmeidaCurricularCoursesFromFileToTable extends LoadAlmeidaData
 				logString += "INFO: Ano " + year + " na linha " + (numberLinesProcessed + 1) + "!\n";
 				anoCurricular = "1";
 			}
-		} catch (NumberFormatException e1) {
-			loader.numberUntreatableElements++;
-			logString += "ERRO: Na linha ["
-				+ (numberLinesProcessed + 1)
-				+ "] os valores lidos do ficheiro são invalidos para a criação de Integers e/ou Doubles!\n";
-		}
-
-		long longCodigoCurso = 0;
-		long longCodigoRamo = 0;
-		long longSemestre = 0;
-		long executionYear = 0;
-		long longAnoCurricular = 0;
-		long longOrientacao = 0;
-		long longTipo = 0;
-		double doubleCreditos = 0;
-		double doubleTeorica = 0;
-		double doubleTeoricopratica = 0;
-		double doublePratica = 0;
-		double doubleLaboratorio = 0;
-
-		if (creditos.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
-			creditos = creditos.substring(1);
-		}
-
-		if (teorica.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
-			teorica = teorica.substring(1);
-		}
-
-		if (pratica.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
-			pratica = pratica.substring(1);
-		}
-
-		if (laboratorio.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
-			laboratorio = laboratorio.substring(1);
-		}
-
-		if (teoricopratica.startsWith(LoadAlmeidaCurricularCoursesFromFileToTable.ONE_SPACE)) {
-			teoricopratica = teoricopratica.substring(1);
-		}
-
-		try {
+			
 			longCodigoCurso = (new Integer(codigoCurso)).longValue();
 			longCodigoRamo = (new Integer(codigoRamo)).longValue();
 			longSemestre = (new Integer(semestreCurricular)).longValue();
@@ -164,7 +158,8 @@ public class LoadAlmeidaCurricularCoursesFromFileToTable extends LoadAlmeidaData
 			doublePratica = (new Double(pratica)).doubleValue();
 			doubleLaboratorio = (new Double(laboratorio)).doubleValue();
 			longTipo = (new Integer(tipoDisciplina)).longValue();
-		} catch (NumberFormatException e2) {
+
+		} catch (NumberFormatException e1) {
 			loader.numberUntreatableElements++;
 			logString += "ERRO: Na linha ["
 				+ (numberLinesProcessed + 1)
@@ -330,7 +325,7 @@ public class LoadAlmeidaCurricularCoursesFromFileToTable extends LoadAlmeidaData
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadAlmeidaCurricularCoursesFromFileToTable.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 
 	protected String getClassName() {

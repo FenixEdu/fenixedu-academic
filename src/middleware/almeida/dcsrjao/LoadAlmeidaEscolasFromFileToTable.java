@@ -36,15 +36,16 @@ public class LoadAlmeidaEscolasFromFileToTable extends LoadAlmeidaDataToTable {
 		loader.printLine(getClassName());
 		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
-		int numberTokens = stringTokenizer.countTokens();
+		//int numberTokens = stringTokenizer.countTokens();
 		String codigo = stringTokenizer.nextToken();
 		String nome = null;
 
-		if (numberTokens > 2) {
-			nome = stringTokenizer.nextToken("\n");
-		} else {
-			nome = stringTokenizer.nextToken();
-		}
+		nome = stringTokenizer.nextToken("\n");
+//		if (numberTokens > 2) {
+//			nome = stringTokenizer.nextToken("\n");
+//		} else {
+//			nome = stringTokenizer.nextToken();
+//		}
 
 		if (nome.startsWith(FOUR_SPACES)) {
 			nome = nome.substring(5);
@@ -75,7 +76,7 @@ public class LoadAlmeidaEscolasFromFileToTable extends LoadAlmeidaDataToTable {
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadAlmeidaEscolasFromFileToTable.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 	protected String getClassName() {
 		return "LoadAlmeidaEscolasFromFileToTable";

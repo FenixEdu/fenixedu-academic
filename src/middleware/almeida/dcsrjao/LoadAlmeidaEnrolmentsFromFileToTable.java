@@ -53,10 +53,6 @@ public class LoadAlmeidaEnrolmentsFromFileToTable extends LoadAlmeidaDataToTable
 		String universityCode = stringTokenizer.nextToken();
 		String observation = stringTokenizer.nextToken();
 
-		Almeida_enrolment almeida_enrolment = new Almeida_enrolment();
-		almeida_enrolment.setId_internal(loader.numberElementsWritten + 1);
-		almeida_enrolment.setNumalu(studentNumber);
-
 		if (epoca.equals(LoadAlmeidaEnrolmentsFromFileToTable.ONE_SPACE)) {
 			epoca = "5"; // corresponde ao valor de uma inscrição noutra universidade	
 		}
@@ -108,6 +104,11 @@ public class LoadAlmeidaEnrolmentsFromFileToTable extends LoadAlmeidaDataToTable
 			logString += "INFO: epoca " + epoca + " na linha " + (numberLinesProcessed + 1) + "!\n";
 			curricularSemester = "0";
 		}
+		
+		Almeida_enrolment almeida_enrolment = new Almeida_enrolment();
+		almeida_enrolment.setId_internal(loader.numberElementsWritten + 1);
+		almeida_enrolment.setNumalu(studentNumber);
+
 		try {
 			almeida_enrolment.setAnoins((new Integer(enrolmentYear)).longValue());
 			almeida_enrolment.setAnodis(longCurricularYear);
@@ -126,7 +127,6 @@ public class LoadAlmeidaEnrolmentsFromFileToTable extends LoadAlmeidaDataToTable
 		almeida_enrolment.setDatexa(evaluationDate);
 		almeida_enrolment.setCoduniv(universityCode);
 		almeida_enrolment.setObserv(observation);
-//		almeida_enrolment.setValid(0); // ainda não foi validado
 
 		loader.setupDAO();
 		writeElement(almeida_enrolment);
@@ -142,7 +142,7 @@ public class LoadAlmeidaEnrolmentsFromFileToTable extends LoadAlmeidaDataToTable
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadAlmeidaEnrolmentsFromFileToTable.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 	
 	protected String getClassName() {

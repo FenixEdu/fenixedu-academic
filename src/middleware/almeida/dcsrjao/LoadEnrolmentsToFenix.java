@@ -165,10 +165,6 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 
 	private void processEnrolment(Almeida_enrolment almeida_enrolment) {
 
-		//		if (almeida_enrolment.getValid() == 1) {
-		//			return;
-		//		}
-
 		this.oldISTDegreeCurricularPlan = processISTDegreeCurricularPlan(almeida_enrolment);
 		if (this.oldISTDegreeCurricularPlan == null) {
 			loader.numberUntreatableElements++;
@@ -292,8 +288,6 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 		enrolment.setEnrolmentState(this.enrolmentState);
 		writeElement(enrolment);
-		//almeida_enrolment.setValid(1); // validado
-		//writeElement(almeida_enrolment);
 		return enrolment;
 	}
 

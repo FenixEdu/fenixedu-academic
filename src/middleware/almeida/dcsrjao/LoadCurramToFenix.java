@@ -33,7 +33,7 @@ public class LoadCurramToFenix extends LoadDataToFenix {
 			loader = new LoadCurramToFenix();
 		}
 
-		loader.migrationStart("LoadCurramToFenix");
+		loader.migrationStart(loader.getClassName());
 		loader.setupDAO();
 		List almeida_currams = loader.persistentObjectOJB.readAllAlmeidaCurrams();
 		loader.shutdownDAO();
@@ -47,7 +47,7 @@ public class LoadCurramToFenix extends LoadDataToFenix {
 			loader.shutdownDAO();
 		}
 		logString += error.toString();
-		loader.migrationEnd("LoadCurramToFenix", logString);
+		loader.migrationEnd(loader.getClassName(), logString);
 	}
 
 	private void processCurram(Almeida_curram almeida_curram) {
@@ -117,7 +117,7 @@ public class LoadCurramToFenix extends LoadDataToFenix {
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadCurramToFenix.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 
 	protected String getClassName() {

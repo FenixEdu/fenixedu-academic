@@ -42,7 +42,7 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			loader = new LoadCurricularCoursesToFenix();
 		}
 
-		loader.migrationStart("LoadCurricularCoursesToFenix");
+		loader.migrationStart(loader.getClassName());
 
 		loader.setupDAO();
 		List almeida_curricularCourse = loader.persistentObjectOJB.readAllAlmeidaDisc();
@@ -57,7 +57,7 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			loader.shutdownDAO();
 		}
 		logString += error.toString();
-		loader.migrationEnd("LoadCurricularCoursesToFenix", logString);
+		loader.migrationEnd(loader.getClassName(), logString);
 	}
 
 	public void processCurricularCourse(Almeida_disc almeida_disc) {
@@ -92,9 +92,9 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			if (almeida_disc.getTipo() == 0) {
 				curricularCourse.setMandatory(new Boolean(true));
 				curricularCourse.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
-//			} else if (almeida_disc.getTipo() == 1) {
-//				curricularCourse.setMandatory(new Boolean(false));
-//				curricularCourse.setType(CurricularCourseType.OPTIONAL_COURSE_OBJ);
+			} else if (almeida_disc.getTipo() == 1) {
+				curricularCourse.setMandatory(new Boolean(false));
+				//curricularCourse.setType(CurricularCourseType.OPTIONAL_COURSE_OBJ);
 			} else {
 				errorMessage = "\n O tipo " + almeida_disc.getTipo() + " é inválido! Registos: ";
 				errorDBID = almeida_disc.getCodint() + ",";
@@ -198,10 +198,6 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 		return branch;
 	}
 
-	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadCurricularCoursesToFenix.txt";
-	}
-
 	private IDegreeCurricularPlan processNewDegreeCurricularPlan() {
 		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN);
 		if (degreeCurricularPlan == null) {
@@ -212,10 +208,6 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 		}
 
 		return degreeCurricularPlan;
-	}
-
-	protected String getClassName() {
-		return "LoadCurricularCoursesToFenix";
 	}
 
 	private IDegreeCurricularPlan processOldDegreeCurricularPlan(Almeida_disc almeida_disc) {
@@ -255,49 +247,11 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 		return universityCode;
 	}
 
-	//	private String processCurricularCourseCode(String code) {
-	//		if ((code.equals("24")) || (code.equals("P6")) || (code.equals("QJ"))) {
-	//			code = "QN";
-	//		} else if ((code.equals("AG")) || (code.equals("QA")) || (code.equals("QM")) || (code.equals("AC0"))) {
-	//			code = "PY";
-	//		} else if ((code.equals("AH")) || (code.equals("QF")) || (code.equals("PS")) || (code.equals("AC1"))) {
-	//			code = "P5";
-	//		} else if ((code.equals("AJ")) || (code.equals("S6")) || (code.equals("UY")) || (code.equals("AC2"))) {
-	//			code = "UN";
-	//		} else if ((code.equals("AK")) || (code.equals("V5"))) {
-	//			code = "U8";
-	//		} else if (code.equals("8Z")) {
-	//			code = "AV7";
-	//		} else if (code.equals("BG")) {
-	//			code = "APS";
-	//		} else if (code.equals("2R")) {
-	//			code = "AME";
-	//		} else if (code.equals("9R")) {
-	//			code = "AR7";
-	//		} else if (code.equals("ALG")) {
-	//			code = "AP9";
-	//		} else if (code.equals("Z7")) {
-	//			code = "C4";
-	//		} else if (code.equals("ZD")) {
-	//			code = "C5";
-	//		} else if (code.equals("2S")) {
-	//			code = "AMG";
-	//		} else if (code.equals("2U")) {
-	//			code = "AMD";
-	//		} else if (code.equals("9S")) {
-	//			code = "7W";
-	//		} else if ((code.equals("UP")) || (code.equals("UZ"))) {
-	//			code = "SF";
-	//		} else if (code.equals("A5H")) {
-	//			code = "AMH";
-	//		} else if (code.equals("A5Y")) {
-	//			code = "AR8";
-	//		} else if (code.equals("QW")) {
-	//			code = "HU";
-	//		} else if ((code.equals("V4")) || (code.equals("HV"))) {
-	//			code = "AJM";
-	//		}
-	//
-	//		return code;
-	//	}
+	protected String getFilenameOutput() {
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
+	}
+
+	protected String getClassName() {
+		return "LoadCurricularCoursesToFenix";
+	}
 }

@@ -72,7 +72,7 @@ public class LoadAlmeidaCurricularCoursesCodesFromFileToTable extends LoadAlmeid
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/LoadAlmeidaCurricularCoursesCodesFromFileToTable.txt";
+		return "etc/migration/dcs-rjao/logs/" + this.getClassName() + ".txt";
 	}
 	protected String getClassName() {
 		return "LoadAlmeidaCurricularCoursesCodesFromFileToTable";

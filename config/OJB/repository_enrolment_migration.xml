@@ -103,11 +103,6 @@
     column="OBSERV"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="14"
-    name="valid"
-    column="VALID"
-    jdbc-type="INTEGER"
-  />
 </class-descriptor>
 
 <class-descriptor 
@@ -135,7 +130,7 @@
 
 <class-descriptor 
   class="middleware.almeida.Almeida_disc"
-  table="almeida_disc"
+  table="ALMEIDA_DISC"
 >
   <field-descriptor id="24"
     name="codint"
@@ -221,7 +216,7 @@
 </class-descriptor>
 <class-descriptor 
   class="middleware.almeida.Almeida_curram"
-  table="almeida_curram"
+  table="ALMEIDA_CURRAM"
 >
   <field-descriptor id="10"
     name="codint"
