@@ -6,9 +6,15 @@
  */
 package ServidorApresentacao.teacher;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
+import DataBeans.gesdis.InfoSite;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author jmota
@@ -53,28 +59,29 @@ public class CurriculumManagerViewObjectivesTest
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-		return null;
+		String[] result = { "FenixActionException" };
+		return result;
 	}
 
 	/**
 	* This method must return a string identifying the forward path when the action executes unsuccessfuly.
 	*/
 	protected String getUnsuccessfulForwardPath() {
-		return null;
+		return "/naoExecutado.do";
 	}
 
 	/**
-     * This method must return a string identifying the forward path when the action executes successfuly.
+	 * This method must return a string identifying the forward path when the action executes successfuly.
 	 */
 	protected String getSuccessfulForwardPath() {
-		return "viewObjectives";
+		return null;
 	}
 
 	/**
 	 * This method must return a string identifying the forward when the action executes successfuly.
 	 */
 	protected String getSuccessfulForward() {
-		return null;
+		return "viewObjectives";
 	}
 
 	/**
@@ -92,7 +99,26 @@ public class CurriculumManagerViewObjectivesTest
 	 * This method must return null if not to be used.
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		return null;
+		Map result = new HashMap();
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		InfoExecutionCourse infoExecutionCourse =
+			new InfoExecutionCourse(
+				"Trabalho Final de Curso I",
+				"TFCI",
+				"programa?",
+				new Double(1.5),
+				new Double(2),
+				new Double(1.5),
+				new Double(2),
+				infoExecutionPeriod);
+		InfoSite infoSite = new InfoSite(infoExecutionCourse);
+		
+		result.put(SessionConstants.INFO_SITE, infoSite);
+
+		return result;
 	}
 
 	/**
@@ -103,7 +129,26 @@ public class CurriculumManagerViewObjectivesTest
 	 * This method must return null if not to be used.
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		return null;
+		Map result = new HashMap();
+//		InfoExecutionYear infoExecutionYear =
+//			new InfoExecutionYear("2002/2003");
+//		InfoExecutionPeriod infoExecutionPeriod =
+//			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+//		InfoExecutionCourse infoExecutionCourse =
+//			new InfoExecutionCourse(
+//				"Trabalho Final de Curso I",
+//				"TFCI",
+//				"programa?",
+//				new Double(1.5),
+//				new Double(2),
+//				new Double(1.5),
+//				new Double(2),
+//				infoExecutionPeriod);
+//		InfoSite infoSite = new InfoSite(infoExecutionCourse);
+//		
+//		result.put(SessionConstants.INFO_SITE, infoSite);
+
+		return result;
 	}
 
 	/**
@@ -114,7 +159,9 @@ public class CurriculumManagerViewObjectivesTest
 	 * This method must return null if not to be used.
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		return null;
+		Map result = new HashMap();
+		result.put("method","acessObjectives");
+		return result;
 	}
 
 	/**
@@ -125,7 +172,9 @@ public class CurriculumManagerViewObjectivesTest
 	 * This method must return null if not to be used.
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-		return null;
+		Map result = new HashMap();
+	result.put("method","acessObjectives");
+	return result;
 	}
 
 	/**

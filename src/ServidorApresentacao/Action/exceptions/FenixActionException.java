@@ -19,12 +19,14 @@ import org.apache.struts.action.ActionError;
 
 public class FenixActionException extends Exception {
 
-	protected String property = null;
+	protected String property = "error.default";
 	protected ActionError error = null;
 
 	// --- End of Variable Declarations ----------------------------------
 
-	public FenixActionException() {};
+	public FenixActionException() {
+		super("error.default");
+		error = new ActionError("error.default");}
 
 	public FenixActionException(String key) {
 		super(key);

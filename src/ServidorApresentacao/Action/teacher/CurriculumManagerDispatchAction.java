@@ -30,18 +30,21 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		SessionUtils.validSessionVerification(request, mapping);	
+		
 		HttpSession session = getSession(request);
 		session.removeAttribute(SessionConstants.INFO_SITE_SECTION);
 		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT);
 		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-		session.removeAttribute("ReferenciaBibliografica");
+//		session.removeAttribute("ReferenciaBibliografica");
 		session.removeAttribute(SessionConstants.EXECUTION_COURSE_CURRICULUM);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-		Object args[] = { infoSite.getInfoExecutionCourse()};
+		if (infoSite!=null){
+		
 		try {
+			Object args[] = { infoSite.getInfoExecutionCourse()};
 			GestorServicos serviceManager = GestorServicos.manager();
 			InfoCurriculum curriculumView =
 				(InfoCurriculum) serviceManager.executar(
@@ -55,6 +58,10 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 			}
 		return mapping.findForward("viewObjectives");
+		}
+		else 
+		{throw new FenixActionException();
+		}
 	}
 	public ActionForward editObjectives(
 		ActionMapping mapping,

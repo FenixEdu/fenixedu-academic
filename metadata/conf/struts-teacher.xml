@@ -215,9 +215,9 @@
                 type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"
                 path="/bibliographicReferenceManager"
                 validate="false">
-	            <forward name="deleteBibliographicReference" path="/deleteBibliographicReference.jsp"
-	            <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"
-				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"
+	            <forward name="deleteBibliographicReference" path="/deleteBibliographicReference.jsp"/>
+	            <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"/>
+				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"/>
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             
 	
