@@ -51,52 +51,6 @@
 	<property name="encoding" value="ISO-8859-15"/>	
 
 
-    <!-- TARGETS -->
-    <target name="tomcat-start"
-            description="Starts tomcat">
-      <parallel>
-	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
-	  	      vmlauncher="true"
-	  	      failonerror="true"
-	  	      os="Linux, Unix">
-		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
-		  <arg value="start"/>
-	  	</exec>
-	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
-	  	      vmlauncher="true"
-	  	      failonerror="true"
-	  	      os="Windows, Windows 2000, Windows XP">
-		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
-		  <arg value="start"/>
-	  	</exec>
-     </parallel>
-    </target>
-
-    <target name="tomcat-stop"
-            description="Stops tomcat">
-      <parallel>
-	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
-	  	      vmlauncher="true"
-	  	      failonerror="true"
-	  	      os="Linux, Unix">
-		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
-		  <arg value="stop"/>
-	  	</exec>
-	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
-	  	      vmlauncher="true"
-	  	      failonerror="true"
-	  	      os="Windows, Windows 2000, Windows XP">
-		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
-		  <arg value="stop"/>
-	  	</exec>
-     </parallel>
-    </target>
-
-    <target name="stop-deploy-start"
-    		description="Stops tomcat, deploys web application, starts tomcat"
-    		depends="clean-all, compile-proj, tomcat-start, install"
-    		/>
-
 
   <target name="prepare">
     <!-- Create build directories as needed -->
@@ -480,6 +434,53 @@
     </target>
     
 	<!-- Targets for tomcat -->
+
+    
+    <target name="tomcat-stop"
+            description="Stops tomcat">
+      <parallel>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
+	  	      os="Linux, Unix">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="stop"/>
+	  	</exec>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
+	  	      vmlauncher="true"
+	  	      failonerror="false"
+	  	      os="Windows, Windows 2000, Windows XP">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="stop"/>
+	  	</exec>
+     </parallel>
+    </target>
+
+<!--    <target name="tomcat-start"
+            description="Starts tomcat">
+     <parallel>
+	  	<exec executable="${env.CATALINA_HOME}/bin/startup.sh"
+	  	      os="Linux, Unix">
+		 <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+	  	</exec>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
+	  	      vmlauncher="false"
+	  	      failonerror="false"
+	  	      os="Windows, Windows 2000, Windows XP">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="start"/>
+	  	</exec>
+     </parallel>
+    </target>
+
+
+    <target name="stop-deploy-start"
+    		description="Stops tomcat, deploys web application, starts tomcat"
+    		depends="clean-all, compile-proj, tomcat-start, install">
+    </target> -->
+
+
+
+
+
 	<taskdef name="install" classname="org.apache.catalina.ant.InstallTask"/>
 	<taskdef name="list"    classname="org.apache.catalina.ant.ListTask"/>
 	<taskdef name="reload"  classname="org.apache.catalina.ant.ReloadTask"/>
@@ -580,6 +581,7 @@
                      dir="${basedir}"
                      includes="**/*~,**/#*#,**/semantic.cache" />
         </delete>
-        <antcall target="tomcat-start"/>
     </target>
+
+
 </project>
