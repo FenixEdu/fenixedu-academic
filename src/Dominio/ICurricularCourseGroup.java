@@ -1,8 +1,5 @@
 /*
  * Created on 25/Nov/2003
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package Dominio;
 
@@ -13,8 +10,9 @@ import Util.AreaType;
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- *
+ * @author David Santos on Jul 26, 2004
  */
+
 public interface ICurricularCourseGroup extends IDomainObject
 {
 	public AreaType getAreaType();
@@ -23,11 +21,15 @@ public interface ICurricularCourseGroup extends IDomainObject
 	public Integer getMinimumCredits();
 	public List getCurricularCourses();
 	public List getScientificAreas();
+	public Integer getMinimumNumberOfOptionalCourses();
+	public Integer getMaximumNumberOfOptionalCourses();
 	
 	public void setAreaType(AreaType areaType);
-	public void setMaximumCredits(Integer maximumCredits);
+	public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses);
+	public void setMinimumNumberOfOptionalCourses(Integer minimumNumberOfOptionalCourses);
 	public void setBranch(IBranch branch);
 	public void setMinimumCredits(Integer minimumCredits);
 	public void setCurricularCourses(List curricularCourses);
 	public void setScientificAreas(List scientificAreas);
+	public void setMaximumCredits(Integer maximumCredits);
 }

@@ -1,0 +1,136 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.CurricularCourseGroup -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.CurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+    <extent-class class-ref="Dominio.AreaCurricularCourseGroup"/>
+    <extent-class class-ref="Dominio.OptionalCurricularCourseGroup"/>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.AreaCurricularCourseGroup -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.AreaCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyBranch"
+		column="KEY_BRANCH"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="areaType"
+		column="AREA_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="minimumCredits"
+		column="MINIMUM_VALUE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="maximumCredits"
+		column="MAXIMUM_VALUE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>      
+	<reference-descriptor
+			name="branch"
+			class-ref="Dominio.Branch"
+			proxy="true">
+		<foreignkey field-ref="keyBranch"/>
+	</reference-descriptor>		
+	<collection-descriptor
+			name="curricularCourses"
+			element-class-ref="Dominio.CurricularCourse"
+			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="scientificAreas"
+			element-class-ref="Dominio.ScientificArea"
+			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_SCIENTIFIC_AREA"/>
+	</collection-descriptor>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.OptionalCurricularCourseGroup -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.OptionalCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyBranch"
+		column="KEY_BRANCH"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minimumNumberOfOptionalCourses"
+		column="MINIMUM_VALUE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="maximumNumberOfOptionalCourses"
+		column="MAXIMUM_VALUE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>      
+	<reference-descriptor
+			name="branch"
+			class-ref="Dominio.Branch"
+			proxy="true">
+		<foreignkey field-ref="keyBranch"/>
+	</reference-descriptor>		
+	<collection-descriptor
+			name="curricularCourses"
+			element-class-ref="Dominio.CurricularCourse"
+			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="scientificAreas"
+			element-class-ref="Dominio.ScientificArea"
+			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_SCIENTIFIC_AREA"/>
+	</collection-descriptor>
+</class-descriptor>
+

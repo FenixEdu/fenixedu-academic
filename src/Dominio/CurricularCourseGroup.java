@@ -2,154 +2,92 @@ package Dominio;
 
 import java.util.List;
 
-import Util.AreaType;
-
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- *
+ * @author David Santos on Jul 26, 2004
  */
 
-public class CurricularCourseGroup extends DomainObject implements ICurricularCourseGroup
-{
-    private Integer minimumCredits;
-    private Integer maximumCredits;
-    private Integer keyBranch;
-    private AreaType areaType;
-    private IBranch branch;
-    private List curricularCourses;
-    private List scientificAreas;
+public abstract class CurricularCourseGroup extends DomainObject {
 
-    public CurricularCourseGroup()
-    {
-    }
+    protected Integer minimumValue;
+
+    protected Integer maximumValue;
+
+    protected Integer keyBranch;
+
+    protected IBranch branch;
+
+    protected List curricularCourses;
+
+    protected List scientificAreas;
     
-    /**
-     * @return
-     */
-    public Integer getKeyBranch()
-    {
+    protected String ojbConcreteClass;
+
+    public Integer getKeyBranch() {
         return keyBranch;
     }
 
-    /**
-     * @param keyBranch
-     */
-    public void setKeyBranch(Integer keyBranch)
-    {
+    public void setKeyBranch(Integer keyBranch) {
         this.keyBranch = keyBranch;
     }
 
-    /**
-     * @return
-     */
-    public Integer getMaximumCredits()
-    {
-        return maximumCredits;
+    protected Integer getMaximumValue() {
+        return maximumValue;
     }
 
-    /**
-     * @param maximumCredits
-     */
-    public void setMaximumCredits(Integer maximumCredits)
-    {
-        this.maximumCredits = maximumCredits;
+    protected void setMaximumValue(Integer maximumValue) {
+        this.maximumValue = maximumValue;
     }
 
-    /**
-     * @return
-     */
-    public Integer getMinimumCredits()
-    {
-        return minimumCredits;
+    protected Integer getMinimumValue() {
+        return minimumValue;
     }
 
-    /**
-     * @param minimumCredits
-     */
-    public void setMinimumCredits(Integer minimumCredits)
-    {
-        this.minimumCredits = minimumCredits;
+    protected void setMinimumValue(Integer minimumValue) {
+        this.minimumValue = minimumValue;
     }
 
-    /**
-     * @return
-     */
-    public IBranch getBranch()
-    {
+    public IBranch getBranch() {
         return branch;
     }
 
-    /**
-     * @param branch
-     */
-    public void setBranch(IBranch branch)
-    {
+    public void setBranch(IBranch branch) {
         this.branch = branch;
     }
 
-    /**
-     * @return
-     */
-    public List getCurricularCourses()
-    {
+    public List getCurricularCourses() {
         return curricularCourses;
     }
 
-    /**
-     * @param curricularCourses
-     */
-    public void setCurricularCourses(List curricularCourses)
-    {
+    public void setCurricularCourses(List curricularCourses) {
         this.curricularCourses = curricularCourses;
     }
 
-    /**
-     * @return
-     */
-    public AreaType getAreaType()
-    {
-        return areaType;
+    public List getScientificAreas() {
+        return scientificAreas;
     }
 
-    /**
-     * @param areaType
-     */
-    public void setAreaType(AreaType areaType)
-    {
-        this.areaType = areaType;
+    public void setScientificAreas(List scientificAreas) {
+        this.scientificAreas = scientificAreas;
     }
 
-    /**
-	 * @return Returns the scientificAreas.
-	 */
-	public List getScientificAreas()
-	{
-		return scientificAreas;
-	}
+    public String getOjbConcreteClass() {
+        return ojbConcreteClass;
+    }
 
-	/**
-	 * @param scientificAreas The scientificAreas to set.
-	 */
-	public void setScientificAreas(List scientificAreas)
-	{
-		this.scientificAreas = scientificAreas;
-	}
+    public void setOjbConcreteClass(String ojbConcreteClass) {
+        this.ojbConcreteClass = ojbConcreteClass;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if ((result) && (obj instanceof ICurricularCourseGroup))
-		{
-			ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) obj;
-			result =
-				curricularCourseGroup.getBranch().equals(this.getBranch()) &&
-				curricularCourseGroup.getIdInternal().equals(this.getIdInternal());
-		}
-		return result;
-	}
-	
-	public String toString()
-	{
-		return "minimumCredits[" + minimumCredits + "] maximumCredits[" + maximumCredits + "] branch[" + branch.getName() + "]";
-	}
+//    public boolean equals(Object obj) {
+//        boolean result = false;
+//        if ((result) && (obj instanceof ICurricularCourseGroup)) {
+//            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup)
+// obj;
+//            result = curricularCourseGroup.getBranch().equals(this.getBranch())
+//                    && curricularCourseGroup.getIdInternal().equals(this.getIdInternal());
+//        }
+//        return result;
+//    }
 }
