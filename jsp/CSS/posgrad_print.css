@@ -16,6 +16,10 @@ table, p {
 	color: black;
 }
 
+p 	{
+	text-align: justify;
+	}
+
 table {
 	width: 95%;
 	margin: 0 2em 0 1.5em;
