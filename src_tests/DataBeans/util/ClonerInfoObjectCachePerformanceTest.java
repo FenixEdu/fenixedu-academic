@@ -52,41 +52,39 @@ public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
 		System.out.println("   ### Testing cache performance ###");
 		try
 		{
-			persistentSupport.iniciarTransaccao();
-			List infoExecutionCourses = readInfoExecutionCourses();
-
-			startTime = Calendar.getInstance();
-			for (int i = 0; i < /*infoExecutionCourses.size()*/ 2798; i++)
-			{
-				Cloner.get((IDomainObject) infoExecutionCourses.get(i));
-			}
-			endTime = Calendar.getInstance();
-			System.out.println(
-				"Cloning of "
-					+ infoExecutionCourses.size()
-					+ " objects took "
-					+ cacheTest.calculateExecutionTime(startTime, endTime)
-					+ " ms");
-
-			startTime = Calendar.getInstance();
-			for (int i = 0; i < infoExecutionCourses.size(); i++)
-			{
-				Cloner.get((IDomainObject) infoExecutionCourses.get(i));
-			}
-			endTime = Calendar.getInstance();
-			System.out.println(
-				"Cloning of "
-					+ infoExecutionCourses.size()
-					+ " objects took "
-					+ cacheTest.calculateExecutionTime(startTime, endTime)
-					+ " ms");
-
-			persistentSupport.confirmarTransaccao();
+			doTheTest();
+			doTheTest();
+			doTheTest();
+			clearCache();
+			doTheTest();
+			doTheTest();
+			doTheTest();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	private static void doTheTest() throws ExcepcaoPersistencia
+	{
+		persistentSupport.iniciarTransaccao();
+		List infoExecutionCourses = readInfoExecutionCourses();
+
+		startTime = Calendar.getInstance();
+		for (int i = 0; i < infoExecutionCourses.size(); i++)
+		{
+			Cloner.get((IDomainObject) infoExecutionCourses.get(i));
+		}
+		endTime = Calendar.getInstance();
+		System.out.println(
+			"Cloning of "
+				+ infoExecutionCourses.size()
+				+ " objects took "
+				+ cacheTest.calculateExecutionTime(startTime, endTime)
+				+ " ms");
+
+		persistentSupport.confirmarTransaccao();
 	}
 
 	private static List readInfoExecutionCourses() throws ExcepcaoPersistencia
@@ -113,6 +111,17 @@ public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
 	private long calculateExecutionTime(Calendar startTime, Calendar endTime)
 	{
 		return endTime.getTimeInMillis() - startTime.getTimeInMillis();
+	}
+
+	/**
+	 * 
+	 */
+	private static void clearCache() throws ExcepcaoPersistencia
+	{
+		persistentSupport.iniciarTransaccao();
+		persistentSupport.clearCache();
+		System.out.println("Cache cleared.");
+		persistentSupport.confirmarTransaccao();
 	}
 
 }
