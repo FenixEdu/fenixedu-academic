@@ -1,129 +1,147 @@
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import Util.SituationOfGuide;
 import Util.State;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) 
+ * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoGuideSituation  extends InfoObject {
-	
-	protected String remarks;
-	protected SituationOfGuide situation;
-	protected Date date;
-	protected State state;
-	  
-	protected InfoGuide infoGuide;	
-	
-	
-	
-	public InfoGuideSituation() {}
-		
-	public InfoGuideSituation(String remarks, SituationOfGuide situationOfGuide, Date date, State state, InfoGuide infoGuide){	 		
-		this.remarks = remarks;
-		this.situation = situationOfGuide;
-		this.date = date;
-		this.state = state;
-		this.infoGuide = infoGuide;
-	}
-	
-	public boolean equals(Object obj) {
-	  boolean resultado = false;
-	  if (obj instanceof InfoGuideSituation) {
-		InfoGuideSituation infoGuideSituation = (InfoGuideSituation)obj;
+public class InfoGuideSituation extends InfoObject
+{
 
-		resultado = getInfoGuide().equals(infoGuideSituation.getInfoGuide()) &&
-					getSituation().equals(infoGuideSituation.getSituation());
-	  }
+    protected String remarks;
+    protected SituationOfGuide situation;
+    protected Date date;
+    protected State state;
 
-	  return resultado;
-	}
-  
-	public String toString() {
-	  String result = "[GUIDE SITUATION";
-	  result += ", remarks=" + remarks;
-	  result += ", guide=" + infoGuide;
-	  result += ", guide Situtation=" + situation;
-	  result += ", date=" + date;
-	  result += ", state=" + state;
-	  result += "]";
-	  return result;
-	}
-    
-	
-	
-	/**
+    protected InfoGuide infoGuide;
+
+    public InfoGuideSituation()
+    {
+    }
+
+    public InfoGuideSituation(
+        String remarks,
+        SituationOfGuide situationOfGuide,
+        Date date,
+        State state,
+        InfoGuide infoGuide)
+    {
+        this.remarks = remarks;
+        this.situation = situationOfGuide;
+        this.date = date;
+        this.state = state;
+        this.infoGuide = infoGuide;
+    }
+
+    public boolean equals(Object obj)
+    {
+        boolean resultado = false;
+        if (obj instanceof InfoGuideSituation)
+        {
+            InfoGuideSituation infoGuideSituation = (InfoGuideSituation) obj;
+
+            resultado =
+                getInfoGuide().equals(infoGuideSituation.getInfoGuide())
+                    && getSituation().equals(infoGuideSituation.getSituation());
+        }
+
+        return resultado;
+    }
+
+    public String toString()
+    {
+        String result = "[GUIDE SITUATION";
+        result += ", remarks=" + remarks;
+        result += ", guide=" + infoGuide;
+        result += ", guide Situtation=" + situation;
+        result += ", date=" + date;
+        result += ", state=" + state;
+        result += "]";
+        return result;
+    }
+
+    /**
 	 * @return
 	 */
-	public Date getDate() {
-		return date;
-	}
+    public Date getDate()
+    {
+        return date;
+    }
 
-	/**
+    /**
 	 * @return
 	 */
-	public InfoGuide getInfoGuide() {
-		return infoGuide;
-	}
+    public InfoGuide getInfoGuide()
+    {
+        return infoGuide;
+    }
 
-	/**
+    /**
 	 * @return
 	 */
-	public String getRemarks() {
-		return remarks;
-	}
+    public String getRemarks()
+    {
+        return remarks;
+    }
 
-	/**
+    /**
 	 * @return
 	 */
-	public SituationOfGuide getSituation() {
-		return situation;
-	}
+    public SituationOfGuide getSituation()
+    {
+        return situation;
+    }
 
-	/**
+    /**
 	 * @return
 	 */
-	public State getState() {
-		return state;
-	}
+    public State getState()
+    {
+        return state;
+    }
 
-	/**
+    /**
 	 * @param date
 	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
 
-	/**
+    /**
 	 * @param guide
 	 */
-	public void setInfoGuide(InfoGuide guide) {
-		infoGuide = guide;
-	}
+    public void setInfoGuide(InfoGuide guide)
+    {
+        infoGuide = guide;
+    }
 
-	/**
+    /**
 	 * @param string
 	 */
-	public void setRemarks(String string) {
-		remarks = string;
-	}
+    public void setRemarks(String string)
+    {
+        remarks = string;
+    }
 
-	/**
+    /**
 	 * @param guide
 	 */
-	public void setSituation(SituationOfGuide guide) {
-		situation = guide;
-	}
+    public void setSituation(SituationOfGuide guide)
+    {
+        situation = guide;
+    }
 
-	/**
+    /**
 	 * @param state
 	 */
-	public void setState(State state) {
-		this.state = state;
-	}
+    public void setState(State state)
+    {
+        this.state = state;
+    }
 
 }

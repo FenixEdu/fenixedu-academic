@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.io.Serializable;
 
 /**
  * @author dcs-rjao

@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.List;
 
 import Util.EnrolmentEvaluationType;
@@ -8,149 +7,180 @@ import Util.EnrolmentState;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 22/Abr/2003
  */
-public class InfoEnrolment extends InfoObject {
-	private InfoStudentCurricularPlan infoStudentCurricularPlan;
-//	private InfoCurricularCourse infoCurricularCourse;
-	private InfoExecutionPeriod infoExecutionPeriod;
-	private EnrolmentState enrolmentState;
-	private EnrolmentEvaluationType evaluationType;
-	private InfoCurricularCourseScope infoCurricularCourseScope;
-	
-	// to be used to keep the actual enrolment evaluation
-	private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
+public class InfoEnrolment extends InfoObject
+{
+    private InfoStudentCurricularPlan infoStudentCurricularPlan;
+    //	private InfoCurricularCourse infoCurricularCourse;
+    private InfoExecutionPeriod infoExecutionPeriod;
+    private EnrolmentState enrolmentState;
+    private EnrolmentEvaluationType evaluationType;
+    private InfoCurricularCourseScope infoCurricularCourseScope;
 
-	private List infoEvaluations;
+    // to be used to keep the actual enrolment evaluation
+    private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
 
-	public InfoEnrolment() {
-	}
+    private List infoEvaluations;
 
-	public InfoEnrolment(InfoStudentCurricularPlan infoStudentCurricularPlan, InfoCurricularCourseScope infoCurricularCourseScope, EnrolmentState state, InfoExecutionPeriod infoExecutionPeriod) {
-		this();
-		setInfoCurricularCourseScope(infoCurricularCourseScope);
-		setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-		setEnrolmentState(state);
-		setInfoExecutionPeriod(infoExecutionPeriod);
-	}
+    public InfoEnrolment()
+    {
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
+    public InfoEnrolment(
+        InfoStudentCurricularPlan infoStudentCurricularPlan,
+        InfoCurricularCourseScope infoCurricularCourseScope,
+        EnrolmentState state,
+        InfoExecutionPeriod infoExecutionPeriod)
+    {
+        this();
+        setInfoCurricularCourseScope(infoCurricularCourseScope);
+        setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+        setEnrolmentState(state);
+        setInfoExecutionPeriod(infoExecutionPeriod);
+    }
 
-		if (obj instanceof InfoEnrolment) {
-			InfoEnrolment enrolment = (InfoEnrolment) obj;
+    public boolean equals(Object obj)
+    {
+        boolean resultado = false;
 
-			resultado = this.getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan()) &&
-//						this.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse()) &&
-						this.getInfoCurricularCourseScope().equals(enrolment.getInfoCurricularCourseScope()) &&
-						this.getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod());
-		}
-		return resultado;
-	}
+        if (obj instanceof InfoEnrolment)
+        {
+            InfoEnrolment enrolment = (InfoEnrolment) obj;
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
-		result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
-		result += "state = " + this.enrolmentState + "; ";
-//		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
-		result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
-		result += "enrolmentEvaluationType = " + this.evaluationType + "; ";
-		result += "infoEvaluations = " + this.infoEvaluations + "]\n";
+            resultado =
+                this.getInfoStudentCurricularPlan().equals(enrolment.getInfoStudentCurricularPlan()) &&
+                //						this.getInfoCurricularCourse().equals(enrolment.getInfoCurricularCourse()) &&
+    this.getInfoCurricularCourseScope().equals(enrolment.getInfoCurricularCourseScope())
+        && this.getInfoExecutionPeriod().equals(enrolment.getInfoExecutionPeriod());
+        }
+        return resultado;
+    }
 
-		return result;
-	}
+    public String toString()
+    {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
+        result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
+        result += "state = " + this.enrolmentState + "; ";
+        //		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
+        result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
+        result += "enrolmentEvaluationType = " + this.evaluationType + "; ";
+        result += "infoEvaluations = " + this.infoEvaluations + "]\n";
 
-//	public InfoCurricularCourse getInfoCurricularCourse() {
-//		return infoCurricularCourse;
-//	}
+        return result;
+    }
 
-	/**
+    //	public InfoCurricularCourse getInfoCurricularCourse() {
+    //		return infoCurricularCourse;
+    //	}
+
+    /**
 	 * @return InfoExecutionPeriod
 	 */
-	public InfoExecutionPeriod getInfoExecutionPeriod() {
-		return infoExecutionPeriod;
-	}
+    public InfoExecutionPeriod getInfoExecutionPeriod()
+    {
+        return infoExecutionPeriod;
+    }
 
-	/**
+    /**
 	 * @return InfoStudentCurricularPlan
 	 */
-	public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
-		return infoStudentCurricularPlan;
-	}
+    public InfoStudentCurricularPlan getInfoStudentCurricularPlan()
+    {
+        return infoStudentCurricularPlan;
+    }
 
-	/**
+    /**
 	 * @return EnrolmentState
 	 */
-	public EnrolmentState getEnrolmentState() {
-		return enrolmentState;
-	}
+    public EnrolmentState getEnrolmentState()
+    {
+        return enrolmentState;
+    }
 
-//	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-//		this.infoCurricularCourse = infoCurricularCourse;
-//	}
+    //	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+    //		this.infoCurricularCourse = infoCurricularCourse;
+    //	}
 
-	/**
+    /**
 	 * Sets the infoExecutionPeriod.
-	 * @param infoExecutionPeriod The infoExecutionPeriod to set
+	 * 
+	 * @param infoExecutionPeriod
+	 *            The infoExecutionPeriod to set
 	 */
-	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-		this.infoExecutionPeriod = infoExecutionPeriod;
-	}
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
+    {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
 
-	/**
+    /**
 	 * Sets the infoStudentCurricularPlan.
-	 * @param infoStudentCurricularPlan The infoStudentCurricularPlan to set
+	 * 
+	 * @param infoStudentCurricularPlan
+	 *            The infoStudentCurricularPlan to set
 	 */
-	public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
-		this.infoStudentCurricularPlan = infoStudentCurricularPlan;
-	}
+    public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan)
+    {
+        this.infoStudentCurricularPlan = infoStudentCurricularPlan;
+    }
 
-	/**
+    /**
 	 * Sets the state.
-	 * @param state The state to set
+	 * 
+	 * @param state
+	 *            The state to set
 	 */
-	public void setEnrolmentState(EnrolmentState state) {
-		this.enrolmentState = state;
-	}
+    public void setEnrolmentState(EnrolmentState state)
+    {
+        this.enrolmentState = state;
+    }
 
-	public EnrolmentEvaluationType getEvaluationType() {
-		return this.evaluationType;
-	}
+    public EnrolmentEvaluationType getEvaluationType()
+    {
+        return this.evaluationType;
+    }
 
-	public void setEvaluationType(EnrolmentEvaluationType type) {
-		this.evaluationType = type;
-	}
+    public void setEvaluationType(EnrolmentEvaluationType type)
+    {
+        this.evaluationType = type;
+    }
 
-	public List getInfoEvaluations() {
-		return infoEvaluations;
-	}
+    public List getInfoEvaluations()
+    {
+        return infoEvaluations;
+    }
 
-	public void setInfoEvaluations(List list) {
-		infoEvaluations = list;
-	}
+    public void setInfoEvaluations(List list)
+    {
+        infoEvaluations = list;
+    }
 
-	public InfoCurricularCourseScope getInfoCurricularCourseScope() {
-		return infoCurricularCourseScope;
-	}
+    public InfoCurricularCourseScope getInfoCurricularCourseScope()
+    {
+        return infoCurricularCourseScope;
+    }
 
-	public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope) {
-		infoCurricularCourseScope = scope;
-	}
+    public void setInfoCurricularCourseScope(InfoCurricularCourseScope scope)
+    {
+        infoCurricularCourseScope = scope;
+    }
 
-	/**
+    /**
 	 * @return InfoEnrolmentEvaluation
 	 */
-	public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
-		return infoEnrolmentEvaluation;
-	}
+    public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation()
+    {
+        return infoEnrolmentEvaluation;
+    }
 
-	/**
+    /**
 	 * @param evaluation
 	 */
-	public void setInfoEnrolmentEvaluation(InfoEnrolmentEvaluation evaluation) {
-		infoEnrolmentEvaluation = evaluation;
-	}
+    public void setInfoEnrolmentEvaluation(InfoEnrolmentEvaluation evaluation)
+    {
+        infoEnrolmentEvaluation = evaluation;
+    }
 
 }

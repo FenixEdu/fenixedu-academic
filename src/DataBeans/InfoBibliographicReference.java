@@ -5,7 +5,6 @@
  */
 package DataBeans;
 
-import java.io.Serializable;
 
 
 /**

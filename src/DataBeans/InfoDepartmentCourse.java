@@ -3,7 +3,6 @@
  */
 package DataBeans;
 
-import java.io.Serializable;
 
 /**
  * @author lmac1
