@@ -212,5 +212,15 @@ log.image.directory=/home/marvin/workspace/fenix_head/build/standalone/ciapl/ima
 #
 #
 #------------------------------------------------------------------------------
+# Testing Configuratio
+#------------------------------------------------------------------------------
+#
+#   request.capture.filename: file to which user requests will be stored for
+#                             load testing of simulation purposes
+#
+request.capture.filename=/tmp/requestCapture.txt
+#
+#
+#------------------------------------------------------------------------------
 # End of build.properties.sample file
 #------------------------------------------------------------------------------

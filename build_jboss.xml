@@ -424,6 +424,10 @@
 		    token="@index.html.link@" 
 		    property="index.html.link"/>
 
+		<replacefilter 
+		    token="@request.capture.filename@" 
+		    property="request.capture.filename"/>
+
              <replacefilter token="@enrollment.faq.url@"
 		    			   property="enrollment.faq.url"/>    
 
