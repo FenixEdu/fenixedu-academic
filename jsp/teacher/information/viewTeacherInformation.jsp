@@ -102,7 +102,7 @@
 			<%--<bean:write name="" property="" />--%>
 			<bean:message key="label.doublePoint" />
 		</p>
-		<style="margin-top:10px">	
+		<br />	
 			<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
 				<bean:write name="infoExternalActivity" property="activity" />
 			</logic:iterate>
@@ -163,19 +163,17 @@
 		</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">7</span>
-			<bean:message key="message.teacherInformation.ownPublications" /></p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
-			<tr> <!-- VER ------------- -->
-				<%--<td><html:textarea name="" property=""/></td> --%>
-			</tr>
-		</table>
-		<%--<table> <!-- VER: Passar a usar a tabela de publicações -->
-			<logic:iterate id="" name="" property="">
-				<tr>
-					<td><bean:write name="" property="" /></td>
-				</tr>
-			</logic:iterate>
-		</table>--%>
+		<bean:message key="message.teacherInformation.ownPublications" /></p>
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
+					<tr>
+						<td class="listClasses">
+							<bean:write name="infoExternalActivity" property="activity" />
+						</td>
+					</tr>
+				</logic:iterate>
+			<br />
+			</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">8</span>
 			<bean:message key="message.teacherInformation.cientificPublications" /></p>
