@@ -881,4 +881,86 @@
 	  <foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor> 
 </class-descriptor>
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.gesdis.StudentCourseReport -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.gesdis.StudentCourseReport" table="STUDENT_COURSE_REPORT">
+    <field-descriptor name="idInternal"
+        			  column="ID_INTERNAL"
+        			  jdbc-type="INTEGER"
+        			  primarykey="true"
+			          autoincrement="true"/>
+    <field-descriptor name="keyCurricularCourse"
+    				  column="KEY_CURRICULAR_COURSE"
+    				  jdbc-type="INTEGER"/>
+	<field-descriptor name="studentReport"
+					  column="STUDENT_REPORT"
+					  jdbc-type="LONGVARCHAR"/>
+	<field-descriptor name="strongPoints"
+					  column="STRONG_POINTS"
+					  jdbc-type="LONGVARCHAR"/>
+	<field-descriptor name="weakPoints"
+					  column="WEAK_POINTS"
+					  jdbc-type="LONGVARCHAR"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>  					  
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<reference-descriptor
+         name="curricularCourse"
+         class-ref="Dominio.CurricularCourse"
+         proxy="false"
+    >
+	  <foreignkey field-ref="keyCurricularCourse"/>
+    </reference-descriptor> 
+</class-descriptor>
+  
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.gesdis.CourseHistoric -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.gesdis.CourseHistoric" table="COURSE_HISTORIC">
+    <field-descriptor name="idInternal"
+        			  column="ID_INTERNAL"
+        			  jdbc-type="INTEGER"
+        			  primarykey="true"
+			          autoincrement="true"/>
+    <field-descriptor name="keyCurricularCourse"
+    				  column="KEY_CURRICULAR_COURSE"
+    				  jdbc-type="INTEGER"/>
+    <field-descriptor name="enrolled"
+    				  column="ENROLLED"
+    				  jdbc-type="INTEGER"/>
+    <field-descriptor name="evaluated"
+    				  column="EVALUATED"
+    				  jdbc-type="INTEGER"/>
+    <field-descriptor name="approved"
+    				  column="APPROVED"
+    				  jdbc-type="INTEGER"/>
+	<field-descriptor name="curricularYear"
+					  column="CURRICULAR_YEAR"
+					  jdbc-type="VARCHAR"/>
+    <field-descriptor name="semester"
+    				  column="SEMESTER"
+    				  jdbc-type="INTEGER"/>  					  
+    <field-descriptor name="ackOptLock"
+                      column="ACK_OPT_LOCK"
+                      jdbc-type="INTEGER"
+                      locking="true"/>
+
+	<reference-descriptor
+         name="curricularCourse"
+         class-ref="Dominio.CurricularCourse"
+         proxy="false"
+    >
+    
+        <foreignkey field-ref="keyCurricularCourse"/>
+    </reference-descriptor> 
+</class-descriptor>
 <!-- Mapping of User defined classes ends here -->
