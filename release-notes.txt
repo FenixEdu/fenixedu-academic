@@ -3,6 +3,41 @@ Release 2004-04-13
 ---------------------------------------------------------------------
 
 NEW FEATURES:
+- Change state of a student curricular course in master degree operation INACTIVE for ACTIVE, it should change all curricular course ANNULLED for ENROLEMENT
+(modified service file EditPosGradStudentCurricularPlanStateAndCredits.java )
+
+NOTES:
+ 	
+CHANGES:
+- In degree curricular plan site it was add a new column to the list, CurricularCourseType.
+(modified publico/degreeSite/showDegreeCurricularPlan.jsp, publico/degreeSite/showDegreeCurricularPlanEnglish.jsp, ApplicationResources, Util/CurricularCourseType.java)
+- In curricular course's site without CURRICULUM information are shown in the same the execution courses.
+- The degree's site in the area of the degree coordinator did not show all actives curricular plans.
+- The student´s list about gratuity shouldn't show only the students with SCP actives or with school part conclued.
+(modified )
+- In the degree's site only the responsible professor for the degree's coordination is shown.
+(modified publico/degreeSite/showDegreeSiteDescription.jsp, publico/degreeSite/showDegreeSiteDescriptionEnglish.jsp)
+- In students list about gratuities, all students with SCP inactive or similar should appear in the list.
+(modified StudentsGratuityListAction.java, GratuitySituationOJB.java, studentsGrauityList.jsp)
+- In students list about gratuities, degrees with gratuity values defined by 
+(modified StudentsGratuityListAction.java, GratuitySituationOJB.java, studentsGrauityList.jsp)
+
+BUG FIXES:
+- in the use cases of GROUP PROPERTIES. This bugs had appeared because bad merge was made in the last deploy.
+- in master degree operation when check enrolment for extra_curricular
+(ATTEND, ENROLMENT_EVALUATION, 
+ENROLMENT_EQUIVALENCE, EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE, 
+CREDITS_IN_SCIENTIFIC_AREA, CREDITS_IN_ANY_SECUNDARY_AREA)
+ 
+KNOWN ISSUES:
+
+
+
+---------------------------------------------------------------------
+Release 2004-04-13
+---------------------------------------------------------------------
+
+NEW FEATURES:
 - Added create/edit of final degree work proposals interface to coordinators portal.
 - task [#178] Publication of Final Degree Work Proposals.
 - task [#177] Public Listing of Final Degree Work Proposals.

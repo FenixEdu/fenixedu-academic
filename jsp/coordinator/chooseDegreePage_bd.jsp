@@ -17,7 +17,7 @@
 	<table>
 		<tr>
 			<td class="listClasses-header">Nome</td>
-			<!--<td class="listClasses-header">Ano Lectivo</td> -->
+			<td class="listClasses-header">Ano Lectivo</td>
 			<td class="listClasses-header">Plano Curricular</td>
 			<!-- <td class="listClasses-header">&nbsp;</td> -->
 		</tr>
@@ -31,11 +31,11 @@
 						<bean:write name="degree" property="infoDegreeCurricularPlan.infoDegree.nome" /> 
 					</html:link>
 			   </td>
-				<!--<td class="listClasses">
+			   <td class="listClasses">
 					<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
 						<bean:write name="degree" property="infoExecutionYear.year" />
 					</html:link>
-			   </td>-->
+			   </td>
 				<td class="listClasses">
 					<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
 						<bean:write name="degree" property="infoDegreeCurricularPlan.name" />

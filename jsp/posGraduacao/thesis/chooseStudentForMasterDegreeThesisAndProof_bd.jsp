@@ -8,14 +8,14 @@
 
 <br/>
 <br/>
-<html:form action="/prepareStudentForMasterDegreeThesisAndProof.do">
+<html:form action="/prepareStudentForMasterDegreeThesisAndProof.do" focus="studentNumber">
 	<html:hidden property="method" value="getStudentAndDegreeTypeForThesisOperations"/>
 	<html:hidden property="degreeType" value="2"/>
 	<html:hidden property="page" value="1"/>
 	<table border="0">
 		<tr>
-			<td align="left"><bean:message key="label.choose.student"/>&nbsp;</td>
-			<td align="left">
+			<td><bean:message key="label.choose.student"/>&nbsp;</td>
+			<td>
 				<input type="text" name="studentNumber" size="5" value=""/>
 			</td>
 		</tr>

@@ -7,6 +7,7 @@
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
+	<bean:define id="infoDegreeID" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal"/>
 	
 	</br>
 	</br>
@@ -52,7 +53,8 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + infoExecutionDegreeID.toString() %>" target="_blank">
+			<%--<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + infoExecutionDegreeID.toString() %>" target="_blank">--%>
+			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;degreeID=" + infoDegreeID.toString() %>" target="_blank">
 			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
 			    <br/>
 				<br/>
