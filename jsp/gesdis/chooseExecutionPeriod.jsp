@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="title.copySite"/></h2>
+
 <br>
 <bean:message key="message.copySite.information" />
 <br><br>

@@ -22,6 +22,15 @@
 	  <put name="body" value=" " />
 	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />	  
 	</definition>	
+	<definition name="copy.site.execution.course.page" page="/teacherLayout_2col.jsp">
+	  <put name="serviceName" value="Portal Docente" />	
+	  <put name="institutionName" value="Instituto Superior Técnico" />
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/navbar.jsp"/>
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="body" value=" " />
+	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />	  
+	</definition>	
 	<definition name="definition.teacher.summaryPage" page="/teacherLayout_2col.jsp">
 	  <put name="serviceName" value="Portal Docente" />
 	  <put name="institutionName" value="Instituto Superior Técnico" />
@@ -41,9 +50,6 @@
 	</definition>
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
-	</definition>
-	<definition name="copy.site.execution.course.page" extends="definition.teacher.two-column">
-	 	<put name="navLocal" value="/teacher/navbar.jsp"/>	
 	</definition>
 	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
 		<put name="title" value=""/>

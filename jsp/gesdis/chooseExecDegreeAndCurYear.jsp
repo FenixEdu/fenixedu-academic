@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<h2><bean:message key="title.copySite"/></h2>
+
 <bean:write name="executionPeriodName"/><br>
 <span class="error"><html:errors/></span>
 <html:form action="/copySiteExecutionCourse">
