@@ -36,6 +36,9 @@
 		  		<bean:message key="label.executionYear" />
 		  	</td >
 		  	<td class="listClasses-header">
+		  		<bean:message key="label.semester" />
+		  	</td >
+		  	<td class="listClasses-header">
 		  		<bean:message key="label.degree.name" />
 		  	</td>
 		  	<td class="listClasses-header">
@@ -50,6 +53,9 @@
 	  		<tr>
 			  <td class="listClasses">
 			    <bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+			  </td>
+			  <td class="listClasses">
+			    <bean:write name="enrolment" property="infoExecutionPeriod.name"/>
 			  </td>
 			  <td class="listClasses">
 			    <bean:write name="enrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>

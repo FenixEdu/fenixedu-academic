@@ -20,7 +20,8 @@ public class ReportAllPastEnrollmentMigration
 	// For errors:
 	private static HashMap unknownCurricularCourses = new HashMap();
 	private static HashMap unknownTeachersAndEmployees = new HashMap();
-
+	private static HashMap notCreatedEnrolmentEvaluations = new HashMap();
+	
 	// For information:
 	private static int totalStudentCurricularPlansCreated = 0;
 	private static int totalEnrollmentsCreated = 0;
@@ -30,6 +31,7 @@ public class ReportAllPastEnrollmentMigration
 
 	private static int unknownCurricularCoursesTimes = 0;
 	private static int unknownTeachersAndEmployeesTimes = 0;
+	private static int notCreatedEnrolmentEvaluationsTimes = 0;
 
 	/**
 	 * @param mwEnrolment
@@ -75,6 +77,27 @@ public class ReportAllPastEnrollmentMigration
 		
 		ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.put(key, mwEnrolmentCasesList);
 		ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes++;
+	}
+
+	/**
+	 * @param mwEnrolment
+	 */
+	public static void addNotCreatedEnrolmentEvaluation(String key, MWEnrolment mwEnrolment)
+	{
+		List mwEnrolmentCasesList = (List) ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.get(key);
+		if (mwEnrolmentCasesList == null)
+		{
+			mwEnrolmentCasesList = new ArrayList();
+			mwEnrolmentCasesList.add(mwEnrolment);
+		} else
+		{
+			if (!mwEnrolmentCasesList.contains(mwEnrolment)) {
+				mwEnrolmentCasesList.add(mwEnrolment);
+			}
+		}
+		
+		ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.put(key, mwEnrolmentCasesList);
+		ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluationsTimes++;
 	}
 
 	/**
@@ -137,7 +160,7 @@ public class ReportAllPastEnrollmentMigration
 				Iterator iterator2 = mwEnrolmentCasesList.iterator();
 				while (iterator2.hasNext()) {
 					MWEnrolment mwEnrolment = (MWEnrolment) iterator2.next();
-					out.println("\t" + mwEnrolment.toFlatString());
+					out.println("\t\t" + mwEnrolment.toFlatString());
 				}
 			}
 			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes);
@@ -163,10 +186,34 @@ public class ReportAllPastEnrollmentMigration
 				Iterator iterator2 = mwEnrolmentCasesList.iterator();
 				while (iterator2.hasNext()) {
 					MWEnrolment mwEnrolment = (MWEnrolment) iterator2.next();
-					out.println("\t" + mwEnrolment.toFlatString());
+					out.println("\t\t" + mwEnrolment.toFlatString());
 				}
 			}
 			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes);
+		}
+	}
+
+	/**
+	 * @param out
+	 * @return
+	 */
+	private static void printNotCreatedEnrolmentEvaluations(PrintWriter out)
+	{
+		if(!ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.entrySet().isEmpty()) {
+			out.println("\nWARNING TYPE 1 - ENROLLMENT EVALUATIONS NOT CREATED");
+			out.println("\tCases:");
+			Iterator iterator = ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.entrySet().iterator();
+			while (iterator.hasNext())
+			{
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				List mwEnrolmentCasesList = (List) mapEntry.getValue();
+				Iterator iterator2 = mwEnrolmentCasesList.iterator();
+				while (iterator2.hasNext()) {
+					MWEnrolment mwEnrolment = (MWEnrolment) iterator2.next();
+					out.println("\t" + mwEnrolment.toFlatString());
+				}
+			}
+			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluationsTimes);
 		}
 	}
 
@@ -190,6 +237,12 @@ public class ReportAllPastEnrollmentMigration
 		if(totalEnrolmentsNotMigrated > 0) {
 			out.println("\nTOTAL ENROLMENTS NOT MIGRADTED: " + totalEnrolmentsNotMigrated);
 		}
+
+		out.println("\n---------------------------------------------------------------------------");
+		out.println("\n----------------------------- WARNING CASES -------------------------------");
+		out.println("\n---------------------------------------------------------------------------");
+
+		ReportAllPastEnrollmentMigration.printNotCreatedEnrolmentEvaluations(out);
 
 		out.println("\n---------------------------------------------------------------------------");
 		out.println("\n----------------------------- INFORMATIONS --------------------------------");

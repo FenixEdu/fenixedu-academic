@@ -1,14 +1,22 @@
-drop table if exists mw_ENROLMENT;
-create table mw_ENROLMENT
-select * from mw_ENROLMENT_temp use index (I2) where enrolmentYear <> 2003;
-
 drop table if exists mw_CURRICULAR_COURSE_SCOPE;
 create table mw_CURRICULAR_COURSE_SCOPE
 select * from mw_CURRICULAR_COURSE_SCOPE_temp;
 
+-- drop table if exists mw_ENROLMENT;
+-- create table mw_ENROLMENT
+-- select * from mw_ENROLMENT_temp use index (I2) where enrolmentYear <> 2003;
+
+-- drop table if exists mw_ALUNO;
+-- create table mw_ALUNO
+-- select mwa.* from mw_ALUNO_temp mwa inner join mw_ENROLMENT mwe on mwa.number = mwe.number group by mwa.number;
+
+drop table if exists mw_ENROLMENT;
+create table mw_ENROLMENT
+select * from mw_ENROLMENT_temp use index (I2) where degreeCode = 11 and enrolmentYear <> 2003;
+
 drop table if exists mw_ALUNO;
 create table mw_ALUNO
-select mwa.* from mw_ALUNO_temp mwa inner join mw_ENROLMENT mwe on mwe.number = mwa.number group by mwa.number;
+select * from mw_ALUNO_temp where degreeCode = 11;
 
 ----------------------------------------------------------------------------------------------------------------------
 -- Especificações do ficheiro 'curriculo.txt' que vem do Almeida:

@@ -393,8 +393,12 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		
 		ICurricularCourse curricularCourse = (ICurricularCourse) CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.get(key);
 		if (curricularCourse == null) {
+			int x = CreateAndUpdateAllPastCurriculums.curricularCoursesCreated;
 			curricularCourse = CreateAndUpdateAllPastCurriculums.getCurricularCourse(mwEnrolment.getCoursecode(), degreeCurricularPlan, fenixPersistentSuport);
-			CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.put(key, curricularCourse);
+			if (CreateAndUpdateAllPastCurriculums.curricularCoursesCreated > x)
+			{
+				CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.put(key, curricularCourse);
+			}
 		}
 
 		if (curricularCourse != null) {
@@ -446,8 +450,12 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			mwCurricularCourseScope.setCurricularsemester(mwEnrolment.getCurricularcoursesemester());
 			mwCurricularCourseScope.setCurricularyear(mwEnrolment.getCurricularcourseyear());
 			mwCurricularCourseScope.setExecutionyear(mwEnrolment.getEnrolmentyear());
+			int x = CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated;
 			curricularCourseScope = CreateAndUpdateAllPastCurriculums.getCurricularCourseScope(mwCurricularCourseScope, curricularCourse, branch, fenixPersistentSuport);
-			CreateAndUpdateAllStudentsPastEnrolments.curricularCourseScopesCreated.put(key, curricularCourseScope);
+			if (CreateAndUpdateAllPastCurriculums.curricularCourseScopesCreated > x)
+			{
+				CreateAndUpdateAllStudentsPastEnrolments.curricularCourseScopesCreated.put(key, curricularCourseScope);
+			}	
 		}
 		return curricularCourseScope;
 	}
@@ -525,24 +533,24 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		}
 
 		// Create the EnrolmentEvaluation.
-		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade(), mwEnrolment.getExamdate());
+		Date whenAltered = null;
+		if (mwEnrolment.getExamdate() == null) {
+			whenAltered = new Date();
+		} else {
+			whenAltered = mwEnrolment.getExamdate();
+		}
+
+		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade(), whenAltered);
+
+		IEnrolmentEvaluation enrolmentEvaluationToObtainKey = new EnrolmentEvaluation();
+		enrolmentEvaluationToObtainKey.setEnrolment(enrolment);
+		enrolmentEvaluationToObtainKey.setGrade(mwEnrolment.getGrade());
+		enrolmentEvaluationToObtainKey.setEnrolmentEvaluationType(enrolmentEvaluationType);
+		enrolmentEvaluationToObtainKey.setWhen(whenAltered);
+		String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
 
 		if (enrolmentEvaluation == null) {
 			
-			Date whenAltered = null;
-			if (mwEnrolment.getExamdate() == null) {
-				whenAltered = new Date();
-			} else {
-				whenAltered = mwEnrolment.getExamdate();
-			}
-
-			IEnrolmentEvaluation enrolmentEvaluationToObtainKey = new EnrolmentEvaluation();
-			enrolmentEvaluationToObtainKey.setEnrolment(enrolment);
-			enrolmentEvaluationToObtainKey.setGrade(mwEnrolment.getGrade());
-			enrolmentEvaluationToObtainKey.setEnrolmentEvaluationType(enrolmentEvaluationType);
-			enrolmentEvaluationToObtainKey.setWhen(whenAltered);
-			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
-
 			enrolmentEvaluation = (IEnrolmentEvaluation) CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.get(key);
 
 			if (enrolmentEvaluation == null) {
@@ -567,11 +575,13 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
 			} else {
 				System.out.println("[WARNING 203] No EnrolmentEvaluation was created!");
-				System.out.println(mwEnrolment.toString());
+				ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
+//				System.out.println(mwEnrolment.toString());
 			}
 		} else {
 			System.out.println("[WARNING 204] No EnrolmentEvaluation was created!");
-			System.out.println(mwEnrolment.toString());
+			ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
+//			System.out.println(mwEnrolment.toString());
 		}
 
 		return enrolment;
@@ -861,7 +871,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @return
 	 * @throws Exception
 	 */
-	public static IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Exception
+	protected static IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
 		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();

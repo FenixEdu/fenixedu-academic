@@ -89,15 +89,15 @@ public class ReadStudentCurricularPlans implements IServico
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
 
             // FIXME [DAVID]: Este if é para estar aqui até que existam planos curriculares de alunos de graduação no Fenix.
-            if (studentCurricularPlan
-                .getDegreeCurricularPlan()
-                .getDegree()
-                .getTipoCurso()
-                .equals(TipoCurso.MESTRADO_OBJ))
-            {
+//            if (studentCurricularPlan
+//                .getDegreeCurricularPlan()
+//                .getDegree()
+//                .getTipoCurso()
+//                .equals(TipoCurso.MESTRADO_OBJ))
+//            {
                 result.add(
                     Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-            }
+//            }
         }
 
         if ((result.size() == 0))

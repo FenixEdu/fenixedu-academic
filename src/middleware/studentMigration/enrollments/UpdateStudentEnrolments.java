@@ -505,7 +505,7 @@ public class UpdateStudentEnrolments
      * @return
      * @throws ExcepcaoPersistencia
      */
-    public static ICurricularCourseScope getCurricularCourseScopeToEnrollIn(
+    private static ICurricularCourseScope getCurricularCourseScopeToEnrollIn(
         IStudentCurricularPlan studentCurricularPlan,
         MWEnrolment mwEnrolment,
         ICurricularCourse curricularCourse,
@@ -1132,7 +1132,7 @@ public class UpdateStudentEnrolments
         }
     }
 
-    public static ICurricularCourse getCurricularCourse(
+    private static ICurricularCourse getCurricularCourse(
         MWEnrolment mwEnrolment,
         IDegreeCurricularPlan degreeCurricularPlan,
         ISuportePersistente sp,
