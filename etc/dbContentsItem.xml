@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
-<!-- <!DOCTYPE dataset SYSTEM "fenix-database.dtd"> -->
+<!DOCTYPE dataset SYSTEM "fenix-database.dtd">
 <dataset>
   <ass_cargo chaveCargo='1' cargo='ALUNO'/>
   <ass_cargo chaveCargo='2' cargo='FUNCDOCENTE'/>
