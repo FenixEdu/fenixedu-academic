@@ -4,11 +4,15 @@
  */
 package ServidorApresentacao.Action.department;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,27 +37,24 @@ public class ReadTeacherProfessorshipsAction extends Action
 	 *          org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
 	 *          javax.servlet.http.HttpServletResponse)
 	 */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
         IUserView userView = SessionUtils.getUserView(request);
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
         DynaActionForm oidForm = (DynaActionForm) form;
-        Integer teacherIdInternal =
-            infoTeacher != null
-                ? infoTeacher.getIdInternal()
-                : new Integer(oidForm.get("idInternal").toString());
+        Integer teacherIdInternal = infoTeacher != null ? infoTeacher.getIdInternal() : new Integer(
+                oidForm.get("idInternal").toString());
 
-        List professorshipList =
-            (List) ServiceUtils.executeService(
-                    userView,
-                    "ReadProfessorshipsByTeacherAndExecutionPeriodOIDs",
-                    new Object[] { teacherIdInternal, null });
-        request.setAttribute("infoProfessorshipList", professorshipList);
+        List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(userView,
+                "ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[]{teacherIdInternal,
+                    null});
+
+        Comparator nameComparator = new BeanComparator("infoProfessorship.infoExecutionCourse.nome");
+        Collections.sort(detailedInfoProfessorshipList, nameComparator);
+
+        request.setAttribute("detailedProfessorshipList", detailedInfoProfessorshipList);
+
         return mapping.findForward("list-professorships");
     }
 
