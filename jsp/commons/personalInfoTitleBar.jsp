@@ -10,7 +10,7 @@
 		<strong>Utilizador:</strong> 
 		<str:getPrechomp delimiter=" ">
 			<bean:write name="<%= SessionConstants.U_VIEW %>" property="fullName"/>
-		</str:getPrechomp>
+		</str:getPrechomp> 
 		<str:getChomp delimiter=" ">
 			<bean:write name="<%= SessionConstants.U_VIEW %>" property="fullName"/>
 		</str:getChomp>
