@@ -2,20 +2,46 @@
  * ItemOJBTest.java
  * JUnit based test
  *
- * Created on 26 de Agosto de 2002, 0:49
+ * Created on 11 de Março de 2003, 11:00
  */
 
 package ServidorPersistente.OJB;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.IItem;
+import Dominio.ISection;
+import Dominio.ISite;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentItem;
+import ServidorPersistente.IPersistentSection;
+import ServidorPersistente.IPersistentSite;
+import ServidorPersistente.ISuportePersistente;
 
 
 /**
  *
- * @author ars
+ * @authors ss AINDA NAO ESTA PRONTO!
  */
 public class ItemOJBTest extends TestCaseOJB {
+	
+
+	ISuportePersistente persistentSupport=null;
+	IPersistentExecutionYear persistentExecutionYear=null;
+	IPersistentExecutionPeriod persistentExecutionPeriod=null;
+	IDisciplinaExecucaoPersistente persistentExecutionCourse=null;
+	IPersistentSite persistentSite=null;
+	IPersistentSection persistentSection=null;
+	IPersistentItem persistentItem=null;
+	ISection section=null;
+	
+	
   public ItemOJBTest(java.lang.String testName) {
     super(testName);
   }
@@ -31,6 +57,37 @@ public class ItemOJBTest extends TestCaseOJB {
   }
     
   protected void setUp() {
+	try {
+		
+		persistentSupport = SuportePersistenteOJB.getInstance();		
+		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+		persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+		persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		persistentSite = persistentSupport.getIPersistentSite();
+		persistentSection = persistentSupport.getIPersistentSection();
+		persistentItem = persistentSupport.getIPersistentItem();
+		
+		persistentSupport.iniciarTransaccao();
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º semestre",executionYear);
+		System.out.println("EXECUTION PERIOD"+executionPeriod.getName());
+		
+		IDisciplinaExecucao executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("PO",executionPeriod);
+		System.out.println("DISCIPLINAEXECUCAO "+executionCourse.getNome());
+		
+		ISite site = persistentSite.readByExecutionCourse(executionCourse);
+		System.out.println("SITE "+site.getAnnouncements());
+		
+		section = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1dePO");
+		persistentSupport.confirmarTransaccao();
+	  	
+	
+	} catch (ExcepcaoPersistencia e) {
+		e.printStackTrace();
+		fail("Error");
+	}	
+	
     super.setUp();
   }
     
@@ -38,35 +95,40 @@ public class ItemOJBTest extends TestCaseOJB {
     super.tearDown();
   }
     
-    
-    // FIXME : NOT USED AT THIS TIME
-	public void testVoidToDelete() {
+  /** Test of readBySeccaoAndNome method, of class ServidorPersistente.OJB.ItemOJB. */
+	public void testReadItemBySectionAndName() {
+		IItem item = null;
+		
+		// read existing Item
+		try {
+			persistentSupport.iniciarTransaccao();
+			item = persistentItem.readBySectionAndName(section,"Item1");
+			persistentSupport.confirmarTransaccao();
+	  	
+	  	} catch (ExcepcaoPersistencia ex) {
+			fail("testReadBySectionAndName:fail read existing item");
+	  	}
+	  	assertEquals("testReadBySectionAndName:read existing item",item.getInformation(),"item1 da seccao1dePO");
+		assertEquals("testReadBySectionAndName:read existing item",item.getName(),"Item1");
+		assertEquals("testReadBySectionAndName:read existing item",item.getOrder(),new Integer(0));
+		assertEquals("testReadBySectionAndName:read existing item",item.getUrgent(),new Integer(1));
+		
+	  	// read unexisting Item
+	  	try {
+			persistentSupport.iniciarTransaccao();
+			item = persistentItem.readBySectionAndName(section,"ItemNaoExistente");
+			assertNull(item);
+			persistentSupport.confirmarTransaccao();
+	  } catch (ExcepcaoPersistencia ex) {
+		fail("testReadBySectionAndName:fail read unexisting item");
+	  }
 	}
+    // FIXME : NOT USED AT THIS TIME
+//	public void testVoidToDelete() {
+//	}
 
     
-  /** Test of readBySeccaoAndNome method, of class ServidorPersistente.OJB.ItemOJB. */
-//  public void testReadBySeccaoAndNome() {
-//    IItem item = null;
-//    // read existing Item
-//    try {
-//      persistentSupport.iniciarTransaccao();
-//      item = _itemPersistente.readBySeccaoAndNome(_seccaoSitio1Topo1,"1");
-//      persistentSupport.confirmarTransaccao();
-//    } catch (ExcepcaoPersistencia ex) {
-//      fail("testReadBySeccaoAndNome:fail read existing item");
-//    }
-//    assertEquals("testReadBySeccaoAndNome:read existing item",item,_item1Sitio1Topo1);
-//        
-//    // read unexisting Item
-//    try {
-//      persistentSupport.iniciarTransaccao();
-//      item = _itemPersistente.readBySeccaoAndNome(_seccaoSitio1Topo1,"6");
-//      assertNull(item);
-//      persistentSupport.confirmarTransaccao();
-//    } catch (ExcepcaoPersistencia ex) {
-//      fail("testReadBySeccaoAndNome:fail read unexisting item");
-//    }
-//  }
+
 //
 //  // write new existing item
 //  public void testCreateExistingItem() {
