@@ -2,8 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <span class="error"><html:errors/></span>
+<bean:define id="executionDegreeID" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />
+
 	<br />
 	<h2>Listas finais de Candidatos</h2>
 	<br />
@@ -33,6 +36,7 @@
                 <html:hidden property='<%= "remarks[" + indexCandidate + "]" %>' />					
                 <html:hidden property='<%= "substitutes[" + indexCandidate + "]" %>' />					
         	</logic:iterate> 
+        	 <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
     	    <html:submit value="Confirmar" styleClass="inputbutton" property="OK"/>
     	    <html:submit value="Cancelar" styleClass="inputbutton" property="NotOK"/>
     	</html:form>
@@ -42,9 +46,10 @@
 		<br />
 		<br />
 		<h2>
-		   <html:link page="/displayListToSelectCandidates.do?method=print" target="_blank">
+		<html:link page="<%= "/displayListToSelectCandidates.do?method=print&amp;executionDegreeID=" + pageContext.findAttribute("executionDegreeID").toString() %>" target="_blank">
+		
 		   		<bean:message key="link.masterDegree.printCandidateApprovalList" />
-		   </html:link>
+		</html:link>
 		</h2>
 	</logic:equal>
 	

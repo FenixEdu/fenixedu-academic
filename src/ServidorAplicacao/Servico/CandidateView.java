@@ -37,8 +37,8 @@ public class CandidateView implements ICandidateView, Serializable {
 				// Information. 
 				// Note: In this list there are only Active Situations !!
 
-				if ((!infoCandidateSituation.getSituation().equals(SituationName.PENDENTE_STRING)) && 
-					(!infoCandidateSituation.getSituation().equals(SituationName.PRE_CANDIDATO_STRING)))
+				if ((!infoCandidateSituation.getSituation().equals(SituationName.PENDENTE_OBJ)) && 
+					(!infoCandidateSituation.getSituation().equals(SituationName.PRE_CANDIDATO_OBJ)))
 					return false;
 			}
 		
