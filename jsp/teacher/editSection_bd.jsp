@@ -25,6 +25,7 @@
 			<html:text size="5" name="<%=SessionConstants.INFO_SECTION %>" property="sectionOrder"/>
 		</td>
 	</tr>
+<%--
 	<tr>
 		<td>
 			<bean:message key="message.parentSection"/>
@@ -35,11 +36,35 @@
 			</html:select>
 		</td>
 	</tr>
+
 	<tr>
 		<td>
 			<app:generateSectionMenu name="ALL_SECTIONS" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" renderer="sectionChooser" />
 		</td>
 	</tr>	
+
+	<% int index = 0; %>
+	<logic:iterate id="section" name="ALL_SECTIONS" />
+		<tr>
+			<td>
+			  	<bean:define id="depth" name="section" property="sectionDepth"/>
+					<% 
+						int i = -1; 
+						while(i< ((Integer) pageContext.findAttribute("depth")).intValue()){
+					%>
+					&nbsp
+					<% 
+						}
+						i++;
+					%>
+					<a href="editSection.do?method=changeParent&amp;index=<%= index %>" >
+						<bean:write name="section" property="name" />
+					</a>
+			</td>
+		</tr>	
+	<% index++; %>					
+	</logic:iterate>
+	--%>
 	<tr>
 		<td>
 			<html:reset  styleClass="inputbutton">

@@ -38,7 +38,9 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
 			InfoSection currentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-			List allSections = (List) session.getAttribute(SessionConstants.SECTIONS);
+			List all = (List) session.getAttribute(SessionConstants.SECTIONS);
+			List allSections = new ArrayList();
+			allSections.addAll(allSections);
 			
 			session.removeAttribute("ALL_SECTIONS");
 			
