@@ -8,6 +8,9 @@
 	<bean:message key="link.home"/>
 </html:link>
 <html:link page="/objectivesManagerDA.do?method=acessObjectives">
+	<bean:message key="link.annoucements"/>
+</html:link>
+<html:link page="/objectivesManagerDA.do?method=acessObjectives">
 	<bean:message key="link.objectives"/>
 </html:link>
 <html:link page="/programManagerDA.do?method=acessProgram">
