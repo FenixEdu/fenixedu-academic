@@ -35,9 +35,6 @@ public class LoadAlmeidaLEQCurricularCourses extends LoadDataFile {
 		if (loader == null) {
 			loader = new LoadAlmeidaLEQCurricularCourses();
 		}
-//		loader.load();
-//		loader.writeToFile(logString);
-//		loader.report();
 		loader.run();
 	}
 
