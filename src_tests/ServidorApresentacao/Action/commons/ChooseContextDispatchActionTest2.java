@@ -240,7 +240,7 @@ public class ChooseContextDispatchActionTest2 extends TestCaseActionExecution {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-publico.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/* (non-Javadoc)
