@@ -49,126 +49,154 @@
 		<mkdir dir="${build.home.webinf.libs}"/>
 		<mkdir dir="${build.home}/images/logs"/>
 
-		<copy todir="${build.home.webinf.classes}">
-			<fileset dir="${config}"/>
-		</copy>
+		<parallel>
+			<copy todir="${build.home}">
+				<fileset dir="${web-content}" >
+					<include name="**/*.*"/>
+					<exclude name="WEB-INF//*.*"/>
+				</fileset>
+			</copy>
 
-		<copy todir="${build.home.webinf.libs}">
-			<fileset dir="${lib}" >
-				<include name="*.*"/>
-				<exclude name="servlet.jar"/>
-				<exclude name="jta.jar"/>
-			</fileset>
-		</copy>
+			<copy todir="${build.home.webinf.classes}">
+				<fileset dir="${config}"/>
+			</copy>
 
-		<copy todir="${build.home}">
-			<fileset dir="${web-content}" >
-				<include name="**/*.*"/>
-				<exclude name="WEB-INF//*.*"/>
-			</fileset>
-		</copy>
-		<copy todir="${build.home.webinf}">
-			<fileset dir="${config.web}" >
-				<include name="**/*.*"/>
-			</fileset>
-		</copy>
+			<copy todir="${build.home.webinf}">
+				<fileset dir="${config.web}" >
+					<include name="**/*.*"/>
+				</fileset>
+			</copy>
+
+			<antcall target="copy-libs"/>
+		</parallel>
 
 		<!-- Replace tokens in configuration files with local config -->
 		<antcall target="replace-property-values"/>
 	</target>
 
+	<target name="copy-libs"
+			description="Creates symbolix links to libraries or copy if links not available on OS.">
+		<apply executable="ln" parallel="false" os="Linux,Unix"
+			dest="${build.home.webinf.libs}"
+			relative="false"
+			output="/dev/null">
+			<arg value="-s"/>
+			<srcfile/>
+			<targetfile/>
+			<fileset dir="${lib}" >
+				<include name="*.jar"/>
+				<exclude name="servlet.jar"/>
+				<exclude name="jta.jar"/>
+			</fileset>
+			<mapper type="glob" from="*.jar" to="*.jar"/>
+		</apply>
+		<apply executable="copy" parallel="false" os="Windows"
+			dest="${build.home.webinf.libs}"
+			relative="false">
+			<srcfile/>
+			<targetfile/>
+			<fileset dir="${lib}" >
+				<include name="*.jar"/>
+				<exclude name="servlet.jar"/>
+				<exclude name="jta.jar"/>
+			</fileset>
+			<mapper type="glob" from="*.jar" to="*.jar"/>
+		</apply>
+	</target>
+
 	<target name="replace-property-values">
 
-		<replace dir="${build.home.webinf.classes}/OJB/"
-				 propertyFile="build.properties">
-			<include name="repository_database.xml"/>
-			<replacefilter token="@db.user@"
-						   property="db.user"/>
-			<replacefilter token="@db.pass@" 
-						   property="db.pass"/>
-			<replacefilter token="@db.name@"
-						   property="db.name"/>
-			<replacefilter token="@db.alias@"
-						   property="db.alias"/>
+		<parallel>
+			<replace dir="${build.home.webinf.classes}/OJB/"
+					 propertyFile="build.properties">
+				<include name="repository_database.xml"/>
+				<replacefilter token="@db.user@"
+							   property="db.user"/>
+				<replacefilter token="@db.pass@" 
+							   property="db.pass"/>
+				<replacefilter token="@db.name@"
+							   property="db.name"/>
+				<replacefilter token="@db.alias@"
+							   property="db.alias"/>
 
-				<replacefilter token="@db.assiduousness.user@"
-							   property="db.assiduousness.user"/>
-				<replacefilter token="@db.assiduousness.pass@" 
-			    			   property="db.assiduousness.pass"/>
-				<replacefilter token="@db.assiduousness.name@" 
-							   property="db.assiduousness.name"/>
-				<replacefilter token="@db.assiduousness.alias@" 
-			    			   property="db.assiduousness.alias"/>
-				<replacefilter token="@db.assiduousness.platform@" 
-			    			   property="db.assiduousness.platform"/>
-				<replacefilter token="@db.assiduousness.driver@" 
-			    			   property="db.assiduousness.driver"/>
-				<replacefilter token="@db.assiduousness.protocol@" 
-			    			   property="db.assiduousness.protocol"/>
-				<replacefilter token="@db.assiduousness.subprotocol@" 
-			    			   property="db.assiduousness.subprotocol"/>
-				<replacefilter token="@db.assiduousness.validationQuery@" 
-			    			   property="db.assiduousness.validationQuery"/>
+					<replacefilter token="@db.assiduousness.user@"
+								   property="db.assiduousness.user"/>
+					<replacefilter token="@db.assiduousness.pass@" 
+				    			   property="db.assiduousness.pass"/>
+					<replacefilter token="@db.assiduousness.name@" 
+								   property="db.assiduousness.name"/>
+					<replacefilter token="@db.assiduousness.alias@" 
+				    			   property="db.assiduousness.alias"/>
+					<replacefilter token="@db.assiduousness.platform@" 
+				    			   property="db.assiduousness.platform"/>
+					<replacefilter token="@db.assiduousness.driver@" 
+				    			   property="db.assiduousness.driver"/>
+					<replacefilter token="@db.assiduousness.protocol@" 
+				    			   property="db.assiduousness.protocol"/>
+					<replacefilter token="@db.assiduousness.subprotocol@" 
+				    			   property="db.assiduousness.subprotocol"/>
+					<replacefilter token="@db.assiduousness.validationQuery@" 
+				    			   property="db.assiduousness.validationQuery"/>
 			  		    
-				<replacefilter token="@db.personFilter.user@" 
-			    			   property="db.personFilter.user"/>
-				<replacefilter token="@db.personFilter.pass@" 
-			    			   property="db.personFilter.pass"/>
-				<replacefilter token="@db.personFilter.name@" 
-			    			   property="db.personFilter.name"/>
-				<replacefilter token="@db.personFilter.alias@" 
-			    			   property="db.personFilter.alias"/>
-				<replacefilter token="@db.personFilter.platform@" 
-			    			   property="db.personFilter.platform"/>
-				<replacefilter token="@db.personFilter.driver@" 
-			    			   property="db.personFilter.driver"/>
-				<replacefilter token="@db.personFilter.protocol@" 
-			    			   property="db.personFilter.protocol"/>
-				<replacefilter token="@db.personFilter.subprotocol@" 
-			    			   property="db.personFilter.subprotocol"/>
-				<replacefilter token="@db.personFilter.validationQuery@" 
-			    			   property="db.personFilter.validationQuery"/>
-				<replacefilter token="@db.personFilter.other@" 
-			    			   property="db.personFilter.other"/>
-				<replacefilter token="@db.personFilter.errorFile@" 
-			    			   property="db.personFilter.errorFile"/>
-				<replacefilter token="@db.personFilter.log@" 
-			    			   property="db.personFilter.log"/>
-		</replace>
+					<replacefilter token="@db.personFilter.user@" 
+				    			   property="db.personFilter.user"/>
+					<replacefilter token="@db.personFilter.pass@" 
+				    			   property="db.personFilter.pass"/>
+					<replacefilter token="@db.personFilter.name@" 
+				    			   property="db.personFilter.name"/>
+					<replacefilter token="@db.personFilter.alias@" 
+				    			   property="db.personFilter.alias"/>
+					<replacefilter token="@db.personFilter.platform@" 
+				    			   property="db.personFilter.platform"/>
+					<replacefilter token="@db.personFilter.driver@" 
+				    			   property="db.personFilter.driver"/>
+					<replacefilter token="@db.personFilter.protocol@" 
+				    			   property="db.personFilter.protocol"/>
+					<replacefilter token="@db.personFilter.subprotocol@" 
+				    			   property="db.personFilter.subprotocol"/>
+					<replacefilter token="@db.personFilter.validationQuery@" 
+				    			   property="db.personFilter.validationQuery"/>
+					<replacefilter token="@db.personFilter.other@" 
+				    			   property="db.personFilter.other"/>
+					<replacefilter token="@db.personFilter.errorFile@" 
+				    			   property="db.personFilter.errorFile"/>
+					<replacefilter token="@db.personFilter.log@" 
+				    			   property="db.personFilter.log"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="Domain.xml"/>
-			<replacefilter token="@db.slide.driver@" 
-		    			   property="db.slide.driver"/>
-			<replacefilter token="@db.slide.alias@" 
-		    			   property="db.slide.alias"/>
-		    <replacefilter token="@db.slide.user@" 
-		    			   property="db.slide.user"/>
-		    <replacefilter token="@db.slide.pass@" 
-		    			   property="db.slide.pass"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="Domain.xml"/>
+				<replacefilter token="@db.slide.driver@" 
+			    			   property="db.slide.driver"/>
+				<replacefilter token="@db.slide.alias@" 
+			    			   property="db.slide.alias"/>
+			    <replacefilter token="@db.slide.user@" 
+			    			   property="db.slide.user"/>
+			    <replacefilter token="@db.slide.pass@" 
+			    			   property="db.slide.pass"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="slide.properties"/>
-		    <replacefilter token="@slide.config@" 
-		    			   property="slide.config"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="slide.properties"/>
+			    <replacefilter token="@slide.config@" 
+			    			   property="slide.config"/>
+			</replace>
 
-		<replace dir="${build.home.webinf}/conf"
-				 propertyFile="build.properties">
-			<include name="struts-default.xml"/>
-			<replacefilter token="@application@" 
-		    			   property="application"/>
-		</replace>
+			<replace dir="${build.home.webinf}/conf"
+					 propertyFile="build.properties">
+				<include name="struts-default.xml"/>
+				<replacefilter token="@application@" 
+			    			   property="application"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="IstFtpServerConfig.properties"/>
-	             <replacefilter 
-	                 token="@ftp.IST.server.user@" 
-	                 property="ftp.IST.server.user"/>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="IstFtpServerConfig.properties"/>
+				<replacefilter 
+		                 token="@ftp.IST.server.user@" 
+		                 property="ftp.IST.server.user"/>
 			  <replacefilter 
 	                  token="@ftp.IST.server.pass@" 
 	                  property="ftp.IST.server.pass"/>
@@ -181,64 +209,64 @@
 			  <replacefilter 
 	                 token="@ftp.IST.scp.args@" 
 	                 property="ftp.IST.scp.args"/>
-		</replace>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="DegreeGradesFtpServerConfig.properties"/>
-            <replacefilter 
-                 token="@ftp.degree.grades.server.user@" 
-                 property="ftp.degree.grades.server.user"/>
-		  <replacefilter 
-                  token="@ftp.degree.grades.server.pass@" 
-                  property="ftp.degree.grades.server.pass"/>
-		  <replacefilter 
-                 token="@ftp.degree.grades.server.address@" 
-                 property="ftp.degree.grades.server.address"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="DegreeGradesFtpServerConfig.properties"/>
+	            <replacefilter 
+    	             token="@ftp.degree.grades.server.user@" 
+	                 property="ftp.degree.grades.server.user"/>
+			  <replacefilter 
+	                  token="@ftp.degree.grades.server.pass@" 
+	                  property="ftp.degree.grades.server.pass"/>
+			  <replacefilter 
+	                 token="@ftp.degree.grades.server.address@" 
+	                 property="ftp.degree.grades.server.address"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="serialization_verifier.properties"/>
-			<replacefilter token="@verify_serializable@" 
-		    			   property="verify_serializable"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="serialization_verifier.properties"/>
+				<replacefilter token="@verify_serializable@" 
+			    			   property="verify_serializable"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="logAnalyser.properties"/>
-			<include name="log4j.xml"/>
-			<replacefilter token="@verify_serializable@" 
-		    			   property="verify_serializable"/>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="logAnalyser.properties"/>
+				<include name="log4j.xml"/>
+				<replacefilter token="@verify_serializable@" 
+			    			   property="verify_serializable"/>
 			  	<replacefilter token="@log.image.directory@"
 			  				   property="log.image.directory"/>
 			  	<replacefilter token="@log.profile.dir@"
 			  				   property="log.profile.dir"/>
 			  	<replacefilter token="@log.profile.filename@"
 			  				   property="log.profile.filename"/>
-		</replace>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="OJB.properties"/>
-			<replacefilter token="@ObjectCacheClass@"
-		    			   property="ObjectCacheClass"/>
-			<replacefilter token="@JdbcAccessClass@"
-		    			   property="JdbcAccessClass"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="OJB.properties"/>
+				<replacefilter token="@ObjectCacheClass@"
+			    			   property="ObjectCacheClass"/>
+				<replacefilter token="@JdbcAccessClass@"
+			    			   property="JdbcAccessClass"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="oscache.properties"/>
-			<replacefilter token="@cache.event.listeners@"
-		    			   property="cache.event.listeners"/>
-			<replacefilter token="@cache.cluster.multicast.ip@"
-		    			   property="cache.cluster.multicast.ip"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="oscache.properties"/>
+				<replacefilter token="@cache.event.listeners@"
+			    			   property="cache.event.listeners"/>
+				<replacefilter token="@cache.cluster.multicast.ip@"
+			    			   property="cache.cluster.multicast.ip"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="SMSConfiguration.properties"/>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="SMSConfiguration.properties"/>
 				<replacefilter token="@sms.gateway.host@"
 			    			   property="sms.gateway.host"/>
 				<replacefilter token="@sms.gateway.port@"
@@ -263,101 +291,102 @@
 			    			   property="sms.delivery.username"/>
 				<replacefilter token="@sms.delivery.password@"
 			    			   property="sms.delivery.password"/>
-		</replace>
+			</replace>
 		
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="GratuitySituationCreatorTask.properties"/>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="GratuitySituationCreatorTask.properties"/>
 				<replacefilter token="@gratuity.situation.creator.task.hour@"
-			    			   property="gratuity.situation.creator.task.hour"/>
-		</replace>
+		    			   property="gratuity.situation.creator.task.hour"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="configurationSQLInstructions.properties"/>
-			<replacefilter token="@roleback.filename@"
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="configurationSQLInstructions.properties"/>
+				<replacefilter token="@roleback.filename@"
 		    			   property="roleback.filename"/>
-		</replace>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="log4j.xml"/>
-			<replacefilter token="@log4j.email.smtp.host@"
-						   property="log4j.email.smtp.host"/>
-			<replacefilter token="@log4j.email.smtp.from@"
-						   property="log4j.email.smtp.from"/>
-			<replacefilter token="@log4j.email.smtp.to@"
-						   property="log4j.email.smtp.to"/>
-			<replacefilter token="@log4j.email.smtp.subject@"
-						   property="log4j.email.smtp.subject"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="log4j.xml"/>
+				<replacefilter token="@log4j.email.smtp.host@"
+							   property="log4j.email.smtp.host"/>
+				<replacefilter token="@log4j.email.smtp.from@"
+							   property="log4j.email.smtp.from"/>
+				<replacefilter token="@log4j.email.smtp.to@"
+							   property="log4j.email.smtp.to"/>
+				<replacefilter token="@log4j.email.smtp.subject@"
+							   property="log4j.email.smtp.subject"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="projectsManagement.properties"/>
-			<replacefilter token="@db.projectManagement.user@"
-						   property="db.projectManagement.user"/>
-			<replacefilter token="@db.projectManagement.pass@"
-						   property="db.projectManagement.pass"/>
-			<replacefilter token="@db.projectManagement.alias@"
-						   property="db.projectManagement.alias"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="projectsManagement.properties"/>
+				<replacefilter token="@db.projectManagement.user@"
+							   property="db.projectManagement.user"/>
+				<replacefilter token="@db.projectManagement.pass@"
+							   property="db.projectManagement.pass"/>
+				<replacefilter token="@db.projectManagement.alias@"
+							   property="db.projectManagement.alias"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}/ServidorApresentacao"
-				 propertyFile="build.properties">
-			<include name="ApplicationResources.properties"/>
-			<include name="ApplicationResourcesSOP.properties"/>
-			<include name="ManagerResources.properties"/>
-		  	<replacefilter token="@login.page@"
-		  				   property="login.page"/>
-		</replace>
+			<replace dir="${build.home.webinf.classes}/ServidorApresentacao"
+					 propertyFile="build.properties">
+				<include name="ApplicationResources.properties"/>
+				<include name="ApplicationResourcesSOP.properties"/>
+				<include name="ManagerResources.properties"/>
+			  	<replacefilter token="@login.page@"
+			  				   property="login.page"/>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="logAnalyser.properties"/>
-		  	<replacefilter token="@login.page@"
-		  				   property="login.page"/>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="logAnalyser.properties"/>
+			  	<replacefilter token="@login.page@"
+			  				   property="login.page"/>
 			  	<replacefilter token="@log.image.directory@"
 			  				   property="log.image.directory"/>
 			  	<replacefilter token="@log.profile.dir@"
 			  				   property="log.profile.dir"/>
 			  	<replacefilter token="@log.profile.filename@"
 			  				   property="log.profile.filename"/>
-		</replace>
+			</replace>
 
-		<replace dir="${build.home.webinf.classes}"
-				 propertyFile="build.properties">
-			<include name="web.xml"/>
+			<replace dir="${build.home.webinf.classes}"
+					 propertyFile="build.properties">
+				<include name="web.xml"/>
 				<replacefilter 
 				    token="@app.context@"
 				    property="app.context"/>
-		</replace>
+			</replace>
 
-		<replace dir="${build.home}"
-				 propertyFile="build.properties">
-			<include name="index.html"/>
-			<replacefilter 
-			    token="@index.html.link@" 
-			    property="index.html.link"/>
-		</replace>
+			<replace dir="${build.home}"
+					 propertyFile="build.properties">
+				<include name="index.html"/>
+				<replacefilter 
+				    token="@index.html.link@" 
+				    property="index.html.link"/>
+			</replace>
 		
-		<replace dir="${build.home}"
-				 propertyFile="build.properties">
-			<include name="publico/index.html"/>
-			<include name="publico/degreeSite/mainNavigation_without_teaching.jsp"/>
-			<replacefilter 
-				    token="@institution.url@" 
-				    property="institution.url"/>
-		</replace>
+			<replace dir="${build.home}"
+					 propertyFile="build.properties">
+				<include name="publico/index.html"/>
+				<include name="publico/degreeSite/mainNavigation_without_teaching.jsp"/>
+				<replacefilter 
+					    token="@institution.url@" 
+					    property="institution.url"/>
+			</replace>
 
-		<replace dir="${build.home}"
-				 propertyFile="build.properties">
-			<include name="student/enrollment/warning.jsp"/>
-			<include name="degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
-			<include name="degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
-            <replacefilter token="@enrollment.faq.url@"
-		    			   property="enrollment.faq.url"/>    
-		</replace>
+			<replace dir="${build.home}"
+					 propertyFile="build.properties">
+				<include name="student/enrollment/warning.jsp"/>
+				<include name="degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
+				<include name="degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
+	            <replacefilter token="@enrollment.faq.url@"
+			    			   property="enrollment.faq.url"/>    
+			</replace>
+		</parallel>
 	</target>
 
     <target name="compile"
