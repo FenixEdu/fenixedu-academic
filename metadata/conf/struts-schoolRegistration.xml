@@ -58,6 +58,8 @@
 		<form-property name="maritalStatus" type="java.lang.String" />
 		
         <form-property name="answersMap" type="java.util.HashMap" />
+        
+        <form-property name="instructionsAccepted" type="java.lang.Boolean" />
       </form-bean>
       
     </form-beans>
@@ -148,8 +150,17 @@
 			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
 						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-			
-			<forward name="beginTransaction" path="/index.do" />
+			<forward name="beginTransaction" path="/viewEnrollments.do?method=viewStudentEnrollments" />
+			<forward name="viewEnrollments" path="/viewEnrollments.do?method=viewStudentEnrollments" />
+		</action>
+		
+		<action path="/viewEnrollments"
+			parameter="method"
+			name="schoolRegistrationForm"
+			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			>
+
+			<forward name="Success" path="definition.schoolRegistration.showSchoolRegistrationInfo" />
 		</action>
     </action-mappings>
     

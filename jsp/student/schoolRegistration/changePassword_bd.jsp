@@ -14,7 +14,7 @@
 
    <table align="center">
     <html:form action="/viewPersonalInfo?method=visualizeFirstTimeStudentPersonalInfoAction">
-    <html:hidden property="page" value="1"/>
+    <html:hidden property="page" value="2"/>
        <!-- Old Password -->
        <tr>
          <td><bean:message key="label.candidate.oldPassword" bundle="DEFAULT"/>:</td>

@@ -2,12 +2,17 @@
 <!-- @validation.doctype@ -->
 <form-validation>
   <formset>
-   <!-- <form name="schoolRegistrationForm">
-    	<field property="oldPassword" depends="required" page="1">
+  
+  	<!--<form name="schoolRegistrationForm">
+  		<field property="instructionsAccepted" depends="required" page="1">
+        	<arg0 key="label.schoolRegistration.instructionsAcceptedError" />
+      	</field>
+    
+    	<field property="oldPassword" depends="required" page="2">
         	<arg0 key="label.candidate.oldPasswordError" />
       	</field>
 
-  		<field property="newPassword" depends="required,twoFields" page="1">
+  		<field property="newPassword" depends="required,twoFields" page="2">
 			<arg0 key="label.candidate.newPasswordError" />
             <var>
             	<var-name>secondProperty</var-name>
@@ -15,59 +20,59 @@
             </var>
         </field>
         
-        <field property="dayOfEmissionDateOfDocumentId" depends="required,integer" page="2">
+        <field property="dayOfEmissionDateOfDocumentId" depends="required,integer" page="3">
         	<arg0 key="error.schoolRegistration.dayOfEmissionDateOfDocumentId" />
         </field>
         
-        <field property="monthOfEmissionDateOfDocumentId" depends="required,integer" page="2">
+        <field property="monthOfEmissionDateOfDocumentId" depends="required,integer" page="3">
         	<arg0 key="error.schoolRegistration.monthOfEmissionDateOfDocumentId" />
         </field>
         
-        <field property="yearOfEmissionDateOfDocumentId" depends="required,integer" page="2">
+        <field property="yearOfEmissionDateOfDocumentId" depends="required,integer" page="3">
         	<arg0 key="error.schoolRegistration.yearOfEmissionDateOfDocumentId" />
         </field>
         
-        <field property="dayOfExpirationDateOfDocumentId" depends="required,integer" page="2">
+        <field property="dayOfExpirationDateOfDocumentId" depends="required,integer" page="3">
         	<arg0 key="error.schoolRegistration.dayOfExpirationDateOfDocumentId" />
         </field>
         
-        <field property="monthOfExpirationDateOfDocumentId" depends="required,integer" page="2">
+        <field property="monthOfExpirationDateOfDocumentId" depends="required,integer" page="3">
         	<arg0 key="error.schoolRegistration.monthOfExpirationDateOfDocumentId" />
         </field>
         
-        <field property="yearOfExpirationDateOfDocumentId" depends="required,integer" page="2">
+        <field property="yearOfExpirationDateOfDocumentId" depends="required,integer" page="3">
         	<arg0 key="error.schoolRegistration.yearOfExpirationDateOfDocumentId" />
         </field>
         
-        <field property="nameOfFather" depends="required" page="2">
+        <field property="nameOfFather" depends="required" page="3">
         	<arg0 key="label.person.fatherName" />
         </field>
         
-        <field property="nameOfMother" depends="required" page="2">
+        <field property="nameOfMother" depends="required" page="3">
         	<arg0 key="label.person.motherName" />
         </field>
         
-        <field property="parishOfBirth" depends="required" page="2">
+        <field property="parishOfBirth" depends="required" page="3">
         	<arg0 key="label.person.birthPlaceParish" />
         </field>
         
-        <field property="districtSubvisionOfBirth" depends="required" page="2">
+        <field property="districtSubvisionOfBirth" depends="required" page="3">
         	<arg0 key="label.person.birthPlaceMunicipality" />
         </field>
         
-        <field property="districtOfBirth" depends="required" page="2">
+        <field property="districtOfBirth" depends="required" page="3">
         	<arg0 key="label.person.birthPlaceDistrict" />
         </field>
         
-        <field property="address" depends="required" page="2">
+        <field property="address" depends="required" page="3">
         	<arg0 key="label.person.address" />
         </field>
         
-        <field property="area" depends="required" page="2">
+        <field property="area" depends="required" page="3">
         	<arg0 key="label.person.place" />
         </field>
       	
-      <field property="areaCode" depends="mask" page="2">
+      <field property="areaCode" depends="mask" page="3">
         <msg name="mask" key="errors.invalid.zipCode"/>
         <var>
         	<var-name>mask</var-name>
@@ -76,43 +81,43 @@
         
       </field>
         
-        <field property="areaOfAreaCode" depends="required" page="2">
+        <field property="areaOfAreaCode" depends="required" page="3">
         	<arg0 key="label.person.areaOfPostCode" />
         </field>
         
-        <field property="parishOfResidence" depends="required" page="2">
+        <field property="parishOfResidence" depends="required" page="3">
         	<arg0 key="label.person.addressParish" />
         </field>
         
-        <field property="districtSubdivisionOfResidence" depends="required" page="2">
+        <field property="districtSubdivisionOfResidence" depends="required" page="3">
         	<arg0 key="label.person.addressMunicipality" />
         </field>
         
-        <field property="districtOfResidence" depends="required" page="2">
+        <field property="districtOfResidence" depends="required" page="3">
         	<arg0 key="label.person.addressDistrict" />
         </field>
         
-        <field property="contributorNumber" depends="required,integer" page="2">
+        <field property="contributorNumber" depends="required,integer" page="3">
         	<arg0 key="label.person.contributorNumber" />
         </field>
         
-        <field property="occupation" depends="required" page="2">
+        <field property="occupation" depends="required" page="3">
         	<arg0 key="label.person.occupation" />
         </field>
         
-        <field property="maritalStatus" depends="required" page="2">
+        <field property="maritalStatus" depends="required" page="3">
         	<arg0 key="label.person.maritalStatus" />
         </field>
         
-        <field property="phone" depends="integer" page="2">
+        <field property="phone" depends="integer" page="3">
         	<arg0 key="label.person.telephone" />
         </field>
         
-        <field property="mobile" depends="integer" page="2">
+        <field property="mobile" depends="integer" page="3">
         	<arg0 key="label.person.mobilePhone" />
         </field>
                 
-    </form>-->
+    </form> -->
     
   </formset>
 </form-validation>

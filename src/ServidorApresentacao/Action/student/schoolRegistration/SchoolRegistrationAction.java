@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoClass;
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.IUserView;
@@ -100,6 +102,8 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
     public ActionForward enrollStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+    	 super.validateToken(request, form, mapping, "error.transaction.schoolRegistrationEnd");
+    	
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm totalForm = (DynaActionForm) form;
@@ -178,7 +182,24 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         System.out.println("O id da pessoa na Accao é: " + infoPerson.getIdInternal());
 
-        return mapping.findForward("");
+        return mapping.findForward("viewEnrollments");
+    }
+    
+    public ActionForward viewStudentEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    throws Exception {
+    
+    	 
+    	IUserView userView = SessionUtils.getUserView(request);
+    	
+    	Object args[] = { userView };
+        List result = (List) ServiceUtils.executeService(userView, "ReadStudentEnrollmentsAndClass", args);
+    	
+        List infoEnrollments = (List) result.get(0);
+        request.setAttribute("infoEnrollments",infoEnrollments);
+        InfoClass infoClass = (InfoClass) result.get(1);
+        request.setAttribute("infoClass",infoClass);
+    	
+    	return mapping.findForward("Success");
     }
 
 }
