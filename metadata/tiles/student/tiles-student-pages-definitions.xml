@@ -28,19 +28,19 @@
 	
 	<!-- SHIFT ENROLMENT DEFINITIONS -->
 
-	<definition name="shift-enrolment-options" extends="definition.student.masterPage">
+	<definition name="shift-enrolment-options" extends="definition.student.one-column">
 		<put name="body" value="/student/showShiftEnrolmentOptions_bd.jsp" />		
 	</definition>
-	<definition name="show-classes-for-shift-enrolment" extends="definition.student.masterPage">
+	<definition name="show-classes-for-shift-enrolment" extends="definition.student.one-column">
 		<put name="body" value="/student/showClassesForShiftEnrolment_bd.jsp" />		
 	</definition>
 	<definition name="show-available-shifts" extends="definition.student.one-column">
 		<put name="body" value="/student/showAvailableShifts_bd.jsp" />		
 	</definition>
-	<definition name="validate-confirm-shift-enrolment" extends="definition.student.masterPage">
+	<definition name="validate-confirm-shift-enrolment" extends="definition.student.one-column">
 		<put name="body" value="/student/validateAndConfirmShiftEnrolment_bd.jsp" />		
 	</definition>
-	<definition name="show-courses-by-degree" extends="definition.student.masterPage">
+	<definition name="show-courses-by-degree" extends="definition.student.one-column">
 	          <put name="body" value="/student/showCoursesByDegree.jsp" />
 	</definition>
 	

@@ -19,7 +19,7 @@
       <form-bean name="studentShiftEnrolmentForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
-		<form-property name="studentNumber" type="java.lang.Integer"/>      			
+		<form-property name="studentId" type="java.lang.Integer"/>      			
 		<form-property name="degree" type="java.lang.Integer"/>
 		<form-property name="wantedCourse" type="java.lang.Integer"/>
 		<form-property name="removedCourse" type="java.lang.Integer"/>      			
@@ -223,7 +223,7 @@
         validate="false">                           
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
-    	<forward name="start" path="/studentShiftEnrolmentManager.do?method=start" />
+    	<forward name="chooseCourses" path="/studentShiftEnrolmentManager.do?method=chooseCourses" />
     	<forward name="selectCourses" path="show-courses-by-degree"/>
         <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
         <forward name="showAvailableShifts" path="show-available-shifts"/>

@@ -12,7 +12,6 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import framework.factory.ServiceManagerServiceFactory;

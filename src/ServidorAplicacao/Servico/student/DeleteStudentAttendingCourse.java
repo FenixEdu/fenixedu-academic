@@ -9,6 +9,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentGroupAttend;
+import Dominio.Student;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
@@ -77,12 +78,12 @@ public class DeleteStudentAttendingCourse implements IService
 	}
 
 	private IStudent findStudent(InfoStudent infoStudent, IPersistentStudent persistentStudent)
-		throws ExcepcaoPersistencia, FenixServiceException
+		throws FenixServiceException
 	{
-		IStudent student =
-			persistentStudent.readStudentByNumberAndDegreeType(
-				infoStudent.getNumber(),
-				infoStudent.getDegreeType());
+		IStudent student = new Student();
+		student.setIdInternal(infoStudent.getIdInternal());
+		
+		student = (IStudent) persistentStudent.readByOId(student, false);
 		if (student == null)
 		{
 			throw new FenixServiceException("noStudent");

@@ -100,4 +100,41 @@ public class InfoClassEnrollmentDetails
     {
         this.infoClassList = infoClassList;
     }
+    
+    public String toString()
+    {
+    	StringBuffer string = new StringBuffer();
+
+    	string.append("[InfoClassEnrollmentDetails ");
+    	string.append("\ninfoStudent: ");
+    	string.append(infoStudent.getNumber());
+    	
+    	string.append("\nclassExecutionCourseShiftEnrollmentDetailsMap: ");		
+    	if (classExecutionCourseShiftEnrollmentDetailsMap != null)
+    	{
+    		string.append(classExecutionCourseShiftEnrollmentDetailsMap.size());
+    	} else {
+    		string.append("null");			
+    	}
+    	
+    	string.append("\ninfoClassList: ");
+    	if (infoClassList != null)
+    	{
+    		string.append(infoClassList.size());
+    	} else {
+    		string.append("null");			
+    	}
+    	    	
+    	string.append("\ninfoShiftEnrolledList: ");
+    	if (infoShiftEnrolledList != null)
+    	{
+    		string.append(infoShiftEnrolledList.size());
+    	} else {
+    		string.append("null");			
+    	}
+    	
+    	string.append(" ]");
+
+    	return string.toString();
+    }
 }
