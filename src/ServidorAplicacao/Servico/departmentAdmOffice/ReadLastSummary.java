@@ -70,18 +70,18 @@ public class ReadLastSummary implements IService {
 				DiaSemana diaSemana = aula.getDiaSemana();
 				int summaryDayOfWeek;
 				for(int i = summaries.size() - 1; i >= 0; i--){
-				    ISummary summary1 = (ISummary) summaries.get(i);
-				    summary = InfoSummary.newInfoFromDomain(summary1);
-				    summaryDayOfWeek = summary.getSummaryDate().get(Calendar.DAY_OF_WEEK);
-				    if(summaryDayOfWeek == diaSemana.getDiaSemana().intValue())
+				    ISummary summary1 = (ISummary) summaries.get(i);				    
+				    summaryDayOfWeek = summary1.getSummaryDate().get(Calendar.DAY_OF_WEEK);
+				    if(summaryDayOfWeek == diaSemana.getDiaSemana().intValue()){
+				        summary = InfoSummary.newInfoFromDomain(summary1);
 				        break;	
+				    }
 				}				
 			}
 			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		
 		return summary;
 	}
 }
