@@ -14,7 +14,9 @@
   	  <html:hidden property="degreeName"/>
   	  <html:hidden property="degreeCode"/>
   	  <html:hidden property="specialization"/>
-  	  
+
+      <span class="error"><html:errors/></span>
+
         <tr>
           <td colspan="2"><h2><bean:message key="candidate.titleChangeApplicationInfo" /></h2></td>
         </tr>
@@ -73,7 +75,6 @@
         <tr>
          <td><bean:message key="candidate.name" /></td>
           <td><html:text property="name"/></td>
-          <td><html:errors property="name"/></td>
         </tr>
         <!-- Estado Civil -->
         <tr>
@@ -83,7 +84,6 @@
                 <html:options collection="maritalStatusList" property="value" labelProperty="label"/>
              </html:select>          
          </td>
-         <td><html:errors property="maritalStatus"/></td>
         </tr>
         <!-- Username -->
         <tr>
@@ -94,37 +94,31 @@
         <tr>
          <td><bean:message key="candidate.password" /></td>
           <td><html:text property="password"/></td>
-          <td><html:errors property="password"/></td>
         </tr>
         <!-- Licenciatura -->
         <tr>
          <td><bean:message key="candidate.majorDegree" /></td>
           <td><html:text property="majorDegree"/></td>
-          <td><html:errors property="majorDegree"/></td>
         </tr>
         <!-- Ano de Licenciatura -->
         <tr>
          <td><bean:message key="candidate.majorDegreeYear" /></td>
           <td><html:text property="majorDegreeYear"/></td>
-          <td><html:errors property="majorDegreeYear"/></td>
         </tr>
         <!-- Escola de Licenciatura -->
         <tr>
          <td><bean:message key="candidate.majorDegreeSchool" /></td>
           <td><html:text property="majorDegreeSchool"/></td>
-          <td><html:errors property="majorDegreeSchool"/></td>
         </tr>
         <!-- Nome do Pai -->
         <tr>
          <td><bean:message key="candidate.fatherName" /></td>
           <td><html:text property="fatherName"/></td>
-          <td><html:errors property="fatherName"/></td>
         </tr>
         <!-- Nome da Mae -->
         <tr>
          <td><bean:message key="candidate.motherName" /></td>
           <td><html:text property="motherName"/></td>
-          <td><html:errors property="motherName"/></td>
         </tr>
         
         <!-- Data de Nascimento -->
@@ -147,10 +141,6 @@
              </html:select>
           </td>          
 
-          <tr><td><td><html:errors property="birthYear"/></td></td>
-              <td><html:errors property="birthMonth"/></td>
-              <td><html:errors property="birthDay"/></td>
-          </tr>
         </tr>
 
         
@@ -158,31 +148,26 @@
         <tr>
          <td><bean:message key="candidate.birthPlaceParish" /></td>
           <td><html:text property="birthPlaceParish"/></td>
-          <td><html:errors property="birthPlaceParish"/></td>
         </tr>
         <!-- Concelho de Naturalidade -->
         <tr>
          <td><bean:message key="candidate.birthPlaceMunicipality" /></td>
           <td><html:text property="birthPlaceMunicipality"/></td>
-          <td><html:errors property="birthPlaceMunicipality"/></td>
         </tr>
         <!-- Distrito de Naturalidade -->
         <tr>
          <td><bean:message key="candidate.birthPlaceDistrict" /></td>
           <td><html:text property="birthPlaceDistrict"/></td>
-          <td><html:errors property="birthPlaceDistrict"/></td>
         </tr>
         <!-- Numero do Documento de Identificacao -->
         <tr>
          <td><bean:message key="candidate.identificationDocumentNumber" /></td>
           <td><html:text property="identificationDocumentNumber"/></td>
-          <td><html:errors property="identificationDocumentNumber"/></td>
         </tr>
         <!-- Local de Emissao do Documento de Identificacao -->
         <tr>
          <td><bean:message key="candidate.identificationDocumentIssuePlace" /></td>
           <td><html:text property="identificationDocumentIssuePlace"/></td>
-          <td><html:errors property="identificationDocumentIssuePlace"/></td>
         </tr>
         
 	<!-- Data de Emissao do Documento de Identificacao -->
@@ -203,10 +188,6 @@
                 <html:options collection="monthDays" property="value" labelProperty="label"/>
              </html:select>
           </td>          
-          <tr><td><td><html:errors property="idIssueDateYear"/></td></td>
-              <td><html:errors property="idIssueDateMonth"/></td>
-              <td><html:errors property="idIssueDateDay"/></td>
-          </tr>
         </tr>
 
 
@@ -218,79 +199,66 @@
                 <html:options collection="identificationDocumentTypeList" property="value" labelProperty="label"/>
              </html:select>          
          </td>
-          <td><html:errors property="identificationDocumentType"/></td>
         </tr>
         <!-- Morada -->
         <tr>
          <td><bean:message key="candidate.address" /></td>
           <td><html:text property="address"/></td>
-          <td><html:errors property="address"/></td>
         </tr>
         <!-- Localidade -->
         <tr>
          <td><bean:message key="candidate.place" /></td>
           <td><html:text property="place"/></td>
-          <td><html:errors property="place"/></td>
         </tr>
         <!-- Codigo Postal -->
         <tr>
          <td><bean:message key="candidate.postCode" /></td>
           <td><html:text property="postCode"/></td>
-          <td><html:errors property="postCode"/></td>
         </tr>
         <!-- Freguesia de Morada -->
         <tr>
          <td><bean:message key="candidate.addressParish" /></td>
           <td><html:text property="addressParish"/></td>
-          <td><html:errors property="addressParish"/></td>
         </tr>
         <!-- Concelho de Morada -->
         <tr>
          <td><bean:message key="candidate.addressMunicipality" /></td>
           <td><html:text property="addressMunicipality"/></td>
-          <td><html:errors property="addressMunicipality"/></td>
         </tr>
         <!-- Distrito de Morada -->
         <tr>
          <td><bean:message key="candidate.addressDistrict" /></td>
           <td><html:text property="addressDistrict"/></td>
-          <td><html:errors property="addressDistrict"/></td>
         </tr>
         <!-- telefone -->
         <tr>
          <td><bean:message key="candidate.telephone" /></td>
           <td><html:text property="telephone"/></td>
-          <td><html:errors property="telephone"/></td>
         </tr>
         <!-- telemovel -->
         <tr>
          <td><bean:message key="candidate.mobilePhone" /></td>
           <td><html:text property="mobilePhone"/></td>
-          <td><html:errors property="mobilePhone"/></td>
         </tr>
         <!-- Email -->
         <tr>
          <td><bean:message key="candidate.email" /></td>
           <td><html:text property="email"/></td>
-          <td><html:errors property="email"/></td>
         </tr>
         <!-- HomePage -->
         <tr>
          <td><bean:message key="candidate.webSite" /></td>
           <td><html:text property="webSite"/></td>
-          <td><html:errors property="webSite"/></td>
         </tr>
         <!-- Numero de Contribuinte -->
         <tr>
          <td><bean:message key="candidate.contributorNumber" /></td>
           <td><html:text property="contributorNumber"/></td>
-          <td><html:errors property="contributorNumber"/></td>
         </tr>
         <!-- Profissao -->
         <tr>
          <td><bean:message key="candidate.occupation" /></td>
           <td><html:text property="occupation"/></td>
-          <td><html:errors property="occupation"/></td>
         </tr>
         <!-- Sexo -->
         <tr>
@@ -300,7 +268,6 @@
                 <html:options collection="sexList" property="value" labelProperty="label"/>
              </html:select>          
          </td>
-         <td><html:errors property="sex"/></td>
         </tr>
         
         <!-- Pais de Origem -->
@@ -311,7 +278,6 @@
                 <html:options collection="countryList" property="value" labelProperty="label"/>
              </html:select>          
          </td>
-         <td><html:errors property="country"/></td>
         </tr>
         
         <!-- Nacionalidade -->
@@ -322,13 +288,11 @@
                 <html:options collection="nationalityList" property="value" labelProperty="label"/>
              </html:select>          
          </td>
-         <td><html:errors property="nationality"/></td>
         </tr>
         <!-- Media -->
         <tr>
          <td><bean:message key="candidate.average" /></td>
           <td><html:text property="average"/></td>
-          <td><html:errors property="average"/></td>
         </tr>
         
         <td colspan="2">

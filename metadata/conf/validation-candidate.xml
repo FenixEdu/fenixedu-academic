@@ -206,7 +206,7 @@
         </var>
       </field>
 
-      <field property="average" depends="required,double,range">
+      <field property="average" depends="required,double,required">
         <arg0 key="candidate.average" />
 		<arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -219,6 +219,7 @@
           <var-value>20.0</var-value>
         </var>
       </field>
+
 
     </form>
 
