@@ -115,7 +115,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "Confirmar Inserir");
+		addRequestParameter("method", "createBibliographicReference");
 
 		
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
@@ -157,7 +157,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "Visualizar");
+		addRequestParameter("method", "viewBibliographicReference");
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
@@ -196,7 +196,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path		
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "Apagar");
+		addRequestParameter("method", "deleteBibliographicReference");
 		addRequestParameter("infoBibliographicReferenceIndex", "0");
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
@@ -249,7 +249,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "Confirmar Editar");
+		addRequestParameter("method", "editBibliographicReference");
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
@@ -317,6 +317,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -324,6 +325,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -331,6 +333,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -338,6 +341,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -345,6 +349,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -352,6 +357,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -359,6 +365,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -366,6 +373,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }
