@@ -1,35 +1,27 @@
+/*
+ * Created on 20/Mar/2003 by jpvl
+ *
+ */
 package ServidorApresentacao.Action.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.SwitchAction;
 
-import ServidorApresentacao.Action.ExcepcaoSessaoInexistente;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
- * @author jorge
+ * @author jpvl
  */
-public abstract class FenixAction extends Action {
-
-	protected HttpSession getSession(HttpServletRequest request)
-		throws ExcepcaoSessaoInexistente {
-		HttpSession result = request.getSession(false);
-		if (result == null)
-			throw new ExcepcaoSessaoInexistente();
-
-		return result;
-	}
-	
+public class FenixSwitchAction extends SwitchAction {
 	/**
-	 * Tests if the session is valid
+	 * Tests if the session is valid.
 	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
-	 * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm, HttpServletRequest, HttpServletResponse)
+	 * @see org.apache.struts.action.SwitchAction#execute(ActionMapping, ActionForm, HttpServletRequest, HttpServletResponse)
 	 */
 	public ActionForward execute(
 		ActionMapping mapping,
