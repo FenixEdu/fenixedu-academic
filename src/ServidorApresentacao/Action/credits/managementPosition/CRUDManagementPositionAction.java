@@ -53,6 +53,7 @@ public class CRUDManagementPositionAction extends CRUDActionByOID
             "teacherId",
             infoManagementPositionCreditLine.getInfoTeacher().getIdInternal());
         managementPositionForm.set("position", infoManagementPositionCreditLine.getPosition());
+        managementPositionForm.set("credits", infoManagementPositionCreditLine.getCredits().toString());
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -77,6 +78,7 @@ public class CRUDManagementPositionAction extends CRUDActionByOID
         String position = (String) managementPositionForm.get("position");
         String start = (String) managementPositionForm.get("start");
         String end = (String) managementPositionForm.get("end");
+        String credits = (String) managementPositionForm.get("credits");
 
         Integer teacherId = (Integer) managementPositionForm.get("teacherId");
         Integer idInternal = (Integer) managementPositionForm.get("idInternal");
@@ -103,7 +105,8 @@ public class CRUDManagementPositionAction extends CRUDActionByOID
             e.printStackTrace(System.out);
             throw new RuntimeException("Problems parsing end date!" + end);
         }
-
+        infoManagementPositionCreditLine.setCredits(Double.valueOf(credits));
+        
         return infoManagementPositionCreditLine;
     }
 

@@ -8,12 +8,9 @@ package Dominio.credits;
  */
 public interface IManagementPositionCreditLine extends IDatePeriodBasedCreditLine
 {
-    /**
-     * @return Returns the position.
-     */
     public abstract String getPosition();
-    /**
-     * @param position The position to set.
-     */
     public abstract void setPosition(String position);
+    
+    public abstract Double getCredits();
+    public abstract void setCredits(Double credits);    
 }

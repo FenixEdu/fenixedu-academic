@@ -27,6 +27,9 @@
 			<td class="listClasses-header" style="text-align:left">
 				<bean:message key="label.managementPosition.position" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			</td>
+			<td class="listClasses-header" style="text-align:left">
+				<bean:message key="label.managementPosition.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			</td>
 			<td class="listClasses-header" width="10%">
 				<bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			</td>
@@ -43,6 +46,7 @@
 		<logic:iterate id="creditLine" name="infoManagementPositions">
 			<tr>
 				<td class="listClasses" style="text-align:left"><bean:write name="creditLine" property="position"/></td>
+				<td class="listClasses" style="text-align:left"><bean:write name="creditLine" property="credits"/></td>
 				<td class="listClasses">
 					<dt:format patternId="datePattern">
 						<bean:write name="creditLine" property="start.time"/>

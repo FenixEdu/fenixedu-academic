@@ -3,6 +3,7 @@ Release 2004-04-29
 ---------------------------------------------------------------------
 
 NEW FEATURES:
+- Added double credits field to ManagementCreditLine
 - added a migration script for math courses responsabilities
 - added a migration script for erasmus/air force/etc students
 - websiteManager: added the possibility to sort information when listing items, but only ascendingly for now
@@ -34,6 +35,7 @@ NEW FEATURES:
   search algorithm more reliable.
 
 NOTES:
+- deployCredits.sql has the necessary sql in order to pass this minor release to production.
 - updateWebSiteItem-14-04-2004.sql: 
 - added field ftpName in website_item table
 - updated items that have erroneous item begin day filled
@@ -73,6 +75,7 @@ KNOWN ISSUES:
   are proposed for. This is due to not yet having information regarding the next execution
   year. This must be resolved by establishing dates when the information must be introduced
   into the database.
+- update to table credits is not very correct on the of ManagementCreditLine and Service Exemption situations.
 
 
 

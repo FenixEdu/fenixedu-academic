@@ -120,6 +120,8 @@
 
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
+      <field-descriptor name="credits" column="CREDITS" jdbc-type="DOUBLE"/>
+
       <field-descriptor name="position" column="POSITION" jdbc-type="VARCHAR"/>
 
       <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"/>

@@ -8,9 +8,11 @@ package DataBeans.credits;
  */
 public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLine
 {
+
     private String position;
-    
-    
+
+    private Double credits;
+
     /**
      * @return Returns the position.
      */
@@ -20,11 +22,21 @@ public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLi
     }
 
     /**
-     * @param position The position to set.
+     * @param position
+     *            The position to set.
      */
     public void setPosition(String position)
     {
         this.position = position;
     }
 
+    public Double getCredits()
+    {
+        return credits;
+    }
+
+    public void setCredits(Double credits)
+    {
+        this.credits = credits;
+    }
 }

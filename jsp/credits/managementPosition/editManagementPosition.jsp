@@ -28,6 +28,15 @@
 			</td>
 		</tr>
 		<tr>
+			<td width="10%">
+				<strong><bean:message key="label.managementPosition.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES" /></strong>
+			</td>
+			<td>
+				<html:text property="credits" size="50"/>
+			</td>
+		</tr>
+		
+		<tr>
 			<td style="vertical-align:top">
 				<strong><bean:message key="label.managementPosition.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>
 			</td>
