@@ -12,6 +12,8 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -44,9 +46,10 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 				ctx.getInfoLicenciaturaExecucao());
 			executionCourse.setSemester(ctx.getSemestre());
 				
-				
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) sessao.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) sessao.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);							
 			
-			Object argsSelectExecutionCourse[] = { executionCourse, ctx.getAnoCurricular()};
+			Object argsSelectExecutionCourse[] = { infoExecutionDegree, infoExecutionPeriod, ctx.getAnoCurricular()};
 			
 			List infoExecutionCourses =
 				(List) gestor.executar(null, "SelectExecutionCourse", argsSelectExecutionCourse);

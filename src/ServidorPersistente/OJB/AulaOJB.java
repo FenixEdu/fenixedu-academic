@@ -20,6 +20,7 @@ import org.odmg.QueryException;
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import Dominio.ITurnoAula;
 import Dominio.TurnoAula;
@@ -171,22 +172,21 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public List readBySalaEmSemestre(String nomeSala, Integer semestre)
+	public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
-			List aulas = new ArrayList();
 			String oqlQuery = "select aulas from " + Aula.class.getName();
-			oqlQuery += " where sala.nome = $1";
-			// 
-			//oqlQuery += " and disciplinaExecucao.semestre = $2";
+			oqlQuery += " where sala.nome = $1"
+						+ " and disciplinaExecucao.executionPeriod.name = $2"
+						+ " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
 			query.create(oqlQuery);
-			query.bind(nomeSala);
-			//query.bind(semestre);
+			query.bind(room.getNome());
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+			
 			List result = (List) query.execute();
 			lockRead(result);
-			for (int i = 0; i != result.size(); i++)
-				aulas.add((IAula) (result.get(i)));
-			return aulas;
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

@@ -5,12 +5,13 @@ import java.util.List;
 
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
-import Dominio.Curso;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
-import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -47,22 +48,17 @@ public class SelectClasses implements IServico {
 		
 		List classes = new ArrayList();
 		List infoClasses = new ArrayList();
-		Turma turma = new Turma();
-		Curso lic = new Curso();
-		if (infoClass.getInfoLicenciatura()!=null) {
-			lic.setSigla(infoClass.getInfoLicenciatura().getSigla());
-			lic.setNome(infoClass.getInfoLicenciatura().getNome());
-			turma.setLicenciatura(lic);
-		}
-		
-		turma.setNome(infoClass.getNome());
-		turma.setSemestre(infoClass.getSemestre());
-		turma.setAnoCurricular(infoClass.getAnoCurricular());
 		
 		
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			classes = sp.getITurmaPersistente().readByCriteria(turma);
+			
+			ITurmaPersistente classDAO = sp.getITurmaPersistente();
+			
+			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
+			ICursoExecucao executionDegree  = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree()); 
+			
+			classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod, infoClass.getAnoCurricular(), executionDegree);
           
 			for (int i = 0; i < classes.size(); i++) {
 				ITurma taux = (ITurma) classes.get(i);
@@ -70,8 +66,7 @@ public class SelectClasses implements IServico {
 			}
 
 		} catch (ExcepcaoPersistencia e) {
-			
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 		return infoClasses;

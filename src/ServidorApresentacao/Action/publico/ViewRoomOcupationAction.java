@@ -11,10 +11,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
-import DataBeans.RoomKeyAndSemester;
-import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -33,24 +33,22 @@ public class ViewRoomOcupationAction extends FenixAction {
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			GestorServicos manager = GestorServicos.manager();
 
 			InfoRoom infoRoom =
 				(InfoRoom) session.getAttribute("publico.infoRoom");
 
-//			session.removeAttribute("publico.infoRooms");
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) session.getAttribute(
+					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-			Integer semester = (Integer) indexForm.get("index");
-
-			Object argsReadLessons[] =
-				{ new RoomKeyAndSemester(semester, infoRoom.getNome())};
+			Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
 
 			List lessons =
-				(List) manager.executar(
+				(List) ServiceUtils.executeService(
 					null,
 					"LerAulasDeSalaEmSemestre",
 					argsReadLessons);
-
+			
 			if (lessons != null) {
 				session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
 			}

@@ -17,8 +17,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.ClassKey;
 import DataBeans.InfoClass;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -38,18 +39,31 @@ public class ViewClassTimeTableAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+		HttpSession session = request.getSession();
+		
 		String className = request.getParameter("className");
 
 		if (className == null)
 			return mapping.getInputForward();
 
-		Object[] args = { new ClassKey(className)};
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+
+		InfoClass classView = new InfoClass();
+
+		classView.setInfoExecutionDegree(infoExecutionDegree);
+		classView.setInfoExecutionPeriod(infoExecutionPeriod);
+		classView.setNome(className);
+
+		Object[] args = { classView };
 		List lessons =
 			(List) ServiceUtils.executeService(null, "LerAulasDeTurma", args);
-		HttpSession session = request.getSession();
-		InfoClass classView = new InfoClass();
-		classView.setNome(className);
-		session.setAttribute(SessionConstants.CLASS_VIEW,classView);
+		
+		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
 		session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
 
 		return mapping.findForward("Sucess");

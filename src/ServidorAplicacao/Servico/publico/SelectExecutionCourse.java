@@ -3,13 +3,16 @@ package ServidorAplicacao.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
-import Dominio.DisciplinaExecucao;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -44,60 +47,38 @@ public class SelectExecutionCourse implements IServico {
 	}
 
 	public Object run(
-		InfoExecutionCourse infoExecutionCourse,
+		InfoExecutionDegree infoExecutionDegree,
+		InfoExecutionPeriod infoExecutionPeriod,
 		Integer curricularYear) {
 
 		
-		List infoExecutionCourses = new ArrayList();
-		IDisciplinaExecucao exeCourse = new DisciplinaExecucao();
+		List infoExecutionCourseList = new ArrayList();
+		
 		
 
 			
 		
 
 		try {
-			List executionCourses = null;
+			List executionCourseList = null;
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			executionCourses =
-				sp
-					.getIDisciplinaExecucaoPersistente()
-					.readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(
-					curricularYear,
-						infoExecutionCourse
-							.getInfoLicenciaturaExecucao()
-							.getAnoLectivo(),
-						infoExecutionCourse.getSemester(),
-						infoExecutionCourse
-							.getInfoLicenciaturaExecucao()
-							.getInfoLicenciatura()
-							.getSigla());
+			
+			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+
+ 			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+ 			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+ 			
+			executionCourseList =
+					executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,executionPeriod,executionDegree);
 
 			//readByCriteria(
 			//	exeCourse);
 
-			for (int i = 0; i < executionCourses.size(); i++) {
+			for (int i = 0; i < executionCourseList.size(); i++) {
 				IDisciplinaExecucao aux =
-					(IDisciplinaExecucao) executionCourses.get(i);
-				infoExecutionCourses.add(
-					new InfoExecutionCourse(
-						aux.getNome(),
-						aux.getSigla(),
-						aux.getPrograma(),
-						new InfoExecutionDegree(
-							aux.getLicenciaturaExecucao().getAnoLectivo(),
-							new InfoDegree(
-								aux
-									.getLicenciaturaExecucao()
-									.getCurso()
-									.getSigla(),
-								aux
-									.getLicenciaturaExecucao()
-									.getCurso()
-									.getNome())),
-						aux.getTheoreticalHours(),
-						aux.getPraticalHours(),
-						aux.getTheoPratHours(),
-						aux.getLabHours()));
+					(IDisciplinaExecucao) executionCourseList.get(i);
+				InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(aux);
+				infoExecutionCourseList.add(infoExecutionCourse);
 			}
 
 		} catch (ExcepcaoPersistencia e) {
@@ -105,7 +86,7 @@ public class SelectExecutionCourse implements IServico {
 			e.printStackTrace();
 		}
 
-		return infoExecutionCourses;
+		return infoExecutionCourseList;
 
 	}
 

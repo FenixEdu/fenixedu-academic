@@ -64,7 +64,7 @@
 
 		<br/>
 		<center>
-		<html:link page="/prepareViewRoomOcupation.do">
+		<html:link page="/viewRoomOcupation.do">
 			<bean:message key="link.room.occupation"/>
 		</html:link>
 		</center>

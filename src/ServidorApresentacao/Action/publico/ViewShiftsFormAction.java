@@ -13,6 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.FenixAction;
@@ -46,9 +47,12 @@ public class ViewShiftsFormAction extends FenixAction {
 											.getAttribute(SessionConstants.CONTEXT_KEY);
 			
 			InfoExecutionCourse executionCourse =new InfoExecutionCourse();
+			
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) sessao.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			
 			executionCourse.setSigla((String) courseForm.get("courseInitials"));
-			executionCourse.setSemester(ctx.getSemestre());
-			executionCourse.setInfoLicenciaturaExecucao(ctx.getInfoLicenciaturaExecucao());
+			executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+			
 			infoShift.setInfoDisciplinaExecucao(executionCourse);
 			
 			sessao.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, executionCourse);

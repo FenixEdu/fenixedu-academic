@@ -24,7 +24,7 @@
 			</html:link>
 			</td>
 			<td>
-			<jsp:getProperty name="classview" property="semestre"/>
+			<bean:write name="classview" property="infoExecutionPeriod.name"/>
 			</td>
 			<td>
 			<jsp:getProperty name="classview" property="anoCurricular"/>

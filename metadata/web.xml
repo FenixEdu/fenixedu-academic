@@ -3,6 +3,19 @@
       "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
       "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
+	<filter>
+	    <filter-name>indexFilter</filter-name>
+	    <filter-class>ServidorApresentacao.servlets.filters.StartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>indexFilter</filter-name>
+	    <url-pattern>/index.do</url-pattern>
+	</filter-mapping>
+    <servlet>
+        <servlet-name>StartupServlet</servlet-name>
+        <servlet-class>ServidorApresentacao.servlets.startup.StartupServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
     <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
@@ -52,6 +65,7 @@
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
+    
     <taglib>
         <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
         <taglib-location>/WEB-INF/struts-html.tld</taglib-location>

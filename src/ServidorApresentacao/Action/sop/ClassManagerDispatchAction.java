@@ -238,8 +238,21 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		IUserView userView,
 		String className)
 		throws Exception {
-		ClassKey keyClass = new ClassKey(className);
-		Object argsApagarTurma[] = { keyClass };
+			
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+		
+		
+			
+		InfoClass infoClass = new InfoClass();
+		
+		infoClass.setInfoExecutionDegree(infoExecutionDegree);
+		infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
+		infoClass.setNome(className);	
+		
+		
+		Object argsApagarTurma[] = { infoClass };
 
 		/** InfoLesson ArrayList */
 		ArrayList lessonList =

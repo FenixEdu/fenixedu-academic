@@ -100,16 +100,7 @@ public abstract class Cloner {
 	 */
 	public static ISala copyInfoRoom2Room(InfoRoom infoRoom) {
 		ISala room = new Sala();
-
-		try {
-			if (infoRoom == null)
-				room = null;
-			else
-				BeanUtils.copyProperties(room, infoRoom);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
+		copyObjectProperties(room, infoRoom);
 		return room;
 	}
 	/**
@@ -150,18 +141,12 @@ public abstract class Cloner {
 	 */
 	public static ITurno copyInfoShift2IShift(InfoShift infoShift) {
 		ITurno shift = new Turno();
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
 
-		try {
-			BeanUtils.copyProperties(shift, infoShift);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
-		IDisciplinaExecucao executionCourse =
-			copyInfoExecutionCourse2ExecutionCourse(
-				infoShift.getInfoDisciplinaExecucao());
+		copyObjectProperties(shift, infoShift);
 
 		shift.setDisciplinaExecucao(executionCourse);
+
 		return shift;
 	}
 	/**
@@ -169,21 +154,16 @@ public abstract class Cloner {
 	 * @param infoShift
 	 * @return ITurno
 	 */
-	public static ITurno copyShift2InfoShift(ITurno shift) {
+	public static InfoShift copyShift2InfoShift(ITurno shift) {
 		InfoShift infoShift = new InfoShift();
 
-		try {
-			BeanUtils.copyProperties(infoShift, shift);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
-		IDisciplinaExecucao executionCourse =
-			copyInfoExecutionCourse2ExecutionCourse(
-				infoShift.getInfoDisciplinaExecucao());
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(shift.getDisciplinaExecucao());
 
-		shift.setDisciplinaExecucao(executionCourse);
-		return shift;
+		copyObjectProperties(infoShift, shift);
+
+		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+
+		return infoShift;
 	}
 
 	/**

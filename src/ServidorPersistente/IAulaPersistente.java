@@ -15,6 +15,7 @@ import java.util.List;
 
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import Util.DiaSemana;
 import Util.TipoAula;
@@ -28,7 +29,7 @@ public interface IAulaPersistente extends IPersistentObject {
     public void deleteAll() throws ExcepcaoPersistencia;
     public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
     public List readByDisciplinaExecucaoETipo(String sigla, TipoAula tipoAula) throws ExcepcaoPersistencia;
-    public List readBySalaEmSemestre(String nomeSala, Integer semestre) throws ExcepcaoPersistencia;
+    public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 	/**
 	 * Method readByDisciplinaExecucaoETipo.
 	 * @param executionCourse

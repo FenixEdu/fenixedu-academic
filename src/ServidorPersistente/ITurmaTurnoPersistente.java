@@ -24,6 +24,6 @@ public interface ITurmaTurnoPersistente extends IPersistentObject {
     public void delete(String nomeTurma, String nomeTurno) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
     public List readTurnosDeTurma(String nomeTurma) throws ExcepcaoPersistencia;
-    public List readAulasByTurma(String nomeTurma) throws ExcepcaoPersistencia;
+    public List readByClass(ITurma group) throws ExcepcaoPersistencia;
 	public List readClassesWithShift(ITurno turno) throws ExcepcaoPersistencia;    
 }
