@@ -26,6 +26,7 @@ public class TipoDocumentoIdentificacao {
     public static final int BILHETE_DE_IDENTIDADE_DA_MARINHA = 5;
     public static final int BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA = 6;
     public static final int OUTRO = 7;
+    public static final int EXTERNO = 8;
     
     public static final String BILHETE_DE_IDENTIDADE_STRING = "Bilhete de Identidade";
     public static final String PASSAPORTE_STRING = "Passaporte";
@@ -34,6 +35,7 @@ public class TipoDocumentoIdentificacao {
     public static final String BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING = "Bilhete de Identidade da Marinha";
     public static final String BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING = "Bilhete de Identidade da Força Aérea";
     public static final String OUTRO_STRING = "Outro";
+    public static final String EXTERNO_STRING = "Externo";
     public static final String DEFAULT = "[Escolha um Tipo]";
     
     private Integer tipo;
@@ -58,6 +60,8 @@ public class TipoDocumentoIdentificacao {
 		if (tipo.equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING)) this.tipo = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA);
 		if (tipo.equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING)) this.tipo = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
 		if (tipo.equals(TipoDocumentoIdentificacao.OUTRO_STRING)) this.tipo = new Integer(TipoDocumentoIdentificacao.OUTRO);
+		if (tipo.equals(TipoDocumentoIdentificacao.EXTERNO_STRING)) this.tipo = new Integer(TipoDocumentoIdentificacao.EXTERNO);
+		
     }
     
     public static ArrayList toArrayList() {
@@ -70,6 +74,8 @@ public class TipoDocumentoIdentificacao {
 	    result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING, TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING));
 	    result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING, TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING));
 		result.add(new LabelValueBean(TipoDocumentoIdentificacao.OUTRO_STRING, TipoDocumentoIdentificacao.OUTRO_STRING));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.EXTERNO_STRING, TipoDocumentoIdentificacao.EXTERNO_STRING));
+		
 		return result;	
     }    
 
@@ -83,6 +89,7 @@ public class TipoDocumentoIdentificacao {
 		result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING, String.valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA)));
 		result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING, String.valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA)));
 		result.add(new LabelValueBean(TipoDocumentoIdentificacao.OUTRO_STRING, String.valueOf(TipoDocumentoIdentificacao.OUTRO)));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.EXTERNO_STRING, String.valueOf(TipoDocumentoIdentificacao.EXTERNO)));
 		return result;	
 	}    
 
@@ -135,6 +142,7 @@ public class TipoDocumentoIdentificacao {
 		if (tipo.intValue() == TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA) return TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING;
 		if (tipo.intValue() == TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA) return TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING;
 		if (tipo.intValue() == TipoDocumentoIdentificacao.OUTRO) return TipoDocumentoIdentificacao.OUTRO_STRING;
+		if (tipo.intValue() == TipoDocumentoIdentificacao.EXTERNO) return TipoDocumentoIdentificacao.EXTERNO_STRING;
 
 		return "ERRO!"; // Nunca e atingido
 	}
