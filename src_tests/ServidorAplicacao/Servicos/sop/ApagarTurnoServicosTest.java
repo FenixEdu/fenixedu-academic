@@ -91,25 +91,23 @@ public class ApagarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 			fail("testDeleteExistingTurno");
 		}
 	}
-/*
+
 	// delete non-existing turno
 	public void testDeleteNonExistingTurno() {
-		Object argsDeleteTurno[] = new Object[1];
-		argsDeleteTurno[0] = new ShiftKey("turno3", null);
+
+		this.ligarSuportePersistente(false);
+
+		Object argsDeleteTurno[] = { new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao()) };
 
 		Object result = null;
 		try {
-			result =
-				_gestor.executar(_userView, "ApagarTurno", argsDeleteTurno);
-			assertEquals(
-				"testDeleteNonExistingTurno",
-				Boolean.FALSE.booleanValue(),
-				((Boolean) result).booleanValue());
+			result = _gestor.executar(_userView, "ApagarTurno", argsDeleteTurno);
+			assertEquals("testDeleteNonExistingTurno", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteNonExistingTurno");
 		}
 	}
-*/
+
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;
