@@ -369,7 +369,6 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 			public boolean evaluate(Object arg0)
 			{
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
-
 				if (infoPaymentPhase.getDescription() != null
 					&& infoPaymentPhase.getDescription().equals(
 						ServidorApresentacao

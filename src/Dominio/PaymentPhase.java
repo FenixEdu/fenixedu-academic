@@ -1,15 +1,19 @@
 /*
  * Created on 6/Jan/2004
- *
+ *  
  */
 package Dominio;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import org.apache.struts.Globals;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
 public class PaymentPhase extends DomainObject implements IPaymentPhase
 {
@@ -20,20 +24,29 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 
 	private IGratuityValues gratuityValues;
 	private Integer keyGratuityValues;
-	
+
 	private List transactionList;
-	
-	
+
 	/**
 	 * @return Returns the description.
 	 */
 	public String getDescription()
 	{
-		return description;
+		
+		MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao.ApplicationResources");
+		
+		String newDescription = null;
+		newDescription = messages.getMessage(this.description);
+		if (newDescription == null)
+		{
+			newDescription = this.description;
+		}
+		return newDescription;
 	}
 
 	/**
-	 * @param description The description to set.
+	 * @param description
+	 *            The description to set.
 	 */
 	public void setDescription(String description)
 	{
@@ -49,7 +62,8 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	}
 
 	/**
-	 * @param endDate The endDate to set.
+	 * @param endDate
+	 *            The endDate to set.
 	 */
 	public void setEndDate(Date endDate)
 	{
@@ -65,7 +79,8 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	}
 
 	/**
-	 * @param startDate The startDate to set.
+	 * @param startDate
+	 *            The startDate to set.
 	 */
 	public void setStartDate(Date startDate)
 	{
@@ -81,13 +96,14 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	}
 
 	/**
-	 * @param value The value to set.
+	 * @param value
+	 *            The value to set.
 	 */
 	public void setValue(Double value)
 	{
 		this.value = value;
 	}
-	
+
 	/**
 	 * @return Returns the gratuity.
 	 */
@@ -97,7 +113,8 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	}
 
 	/**
-	 * @param gratuity The gratuity to set.
+	 * @param gratuity
+	 *            The gratuity to set.
 	 */
 	public void setGratuityValues(IGratuityValues gratuityValues)
 	{
@@ -113,7 +130,8 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	}
 
 	/**
-	 * @param keyGratuity The keyGratuity to set.
+	 * @param keyGratuity
+	 *            The keyGratuity to set.
 	 */
 	public void setKeyGratuityValues(Integer keyGratuityValues)
 	{
@@ -129,23 +147,38 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	}
 
 	/**
-	 * @param transactionList The transactionList to set.
+	 * @param transactionList
+	 *            The transactionList to set.
 	 */
 	public void setTransactionList(List transactionList)
 	{
 		this.transactionList = transactionList;
 	}
-	
-	
+
 	public String toString()
 	{
-		//TODO: to make
-		return null;
+		StringBuffer object = new StringBuffer();
+		object =
+		object
+		.append("\n[PaymentPhase: ")
+		.append("idInternal= ")
+		.append(getIdInternal())
+		.append(" starDate= ")
+		.append(startDate)
+		.append("; endDate= ")
+		.append(endDate)
+		.append("; value= ")
+		.append(value)
+		.append("; description= ")
+		.append(description)
+		.append("\n");
+
+		return object.toString();
 	}
 
 	public boolean equals(Object object)
 	{
 		//TODO: to make
 		return true;
-	}	
+	}
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.struts.util.MessageResources;
+
 /**
  * @author Fernanda Quitério 10/Jan/2004
  *  
@@ -18,7 +20,7 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	private InfoGratuityValues infoGratuityValues;
 
 	private List transactionList;
-	
+
 	public String toString()
 	{
 		StringBuffer object = new StringBuffer();
@@ -39,7 +41,7 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 
 		return object.toString();
 	}
-	
+
 	/**
 	 * @return Returns the transactionList.
 	 */
@@ -49,20 +51,33 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param transactionList The transactionList to set.
+	 * @param transactionList
+	 *            The transactionList to set.
 	 */
 	public void setTransactionList(List transactionList)
 	{
 		this.transactionList = transactionList;
 	}
-	
-	
+
 	/**
 	 * @return Returns the description.
 	 */
 	public String getDescription()
 	{
-		return description;
+
+		MessageResources messageResources = MessageResources.getMessageResources("ServidorApresentacao.ApplicationResources");
+		//		ResourceBundle bundle = ResourceBundle.getBundle(Globals.MESSAGES_KEY);
+		String newDescription = null;
+		//		try {
+		//			newDescription = bundle.getString(this.description);
+//		newDescription = messageResources.getMessage(this.description);
+		//		}catch(NullPointerException npe) {
+//		if (newDescription == null)
+//		{
+			newDescription = this.description;
+//		}
+		//		}
+		return newDescription;
 	}
 
 	/**

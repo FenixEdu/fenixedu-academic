@@ -30,7 +30,10 @@ public class Specialization implements Serializable {
     public static final String ESPECIALIZACAO_STRING = "Especialização";
 	public static final String DEFAULT = "";
     
-    
+	public static final Specialization MESTRADO_TYPE = new Specialization(MESTRADO);
+	public static final Specialization INTEGRADO_TYPE = new Specialization(INTEGRADO);
+	public static final Specialization ESPECIALIZACAO_TYPE = new Specialization(ESPECIALIZACAO);
+
     private Integer specialization;
 
     /** Creates a new instance of Especializacao */

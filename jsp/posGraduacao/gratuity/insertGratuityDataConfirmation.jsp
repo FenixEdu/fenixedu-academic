@@ -30,31 +30,24 @@
 		</tr>
 		<logic:greaterThan name="infoGratuityValues" property="anualValue" value="0">
 			<tr>
-				<td style="text-align:right">
+				<td colspan="2">
 					<br />
-					<bean:message key="label.masterDegree.gratuity.annual.value"/>:
-				</td>
-				<td>
-					<br />
+					<bean:message key="label.masterDegree.gratuity.annual.value"/>:&nbsp;
 					<bean:write name="infoGratuityValues" property="anualValue" />&nbsp;<bean:message key="label.masterDegree.gratuity.euro"/>
 				</td>
 			</tr>
 		</logic:greaterThan>
 		<logic:greaterThan name="infoGratuityValues" property="scholarShipValue" value="0">		
 			<tr>
-				<td style="text-align:right">
-					<bean:message key="label.masterDegree.gratuity.scholarPart"/>:
-				</td>
-				<td>
+				<td colspan="2">
+					<br />
+					<bean:message key="label.masterDegree.gratuity.scholarPart"/>:&nbsp;
 					<bean:write name="infoGratuityValues" property="scholarShipValue" />&nbsp;<bean:message key="label.masterDegree.gratuity.euro"/>
 				</td>
 			</tr>
 			<tr>
-				<td style="text-align:right">
-					<bean:message key="label.masterDegree.gratuity.thesisPart"/>:
-					<br /><br />
-				</td>
-				<td>
+				<td colspan="2">
+					<bean:message key="label.masterDegree.gratuity.thesisPart"/>:&nbsp;
 					<bean:write name="infoGratuityValues" property="finalProofValue" />&nbsp;<bean:message key="label.masterDegree.gratuity.euro"/>&nbsp;
 					<logic:equal name="infoGratuityValues" property="proofRequestPayment" value="<%=Boolean.TRUE.toString()%>">
 						<bean:message key="label.masterDegree.gratuity.paymentSituation"/>
@@ -64,13 +57,8 @@
 			</tr>
 		</logic:greaterThan>
 		<tr>
-			<td style="text-align:right">
-				<br />
-				<bean:message key="label.masterDegree.gratuity.unitaryValue"/>:
-				<br /><br />
-			</td>
-			<td>
-				<br />
+			<td colspan="2">
+				<bean:message key="label.masterDegree.gratuity.unitaryValue"/>:&nbsp;
 				<logic:greaterThan name="infoGratuityValues" property="courseValue" value="0">		
 					<bean:message key="label.masterDegree.gratuity.valueByCourse"/>
 					<bean:write name="infoGratuityValues" property="courseValue" />&nbsp;
@@ -159,7 +147,7 @@
 								</td>
 								<td class="listClasses">
 									<logic:present name="phase" property="description">
-									<bean:write name="phase" property="description"/>
+										<bean:message key="label.masterDegree.gratuity.phase" arg0="<%=phase.getDescription()%>"/>
 									</logic:present>
 									<logic:notPresent name="phase" property="description">
 										&nbsp;

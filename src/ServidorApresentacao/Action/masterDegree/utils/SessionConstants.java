@@ -17,7 +17,8 @@ public abstract class SessionConstants {
 	
 	public static final String WORK_LOCATIONS_LIST = "work_locations_list";
 	
-	public static final String REGISTRATION_PAYMENT = "No acto da inscricao";
-
+	public static final String REGISTRATION_PAYMENT = "No acto da inscrição";
+	public static final String REGISTRATION_PAYMENT_KEY = "label.masterDegree.gratuity.registrationPayment";
+	
 	
 }
