@@ -144,4 +144,19 @@ public class Site implements ISite {
 		this.sections = sections;
 	}
 
+	/**
+	 * @return Integer
+	 */
+	public Integer getKeyInitialSection() {
+		return keyInitialSection;
+	}
+
+	/**
+	 * Sets the keyInitialSection.
+	 * @param keyInitialSection The keyInitialSection to set
+	 */
+	public void setKeyInitialSection(Integer keyInitialSection) {
+		this.keyInitialSection = keyInitialSection;
+	}
+
 }
