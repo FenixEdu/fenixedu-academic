@@ -60,7 +60,6 @@ public class ViewRoomFormAction extends FenixAction {
 			}
 			
 			if (roomList!=null && !roomList.isEmpty()){
-				System.out.println(roomList.size());
 				infoRoom = (InfoRoom) roomList.get(0);
 			}
 			

@@ -254,13 +254,6 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 			lockRead(allExamRooms);
 			availableRooms =
 				(List) CollectionUtils.subtract(allExamRooms, occupiedRooms);
-
-			System.out.println("availableRooms.size= " + availableRooms.size());
-			for (int i = 0; i < availableRooms.size(); i++) {
-				ISala sala = (ISala) availableRooms.get(i);
-				System.out.println("sala= " + sala.getNome());
-			}
-
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

@@ -218,9 +218,7 @@ public abstract class Cloner {
 	public static InfoRoom copyRoom2InfoRoom(ISala room) {
 		InfoRoom infoRoom = new InfoRoom();
 
-		System.out.println("C1");
 		copyObjectProperties(infoRoom, room);
-		System.out.println("C2");
 		return infoRoom;
 	}
 
