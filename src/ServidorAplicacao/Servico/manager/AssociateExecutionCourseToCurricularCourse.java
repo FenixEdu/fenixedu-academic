@@ -24,62 +24,84 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class AssociateExecutionCourseToCurricularCourse implements IServico {
-	
-	private static AssociateExecutionCourseToCurricularCourse service = new AssociateExecutionCourseToCurricularCourse();
+public class AssociateExecutionCourseToCurricularCourse implements IServico
+{
 
-	public static AssociateExecutionCourseToCurricularCourse getService() {
-		return service;
-	}
+    private static AssociateExecutionCourseToCurricularCourse service =
+        new AssociateExecutionCourseToCurricularCourse();
 
-	private AssociateExecutionCourseToCurricularCourse() {
-	}
+    public static AssociateExecutionCourseToCurricularCourse getService()
+    {
+        return service;
+    }
 
-	public final String getNome() {
-		return "AssociateExecutionCourseToCurricularCourse";
-	}
-	
+    private AssociateExecutionCourseToCurricularCourse()
+    {
+    }
 
-	public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId) throws FenixServiceException {
-	
-		try {
-			
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-				
-				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-				IExecutionCourse executionCourse;
-				
-				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
-				
-				if(curricularCourse == null)
-					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-					
-				List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-				
-				Iterator iter = executionCourses.iterator();
-			
-				while(iter.hasNext()){
-				Integer associatedExecutionPeriodId = ((IExecutionCourse) iter.next()).getExecutionPeriod().getIdInternal();
-				if(associatedExecutionPeriodId.equals(executionPeriodId))
-					throw new ExistingServiceException("message.unavailable.execution.period",null);
-				}
-				
-				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
-				if(executionCourse == null)
-					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
-				else {
-						List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-						if(!executionCourses.contains(executionCourse) && !curricularCourses.contains(curricularCourse)) {
-							persistentCurricularCourse.simpleLockWrite(curricularCourse);
-							executionCourses.add(executionCourse);
-							curricularCourses.add(curricularCourse);
-							curricularCourse.setAssociatedExecutionCourses(executionCourses);
-							executionCourse.setAssociatedCurricularCourses(curricularCourses);
-						}
-				}	 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+    public final String getNome()
+    {
+        return "AssociateExecutionCourseToCurricularCourse";
+    }
+
+    public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
+        throws FenixServiceException
+    {
+
+        try
+        {
+
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+
+            IPersistentExecutionCourse persistentExecutionCourse =
+                persistentSuport.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse;
+
+            IPersistentCurricularCourse persistentCurricularCourse =
+                persistentSuport.getIPersistentCurricularCourse();
+            ICurricularCourse curricularCourse =
+                (ICurricularCourse) persistentCurricularCourse.readByOId(
+                    new CurricularCourse(curricularCourseId),
+                    false);
+
+            if (curricularCourse == null)
+                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+
+            List executionCourses = curricularCourse.getAssociatedExecutionCourses();
+
+            Iterator iter = executionCourses.iterator();
+
+            while (iter.hasNext())
+            {
+                Integer associatedExecutionPeriodId =
+                    ((IExecutionCourse) iter.next()).getExecutionPeriod().getIdInternal();
+                if (associatedExecutionPeriodId.equals(executionPeriodId))
+                    throw new ExistingServiceException("message.unavailable.execution.period", null);
+            }
+
+            executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(
+                    new ExecutionCourse(executionCourseId),
+                    false);
+            if (executionCourse == null)
+                throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+            else
+            {
+                List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                if (!executionCourses.contains(executionCourse)
+                    && !curricularCourses.contains(curricularCourse))
+                {
+                    persistentCurricularCourse.simpleLockWrite(curricularCourse);
+                    executionCourses.add(executionCourse);
+                    curricularCourses.add(curricularCourse);
+                    curricularCourse.setAssociatedExecutionCourses(executionCourses);
+                    executionCourse.setAssociatedCurricularCourses(curricularCourses);
+                }
+            }
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }

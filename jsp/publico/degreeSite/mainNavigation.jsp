@@ -7,7 +7,7 @@
 <ul class="treemenu">
 	<li><a href="http://www.ist.utl.pt/pt/informacoes/">Informação</a></li>
   <li><a href="http://www.ist.utl.pt/pt/estrutura_interna/">Estrutura</a></li>
-  <li><a href="http://www.ist.utl.pt/pt/servicos/">Serviços</a></li>
+  <li><html:link page="/showServices.do">Serviços</html:link></li>
   <li class="treenode"><a href="">Ensino</a>
 		<ul class="expmenu">
 			<li><html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>

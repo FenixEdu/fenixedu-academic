@@ -111,6 +111,13 @@
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
      
+     
+     <form-bean name="teachersBodyForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="executionYearId" type="java.lang.Integer"/>
+        <form-property name="executionDegreeId" type="java.lang.Integer"/>
+      </form-bean>
   </form-beans>     
      
     
@@ -441,6 +448,15 @@
      	<forward name="showExecutionCourseSite" path="showExecutionCourseSite" />
      </action>
               
+        <action path="/searchProfessorships" name="teachersBodyForm" 
+            type="ServidorApresentacao.Action.publico.teachersBody.ShowTeachersBodyDispatchAction" 
+            parameter="method" >
+            <forward name="showForm" path="searchProfessorships"/>
+            <forward name="showProfessorships" path="showProfessorships"/>
+        </action>
+        
+        <action path="/showServices" forward="showServices"/>
+        
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->

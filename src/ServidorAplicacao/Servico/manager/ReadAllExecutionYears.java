@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -19,53 +19,44 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadAllExecutionYears implements IServico {
+public class ReadAllExecutionYears implements IService
+{
 
-  private static ReadAllExecutionYears service = new ReadAllExecutionYears();
+    /**
+	 * The constructor of this class.
+	 */
+    public ReadAllExecutionYears()
+    {
+    }
 
-  /**
-   * The singleton access method of this class.
-   */
-  public static ReadAllExecutionYears getService() {
-	return service;
-  }
+    /**
+	 * Executes the service. Returns the current collection of infoTeachers.
+	 */
+    public List run() throws FenixServiceException
+    {
+        ISuportePersistente sp;
+        List allExecutionYears = null;
 
-  /**
-   * The constructor of this class.
-   */
-  private ReadAllExecutionYears() { }
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            allExecutionYears = sp.getIPersistentExecutionYear().readAllExecutionYear();
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
 
-  /**
-   * Service name
-   */
-  public final String getNome() {
-	return "ReadAllExecutionYears";
-  }
+        if (allExecutionYears == null || allExecutionYears.isEmpty())
+            return allExecutionYears;
 
-  /**
-   * Executes the service. Returns the current collection of infoTeachers.
-   */
-  public List run() throws FenixServiceException {
-	ISuportePersistente sp;
-	List allExecutionYears = null;
+        // build the result of this service
+        Iterator iterator = allExecutionYears.iterator();
+        List result = new ArrayList(allExecutionYears.size());
 
-	try {
-			sp = SuportePersistenteOJB.getInstance();
-			allExecutionYears = sp.getIPersistentExecutionYear().readAllExecutionYear();
-	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-		throw new FenixServiceException(excepcaoPersistencia);
-	}
+        while (iterator.hasNext())
+            result.add(Cloner.copyIExecutionYear2InfoExecutionYear((IExecutionYear) iterator.next()));
 
-	if(allExecutionYears == null || allExecutionYears.isEmpty()) 
-		return allExecutionYears;
-
-	// build the result of this service
-	Iterator iterator = allExecutionYears.iterator();
-	List result = new ArrayList(allExecutionYears.size());
-    
-	while (iterator.hasNext())
-		result.add(Cloner.copyIExecutionYear2InfoExecutionYear((IExecutionYear) iterator.next()));
-
-	return result;
-  }
+        return result;
+    }
 }

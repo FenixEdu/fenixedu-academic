@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -37,6 +38,8 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
         super();
     }
 
+   
+
     public List readAll() throws ExcepcaoPersistencia
     {
         try
@@ -52,15 +55,27 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
-
-    public IResponsibleFor readByTeacherAndExecutionCourse(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia
+    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo(
+                "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+                executionDegree.getCurricularPlan().getIdInternal());
+        return queryList(ResponsibleFor.class, criteria, true);
+    }
+    public IResponsibleFor readByTeacherAndExecutionCourse(
+        ITeacher teacher,
+        IExecutionCourse executionCourse)
+        throws ExcepcaoPersistencia
     {
         try
         {
             IResponsibleFor responsibleFor = null;
-            String oqlQuery = "select responsibleFor from " + ResponsibleFor.class.getName()
-                    + " where teacher.teacherNumber = $1" + " and executionCourse.sigla = $2"
+            String oqlQuery =
+                "select responsibleFor from "
+                    + ResponsibleFor.class.getName()
+                    + " where teacher.teacherNumber = $1"
+                    + " and executionCourse.sigla = $2"
                     + " and executionCourse.executionPeriod.name = $3"
                     + " and executionCourse.executionPeriod.executionYear.year = $4";
 
@@ -87,7 +102,9 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
         try
         {
 
-            String oqlQuery = "select responsibleFor from " + ResponsibleFor.class.getName()
+            String oqlQuery =
+                "select responsibleFor from "
+                    + ResponsibleFor.class.getName()
                     + " where teacher.teacherNumber = $1";
 
             query.create(oqlQuery);
@@ -123,7 +140,7 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
     }
 
     public void lockWrite(IResponsibleFor responsibleFor)
-            throws ExcepcaoPersistencia, ExistingPersistentException
+        throws ExcepcaoPersistencia, ExistingPersistentException
     {
         IResponsibleFor responsibleForFromDB = null;
 
@@ -132,17 +149,21 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
             return;
 
         // Read responsibleFor from database.
-        responsibleForFromDB = this.readByTeacherAndExecutionCourse(responsibleFor.getTeacher(),
+        responsibleForFromDB =
+            this.readByTeacherAndExecutionCourse(
+                responsibleFor.getTeacher(),
                 responsibleFor.getExecutionCourse());
 
         // If responsibleFor is not in database, then write it.
         if (responsibleForFromDB == null)
             super.lockWrite(responsibleFor);
 
-        // else If the responsibleFor is mapped to the database, then write any existing changes.
-        else if ((responsibleFor instanceof ResponsibleFor)
-                && ((Professorship) responsibleForFromDB).getIdInternal()
-                        .equals(((Professorship) responsibleFor).getIdInternal()))
+        // else If the responsibleFor is mapped to the database, then write any
+        // existing changes.
+        else if (
+            (responsibleFor instanceof ResponsibleFor)
+                && ((Professorship) responsibleForFromDB).getIdInternal().equals(
+                    ((Professorship) responsibleFor).getIdInternal()))
         {
             super.lockWrite(responsibleFor);
             // else Throw an already existing exception
@@ -155,10 +176,12 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCoursePB(Dominio.ITeacher,
-	 *          Dominio.IDisciplinaExecucao)
+	 *      Dominio.IDisciplinaExecucao)
 	 */
-    public IResponsibleFor readByTeacherAndExecutionCoursePB(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia
+    public IResponsibleFor readByTeacherAndExecutionCoursePB(
+        ITeacher teacher,
+        IExecutionCourse executionCourse)
+        throws ExcepcaoPersistencia
     {
 
         Criteria criteria = new Criteria();
@@ -174,12 +197,13 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
 	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionPeriod(Dominio.ITeacher)
 	 */
     public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriod
-                .getIdInternal());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.idInternal",
+            executionPeriod.getIdInternal());
         return queryList(ResponsibleFor.class, criteria);
     }
 
@@ -187,22 +211,27 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionYear(Dominio.ITeacher,
-	 *          Dominio.IExecutionYear)
+	 *      Dominio.IExecutionYear)
 	 */
     public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
-            throws ExcepcaoPersistencia
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionYear
-                .getIdInternal());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.executionYear.idInternal",
+            executionYear.getIdInternal());
         return queryList(ResponsibleFor.class, criteria);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCourseIds(Dominio.ITeacher, java.util.List)
-     */
-    public List readByTeacherAndExecutionCourseIds(ITeacher teacher, List executionCourseIds) throws ExcepcaoPersistencia
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCourseIds(Dominio.ITeacher,
+	 *      java.util.List)
+	 */
+    public List readByTeacherAndExecutionCourseIds(ITeacher teacher, List executionCourseIds)
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());

@@ -54,5 +54,17 @@
 	<definition name="errorExecutionCourseSite" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="" />	
 		<put name="body" value="/publico/degreeSite/errorExecutionCourseSite.jsp"/>
-	</definition>		
+	</definition>	
+	<definition name="showServices" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />	
+		<put name="body" value="/publico/services/services.jsp"/>
+	</definition>	
+	<definition name="searchProfessorships" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />	
+		<put name="body" value="/publico/services/teachers/searchProfessorships.jsp"/>
+	</definition>
+	<definition name="showProfessorships" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />	
+		<put name="body" value="/publico/services/teachers/showProfessorships.jsp"/>
+	</definition>
 </tiles-definitions>
