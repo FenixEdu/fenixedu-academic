@@ -58,6 +58,18 @@
                  dynamic="true">
       </form-bean>
 
+	  <!-- Dynamic-FormBean para as Turmas -->
+      <form-bean name="classTimeTableWithClassNameAndDegreeInitialsForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="className" type="java.lang.String"/>
+        <form-property name="degreeInitials" type="java.lang.String"/>
+        <form-property name="nameDegreeCurricularPlan" type="java.lang.String"/>
+      </form-bean>
+      
+      	
+
+
      </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -132,6 +144,14 @@
               >
           <forward name="Sucess" path="/viewClasses.jsp"/>
       </action>
+
+	<action path="/viewClassTimeTableWithClassNameAndDegreeInitialsAction"
+			name="classTimeTableWithClassNameAndDegreeInitialsForm"
+			type="ServidorApresentacao.Action.publico.ViewClassTimeTableWithClassNameAndDegreeInitialsAction"
+			validate="false"
+			>
+		<forward name="Sucess" path="/viewClassTimeTable.do"/>
+	</action>
 
 	<!-- Turnos -->
 	

@@ -30,6 +30,7 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 */
 	public List readByExecutionYear(IExecutionYear executionYear)
 		throws ExcepcaoPersistencia;
+
 	/**
 	* 
 	* @param degree
@@ -40,6 +41,11 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 		IPlanoCurricularCurso degreeCurricularPlan,
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia;
-		
+
+	public ICursoExecucao readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+		String degreeInitials,
+		String nameDegreeCurricularPlan,
+		IExecutionYear executionYear)
+		throws ExcepcaoPersistencia;		
 	
 }

@@ -83,6 +83,7 @@ public class CursoExecucaoOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
 	/**
 	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYear(Dominio.IExecutionYear)
 	 */
@@ -123,6 +124,38 @@ public class CursoExecucaoOJB
 			query.bind(executionYear.getYear());
 			query.bind(degreeCurricularPlan.getName());
 			query.bind(degreeCurricularPlan.getCurso().getSigla());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				return (ICursoExecucao) result.get(0);
+			else
+				return null;
+		} catch (QueryException e) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+	}
+
+	/**
+	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByDegreeAndExecutionYear(Dominio.ICurso, Dominio.IExecutionYear)
+	 */
+	public ICursoExecucao readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+		String degreeInitials,
+		String nameDegreeCurricularPlan,
+		IExecutionYear executionYear)
+		throws ExcepcaoPersistencia {
+		try {
+			ICursoExecucao cursoExecucao = null;
+			String oqlQuery =
+				"select all from " + CursoExecucao.class.getName();
+			oqlQuery += " where executionYear.year = $1"
+				+ " and curricularPlan.name = $2 "
+				+ " and curricularPlan.curso.sigla = $3";
+			query.create(oqlQuery);
+
+			query.bind(executionYear.getYear());
+			query.bind(nameDegreeCurricularPlan);
+			query.bind(degreeInitials);
 
 			List result = (List) query.execute();
 			lockRead(result);

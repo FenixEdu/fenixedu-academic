@@ -39,6 +39,9 @@ public class ViewClassTimeTableAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			
+		System.out.println("Entrou na antiga Action... :o)");
+
 		HttpSession session = request.getSession();
 		
 		String className = request.getParameter("className");

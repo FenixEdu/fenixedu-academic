@@ -57,9 +57,9 @@
 						</td>
 					</tr>
 			
-				<logic:iterate id="infoShift" name="publico.infoShifts" scope="session">
+				<logic:iterate id="infoShift" name="publico.infoShifts" scope="session" indexId="infoShiftIndex">
 
-					<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1">
+					<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
                        <% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.HOUR_OF_DAY)); %>
@@ -82,11 +82,16 @@
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td>
+
 							<td rowspan=<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>>
 								<logic:iterate id="infoClass" name="infoShift" property="infoClasses">
-									<html:link page="/viewClassTimeTable.do" paramId="className" paramName="infoClass" paramProperty="nome">
-										<bean:write name="infoClass" property="nome"/>
-									</html:link> &nbsp;
+
+										<bean:define id="className" name="infoClass" property="nome" toScope="request"/>
+										<bean:define id="degreeInitials" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" toScope="request"/>
+										<bean:define id="nameDegreeCurricularPlan" name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.name" toScope="request"/>
+										<a href="viewClassTimeTableWithClassNameAndDegreeInitialsAction.do?className=<%= request.getAttribute("className").toString() %>&amp;degreeInitials=<%= request.getAttribute("degreeInitials").toString() %>&amp;nameDegreeCurricularPlan=<%= request.getAttribute("nameDegreeCurricularPlan").toString() %>">
+											<bean:write name="infoClass" property="nome" />
+										</a>
 								</logic:iterate>
 							</td>
 						</tr>
