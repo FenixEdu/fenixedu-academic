@@ -226,6 +226,7 @@ public abstract class Cloner {
 	 * @param iExecutionPeriod
 	 * @return InfoExecutionPeriod
 	 */
+	
 	public static InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod executionPeriod) {
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionPeriod.getExecutionYear());
