@@ -37,7 +37,6 @@ import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
-import Util.TipoAula;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction
 {

@@ -12,7 +12,6 @@ import DataBeans.InfoPerson;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import Util.EstadoCivil;
 import Util.Sexo;
