@@ -1267,9 +1267,20 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
     	  <export dest="${metadata}/dtds/fenix-database.dtd" format="dtd"/> 
 	  </dbunit>
 	</target>
+	
+	<!-- generate dataset (old)-->
 	<target name="generate-dataset" description="Generates a dataset using the parameters specified in DataSetGenerator.properties" depends="compile-proj">
 		<java classname="Tools.DataSetGeneratorMain" fork="true">
 			<classpath refid="runtime-classpath" />
 		</java>
 	</target>
+	
+	<!-- generate dataset (smart mode) -->
+	<target name="smart-generate-dataset" description="Generates a dataset using the parameters specified in SmartDataSetGenerator.properties" depends="compile-proj">
+		<java classname="Tools.SmartDataSetGeneratorMain" fork="true">
+			<classpath refid="runtime-classpath" />
+		</java>
+	</target>
+	
+	
 </project>
