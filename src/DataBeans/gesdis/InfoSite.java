@@ -26,6 +26,11 @@ public class InfoSite {
 	public InfoSite(){
 	}
 	
+	public InfoSite(InfoExecutionCourse infoExecutionCourse) {
+		setInfoExecutionCourse(infoExecutionCourse);
+	}
+	
+	
     public InfoSite(InfoSection initialSection, List sections, InfoExecutionCourse infoExecutionCourse) {
 //		this.initialSection = ViewUtils.buildQualifiedName(initialSection);
 
