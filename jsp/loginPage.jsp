@@ -66,5 +66,8 @@
        </tr>
   </table>
      <p>&nbsp;</p>	
+     <%-- Invalidate session if the session is new. 
+     	  This is to work with FenixActionServlet --%>
+     <% if (!session.isNew()) session.invalidate(); %>
   </body>
 </html>
