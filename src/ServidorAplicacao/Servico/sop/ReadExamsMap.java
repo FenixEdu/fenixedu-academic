@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.odmg.HasBroker;
-
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamsMap;
