@@ -21,48 +21,47 @@
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 	
-		
-        <table id="anuncios" cellspacing="0">
+ <logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" scope="session">		
+        <table id="anuncios" align="center" cellspacing="0">
           <tr>
-            <td  class="ultAnuncioAviso"><img "<%= request.getContextPath() %>/images/icon_warning.gif"  width="7" height="9" /> 
-            <bean:message key="message.lastWeekAnnouncements"/> 
+            <td  class="ultAnuncioAviso"> 
+            <img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
+            	<bean:message key="message.lastWeekAnnouncements"/> 
              </td>
              <td  class="ultAnuncioAviso">
              </td>
              <td  class="ultAnuncioAviso">
              </td>
-             <td  class="ultAnuncioAviso">
-             </td>
+           
            </tr>
-           <logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" scope="session">
+          
            <tr>
            	<td >
-           		<img "<%= request.getContextPath() %>/images/icon_warning.gif"  width="7" height="9" /><bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title"/>
+           		<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
+           		<html:link  page="/accessAnnouncements.do">
+            <bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title"/>
+            	</html:link>	
            	</td>
-           	<td>	
+           	<td align="center">	
            		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="information"/>
            </td>
            </tr>
            <tr>
-           	<td></td>
-           	<td></td>
-           <td>	
-           		<bean:message key="message.createdOn"/>
-           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="creationDate"/>
-           </td>
-             </tr>
-           <tr>
-           	<td></td>
-           	<td></td>      
-           <td>	
-           		<bean:message key="message.modifiedOn"/>
-           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="lastModifiedDate"/>
-           </td>
           
-           </tr>
-           </logic:present>
+           	<td align="right"><bean:message key="message.createdOn"/>
+           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="creationDate"/>
+           		<br/>		
+           		<bean:message key="message.modifiedOn"/>
+           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="lastModifiedDate"/></td>
+                </tr>
+                     
         </table>
-    
+        <br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+    </logic:present>
 			
 	<bean:message key="property.executionCourse.associatedCurricularCourses"/>
 	<logic:present name="publico.infoCurricularCourses" scope="session">
