@@ -116,7 +116,7 @@ public class ReadFile extends LoadDataFile {
 			curricularCourseCode = curricularCourseCode.substring(1);
 		}
 		if (grade.equals(ReadFile.TWO_SPACES)) {
-			grade = "NA";
+			grade = "";
 		}
 		if (teacherNumber.equals(ReadFile.FOUR_SPACES)) {
 			teacherNumber = null;
@@ -149,6 +149,8 @@ public class ReadFile extends LoadDataFile {
 
 		if (isEnrolmentThisYear(almeida_enrolment)) {
 			System.out.print("...");
+			System.out.println("-->ENROLMENT: " + almeida_enrolment);
+
 			processEnrolment(almeida_enrolment);
 		}
 	}
@@ -188,7 +190,7 @@ public class ReadFile extends LoadDataFile {
 				+ almeida_enrolment.getCoddis()
 				+ "  degree = "
 				+ almeida_enrolment.getCurso()
-				+ "unknown\n";
+				+ " unknown\n";
 			numberUntreatableElements++;
 			return;
 		} else if (curricularCourseAndScope == null || curricularCourseAndScope.size() > 2) {
@@ -197,11 +199,11 @@ public class ReadFile extends LoadDataFile {
 				+ almeida_enrolment.getCoddis()
 				+ "  degree = "
 				+ almeida_enrolment.getCurso()
-				+ "more that one\n";
+				+ " more that one\n";
 			numberUntreatableElements++;
 			return;
 		}
-		
+
 		ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseAndScope.get(0);
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourseAndScope.get(1);
 
@@ -237,13 +239,21 @@ public class ReadFile extends LoadDataFile {
 			enrolmentEvaluation.setEnrolment(enrolment);
 
 			if (almeida_enrolment.getNumdoc() != null) {
-				ITeacher teacher = persistentObjectOJB.readTeacher(Integer.valueOf(almeida_enrolment.getNumdoc()));
-				if (teacher != null) {
-					enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-				} else {
-					logString += numberLine + "-ERRO: Teacher " + almeida_enrolment.getNumdoc() + " unknown\n";
+				Integer teacherNumber = null;
+
+				try {
+					teacherNumber = Integer.valueOf(almeida_enrolment.getNumdoc());
+					ITeacher teacher = persistentObjectOJB.readTeacher(teacherNumber);
+					if (teacher != null) {
+						enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
+					} else {
+						logString += numberLine + "-ERRO: Teacher " + almeida_enrolment.getNumdoc() + " unknown\n";
+					}
+				} catch (NumberFormatException exception) {
+					logString += numberLine + "-ERRO: Teacher: number = " + almeida_enrolment.getNumdoc() + " isn't a number\n";
 				}
 			}
+
 			if (almeida_enrolment.getObserv() != null) {
 				enrolmentEvaluation.setObservation("carregamentos: " + almeida_enrolment.getObserv());
 			} else {
@@ -278,14 +288,14 @@ public class ReadFile extends LoadDataFile {
 				+ curricularCourse.getName()
 				+ "  dgree= "
 				+ almeida_enrolment.getCurso()
-				+ "unknown\n";
+				+ " unknown\n";
 			//writeElement(almeida_inscricoes);
 			numberUntreatableElements++;
 			return;
 		}
 	}
 
-	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {		
+	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
 		return persistentObjectOJB.readStudentCurricularPlanByStudentNumber(new Integer("" + almeida_enrolment.getNumalu()));
 	} //readStudentCurricularPlan
 
@@ -302,10 +312,14 @@ public class ReadFile extends LoadDataFile {
 				Long.valueOf(almeida_enrolment.getCurso()).longValue(),
 				almeida_enrolment.getAnoins());
 		if (almeida_disc == null) {
-			//shoud exists
-			logString += numberLine + "-ERRO: Almeida disciplina " + almeida_enrolment.getCoddis() + " unknown\n";
-			numberUntreatableElements++;
-			return null;
+			almeida_disc =
+				persistentObjectOJB.readAlmeidaCurricularCourseByCodeAndYear(almeida_enrolment.getCoddis(), almeida_enrolment.getAnoins());
+			if (almeida_disc == null) {
+				//shoud exists
+				logString += numberLine + "-ERRO: Almeida disciplina " + almeida_enrolment.getCoddis() + " unknown\n";
+				numberUntreatableElements++;
+				return null;
+			}
 		}
 
 		// Read our corresponding curricular couse
@@ -369,24 +383,22 @@ public class ReadFile extends LoadDataFile {
 		ICurricularYear curricularYear =
 			persistentObjectOJB.readCurricularYearByYear(new Integer(String.valueOf(almeida_enrolment.getAnodis())));
 		if (curricularYear == null) {
-			logString += numberLine + "-ERRO: curricularYear da disciplina " + almeida_enrolment.getCoddis() + " desconhecido\n";
+			logString += numberLine + "-ERRO: course's Curricular Year  " + almeida_enrolment.getCoddis() + " unknown\n";
 			return null;
 		}
 
 		ICurricularSemester curricularSemester =
-			persistentObjectOJB.readCurricularSemesterBySemesterAndCurricularYear(new Integer(String.valueOf(almeida_enrolment.getSemdis())), curricularYear);
+			persistentObjectOJB.readCurricularSemesterBySemesterAndCurricularYear(
+				new Integer(String.valueOf(almeida_enrolment.getSemdis())),
+				curricularYear);
 		if (curricularSemester == null) {
-			logString += numberLine + "-ERRO: curricularSemester da disciplina " + almeida_enrolment.getCoddis() + " desconhecido\n";
+			logString += numberLine + "-ERRO: course's Curricular Semester " + almeida_enrolment.getCoddis() + " unknown\n";
 			return null;
 		}
 
 		if (branch != null) {
-			curricularCourseScope =
-				persistentObjectOJB.readCurricularCourseScopeByUnique(
-					curricularCourse,
-					branch,
-					curricularSemester);
-					//new Integer(String.valueOf(almeida_enrolment.getAnoins())));
+			curricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByUnique(curricularCourse, branch, curricularSemester);
+			//new Integer(String.valueOf(almeida_enrolment.getAnoins())));
 		} else {
 			curricularCourseScope =
 				persistentObjectOJB.readCurricularCourseScopeByUniqueWithoutBranch(
@@ -401,7 +413,7 @@ public class ReadFile extends LoadDataFile {
 				+ almeida_enrolment.getCoddis()
 				+ "  degree = "
 				+ almeida_enrolment.getCurso()
-				+ "unknown\n";
+				+ " unknown\n";
 			numberUntreatableElements++;
 		}
 		return curricularCourseScope;
@@ -545,7 +557,7 @@ public class ReadFile extends LoadDataFile {
 				enrolmentEvaluationType = EnrolmentEvaluationType.EXTERNAL_OBJ;
 				break;
 			default :
-				logString += "ERRO: A epoca [" + epocaLong + "] é invalida!\n";
+				logString += "ERRO: Season [" + epocaLong + "] is invalid!\n";
 				break;
 		}
 
@@ -578,6 +590,4 @@ public class ReadFile extends LoadDataFile {
 	protected String getFilenameOutput() {
 		return fileOutputName;
 	}
-	//D:/projectos/_carregamentos/inscricoes/curriculo_05.txt
-	//D:/projectos/_carregamentos/inscricoes/outputReadFile.txt
 }

@@ -171,7 +171,18 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		criteria.addEqualTo("codcur", new Integer("" + curso));
 		criteria.addEqualTo("anoLectivo", new Integer("" + year));
 		List result = query(Almeida_disc.class, criteria);
-		//System.out.println("result.size" + result.size());
+		if (result.size() > 0) {
+			return (Almeida_disc) result.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public Almeida_disc readAlmeidaCurricularCourseByCodeAndYear(String code, long year) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("coddis", code);
+		criteria.addEqualTo("anoLectivo", new Integer("" + year));
+		List result = query(Almeida_disc.class, criteria);
 		if (result.size() > 0) {
 			return (Almeida_disc) result.get(0);
 		} else {
@@ -542,7 +553,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 			return null;
 		}
 	}
-
+	
 	public IBranch readBranchByUnique(String code, IDegreeCurricularPlan degreeCurricularPlan) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);

@@ -89,6 +89,7 @@ public class ServicoSeguroActualizarPessoas {
 						updatePerson((Pessoa) person2Write, (Pessoa) servico._pessoa);
 					}
 
+					//roles
 					IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) person2Write, RoleType.PERSON, broker);
 					if (personRole == null) {
 						criteria = new Criteria();
@@ -107,7 +108,6 @@ public class ServicoSeguroActualizarPessoas {
 							person2Write.getPersonRoles().add((Role) result.get(0));
 							newRoles++;
 						}
-
 					}
 					if (person2Write.getEstadoCivil().getEstadoCivil().intValue() > 7) {
 						System.out.println("Erro : " + person2Write.getEstadoCivil().getEstadoCivil().intValue());
@@ -205,5 +205,4 @@ public class ServicoSeguroActualizarPessoas {
 			throw new Exception(e);
 		}
 	}
-
 }
