@@ -228,16 +228,23 @@
         id="2"
     />
     <field-descriptor 
-        name="portalAction"
-        column="PORTAL_ACTION"
-	nullable="true"
+        name="portalSubApplication"
+        column="PORTAL_SUB_APPLICATION"
+		nullable="true"
         jdbc-type="VARCHAR"
         id="3"
     />
     <field-descriptor 
-        name="portalActionNameProperty"
-        column="PORTAL_ACTION_NAME_PROPERTY"
-	nullable="true"
+        name="page"
+        column="PAGE"
+		nullable="true"
+        jdbc-type="VARCHAR"
+        id="3"
+    />
+    <field-descriptor 
+        name="pageNameProperty"
+        column="PAGE_NAME_PROPERTY"
+		nullable="true"
         jdbc-type="VARCHAR"
         id="4"
     />
