@@ -5,6 +5,8 @@
  */
 package Dominio;
 
+import java.util.List;
+
 /**
  * @author João Mota
  *
@@ -16,7 +18,7 @@ public class Professorship extends DomainObject implements IProfessorship {
 	
 	private Integer keyTeacher;
 	private Integer keyExecutionCourse;
-
+	private List associatedTeacherShiftPercentage;
 	/**
 	 * 
 	 */
@@ -94,4 +96,25 @@ public class Professorship extends DomainObject implements IProfessorship {
 			
 			return result;
 		}
+
+	public List getAssociatedTeacherShiftPercentage() {
+		return associatedTeacherShiftPercentage;
+	}
+
+	public void setAssociatedTeacherShiftPercentage(List associatedTeacherShiftPercentage) {
+		this.associatedTeacherShiftPercentage = associatedTeacherShiftPercentage;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof IProfessorship){
+			IProfessorship professorship = (IProfessorship) obj;
+			return this.getTeacher().equals(professorship.getTeacher()) && this.getExecutionCourse().equals(professorship.getExecutionCourse());
+		}
+		return false;
+	}
+
 }
