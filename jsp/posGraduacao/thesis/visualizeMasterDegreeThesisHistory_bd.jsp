@@ -61,11 +61,12 @@
 
 
 <table border="0" width="100%" cellspacing="3" cellpadding="10">
+
 	<!-- Guiders -->
-	<tr>
-		<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.guiders"/></th>				
-	</tr>
 	<logic:present name="<%= SessionConstants.GUIDERS_LIST %>" scope="request">
+		<tr>
+			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.guiders"/></th>				
+		</tr>
 		<bean:define id="guidersList" name="<%= SessionConstants.GUIDERS_LIST %>" type="java.util.List"/>
 		<tr>
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>

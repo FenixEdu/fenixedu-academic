@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -21,11 +20,9 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.GuiderAlreadyChosenServiceException;
-import ServidorAplicacao.Servico.exceptions.RequiredGuidersServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException;
-import ServidorApresentacao.Action.exceptions.RequiredGuidersActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -81,10 +78,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -132,10 +131,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -190,10 +191,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -244,10 +247,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -298,10 +303,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -355,10 +362,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -412,10 +421,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -463,10 +474,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				actionErrors);
 			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -514,10 +527,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				actionErrors);
 			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -576,10 +591,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -638,10 +655,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -699,10 +718,12 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
 			saveErrors(request, actionErrors);
 		}
@@ -739,7 +760,8 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 					userView,
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					args);
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
@@ -779,16 +801,13 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 					SessionConstants.EXTERNAL_GUIDERS_LIST,
 					actionErrors);
 
-		} catch (Exception e1)
+		}
+		catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
-		} finally
+		}
+		finally
 		{
-			if (infoTeacherGuiders.isEmpty())
-				actionErrors.add(
-					"error.exception.masterDegree.noGuidersSelected",
-					new ActionError("error.exception.masterDegree.noGuidersSelected"));
-
 			saveErrors(request, actionErrors);
 
 			if (actionErrors.isEmpty() == false)
@@ -809,16 +828,16 @@ public class CreateMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 		try
 		{
 			ServiceUtils.executeService(userView, "CreateMasterDegreeThesis", args2);
-		} catch (RequiredGuidersServiceException e)
-		{
-			throw new RequiredGuidersActionException(e.getMessage(), mapping.findForward("start"));
-		} catch (GuiderAlreadyChosenServiceException e)
+		}
+		catch (GuiderAlreadyChosenServiceException e)
 		{
 			throw new GuiderAlreadyChosenActionException(e.getMessage(), mapping.findForward("start"));
-		} catch (ExistingServiceException e)
+		}
+		catch (ExistingServiceException e)
 		{
 			throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
 		}

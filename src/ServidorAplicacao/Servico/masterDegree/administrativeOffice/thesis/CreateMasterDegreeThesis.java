@@ -22,7 +22,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.GuiderAlreadyChosenServiceException;
-import ServidorAplicacao.Servico.exceptions.RequiredGuidersServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -75,9 +74,6 @@ public class CreateMasterDegreeThesis implements IServico
 
 		try
 		{
-
-			if (infoTeacherGuiders.size() < 1)
-				throw new RequiredGuidersServiceException("error.exception.masterDegree.noGuidersSelected");
 
 			//	check duplicate guiders and assistent guiders
 			for (Iterator iter = infoTeacherGuiders.iterator(); iter.hasNext();)
