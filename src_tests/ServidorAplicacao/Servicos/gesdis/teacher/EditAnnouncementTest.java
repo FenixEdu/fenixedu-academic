@@ -55,11 +55,16 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		Object argsEditAnnouncement[] = new Object[4];
 //		(InfoSite infoSite, InfoAnnouncement infoAnnouncement, String announcementNewTitle, String announcementNewInformation)
 
-		// write non existing
+		// write existing
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
 		Timestamp date = new Timestamp(calendar.getTime().getTime());
 
 		//infoSite
@@ -79,7 +84,7 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		argsEditAnnouncement[0] = infoSite;
 
 		//infoAnnouncement
-		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1", date, date, "information1", infoSite);
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1deTFCI", date, date, "information1", infoSite);
 		argsEditAnnouncement[1] = infoAnnouncement;
 
 		//title
@@ -93,13 +98,17 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		Object argsEditAnnouncement[] = new Object[4];
-//		(InfoSite infoSite, InfoAnnouncement infoAnnouncement, String announcementNewTitle, String announcementNewInformation)
 
 		// write non existing
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
 		Timestamp date = new Timestamp(calendar.getTime().getTime());
 
 		//infoSite

@@ -107,13 +107,14 @@ public class EditAnnouncement implements IServico {
 				persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(), 
 					executionPeriod); 
 			site = persistentSite.readByExecutionCourse(executionCourse);
-        	date = new Timestamp(new Date((infoAnnouncement.getCreationDate()).getTime()).getTime());
+			date = infoAnnouncement.getCreationDate();
         	checkIfAnnouncementExists(announcementOldTitle, date, announcementNewTitle, site);
 			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(announcementOldTitle, date, site);
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia){
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
+
         if (announcement == null) throw new InvalidArgumentsServiceException();
         Timestamp lastModificationDate = new Timestamp(new Date(System.currentTimeMillis()).getTime());
         announcement.setTitle(announcementNewTitle);
