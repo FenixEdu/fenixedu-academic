@@ -33,6 +33,7 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
 import Util.EnrolmentState;
+import Util.MasterDegreeClassification;
 import Util.Specialization;
 /**
  * 
@@ -644,8 +645,9 @@ public class PrintCertificateDispatchAction extends DispatchAction
 													.getValue();
 											session.setAttribute(
 												SessionConstants.FINAL_RESULT,
-												infoMasterDegreeProofVersion
-													.getFinalResult()
+												MasterDegreeClassification
+//												infoMasterDegreeProofVersion
+//													.getFinalResult()
 													.getClassificationString(
 													value));
 										}
@@ -702,8 +704,9 @@ public class PrintCertificateDispatchAction extends DispatchAction
 											notString);
 										session.setAttribute(
 											SessionConstants.FINAL_RESULT,
-											infoMasterDegreeProofVersion
-												.getFinalResult()
+											MasterDegreeClassification
+//											infoMasterDegreeProofVersion
+//												.getFinalResult()
 												.getClassificationString(
 												value));
 										session.setAttribute(
