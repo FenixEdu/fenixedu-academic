@@ -14,15 +14,14 @@ import java.util.List;
 
 import Util.TipoAula;
 
-public class Turno implements ITurno {
+public class Turno extends DomainObject implements ITurno {
 	protected String _nome;
 	protected TipoAula _tipo;
 	protected Integer _lotacao;
 	protected IDisciplinaExecucao _disciplinaExecucao;
 	private List associatedTeacherProfessorShipPercentage;
 
-	// c�digos internos da base de dados
-	private Integer codigoInterno;
+	// c�digos internos da base de dados	
 	private Integer chaveDisciplinaExecucao;
 
 	/** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
@@ -38,14 +37,6 @@ public class Turno implements ITurno {
 		setTipo(tipo);
 		setLotacao(lotacao);
 		setDisciplinaExecucao(disciplinaExecucao);
-	}
-
-	public Integer getCodigoInterno() {
-		return this.codigoInterno;
-	}
-
-	public void setCodigoInterno(Integer codigoInterno) {
-		this.codigoInterno = codigoInterno;
 	}
 
 	public String getNome() {
@@ -104,7 +95,7 @@ public class Turno implements ITurno {
 
 	public String toString() {
 		String result = "[TURNO";
-		result += ", codigoInterno=" + this.codigoInterno;
+		result += ", codigoInterno=" + this.getIdInternal();
 		result += ", nome=" + _nome;
 		result += ", tipo=" + _tipo;
 		result += ", lotacao=" + _lotacao;
