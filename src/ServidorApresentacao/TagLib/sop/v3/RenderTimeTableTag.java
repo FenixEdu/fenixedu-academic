@@ -189,31 +189,21 @@ public final class RenderTimeTableTag extends TagSupport {
 			case TimeTableType.SHIFT_TIMETABLE :
 				this.lessonSlotContentRenderer =
 					new ShiftTimeTableLessonContentRenderer();
-				// REMOVE println
-				System.out.println(" ***************************** ALI");
 				this.colorPicker = new ClassTimeTableColorPicker();
 				break;
 			case TimeTableType.EXECUTION_COURSE_TIMETABLE :
 				this.lessonSlotContentRenderer =
 					new ExecutionCourseTimeTableLessonContentRenderer();
 				this.colorPicker = new ExecutionCourseTimeTableColorPicker();
-			// REMOVE println
-			System.out.println(" ***************************** ALO");
-									
 				break;
 			case TimeTableType.ROOM_TIMETABLE :
 				this.lessonSlotContentRenderer =
 					new RoomTimeTableLessonContentRenderer();
 				this.colorPicker = new RoomTimeTableColorPicker();
-			// REMOVE println
-			System.out.println(" ***************************** ALE");
-				
 				break;
 			default :
 				this.lessonSlotContentRenderer =
 					new ClassTimeTableLessonContentRenderer();
-				//REMOVE println
-				System.out.println("************************* AQUI");
 				this.colorPicker = new ClassTimeTableColorPicker();
 				break;
 		}
