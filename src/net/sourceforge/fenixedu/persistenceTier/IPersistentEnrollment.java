@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
-import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 /**

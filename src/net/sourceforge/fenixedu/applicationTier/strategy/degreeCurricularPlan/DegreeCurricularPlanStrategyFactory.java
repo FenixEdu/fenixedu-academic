@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan;
 
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.DegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.MasterDegreeCurricularPlanStrategy;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**

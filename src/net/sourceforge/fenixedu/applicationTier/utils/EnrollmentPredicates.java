@@ -7,7 +7,7 @@
 package net.sourceforge.fenixedu.applicationTier.utils;
 
 import net.sourceforge.fenixedu.domain.IEnrollment;
-import net.sourceforge.fenixedu.util.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 import org.apache.commons.collections.Predicate;
 
@@ -31,7 +31,7 @@ public class EnrollmentPredicates
 					IEnrollment en = (IEnrollment)object;
 					if (en.getEnrollmentState().equals(EnrollmentState.APROVED) ||
 					    en.getEnrollmentState().equals(EnrollmentState.ENROLLED) ||
-					    en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLED))
+					    en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED))
 						return true;
 				}
 				
@@ -51,7 +51,7 @@ public class EnrollmentPredicates
 				{
 					IEnrollment en = (IEnrollment)object;
 					if (en.getEnrollmentState().equals(EnrollmentState.ENROLLED) ||
-						en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLED))
+						en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED))
 						return true;
 				}
 				

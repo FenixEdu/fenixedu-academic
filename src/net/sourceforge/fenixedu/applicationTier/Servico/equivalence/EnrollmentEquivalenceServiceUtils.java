@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentFo
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
@@ -43,7 +43,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      */
     protected boolean isAnEnroledEnrollment(IEnrollment enrollment) {
         return (enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) || enrollment
-                .getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLED));
+                .getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED));
     }
 
     /**

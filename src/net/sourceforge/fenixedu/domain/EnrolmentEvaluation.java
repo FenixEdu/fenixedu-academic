@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.util.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.TipoCurso;

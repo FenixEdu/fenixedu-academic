@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.EnrollmentState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -80,7 +80,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
         for (int iter = 0; iter < enrollments.size(); iter++) {
             IEnrollment enrollment = (IEnrollment) enrollments.get(iter);
             if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
-                    || enrollment.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLED)
+                    || enrollment.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED)
                     || enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED))
                 return true;
         }

@@ -14,9 +14,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.ICandidateView;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -34,6 +31,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
