@@ -16,7 +16,6 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.ITest;
 import Dominio.ITestQuestion;
 import Dominio.Test;
 import Dominio.TestQuestion;
@@ -74,8 +73,8 @@ public class InsertTestQuestionTest extends ServiceNeedsAuthenticationTestCase
 		String[] metadataId =
 		{new String("133"), new String("134")};
 		//String[] metadataId = {"133"};
-		Integer questionOrder = new Integer(0);
-		Integer questionValue = new Integer(2);
+		//Integer questionOrder = new Integer(0);
+		//Integer questionValue = new Integer(2);
 		String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
 		Object[] args =
 		//{executionCourseId, testId, metadataId, questionOrder,
@@ -105,7 +104,7 @@ public class InsertTestQuestionTest extends ServiceNeedsAuthenticationTestCase
 			criteria = new Criteria();
 			criteria.addEqualTo("idInternal", args[1]);
 			queryCriteria = new QueryByCriteria(Test.class, criteria);
-			ITest test = (ITest) broker.getObjectByQuery(queryCriteria);
+			//ITest test = (ITest) broker.getObjectByQuery(queryCriteria);
 
 			broker.close();
 			//ver se os dados estão correctos

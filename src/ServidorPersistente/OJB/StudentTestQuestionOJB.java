@@ -6,7 +6,6 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -235,7 +234,7 @@ public class StudentTestQuestionOJB extends ObjectFenixOJB implements IPersisten
 
 	public void deleteByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia
 	{
-		Calendar start = Calendar.getInstance();
+		//Calendar start = Calendar.getInstance();
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
 		List studentTestQuestions = queryList(StudentTestQuestion.class, criteria);

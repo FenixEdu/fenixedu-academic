@@ -17,7 +17,6 @@ import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -45,8 +44,7 @@ public class RoomSiteComponentBuilder {
 	public ISiteComponent getComponent(
 		ISiteComponent component,
 		IExecutionPeriod executionPeriod,
-		ISala room)
-		throws FenixServiceException {
+		ISala room) {
 
 		if (component instanceof InfoSiteRoomTimeTable) {
 			return getInfoSiteRoomTimeTable(
@@ -62,8 +60,7 @@ public class RoomSiteComponentBuilder {
 	private ISiteComponent getInfoSiteRoomTimeTable(
 		InfoSiteRoomTimeTable component,
 		IExecutionPeriod executionPeriod,
-		ISala room)
-		throws FenixServiceException {
+		ISala room) {
 		
 			List infoAulas = null;
 

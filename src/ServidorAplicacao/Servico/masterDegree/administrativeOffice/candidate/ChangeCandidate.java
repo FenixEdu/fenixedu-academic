@@ -8,7 +8,6 @@
 
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -50,8 +49,6 @@ public class ChangeCandidate implements IService
         throws
             ExcepcaoInexistente,
             FenixServiceException,
-            IllegalAccessException,
-            InvocationTargetException,
             ExcepcaoPersistencia
     {
 

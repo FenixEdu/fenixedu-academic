@@ -240,7 +240,6 @@ public class EditDistributedTest implements IServico
 	}
 
 	private IQuestion getStudentQuestion(IPersistentQuestion persistentQuestion, IMetadata metadata)
-			throws ExcepcaoPersistencia
 	{
 		List questions = metadata.getVisibleQuestions();
 		IQuestion question = null;

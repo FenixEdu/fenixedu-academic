@@ -49,7 +49,7 @@ public class DownloadCandidaciesTable extends FenixAction
 {
     static final String COLUMNS_HEADERS =
         "Nº\tNome\tMédia\tCadeiras Feitas\tAprovado\tE-Mail\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
-    Object[] getReadCandidaciesArgs(HttpServletRequest request) throws FenixActionException
+    Object[] getReadCandidaciesArgs(HttpServletRequest request)
     {
         Integer modalityID;
         Integer themeID;
@@ -184,7 +184,7 @@ public class DownloadCandidaciesTable extends FenixAction
                 //String motivation= null;
                 InfoSeminary seminary = null;
                 List casesChoices = null;
-                InfoStudentCurricularPlan studentCurricularPlan = null;
+                //InfoStudentCurricularPlan studentCurricularPlan = null;
                 List cases = new LinkedList();
                 InfoCandidacy candidacy = (InfoCandidacy) iterator.next();
                 Object[] argsReadStudent = { candidacy.getStudentIdInternal()};
@@ -198,8 +198,8 @@ public class DownloadCandidaciesTable extends FenixAction
                         "student.ReadStudentById",
                         argsReadStudent);
                 Object[] argsReadCurricularPlan = { student.getNumber(), student.getDegreeType()};
-                studentCurricularPlan =
-                    (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+                /*studentCurricularPlan =
+                    (InfoStudentCurricularPlan)*/ ServiceManagerServiceFactory.executeService(
                         userView,
                         "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                         argsReadCurricularPlan);

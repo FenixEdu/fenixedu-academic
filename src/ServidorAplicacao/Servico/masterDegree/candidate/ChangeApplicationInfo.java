@@ -12,7 +12,6 @@
 
 package ServidorAplicacao.Servico.masterDegree.candidate;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,7 +49,7 @@ public class ChangeApplicationInfo implements IService
 
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
             InfoPerson infoPerson, UserView userView) throws FenixServiceException,
-            ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException
+            ExcepcaoPersistencia
     {
 
         ISuportePersistente sp = null;

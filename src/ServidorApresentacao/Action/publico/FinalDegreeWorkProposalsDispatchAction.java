@@ -138,7 +138,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String finalDegreeWorkProposalOID = (String) request
+        String finalDegreeWorkProposalOID = request
                 .getParameter("finalDegreeWorkProposalOID");
         if (finalDegreeWorkProposalOID != null
                 && !finalDegreeWorkProposalOID.equals("")
@@ -158,7 +158,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends
     public ActionForward sortByNumber(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        String executionDegreeOID = (String) request
+        String executionDegreeOID = request
                 .getParameter("executionDegreeOID");
         putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
                 request, executionDegreeOID, "proposalNumber");
@@ -170,7 +170,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends
     public ActionForward sortByTitle(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        String executionDegreeOID = (String) request
+        String executionDegreeOID = request
                 .getParameter("executionDegreeOID");
         putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
                 request, executionDegreeOID, "title");
@@ -182,7 +182,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends
     public ActionForward sortByOrientatorName(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String executionDegreeOID = (String) request
+        String executionDegreeOID = request
                 .getParameter("executionDegreeOID");
         putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
                 request, executionDegreeOID, "orientatorName");
@@ -194,7 +194,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends
     public ActionForward sortByCompanyLink(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String executionDegreeOID = (String) request
+        String executionDegreeOID = request
                 .getParameter("executionDegreeOID");
         putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
                 request, executionDegreeOID, "companyLink");
@@ -206,7 +206,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends
     public ActionForward sortByCoorientatorName(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String executionDegreeOID = (String) request
+        String executionDegreeOID = request
                 .getParameter("executionDegreeOID");
         putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
                 request, executionDegreeOID, "coorientatorName");

@@ -54,6 +54,7 @@
 
 
 <!-- EXECUTION COURSES LINK  -->
+<logic:present name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
 <bean:size id="listSize" name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
 
 <logic:greaterThan name="listSize" value="0">
@@ -78,8 +79,10 @@
   </table>
 </div>
 </logic:greaterThan>
+</logic:present>
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
+<logic:present name="infoCurricularCourse" property="infoScopes">
 <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.scope" />	</h2>
 <p>
 	<ul>
@@ -106,8 +109,10 @@
 		</logic:iterate>		
 	</ul>
 </p>
+</logic:present>
 
 <!-- CURRICULAR COURSE INFO -->
+<logic:present name="infoCurriculum" property="generalObjectives">
 <logic:notEmpty name="infoCurriculum" property="generalObjectives">
 		<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.generalObjectives" />	</h2>
@@ -116,6 +121,8 @@
 		</p>
 		</logic:notEqual>
 </logic:notEmpty>
+</logic:present>
+<logic:present name="infoCurriculum" property="operacionalObjectives">
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectives">
 		<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.operacionalObjectives" /></h2>
@@ -124,8 +131,10 @@
 		</p>
 		</logic:notEqual>
 </logic:notEmpty> 
+</logic:present>
 <br/>
 <br/>
+<logic:present name="infoCurriculum" property="program">
 <logic:notEmpty name="infoCurriculum" property="program">
 	<logic:notEqual name="infoCurriculum" property="program" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.program" /></h2>	
@@ -134,6 +143,7 @@
 		</p>	
 	</logic:notEqual>
 </logic:notEmpty>
+</logic:present>
 <br/>
 <br/>
 

@@ -268,7 +268,7 @@ public class EditGrantPartAction extends FenixDispatchAction
 
 		//Set the Payment Entity
 		InfoGrantPaymentEntity infoPaymentEntity = null;
-		Integer paymentEntityID = null;
+		//Integer paymentEntityID = null;
 		if (verifyStringParameterInForm(editGrantPartForm,"project"))
 		{
 			infoPaymentEntity = new InfoGrantProject();

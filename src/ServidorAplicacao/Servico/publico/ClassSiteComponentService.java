@@ -108,8 +108,7 @@ public class ClassSiteComponentService implements IServico {
 
     private ITurma getDomainClass(String className, Integer curricularYear,
             IExecutionPeriod executionPeriod, ICursoExecucao executionDegree,
-            ISuportePersistente sp) throws ExcepcaoPersistencia,
-            FenixServiceException {
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
 
         ITurmaPersistente persistentClass = sp.getITurmaPersistente();
         ITurma domainClass = null;

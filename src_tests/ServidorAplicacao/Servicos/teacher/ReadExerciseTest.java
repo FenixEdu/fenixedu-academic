@@ -25,7 +25,6 @@ import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.Metadata;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
@@ -116,7 +115,7 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            //IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
             Object[] args1 = getAuthorizeArguments1();
             Object[] args2 = getAuthorizeArguments2();
@@ -162,7 +161,7 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
             IQuestion question = (IQuestion) it.next();
             xmlNames.add(new LabelValueBean(question.getXmlFileName(), question.getIdInternal()
                     .toString()));
-            if ((question.getIdInternal().equals((Integer)args[2])) || ((Integer)args[2]).equals(new Integer(-2)))
+            if ((question.getIdInternal().equals(args[2])) || ((Integer)args[2]).equals(new Integer(-2)))
             {
                 InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
                 ParseQuestion parse = new ParseQuestion();

@@ -312,7 +312,7 @@ public class ReadCourseInformation implements IService
 	 * @param sp
 	 * @return
 	 */
-    private Integer getApproved(List enrolments) throws ExcepcaoPersistencia
+    private Integer getApproved(List enrolments)
     {
         int approved = 0;
         Iterator iter = enrolments.iterator();
@@ -333,7 +333,7 @@ public class ReadCourseInformation implements IService
 	 * @param sp
 	 * @return
 	 */
-    private Integer getEvaluated(List enrolments) throws ExcepcaoPersistencia
+    private Integer getEvaluated(List enrolments)
     {
         int evaluated = 0;
         Iterator iter = enrolments.iterator();
@@ -596,7 +596,6 @@ public class ReadCourseInformation implements IService
 	 *         ExcepcaoPersistencia
 	 */
     private List getInfoResponsibleTeachers(List responsiblesFor, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
     {
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();

@@ -64,7 +64,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 
         HttpSession session = request.getSession(false);
 
-        DynaActionForm approvalForm = (DynaActionForm) form;
+        //DynaActionForm approvalForm = (DynaActionForm) form;
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String executionYear = getFromRequest("executionYear", request);

@@ -243,7 +243,7 @@ public class ChangeStudentTestQuestion implements IServico
 	}
 
 	private IQuestion getNewQuestion(IPersistentQuestion persistentQuestion, IMetadata metadata,
-			IQuestion oldQuestion) throws ExcepcaoPersistencia
+			IQuestion oldQuestion)
 	{
 
 		List questions = metadata.getVisibleQuestions();
@@ -322,7 +322,7 @@ public class ChangeStudentTestQuestion implements IServico
 			{
 				ITestQuestion oldTestQuestion = (ITestQuestion) it.next();
 				persistentTestQuestion.simpleLockWrite(oldTestQuestion);
-				ITest test = oldTestQuestion.getTest();
+				//ITest test = oldTestQuestion.getTest();
 
 				oldTestQuestion.setKeyQuestion(newQuestion.getIdInternal());
 				oldTestQuestion.setQuestion(newQuestion);
@@ -334,7 +334,7 @@ public class ChangeStudentTestQuestion implements IServico
 			double mark2Remove) throws ExcepcaoPersistencia
 	{
 		double totalMark = 0;
-		List studentTestQuestionList = (List) sp.getIPersistentStudentTestQuestion()
+		List studentTestQuestionList = sp.getIPersistentStudentTestQuestion()
 				.readByStudentAndDistributedTest(s, dt);
 
 		Iterator it = studentTestQuestionList.iterator();

@@ -19,8 +19,6 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.LabelValueBean;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoClass;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
@@ -38,6 +36,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -838,7 +837,7 @@ public class ContextUtils
 
 		Iterator iterator = executionDegreeList.iterator();
 
-		int index = 0;
+		//sint index = 0;
 		while (iterator.hasNext()) {
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();

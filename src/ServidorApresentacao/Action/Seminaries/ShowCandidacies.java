@@ -48,7 +48,7 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class ShowCandidacies extends FenixAction
 {
-	Object[] getReadCandidaciesArgs(HttpServletRequest request) throws FenixActionException
+	Object[] getReadCandidaciesArgs(HttpServletRequest request)
 	{
 		Integer modalityID;
 		Integer themeID;
@@ -193,7 +193,7 @@ public class ShowCandidacies extends FenixAction
 				InfoTheme theme = null;
 				InfoModality modality = null;
 				InfoSeminary seminary = null;
-				InfoStudentCurricularPlan studentCurricularPlan = null;
+				//InfoStudentCurricularPlan studentCurricularPlan = null;
 				List casesChoices = null;
 				List cases = new LinkedList();
 				InfoCandidacy candidacy = (InfoCandidacy) iterator.next();
@@ -208,8 +208,8 @@ public class ShowCandidacies extends FenixAction
 						"student.ReadStudentById",
 						argsReadStudent);
 				Object[] argsReadCurricularPlan = { student.getNumber(), student.getDegreeType()};
-				studentCurricularPlan =
-					(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+				/*studentCurricularPlan =
+					(InfoStudentCurricularPlan)*/ ServiceManagerServiceFactory.executeService(
 						userView,
 						"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 						argsReadCurricularPlan);

@@ -90,7 +90,7 @@ public class SelectCandidacies extends FenixDispatchAction
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();)
             {
                 InfoStudent student = null;
-                InfoStudentCurricularPlan studentCurricularPlan = null;
+                //InfoStudentCurricularPlan studentCurricularPlan = null;
                 InfoCandidacy candidacy = (InfoCandidacy) iterator.next();
                 Object[] argsReadStudent = { candidacy.getStudentIdInternal()};
                 student =
@@ -99,8 +99,8 @@ public class SelectCandidacies extends FenixDispatchAction
                         "student.ReadStudentById",
                         argsReadStudent);
                 Object[] argsReadCurricularPlan = { student.getNumber(), student.getDegreeType()};
-                studentCurricularPlan =
-                    (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+                /*studentCurricularPlan =
+                    (InfoStudentCurricularPlan)*/ ServiceManagerServiceFactory.executeService(
                         userView,
                         "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                         argsReadCurricularPlan);

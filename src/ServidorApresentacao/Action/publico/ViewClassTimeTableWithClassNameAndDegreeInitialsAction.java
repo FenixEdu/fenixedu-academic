@@ -38,12 +38,12 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends
         String nameDegreeCurricularPlan = request
                 .getParameter("nameDegreeCurricularPlan");
         String classIdString = request.getParameter("classId");
-        Integer classId = null;
         if (degreeInitials == null && classIdString == null) { return mapping
                 .getInputForward(); }
+/*        Integer classId = null;        
         if (classIdString != null) {
             classId = new Integer(classIdString);
-        }
+        }*/
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);

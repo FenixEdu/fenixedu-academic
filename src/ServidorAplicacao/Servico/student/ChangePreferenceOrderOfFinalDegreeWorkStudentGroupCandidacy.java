@@ -8,7 +8,6 @@ import Dominio.finalDegreeWork.Group;
 import Dominio.finalDegreeWork.GroupProposal;
 import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupProposal;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.ISuportePersistente;
@@ -26,7 +25,7 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy impleme
     }
 
     public boolean run(Integer groupOID, Integer groupProposalOID, Integer orderOfPreference)
-            throws ExcepcaoPersistencia, FenixServiceException
+            throws ExcepcaoPersistencia
     {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport

@@ -143,7 +143,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem
 	                    // be sure that we have at least one excerpt
 	                    if (excerptsList.size() == 0)
 	                    {
-	                        excerptsList.add((InfoWebSiteItem) infoWebSiteSection.getInfoItemsList().get(0));
+	                        excerptsList.add(infoWebSiteSection.getInfoItemsList().get(0));
 	                    }
 	                }
 	
@@ -255,7 +255,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem
 	                while (iterLinks.hasNext())
 	                {
 	                    Integer monthLink = (Integer) iterLinks.next();
-	                    Mes thisMonthString = new Mes(monthLink.intValue() + 1);
+	                    //Mes thisMonthString = new Mes(monthLink.intValue() + 1);
 	                    String fileName = infoWebSiteSection.getFtpName() + year.toString() + "_"
 	                            + new Integer(monthLink.intValue() + 1).toString() + ".html";
 	

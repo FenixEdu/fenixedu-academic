@@ -45,7 +45,6 @@ import DataBeans.comparators.InfoShiftComparatorByLessonType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -1077,7 +1076,7 @@ public class TestsManagementAction extends FenixDispatchAction
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Integer objectCode = getCodeFromRequest(request, "objectCode");
 		Integer distributedTestCode = getCodeFromRequest(request, "distributedTestCode");
-		String path = getServlet().getServletContext().getRealPath("/");
+		//String path = getServlet().getServletContext().getRealPath("/");
 		Object[] args =
 		{objectCode, distributedTestCode};
 		SiteView siteView = null;
@@ -1204,8 +1203,7 @@ public class TestsManagementAction extends FenixDispatchAction
 	}
 
 	public ActionForward loadExerciseFiles(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception,
-			NotExecuteException
+			HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
 		IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
 		FormFile metadataFile = (FormFile) ((DynaActionForm) form).get("metadataFile");

@@ -925,8 +925,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward setFinalDegreeCandidacyRequirements(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException
     {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
@@ -986,8 +985,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward attributeGroupProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException
     {
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
@@ -1007,8 +1005,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException
+            HttpServletRequest request, HttpServletResponse response)
     {
         String studentNumber = request.getParameter("studentNumber");
         

@@ -3,8 +3,6 @@ package DataBeans;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.struts.util.MessageResources;
-
 /**
  * @author Fernanda Quitério 10/Jan/2004
  *  
@@ -64,7 +62,7 @@ public class InfoPaymentPhase extends InfoObject
 	public String getDescription()
 	{
 
-		MessageResources messageResources = MessageResources.getMessageResources("ServidorApresentacao.ApplicationResources");
+		//MessageResources messageResources = MessageResources.getMessageResources("ServidorApresentacao.ApplicationResources");
 		//		ResourceBundle bundle = ResourceBundle.getBundle(Globals.MESSAGES_KEY);
 		String newDescription = null;
 		//		try {

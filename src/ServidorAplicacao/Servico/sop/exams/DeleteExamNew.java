@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import Dominio.Exam;
 import Dominio.IExam;
 import Dominio.IPeriod;
@@ -23,8 +25,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
-
-import commons.CollectionUtils;
 
 public class DeleteExamNew implements IServico
 {

@@ -9,7 +9,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
@@ -63,7 +62,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
 
 		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 		InfoStudent infoStudent = null;
-		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+		//InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
 		/* * * get student * * */
 		Object argsStudent[] = { studentNumber, new TipoCurso(degreeType)};
@@ -115,8 +114,8 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
 		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
 		try
 		{
-			infoMasterDegreeThesisDataVersion =
-				(InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
+			/*infoMasterDegreeThesisDataVersion =
+				(InfoMasterDegreeThesisDataVersion)*/ ServiceUtils.executeService(
 					userView,
 					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
 					argsMasterDegreeThesisDataVersion);

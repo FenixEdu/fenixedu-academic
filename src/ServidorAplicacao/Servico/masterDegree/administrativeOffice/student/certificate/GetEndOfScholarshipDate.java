@@ -7,7 +7,6 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
@@ -42,7 +41,7 @@ public class GetEndOfScholarshipDate implements IServico {
 	}
 
 	
-	public Date run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
+	public Date run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws ExcepcaoPersistencia {
 
 			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 

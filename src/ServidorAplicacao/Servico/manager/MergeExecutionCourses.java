@@ -126,7 +126,6 @@ public class MergeExecutionCourses implements IServico
         IExecutionCourse destination,
         IExecutionCourse source,
         ISuportePersistente ps)
-        throws InvalidArgumentsServiceException
     {
 
         boolean distributedTestAuthorization = false;

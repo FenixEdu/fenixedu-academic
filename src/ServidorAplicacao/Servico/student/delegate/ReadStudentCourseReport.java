@@ -225,7 +225,7 @@ public class ReadStudentCourseReport implements IService
 	 * @param sp
 	 * @return
 	 */
-    private Integer getApproved(List enrolments) throws ExcepcaoPersistencia
+    private Integer getApproved(List enrolments)
     {
         int approved = 0;
         Iterator iter = enrolments.iterator();
@@ -246,7 +246,7 @@ public class ReadStudentCourseReport implements IService
 	 * @param sp
 	 * @return
 	 */
-    private Integer getEvaluated(List enrolments) throws ExcepcaoPersistencia
+    private Integer getEvaluated(List enrolments)
     {
         int evaluated = 0;
         Iterator iter = enrolments.iterator();

@@ -163,7 +163,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
             HasBroker hasBroker = ((HasBroker) _odmg.currentTransaction());
             if (hasBroker != null)
             {
-                PersistenceBroker broker = hasBroker.getBroker();
+                //PersistenceBroker broker = hasBroker.getBroker();
 
 //                System.out.println("###########################################33");
 //                System.out.println(

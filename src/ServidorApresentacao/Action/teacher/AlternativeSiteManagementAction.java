@@ -30,8 +30,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+		HttpServletResponse response) {
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);

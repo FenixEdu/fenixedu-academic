@@ -363,6 +363,6 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
             super();
             this.degreeCurricularPlanID = degreeCurricularPlanID;
         }
-    };
+    }
 
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoSiteDistributedTests;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -83,7 +82,6 @@ public class InsertStudentTestResponsesTest extends TestCaseReadServices
 
 	protected Object getObjectToCompare()
 	{
-		InfoSiteDistributedTests infoSiteDistributedTests = new InfoSiteDistributedTests();
 		try
 		{
 			Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
@@ -99,14 +97,14 @@ public class InsertStudentTestResponsesTest extends TestCaseReadServices
 					new DistributedTest((Integer) args[1]),
 					false);
 			List studentTestQuestionList =
-				(List) sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-					student,
-					distributedTest);
+				sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+            	student,
+            	distributedTest);
 
 			List studentTestLogList =
-				(List) sp.getIPersistentStudentTestLog().readByStudentAndDistributedTest(
-					student,
-					distributedTest);
+				sp.getIPersistentStudentTestLog().readByStudentAndDistributedTest(
+            	student,
+            	distributedTest);
 			sp.confirmarTransaccao();
 
 			Iterator it = studentTestQuestionList.iterator();

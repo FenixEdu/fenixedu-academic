@@ -8,7 +8,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import ServidorApresentacao.Action.base.FenixDispatchAction;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
  * @author Fernanda Quitério 4/Dez/2003
@@ -21,7 +20,6 @@ public class TeachersManagementAction extends FenixDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 		return mapping.findForward("firstPage");
 	}
@@ -31,7 +29,6 @@ public class TeachersManagementAction extends FenixDispatchAction
 			ActionForm form,
 			HttpServletRequest request,
 			HttpServletResponse response)
-	throws FenixActionException
 	{
 		return mapping.findForward("mainPage");
 	}	

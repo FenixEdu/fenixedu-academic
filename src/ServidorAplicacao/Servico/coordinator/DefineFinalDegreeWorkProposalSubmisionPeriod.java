@@ -50,8 +50,8 @@ public class DefineFinalDegreeWorkProposalSubmisionPeriod implements IService {
 
 				if (cursoExecucao != null) {
 					IScheduleing scheduleing =
-						(IScheduleing) persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(
-							executionDegreeOID);
+						persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(
+                    	executionDegreeOID);
 
 					if (scheduleing == null) {
 						scheduleing = new Scheduleing();

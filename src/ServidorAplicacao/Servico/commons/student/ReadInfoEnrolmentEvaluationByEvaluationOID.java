@@ -50,7 +50,7 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico
     }
 
     public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID)
-        throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia
+        throws ExcepcaoInexistente, FenixServiceException
     {
         ISuportePersistente sp = null;
         

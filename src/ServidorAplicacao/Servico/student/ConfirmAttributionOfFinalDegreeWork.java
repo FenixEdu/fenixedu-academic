@@ -10,7 +10,6 @@ import Dominio.finalDegreeWork.GroupProposal;
 import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupProposal;
 import Dominio.finalDegreeWork.IGroupStudent;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.ISuportePersistente;
@@ -27,8 +26,7 @@ public class ConfirmAttributionOfFinalDegreeWork implements IService
         super();
     }
 
-    public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia,
-            FenixServiceException
+    public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia
     {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport

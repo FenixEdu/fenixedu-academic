@@ -38,7 +38,7 @@ public class DissociateCurricularCourseByExecutionCourseId implements IService
 
         try
         {
-            List executionCourseList = null;
+            //List executionCourseList = null;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();

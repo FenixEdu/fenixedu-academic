@@ -11,7 +11,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.finalDegreeWork.Group;
 import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupProposal;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.ISuportePersistente;
@@ -29,7 +28,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService
         super();
     }
 
-    public boolean run(Integer groupOID, Integer groupProposalOID) throws ExcepcaoPersistencia, FenixServiceException
+    public boolean run(Integer groupOID, Integer groupProposalOID) throws ExcepcaoPersistencia
     {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport.getIPersistentFinalDegreeWork();
@@ -77,6 +76,6 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService
             super();
             this.groupProposalID = groupProposalID;
         }
-    };
+    }
 
 }

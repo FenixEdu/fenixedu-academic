@@ -110,7 +110,7 @@ public class InsertDistributedTest implements IServico
 			distributedTest.setStudentFeedback(feedback);
 			distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
 
-			ITestScope testScope = (ITestScope) persistentSuport.getIPersistentTestScope()
+			ITestScope testScope = persistentSuport.getIPersistentTestScope()
 					.readByDomainObject(executionCourse);
 			if (testScope == null)
 			{
@@ -220,7 +220,6 @@ public class InsertDistributedTest implements IServico
 	}
 
 	private IQuestion getStudentQuestion(IPersistentQuestion persistentQuestion, IMetadata metadata)
-			throws ExcepcaoPersistencia
 	{
 		List questions = metadata.getVisibleQuestions();
 		IQuestion question = null;

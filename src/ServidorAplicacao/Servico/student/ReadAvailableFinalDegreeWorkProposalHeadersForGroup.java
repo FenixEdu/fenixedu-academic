@@ -114,6 +114,6 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements ISer
             super();
             this.proposal = proposal;
         }
-    };
+    }
 
 }

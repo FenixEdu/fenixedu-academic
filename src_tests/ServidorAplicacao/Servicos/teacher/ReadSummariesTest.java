@@ -86,7 +86,6 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 
 			InfoSiteSummaries infoSiteSummaries =
 				(InfoSiteSummaries) result.getComponent();
-			assertEquals(infoSiteSummaries.getSummaryType(), summaryType);
 			List infoSummaries = infoSiteSummaries.getInfoSummaries();
 			assertEquals(infoSummaries.size(), 2);
 			
@@ -120,7 +119,6 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 
 			InfoSiteSummaries infoSiteSummaries =
 				(InfoSiteSummaries) result.getComponent();
-			assertEquals(infoSiteSummaries.getSummaryType(), summaryType);
 			List infoSummaries = infoSiteSummaries.getInfoSummaries();
 			assertEquals(infoSummaries.size(), 0);
 			// verifica se a base de dados nao foi alterada

@@ -38,7 +38,6 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 {
 
 	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException
 	{
 
 		return mapping.findForward("insertDegreeCurricularPlan");

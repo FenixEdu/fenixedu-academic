@@ -165,7 +165,7 @@ public class ParseMetadata extends DefaultHandler
 		{
 			Element element = (Element) it.next();
 			String tag = element.getQName();
-			Attributes atts = element.getAttributes();
+			//Attributes atts = element.getAttributes();
 			if ((tag.equals("difficulty")))
 			{
 				difficulty = true;
@@ -298,7 +298,7 @@ public class ParseMetadata extends DefaultHandler
 		{
 			Element element = (Element) it.next();
 			String tag = element.getQName();
-			Attributes atts = element.getAttributes();
+			//Attributes atts = element.getAttributes();
 			if ((tag.equals("location")))
 				result.add(element.getValue());
 		}

@@ -31,7 +31,6 @@ public class TfcManagementAction extends FenixDispatchAction
 {
 	public ActionForward submit(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
 	{
 		DynaActionForm tfcForm = (DynaActionForm) form;
 		String nomeResponsavel = (String) tfcForm.get("responsableTeacherName");

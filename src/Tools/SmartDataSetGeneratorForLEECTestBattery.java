@@ -414,11 +414,10 @@ public class SmartDataSetGeneratorForLEECTestBattery
      * @param resultMetadata
      * @return HashMap contaning pairs <KEY_NAME>=<TABLE_NAME>
      * @throws SQLException
-     * @throws IOException
      */
 
     private HashMap preprocessForeingKeys(String nameOfTable,
-            ResultSetMetaData resultMetadata) throws SQLException, IOException
+            ResultSetMetaData resultMetadata) throws SQLException
     {
         HashMap tableFkCorrections = readTableFkCorrections(nameOfTable);
         HashMap foreignKeyTableMap = new HashMap();

@@ -42,7 +42,7 @@ public class UpdateTestsFields
 			throw new InvalidArgumentsServiceException();
 
 		ITestScope testScope =
-			(ITestScope) persistentSuport.getIPersistentTestScope().readByDomainObject(executionCourse);
+			persistentSuport.getIPersistentTestScope().readByDomainObject(executionCourse);
 		if (testScope == null)
 		{
 			testScope = new TestScope(executionCourse);

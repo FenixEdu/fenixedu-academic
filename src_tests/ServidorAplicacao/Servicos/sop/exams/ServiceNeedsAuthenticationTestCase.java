@@ -35,11 +35,8 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 		Object serviceArguments[] = getSuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result =
-				ServiceUtils.executeService(
+			ServiceUtils.executeService(
 					userView1,
 					getNameOfServiceToBeTested(),
 					serviceArguments);
@@ -63,11 +60,8 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 		Object serviceArguments[] = getSuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result =
-				ServiceUtils.executeService(
+			ServiceUtils.executeService(
 					userView2,
 					getNameOfServiceToBeTested(),
 					serviceArguments);

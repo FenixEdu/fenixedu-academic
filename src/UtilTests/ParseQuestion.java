@@ -317,7 +317,7 @@ public class ParseQuestion extends DefaultHandler
 		{
 			Element element = (Element) it.next();
 			String tag = element.getQName();
-			Attributes atts = element.getAttributes();
+//			Attributes atts = element.getAttributes();
 			if (tag.equals("setvar"))
 				infoQuestion.setQuestionValue(new Integer(element.getValue()));
 			else if (tag.equals("varequal"))
@@ -335,7 +335,7 @@ public class ParseQuestion extends DefaultHandler
 		{
 			Element element = (Element) it.next();
 			String tag = element.getQName();
-			Attributes atts = element.getAttributes();
+			//Attributes atts = element.getAttributes();
 			if ((tag.equals("matimage")))
 				if (imageIdAux == imageId)
 					return element.getValue();
@@ -347,7 +347,7 @@ public class ParseQuestion extends DefaultHandler
 		{
 			Element element = (Element) it.next();
 			String tag = element.getQName();
-			Attributes atts = element.getAttributes();
+			//Attributes atts = element.getAttributes();
 			if ((tag.equals("matimage")))
 				if (imageIdAux == imageId)
 					return element.getValue();

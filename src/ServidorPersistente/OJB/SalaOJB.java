@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
@@ -26,7 +27,6 @@ import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IPeriod;
 import Dominio.ISala;
-import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.Period;
@@ -38,7 +38,6 @@ import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 import Util.TipoSala;
 
-import commons.CollectionUtils;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
 {

@@ -3,8 +3,6 @@
  */
 package ServidorAplicacao.Servico.person;
 
-import java.lang.reflect.InvocationTargetException;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IPessoa;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -34,8 +32,7 @@ public class ChangePasswordService implements IService
 
     public void run(UserView userView, String oldPassword, String newPassword)
             throws ExcepcaoInexistente, FenixServiceException, InvalidPasswordServiceException,
-            ExistingPersistentException, ExcepcaoPersistencia, IllegalAccessException,
-            InvocationTargetException
+            ExistingPersistentException, ExcepcaoPersistencia
     {
 
         // Check if the old password is equal

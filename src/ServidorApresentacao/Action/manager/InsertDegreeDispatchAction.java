@@ -33,8 +33,7 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 			ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
+			HttpServletResponse response) {
 
 			return mapping.findForward("insertDegree");
 		}

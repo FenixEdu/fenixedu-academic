@@ -7,6 +7,7 @@ package ServidorAplicacao.Servico.sop.exams;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoCurricularCourse;
@@ -23,7 +24,6 @@ import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-import commons.CollectionUtils;
 
 /**
  * @author Ana e Ricardo

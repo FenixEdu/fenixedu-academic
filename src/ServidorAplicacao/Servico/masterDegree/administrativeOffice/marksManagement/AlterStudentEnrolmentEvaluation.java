@@ -117,7 +117,6 @@ public class AlterStudentEnrolmentEvaluation implements IServico
 						enrolmentEvaluationCopy.getEnrolment().getStudentCurricularPlan());
 				enrolment.setIdInternal(enrolmentEvaluationCopy.getEnrolment().getIdInternal());
 		
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();				
 				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 				enrolmentEvaluation.setEnrolment(enrolment);	
 				enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ );

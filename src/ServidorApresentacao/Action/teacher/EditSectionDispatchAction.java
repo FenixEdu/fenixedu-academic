@@ -165,8 +165,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("viewSite");
 	}
 
-	public ActionForward prepareChangeParent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+	public ActionForward prepareChangeParent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	
 		

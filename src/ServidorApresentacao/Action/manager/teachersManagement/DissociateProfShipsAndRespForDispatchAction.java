@@ -38,7 +38,6 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 		return mapping.findForward("prepareDissociateEC");
 	}

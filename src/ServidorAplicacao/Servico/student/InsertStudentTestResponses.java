@@ -4,7 +4,6 @@
 
 package ServidorAplicacao.Servico.student;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +49,7 @@ public class InsertStudentTestResponses implements IService
     public boolean run(String userName, Integer distributedTestId, String[] options, String path)
             throws FenixServiceException
     {
-        List infoStudentTestQuestionList = new ArrayList();
+        //List infoStudentTestQuestionList = new ArrayList();
         this.path = path.replace('\\', '/');
         try
         {

@@ -8,7 +8,6 @@ import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
@@ -24,8 +23,8 @@ public class DeleteCurricularCourseScope implements IService {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
 					.getIPersistentCurricularCourseScope();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
-					.getIStudentCurricularPlanPersistente();
+//			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+//					.getIStudentCurricularPlanPersistente();
 			ICurricularCourseScope helpCurricularCourseScope = new CurricularCourseScope();
 			helpCurricularCourseScope.setIdInternal(scopeId);
 			ICurricularCourseScope scope = (ICurricularCourseScope) persistentCurricularCourseScope

@@ -8,7 +8,6 @@ import Dominio.finalDegreeWork.GroupProposal;
 import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupProposal;
 import Dominio.finalDegreeWork.IProposal;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.ISuportePersistente;
@@ -25,7 +24,7 @@ public class AttributeFinalDegreeWork implements IService
         super();
     }
 
-    public void run(Integer selectedGroupProposal) throws FenixServiceException, ExcepcaoPersistencia
+    public void run(Integer selectedGroupProposal) throws ExcepcaoPersistencia
     {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport

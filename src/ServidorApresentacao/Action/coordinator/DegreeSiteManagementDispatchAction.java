@@ -37,7 +37,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 
 		return mapping.findForward("degreeSiteMenu");
@@ -390,7 +389,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException
 	{
 
 		ActionErrors errors = new ActionErrors();

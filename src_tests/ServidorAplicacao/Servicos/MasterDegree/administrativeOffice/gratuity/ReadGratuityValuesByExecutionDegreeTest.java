@@ -94,10 +94,9 @@ public class ReadGratuityValuesByExecutionDegreeTest
 	{
 		Object[] args = { null };
 		
-		InfoGratuityValues infoGratuityValues = null;
 		try
 		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 		}
 		catch (FenixServiceException e)
 		{
@@ -114,10 +113,9 @@ public class ReadGratuityValuesByExecutionDegreeTest
 	{
 		Object[] args = { new Integer(12) };
 		
-		InfoGratuityValues infoGratuityValues = null;
 		try
 		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 		}
 		catch (FenixServiceException e)
 		{

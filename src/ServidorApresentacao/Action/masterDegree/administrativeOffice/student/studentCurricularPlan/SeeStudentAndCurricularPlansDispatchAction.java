@@ -31,7 +31,7 @@ import Util.TipoDocumentoIdentificacao;
 
 public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
 
-	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 		request.setAttribute("docIDTypeList", TipoDocumentoIdentificacao.toIntegerArrayList());
 		return mapping.findForward("start");

@@ -40,7 +40,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
 	{
 		ActionErrors errors = new ActionErrors();
 
-		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+		//Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
 
 		Integer degreeId = getFromRequest("degreeID", request);
 		request.setAttribute("degreeID", degreeId);

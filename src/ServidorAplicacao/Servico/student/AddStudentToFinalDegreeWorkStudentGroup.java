@@ -18,7 +18,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -39,8 +38,8 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport
                 .getIPersistentStudent();
-        IStudentCurricularPlanPersistente studentCurricularPlanPersistente = persistentSupport
-                .getIStudentCurricularPlanPersistente();
+//        IStudentCurricularPlanPersistente studentCurricularPlanPersistente = persistentSupport
+//                .getIStudentCurricularPlanPersistente();
         IPersistentEnrolment persistentEnrolment = persistentSupport
                 .getIPersistentEnrolment();
 

@@ -26,7 +26,6 @@ import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceExcepti
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.exceptions.RequiredJuriesActionException;
 import ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -425,7 +424,6 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 		ArrayList infoTeacherJuries,
 		ArrayList infoExternalPersonExternalJuries)
 		throws
-			RequiredJuriesActionException,
 			NonExistingActionException,
 			ScholarshipNotFinishedActionException,
 			ExistingActionException
@@ -542,7 +540,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
 	}
 
-	public void transportData(ActionForm form, HttpServletRequest request) throws FenixActionException
+	public void transportData(ActionForm form, HttpServletRequest request)
 	{
 
 		// dissertation title

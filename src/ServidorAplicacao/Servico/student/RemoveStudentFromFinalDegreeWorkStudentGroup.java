@@ -87,7 +87,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService
             super();
             this.studentID = studentID;
         }
-    };
+    }
 
     public class GroupProposalCandidaciesExistException extends FenixServiceException
     {

@@ -27,7 +27,6 @@ import Dominio.Turma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerAulasDeTurma implements IService
@@ -48,7 +47,7 @@ public class LerAulasDeTurma implements IService
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
+            //ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
             ITurmaPersistente persistentDomainClass = sp.getITurmaPersistente();
             ITurma group = null;
             if (infoClass.getIdInternal() != null)

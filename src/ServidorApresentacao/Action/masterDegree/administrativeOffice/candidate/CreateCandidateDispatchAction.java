@@ -199,9 +199,9 @@ public class CreateCandidateDispatchAction extends DispatchAction
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
+			//DynaActionForm createCandidateForm = (DynaActionForm) form;
 
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			//IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Create the Degree Type List
 			ArrayList specializations = Specialization.toArrayList();
@@ -210,7 +210,7 @@ public class CreateCandidateDispatchAction extends DispatchAction
 			
 			String executionDegreeId = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 			if(executionDegreeId== null) {
-			    executionDegreeId = (String) request.getParameter(SessionConstants.EXECUTION_DEGREE);
+			    executionDegreeId = request.getParameter(SessionConstants.EXECUTION_DEGREE);
 			}
 			session.setAttribute(SessionConstants.EXECUTION_YEAR, session.getAttribute(SessionConstants.EXECUTION_YEAR));
 		

@@ -12,8 +12,6 @@
 
 package ServidorAplicacao.Servico.commons.student;
 
-import java.lang.reflect.InvocationTargetException;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
@@ -38,8 +36,7 @@ public class ChangePersonalStudentInfo implements IService
     }
 
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoInexistente, FenixServiceException,
-            ExistingPersistentException, ExcepcaoPersistencia, IllegalAccessException,
-            InvocationTargetException
+            ExistingPersistentException, ExcepcaoPersistencia
     {
 
         ISuportePersistente sp = null;

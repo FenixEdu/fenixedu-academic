@@ -94,10 +94,10 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 	{
 		Object[] args = { null, new String("2003/2004") };
 		
-		InfoGratuityValues infoGratuityValues = null;
+		
 		try
 		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 		}
 		catch (FenixServiceException e)
 		{
@@ -114,10 +114,9 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 	{
 		Object[] args = { new Integer(35), null };
 		
-		InfoGratuityValues infoGratuityValues = null;
 		try
 		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+		    ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 		}
 		catch (FenixServiceException e)
 		{
@@ -134,10 +133,9 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 	{
 		Object[] args = { new Integer(1), new String("2003/2004") };
 		
-		InfoGratuityValues infoGratuityValues = null;
 		try
 		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+		    ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 		}
 		catch (FenixServiceException e)
 		{
@@ -154,10 +152,9 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 	{
 		Object[] args = { new Integer(1), new String("2006/2007") };
 		
-		InfoGratuityValues infoGratuityValues = null;
 		try
 		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+		    ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 		}
 		catch (FenixServiceException e)
 		{
@@ -174,10 +171,9 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 	{
 		Object[] args = { new Integer(37), new String("2003/2004") };
 		
-		InfoGratuityValues infoGratuityValues = null;
 		try
 		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+		    ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 		}
 		catch (FenixServiceException e)
 		{

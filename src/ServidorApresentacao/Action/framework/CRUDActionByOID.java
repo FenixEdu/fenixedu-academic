@@ -333,8 +333,7 @@ public class CRUDActionByOID extends DispatchAction
     protected void prepareFormConstants(
         ActionMapping mapping,
         ActionForm form,
-        HttpServletRequest request)
-        throws FenixServiceException
+        HttpServletRequest request) throws FenixServiceException
     {
     }
 

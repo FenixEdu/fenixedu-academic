@@ -38,8 +38,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+		HttpServletResponse response) {
 
 //		HttpSession session = request.getSession(false);
 //

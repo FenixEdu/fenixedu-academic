@@ -49,7 +49,7 @@ public class ChangePersonPassword implements IServico {
 		throws
 			ExcepcaoInexistente,
 			FenixServiceException,
-			InvalidPasswordServiceException, ExcepcaoPersistencia {
+			InvalidPasswordServiceException {
 
 		// Check if the old password is equal
 

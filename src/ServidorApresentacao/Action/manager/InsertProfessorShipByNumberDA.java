@@ -30,7 +30,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 
-	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		return mapping.findForward("insertProfessorShip");
 	}
 

@@ -241,7 +241,6 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws FenixActionException
     {
 
         DynaValidatorForm referenceForm = (DynaValidatorForm) form;

@@ -19,9 +19,7 @@ import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
-import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
-import Dominio.IExecutionCourse;
 import Dominio.IStudentTestQuestion;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -63,7 +61,7 @@ public class ReadInquiryStatistics implements IServico
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
+			//IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
 
 			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
 			distributedTest =

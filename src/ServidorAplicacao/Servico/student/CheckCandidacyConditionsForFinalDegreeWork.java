@@ -16,7 +16,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -38,8 +37,8 @@ public class CheckCandidacyConditionsForFinalDegreeWork implements IService
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport
-        		.getIStudentCurricularPlanPersistente();
+        //IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport
+        		//.getIStudentCurricularPlanPersistente();
         IPersistentEnrolment persistentEnrolment = persistentSupport
         	.getIPersistentEnrolment();
 

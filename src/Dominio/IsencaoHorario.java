@@ -80,8 +80,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 		int mesFim = 0;
 		int anoFim = 0;
 
-		int intervaloMinimoRefeicaoHoras = 0;
-		int intervaloMinimoRefeicaoMinutos = 0;
+		//int intervaloMinimoRefeicaoHoras = 0;
+		//int intervaloMinimoRefeicaoMinutos = 0;
 
 		int descontoObrigatorioHoras = 0;
 		int descontoObrigatorioMinutos = 0;
@@ -294,8 +294,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 			}
 
 			try {
-				intervaloMinimoRefeicaoHoras = new Integer(formHorario.getIntervaloMinimoHoras()).intValue();
-				intervaloMinimoRefeicaoMinutos = new Integer(formHorario.getIntervaloMinimoMinutos()).intValue();
+				/*intervaloMinimoRefeicaoHoras = */new Integer(formHorario.getIntervaloMinimoHoras()).intValue();
+				/*intervaloMinimoRefeicaoMinutos = */new Integer(formHorario.getIntervaloMinimoMinutos()).intValue();
 				descontoObrigatorioHoras = new Integer(formHorario.getDescontoObrigatorioHoras()).intValue();
 				descontoObrigatorioMinutos = new Integer(formHorario.getDescontoObrigatorioMinutos()).intValue();
 			} catch (java.lang.NumberFormatException e) {

@@ -180,7 +180,7 @@ public class CreateReimbursementGuide implements IService {
     private boolean checkReimbursementGuideEntriesSum(
             IReimbursementGuideEntry newReimbursementGuideEntry,
             ISuportePersistente suportePersistente)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws FenixServiceException {
         IPersistentGuideEntry persistentGuideEntry = suportePersistente
                 .getIPersistentGuideEntry();
         IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = suportePersistente

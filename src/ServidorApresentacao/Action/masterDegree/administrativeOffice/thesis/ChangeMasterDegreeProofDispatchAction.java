@@ -332,7 +332,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction
 
 	}
 
-	private void transportData(ActionForm form, HttpServletRequest request) throws FenixActionException
+	private void transportData(ActionForm form, HttpServletRequest request)
 	{
 
 		// dissertation title

@@ -73,7 +73,7 @@ public class ReadMetadatasByDistributedTest implements IServico
 			IPersistentDistributedTest persistentDistributedTest =
 				persistentSuport.getIPersistentDistributedTest();
 
-			List questions = new ArrayList();
+			//List questions = new ArrayList();
 
 			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
 			distributedTest =

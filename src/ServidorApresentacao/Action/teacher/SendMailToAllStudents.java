@@ -141,7 +141,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
         request.setAttribute("siteView", siteView);
         return mapping.findForward("showEmailForm");
     }
-    Object[] getReadCandidaciesArgs(HttpServletRequest request) throws FenixActionException
+    Object[] getReadCandidaciesArgs(HttpServletRequest request)
     {
         Integer modalityID;
         Integer themeID;

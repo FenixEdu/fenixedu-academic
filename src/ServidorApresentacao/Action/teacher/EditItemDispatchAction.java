@@ -36,7 +36,6 @@ public class EditItemDispatchAction extends FenixDispatchAction
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws FenixActionException
     {
 
         String indexString = request.getParameter("index");

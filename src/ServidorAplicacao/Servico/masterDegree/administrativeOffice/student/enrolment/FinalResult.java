@@ -6,7 +6,6 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
@@ -39,7 +38,7 @@ public class FinalResult implements IServico {
 		return "FinalResult";
 	}
 
-	public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, Exception {
+	public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
 
 
 		boolean result = false;

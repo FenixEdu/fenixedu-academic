@@ -45,7 +45,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements implements IService
 
                 if (cursoExecucao != null)
                 {
-                    IScheduleing scheduleing = (IScheduleing) persistentFinalDegreeWork
+                    IScheduleing scheduleing = persistentFinalDegreeWork
                             .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
                     if (scheduleing == null)

@@ -68,7 +68,7 @@ public class ReadDistributedTestMarksStatistics implements IServico
 			List studentTestQuestionList =
 				persistentStudentTestQuestion.readStudentTestQuestionsByDistributedTest(distributedTest);
 			Iterator it = studentTestQuestionList.iterator();
-			List infoStudentTestQuestionList = new ArrayList();
+			//List infoStudentTestQuestionList = new ArrayList();
 			List correctAnswersPercentageList = new ArrayList(),
 				wrongAnswersPercentageList = new ArrayList(),
 				notAnsweredPercentageList = new ArrayList();

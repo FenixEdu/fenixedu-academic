@@ -66,7 +66,6 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
     }
 
     private ITurno getIShift(ITurnoPersistente shiftDAO, InfoShiftProfessorship infoShiftProfessorship)
-        throws ExcepcaoPersistencia
     {
         ITurno shift = new Turno(infoShiftProfessorship.getInfoShift().getIdInternal());
         shift = (ITurno) shiftDAO.readByOId(shift, false);

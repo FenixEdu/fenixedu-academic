@@ -110,6 +110,7 @@
 </p>
 
 <!-- CURRICULAR COURSE INFO -->
+<logic:present name="infoCurriculum" property="generalObjectivesEn">
 <logic:notEmpty name="infoCurriculum" property="generalObjectivesEn">
 		<logic:notEqual name="infoCurriculum" property="generalObjectivesEn" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="message.generalObjectivesEn" />	</h2>
@@ -118,6 +119,8 @@
 		</p>
 		</logic:notEqual>
 </logic:notEmpty>
+</logic:present>
+<logic:present name="infoCurriculum" property="operacionalObjectivesEn">
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectivesEn">
 		<logic:notEqual name="infoCurriculum" property="operacionalObjectivesEn" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="message.operacionalObjectivesEn" /></h2>
@@ -126,8 +129,10 @@
 		</p>
 		</logic:notEqual>
 </logic:notEmpty> 
+</logic:present>
 <br/>
 <br/>
+<logic:present name="infoCurriculum" property="programEn">
 <logic:notEmpty name="infoCurriculum" property="programEn">
 	<logic:notEqual name="infoCurriculum" property="programEn" value="">
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="message.programEn" /></h2>	
@@ -136,6 +141,7 @@
 		</p>	
 	</logic:notEqual>
 </logic:notEmpty>
+</logic:present>
 <br/>
 <br/>
 

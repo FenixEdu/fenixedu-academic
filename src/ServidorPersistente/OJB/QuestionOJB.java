@@ -78,7 +78,6 @@ public class QuestionOJB extends ObjectFenixOJB implements IPersistentQuestion
     }
 
     private int countReferences(Integer distributedTestId, Integer questionId)
-            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("keyDistributedTest", distributedTestId);

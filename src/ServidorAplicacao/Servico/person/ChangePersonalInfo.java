@@ -12,8 +12,6 @@
 
 package ServidorAplicacao.Servico.person;
 
-import java.lang.reflect.InvocationTargetException;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
 import Dominio.ICountry;
@@ -37,8 +35,7 @@ public class ChangePersonalInfo implements IService
     }
 
     public UserView run(InfoPerson newInfoPerson, UserView userView) throws ExcepcaoInexistente,
-            FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia,
-            IllegalAccessException, InvocationTargetException
+            FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia
     {
 
         ISuportePersistente sp = null;

@@ -19,7 +19,6 @@ import DataBeans.SiteView;
 import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
-import Dominio.IExecutionCourse;
 import Dominio.StudentTestQuestion;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -103,7 +102,7 @@ public class ReadDistributedTestMarksStatisticsTest extends ServiceNeedsAuthenti
 			Criteria criteria = new Criteria();
 			criteria.addEqualTo("idInternal", args[0]);
 			Query queryCriteria = new QueryByCriteria(ExecutionCourse.class, criteria);
-			IExecutionCourse executionCourse = (IExecutionCourse) broker.getObjectByQuery(queryCriteria);
+			//IExecutionCourse executionCourse = (IExecutionCourse) broker.getObjectByQuery(queryCriteria);
 
 			criteria = new Criteria();
 			criteria.addEqualTo("idInternal", args[1]);

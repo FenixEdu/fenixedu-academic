@@ -40,8 +40,8 @@ public class FilterDiscriptorProperty2XML extends FileUtil {
 		String outputFile,
 		String implementationClassPackage,
 		FilterDiscriptorProperty2XML instance) {
-		FilterDiscriptorProperty2XML.inputFile = inputFile;
-		FilterDiscriptorProperty2XML.outputFile = outputFile;
+		FileUtil.inputFile = inputFile;
+		FileUtil.outputFile = outputFile;
 		FilterDiscriptorProperty2XML.implementationClassPackage =
 			implementationClassPackage;
 		instance.processFile();
