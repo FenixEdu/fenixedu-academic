@@ -21,7 +21,6 @@
 	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
 </ul>
 	
-<html:form action="/readCurricularCourse">
 	<h3><bean:message key="label.manager.executionCourses"/></h3>
 
 	<logic:empty name="executionCoursesList">
@@ -125,7 +124,7 @@
 						
 						<td>
 							<ul style="list-style-type: square;">
-								<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getAttribute("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>
+								<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>
 							</ul>
 						</td>
 	 				</tr>
@@ -137,4 +136,4 @@
 	</logic:present>
 	
 	<span class="error"><html:errors/></span>
-</html:form> 
+

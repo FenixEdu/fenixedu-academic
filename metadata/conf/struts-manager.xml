@@ -44,14 +44,9 @@
 				<form-property name="type" type="java.lang.String" />
 				<form-property name="mandatory" type="java.lang.String" />
 				<form-property name="basic" type="java.lang.String" />
-				<form-property name="departmentCourse" type="java.lang.String" />
-				<!--copiei pq a falta tava a dar erro-->
-				<form-property name="branchId" type="java.lang.String" />
-				<form-property name="curricularSemesterId" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
-		<!--acho que posso por os Ids com Strings-->
 		<form-bean name="curricularCourseScopeForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">
@@ -64,10 +59,7 @@
 				<form-property name="minIncrementNac" type="java.lang.String" />
 				<form-property name="weight" type="java.lang.String" />
 				<form-property name="branchId" type="java.lang.String" />
-			
-				<!--deixei pq a falta tava a dar erro-->
-				<form-property name="curricularSemesterId" type="java.lang.String" />
-
+				<form-property name="semesterId" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -241,19 +233,7 @@
 	
 	
 	<!-- Action for reading a curricular course -->
-      	<!--o problema do readDegreeCurricularPlanInput é que ja perdeu a informaçaõ do curricularCourses
-      		pelo menos tava a fazer este percurso:
-      		editCCScope
-      		(qd o scope ja existe)
-      		readCurricularCourse.do
-      		que tem um erro e vai para o
-      		input=
-      		NAO PERCEBO PQ EH QUE VAI PARA O INMPUT
-      		e mostra msg de erro qd nao preeencho os campos do insert curricular course tem a ver com o form mas n percebos
-      		pus o form do ccSope??????
-      		
-      		FALTAVA
-      		no EditCCScope fazer set do curricularcourseId->nao alteriu nada-->
+  
     <action path="/readCurricularCourse"
         name="curricularCourseScopeForm"
         input="/readDegreeCurricularPlan.do"

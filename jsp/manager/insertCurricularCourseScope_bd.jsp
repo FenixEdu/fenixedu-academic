@@ -13,7 +13,7 @@
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 	
-	<table>
+    <table>
 		<tr>
 			<td>
 				<bean:message key="label.manager.curricular.course.scope.branch"/>
@@ -24,7 +24,7 @@
 				</html:select>				
 			</td>
 		</tr>
-		<tr>
+	    <tr>
 			<td>
 				<bean:message key="label.manager.curricular.course.scope.semester"/>
 			</td>
