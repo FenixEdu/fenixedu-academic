@@ -49,7 +49,7 @@ public class ChangePersonPassword implements IServico {
 		throws
 			ExcepcaoInexistente,
 			FenixServiceException,
-			InvalidPasswordServiceException {
+			InvalidPasswordServiceException, ExcepcaoPersistencia {
 
 		// Check if the old password is equal
 
@@ -71,7 +71,8 @@ public class ChangePersonPassword implements IServico {
 
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person!");
-			
+		
+		sp.getIPessoaPersistente().lockWrite(person);
 		person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
 	}
 }

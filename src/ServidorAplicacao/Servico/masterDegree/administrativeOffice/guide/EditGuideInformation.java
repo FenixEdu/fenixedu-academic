@@ -229,9 +229,9 @@ public class EditGuideInformation implements IServico {
 	
 					sp.getIPersistentGuide().write(newGuideVersion);
 					sp.getIPersistentGuideSituation().write(guideSituation);
-					// Make sure that everything is written before reading ...
-					sp.confirmarTransaccao();
-					sp.iniciarTransaccao();
+//					// Make sure that everything is written before reading ...
+//					sp.confirmarTransaccao();
+//					sp.iniciarTransaccao();
 					
 					// Write the Guide Entries
 					Iterator guideEntryIterator = newInfoGuideEntries.iterator();
@@ -265,6 +265,7 @@ public class EditGuideInformation implements IServico {
 		
 		InfoGuide newInfoGuide = null;
 		IGuide newGuide = null;
+		InfoGuide result = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 
@@ -273,28 +274,30 @@ public class EditGuideInformation implements IServico {
 			if (othersGuideEntry != null)
 				sp.getIPersistentGuideEntry().write(othersGuideEntry);
 			
+			
 			// Make sure that everything is written before reading ...
 			sp.confirmarTransaccao();
 			sp.iniciarTransaccao();
 
 			newGuide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(), infoGuide.getYear(), infoGuide.getVersion());
 
+			// Update the Guide Total
+			InfoGuide infoGuideTemp = new InfoGuide();
+			infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
+
+			result = Cloner.copyIGuide2InfoGuide(newGuide); 
+
+			result.setTotal(CalculateGuideTotal.calculate(result));
+
+			newGuide.setTotal(result.getTotal());
+		
+			sp.getIPersistentGuide().write(newGuide);
+
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-		
-		
-		// Update the Guide Total
-		InfoGuide infoGuideTemp = new InfoGuide();
-		infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
-
-		InfoGuide result = Cloner.copyIGuide2InfoGuide(newGuide); 
-
-		result.setTotal(CalculateGuideTotal.calculate(result));
-
-		newGuide.setTotal(result.getTotal());
 		
 		return result;
 

@@ -14,6 +14,7 @@
 
 package ServidorPersistente.OJB;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -83,9 +84,18 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     }
 
     
-    public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidateToWrite) throws ExcepcaoPersistencia {
+    public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidateToWrite) throws ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
     	if (masterDegreeCandidateToWrite == null) return;
     	
+    	
+    	// Write the Person first to see if there's no clash
+    	
+    	try {
+	    	SuportePersistenteOJB.getInstance().getIPessoaPersistente().escreverPessoa(masterDegreeCandidateToWrite.getPerson());
+		} catch(ExistingPersistentException e) {
+			throw new ExistingPersistentException("Existing Person !");
+		}
+	
     	IMasterDegreeCandidate masterDegreeCandidateBD1 = this.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(
 				masterDegreeCandidateToWrite.getCandidateNumber(),
 				masterDegreeCandidateToWrite.getExecutionDegree().getExecutionYear().getYear(),
@@ -106,7 +116,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 				 (masterDegreeCandidateToWrite instanceof MasterDegreeCandidate) &&
 				 ((MasterDegreeCandidate) masterDegreeCandidateBD1).getInternalCode().equals(
 				 ((MasterDegreeCandidate) masterDegreeCandidateToWrite).getInternalCode())) {
-				   super.lockWrite(masterDegreeCandidateToWrite);
+					super.lockWrite(masterDegreeCandidateToWrite);
 				   return;
 				 }
 	   if (masterDegreeCandidateBD2 != null &&
@@ -116,7 +126,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 				  super.lockWrite(masterDegreeCandidateToWrite);
 				  return;
 				}
-		
+System.out.println("Existente");				
 		throw new ExistingPersistentException();
     }
     

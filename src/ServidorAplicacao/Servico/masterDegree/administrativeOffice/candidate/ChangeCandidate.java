@@ -8,6 +8,7 @@
 
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -24,10 +25,12 @@ import Dominio.ICountry;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.SituationName;
 import Util.Specialization;
 import Util.State;
@@ -59,7 +62,7 @@ public class ChangeCandidate implements IServico {
     
     
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate oldCandidate, InfoMasterDegreeCandidate newCandidate) 
-	    throws ExcepcaoInexistente, FenixServiceException {
+	    throws ExcepcaoInexistente, FenixServiceException, IllegalAccessException, InvocationTargetException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
 
@@ -147,14 +150,8 @@ public class ChangeCandidate implements IServico {
 			while(iterator.hasNext()) {
 				ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
 				if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))){
+					sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationTemp);
 					candidateSituationTemp.setValidation(new State(State.INACTIVE));
-					try {		
-						sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationTemp);
-					} catch (ExcepcaoPersistencia ex) {
-					  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-					  newEx.fillInStackTrace();
-					  throw newEx;
-					}		
 				}
 				situations.add(candidateSituationTemp);
 			}
@@ -178,9 +175,10 @@ public class ChangeCandidate implements IServico {
 		} else 
 			situations.addAll(masterDegreeCandidate.getSituations());
 		
-		
 		try {
             sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
+		} catch(ExistingPersistentException e) {
+			throw new ExistingServiceException(e);
 	    } catch (ExcepcaoPersistencia ex) {
 	      FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 	      newEx.fillInStackTrace();
@@ -193,6 +191,10 @@ public class ChangeCandidate implements IServico {
 		List situationsList = new ArrayList();
 		Iterator iterator = situations.iterator();
 		while(iterator.hasNext()){
+			System.out.println();
+			
+			
+			
 			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator.next()); 
 			situationsList.add(infoCandidateSituation);
 

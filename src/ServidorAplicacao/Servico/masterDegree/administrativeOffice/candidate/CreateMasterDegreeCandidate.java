@@ -94,6 +94,9 @@ public class CreateMasterDegreeCandidate implements IServico {
 			candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
 			candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
 			candidateSituation.setValidation(new State(State.ACTIVE));
+			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+			
+			
 			
 			Calendar actualDate = Calendar.getInstance();
 			candidateSituation.setDate(actualDate.getTime());
@@ -124,6 +127,9 @@ public class CreateMasterDegreeCandidate implements IServico {
 				// Generate Person Username
 				
 				String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
+
+System.out.println(username);				
+
 				person.setUsername(username);
 				
 				

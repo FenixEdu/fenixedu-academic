@@ -27,6 +27,7 @@
 
 package ServidorPersistente.OJB;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -281,7 +282,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		}
 	}
 
-	public void testWriteExistingMasterDegreeCandidate() {
+	public void testWriteExistingMasterDegreeCandidate() throws IllegalAccessException, InvocationTargetException {
 		System.out.println("- Test 3 : Write Existing Master Degree Candidate");
 
 		List candidates = null;
@@ -329,7 +330,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		}
 	}
 
-	public void testWriteNonExistingMasterDegreeCandidate() {
+	public void testWriteNonExistingMasterDegreeCandidate() throws IllegalAccessException, InvocationTargetException {
 		System.out.println(
 			"- Test 4 : Write NonExisting Master Degree Candidate");
 

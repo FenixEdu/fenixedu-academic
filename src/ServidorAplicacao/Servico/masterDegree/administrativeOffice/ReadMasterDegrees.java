@@ -58,8 +58,8 @@ public class ReadMasterDegrees implements IServico {
 			executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 			
 			// Read the degrees
-			
 			result = sp.getICursoExecucaoPersistente().readMasterDegrees(executionYear.getYear());	
+
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();

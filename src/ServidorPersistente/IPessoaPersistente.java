@@ -6,6 +6,7 @@
 
 package ServidorPersistente;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import Dominio.IPessoa;
@@ -13,7 +14,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
 public interface IPessoaPersistente extends IPersistentObject {
-    public void escreverPessoa(IPessoa pessoa) throws ExcepcaoPersistencia, ExistingPersistentException;
+    public void escreverPessoa(IPessoa pessoa) throws ExcepcaoPersistencia, ExistingPersistentException, IllegalAccessException, InvocationTargetException;
     public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
     public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia;
     public void apagarTodasAsPessoas() throws ExcepcaoPersistencia;

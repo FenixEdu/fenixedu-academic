@@ -18,6 +18,8 @@
 
 package ServidorAplicacao.Servico.person;
 
+import java.lang.reflect.InvocationTargetException;
+
 import DataBeans.InfoPerson;
 import Dominio.ICountry;
 import Dominio.IPessoa;
@@ -28,6 +30,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class ChangePersonalInfo implements IServico {
     
@@ -56,7 +59,7 @@ public class ChangePersonalInfo implements IServico {
     
     
     public UserView run(InfoPerson newInfoPerson, UserView userView) 
-	    throws ExcepcaoInexistente, FenixServiceException {
+	    throws ExcepcaoInexistente, FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
 
         ISuportePersistente sp = null;
         IPessoa person = null;
@@ -74,6 +77,8 @@ public class ChangePersonalInfo implements IServico {
         } 
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person !!");	
+
+		sp.getIPessoaPersistente().escreverPessoa(person);
 
 		// Get new Country
 		ICountry nationality = null;

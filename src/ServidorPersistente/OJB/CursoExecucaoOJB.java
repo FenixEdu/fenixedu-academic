@@ -206,6 +206,18 @@ public class CursoExecucaoOJB
 	public List readMasterDegrees(String executionYear)
 		throws ExcepcaoPersistencia {
 		try {
+			
+			
+//			Criteria criteria = new Criteria();
+//			
+//			criteria.addEqualTo("executionYear.year",executionYear);
+//			criteria.addEqualTo("curricularPlan.degree.tipoCurso",new Integer(TipoCurso.MESTRADO));
+//			System.out.println("Execution ...");			
+//			List result = queryList(CursoExecucao.class, criteria);
+//			System.out.println("Done !");			
+//			return result;
+			
+			
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
@@ -215,8 +227,12 @@ public class CursoExecucaoOJB
 			query.bind(executionYear);
 			query.bind(new Integer(TipoCurso.MESTRADO));
 
+
+
 			List result = (List) query.execute();
-			lockRead(result);
+//			lockRead(result);
+
+
 			return result;
 		} catch (QueryException e) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);

@@ -18,6 +18,8 @@
 
 package ServidorAplicacao.Servico.masterDegree.candidate;
 
+import java.lang.reflect.InvocationTargetException;
+
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
@@ -57,7 +59,7 @@ public class ChangeApplicationInfo implements IServico {
     
     
     public void run(InfoMasterDegreeCandidate newMasterDegreeCandidate) 
-	    throws ExcepcaoInexistente, FenixServiceException {
+	    throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
 
         ISuportePersistente sp = null;
         IMasterDegreeCandidate existingMasterDegreeCandidate = null;
@@ -81,17 +83,12 @@ public class ChangeApplicationInfo implements IServico {
 
 		// Change the Information
 		
+		sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(existingMasterDegreeCandidate);
+		
 		existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate.getAverage());
 		existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate.getMajorDegree());
 		existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate.getMajorDegreeSchool());
 		existingMasterDegreeCandidate.setMajorDegreeYear(newMasterDegreeCandidate.getMajorDegreeYear());
 		
-		try {
-            sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(existingMasterDegreeCandidate);
-	    } catch (ExcepcaoPersistencia ex) {
-	      FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-	      newEx.fillInStackTrace();
-	      throw newEx;
-	    }
     }
 }

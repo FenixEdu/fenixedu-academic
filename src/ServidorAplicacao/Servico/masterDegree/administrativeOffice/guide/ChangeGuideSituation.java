@@ -22,6 +22,7 @@ import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PaymentType;
 import Util.SituationOfGuide;
 import Util.State;
@@ -53,7 +54,7 @@ public class ChangeGuideSituation implements IServico {
     
     
     public void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate, String remarks, String situationOfGuideString, String paymentType) 
-	    throws ExcepcaoInexistente, FenixServiceException {
+	    throws ExcepcaoInexistente, FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
 
@@ -84,9 +85,11 @@ public class ChangeGuideSituation implements IServico {
 		
 				
 		// check if the change is valid
-		if (verifyChangeValidation(guideSituation, situationOfGuide) == false)
+		if (verifyChangeValidation(guideSituation, situationOfGuide) == false) {
 			throw new NonValidChangeServiceException();
-		
+	    }
+	    
+		sp.getIPersistentGuideSituation().write(guideSituation);
 		if (situationOfGuide.equals(guideSituation.getSituation())){
 			guideSituation.setRemarks(remarks);
 			if (guideSituation.getSituation().equals(SituationOfGuide.PAYED_TYPE)){
@@ -95,6 +98,7 @@ public class ChangeGuideSituation implements IServico {
 			}
 		} else {
 			// Create The New Situation
+			
 			guideSituation.setState(new State(State.INACTIVE));
 		
 			IGuideSituation newGuideSituation = new GuideSituation();
@@ -106,6 +110,7 @@ public class ChangeGuideSituation implements IServico {
 			newGuideSituation.setState(new State(State.ACTIVE));
 
 			if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)){
+				sp.getIPersistentGuide().write(guide);
 				guide.setPaymentDate(paymentDate);
 				guide.setPaymentType(new PaymentType(paymentType));
 			}
@@ -113,7 +118,6 @@ public class ChangeGuideSituation implements IServico {
 		
 			// Write the new Situation
 			try {
-				sp = SuportePersistenteOJB.getInstance();
 				sp.getIPersistentGuideSituation().write(newGuideSituation);
 			} catch (ExcepcaoPersistencia ex) {
 				FenixServiceException newEx = new FenixServiceException("Persistence layer error");

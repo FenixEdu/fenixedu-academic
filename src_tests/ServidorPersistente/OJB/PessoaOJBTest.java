@@ -5,6 +5,7 @@
 
 package ServidorPersistente.OJB;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import junit.framework.Test;
@@ -116,7 +117,7 @@ public class PessoaOJBTest extends TestCaseOJB {
   }
 
   // write new non-existing item
-  public void testCreateNonExistingPessoa() {
+  public void testCreateNonExistingPessoa() throws IllegalAccessException, InvocationTargetException {
     //IPessoa pessoa = new Pessoa("ars","xxxxxxxx", null);
     IPessoa pessoa = new Pessoa();
     pessoa.setNumeroDocumentoIdentificacao("9786541230");
@@ -136,7 +137,7 @@ public class PessoaOJBTest extends TestCaseOJB {
   }
 
   /** Test of write method, of class ServidorPersistente.OJB.PessoaOJB. */
-  public void testWriteExistingUnchangedObject() {
+  public void testWriteExistingUnchangedObject() throws IllegalAccessException, InvocationTargetException {
     // write pessoa already mapped into memory
     IPessoa pessoa = null;
     try {
@@ -150,7 +151,7 @@ public class PessoaOJBTest extends TestCaseOJB {
   }
 
   /** Test of write method, of class ServidorPersistente.OJB.PessoaOJB. */
-  public void testWriteExistingChangedObject() {
+  public void testWriteExistingChangedObject() throws IllegalAccessException, InvocationTargetException {
     // write pessoa already mapped into memory
     try {
       persistentSupport.iniciarTransaccao();

@@ -59,12 +59,15 @@ public class EditContributor implements IServico {
 			
 			if (contributorBD == null)
 				throw new NonExistingContributorServiceException();
-				
+			
+			
+			sp.getIPersistentContributor().write(contributorBD);
+			
 			contributorBD.setContributorNumber(contributorNumber);
 			contributorBD.setContributorName(contributorName);
 			contributorBD.setContributorAddress(contributorAddress);
 				
-			sp.getIPersistentContributor().write(contributorBD);
+			
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia ex) {

@@ -25,6 +25,7 @@
 
 package ServidorPersistente.OJB;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -121,7 +122,7 @@ public class CandidateSituationOJBTest extends TestCaseOJB {
         
     }
     
-    public void testReadNonExistingCandidateSituation() {
+    public void testReadNonExistingCandidateSituation() throws IllegalAccessException, InvocationTargetException {
         System.out.println("- Test 2 : Read non-existing Candidate Situation");
         ICandidateSituation candidateSituationTemp = null;
         

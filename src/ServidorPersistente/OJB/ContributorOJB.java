@@ -61,9 +61,10 @@ public class ContributorOJB extends ObjectFenixOJB implements IPersistentContrib
 			else if ((contributor instanceof Contributor) &&
 					 ((Contributor) contributorBD).getIdInternal().equals(
 						((Contributor) contributor).getIdInternal())) {
-						contributorBD.setContributorNumber(contributor.getContributorNumber());
-    					contributorBD.setContributorName(contributor.getContributorName());
-						contributorBD.setContributorAddress(contributor.getContributorAddress());
+							super.lockWrite(contributorBD);
+//						contributorBD.setContributorNumber(contributor.getContributorNumber());
+//    					contributorBD.setContributorName(contributor.getContributorName());
+//						contributorBD.setContributorAddress(contributor.getContributorAddress());
 			// else Throw an already existing exception
 			} else
 				throw new ExistingPersistentException();

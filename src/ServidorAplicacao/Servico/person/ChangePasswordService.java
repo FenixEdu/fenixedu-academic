@@ -4,6 +4,8 @@
  */
 package ServidorAplicacao.Servico.person;
 
+import java.lang.reflect.InvocationTargetException;
+
 import Dominio.IPessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -15,6 +17,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -49,7 +52,7 @@ public class ChangePasswordService implements IServico {
 		throws
 			ExcepcaoInexistente,
 			FenixServiceException,
-			InvalidPasswordServiceException {
+			InvalidPasswordServiceException, ExistingPersistentException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
 
 		// Check if the old password is equal
 
@@ -76,6 +79,7 @@ public class ChangePasswordService implements IServico {
 			throw new InvalidPasswordServiceException("Invalid Existing Password!");
 		} else {
 			// Change the Password
+			sp.getIPessoaPersistente().escreverPessoa(person);
 			person.setPassword(PasswordEncryptor.encryptPassword(newPassword));
 		}
 	}

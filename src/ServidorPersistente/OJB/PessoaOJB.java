@@ -6,10 +6,12 @@
 
 package ServidorPersistente.OJB;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
@@ -25,7 +27,7 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
     public PessoaOJB() {}
     
 	public void escreverPessoa(IPessoa personToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException {
+		throws ExcepcaoPersistencia, ExistingPersistentException, IllegalAccessException, InvocationTargetException {
 
 			IPessoa personFromDB1 = null;
 			IPessoa personFromDB2 = null;
@@ -38,27 +40,42 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 		personFromDB1 = this.lerPessoaPorUsername(personToWrite.getUsername());
 		personFromDB2 = this.lerPessoaPorNumDocIdETipoDocId(personToWrite.getNumeroDocumentoIdentificacao(), personToWrite.getTipoDocumentoIdentificacao());
 
+		
+		
 		// If person is not in database, then write it.
-		if ((personFromDB1 == null) && (personFromDB2 == null))
+		if ((personFromDB1 == null) && (personFromDB2 == null)){
+
 			super.lockWrite(personToWrite);
+			return;
+			
+		} else if ((personFromDB1 != null) && (personFromDB2 != null) &&	
+				  (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal())) &&
+				  (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal()))) {
+
+					super.lockWrite(personFromDB1);
+					BeanUtils.copyProperties(personFromDB1, personToWrite);
+					return;
 			
 		// else If the person is mapped to the database, then write any existing changes.
-		else if ((personFromDB1 != null) &&
+		} else if ((personFromDB1 != null) && (personFromDB2 == null) &&
 				 (personToWrite instanceof Pessoa) && 
-				 (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal())))
+				 (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal()))){
 
-					super.lockWrite(personToWrite);
+					super.lockWrite(personFromDB1);
+					BeanUtils.copyProperties(personFromDB1, personToWrite);
+
+					return;
 			
-		else if ((personFromDB2 != null) &&
+		} else if ((personFromDB2 != null) && (personFromDB1 == null) &&
 				 (personToWrite instanceof Pessoa) && 
-				 (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal())))
-					super.lockWrite(personToWrite);
-			
-			
-			
+				 (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite).getIdInternal()))){
+					super.lockWrite(personFromDB1);
+					BeanUtils.copyProperties(personFromDB2, personToWrite);
+				 	
+					return;
+		}	
 		// else Throw an already existing exception
-		else
-			throw new ExistingPersistentException();
+		throw new ExistingPersistentException();
 	}
     
     public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
