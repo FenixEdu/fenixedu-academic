@@ -17,10 +17,12 @@
 <br />
 <br />
 
+<%--
 <logic:present name="infoExecutionDegree" >
 	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" /><br />
 	<bean:message key="label.masterDegree.administrativeOffice.masterDegree"/>:<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" /><br />
 </logic:present>
+--%>
 
 <logic:present name="curricularCourses">
 	<h2><bean:message key="title.masterDegree.administrativeOffice.chooseCurricularCourseToStudyPlan" /></h2>

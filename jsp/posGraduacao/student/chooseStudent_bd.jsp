@@ -14,7 +14,7 @@
 		<table>	
 	       <!-- Student Number -->
 	       <tr>
-	         <td><bean:message key="label.student.number"/>:</td>
+	         <td><bean:message key="label.student.number"/></td>
 	         <td><html:text property="number"/></td>
 	         </td>
 	       </tr>

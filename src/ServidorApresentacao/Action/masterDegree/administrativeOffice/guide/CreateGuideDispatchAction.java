@@ -5,6 +5,7 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -90,6 +92,13 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				throw new ExistingActionException(e);
 			}
 
+
+
+
+			BeanComparator nameComparator = new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+			Collections.sort(degreeList, nameComparator);
+			
+			
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 			session.removeAttribute(SessionConstants.PRINT_PASSWORD);
 			session.removeAttribute(SessionConstants.PRINT_INFORMATION);

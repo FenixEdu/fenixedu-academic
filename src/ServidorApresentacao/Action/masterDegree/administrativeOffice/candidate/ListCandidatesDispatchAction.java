@@ -212,6 +212,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 
 			Integer personID = Integer.valueOf(request.getParameter("personID"));
+			request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
+			
 			
 			// Read the Candidates for This Person
 			
@@ -225,7 +227,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			}
 			
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
-			request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
+//			request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
 			
 			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 			

@@ -273,6 +273,7 @@ public class RegisterCandidate implements IServico {
 					personTemp.setIdInternal(student.getPerson().getIdInternal());
 					IPessoa person = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, true);
 					person.setUsername("M" + student.getNumber());
+					student.setPerson(person);
 			}
 			
 		} catch (ExcepcaoPersistencia e) {

@@ -35,7 +35,7 @@
 		</tr>
     		<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
     			<bean:define id="candidateLink">
-    				<bean:write name="link"/><bean:write name="candidate" property="infoPerson.idInternal"/>
+    				<bean:write name="link"/><bean:write name="candidate" property="infoPerson.idInternal"/>&candidateID=<bean:write name="candidate" property="idInternal"/>
     			</bean:define>
     	<tr>
     		<td class="listClasses">

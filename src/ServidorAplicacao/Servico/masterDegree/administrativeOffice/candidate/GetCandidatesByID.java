@@ -54,7 +54,7 @@ public class GetCandidatesByID implements IServico {
 	public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
 
 		ISuportePersistente sp = null;
-		IMasterDegreeCandidate result = null;
+		IMasterDegreeCandidate masterDegreeCandidate = null;
 
 
 		if (candidateID == null) {
@@ -65,26 +65,34 @@ public class GetCandidatesByID implements IServico {
 			sp = SuportePersistenteOJB.getInstance();
 						
 			// Read the candidates
-			IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
-			masterDegreeCandidate.setIdInternal(candidateID);
+			IMasterDegreeCandidate masterDegreeCandidateTemp = new MasterDegreeCandidate();
+			masterDegreeCandidateTemp.setIdInternal(candidateID);
 			
-			result = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidate, false);
+			masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, false);
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		} 
 
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(result);
-		Iterator situationIterator = result.getSituations().iterator();
+
+System.out.println("Encontrei " + masterDegreeCandidate.getIdInternal());
+
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+		Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
 		List situations = new ArrayList();
 		while (situationIterator.hasNext()){ 
 			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator.next()); 
 			situations.add(infoCandidateSituation);
 			
 			// Check if this is the Active Situation
-			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE))){
+
+System.out.println("Situacao activa " + infoCandidateSituation.getSituation());
+				
 				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+			}
+				
 		}			
 		infoMasterDegreeCandidate.setSituationList(situations);
 			
