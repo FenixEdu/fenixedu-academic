@@ -60,7 +60,7 @@ public class DistributeStudentsByClass
 		// ler todos os turnos da turma.
 		ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-		List groupShiftList = shiftDAO.readByClass(group);
+		List groupShiftList = group.getAssociatedShifts();
 
 		List groupShiftListFiltered = (List) CollectionUtils.select(groupShiftList, new Predicate()
 		{
