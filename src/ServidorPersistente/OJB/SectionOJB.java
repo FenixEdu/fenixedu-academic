@@ -1,5 +1,5 @@
 /*
- * SeccaoOJB.java
+ * SectionOJB.java
  *
  * Created on 23 de Agosto de 2002, 16:58
  */
@@ -80,6 +80,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
   //reads imediatly inferior sections of a section
 	public List readBySiteAndSection(ISite site,ISection superiorSection)
 		throws ExcepcaoPersistencia {
+		
 	try {
 			
 		Section section = (Section) superiorSection;
@@ -101,13 +102,16 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 		query.bind(site.getExecutionCourse().getSigla());
 		query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
 		query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+	
 			
+		 
 		if (section != null) {
 			System.out.println(oqlQuery);
 			query.bind(section.getInternalCode());			
-		}
-
-		List result = (List) query.execute();
+		 
+		}	
+		
+		List result = (List) query.execute();		
 		lockRead(result);
 		
 		return result;
@@ -144,10 +148,10 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			IItem item = null;
 			ItemOJB itemOJB = new ItemOJB();
 			String oqlQuery = "select all from " + Item.class.getName();
-			oqlQuery += " where section.name = $1 and section.site.executionCourse.sigla = $2 "
-				+ "and  section.site.executionCourse.executionPeriod.name = $3  "
-				+ "and  section.site.executionCourse.executionPeriod.executionYear.year = $4  ";
-
+			oqlQuery
+			+= " where section.nome = $1 and section.site.disciplinaExecucao.sigla = $2 "
+			+ "and  section.site.disciplinaExecucao.executionPeriod.name = $3  "
+			+ "and  section.disciplinaExecucao.executionPeriod.executionYear.year = $4  ";
 			query.create(oqlQuery);
 			query.bind(section.getName());
 			query.bind(section.getSite().getExecutionCourse().getSigla());
