@@ -23,6 +23,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 	private Integer minimalYearForOptionalCourses;
 	private Double neededCredits;
 	private MarkType markType;
+	private Integer numerusClausus;
 
 	public InfoDegreeCurricularPlan() {
 		setName(null);
@@ -63,6 +64,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 		result += "state = " + this.state + "; ";
 		result += "NeededCredits = " + this.neededCredits + "; ";
 		result += "degree = " + this.infoDegree + "]";
+		result += "Numerus Clausus = " + this.numerusClausus + "]";
 		return result;
 	}
 
@@ -179,6 +181,20 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 
 	public void setMarkType(MarkType type) {
 		markType = type;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getNumerusClausus() {
+		return numerusClausus;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setNumerusClausus(Integer integer) {
+		numerusClausus = integer;
 	}
 
 }
