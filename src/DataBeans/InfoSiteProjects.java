@@ -64,5 +64,12 @@ public class InfoSiteProjects implements ISiteComponent{
 		
 		return result;
 	}
+    
+    public String toString()
+    {
+        String result = "[InfoSiteProjects: ";
+        result += "infoGroupPropertiesList - " + this.getInfoGroupPropertiesList() + "]";
+        return result;
+    }
 
 }

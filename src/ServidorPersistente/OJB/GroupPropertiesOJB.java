@@ -28,14 +28,15 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 	public List readAllGroupPropertiesByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 
 			Criteria criteria = new Criteria(); 
-			criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
-			return (List) queryList(GroupProperties.class, criteria);
+			criteria.addEqualTo("KEY_EXECUTION_COURSE", executionCourse.getIdInternal());	
+            List temp = (List) queryList(GroupProperties.class, criteria);
+			return temp;
 	}
     
     public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia {
 
             Criteria criteria = new Criteria(); 
-            criteria.addEqualTo("keyExecutionCourse", id); 
+            criteria.addEqualTo("KEY_EXECUTION_COURSE", id); 
             return (List) queryList(GroupProperties.class, criteria);
     }
     
@@ -43,7 +44,7 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IDisciplinaExecucao executionCourse,String name) throws ExcepcaoPersistencia {
 
 			Criteria criteria = new Criteria(); 
-			criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
+			criteria.addEqualTo("KEY_EXECUTION_COURSE", executionCourse.getIdInternal());	
 			criteria.addEqualTo("name", name);	
 			return (IGroupProperties) queryObject(GroupProperties.class, criteria);
 		}

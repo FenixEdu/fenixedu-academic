@@ -79,7 +79,8 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
 		{
 			siteView=
 				(TeacherAdministrationSiteView) gestor.executar(userView, "ReadStudentsByCurricularCourse", args);
-			projects= (InfoSiteProjects) gestor.executar(userView, "ReadExecutionCourseProjects", argsProjects);
+			projects= (InfoSiteProjects) gestor.executar(userView, "teacher.ReadExecutionCourseProjects", argsProjects);
+            System.out.println("Tenho estes projectos:" + projects);
 			infosGroups=
 				(List) gestor.executar(userView, "teacher.GetProjectsGroupsByExecutionCourseID", argsInfos);
 			InfoSiteStudents infoSiteStudents= (InfoSiteStudents) siteView.getComponent();
