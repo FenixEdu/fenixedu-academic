@@ -97,7 +97,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 			fail("Reading the Curricular Plans of a PosGrad Student");
 		}
 		assertEquals(result.size(), 1);
-		System.out.println("\nOK - One student curricular plan Read!");
+		System.out.println("test case 1 ok!");
 		System.out.println("test Case 2-ReadPosGradStudentCurricularPlans - non-existing student");	
 		Object args2[] = {new Integer(50)};
 
@@ -105,7 +105,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 			result = (List) this.serviceManager.executar(userView, "ReadPosGradStudentCurricularPlans", args2);
 			fail("Reading the Curricular Plans of a PosGrad Student with non-existing-studentId");
 		} catch (InvalidArgumentsServiceException ex) {
-			System.out.println("\nOK - proper exception thrown!");
+			System.out.println("test case 2 ok! - proper exception thrown!");
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			fail("test Case 2-wrong exception thrown");
@@ -118,7 +118,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 					result = (List) this.serviceManager.executar(userView, "ReadPosGradStudentCurricularPlans", args3);
 					fail("test case 3- exception not thrown");
 				} catch (NotAuthorizedException ex) {
-					System.out.println("\nOK - proper exception thrown!");					
+					System.out.println("test case 3 ok! - proper exception thrown!");					
 				} catch (Exception ex) {
 					System.out.println(ex.toString());
 					fail("test Case 3-wrong exception thrown");

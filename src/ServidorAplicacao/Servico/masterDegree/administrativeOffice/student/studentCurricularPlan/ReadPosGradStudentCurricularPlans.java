@@ -50,14 +50,15 @@ public class ReadPosGradStudentCurricularPlans implements IServico {
 				sp.getIStudentCurricularPlanPersistente();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			IStudent student = new Student(studentId);
+			
+			student =
+							(IStudent) persistentStudent.readByOId(student, false);
+			
+			if (student == null) {
+							throw new InvalidArgumentsServiceException("invalidStudentId");
+						}
 			if (student.getDegreeType().getTipoCurso().intValue()
 				== TipoCurso.MESTRADO) {
-				student =
-					(IStudent) persistentStudent.readByOId(student, false);
-				if (student == null) {
-					throw new InvalidArgumentsServiceException("invalidStudentId");
-				}
-
 				result.addAll(
 					persistentStudentCurricularPlan
 						.readByStudentNumberAndDegreeType(
