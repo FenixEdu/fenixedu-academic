@@ -15,10 +15,12 @@
 	<img alt="Logo dot ist" src="<%= request.getContextPath() %>/images/dotist-id.gif" />
     <p><tiles:getAsString name="serviceName" /></p>
 </div>
-<div id="hdr-nav"><a href="mailto:suporte@dotist.utl.pt"><img alt="Icon de Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a href="logout.do"><img alt="Icon de Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
+<div id="hdr-nav"><a href="mailto:suporte@dotist.utl.pt"><img alt="Icon de Suporte" src="<%= request.getContextPath() %>/images/sup-bar.gif" /></a><a href="logoff.do"><img alt="Icon de Logout" src="<%= request.getContextPath() %>/images/logoff-bar.gif" /></a></div>
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />
+
+<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
 <!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0">

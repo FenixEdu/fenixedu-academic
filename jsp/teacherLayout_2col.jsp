@@ -5,7 +5,10 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="<%= request.getContextPath() %>/CSS/dotist_gesdis.css" rel="stylesheet" type="text/css" />
+<!--<link href="<%= request.getContextPath() %>/CSS/dotist_gesdis.css" rel="stylesheet" type="text/css" />-->
+<link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 </head>
 <body>
@@ -19,6 +22,9 @@
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />
+
+<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
+
 <!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0">

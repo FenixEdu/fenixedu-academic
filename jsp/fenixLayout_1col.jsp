@@ -21,6 +21,8 @@
 <!-- End Header -->
 <!-- NavGeral -->
 <tiles:insert attribute="navGeral" />
+
+<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
 <!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
 <div id="bodycontent"><tiles:insert attribute="body" /></div>
