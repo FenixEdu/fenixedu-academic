@@ -26,6 +26,15 @@ import DataBeans.RoomKey;
 import DataBeans.comparators.RoomAlphabeticComparator;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.InterceptingActionException;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.InvalidTimeIntervalActionException;
 import ServidorApresentacao
 	.Action
 	.sop
@@ -47,6 +56,22 @@ public class ManageLessonDA
 		"errors.lesson.invalid.time.interval";
 	public static String INVALID_WEEKDAY = "errors.lesson.invalid.weekDay";
 	public static String UNKNOWN_ERROR = "errors.unknown";
+
+	public ActionForward findInput(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		String action = request.getParameter("action");
+		if (action != null && action.equals("edit")) {
+			return prepareEdit(mapping, form, request, response);			
+		} else {
+			return prepareCreate(mapping, form, request, response);
+		}
+
+	}
 
 	public ActionForward prepareCreate(
 		ActionMapping mapping,
@@ -85,7 +110,11 @@ public class ManageLessonDA
 		manageLessonForm.set(
 			"minutosFim",
 			"" + infoLesson.getFim().get(Calendar.MINUTE));
+		manageLessonForm.set(
+			"nomeSala",
+			"" + infoLesson.getInfoSala().getNome());
 
+		request.setAttribute("action", "edit");
 		return mapping.findForward("ShowLessonForm");
 	}
 
@@ -97,7 +126,6 @@ public class ManageLessonDA
 		throws Exception {
 
 		DynaActionForm manageLessonForm = (DynaActionForm) form;
-		request.setAttribute("manageLessonForm", manageLessonForm);
 
 		DiaSemana weekDay =
 			new DiaSemana(
@@ -157,6 +185,23 @@ public class ManageLessonDA
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
+
+			String action = request.getParameter("action");
+			if (action != null && action.equals("edit")) {
+				emptyRoomsList.add(
+					0,
+					((InfoLesson) request
+						.getAttribute(SessionConstants.LESSON))
+						.getInfoSala());
+				manageLessonForm.set(
+					"nomeSala",
+					""
+						+ ((InfoLesson) request
+							.getAttribute(SessionConstants.LESSON))
+							.getInfoSala()
+							.getNome());
+			}
+
 			Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
 			List listaSalas = new ArrayList();
 			listaSalas.add(
@@ -166,13 +211,17 @@ public class ManageLessonDA
 				listaSalas.add(
 					new LabelValueBean(elem.getNome(), elem.getNome()));
 			}
+
+			request.setAttribute("action", action);
 			//emptyRoomsList.add(0, infoSala);
 
 			//sessao.removeAttribute("listaSalas");
 			//sessao.removeAttribute("listaInfoSalas");
 			request.setAttribute("listaSalas", listaSalas);
 			//request.setAttribute("listaInfoSalas", emptyRoomsList);
-			request.setAttribute(SessionConstants.LESSON, infoLesson);
+			//			request.setAttribute(SessionConstants.LESSON, infoLesson);
+
+			request.setAttribute("manageLessonForm", manageLessonForm);
 
 			return mapping.findForward("ShowChooseRoomForm");
 		} else {
@@ -369,6 +418,132 @@ public class ManageLessonDA
 		}
 
 		return mapping.findForward("LessonDeleted");
+	}
+
+	public ActionForward createEditLesson(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		DynaActionForm manageLessonForm = (DynaActionForm) form;
+		request.setAttribute("manageLessonForm", manageLessonForm);
+
+		DiaSemana weekDay =
+			new DiaSemana(
+				new Integer(
+					formDay2EnumerateDay(
+						(String) manageLessonForm.get("diaSemana"))));
+
+		Calendar inicio = Calendar.getInstance();
+		inicio.set(
+			Calendar.HOUR_OF_DAY,
+			Integer.parseInt((String) manageLessonForm.get("horaInicio")));
+		inicio.set(
+			Calendar.MINUTE,
+			Integer.parseInt((String) manageLessonForm.get("minutosInicio")));
+		inicio.set(Calendar.SECOND, 0);
+		Calendar fim = Calendar.getInstance();
+		fim.set(
+			Calendar.HOUR_OF_DAY,
+			Integer.parseInt((String) manageLessonForm.get("horaFim")));
+		fim.set(
+			Calendar.MINUTE,
+			Integer.parseInt((String) manageLessonForm.get("minutosFim")));
+		fim.set(Calendar.SECOND, 0);
+
+		InfoRoom infoSala = new InfoRoom();
+		infoSala.setNome((String) manageLessonForm.get("nomeSala"));
+
+		ActionErrors actionErrors =
+			checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
+
+		if (actionErrors.isEmpty()) {
+			InfoRoom infoRoom = new InfoRoom();
+			infoRoom.setCapacidadeNormal(new Integer(0));
+			infoRoom.setCapacidadeExame(new Integer(0));
+
+			InfoLesson infoLessonToCreateOrEdited = new InfoLesson();
+			infoLessonToCreateOrEdited.setDiaSemana(weekDay);
+			infoLessonToCreateOrEdited.setInicio(inicio);
+			infoLessonToCreateOrEdited.setFim(fim);
+
+			InfoShift infoShift =
+				(InfoShift) (request.getAttribute(SessionConstants.SHIFT));
+
+			infoLessonToCreateOrEdited.setInfoDisciplinaExecucao(
+				infoShift.getInfoDisciplinaExecucao());
+			infoLessonToCreateOrEdited.setTipo(infoShift.getTipo());
+			infoLessonToCreateOrEdited.setInfoSala(infoSala);
+
+			System.out.println(
+				"### Action parameter in request: "
+					+ request.getParameter("action"));
+			String action = request.getParameter("action");
+			if (action != null && action.equals("edit")) {
+
+				HttpSession sessao = request.getSession(false);
+				IUserView userView =
+					(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+				GestorServicos gestor = GestorServicos.manager();
+
+				//				Object argsReadLessonByOID[] =
+				//					{ new Integer(request.getParameter(SessionConstants.LESSON_OID))};
+				//					System.out.println("##### LessonOID - " + request.getParameter(SessionConstants.LESSON_OID));
+				//				InfoLesson infoLessonOld = null;
+				//				infoLessonOld =
+				//					(InfoLesson) gestor.executar(
+				//						userView,
+				//						"ReadLessonByOID",
+				//						argsReadLessonByOID);
+				InfoLesson infoLessonOld =
+					(InfoLesson) request.getAttribute(SessionConstants.LESSON);
+				System.out.println("infoLessonOld= " + infoLessonOld);
+				System.out.println("infoSala= " + infoSala);
+				KeyLesson keyLessonOld =
+					new KeyLesson(
+						infoLessonOld.getDiaSemana(),
+						infoLessonOld.getInicio(),
+						infoLessonOld.getFim(),
+						new RoomKey(infoLessonOld.getInfoSala().getNome()));
+
+				Object argsEditLesson[] =
+					{
+						keyLessonOld,
+						infoLessonToCreateOrEdited /*, iExecutionPeriod*/
+				};
+
+				try {
+					ServiceUtils.executeService(
+						SessionUtils.getUserView(request),
+						"EditarAula",
+						argsEditLesson);
+				} catch (ExistingServiceException ex) {
+					throw new ExistingActionException("A aula", ex);
+				} catch (InterceptingServiceException ex) {
+					throw new InterceptingActionException(
+						infoSala.getNome(),
+						ex);
+				} catch (InvalidTimeIntervalServiceException ex) {
+					throw new InvalidTimeIntervalActionException(ex);
+				}
+
+			} else {
+				Object argsCreateLesson[] =
+					{ infoLessonToCreateOrEdited, infoShift };
+
+				ServiceUtils.executeService(
+					SessionUtils.getUserView(request),
+					"CreateLesson",
+					argsCreateLesson);
+			}
+
+			return mapping.findForward("EditShift");
+		} else {
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		}
 	}
 
 }

@@ -20,7 +20,10 @@
 <html:form action="/manageLesson" focus="diaSemana">
 	<html:hidden property="method" value="chooseRoom"/>
 	<html:hidden property="page" value="1"/>
-
+	<logic:present name="action">
+		<html:hidden property="action"
+					 value="<%= pageContext.findAttribute("action").toString() %>"/>
+	</logic:present>
 	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
@@ -31,6 +34,10 @@
 				 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
 	<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
 				 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
+	<logic:present name="lessonOID">
+		<html:hidden property="<%= SessionConstants.LESSON_OID %>"
+					 value="<%= pageContext.findAttribute("lessonOID").toString() %>"/>
+	</logic:present>
 
 	<table cellspacing="0">
 		<tr>

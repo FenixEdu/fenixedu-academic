@@ -378,11 +378,11 @@ public class ContextUtils {
 	public static void setLessonContext(HttpServletRequest request) {
 		String lessonOIDString =
 			(String) request.getAttribute(SessionConstants.LESSON_OID);
-		System.out.println("Class from request: " + lessonOIDString);
+		System.out.println("Lesson from request: " + lessonOIDString);
 		if (lessonOIDString == null) {
 			lessonOIDString =
 				request.getParameter(SessionConstants.LESSON_OID);
-			System.out.println("Class from parameter: " + lessonOIDString);
+			System.out.println("Lesson from parameter: " + lessonOIDString);
 		}
 
 		Integer lessonOID = null;
@@ -401,6 +401,10 @@ public class ContextUtils {
 						null,
 						"ReadLessonByOID",
 						args);
+						
+			System.out.println("##### infoLesson: "+infoLesson);
+			System.out.println("##### infoLesson.getIdInternal: "+infoLesson.getIdInternal());
+			
 			} catch (FenixServiceException e) {
 				e.printStackTrace();
 			}

@@ -1160,7 +1160,7 @@
 	</action>
 
 	<action path="/manageLesson"
-			input="/manageLesson.jsp"
+			input="/manageLesson.do?method=findInput"
             type="ServidorApresentacao.Action.sop.ManageLessonDA"
             name="manageLessonForm"
             parameter="method"
