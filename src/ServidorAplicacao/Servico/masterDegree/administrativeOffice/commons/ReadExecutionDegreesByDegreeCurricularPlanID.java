@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.util.Cloner;
+import DataBeans.InfoExecutionDegreeWithInfoExecutionYear;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
@@ -17,8 +18,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -55,8 +54,11 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService
             for (Iterator iter = executionDegrees.iterator(); iter.hasNext();)
             {
                 ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
-                InfoExecutionDegree infoExecutionDegree =
-                    (InfoExecutionDegree) Cloner.get(executionDegree);
+                //CLONER
+                //InfoExecutionDegree infoExecutionDegree =
+                //    (InfoExecutionDegree) Cloner.get(executionDegree);
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
+                        .newInfoFromDomain(executionDegree);
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
 

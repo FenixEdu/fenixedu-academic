@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoDegreeInfo;
-import DataBeans.util.Cloner;
+import DataBeans.InfoDegreeInfoWithDegree;
 import Dominio.Curso;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurso;
@@ -94,7 +94,9 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
                     "lastModificationDate"));
             IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList
                     .get(degreeInfoList.size() - 1);
-            infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+            //CLONER
+            //infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+            infoDegreeInfo = InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);
             infoDegreeInfo.recaptureNULLs(degreeInfo);
 
             if (infoDegreeInfo == null) {

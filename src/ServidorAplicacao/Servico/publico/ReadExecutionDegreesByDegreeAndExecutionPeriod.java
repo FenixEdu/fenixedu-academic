@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.InfoExecutionDegree;
-import DataBeans.util.Cloner;
+import DataBeans.InfoExecutionDegreeWithCoordinators;
 import Dominio.Curso;
 import Dominio.ExecutionPeriod;
-import Dominio.ICoordinator;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
@@ -93,23 +92,25 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
                 ICursoExecucao executionDegree = (ICursoExecucao) listIterator
                         .next();
 
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-                        .get(executionDegree);
-                if (executionDegree.getCoordinatorsList() != null) {
-                    List infoCoordinatorList = new ArrayList();
-                    ListIterator iteratorCoordinator = executionDegree
-                            .getCoordinatorsList().listIterator();
-                    while (iteratorCoordinator.hasNext()) {
-                        ICoordinator coordinator = (ICoordinator) iteratorCoordinator
-                                .next();
+                //CLONER
+                //InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+                //        .get(executionDegree);
+                //if (executionDegree.getCoordinatorsList() != null) {
+                //    List infoCoordinatorList = new ArrayList();
+                //    ListIterator iteratorCoordinator = executionDegree
+                //            .getCoordinatorsList().listIterator();
+                //    while (iteratorCoordinator.hasNext()) {
+                //        ICoordinator coordinator = (ICoordinator) iteratorCoordinator
+                //                .next();
 
-                        infoCoordinatorList.add(Cloner
-                                .copyICoordinator2InfoCoordenator(coordinator));
-                    }
+                //        infoCoordinatorList.add(Cloner
+                //                .copyICoordinator2InfoCoordenator(coordinator));
+                //    }
 
-                    infoExecutionDegree
-                            .setCoordinatorsList(infoCoordinatorList);
-                }
+                //    infoExecutionDegree
+                //            .setCoordinatorsList(infoCoordinatorList);
+                //}
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators.newInfoFromDomain(executionDegree);
 
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }

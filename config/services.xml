@@ -6681,6 +6681,14 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
+ 	<service>
+        <name>ReadExecutionDegreesByDegreeCurricularPlanIDForCoordinator</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
 
 <!-- =============================================================================================== -->
 <!-- ==================================== Enrollment Equivalence =================================== -->

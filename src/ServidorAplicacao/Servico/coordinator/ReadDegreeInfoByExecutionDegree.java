@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoDegreeInfo;
-import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -82,7 +81,10 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
                         "lastModificationDate"));
                 IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList
                         .get(degreeInfoList.size() - 1);
-                infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+                //CLONER
+                //infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+                infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
+                
                 infoDegreeInfo.recaptureNULLs(degreeInfo);
 
                 //return the degree info with the last modification date

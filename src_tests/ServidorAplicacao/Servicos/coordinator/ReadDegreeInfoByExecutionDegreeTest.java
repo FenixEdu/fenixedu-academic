@@ -112,7 +112,9 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMin());
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMax());
             assertEquals(new Double(12.0), infoDegreeInfo.getMarkAverage());
-            assertEquals(new Integer(10), infoDegreeInfo.getInfoDegree().getIdInternal());
+            if(infoDegreeInfo.getInfoDegree() != null) {
+                assertEquals(new Integer(10), infoDegreeInfo.getInfoDegree().getIdInternal());
+            }
 
             System.out.println(
                 "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithOnlyOneDegreeInfo");
@@ -173,7 +175,9 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMin());
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMax());
             assertEquals(new Double(10.0), infoDegreeInfo.getMarkAverage());
-            assertEquals(new Integer(100), infoDegreeInfo.getInfoDegree().getIdInternal());
+            if(infoDegreeInfo.getInfoDegree() != null) {
+                assertEquals(new Integer(100), infoDegreeInfo.getInfoDegree().getIdInternal());
+            }
 
             System.out.println(
                 "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithMoreThanOneDegreeInfo");
@@ -230,7 +234,9 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMin());
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMax());
             assertEquals(new Double(10.0), infoDegreeInfo.getMarkAverage());
-            assertEquals(new Integer(2002), infoDegreeInfo.getInfoDegree().getIdInternal());
+            if(infoDegreeInfo.getInfoDegree() != null) {
+                assertEquals(new Integer(2002), infoDegreeInfo.getInfoDegree().getIdInternal());
+            }
 
             System.out.println(
                 "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithDegreeInfoLastYear");

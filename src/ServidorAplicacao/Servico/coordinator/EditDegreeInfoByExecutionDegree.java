@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import DataBeans.InfoDegreeInfo;
-import DataBeans.util.Cloner;
+import DataBeans.InfoDegreeInfoWithDegree;
 import Dominio.CursoExecucao;
 import Dominio.DegreeInfo;
 import Dominio.ICurso;
@@ -132,7 +132,9 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
             e.printStackTrace();
             throw new FenixServiceException(e);
         }
-        return Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+        //CLONER
+        //return Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+        return InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);
     }
 
     private boolean verifyExecutionYear(Timestamp lastModificationDate,

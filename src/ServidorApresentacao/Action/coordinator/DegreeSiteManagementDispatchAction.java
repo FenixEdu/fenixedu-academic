@@ -382,7 +382,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 			return (new ActionForward(mapping.getInput()));
 		}
 
-		request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+		//request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 		request.setAttribute("infoDegreeID", infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
 		return mapping.findForward("editOK");
 	}
@@ -432,8 +432,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 			return (new ActionForward(mapping.getInput()));
 		}
 
-		degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
-
+		//degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
+		degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
 		//read all execution degres this degree
 		Object[] args2 = { degreeId };
 
@@ -443,7 +443,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 			infoExecutionDegrees =
 				(List) ServiceManagerServiceFactory.executeService(
 					null,
-					"ReadExecutionDegreesByDegree",
+					"ReadExecutionDegreesByDegreeCurricularPlanIDForCoordinator",
 					args2);
 		}
 		catch (FenixServiceException e)
