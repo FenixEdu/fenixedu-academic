@@ -126,7 +126,7 @@
               scope="request"
       	      type="ServidorApresentacao.Action.masterDegree.candidate.PrepareApplicationInfoChangeFormAction">
       	  <forward name="Success" path="/changeApplicationInfo.jsp"/>
-      	  <forward name="Unchangeable" path="/unchangeable.jsp"/>
+      	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
       </action>
 
       <!-- Action to Change Candidate's Application Information -->
