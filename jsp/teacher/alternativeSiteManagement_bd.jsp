@@ -53,10 +53,7 @@
 		<h2><bean:message key="message.initialStatement"/></h2>
 	</td>	
 	<td>
-		<html:textarea property="initialStatement" rows="4" cols="56"/>
-	</td>
-	<td>
-		<span class="error" ><html:errors property="initialStatement"/></span>
+		<html:textarea name="<%=SessionConstants.INFO_SITE%>" property="initialStatement" rows="4" cols="56"/>
 	</td>
 </tr>
 <tr>
@@ -64,10 +61,7 @@
 		<h2><bean:message key="message.introduction"/></h2>
 	</td>	
 	<td>
-		<html:textarea property="introduction" rows="4" cols="56"/>
-	</td>
-	<td>
-		<span class="error" ><html:errors property="introduction"/></span>
+		<html:textarea name="<%=SessionConstants.INFO_SITE%>" property="introduction" rows="4" cols="56"/>
 	</td>
 </tr>
 </table>

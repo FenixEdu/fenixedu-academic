@@ -8,7 +8,7 @@
 	<li><bean:message key="link.home"/></li>
 </html:link>
 <html:link page="/alternativeSite.do?method=management">
-	<li>	<bean:message key="link.alternative"/></li>
+	<li>	<bean:message key="link.personalizationOptions"/></li>
 	</html:link>
 <html:link  page="/accessAnnouncementManagementAction.do">
 	<li><bean:message key="link.announcements"/></li>

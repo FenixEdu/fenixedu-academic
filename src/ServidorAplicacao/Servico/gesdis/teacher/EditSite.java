@@ -4,7 +4,7 @@
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.Servico.gesdis;
+package ServidorAplicacao.Servico.gesdis.teacher;
 
 import DataBeans.util.*;
 import DataBeans.gesdis.InfoSite;
@@ -49,7 +49,9 @@ public class EditSite implements IServico {
 		
 		
 		siteOld.setAlternativeSite(infoSiteNew.getAlternativeSite());
-		siteOld.setMail(infoSiteNew.getMail());																	
+		siteOld.setMail(infoSiteNew.getMail());	
+		siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
+		siteOld.setIntroduction(infoSiteNew.getIntroduction());																
 		
 		persistentSite.lockWrite(siteOld);					
 		}
