@@ -45,4 +45,15 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
      * @return
      */
     public int readNumberOfStudentsByShift(ITurno shift);
+    /**
+     * 
+     * @param student
+     * @param executionCourse
+     * @param lessonType
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    public ITurnoAluno readByStudentAndExecutionCourseAndLessonType(
+            IStudent student, IExecutionCourse executionCourse,
+            TipoAula lessonType) throws ExcepcaoPersistencia;
 }

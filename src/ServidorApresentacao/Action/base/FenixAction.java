@@ -26,7 +26,7 @@ public abstract class FenixAction extends Action {
 	}
 	
 	/**
-	 * Tests if the session is valid
+	 * 
 	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
 	 * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm, HttpServletRequest, HttpServletResponse)
 	 */

@@ -81,14 +81,17 @@ public class EnrollStudentInShifts implements IService
                 List shiftsToUnEnroll = new ArrayList();
                 List filteredShiftsIdsToEnroll = new ArrayList();
 
-                shiftsToUnEnroll = calculateShiftsToUnEnroll(shiftIdsToEnroll,
-                        shiftEnrollments, shiftsToUnEnroll);
                 filteredShiftsIdsToEnroll = calculateShiftsToEnroll(
                         shiftIdsToEnroll, shiftEnrollments,
                         filteredShiftsIdsToEnroll);
 
-                enrollStudentsInShifts(student, filteredShiftsIdsToEnroll,
-                        errorReport, persistentShift, persistentShiftStudent);
+                shiftsToUnEnroll = enrollStudentsInShiftsAndCalculateShiftsToUnEnroll(
+                        student, filteredShiftsIdsToEnroll, errorReport,
+                        persistentShift, persistentShiftStudent);
+
+                shiftsToUnEnroll = calculateShiftsToUnEnroll(shiftIdsToEnroll,
+                        shiftEnrollments, shiftsToUnEnroll);
+
                 unEnrollStudentsInShifts(shiftsToUnEnroll, errorReport,
                         persistentShiftStudent);
 
@@ -130,13 +133,14 @@ public class EnrollStudentInShifts implements IService
      * @param persistentShiftStudent
      * @throws ExcepcaoPersistencia
      */
-    private void enrollStudentsInShifts(IStudent student,
-            List filteredShiftsIdsToEnroll,
+    private List enrollStudentsInShiftsAndCalculateShiftsToUnEnroll(
+            IStudent student, List filteredShiftsIdsToEnroll,
             ShiftEnrollmentErrorReport errorReport,
             ITurnoPersistente persistentShift,
             ITurnoAlunoPersistente persistentShiftStudent)
             throws ExcepcaoPersistencia
     {
+        List shiftsToUnEnroll = new ArrayList();
         Iterator iter = filteredShiftsIdsToEnroll.iterator();
         while (iter.hasNext())
         {
@@ -149,9 +153,17 @@ public class EnrollStudentInShifts implements IService
             }
             else
             {
+                ITurnoAluno shiftStudentToDelete = persistentShiftStudent
+                        .readByStudentAndExecutionCourseAndLessonType(student,
+                                shift.getDisciplinaExecucao(), shift.getTipo());
+
                 if (shift.getLotacao().intValue() > persistentShiftStudent
                         .readNumberOfStudentsByShift(shift))
                 {
+                    if (shiftStudentToDelete != null)
+                    {
+                        shiftsToUnEnroll.add(shiftStudentToDelete);
+                    }
                     ITurnoAluno shiftStudentToWrite = new ShiftStudent();
                     persistentShiftStudent.simpleLockWrite(shiftStudentToWrite);
                     shiftStudentToWrite.setShift(shift);
@@ -165,6 +177,7 @@ public class EnrollStudentInShifts implements IService
             }
 
         }
+        return shiftsToUnEnroll;
     }
 
     /**
@@ -186,7 +199,7 @@ public class EnrollStudentInShifts implements IService
             List shiftEnrollments, List shiftsToUnEnroll)
     {
 
-        return shiftEnrollments;
+        return shiftsToUnEnroll;
 
     }
 
