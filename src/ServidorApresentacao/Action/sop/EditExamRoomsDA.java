@@ -21,9 +21,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExam;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.GestorServicos;
@@ -32,13 +32,18 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
+import ServidorApresentacao.Action.sop.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.sop.utils.Util;
+import ServidorApresentacao.Action.utils.ContextUtils;
+import Util.Season;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class EditExamRoomsDA extends DispatchAction {
+public class EditExamRoomsDA extends FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,
@@ -52,10 +57,32 @@ public class EditExamRoomsDA extends DispatchAction {
 		GestorServicos gestor = GestorServicos.manager();
 		DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
-		InfoExam infoExam =
-			((InfoViewExamByDayAndShift) session
-				.getAttribute(SessionConstants.INFO_EXAMS_KEY))
-				.getInfoExam();
+		//InfoExam infoExam =
+		//	((InfoViewExamByDayAndShift) session
+		//		.getAttribute(SessionConstants.INFO_EXAMS_KEY))
+		//		.getInfoExam();
+		ContextUtils.setExecutionCourseContext(request);
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+
+		System.out.println("infoExecutionCourse= " + infoExecutionCourse);
+			
+		Season oldExamsSeason = new Season( new Integer(request.getParameter("oldExamSeason")) );
+			
+		Object args1[] =
+		{ infoExecutionCourse.getSigla(), oldExamsSeason, infoExecutionCourse.getInfoExecutionPeriod() };
+		InfoExam infoExam = null;
+		InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
+		try  {
+			infoViewExamByDayAndShift =
+				((InfoViewExamByDayAndShift) ServiceUtils.executeService(
+					userView,
+					"ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
+					args1));
+			infoExam = infoViewExamByDayAndShift.getInfoExam();
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		System.out.println("infoViewOldExam" + infoExam);
 
 		List examRooms = infoExam.getAssociatedRooms();
 
@@ -99,6 +126,13 @@ public class EditExamRoomsDA extends DispatchAction {
 
 		request.setAttribute(SessionConstants.AVAILABLE_ROOMS, sortedRooms);
 
+		request.setAttribute(
+			SessionConstants.INFO_EXAMS_KEY,
+			infoViewExamByDayAndShift);
+
+		String input = (String) request.getParameter("input");
+		request.setAttribute(SessionConstants.NEXT_PAGE, input);
+
 		return mapping.findForward("ViewSelectRoomsForm");
 	}
 
@@ -114,10 +148,33 @@ public class EditExamRoomsDA extends DispatchAction {
 		GestorServicos gestor = GestorServicos.manager();
 		DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
-		InfoViewExamByDayAndShift infoViewExamByDayAndShift =
-			(InfoViewExamByDayAndShift) session.getAttribute(
-				SessionConstants.INFO_EXAMS_KEY);
-		InfoExam infoExam = infoViewExamByDayAndShift.getInfoExam();
+		//InfoViewExamByDayAndShift infoViewExamByDayAndShift =
+		//	(InfoViewExamByDayAndShift) session.getAttribute(
+		//		SessionConstants.INFO_EXAMS_KEY);
+		//InfoExam infoExam = infoViewExamByDayAndShift.getInfoExam();
+		ContextUtils.setExecutionCourseContext(request);
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+
+		System.out.println("infoExecutionCourse= " + infoExecutionCourse);
+			
+		Season oldExamsSeason = new Season( new Integer(request.getParameter("oldExamSeason")) );
+			
+		Object args1[] =
+		{ infoExecutionCourse.getSigla(), oldExamsSeason, infoExecutionCourse.getInfoExecutionPeriod() };
+		InfoExam infoExam = null;
+		InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
+		try  {
+			infoViewExamByDayAndShift =
+				((InfoViewExamByDayAndShift) ServiceUtils.executeService(
+					userView,
+					"ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
+					args1));
+			infoExam = infoViewExamByDayAndShift.getInfoExam();
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		System.out.println("infoViewOldExam" + infoExam);
+
 
 		String[] rooms = (String[]) editExamRoomsForm.get("selectedRooms");
 		List roomsToSet = new ArrayList();
@@ -136,10 +193,29 @@ public class EditExamRoomsDA extends DispatchAction {
 		}
 
 		infoViewExamByDayAndShift.setInfoExam(infoExam);
-		session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
-		session.setAttribute(
+		//session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
+		request.setAttribute(
 			SessionConstants.INFO_EXAMS_KEY,
 			infoViewExamByDayAndShift);
+
+			ArrayList horas = Util.getExamShifts();
+			request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+
+			ArrayList daysOfMonth = Util.getDaysOfMonth();
+			request.setAttribute(
+				SessionConstants.LABLELIST_DAYSOFMONTH,
+				daysOfMonth);
+
+			ArrayList monthsOfYear = Util.getMonthsOfYear();
+			request.setAttribute(
+				SessionConstants.LABLELIST_MONTHSOFYEAR,
+				monthsOfYear);
+
+			ArrayList examSeasons = Util.getExamSeasons();
+			request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+
+			String input = (String) request.getParameter("input");
+			request.setAttribute(SessionConstants.NEXT_PAGE, input);
 
 		return mapping.findForward("ViewEditExamForm");
 	}

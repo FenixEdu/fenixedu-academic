@@ -162,6 +162,48 @@
 		<bean:message key="message.exam.no.rooms"/> <br/>
 	</logic:notPresent>
 
-	<html:link page="/editExamRooms.do?method=prepare">
+	<html:link page="<%= "/editExamRooms.do?method=prepare&amp;"
+							+ SessionConstants.EXECUTION_PERIOD_OID
+							+ "="
+  							+ pageContext.findAttribute("executionPeriodOID")
+							+ "&amp;"
+							+ SessionConstants.EXECUTION_DEGREE_OID
+							+ "="
+  							+ pageContext.findAttribute("executionDegreeOID")
+							+ "&amp;"
+							+ SessionConstants.EXECUTION_COURSE_OID
+							+ "="
+  							+ pageContext.findAttribute("executionCourseOID")
+							+ "&amp;"
+							+ "oldExamSeason"
+							+ "="
+  							+ pageContext.findAttribute("oldExamSeason")
+							+ "&amp;"
+							+ "input"
+							+ "="
+  							+ pageContext.findAttribute(SessionConstants.NEXT_PAGE)
+							+ "&amp;"
+							+ SessionConstants.CURRICULAR_YEARS_1
+							+ "="
+  							+ pageContext.findAttribute("curricularYears_1")
+							+ "&amp;"
+							+ SessionConstants.CURRICULAR_YEARS_2
+							+ "="
+  							+ pageContext.findAttribute("curricularYears_2")
+							+ "&amp;"
+							+ SessionConstants.CURRICULAR_YEARS_3
+							+ "="
+  							+ pageContext.findAttribute("curricularYears_3")
+							+ "&amp;"
+							+ SessionConstants.CURRICULAR_YEARS_4
+							+ "="
+  							+ pageContext.findAttribute("curricularYears_4")
+							+ "&amp;"
+							+ SessionConstants.CURRICULAR_YEARS_5
+							+ "="
+  							+ pageContext.findAttribute("curricularYears_5")
+					 %>">
+
+
    		<bean:message key="lable.changeRoom"/>
    	</html:link>

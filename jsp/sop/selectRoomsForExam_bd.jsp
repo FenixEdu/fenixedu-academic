@@ -13,6 +13,46 @@
 <span class="error"><html:errors /></span>
 <html:form action="/editExamRooms">
 	<html:hidden property="page" value="1"/>
+
+		<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+
+		<bean:define id="oldExamSeason"
+					 name="<%= SessionConstants.INFO_EXAMS_KEY %>"
+					 property="infoExam.season.season"/>
+		<html:hidden property="oldExamSeason"
+					 value="<%= pageContext.findAttribute("oldExamSeason").toString() %>"/>
+
+		<logic:present name="nextPage">
+			<html:hidden property="input"
+						 value="<%= pageContext.findAttribute(SessionConstants.NEXT_PAGE).toString() %>"/>
+		</logic:present>
+
+	<logic:iterate id="year" name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
+		<logic:equal name="year" value="1">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_1 %>"
+						 value="1"/>
+		</logic:equal>
+		<logic:equal name="year" value="2">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_2 %>"
+						 value="2"/>
+		</logic:equal>
+		<logic:equal name="year" value="3">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_3 %>"
+						 value="3"/>
+		</logic:equal>
+		<logic:equal name="year" value="4">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_4 %>"
+						 value="4"/>
+		</logic:equal>
+		<logic:equal name="year" value="5">
+			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_5 %>"
+						 value="5"/>
+		</logic:equal>
+	</logic:iterate>
+
 	<logic:present name="<%=SessionConstants.AVAILABLE_ROOMS%>">
 		<bean:define id="roomsHashTable" name="<%=SessionConstants.AVAILABLE_ROOMS%>"/>
 			<logic:iterate id="infoRoomsOfBuilding" name="roomsHashTable">

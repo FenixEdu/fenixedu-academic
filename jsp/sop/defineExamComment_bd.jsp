@@ -56,27 +56,22 @@
 		<logic:equal name="year" value="1">
 			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_1 %>"
 						 value="1"/>
-			<bean:write name="year"/>
 		</logic:equal>
 		<logic:equal name="year" value="2">
 			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_2 %>"
 						 value="2"/>
-			<bean:write name="year"/>
 		</logic:equal>
 		<logic:equal name="year" value="3">
 			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_3 %>"
 						 value="3"/>
-			<bean:write name="year"/>
 		</logic:equal>
 		<logic:equal name="year" value="4">
 			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_4 %>"
 						 value="4"/>
-			<bean:write name="year"/>
 		</logic:equal>
 		<logic:equal name="year" value="5">
 			<html:hidden property="<%= SessionConstants.CURRICULAR_YEARS_5 %>"
 						 value="5"/>
-			<bean:write name="year"/>
 		</logic:equal>
 	</logic:iterate>
 
