@@ -11,12 +11,13 @@
 
 package DataBeans;
 
+import java.io.Serializable;
 
-public class InfoDegreeCurricularPlan{
+
+public class InfoDegreeCurricularPlan implements Serializable{
     
     private InfoDegree infoDegree;
     private String name;
-
         
     public InfoDegreeCurricularPlan() { }
     
