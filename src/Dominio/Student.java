@@ -68,7 +68,7 @@ public class Student extends DomainObject implements IStudent {
 		result += "state = " + this.state + "; ";
 		result += "degreeType = " + this.degreeType + "; ";
 		result += "studentKind = " + this.studentKind + "; ";
-		result += "person = " + this.person + "]";
+		//result += "person = " + this.person + "]";
 		return result;
 	}
 
