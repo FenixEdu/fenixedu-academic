@@ -10,7 +10,6 @@ import java.util.Map;
 
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationManagerPortal;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author lmac1
@@ -102,7 +101,7 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		Map result = new HashMap();
 		List requestAttributtes = new ArrayList(1);
-		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
+		requestAttributtes.add("infoDegreesList");
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
 		return result;
 	}
@@ -114,7 +113,7 @@ public class InsertDegreeDispatchActionTest extends TestCasePresentationManagerP
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
 		Map result = new HashMap();
 		List requestAttributtes = new ArrayList(1);
-		requestAttributtes.add(SessionConstants.INFO_DEGREES_LIST);
+		requestAttributtes.add("infoDegreesList");
 		result.put(new Integer(ScopeConstants.REQUEST), requestAttributtes);
 		return result;
 	}
