@@ -67,6 +67,12 @@
 							<logic:empty name="infoExecutionCourseAndExams" property="infoExam1.day">
 								<bean:message key="message.exam.not.scheduled"/>
 							</logic:empty>
+							<logic:notEmpty name="infoExecutionCourseAndExams" property ="infoExam1.associatedRooms">
+								<br/>
+								<logic:iterate id="room" name="infoExecutionCourseAndExams" property ="infoExam1.associatedRooms">
+									<bean:write name="room" property="nome"/>
+								</logic:iterate>
+							</logic:notEmpty>
 						  </logic:present>
 						  <logic:notPresent name="infoExecutionCourseAndExams" property="infoExam1">
 						  	<bean:message key="message.exam.not.scheduled"/>
@@ -88,6 +94,12 @@
 							<logic:empty name="infoExecutionCourseAndExams" property="infoExam2.day">
 								<bean:message key="message.exam.not.scheduled"/>
 							</logic:empty>
+							<logic:notEmpty name="infoExecutionCourseAndExams" property ="infoExam2.associatedRooms">
+								<br/>
+								<logic:iterate id="room" name="infoExecutionCourseAndExams" property ="infoExam2.associatedRooms">
+									<bean:write name="room" property="nome"/>
+								</logic:iterate>
+							</logic:notEmpty>
 						  </logic:present>
 						  <logic:notPresent name="infoExecutionCourseAndExams" property="infoExam2">
 						  	<bean:message key="message.exam.not.scheduled"/>
