@@ -105,7 +105,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 			 persistentSupport.iniciarTransaccao();
 			 executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			 executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre",executionYear);
-			 executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII",executionPeriod);
+			 executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("PO",executionPeriod);
 			
 			 assertNotNull(executionCourse);
 			 persistentSupport.confirmarTransaccao();

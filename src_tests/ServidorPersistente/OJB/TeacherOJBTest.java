@@ -56,7 +56,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		IPessoa person = new Pessoa(new TipoDocumentoIdentificacao(
 				TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE),"eusoufixe");
 		
-		teacher = new Teacher(person, new Integer("2"));
+		teacher = new Teacher(person, new Integer("22"));
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -139,7 +139,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(teacher);
 		assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-		assertEquals(teacher.getResponsibleForExecutionCourses().size(), 2);
+		assertEquals(teacher.getResponsibleForExecutionCourses().size(), 3);
 		assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
 
 		//read unexisting
@@ -166,7 +166,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(teacher);
 		assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-		assertEquals(teacher.getResponsibleForExecutionCourses().size(), 2);
+		assertEquals(teacher.getResponsibleForExecutionCourses().size(), 3);
 		assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
 
 		//read unexisting
@@ -243,7 +243,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 			fail("testReadResponsableForExecutionCoursesByTeacherNumber: readResponsableForExecutionCourses");
 		}
 		assertNotNull(result);
-		assertEquals(result.size(), 2);
+		assertEquals(result.size(), 3);
 
 		//read unexisting
 		result = null;
@@ -283,7 +283,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			result =
 				persistentTeacher.readProfessorShipsExecutionCoursesByNumber(
-					new Integer("2"));
+					new Integer("5"));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
