@@ -41,7 +41,6 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @throws StudentNotFoundServiceException
  * @author jpvl
  */
 public class ReadClassShiftEnrollmentDetails implements IService {
@@ -62,6 +61,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 
     public InfoClassEnrollmentDetails run(InfoStudent infoStudent, Integer klassId)
             throws FenixServiceException {
+
         InfoClassEnrollmentDetails enrollmentDetails = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
