@@ -73,9 +73,8 @@ public class ReadPersonByUsernameTest extends TestCaseNeedAuthorizationServices 
 		UserView userView = getUserViewToBeTested("nonexisting");
 		
 		Object args[] = { userView };
-		InfoPerson infoPerson = null;
 		try {
-			infoPerson = (InfoPerson) ServiceUtils.executeService(userView, getNameOfServiceToBeTested(), args);
+		    ServiceUtils.executeService(userView, getNameOfServiceToBeTested(), args);
 			fail ("Must throw "+ InvalidPasswordServiceException.class.getName()+" exception.");
 		} catch(FenixServiceException e) {
 			// All is OK
