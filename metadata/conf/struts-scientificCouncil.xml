@@ -14,7 +14,6 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
          <form-property name="basicCurricularCourses" type="java.lang.String[]" />  
-         <form-property name="nonBasicCurricularCourses" type="java.lang.String[]" />  
       </form-bean>
 		
     </form-beans>
@@ -79,6 +78,7 @@
     		<forward name="selectDegree" path="selectDegreeBasic.jsp"/>
     		<forward name="showDegreeCurricularPlans" path="showDegreeCurricularPlansBasic.jsp"/>
     		<forward name="showCurricularCourses" path="showCurricularCoursesBasic.jsp"/>
+    		<forward name="firstPage" path="curricularCourseManagement.do"/>
     		
     		</action>
 	</action-mappings>

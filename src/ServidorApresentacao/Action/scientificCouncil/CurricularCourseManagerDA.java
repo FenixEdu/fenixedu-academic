@@ -5,6 +5,10 @@
  */
 package ServidorApresentacao.Action.scientificCouncil;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteBasicCurricularCourses;
@@ -126,13 +131,36 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 				new Integer(degreeCurricularPlanIdString);
 
 			ISiteComponent component = new InfoSiteBasicCurricularCourses();
-			readSiteView(
-				request,
-				userView,
-				null,
-				null,
-				degreeCurricularPlanId,
-				component);
+			SiteView siteView =
+				readSiteView(
+					request,
+					userView,
+					null,
+					null,
+					degreeCurricularPlanId,
+					component);
+
+			DynaActionForm coursesForm = (DynaActionForm) form;
+			List curricularCoursesIds =
+				((InfoSiteBasicCurricularCourses) siteView.getComponent())
+					.getBasicCurricularCoursesIds();
+			List nonBasicCurricularCourses =
+				((InfoSiteBasicCurricularCourses) siteView.getComponent())
+					.getNonBasicCurricularCourses();
+
+			String[] formValues =
+				new String[curricularCoursesIds.size()
+					+ nonBasicCurricularCourses.size()];
+			int i = 0;
+			for (Iterator iter = curricularCoursesIds.iterator();
+				iter.hasNext();
+				) {
+				Integer courseId = (Integer) iter.next();
+				formValues[i] = courseId.toString();
+				i++;
+			}
+
+			coursesForm.set("basicCurricularCourses", formValues);
 			return mapping.findForward("showCurricularCourses");
 		} else
 			throw new FenixActionException();
@@ -140,16 +168,52 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
 	}
 
-	private void readSiteView(
+	public ActionForward setBasicCurricularCourses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+			DynaActionForm basicCoursesList = (DynaActionForm) form;
+			String[] coursesIdsString =
+				(String[]) basicCoursesList.get("basicCurricularCourses");
+			List coursesIds = new ArrayList();
+			for (int i = 0; i < coursesIdsString.length; i++) {
+				coursesIds.add(new Integer(coursesIdsString[i]));
+			}
+			Object[] args = { coursesIds };
+			
+			try {
+				 ServiceUtils.executeService(
+						userView,
+						"setBasicCurricularCourses",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+
+			return mapping.findForward("firstPage");
+		} else
+			throw new FenixActionException();
+		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+	}
+
+	private SiteView readSiteView(
 		HttpServletRequest request,
 		IUserView userView,
 		Integer degreeId,
-		Integer curricularYear,
+		List coursesIds,
 		Integer degreeCurricularPlanId,
 		ISiteComponent component)
 		throws FenixActionException {
 		Object[] args =
-			{ component, degreeId, curricularYear, degreeCurricularPlanId };
+			{ component, degreeId, coursesIds, degreeCurricularPlanId };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -161,6 +225,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 		request.setAttribute("siteView", siteView);
+		return siteView;
 	}
 
 }

@@ -10,23 +10,31 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/basicCurricularCourseManager">
+<html:hidden property="method" value="setBasicCurricularCourses"/>
 <table>
 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 <logic:iterate id="infoCurricularCourse" name="basicCurricularCourses">
 <tr>
-<bean:define id="idInternal" name="infoCurricularCourse" property="idInternal"/>
-<td><html:multibox  property="basicCurricularCourses" name="infoCurricularCourse" property="idInternal" value="<%= idInternal.toString() %>" /></td>
+
+<td><html:multibox  property="basicCurricularCourses"><bean:write name="infoCurricularCourse" property="idInternal"/> </html:multibox ></td>
 <td><bean:write name="infoCurricularCourse" property="name"/></td>
 </tr>
 </logic:iterate>
 <logic:iterate id="infoCurricularCourse" name="nonBasicCurricularCourses">
 <tr>
-<bean:define id="idInternal" name="infoCurricularCourse" property="idInternal"/>
-<td><html:multibox  property="nonBasicCurricularCourses" value="<%= idInternal.toString() %>" /></td>
+
+<td><html:multibox  property="basicCurricularCourses"><bean:write name="infoCurricularCourse" property="idInternal"/> </html:multibox ></td>
 <td><bean:write name="infoCurricularCourse" property="name"/></td>
 </tr>
 </logic:iterate>
 
 
 </table>
+<br />
+		<html:submit styleClass="inputbutton">
+			<bean:message key="button.save"/>
+		</html:submit>
+		<html:reset  styleClass="inputbutton">
+			<bean:message key="label.clear"/>
+		</html:reset>			
 </html:form>
