@@ -65,34 +65,6 @@ a:hover {
 	text-decoration: none;
 	}
 
-/******************************************
-	NavGeral Links Proprieties
-*******************************************/
-	
-.navopgeral a:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-	}
-
-.navopgeral a:active {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-	}
-	
-.navopgeral a:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-	}
-
-.navopgeral a:hover {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: transparent;
-	color: #B5BDD6;
-	}
-
 /********************************************
 	Structural & Templating Classes
 ********************************************/
@@ -101,7 +73,7 @@ a:hover {
 	text-align: center;
 	}
 	
-.header {
+.header-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #FFFFFF;
@@ -109,19 +81,8 @@ a:hover {
 	padding-right: 20px;
 	padding-left: 20px;
 	}
-
-.footer {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	text-align: center;
-	padding: 20px;
-	border-top-width: 4px;
-	border-top-style: solid;
-	border-top-color: #FF9933;
-	}
 	
-.navbargeral {
+.navbargeral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
@@ -129,7 +90,7 @@ a:hover {
 	text-align: center;
 	}
 	
-.navopgeral {
+.navopgeral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
@@ -141,7 +102,7 @@ a:hover {
 	border-right-color: #b5bdd6;
 	}
 
-.navlateral {
+.navlateral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333333;
@@ -159,15 +120,54 @@ a:hover {
 	padding: 20px;
 	}
 	
+.footer-td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	text-align: center;
+	padding: 20px;
+	border-top-width: 4px;
+	border-top-style: solid;
+	border-top-color: #FF9933;
+	}
+	
+/******************************************
+	NavGeral Links Proprieties
+*******************************************/
+	
+.navopgeral-td a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+
+.navopgeral-td a:active {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+	
+.navopgeral-td a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+
+.navopgeral-td a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: transparent;
+	color: #B5BDD6;
+	}
+	
 /**********************************************
 	 navlateral list
 ***********************************************/	
 
-.navlateral ul {
+.navlateral-td ul {
 	list-style-type: square;
 	}
 	
-.navlateral li {
+.navlateral-td li {
 	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #333;
 	margin: 5px 0 5px 0;
@@ -236,12 +236,6 @@ a:hover {
 	padding: 20px;
 	border: 1px solid #ccc;
 	}
-	
-.verbete-td {
-	background-color: #EBECED;   
-	border: 1px solid #ccc;                
-	height: 25px;                
-	}                            
 
 .bottomborder {
 	border-bottom: 1px solid #ccc;
@@ -270,6 +264,49 @@ a:hover {
 .tall-td {
 	height: 50px;
 	}
+
+/*****************************************************************
+	Assiduidade - layout verbete
+******************************************************************/
+
+.verb-table {
+	border: 1px solid #333;
+	}
+
+.verb-hdr {
+	font-weight: bold;
+	text-align: center;
+	background: #ccc;
+	border-right: 1px solid #333;
+	border-bottom: 1px solid #333;
+	}
+
+.verb-hrd-last {
+	font-weight: bold;
+	text-align: center;
+	background: #ccc;
+	border-bottom: 1px solid #333;
+	}
+	
+.verb-td {
+	background: #ebeced;
+	border-right: 1px solid #333;   
+	border-bottom: 1px solid #ccc;                               
+	}
+	
+.verb-td-last {
+	background: #ebeced;  
+	border-bottom: 1px solid #ccc;                               
+	}
+
+.verb-finalrow {
+	background: #ebeced;
+	border-right: 1px solid #333;
+	}
+
+.verb-finalrow-last {
+	background: #ebeced;
+	}                   
 
 /*****************************************************************
 	Misc text styles

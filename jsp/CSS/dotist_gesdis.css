@@ -80,31 +80,8 @@ a:hover {
 	color: #00427b;
 	text-decoration: none;
 	}
-
-/******************************************
-	NavGeral Links Proprieties
-*******************************************/
 	
-.navopgeral a:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #fff;
-	text-decoration: none;
-	}
-
-.navopgeral a:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #fff;
-	text-decoration: none;
-	}
-
-.navopgeral a:hover {
-
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: transparent;
-	color: #B5BDD6;
-	}
-
-/********************************************
+********************************************
 	Structural & Templating Classes
 ********************************************/
 
@@ -112,7 +89,7 @@ a:hover {
 	text-align: center;
 	}
 	
-.header {
+.header-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #FFFFFF;
@@ -120,19 +97,8 @@ a:hover {
 	padding-right: 20px;
 	padding-left: 20px;
 	}
-
-.footer {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	text-align: center;
-	padding: 20px;
-	border-top-width: 4px;
-	border-top-style: solid;
-	border-top-color: #FF9933;
-	}
 	
-.navbargeral {
+.navbargeral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
@@ -140,7 +106,7 @@ a:hover {
 	text-align: center;
 	}
 	
-.navopgeral {
+.navopgeral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #FFFFFF;
@@ -152,29 +118,69 @@ a:hover {
 	border-right-color: #b5bdd6;
 	}
 
-.navlateral {
+.navlateral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #333;
-	border-right: 1px solid #ccc;
+	color: #333333;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #CCCCCC;
 	padding: 20px;
 	}
-	
-.navlateral ul {
-	list-style-type: square;
-	}
-	
-.navlateral li {
-	text-indent: 10px;
-	margin: 5px 0 5px 0;
-	}
-	
+
 .bodycontent {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	line-height: 16px;
 	color: #333333;
 	padding: 20px;
+	}
+	
+.footer-td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	text-align: center;
+	padding: 20px;
+	border-top-width: 4px;
+	border-top-style: solid;
+	border-top-color: #FF9933;
+	}
+	
+/******************************************
+	NavGeral Links Proprieties
+*******************************************/
+	
+.navopgeral-td a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #fff;
+	text-decoration: none;
+	}
+
+.navopgeral-td a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #fff;
+	text-decoration: none;
+	}
+
+.navopgeral-td a:hover {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: transparent;
+	color: #B5BDD6;
+	}
+
+/**********************************************
+	 navlateral list
+***********************************************/	
+	
+.navlateral-td ul {
+	list-style-type: square;
+	}
+	
+.navlateral-td li {
+	text-indent: 10px;
+	margin: 5px 0 5px 0;
 	}
 
 /**********************************************
