@@ -718,6 +718,16 @@
 		column="BRANCH_ACRONYM"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="specializationCredits"
+		column="SPECIALIZATION_CREDITS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="secondaryCredits"
+		column="SECONDARY_CREDITS"
+		jdbc-type="INTEGER"
+	/>
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="Dominio.DegreeCurricularPlan"
@@ -1168,8 +1178,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<!--
-<class-descriptor class="Dominio.CurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+ <class-descriptor class="Dominio.CurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -1183,17 +1192,18 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="specialization"
-		column="SPECIALIZATION"
+		name="areaType"
+		column="AREA_TYPE"
 		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
 	/>
 	<field-descriptor
-		name="minimum_credits"
+		name="minimumCredits"
 		column="MINIMUM_CREDITS"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="maximum_credits"
+		name="maximumCredits"
 		column="MAXIMUM_CREDITS"
 		jdbc-type="INTEGER"
 	/>
@@ -1203,6 +1213,7 @@
 			proxy="false">
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
+	
 	<collection-descriptor
 			name="curricularCourseScopes"
 			element-class-ref="Dominio.CurricularCourseScope"
@@ -1214,7 +1225,7 @@
 	</collection-descriptor>
 	
 </class-descriptor>
--->
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.University -->
