@@ -9,11 +9,41 @@ import DataBeans.InfoTeacher;
  *
  */
 public class InfoCredits extends InfoObject {
-	private InfoTeacher infoTeacher = null;
-	private InfoExecutionPeriod infoExecutionPeriod = null;
-	private Integer tfcStudentsNumber = null;
-	private Double credits = null;
+	private InfoTeacher infoTeacher;
+	private InfoExecutionPeriod infoExecutionPeriod;
+	private Integer tfcStudentsNumber;
+	private Double credits;
+	private Double additionalCredits;
+	private String additionalCreditsJustification;
 	
+	/**
+	 * @return
+	 */
+	public Double getAdditionalCredits() {
+		return this.additionalCredits;
+	}
+
+	/**
+	 * @param additionalCredits
+	 */
+	public void setAdditionalCredits(Double additionalCredits) {
+		this.additionalCredits = additionalCredits;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getAdditionalCreditsJustification() {
+		return this.additionalCreditsJustification;
+	}
+
+	/**
+	 * @param additionalCreditsJustification
+	 */
+	public void setAdditionalCreditsJustification(String additionalCreditsJustification) {
+		this.additionalCreditsJustification = additionalCreditsJustification;
+	}
+
 	/**
 	 * @return
 	 */

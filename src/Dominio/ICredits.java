@@ -17,6 +17,12 @@ public interface ICredits extends IDomainObject {
 	public abstract IExecutionPeriod getExecutionPeriod();
 	public abstract ITeacher getTeacher();
 	public abstract Integer getTfcStudentsNumber();
+	String getAdditionalCreditsJustification();
+	void setAdditionalCreditsJustification(String additionalCreditsJustification);
+
+	Double getAdditionalCredits();
+	void setAdditionalCredits(Double additionalCredits);
+	
 	public abstract void setCredits(Double double1);
 	public abstract void setExecutionPeriod(IExecutionPeriod period);
 	public abstract void setTeacher(ITeacher teacher);

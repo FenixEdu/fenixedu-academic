@@ -46,7 +46,15 @@ public class TeacherCreditsDispatchAction extends DispatchAction {
 		if (tfcStudentsNumber != null && tfcStudentsNumber.intValue() != 0) {
 			creditsTeacherForm.set(
 				"tfcStudentsNumber",
-				infoCredits.getTfcStudentsNumber());
+				infoCredits.getTfcStudentsNumber().toString());
+			if (infoCredits.getAdditionalCredits() != null && infoCredits.getAdditionalCredits().doubleValue() != 0)
+				creditsTeacherForm.set(
+					"additionalCredits",
+					infoCredits.getAdditionalCredits().toString());
+			creditsTeacherForm.set(
+				"additionalCreditsJustification",
+				infoCredits.getAdditionalCreditsJustification());
+				
 		}
 		request.setAttribute("infoCreditsTeacher", infoCredits);
 		
@@ -62,12 +70,36 @@ public class TeacherCreditsDispatchAction extends DispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaActionForm creditsTeacherForm = (DynaActionForm) form;
-		Integer tfcTfcStudentsNumber =
-			(Integer) creditsTeacherForm.get("tfcStudentsNumber");
+		
+		
+		
+		Integer tfcStudentsNumber = null;
+		try {
+			tfcStudentsNumber = new Integer ( (String) creditsTeacherForm.get("tfcStudentsNumber"));
+		} catch (NumberFormatException e) {
+		}
+
+		Double additionalCredits = null;
+		String additionalCreditsJustification = null;
+		try {
+			// if additionalCredits is not a number don't get additionalCreditsJustification
+			additionalCredits = new Double((String) creditsTeacherForm.get("additionalCredits"));
+			if (additionalCredits.doubleValue() != 0)
+				additionalCreditsJustification = (String) creditsTeacherForm.get("additionalCreditsJustification") ;
+		} catch (NumberFormatException e1) {
+		}
+		
+		
+	 	InfoCredits infoCredits = new InfoCredits();
+		infoCredits.setTfcStudentsNumber(tfcStudentsNumber);
+		infoCredits.setAdditionalCredits(additionalCredits);
+		infoCredits.setAdditionalCreditsJustification(additionalCreditsJustification);
+		
+		
 		Integer teacherOID =
 			new Integer((String) creditsTeacherForm.get("teacherOID"));
 
-		Object[] args = { teacherOID, tfcTfcStudentsNumber };
+		Object[] args = { teacherOID, infoCredits };
 
 		ServiceUtils.executeService(userView, "WriteCreditsTeacher", args);
 
