@@ -38,11 +38,13 @@
            		<td class="ultAnuncio">
            			<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
            			<html:link  page="/accessAnnouncements.do">
-            		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="information"/>
+            		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title"/>:
             		</html:link>	
+            		<br>
+            		<center><bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="information" filter="false"/></center>
            		</td>
            </tr>
-           <tr>
+           <tr>		
            		<td class="ultAnuncio-date"><bean:message key="message.createdOn"/>
            			<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="creationDate"/>
            			<br/>		
