@@ -3599,7 +3599,8 @@ public abstract class Cloner
         copyObjectProperties(externalPerson, infoExternalPerson);
         IPessoa person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
         externalPerson.setPerson(person);
-        IWorkLocation workLocation = Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson.getInfoWorkLocation());
+        IWorkLocation workLocation =
+            Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson.getInfoWorkLocation());
         externalPerson.setWorkLocation(workLocation);
 
         return externalPerson;
@@ -3611,9 +3612,10 @@ public abstract class Cloner
         copyObjectProperties(infoExternalPerson, externalPerson);
         InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(externalPerson.getPerson());
         infoExternalPerson.setInfoPerson(infoPerson);
-        InfoWorkLocation infoWorkLocation = Cloner.copyIWorkLocation2InfoWorkLocation(externalPerson.getWorkLocation());
+        InfoWorkLocation infoWorkLocation =
+            Cloner.copyIWorkLocation2InfoWorkLocation(externalPerson.getWorkLocation());
         infoExternalPerson.setInfoWorkLocation(infoWorkLocation);
-        
+
         return infoExternalPerson;
     }
 
@@ -4213,4 +4215,20 @@ public abstract class Cloner
 
         return infoWorkLocation;
     }
+
+    public static List copyListIWorkLocation2ListInfoWorkLocation(List workLocations)
+    {
+        List listInfoWorkLocations = new ArrayList();
+        Iterator iter = workLocations.iterator();
+
+        while (iter.hasNext())
+        {
+            WorkLocation workLocation = (WorkLocation) iter.next();
+            InfoWorkLocation infoWorkLocation = Cloner.copyIWorkLocation2InfoWorkLocation(workLocation);
+            listInfoWorkLocations.add(infoWorkLocation);
+        }
+
+        return listInfoWorkLocations;
+    }
+
 }
