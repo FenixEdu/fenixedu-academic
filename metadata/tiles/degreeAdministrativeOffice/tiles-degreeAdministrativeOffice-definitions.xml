@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.degreeAdministrativeOffice.masterPage" extends="df.layout.two-column">
+		<put name="title" value=".IST - Secretaria de Graduação"/>
+		<put name="serviceName" value="Secretaria de Graduação"/>
+		<put name="navGeral" value="/degreeAdministrativeOffice/commonNavGeral.jsp"/>
+		<put name="navLocal" value="/degreeAdministrativeOffice/pgMainMenu.jsp"/>
+		<put name="body-context" value=""/>
+		<put name="body" value=""/>
+		<put name="footer" value="/degreeAdministrativeOffice/copyrightDefault.jsp"/>
+	</definition>
+	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/enrolmentContext.jsp"/>
+	</definition>
+	<definition name="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/enrolmentInOptionalCurricularCourseContext.jsp"/>
+	</definition>
+	<definition name="definition.out.of.period" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/outOfPeriod.jsp"/>
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.page.main" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/welcomeScreen.jsp"/>
+	</definition>
+	<definition name="df.page.chooseStudentAndTypeDegree" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/chooseStudentAndTypeDegree.jsp"/>
+	</definition>
+
+	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+		<put name="body" value="/degreeAdministrativeOffice/acceptEnrolment_bd.jsp"/>
+	</definition>
+	<definition name="df.page.showAvailableCurricularCourses" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+		<put name="body" value="/degreeAdministrativeOffice/showAvailableCurricularCourses_bd.jsp"/>
+	</definition>
+	<definition name="df.page.verifyEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
+		<put name="body" value="/degreeAdministrativeOffice/verifyEnrolment_bd.jsp"/>
+	</definition>
+	<definition name="df.page.concreteOptionalList" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
+		<put name="body" value="/degreeAdministrativeOffice/concreteOptionalList_bd.jsp"/>
+	</definition>
+	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
+		<put name="body" value="/degreeAdministrativeOffice/searchOptionalCurricularCourses_bd.jsp"/>
+	</definition>
+</tiles-definitions>

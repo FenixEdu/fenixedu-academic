@@ -7,6 +7,17 @@
 
 	<!-- ========== Form Bean Definitions =================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
+		<form-bean name="curricularCourseEnrolmentWithRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.Integer"/>
+<!--
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
+			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
+-->
+		</form-bean>
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================ -->
@@ -34,9 +45,11 @@
 
 	<!-- ========== Global Forward Definitions ============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
-		<forward name="index" path="/index.do" redirect="true"/>
-		<forward name="firstPage" path="/index.do" contextRelative="true"/>
+		<forward name="ciaplIndex" path="/index.do" contextRelative="true"/>
 		<forward name="logoff" path="/logoff.do" contextRelative="true"/>
+
+		<forward name="index" path="/index.do" redirect="true"/>
+		<forward name="globalOutOfPeriod" path="definition.out.of.period" redirect="true"/>
 	</global-forwards>
 
 	<!-- ========== Action Mapping Definitions ============================== -->
@@ -44,7 +57,34 @@
 		<!-- page fronting actions -->
 		<action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
 		<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
-		<action path="/index" forward="/index.jsp"/>
+		<!--<action path="/index" forward="/index.jsp"/>-->
+
+		<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
+			<forward name="Success" path="df.page.main"/>
+		</action>
+
+		<action	name="curricularCourseEnrolmentWithRulesForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithRulesManagerDispatchAction"
+				path="/curricularCourseEnrolmentWithRulesManager"
+				input="/curricularCourseEnrolmentWithRulesManager.do?method=preStart"
+				parameter="method"
+				scope="session"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			<exception	type="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
+						key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+
+			<forward name="chooseStudentAndTypeDegree" path="df.page.chooseStudentAndTypeDegree"/>
+
+			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCourses"/>
+			<forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
+			<forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
+			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
+			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
+		</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -61,7 +101,7 @@
 	</plug-in>
 
 	<plug-in className="org.apache.struts.tiles.TilesPlugin">
-		<set-property property="definitions-config" value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml"/>
+		<set-property property="definitions-config" value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/degreeAdministrativeOffice/tiles-degreeAdministrativeOffice-definitions.xml,/WEB-INF/tiles/degreeAdministrativeOffice/tiles-degreeAdministrativeOffice-pages-definitions.xml"/>
 		<set-property property="moduleAware" value="true"/>
 		<set-property property="definitions-parser-validate" value="true"/>
 	</plug-in>
