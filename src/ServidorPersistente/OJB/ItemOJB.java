@@ -40,7 +40,25 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
-        
+      
+      
+	public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia {
+			try {
+				IItem item = null;
+				String oqlQuery = "select sectionItem from " + Item.class.getName();
+				oqlQuery += " where section.name = $1 " ; 
+				query.create(oqlQuery);
+				query.bind(section.getName());
+				List result = (List) query.execute();
+				lockRead(result);
+				return result;
+				
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
+		}
+		
+		    
     public void lockWrite(IItem item) throws ExcepcaoPersistencia {
         super.lockWrite(item);
     }
