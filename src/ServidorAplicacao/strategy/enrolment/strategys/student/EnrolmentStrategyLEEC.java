@@ -1236,6 +1236,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 */
 	private void automaticalyEnrollInMandatoryCurricularCourses() throws ExcepcaoPersistencia
 	{
+		HashMap enrollmentsCreated = new HashMap();
+
 		// FIXME [DAVID]: There is a bug here!
 		// Try this: Enroll in all mandatory curricular courses and some others more untill you get a total of maxCourses
 		// enrolled. Now try to unenroll a mandatory curricular course.
@@ -1261,10 +1263,11 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			while (iterator.hasNext())
 			{
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				IEnrolment enrolment = writeEnrollment(studentCurricularPlan, executionPeriod, curricularCourse);
+				IEnrolment enrolment = writeEnrollment(studentCurricularPlan, executionPeriod, curricularCourse, enrollmentsCreated);
 				if (enrolment != null)
 				{
 					enrollmentsToAdd.add(enrolment);
+					enrollmentsCreated.put(curricularCourse.getIdInternal(), enrolment);
 				}
 			}
 			this.studentEnrolmentContext.getStudentCurrentSemesterEnrollments().addAll(enrollmentsToAdd);
@@ -1311,7 +1314,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	private IEnrolment writeEnrollment(
 		IStudentCurricularPlan studentCurricularPlan,
 		IExecutionPeriod executionPeriod,
-		ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
+		ICurricularCourse curricularCourse,
+		HashMap enrollmentsCreated) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
@@ -1324,15 +1328,19 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		
 		if (enrolment == null)
 		{
-			enrolment = new Enrolment();
-			enrolmentDAO.simpleLockWrite(enrolment);
-			enrolment.setCurricularCourse(curricularCourse);
-			enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-			enrolment.setEnrolmentState(EnrolmentState.ENROLED);
-			enrolment.setExecutionPeriod(executionPeriod);
-			enrolment.setStudentCurricularPlan(studentCurricularPlan);
-			WriteEnrolment.createAttend(enrolment);
-			return enrolment;
+			enrolment = (IEnrolment) enrollmentsCreated.get(curricularCourse.getIdInternal());
+			if (enrolment == null)
+			{
+				enrolment = new Enrolment();
+				enrolmentDAO.simpleLockWrite(enrolment);
+				enrolment.setCurricularCourse(curricularCourse);
+				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+				enrolment.setExecutionPeriod(executionPeriod);
+				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				WriteEnrolment.createAttend(enrolment);
+				return enrolment;
+			}
 		}
 		return null;
 	}
