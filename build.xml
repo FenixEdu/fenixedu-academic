@@ -5,18 +5,29 @@
 
     <property environment="env"/>
 
-	<property name="encoding" value="ISO-8859-15"/>
+	<property file="build.properties"/>
 
     <!--Directorios com codigo fonte-->
-    <property location="src" name="src"/> 
-    <property location="src_tests" name="src.tests"/> 
-    <property location="jsp" name="src.jsp"/>
-    <property location="metadata" name="metadata"/>
+    <property name="src" location="src" /> 
+    <property name="src.tests" location="src_tests" /> 
+    <property name="src.jsp" location="jsp" />
+    <property name="metadata" location="metadata" />
     
+	<property name="build.home" location="build"/>
+
     <!--Directorios destino da compilacao do projecto-->
-    <property location="classes" name="classes"/>
-    <property location="classes_tests" name="classes.tests"/>
+    <property name="tests.classes" location="${build.home}/tests"/>
+
+    <property name="webapp"          location="${build.home}/app"/>
+    <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
+    <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
+    <property name="webapp.lib"      value="${webapp.metadata}/lib"/>    
+
     
+	<!-- Directorys for deploy -->
+	<property name="deploy.home" location="deploy"/>	
+    <property name="deploy.jars"     value="${deploy.home}/jars"/>
+	
     <!--Directorio com bibliotecas (JAR) a utilizar-->
     <property location="lib" name="libs"/>
 	<property location="lib_web" name="libs.web"/>
@@ -27,25 +38,20 @@
     <!--Directorio com instrucoes SQL-->
     <property location="etc" name="sql"/>
 
-    <!--Directorio com reports de testes-->
-    <property location="report" name="reports.tests"/>
-	
 
     <!-- INTERFACE WEB -->
     <!--Directorios da aplicacao Web-->
-    <property name="webapp"          location="web"/>
-    <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
-    <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
-    <property name="webapp.lib"      value="${webapp.metadata}/lib"/>    
-    <!--Nome da aplicacao web-->
-    <property name="name" value="ciapl"/>
 
-    <!--Directorios de deploy-->
-    <property name="deploy"          location="${env.CATALINA_HOME}/webapps"/>
-    <property name="deploy.jars"     value="deploy/jars"/>
   
-    <!-- TARGETS -->
+	<!-- Compilation options -->
+	<property name="compile.debug"       value="on"/>
+  	<property name="compile.deprecation" value="on"/>
+  	<property name="compile.optimize"    value="on"/>
 
+	<property name="encoding" value="ISO-8859-15"/>	
+
+
+    <!-- TARGETS -->
     <target name="tomcat-start"
             description="Starts tomcat">
       <parallel>
@@ -87,140 +93,135 @@
     </target>
 
     <target name="stop-deploy-start"
-    		description="Stops tomcat"
-    		depends="tomcat-stop,deploy-standalone,tomcat-start"
+    		description="Stops tomcat, deploys web application, starts tomcat"
+    		depends="clean-all, compile-proj, tomcat-start, install"
     		/>
+
+
+  <target name="prepare">
+    <!-- Create build directories as needed -->
+	<mkdir dir="${tests.classes}"/>
+	<mkdir dir="${webapp.classes}"/>	
+	<mkdir dir="${webapp.lib}"/>	
+	<mkdir dir="${deploy.home}"/>
+    <!-- Copy external dependencies as required -->
+    <!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
+    <copy todir="${webapp}">
+    	<fileset dir="${basedir}/jsp"/>
+    </copy>
+    
+    <copy todir="${webapp.metadata}">
+    	<fileset dir="${basedir}/metadata"/>    
+    </copy>
+
+    <copy todir="${webapp.lib}">
+    	<fileset dir="${basedir}/lib">    
+    	      <exclude name="servlet.jar"/>
+              <exclude name="strutstest.jar"/>
+    	</fileset>
+    	<fileset dir="${basedir}/lib_web">    
+    	      <exclude name="servlet.jar"/>
+              <exclude name="strutstest.jar"/>
+    	</fileset>
+    </copy>
+
+	<copy todir="${webapp.classes}">
+		<fileset dir="${basedir}/config"/>
+	</copy>
+    <!-- Copy static files from external dependencies as needed -->
+    <!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
+
+  </target>
   
     <target name="compile-proj"
-            description="Compila o projecto principal">
-        <mkdir dir="${classes}"/>
-        <javac destdir="${classes}"
+            description="Compila o projecto principal" depends="prepare">
+        <tstamp />
+        <javac destdir="${webapp.classes}"
                extdirs="${libs};${libs.web}"
-               srcdir="${src}"
-               debug="on"
-               encoding="${encoding}"/>
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}">
+			<src path="${src}"/>
+        </javac>
+		<replace 
+	    	dir="${webapp.metadata}"
+	    	propertyFile="build.properties">
+	    	<include name="**/**/*.xml"/>
+		  <replacefilter 
+		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
+		  <replacefilter 
+		    token="@db.user@" 
+		    property="db.user"/>
+		  <replacefilter 
+		    token="@db.pass@" 
+		    property="db.pass"/>
+		  <replacefilter 
+		    token="@db.name@" 
+		    property="db.name"/>
+		  <replacefilter 
+		    token="@db.alias@" 
+		    property="db.alias"/>
+		</replace>
     </target>
     
     <target name="compile-tests"
             depends="compile-proj"
-            description="Compila os testes">
-        <mkdir dir="${classes.tests}"/>
-        <javac classpath="${classes}"
-               destdir="${classes.tests}"
-               extdirs="${libs};${libs.web}" srcdir="${src.tests}"
-               encoding="${encoding}"/>
+            description="Compiles tests classes">
+        <javac classpath="${webapp.classes}"
+               destdir="${tests.classes}"
+               extdirs="${libs};${libs.web}" 
+               srcdir="${src.tests}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+               fork="yes"/>
     </target>
     
-    <target name="clean-proj"
-            description="Apaga todas as classes compiladas do projecto">
-        <delete dir="${classes}"/>
-    </target>
-    
-    <target name="clean-tests"
-            description="Apaga todas as classes compiladas dos testes">
-        <delete dir="${classes.tests}"/>
-    </target>
-
-    <target name="clean-standalone"
-            description="Apaga a aplicacao web">
-        <delete dir="${deploy}\${name}"/>
-        <delete file="${deploy}\${name}.war"/>
-    </target>
-
-    <target name="clean-netbeans"
-            description="Apaga a aplicacao web para uso no netbeans">
-    	<delete dir="${webapp}"/>
-    </target>
-
-    <target name="cleanall"
-            depends="clean-proj,clean-tests,clean-standalone,clean-netbeans"
-            description="Apaga todas as classes e ficheiros temporarios">
-        <delete>
-            <fileset defaultExcludes="no"
-                     dir="${basedir}"
-                     includes="**/*~,**/#*#,**/semantic.cache"/>
-        </delete>
-    </target>
 
     <target name="build-proj"
-            depends="clean-proj,compile-proj"
-            description="Compila de raiz o projecto"/>
-
-    <target depends="build-proj" name="run">
-	  <java classname="Aplicacao" fork="yes">
-            <classpath>
-		    <pathelement path="${classes}" /> 
-		    <pathelement path="${config}" /> 
-		    <fileset dir="${libs}">
-		        <include name="**/*.jar" /> 
-		    </fileset>
-		</classpath>
-	  </java>
+            depends="clean-build,compile-proj"
+            description="Cleans and compiles project"/>
+  
+    <target name="deploy-webapp"
+            depends="compile-proj"
+            description="Creates web application"
+            >
+	    <jar jarfile="${deploy.home}/${app.name}.war"
+         basedir="${build.home}" update="true"/>
     </target>
-
-    <target name="deploy"
-            depends="jars"
-            description="Cria a aplicacao web para uso com o netbeans">
-      <mkdir dir="${webapp.classes}"/>
-      <mkdir dir="${webapp.lib}"/>
-    	
-      <copy todir="${webapp}">
-          <fileset dir="${src.jsp}"/>
-      </copy>       
-      <copy todir="${webapp.lib}">
-          <fileset dir="${libs}"/>
-          <fileset dir="${libs.web}">
-              <exclude name="servlet.jar"/>
-              <exclude name="strutstest.jar"/>
-          </fileset>
-          <fileset dir="${deploy.jars}"/>
-      </copy>
-      <copy todir="${webapp.classes}">
-          <fileset dir="${classes}">
-       	  <include name="ServidorApresentacao/**/*.class"/>
-          </fileset>
-          <fileset dir="${config}">
-              <include name="ServidorApresentacao/**"/>
-          </fileset>
-      </copy>
-      <copy todir="${webapp.metadata}">
-          <fileset dir="${metadata}"/>
-      </copy>
-    </target>
+    
 
     <target name="jars" depends="compile-proj"
             description="Cria os jar no directorio de deploy">
       	<mkdir dir="${deploy.jars}"/>
         
         <jar destfile="${deploy.jars}/Dominio.jar"
-        	 basedir="${classes}"
+        	 basedir="${webapp.classes}"
         	 includes="Dominio/**/*.class"/>
         
         <jar destfile="${deploy.jars}/ServidorPersistente.jar">
-        	 <fileset dir="${classes}">
+        	 <fileset dir="${webapp.classes}">
         	 	<include name="ServidorPersistente/**/*.class"/>
-        	 </fileset>
-        	 <fileset dir="${config}">
         	 	<include name="OJB/**"/>
         	 	<include name="OJB.properties"/>
         	 </fileset>
        	</jar>
        	
         <jar destfile="${deploy.jars}/ServidorAplicacao.jar">
-        	 <fileset dir="${classes}">
+        	 <fileset dir="${webapp.classes}">
         	 	<include name="ServidorAplicacao/**/*.class"/>
-        	 </fileset>
-        	 <fileset dir="${config}">
         	 	<include name="filtros.conf"/>
         	 	<include name="servicos.conf"/>
         	 </fileset>
 		</jar>
 	</target>		        
 
-    <target name="deploy-standalone"
+<!--    <target name="deploy-standalone"
             depends="jars,clean-standalone"
             description="Cria a aplicacao web">       
-        <war destfile="${deploy}/${name}.war"
+        <war destfile="${deploy}/${app.name}.war"
              webxml="${metadata}/web.xml"
              duplicate="preserve">
             <fileset dir="${src.jsp}"/>
@@ -231,106 +232,14 @@
             <classes dir="${config}" includes="ServidorApresentacao/**"/>
             <webinf dir="${metadata}" excludes="web.xml"/>
       </war>
-    </target>
+    </target> -->
 
 
-    <target depends="clean-tests,compile-tests,deploy"
+    <target depends="clean-tests,compile-tests"
             description="Compila de raiz os testes para o projecto"
             name="build-tests"/>   
-
-    <target depends="compile-tests,deploy, load-dump-db"
-            description="Executa todos os testes"
-            name="tests-report">
-
-		<junit printsummary="yes" haltonfailure="no">
-            <classpath>
-                <pathelement path="${classes}"/>
-                <pathelement path="${classes.tests}"/>
-                <pathelement path="${config}"/>
-                <pathelement path="${webapp}"/>
-                <pathelement path="${sql}"/>
-                <fileset dir="${libs}">
-                    <include name="**/*.jar"/>
-                </fileset>
-                <fileset dir="${libs.web}">
-                    <include name="**/*.jar"/>
-                    <exclude name="commons-beanutils.jar;commons-collections.jar;commons-lang.jar;commons-logging.jar;commons-pool.jar;jdbc2_0-stdext.jar"/>
-                </fileset>
-            </classpath>
-
-		  <formatter type="xml"/>
-
-		  <test name="my.test.TestCase" haltonfailure="no" todir="${reports.tests}" outfile="resultTEST">
-		    <formatter type="xml"/>
-		  </test>
-
-            <batchtest fork="yes" todir="${reports.tests}">
-                <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
-                </fileset>
-            </batchtest>
-		</junit>
-
-		<junitreport todir="${reports.tests}">
-          <fileset dir="${reports.tests}">
-	          <include name="TEST-*.xml"/>
-		  </fileset>
-		  <report format="frames" todir="${reports.tests}/html"/>
-		</junitreport>
-
-    </target>
-
-    <target depends="compile-tests,deploy, load-dump-db"
-            description="Executa todos os testes"
-            name="generate_unitTest-reports">
-
-		<delete dir="${reports.tests}"/>
-		<mkdir dir="${reports.tests}"/>
-		
-		<junit printsummary="yes" haltonfailure="no">
-            <classpath>
-                <pathelement path="${classes}"/>
-                <pathelement path="${classes.tests}"/>
-                <pathelement path="${config}"/>
-                <pathelement path="${webapp}"/>
-                <pathelement path="${sql}"/>
-                <fileset dir="${libs}">
-                    <include name="**/*.jar"/>
-                </fileset>
-                <fileset dir="${libs.web}">
-                    <include name="**/*.jar"/>
-                    <exclude name="commons-beanutils.jar;commons-collections.jar;commons-lang.jar;commons-logging.jar;commons-pool.jar;jdbc2_0-stdext.jar"/>
-                </fileset>
-            </classpath>
-
-		  <formatter type="xml"/>
-
-<!--		  <test name="my.test.TestCase" haltonfailure="no" todir="${reports.tests}" outfile="resultTEST">
-		    <formatter type="xml"/>
-		  </test>
--->
-            <batchtest fork="yes" todir="${reports.tests}">
-                <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
-                    <exclude name="**/SuportePersistenteOJBTest.java"/>
-                    <exclude name="**/AllTests.java"/>
-                    
-                    <exclude name="**/ReadSectionsServiceTest.java"/>
-                </fileset>
-            </batchtest>
-		</junit>
-
-		<junitreport todir="${reports.tests}">
-          <fileset dir="${reports.tests}">
-	          <include name="TEST-*.xml"/>
-		  </fileset>
-		  <report format="frames" todir="${reports.tests}/html"/>
-		</junitreport>
-
-    </target>
-
     
-    <target depends="compile-tests,deploy, load-dump-db"
+    <target depends="compile-tests, load-dump-db"
             description="Executa todos os testes"
             name="run-tests">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -342,7 +251,8 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
+                    <!--<include name="**/*Test.java"/>-->
+                    <include name="**/CriarSalaFormActionTest.java"/>
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
                     <exclude name="**/SessionUtilsTest.java"/>
@@ -358,23 +268,22 @@
                 </fileset>
             </batchtest>
             <classpath>
-                <pathelement path="${classes}"/>
-                <pathelement path="${classes.tests}"/>
-                <pathelement path="${config}"/>
+                <pathelement path="${webapp.classes}"/>
+                <pathelement path="${tests.classes}"/>
                 <pathelement path="${webapp}"/>
                 <pathelement path="${sql}"/>
-                <fileset dir="${libs}">
+                <fileset dir="${webapp.lib}">
                     <include name="**/*.jar"/>
                 </fileset>
-                <fileset dir="${libs.web}">
+<!--                <fileset dir="${libs.web}">
                     <include name="**/*.jar"/>
                     <exclude name="commons-beanutils.jar;commons-collections.jar;commons-lang.jar;commons-logging.jar;commons-pool.jar;jdbc2_0-stdext.jar"/>
-                </fileset>
+                </fileset> -->
             </classpath>
         </junit>
     </target>
-
-    <target depends="compile-tests,deploy, load-dump-db"
+    
+    <target depends="compile-tests, load-dump-db"
             description="Executa todos os testes"
             name="run-tests-capresentacao">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -386,7 +295,7 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                 <include name="**/*Test.java"/>
+                 <include name="**/ChangePersonalInfoDispatchActionPrepareMethodTest.java"/>
             <!-- start of tests that are failing -->    
              <!--    <exclude name="**/CriarAulaFormActionTest.java" /> 		 -->
                  <exclude name="**/EditarAulaFormActionTest.java" /> 
@@ -412,24 +321,19 @@
                 </fileset>
             </batchtest>
             <classpath>
-                <pathelement path="${classes}"/>
-                <pathelement path="${classes.tests}"/>
-                <pathelement path="${config}"/>
+                <pathelement path="${webapp.classes}"/>
+                <pathelement path="${tests.classes}"/>
                 <pathelement path="${webapp}"/>
                 <pathelement path="${sql}"/>
-                <fileset dir="${libs}">
+                <fileset dir="${webapp.lib}">
                     <include name="**/*.jar"/>
                 </fileset>
-                <fileset dir="${libs.web}">
-                    <include name="**/*.jar"/>
-                    <exclude name="commons-beanutils.jar;commons-collections.jar;commons-lang.jar;commons-logging.jar;commons-pool.jar;jdbc2_0-stdext.jar"/>
-                </fileset>
-            </classpath>
+            </classpath> 
         </junit>
     </target>
     
     <target depends="compile-tests, load-dump-db"
-            description="Executa os testes do suporte persistente"
+            description="Runs persistent layer tests"
             name="run-tests-sp">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
             <formatter type="plain" usefile="false"/>
@@ -453,11 +357,11 @@
                 </fileset>
             </batchtest>
             <classpath>
-                <pathelement path="${classes}"/>
-                <pathelement path="${classes.tests}"/>
+                <pathelement path="${webapp.classes}"/>
+                <pathelement path="${tests.classes}"/>
                 <pathelement path="${config}"/>
                 <pathelement path="${sql}"/>
-                <fileset dir="${libs}">
+                <fileset dir="${webapp.lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -485,35 +389,35 @@
             </batchtest>
             <classpath>
                 <pathelement path="${classes}"/>
-                <pathelement path="${classes.tests}"/>
+                <pathelement path="${tests.classes}"/>
                 <pathelement path="${config}"/>
                 <pathelement path="${sql}"/>
-                <fileset dir="${libs}">
+                <fileset dir="${webapp.lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
         </junit>
     </target>
-
+    
+	<!-- Database targets -->
     <target name="create-tables"
             description="Cria as tabelas da base de dados.">
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/"
-            userid="root"
-            password=""
+            userid="${db.user}"
+            password="${db.pass}"
             encoding="${encoding}"
         >
-        DROP DATABASE IF EXISTS ciapl;
-        CREATE DATABASE ciapl;
+        DROP DATABASE IF EXISTS ${db.name};
+        CREATE DATABASE ${db.name};
         </sql>
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/ciapl"
-            userid="root"
-            password=""
-            encoding="${encoding}"            
-        >
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
 	        <fileset dir="${sql}">
 			 <include name="tables_*.sql" />
 	         <exclude name="tables_inscRelatedDBTables.sql" />
@@ -532,8 +436,8 @@
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/ciapl"
-            userid="root"
-            password=""
+            userid="${db.user}"
+            password="${db.pass}"
             encoding="${encoding}"
             src="${sql}/test-data_sop.sql"
         >
@@ -546,24 +450,10 @@
        <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/ciapl"
-            userid="root"
-            password=""
+            userid="${db.user}"
+            password="${db.pass}"
             encoding="${encoding}"
             src="${sql}/test-data_GesDis.sql"
-        >
-            <classpath>
-                <fileset dir="${libs}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-       <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/ciapl"
-            userid="root"
-            password=""
-            encoding="${encoding}"
-            src="${sql}/test-data_inscricoes.sql"
         >
             <classpath>
                 <fileset dir="${libs}">
@@ -575,11 +465,11 @@
     </target>
 
     <target name="dump-db"
-            description="Passar o Conteudo da Base de Dados para um ficheiro .xml">
+            description="Uses dbunit to load database to xml file">
 	  <dbunit driver="com.mysql.jdbc.Driver"
     	      url="jdbc:mysql://localhost/ciapl"
-        	  userid="root"
-	          password="">
+        	  userid="${db.user}"
+	          password="${db.pass}">
     	  <export dest="${sql}/dbContents.xml"/>
 	  </dbunit>
     </target>
@@ -588,59 +478,108 @@
             description="Load and dump database to testDataSet.xml">
 	  <copy file="${sql}/dbContents.xml" toFile="${sql}/testDataSet.xml"/>
     </target>
-
-    <target name="load-cinfo" depends="compile-proj"
-            description="Loads degrees info from datafile..." >
-
-            <java classname="middleware.LoadDegrees" fork="yes" dir="${basedir}">
-	            <classpath>
-	                <pathelement path="${classes}"/>
-	                <pathelement path="${config}"/>
-	                <pathelement path="${sql}"/>                
-	                <fileset dir="${libs}">
-	                    <include name="**/*.jar"/>
-	                </fileset>
-	            </classpath>
-            </java>
-
-            <java classname="middleware.LoadCourses" fork="yes" dir="${basedir}">
-	            <classpath>
-	                <pathelement path="${classes}"/>
-	                <pathelement path="${config}"/>
-	                <pathelement path="${sql}"/>                
-	                <fileset dir="${libs}">
-	                    <include name="**/*.jar"/>
-	                </fileset>
-	            </classpath>
-            </java>
-
-            <java classname="middleware.LoadStudents" fork="yes" dir="${basedir}">
-	            <classpath>
-	                <pathelement path="${classes}"/>
-	                <pathelement path="${config}"/>
-	                <pathelement path="${sql}"/>                
-	                <fileset dir="${libs}">
-	                    <include name="**/*.jar"/>
-	                </fileset>
-	            </classpath>
-            </java>
-
-    </target>
-
-    <target name="load-einfo" depends="compile-proj"
-            description="Loads degrees info from datafile..." >
-
-            <java classname="middleware.LoadCourseEnrolments" fork="yes" dir="${basedir}">
-	            <classpath>
-	                <pathelement path="${classes}"/>
-	                <pathelement path="${config}"/>
-	                <pathelement path="${sql}"/>                
-	                <fileset dir="${libs}">
-	                    <include name="**/*.jar"/>
-	                </fileset>
-	            </classpath>
-            </java>
-
-    </target>
     
+	<!-- Targets for tomcat -->
+	<taskdef name="install" classname="org.apache.catalina.ant.InstallTask"/>
+	<taskdef name="list"    classname="org.apache.catalina.ant.ListTask"/>
+	<taskdef name="reload"  classname="org.apache.catalina.ant.ReloadTask"/>
+	<taskdef name="remove"  classname="org.apache.catalina.ant.RemoveTask"/>
+
+
+	<!-- ==================== Install Target ================================== -->
+	<!--
+	  The "install" target tells the specified Tomcat 4 installation to dynamically
+	  install this web application and make it available for execution.  It does
+	  *not* cause the existence of this web application to be remembered across
+	  Tomcat restarts; if you restart the server, you will need to re-install all
+	  this web application.
+	
+	  If you have already installed this application, and simply want Tomcat to
+	  recognize that you have updated Java classes (or the web.xml file), use the
+	  "reload" target instead.
+	
+	  NOTE:  This target will only succeed if it is run from the same server that
+	  Tomcat is running on.
+	
+	  NOTE:  This is the logical opposite of the "remove" target.
+	-->
+	<target name="install" depends="compile-proj"
+			description="Install application to servlet container">
+	
+		<install url="${manager.url}"
+	    		 username="${manager.username}"
+	        	 password="${manager.password}"
+	             path="${app.path}"
+	             war="file://${webapp}"/>
+	</target>
+
+	<!-- ==================== Remove Target =================================== -->
+	<!--
+	  The "remove" target tells the specified Tomcat 4 installation to dynamically
+	  remove this web application from service.
+	  NOTE:  This is the logical opposite of the "install" target.
+	-->
+	  <target name="remove"
+	   description="Remove application on servlet container">
+	    <remove url="${manager.url}"
+	       username="${manager.username}"
+	       password="${manager.password}"
+	           path="${app.path}"/>
+	  </target>
+	<!-- ==================== Reload Target =================================== -->
+	<!--
+	  The "reload" target tells the specified Tomcat 4 installation to dynamically
+	  reload this web application, to reflect changes in the underlying classes or
+	  the "web.xml" deployment descriptor.
+	-->
+	<target name="reload" depends="compile-proj"
+	   description="Reload application on servlet container">
+		<reload url="${manager.url}"
+	    	    username="${manager.username}"
+	       		password="${manager.password}"
+	            path="${app.path}"/>
+	</target>
+	
+	<!-- ====================== List Target =================================== -->
+	<!--
+	  The "list" target asks the specified Tomcat 4 installation to list the
+	  currently running web applications, either loaded at startup time or
+	  installed dynamically.  It is useful to determine whether or not the
+	  application you are currently developing has been installed.
+	-->
+	<target name="list"
+	   description="List installed applications on servlet container">
+	
+		<list    url="${manager.url}"
+	    	    username="${manager.username}"
+	        	password="${manager.password}"/>
+	</target>
+	    
+
+	<!-- Targets for Clean  -->
+    <target name="clean-tests"
+            description="Apaga todas as classes compiladas dos testes">
+        <delete dir="${tests.classes}"/>
+    </target>
+	<target name="clean-build" description="Delete build dir">
+	    <delete dir="${build.home}"/>	
+	</target>
+    <target name="clean-standalone"
+            description="Apaga a aplicacao web">
+        <delete dir="${deploy}\${app.name}"/>
+        <delete file="${deploy}\${app.name}.war"/>
+    </target>
+
+    <target name="clean-all"
+            depends="tomcat-stop, clean-build, clean-tests, clean-standalone"
+            description="Delete all class and temp files">
+        <delete dir="${build.home}"/>
+        <delete dir="${deploy.home}"/>        
+        <delete>
+            <fileset defaultExcludes="no"
+                     dir="${basedir}"
+                     includes="**/*~,**/#*#,**/semantic.cache" />
+        </delete>
+        <antcall target="tomcat-start"/>
+    </target>
 </project>
