@@ -21,7 +21,7 @@
 				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:write name="degreeLabel"/><br>
 			</logic:notEqual>
 			<logic:equal name="degreeString" value="all">
-				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:message key="label.masterDegree.gratuity.all"/><br>
+				<b><bean:message key="label.qualification.degree" /></b>&nbsp;<bean:message key="label.all"/><br>
 			</logic:equal>
 	
 			<bean:define id="specializationLabel"><%=pageContext.findAttribute("specialization")%></bean:define>	

@@ -33,7 +33,7 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	private Double payedValue;//attributes auxiliaries for calculations
 	private Double remainingValue;//attributes auxiliaries for calculations
 	private GratuitySituationType situationType; //attributes auxiliaries for calculations 
-	private String insurancePayed = new String("label.masterDegree.gratuity.notPayed"); //attributes auxiliaries for calculations
+	private String insurancePayed = new String("label.notPayed"); //attributes auxiliaries for calculations
 		
 	/**
 	 * @return Returns the insurancePayed.

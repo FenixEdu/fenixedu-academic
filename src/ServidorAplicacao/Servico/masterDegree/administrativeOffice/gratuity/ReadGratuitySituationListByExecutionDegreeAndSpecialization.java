@@ -240,7 +240,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					}
 					else if (infoGuideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE))
 					{
-						infoGratuitySituation.setInsurancePayed(new String("label.masterDegree.gratuity.payed"));
+						infoGratuitySituation.setInsurancePayed(new String("label.payed"));
 					}
 				}
 			}

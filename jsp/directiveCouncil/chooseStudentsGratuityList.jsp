@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<h2><bean:message key="label.listStudents"/></h2>
+<h2><bean:message key="label.gratuity.listStudents"/></h2>
 <span class="error"><html:errors/></span>
 
 <html:form action="/studentsGratuityList" >
@@ -86,13 +86,14 @@
 					</html:select>
 				</td>
 			</tr>
+			<tr>
+				<td>	
+					<br />
+					<html:submit styleClass="inputbutton">
+						<bean:message key="button.list"/>
+					</html:submit>				
+				</td>
+			</tr>
 		</logic:present>
-	</table>
-	<br />
-	<logic:present name="showNextSelects">
-		<html:submit styleClass="inputbutton">
-			<bean:message key="button.masterDegree.gratuity.list"/>
-		</html:submit>
-	</logic:present>		
 </table>	
 </html:form>	

@@ -86,13 +86,14 @@
 					</html:select>
 				</td>
 			</tr>
-		</logic:present>
-	</table>
-	<br />
-	<logic:present name="showNextSelects">
-		<html:submit styleClass="inputbutton">
-			<bean:message key="button.masterDegree.gratuity.list"/>
-		</html:submit>
-	</logic:present>		
+			<tr>
+				<td>	
+					<br />
+					<html:submit styleClass="inputbutton">
+						<bean:message key="button.masterDegree.gratuity.list"/>
+					</html:submit>				
+				</td>
+			</tr>
+		</logic:present>		
 </table>	
 </html:form>	

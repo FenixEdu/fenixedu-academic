@@ -10,7 +10,7 @@
 		<put name="body-context" value=""/>
 		<put name="body" value=""/>
 	</definition>
-	<definition name="definition.directiveCouncil.gratuity" extends="definition.directiveCouncil.gratuity">
+	<definition name="definition.directiveCouncil.gratuity" extends="definition.directiveCouncil.masterPage">
 		<put name="navLocal" value="/directiveCouncil/gratuityMenu.jsp"/>
 	</definition>
 </tiles-definitions>
