@@ -97,7 +97,7 @@ public class InsertExternalPerson implements IServico
 			person.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.EXTERNO));
 			person.setUsername("e" + lastDocumentIdNumber);
 			
-			sp.getIPersistentExternalPerson().simpleLockWrite(person);
+			sp.getIPessoaPersistente().simpleLockWrite(person);
 			
 			externalPerson.setPerson(person);
 			externalPerson.setWorkLocation(storedWorkLocation);

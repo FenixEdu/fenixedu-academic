@@ -9,6 +9,7 @@
 <span class="error"><html:errors/></span>
 
 <br/>
+<logic:present name="<%= SessionConstants.WORK_LOCATIONS_LIST %>" scope="request">
 	<html:form action="/editWorkLocation.do?method=edit" >
 		<html:hidden property="page" value="1" />
 		<table>
@@ -40,5 +41,5 @@
 			</tr>
 		</table>
 	</html:form>
-
+</logic:present>
 </center>
