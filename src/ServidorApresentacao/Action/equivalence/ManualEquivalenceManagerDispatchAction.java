@@ -315,6 +315,7 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 		ComparatorChain comparatorChain1 = new ComparatorChain();
 		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"));
 		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester"));
+		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularCourse.name"));
 		if(listOfEnrolments != null) {
 			Collections.sort(listOfEnrolments, comparatorChain1);
 		}
@@ -322,9 +323,9 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 		ComparatorChain comparatorChain2 = new ComparatorChain();
 		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
 		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+		comparatorChain2.addComparator(new BeanComparator("infoCurricularCourse.name"));
 		if(listOfCurricularCourseScopes != null) {
 			Collections.sort(listOfCurricularCourseScopes, comparatorChain2);
 		}
 	}
-
 }

@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -90,11 +93,10 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 		return years;
 	}
 
-	public List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList) {
+	private List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList) {
 		ArrayList result = null;
 		if ( (infoExecutionDegreesList != null) && (!infoExecutionDegreesList.isEmpty()) ) {
 			result = new ArrayList();
-			result.add(new LabelValueBean("Escolha", ""));
 			Iterator iterator = infoExecutionDegreesList.iterator();
 			while(iterator.hasNext()) {
 				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
@@ -102,6 +104,16 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 				result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
 			}
 		}
+		this.sort(result);
+		result.add(0, new LabelValueBean("Escolha", ""));
 		return result;	
+	}
+
+	private void sort(List listOfLabelValueBeans) {
+		ComparatorChain comparatorChain = new ComparatorChain();
+		comparatorChain.addComparator(new BeanComparator("label"));
+		if(listOfLabelValueBeans != null) {
+			Collections.sort(listOfLabelValueBeans, comparatorChain);
+		}
 	}
 }
