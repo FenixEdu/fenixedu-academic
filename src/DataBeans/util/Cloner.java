@@ -25,7 +25,6 @@ import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
-import DataBeans.InfoEquivalence;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExam;
@@ -1611,40 +1610,40 @@ public abstract class Cloner {
 		* @param copyIEquivalence2InfoEquivalence
 		* @return InfoEquivalence
 		*/
-	public static InfoEquivalence copyIEquivalence2InfoEquivalence(IEnrolmentEquivalence equivalence) {
-
-		InfoEquivalence infoEquivalence = new InfoEquivalence();
-
-		InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(equivalence.getEnrolment());
-		InfoEnrolment infoEquivalentEnrolment = Cloner.copyIEnrolment2InfoEnrolment(equivalence.getEquivalentEnrolment());
-
-		copyObjectProperties(infoEquivalence, equivalence);
-
-		infoEquivalence.setInfoEnrolment(infoEnrolment);
-		infoEquivalence.setInfoEquivalentEnrolment(infoEquivalentEnrolment);
-
-		return infoEquivalence;
-	}
+//	public static InfoEquivalence copyIEquivalence2InfoEquivalence(IEnrolmentEquivalence equivalence) {
+//
+//		InfoEquivalence infoEquivalence = new InfoEquivalence();
+//
+//		InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(equivalence.getEnrolment());
+//		InfoEnrolment infoEquivalentEnrolment = Cloner.copyIEnrolment2InfoEnrolment(equivalence.getEquivalentEnrolment());
+//
+//		copyObjectProperties(infoEquivalence, equivalence);
+//
+//		infoEquivalence.setInfoEnrolment(infoEnrolment);
+//		infoEquivalence.setInfoEquivalentEnrolment(infoEquivalentEnrolment);
+//
+//		return infoEquivalence;
+//	}
 
 	/**
 		* @author dcs-rjao
 		* @param copyInfoEquivalence2IEquivalence
 		* @return IEnrolmentEquivalence
 		*/
-	public static IEnrolmentEquivalence copyInfoEquivalence2IEquivalence(InfoEquivalence infoEquivalence) {
-
-		IEnrolmentEquivalence equivalence = new EnrolmentEquivalence();
-
-		IEnrolment enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEnrolment());
-		IEnrolment equivalentEnrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEquivalentEnrolment());
-
-		copyObjectProperties(equivalence, infoEquivalence);
-
-		equivalence.setEnrolment(enrolment);
-		equivalence.setEquivalentEnrolment(equivalentEnrolment);
-
-		return equivalence;
-	}
+//	public static IEnrolmentEquivalence copyInfoEquivalence2IEquivalence(InfoEquivalence infoEquivalence) {
+//
+//		IEnrolmentEquivalence equivalence = new EnrolmentEquivalence();
+//
+//		IEnrolment enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEnrolment());
+//		IEnrolment equivalentEnrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEquivalentEnrolment());
+//
+//		copyObjectProperties(equivalence, infoEquivalence);
+//
+//		equivalence.setEnrolment(enrolment);
+//		equivalence.setEquivalentEnrolment(equivalentEnrolment);
+//
+//		return equivalence;
+//	}
 
 	/**
 	 * @author dcs-rjao

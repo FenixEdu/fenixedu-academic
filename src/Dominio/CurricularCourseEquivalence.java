@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.List;
+
 
 /**
  * @author dcs-rjao
@@ -10,10 +12,9 @@ package Dominio;
 public class CurricularCourseEquivalence extends DomainObject implements ICurricularCourseEquivalence{
 
 	private ICurricularCourse curricularCourse;
-	private ICurricularCourse equivalentCurricularCourse;
+	private List equivalenceRestrictions;
 
 	private Integer curricularCourseKey;
-	private Integer equivalentCurricularCourseKey;
 
 	public CurricularCourseEquivalence() {
 	}
@@ -25,8 +26,7 @@ public class CurricularCourseEquivalence extends DomainObject implements ICurric
 		if (obj instanceof ICurricularCourseEquivalence) {
 			ICurricularCourseEquivalence equivalence = (ICurricularCourseEquivalence) obj;
 
-			resultado = (this.getCurricularCourse().equals(equivalence.getCurricularCourse())) &&
-									(this.getEquivalentCurricularCourse().equals(equivalence.getEquivalentCurricularCourse()));
+			resultado = (this.getCurricularCourse().equals(equivalence.getCurricularCourse()));
 		}
 		return resultado;
 	}
@@ -34,7 +34,6 @@ public class CurricularCourseEquivalence extends DomainObject implements ICurric
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "; ";
-		result += "equivalentCurricularCourse = " + this.equivalentCurricularCourse + "; ";
 		return result;
 	}
 	public ICurricularCourse getCurricularCourse() {
@@ -45,13 +44,6 @@ public class CurricularCourseEquivalence extends DomainObject implements ICurric
 		return curricularCourseKey;
 	}
 
-	public ICurricularCourse getEquivalentCurricularCourse() {
-		return equivalentCurricularCourse;
-	}
-
-	public Integer getEquivalentCurricularCourseKey() {
-		return equivalentCurricularCourseKey;
-	}
 
 	public void setCurricularCourse(ICurricularCourse course) {
 		curricularCourse = course;
@@ -60,13 +52,12 @@ public class CurricularCourseEquivalence extends DomainObject implements ICurric
 	public void setCurricularCourseKey(Integer integer) {
 		curricularCourseKey = integer;
 	}
-
-	public void setEquivalentCurricularCourse(ICurricularCourse course) {
-		equivalentCurricularCourse = course;
+	public List getEquivalenceRestrictions() {
+		return equivalenceRestrictions;
 	}
 
-	public void setEquivalentCurricularCourseKey(Integer integer) {
-		equivalentCurricularCourseKey = integer;
+	public void setEquivalenceRestrictions(List list) {
+		equivalenceRestrictions = list;
 	}
 
 }

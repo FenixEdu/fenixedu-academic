@@ -2,7 +2,7 @@ package DataBeans;
 
 import java.io.Serializable;
 
-import Util.EquivalenceType;
+import Util.EnrolmentEquivalenceType;
 
 /**
  * @author dcs-rjao
@@ -13,7 +13,7 @@ public class InfoEquivalence implements Serializable {
 
 	private InfoEnrolment infoEnrolment;
 	private InfoEnrolment infoEquivalentEnrolment;
-	private EquivalenceType equivalenceType;
+	private EnrolmentEquivalenceType equivalenceType;
 
 
 	public InfoEquivalence() {
@@ -22,7 +22,7 @@ public class InfoEquivalence implements Serializable {
 		setEquivalenceType(null);
 	}
 
-	public InfoEquivalence(InfoEnrolment enrolment, InfoEnrolment equivalentEnrolment, EquivalenceType equivalenceType) {
+	public InfoEquivalence(InfoEnrolment enrolment, InfoEnrolment equivalentEnrolment, EnrolmentEquivalenceType equivalenceType) {
 		setInfoEnrolment(enrolment);
 		setInfoEquivalentEnrolment(equivalentEnrolment);
 		setEquivalenceType(equivalenceType);
@@ -49,9 +49,9 @@ public class InfoEquivalence implements Serializable {
 	}
 
 	/**
-	 * @return EquivalenceType
+	 * @return EnrolmentEquivalenceType
 	 */
-	public EquivalenceType getEquivalenceType() {
+	public EnrolmentEquivalenceType getEquivalenceType() {
 		return equivalenceType;
 	}
 
@@ -73,7 +73,7 @@ public class InfoEquivalence implements Serializable {
 	 * Sets the equivalenceType.
 	 * @param equivalenceType The equivalenceType to set
 	 */
-	public void setEquivalenceType(EquivalenceType equivalenceType) {
+	public void setEquivalenceType(EnrolmentEquivalenceType equivalenceType) {
 		this.equivalenceType = equivalenceType;
 	}
 

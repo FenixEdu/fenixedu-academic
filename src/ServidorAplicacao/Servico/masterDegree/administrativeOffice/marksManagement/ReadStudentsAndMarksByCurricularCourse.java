@@ -96,7 +96,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 				//			in case we have evaluations they can be submitted only if they are temporary
 				if (((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
 					.getEnrolmentEvaluationState()
-					.equals(EnrolmentEvaluationState.NORMAL_OBJ)) {
+					.equals(EnrolmentEvaluationState.FINAL_OBJ)) {
 					throw new ExistingServiceException();
 				}
 

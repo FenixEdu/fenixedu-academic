@@ -6,14 +6,17 @@
  */
 package Dominio;
 
+import java.util.List;
+
 /**
  * @author dcs-rjao
  *
  * 17/Jun/2003
  */
-public interface ICurricularCourseEquivalence {
+public interface ICurricularCourseEquivalence extends IDomainObject{
 	public abstract ICurricularCourse getCurricularCourse();
-	public abstract ICurricularCourse getEquivalentCurricularCourse();
+	public List getEquivalenceRestrictions();
 	public abstract void setCurricularCourse(ICurricularCourse course);
-	public abstract void setEquivalentCurricularCourse(ICurricularCourse course);
+	public void setEquivalenceRestrictions(List list);
+
 }

@@ -1,6 +1,7 @@
 package Dominio;
 
-import Util.EquivalenceType;
+import java.util.List;
+
 
 /**
  * @author dcs-rjao
@@ -8,13 +9,11 @@ import Util.EquivalenceType;
  * 24/Mar/2003
  */
 
-public interface IEnrolmentEquivalence {
+public interface IEnrolmentEquivalence extends IDomainObject{
 
 	public IEnrolment getEnrolment();
-	public EquivalenceType getEquivalenceType();
-	public IEnrolment getEquivalentEnrolment();
-
+	public List getEquivalenceRestrictions();
 	public void setEnrolment(IEnrolment enrolment);
-	public void setEquivalenceType(EquivalenceType equivalenceType);
-	public void setEquivalentEnrolment(IEnrolment equivalentEnrolment);
+	public void setEquivalenceRestrictions(List list);
+
 }

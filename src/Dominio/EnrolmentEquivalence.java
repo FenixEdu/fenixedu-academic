@@ -1,6 +1,7 @@
 package Dominio;
 
-import Util.EquivalenceType;
+import java.util.List;
+
 
 /**
  * @author dcs-rjao
@@ -8,35 +9,15 @@ import Util.EquivalenceType;
  * 24/Mar/2003
  */
 
-public class EnrolmentEquivalence implements IEnrolmentEquivalence {
+public class EnrolmentEquivalence extends DomainObject implements IEnrolmentEquivalence {
 
 	private IEnrolment enrolment;
-	private IEnrolment equivalentEnrolment;
-	private EquivalenceType equivalenceType;
-
-	private Integer internalID;
 	private Integer enrolmentKey;
-	private Integer equivalentEnrolmentKey;
+	private List equivalenceRestrictions;
 
 	public EnrolmentEquivalence() {
-		setEnrolment(null);
-		setEquivalentEnrolment(null);
-		setEquivalenceType(null);
-
-		setInternalID(null);
-		setEnrolmentKey(null);
-		setEquivalentEnrolmentKey(null);
 	}
 
-	public EnrolmentEquivalence(IEnrolment enrolment, IEnrolment equivalentEnrolment, EquivalenceType equivalenceType) {
-		setEnrolment(enrolment);
-		setEquivalentEnrolment(equivalentEnrolment);
-		setEquivalenceType(equivalenceType);
-
-		setInternalID(null);
-		setEnrolmentKey(null);
-		setEquivalentEnrolmentKey(null);
-	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
@@ -44,8 +25,7 @@ public class EnrolmentEquivalence implements IEnrolmentEquivalence {
 		if (obj instanceof IEnrolmentEquivalence) {
 			IEnrolmentEquivalence equivalence = (IEnrolmentEquivalence) obj;
 
-			resultado = (this.getEnrolment().equals(equivalence.getEnrolment())) &&
-									(this.getEquivalentEnrolment().equals(equivalence.getEquivalentEnrolment()));
+			resultado = (this.getEnrolment().equals(equivalence.getEnrolment()));
 		}
 		return resultado;
 	}
@@ -53,8 +33,6 @@ public class EnrolmentEquivalence implements IEnrolmentEquivalence {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "enrolment = " + this.enrolment + "; ";
-		result += "equivalentEnrolment = " + this.equivalentEnrolment + "; ";
-		result += "equivalenceType" + this.equivalenceType + "]\n";
 		return result;
 	}
 
@@ -73,34 +51,6 @@ public class EnrolmentEquivalence implements IEnrolmentEquivalence {
 	}
 
 	/**
-	 * @return EquivalenceType
-	 */
-	public EquivalenceType getEquivalenceType() {
-		return equivalenceType;
-	}
-
-	/**
-	 * @return IEnrolment
-	 */
-	public IEnrolment getEquivalentEnrolment() {
-		return equivalentEnrolment;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getEquivalentEnrolmentKey() {
-		return equivalentEnrolmentKey;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getInternalID() {
-		return internalID;
-	}
-
-	/**
 	 * Sets the enrolment.
 	 * @param enrolment The enrolment to set
 	 */
@@ -116,36 +66,12 @@ public class EnrolmentEquivalence implements IEnrolmentEquivalence {
 		this.enrolmentKey = enrolmentKey;
 	}
 
-	/**
-	 * Sets the equivalenceType.
-	 * @param equivalenceType The equivalenceType to set
-	 */
-	public void setEquivalenceType(EquivalenceType equivalenceType) {
-		this.equivalenceType = equivalenceType;
+	public List getEquivalenceRestrictions() {
+		return equivalenceRestrictions;
 	}
 
-	/**
-	 * Sets the equivalentEnrolment.
-	 * @param equivalentEnrolment The equivalentEnrolment to set
-	 */
-	public void setEquivalentEnrolment(IEnrolment equivalentEnrolment) {
-		this.equivalentEnrolment = equivalentEnrolment;
-	}
-
-	/**
-	 * Sets the equivalentEnrolmentKey.
-	 * @param equivalentEnrolmentKey The equivalentEnrolmentKey to set
-	 */
-	public void setEquivalentEnrolmentKey(Integer equivalentEnrolmentKey) {
-		this.equivalentEnrolmentKey = equivalentEnrolmentKey;
-	}
-
-	/**
-	 * Sets the internalID.
-	 * @param internalID The internalID to set
-	 */
-	public void setInternalID(Integer internalID) {
-		this.internalID = internalID;
+	public void setEquivalenceRestrictions(List list) {
+		equivalenceRestrictions = list;
 	}
 
 }

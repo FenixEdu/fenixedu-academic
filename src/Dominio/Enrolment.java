@@ -68,16 +68,15 @@ public class Enrolment extends DomainObject implements IEnrolment {
 
 		if (obj instanceof IEnrolment) {
 			IEnrolment enrolment = (IEnrolment) obj;
-
+						
 			resultado =
 				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
-//					&& this.getCurricularCourse().equals(enrolment.getCurricularCourse())
 					&& this.getCurricularCourseScope().equals(enrolment.getCurricularCourseScope())
 					&& this.getExecutionPeriod().equals(enrolment.getExecutionPeriod());
 		}
 		return resultado;
 	}
-
+		
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
@@ -241,4 +240,5 @@ public class Enrolment extends DomainObject implements IEnrolment {
 	public void setCurricularCourseScopeKey(Integer integer) {
 		curricularCourseScopeKey = integer;
 	}
+
 }
