@@ -26,16 +26,13 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
-import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
-import Dominio.StudentCurricularPlan;
+import Util.DegreeCurricularPlanState;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.PeriodState;
-import Util.StudentCurricularPlanState;
-import Util.TipoCurso;
 
 /**
  * @author Tânia Pousão
@@ -86,7 +83,7 @@ public class ReadFile extends LoadDataFile {
 
 	public void processLine(String line) {
 		numberLine += 1;
-		System.out.println("-->A tratar linha " + numberLine);
+		System.out.print("\n-->" + numberLine);
 		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
 		String studentNumber = stringTokenizer.nextToken();
@@ -148,200 +145,177 @@ public class ReadFile extends LoadDataFile {
 		almeida_enrolment.setCoduniv(universityCode);
 		almeida_enrolment.setObserv(observation);
 
-		if (enrolmentThisYear(almeida_enrolment)) {
+		if (isEnrolmentThisYear(almeida_enrolment)) {
+			System.out.print("...");
 			processEnrolment(almeida_enrolment);
 		}
 	}
 
-	private boolean enrolmentThisYear(Almeida_enrolment almeida_enrolment) {
+	private boolean isEnrolmentThisYear(Almeida_enrolment almeida_enrolment) {
 		String enrolment_year = String.valueOf(almeida_enrolment.getAnoins()) + "/" + String.valueOf(almeida_enrolment.getAnoins() + 1);
 
-		return enrolment_year.equals(EXECUTION_YEAR);
+		return (enrolment_year.equals(EXECUTION_YEAR)) && (almeida_enrolment.getSemdis() == EXECUTION_SEMESTER);
 	}
 
 	private void processEnrolment(Almeida_enrolment almeida_enrolment) {
-		IDegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(almeida_enrolment);
-		IBranch branch = readBranch(almeida_enrolment, degreeCurricularPlan);
-
-		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(almeida_enrolment, degreeCurricularPlan, branch);
-		ICurricularCourse curricularCourse = readCurricularCourse(almeida_enrolment, degreeCurricularPlan);
-
-		ICurricularCourseScope curricularCourseScope = null;
-		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao disciplinaExecucao = null;
-
+		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(almeida_enrolment);
 		if (studentCurricularPlan == null) {
-			logString += numberLine + "-ERRO: Plano curricular do estudante " + almeida_enrolment.getNumalu() + " desconhecido\n";
-		} else if (curricularCourse == null) {
-			logString += numberLine + "-ERRO: Disciplina curricular " + almeida_enrolment.getCoddis() + " desconhecida\n";
-		} else {
+			logString += numberLine + "-ERRO: Student Curricular Plan " + almeida_enrolment.getNumalu() + " unknown\n";
+			numberUntreatableElements++;
+			return;
+		}
 
-			if (degreeCurricularPlan == null) {
-				logString += numberLine + "-ERRO: Plano curricular do curso " + almeida_enrolment.getCurso() + " desconhecidos\n";
-			} else {
-				curricularCourseScope = readCurricularCourseScope(almeida_enrolment, curricularCourse, branch);
+		IDegreeCurricularPlan degreeCurricularPlan = readDegreeCurricularPlan(almeida_enrolment);
+		if (degreeCurricularPlan == null) {
+			logString += numberLine + "-ERRO: Degree Curricular Plan" + almeida_enrolment.getCurso() + " unknown\n";
+			numberUntreatableElements++;
+			return;
+		}
 
-				if (curricularCourseScope == null) {
-					logString += numberLine
-						+ "-ERRO: CurricularCourseScope: disciplina= "
-						+ almeida_enrolment.getCoddis()
-						+ "  curso= "
-						+ almeida_enrolment.getCurso()
-						+ "\n";
-					//writeElement(almeida_inscricoes);
-					numberUntreatableElements++;
-					return;
+		ICurricularCourse curricularCourse = readCurricularCourse(almeida_enrolment, degreeCurricularPlan);
+		if (curricularCourse == null) {
+			logString += numberLine + "-ERRO: Curricular Courser " + almeida_enrolment.getCoddis() + " unknown\n";
+			numberUntreatableElements++;
+			return;
+		}
+
+		IBranch branch = readBranch(almeida_enrolment, degreeCurricularPlan);
+		if (branch == null) {
+			logString += numberLine + "-ERRO: Branch " + almeida_enrolment.getCurso() + "-" + almeida_enrolment.getRamo() + " unknown\n";
+			numberUntreatableElements++;
+			return;
+		}
+
+		ICurricularCourseScope curricularCourseScope = readCurricularCourseScope(almeida_enrolment, curricularCourse, branch);
+		if (curricularCourseScope == null) {
+			logString += numberLine
+				+ "-ERRO: Curricular Course Scope: curricular course = "
+				+ almeida_enrolment.getCoddis()
+				+ "  degree = "
+				+ almeida_enrolment.getCurso()
+				+ "unknown\n";
+			numberUntreatableElements++;
+			return;
+		}
+
+		IExecutionPeriod executionPeriod = readActualExecutionPeriod();
+
+		//update enrolment
+		IEnrolment enrolment = readEnrolment(studentCurricularPlan, curricularCourseScope, executionPeriod);
+		if (enrolment == null) {
+			enrolment = new Enrolment();
+			enrolment.setCurricularCourseScope(curricularCourseScope);
+			enrolment.setExecutionPeriod(executionPeriod);
+			enrolment.setEnrolmentEvaluationType(readEvaluationType(almeida_enrolment.getEpoca()));
+			enrolment.setEnrolmentState(readStateEnrolment(almeida_enrolment));
+			enrolment.setStudentCurricularPlan(studentCurricularPlan);
+
+			writeElement(enrolment);
+		}
+
+		//update evaluation
+		IEnrolmentEvaluation enrolmentEvaluation =
+			persistentObjectOJB.readEnrolmentEvaluationByEvaluationDate(
+				enrolment,
+				enrolment.getEnrolmentEvaluationType(),
+				almeida_enrolment.getResult(),
+				readEvaluationDate(almeida_enrolment.getDatexa()));
+		if (enrolmentEvaluation == null) {
+			enrolmentEvaluation = new EnrolmentEvaluation();
+
+			enrolmentEvaluation.setGrade(almeida_enrolment.getResult());
+			enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+			enrolmentEvaluation.setExamDate(readEvaluationDate(almeida_enrolment.getDatexa()));
+			enrolmentEvaluation.setEnrolment(enrolment);
+
+			if (almeida_enrolment.getNumdoc() != null) {
+				ITeacher teacher = persistentObjectOJB.readTeacher(Integer.valueOf(almeida_enrolment.getNumdoc()));
+				if (teacher != null) {
+					enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
 				} else {
-					//update enrolment
-					executionPeriod = readActualExecutionPeriod();
-					IEnrolment enrolment = readEnrolment(studentCurricularPlan, curricularCourseScope, executionPeriod);
-					if (enrolment == null) {
-						enrolment = new Enrolment();
-						enrolment.setCurricularCourseScope(curricularCourseScope);
-						enrolment.setExecutionPeriod(executionPeriod);
-						enrolment.setEnrolmentEvaluationType(readEvaluationType(almeida_enrolment.getEpoca()));
-						enrolment.setEnrolmentState(readStateEnrolment(almeida_enrolment));
-						enrolment.setStudentCurricularPlan(studentCurricularPlan);
-
-						writeElement(enrolment);
-					}
-
-					if (enrolment != null) {
-						//update evaluation
-						IEnrolmentEvaluation enrolmentEvaluation =
-							persistentObjectOJB.readEnrolmentEvaluationByUnique(
-								enrolment,
-								enrolment.getEnrolmentEvaluationType(),
-								almeida_enrolment.getResult(),
-								readEvaluationDate(almeida_enrolment.getDatexa()));
-						if (enrolmentEvaluation == null) {
-							enrolmentEvaluation = new EnrolmentEvaluation();
-
-							enrolmentEvaluation.setGrade(almeida_enrolment.getResult());
-							enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-							enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-							enrolmentEvaluation.setExamDate(readEvaluationDate(almeida_enrolment.getDatexa()));
-							enrolmentEvaluation.setEnrolment(enrolment);
-
-							if (almeida_enrolment.getNumdoc() != null) {
-								ITeacher teacher = persistentObjectOJB.readTeacher(Integer.valueOf(almeida_enrolment.getNumdoc()));
-								if (teacher != null) {
-									enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-								} else {
-									logString += numberLine + "-ERRO: Professor " + almeida_enrolment.getNumdoc() + " desconhecidos\n";
-								}
-							}
-							if (almeida_enrolment.getObserv() != null) {
-								enrolmentEvaluation.setObservation("carregamentos: " + almeida_enrolment.getObserv());
-							} else {
-								enrolmentEvaluation.setObservation("carregamentos");
-							}
-
-							Calendar calendar = Calendar.getInstance();
-							enrolmentEvaluation.setWhen(calendar.getTime());
-
-							writeElement(enrolmentEvaluation);
-						}
-
-						//update frequenta
-						disciplinaExecucao = readExecutionCourse(curricularCourse, executionPeriod);
-						if (disciplinaExecucao != null) {
-							IFrequenta frequenta = persistentObjectOJB.readFrequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
-							if (frequenta == null) {
-								frequenta = new Frequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
-								frequenta.setEnrolment(enrolment);
-
-								writeElement(frequenta);
-							} else {
-								frequenta.setEnrolment(enrolment);
-
-								writeElement(frequenta);
-							}
-						} else {
-							logString += numberLine
-								+ "-ERRO: disciplina Execucao: code= "
-								+ curricularCourse.getCode()
-								+ "  name= "
-								+ curricularCourse.getName()
-								+ "  curso= "
-								+ almeida_enrolment.getCurso()
-								+ "\n";
-							//writeElement(almeida_inscricoes);
-							numberUntreatableElements++;
-							return;
-						}
-					}
+					logString += numberLine + "-ERRO: Teacher " + almeida_enrolment.getNumdoc() + " unknown\n";
 				}
 			}
+			if (almeida_enrolment.getObserv() != null) {
+				enrolmentEvaluation.setObservation("carregamentos: " + almeida_enrolment.getObserv());
+			} else {
+				enrolmentEvaluation.setObservation("carregamentos");
+			}
+
+			Calendar calendar = Calendar.getInstance();
+			enrolmentEvaluation.setWhen(calendar.getTime());
+
+			writeElement(enrolmentEvaluation);
+		}
+
+		//update frequenta
+		IDisciplinaExecucao disciplinaExecucao = readExecutionCourse(curricularCourse, executionPeriod);
+		if (disciplinaExecucao != null) {
+			IFrequenta frequenta = persistentObjectOJB.readFrequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
+			if (frequenta == null) {
+				frequenta = new Frequenta(studentCurricularPlan.getStudent(), disciplinaExecucao);
+				frequenta.setEnrolment(enrolment);
+
+				writeElement(frequenta);
+			} else {
+				frequenta.setEnrolment(enrolment);
+
+				writeElement(frequenta);
+			}
+		} else {
+			logString += numberLine
+				+ "-ERRO: Exectution Course: code= "
+				+ curricularCourse.getCode()
+				+ "  name= "
+				+ curricularCourse.getName()
+				+ "  dgree= "
+				+ almeida_enrolment.getCurso()
+				+ "unknown\n";
+			//writeElement(almeida_inscricoes);
+			numberUntreatableElements++;
+			return;
 		}
 	}
 
-	private IStudentCurricularPlan readStudentCurricularPlan(
-		Almeida_enrolment almeida_enrolment,
-		IDegreeCurricularPlan degreeCurricularPlan,
-		IBranch branch) {
-		IStudentCurricularPlan studentCurricularPlan =
-			persistentObjectOJB.readStudentCurricularPlan(new Integer("" + almeida_enrolment.getNumalu()));
-		if (studentCurricularPlan == null) {
-			IStudent student =
-				persistentObjectOJB.readStudent(new Integer("" + almeida_enrolment.getNumalu()), new TipoCurso(TipoCurso.LICENCIATURA));
-
-			if (student != null && degreeCurricularPlan != null) {
-
-				studentCurricularPlan =
-					new StudentCurricularPlan(
-						student,
-						degreeCurricularPlan,
-						branch,
-						new Date(),
-						new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
-			} else {
-				logString += numberLine
-					+ "-ERRO: Estudante "
-					+ almeida_enrolment.getNumalu()
-					+ " ou curso curricular "
-					+ almeida_enrolment.getCurso()
-					+ " desconhecidos\n";
-			}
-
-			writeElement(studentCurricularPlan);
-		}
-
-		return studentCurricularPlan;
+	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
+		return persistentObjectOJB.readStudentCurricularPlan(new Integer("" + almeida_enrolment.getNumalu()));
 	} //readStudentCurricularPlan
 
 	private ICurricularCourse readCurricularCourse(Almeida_enrolment almeida_enrolment, IDegreeCurricularPlan degreeCurricularPlan) {
-		ICurricularCourse curricularCourse = null;
 
-		// First read Almeidas curricular course
+		// First search the curricular course in Almeida's table
 		Almeida_disc almeida_disc =
 			persistentObjectOJB.readAlmeidaCurricularCourse(
 				almeida_enrolment.getCoddis(),
 				Long.valueOf(almeida_enrolment.getCurso()).longValue(),
 				almeida_enrolment.getAnoins());
-
-		// Log the ones that don't exist in his database!
 		if (almeida_disc == null) {
-			writeElement(almeida_enrolment);
+			//shoud exists
+			logString += numberLine + "-ERRO: Almeida disciplina " + almeida_enrolment.getCoddis() + " unknown\n";
 			numberUntreatableElements++;
-		} else {
-			// Read our corresponding curricular couse
-			if (degreeCurricularPlan != null) {
-				curricularCourse =
-					persistentObjectOJB.readCurricularCourse(
-						almeida_disc.getNomedis(),
-						degreeCurricularPlan.getIdInternal(),
-						almeida_disc.getCoddis());
-				if (curricularCourse == null) {
-					// Log the ones we can't match
-					writeElement(almeida_enrolment);
-					numberUntreatableElements++;
-				}
-			}
+			return null;
 		}
 
+		// Read our corresponding curricular couse
+		ICurricularCourse curricularCourse = null;
+		//TODO
+		curricularCourse =
+			persistentObjectOJB.readCurricularCourse(
+				almeida_disc.getNomedis(),
+				degreeCurricularPlan.getIdInternal(),
+				almeida_disc.getCoddis());
+		if (curricularCourse == null) {
+			curricularCourse = findCurricularCourse(almeida_disc, degreeCurricularPlan);			
+		}
 		return curricularCourse;
 	} //readCurricularCourse
+
+	private ICurricularCourse findCurricularCourse(Almeida_disc almeida_disc, IDegreeCurricularPlan degreeCurricularPlan) {
+		
+		
+		return null;
+	}
 
 	private ICurricularCourseScope readCurricularCourseScope(
 		Almeida_enrolment almeida_enrolment,
@@ -455,14 +429,9 @@ public class ReadFile extends LoadDataFile {
 	}
 
 	private IDegreeCurricularPlan readDegreeCurricularPlan(Almeida_enrolment almeida_enrolment) {
-		IDegreeCurricularPlan degreeCurricularPlan =
-			persistentObjectOJB.readDegreeCurricularPlanByDegreeIDAndActiveState(new Integer("" + almeida_enrolment.getCurso()));
-		if (degreeCurricularPlan != null) {
-			return degreeCurricularPlan;
-		} else {
-			logString += numberLine + "-ERRO: Degree " + almeida_enrolment.getCurso() + " desconhecido\n";
-			return null;
-		}
+		return persistentObjectOJB.readDegreeCurricularPlanByDegreeKeyAndState(
+			new Integer("" + almeida_enrolment.getCurso()),
+			DegreeCurricularPlanState.ACTIVE_OBJ);
 	}
 
 	private IBranch readBranch(Almeida_enrolment almeida_enrolment, IDegreeCurricularPlan degreeCurricularPlan) {
@@ -470,12 +439,7 @@ public class ReadFile extends LoadDataFile {
 		if (almeida_enrolment.getRamo() != 0) {
 			code = almeida_enrolment.getCurso() + almeida_enrolment.getRamo() + "0";
 		}
-
-		if (degreeCurricularPlan != null) {
-			return persistentObjectOJB.readBranchByUnique(code, degreeCurricularPlan);
-		} else {
-			return null;
-		}
+		return persistentObjectOJB.readBranchByUnique(code, degreeCurricularPlan);
 	}
 
 	private IEnrolment readEnrolment(
