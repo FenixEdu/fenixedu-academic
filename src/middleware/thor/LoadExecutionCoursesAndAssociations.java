@@ -333,10 +333,10 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 					disciplinaExecucao.setNome(courseDegreesPair.getNome());
 					disciplinaExecucao.setAssociatedExams(null);
 					disciplinaExecucao.setExecutionPeriod(executionPeriod);
-					disciplinaExecucao.setTheoreticalHours(null);
-					disciplinaExecucao.setPraticalHours(null);
-					disciplinaExecucao.setTheoPratHours(null);
-					disciplinaExecucao.setLabHours(null);
+					disciplinaExecucao.setTheoreticalHours(new Double(0));
+					disciplinaExecucao.setPraticalHours(new Double(0));
+					disciplinaExecucao.setTheoPratHours(new Double(0));
+					disciplinaExecucao.setLabHours(new Double(0));
 					disciplinaExecucao.setComment(" ");
 					disciplinaExecucao.setAssociatedCurricularCourses(
 						new ArrayList());
@@ -354,15 +354,10 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 					disciplinaExecucao.getAssociatedCurricularCourses().add(
 						curricularCourse);
 
-					//writeExecutionCourse = true;
-
-					bufferToWrite
-						+= "insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, "
-						+ curricularCourse.getIdInternal()
-						+ ", "
-						+ disciplinaExecucao.getIdInternal()
-						+ ");\n";
-
+					disciplinaExecucao.setTheoreticalHours(curricularCourse.getTheoreticalHours());
+					disciplinaExecucao.setPraticalHours(curricularCourse.getPraticalHours());
+					disciplinaExecucao.setTheoPratHours(curricularCourse.getTheoPratHours());
+					disciplinaExecucao.setLabHours(curricularCourse.getLabHours());
 				}
 			}
 
