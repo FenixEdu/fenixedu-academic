@@ -39,6 +39,15 @@
 				<arg0 key="error.no.execution.period.selected" resource="true"/>
 			</field>
 		</form>
+		
+		<form name="getStudentByNumberAndDegreeTypeForThesisForm">
+			<field property="degreeType" depends="required,integer" page="1">
+				<arg0 key="error.no.degree.type.selected" resource="true"/>
+			</field>
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="error.no.student.selected" resource="true"/>
+			</field>
+		</form>
 
 		<form name="getDegreeAndCurricularSemesterAndCurricularYearForm">
 			<field property="infoExecutionDegree" depends="required,integer" page="1">

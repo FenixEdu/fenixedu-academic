@@ -17,6 +17,14 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="executionPeriodOID" type="java.lang.String"/>
 		</form-bean>
+		
+		<form-bean name="getStudentByNumberAndDegreeTypeForThesisForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+		</form-bean>
+		
 		<form-bean name="getStudentByNumberAndGraduationTypeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
@@ -618,10 +626,10 @@
 			<forward name="error" path="/enrollment/chooseStudentForEnrollment.jsp"/>
 		</action>
 		
-		<action	name="getStudentByNumberAndDegreeTypeForm"
+		<action	name="getStudentByNumberAndDegreeTypeForThesisForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.PrepareStudentDataForThesisOperationsDispatchAction"
 				path="/prepareStudentForMasterDegreeThesisAndProof"
-				input="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"
+				input="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp?page=2"
 				parameter="method"
 				scope="request"
 				validate="true">
