@@ -1,0 +1,66 @@
+/*
+ * Created on 23/Abr/2003
+ *
+ * To change the template for this generated file go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
+ */
+package ServidorAplicacao.Servico.gesdis;
+
+import DataBeans.InfoEvaluation;
+import DataBeans.InfoExecutionCourse;
+import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IEvaluation;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.IServico;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+
+/**
+ * @author jmota
+ *
+ * To change the template for this generated type comment go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
+ */
+public class ReadEvaluation implements IServico {
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.IServico#getNome()
+	 */
+
+	private static ReadEvaluation service = new ReadEvaluation();
+
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static ReadEvaluation getService() {
+		return service;
+	}
+
+	/**
+	 * The ctor of this class.
+	 **/
+	private ReadEvaluation() {
+	}
+	public String getNome() {
+		return "ReadEvaluation";
+	}
+
+	public InfoEvaluation run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+		try {
+			InfoEvaluation infoEvaluation = null;
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+			IEvaluation  evaluation = sp.getIPersistentEvaluation().readByExecutionCourse(executionCourse);
+			if (evaluation != null) {
+				infoEvaluation=Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+			}
+		
+			return infoEvaluation;
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+	}
+
+}

@@ -20,6 +20,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
+import DataBeans.InfoEvaluation;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -62,6 +63,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Equivalence;
+import Dominio.Evaluation;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -87,6 +89,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
+import Dominio.IEvaluation;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -1559,6 +1562,30 @@ public abstract class Cloner {
 
 		return equivalence;
 	}
+
+	public static IEvaluation copyInfoEvaluation2IEvaluation(InfoEvaluation infoEvaluation) {
+
+		IEvaluation evaluation = new Evaluation();
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoEvaluation.getInfoExecutionCourse());
+			
+		copyObjectProperties(evaluation, infoEvaluation);
+
+		evaluation.setExecutionCourse(executionCourse);		
+
+		return evaluation;
+		}
+		
+	public static InfoEvaluation copyIEvaluation2InfoEvaluation(IEvaluation evaluation) {
+
+			InfoEvaluation infoEvaluation = new InfoEvaluation();
+			InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(evaluation.getExecutionCourse());
+			
+			copyObjectProperties(infoEvaluation, evaluation);
+
+			infoEvaluation.setInfoExecutionCourse(infoExecutionCourse);		
+
+			return infoEvaluation;
+			}	
 
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 }
