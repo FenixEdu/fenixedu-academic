@@ -84,6 +84,11 @@ public class WriteCandidacy implements IService {
                         candidacy.getTheme().getIdInternal());
                 candidacy.setTheme(readTheme);
             }
+            if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue())
+            {
+                ((Candidacy) candidacy).setThemeIdInternal(null);
+                candidacy.setTheme(null);                
+            }
             for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {
                 ICaseStudyChoice element = (ICaseStudyChoice) iter.next();
                 persistentChoice.simpleLockWrite(element);

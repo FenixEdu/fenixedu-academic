@@ -217,6 +217,7 @@ public class ShowCandidacies extends FenixAction {
             }
         }
         Collections.sort(avaliableCurricularPlans, new BeanComparator("name"));
+
         request.setAttribute("seminaries", seminaries);
         request.setAttribute("cases", cases);
         request.setAttribute("degrees", avaliableCurricularPlans);
