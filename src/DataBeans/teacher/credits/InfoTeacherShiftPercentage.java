@@ -12,15 +12,15 @@ import DataBeans.InfoShift;
  * @author jpvl
  */
 public class InfoTeacherShiftPercentage extends InfoObject {
-	private InfoProfessorShip infoProfesorShip = null;
+	private InfoProfessorShip infoProfessorship = null;
 	private InfoShift infoShift = null;
 	private Double percentage = null;
 
 	/**
 	 * @return
 	 */
-	public InfoProfessorShip getInfoProfesorShip() {
-		return infoProfesorShip;
+	public InfoProfessorShip getInfoProfessorship() {
+		return infoProfessorship;
 	}
 
 	/**
@@ -40,8 +40,8 @@ public class InfoTeacherShiftPercentage extends InfoObject {
 	/**
 	 * @param ship
 	 */
-	public void setInfoProfesorShip(InfoProfessorShip ship) {
-		infoProfesorShip = ship;
+	public void setInfoProfessorship(InfoProfessorShip ship) {
+		infoProfessorship = ship;
 	}
 
 	/**
