@@ -1,7 +1,5 @@
 package ServidorApresentacao.Action.commons.password;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,7 +9,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoPerson;
 import ServidorAplicacao.GestorServicos;
@@ -38,17 +35,6 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 
 		DynaActionForm newPasswordForm = (DynaActionForm) form;
 
-//		newPasswordForm.set("userType", null);
-//		newPasswordForm.set("number", null);
-		
-		ArrayList userTypes = new ArrayList();
-		userTypes.add(new LabelValueBean("Docente", "D"));
-		userTypes.add(new LabelValueBean("Funcionário", "F"));
-		userTypes.add(new LabelValueBean("Aluno de Mestrado", "M"));
-		userTypes.add(new LabelValueBean("Aluno de Licenciatura", "L"));
-
-		request.setAttribute("userTypes", userTypes);
-
 		return mapping.findForward("PrepareSuccess");
 	}
 	
@@ -64,14 +50,12 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 
 		DynaActionForm newPasswordForm = (DynaActionForm) form;
 
-		String userType = (String) newPasswordForm.get("userType");
-		String personNumberString = (String) newPasswordForm.get("number");
-
+		String username = (String) newPasswordForm.get("username");
 
 	  
 		InfoPerson infoPerson = null;
 		try {
-			Object args[] = { new String(userType + personNumberString) };
+			Object args[] = { username };
 			infoPerson = (InfoPerson) serviceManager.executar(userView, "ReadPersonByUsername", args);
 		} catch (ExcepcaoInexistente e) {
 			throw new NonExistingActionException("A Pessoa", e);

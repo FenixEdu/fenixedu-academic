@@ -20,26 +20,10 @@
 	<table>
 		<tr>
 			<td>
-				Tipo de Utilizador:			
-			
+				Username
 			</td>
 			<td>
-				<logic:iterate id="user" name="userTypes">
-					<tr>
-						<td>
-							<bean:define id="userValue" name="user" property="value" />
-							<html:radio property="userType" value="<%= (String) userValue %>"/><bean:write name="user" property="label" /><br />
-						</td>
-					</tr>
-				</logic:iterate>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Número
-			</td>
-			<td>
-				<html:text property="number" />
+				<html:text property="username" />
 			</td>
 		
 		</tr>

@@ -174,8 +174,7 @@
       			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
       			dynamic="true">
 		<form-property name="userType" type="java.lang.String"/>
-		<form-property name="number" type="java.lang.String"/>
-		<form-property name="personID" type="java.lang.Integer"/>
+		<form-property name="username" type="java.lang.String"/>
 		<form-property name="page" type="java.lang.Integer"/>
       </form-bean>   
     </form-beans>
