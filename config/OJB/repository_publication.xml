@@ -145,7 +145,7 @@
 	<collection-descriptor
 			name="authorPublications"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
-			proxy="true">
+			proxy="true" refresh="true">
 		<inverse-foreignkey field-ref="keyAuthor"/>
 	</collection-descriptor>	
 
