@@ -131,7 +131,7 @@
 	<action-mappings type="org.apache.struts.action.ActionMapping">
      <action path="/naoExecutado" forward="/error.jsp"/>
 	 <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
- 
+
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
 				scope="session"
@@ -315,7 +315,8 @@
 	</action>
 	
 	<!-- Section viewer -->
-	<action path="/viewSection"
+	<action name="sectionForm"
+		path="/viewSection"
         type="ServidorApresentacao.Action.teacher.ViewSectionAction">    
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>
