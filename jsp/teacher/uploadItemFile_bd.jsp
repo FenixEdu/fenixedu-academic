@@ -17,12 +17,14 @@
  	<html:hidden  property="itemCode" value="<%= itemCode.toString() %>"/>
  	<html:hidden  property="objectCode" value="<%= objectCode.toString() %>"/>
  
-	Nome que pretende para a visualização do ficheiro:
+	<strong>Nome que pretende para a visualização do ficheiro:</strong>
 	<br/>	
- 	<html:text property="linkName"/>
+ 	<html:text property="linkName" size="55"/>
+ 	<br/> 	
  	<br/>
+ 	<strong>Ficheiro:</strong>
  	<br/>
- 	<html:file property="theFile" />
+ 	<html:file property="theFile" size="40"/>
 	<br />
 	<br />
 	<html:submit styleClass="inputbutton">

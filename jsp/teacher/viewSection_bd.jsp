@@ -9,7 +9,7 @@
 <bean:define id="section" name="infoSiteSection" property="section"/>
 <bean:define id="currentSectionCode" name="section" property="idInternal"/>
 	
-<h2><bean:write name="section" property="name"/></h2>
+<h2><bean:message key="label.section"/><bean:write name="section" property="name"/></h2>
 <table	 cellpadding="0" border="0">
 	<tr> 
 		<td>
@@ -63,35 +63,13 @@
 
 <logic:iterate id="item" name="itemsList">
 <bean:define id="itemCode" name="item" property="idInternal"/>
-<h4><bean:write name="item" property="name"/></h4>
-    <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal> 		
-  	<bean:write name="item" property="information" filter="false" />
-  	<logic:equal name="item" property="urgent" value="true"></font></logic:equal>
-  	<logic:present name="item" property="links">
-  	<br/>
-  	<br/>
-  		<table>
-  			<tr><td class="listClasses-header">
-  			Ficheiros:
-  			</td><td class="listClasses-header">&nbsp;</td></tr>
-		<logic:iterate id="infoLink" name="item" property="links">
-		<tr><td class="listClasses">
-			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
-		</td>
-		<td class="listClasses"><html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" paramId="fileName" paramName="infoLink" paramProperty="link" onclick="return confirm('Tem a certeza que deseja apagar este ficheiro?')" >Apagar Ficheiro</html:link>
-		
-		</td>
-		</tr>
-		</logic:iterate>
-		</table>
-  	</logic:present>
-  	
-<br />
-<br />
+<div class="greytxt"><strong><bean:message key="label.item"/><bean:write name="item" property="name"/></strong></div>
+<br/>
 <table>
 	<tr>			
 		<td>
 			<div class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
 				<html:link page="<%= "/editItem.do?method=prepareEditItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode %>">
 					<bean:message key="button.editItem"/>
 				</html:link>
@@ -99,13 +77,15 @@
 		</td>
 		<td>
 			<div class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
 				<html:link page="<%= "/deleteItem.do?method=deleteItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" onclick="return confirm('Tem a certeza que deseja apagar este item?')">
 					<bean:message key="button.deleteItem"/>
 				</html:link>
 			</div>
 		</td>
-		<%--<td>
+<%--		<td>
 			<div class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
 				<html:link page="<%="/prepareFileUpload.do?method=prepareFileUpload&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>">
 					Inserir Ficheiro
 				</html:link>
@@ -113,6 +93,33 @@
 		</td>--%>
 	</tr>
 </table>  
+<br />
+<br />
+    <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal> 		
+  	<bean:write name="item" property="information" filter="false" />
+  	<logic:equal name="item" property="urgent" value="true"></font></logic:equal>
+  	<logic:present name="item" property="links">
+  	<br/>
+  	<br/>  			
+  		<table>	
+		<logic:iterate id="infoLink" name="item" property="links">
+		<tr>
+		<bean:define id="linkName" name="infoLink" property="linkName"/>
+		<td><img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /></td>
+		<td>
+			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
+		</td>
+		<td>&nbsp;&nbsp;<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> </td>
+			<td><html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" paramId="fileName" paramName="infoLink" paramProperty="link" onclick="<%= "return confirm('Tem a certeza que deseja apagar o ficheiro "+linkName+"?')"%>" >Apagar Ficheiro</html:link>
+			</td>
+		
+		</tr>
+		</logic:iterate>
+		</table>
+		
+  	</logic:present>
+  	
+<br> 
 <br> 
 </logic:iterate>
 </logic:present>
