@@ -45,9 +45,7 @@ public class LerTurno implements IServico {
 		InfoShift infoTurno = null;
 		
 		try {
-		
-		
-		
+				
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		
 			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());

@@ -25,9 +25,8 @@
 
     <table>        
 		<tr>
-			
 			<td colspan="3">
-			 <h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>
+			 <h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>				
 			
 			<logic:present name="marksListComponent" property="infoEvaluation">  
 				<bean:define id="evaluation" name="marksListComponent" property="infoEvaluation" />		
@@ -35,7 +34,8 @@
 					<h2>
 					&nbsp;-&nbsp;				
 					<bean:write name="evaluation" property="season"/>&nbsp;
-					<bean:write name="evaluation" property="date"/> <i><bean:message key="label.at" /></i> <bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/><br />
+					<bean:write name="evaluation" property="date"/> <i><bean:message key="label.at" /></i> 
+					<bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/><br />
 					</h2>
 				</logic:equal>
 				<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">
@@ -47,11 +47,15 @@
 		   </td>
 		</tr> 
 		<tr>
+			
 			<td class="listClasses-header">
 				<bean:message key="label.number" /> 
 		   </td>
 			<td class="listClasses-header">
 				<bean:message key="label.name" />
+		   </td>
+		   <td class="listClasses-header">
+				<bean:message key="label.enrolmentEvaluationType" /> 
 		   </td>
 			<logic:present name="marksListComponent" property="marksList">  						
 				<td class="listClasses-header">
@@ -64,22 +68,41 @@
 			<bean:size id="size" name="marksListComponent" property="marksList" />	
 			<html:hidden property="sizeList" value="<%= size.toString() %>" />							
 				    			    		
-	    	<logic:iterate id="markElem" name="marksListComponent" property="marksList" indexId="markId" > 
-	    		<bean:define id="studentCode" name="markElem" property="infoFrequenta.aluno.idInternal" />
+	    	<logic:iterate id="markElem" name="marksListComponent" property="marksList" indexId="markId" type="DataBeans.InfoMark" > 
+	    	
+		    	<bean:define id="studentCode" name="markElem" property="infoFrequenta.aluno.idInternal" />
+		    	<bean:define id="infoFrequenta" name="markElem" property="infoFrequenta"/>
+		    	<logic:notEmpty name="infoFrequenta" property="infoEnrolment">
+		      		<bean:define id="infoEnrolment" name="infoFrequenta" property="infoEnrolment"/>					
+			  		<bean:define id="evaluationType" name="infoEnrolment" property="evaluationType"/> 		      		
+		  		</logic:notEmpty>
+
 	    		<bean:define id="studentMark" name="markElem" property="mark" />
 	    		
 	    		<tr>
+	    		<logic:present name="markElem" property="infoFrequenta"/>	
 					<td class="listClasses">
 						<bean:write name="markElem" property="infoFrequenta.aluno.number"/>&nbsp;
 					</td>
 					<td class="listClasses">
 						<bean:write name="markElem" property="infoFrequenta.aluno.infoPerson.nome"/>
-					</td>											
-					<td class="listClasses">
-						<html:text name="markElem" property="mark" size="4" indexed="true" />
-						<html:hidden name="markElem" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
 					</td>
+				</logic:present>	
+				<td class="listClasses">
+					<logic:empty name="markElem" property="infoFrequenta.infoEnrolment" >
+						<bean:message key="message.notEnroled"/>
+					</logic:empty>	
+					<logic:notEmpty name="markElem" property="infoFrequenta.infoEnrolment">
+							<bean:write name="evaluationType"/>
+					</logic:notEmpty>
+				</td>
+				
+				<td class="listClasses">
+					<html:text name="markElem" property="mark" size="4" indexed="true" />
+					<html:hidden name="markElem" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
+				</td>
 				</tr>
+				
 	    	</logic:iterate>	    	
 		</logic:present>
 		

@@ -25,6 +25,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class LerTurnosDeDisciplinaExecucao implements IServico {
+	
 	private static LerTurnosDeDisciplinaExecucao _servico =
 		new LerTurnosDeDisciplinaExecucao();
 	/**

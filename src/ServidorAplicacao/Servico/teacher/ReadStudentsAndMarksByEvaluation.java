@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
@@ -13,12 +14,14 @@ import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
+import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEvaluation;
 import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.ISite;
 import Dominio.Mark;
+import Dominio.Site;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -37,7 +40,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 public class ReadStudentsAndMarksByEvaluation implements IServico {
-	private static ReadStudentsAndMarksByEvaluation _servico = new ReadStudentsAndMarksByEvaluation();
+	private static ReadStudentsAndMarksByEvaluation _servico =
+		new ReadStudentsAndMarksByEvaluation();
 
 	/**
 		* The actor of this class.
@@ -61,18 +65,20 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 		return _servico;
 	}
 
-	public Object run(Integer executionCourseCode, Integer evaluationCode) throws ExcepcaoInexistente, FenixServiceException {
-		List attendList = null;
-		List infoMarksList = null;
+	public Object run(Integer executionCourseCode, Integer evaluationCode)
+		throws ExcepcaoInexistente, FenixServiceException {
+		
+		List attendList = new ArrayList();
+		List infoMarksList = new ArrayList();
 
-		ISite site = null;
-		IDisciplinaExecucao executionCourse = null;
-		IEvaluation evaluation = null;
-		InfoEvaluation infoEvaluation = null;
+		ISite site = new Site();
+		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+		IEvaluation evaluation = new Evaluation();
+		InfoEvaluation infoEvaluation = new InfoEvaluation();
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
+	
 			//Execution Course
 			executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(executionCourseCode);
@@ -90,23 +96,27 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 			IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
 			evaluation = (IEvaluation) evaluationDAO.readByOId(evaluation, false);
 			infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
-
+			
 			//Attends
 			IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
 			attendList = frequentaPersistente.readByExecutionCourse(executionCourse);
+			
 			if (attendList != null) {
 				Iterator attendIterador = attendList.listIterator();
-				IFrequenta frequenta = null;
-
+				IFrequenta frequenta = new Frequenta();
+				
 				IPersistentMark persistentMark = sp.getIPersistentMark();
-				IMark mark = null;
-				InfoMark infoMark = null;
+
+				IMark mark = new Mark();
+				InfoMark infoMark = new InfoMark();
 				infoMarksList = new ArrayList();
+				
 				while (attendIterador.hasNext()) {
 					frequenta = (IFrequenta) attendIterador.next();
-
+					
 					//mark
 					mark = persistentMark.readBy(evaluation, frequenta);
+					
 					if (mark == null) {
 						//student without mark
 						mark = new Mark();
@@ -114,10 +124,21 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 						mark.setEvaluation(evaluation);
 						mark.setMark(new String(""));
 						mark.setPublishedMark(new String(""));
+					
 					}
 
 					infoMark = Cloner.copyIMark2InfoMark(mark);
+					InfoEnrolment infoEnrolment = new InfoEnrolment();
+										
+					if(mark.getAttend().getEnrolment()!=null){
+					
+						infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(mark.getAttend().getEnrolment());		 
+						infoEnrolment.setEvaluationType(mark.getAttend().getEnrolment().getEnrolmentEvaluationType());
+						infoMark.getInfoFrequenta().setInfoEnrolment(infoEnrolment);					
+					}
+
 					infoMarksList.add(infoMark);
+					
 				}
 			}
 		} catch (ExcepcaoPersistencia e) {
@@ -129,10 +150,18 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 		infoSiteMarks.setMarksList(infoMarksList);
 		infoSiteMarks.setInfoEvaluation(infoEvaluation);
 
-		TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+		TeacherAdministrationSiteComponentBuilder componentBuilder =
+			new TeacherAdministrationSiteComponentBuilder();
+		ISiteComponent commonComponent =
+			componentBuilder.getComponent(
+				new InfoSiteCommon(),
+				site,
+				null,
+				null,
+				null);
 
-		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
+		TeacherAdministrationSiteView siteView =
+			new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
 
 		return siteView;
 	}
