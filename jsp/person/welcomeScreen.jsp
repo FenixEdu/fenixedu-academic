@@ -24,7 +24,7 @@
 					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.sendDate"/>:</strong> <date:format pattern="yyyy.MM.dd"><bean:write name="advisory" property="created.time"/></date:format></td
 				</tr>
 				<tr>
-					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.subject"/>:</strong> <bean:write name="advisory" property="subject"/><td>
+					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.subject"/>:</strong> <bean:write name="advisory" property="subject" filter="false"/><td>
 				</tr>
 				<tr>
 					<td colspan="3" style="background: #EBECED; padding: 10px; border-bottom: 1px solid #333;"><bean:write name="advisory" property="message" filter="false" /></td>
