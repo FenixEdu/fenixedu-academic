@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -166,5 +167,24 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 	   }
 
 
+	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+		try {
+			   IStudentCurricularPlan studentCurricularPlan = null;
+			   		   
+			   String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			   oqlQuery += " where degreeCurricularPlan.name = $1" ;
+    		   oqlQuery += " and degreeCurricularPlan.degree.sigla = $2" ;
+			   query.create(oqlQuery);
+			   query.bind(degreeCurricularPlan.getName());
+			   query.bind(degreeCurricularPlan.getDegree().getSigla());
+			   			       
+			   List studentCurricularPlanList = (List) query.execute();
+			   lockRead(studentCurricularPlanList);
+			   return studentCurricularPlanList;
+		   } catch (QueryException ex) {
+			   throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		   }
+	}
+	
 
 }

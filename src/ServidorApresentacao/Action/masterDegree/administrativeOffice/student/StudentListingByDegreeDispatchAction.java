@@ -38,24 +38,24 @@ public class StudentListingByDegreeDispatchAction extends DispatchAction {
 
 			HttpSession session = request.getSession();
 
-			String executionYear = getFromRequest("executionYear", request);
-			String degree = getFromRequest("degree", request);
+			String executionYearString = getFromRequest("executionYear", request);
+			String executionDegreeString = getFromRequest("degree", request);
 
 			request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-			request.setAttribute("executionYear", executionYear);
-			request.setAttribute("degree", degree);
+			request.setAttribute("executionYear", executionYearString);
+			request.setAttribute("degree", executionDegreeString);
 
 			// Get the Students List			
-			Object args[] = { executionYear, degree };
+			Object args[] = { executionDegreeString, executionYearString };
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos serviceManager = GestorServicos.manager();
 			ArrayList studentList = null;
 			try {
 //				studentList = (ArrayList) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
-				studentList = (ArrayList) serviceManager.executar(userView, "ReadStudentsByDegree", args);
+				studentList = (ArrayList) serviceManager.executar(userView, "ReadStudentsByExecutionDegreeAndExecutionYear", args);
 			} catch (NonExistingServiceException e) {
 				ActionErrors errors = new ActionErrors();
-				errors.add("nonExisting", new ActionError("message.public.not.found.studentsByDegree", degree));
+				errors.add("nonExisting", new ActionError("message.public.not.found.studentsByDegree", executionDegreeString));
 				saveErrors(request, errors);
 				return mapping.getInputForward();
 

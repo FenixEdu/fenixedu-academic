@@ -149,25 +149,4 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 		}
 
 	}
-	
-//	public IDegreeCurricularPlan readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
-//			try {
-//				IDegreeCurricularPlan degreeCurricularPlan = null;
-//
-//				String oqlQuery = "select all from " + DegreeCurricularPlan.class.getName();
-//				oqlQuery += " where executionDegree.sigla = $1 ";
-//
-//				query.create(oqlQuery);
-//				query.bind(executionDegree.getCurricularPlan());
-//
-//				List result = (List) query.execute();
-//				super.lockRead(result);
-//				if (result.size() != 0)
-//				degreeCurricularPlan = (IDegreeCurricularPlan) result.get(0);
-//				return degreeCurricularPlan;
-//			} catch (QueryException ex) {
-//				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//			}
-//
-//	}
 }

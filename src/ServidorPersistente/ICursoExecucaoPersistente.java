@@ -112,4 +112,5 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 		IExecutionYear executionYear,
 		TipoCurso degreeType)
 		throws ExcepcaoPersistencia;
+		
 }

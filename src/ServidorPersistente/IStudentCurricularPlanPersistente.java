@@ -13,6 +13,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Specialization;
@@ -25,4 +26,5 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAllFromStudent(int studentNumber /*, StudentType studentType */) throws ExcepcaoPersistencia;
 	IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber, TipoCurso degreeType, Specialization specialization ) throws ExcepcaoPersistencia;
+	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 }
