@@ -321,12 +321,12 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public List readLessonsInBroadPeriodInAnyRoom(IAula lesson)
+	public List readLessonsInBroadPeriodInAnyRoom(IAula lesson, IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
 			List lessonList = null;
 			String oqlQuery = "select aulas from " + Aula.class.getName();
-			oqlQuery += " where ( inicio >$1 "
+			oqlQuery += " where (( inicio >$1 "
 				+ "and inicio <$2 "
 				+ "and diaSemana = $3 ) "
 				+ "or ( fim > $4 "
@@ -340,8 +340,10 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				+ "and diaSemana = $12 ) "
 				+ "or ( inicio = $13 "
 				+ "and fim <= $14 "
-				+ "and diaSemana = $15 )";
-			
+				+ "and diaSemana = $15 ))"
+				+ "and disciplinaExecucao.executionPeriod.name = $16"
+				+ "and disciplinaExecucao.executionPeriod.executionYear.year = $17";
+				
 			query.create(oqlQuery);
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
@@ -363,6 +365,9 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
 
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+			
 			lessonList = (List) query.execute();
 			lockRead(lessonList);
 

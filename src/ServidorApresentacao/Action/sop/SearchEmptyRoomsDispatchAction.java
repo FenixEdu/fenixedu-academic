@@ -144,14 +144,18 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 					SessionConstants.LIST_INFOEXECUTIONPERIOD);
 			Integer index = (Integer) searchForm.get("executionPeriodIndex");
 
+			InfoExecutionPeriod infoExecutionPeriod = null;
 			if (infoExecutionPeriodList != null && index != null) {
+				infoExecutionPeriod =
+					(InfoExecutionPeriod) infoExecutionPeriodList.get(
+						index.intValue());
 				session.setAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-					infoExecutionPeriodList.get(index.intValue()));
+					infoExecutionPeriod);
 			}
 			// --------------------------------	
 
-			Object args[] = { infoRoom, infoLesson };
+			Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
 			List emptyRoomsList =
 				(List) ServiceUtils.executeService(

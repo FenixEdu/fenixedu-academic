@@ -80,8 +80,11 @@ public class ReadEmptyRoomsServiceTest extends TestCaseReadServices {
 		start.set(Calendar.MINUTE, 0);
 		start.set(Calendar.SECOND, 0);
 		infoLesson.setFim(end);
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º semestre", new InfoExecutionYear("2002/2003"));
+		
 
-		Object[] result = { infoRoom, infoLesson };
+		Object[] result = { infoRoom, infoLesson, infoExecutionPeriod };
 		return result;
 	}
 

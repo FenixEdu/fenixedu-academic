@@ -7,10 +7,12 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -25,93 +27,103 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author jpvl
  */
 public class ReadEmptyRoomsService implements IServico {
-	private static ReadEmptyRoomsService serviceInstance = new ReadEmptyRoomsService();
+	private static ReadEmptyRoomsService serviceInstance =
+		new ReadEmptyRoomsService();
 	/**
 	 * The singleton access method of this class.
 	 **/
 	public static ReadEmptyRoomsService getService() {
-	  return serviceInstance;
+		return serviceInstance;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private ReadEmptyRoomsService() { }
+	private ReadEmptyRoomsService() {
+	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-	  return "ReadEmptyRoomsService";
+		return "ReadEmptyRoomsService";
 	}
 
-	public Object run(InfoRoom infoRoom, InfoLesson infoLesson) throws FenixServiceException{
+	public Object run(
+		InfoRoom infoRoom,
+		InfoLesson infoLesson,
+		InfoExecutionPeriod infoExecutionPeriod)
+		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
+
 			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
 			ISalaPersistente roomDAO = sp.getISalaPersistente();
 
-
 			// Check is time interval is valid
-			
+
 			if (!validTimeInterval(infoLesson)) {
 				throw new InvalidTimeIntervalServiceException();
 			}
 
-			
-
 			// Read all Rooms with a capacity
-			List roomList = roomDAO.readSalas(
-							null,
-							null,
-							null,
-							null,
-							infoRoom.getCapacidadeNormal(),
-							null);
-			
-			
+			List roomList =
+				roomDAO.readSalas(
+					null,
+					null,
+					null,
+					null,
+					infoRoom.getCapacidadeNormal(),
+					null);
+
 			Iterator roomListIterator = roomList.iterator();
-			
+
 			List infoRoomList = new ArrayList();
-						
-			
+
 			while (roomListIterator.hasNext()) {
 				ISala element = (ISala) roomListIterator.next();
-				try{
-					InfoRoom infoRoomElement = Cloner.copyRoom2InfoRoom(element);
+				try {
+					InfoRoom infoRoomElement =
+						Cloner.copyRoom2InfoRoom(element);
 					infoRoomList.add(infoRoomElement);
-				}catch (IllegalArgumentException e){
+				} catch (IllegalArgumentException e) {
 					// ignored
 				}
 			}
 			// remove predicate
-			infoRoomList = (List) CollectionUtils.select(infoRoomList, new RoomLessonPredicate());
-						
+			infoRoomList =
+				(List) CollectionUtils.select(
+					infoRoomList,
+					new RoomLessonPredicate());
+
 			IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-			
+			IExecutionPeriod executionPeriod =
+				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+					infoExecutionPeriod);
+
 			//List lessonList = lessonDAO.readLessonsInPeriod(lesson);
-			List lessonList = lessonDAO.readLessonsInBroadPeriodInAnyRoom(lesson);
-			
-						
+			List lessonList =
+				lessonDAO.readLessonsInBroadPeriodInAnyRoom(lesson,executionPeriod);
+
 			Iterator lessonIterator = lessonList.iterator();
-			
+
 			/* remove lesson's rooms from room list */
 			while (lessonIterator.hasNext()) {
 				IAula lessonAux = (IAula) lessonIterator.next();
-				InfoLesson infoLessonAux = Cloner.copyILesson2InfoLesson(lessonAux);
+				InfoLesson infoLessonAux =
+					Cloner.copyILesson2InfoLesson(lessonAux);
 				infoRoomList.remove(infoLessonAux.getInfoSala());
 			}
 			return infoRoomList;
-			
+
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
-		} 
+		}
 	}
 
-	private class RoomLessonPredicate implements Predicate{
-		public RoomLessonPredicate(){
+	private class RoomLessonPredicate implements Predicate {
+		public RoomLessonPredicate() {
 		}
 		/**
 		 * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
@@ -121,8 +133,7 @@ public class ReadEmptyRoomsService implements IServico {
 			return !infoRoom.getNome().endsWith(".");
 		}
 	}
- 	
- 	
+
 	private boolean validTimeInterval(InfoLesson lesson) {
 		boolean result = true;
 
