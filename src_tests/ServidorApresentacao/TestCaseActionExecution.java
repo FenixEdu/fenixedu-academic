@@ -57,10 +57,10 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 	public void testSuccessfulExecutionOfAction() {
 
-		doTest(	(Map) getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
-				(Map) getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
-				getSuccessfulForward(), (Map) getExistingAttributesListToVerifyInSuccessfulExecution(),
-				(Map) getNonExistingAttributesListToVerifyInSuccessfulExecution() );
+		doTest(	getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
+				getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
+				getSuccessfulForward(), getExistingAttributesListToVerifyInSuccessfulExecution(),
+				getNonExistingAttributesListToVerifyInSuccessfulExecution() );
 	}
 
 	public void testUnsuccessfulExecutionOfAction() {
@@ -113,7 +113,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 		}
 
 		if( (pathOfAction != null) && (nameOfAction != null) &&
-			(itemsToPutInSession != null) && (itemsToPutInRequest != null) &&
+//			(itemsToPutInSession != null) && (itemsToPutInRequest != null) &&
 			(forward != null) ) {
 //			perform
 			actionPerform();
