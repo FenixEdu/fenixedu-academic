@@ -120,7 +120,7 @@ public class ExamOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		// Read Existing
 		List exams = persistentExam.readBy(beginning.getTime(), beginning);
-		assertEquals("testReadByDayAndBeginning: read existing",3, exams.size());
+		assertEquals("testReadByDayAndBeginning: read existing",8, exams.size());
 
 		beginning.set(Calendar.YEAR, 2002);
 		// Read Non-Existing
@@ -181,7 +181,7 @@ public class ExamOJBTest extends TestCaseOJB {
 
 		List exams = persistentExam.readAll();
 		assertNotNull("testReadAll: expected a result", exams);
-		assertEquals("testReadAll: expected a diferent number of results", 5, exams.size());
+		assertEquals("testReadAll: expected a diferent number of results", 10, exams.size());
 
 		persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia e) {
@@ -270,7 +270,7 @@ public class ExamOJBTest extends TestCaseOJB {
 		List exams = persistentExam.readAll();
 		persistentSupport.confirmarTransaccao();		
 		assertNotNull("testDelete ",exams);
-		assertEquals("testDelete ",5,exams.size());
+		assertEquals("testDelete ",10,exams.size());
 		IExam examToDelete = (IExam)exams.get(0);
 				
 		//Delete existing
@@ -281,7 +281,7 @@ public class ExamOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		exams = persistentExam.readAll();
 		persistentSupport.confirmarTransaccao();		
-		assertEquals("testDelete: delete existing",4,exams.size());
+		assertEquals("testDelete: delete existing",9,exams.size());
 
 		//Delete non-existing
 		persistentSupport.iniciarTransaccao();
@@ -291,7 +291,7 @@ public class ExamOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		exams = persistentExam.readAll();
 		persistentSupport.confirmarTransaccao();
-		assertEquals("testDelete: delete non-existing",4,exams.size());
+		assertEquals("testDelete: delete non-existing",9,exams.size());
 	} catch (ExcepcaoPersistencia e) {
 		fail("testReadBy: unexpected exception: " + e);
 	}
@@ -304,7 +304,7 @@ public class ExamOJBTest extends TestCaseOJB {
 		List exams = persistentExam.readAll();
 		persistentSupport.confirmarTransaccao();		
 		assertNotNull("testDeleteAll",exams);
-		assertEquals("testDeleteAll",5,exams.size());
+		assertEquals("testDeleteAll",10,exams.size());
 				
 		//Delete all
 		persistentSupport.iniciarTransaccao();
