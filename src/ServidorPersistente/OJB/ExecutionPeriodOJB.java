@@ -332,7 +332,7 @@ public class ExecutionPeriodOJB
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
 
-		System.out.println("Finished creating classLessons.");
+		System.out.println("Finished creating classShifts.");
 
 		System.out.println("Confirming transaction.");
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
