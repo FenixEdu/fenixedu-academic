@@ -83,7 +83,7 @@ public class PrepararEscolherContextoFormAction extends Action {
 	 * Method setExecutionContext.
 	 * @param request
 	 */
-	private void setExecutionContext(HttpServletRequest request) throws Exception {
+	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 		IUserView userView = SessionUtils.getUserView(request);
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
 				userView,
@@ -91,5 +91,6 @@ public class PrepararEscolherContextoFormAction extends Action {
 				new Object[0]);
 		HttpSession session = request.getSession();
 		session.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		return infoExecutionPeriod;
 	}
 }
