@@ -56,7 +56,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 		} catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o serviço"
+				"Unable to run service: "
 					+ getNameOfServiceToBeTested());
 
 		}
@@ -84,7 +84,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 		} catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o serviço"
+				"Unable to run service: "
 					+ getNameOfServiceToBeTested());
 
 		}
@@ -102,7 +102,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 					userView3,
 					getNameOfServiceToBeTested(),
 					serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testUnauthorizedUser");
+			fail(getNameOfServiceToBeTested() + "fail testNonTeacherUser");
 
 		} catch (NotAuthorizedException ex) {
 
@@ -112,7 +112,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 		} catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o serviço"
+				"Unable to run service: "
 					+ getNameOfServiceToBeTested());
 
 		}
