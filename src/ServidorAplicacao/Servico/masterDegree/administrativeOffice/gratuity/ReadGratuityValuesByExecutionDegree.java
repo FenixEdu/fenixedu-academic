@@ -23,7 +23,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuityValues;
-import ServidorPersistente.IPersistentPaymentPhase;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -65,7 +64,7 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 	{
 		if (executionDegreeID == null)
 		{
-			throw new FenixServiceException();
+			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}
 
 		ISuportePersistente sp = null;
@@ -75,24 +74,24 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 		{
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
-			IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
-
+	
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(executionDegreeID);
+	
 			gratuityValues =
 				persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
 		}
 		catch (ExcepcaoPersistencia e)
 		{
 			e.printStackTrace();
-			throw new FenixServiceException();
+			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}
 
 		InfoGratuityValues infoGratuityValues = null;
 		if (gratuityValues != null)
 		{
 			infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
-			
+		
 			infoPaymentPhases = new ArrayList();
 			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer()
 			{
@@ -121,6 +120,7 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 			
 			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
 		}
+
 		return infoGratuityValues;
 	}
 }

@@ -13,39 +13,39 @@ import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.Administrati
  * @author Tânia Pousão
  *  
  */
-public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
+public class ReadGratuityValuesByExecutionDegreeTest
 	extends AdministrativeOfficeBaseTest
 {
 
-	public ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear(String name)
+	public ReadGratuityValuesByExecutionDegreeTest(String name)
 	{
 		super(name);
 		this.dataSetFilePath =
-			"etc/datasets/servicos/MasterDegree/administrativeOffice/gratuity/testReadGratuityValuesByDegreeCurricularPlanAndExecutionYearDataSet.xml";
+			"etc/datasets/servicos/MasterDegree/administrativeOffice/gratuity/testReadGratuityValuesByExecutionDegreeDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested()
 	{
-		return "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear";
+		return "ReadGratuityValuesByExecutionDegree";
 	}
 
 	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
 	{
-		Object[] args = { new Integer(33), new String("2003/2004")};
+		Object[] args = { new Integer(10) };
 
 		return args;
 	}
 
 	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
 	{
-		Object[] args = { new Integer(33), new String("2003/2004")};
+		Object[] args = { new Integer(10)};
 
 		return args;
 	}
 
 	public void testSucessReadGratuityValues()
 	{
-		Object[] args = { new Integer(33), new String("2003/2004") };
+		Object[] args = { new Integer(10)};
 		
 		InfoGratuityValues infoGratuityValues = null;
 		try
@@ -74,7 +74,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 	
 	public void testReadGratuityValuesThatDontExists()
 	{
-		Object[] args = { new Integer(35), new String("2003/2004") };
+		Object[] args = { new Integer(11) };
 		
 		InfoGratuityValues infoGratuityValues = null;
 		try
@@ -90,69 +90,9 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 		assertNull((infoGratuityValues));		
 	}
 	
-	public void testReadGratuityValuesWithArg1NULL()
+	public void testReadGratuityValuesWithArgNULL()
 	{
-		Object[] args = { null, new String("2003/2004") };
-		
-		InfoGratuityValues infoGratuityValues = null;
-		try
-		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			String msg =
-			e.getMessage().substring(
-					e.getMessage().lastIndexOf(".") + 1,
-					e.getMessage().lastIndexOf(".") + 16);
-			assertEquals(new String("noGratuityValues"), msg);
-		}
-	}
-	
-	public void testReadGratuityValuesWithArg2NULL()
-	{
-		Object[] args = { new Integer(35), null };
-		
-		InfoGratuityValues infoGratuityValues = null;
-		try
-		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			String msg =
-			e.getMessage().substring(
-					e.getMessage().lastIndexOf(".") + 1,
-					e.getMessage().lastIndexOf(".") + 16);
-			assertEquals(new String("noGratuityValues"), msg);
-		}
-	}
-	
-	public void testReadGratuityValuesWithDegreeCurricularPlanUnExist()
-	{
-		Object[] args = { new Integer(1), new String("2003/2004") };
-		
-		InfoGratuityValues infoGratuityValues = null;
-		try
-		{
-			infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			String msg =
-			e.getMessage().substring(
-					e.getMessage().lastIndexOf(".") + 1,
-					e.getMessage().lastIndexOf(".") + 16);
-			assertEquals(new String("noGratuityValues"), msg);
-		}
-	}
-	
-	public void testReadGratuityValuesWithExecutionYearUnExist()
-	{
-		Object[] args = { new Integer(1), new String("2006/2007") };
+		Object[] args = { null };
 		
 		InfoGratuityValues infoGratuityValues = null;
 		try
@@ -172,7 +112,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 	
 	public void testReadGratuityValuesWithExecutionDegreeUnExist()
 	{
-		Object[] args = { new Integer(37), new String("2003/2004") };
+		Object[] args = { new Integer(12) };
 		
 		InfoGratuityValues infoGratuityValues = null;
 		try
@@ -188,6 +128,5 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 					e.getMessage().lastIndexOf(".") + 16);
 			assertEquals(new String("noGratuityValues"), msg);
 		}
-	}
-	
+	}	
 }

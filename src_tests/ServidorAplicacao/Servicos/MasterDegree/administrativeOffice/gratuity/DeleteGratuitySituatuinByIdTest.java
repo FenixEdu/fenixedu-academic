@@ -1,53 +1,88 @@
 /*
  * Created on 13/Jan/2004
- *
+ *  
  */
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.gratuity;
 
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
 public class DeleteGratuitySituatuinByIdTest extends AdministrativeOfficeBaseTest
 {
 
-	/**
-	 * @param name
-	 */
 	public DeleteGratuitySituatuinByIdTest(String name)
 	{
 		super(name);
-		// TODO Auto-generated constructor stub
+		this.dataSetFilePath =
+			"etc/datasets/servicos/MasterDegree/administrativeOffice/gratuity/testDeleteGratuitySituationByIdDataSet.xml";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return "DeleteGratuitySituationById";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest#getServiceArgumentsForNotAuthenticatedUser()
-	 */
 	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Object[] args = { new Integer(1)};
+
+		return args;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest#getServiceArgumentsForNotAuthorizedUser()
-	 */
 	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Object[] argsEditGratuitySituationById = { new Integer(1)};
+
+		return argsEditGratuitySituationById;
 	}
 
+	public void testSucessDeleteGratuitySituation()
+	{
+		Object[] args = { new Integer(1)};
+
+		Boolean result = Boolean.FALSE;
+		try
+		{
+			result =
+				(Boolean) ServiceManagerServiceFactory.executeService(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+		}
+		catch (FenixServiceException e)
+		{
+			e.printStackTrace();
+			fail("testSucessDeleteGratuitySituation " + e.getMessage());
+		}
+
+		assertEquals(result, Boolean.TRUE);
+		compareDataSet("tesDeleteGratuitySituationByIdConfirmationDataSet.xml");
+	}
+
+	public void testSucessDeleteGratuitySituationAlreadyUnExist()
+	{
+		Object[] args = { new Integer(2)};
+
+		Boolean result = Boolean.FALSE;
+		try
+		{
+			result =
+				(Boolean) ServiceManagerServiceFactory.executeService(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+		}
+		catch (FenixServiceException e)
+		{
+			e.printStackTrace();
+			fail("testSucessDeleteGratuitySituationAlreadyUnExist " + e.getMessage());
+		}
+
+		assertEquals(result, Boolean.TRUE);
+	}
 }

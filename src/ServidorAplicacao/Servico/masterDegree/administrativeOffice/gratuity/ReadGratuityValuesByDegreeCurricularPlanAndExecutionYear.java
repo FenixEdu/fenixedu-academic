@@ -25,7 +25,6 @@ import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGratuityValues;
-import ServidorPersistente.IPersistentPaymentPhase;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -67,7 +66,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 	{
 		if (degreeCurricularPlanID == null || executionYearName == null)
 		{
-			throw new FenixServiceException();
+			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}
 
 		ISuportePersistente sp = null;
@@ -84,31 +83,30 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 			
 			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
-			
+						
+			if (degreeCurricularPlan == null || executionYear == null)
+			{
+				throw new FenixServiceException("error.impossible.noGratuityValues");
+			}
 			
 			//read execution degree
 			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
 			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
-
+			if (executionDegree == null)
+			{
+				throw new FenixServiceException("error.impossible.noGratuityValues");
+			}
+			
 			//read execution degree's gratuity values
 			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 			gratuityValues =
 				persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
-			if (gratuityValues != null)
-			{
-				//read payment phases for this gratuity value
-				IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
-				List paymentPhases = persistentPaymentPhase.readByGratuityValues(gratuityValues);
-				if (paymentPhases != null)
-				{
-				}
-			}
 			
 		}
 		catch (ExcepcaoPersistencia e)
 		{
 			e.printStackTrace();
-			throw new FenixServiceException();
+			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}
 
 		InfoGratuityValues infoGratuityValues = null;

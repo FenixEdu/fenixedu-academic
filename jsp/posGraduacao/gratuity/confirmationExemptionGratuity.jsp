@@ -43,10 +43,10 @@
 
 <b><bean:message key="label.exemptionGratuity.value" />:</b>&nbsp;
 <logic:notEqual name="exemptionGratuity" property="exemptionPercentage" value="-1">
-	<bean:write name="exemptionGratuity" property="exemptionPercentage"/>		
+	<bean:write name="exemptionGratuity" property="exemptionPercentage"/>%		
 </logic:notEqual>
 <logic:equal name="exemptionGratuity" property="exemptionPercentage" value="-1">
-	<bean:write name="exemptionGratuity" property="otherValueExemptionGratuity"/>		
+	<bean:write name="exemptionGratuity" property="otherValueExemptionGratuity"/>%		
 </logic:equal>
 <br />
 
