@@ -87,6 +87,7 @@
             <form-property name="teacherId" type="java.lang.Integer" />
             <form-property  name="executionYearId" type="java.lang.Integer" />
             <form-property name="executionCourseResponsability" type="java.lang.Integer[]" />
+            <form-property name="hours" type="java.util.HashMap" />			
         </form-bean>
         <form-bean name="searchTeachersDepartmentForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
