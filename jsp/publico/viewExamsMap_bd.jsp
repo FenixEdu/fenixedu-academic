@@ -17,4 +17,4 @@
 <br/>
 
 <br/>
-<app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="sop"/>
+<app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="public"/>

@@ -35,3 +35,13 @@ turnos, horário e carga curricular
 <p>
 Nesta área encontrará a informação relativamente a uma sala, onde poderá consultar o horário lectivo dessa mesma sala.
 </p>  
+<br />
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  		<tr>
+    		<td class="infoop"><html:link page="/chooseExamsMapContextDA.do?method=prepare"><strong><bean:message key="link.exams.consult"/></strong></html:link></td>
+  		</tr>
+	</table>
+<br />
+<p>
+Nesta área encontrará a informação relativamente aos exames, onde poderá consultar as datas de avaliação (1ª e 2ª época).
+</p>  
