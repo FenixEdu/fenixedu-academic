@@ -235,6 +235,7 @@
 		scope="session"
         type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction">	           
 		<forward name="bibliographyManagement" path="/bibliographicReferences.jsp"/>
+		<forward name="editBibliographicReference" path="/bibliographicReferences.jsp"/>
 	</action>             
 
 	<!-- access to announcements -->

@@ -47,6 +47,10 @@ public class AccessTeachersAction extends FenixAction {
 				session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
 			}
 		}
+		else {
+			session.removeAttribute(SessionConstants.RESPONSIBLE_TEACHERS_LIST);	
+			session.removeAttribute(SessionConstants.TEACHERS_LIST);	
+		}
 
 		return mapping.findForward("Teachers");
 	}
