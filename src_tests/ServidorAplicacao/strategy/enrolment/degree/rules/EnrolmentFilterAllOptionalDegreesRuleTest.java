@@ -6,7 +6,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ICurso;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -30,7 +29,6 @@ public class EnrolmentFilterAllOptionalDegreesRuleTest extends BaseEnrolmentRule
 	public void testApplyFilterAllOptionalCoursesRule() {
 
 		List optionalSpan = null;
-		InfoEnrolmentContext infoEnrolmentContext = null;
 		EnrolmentContext enrolmentContext = null;
 
 		autentication();
