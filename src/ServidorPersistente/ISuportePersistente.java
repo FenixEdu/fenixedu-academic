@@ -90,4 +90,5 @@ public interface ISuportePersistente {
 	public IPersistentEvaluation getIPersistentEvaluation();
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
+	public IPersistentDegreeEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
 }

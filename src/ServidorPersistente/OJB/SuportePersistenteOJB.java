@@ -40,6 +40,7 @@ import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentDegreeEnrolmentInfo;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
@@ -412,11 +413,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			return new EvaluationOJB();
 		}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentEnrolmentPeriod()
-	 */
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
 		return new PersistentEnrolmentPeriod();
+	}
+
+	public IPersistentDegreeEnrolmentInfo getIPersistentDegreeEnrolmentInfo() {
+		return new DegreeEnrolmentInfoOJB();
 	}
 
 }

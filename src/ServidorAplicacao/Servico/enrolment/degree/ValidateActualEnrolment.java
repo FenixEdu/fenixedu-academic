@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.enrolment.degree;
 
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
@@ -43,7 +44,7 @@ public class ValidateActualEnrolment implements IServico {
 	 * @return EnrolmentContext
 	 * @throws FenixServiceException
 	 */
-	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) {
+	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) throws FenixServiceException{
 
 		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
 		IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));

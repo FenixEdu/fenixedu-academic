@@ -27,102 +27,114 @@ public class InscTeste {
 		
 		autentication();
 
-		System.out.println("Mostra cadeira");
+		System.out.println("ShowAvailableCurricularCourses 1ª vez:");
 		Object serviceArgs1[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
 		showActualEnrolments(infoEnrolmentContext);
-		showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
 		
-//		Object serviceArgs2[] = { infoEnrolmentContext };
-//		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
-//		showAvailableDegreesForOption(infoEnrolmentContext);
-//
-//		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-//
-//		Object serviceArgs3[] = { infoEnrolmentContext };
-//		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
-//		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
-//
-//		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(3)));
-//
-//		Object serviceArgs4[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(0) };
-//		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
-//		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
+		System.out.println("ShowAvailableDegreesForOption 1ª vez:");
+		Object serviceArgs2[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
+		showAvailableDegreesForOption(infoEnrolmentContext);
 
-//		Object serviceArgs5[] = { infoEnrolmentContext };
-//		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs5);
-//		showAvailableDegreesForOption(infoEnrolmentContext);
-//
-//		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-//
-//		Object serviceArgs6[] = { infoEnrolmentContext };
-//		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs6);
-//		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
-//
-//		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
-//
-//		Object serviceArgs7[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(1) };
-//		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs7);
-//		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
-//
-//		Object serviceArgs8[] = { infoEnrolmentContext };
-//		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs8);
-//		showAvailableDegreesForOption(infoEnrolmentContext);
-//
-//		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-//
-//		Object serviceArgs9[] = { infoEnrolmentContext };
-//		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs9);
-//		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
 
-		for(int i = 0; i < 3; i++) {
+		System.out.println("ShowAvailableCurricularCoursesForOption 1ª vez:");
+		Object serviceArgs3[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
+		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(6)));
+
+		System.out.println("SelectOptionalCurricularCourse 1ª vez:");
+		Object serviceArgs4[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(0) };
+		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
+		showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
+
+		for(int i = 0; i < 4; i++) {
 			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 		}
 
-//		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
-//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(1);
-//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(2);
-//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(3);
-//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
-//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
+//		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 
-		System.out.println("Escolheu cadeiras e vai escrever na BD");
+		System.out.println("ValidateActualEnrolment 1ª vez");
 		Object serviceArgs10[] = {infoEnrolmentContext};
 		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
-
+		System.out.println("ConfirmActualEnrolment 1ª vez");
 		Object serviceArgs11[] = {infoEnrolmentContext};
 		infoEnrolmentContext = executeService("ConfirmActualEnrolment", serviceArgs11);
+		showEnrolmentValidationResultMessages(infoEnrolmentContext);
 		showActualEnrolments(infoEnrolmentContext);
 
-		System.out.println("Mostra cadeiras");
-		
+		System.out.println("ShowAvailableCurricularCourses 2ª vez");
 		Object serviceArgs12[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs12);
 		showFinalSpan(infoEnrolmentContext);
 		showActualEnrolments(infoEnrolmentContext);
 		showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
 
-		infoEnrolmentContext.getActualEnrolment().remove(0);
-		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
-		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//		infoEnrolmentContext.getActualEnrolment().remove(1);
+//		infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().remove(0);
+//		InfoCurricularCourseScope infoCurricularCourseScope2 = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(2);
+//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope2);
 
-		System.out.println("Escolheu cadeiras e vai escrever na BD");
+
+
+
+
+
+
+
+
+		System.out.println("ShowAvailableDegreesForOption 2ª vez:");
+		Object serviceArgs20[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs20);
+		showAvailableDegreesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+
+		System.out.println("ShowAvailableCurricularCoursesForOption 2ª vez:");
+		Object serviceArgs30[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs30);
+		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(6)));
+
+		System.out.println("SelectOptionalCurricularCourse 2ª vez:");
+		Object serviceArgs40[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(1) };
+		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs40);
+		showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		System.out.println("ValidateActualEnrolment 2ª vez");
 		Object serviceArgs13[] = {infoEnrolmentContext};
 		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs13);
-
+		System.out.println("ConfirmActualEnrolment 2ª vez");
 		Object serviceArgs14[] = {infoEnrolmentContext};
 		infoEnrolmentContext = executeService("ConfirmActualEnrolment", serviceArgs14);
 		showActualEnrolments(infoEnrolmentContext);
-		
-		System.out.println("Mostra cadeiras");
+		showEnrolmentValidationResultMessages(infoEnrolmentContext);
+				
+		System.out.println("ShowAvailableCurricularCourses 3ª vez");
 		Object serviceArgs15[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs15);
 		showFinalSpan(infoEnrolmentContext);

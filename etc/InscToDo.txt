@@ -1,0 +1,20 @@
+COISAS MESMO PARA FAZER:
+========================
+
+1. Verificar a aplicação da regra 7.3 do livro azul.
+2. Parametrizar valores para NAC, etc.
+3. Testar situações em que o aluno muda de plano curricular por: mudar de curso, mudar de escola, erasmus, restruturação do curso, etc...
+1000. Os eternos testes!...
+
+DÚVIDAS:
+========
+
+1. Onde está o estatuto do estudante?
+2. O que fazer quando o curso está terminado?
+3. Existem cadeiras de opção anuais? Ou seja, posso escolher uma cadeira de opção que dura um ano inteiro? Se não houver, temos de acrescentar mais uma condição ao BIG IF da regra "EnrolmentFilterAllOptionalCoursesRule".
+4. Se se chumbar ao TFC, a próxima inscrição conta como duas acumuladas ou apenas como uma? Se contar como duas temos de alterar as regras de filter e validate dos NACs.
+
+COISAS PARA FAZER EVENTUALMENTE:
+================================
+
+1. A lista actualEnrolment do EnrolmentContext passar a ter Enrolments em vez de CurricularCourseScopes.

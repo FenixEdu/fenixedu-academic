@@ -72,7 +72,7 @@ public class SelectOptionalCurricularCourse implements IServico {
 			}
 			infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().add(infoEnrolment);
 		} else {
-			throw new IllegalStateException("Cannot associate a curricular course to a non optional curricular course!");
+			throw new FenixServiceException("Cannot associate a curricular course to a non optional curricular course!");
 		}
 		return infoEnrolmentContext;
 	}

@@ -11,6 +11,7 @@ import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
@@ -61,7 +62,7 @@ public class ConfirmActualEnrolment implements IServico {
 	 * @return EnrolmentContext
 	 * @throws FenixServiceException
 	 */
-	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) {
+	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) throws FenixServiceException {
 
 		EnrolmentContext enrolmentContext = EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext);
 
@@ -71,8 +72,7 @@ public class ConfirmActualEnrolment implements IServico {
 				enrolmentContext.getEnrolmentValidationResult().setSucessMessage(EnrolmentValidationResult.SUCCESS_ENROLMENT);
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
-				//FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
-				enrolmentContext.getEnrolmentValidationResult().setSucessMessage("Erro no acesso à base de dados");
+				throw new FenixServiceException(e);
 			}
 		}
 		return EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);

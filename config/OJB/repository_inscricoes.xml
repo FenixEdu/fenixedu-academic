@@ -679,10 +679,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.Precedence -->
+<!-- Definitions for Dominio.DegreeEnrolmentInfo -->
 <!-- ************************************************************************************************************ -->
-<!--
-<class-descriptor class="Dominio.Precedence" table="PRECEDENCE">
+<class-descriptor class="Dominio.DegreeEnrolmentInfo" table="DEGREE_ENROLMENT_INFO">
 	<field-descriptor id="1"
 		name="internalID"
 		column="ID_INTERNAL"
@@ -691,28 +690,26 @@
 		autoincrement="true"
 	/>
 	<field-descriptor id="2"
-		name="curricularCourseKey"
-		column="KEY_CURRICULAR_COURSE"
+		name="degreeCurricularPlanKey"
+		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor id="3"
-		name="precedingCurricularCourseKey"
-		column="KEY_PRECEDING_CURRICULAR_COURSE"
+		name="degreeDuration"
+		column="DEGREE_DURATION"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="3"
+		name="minimalYearForOptionalCourses"
+		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
 		jdbc-type="INTEGER"
 	/>
 	<reference-descriptor
-			name="curricularCourse"
-			class-ref="Dominio.CurricularCourse"
-			proxy="true">
+			name="degreeCurricularPlan"
+			class-ref="Dominio.DegreeCurricularPlan"
+			proxy="false">
 		<foreignkey field-id-ref="2"/>
 	</reference-descriptor>
-	<reference-descriptor
-			name="precedingCurricularCourse"
-			class-ref="Dominio.CurricularCourse"
-			proxy="true">
-		<foreignkey field-id-ref="3"/>
-	</reference-descriptor>
 </class-descriptor>
--->
 
 <!-- Mapping of User defined classes ends here -->
