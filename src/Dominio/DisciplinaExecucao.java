@@ -70,9 +70,10 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
         boolean resultado = false;
         if (obj instanceof IDisciplinaExecucao ) {
             IDisciplinaExecucao de = (IDisciplinaExecucao) obj;
+            
             resultado = (getNome().equals(de.getNome())) &&
                         (getSigla().equals(de.getSigla())) &&
-                        (getPrograma().equals(de.getPrograma())) && 
+//                      (getPrograma().equals(de.getPrograma())) && 
                         (getTheoreticalHours().equals(de.getTheoreticalHours())) &&
                         (getPraticalHours().equals(de.getPraticalHours())) &&
                         (getTheoPratHours().equals(de.getTheoPratHours())) &&
