@@ -14,7 +14,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -56,7 +56,7 @@ public class ReadExecutionDegreesByExecutionYearId implements IService {
                 infoExecutionDegreeList = new ArrayList();
 
                 while (iterator.hasNext()) {
-                    ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
+                    IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
                     infoExecutionDegreeList.add(Cloner.get(executionDegree));
                 }
             }

@@ -21,8 +21,8 @@ import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
 import Dominio.IStudent;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -61,7 +61,7 @@ public class LerAlunosDeTurno implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            ITurno shift = new Turno();
+            IShift shift = new Shift();
 
             IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno
                     .getInfoExecutionCourse());

@@ -14,10 +14,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
 import DataBeans.student.schoolRegistration.InfoResidenceCandidacy;
 import Dominio.ICountry;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.IStudent;
-import Dominio.Pessoa;
+import Dominio.Person;
 import Dominio.Role;
 import Dominio.student.IPersonalDataUseInquiryAnswers;
 import Dominio.student.IResidenceCandidancies;
@@ -60,7 +60,7 @@ public class SchoolRegistration implements IService {
         IStudent student = persistentStudent.readByUsername(username);
         IPessoaPersistente pessoaPersistente = suportePersistente.getIPessoaPersistente();
 
-        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class, infoPerson.getIdInternal());
+        IPerson pessoa = (IPerson) pessoaPersistente.readByOID(Person.class, infoPerson.getIdInternal());
 
         if (isStudentRegistered(pessoa)) {
             return Boolean.FALSE;
@@ -73,7 +73,7 @@ public class SchoolRegistration implements IService {
         return Boolean.TRUE;
     }
 
-    private boolean isStudentRegistered(IPessoa pessoa) {
+    private boolean isStudentRegistered(IPerson pessoa) {
 
         boolean result;
         result = CollectionUtils.exists(pessoa.getPersonRoles(), new Predicate() {
@@ -115,7 +115,7 @@ public class SchoolRegistration implements IService {
         }
     }
 
-    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson, IPessoa pessoa)
+    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson, IPerson pessoa)
             throws ExcepcaoPersistencia, FenixServiceException {
 
         IPersistentRole pRole = sp.getIPersistentRole();

@@ -2,29 +2,29 @@ package ServidorPersistenteJDBC;
 
 import java.util.List;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 
 /**
  * @author Ivo Brandão
  */
 public interface IPessoaPersistente {
-    public boolean alterarPessoa(Pessoa pessoa);
+    public boolean alterarPessoa(Person pessoa);
 
     public boolean apagarPessoa(int codigoInterno);
 
-    public boolean escreverPessoa(Pessoa pessoa);
+    public boolean escreverPessoa(Person pessoa);
 
-    public boolean escreverPapelPessoa(Pessoa pessoa, int chaveRole);
+    public boolean escreverPapelPessoa(Person pessoa, int chaveRole);
 
     public List lerCargos(int chavePessoa);
 
     public List lerPapelPessoa(int codigoInterno);
 
-    public Pessoa lerPessoa(int codigoInterno);
+    public Person lerPessoa(int codigoInterno);
 
-    public Pessoa lerPessoa(String username);
+    public Person lerPessoa(String username);
 
-    public Pessoa lerPessoa(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao);
+    public Person lerPessoa(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao);
 
     public List lerPessoasPorCargo(String string);
 

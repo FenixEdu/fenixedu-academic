@@ -1,5 +1,5 @@
 /*
- * IFrequenta.java
+ * IAttends.java
  *
  * Created on 20 de Outubro de 2002, 15:17
  */
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author  tfc130
  */
-public interface IFrequenta extends IDomainObject {
+public interface IAttends extends IDomainObject {
     public IStudent getAluno();
 
     public IExecutionCourse getDisciplinaExecucao();

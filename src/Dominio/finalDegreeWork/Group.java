@@ -7,7 +7,7 @@ package Dominio.finalDegreeWork;
 import java.util.List;
 
 import Dominio.DomainObject;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 
 /**
  * @author Luis Cruz
@@ -17,7 +17,7 @@ public class Group extends DomainObject implements IGroup {
 
     private Integer keyExecutionDegree;
 
-    private ICursoExecucao executionDegree;
+    private IExecutionDegree executionDegree;
 
     private List groupStudents;
 
@@ -51,7 +51,7 @@ public class Group extends DomainObject implements IGroup {
     /**
      * @return Returns the executionDegree.
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
@@ -59,7 +59,7 @@ public class Group extends DomainObject implements IGroup {
      * @param executionDegree
      *            The executionDegree to set.
      */
-    public void setExecutionDegree(ICursoExecucao executionDegree) {
+    public void setExecutionDegree(IExecutionDegree executionDegree) {
         this.executionDegree = executionDegree;
     }
 

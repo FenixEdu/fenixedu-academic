@@ -1,5 +1,5 @@
 /*
- * Sala.java
+ * Room.java
  *
  * Created on 17 de Outubro de 2002, 22:56
  */
@@ -14,11 +14,9 @@ import java.util.List;
 
 import Util.TipoSala;
 
-public class Sala extends DomainObject implements ISala {
+public class Room extends DomainObject implements IRoom {
 
     protected String _nome;
-
-    protected String _edificio;
 
     protected Integer _piso;
 
@@ -35,14 +33,14 @@ public class Sala extends DomainObject implements ISala {
     private IBuilding building;
 
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-    public Sala() {
+    public Room() {
     }
 
-    public Sala(Integer idInternal) {
+    public Room(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
-    public Sala(String nome, String edificio, Integer piso, TipoSala tipo, Integer capacidadeNormal,
+    public Room(String nome, String edificio, Integer piso, TipoSala tipo, Integer capacidadeNormal,
             Integer capacidadeExame) {
         setNome(nome);
         setEdificio(edificio);
@@ -103,8 +101,8 @@ public class Sala extends DomainObject implements ISala {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof ISala) {
-            ISala sala = (ISala) obj;
+        if (obj instanceof IRoom) {
+            IRoom sala = (IRoom) obj;
             resultado = (getNome().equals(sala.getNome()));
         }
         return resultado;
@@ -114,7 +112,6 @@ public class Sala extends DomainObject implements ISala {
         String result = "[SALA";
         result += ", codInt=" + getIdInternal();
         result += ", nome=" + _nome;
-        result += ", edificio=" + _edificio;
         result += ", piso=" + _piso;
         result += ", tipo=" + _tipo;
         result += ", capacidadeNormal=" + _capacidadeNormal;
@@ -144,7 +141,6 @@ public class Sala extends DomainObject implements ISala {
 
     public void setBuilding(IBuilding building) {
         this.building = building;
-        this._edificio = building.getName();
     }
 
     public Integer getKeyBuilding() {

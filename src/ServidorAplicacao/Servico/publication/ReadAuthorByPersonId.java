@@ -7,8 +7,8 @@
 package ServidorAplicacao.Servico.publication;
 
 import DataBeans.publication.InfoAuthor;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import Dominio.publication.IAuthor;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
@@ -53,7 +53,7 @@ public class ReadAuthorByPersonId implements IServico {
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IAuthor iauthor = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
             author.copyFromDomain(iauthor);
 
@@ -73,7 +73,7 @@ public class ReadAuthorByPersonId implements IServico {
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userName);
+            IPerson person = persistentPerson.lerPessoaPorUsername(userName);
             IAuthor iauthor = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
             author.copyFromDomain(iauthor);
 

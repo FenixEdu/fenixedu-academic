@@ -9,8 +9,8 @@ import java.util.List;
 import org.apache.slide.common.SlideException;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
@@ -36,7 +36,7 @@ public class RetrievePhoto implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = (IPessoa) persistentPerson.readByOID(Pessoa.class, personId);
+            IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);
 
             IFileSuport fileSuport = FileSuport.getInstance();
 

@@ -9,7 +9,7 @@ public class PersonRole extends DomainObject implements IPersonRole {
 
     private Integer keyRole;
 
-    private IPessoa person;
+    private IPerson person;
 
     private IRole role;
 
@@ -38,7 +38,7 @@ public class PersonRole extends DomainObject implements IPersonRole {
     /**
      * @return
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -66,7 +66,7 @@ public class PersonRole extends DomainObject implements IPersonRole {
     /**
      * @param pessoa
      */
-    public void setPerson(IPessoa pessoa) {
+    public void setPerson(IPerson pessoa) {
         person = pessoa;
     }
 

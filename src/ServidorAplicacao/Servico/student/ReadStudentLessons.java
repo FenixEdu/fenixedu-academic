@@ -20,8 +20,8 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoPerson;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
-import Dominio.IAula;
-import Dominio.ITurno;
+import Dominio.ILesson;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -38,8 +38,8 @@ public class ReadStudentLessons implements IService {
         final List infoLessons = new ArrayList(lessons.size());
 
         for (final Iterator iterator = lessons.iterator(); iterator.hasNext(); ) {
-            final IAula lesson = (IAula) iterator.next();
-            final ITurno shift = lesson.getShift();
+            final ILesson lesson = (ILesson) iterator.next();
+            final IShift shift = lesson.getShift();
 
             final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);

@@ -14,7 +14,7 @@ import DataBeans.finalDegreeWork.InfoGroup;
 import DataBeans.finalDegreeWork.InfoGroupProposal;
 import DataBeans.finalDegreeWork.InfoGroupStudent;
 import DataBeans.finalDegreeWork.InfoProposal;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupProposal;
@@ -105,7 +105,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implement
                                                         infoStudent.setIdInternal(student
                                                                 .getIdInternal());
                                                         infoStudent.setNumber(student.getNumber());
-                                                        IPessoa person = student.getPerson();
+                                                        IPerson person = student.getPerson();
                                                         if (person != null) {
                                                             InfoPerson infoPerson = new InfoPerson();
                                                             infoPerson.setIdInternal(person

@@ -10,7 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.IAdvisory;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author João Mota
@@ -18,7 +18,7 @@ import Dominio.IPessoa;
  */
 public class InfoPersonWithAdvisories extends InfoPerson {
 
-    public void copyFromDomain(IPessoa person) {
+    public void copyFromDomain(IPerson person) {
         super.copyFromDomain(person);
         if (person != null && person.getAdvisories() != null) {
 
@@ -32,7 +32,7 @@ public class InfoPersonWithAdvisories extends InfoPerson {
         }
     }
 
-    public static InfoPerson newInfoFromDomain(IPessoa person) {
+    public static InfoPerson newInfoFromDomain(IPerson person) {
         InfoPersonWithAdvisories infoPerson = null;
         if (person != null) {
             infoPerson = new InfoPersonWithAdvisories();

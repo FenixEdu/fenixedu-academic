@@ -192,7 +192,7 @@ public class InfoGroupProperties extends InfoObject
 	}
 
 	/**
-	 * @return Tipo Aula
+	 * @return Tipo Lesson
 	 */
 	public TipoAula getShiftType()
 	{

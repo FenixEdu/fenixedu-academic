@@ -15,7 +15,7 @@ import DataBeans.InfoExecutionDegreeWithInfoExecutionYear;
 import DataBeans.InfoPeriod;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -61,7 +61,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
         List result = new ArrayList(allExecutionDegrees.size());
 
         while (iterator.hasNext()) {
-            ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
+            IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
 
             InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
                     .newInfoFromDomain(executionDegree);

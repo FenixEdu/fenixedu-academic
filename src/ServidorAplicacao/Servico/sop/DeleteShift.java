@@ -11,12 +11,12 @@ package ServidorAplicacao.Servico.sop;
 import java.util.List;
 
 import DataBeans.InfoShift;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IShiftProfessorship;
 import Dominio.IStudentGroup;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -61,7 +61,7 @@ public class DeleteShift implements IServico {
             try {
                 final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-                ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+                IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                         infoShift.getIdInternal());
                 if (shift != null) {
                     //if the shift has students associated it can't be deleted
@@ -103,13 +103,13 @@ public class DeleteShift implements IServico {
                     }
 
                     for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
-                        IAula lesson = (IAula) shift.getAssociatedLessons().get(i);
+                        ILesson lesson = (ILesson) shift.getAssociatedLessons().get(i);
                         sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
                         sp.getIAulaPersistente().delete(lesson);
                     }
 
                     for (int i = 0; i < shift.getAssociatedClasses().size(); i++) {
-                        ITurma schoolClass = (ITurma) shift.getAssociatedClasses().get(i);
+                        ISchoolClass schoolClass = (ISchoolClass) shift.getAssociatedClasses().get(i);
                         sp.getITurmaPersistente().simpleLockWrite(schoolClass);
                         schoolClass.getAssociatedShifts().remove(shift);
                     }

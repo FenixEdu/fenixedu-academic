@@ -9,10 +9,10 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithCoordinators;
 import DataBeans.InfoExecutionYear;
-import Dominio.Curso;
+import Dominio.Degree;
 import Dominio.ExecutionPeriod;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
@@ -71,7 +71,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
 
             //Degree
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeId);
+            IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
@@ -87,7 +87,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
             infoExecutionDegreeList = new ArrayList();
             ListIterator listIterator = executionDegreeList.listIterator();
             while (listIterator.hasNext()) {
-                ICursoExecucao executionDegree = (ICursoExecucao) listIterator.next();
+                IExecutionDegree executionDegree = (IExecutionDegree) listIterator.next();
 
                 //CLONER
                 //InfoExecutionDegree infoExecutionDegree =

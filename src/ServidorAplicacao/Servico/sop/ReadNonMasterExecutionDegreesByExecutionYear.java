@@ -11,7 +11,7 @@ import java.util.List;
 
 import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -75,7 +75,7 @@ public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
             infoExecutionDegreeList = new ArrayList();
 
             while (iterator.hasNext()) {
-                ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
+                IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
                 infoExecutionDegreeList.add(Cloner.get(executionDegree));
             }
 

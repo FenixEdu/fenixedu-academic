@@ -17,9 +17,9 @@ import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -109,8 +109,8 @@ public class PrepareDegreesListByStudentNumber implements IService {
         if (executionDegreeIdChosen != null) {
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeIdChosen);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeIdChosen);
             if (executionDegree != null) {
                 return (InfoExecutionDegree) Cloner.get(executionDegree);
             }

@@ -19,7 +19,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ShiftProfessorship;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentShiftProfessorship;
@@ -119,9 +119,9 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
      * (non-Javadoc)
      * 
      * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorshipAndShift(Dominio.IProfessorship,
-     *      Dominio.ITurno)
+     *      Dominio.IShift)
      */
-    public IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, ITurno shift)
+    public IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, IShift shift)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyProfessorship", professorship.getIdInternal());
@@ -259,9 +259,9 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentShiftProfessorship#readByShift(Dominio.ITurno)
+     * @see ServidorPersistente.IPersistentShiftProfessorship#readByShift(Dominio.IShift)
      */
-    public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
+    public List readByShift(IShift shift) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyShift", shift.getIdInternal());
         return queryList(ShiftProfessorship.class, criteria);

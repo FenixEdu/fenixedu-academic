@@ -41,7 +41,7 @@ public class CriarSalaFormAction extends Action {
             try {
                 ServiceManagerServiceFactory.executeService(userView, "CriarSala", argsCriarSala);
             } catch (ExistingServiceException e) {
-                throw new ExistingActionException("A Sala", e);
+                throw new ExistingActionException("A Room", e);
             }
             return mapping.findForward("Sucesso");
         }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GratuitySituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IEnrollment;
 import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
@@ -67,7 +67,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 
-                ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
+                IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
                 IGratuityValues gratuityValues = gratuityValuesDAO
                         .readGratuityValuesByExecutionDegree(executionDegree);
 

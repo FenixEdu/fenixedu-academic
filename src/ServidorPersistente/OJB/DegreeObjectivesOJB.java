@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.DegreeObjectives;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeObjectives;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeObjectives;
@@ -23,7 +23,7 @@ import ServidorPersistente.IPersistentDegreeObjectives;
  */
 public class DegreeObjectivesOJB extends PersistentObjectOJB implements IPersistentDegreeObjectives {
 
-    public IDegreeObjectives readCurrentByDegree(ICurso degree) throws ExcepcaoPersistencia {
+    public IDegreeObjectives readCurrentByDegree(IDegree degree) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDegree", degree.getIdInternal());
@@ -32,7 +32,7 @@ public class DegreeObjectivesOJB extends PersistentObjectOJB implements IPersist
 
     }
 
-    public List readByDegree(ICurso degree) throws ExcepcaoPersistencia {
+    public List readByDegree(IDegree degree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDegree", degree.getIdInternal());
 

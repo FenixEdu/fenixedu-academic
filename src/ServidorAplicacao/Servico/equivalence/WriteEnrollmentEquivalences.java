@@ -23,7 +23,7 @@ import Dominio.IEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.IExecutionPeriod;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
@@ -150,9 +150,9 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
     /**
      * @param userView
-     * @return IPessoa
+     * @return IPerson
      */
-    private IPessoa getPersonResponsibleFor(IUserView userView) throws ExcepcaoPersistencia {
+    private IPerson getPersonResponsibleFor(IUserView userView) throws ExcepcaoPersistencia {
         ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
         IPessoaPersistente personDAO = persistenceDAO.getIPessoaPersistente();
 
@@ -163,7 +163,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
      * @param person
      * @return IEmployee
      */
-    private IEmployee getEmployee(IPessoa person) throws ExcepcaoPersistencia {
+    private IEmployee getEmployee(IPerson person) throws ExcepcaoPersistencia {
         ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
         IPersistentEmployee employeeDAO = persistenceDAO.getIPersistentEmployee();
 
@@ -208,7 +208,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
         IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistenceDAO
                 .getIPersistentEnrolmentEvaluation();
 
-        IPessoa person = getPersonResponsibleFor(userView);
+        IPerson person = getPersonResponsibleFor(userView);
 
         IEmployee employee = getEmployee(person);
 

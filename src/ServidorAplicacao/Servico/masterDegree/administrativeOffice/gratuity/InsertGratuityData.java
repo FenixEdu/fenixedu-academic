@@ -14,13 +14,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.GratuityValues;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IEmployee;
 import Dominio.IGratuityValues;
 import Dominio.IPaymentPhase;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.PaymentPhase;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
@@ -73,7 +73,7 @@ public class InsertGratuityData implements IService {
             IGratuityValues gratuityValues = new GratuityValues();
             gratuityValues.setIdInternal(infoGratuityValues.getIdInternal());
 
-            ICursoExecucao executionDegree = new CursoExecucao();
+            IExecutionDegree executionDegree = new ExecutionDegree();
             executionDegree.setIdInternal(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
             gratuityValues.setExecutionDegree(executionDegree);
 
@@ -91,8 +91,8 @@ public class InsertGratuityData implements IService {
                 IPersistentExecutionDegree persistentExecutionDegree = sp
                         .getIPersistentExecutionDegree();
 
-                executionDegree = (ICursoExecucao) persistentExecutionDegree
-                        .readByOID(CursoExecucao.class, infoGratuityValues.getInfoExecutionDegree()
+                executionDegree = (IExecutionDegree) persistentExecutionDegree
+                        .readByOID(ExecutionDegree.class, infoGratuityValues.getInfoExecutionDegree()
                                 .getIdInternal());
                 gratuityValues.setExecutionDegree(executionDegree);
 
@@ -236,7 +236,7 @@ public class InsertGratuityData implements IService {
             IGratuityValues gratuityValues) throws ExcepcaoPersistencia {
         //employee who made register
         IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPessoa person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
+        IPerson person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
                 .getPerson().getUsername());
         if (person != null) {
             IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();

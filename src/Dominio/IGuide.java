@@ -19,7 +19,7 @@ public interface IGuide extends IDomainObject {
 
     public String getRemarks();
 
-    public IPessoa getPerson();
+    public IPerson getPerson();
 
     public IContributor getContributor();
 
@@ -27,7 +27,7 @@ public interface IGuide extends IDomainObject {
 
     public GuideRequester getGuideRequester();
 
-    public ICursoExecucao getExecutionDegree();
+    public IExecutionDegree getExecutionDegree();
 
     public PaymentType getPaymentType();
 
@@ -51,7 +51,7 @@ public interface IGuide extends IDomainObject {
 
     public void setRemarks(String remarks);
 
-    public void setPerson(IPessoa person);
+    public void setPerson(IPerson person);
 
     public void setContributor(IContributor contributor);
 
@@ -59,7 +59,7 @@ public interface IGuide extends IDomainObject {
 
     public void setGuideRequester(GuideRequester guideRequester);
 
-    public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(IExecutionDegree executionDegree);
 
     public void setPaymentType(PaymentType paymentType);
 

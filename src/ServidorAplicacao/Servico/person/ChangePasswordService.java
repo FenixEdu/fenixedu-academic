@@ -4,7 +4,7 @@
 package ServidorAplicacao.Servico.person;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -37,7 +37,7 @@ public class ChangePasswordService implements IService {
         ISuportePersistente sp = null;
 
         String username = new String(userView.getUtilizador());
-        IPessoa person = null;
+        IPerson person = null;
         IPessoaPersistente personDAO = null;
         try {
             sp = SuportePersistenteOJB.getInstance();

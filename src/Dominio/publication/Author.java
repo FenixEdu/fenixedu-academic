@@ -14,7 +14,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.DomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 /**
  * @author TJBF & PFON
  * 
@@ -24,7 +24,7 @@ import Dominio.IPessoa;
 public class Author extends DomainObject implements IAuthor{
 
 	private Integer keyPerson;
-	public IPessoa person;
+	public IPerson person;
 	public String author;
 	public String organization;
 	
@@ -60,7 +60,7 @@ public class Author extends DomainObject implements IAuthor{
 	/**
      * @return Returns the pessoa.
      */
-	public IPessoa getPerson() {
+	public IPerson getPerson() {
 		return person;
 	}
 
@@ -92,7 +92,7 @@ public class Author extends DomainObject implements IAuthor{
      * @param pessoa
      *            The pessoa to set.
      */
-	public void setPerson(IPessoa person) {
+	public void setPerson(IPerson person) {
 		this.person = person;
 	}
 

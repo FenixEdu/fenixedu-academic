@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import Dominio.IEmployee;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionYear;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -140,7 +140,7 @@ public class RowMarksFile {
         return StringUtils.trim(tokens[0]);
     }
 
-    private IEmployee readEmployee(IPessoa person) {
+    private IEmployee readEmployee(IPerson person) {
         IEmployee employee = null;
         IPersistentEmployee persistentEmployee;
         try {

@@ -18,7 +18,7 @@ import Dominio.ExecutionCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
 import Dominio.ISite;
 import Dominio.IStudent;
@@ -108,7 +108,7 @@ public class InsertEvaluationMarks implements IServico {
             ListIterator iterAttends = attendList.listIterator();
 
             while (iterAttends.hasNext()) {
-                IFrequenta attend = (IFrequenta) iterAttends.next();
+                IAttends attend = (IAttends) iterAttends.next();
 
                 String mark = (String) hashMarks.get(attend.getAluno().getNumber().toString());
                 hashMarks.remove(attend.getAluno().getNumber().toString());

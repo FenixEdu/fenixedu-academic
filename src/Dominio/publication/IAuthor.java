@@ -9,7 +9,7 @@ package Dominio.publication;
 import java.util.List;
 
 import Dominio.IDomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author TJBF & PFON
@@ -36,7 +36,7 @@ public interface IAuthor extends IDomainObject {
     /**
      * @return Returns the pessoa.
      */
-    public abstract IPessoa getPerson();
+    public abstract IPerson getPerson();
 
     /**
      * @param author
@@ -60,7 +60,7 @@ public interface IAuthor extends IDomainObject {
      * @param pessoa
      *            The pessoa to set.
      */
-    public abstract void setPerson(IPessoa person);
+    public abstract void setPerson(IPerson person);
 
     /**
      * @return the List of Publications from the author

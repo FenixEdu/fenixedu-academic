@@ -16,7 +16,7 @@ import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteStudentInformation;
 import Dominio.GroupProperties;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -125,7 +125,7 @@ public class PrepareCreateStudentGroup implements IServico {
 					.readAllByStudentGroup((IStudentGroup) iterator.next());
             
             		Iterator iterator2 = allStudentGroupAttend.iterator();
-            		IFrequenta frequenta = null;
+            		IAttends frequenta = null;
             		while (iterator2.hasNext()) {
             			frequenta = ((IStudentGroupAttend) iterator2.next())
 						.getAttend();
@@ -140,7 +140,7 @@ public class PrepareCreateStudentGroup implements IServico {
             Iterator iterator3 = frequentas.iterator();
 
             while (iterator3.hasNext()) {
-                student = ((IFrequenta) iterator3.next()).getAluno();
+                student = ((IAttends) iterator3.next()).getAluno();
                 InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
 
                 infoSiteStudentInformation.setEmail(student.getPerson()

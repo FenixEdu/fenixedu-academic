@@ -10,16 +10,16 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GroupProperties;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.Student;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -93,12 +93,12 @@ public class GroupEnrolment implements IService {
             	throw new NoChangeMadeServiceException();
             }
 
-            ITurno shift = null;
+            IShift shift = null;
             
             Integer result= null;
             if(shiftCode != null){
-           	 shift = (ITurno) sp.getITurnoPersistente().readByOID(
-                       Turno.class, shiftCode);
+           	 shift = (IShift) sp.getITurnoPersistente().readByOID(
+                       Shift.class, shiftCode);
             }
              result = strategy.enrolmentPolicyNewGroup(groupProperties,
                     studentCodes.size() + 1, shift);
@@ -126,7 +126,7 @@ public class GroupEnrolment implements IService {
             	throw new InvalidStudentNumberServiceException();
             }
 
-            IFrequenta userAttend = groupProperties.getAttendsSet().getStudentAttend(userStudent);
+            IAttends userAttend = groupProperties.getAttendsSet().getStudentAttend(userStudent);
            
             checkStudentCodesAndUserAttendInStudentGroup(studentsList,groupProperties,userAttend);
 
@@ -145,7 +145,7 @@ public class GroupEnrolment implements IService {
 
                 IStudent student = (IStudent)iter.next();
 
-                IFrequenta attend = groupProperties.getAttendsSet().getStudentAttend(student);
+                IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
 
                 IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(
                         newStudentGroup, attend);
@@ -166,7 +166,7 @@ public class GroupEnrolment implements IService {
     }
 
     
-    private void checkStudentCodesAndUserAttendInStudentGroup (List studentsList, IGroupProperties groupProperties, IFrequenta userAttend) 
+    private void checkStudentCodesAndUserAttendInStudentGroup (List studentsList, IGroupProperties groupProperties, IAttends userAttend) 
     throws FenixServiceException {
     	
     	try {

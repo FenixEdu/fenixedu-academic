@@ -20,7 +20,7 @@ import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -124,7 +124,7 @@ public class ReadDistributedTestMarksToString implements IService {
                     new Transformer() {
 
                         public Object transform(Object input) {
-                            return ((IFrequenta) input).getAluno();
+                            return ((IAttends) input).getAluno();
                         }
                     });
             List distributedTestIdsList = new ArrayList();

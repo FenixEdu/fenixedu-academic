@@ -66,7 +66,7 @@
       </reference-descriptor> 
       <collection-descriptor
 			name="schoolClasses"
-			element-class-ref="Dominio.Turma"
+			element-class-ref="Dominio.SchoolClass"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>  

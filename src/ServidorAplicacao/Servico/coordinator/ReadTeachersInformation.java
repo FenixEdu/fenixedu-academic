@@ -30,9 +30,9 @@ import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoSiteTeacherInformation;
 import DataBeans.teacher.InfoWeeklyOcupation;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -108,8 +108,8 @@ public class ReadTeachersInformation implements IService {
                             executionDegrees, basic);
                 }
             } else {
-                ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                        CursoExecucao.class, executionDegreeId);
+                IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                        ExecutionDegree.class, executionDegreeId);
 
                 if (basic == null) {
                     professorships = persistentProfessorship.readByExecutionDegree(executionDegree);

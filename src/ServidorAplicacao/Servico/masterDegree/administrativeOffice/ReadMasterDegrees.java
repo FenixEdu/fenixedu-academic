@@ -11,7 +11,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -58,7 +58,7 @@ public class ReadMasterDegrees implements IService {
         Iterator iterator = result.iterator();
         while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-                    .get((ICursoExecucao) iterator.next());
+                    .get((IExecutionDegree) iterator.next());
             degrees.add(infoExecutionDegree);
         }
 

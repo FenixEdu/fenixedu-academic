@@ -2,20 +2,20 @@ package ServidorPersistenteJDBC;
 
 import java.util.List;
 
-import Dominio.CentroCusto;
+import Dominio.CostCenter;
 
 /**
  * 
  * @author Fernanda Quitério e Tania Pousão
  */
 public interface ICentroCustoPersistente {
-    public boolean alterarCentroCusto(CentroCusto centroCusto);
+    public boolean alterarCentroCusto(CostCenter centroCusto);
 
-    public boolean escreverCentroCusto(CentroCusto centroCusto);
+    public boolean escreverCentroCusto(CostCenter centroCusto);
 
-    public CentroCusto lerCentroCusto(String sigla);
+    public CostCenter lerCentroCusto(String sigla);
 
-    public CentroCusto lerCentroCusto(int codigoInterno);
+    public CostCenter lerCentroCusto(int codigoInterno);
 
     public List lerTodosCentrosCusto();
 }

@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.Curso;
-import Dominio.ICurso;
+import Dominio.Degree;
+import Dominio.IDegree;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import Util.TipoCurso;
@@ -27,36 +27,36 @@ public class CursoOJB extends PersistentObjectOJB implements ICursoPersistente {
     public CursoOJB() {
     }
 
-    public ICurso readBySigla(String sigla) throws ExcepcaoPersistencia {
+    public IDegree readBySigla(String sigla) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("sigla", sigla);
-        return (ICurso) queryObject(Curso.class, criteria);
+        return (IDegree) queryObject(Degree.class, criteria);
     }
 
-    public ICurso readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia {
-        return (ICurso) readByOID(Curso.class, idInternal);
+    public IDegree readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia {
+        return (IDegree) readByOID(Degree.class, idInternal);
     }
 
-    public void delete(ICurso degree) throws ExcepcaoPersistencia {
+    public void delete(IDegree degree) throws ExcepcaoPersistencia {
         super.delete(degree);
     }
 
     public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        return queryList(Curso.class, criteria);
+        return queryList(Degree.class, criteria);
     }
 
     public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("tipoCurso", degreeType);
-        return queryList(Curso.class, criteria, "nome", true);
+        return queryList(Degree.class, criteria, "nome", true);
     }
 
-    public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia {
+    public IDegree readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("nome", name);
         criteria.addEqualTo("tipoCurso", degreeType);
-        return (ICurso) queryObject(Curso.class, criteria);
+        return (IDegree) queryObject(Degree.class, criteria);
     }
 
 }

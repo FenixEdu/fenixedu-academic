@@ -7,7 +7,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -41,7 +41,7 @@ public class ReadExecutionDegreesOfTypeDegree implements IService {
             if (executionDegrees != null) {
                 Iterator iterator = executionDegrees.iterator();
                 while (iterator.hasNext()) {
-                    ICursoExecucao cursoExecucao = (ICursoExecucao) iterator.next();
+                    IExecutionDegree cursoExecucao = (IExecutionDegree) iterator.next();
                     InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
                             .get(cursoExecucao);
                     infoExecutionDegrees.add(infoExecutionDegree);

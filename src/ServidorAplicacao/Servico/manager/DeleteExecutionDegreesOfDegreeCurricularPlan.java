@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionDegree;
@@ -36,14 +36,14 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
             List undeletedExecutionDegreesYears = new ArrayList();
             List classes;
             Integer executionDegreeId;
-            ICursoExecucao executionDegree;
+            IExecutionDegree executionDegree;
 
             while (iter.hasNext()) {
 
                 executionDegreeId = (Integer) iter.next();
 
-                executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                        CursoExecucao.class, executionDegreeId);
+                executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                        ExecutionDegree.class, executionDegreeId);
                 if (executionDegree != null) {
                     classes = persistentClass.readByExecutionDegree(executionDegree);
                     if (classes.isEmpty())

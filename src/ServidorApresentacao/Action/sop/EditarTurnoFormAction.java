@@ -58,7 +58,7 @@ public class EditarTurnoFormAction extends
                 ServiceManagerServiceFactory.executeService(userView, "EditarTurno", argsEditarTurno);
             } catch (ExistingServiceException e) {
 
-                throw new ExistingActionException("O Turno", e);
+                throw new ExistingActionException("O Shift", e);
 
             }
 

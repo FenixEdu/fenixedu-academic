@@ -36,7 +36,7 @@ public class Qualification extends DomainObject implements IQualification {
 
     private Integer countryKey;
 
-    private IPessoa person;
+    private IPerson person;
 
     public Qualification() {
     }
@@ -76,14 +76,14 @@ public class Qualification extends DomainObject implements IQualification {
     /**
      * @return
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
     /**
      * @param person
      */
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

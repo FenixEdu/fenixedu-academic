@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.student.Delegate;
@@ -28,10 +28,10 @@ public class DelegateOJB extends PersistentObjectOJB implements IPersistentDeleg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYear(Dominio.ICurso,
+     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYear(Dominio.IDegree,
      *      Dominio.IExecutionYear)
      */
-    public List readByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+    public List readByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degree.getIdInternal());
@@ -42,10 +42,10 @@ public class DelegateOJB extends PersistentObjectOJB implements IPersistentDeleg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYearAndType(Dominio.ICurso,
+     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYearAndType(Dominio.IDegree,
      *      Dominio.IExecutionYear, Util.DelegateType)
      */
-    public List readByDegreeAndExecutionYearAndYearType(ICurso degree, IExecutionYear executionYear,
+    public List readByDegreeAndExecutionYearAndYearType(IDegree degree, IExecutionYear executionYear,
             DelegateYearType yearType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degree.getIdInternal());
@@ -68,10 +68,10 @@ public class DelegateOJB extends PersistentObjectOJB implements IPersistentDeleg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.student.IPersistentDelegate#readDegreeDelegateByDegreeAndExecutionYear(Dominio.ICurso,
+     * @see ServidorPersistente.student.IPersistentDelegate#readDegreeDelegateByDegreeAndExecutionYear(Dominio.IDegree,
      *      Dominio.IExecutionYear)
      */
-    public List readDegreeDelegateByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+    public List readDegreeDelegateByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degree.getIdInternal());

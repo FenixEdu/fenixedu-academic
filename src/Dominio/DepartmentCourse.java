@@ -1,5 +1,5 @@
 /*
- * DisciplinaDepartamento.java
+ * DepartmentCourse.java
  *
  * Created on 6 de Novembro de 2002, 15:57
  */
@@ -11,7 +11,7 @@
 
 package Dominio;
 
-public class DisciplinaDepartamento extends DomainObject implements IDisciplinaDepartamento {
+public class DepartmentCourse extends DomainObject implements IDepartmentCourse {
 
     private Integer codigoInterno;
 
@@ -23,13 +23,13 @@ public class DisciplinaDepartamento extends DomainObject implements IDisciplinaD
 
     private IDepartment departamento;
 
-    public DisciplinaDepartamento() {
+    public DepartmentCourse() {
         setNome("");
         setSigla("");
         setDepartamento(null);
     }
 
-    public DisciplinaDepartamento(String nome, String sigla, IDepartment departamento) {
+    public DepartmentCourse(String nome, String sigla, IDepartment departamento) {
         setCodigoInterno(null);
         setNome(nome);
         setSigla(sigla);
@@ -38,8 +38,8 @@ public class DisciplinaDepartamento extends DomainObject implements IDisciplinaD
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof DisciplinaDepartamento) {
-            DisciplinaDepartamento d = (DisciplinaDepartamento) obj;
+        if (obj instanceof DepartmentCourse) {
+            DepartmentCourse d = (DepartmentCourse) obj;
             resultado = (getNome().equals(d.getNome()) && getSigla().equals(d.getSigla()));
         }
         return resultado;

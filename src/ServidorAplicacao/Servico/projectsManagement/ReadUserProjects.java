@@ -10,7 +10,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.projectsManagement.InfoProject;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.projectsManagement.IProject;
 import ServidorAplicacao.IUserView;
@@ -39,7 +39,7 @@ public class ReadUserProjects implements IService {
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPessoa person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = (IEmployee) persistentSuport.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

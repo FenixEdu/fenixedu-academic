@@ -8,11 +8,11 @@ import java.util.List;
 
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
-import Dominio.Frequenta;
+import Dominio.Attends;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudentGroupAttend;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
@@ -87,7 +87,7 @@ public abstract class DeleteEnrolmentUtils {
             IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
 
             if (executionCourse != null) {
-                IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(enrolment
+                IAttends attend = attendDAO.readByAlunoAndDisciplinaExecucao(enrolment
                         .getStudentCurricularPlan().getStudent(), executionCourse);
 
                 if (attend != null) {
@@ -100,7 +100,7 @@ public abstract class DeleteEnrolmentUtils {
 
                             if (shiftsStudentIsIn == null || shiftsStudentIsIn.isEmpty()) {
 
-                                attendDAO.deleteByOID(Frequenta.class, attend.getIdInternal());
+                                attendDAO.deleteByOID(Attends.class, attend.getIdInternal());
                             } else {
                                 attendDAO.simpleLockWrite(attend);
                                 attend.setEnrolment(null);

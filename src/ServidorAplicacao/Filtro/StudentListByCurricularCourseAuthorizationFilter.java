@@ -14,7 +14,7 @@ import DataBeans.InfoRole;
 import Dominio.CurricularCourse;
 import Dominio.ICoordinator;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -136,7 +136,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
                 // ALWAYS the same
                 //modified by Tânia Pousão
                 List coodinatorsList = SuportePersistenteOJB.getInstance().getIPersistentCoordinator()
-                        .readCoordinatorsByExecutionDegree(((ICursoExecucao) executionDegrees.get(0)));
+                        .readCoordinatorsByExecutionDegree(((IExecutionDegree) executionDegrees.get(0)));
                 if (coodinatorsList == null) {
                     return false;
                 }
@@ -149,7 +149,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
                     }
                 }
 
-                //                teacher = ((ICursoExecucao)
+                //                teacher = ((IExecutionDegree)
                 // executionDegrees.get(0)).getCoordinator();
                 //
                 //                if (teacher == null)

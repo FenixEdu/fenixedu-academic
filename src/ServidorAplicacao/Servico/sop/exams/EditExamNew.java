@@ -29,10 +29,10 @@ import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
-import Dominio.ISala;
+import Dominio.IRoom;
 import Dominio.Period;
 import Dominio.RoomOccupation;
-import Dominio.Sala;
+import Dominio.Room;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
@@ -215,7 +215,7 @@ public class EditExamNew implements IService {
                 }
 
                 for (int i = 0; i < roomIDArray.length; i++) {
-                    ISala room = (ISala) sp.getISalaPersistente().readByOID(Sala.class,
+                    IRoom room = (IRoom) sp.getISalaPersistente().readByOID(Room.class,
                             new Integer(roomIDArray[i]));
 
                     if (room == null) {

@@ -17,14 +17,14 @@ public class PersonAccount extends DomainObject implements IPersonAccount {
 
     private Double balance;
 
-    private IPessoa person;
+    private IPerson person;
 
     private List transactions;
 
     public PersonAccount() {
     }
 
-    public PersonAccount(IPessoa person) {
+    public PersonAccount(IPerson person) {
         this.person = person;
         this.balance = new Double(0);
 
@@ -46,11 +46,11 @@ public class PersonAccount extends DomainObject implements IPersonAccount {
         this.keyPerson = keyPerson;
     }
 
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

@@ -16,11 +16,11 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
-import Dominio.CentroCusto;
-import Dominio.FuncNaoDocente;
+import Dominio.CostCenter;
+import Dominio.NonTeacherEmployee;
 import Dominio.Funcionario;
 import Dominio.Horario;
-import Dominio.Pessoa;
+import Dominio.Person;
 import Dominio.StatusAssiduidade;
 import constants.assiduousness.Constants;
 
@@ -338,9 +338,9 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
         _rotacaoHorario = rotacaoHorario;
     }
 
-    public void setForm(Date dataInicialConsulta, Date dataFinalConsulta, Pessoa pessoa,
-            Funcionario funcionario, StatusAssiduidade statusAssiduidade, CentroCusto centroCusto,
-            FuncNaoDocente funcNaoDocente, List rotacaoHorario, HashMap listaRegimesRotacao) {
+    public void setForm(Date dataInicialConsulta, Date dataFinalConsulta, Person pessoa,
+            Funcionario funcionario, StatusAssiduidade statusAssiduidade, CostCenter centroCusto,
+            NonTeacherEmployee funcNaoDocente, List rotacaoHorario, HashMap listaRegimesRotacao) {
 
         _listaEscolhas.clear();
         _listaEscolhas.add(new String("consultar.marcacao"));
@@ -376,9 +376,9 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
         }
 
         if (centroCusto != null) {
-            setSiglaCentroCusto(centroCusto.getSigla());
-            setDescricaoCentroCusto(centroCusto.getDepartamento() + "<br>" + centroCusto.getSeccao1()
-                    + "<br>" + centroCusto.getSeccao2());
+            setSiglaCentroCusto(centroCusto.getCode());
+            setDescricaoCentroCusto(centroCusto.getDepartament() + "<br>" + centroCusto.getSection1()
+                    + "<br>" + centroCusto.getSection2());
         }
 
         ListIterator iterador = rotacaoHorario.listIterator();

@@ -6,7 +6,7 @@ package ServidorPersistente.student;
 
 import java.util.List;
 
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Dominio.student.IDelegate;
@@ -20,10 +20,10 @@ import Util.DelegateYearType;
  *  
  */
 public interface IPersistentDelegate extends IPersistentObject {
-    public List readByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+    public List readByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
             throws ExcepcaoPersistencia;
 
-    public List readByDegreeAndExecutionYearAndYearType(ICurso degree, IExecutionYear executionYear,
+    public List readByDegreeAndExecutionYearAndYearType(IDegree degree, IExecutionYear executionYear,
             DelegateYearType type) throws ExcepcaoPersistencia;
 
     /**
@@ -31,6 +31,6 @@ public interface IPersistentDelegate extends IPersistentObject {
      */
     public IDelegate readByStudent(IStudent student) throws ExcepcaoPersistencia;
 
-    public List readDegreeDelegateByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+    public List readDegreeDelegateByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
             throws ExcepcaoPersistencia;
 }

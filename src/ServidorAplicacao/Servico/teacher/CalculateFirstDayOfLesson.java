@@ -7,8 +7,8 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Calendar;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.Aula;
-import Dominio.IAula;
+import Dominio.Lesson;
+import Dominio.ILesson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -24,7 +24,7 @@ public class CalculateFirstDayOfLesson implements IService {
 	    ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 	    IAulaPersistente persistentLesson = persistentSupport.getIAulaPersistente();
 
-	    IAula lesson = (IAula) persistentLesson.readByOID(Aula.class, lessonId);
+	    ILesson lesson = (ILesson) persistentLesson.readByOID(Lesson.class, lessonId);
 	    Calendar startDate = lesson.getRoomOccupation().getPeriod().getStartDate();
 	    return startDate;
     }

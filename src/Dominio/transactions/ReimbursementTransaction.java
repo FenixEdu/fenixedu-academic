@@ -3,7 +3,7 @@ package Dominio.transactions;
 import java.sql.Timestamp;
 
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.reimbursementGuide.IReimbursementGuideEntry;
 import Util.PaymentType;
 import Util.transactions.TransactionType;
@@ -36,7 +36,7 @@ public class ReimbursementTransaction extends Transaction implements IReimbursem
      */
     public ReimbursementTransaction(Double value, Timestamp transactionDate, String remarks,
             PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-            IPessoa responsiblePerson, IPersonAccount personAccount,
+            IPerson responsiblePerson, IPersonAccount personAccount,
             IReimbursementGuideEntry reimbursementGuideEntry) {
         super(value, transactionDate, remarks, paymentType, transactionType, wasInternalBalance,
                 responsiblePerson, personAccount);

@@ -18,10 +18,10 @@ import DataBeans.InfoSiteCurricularCourses;
 import DataBeans.InfoSiteDegreeCurricularPlans;
 import DataBeans.InfoSiteSCDegrees;
 import DataBeans.util.Cloner;
-import Dominio.Curso;
+import Dominio.Degree;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -173,7 +173,7 @@ public class ScientificCouncilComponentBuilder {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = sp.getIPersistentObject();
-            ICurso degree = (ICurso) persistentObject.readByOID(Curso.class, degreeId);
+            IDegree degree = (IDegree) persistentObject.readByOID(Degree.class, degreeId);
             if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -212,7 +212,7 @@ public class ScientificCouncilComponentBuilder {
             Iterator degreeIterator = degrees.iterator();
             List infoDegrees = new ArrayList();
             while (degreeIterator.hasNext()) {
-                ICurso degree = (ICurso) degreeIterator.next();
+                IDegree degree = (IDegree) degreeIterator.next();
                 InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degree);
                 infoDegrees.add(infoDegree);
             }

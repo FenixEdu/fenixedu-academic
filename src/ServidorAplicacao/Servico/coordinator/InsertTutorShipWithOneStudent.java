@@ -4,8 +4,8 @@
  */
 package ServidorAplicacao.Servico.coordinator;
 
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IStudent;
 import Dominio.ITeacher;
 import Dominio.ITutor;
@@ -42,8 +42,8 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
 
             //execution degree
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
             String degreeCode = null;
             if (executionDegree != null && executionDegree.getCurricularPlan() != null
                     && executionDegree.getCurricularPlan().getDegree() != null) {

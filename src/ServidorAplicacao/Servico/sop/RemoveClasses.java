@@ -14,10 +14,10 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoShift;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turma;
-import Dominio.Turno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.SchoolClass;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -31,13 +31,13 @@ public class RemoveClasses implements IService {
 
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+        IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                 infoShift.getIdInternal());
 
         sp.getITurnoPersistente().simpleLockWrite(shift);
 
         for (int i = 0; i < classOIDs.size(); i++) {
-            ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+            ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                     (Integer) classOIDs.get(i));
 
             shift.getAssociatedClasses().remove(schoolClass);

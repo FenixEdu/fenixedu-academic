@@ -12,7 +12,7 @@ public interface IMark extends IDomainObject {
 
     public String getPublishedMark();
 
-    public IFrequenta getAttend();
+    public IAttends getAttend();
 
     public IEvaluation getEvaluation();
 
@@ -24,7 +24,7 @@ public interface IMark extends IDomainObject {
 
     public void setPublishedMark(String publishedMark);
 
-    public void setAttend(IFrequenta attend);
+    public void setAttend(IAttends attend);
 
     public void setEvaluation(IEvaluation evaluation);
 

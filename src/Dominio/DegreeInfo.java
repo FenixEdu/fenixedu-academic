@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class DegreeInfo extends DomainObject implements IDegreeInfo {
     private Integer degreeKey;
 
-    private ICurso degree;
+    private IDegree degree;
 
     private String description;
 
@@ -64,7 +64,7 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
     public DegreeInfo() {
     }
 
-    public DegreeInfo(ICurso degree, String objectives, String history, String professionalExits,
+    public DegreeInfo(IDegree degree, String objectives, String history, String professionalExits,
             String additionalInfo, String links, String testIngression, Integer driftsInitial,
             Integer driftsFirst, Integer driftsSecond, String classifications, Double markMin,
             Double markMax, Double markAverage, Timestamp lastModificationDate) {
@@ -86,7 +86,7 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
         this.lastModificationDate = lastModificationDate;
     }
 
-    public DegreeInfo(Integer degreeKey, ICurso degree, String objectives, String history,
+    public DegreeInfo(Integer degreeKey, IDegree degree, String objectives, String history,
             String professionalExits, String additionalInfo, String links, String testIngression,
             Integer driftsInitial, Integer driftsFirst, Integer driftsSecond, String classifications,
             Double markMin, Double markMax, Double markAverage, Timestamp lastModificationDate) {
@@ -124,11 +124,11 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
         this.classifications = classifications;
     }
 
-    public ICurso getDegree() {
+    public IDegree getDegree() {
         return degree;
     }
 
-    public void setDegree(ICurso degree) {
+    public void setDegree(IDegree degree) {
         this.degree = degree;
     }
 

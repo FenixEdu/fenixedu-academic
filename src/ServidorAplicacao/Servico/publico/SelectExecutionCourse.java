@@ -8,7 +8,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -60,12 +60,12 @@ public class SelectExecutionCourse implements IServico {
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
             //CLONER
-            //ICursoExecucao executionDegree = Cloner
+            //IExecutionDegree executionDegree = Cloner
             //        .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
             //IExecutionPeriod executionPeriod = Cloner
             //        .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-            ICursoExecucao executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
+            IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
             if (executionDegree != null) {
                 executionDegree.setCurricularPlan(InfoDegreeCurricularPlan
                         .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));

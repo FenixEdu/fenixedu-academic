@@ -7,7 +7,7 @@ import java.util.List;
 
 import Dominio.IAttendsSet;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 
 /**
  * @author asnr and scpo
@@ -22,7 +22,7 @@ public interface IPersistentStudentGroup extends IPersistentObject{
 
     public List readAllStudentGroupByAttendsSet (IAttendsSet attendsSet) throws ExcepcaoPersistencia;
 
-    public List readAllStudentGroupByAttendsSetAndShift (IAttendsSet attendsSet, ITurno shift) throws ExcepcaoPersistencia;
+    public List readAllStudentGroupByAttendsSetAndShift (IAttendsSet attendsSet, IShift shift) throws ExcepcaoPersistencia;
 
-    public List readAllStudentGroupByShift (ITurno shift) throws ExcepcaoPersistencia;	
+    public List readAllStudentGroupByShift (IShift shift) throws ExcepcaoPersistencia;	
 }

@@ -1,5 +1,5 @@
 /*
- * Turno.java
+ * Shift.java
  *
  * Created on 17 de Outubro de 2002, 19:28
  */
@@ -15,7 +15,7 @@ import java.util.List;
 
 import Util.TipoAula;
 
-public class Turno extends DomainObject implements ITurno {
+public class Shift extends DomainObject implements IShift {
     protected String _nome;
 
     protected TipoAula _tipo;
@@ -45,14 +45,14 @@ public class Turno extends DomainObject implements ITurno {
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
      * OJB
      */
-    public Turno() {
+    public Shift() {
     }
 
-    public Turno(Integer idInternal) {
+    public Shift(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
-    public Turno(String nome, TipoAula tipo, Integer lotacao, IExecutionCourse disciplinaExecucao) {
+    public Shift(String nome, TipoAula tipo, Integer lotacao, IExecutionCourse disciplinaExecucao) {
         setNome(nome);
         setTipo(tipo);
         setLotacao(lotacao);
@@ -103,8 +103,8 @@ public class Turno extends DomainObject implements ITurno {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof ITurno) {
-            ITurno turno = (ITurno) obj;
+        if (obj instanceof IShift) {
+            IShift turno = (IShift) obj;
             resultado = getIdInternal().equals(turno.getIdInternal());
         }
         return resultado;
@@ -209,13 +209,13 @@ public class Turno extends DomainObject implements ITurno {
     /*
      * (non-Javadoc)
      * 
-     * @see Dominio.ITurno#hours()
+     * @see Dominio.IShift#hours()
      */
     public double hours() {
         double hours = 0;
         List lessons = this.getAssociatedLessons();
         for (int i = 0; i < lessons.size(); i++) {
-            IAula lesson = (IAula) lessons.get(i);
+            ILesson lesson = (ILesson) lessons.get(i);
             hours += lesson.hours();
         }
         return hours;

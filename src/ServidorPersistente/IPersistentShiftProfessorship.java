@@ -11,7 +11,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Util.DiaSemana;
 import Util.TipoCurso;
 
@@ -24,7 +24,7 @@ public interface IPersistentShiftProfessorship extends IPersistentObject {
 
     void delete(IShiftProfessorship teacherShiftPercentage) throws ExcepcaoPersistencia;
 
-    IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, ITurno shift)
+    IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, IShift shift)
             throws ExcepcaoPersistencia;
 
     List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay,
@@ -47,5 +47,5 @@ public interface IPersistentShiftProfessorship extends IPersistentObject {
     List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod period)
             throws ExcepcaoPersistencia;
 
-    List readByShift(ITurno shift) throws ExcepcaoPersistencia;
+    List readByShift(IShift shift) throws ExcepcaoPersistencia;
 }

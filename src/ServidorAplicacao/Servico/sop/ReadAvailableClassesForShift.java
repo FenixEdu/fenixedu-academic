@@ -15,9 +15,9 @@ import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IExecutionCourse;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -42,7 +42,7 @@ public class ReadAvailableClassesForShift implements IService {
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-            ITurno shift = (ITurno) shiftDAO.readByOID(Turno.class, shiftOID);
+            IShift shift = (IShift) shiftDAO.readByOID(Shift.class, shiftOID);
 
             List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
             List scopes = new ArrayList();
@@ -59,7 +59,7 @@ public class ReadAvailableClassesForShift implements IService {
             infoClasses = new ArrayList();
             Iterator iter = classes.iterator();
             while (iter.hasNext()) {
-                ITurma classImpl = (ITurma) iter.next();
+                ISchoolClass classImpl = (ISchoolClass) iter.next();
                 if (!shift.getAssociatedClasses().contains(classImpl)
                         && containsScope(scopes, classImpl)) {
                     InfoClass infoClass = Cloner.copyClass2InfoClass(classImpl);
@@ -77,7 +77,7 @@ public class ReadAvailableClassesForShift implements IService {
      * @param classImpl
      * @return
      */
-    private boolean containsScope(List scopes, ITurma classImpl) {
+    private boolean containsScope(List scopes, ISchoolClass classImpl) {
         for (int i = 0; i < scopes.size(); i++) {
             ICurricularCourseScope scope = (ICurricularCourseScope) scopes.get(i);
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -51,7 +51,7 @@ public class GenerateNewStudentsPasswordsService implements IService {
         for (int iterator = 0; iterator < studentsList.size(); iterator++) {
             IStudent student = (IStudent) studentsList.get(iterator);
 
-            IPessoa person = student.getPerson();
+            IPerson person = student.getPerson();
             persistentPerson.simpleLockWrite(person);
             String password = RandomStringGenerator.getRandomStringGenerator(8);
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -26,7 +26,7 @@ public class ReadCPlanFromChosenMasterDegree implements IService {
             sp = SuportePersistenteOJB.getInstance();
 
             // Get the Master Degree
-            ICurso degree = null;
+            IDegree degree = null;
             degree = sp.getICursoPersistente().readByIdInternal(idInternal);
 
             // Get the List of Degree Curricular Plans

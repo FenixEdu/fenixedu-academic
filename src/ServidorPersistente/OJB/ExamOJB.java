@@ -19,7 +19,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.Exam;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 
@@ -72,14 +72,14 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentExam#readBy(Dominio.ISala,
+     * @see ServidorPersistente.IPersistentExam#readBy(Dominio.IRoom,
      *      Dominio.IExecutionPeriod)
      */
     /**
      * 
      * @deprecated
      */
-    public List readBy(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    public List readBy(IRoom room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("associatedRooms.nome", room.getNome());
         criteria
@@ -97,7 +97,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
         return examsWithoutRepetition;
     }
 
-    public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
+    public List readByRoomAndExecutionPeriod(IRoom room, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("associatedRoomOccupation.room.nome", room.getNome());
@@ -134,7 +134,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
         return queryList(Exam.class, criteria);
     }
 
-    public List readByRoomAndWeek(ISala room, Calendar day) throws ExcepcaoPersistencia {
+    public List readByRoomAndWeek(IRoom room, Calendar day) throws ExcepcaoPersistencia {
         List list = new ArrayList();
         day.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
         for (int i = 0; i < 6; i++) {

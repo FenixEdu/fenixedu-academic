@@ -8,7 +8,7 @@ import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.IExecutionYear;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -48,7 +48,7 @@ public class EditObjectives implements IServico {
 
             //Person who change all information
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(username);
+            IPerson person = persistentPerson.lerPessoaPorUsername(username);
             if (person == null) {
                 throw new NonExistingServiceException("noPerson");
             }

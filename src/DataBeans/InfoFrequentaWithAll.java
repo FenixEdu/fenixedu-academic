@@ -4,14 +4,14 @@
  */
 package DataBeans;
 
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 
 /**
  * @author Tânia Pousão 18/Jun/2004
  */
 public class InfoFrequentaWithAll extends InfoFrequenta {
 
-    public void copyFromDomain(IFrequenta frequenta) {
+    public void copyFromDomain(IAttends frequenta) {
         super.copyFromDomain(frequenta);
         if (frequenta != null) {
             setAluno(InfoStudentWithInfoPerson.newInfoFromDomain(frequenta.getAluno()));
@@ -21,7 +21,7 @@ public class InfoFrequentaWithAll extends InfoFrequenta {
         }
     }
 
-    public static InfoFrequenta newInfoFromDomain(IFrequenta frequenta) {
+    public static InfoFrequenta newInfoFromDomain(IAttends frequenta) {
         InfoFrequentaWithAll infoFrequenta = null;
         if (frequenta != null) {
             infoFrequenta = new InfoFrequentaWithAll();

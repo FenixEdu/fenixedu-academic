@@ -17,7 +17,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCandidateSituation;
@@ -61,7 +61,7 @@ public class CandidateSituationOJB extends PersistentObjectOJB implements IPersi
 
     }
 
-    public List readActiveSituationsBySituationList(ICursoExecucao executionDegree, List situations)
+    public List readActiveSituationsBySituationList(IExecutionDegree executionDegree, List situations)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
@@ -89,7 +89,7 @@ public class CandidateSituationOJB extends PersistentObjectOJB implements IPersi
         super.delete(candidateSituation);
     }
 
-    public List readCandidateListforRegistration(ICursoExecucao executionDegree)
+    public List readCandidateListforRegistration(IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         Criteria criteriaDocs = new Criteria();

@@ -19,7 +19,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoViewAllExams;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IEvaluation;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
@@ -76,7 +76,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
 
             for (int k = 0; k < executionDegrees.size(); k++) {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-                        .get((ICursoExecucao) executionDegrees.get(k));
+                        .get((IExecutionDegree) executionDegrees.get(k));
 
                 for (int curricularYear = 1; curricularYear <= 5; curricularYear++) {
                     InfoViewAllExams infoViewAllExams = new InfoViewAllExams(infoExecutionDegree,
@@ -84,7 +84,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
 
                     List infoExecutionCourseAndExamsList = new ArrayList();
 
-                    ICursoExecucao executionDegree = (ICursoExecucao) executionDegrees.get(k);
+                    IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(k);
 
                     List executionCourses = sp.getIPersistentExecutionCourse()
                             .readByCurricularYearAndExecutionPeriodAndExecutionDegree(

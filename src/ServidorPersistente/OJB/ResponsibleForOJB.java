@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -39,7 +39,7 @@ public class ResponsibleForOJB extends PersistentObjectOJB implements IPersisten
         return queryList(ResponsibleFor.class, criteria);
     }
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",

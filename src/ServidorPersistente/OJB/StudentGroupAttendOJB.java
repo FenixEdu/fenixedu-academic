@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.StudentGroupAttend;
@@ -22,7 +22,7 @@ import ServidorPersistente.IPersistentStudentGroupAttend;
 public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistentStudentGroupAttend
 {
 
-    public IStudentGroupAttend readBy(IStudentGroup studentGroup, IFrequenta attend)
+    public IStudentGroupAttend readBy(IStudentGroup studentGroup, IAttends attend)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
@@ -56,7 +56,7 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
         }
     }
 
-    public List readAllByAttend(IFrequenta attend) throws ExcepcaoPersistencia {
+    public List readAllByAttend(IAttends attend) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 
@@ -75,7 +75,7 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
     }
 
     //by gedl AT rnl DOT ist DOT utl DOT pt at September the 10th, 2003
-    public IStudentGroupAttend readBy(IFrequenta attend) throws ExcepcaoPersistencia
+    public IStudentGroupAttend readBy(IAttends attend) throws ExcepcaoPersistencia
     {
 
         Criteria criteria = new Criteria();

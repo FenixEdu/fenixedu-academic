@@ -23,11 +23,11 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoViewClassSchedule;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
-import Dominio.IAula;
-import Dominio.ICursoExecucao;
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ExecutionDegree;
+import Dominio.ILesson;
+import Dominio.IExecutionDegree;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
@@ -53,11 +53,11 @@ public class ReadDegreesClassesLessons implements IService {
             for (int i = 0; i < infoExecutionDegrees.size(); i++) {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees
                         .get(i);
-                ICursoExecucao executionDegree = (ICursoExecucao) classDAO.readByOID(
-                        CursoExecucao.class, infoExecutionDegree.getIdInternal());
+                IExecutionDegree executionDegree = (IExecutionDegree) classDAO.readByOID(
+                        ExecutionDegree.class, infoExecutionDegree.getIdInternal());
                 List degreeClasses = classDAO.readByExecutionDegree(executionDegree);
                 for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext(); ) {
-                    ITurma klass = (ITurma) iterator.next();
+                    ISchoolClass klass = (ISchoolClass) iterator.next();
                     if (klass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())) {
                         classes.add(klass);
                     }
@@ -67,20 +67,20 @@ public class ReadDegreesClassesLessons implements IService {
 
             for (int i = 0; i < classes.size(); i++) {
                 InfoViewClassSchedule infoViewClassSchedule = new InfoViewClassSchedule();
-                ITurma turma = (ITurma) classes.get(i);
+                ISchoolClass turma = (ISchoolClass) classes.get(i);
 
                 // read class lessons
                 List shiftList = sp.getITurmaTurnoPersistente().readByClass(turma);
                 Iterator iterator = shiftList.iterator();
                 List infoLessonList = new ArrayList();
                 while (iterator.hasNext()) {
-                    ITurno shift = (ITurno) iterator.next();
+                    IShift shift = (IShift) iterator.next();
                     InfoShift infoShift = (InfoShift) Cloner.get(shift);
                     List lessonList = shift.getAssociatedLessons();
                     //List lessonList = shiftLessonDAO.readByShift(shift);
                     Iterator lessonIterator = lessonList.iterator();
                     while (lessonIterator.hasNext()) {
-                        IAula elem = (IAula) lessonIterator.next();
+                        ILesson elem = (ILesson) lessonIterator.next();
                         InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
                         if (infoLesson != null) {
                             infoLesson.setInfoShift(infoShift);

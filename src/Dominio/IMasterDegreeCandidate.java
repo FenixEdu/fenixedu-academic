@@ -32,11 +32,11 @@ public interface IMasterDegreeCandidate extends IDomainObject {
 
     void setAverage(Double average);
 
-    void setExecutionDegree(ICursoExecucao executionDegree);
+    void setExecutionDegree(IExecutionDegree executionDegree);
 
     void setSituations(List situations);
 
-    void setPerson(IPessoa person);
+    void setPerson(IPerson person);
 
     void setSpecializationArea(String specializationArea);
 
@@ -59,11 +59,11 @@ public interface IMasterDegreeCandidate extends IDomainObject {
 
     Double getAverage();
 
-    ICursoExecucao getExecutionDegree();
+    IExecutionDegree getExecutionDegree();
 
     List getSituations();
 
-    IPessoa getPerson();
+    IPerson getPerson();
 
     String getSpecializationArea();
 

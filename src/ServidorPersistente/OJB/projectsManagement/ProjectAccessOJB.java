@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.projectsManagement.IProjectAccess;
 import Dominio.projectsManagement.ProjectAccess;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -99,7 +99,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
 
     }
 
-    public int countByPersonAndProject(IPessoa person, Integer keyProject) throws ExcepcaoPersistencia {
+    public int countByPersonAndProject(IPerson person, Integer keyProject) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addEqualTo("keyProject", keyProject);
@@ -108,7 +108,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return count(ProjectAccess.class, criteria);
     }
 
-    public int countByPerson(IPessoa person) throws ExcepcaoPersistencia {
+    public int countByPerson(IPerson person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
@@ -116,7 +116,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return count(ProjectAccess.class, criteria);
     }
 
-    public void deleteByPerson(IPessoa person) throws ExcepcaoPersistencia {
+    public void deleteByPerson(IPerson person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         List allPersonProjects = queryList(ProjectAccess.class, criteria);
@@ -125,7 +125,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         }
     }
 
-    public void deleteByPersonAndDate(IPessoa person) throws ExcepcaoPersistencia {
+    public void deleteByPersonAndDate(IPerson person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addLessOrEqualThan("endDate", Calendar.getInstance().getTime());

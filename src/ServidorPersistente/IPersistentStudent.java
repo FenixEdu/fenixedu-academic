@@ -3,7 +3,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IExecutionYear;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.IStudent;
 import Util.TipoCurso;
@@ -21,7 +21,7 @@ public interface IPersistentStudent extends IPersistentObject {
     public IStudent readStudentByNumberAndDegreeType(Integer number, TipoCurso degreeType)
             throws ExcepcaoPersistencia;
 
-    public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPessoa person)
+    public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPerson person)
             throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
@@ -32,11 +32,11 @@ public interface IPersistentStudent extends IPersistentObject {
     public IStudent readByUsername(String username) throws ExcepcaoPersistencia;
 
     /**
-     * @param IPessoa
+     * @param IPerson
      * @param TipoCurso
      * @return IStudent
      */
-    public IStudent readByPersonAndDegreeType(IPessoa person, TipoCurso degreeType)
+    public IStudent readByPersonAndDegreeType(IPerson person, TipoCurso degreeType)
             throws ExcepcaoPersistencia;
 
     /**
@@ -49,7 +49,7 @@ public interface IPersistentStudent extends IPersistentObject {
      * @param Person
      * @return All the students associated to this Person
      */
-    public List readbyPerson(IPessoa pessoa) throws ExcepcaoPersistencia;
+    public List readbyPerson(IPerson pessoa) throws ExcepcaoPersistencia;
 
     public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(String studentName,
             String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber)

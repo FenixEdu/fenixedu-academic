@@ -20,9 +20,9 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -45,7 +45,7 @@ public class LerTurnosDeDisciplinaExecucao implements IService {
             Iterator itShiftList = infoShiftList.iterator();
 
             while (itShiftList.hasNext()) {
-                ITurno shift = (ITurno) itShiftList.next();
+                IShift shift = (IShift) itShiftList.next();
                 InfoShift infoTurno = (InfoShift) Cloner.get(shift);
 
                 List lessons = shift.getAssociatedLessons();
@@ -55,7 +55,7 @@ public class LerTurnosDeDisciplinaExecucao implements IService {
                 InfoLesson infoLesson;
 
                 while (itLessons.hasNext()) {
-                    infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
+                    infoLesson = Cloner.copyILesson2InfoLesson((ILesson) itLessons.next());
 
                     infoLesson.setInfoShift(infoTurno);
 

@@ -30,7 +30,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
 
     protected DiaSemana dayOfWeek;
 
-    protected ISala room;
+    protected IRoom room;
 
     protected IPeriod period;
 
@@ -54,7 +54,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
         setIdInternal(idInternal);
     }
 
-    public RoomOccupation(ISala room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
+    public RoomOccupation(IRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             int frequency) {
         this.room = room;
         this.startTime = startTime;
@@ -150,7 +150,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
     /**
      * @return
      */
-    public ISala getRoom() {
+    public IRoom getRoom() {
         return room;
     }
 
@@ -164,7 +164,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
     /**
      * @param sala
      */
-    public void setRoom(ISala sala) {
+    public void setRoom(IRoom sala) {
         room = sala;
     }
 
@@ -204,7 +204,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
     }
 
     public boolean roomOccupationForDateAndTime(IPeriod period, Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week, ISala room) {
+            DiaSemana dayOfWeek, Integer frequency, Integer week, IRoom room) {
         if (!room.equals(this.getRoom())) {
             return false;
         }

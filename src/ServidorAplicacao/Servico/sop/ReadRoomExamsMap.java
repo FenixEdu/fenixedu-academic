@@ -25,7 +25,7 @@ import DataBeans.util.Cloner;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -88,7 +88,7 @@ public class ReadRoomExamsMap implements IServico {
         // Translate to execute following queries
         IExecutionPeriod executionPeriod = Cloner
                 .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-        ISala room = Cloner.copyInfoRoom2Room(infoRoom);
+        IRoom room = Cloner.copyInfoRoom2Room(infoRoom);
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();

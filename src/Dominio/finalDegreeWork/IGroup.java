@@ -6,7 +6,7 @@ package Dominio.finalDegreeWork;
 
 import java.util.List;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDomainObject;
 
 /**
@@ -15,9 +15,9 @@ import Dominio.IDomainObject;
  */
 public interface IGroup extends IDomainObject {
 
-    public ICursoExecucao getExecutionDegree();
+    public IExecutionDegree getExecutionDegree();
 
-    public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(IExecutionDegree executionDegree);
 
     public List getGroupStudents();
 

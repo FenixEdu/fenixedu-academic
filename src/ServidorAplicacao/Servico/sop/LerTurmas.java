@@ -14,9 +14,9 @@ import java.util.List;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -60,7 +60,7 @@ public class LerTurmas implements IServico {
         IExecutionPeriod executionPeriod = Cloner
                 .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-        ICursoExecucao executionDegree = Cloner
+        IExecutionDegree executionDegree = Cloner
                 .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
         if (curricularYear != null) {
@@ -74,7 +74,7 @@ public class LerTurmas implements IServico {
         Iterator iterator = classesList.iterator();
         infoClassesList = new ArrayList();
         while (iterator.hasNext()) {
-            ITurma elem = (ITurma) iterator.next();
+            ISchoolClass elem = (ISchoolClass) iterator.next();
             infoClassesList.add(Cloner.copyClass2InfoClass(elem));
         }
 

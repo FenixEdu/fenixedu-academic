@@ -27,7 +27,7 @@ import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoMasterDegreeCandidateWithInfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -50,7 +50,7 @@ public class ReadDegreeCandidates implements IService {
 
             // Read the Candidates
 
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
             candidates = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegree(executionDegree);

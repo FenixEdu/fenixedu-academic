@@ -32,7 +32,7 @@ public class Student extends DomainObject implements IStudent {
 
     private AgreementType agreementType;
 
-    private IPessoa person;
+    private IPerson person;
 
     private Integer personKey;
 
@@ -75,7 +75,7 @@ public class Student extends DomainObject implements IStudent {
         setSpecialSeason(new Boolean(false));
     }
 
-    public Student(Integer number, StudentState state, IPessoa person, TipoCurso degreeType) {
+    public Student(Integer number, StudentState state, IPerson person, TipoCurso degreeType) {
         this();
         setNumber(number);
         setState(state);
@@ -132,9 +132,9 @@ public class Student extends DomainObject implements IStudent {
     /**
      * Returns the person.
      * 
-     * @return IPessoa
+     * @return IPerson
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -182,7 +182,7 @@ public class Student extends DomainObject implements IStudent {
      * @param person
      *            The person to set
      */
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

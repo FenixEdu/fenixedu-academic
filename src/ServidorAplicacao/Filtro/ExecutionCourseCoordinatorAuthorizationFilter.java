@@ -13,7 +13,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
@@ -99,7 +99,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
                 if (executionDegrees != null && !executionDegrees.isEmpty()) {
                     Iterator iter = executionDegrees.iterator();
                     while (iter.hasNext() && !result) {
-                        ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
+                        IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
                         if (executionDegree.getExecutionYear().equals(
                                 executionCourse.getExecutionPeriod().getExecutionYear())) {
                             if (CollectionUtils.containsAny(executionDegree.getCurricularPlan()

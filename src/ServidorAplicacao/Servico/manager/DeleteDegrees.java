@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
@@ -37,7 +37,7 @@ public class DeleteDegrees implements IService {
             while (iter.hasNext()) {
 
                 Integer internalId = (Integer) iter.next();
-                ICurso degree = persistentDegree.readByIdInternal(internalId);
+                IDegree degree = persistentDegree.readByIdInternal(internalId);
                 if (degree != null) {
                     degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegree(degree);
                     if (degreeCurricularPlans.isEmpty())

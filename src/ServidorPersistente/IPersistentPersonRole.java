@@ -1,7 +1,7 @@
 package ServidorPersistente;
 
 import Dominio.IPersonRole;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 
 /**
@@ -17,6 +17,6 @@ public interface IPersistentPersonRole extends IPersistentObject {
      * @return IPersonRole
      * @throws ExcepcaoPersistencia
      */
-    public IPersonRole readByPersonAndRole(IPessoa person, IRole role) throws ExcepcaoPersistencia;
+    public IPersonRole readByPersonAndRole(IPerson person, IRole role) throws ExcepcaoPersistencia;
 
 }

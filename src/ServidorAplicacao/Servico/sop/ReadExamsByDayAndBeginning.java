@@ -19,10 +19,10 @@ import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -66,7 +66,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
             IExam tempExam = null;
             InfoExam tempInfoExam = null;
             List tempAssociatedCurricularCourses = null;
-            ICurso tempDegree = null;
+            IDegree tempDegree = null;
             List tempInfoExecutionCourses = null;
             List tempInfoDegrees = null;
             Integer numberStudentesAttendingCourse = null;
@@ -121,7 +121,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
             List rooms = sp.getISalaPersistente().readAll();
             int totalExamCapacity = 0;
             for (int i = 0; i < rooms.size(); i++) {
-                ISala room = (ISala) rooms.get(i);
+                IRoom room = (IRoom) rooms.get(i);
                 if (!room.getTipo().equals(new TipoSala(TipoSala.LABORATORIO))) {
                     totalExamCapacity += room.getCapacidadeExame().intValue();
                 }

@@ -11,7 +11,7 @@ import Dominio.EnrolmentInExtraCurricularCourse;
 import Dominio.IBranch;
 import Dominio.IEmployee;
 import Dominio.IEnrollment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
@@ -59,7 +59,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
             IPersistentBranch persistentBranch = sp.getIPersistentBranch();
 
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             if (person == null) {
                 throw new InvalidArgumentsServiceException();
             }

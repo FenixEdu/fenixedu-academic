@@ -7,7 +7,7 @@ package Dominio.projectsManagement;
 import java.util.Calendar;
 
 import Dominio.IDomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author Susana Fernandes
@@ -34,8 +34,8 @@ public interface IProjectAccess extends IDomainObject {
 
     public abstract void setKeyProjectCoordinator(Integer keyProjectCoordinator);
 
-    public abstract IPessoa getPerson();
+    public abstract IPerson getPerson();
 
-    public abstract void setPerson(IPessoa person);
+    public abstract void setPerson(IPerson person);
 
 }

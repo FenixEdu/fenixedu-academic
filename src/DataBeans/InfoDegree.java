@@ -7,8 +7,8 @@ package DataBeans;
 
 import java.util.List;
 
-import Dominio.Curso;
-import Dominio.ICurso;
+import Dominio.Degree;
+import Dominio.IDegree;
 import Util.TipoCurso;
 
 /**
@@ -122,7 +122,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         this.infoDegreeInfos = infoDegreeInfos;
     }
 
-    public void copyFromDomain(ICurso degree) {
+    public void copyFromDomain(IDegree degree) {
         super.copyFromDomain(degree);
         if (degree != null) {
             setNome(degree.getNome());
@@ -135,7 +135,7 @@ public class InfoDegree extends InfoObject implements Comparable {
      * @param degree
      * @return
      */
-    public static InfoDegree newInfoFromDomain(ICurso degree) {
+    public static InfoDegree newInfoFromDomain(IDegree degree) {
         InfoDegree infoDegree = null;
         if (degree != null) {
             infoDegree = new InfoDegree();
@@ -144,17 +144,17 @@ public class InfoDegree extends InfoObject implements Comparable {
         return infoDegree;
     }
 
-    public void copyToDomain(InfoDegree infoDegree, ICurso degree) {
+    public void copyToDomain(InfoDegree infoDegree, IDegree degree) {
         super.copyToDomain(infoDegree, degree);
         degree.setNome(infoDegree.getNome());
         degree.setSigla(infoDegree.getSigla());
         degree.setTipoCurso(infoDegree.getTipoCurso());
     }
 
-    public static ICurso newDomainFromInfo(InfoDegree infoDegree) {
-        ICurso degree = null;
+    public static IDegree newDomainFromInfo(InfoDegree infoDegree) {
+        IDegree degree = null;
         if (infoDegree != null) {
-            degree = new Curso();
+            degree = new Degree();
             infoDegree.copyToDomain(infoDegree, degree);
         }
         return degree;

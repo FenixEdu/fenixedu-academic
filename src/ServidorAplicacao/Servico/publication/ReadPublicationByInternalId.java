@@ -18,7 +18,7 @@ import DataBeans.InfoPerson;
 import DataBeans.publication.InfoAuthor;
 import DataBeans.publication.InfoPublication;
 import DataBeans.publication.InfoPublicationType;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.publication.IAuthor;
 import Dominio.publication.IPublication;
 import Dominio.publication.IPublicationAuthor;
@@ -78,7 +78,7 @@ public class ReadPublicationByInternalId implements IService {
             final InfoAuthor infoAuthor = (InfoAuthor) iterator.next();
             final Integer keyPerson = infoAuthor.getKeyPerson();
             if (keyPerson != null) {
-                final IPessoa person = (IPessoa) personsMap.get(keyPerson);
+                final IPerson person = (IPerson) personsMap.get(keyPerson);
                 final InfoPerson infoPerson = new InfoPerson();
                 infoPerson.setIdInternal(person.getIdInternal());
                 infoPerson.setNome(person.getNome());
@@ -96,7 +96,7 @@ public class ReadPublicationByInternalId implements IService {
         for (final Iterator iterator = publicationAuthors.iterator(); iterator.hasNext();) {
             final IPublicationAuthor publicationAuthor = (IPublicationAuthor) iterator.next();
             final IAuthor author = publicationAuthor.getAuthor();
-            final IPessoa person = author.getPerson();
+            final IPerson person = author.getPerson();
             if (person != null) {
                 personsMap.put(person.getIdInternal(), person);
             }

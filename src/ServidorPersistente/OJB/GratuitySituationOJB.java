@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.GratuitySituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
@@ -46,7 +46,7 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
     }
 
     public List readGratuitySituationListByExecutionDegreeAndSpecialization(
-            ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
+            IExecutionDegree executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         if (executionDegree != null) {
             if (executionDegree.getIdInternal() != null) {
@@ -86,7 +86,7 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
     }
 
     public List readGratuitySituationListByExecutionDegreeAndSpecializationAndSituation(
-            ICursoExecucao executionDegree, Specialization specialization,
+            IExecutionDegree executionDegree, Specialization specialization,
             GratuitySituationType situation) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         if (executionDegree != null) {
@@ -132,7 +132,7 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
     }
 
     public IGratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
-            ICursoExecucao executionDegree, IStudent student) throws ExcepcaoPersistencia {
+            IExecutionDegree executionDegree, IStudent student) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria
                 .addEqualTo("gratuityValues.executionDegree.idInternal", executionDegree.getIdInternal());

@@ -9,8 +9,8 @@ import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.DisciplinaDepartamento;
-import Dominio.IDisciplinaDepartamento;
+import Dominio.DepartmentCourse;
+import Dominio.IDepartmentCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 
@@ -20,12 +20,12 @@ public class DisciplinaDepartamentoOJB extends PersistentObjectOJB implements
     public DisciplinaDepartamentoOJB() {
     }
 
-    public IDisciplinaDepartamento lerDisciplinaDepartamentoPorNomeESigla(String nome, String sigla)
+    public IDepartmentCourse lerDisciplinaDepartamentoPorNomeESigla(String nome, String sigla)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
         crit.addEqualTo("sigla", sigla);
-        return (IDisciplinaDepartamento) queryObject(DisciplinaDepartamento.class, crit);
+        return (IDepartmentCourse) queryObject(DepartmentCourse.class, crit);
 
     }
 
@@ -35,7 +35,7 @@ public class DisciplinaDepartamentoOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
         crit.addEqualTo("sigla", sigla);
-        List result = queryList(DisciplinaDepartamento.class, crit);
+        List result = queryList(DepartmentCourse.class, crit);
         if (result != null) {
 
             ListIterator iterator = result.listIterator();
@@ -47,10 +47,10 @@ public class DisciplinaDepartamentoOJB extends PersistentObjectOJB implements
     }
 
     public List lerTodasAsDisciplinasDepartamento() throws ExcepcaoPersistencia {
-        return queryList(DisciplinaDepartamento.class, new Criteria());
+        return queryList(DepartmentCourse.class, new Criteria());
     }
 
-    public void apagarDisciplinaDepartamento(IDisciplinaDepartamento disciplina)
+    public void apagarDisciplinaDepartamento(IDepartmentCourse disciplina)
             throws ExcepcaoPersistencia {
         super.delete(disciplina);
     }

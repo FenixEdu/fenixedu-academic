@@ -7,7 +7,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.Enrolment;
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
@@ -201,7 +201,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
      *      Dominio.ICurricularCourse)
      */
     public List readEnrollmentsByStudentAndCurricularCourseNameAndDegree(IStudent student,
-            ICurricularCourse curricularCourse, ICurso degree) throws ExcepcaoPersistencia {
+            ICurricularCourse curricularCourse, IDegree degree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.student.idInternal", student.getIdInternal());
         criteria.addEqualTo("curricularCourse.name", curricularCourse.getName());

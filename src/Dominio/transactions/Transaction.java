@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import Dominio.DomainObject;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Util.PaymentType;
 import Util.transactions.TransactionType;
 
@@ -29,7 +29,7 @@ public abstract class Transaction extends DomainObject implements ITransaction {
 
     private Integer keyResponsiblePerson;
 
-    private IPessoa responsiblePerson;
+    private IPerson responsiblePerson;
 
     private Integer keyPersonAccount;
 
@@ -50,7 +50,7 @@ public abstract class Transaction extends DomainObject implements ITransaction {
      */
     protected Transaction(Double value, Timestamp transactionDate, String remarks,
             PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-            IPessoa responsiblePerson, IPersonAccount personAccount) {
+            IPerson responsiblePerson, IPersonAccount personAccount) {
         this.value = value;
         this.transactionDate = transactionDate;
         this.remarks = remarks;
@@ -109,7 +109,7 @@ public abstract class Transaction extends DomainObject implements ITransaction {
     /**
      * @return Returns the responsiblePerson.
      */
-    public IPessoa getResponsiblePerson() {
+    public IPerson getResponsiblePerson() {
         return responsiblePerson;
     }
 
@@ -117,7 +117,7 @@ public abstract class Transaction extends DomainObject implements ITransaction {
      * @param responsiblePerson
      *            The responsiblePerson to set.
      */
-    public void setResponsiblePerson(IPessoa responsiblePerson) {
+    public void setResponsiblePerson(IPerson responsiblePerson) {
         this.responsiblePerson = responsiblePerson;
     }
 

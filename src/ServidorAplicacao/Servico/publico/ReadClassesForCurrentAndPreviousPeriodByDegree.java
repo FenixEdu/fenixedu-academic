@@ -6,10 +6,10 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ClassView;
-import Dominio.Curso;
-import Dominio.ICurso;
+import Dominio.Degree;
+import Dominio.IDegree;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
@@ -39,17 +39,17 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree implements IService 
         IExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod
                 .getPreviousExecutionPeriod();
 
-        ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeOID);
+        IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeOID);
 
         List classes = persistentClass.readAll();
 
         return constructViews(classes, degree, currentExecutionPeriod, previouseExecutionPeriod);
     }
 
-    private Object constructViews(List classes, final ICurso degree, final IExecutionPeriod currentExecutionPeriod, final IExecutionPeriod previouseExecutionPeriod) {
+    private Object constructViews(List classes, final IDegree degree, final IExecutionPeriod currentExecutionPeriod, final IExecutionPeriod previouseExecutionPeriod) {
         List classViews = new ArrayList();
         for (Iterator iterator = classes.iterator(); iterator.hasNext();) {
-            ITurma klass = (ITurma) iterator.next();
+            ISchoolClass klass = (ISchoolClass) iterator.next();
             if (isInPeriodsAndForDegree(klass, degree, currentExecutionPeriod,
                     previouseExecutionPeriod)) {
                 ClassView classView = new ClassView();
@@ -67,7 +67,7 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree implements IService 
         return classViews;
     }
 
-    private boolean isInPeriodsAndForDegree(ITurma klass, ICurso degree,
+    private boolean isInPeriodsAndForDegree(ISchoolClass klass, IDegree degree,
             IExecutionPeriod currentExecutionPeriod, IExecutionPeriod previouseExecutionPeriod) {
         return (klass.getExecutionPeriod().getIdInternal()
                 .equals(currentExecutionPeriod.getIdInternal()) || klass.getExecutionPeriod()

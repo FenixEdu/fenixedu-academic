@@ -27,7 +27,7 @@ import DataBeans.DepartmentTeachersDTO;
 import DataBeans.InfoDepartment;
 import DataBeans.util.Cloner;
 import Dominio.IDepartment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -61,7 +61,7 @@ public class ReadUserManageableDepartments implements IServico {
     public List run(String username) throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
-        IPessoa person = null;
+        IPerson person = null;
         try {
             sp = SuportePersistenteOJB.getInstance();
             person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);

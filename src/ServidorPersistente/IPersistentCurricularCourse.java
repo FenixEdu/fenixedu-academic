@@ -4,7 +4,7 @@ import java.util.List;
 
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Util.CurricularCourseType;
@@ -88,7 +88,7 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
      * @param curso
      * @param executionYear
      */
-    public List readExecutedCurricularCoursesByDegreeAndExecutionYear(ICurso curso,
+    public List readExecutedCurricularCoursesByDegreeAndExecutionYear(IDegree curso,
             IExecutionYear executionYear) throws ExcepcaoPersistencia;
 
     /**
@@ -97,6 +97,6 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
      * @param executionYear
      * @return
      */
-    public List readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(ICurso curso, Integer year,
+    public List readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(IDegree curso, Integer year,
             IExecutionYear executionYear) throws ExcepcaoPersistencia;
 }

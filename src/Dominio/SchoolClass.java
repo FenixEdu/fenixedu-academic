@@ -1,5 +1,5 @@
 /*
- * Turma.java
+ * SchoolClass.java
  *
  * Created on 17 de Outubro de 2002, 19:07
  */
@@ -13,12 +13,12 @@ import java.util.List;
  * @author Luis Cruz & Sara Ribeiro
  */
 
-public class Turma extends DomainObject implements ITurma {
+public class SchoolClass extends DomainObject implements ISchoolClass {
     protected String _nome;
 
     protected Integer _anoCurricular;
 
-    private ICursoExecucao executionDegree;
+    private IExecutionDegree executionDegree;
 
     private Integer keyExecutionDegree;
 
@@ -32,10 +32,10 @@ public class Turma extends DomainObject implements ITurma {
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
      * OJB
      */
-    public Turma() {
+    public SchoolClass() {
     }
 
-    public Turma(Integer idInternal) {
+    public SchoolClass(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
@@ -46,14 +46,14 @@ public class Turma extends DomainObject implements ITurma {
      * @param anoCurricular
      * @param licenciatura
      */
-    public Turma(String nome, Integer semestre, Integer anoCurricular, ICurso licenciatura) {
+    public SchoolClass(String nome, Integer semestre, Integer anoCurricular, IDegree licenciatura) {
         setNome(nome);
         //	setSemestre(semestre);
         setAnoCurricular(anoCurricular);
         //	setLicenciatura(licenciatura);
     }
 
-    public Turma(String nome, Integer anoCurricular, ICursoExecucao executionDegree,
+    public SchoolClass(String nome, Integer anoCurricular, IExecutionDegree executionDegree,
             IExecutionPeriod executionPeriod) {
         setNome(nome);
         setAnoCurricular(anoCurricular);
@@ -63,8 +63,8 @@ public class Turma extends DomainObject implements ITurma {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof ITurma) {
-            ITurma turma = (ITurma) obj;
+        if (obj instanceof ISchoolClass) {
+            ISchoolClass turma = (ISchoolClass) obj;
             resultado = getIdInternal().equals(turma.getIdInternal());
         }
         return resultado;
@@ -101,9 +101,9 @@ public class Turma extends DomainObject implements ITurma {
     /**
      * Returns the executionDegree.
      * 
-     * @return ICursoExecucao
+     * @return IExecutionDegree
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
@@ -142,7 +142,7 @@ public class Turma extends DomainObject implements ITurma {
      * @param executionDegree
      *            The executionDegree to set
      */
-    public void setExecutionDegree(ICursoExecucao executionDegree) {
+    public void setExecutionDegree(IExecutionDegree executionDegree) {
         this.executionDegree = executionDegree;
     }
 

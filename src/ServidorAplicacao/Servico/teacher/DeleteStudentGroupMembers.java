@@ -9,7 +9,7 @@ import java.util.List;
 
 import Dominio.GroupProperties;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -126,7 +126,7 @@ public class DeleteStudentGroupMembers implements IServico {
 
                 IStudent student = persistentStudent.readByUsername(iterator
                         .next().toString());
-                IFrequenta attend = attendsSet.getStudentAttend(student);
+                IAttends attend = attendsSet.getStudentAttend(student);
                 
                  IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
                         .readBy(studentGroup, attend);
@@ -156,7 +156,7 @@ public class DeleteStudentGroupMembers implements IServico {
 
     		IStudent student = persistentStudent.readByUsername(iterator
     				.next().toString());
-    		IFrequenta attend = attendsSet.getStudentAttend(student);
+    		IAttends attend = attendsSet.getStudentAttend(student);
     		IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
                     .readBy(studentGroup, attend);
     		if (oldStudentGroupAttend == null) {

@@ -16,11 +16,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IDomainObject;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -54,7 +54,7 @@ public class EditarTurno implements IService {
 
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ITurno shiftToEdit = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+        IShift shiftToEdit = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                 infoShiftOld.getIdInternal());
 
         int capacityDiference = infoShiftNew.getLotacao().intValue()
@@ -67,7 +67,7 @@ public class EditarTurno implements IService {
         final IExecutionCourse executionCourse = Cloner
                 .copyInfoExecutionCourse2ExecutionCourse(infoShiftNew.getInfoDisciplinaExecucao());
 
-        ITurno otherShiftWithSameNewName = sp.getITurnoPersistente().readByNameAndExecutionCourse(
+        IShift otherShiftWithSameNewName = sp.getITurnoPersistente().readByNameAndExecutionCourse(
                 infoShiftNew.getNome(), executionCourse);
 
         if ((otherShiftWithSameNewName != null)
@@ -93,9 +93,9 @@ public class EditarTurno implements IService {
             for (int i = 0; i < shiftToEdit.getAssociatedLessons().size(); i++) {
                 sp.getIAulaPersistente().simpleLockWrite(
                         (IDomainObject) shiftToEdit.getAssociatedLessons().get(i));
-                ((IAula) shiftToEdit.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
-                ((IAula) shiftToEdit.getAssociatedLessons().get(i)).setShift(shiftToEdit);
-                //((IAula)
+                ((ILesson) shiftToEdit.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
+                ((ILesson) shiftToEdit.getAssociatedLessons().get(i)).setShift(shiftToEdit);
+                //((ILesson)
                 // shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
             }
         }
@@ -116,11 +116,11 @@ public class EditarTurno implements IService {
 
         // 1. Read shift lessons
         List shiftLessons = null;
-        ITurno shift = null;
+        IShift shift = null;
         try {
             ISuportePersistente sp;
             sp = SuportePersistenteOJB.getInstance();
-            shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+            shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                     infoShiftOld.getIdInternal());
             shiftLessons = shift.getAssociatedLessons();
         } catch (ExcepcaoPersistencia ex) {
@@ -131,7 +131,7 @@ public class EditarTurno implements IService {
         Integer maxCapacity = new Integer(0);
         double shiftDuration = 0;
         for (int i = 0; i < shiftLessons.size(); i++) {
-            IAula lesson = ((IAula) shiftLessons.get(i));
+            ILesson lesson = ((ILesson) shiftLessons.get(i));
             shiftDuration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
             if (lesson.getRoomOccupation().getRoom().getCapacidadeNormal().intValue() > maxCapacity
                     .intValue()) {
@@ -164,7 +164,7 @@ public class EditarTurno implements IService {
 
     }
 
-    private boolean newShiftTypeIsValid(ITurno shift, TipoAula newShiftType, double shiftDuration) {
+    private boolean newShiftTypeIsValid(IShift shift, TipoAula newShiftType, double shiftDuration) {
         // Verify if shift total duration exceeds new shift type duration
         if (newShiftType.equals(new TipoAula(TipoAula.TEORICA))) {
             if (shiftDuration > shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
@@ -189,7 +189,7 @@ public class EditarTurno implements IService {
         return true;
     }
 
-    private boolean newShiftExecutionCourseIsValid(ITurno shift,
+    private boolean newShiftExecutionCourseIsValid(IShift shift,
             InfoExecutionCourse newShiftExecutionCourse, double shiftDuration) {
 
         // Verify if shift total duration exceeds new executionCourse uration
@@ -216,7 +216,7 @@ public class EditarTurno implements IService {
         return true;
     }
 
-    private Integer getLessonDurationInMinutes(IAula lesson) {
+    private Integer getLessonDurationInMinutes(ILesson lesson) {
         int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
         int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
         int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);

@@ -13,7 +13,7 @@ import Dominio.IGratuitySituation;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.transactions.GratuityTransaction;
 import Dominio.transactions.IGratuityTransaction;
@@ -43,7 +43,7 @@ public class CreateGratuityTransaction implements IService {
         IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
                 .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree(), student);
         IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson());
-        IPessoa responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        IPerson responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
         Double value = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());

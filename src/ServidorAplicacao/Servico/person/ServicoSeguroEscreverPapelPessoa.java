@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.person;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
@@ -10,9 +10,9 @@ import ServidorPersistenteJDBC.SuportePersistente;
 
 public class ServicoSeguroEscreverPapelPessoa extends ServicoSeguro {
 
-    private Pessoa pessoa = null;
+    private Person pessoa = null;
 
-    public ServicoSeguroEscreverPapelPessoa(ServicoAutorizacao servicoAutorizacao, Pessoa pessoa) {
+    public ServicoSeguroEscreverPapelPessoa(ServicoAutorizacao servicoAutorizacao, Person pessoa) {
         super(servicoAutorizacao);
         this.pessoa = pessoa;
     }
@@ -45,7 +45,7 @@ public class ServicoSeguroEscreverPapelPessoa extends ServicoSeguro {
 
     }
 
-    public Pessoa getPessoa() {
+    public Person getPessoa() {
         return pessoa;
     }
 }

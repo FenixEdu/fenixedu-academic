@@ -33,7 +33,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 
     private IEnrollment enrolment;
 
-    private IPessoa personResponsibleForGrade;
+    private IPerson personResponsibleForGrade;
 
     private IEmployee employee;
 
@@ -127,7 +127,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         this.enrolmentEvaluationState = state;
     }
 
-    public IPessoa getPersonResponsibleForGrade() {
+    public IPerson getPersonResponsibleForGrade() {
         return personResponsibleForGrade;
     }
 
@@ -135,7 +135,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         return personResponsibleForGradeKey;
     }
 
-    public void setPersonResponsibleForGrade(IPessoa person) {
+    public void setPersonResponsibleForGrade(IPerson person) {
         personResponsibleForGrade = person;
     }
 

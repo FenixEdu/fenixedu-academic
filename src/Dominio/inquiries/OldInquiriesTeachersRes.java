@@ -5,7 +5,7 @@
 package Dominio.inquiries;
 
 import Dominio.DomainObject;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 
@@ -24,7 +24,7 @@ public class OldInquiriesTeachersRes extends DomainObject implements IOldInquiri
 	private Integer semester;
 
 	private Integer keyDegree;
-	private ICurso degree;
+	private IDegree degree;
 
 	private Integer curricularYear;
 
@@ -276,13 +276,13 @@ public class OldInquiriesTeachersRes extends DomainObject implements IOldInquiri
     /**
      * @return Returns the degree.
      */
-    public ICurso getDegree() {
+    public IDegree getDegree() {
         return degree;
     }
     /**
      * @param degree The degree to set.
      */
-    public void setDegree(ICurso degree) {
+    public void setDegree(IDegree degree) {
         this.degree = degree;
     }
     /**

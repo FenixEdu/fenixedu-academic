@@ -14,7 +14,7 @@ public class Coordinator extends DomainObject implements ICoordinator {
 
     private ITeacher teacher;
 
-    private ICursoExecucao executionDegree;
+    private IExecutionDegree executionDegree;
 
     private Boolean responsible;
 
@@ -35,14 +35,14 @@ public class Coordinator extends DomainObject implements ICoordinator {
     /**
      * @return
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
     /**
      * @param executionDegree
      */
-    public void setExecutionDegree(ICursoExecucao executionDegree) {
+    public void setExecutionDegree(IExecutionDegree executionDegree) {
         this.executionDegree = executionDegree;
     }
 

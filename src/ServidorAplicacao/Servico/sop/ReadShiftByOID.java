@@ -8,8 +8,8 @@ package ServidorAplicacao.Servico.sop;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -36,7 +36,7 @@ public class ReadShiftByOID implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-            ITurno shift = (ITurno) shiftDAO.readByOID(Turno.class, oid);
+            IShift shift = (IShift) shiftDAO.readByOID(Shift.class, oid);
 
             if (shift != null) {
                 result = (InfoShift) Cloner.get(shift);

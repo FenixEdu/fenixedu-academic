@@ -28,7 +28,7 @@ public interface ICurriculum extends IDomainObject {
 
     public ICurricularCourse getCurricularCourse();
 
-    public IPessoa getPersonWhoAltered();
+    public IPerson getPersonWhoAltered();
 
     public Date getLastModificationDate();
 
@@ -46,7 +46,7 @@ public interface ICurriculum extends IDomainObject {
 
     public void setCurricularCourse(ICurricularCourse CurricularCourse);
 
-    public void setPersonWhoAltered(IPessoa personWhoAltered);
+    public void setPersonWhoAltered(IPerson personWhoAltered);
 
     public void setLastModificationDate(Date lastModificationDate);
 

@@ -19,7 +19,7 @@ import org.apache.commons.collections.CollectionUtils;
 import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
 import Dominio.IExam;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -70,7 +70,7 @@ public class ReadRoomsWithNoExamsInDayAndBeginning implements IServico {
 
             availableRooms = (ArrayList) CollectionUtils.subtract(allRooms, occupiedRooms);
             for (int i = 0; i < availableRooms.size(); i++) {
-                ISala room = (ISala) availableRooms.get(i);
+                IRoom room = (IRoom) availableRooms.get(i);
                 InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(room);
                 availableInfoRooms.add(infoRoom);
             }

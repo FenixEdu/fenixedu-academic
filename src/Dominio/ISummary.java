@@ -118,9 +118,9 @@ public interface ISummary extends IDomainObject {
 
     public void setKeyShift(Integer keyShift);
 
-    public ITurno getShift();
+    public IShift getShift();
 
-    public void setShift(ITurno shift);
+    public void setShift(IShift shift);
 
     public Integer getKeyTeacher();
 
@@ -142,7 +142,7 @@ public interface ISummary extends IDomainObject {
 
     public void setIsExtraLesson(Boolean isExtraLesson);
 
-    public ISala getRoom();
+    public IRoom getRoom();
 
-    public void setRoom(ISala room);
+    public void setRoom(IRoom room);
 }

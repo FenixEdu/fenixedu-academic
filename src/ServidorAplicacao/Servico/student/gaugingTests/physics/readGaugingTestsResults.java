@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.student.gaugingTests.physics;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.util.Cloner;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.gaugingTests.physics.IGaugingTestResult;
 import ServidorAplicacao.IUserView;
@@ -43,7 +43,7 @@ public class readGaugingTestsResults implements IService {
             IPersistentGaugingTestResult persistentGaugingTestResult = ps
                     .getIPersistentGaugingTestResult();
             IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
             IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 

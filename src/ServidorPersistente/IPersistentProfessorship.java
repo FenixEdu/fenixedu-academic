@@ -5,7 +5,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -78,7 +78,7 @@ public interface IPersistentProfessorship extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia;
 
     /**
      * @param executionDegree
@@ -86,7 +86,7 @@ public interface IPersistentProfessorship extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public List readByExecutionDegreeAndBasic(ICursoExecucao executionDegree, Boolean basic)
+    public List readByExecutionDegreeAndBasic(IExecutionDegree executionDegree, Boolean basic)
             throws ExcepcaoPersistencia;
 
     /**
@@ -102,6 +102,6 @@ public interface IPersistentProfessorship extends IPersistentObject {
      * @return List
      * @throws ExcepcaoPersistencia
      */
-    public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao executionDegree, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    public List readByExecutionDegreeAndExecutionPeriod(IExecutionDegree executionDegree, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
     
 }

@@ -2,7 +2,7 @@ package ServidorAplicacao.Servico.coordinator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ICoordinator;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.IPersistentCoordinator;
@@ -24,7 +24,7 @@ public class UserCoordinatorByExecutionDegree implements IService {
 
         try {
             ISuportePersistente sp;
-            ICurso degree = null;
+            IDegree degree = null;
 
             sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();

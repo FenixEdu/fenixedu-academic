@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Set;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.commons.SendMail;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -37,8 +37,8 @@ public class ChangeStudentsShift implements IService {
         ITurnoAlunoPersistente persistentShiftStudent = persistentSupport.getITurnoAlunoPersistente();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        ITurno oldShift = (ITurno) persistentShift.readByOID(Turno.class, oldShiftId);
-        ITurno newShift = (ITurno) persistentShift.readByOID(Turno.class, newShiftId);
+        IShift oldShift = (IShift) persistentShift.readByOID(Shift.class, oldShiftId);
+        IShift newShift = (IShift) persistentShift.readByOID(Shift.class, newShiftId);
 
         SendMail sendMail = new SendMail();
         List emptyList = new ArrayList();
@@ -65,7 +65,7 @@ public class ChangeStudentsShift implements IService {
                     persistentShiftStudent.simpleLockWrite(shiftStudent);
                     shiftStudent.setShift(newShift);
 
-                    IPessoa person = student.getPerson();
+                    IPerson person = student.getPerson();
                     if (person.getEmail() != null && person.getEmail().length() > 0) {
                         toMails.add(person.getEmail());
                     }
@@ -74,7 +74,7 @@ public class ChangeStudentsShift implements IService {
                 }
             }
 
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             sendMail
                     .run(emptyList, emptyList, toMails, person.getNome(), person.getEmail(),
                             "Alteração de turnos",

@@ -13,14 +13,14 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
-import Dominio.Frequenta;
+import Dominio.Attends;
 import Dominio.IEmployee;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.IFrequenta;
-import Dominio.IPessoa;
+import Dominio.IAttends;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -54,7 +54,7 @@ public class ImprovmentEnrollService implements IService{
             }
             
             IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-            IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
+            IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
             
             if(pessoa == null) {
                 throw new InvalidArgumentsServiceException();
@@ -125,10 +125,10 @@ public class ImprovmentEnrollService implements IService{
         
         if(currentExecutionCourse != null) {
             List attends = currentExecutionCourse.getAttends();
-            IFrequenta attend = (IFrequenta) CollectionUtils.find(attends, new Predicate() {
+            IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
-                    IFrequenta frequenta = (IFrequenta) arg0;
+                    IAttends frequenta = (IAttends) arg0;
                     if(frequenta.getAluno().equals(student))
                     	return true;
                     return false;
@@ -141,7 +141,7 @@ public class ImprovmentEnrollService implements IService{
                 attend.setEnrolment(enrollment);
             }
             else {
-                attend = new Frequenta();
+                attend = new Attends();
                 frequentaPersistente.simpleLockWrite(attend);
                 attend.setDisciplinaExecucao(currentExecutionCourse);
                 attend.setAluno(student);

@@ -19,12 +19,12 @@ import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import DataBeans.util.Cloner;
-import Dominio.Aula;
-import Dominio.IAula;
+import Dominio.Lesson;
+import Dominio.ILesson;
 import Dominio.IExecutionPeriod;
 import Dominio.IRoomOccupation;
-import Dominio.ISala;
-import Dominio.ITurno;
+import Dominio.IRoom;
+import Dominio.IShift;
 import Dominio.RoomOccupation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -60,29 +60,29 @@ public class EditLesson implements IServico {
 
     public Object run(InfoLesson aulaAntiga, InfoLesson aulaNova, InfoShift infoShift)
             throws FenixServiceException {
-        IAula aula = null;
+        ILesson aula = null;
         InfoLessonServiceResult result = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
-            ISala salaAntiga = sp.getISalaPersistente().readByName(aulaAntiga.getInfoSala().getNome());
-            ISala salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
+            IRoom salaAntiga = sp.getISalaPersistente().readByName(aulaAntiga.getInfoSala().getNome());
+            IRoom salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
 
             IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(aulaNova
                     .getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod());
             aula = aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(aulaAntiga.getDiaSemana(),
                     aulaAntiga.getInicio(), aulaAntiga.getFim(), salaAntiga, executionPeriod);
-            ITurno shift = Cloner.copyInfoShift2Shift(aulaNova.getInfoShift());
+            IShift shift = Cloner.copyInfoShift2Shift(aulaNova.getInfoShift());
             IRoomOccupation roomOccupation = aula.getRoomOccupation();
 
-            IAula newLesson = new Aula(aulaNova.getDiaSemana(), aulaNova.getInicio(), aulaNova.getFim(),
+            ILesson newLesson = new Lesson(aulaNova.getDiaSemana(), aulaNova.getInicio(), aulaNova.getFim(),
                     aulaNova.getTipo(), salaNova, roomOccupation, shift /* ,null */
             );
             newLesson.setIdInternal(aula.getIdInternal());
             List associatedLessons = SuportePersistenteOJB.getInstance().getIAulaPersistente()
                     .readLessonsByShift(shift);
             for (int i = 0; i < associatedLessons.size(); i++) {
-                IAula lessonAssociated = (IAula) associatedLessons.get(i);
+                ILesson lessonAssociated = (ILesson) associatedLessons.get(i);
                 if (lessonAssociated.getIdInternal().equals(aula.getIdInternal())) {
                     associatedLessons.remove(i);
                     //associatedLessons.set(i, newLesson);
@@ -99,13 +99,13 @@ public class EditLesson implements IServico {
                         .copyInfoRoomOccupation2RoomOccupation(aulaNova.getInfoRoomOccupation()),
                         roomOccupation);
                 /*
-                 * ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(
-                 * Turno.class, infoShift.getIdInternal());
+                 * IShift shift = (IShift) sp.getITurnoPersistente().readByOID(
+                 * Shift.class, infoShift.getIdInternal());
                  */
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, newLesson);
                 if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
-                    //aula = (IAula) aulaPersistente.readByOId(aula, true);
-                    aula = (IAula) aulaPersistente.readByOID(Aula.class, aula.getIdInternal());
+                    //aula = (ILesson) aulaPersistente.readByOId(aula, true);
+                    aula = (ILesson) aulaPersistente.readByOID(Lesson.class, aula.getIdInternal());
                     aulaPersistente.simpleLockWrite(aula);
                     //sp.getITurnoPersistente().simpleLockWrite(shift);
                     aula.setDiaSemana(aulaNova.getDiaSemana());
@@ -148,7 +148,7 @@ public class EditLesson implements IServico {
         return result;
     }
 
-    private InfoLessonServiceResult valid(IAula lesson) {
+    private InfoLessonServiceResult valid(ILesson lesson) {
         InfoLessonServiceResult result = new InfoLessonServiceResult();
         if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime()) {
             result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
@@ -195,7 +195,7 @@ public class EditLesson implements IServico {
          */
     }
 
-    private InfoShiftServiceResult valid(ITurno shift, IAula lesson) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(IShift shift, ILesson lesson) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
         double hours = getTotalHoursOfShiftType(shift, lesson);
@@ -230,24 +230,24 @@ public class EditLesson implements IServico {
         return result;
     }
 
-    private double getTotalHoursOfShiftType(ITurno shift, IAula alteredLesson)
+    private double getTotalHoursOfShiftType(IShift shift, ILesson alteredLesson)
             throws ExcepcaoPersistencia {
         /*
-         * ITurno shiftCriteria = new Turno();
+         * IShift shiftCriteria = new Shift();
          * shiftCriteria.setNome(shift.getNome());
          * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
          * 
          * List lessonsOfShiftType = SuportePersistenteOJB .getInstance()
          * .getITurnoAulaPersistente() .readLessonsByShift(shiftCriteria);
          * 
-         * IAula lesson = null; double duration = 0; for (int i = 0; i <
+         * ILesson lesson = null; double duration = 0; for (int i = 0; i <
          * lessonsOfShiftType.size(); i++) { lesson = ((ITurnoAula)
          * lessonsOfShiftType.get(i)).getAula(); if
          * (!lesson.getIdInternal().equals(alteredLesson.getIdInternal())) {
          * duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60); } }
          * return duration;
          */
-        IAula lesson = null;
+        ILesson lesson = null;
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
         if (associatedLessons == null) {
@@ -256,7 +256,7 @@ public class EditLesson implements IServico {
             shift.setAssociatedLessons(associatedLessons);
         }
         for (int i = 0; i < associatedLessons.size(); i++) {
-            lesson = (IAula) associatedLessons.get(i);
+            lesson = (ILesson) associatedLessons.get(i);
             if (!lesson.getIdInternal().equals(alteredLesson.getIdInternal())) {
                 duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
             }
@@ -264,7 +264,7 @@ public class EditLesson implements IServico {
         return duration;
     }
 
-    private Integer getLessonDurationInMinutes(IAula lesson) {
+    private Integer getLessonDurationInMinutes(ILesson lesson) {
         int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
         int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
         int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);

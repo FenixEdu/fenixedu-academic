@@ -11,11 +11,11 @@ package Dominio;
 public interface IStudentGroupAttend extends IDomainObject {
     public IStudentGroup getStudentGroup();
 
-    public IFrequenta getAttend();
+    public IAttends getAttend();
 
     public void setStudentGroup(IStudentGroup studentGroup);
 
-    public void setAttend(IFrequenta attend);
+    public void setAttend(IAttends attend);
 
     public Integer getKeyStudentGroup();
 

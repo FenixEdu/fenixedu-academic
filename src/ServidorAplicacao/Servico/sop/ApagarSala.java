@@ -12,7 +12,7 @@ package ServidorAplicacao.Servico.sop;
  * @author tfc130
  */
 import DataBeans.RoomKey;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -46,7 +46,7 @@ public class ApagarSala implements IServico {
 
     public Object run(RoomKey keySala) throws FenixServiceException {
 
-        ISala sala1 = null;
+        IRoom sala1 = null;
         boolean result = false;
 
         try {

@@ -22,7 +22,7 @@ public interface ITeacher extends IDomainObject {
 
     public List getInstitutionWorkTimePeriods();
 
-    public IPessoa getPerson();
+    public IPerson getPerson();
 
     public List getProfessorships();
 
@@ -39,7 +39,7 @@ public interface ITeacher extends IDomainObject {
 
     public void setInstitutionWorkTimePeriods(List institutionWorkTimePeriods);
 
-    public void setPerson(IPessoa person);
+    public void setPerson(IPerson person);
 
     public void setProfessorships(List professorships);
 

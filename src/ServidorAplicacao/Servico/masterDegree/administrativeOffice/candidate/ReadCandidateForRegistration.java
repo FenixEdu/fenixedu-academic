@@ -10,9 +10,9 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -40,7 +40,7 @@ public class ReadCandidateForRegistration implements IService {
 
             // Get the Actual Execution Year
 
-            ICursoExecucao executionDegree = new CursoExecucao();
+            IExecutionDegree executionDegree = new ExecutionDegree();
             executionDegree.setIdInternal(executionDegreeCode);
 
             result = sp.getIPersistentCandidateSituation().readCandidateListforRegistration(

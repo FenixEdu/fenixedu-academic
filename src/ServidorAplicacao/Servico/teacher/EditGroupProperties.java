@@ -13,7 +13,7 @@ import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -88,7 +88,7 @@ public class EditGroupProperties implements IService {
             Integer minimumCapacity = infoGroupProperties.getMinimumCapacity();
 
             if (groupMaximumNumber != null) {
-                ITurno shift = null;
+                IShift shift = null;
                 List shiftsInternalList = new ArrayList();
                 Iterator iterator = allStudentsGroup.iterator();
 
@@ -103,7 +103,7 @@ public class EditGroupProperties implements IService {
                 shift = null;
 
                 while (iterator2.hasNext()) {
-                    shift = (ITurno) iterator2.next();
+                    shift = (IShift) iterator2.next();
                     if(shift!=null){
                     studentGroupsList = persistentStudentGroup
                             .readAllStudentGroupByAttendsSetAndShift(
@@ -166,7 +166,7 @@ public class EditGroupProperties implements IService {
     		Iterator iterStudentGroupList = studentGroupList.iterator();
     		while(iterStudentGroupList.hasNext()){
     			IStudentGroup studentGroup = (IStudentGroup)iterStudentGroupList.next();
-    			ITurno shift = studentGroup.getShift();
+    			IShift shift = studentGroup.getShift();
     			if(shift!=null){
     				persistentStudentGroup.simpleLockWrite(studentGroup);
     				studentGroup.setShift(null);

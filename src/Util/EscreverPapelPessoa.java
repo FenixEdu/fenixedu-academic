@@ -2,7 +2,7 @@ package Util;
 
 import java.util.ListIterator;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
@@ -34,9 +34,9 @@ public class EscreverPapelPessoa extends FenixUtil {
         }
 
         ListIterator iteradorFuncionario = servicoSeguroLerTodasPessoas.getListaPessoas().listIterator();
-        Pessoa pessoa = null;
+        Person pessoa = null;
         while (iteradorFuncionario.hasNext()) {
-            pessoa = (Pessoa) iteradorFuncionario.next();
+            pessoa = (Person) iteradorFuncionario.next();
 
             // actualizar os papeis desta pessoa
             ServicoSeguroEscreverPapelPessoa servicoSeguroEscreverPapelPessoa = new ServicoSeguroEscreverPapelPessoa(

@@ -1,5 +1,5 @@
 /*
- * IDisciplinaDepartamento.java
+ * IDepartmentCourse.java
  *
  * Created on 6 de Novembro de 2002, 16:03
  */
@@ -10,7 +10,7 @@ package Dominio;
  * 
  * @author dcs-rjao
  */
-public interface IDisciplinaDepartamento extends IDomainObject {
+public interface IDepartmentCourse extends IDomainObject {
     public java.lang.String getNome();
 
     public java.lang.String getSigla();

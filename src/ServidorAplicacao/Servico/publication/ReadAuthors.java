@@ -8,7 +8,7 @@ package ServidorAplicacao.Servico.publication;
 
 import java.util.List;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.publication.IAuthor;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
@@ -43,7 +43,7 @@ public class ReadAuthors implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
             IAuthor author = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.sms.SentSms;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.PersistentObjectOJB;
@@ -27,13 +27,13 @@ public class SentSmsOJB extends PersistentObjectOJB implements IPersistentSentSm
         super();
     }
 
-    public List readByPerson(IPessoa person) throws ExcepcaoPersistencia {
+    public List readByPerson(IPerson person) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.idInternal", person.getIdInternal());
         return queryList(SentSms.class, crit, "sendDate", false);
     }
 
-    public List readByPerson(IPessoa person, Integer interval) throws ExcepcaoPersistencia {
+    public List readByPerson(IPerson person, Integer interval) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.idInternal", person.getIdInternal());
         return readInterval(SentSms.class, crit, interval, new Integer(0), "sendDate", false);

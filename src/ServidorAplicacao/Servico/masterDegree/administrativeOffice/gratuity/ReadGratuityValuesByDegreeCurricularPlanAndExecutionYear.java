@@ -14,7 +14,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuityValues;
 import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IGratuityValues;
@@ -61,7 +61,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 
             //read execution degree
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = persistentExecutionDegree
+            IExecutionDegree executionDegree = persistentExecutionDegree
                     .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
             if (executionDegree == null) {
                 throw new FenixServiceException("error.impossible.noGratuityValues");

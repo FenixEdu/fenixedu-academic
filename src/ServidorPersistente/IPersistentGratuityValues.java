@@ -4,7 +4,7 @@
  */
 package ServidorPersistente;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IGratuityValues;
 
 /**
@@ -12,6 +12,6 @@ import Dominio.IGratuityValues;
  *  
  */
 public interface IPersistentGratuityValues extends IPersistentObject {
-    public IGratuityValues readGratuityValuesByExecutionDegree(ICursoExecucao executionDegree)
+    public IGratuityValues readGratuityValuesByExecutionDegree(IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia;
 }

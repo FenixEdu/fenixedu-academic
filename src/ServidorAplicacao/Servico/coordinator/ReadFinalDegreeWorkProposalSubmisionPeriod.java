@@ -5,8 +5,8 @@ package ServidorAplicacao.Servico.coordinator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.finalDegreeWork.InfoScheduleing;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.finalDegreeWork.IScheduleing;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,8 +34,8 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod implements IService {
                 IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                         .getIPersistentFinalDegreeWork();
 
-                ICursoExecucao cursoExecucao = (ICursoExecucao) persistentFinalDegreeWork.readByOID(
-                        CursoExecucao.class, executionDegreeOID);
+                IExecutionDegree cursoExecucao = (IExecutionDegree) persistentFinalDegreeWork.readByOID(
+                        ExecutionDegree.class, executionDegreeOID);
 
                 if (cursoExecucao != null) {
                     IScheduleing scheduleing = persistentFinalDegreeWork

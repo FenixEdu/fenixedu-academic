@@ -25,7 +25,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionPeriod;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -117,10 +117,10 @@ public class ReadFilteredExamsMapList implements IServico {
            List executionDegreeList=new ArrayList(); 
 		   // Translate to execute following queries
 		   //CLONER
-		   //ICursoExecucao executionDegree =
+		   //IExecutionDegree executionDegree =
 		   //Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 		   for (int i = 0; i < infoExecutionDegreeList.size(); i++) {
-		   ICursoExecucao executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan
+		   IExecutionDegree executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan
 				   .newDomainFromInfo((InfoExecutionDegree)infoExecutionDegreeList.get(i));
 			executionDegreeList.add(executionDegree);
 		   }	
@@ -144,7 +144,7 @@ public class ReadFilteredExamsMapList implements IServico {
 //						   .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 //								   (Integer) curricularYears.get(i), executionPeriod, executionDegree);
 				for (int n = 0; n < executionDegreeList.size(); n++) {
-					ICursoExecucao execucaoDegree = (ICursoExecucao)executionDegreeList.get(n);
+					IExecutionDegree execucaoDegree = (IExecutionDegree)executionDegreeList.get(n);
 					List executionCourses = sp.getIPersistentExecutionCourse()
 										   .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 												   (Integer) curricularYears.get(i), executionPeriod, execucaoDegree);

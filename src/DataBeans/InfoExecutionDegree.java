@@ -12,8 +12,8 @@ import java.util.List;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.util.LabelValueBean;
 
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 
 import commons.CollectionUtils;
 
@@ -232,7 +232,7 @@ public class InfoExecutionDegree extends InfoObject {
 
     }
 
-    public void copyFromDomain(ICursoExecucao executionDegree) {
+    public void copyFromDomain(IExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setTemporaryExamMap(executionDegree.getTemporaryExamMap());
@@ -243,7 +243,7 @@ public class InfoExecutionDegree extends InfoObject {
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
         InfoExecutionDegree infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegree();
@@ -252,15 +252,15 @@ public class InfoExecutionDegree extends InfoObject {
         return infoExecutionDegree;
     }
 
-    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, ICursoExecucao executionDegree) {
+    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, IExecutionDegree executionDegree) {
         super.copyToDomain(infoExecutionDegree, executionDegree);
         executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
     }
 
-    public static ICursoExecucao newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
-        ICursoExecucao executionDegree = null;
+    public static IExecutionDegree newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
+        IExecutionDegree executionDegree = null;
         if (infoExecutionDegree != null) {
-            executionDegree = new CursoExecucao();
+            executionDegree = new ExecutionDegree();
             infoExecutionDegree.copyToDomain(infoExecutionDegree, executionDegree);
         }
         return executionDegree;

@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoClass;
-import Dominio.ITurma;
-import Dominio.Turma;
+import Dominio.ISchoolClass;
+import Dominio.SchoolClass;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -52,7 +52,7 @@ public class ApagarTurma implements IServico {
         
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        final ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+        final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
         sp.getITurmaPersistente().simpleLockWrite(schoolClass);
         final List shifts = schoolClass.getAssociatedShifts();

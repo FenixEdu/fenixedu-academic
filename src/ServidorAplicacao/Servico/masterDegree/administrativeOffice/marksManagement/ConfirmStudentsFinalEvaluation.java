@@ -12,7 +12,7 @@ import Dominio.ICurricularCourse;
 import Dominio.IEmployee;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -45,7 +45,7 @@ public class ConfirmStudentsFinalEvaluation implements IService {
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
             //			employee
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = readEmployee(person);
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
@@ -126,7 +126,7 @@ public class ConfirmStudentsFinalEvaluation implements IService {
         enrolmentToEdit.setEnrollmentState(newEnrolmentState);
     }
 
-    private IEmployee readEmployee(IPessoa person) {
+    private IEmployee readEmployee(IPerson person) {
         IEmployee employee = null;
         IPersistentEmployee persistentEmployee;
         try {

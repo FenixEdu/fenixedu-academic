@@ -24,11 +24,11 @@ import Dominio.ICurricularCourse;
 import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import Dominio.Professorship;
 import Dominio.ResponsibleFor;
@@ -157,7 +157,7 @@ public class SeperateExecutionCourse implements IService {
         final ITurnoAlunoPersistente persistentStudentShift = sp.getITurnoAlunoPersistente();
 
         for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-            ITurno shift = (ITurno) iterator.next();
+            IShift shift = (IShift) iterator.next();
             if (contains(shiftIdsToTransfer, shift.getIdInternal())) {
                 persistentObject.simpleLockWrite(shift);
                 shift.setDisciplinaExecucao(destinationExecutionCourse);
@@ -191,7 +191,7 @@ public class SeperateExecutionCourse implements IService {
         final Set transferedStudents = new HashSet();
 
         for (Iterator iterator = attends.iterator(); iterator.hasNext();) {
-            final IFrequenta attend = (IFrequenta) iterator.next();
+            final IAttends attend = (IAttends) iterator.next();
             if (attend.getEnrolment() != null
                     && contains(curricularCourseIdsToTransfer, attend.getEnrolment()
                             .getCurricularCourse().getIdInternal())) {

@@ -23,7 +23,7 @@ import DataBeans.comparators.CalendarHourComparator;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
 import Dominio.IOnlineTest;
 import Dominio.IStudent;
@@ -160,7 +160,7 @@ public class InsertStudentTestResponses implements IService {
                 }
                 if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
                     IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTest);
-                    IFrequenta attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,
+                    IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,
                             (IExecutionCourse) distributedTest.getTestScope().getDomainObject());
                     IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
 

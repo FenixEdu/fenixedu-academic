@@ -73,7 +73,7 @@
     
     <reference-descriptor    	
          name="personWhoAltered"
-         class-ref="Dominio.Pessoa"
+         class-ref="Dominio.Person"
          refresh="true"
          proxy="true"
     >

@@ -12,12 +12,12 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GuideEntry;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IEmployee;
 import Dominio.IGratuitySituation;
 import Dominio.IGuideEntry;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.reimbursementGuide.IReimbursementGuide;
 import Dominio.reimbursementGuide.IReimbursementGuideEntry;
@@ -105,7 +105,7 @@ public class EditReimbursementGuide implements IService {
 
             IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
             IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = persistentEmployee.readByPerson(person);
 
             newActiveSituation.setEmployee(employee);
@@ -171,10 +171,10 @@ public class EditReimbursementGuide implements IService {
 
                         persistentReimbursementTransaction.lockWrite(reimbursementTransaction);
 
-                        IPessoa studentPerson = reimbursementGuide.getGuide().getPerson();
+                        IPerson studentPerson = reimbursementGuide.getGuide().getPerson();
                         IStudent student = ps.getIPersistentStudent().readByPersonAndDegreeType(
                                 studentPerson, TipoCurso.MESTRADO_OBJ);
-                        ICursoExecucao executionDegree = reimbursementGuide.getGuide()
+                        IExecutionDegree executionDegree = reimbursementGuide.getGuide()
                                 .getExecutionDegree();
 
                         IGratuitySituation gratuitySituation = persistentGratuitySituation

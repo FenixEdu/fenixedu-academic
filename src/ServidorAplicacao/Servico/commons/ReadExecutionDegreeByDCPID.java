@@ -3,7 +3,7 @@ package ServidorAplicacao.Servico.commons;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -27,7 +27,7 @@ public class ReadExecutionDegreeByDCPID implements IService {
      */
     public InfoExecutionDegree run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
-        ICursoExecucao executionDegree = null;
+        IExecutionDegree executionDegree = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

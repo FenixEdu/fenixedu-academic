@@ -7,8 +7,8 @@ package ServidorPersistente.middleware;
 import java.util.ArrayList;
 import java.util.List;
 
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 
 /**
  * @author jpvl
@@ -20,7 +20,7 @@ public class MigrationShift {
 
     private MigrationExecutionCourse migrationExecutionCourse;
 
-    private ITurno shift = null;
+    private IShift shift = null;
 
     private String shiftName;
 
@@ -47,9 +47,9 @@ public class MigrationShift {
     }
 
     /**
-     * @return ITurno
+     * @return IShift
      */
-    public ITurno getShift() {
+    public IShift getShift() {
         return shift;
     }
 
@@ -110,7 +110,7 @@ public class MigrationShift {
      * @param shift
      *            The shift to set
      */
-    public void setShift(ITurno shift) {
+    public void setShift(IShift shift) {
         this.shift = shift;
     }
 
@@ -140,7 +140,7 @@ public class MigrationShift {
         return stringBuffer.toString();
     }
 
-    public void setClass(ITurma clazz) {
+    public void setClass(ISchoolClass clazz) {
         if (!classList.contains(clazz))
             classList.add(clazz);
     }

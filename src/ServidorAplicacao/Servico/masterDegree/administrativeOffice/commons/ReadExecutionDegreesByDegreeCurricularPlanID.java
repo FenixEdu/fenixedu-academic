@@ -12,7 +12,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYear;
 import Dominio.DegreeCurricularPlan;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -49,7 +49,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService {
             infoExecutionDegreeList = new ArrayList();
 
             for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
-                ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
+                IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
                 //CLONER
                 //InfoExecutionDegree infoExecutionDegree =
                 //    (InfoExecutionDegree) Cloner.get(executionDegree);

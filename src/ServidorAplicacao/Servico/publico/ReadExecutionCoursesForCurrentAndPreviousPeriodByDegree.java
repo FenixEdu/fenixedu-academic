@@ -8,10 +8,10 @@ import java.util.Set;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseView;
-import Dominio.Curso;
+import Dominio.Degree;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -41,7 +41,7 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements 
         IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
         IExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
-        ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeOID);
+        IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeOID);
         List degreeCurricularPlans = degree.getDegreeCurricularPlans();
 
         Set processedExecutionCourses = new HashSet();

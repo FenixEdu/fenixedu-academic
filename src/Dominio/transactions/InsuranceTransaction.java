@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import Dominio.IExecutionYear;
 import Dominio.IGuideEntry;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Util.PaymentType;
 import Util.transactions.TransactionType;
@@ -44,7 +44,7 @@ public class InsuranceTransaction extends PaymentTransaction implements IInsuran
      */
     public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks,
             PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-            IPessoa responsiblePerson, IPersonAccount personAccount, IGuideEntry guideEntry,
+            IPerson responsiblePerson, IPersonAccount personAccount, IGuideEntry guideEntry,
             IExecutionYear executionYear, IStudent student) {
         super(value, transactionDate, remarks, paymentType, transactionType, wasInternalBalance,
                 responsiblePerson, personAccount, guideEntry);

@@ -5,10 +5,10 @@
  */
 package ServidorAplicacao.Servico.sop;
 
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turma;
-import Dominio.Turno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.SchoolClass;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -53,8 +53,8 @@ public class AddShiftToClasses implements IServico {
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             ITurmaPersistente persistentClass = sp.getITurmaPersistente();
 
-            ITurno shift = new Turno(keyShift);
-            shift = (ITurno) persistentShift.readByOID(Turno.class, keyShift);
+            IShift shift = new Shift(keyShift);
+            shift = (IShift) persistentShift.readByOID(Shift.class, keyShift);
             if (shift == null || classesList == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -63,7 +63,7 @@ public class AddShiftToClasses implements IServico {
             int length = classesList.length;
             while (iter < length) {
                 Integer keyClass = new Integer(classesList[iter]);
-                ITurma dClass = (ITurma) persistentClass.readByOID(Turma.class, keyClass);
+                ISchoolClass dClass = (ISchoolClass) persistentClass.readByOID(SchoolClass.class, keyClass);
                 if (dClass == null) {
                     throw new InvalidArgumentsServiceException();
                 }

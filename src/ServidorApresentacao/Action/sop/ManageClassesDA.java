@@ -91,7 +91,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
         try {
             infoClass = (InfoClass) ServiceUtils.executeService(userView, "CriarTurma", argsCriarTurma);
         } catch (ExistingServiceException e) {
-            throw new ExistingActionException("A Turma", e);
+            throw new ExistingActionException("A SchoolClass", e);
         }
 
         return listClasses(mapping, form, request, response);

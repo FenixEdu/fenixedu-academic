@@ -11,8 +11,8 @@ import java.util.List;
 import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -74,8 +74,8 @@ public class VerifyIfCanEnrollStudentGroupsInShift implements IServico {
             	throw new ExistingServiceException();
             }
             
-            ITurno shift = (ITurno) persistentShift.readByOID(
-            		Turno.class, shiftCode);
+            IShift shift = (IShift) persistentShift.readByOID(
+            		Shift.class, shiftCode);
  
             if(groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue()){
             	return result = false;
@@ -96,7 +96,7 @@ public class VerifyIfCanEnrollStudentGroupsInShift implements IServico {
         return result;
     }
     
-	private List getStudentGroupsByShift(IGroupProperties groupProperties, ITurno shift){
+	private List getStudentGroupsByShift(IGroupProperties groupProperties, IShift shift){
 		List result = new ArrayList();
 		List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithShift();
 		Iterator iterStudentGroups = studentGroups.iterator();

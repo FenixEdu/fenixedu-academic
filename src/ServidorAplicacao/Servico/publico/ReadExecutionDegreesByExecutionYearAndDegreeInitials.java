@@ -10,7 +10,7 @@ package ServidorAplicacao.Servico.publico;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -53,7 +53,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements ISe
             IExecutionYear executionYear = Cloner
                     .copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
 
-            ICursoExecucao executionDegree = executionDegreeDAO
+            IExecutionDegree executionDegree = executionDegreeDAO
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
                             nameDegreeCurricularPlan, executionYear);
             if (executionDegree != null)

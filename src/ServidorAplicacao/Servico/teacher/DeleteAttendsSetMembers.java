@@ -10,7 +10,7 @@ import java.util.List;
 import Dominio.AttendsSet;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -117,7 +117,7 @@ public class DeleteAttendsSetMembers implements IServico {
             	 	}
             	 }
                      
-           	    IFrequenta attend = attendInAttendsSet.getAttend();
+           	    IAttends attend = attendInAttendsSet.getAttend();
                 
                 boolean found = false;
                 Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();

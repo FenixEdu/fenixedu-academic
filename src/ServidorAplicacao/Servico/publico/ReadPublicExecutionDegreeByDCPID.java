@@ -9,7 +9,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -58,7 +58,7 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
             result = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
 
                 public Object transform(Object input) {
-                    ICursoExecucao executionDegree = (ICursoExecucao) input;
+                    IExecutionDegree executionDegree = (IExecutionDegree) input;
                     InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
                             .get(executionDegree);
                     return infoExecutionDegree;
@@ -78,7 +78,7 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID)
             throws FenixServiceException {
 
-        ICursoExecucao executionDegrees = null;
+        IExecutionDegree executionDegrees = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

@@ -8,7 +8,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -69,7 +69,7 @@ public class UnEnrollStudentGroupShift implements IService {
             	throw new InvalidChangeServiceException();
             }
             
-            ITurno shift = null;
+            IShift shift = null;
             persistentStudentGroup.simpleLockWrite(studentGroup);
             studentGroup.setShift(shift);
 

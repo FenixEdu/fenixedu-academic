@@ -7,7 +7,7 @@ package ServidorAplicacao.Filtro.coordinator;
 import java.util.List;
 
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.ITeacher;
 import Dominio.finalDegreeWork.IProposal;
 import Dominio.finalDegreeWork.Proposal;
@@ -62,7 +62,7 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
             if (proposal == null) {
                 return false;
             }
-            ICursoExecucao executionDegree = proposal.getExecutionDegree();
+            IExecutionDegree executionDegree = proposal.getExecutionDegree();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             List coordinators = executionDegree.getCoordinatorsList();

@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.person;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
@@ -9,9 +9,9 @@ import ServidorPersistenteJDBC.SuportePersistente;
 
 public class ServicoSeguroCriarPessoa extends ServicoSeguro {
 
-    private Pessoa pessoa;
+    private Person pessoa;
 
-    public ServicoSeguroCriarPessoa(ServicoAutorizacao servicoAutorizacaoCriarPessoa, Pessoa pessoa) {
+    public ServicoSeguroCriarPessoa(ServicoAutorizacao servicoAutorizacaoCriarPessoa, Person pessoa) {
         super(servicoAutorizacaoCriarPessoa);
         this.pessoa = pessoa;
     }

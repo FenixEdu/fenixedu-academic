@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.person;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorPersistenteJDBC.IPessoaPersistente;
@@ -8,9 +8,9 @@ import ServidorPersistenteJDBC.SuportePersistente;
 
 public class ServicoAutorizacaoCriarPessoa extends ServicoAutorizacao {
 
-    private Pessoa pessoa;
+    private Person pessoa;
 
-    public ServicoAutorizacaoCriarPessoa(Pessoa pessoa) {
+    public ServicoAutorizacaoCriarPessoa(Person pessoa) {
         this.pessoa = pessoa;
     }
 
@@ -20,7 +20,7 @@ public class ServicoAutorizacaoCriarPessoa extends ServicoAutorizacao {
             throw new NotAuthorizeException();
     }
 
-    public Pessoa getPessoa() {
+    public Person getPessoa() {
         return pessoa;
     }
 }

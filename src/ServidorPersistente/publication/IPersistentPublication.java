@@ -6,7 +6,7 @@ package ServidorPersistente.publication;
 
 import java.util.List;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
@@ -17,7 +17,7 @@ import ServidorPersistente.IPersistentObject;
 public interface IPersistentPublication extends IPersistentObject
 {
 
-    List readAllByPersonAndPublicationType(IPessoa pessoa, Integer publicationType)
+    List readAllByPersonAndPublicationType(IPerson pessoa, Integer publicationType)
         throws ExcepcaoPersistencia;
     
     List readAll() throws ExcepcaoPersistencia;

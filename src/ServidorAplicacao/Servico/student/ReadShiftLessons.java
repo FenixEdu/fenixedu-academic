@@ -19,11 +19,11 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IRoomOccupation;
-import Dominio.ISala;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IRoom;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
@@ -35,13 +35,13 @@ public class ReadShiftLessons implements IService {
         final ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-        final ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, infoShift.getIdInternal());
+        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
         return CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {
 
             public Object transform(Object arg0) {
-                final IAula lesson = (IAula) arg0;
+                final ILesson lesson = (ILesson) arg0;
                 final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
-                final ISala room = roomOccupation.getRoom();
+                final IRoom room = roomOccupation.getRoom();
 
                 final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                 infoLesson.setInfoShift(infoShift);

@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IEvaluation;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
 import Dominio.Mark;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -30,7 +30,7 @@ public class MarkOJB extends PersistentObjectOJB implements IPersistentMark {
         }
     }
 
-    public List readBy(IFrequenta attend) throws ExcepcaoPersistencia {
+    public List readBy(IAttends attend) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("attend.idInternal", attend.getIdInternal());
         return queryList(Mark.class, criteria);
@@ -42,7 +42,7 @@ public class MarkOJB extends PersistentObjectOJB implements IPersistentMark {
         return queryList(Mark.class, criteria);
     }
 
-    public IMark readBy(IEvaluation evaluation, IFrequenta attend) throws ExcepcaoPersistencia {
+    public IMark readBy(IEvaluation evaluation, IAttends attend) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("evaluation.idInternal", evaluation.getIdInternal());
         criteria.addEqualTo("attend.idInternal", attend.getIdInternal());

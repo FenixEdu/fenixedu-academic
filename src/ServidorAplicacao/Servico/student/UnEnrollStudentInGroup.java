@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.student;
 
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -78,7 +78,7 @@ public class UnEnrollStudentInGroup implements IServico {
             
             IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
             
-            IFrequenta attend = studentGroup.getAttendsSet().getStudentAttend(student);
+            IAttends attend = studentGroup.getAttendsSet().getStudentAttend(student);
             
             if(attend == null){
             	throw new NotAuthorizedException();

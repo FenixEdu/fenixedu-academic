@@ -17,9 +17,9 @@ import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
@@ -80,7 +80,7 @@ public class TransferCurricularCourse implements IService {
     {
         List shifts = persistentShift.readByExecutionCourseID(sourceExecutionCourse.getIdInternal());
         for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-            ITurno shift = (ITurno) iterator.next();
+            IShift shift = (IShift) iterator.next();
             List shiftStudents = persistentShiftStudent.readByShiftID(shift.getIdInternal());
             for (Iterator shiftStudentIterator = shiftStudents.iterator(); shiftStudentIterator.hasNext();) {
                 ITurnoAluno shiftStudent = (ITurnoAluno) shiftStudentIterator.next();
@@ -106,15 +106,15 @@ public class TransferCurricularCourse implements IService {
     {
         List attends = sourceExecutionCourse.getAttends();
         for (Iterator iterator = attends.iterator(); iterator.hasNext();) {
-            IFrequenta attend = (IFrequenta) iterator.next();
+            IAttends attend = (IAttends) iterator.next();
             IEnrollment enrollment = attend.getEnrolment();
             final IStudent student = attend.getAluno();
             if (enrollment != null) {
                 ICurricularCourse associatedCurricularCourse = attend.getEnrolment().getCurricularCourse();
                 if (curricularCourse.getIdInternal().equals(associatedCurricularCourse.getIdInternal())) {
-                    IFrequenta existingAttend = (IFrequenta) CollectionUtils.find(destinationExecutionCourse.getAttends(), new Predicate() {
+                    IAttends existingAttend = (IAttends) CollectionUtils.find(destinationExecutionCourse.getAttends(), new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            IFrequenta attendFromDestination = (IFrequenta) arg0;
+                            IAttends attendFromDestination = (IAttends) arg0;
                             return attendFromDestination.getAluno().getIdInternal().equals(student.getIdInternal());
                         }});
                     if (existingAttend != null) {

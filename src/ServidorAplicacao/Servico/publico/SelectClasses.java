@@ -6,9 +6,9 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
@@ -32,14 +32,14 @@ public class SelectClasses implements IService {
 
         IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
                 .getInfoExecutionPeriod());
-        ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
+        IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
                 .getInfoExecutionDegree());
 
         classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod,
                 infoClass.getAnoCurricular(), executionDegree);
 
         for (int i = 0; i < classes.size(); i++) {
-            ITurma taux = (ITurma) classes.get(i);
+            ISchoolClass taux = (ISchoolClass) classes.get(i);
             infoClasses.add(Cloner.copyClass2InfoClass(taux));
         }
 

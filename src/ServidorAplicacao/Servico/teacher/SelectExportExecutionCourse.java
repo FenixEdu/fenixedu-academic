@@ -7,7 +7,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -66,7 +66,7 @@ public class SelectExportExecutionCourse implements IServico
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            ICursoExecucao executionDegree =
+            IExecutionDegree executionDegree =
                 Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
             IExecutionPeriod executionPeriod =
                 Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);

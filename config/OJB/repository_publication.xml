@@ -149,7 +149,7 @@
 		<inverse-foreignkey field-ref="keyAuthor"/>
 	</collection-descriptor>	
 
-	<reference-descriptor name="person" class-ref="Dominio.Pessoa" proxy="true">
+	<reference-descriptor name="person" class-ref="Dominio.Person" proxy="true">
 	    <foreignkey field-ref="keyPerson"/>
     </reference-descriptor>
     

@@ -93,7 +93,7 @@ public class ClassManagerDispatchAction extends
                             argsCriarTurma);
                     request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
                 } catch (ExistingServiceException e) {
-                    throw new ExistingActionException("A Turma", e);
+                    throw new ExistingActionException("A SchoolClass", e);
                 }
                 return viewClass(mapping, form, request, response);
             }
@@ -141,7 +141,7 @@ public class ClassManagerDispatchAction extends
 
                 ServiceUtils.executeService(userView, "EditarTurma", argsEditarTurma);
             } catch (ExistingServiceException ex) {
-                throw new ExistingActionException("A Turma", ex);
+                throw new ExistingActionException("A SchoolClass", ex);
             } catch (NotAuthorizedException e) {
                 throw e;
             } catch (FenixServiceException e) {

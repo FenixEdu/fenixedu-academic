@@ -3,7 +3,7 @@ package ServidorPersistente;
 import java.util.Date;
 import java.util.List;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IQualification;
 
 /**
@@ -11,8 +11,8 @@ import Dominio.IQualification;
  * @author Nuno Barbosa
  */
 public interface IPersistentQualification extends IPersistentObject {
-    public List readQualificationsByPerson(IPessoa person) throws ExcepcaoPersistencia;
+    public List readQualificationsByPerson(IPerson person) throws ExcepcaoPersistencia;
 
-    public IQualification readByDateAndSchoolAndPerson(Date date, String school, IPessoa person)
+    public IQualification readByDateAndSchoolAndPerson(Date date, String school, IPerson person)
             throws ExcepcaoPersistencia;
 }

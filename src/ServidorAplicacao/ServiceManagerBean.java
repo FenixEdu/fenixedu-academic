@@ -144,12 +144,15 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             return serviceResult;
         } catch (Exception e) {
             if (e instanceof FenixServiceException) {
+                e.printStackTrace();
                 logger.warn(e);
             } else {
+                e.printStackTrace();
                 logger.error(e);
             }
             throw (EJBException) new EJBException(e).initCause(e);
         } catch (Throwable t) {
+            t.printStackTrace();
             logger.error(t);
             throw (EJBException) new EJBException(t.getMessage());
         }

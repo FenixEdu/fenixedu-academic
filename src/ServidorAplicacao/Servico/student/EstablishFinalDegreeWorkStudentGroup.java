@@ -7,8 +7,8 @@ package ServidorAplicacao.Servico.student;
 import java.util.ArrayList;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IStudent;
 import Dominio.finalDegreeWork.Group;
 import Dominio.finalDegreeWork.GroupStudent;
@@ -69,8 +69,8 @@ public class EstablishFinalDegreeWorkStudentGroup implements IService {
 
         if (group.getExecutionDegree() == null
                 || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID)) {
-            ICursoExecucao executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOID(
-                    CursoExecucao.class, executionDegreeOID);
+            IExecutionDegree executionDegree = (IExecutionDegree) cursoExecucaoPersistente.readByOID(
+                    ExecutionDegree.class, executionDegreeOID);
             if (executionDegree != null) {
                 group.setExecutionDegree(executionDegree);
             }

@@ -5,7 +5,7 @@
 package ServidorPersistente;
 import java.util.List;
 
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 /**
@@ -18,9 +18,9 @@ public interface IPersistentStudentGroupAttend extends IPersistentObject
 	public void delete(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia;
 	
 	
-	public IStudentGroupAttend readBy(IStudentGroup studentGroup, IFrequenta attend) throws ExcepcaoPersistencia;
+	public IStudentGroupAttend readBy(IStudentGroup studentGroup, IAttends attend) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 	public List readAllByStudentGroup(IStudentGroup studentGroup) throws ExcepcaoPersistencia;
-	public List readAllByAttend(IFrequenta attend) throws ExcepcaoPersistencia;
-    public IStudentGroupAttend readBy(IFrequenta attend) throws ExcepcaoPersistencia;
+	public List readAllByAttend(IAttends attend) throws ExcepcaoPersistencia;
+    public IStudentGroupAttend readBy(IAttends attend) throws ExcepcaoPersistencia;
 }

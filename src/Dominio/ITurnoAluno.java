@@ -11,11 +11,11 @@ package Dominio;
  * @author tfc130
  */
 public interface ITurnoAluno extends IDomainObject {
-    public ITurno getShift();
+    public IShift getShift();
 
     public IStudent getStudent();
 
-    public void setShift(ITurno turno);
+    public void setShift(IShift turno);
 
     public void setStudent(IStudent aluno);
 }

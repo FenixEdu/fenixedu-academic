@@ -14,7 +14,7 @@ import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
 import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -58,8 +58,8 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
 
             Collections.sort(executionDegrees, new Comparator() {
                 public int compare(Object o1, Object o2) {
-                    return ((ICursoExecucao) o1).getExecutionYear().getBeginDate().compareTo(
-                            ((ICursoExecucao) o1).getExecutionYear().getBeginDate());
+                    return ((IExecutionDegree) o1).getExecutionYear().getBeginDate().compareTo(
+                            ((IExecutionDegree) o1).getExecutionYear().getBeginDate());
                 }
             });
 
@@ -68,7 +68,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
             }
 
             // decide which is the execution year which we want to edit
-            ICursoExecucao executionDegree = (ICursoExecucao) getActiveExecutionYear(executionDegrees);
+            IExecutionDegree executionDegree = (IExecutionDegree) getActiveExecutionYear(executionDegrees);
             if (executionDegree != null) {
 
                 infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
@@ -123,21 +123,21 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
      * @param infoExecutionDegreeList a list of infoexecution degrees sorted by beginDate
      */
 
-    private ICursoExecucao getActiveExecutionYear(List executionDegreeList) {
+    private IExecutionDegree getActiveExecutionYear(List executionDegreeList) {
         Date todayDate = new Date();
         int i;
         for (i = 0; i < executionDegreeList.size(); i++) {
             //if the first is in the future, the rest is also
-            if ((ExecutionDegreeDuringDate(todayDate, (ICursoExecucao) executionDegreeList.get(i)) == 1)
+            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 1)
                     && (i == 0))
-                return (ICursoExecucao) executionDegreeList.get(i);
+                return (IExecutionDegree) executionDegreeList.get(i);
             // if the last is in the past, there is no editable executionDegree
-            if ((ExecutionDegreeDuringDate(todayDate, (ICursoExecucao) executionDegreeList.get(i)) == 1)
+            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 1)
                     && (i == executionDegreeList.size() - 1))
                 return null;
 
-            if (ExecutionDegreeDuringDate(todayDate, (ICursoExecucao) executionDegreeList.get(i)) == 0)
-                return (ICursoExecucao) executionDegreeList.get(i);
+            if (ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 0)
+                return (IExecutionDegree) executionDegreeList.get(i);
         }
         return null;
     }
@@ -149,7 +149,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
      * 			1 if it is in the future
      */
 
-    private int ExecutionDegreeDuringDate(Date date, ICursoExecucao info) {
+    private int ExecutionDegreeDuringDate(Date date, IExecutionDegree info) {
         if (date.after(info.getExecutionYear().getEndDate()))
             return -1;
         if ((date.after(info.getExecutionYear().getBeginDate()))

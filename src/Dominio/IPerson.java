@@ -1,5 +1,5 @@
 /*
- * IPessoa.java
+ * IPerson.java
  * 
  * Created on 15 de Outubro de 2002, 15:03
  * @author Lu?s Cruz, Nuno Nunes, Jo?o Luz
@@ -15,7 +15,7 @@ import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
-public interface IPessoa extends IDomainObject {
+public interface IPerson extends IDomainObject {
 
     public List getManageableDepartmentCredits();
 

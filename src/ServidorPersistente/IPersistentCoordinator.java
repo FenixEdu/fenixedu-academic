@@ -3,7 +3,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.ITeacher;
 
 /**
@@ -18,14 +18,14 @@ public interface IPersistentCoordinator extends IPersistentObject {
 
     public List readCurricularPlansByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 
-    public List readCoordinatorsByExecutionDegree(ICursoExecucao executionDegree)
+    public List readCoordinatorsByExecutionDegree(IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia;
 
     public ICoordinator readCoordinatorByTeacherAndExecutionDegreeId(ITeacher teacher,
             Integer executionDegreeId) throws ExcepcaoPersistencia;
 
     public ICoordinator readCoordinatorByTeacherAndExecutionDegree(ITeacher teacher,
-            ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+            IExecutionDegree executionDegree) throws ExcepcaoPersistencia;
 
     public ICoordinator readCoordinatorByTeacherAndDegreeCurricularPlanID(ITeacher teacher,
             Integer degreeCurricularPlanID) throws ExcepcaoPersistencia;

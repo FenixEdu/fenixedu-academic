@@ -5,7 +5,7 @@
 package Dominio.student;
 
 import Dominio.DomainObject;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
 import Util.DelegateYearType;
@@ -18,7 +18,7 @@ import Util.DelegateYearType;
 public class Delegate extends DomainObject implements IDelegate {
     private IStudent student;
 
-    private ICurso degree;
+    private IDegree degree;
 
     private IExecutionYear executionYear;
 
@@ -64,7 +64,7 @@ public class Delegate extends DomainObject implements IDelegate {
     /**
      * @return Returns the degree.
      */
-    public ICurso getDegree() {
+    public IDegree getDegree() {
         return degree;
     }
 
@@ -72,7 +72,7 @@ public class Delegate extends DomainObject implements IDelegate {
      * @param degree
      *            The degree to set.
      */
-    public void setDegree(ICurso degree) {
+    public void setDegree(IDegree degree) {
         this.degree = degree;
     }
 

@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.person;
 
 import Dominio.Funcionario;
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
@@ -14,7 +14,7 @@ import ServidorPersistenteJDBC.SuportePersistente;
  *  
  */
 public class ServicoSeguroLerPessoaPorNumeroMecanografico extends ServicoSeguro {
-    private Pessoa pessoa = null;
+    private Person pessoa = null;
 
     private int numeroMecanografico;
 
@@ -37,7 +37,7 @@ public class ServicoSeguroLerPessoaPorNumeroMecanografico extends ServicoSeguro 
             throw new NotExecuteException();
     }
 
-    public Pessoa getPessoa() {
+    public Person getPessoa() {
         return pessoa;
     }
 }

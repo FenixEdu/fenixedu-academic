@@ -36,12 +36,12 @@ public class Desfasado implements IStrategyHorarios {
     public void setDatasHorario(Horario horario, ActionForm form) {
     } /* setDatasHorario */
 
-    public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form, Pessoa pessoa,
+    public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form, Person pessoa,
             Funcionario funcionario, Horario horario, List listaRegime, boolean isExcepcao,
             String alterar) {
     } /* setFormAssociarHorarioConfirmar */
 
-    public void setFormAssociarHorarioTipoConfirmar(Locale locale, ActionForm form, Pessoa pessoa,
+    public void setFormAssociarHorarioTipoConfirmar(Locale locale, ActionForm form, Person pessoa,
             Funcionario funcionario, HorarioTipo horarioTipo, Horario horario, List listaRegime,
             boolean isExcepcao) {
     } /* setFormAssociarHorarioTipoConfirmar */
@@ -100,17 +100,17 @@ public class Desfasado implements IStrategyHorarios {
     }
 
     /* (non-Javadoc)
-     * @see Dominio.IStrategyHorarios#setFormAssociarHorarioConfirmar(java.util.Locale, org.apache.struts.action.ActionForm, Dominio.Pessoa, Dominio.Funcionario, Dominio.Horario, java.util.ArrayList, boolean, java.lang.String)
+     * @see Dominio.IStrategyHorarios#setFormAssociarHorarioConfirmar(java.util.Locale, org.apache.struts.action.ActionForm, Dominio.Person, Dominio.Funcionario, Dominio.Horario, java.util.ArrayList, boolean, java.lang.String)
      */
-    public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form, Pessoa pessoa, Funcionario funcionario, Horario horario, ArrayList listaRegime, boolean isExcepcao, String alterar) {
+    public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form, Person pessoa, Funcionario funcionario, Horario horario, ArrayList listaRegime, boolean isExcepcao, String alterar) {
         // TODO Auto-generated method stub
         
     }
 
     /* (non-Javadoc)
-     * @see Dominio.IStrategyHorarios#setFormAssociarHorarioTipoConfirmar(java.util.Locale, org.apache.struts.action.ActionForm, Dominio.Pessoa, Dominio.Funcionario, Dominio.HorarioTipo, Dominio.Horario, java.util.ArrayList, boolean)
+     * @see Dominio.IStrategyHorarios#setFormAssociarHorarioTipoConfirmar(java.util.Locale, org.apache.struts.action.ActionForm, Dominio.Person, Dominio.Funcionario, Dominio.HorarioTipo, Dominio.Horario, java.util.ArrayList, boolean)
      */
-    public void setFormAssociarHorarioTipoConfirmar(Locale locale, ActionForm form, Pessoa pessoa, Funcionario funcionario, HorarioTipo horarioTipo, Horario horario, ArrayList listaRegime, boolean isExcepcao) {
+    public void setFormAssociarHorarioTipoConfirmar(Locale locale, ActionForm form, Person pessoa, Funcionario funcionario, HorarioTipo horarioTipo, Horario horario, ArrayList listaRegime, boolean isExcepcao) {
         // TODO Auto-generated method stub
         
     }

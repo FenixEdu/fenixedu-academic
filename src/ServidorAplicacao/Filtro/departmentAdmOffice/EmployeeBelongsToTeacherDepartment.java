@@ -7,7 +7,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IDepartment;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.Filtro;
@@ -58,7 +58,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @throws NotAuthorizedFilterException
      */
     protected IDepartment getEmployeeDepartment(IPersistentDepartment persistentDepartment, IPersistentEmployee persistentEmployee, IPessoaPersistente pessoaPersistente, IUserView userView) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
-        IPessoa pessoa = getPessoa(pessoaPersistente, userView);
+        IPerson pessoa = getPessoa(pessoaPersistente, userView);
         IEmployee employee = persistentEmployee.readByPerson(pessoa);
         if(employee == null)
             throw new NotAuthorizedFilterException("Não existe funcionario");
@@ -89,9 +89,9 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @throws FenixServiceException
      * @throws NotAuthorizedFilterException
      */
-    protected IPessoa getPessoa(IPessoaPersistente pessoaPersistente, IUserView userView) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
+    protected IPerson getPessoa(IPessoaPersistente pessoaPersistente, IUserView userView) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
         String utilizador = userView.getUtilizador();        
-        IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(utilizador); 
+        IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(utilizador); 
         if(pessoa == null)
             throw new NotAuthorizedFilterException("error.noPerson");
         return pessoa;

@@ -17,7 +17,7 @@ public class ExternalPerson extends DomainObject implements IExternalPerson {
     private Integer keyWorkLocation;
 
     //fields
-    private IPessoa person;
+    private IPerson person;
 
     private IWorkLocation workLocation;
 
@@ -42,11 +42,11 @@ public class ExternalPerson extends DomainObject implements IExternalPerson {
         return keyPerson;
     }
 
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 

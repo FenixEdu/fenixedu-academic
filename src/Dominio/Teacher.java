@@ -26,7 +26,7 @@ public class Teacher extends DomainObject implements ITeacher {
 
     private Integer keyPerson;
 
-    private IPessoa person;
+    private IPerson person;
 
     private Integer teacherNumber;
 
@@ -55,7 +55,7 @@ public class Teacher extends DomainObject implements ITeacher {
         setIdInternal(idInternal);
     }
 
-    public Teacher(IPessoa person, Integer teacherNumber) {
+    public Teacher(IPerson person, Integer teacherNumber) {
         setPerson(person);
         setTeacherNumber(teacherNumber);
     }
@@ -118,9 +118,9 @@ public class Teacher extends DomainObject implements ITeacher {
     }
 
     /**
-     * @return IPessoa
+     * @return IPerson
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -222,7 +222,7 @@ public class Teacher extends DomainObject implements ITeacher {
      * @param person
      *            The person to set
      */
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

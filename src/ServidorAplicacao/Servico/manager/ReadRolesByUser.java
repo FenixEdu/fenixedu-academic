@@ -7,7 +7,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -28,7 +28,7 @@ public class ReadRolesByUser implements IService {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
             if (person == null) {
                 throw new FenixServiceException("error.noUsername");
             }

@@ -2,8 +2,8 @@ package ServidorAplicacao.Servico.publico;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
-import Dominio.Curso;
-import Dominio.ICurso;
+import Dominio.Degree;
+import Dominio.IDegree;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -19,7 +19,7 @@ public class ReadDegreeByOID implements IService {
         ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
         ICursoPersistente persistentDegree = suportePersistente.getICursoPersistente();
 
-        ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeId);
+        IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
 
         InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
         return infoDegree;

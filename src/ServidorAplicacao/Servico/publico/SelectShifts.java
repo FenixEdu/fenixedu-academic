@@ -5,7 +5,7 @@ import java.util.List;
 
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -48,14 +48,14 @@ public class SelectShifts implements IServico {
         List shifts = new ArrayList();
         List infoShifts = new ArrayList();
 
-        ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+        IShift shift = Cloner.copyInfoShift2IShift(infoShift);
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             shifts = sp.getITurnoPersistente().readByExecutionCourse(shift.getDisciplinaExecucao());
 
             for (int i = 0; i < shifts.size(); i++) {
-                ITurno taux = (ITurno) shifts.get(i);
+                IShift taux = (IShift) shifts.get(i);
                 infoShifts.add(Cloner.copyShift2InfoShift(taux));
             }
         } catch (ExcepcaoPersistencia e) {

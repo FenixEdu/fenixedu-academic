@@ -5,9 +5,9 @@ package ServidorAplicacao.Servico.manager;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
-import Dominio.Curso;
+import Dominio.Degree;
 import Dominio.DegreeCurricularPlan;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -36,7 +36,7 @@ public class InsertDegree implements IService {
             String name = infoDegree.getNome();
             TipoCurso type = infoDegree.getTipoCurso();
 
-            ICurso degree = new Curso();
+            IDegree degree = new Degree();
             persistentDegree.simpleLockWrite(degree);
             degree.setSigla(code);
             degree.setNome(name);

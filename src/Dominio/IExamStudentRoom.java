@@ -18,7 +18,7 @@ public interface IExamStudentRoom extends IDomainObject {
     /**
      * @return
      */
-    public abstract ISala getRoom();
+    public abstract IRoom getRoom();
 
     /**
      * @return
@@ -33,7 +33,7 @@ public interface IExamStudentRoom extends IDomainObject {
     /**
      * @param sala
      */
-    public abstract void setRoom(ISala sala);
+    public abstract void setRoom(IRoom sala);
 
     /**
      * @param student

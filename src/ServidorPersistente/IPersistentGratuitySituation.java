@@ -6,7 +6,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
@@ -32,14 +32,14 @@ public interface IPersistentGratuitySituation extends IPersistentObject {
             throws ExcepcaoPersistencia;
 
     public List readGratuitySituationListByExecutionDegreeAndSpecialization(
-            ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia;
+            IExecutionDegree executionDegree, Specialization specialization) throws ExcepcaoPersistencia;
 
     public List readGratuitySituationListByExecutionDegreeAndSpecializationAndSituation(
-            ICursoExecucao executionDegree, Specialization specialization,
+            IExecutionDegree executionDegree, Specialization specialization,
             GratuitySituationType situation) throws ExcepcaoPersistencia;
 
     public IGratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
-            ICursoExecucao executionDegree, IStudent student) throws ExcepcaoPersistencia;
+            IExecutionDegree executionDegree, IStudent student) throws ExcepcaoPersistencia;
 
     public IGratuitySituation readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
             IStudentCurricularPlan studentCurricularPlan, IGratuityValues gratuityValues,

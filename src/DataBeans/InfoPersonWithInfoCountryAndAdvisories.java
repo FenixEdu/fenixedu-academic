@@ -4,7 +4,7 @@
  */
 package DataBeans;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author João Mota
@@ -12,14 +12,14 @@ import Dominio.IPessoa;
  */
 public class InfoPersonWithInfoCountryAndAdvisories extends InfoPersonWithAdvisories {
 
-    public void copyFromDomain(IPessoa person) {
+    public void copyFromDomain(IPerson person) {
         super.copyFromDomain(person);
         if (person != null) {
             setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
         }
     }
 
-    public static InfoPerson newInfoFromDomain(IPessoa person) {
+    public static InfoPerson newInfoFromDomain(IPerson person) {
         InfoPersonWithInfoCountryAndAdvisories infoPerson = null;
         if (person != null) {
             infoPerson = new InfoPersonWithInfoCountryAndAdvisories();

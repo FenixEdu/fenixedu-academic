@@ -11,7 +11,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
@@ -36,7 +36,7 @@ public class ReadExecutionCoursesByStudentTests implements IService {
 
         final List infoExecutionCourses = new ArrayList();
         for (final Iterator iterator = attends.iterator(); iterator.hasNext(); ) {
-            final IFrequenta attend = (IFrequenta) iterator.next();
+            final IAttends attend = (IAttends) iterator.next();
             final IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
 
             final int count = persistentStudentTestQuestion.countStudentTestByStudentAndExecutionCourse(executionCourse, student);

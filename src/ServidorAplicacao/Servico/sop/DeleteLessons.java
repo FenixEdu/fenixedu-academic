@@ -11,8 +11,8 @@ package ServidorAplicacao.Servico.sop;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.Aula;
-import Dominio.IAula;
+import Dominio.Lesson;
+import Dominio.ILesson;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -26,7 +26,7 @@ public class DeleteLessons implements IService {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
         for (int j = 0; j < lessonOIDs.size(); j++) {
-            IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(Aula.class,
+            ILesson lesson = (ILesson) sp.getIAulaPersistente().readByOID(Lesson.class,
                     (Integer) lessonOIDs.get(j));
 
             sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());

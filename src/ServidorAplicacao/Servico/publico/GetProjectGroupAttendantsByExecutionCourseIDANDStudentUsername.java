@@ -10,7 +10,7 @@ import java.util.List;
 import DataBeans.StudentGroupAttendacyInformation;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
@@ -68,7 +68,7 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername impl
                     ExecutionCourse.class, executionCourseID);
             //
             //
-            IFrequenta attendacy = persistentAttendacy.readByAlunoAndDisciplinaExecucao(student,
+            IAttends attendacy = persistentAttendacy.readByAlunoAndDisciplinaExecucao(student,
                     executionCourse);
             if (attendacy == null)
                 return null; // the student is not enrolled on this course

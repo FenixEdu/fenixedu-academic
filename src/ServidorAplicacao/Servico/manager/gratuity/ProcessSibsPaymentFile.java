@@ -11,13 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
 import Dominio.IInsuranceValue;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.gratuity.masterDegree.ISibsPaymentFile;
@@ -191,7 +191,7 @@ public class ProcessSibsPaymentFile implements IService {
                 continue;
             }
 
-            IPessoa responsiblePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
+            IPerson responsiblePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
                     userView.getUtilizador());
 
             IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
@@ -246,7 +246,7 @@ public class ProcessSibsPaymentFile implements IService {
                     continue;
                 }
 
-                ICursoExecucao candidateExecutionDegree = sp.getIPersistentExecutionDegree()
+                IExecutionDegree candidateExecutionDegree = sp.getIPersistentExecutionDegree()
                         .readByDegreeCurricularPlanAndExecutionYear(
                                 studentCurricularPlan.getDegreeCurricularPlan(), executionYear);
 
@@ -272,7 +272,7 @@ public class ProcessSibsPaymentFile implements IService {
                 continue;
             }
 
-            ICursoExecucao executionDegree = (ICursoExecucao) executionDegrees.get(0);
+            IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(0);
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlans
                     .get(0);

@@ -10,7 +10,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -107,7 +107,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
     //Read all curricular course scope of this year and curricular year
     protected List readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, Integer curricularYear,
+            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree, Integer curricularYear,
             ISuportePersistente sp) throws FenixServiceException {
         List infoActiveScopes = null;
         try {

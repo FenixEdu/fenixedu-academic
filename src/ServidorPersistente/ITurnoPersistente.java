@@ -9,23 +9,23 @@ package ServidorPersistente;
  */
 import java.util.List;
 
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.ICurricularYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 
 public interface ITurnoPersistente extends IPersistentObject {
 
-    public ITurno readByNameAndExecutionCourse(String nome, IExecutionCourse IDE)
+    public IShift readByNameAndExecutionCourse(String nome, IExecutionCourse IDE)
             throws ExcepcaoPersistencia;
 
-    public void delete(ITurno turno) throws ExcepcaoPersistencia;
+    public void delete(IShift turno) throws ExcepcaoPersistencia;
 
-    public Integer countAllShiftsOfAllClassesAssociatedWithShift(ITurno shift)
+    public Integer countAllShiftsOfAllClassesAssociatedWithShift(IShift shift)
             throws ExcepcaoPersistencia;
 
     // FIXME : O metodo nao seleciona bem as turmas ... mas nao da erro na query
@@ -44,23 +44,23 @@ public interface ITurnoPersistente extends IPersistentObject {
      * @return
      */
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree,
+            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree,
             ICurricularYear curricularYear) throws ExcepcaoPersistencia;
 
     /**
      * @param shcoolClass
      * @return
      */
-    public List readAvailableShiftsForClass(ITurma schoolClass) throws ExcepcaoPersistencia;
+    public List readAvailableShiftsForClass(ISchoolClass schoolClass) throws ExcepcaoPersistencia;
 
     public List readByExecutionCourseID(Integer id) throws ExcepcaoPersistencia;
 
     /**
      * @return
      */
-    public List readByLesson(IAula lesson) throws ExcepcaoPersistencia;
+    public List readByLesson(ILesson lesson) throws ExcepcaoPersistencia;
 
-    public ITurno readShiftByLesson(IAula lesson) throws ExcepcaoPersistencia;
+    public IShift readShiftByLesson(ILesson lesson) throws ExcepcaoPersistencia;
 
     public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(IStudent student,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;

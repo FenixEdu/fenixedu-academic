@@ -20,10 +20,10 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoViewRoomSchedule;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
-import Dominio.ITurno;
+import Dominio.IRoom;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISalaPersistente;
@@ -64,14 +64,14 @@ public class ReadPavillionsRoomsLessons implements IService {
             // Read rooms classes
             for (int i = 0; i < rooms.size(); i++) {
                 InfoViewRoomSchedule infoViewRoomSchedule = new InfoViewRoomSchedule();
-                ISala room = (ISala) rooms.get(i);
+                IRoom room = (IRoom) rooms.get(i);
                 List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
                 Iterator iterator = lessonList.iterator();
                 List infoLessonsList = new ArrayList();
                 while (iterator.hasNext()) {
-                    IAula elem = (IAula) iterator.next();
+                    ILesson elem = (ILesson) iterator.next();
                     InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-                    ITurno shift = elem.getShift();
+                    IShift shift = elem.getShift();
                     if (shift == null) {
                         continue;
                     }

@@ -57,7 +57,7 @@
 	
 	<reference-descriptor
        	name="person"
-       	class-ref="Dominio.Pessoa"
+       	class-ref="Dominio.Person"
        	proxy="true"
 		refresh="true"
     >

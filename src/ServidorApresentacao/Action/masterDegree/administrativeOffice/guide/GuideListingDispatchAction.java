@@ -164,7 +164,7 @@ public class GuideListingDispatchAction extends DispatchAction {
                     }
                 }
                 if (infoStudent == null) {
-                    throw new NonExistingActionException("A Pessoa");
+                    throw new NonExistingActionException("A Person");
                 }
                 identificationDocumentNumber = infoStudent.getInfoPerson()
                         .getNumeroDocumentoIdentificacao();
@@ -178,7 +178,7 @@ public class GuideListingDispatchAction extends DispatchAction {
                 result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
                         args);
             } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("A Pessoa", e);
+                throw new NonExistingActionException("A Person", e);
             }
 
             if (result == null) {
@@ -212,7 +212,7 @@ public class GuideListingDispatchAction extends DispatchAction {
                 result = (List) ServiceManagerServiceFactory.executeService(userView,
                         "ChooseGuideByPersonID", args);
             } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("A Pessoa", e);
+                throw new NonExistingActionException("A Person", e);
             }
 
             if (result == null) {

@@ -14,7 +14,7 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.IDomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.publication.IPublication;
 import Dominio.publication.IPublicationAuthor;
 import Dominio.publication.Publication;
@@ -102,7 +102,7 @@ public class PublicationOJB extends PersistentObjectOJB implements IPersistentPu
      * @see ServidorPersistente.teacher.IPersistentOldPublication#readAllByTeacherAndOldPublicationType(Dominio.ITeacher,
      *      Util.OldPublicationType)
      */
-    public List readAllByPersonAndPublicationType(IPessoa pessoa, Integer publicationType)
+    public List readAllByPersonAndPublicationType(IPerson pessoa, Integer publicationType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", pessoa.getIdInternal());

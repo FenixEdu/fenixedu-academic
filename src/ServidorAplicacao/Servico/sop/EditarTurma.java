@@ -13,9 +13,9 @@ package ServidorAplicacao.Servico.sop;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -32,13 +32,13 @@ public class EditarTurma implements IService {
         final IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(oldClassView
                 .getInfoExecutionPeriod());
 
-        final ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(oldClassView
+        final IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(oldClassView
                 .getInfoExecutionDegree());
 
-        final ITurma classToEdit = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
+        final ISchoolClass classToEdit = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
                 oldClassView.getNome(), executionDegree, executionPeriod);
 
-        final ITurma otherClassWithSameNewName = sp.getITurmaPersistente()
+        final ISchoolClass otherClassWithSameNewName = sp.getITurmaPersistente()
                 .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(), executionDegree,
                         executionPeriod);
 

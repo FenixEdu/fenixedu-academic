@@ -1,7 +1,7 @@
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.Curso -->
+<!-- Definitions for Dominio.Degree -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.Curso" table="DEGREE">
+<class-descriptor class="Dominio.Degree" table="DEGREE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"

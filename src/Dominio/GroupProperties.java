@@ -183,7 +183,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	}
 	
 	/**
-	* @return Tipo Aula
+	* @return Tipo Lesson
 	**/
 	public TipoAula getShiftType() {
 		return shiftType;

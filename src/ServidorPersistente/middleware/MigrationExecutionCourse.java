@@ -286,7 +286,7 @@ public class MigrationExecutionCourse {
                 ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesIterator
                         .next();
                 stringBuffer.append("\t\t(").append("Nome:").append(curricularCourse.getName()).append(
-                        ",Curso:").append(
+                        ",Degree:").append(
                         curricularCourse.getDegreeCurricularPlan().getDegree().getSigla()).append(
                         ",Ano:")
                 //					.append(curricularCourse.getCurricularYear())

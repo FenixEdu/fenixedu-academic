@@ -18,7 +18,7 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionDegree;
@@ -35,16 +35,16 @@ public class CriarTurma implements IService {
 
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        final ITurma turma = Cloner.copyInfoClass2Class(infoTurma);
+        final ISchoolClass turma = Cloner.copyInfoClass2Class(infoTurma);
 
         final ITurmaPersistente classDAO = sp.getITurmaPersistente();
         final List listClasses = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(turma
                 .getExecutionPeriod(), turma.getAnoCurricular(), turma.getExecutionDegree());
 
-        final ITurma existingClass = (ITurma) CollectionUtils.find(listClasses, new Predicate() {
+        final ISchoolClass existingClass = (ISchoolClass) CollectionUtils.find(listClasses, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                final ITurma schoolClass = (ITurma) arg0;
+                final ISchoolClass schoolClass = (ISchoolClass) arg0;
                 return infoTurma.getNome().equalsIgnoreCase(schoolClass.getNome());
             }
 

@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.projectsManagement;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IEmployee;
 import Dominio.IPersonRole;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.ITeacher;
 import Dominio.PersonRole;
@@ -32,7 +32,7 @@ public class ReviewProjectAccess implements IService {
     public void run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        IPessoa person = (IPessoa) sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        IPerson person = (IPerson) sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
         if (persistentProjectAccess.countByPerson(person) == 0) {
             Integer userNumber = null;
             ITeacher teacher = (ITeacher) sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());

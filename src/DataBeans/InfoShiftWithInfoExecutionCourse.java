@@ -4,7 +4,7 @@
  */
 package DataBeans;
 
-import Dominio.ITurno;
+import Dominio.IShift;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import Dominio.ITurno;
  */
 public class InfoShiftWithInfoExecutionCourse extends InfoShift {
 
-    public void copyFromDomain(ITurno shift) {
+    public void copyFromDomain(IShift shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
             setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(shift
@@ -20,7 +20,7 @@ public class InfoShiftWithInfoExecutionCourse extends InfoShift {
         }
     }
 
-    public static InfoShift newInfoFromDomain(ITurno shift) {
+    public static InfoShift newInfoFromDomain(IShift shift) {
         InfoShiftWithInfoExecutionCourse infoShift = null;
         if (shift != null) {
             infoShift = new InfoShiftWithInfoExecutionCourse();

@@ -13,13 +13,13 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoSummary;
-import Dominio.Aula;
+import Dominio.Lesson;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
 import Dominio.ISummary;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
@@ -49,11 +49,11 @@ public class ReadLastSummary implements IService {
 			ITurnoPersistente persistentShift = suportePersistente.getITurnoPersistente();
 			IAulaPersistente aulaPersistente = suportePersistente.getIAulaPersistente();
 			
-			ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, shiftId);
+			IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
 			if(shift == null)
 				throw new FenixServiceException("no.shift");		
 						
-			IAula aula = (IAula) aulaPersistente.readByOID(Aula.class, lessonID);								
+			ILesson aula = (ILesson) aulaPersistente.readByOID(Lesson.class, lessonID);								
 			if(aula == null)
 			    throw new FenixServiceException("no.lesson");
 									

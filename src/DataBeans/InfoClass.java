@@ -5,7 +5,7 @@
  */
 package DataBeans;
 
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -105,14 +105,14 @@ public class InfoClass extends InfoObject {
         this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
-    public void copyFromDomain(ITurma turma) {
+    public void copyFromDomain(ISchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
             setNome(turma.getNome());
         }
     }
 
-    public static InfoClass newInfoFromDomain(ITurma turma) {
+    public static InfoClass newInfoFromDomain(ISchoolClass turma) {
         InfoClass infoClass = null;
         if (turma != null) {
             infoClass = new InfoClass();

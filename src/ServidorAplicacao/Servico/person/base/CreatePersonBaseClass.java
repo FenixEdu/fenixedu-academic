@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import DataBeans.InfoPerson;
 import Dominio.Country;
 import Dominio.ICountry;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.security.PasswordEncryptor;
@@ -30,12 +30,12 @@ import Util.RoleType;
 
 /*
  * This class is the base class to create a new person. Each class that needs to
- * create a new object of class Pessoa (person) should extend THIS class.
+ * create a new object of class Person (person) should extend THIS class.
  *  
  */
 
 public class CreatePersonBaseClass {
-    public static IPessoa setPersonAttributes(IPessoa personToLock, InfoPerson newPerson,
+    public static IPerson setPersonAttributes(IPerson personToLock, InfoPerson newPerson,
             IPersistentCountry pCountry) throws ExcepcaoPersistencia {
         personToLock.setNome(newPerson.getNome());
         if (newPerson.getNumeroDocumentoIdentificacao() != null)
@@ -88,23 +88,23 @@ public class CreatePersonBaseClass {
         return personToLock;
     }
 
-    public static IPessoa createPersonBase(IPessoa personToLock, InfoPerson newPerson,
+    public static IPerson createPersonBase(IPerson personToLock, InfoPerson newPerson,
             ISuportePersistente sp, IPessoaPersistente pPerson, IPersistentPersonRole pPersonRole)
             throws FenixServiceException {
         IPersistentCountry pCountry = null;
 
-        //IPessoa person = null;
+        //IPerson person = null;
         try {
             pCountry = sp.getIPersistentCountry();
 
             //Check if the person Exists
             if (newPerson.getIdInternal() != null && !newPerson.getIdInternal().equals(new Integer(0)))
-                personToLock = (IPessoa) pPerson.readByOID(Pessoa.class, newPerson.getIdInternal());
+                personToLock = (IPerson) pPerson.readByOID(Person.class, newPerson.getIdInternal());
 
             boolean islocked = false;
             //Create the new Person if it does not exist
             if (personToLock == null) {
-                personToLock = new Pessoa();
+                personToLock = new Person();
                 pPerson.simpleLockWrite(personToLock);
 
                 personToLock.setPersonRoles(new ArrayList());

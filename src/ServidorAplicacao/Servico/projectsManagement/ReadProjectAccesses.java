@@ -11,7 +11,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.projectsManagement.InfoProject;
 import DataBeans.projectsManagement.InfoProjectAccess;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.projectsManagement.IProjectAccess;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -56,7 +56,7 @@ public class ReadProjectAccesses implements IService {
 
         ITeacher personTeacher = sp.getIPersistentTeacher().readTeacherByUsername(username);
         if (personTeacher == null) {
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
             if (person == null)
                 throw new ExcepcaoInexistente();
             IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());

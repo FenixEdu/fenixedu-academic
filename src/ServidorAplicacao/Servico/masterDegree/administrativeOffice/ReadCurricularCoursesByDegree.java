@@ -13,7 +13,7 @@ import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -38,7 +38,7 @@ public class ReadCurricularCoursesByDegree implements IService {
 					.readExecutionYearByName(executionYearString);
 
 			// Read degree
-			ICursoExecucao cursoExecucao = sp.getIPersistentExecutionDegree()
+			IExecutionDegree cursoExecucao = sp.getIPersistentExecutionDegree()
 					.readByDegreeCurricularPlanNameAndExecutionYear(degreeName,
 							executionYear);
 

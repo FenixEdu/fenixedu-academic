@@ -103,7 +103,7 @@ public interface IFuncionario {
     /**
      * @return
      */
-    public abstract IPessoa getPerson();
+    public abstract IPerson getPerson();
 
     /**
      * @return Timestamp
@@ -235,7 +235,7 @@ public interface IFuncionario {
     /**
      * @param pessoa
      */
-    public abstract void setPerson(IPessoa person);
+    public abstract void setPerson(IPerson person);
 
     /**
      * Sets the quando.

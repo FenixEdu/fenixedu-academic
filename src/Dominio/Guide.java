@@ -27,11 +27,11 @@ public class Guide extends DomainObject implements IGuide {
 
     protected String remarks;
 
-    protected IPessoa person;
+    protected IPerson person;
 
     protected IContributor contributor;
 
-    protected ICursoExecucao executionDegree;
+    protected IExecutionDegree executionDegree;
 
     protected PaymentType paymentType;
 
@@ -52,8 +52,8 @@ public class Guide extends DomainObject implements IGuide {
     public Guide() {
     }
 
-    public Guide(Integer number, Integer year, Double total, String remarks, IPessoa person,
-            IContributor contributor, GuideRequester guideRequester, ICursoExecucao executionDegree,
+    public Guide(Integer number, Integer year, Double total, String remarks, IPerson person,
+            IContributor contributor, GuideRequester guideRequester, IExecutionDegree executionDegree,
             PaymentType paymentType, Date creationDate, Integer version) {
         this.contributor = contributor;
         this.number = number;
@@ -133,7 +133,7 @@ public class Guide extends DomainObject implements IGuide {
     /**
      * @return
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
@@ -182,7 +182,7 @@ public class Guide extends DomainObject implements IGuide {
     /**
      * @return
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -217,7 +217,7 @@ public class Guide extends DomainObject implements IGuide {
     /**
      * @param execucao
      */
-    public void setExecutionDegree(ICursoExecucao execucao) {
+    public void setExecutionDegree(IExecutionDegree execucao) {
         executionDegree = execucao;
     }
 
@@ -266,7 +266,7 @@ public class Guide extends DomainObject implements IGuide {
     /**
      * @param pessoa
      */
-    public void setPerson(IPessoa pessoa) {
+    public void setPerson(IPerson pessoa) {
         person = pessoa;
     }
 

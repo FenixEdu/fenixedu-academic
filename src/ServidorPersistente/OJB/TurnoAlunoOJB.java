@@ -16,8 +16,8 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import Dominio.ShiftStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -44,7 +44,7 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
         return queryList(ShiftStudent.class, crit);
     }
 
-    public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno) throws ExcepcaoPersistencia {
+    public ITurnoAluno readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("student.number", aluno.getNumber());
@@ -67,20 +67,20 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
     /**
      * FIXME: wrong link from executionCourse to ExecutionDegree
      */
-    public ITurno readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
+    public IShift readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("shift.tipo", shiftType);
         crit.addEqualTo("shift.disciplinaExecucao.licenciaturaExecucao.nome", nameExecutionCourse);
         crit.addEqualTo("student.number", id);
-        return (ITurno) queryObject(ShiftStudent.class, crit);
+        return (IShift) queryObject(ShiftStudent.class, crit);
 
     }
 
     /**
-     * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.ITurno)
+     * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.IShift)
      */
-    public List readStudentShiftByShift(ITurno shift) throws ExcepcaoPersistencia {
+    public List readStudentShiftByShift(IShift shift) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.nome", shift.getNome());
         criteria.addEqualTo("shift.disciplinaExecucao.sigla", shift.getDisciplinaExecucao().getSigla());
@@ -93,9 +93,9 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
     }
 
     /**
-     * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.ITurno)
+     * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.IShift)
      */
-    public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
+    public List readByShift(IShift shift) throws ExcepcaoPersistencia {
         List result = readStudentShiftByShift(shift);
 
         List studentList = new ArrayList();
@@ -132,10 +132,10 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
      * (non-Javadoc)
      * 
      * @see ServidorPersistente.ITurnoAlunoPersistente#readByStudentAndExecutionCourseAndLessonTypeAndGroup(Dominio.IStudent,
-     *      Dominio.IDisciplinaExecucao, Util.TipoAula, Dominio.ITurma)
+     *      Dominio.IDisciplinaExecucao, Util.TipoAula, Dominio.ISchoolClass)
      */
     public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
-            IExecutionCourse executionCourse, TipoAula lessonType, ITurma group)
+            IExecutionCourse executionCourse, TipoAula lessonType, ISchoolClass group)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
@@ -160,9 +160,9 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.ITurnoAlunoPersistente#readNumberOfStudentsByShift(Dominio.ITurno)
+     * @see ServidorPersistente.ITurnoAlunoPersistente#readNumberOfStudentsByShift(Dominio.IShift)
      */
-    public int readNumberOfStudentsByShift(ITurno shift) {
+    public int readNumberOfStudentsByShift(IShift shift) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
         return count(ShiftStudent.class, criteria);

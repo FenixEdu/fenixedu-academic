@@ -9,9 +9,9 @@ public interface IShiftProfessorship extends IDomainObject {
 
     void setProfessorship(IProfessorship professorship);
 
-    ITurno getShift();
+    IShift getShift();
 
-    void setShift(ITurno shift);
+    void setShift(IShift shift);
 
     public Double getPercentage();
 

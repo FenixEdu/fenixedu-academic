@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Dominio.CentroCusto;
+import Dominio.CostCenter;
 import ServidorPersistenteJDBC.ICentroCustoPersistente;
 
 /**
@@ -13,7 +13,7 @@ import ServidorPersistenteJDBC.ICentroCustoPersistente;
  */
 public class CentroCustoRelacional implements ICentroCustoPersistente {
 
-    public boolean alterarCentroCusto(CentroCusto centroCusto) {
+    public boolean alterarCentroCusto(CostCenter centroCusto) {
         boolean resultado = false;
 
         try {
@@ -21,12 +21,12 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
                     + "codigoInterno = ? , " + "sigla = ? , " + "departamento = ? ," + "seccao1 = ? ,"
                     + "seccao2 = ? " + "WHERE codigoInterno = ? ");
 
-            sql.setInt(1, centroCusto.getCodigoInterno());
-            sql.setString(2, centroCusto.getSigla());
-            sql.setString(3, centroCusto.getDepartamento());
-            sql.setString(4, centroCusto.getSeccao1());
-            sql.setString(5, centroCusto.getSeccao2());
-            sql.setInt(6, centroCusto.getCodigoInterno());
+            sql.setInt(1, centroCusto.getIdInternal().intValue());
+            sql.setString(2, centroCusto.getCode());
+            sql.setString(3, centroCusto.getDepartament());
+            sql.setString(4, centroCusto.getSection1());
+            sql.setString(5, centroCusto.getSection2());
+            sql.setInt(6, centroCusto.getIdInternal().intValue());
 
             sql.executeUpdate();
             sql.close();
@@ -37,18 +37,18 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
         return resultado;
     } /* alterarCentroCusto */
 
-    public boolean escreverCentroCusto(CentroCusto centroCusto) {
+    public boolean escreverCentroCusto(CostCenter centroCusto) {
         boolean resultado = false;
 
         try {
             PreparedStatement sql = UtilRelacional
                     .prepararComando("INSERT INTO ass_CENTRO_CUSTO VALUES (?, ?, ?, ?, ?, 1)");
 
-            sql.setInt(1, centroCusto.getCodigoInterno());
-            sql.setString(2, centroCusto.getSigla());
-            sql.setString(3, centroCusto.getDepartamento());
-            sql.setString(4, centroCusto.getSeccao1());
-            sql.setString(5, centroCusto.getSeccao2());
+            sql.setInt(1, centroCusto.getIdInternal().intValue());
+            sql.setString(2, centroCusto.getCode());
+            sql.setString(3, centroCusto.getDepartament());
+            sql.setString(4, centroCusto.getSection1());
+            sql.setString(5, centroCusto.getSection2());
 
             sql.executeUpdate();
             sql.close();
@@ -61,8 +61,8 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
 
     } /* escreverCentroCusto */
 
-    public CentroCusto lerCentroCusto(String sigla) {
-        CentroCusto centroCusto = null;
+    public CostCenter lerCentroCusto(String sigla) {
+        CostCenter centroCusto = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -73,9 +73,10 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
             ResultSet resultado = sql.executeQuery();
 
             if (resultado.next()) {
-                centroCusto = new CentroCusto(resultado.getInt("codigoInterno"), resultado
+                centroCusto = new CostCenter(resultado
                         .getString("sigla"), resultado.getString("departamento"), resultado
                         .getString("seccao1"), resultado.getString("seccao2"));
+                centroCusto.setIdInternal(new Integer(resultado.getInt("codigoInterno")));
             }
             sql.close();
         } catch (Exception e) {
@@ -85,8 +86,8 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
 
     } /* lerCentroCusto */
 
-    public CentroCusto lerCentroCusto(int codigoInterno) {
-        CentroCusto centroCusto = null;
+    public CostCenter lerCentroCusto(int codigoInterno) {
+        CostCenter centroCusto = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -96,9 +97,10 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
 
             ResultSet resultado = sql.executeQuery();
             if (resultado.next()) {
-                centroCusto = new CentroCusto(resultado.getInt("codigoInterno"), resultado
+                centroCusto = new CostCenter(resultado
                         .getString("sigla"), resultado.getString("departamento"), resultado
                         .getString("seccao1"), resultado.getString("seccao2"));
+                centroCusto.setIdInternal(new Integer(resultado.getInt("codigoInterno")));
             }
             sql.close();
         } catch (Exception e) {
@@ -118,9 +120,12 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
 
             listaCentrosCusto = new ArrayList();
             while (resultadoQuery.next()) {
-                listaCentrosCusto.add(new CentroCusto(resultadoQuery.getInt("codigoInterno"),
-                        resultadoQuery.getString("sigla"), resultadoQuery.getString("departamento"),
-                        resultadoQuery.getString("seccao1"), resultadoQuery.getString("seccao2")));
+                CostCenter costCenter = new CostCenter(resultadoQuery
+                        .getString("sigla"), resultadoQuery.getString("departamento"), resultadoQuery
+                        .getString("seccao1"), resultadoQuery.getString("seccao2"));
+                costCenter.setIdInternal(new Integer(resultadoQuery.getInt("codigoInterno")));
+
+                listaCentrosCusto.add(costCenter);
             }
             sql.close();
         } catch (Exception e) {

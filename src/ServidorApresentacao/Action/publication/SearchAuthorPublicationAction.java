@@ -34,8 +34,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.util.Cloner;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
 import Dominio.publication.IPublicationType;
@@ -153,7 +153,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
             List newAuthors = infoAuthorsPersons(authors, new Author());
 
-            List newPersons = infoAuthorsPersons(persons, new Pessoa());
+            List newPersons = infoAuthorsPersons(persons, new Person());
 
             List infoAuthorsPersons = joinAuthorsAndPersons(newAuthors, newPersons);
 
@@ -339,7 +339,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
             infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
                 public Object transform(Object o) {
-                    IPessoa person = (IPessoa) o;
+                    IPerson person = (IPerson) o;
                     return Cloner.copyIPerson2InfoAuthorPerson(person);
                 }
             });
@@ -508,7 +508,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
         Iterator personsIterator = persons.iterator();
 
         while (personsIterator.hasNext()) {
-            IPessoa person = (IPessoa) personsIterator.next();
+            IPerson person = (IPerson) personsIterator.next();
             authorsIterator = authors.iterator();
             contains = Boolean.FALSE;
 

@@ -20,7 +20,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -104,7 +104,7 @@ public class ReadExamsMap implements IServico {
         infoExamsMap.setEndSeason2(endSeason2);
 
         // Translate to execute following queries
-        ICursoExecucao executionDegree = Cloner
+        IExecutionDegree executionDegree = Cloner
                 .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
         IExecutionPeriod executionPeriod = Cloner
                 .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);

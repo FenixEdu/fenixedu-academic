@@ -9,7 +9,7 @@ package ServidorAplicacao.Servico.publication;
 import java.util.ArrayList;
 import java.util.List;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -47,7 +47,7 @@ public class ReadPersonsNotAuthors implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             persons = persistentPerson.findPersonByName(nameString);
             persons.remove(person);
 

@@ -9,9 +9,9 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Coordinator;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -32,8 +32,8 @@ public class ResponsibleCoordinators implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
             if (executionDegree == null) {
                 throw new InvalidArgumentsServiceException();
             }

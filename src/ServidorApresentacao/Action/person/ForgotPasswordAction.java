@@ -16,7 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
@@ -67,7 +67,7 @@ public final class ForgotPasswordAction extends Action {
             }
         }
 
-        Pessoa pessoa = servicoSeguroLerPessoa.getPessoa();
+        Person pessoa = servicoSeguroLerPessoa.getPessoa();
 
         if (!(pessoa.getNumeroDocumentoIdentificacao()).equals(passwordForm
                 .getNumeroDocumentoIdentificacao())) {
@@ -110,7 +110,7 @@ public final class ForgotPasswordAction extends Action {
         // envia o mail de nova password para todas as pessoas de gestao de
         // assiduidade e para a pessoa caso tenha email
         while (iterador.hasNext()) {
-            Pessoa pessoaDestino = (Pessoa) iterador.next();
+            Person pessoaDestino = (Person) iterador.next();
             if (EMail.send("mail.adm", "assiduidade", pessoaDestino.getEmail(),
                     "Nova Password para acesso à Assiduidade do Funcionário número "
                             + passwordForm.getUsername(), "A nova password do funcionário número "

@@ -15,7 +15,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.managementAssiduousness.InfoExtraWork;
 import DataBeans.managementAssiduousness.InfoExtraWorkWithAll;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.managementAssiduousness.ExtraWork;
 import Dominio.managementAssiduousness.IExtraWork;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -46,7 +46,7 @@ public class WriteExtraWork implements IService {
 
             // Read employee logged
             IEmployee employeeWho = null;
-            IPessoa personWho = personDAO.lerPessoaPorUsername(usernameWho);
+            IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
             if (personWho != null) {
                 employeeWho = employeeDAO.readByPerson(personWho
                         .getIdInternal().intValue());

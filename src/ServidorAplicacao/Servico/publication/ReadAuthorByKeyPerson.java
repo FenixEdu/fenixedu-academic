@@ -6,7 +6,7 @@
  */
 package ServidorAplicacao.Servico.publication;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
 import ServidorAplicacao.IServico;
@@ -53,7 +53,7 @@ public class ReadAuthorByKeyPerson implements IServico {
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             author = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
 
         } catch (ExcepcaoPersistencia e) {

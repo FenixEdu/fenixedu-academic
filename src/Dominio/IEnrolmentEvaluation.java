@@ -30,7 +30,7 @@ public interface IEnrolmentEvaluation extends IDomainObject {
 
     public abstract EnrolmentEvaluationState getEnrolmentEvaluationState();
 
-    public abstract IPessoa getPersonResponsibleForGrade();
+    public abstract IPerson getPersonResponsibleForGrade();
 
     public abstract IEmployee getEmployee();
 
@@ -40,7 +40,7 @@ public interface IEnrolmentEvaluation extends IDomainObject {
 
     public abstract String getObservation();
 
-    public abstract void setPersonResponsibleForGrade(IPessoa teacher);
+    public abstract void setPersonResponsibleForGrade(IPerson teacher);
 
     public abstract void setEnrolment(IEnrollment enrolment);
 

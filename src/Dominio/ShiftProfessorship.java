@@ -17,7 +17,7 @@ public class ShiftProfessorship extends DomainObject implements IShiftProfessors
 
     private Integer keyProfessorship = null;
 
-    private ITurno shift = null;
+    private IShift shift = null;
 
     private Integer keyShift = null;
 
@@ -62,11 +62,11 @@ public class ShiftProfessorship extends DomainObject implements IShiftProfessors
         this.professorship = professorship;
     }
 
-    public ITurno getShift() {
+    public IShift getShift() {
         return this.shift;
     }
 
-    public void setShift(ITurno shift) {
+    public void setShift(IShift shift) {
         this.shift = shift;
     }
 

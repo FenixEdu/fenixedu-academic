@@ -12,8 +12,8 @@ package ServidorPersistente;
 import java.util.Collection;
 import java.util.List;
 
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionYear;
@@ -28,7 +28,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      * @param cursoExecucao
      * @throws ExcepcaoPersistencia
      */
-    public void delete(ICursoExecucao cursoExecucao) throws ExcepcaoPersistencia;
+    public void delete(IExecutionDegree cursoExecucao) throws ExcepcaoPersistencia;
 
     /**
      * Method readByExecutionYear.
@@ -41,9 +41,9 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
     /**
      * @param degree
      * @param executionYear
-     * @return ICursoExecucao
+     * @return IExecutionDegree
      */
-    public ICursoExecucao readByDegreeCurricularPlanAndExecutionYear(
+    public IExecutionDegree readByDegreeCurricularPlanAndExecutionYear(
             IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear)
             throws ExcepcaoPersistencia;
 
@@ -54,7 +54,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    public ICursoExecucao readByDegreeCurricularPlanIDAndExecutionYear(
+    public IExecutionDegree readByDegreeCurricularPlanIDAndExecutionYear(
             Integer degreeCurricularPlanID, String executionYear)
             throws ExcepcaoPersistencia;
     
@@ -65,7 +65,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public ICursoExecucao readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+    public IExecutionDegree readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
             String degreeInitials, String nameDegreeCurricularPlan, IExecutionYear executionYear)
             throws ExcepcaoPersistencia;
 
@@ -82,7 +82,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public List readByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+    public List readByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
             throws ExcepcaoPersistencia;
 
     /**
@@ -117,11 +117,11 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
 
     /**
      * @param degreeCurricularPlanID
-     * @return ICursoExecucao This method assumes thar there's only one
+     * @return IExecutionDegree This method assumes thar there's only one
      *         Execution Degree for each Degree Curricular Plan. This is the
      *         case with the Master Degrees
      */
-    public ICursoExecucao readbyDegreeCurricularPlanID(Integer degreeCurricularPlanID)
+    public IExecutionDegree readbyDegreeCurricularPlanID(Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia;
 
     /**
@@ -130,7 +130,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public ICursoExecucao readByDegreeCodeAndDegreeCurricularPlanName(String code, String name)
+    public IExecutionDegree readByDegreeCodeAndDegreeCurricularPlanName(String code, String name)
             throws ExcepcaoPersistencia;
 
     public List readListByDegreeNameAndExecutionYear(String name, IExecutionYear executionYear)
@@ -143,7 +143,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      * @param executionCourse
      * @param degree
      */
-    public List readExecutionsDegreesByDegree(ICurso degree) throws ExcepcaoPersistencia;
+    public List readExecutionsDegreesByDegree(IDegree degree) throws ExcepcaoPersistencia;
 
     /**
      * @param executionCourse
@@ -165,7 +165,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      *         Curricular Plan name
      * @throws ExcepcaoPersistencia
      */
-    public ICursoExecucao readByDegreeCurricularPlanNameAndExecutionYear(String name,
+    public IExecutionDegree readByDegreeCurricularPlanNameAndExecutionYear(String name,
             IExecutionYear executionYear) throws ExcepcaoPersistencia;
 
     public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia;
@@ -176,7 +176,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
     public List readExecutionDegreesbyDegreeCurricularPlanID(Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia;
 
-    public ICursoExecucao readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
+    public IExecutionDegree readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
             Integer degreeCurricularPlanID, Integer executionYearID) throws ExcepcaoPersistencia;
 
     public List readByExecutionYearOID(Integer executionYearOID) throws ExcepcaoPersistencia;

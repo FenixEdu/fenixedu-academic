@@ -12,7 +12,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPersonWithInfoCountry;
 import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.grant.utils.SessionConstants;
@@ -43,7 +43,7 @@ public class SearchGrantOwner implements IService {
         List personList = new ArrayList();
         List infoGrantOwnerList = new ArrayList();
         IGrantOwner grantOwner = null;
-        IPessoa person = null;
+        IPerson person = null;
         try {
             persistentSupport = SuportePersistenteOJB.getInstance();
             persistentPerson = persistentSupport.getIPessoaPersistente();
@@ -92,7 +92,7 @@ public class SearchGrantOwner implements IService {
                 //Get all the grantOwners associated with each person in list
                 for (int i = 0; i < personList.size(); i++) {
                     InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
-                    IPessoa newPerson = (IPessoa) personList.get(i);
+                    IPerson newPerson = (IPerson) personList.get(i);
                     grantOwner = persistentGrantOwner.readGrantOwnerByPerson(newPerson.getIdInternal());
                     if (grantOwner != null)
                         //The person is a GrantOwner

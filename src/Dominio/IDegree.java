@@ -1,5 +1,5 @@
 /*
- * ICurso.java
+ * IDegree.java
  * 
  * Created on 31 de Outubro de 2002, 14:46
  */
@@ -13,7 +13,7 @@ import Util.TipoCurso;
 /**
  * @author rpfi
  */
-public interface ICurso extends IDomainObject {
+public interface IDegree extends IDomainObject {
     public String getSigla();
 
     public String getNome();

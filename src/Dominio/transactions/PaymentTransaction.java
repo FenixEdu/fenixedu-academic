@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import Dominio.IGuideEntry;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Util.PaymentType;
 import Util.transactions.TransactionType;
 
@@ -36,7 +36,7 @@ public abstract class PaymentTransaction extends Transaction implements IPayment
      */
     public PaymentTransaction(Double value, Timestamp transactionDate, String remarks,
             PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-            IPessoa responsiblePerson, IPersonAccount personAccount, IGuideEntry guideEntry) {
+            IPerson responsiblePerson, IPersonAccount personAccount, IGuideEntry guideEntry) {
         super(value, transactionDate, remarks, paymentType, transactionType, wasInternalBalance,
                 responsiblePerson, personAccount);
         this.guideEntry = guideEntry;

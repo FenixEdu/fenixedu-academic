@@ -18,7 +18,7 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupWithAll;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -99,7 +99,7 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico
                         public Object transform( Object input )
                         {
                             IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) input;
-                            IFrequenta attendacy = studentGroupAttend.getAttend();
+                            IAttends attendacy = studentGroupAttend.getAttend();
                             IStudent student = attendacy.getAluno();
                             //CLONER
                             //InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);

@@ -11,11 +11,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoPeriod;
 import Dominio.Campus;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionYear;
 import Dominio.ICampus;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IPeriod;
@@ -76,7 +76,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
             IPersistentExecutionDegree persistentExecutionDegree = persistentSuport
                     .getIPersistentExecutionDegree();
 
-            ICursoExecucao executionDegree = new CursoExecucao();
+            IExecutionDegree executionDegree = new ExecutionDegree();
             persistentExecutionDegree.simpleLockWrite(executionDegree);
             executionDegree.setCurricularPlan(degreeCurricularPlan);
             executionDegree.setExecutionYear(executionYear);
@@ -94,7 +94,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
         }
     }
 
-    private void setPeriods(ICursoExecucao executionDegree, InfoExecutionDegree infoExecutionDegree)
+    private void setPeriods(IExecutionDegree executionDegree, InfoExecutionDegree infoExecutionDegree)
             throws FenixServiceException {
         InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
         setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
@@ -112,7 +112,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
         setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
     }
 
-    private void setCompositePeriod(ICursoExecucao executionDegree, InfoPeriod infoPeriod,
+    private void setCompositePeriod(IExecutionDegree executionDegree, InfoPeriod infoPeriod,
             int periodToAssociateExecutionDegree) throws FenixServiceException {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();

@@ -14,7 +14,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
 import Dominio.IDomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
@@ -60,7 +60,7 @@ public class SearchPerson implements IService {
     }
 
     protected InfoObject cloneDomainObject(IDomainObject object) {
-        InfoPerson infoPerson = InfoPerson.newInfoFromDomain((IPessoa) object);
+        InfoPerson infoPerson = InfoPerson.newInfoFromDomain((IPerson) object);
 
         return infoPerson;
     }

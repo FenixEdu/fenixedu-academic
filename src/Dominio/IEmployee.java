@@ -16,7 +16,7 @@ public interface IEmployee extends IDomainObject {
 
     public Date getAntiquity();
 
-    public IPessoa getPerson();
+    public IPerson getPerson();
 
     public EmployeeHistoric getEmployeeHistoric();
 
@@ -28,7 +28,7 @@ public interface IEmployee extends IDomainObject {
 
     public void setAntiquity(Date antiquity);
 
-    public void setPerson(IPessoa person);
+    public void setPerson(IPerson person);
 
     public void setEmployeeHistoric(EmployeeHistoric employeeHistoric);
 

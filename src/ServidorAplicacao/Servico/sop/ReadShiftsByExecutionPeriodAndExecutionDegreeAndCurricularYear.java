@@ -24,13 +24,13 @@ import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.CurricularYear;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.ICurricularYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -58,8 +58,8 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
                     .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-            ICursoExecucao executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree()
-                    .readByOID(CursoExecucao.class, infoExecutionDegree.getIdInternal());
+            IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                    .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
             ICurricularYear curricularYear = (ICurricularYear) sp.getIPersistentCurricularYear()
                     .readByOID(CurricularYear.class, infoCurricularYear.getIdInternal());
@@ -77,7 +77,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             //			infoShifts =
             //				(List) CollectionUtils.collect(shifts, new Transformer() {
             //				public Object transform(Object arg0) {
-            //					ITurno shift = (ITurno) arg0;
+            //					IShift shift = (IShift) arg0;
             //					InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
             //					infoShift
             //						.setInfoLessons(
@@ -86,7 +86,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             //								shift.getAssociatedLessons(),
             //								new Transformer() {
             //						public Object transform(Object arg0) {
-            //							return Cloner.copyILesson2InfoLesson((IAula) arg0);
+            //							return Cloner.copyILesson2InfoLesson((ILesson) arg0);
             //						}
             //					}));
             //					return infoShift;
@@ -97,8 +97,8 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             // Could still make it faster... but this is probably fast enough.
             infoShifts = new ArrayList();
             for (int i = 0; i < shifts.size(); i++) {
-                ITurno shift = (ITurno) shifts.get(i);
-                //Cloner.copyShift2InfoShift((ITurno) shifts.get(i));
+                IShift shift = (IShift) shifts.get(i);
+                //Cloner.copyShift2InfoShift((IShift) shifts.get(i));
                 InfoShift infoShift = new InfoShift();
                 infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
                 infoShift.setIdInternal(shift.getIdInternal());
@@ -110,10 +110,10 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
                 infoShift.setInfoLessons(new ArrayList());
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                        .get(((ITurno) shifts.get(i)).getDisciplinaExecucao());
+                        .get(((IShift) shifts.get(i)).getDisciplinaExecucao());
                 infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-                for (int j = 0; j < ((ITurno) shifts.get(i)).getAssociatedLessons().size(); j++) {
-                    IAula lesson = (IAula) ((ITurno) shifts.get(i)).getAssociatedLessons().get(j);
+                for (int j = 0; j < ((IShift) shifts.get(i)).getAssociatedLessons().size(); j++) {
+                    ILesson lesson = (ILesson) ((IShift) shifts.get(i)).getAssociatedLessons().get(j);
                     InfoLesson infoLesson = new InfoLesson();
                     InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
                     InfoRoomOccupation infoRoomOccupation = Cloner

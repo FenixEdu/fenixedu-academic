@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  */
 public interface IDegreeInfo extends IDomainObject {
 
-    public ICurso getDegree();
+    public IDegree getDegree();
 
     public String getDescription();
 
@@ -55,7 +55,7 @@ public interface IDegreeInfo extends IDomainObject {
 
     public String getClassificationsEn();
 
-    public void setDegree(ICurso degree);
+    public void setDegree(IDegree degree);
 
     public void setDescription(String description);
 

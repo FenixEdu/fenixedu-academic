@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IQualification;
 import Dominio.Qualification;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -20,7 +20,7 @@ public class QualificationOJB extends PersistentObjectOJB implements IPersistent
     public QualificationOJB() {
     }
 
-    public List readQualificationsByPerson(IPessoa person) throws ExcepcaoPersistencia {
+    public List readQualificationsByPerson(IPerson person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", person.getIdInternal());
         List result = queryList(Qualification.class, criteria);
@@ -31,9 +31,9 @@ public class QualificationOJB extends PersistentObjectOJB implements IPersistent
      * (non-Javadoc)
      * 
      * @see ServidorPersistente.IPersistentQualification#readByYearAndSchoolAndDegreeAndPerson(java.lang.String,
-     *      java.lang.String, java.lang.String, Dominio.IPessoa)
+     *      java.lang.String, java.lang.String, Dominio.IPerson)
      */
-    public IQualification readByDateAndSchoolAndPerson(Date date, String school, IPessoa person)
+    public IQualification readByDateAndSchoolAndPerson(Date date, String school, IPerson person)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("date", date);

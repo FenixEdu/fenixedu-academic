@@ -10,12 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.Student;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
@@ -33,7 +33,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
 {
 
-    public boolean checkNumberOfGroups(IGroupProperties groupProperties, ITurno shift)
+    public boolean checkNumberOfGroups(IGroupProperties groupProperties, IShift shift)
     {
         boolean result = false;
         try
@@ -99,7 +99,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         return false;
     }
 
-    public boolean checkShiftType(IGroupProperties groupProperties, ITurno shift)
+    public boolean checkShiftType(IGroupProperties groupProperties, IShift shift)
     {
         boolean result = false;
         if(shift!=null){
@@ -117,11 +117,11 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     {
     	if(groupProperties.getShiftType()!=null){
     	Iterator iterShift = shifts.iterator();
-        ITurno shift = null;
+        IShift shift = null;
         List allShifts = new ArrayList();
         while (iterShift.hasNext())
         {
-            shift = (ITurno) iterShift.next();
+            shift = (IShift) iterShift.next();
             if (shift.getTipo().equals(groupProperties.getShiftType()))
                 allShifts.add(shift);
         }
@@ -145,9 +145,9 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
             
             Iterator iterAttends = groupProperties.getAttendsSet().getAttends().iterator();
             boolean found = false;
-            IFrequenta attend = null;
+            IAttends attend = null;
             while(iterAttends.hasNext() && !found){
-            	attend = (IFrequenta)iterAttends.next();
+            	attend = (IAttends)iterAttends.next();
             	if (attend.getAluno().equals(student)) {
             		found=true;
             		}
@@ -202,9 +202,9 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
             
             Iterator iterAttends = groupProperties.getAttendsSet().getAttends().iterator();
             boolean found = false;
-            IFrequenta attend = null;
+            IAttends attend = null;
             while(iterAttends.hasNext() && !found){
-            	attend = (IFrequenta)iterAttends.next();
+            	attend = (IAttends)iterAttends.next();
             	if (attend.getAluno().equals(student)) {
             		found=true;
             		}
@@ -236,7 +236,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     public boolean checkPossibleToEnrolInExistingGroup(
         IGroupProperties groupProperties,
         IStudentGroup studentGroup,
-        ITurno shift)
+        IShift shift)
         throws ExcepcaoPersistencia
     {
         boolean result = false;
@@ -304,9 +304,9 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     
     		Iterator iterAttends = groupProperties.getAttendsSet().getAttends().iterator();
   
-    		IFrequenta attend = null;
+    		IAttends attend = null;
     		while(iterAttends.hasNext() && !found){
-    			attend = (IFrequenta)iterAttends.next();
+    			attend = (IAttends)iterAttends.next();
     			if (attend.getAluno().equals(student)) {
     				found=true;
     			}
@@ -333,7 +333,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     		List students =  new ArrayList();
     		Iterator iterAttends = attends.iterator();
     		while(iterAttends.hasNext()){
-    			IFrequenta frequenta = (IFrequenta)iterAttends.next();
+    			IAttends frequenta = (IAttends)iterAttends.next();
     			students.add(frequenta.getAluno());
     		}
     		Iterator iterator = studentCodes.iterator();
@@ -363,7 +363,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     		List students =  new ArrayList();
     		Iterator iterAttends = attends.iterator();
     		while(iterAttends.hasNext()){
-    			IFrequenta frequenta = (IFrequenta)iterAttends.next();
+    			IAttends frequenta = (IAttends)iterAttends.next();
     			students.add(frequenta.getAluno());
     		}
     		Iterator iterator = studentUsernames.iterator();
@@ -391,7 +391,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     public abstract Integer enrolmentPolicyNewGroup(
         IGroupProperties groupProperties,
         int numberOfStudentsToEnrole,
-        ITurno shift);
+        IShift shift);
 
     public abstract boolean checkNumberOfGroupElements(
         IGroupProperties groupProperties,

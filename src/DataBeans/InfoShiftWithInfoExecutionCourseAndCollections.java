@@ -9,9 +9,9 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import Dominio.IAula;
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ILesson;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 
 /**
  * @author João Mota
@@ -19,7 +19,7 @@ import Dominio.ITurno;
  */
 public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWithInfoExecutionCourse {
 
-    public void copyFromDomain(ITurno shift) {
+    public void copyFromDomain(IShift shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
             setInfoLessons(copyILessons2InfoLessons(shift.getAssociatedLessons()));
@@ -27,7 +27,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
         }
     }
 
-    public static InfoShift newInfoFromDomain(ITurno shift) {
+    public static InfoShift newInfoFromDomain(IShift shift) {
         InfoShiftWithInfoExecutionCourseAndCollections infoShift = null;
         if (shift != null) {
             infoShift = new InfoShiftWithInfoExecutionCourseAndCollections();
@@ -47,7 +47,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
 
                 public Object transform(Object arg0) {
 
-                    return InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain((IAula) arg0);
+                    return InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain((ILesson) arg0);
                 }
 
             });
@@ -66,7 +66,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
 
                 public Object transform(Object arg0) {
 
-                    return InfoClassWithInfoExecutionDegree.newInfoFromDomain((ITurma) arg0);
+                    return InfoClassWithInfoExecutionDegree.newInfoFromDomain((ISchoolClass) arg0);
                 }
 
             });

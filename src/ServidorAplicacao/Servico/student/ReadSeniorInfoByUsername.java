@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.student;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.student.InfoSenior;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.student.ISenior;
 import ServidorAplicacao.IUserView;
@@ -33,7 +33,7 @@ public class ReadSeniorInfoByUsername implements IService {
             ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
             IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
             IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
             IStudent student = persistentStudent.readByUsername(userView.getUtilizador());

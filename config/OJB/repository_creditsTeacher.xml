@@ -24,7 +24,7 @@
          <foreignkey field-ref="keyProfessorship"/>
       </reference-descriptor>
             
-      <reference-descriptor name="shift" class-ref="Dominio.Turno">
+      <reference-descriptor name="shift" class-ref="Dominio.Shift">
          <foreignkey field-ref="keyShift"/>
       </reference-descriptor>    
 </class-descriptor>

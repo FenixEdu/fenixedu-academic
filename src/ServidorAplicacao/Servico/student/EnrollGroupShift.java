@@ -13,9 +13,9 @@ import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -83,7 +83,7 @@ public class EnrollGroupShift implements IService {
                 throw new InvalidArgumentsServiceException();
             
             persistentShift = persistentSupport.getITurnoPersistente();
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
+            IShift shift = (IShift) persistentShift.readByOID(Shift.class,
                     newShiftCode);
             
             if(groupProperties.getShiftType() == null || studentGroup.getShift()!=null ||

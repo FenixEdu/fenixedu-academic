@@ -1,5 +1,5 @@
 /*
- * Aula.java
+ * Lesson.java
  *
  * Created on 18 de Outubro de 2002, 00:54
  */
@@ -16,7 +16,7 @@ import Util.DiaSemana;
 import Util.TipoAula;
 import Util.date.TimePeriod;
 
-public class Aula extends DomainObject implements IAula {
+public class Lesson extends DomainObject implements ILesson {
     protected DiaSemana _diaSemana;
 
     protected Calendar _inicio;
@@ -25,10 +25,10 @@ public class Aula extends DomainObject implements IAula {
 
     protected TipoAula _tipo;
 
-    protected ISala _sala;
+    protected IRoom _sala;
 
     //  protected IExecutionCourse _disciplinaExecucao;
-    protected ITurno _shift;
+    protected IShift _shift;
 
     protected IExecutionPeriod executionPeriod;
 
@@ -77,15 +77,15 @@ public class Aula extends DomainObject implements IAula {
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
      * OJB
      */
-    public Aula() {
+    public Lesson() {
     }
 
-    public Aula(Integer idInternal) {
+    public Lesson(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
-    public Aula(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo, ISala sala,
-            IRoomOccupation roomOccupation, ITurno shift /*
+    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo, IRoom sala,
+            IRoomOccupation roomOccupation, IShift shift /*
                                                           * ,IExecutionCourse
                                                           * disciplinaExecucao
                                                           */
@@ -154,18 +154,18 @@ public class Aula extends DomainObject implements IAula {
      * _disciplinaExecucao = disciplinaExecucao; if (disciplinaExecucao != null) {
      * setExecutionPeriod(disciplinaExecucao.getExecutionPeriod()); } }
      */
-    public ISala getSala() {
+    public IRoom getSala() {
         return _sala;
     }
 
-    public void setSala(ISala sala) {
+    public void setSala(IRoom sala) {
         _sala = sala;
     }
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof IAula) {
-            IAula aula = (IAula) obj;
+        if (obj instanceof ILesson) {
+            ILesson aula = (ILesson) obj;
             resultado = getIdInternal().equals(aula.getIdInternal());
 //            resultado = getDiaSemana().equals(aula.getDiaSemana())
 //                    && (getInicio().get(Calendar.HOUR_OF_DAY) == aula.getInicio().get(
@@ -200,14 +200,14 @@ public class Aula extends DomainObject implements IAula {
     /**
      * @return
      */
-    public ITurno getShift() {
+    public IShift getShift() {
         return _shift;
     }
 
     /**
      * @param shift
      */
-    public void setShift(ITurno shift) {
+    public void setShift(IShift shift) {
         this._shift = shift;
     }
 
@@ -228,7 +228,7 @@ public class Aula extends DomainObject implements IAula {
     /*
      * (non-Javadoc)
      * 
-     * @see Dominio.IAula#hours()
+     * @see Dominio.ILesson#hours()
      */
     public double hours() {
         TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());

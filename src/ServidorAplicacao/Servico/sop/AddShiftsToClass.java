@@ -13,10 +13,10 @@ package ServidorAplicacao.Servico.sop;
 import java.util.List;
 
 import DataBeans.InfoClass;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turma;
-import Dominio.Turno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.SchoolClass;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -54,15 +54,15 @@ public class AddShiftsToClass implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+            ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                     infoClass.getIdInternal());
             sp.getITurmaPersistente().simpleLockWrite(schoolClass);
 
             for (int i = 0; i < shiftOIDs.size(); i++) {
-                ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+                IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                         (Integer) shiftOIDs.get(i));
 
-                //				ITurmaTurno classShift = new TurmaTurno(schoolClass, shift);
+                //				ISchoolClassShift classShift = new SchoolClassShift(schoolClass, shift);
                 //				try {
                 //					sp.getITurmaTurnoPersistente().lockWrite(classShift);
                 //				} catch (ExistingPersistentException e) {

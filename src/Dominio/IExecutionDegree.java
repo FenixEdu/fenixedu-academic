@@ -1,5 +1,5 @@
 /*
- * ICursoExecucao.java
+ * IExecutionDegree.java
  * 
  * Created on 2 de Novembro de 2002, 20:50
  */
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author rpfi
  */
-public interface ICursoExecucao extends Serializable, IDomainObject {
+public interface IExecutionDegree extends Serializable, IDomainObject {
 
     IExecutionYear getExecutionYear();
 

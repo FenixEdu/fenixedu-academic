@@ -11,7 +11,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoRole;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -162,7 +162,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
         List degreeCurricularPlansOfThisCoordinator = (List) CollectionUtils.collect(
                 executionDegreesOfThisCoordinator, new Transformer() {
                     public Object transform(Object obj) {
-                        ICursoExecucao executionDegree = (ICursoExecucao) obj;
+                        IExecutionDegree executionDegree = (IExecutionDegree) obj;
                         return executionDegree.getCurricularPlan();
                     }
                 });

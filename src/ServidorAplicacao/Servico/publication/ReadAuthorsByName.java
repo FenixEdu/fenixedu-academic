@@ -6,7 +6,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.publication.InfoAuthor;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.publication.IAuthor;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;

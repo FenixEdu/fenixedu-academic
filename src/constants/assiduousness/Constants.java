@@ -49,7 +49,7 @@ public final class Constants {
 
     public static final int MAX_DURACAO = 6;
 
-    /* Cargos de Pessoa */
+    /* Cargos de Person */
     public static final String GESTAO_ASSIDUIDADE = "GestaoAssiduidade";
 
     public static final String CONSULTA_ASSIDUIDADE = "ConsultaAssiduidade";

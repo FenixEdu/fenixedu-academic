@@ -10,7 +10,7 @@ import java.util.Calendar;
 import DataBeans.ISiteComponent;
 import DataBeans.RoomKey;
 import DataBeans.SiteView;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.RoomSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -63,7 +63,7 @@ public class RoomSiteComponentService implements IServico {
             //			IPersistentExecutionPeriod persistentExecutionPeriod =
             // sp.getIPersistentExecutionPeriod();
 
-            ISala room = persistentRoom.readByName(roomKey.getNomeSala());
+            IRoom room = persistentRoom.readByName(roomKey.getNomeSala());
             //            IExecutionPeriod executionPeriod = (IExecutionPeriod)
             // persistentExecutionPeriod
             //                    .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);

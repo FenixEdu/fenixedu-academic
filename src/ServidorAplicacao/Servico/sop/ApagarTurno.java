@@ -15,7 +15,7 @@ package ServidorAplicacao.Servico.sop;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -48,7 +48,7 @@ public class ApagarTurno implements IServico {
 
     public Boolean run(ShiftKey keyTurno) {
 
-        ITurno turno1 = null;
+        IShift turno1 = null;
         boolean result = false;
 
         try {

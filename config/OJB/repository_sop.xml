@@ -20,7 +20,7 @@
      <collection-descriptor
 			name="rooms"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Sala"
+			element-class-ref="Dominio.Room"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">
@@ -29,7 +29,7 @@
 </class-descriptor>
 
 <class-descriptor
-   	  class="Dominio.Sala"
+   	  class="Dominio.Room"
    	  table="ROOM"
    >
       <field-descriptor id="1"
@@ -44,11 +44,6 @@
          column="NAME"
          jdbc-type="VARCHAR"
       />
-      <field-descriptor id="3"
-         name="edificio"
-         column="BUILDING"
-         jdbc-type="VARCHAR"
-      />      
       <field-descriptor id="4"
          name="piso"
          column="FLOOR"
@@ -89,9 +84,9 @@
       </reference-descriptor>
 </class-descriptor>
 
-<!-- Definitions for Dominio.Turma -->
+<!-- Definitions for Dominio.SchoolClass -->
 <class-descriptor
-   	  class="Dominio.Turma"
+   	  class="Dominio.SchoolClass"
    	  table="CLASS"
    >
       <field-descriptor id="1"
@@ -129,7 +124,7 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.CursoExecucao"
+         class-ref="Dominio.ExecutionDegree"
       >
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
@@ -142,7 +137,7 @@
      <collection-descriptor
 			name="associatedShifts"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Turno"
+			element-class-ref="Dominio.Shift"
 			indirection-table="CLASS_SHIFT"
 			proxy="true"
 			auto-retrieve="true"
@@ -152,9 +147,9 @@
 	</collection-descriptor>      
 </class-descriptor>
 
-<!-- Definitions for Dominio.Turno -->
+<!-- Definitions for Dominio.Shift -->
    <class-descriptor
-   	  class="Dominio.Turno"
+   	  class="Dominio.Shift"
    	  table="SHIFT"
    >
       <field-descriptor id="1"
@@ -218,7 +213,7 @@
      <collection-descriptor
 			name="associatedLessons"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
-			element-class-ref="Dominio.Aula"
+			element-class-ref="Dominio.Lesson"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">
@@ -227,7 +222,7 @@
 	<!-- collection-class="org.apache.ojb.broker.util.collections.ManageableVector" -->
      <collection-descriptor
 			name="associatedClasses"
-			element-class-ref="Dominio.Turma"
+			element-class-ref="Dominio.SchoolClass"
 			indirection-table="CLASS_SHIFT"
 			proxy="true"
 			auto-retrieve="true"
@@ -245,9 +240,9 @@
 	</collection-descriptor>
 </class-descriptor>
 
-<!-- Definitions for Dominio.Aula -->
+<!-- Definitions for Dominio.Lesson -->
    <class-descriptor
-   	  class="Dominio.Aula"
+   	  class="Dominio.Lesson"
    	  table="LESSON"
    >
       <field-descriptor id="1"
@@ -315,13 +310,13 @@
       />
       <reference-descriptor
          name="sala"
-         class-ref="Dominio.Sala"
+         class-ref="Dominio.Room"
       >
          <foreignkey field-ref="chaveSala"/>
       </reference-descriptor>
       <reference-descriptor
          name="shift"
-         class-ref="Dominio.Turno"
+         class-ref="Dominio.Shift"
       >
          <foreignkey field-ref="keyShift"/>
       </reference-descriptor>
@@ -339,9 +334,9 @@
       </reference-descriptor>     
 </class-descriptor>
 
-<!-- Definitions for Dominio.TurmaTurno -->
+<!-- Definitions for Dominio.SchoolClassShift -->
 <class-descriptor
-   	  class="Dominio.TurmaTurno"
+   	  class="Dominio.SchoolClassShift"
    	  table="CLASS_SHIFT"
    >
       <field-descriptor id="1"
@@ -369,14 +364,14 @@
       />
       <reference-descriptor
          name="turma"
-         class-ref="Dominio.Turma"
+         class-ref="Dominio.SchoolClass"
          proxy="true"
       >
          <foreignkey field-ref="chaveTurma"/>
       </reference-descriptor>      
       <reference-descriptor
          name="turno"
-         class-ref="Dominio.Turno"
+         class-ref="Dominio.Shift"
          proxy="true"
       >
          <foreignkey field-ref="chaveTurno"/>
@@ -413,7 +408,7 @@
       />
       <reference-descriptor
          name="shift"
-         class-ref="Dominio.Turno">
+         class-ref="Dominio.Shift">
       <foreignkey field-ref="keyShift"/>
       </reference-descriptor>      
          <reference-descriptor
@@ -423,9 +418,9 @@
       </reference-descriptor>      
    </class-descriptor>         
 
-<!-- Definitions for Dominio.Frequenta -->
+<!-- Definitions for Dominio.Attends -->
    <class-descriptor
-   	  class="Dominio.Frequenta"
+   	  class="Dominio.Attends"
    	  table="ATTEND"
    >
       <field-descriptor id="1"
@@ -506,7 +501,7 @@
       <reference-descriptor name="student" class-ref="Dominio.Student" proxy="false">
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor> 
-      <reference-descriptor name="room" class-ref="Dominio.Sala" proxy="false">
+      <reference-descriptor name="room" class-ref="Dominio.Room" proxy="false">
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor> 
 </class-descriptor>
@@ -593,7 +588,7 @@
       />
       <reference-descriptor
          name="attend"
-         class-ref="Dominio.Frequenta"
+         class-ref="Dominio.Attends"
          proxy="true"
       >
          <foreignkey field-ref="keyAttend"/>
@@ -749,7 +744,7 @@
       />
       <reference-descriptor
          name="room"
-         class-ref="Dominio.Sala"
+         class-ref="Dominio.Room"
       >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor>

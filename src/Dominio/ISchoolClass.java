@@ -1,5 +1,5 @@
 /*
- * ITurma.java
+ * ISchoolClass.java
  *
  * Created on 17 de Outubro de 2002, 18:35
  */
@@ -14,12 +14,12 @@ import java.util.List;
  * @author Luis Cruz & Sara Ribeiro
  */
 
-public interface ITurma extends Serializable, IDomainObject {
+public interface ISchoolClass extends Serializable, IDomainObject {
     public String getNome();
 
     public Integer getAnoCurricular();
 
-    public ICursoExecucao getExecutionDegree();
+    public IExecutionDegree getExecutionDegree();
 
     public IExecutionPeriod getExecutionPeriod();
 
@@ -29,7 +29,7 @@ public interface ITurma extends Serializable, IDomainObject {
 
     public void setAnoCurricular(Integer anoCurricular);
 
-    void setExecutionDegree(ICursoExecucao executionDegree);
+    void setExecutionDegree(IExecutionDegree executionDegree);
 
     void setExecutionPeriod(IExecutionPeriod executionPeriod);
 

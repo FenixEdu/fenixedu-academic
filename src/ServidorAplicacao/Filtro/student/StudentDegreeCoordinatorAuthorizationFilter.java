@@ -16,7 +16,7 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -89,7 +89,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 	            
 	            if (group != null)
 	            {
-	                ICursoExecucao executionDegree = group.getExecutionDegree();
+	                IExecutionDegree executionDegree = group.getExecutionDegree();
 	                List coordinators = executionDegree.getCoordinatorsList();
 	                
 	                for (Iterator it = coordinators.iterator(); it.hasNext();)
@@ -148,7 +148,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 	                
 	                for(Iterator executionDegreeIterator = executionDegrees.iterator(); executionDegreeIterator.hasNext();)
 	                {
-	                    ICursoExecucao executionDegree = (ICursoExecucao)executionDegreeIterator.next();
+	                    IExecutionDegree executionDegree = (IExecutionDegree)executionDegreeIterator.next();
 		                List coordinatorsList = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree);
 		                
 		                if (coordinatorsList == null || coordinatorsList.isEmpty())

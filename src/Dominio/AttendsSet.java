@@ -148,8 +148,8 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 	
 	
 	
-	public IFrequenta getStudentAttend(IStudent student){
-		IFrequenta attend=null;
+	public IAttends getStudentAttend(IStudent student){
+		IAttends attend=null;
 		boolean found = false;
 		Iterator iterAttends = getAttendInAttendsSet().iterator();
 		while(iterAttends.hasNext() && !found)
@@ -215,7 +215,7 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
         // Delete students in attendsSet from frequentasPossiveis
         
         Iterator iterator2 = frequentasAttendsSet.iterator();
-        IFrequenta frequenta = null;
+        IAttends frequenta = null;
         while (iterator2.hasNext()) {
             IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet)iterator2.next();
         	frequenta = attendInAttendsSet.getAttend();
@@ -231,7 +231,7 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
         List frequentasOutside = new ArrayList();
         Iterator iteratorFreqPoss = frequentasPossiveis.iterator();
         while (iteratorFreqPoss.hasNext()) {
-        	frequenta = (IFrequenta)iteratorFreqPoss.next();
+        	frequenta = (IAttends)iteratorFreqPoss.next();
         	if(!frequentasStudentNumbersInsert.contains(frequenta.getAluno().getNumber())){
         		
         		frequentasStudentNumbersInsert.add(frequenta.getAluno().getNumber());

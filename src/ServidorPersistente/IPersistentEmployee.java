@@ -7,7 +7,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author jpvl
@@ -19,7 +19,7 @@ public interface IPersistentEmployee extends IPersistentObject {
 
     public IEmployee readByPerson(int keyPerson) throws ExcepcaoPersistencia;
 
-    public IEmployee readByPerson(IPessoa person) throws ExcepcaoPersistencia;
+    public IEmployee readByPerson(IPerson person) throws ExcepcaoPersistencia;
 
     public List readHistoricByKeyEmployee(int keyEmployee) throws ExcepcaoPersistencia;
 }

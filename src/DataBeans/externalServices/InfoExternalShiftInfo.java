@@ -6,7 +6,7 @@
  */
 package DataBeans.externalServices;
 
-import Dominio.ITurno;
+import Dominio.IShift;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -34,7 +34,7 @@ public class InfoExternalShiftInfo
      * @param shift
      * @return
      */
-    public static InfoExternalShiftInfo newFromShift(ITurno shift)
+    public static InfoExternalShiftInfo newFromShift(IShift shift)
     {
         InfoExternalShiftInfo info = new InfoExternalShiftInfo();
         info.setName(shift.getNome());

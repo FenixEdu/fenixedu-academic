@@ -25,10 +25,10 @@ import Dominio.ExamStudentRoom;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
-import Dominio.ISala;
+import Dominio.IAttends;
+import Dominio.IRoom;
 import Dominio.IStudent;
-import Dominio.Sala;
+import Dominio.Room;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -86,7 +86,7 @@ public class ExamRoomDistribution implements IService {
                     students.addAll(CollectionUtils.collect(attends, new Transformer() {
 
                         public Object transform(Object arg0) {
-                            IFrequenta frequenta = (IFrequenta) arg0;
+                            IAttends frequenta = (IAttends) arg0;
                             return frequenta.getAluno();
                         }
                     }));
@@ -122,7 +122,7 @@ public class ExamRoomDistribution implements IService {
             Iterator iterRoom = uniqueRooms.iterator();
             List rooms = new ArrayList();
             while (iterRoom.hasNext()) {
-                ISala room = (ISala) persistentRoom.readByOID(Sala.class, (Integer) iterRoom.next());
+                IRoom room = (IRoom) persistentRoom.readByOID(Room.class, (Integer) iterRoom.next());
                 if (room == null) {
                     throw new InvalidArgumentsServiceException("room");
                 }
@@ -134,7 +134,7 @@ public class ExamRoomDistribution implements IService {
 
             Iterator iter = rooms.iterator();
             while (iter.hasNext()) {
-                ISala room = (ISala) iter.next();
+                IRoom room = (IRoom) iter.next();
                 int i = 1;
                 while (i <= room.getCapacidadeExame().intValue()) {
                     if (students.size() > 0) {

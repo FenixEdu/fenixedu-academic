@@ -37,7 +37,7 @@ public interface IAttendsSet extends IDomainObject {
 	public void removeStudentGroup (IStudentGroup studentGroup);
 	public boolean existsStudentGroup (IStudentGroup studentGroup);
 	
-	public IFrequenta getStudentAttend(IStudent student);
+	public IAttends getStudentAttend(IStudent student);
 	public List getStudentGroupsWithoutShift();
 	public List getStudentGroupsWithShift();
 	public Integer getNumberOfStudentsInAttendsSet();

@@ -9,7 +9,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -31,7 +31,7 @@ public class ReadDegreeCurricularPlansByDegree implements IService {
         List allDegreeCurricularPlans = null;
         try {
             sp = SuportePersistenteOJB.getInstance();
-            ICurso degree = sp.getICursoPersistente().readByIdInternal(idDegree);
+            IDegree degree = sp.getICursoPersistente().readByIdInternal(idDegree);
             allDegreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readByDegree(degree);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

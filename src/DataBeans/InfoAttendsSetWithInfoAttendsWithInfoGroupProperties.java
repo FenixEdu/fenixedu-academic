@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 
 /**
  * @author joaosa & rmalo
@@ -25,7 +25,7 @@ public class InfoAttendsSetWithInfoAttendsWithInfoGroupProperties extends InfoAt
 	        Iterator iterAttends = attendsSet.getAttends().iterator();
 	        InfoFrequenta infoFrequenta;
 	        while(iterAttends.hasNext()){
-	        	infoFrequenta = InfoFrequentaWithAll.newInfoFromDomain ((IFrequenta)iterAttends.next());
+	        	infoFrequenta = InfoFrequentaWithAll.newInfoFromDomain ((IAttends)iterAttends.next());
 	        	listaInfoAttend.add(infoFrequenta);
 	        }
 	        setInfoAttends(listaInfoAttend);	

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import Dominio.IAula;
+import Dominio.ILesson;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -236,7 +236,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
         this.infoRoomOccupation = infoRoomOccupation;
     }
 
-    public void copyFromDomain(IAula lesson) {
+    public void copyFromDomain(ILesson lesson) {
         super.copyFromDomain(lesson);
         if (lesson != null) {
             setDiaSemana(lesson.getDiaSemana());
@@ -246,7 +246,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
         }
     }
 
-    public static InfoLesson newInfoFromDomain(IAula lesson) {
+    public static InfoLesson newInfoFromDomain(ILesson lesson) {
         InfoLesson infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLesson();

@@ -19,10 +19,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import DataBeans.util.Cloner;
-import Dominio.Aula;
-import Dominio.IAula;
+import Dominio.Lesson;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -48,13 +48,13 @@ public class AdicionarAula implements IService {
             IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
                     .getInfoDisciplinaExecucao());
 
-            ITurno turno1 = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
+            IShift turno1 = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
                     executionCourse);
 
             int i = 0;
             while (i < classesList.length) {
                 Integer lessonId = new Integer(classesList[i]);
-                IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(Aula.class, lessonId);
+                ILesson lesson = (ILesson) sp.getIAulaPersistente().readByOID(Lesson.class, lessonId);
                 if (lesson != null) {
                     //turnoAula = new TurnoAula(turno1, lesson);
                     result = valid(turno1, lesson);
@@ -83,7 +83,7 @@ public class AdicionarAula implements IService {
         return serviceResult;
     }
 
-    private InfoShiftServiceResult valid(ITurno shift, IAula lesson) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(IShift shift, ILesson lesson) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
 
@@ -119,35 +119,35 @@ public class AdicionarAula implements IService {
         return result;
     }
 
-    private double getTotalHoursOfShiftType(ITurno shift) throws ExcepcaoPersistencia {
+    private double getTotalHoursOfShiftType(IShift shift) throws ExcepcaoPersistencia {
         /*
-         * ITurno shiftCriteria = new Turno();
+         * IShift shiftCriteria = new Shift();
          * shiftCriteria.setNome(shift.getNome());
          * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
          * 
          * List lessonsOfShiftType = SuportePersistenteOJB.getInstance()
          * .getITurnoAulaPersistente().readLessonsByShift(shiftCriteria);
          * 
-         * IAula lesson = null; double duration = 0; for (int i = 0; i <
+         * ILesson lesson = null; double duration = 0; for (int i = 0; i <
          * lessonsOfShiftType.size(); i++) { lesson = ((ITurnoAula)
          * lessonsOfShiftType.get(i)).getAula(); duration +=
          * (getLessonDurationInMinutes(lesson).doubleValue() / 60); } return
          * duration;
          */
 
-        IAula lesson = null;
+        ILesson lesson = null;
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
 
         for (int i = 0; i < associatedLessons.size(); i++) {
-            lesson = (IAula) associatedLessons.get(i);
+            lesson = (ILesson) associatedLessons.get(i);
             duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
         }
 
         return duration;
     }
 
-    private Integer getLessonDurationInMinutes(IAula lesson) {
+    private Integer getLessonDurationInMinutes(ILesson lesson) {
         int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
         int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
         int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);

@@ -10,7 +10,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDepartment;
 import DataBeans.util.Cloner;
 import Dominio.IDepartment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
@@ -30,7 +30,7 @@ public class ReadDepartmentByUser implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa person = personDAO.lerPessoaPorUsername(username);
+            IPerson person = personDAO.lerPessoaPorUsername(username);
             List departmentList = person.getManageableDepartmentCredits();
             if (departmentList != null && !departmentList.isEmpty()) {
                 infoDepartment = Cloner.copyIDepartment2InfoDepartment((IDepartment) departmentList

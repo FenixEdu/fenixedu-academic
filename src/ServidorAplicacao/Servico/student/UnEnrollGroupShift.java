@@ -13,7 +13,7 @@ import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -101,7 +101,7 @@ public class UnEnrollGroupShift implements IService {
                 throw new InvalidSituationServiceException();
             }
             
-            ITurno shift = null;
+            IShift shift = null;
             boolean result = strategy.checkNumberOfGroups(groupProperties,shift);
             if (!result) {
                 throw new InvalidChangeServiceException();

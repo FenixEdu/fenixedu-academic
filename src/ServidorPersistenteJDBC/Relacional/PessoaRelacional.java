@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorPersistenteJDBC.IPessoaPersistente;
 import Util.DataIndisponivel;
 import Util.EstadoCivil;
@@ -24,11 +24,11 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Altera um registo de Pessoa
+     * Altera um registo de Person
      * 
      * @return true se sucedeu, false se ocorreu uma excepcao
      */
-    public boolean alterarPessoa(Pessoa pessoa) {
+    public boolean alterarPessoa(Person pessoa) {
         boolean resultado = false;
 
         try {
@@ -112,7 +112,7 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Apaga um registo de Pessoa
+     * Apaga um registo de Person
      * 
      * @return true se sucedeu, false se ocorreu uma excepcao
      */
@@ -136,7 +136,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 
     }
 
-    public boolean escreverPapelPessoa(Pessoa pessoa, int chaveRole) {
+    public boolean escreverPapelPessoa(Person pessoa, int chaveRole) {
         boolean resultado = false;
 
         try {
@@ -159,11 +159,11 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Escreve um registo de Pessoa
+     * Escreve um registo de Person
      * 
      * @return true se sucedeu, false se ocorreu uma excepcao
      */
-    public boolean escreverPessoa(Pessoa pessoa) {
+    public boolean escreverPessoa(Person pessoa) {
         boolean resultado = false;
 
         try {
@@ -235,7 +235,7 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Le os cargos de Pessoa com a chave primaria
+     * Le os cargos de Person com a chave primaria
      * 
      * @return lista de cargos se sucedeu, null caso contrario
      */
@@ -261,7 +261,7 @@ public class PessoaRelacional implements IPessoaPersistente {
         return listaCargos;
     } /* lerCargos */
 
-    /** Le todos os roles associado à Pessoa */
+    /** Le todos os roles associado à Person */
     public List lerPapelPessoa(int codigoInterno) {
         List listaRoles = null;
 
@@ -296,12 +296,12 @@ public class PessoaRelacional implements IPessoaPersistente {
     } /* lerPapelPessoa */
 
     /**
-     * Le um registo de Pessoa com a chave primaria
+     * Le um registo de Person com a chave primaria
      * 
-     * @return Pessoa se sucedeu, null caso contrario
+     * @return Person se sucedeu, null caso contrario
      */
-    public Pessoa lerPessoa(int codigoInterno) {
-        Pessoa pessoa = null;
+    public Person lerPessoa(int codigoInterno) {
+        Person pessoa = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -323,12 +323,12 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Le um registo de Pessoa com o username
+     * Le um registo de Person com o username
      * 
-     * @return Pessoa se sucedeu, null caso contrario
+     * @return Person se sucedeu, null caso contrario
      */
-    public Pessoa lerPessoa(String username) {
-        Pessoa pessoa = null;
+    public Person lerPessoa(String username) {
+        Person pessoa = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -350,12 +350,12 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Le um registo de Pessoa atraves do Documento de Identificacao
+     * Le um registo de Person atraves do Documento de Identificacao
      * 
-     * @return Pessoa se sucedeu, null caso contrario
+     * @return Person se sucedeu, null caso contrario
      */
-    public Pessoa lerPessoa(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao) {
-        Pessoa pessoa = null;
+    public Person lerPessoa(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao) {
+        Person pessoa = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -464,12 +464,12 @@ public class PessoaRelacional implements IPessoaPersistente {
     }
 
     /**
-     * Constroi um registo de Pessoa a partir de um ResultSet
+     * Constroi um registo de Person a partir de um ResultSet
      * 
-     * @return Pessoa se sucedeu, null caso contrario
+     * @return Person se sucedeu, null caso contrario
      */
-    private Pessoa constroiPessoa(ResultSet resultado) {
-        Pessoa pessoa = null;
+    private Person constroiPessoa(ResultSet resultado) {
+        Person pessoa = null;
 
         try {
             Date emissionDate = null;
@@ -486,7 +486,7 @@ public class PessoaRelacional implements IPessoaPersistente {
             if (resultado.getString("DATE_OF_BIRTH") != null) {
                 birthDate = converteData(java.sql.Date.valueOf(resultado.getString("DATE_OF_BIRTH")));
             }
-            pessoa = new Pessoa(new Integer(resultado.getInt("ID_INTERNAL")), resultado
+            pessoa = new Person(new Integer(resultado.getInt("ID_INTERNAL")), resultado
                     .getString("DOCUMENT_ID_NUMBER"), new TipoDocumentoIdentificacao(resultado
                     .getInt("TYPE_ID_DOCUMENT")), resultado
                     .getString("EMISSION_LOCATION_OF_DOCUMENT_ID"), emissionDate, experationDate,

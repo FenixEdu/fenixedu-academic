@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -87,7 +87,7 @@ public class PrepareEditStudentGroupMembers implements IServico {
                         .readAllByStudentGroup((IStudentGroup) iterator.next());
 
                 Iterator iterator2 = allStudentGroupAttend.iterator();
-                IFrequenta frequenta = null;
+                IAttends frequenta = null;
                 while (iterator2.hasNext()) {
 
                     frequenta = ((IStudentGroupAttend) iterator2.next())
@@ -107,7 +107,7 @@ public class PrepareEditStudentGroupMembers implements IServico {
 
         while (iterator3.hasNext()) {
 
-            student = ((IFrequenta) iterator3.next()).getAluno();
+            student = ((IAttends) iterator3.next()).getAluno();
             infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
         }
         return infoStudentList;

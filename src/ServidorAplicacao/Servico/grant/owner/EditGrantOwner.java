@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.owner.InfoGrantOwner;
 import Dominio.IDomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -50,7 +50,7 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IService {
         return grantOwner;
     }
 
-    private IGrantOwner prepareGrantOwner(IGrantOwner grantOwner, IPessoa person,
+    private IGrantOwner prepareGrantOwner(IGrantOwner grantOwner, IPerson person,
             InfoGrantOwner infoGrantOwner, IPersistentGrantOwner pGrantOwner)
             throws ExcepcaoPersistencia {
         pGrantOwner.simpleLockWrite(grantOwner);
@@ -95,7 +95,7 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IService {
         pPerson = sp.getIPessoaPersistente();
 
         try {
-            IPessoa person = null;
+            IPerson person = null;
             IGrantOwner grantOwner = null;
 
             //create or edit person information

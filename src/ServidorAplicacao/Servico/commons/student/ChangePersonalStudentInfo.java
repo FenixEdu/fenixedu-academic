@@ -16,8 +16,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.ICountry;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -37,11 +37,11 @@ public class ChangePersonalStudentInfo implements IService {
             ExistingPersistentException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
-        IPessoa person = null;
+        IPerson person = null;
 
         try {
             sp = SuportePersistenteOJB.getInstance();
-            person = (IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class,
+            person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                     newInfoPerson.getIdInternal());
         } catch (ExcepcaoPersistencia ex) {
 

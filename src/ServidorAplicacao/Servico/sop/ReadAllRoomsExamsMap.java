@@ -25,7 +25,7 @@ import DataBeans.util.Cloner;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -85,7 +85,7 @@ public class ReadAllRoomsExamsMap implements IServico {
 
             for (int i = 0; i < rooms.size(); i++) {
 
-                ISala room = (ISala) rooms.get(i);
+                IRoom room = (IRoom) rooms.get(i);
 
                 InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
 

@@ -5,7 +5,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoFinalResult;
 import DataBeans.InfoStudentCurricularPlan;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
@@ -25,7 +25,7 @@ public class FinalResult implements IService {
                 .newDomainFromInfo(infoStudentCurricularPlan);
         IDegreeCurricularPlan degreeCurricularPlan = InfoDegreeCurricularPlan
                 .newDomainFromInfo(infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
-        ICurso degree = InfoDegree.newDomainFromInfo(infoStudentCurricularPlan
+        IDegree degree = InfoDegree.newDomainFromInfo(infoStudentCurricularPlan
                 .getInfoDegreeCurricularPlan().getInfoDegree());
         degreeCurricularPlan.setDegree(degree);
         studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);

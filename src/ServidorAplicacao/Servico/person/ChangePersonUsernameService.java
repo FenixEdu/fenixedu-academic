@@ -6,8 +6,8 @@
 package ServidorAplicacao.Servico.person;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
@@ -28,12 +28,12 @@ public class ChangePersonUsernameService implements IService {
         ISuportePersistente sp = null;
         IPessoaPersistente pessoaPersistente = null;
 
-        IPessoa person = null;
+        IPerson person = null;
         try {
             sp = SuportePersistenteOJB.getInstance();
             pessoaPersistente = sp.getIPessoaPersistente();
 
-            person = (IPessoa) pessoaPersistente.readByOID(Pessoa.class, personId);
+            person = (IPerson) pessoaPersistente.readByOID(Person.class, personId);
 
             if (person == null || newUsername == null) {
                 throw new FenixServiceException();

@@ -14,11 +14,11 @@ public interface IStudentGroup extends IDomainObject{
 
 	public IAttendsSet getAttendsSet() ;
 
-	public ITurno getShift();
+	public IShift getShift();
 	
 	public void setGroupNumber(Integer groupNumber);
 
 	public void setAttendsSet(IAttendsSet attendsSet);
 
-	public void setShift(ITurno shift);	
+	public void setShift(IShift shift);	
 }

@@ -11,7 +11,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Coordinator;
 import Dominio.ICoordinator;
 import Dominio.IPersonRole;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.PersonRole;
 import Dominio.Teacher;
@@ -56,7 +56,7 @@ public class RemoveCoordinators implements IService {
                     List executionDegreesTeacherList = persistentCoordinator
                             .readExecutionDegreesByTeacher(teacher);
                     if (executionDegreesTeacherList == null || executionDegreesTeacherList.size() <= 0) {
-                        IPessoa person = coordinator.getTeacher().getPerson();
+                        IPerson person = coordinator.getTeacher().getPerson();
                         IPersonRole personRole = persistentPersonRole.readByPersonAndRole(person, sp
                                 .getIPersistentRole().readByRoleType(RoleType.COORDINATOR));
                         if (personRole != null) {

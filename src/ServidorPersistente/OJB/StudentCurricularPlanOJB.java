@@ -14,7 +14,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IBranch;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
@@ -70,7 +70,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
     }
 
     public List readAllActiveStudentCurricularPlansByDegreeWithEnrollmentsInExecutionPeriod(
-            IExecutionPeriod executionPeriod, ICurso degree) throws ExcepcaoPersistencia {
+            IExecutionPeriod executionPeriod, IDegree degree) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("enrolments.executionPeriod.idInternal", executionPeriod.getIdInternal());
         crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));

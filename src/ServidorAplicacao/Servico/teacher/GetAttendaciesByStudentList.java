@@ -21,11 +21,11 @@ import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.ITurnoAluno;
 import Dominio.Student;
@@ -79,14 +79,14 @@ public class GetAttendaciesByStudentList implements IService {
             }
             for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {
                 IStudent student = (IStudent) studentsIterator.next();
-                IFrequenta attendacy = persistentAttendacy.readByAlunoIdAndDisciplinaExecucaoId(student
+                IAttends attendacy = persistentAttendacy.readByAlunoIdAndDisciplinaExecucaoId(student
                         .getIdInternal(), executionCourseID);
                 Integer enrollments = new Integer(0);
                 if (attendacy.getEnrolment() != null) {
                     IEnrollment enrollment = attendacy.getEnrolment();
                     ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
                     IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                    ICurso degree = degreeCurricularPlan.getDegree();
+                    IDegree degree = degreeCurricularPlan.getDegree();
 
                     List enrollmentList = persistentEnrolment
                             .readEnrollmentsByStudentAndCurricularCourseNameAndDegree(

@@ -20,7 +20,7 @@ import Dominio.IAdvisory;
 import Dominio.IDistributedTest;
 import Dominio.IDistributedTestAdvisory;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
 import Dominio.IOnlineTest;
 import Dominio.IStudent;
@@ -121,7 +121,7 @@ public class EditDistributedTest implements IService {
                         IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentTestQuestionIt.next();
                         studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();
                     }
-                    IFrequenta attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
+                    IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
                     if (attend != null) {
                         IMark mark = new Mark();
                         persistentSuport.getIPersistentMark().simpleLockWrite(mark);

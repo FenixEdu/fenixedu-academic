@@ -10,7 +10,7 @@ import DataBeans.util.Cloner;
 import Dominio.IEmployee;
 import Dominio.IMasterDegreeProofVersion;
 import Dominio.IMasterDegreeThesis;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudentCurricularPlan;
 import Dominio.MasterDegreeProofVersion;
 import ServidorAplicacao.IUserView;
@@ -73,7 +73,7 @@ public class ChangeMasterDegreeProof implements IService {
                 storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
             }
 
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = sp.getIPersistentEmployee().readByPerson(
                     person.getIdInternal().intValue());
             List teacherJuries = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherJuries);

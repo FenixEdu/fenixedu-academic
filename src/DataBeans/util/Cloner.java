@@ -241,8 +241,8 @@ public abstract class Cloner {
         }
     }
 
-    public static ITurno copyInfoShift2Shift(InfoShift infoShift) {
-        ITurno shift = new Turno();
+    public static IShift copyInfoShift2Shift(InfoShift infoShift) {
+        IShift shift = new Shift();
         IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
                 .getInfoDisciplinaExecucao());
         copyObjectProperties(shift, infoShift);
@@ -291,14 +291,14 @@ public abstract class Cloner {
      * Method copyInfoLesson2Lesson.
      * 
      * @param lessonExample
-     * @return IAula
+     * @return ILesson
      */
-    public static IAula copyInfoLesson2Lesson(InfoLesson infoLesson) {
-        IAula lesson = new Aula();
-        ISala sala = null;
+    public static ILesson copyInfoLesson2Lesson(InfoLesson infoLesson) {
+        ILesson lesson = new Lesson();
+        IRoom sala = null;
 
         IRoomOccupation roomOccupation = null;
-        //ITurno shift = null;
+        //IShift shift = null;
         try {
             BeanUtils.copyProperties(lesson, infoLesson);
         } catch (Exception e) {
@@ -320,17 +320,17 @@ public abstract class Cloner {
      * 
      * @param infoRoom
      */
-    public static ISala copyInfoRoom2Room(InfoRoom infoRoom) {
-        ISala room = new Sala();
+    public static IRoom copyInfoRoom2Room(InfoRoom infoRoom) {
+        IRoom room = new Room();
         copyObjectProperties(room, infoRoom);
         return room;
     }
 
     /**
      * @param room
-     * @return IAula
+     * @return ILesson
      */
-    public static InfoRoom copyRoom2InfoRoom(ISala room) {
+    public static InfoRoom copyRoom2InfoRoom(IRoom room) {
 
         if (room != null) {
             InfoRoom infoRoom = new InfoRoom();
@@ -371,9 +371,9 @@ public abstract class Cloner {
      * Method copyInfoLesson2Lesson.
      * 
      * @param lessonExample
-     * @return IAula
+     * @return ILesson
      */
-    public static InfoLesson copyILesson2InfoLesson(IAula lesson) {
+    public static InfoLesson copyILesson2InfoLesson(ILesson lesson) {
         if (lesson == null) {
             return null;
         }
@@ -413,12 +413,12 @@ public abstract class Cloner {
      * Method copyInfoShift2Shift.
      * 
      * @param infoShift
-     * @return ITurno
+     * @return IShift
      */
-    public static ITurno copyInfoShift2IShift(InfoShift infoShift) {
+    public static IShift copyInfoShift2IShift(InfoShift infoShift) {
         if (infoShift == null)
             return null;
-        ITurno shift = new Turno();
+        IShift shift = new Shift();
         IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
                 .getInfoDisciplinaExecucao());
 
@@ -427,7 +427,7 @@ public abstract class Cloner {
         if (shift.getAssociatedLessons() != null) {
             for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
                 InfoLesson infoLesson = (InfoLesson) shift.getAssociatedLessons().get(i);
-                IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
+                ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
                 lessons.add(lesson);
             }
         }
@@ -440,9 +440,9 @@ public abstract class Cloner {
      * Method copyInfoShift2Shift.
      * 
      * @param infoShift
-     * @return ITurno
+     * @return IShift
      */
-    public static InfoShift copyShift2InfoShift(ITurno shift) {
+    public static InfoShift copyShift2InfoShift(IShift shift) {
         InfoShift infoShift = new InfoShift();
 
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(shift
@@ -451,14 +451,14 @@ public abstract class Cloner {
         List infoLessonList = (List) CollectionUtils.collect(shift.getAssociatedLessons(),
                 new Transformer() {
                     public Object transform(Object arg0) {
-                        return copyILesson2InfoLesson((IAula) arg0);
+                        return copyILesson2InfoLesson((ILesson) arg0);
                     }
                 });
 
         List infoClassesList = (List) CollectionUtils.collect(shift.getAssociatedClasses(),
                 new Transformer() {
                     public Object transform(Object arg0) {
-                        return copyClass2InfoClass((ITurma) arg0);
+                        return copyClass2InfoClass((ISchoolClass) arg0);
                     }
                 });
 
@@ -474,9 +474,9 @@ public abstract class Cloner {
      * Method copyInfoShift2Shift.
      * 
      * @param infoShift
-     * @return ITurno
+     * @return IShift
      */
-    public static InfoClass copyClass2InfoClass(ITurma classD) {
+    public static InfoClass copyClass2InfoClass(ISchoolClass classD) {
         InfoClass infoClass = new InfoClass();
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(classD
                 .getExecutionDegree());
@@ -522,12 +522,12 @@ public abstract class Cloner {
 
     /**
      * @param infoExecutionDegree
-     * @return ICursoExecucao
+     * @return IExecutionDegree
      */
-    public static ICursoExecucao copyInfoExecutionDegree2ExecutionDegree(
+    public static IExecutionDegree copyInfoExecutionDegree2ExecutionDegree(
             InfoExecutionDegree infoExecutionDegree) {
 
-        ICursoExecucao executionDegree = new CursoExecucao();
+        IExecutionDegree executionDegree = new ExecutionDegree();
         IDegreeCurricularPlan degreeCurricularPlan = Cloner
                 .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoExecutionDegree
                         .getInfoDegreeCurricularPlan());
@@ -553,7 +553,7 @@ public abstract class Cloner {
      */
 
     // DO NOT DELETE - this is used locally through introspection!!!
-    private static InfoExecutionDegree copy(ICursoExecucao executionDegree) {
+    private static InfoExecutionDegree copy(IExecutionDegree executionDegree) {
 
         InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
@@ -616,7 +616,7 @@ public abstract class Cloner {
      * @param iCurso
      * @return InfoDegree
      */
-    public static InfoDegree copyIDegree2InfoDegree(ICurso degree) {
+    public static InfoDegree copyIDegree2InfoDegree(IDegree degree) {
         InfoDegree infoDegree = new InfoDegree();
         copyObjectProperties(infoDegree, degree);
         return infoDegree;
@@ -626,10 +626,10 @@ public abstract class Cloner {
      * Method copyInfoDegree2IDegree.
      * 
      * @param infoDegree
-     * @return ICurso
+     * @return IDegree
      */
-    public static ICurso copyInfoDegree2IDegree(InfoDegree infoDegree) {
-        ICurso degree = new Curso();
+    public static IDegree copyInfoDegree2IDegree(InfoDegree infoDegree) {
+        IDegree degree = new Degree();
         copyObjectProperties(degree, infoDegree);
         return degree;
 
@@ -664,14 +664,14 @@ public abstract class Cloner {
      * Method copyInfoClass2Class.
      * 
      * @param infoTurma
-     * @return ITurma
+     * @return ISchoolClass
      */
-    public static ITurma copyInfoClass2Class(InfoClass infoClass) {
-        ITurma domainClass = new Turma();
+    public static ISchoolClass copyInfoClass2Class(InfoClass infoClass) {
+        ISchoolClass domainClass = new SchoolClass();
 
         IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
                 .getInfoExecutionPeriod());
-        ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
+        IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
                 .getInfoExecutionDegree());
 
         copyObjectProperties(domainClass, infoClass);
@@ -687,9 +687,9 @@ public abstract class Cloner {
      * @param elem
      * @return Object
      */
-    //public static InfoShift copyIShift2InfoShift(ITurno shift)
+    //public static InfoShift copyIShift2InfoShift(IShift shift)
     // DO NOT DELETE - this is used locally through introspection!!!
-    private static InfoShift copy(ITurno shift) {
+    private static InfoShift copy(IShift shift) {
 
         if (shift == null)
             return null;
@@ -699,14 +699,14 @@ public abstract class Cloner {
         List infoLessonList = (List) CollectionUtils.collect(shift.getAssociatedLessons(),
                 new Transformer() {
                     public Object transform(Object arg0) {
-                        return copyILesson2InfoLesson((IAula) arg0);
+                        return copyILesson2InfoLesson((ILesson) arg0);
                     }
                 });
 
         List infoClassesList = (List) CollectionUtils.collect(shift.getAssociatedClasses(),
                 new Transformer() {
                     public Object transform(Object arg0) {
-                        return copyClass2InfoClass((ITurma) arg0);
+                        return copyClass2InfoClass((ISchoolClass) arg0);
                     }
                 });
 
@@ -728,7 +728,7 @@ public abstract class Cloner {
      */
     public static IStudent copyInfoStudent2IStudent(InfoStudent infoStudent) {
         IStudent student = new Student();
-        IPessoa person = Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
+        IPerson person = Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
         IStudentKind studentGroupInfo = Cloner.copyInfoStudentKind2IStudentKind(infoStudent
                 .getInfoStudentKind());
         copyObjectProperties(student, infoStudent);
@@ -763,12 +763,12 @@ public abstract class Cloner {
      * Method copyInfoPerson2IPerson.
      * 
      * @param infoPerson
-     * @return IPessoa
+     * @return IPerson
      */
-    public static IPessoa copyInfoPerson2IPerson(InfoPerson infoPerson) {
-        IPessoa person = null;
+    public static IPerson copyInfoPerson2IPerson(InfoPerson infoPerson) {
+        IPerson person = null;
         if (infoPerson != null) {
-            person = new Pessoa();
+            person = new Person();
             ICountry country = Cloner.copyInfoCountry2ICountry(infoPerson.getInfoPais());
             copyObjectProperties(person, infoPerson);
             person.setPais(country);
@@ -782,7 +782,7 @@ public abstract class Cloner {
      * @param Person
      * @return InfoPerson
      */
-    public static InfoPerson copyIPerson2InfoPerson(IPessoa person) {
+    public static InfoPerson copyIPerson2InfoPerson(IPerson person) {
 
         try {
             // Temporary bug fix.
@@ -1123,7 +1123,7 @@ public abstract class Cloner {
 
         if (exam != null && exam.getAssociatedRooms() != null && exam.getAssociatedRooms().size() > 0) {
             for (int i = 0; i < exam.getAssociatedRooms().size(); i++) {
-                infoRooms.add(copyRoom2InfoRoom((ISala) exam.getAssociatedRooms().get(i)));
+                infoRooms.add(copyRoom2InfoRoom((IRoom) exam.getAssociatedRooms().get(i)));
             }
         }
 
@@ -1209,7 +1209,7 @@ public abstract class Cloner {
         IRoomOccupation roomOccupation = new RoomOccupation();
 
         IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoRoomOccupation.getInfoPeriod());
-        ISala room = Cloner.copyInfoRoom2Room(infoRoomOccupation.getInfoRoom());
+        IRoom room = Cloner.copyInfoRoom2Room(infoRoomOccupation.getInfoRoom());
 
         copyObjectProperties(roomOccupation, infoRoomOccupation);
 
@@ -1291,7 +1291,7 @@ public abstract class Cloner {
      */
     public static ITeacher copyInfoTeacher2Teacher(InfoTeacher infoTeacher) {
         ITeacher teacher = new Teacher();
-        IPessoa person = new Pessoa();
+        IPerson person = new Person();
         ICategory category = new Category();
         person = copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
         category = copyInfoCategory2ICategory(infoTeacher.getInfoCategory());
@@ -1488,7 +1488,7 @@ public abstract class Cloner {
             InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
         IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 
-        ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
+        IDegree degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
 
         copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
 
@@ -1874,7 +1874,7 @@ public abstract class Cloner {
             InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
         //      properties of infoEnrolment are not copied for not to get into loop
         IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-        IPessoa pessoa = copyInfoPerson2IPerson(infoEnrolmentEvaluation
+        IPerson pessoa = copyInfoPerson2IPerson(infoEnrolmentEvaluation
                 .getInfoPersonResponsibleForGrade());
         copyObjectProperties(enrolmentEvaluation, infoEnrolmentEvaluation);
         enrolmentEvaluation.setPersonResponsibleForGrade(pessoa);
@@ -1920,7 +1920,7 @@ public abstract class Cloner {
 
         IShiftProfessorship teacherShiftPercentage = new ShiftProfessorship();
         IProfessorship professorship = Cloner.copyInfoProfessorship2IProfessorship(infoProfessorShip);
-        ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+        IShift shift = Cloner.copyInfoShift2IShift(infoShift);
 
         copyObjectProperties(teacherShiftPercentage, infoTeacherShiftPercentage);
 
@@ -1959,10 +1959,10 @@ public abstract class Cloner {
     }
 
     /**
-     * @param IFrequenta
+     * @param IAttends
      * @return InfoFrequenta
      */
-    public static InfoFrequenta copyIFrequenta2InfoFrequenta(IFrequenta frequenta) {
+    public static InfoFrequenta copyIFrequenta2InfoFrequenta(IAttends frequenta) {
         if (frequenta == null) {
             return null;
         }
@@ -2069,7 +2069,7 @@ public abstract class Cloner {
         summary.setExecutionCourse(executionCourse);
 
         if (infoSummary.getInfoShift() != null) {
-            ITurno shift = copyInfoShift2IShift(infoSummary.getInfoShift());
+            IShift shift = copyInfoShift2IShift(infoSummary.getInfoShift());
             summary.setShift(shift);
         }
 
@@ -2085,7 +2085,7 @@ public abstract class Cloner {
         }
 
         if (infoSummary.getInfoRoom() != null) {
-            ISala room = copyInfoRoom2Room(infoSummary.getInfoRoom());
+            IRoom room = copyInfoRoom2Room(infoSummary.getInfoRoom());
             summary.setRoom(room);
         }
         return summary;
@@ -2477,7 +2477,7 @@ public abstract class Cloner {
             InfoExternalPerson infoExternalPerson) {
         IExternalPerson externalPerson = new ExternalPerson();
         copyObjectProperties(externalPerson, infoExternalPerson);
-        IPessoa person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
+        IPerson person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
         externalPerson.setPerson(person);
         IWorkLocation workLocation = Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson
                 .getInfoWorkLocation());
@@ -3340,7 +3340,7 @@ public abstract class Cloner {
 
     public static IAuthor copyInfoAuthor2IAuthor(InfoAuthor infoAuthor) {
         IAuthor author = new Author();
-        IPessoa person = new Pessoa();
+        IPerson person = new Person();
         if (infoAuthor.getKeyPerson() != null) {
             person = copyInfoPerson2IPerson(infoAuthor.getInfoPessoa());
         }
@@ -3381,7 +3381,7 @@ public abstract class Cloner {
         return infoAuthorPerson;
     }
 
-    public static InfoAuthorPerson copyIPerson2InfoAuthorPerson(IPessoa person) {
+    public static InfoAuthorPerson copyIPerson2InfoAuthorPerson(IPerson person) {
 
         InfoAuthorPerson infoAuthorPerson = new InfoAuthorPerson();
 

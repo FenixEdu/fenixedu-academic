@@ -18,7 +18,7 @@ import DataBeans.InfoExecutionCourseAndExams;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -57,7 +57,7 @@ public class ReadExamsByExecutionDegreeAndCurricularYearPublic implements IServi
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
             IExecutionPeriod executionPeriod = Cloner
                     .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);

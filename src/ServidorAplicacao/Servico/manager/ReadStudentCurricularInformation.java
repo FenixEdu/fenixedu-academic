@@ -24,13 +24,13 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.equivalence.InfoEnrollmentGrade;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -77,7 +77,7 @@ public class ReadStudentCurricularInformation implements IService {
     protected InfoStudent constructInfoStudent(final IStudent student) {
         final InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
         final InfoPerson infoPerson = new InfoPerson();
-        final IPessoa person = student.getPerson();
+        final IPerson person = student.getPerson();
 
         infoStudent.setInfoPerson(infoPerson);
         infoPerson.setNome(person.getNome());
@@ -92,7 +92,7 @@ public class ReadStudentCurricularInformation implements IService {
             final IStudentCurricularPlan studentCurricularPlan) {
         final IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
                 .getDegreeCurricularPlan();
-        final ICurso degree = degreeCurricularPlan.getDegree();
+        final IDegree degree = degreeCurricularPlan.getDegree();
         final List enrollments = studentCurricularPlan.getEnrolments();
 
         final InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
@@ -118,7 +118,7 @@ public class ReadStudentCurricularInformation implements IService {
                 final ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
                 final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse
                         .getDegreeCurricularPlan();
-                final ICurso degree = degreeCurricularPlan.getDegree();
+                final IDegree degree = degreeCurricularPlan.getDegree();
                 final List enrollmentEvaluations = enrollment.getEvaluations();
 
                 final InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();

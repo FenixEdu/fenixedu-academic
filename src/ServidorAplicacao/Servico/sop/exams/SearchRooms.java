@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -59,7 +59,7 @@ public class SearchRooms implements IServico {
             List infoRooms = new ArrayList();
             Iterator iter = rooms.iterator();
             while (iter.hasNext()) {
-                ISala room = (ISala) iter.next();
+                IRoom room = (IRoom) iter.next();
                 infoRooms.add(Cloner.copyRoom2InfoRoom(room));
             }
 

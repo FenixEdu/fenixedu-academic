@@ -5,7 +5,7 @@ package Dominio.finalDegreeWork;
 
 import java.util.Date;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDomainObject;
 
 /**
@@ -13,9 +13,9 @@ import Dominio.IDomainObject;
  */
 public interface IScheduleing extends IDomainObject {
 
-    public ICursoExecucao getExecutionDegree();
+    public IExecutionDegree getExecutionDegree();
 
-    public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(IExecutionDegree executionDegree);
 
     public Date getEndOfProposalPeriod();
 

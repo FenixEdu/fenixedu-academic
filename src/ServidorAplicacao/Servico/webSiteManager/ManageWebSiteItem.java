@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IWebSiteItem;
 import Dominio.IWebSiteSection;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -69,7 +69,7 @@ abstract public class ManageWebSiteItem implements IService {
             IWebSiteSection webSiteSection, IWebSiteItem webSiteItem) throws FenixServiceException {
         try {
 
-            IPessoa person = (IPessoa) persistentPerson.lerPessoaPorUsername(user);
+            IPerson person = (IPerson) persistentPerson.lerPessoaPorUsername(user);
             webSiteItem.setEditor(person);
 
             // treat author of item

@@ -14,7 +14,7 @@ import Dominio.ExecutionCourse;
 import Dominio.IEnrollment;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -84,7 +84,7 @@ public class ValidateSubmitMarks implements IServico {
             List enrolmentListIds = (List) CollectionUtils.collect(attendList, new Transformer() {
 
                 public Object transform(Object input) {
-                    IFrequenta attend = (IFrequenta) input;
+                    IAttends attend = (IAttends) input;
                     IEnrollment enrolment = attend.getEnrolment();
                     if(enrolment != null) {
                         if(enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))

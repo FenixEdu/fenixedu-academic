@@ -7,7 +7,7 @@ package Dominio.sms;
 import java.util.Date;
 
 import Dominio.IDomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Util.SmsDeliveryType;
 
 /**
@@ -64,13 +64,13 @@ public interface ISentSms extends IDomainObject {
     /**
      * @return Returns the person.
      */
-    public abstract IPessoa getPerson();
+    public abstract IPerson getPerson();
 
     /**
      * @param person
      *            The person to set.
      */
-    public abstract void setPerson(IPessoa person);
+    public abstract void setPerson(IPerson person);
 
     /**
      * @return Returns the sendDate.

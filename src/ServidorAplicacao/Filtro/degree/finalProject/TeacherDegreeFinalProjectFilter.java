@@ -10,7 +10,7 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IDepartment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
@@ -57,7 +57,7 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
             }
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
             if (requesterPerson == null) {
                 throw new NotAuthorizedException("No person with that userView");
             }

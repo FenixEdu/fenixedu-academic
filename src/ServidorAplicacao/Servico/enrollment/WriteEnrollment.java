@@ -13,13 +13,13 @@ import Dominio.EnrolmentEvaluation;
 import Dominio.EnrolmentInExtraCurricularCourse;
 import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.ExecutionPeriod;
-import Dominio.Frequenta;
+import Dominio.Attends;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
@@ -164,19 +164,19 @@ public class WriteEnrollment implements IService {
         }
 
         if (executionCourse != null) {
-            IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+            IAttends attend = attendDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
             String key = student.getIdInternal().toString() + "-"
                     + executionCourse.getIdInternal().toString();
 
             if (attend == null) {
-                attend = (IFrequenta) createdAttends.get(key);
+                attend = (IAttends) createdAttends.get(key);
             }
 
             if (attend != null) {
                 attendDAO.simpleLockWrite(attend);
                 attend.setEnrolment(enrolmentToWrite);
             } else {
-                IFrequenta attendToWrite = new Frequenta();
+                IAttends attendToWrite = new Attends();
                 attendDAO.simpleLockWrite(attendToWrite);
                 attendToWrite.setAluno(student);
                 attendToWrite.setDisciplinaExecucao(executionCourse);

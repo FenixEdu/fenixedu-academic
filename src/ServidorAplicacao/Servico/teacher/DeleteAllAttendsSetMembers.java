@@ -11,7 +11,7 @@ import java.util.List;
 import Dominio.AttendsSet;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
@@ -88,7 +88,7 @@ public class DeleteAllAttendsSetMembers implements IServico {
             Iterator iterator = attendsSetElements.iterator();
             while (iterator.hasNext()) {
             	IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet)iterator.next();
-            	IFrequenta frequenta = (IFrequenta)attendInAttendsSet.getAttend();
+            	IAttends frequenta = (IAttends)attendInAttendsSet.getAttend();
 
             		boolean found = false;
                     Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();

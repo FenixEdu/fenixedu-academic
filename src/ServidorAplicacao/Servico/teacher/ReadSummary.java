@@ -24,14 +24,14 @@ import DataBeans.InfoSummaryWithAll;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
-import Dominio.ISala;
+import Dominio.IRoom;
 import Dominio.ISite;
 import Dominio.ISummary;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.Summary;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -87,7 +87,7 @@ public class ReadSummary implements IService {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ITurno turno = (ITurno) arg0;
+                        IShift turno = (IShift) arg0;
                         return Cloner.copyShift2InfoShift(turno);
                     }
                 });
@@ -123,7 +123,7 @@ public class ReadSummary implements IService {
                 infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ISala room = (ISala) arg0;
+                        IRoom room = (IRoom) arg0;
                         return Cloner.copyRoom2InfoRoom(room);
                     }
                 });
@@ -195,7 +195,7 @@ public class ReadSummary implements IService {
 
             ListIterator iteratorShift = shifts.listIterator();
             while (iteratorShift.hasNext()) {
-                ITurno shift = (ITurno) iteratorShift.next();
+                IShift shift = (IShift) iteratorShift.next();
                 if (summary.getSummaryType() != null && shift.getTipo() != null
                         && !summary.getSummaryType().equals(shift.getTipo())) {
                     continue;
@@ -204,7 +204,7 @@ public class ReadSummary implements IService {
                 if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
                     ListIterator iteratorLesson = shift.getAssociatedLessons().listIterator();
                     while (iteratorLesson.hasNext()) {
-                        IAula lesson = (IAula) iteratorLesson.next();
+                        ILesson lesson = (ILesson) iteratorLesson.next();
 
                         beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
                                 Calendar.HOUR_OF_DAY));
@@ -231,7 +231,7 @@ public class ReadSummary implements IService {
             //If the execution to arrive until here,
             //then was impossible attribute a shift to the summary
             summary.setIsExtraLesson(Boolean.TRUE);
-            summary.setShift((ITurno) shifts.get(0));
+            summary.setShift((IShift) shifts.get(0));
         }
     }
 }

@@ -65,7 +65,7 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditarSala", argsCriarSala);
         } catch (ExistingServiceException e) {
-            throw new ExistingActionException("A Sala", e);
+            throw new ExistingActionException("A Room", e);
         }
 
         // Update selectedRooms in request

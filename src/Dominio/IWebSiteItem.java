@@ -13,9 +13,9 @@ public interface IWebSiteItem extends IDomainObject {
 
     public void setCreationDate(Timestamp creationDate);
 
-    public IPessoa getEditor();
+    public IPerson getEditor();
 
-    public void setEditor(IPessoa editor);
+    public void setEditor(IPerson editor);
 
     public String getExcerpt();
 

@@ -18,7 +18,7 @@ import DataBeans.InfoEnrolmentWithInfoCurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import Dominio.ShiftStudent;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -97,13 +97,13 @@ public class ReadStudentEnrollmentsAndClass implements IService {
             ShiftStudent shiftStudent = (ShiftStudent) studentShifts.get(0);
             List classes = shiftStudent.getShift().getAssociatedClasses();
             if (classes.size() == 1) {
-                ITurma klass = (ITurma) classes.get(0);
+                ISchoolClass klass = (ISchoolClass) classes.get(0);
                 infoClass.setNome(klass.getNome());
                 return infoClass;
             }
 
             for (int j = 0; j < classes.size(); j++) {
-                ITurma klass = (ITurma) classes.get(j);
+                ISchoolClass klass = (ISchoolClass) classes.get(j);
                 if (degreeName.equals(klass.getExecutionDegree().getCurricularPlan().getDegree()
                         .getNome())) {
                     classesName.add(klass.getNome());

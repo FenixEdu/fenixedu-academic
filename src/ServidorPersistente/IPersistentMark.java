@@ -7,7 +7,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IEvaluation;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
 
 /**
@@ -17,9 +17,9 @@ public interface IPersistentMark extends IPersistentObject {
 
     public List readAll() throws ExcepcaoPersistencia;
 
-    public IMark readBy(IEvaluation evaluation, IFrequenta attend) throws ExcepcaoPersistencia;
+    public IMark readBy(IEvaluation evaluation, IAttends attend) throws ExcepcaoPersistencia;
 
-    public List readBy(IFrequenta attend) throws ExcepcaoPersistencia;
+    public List readBy(IAttends attend) throws ExcepcaoPersistencia;
 
     public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia;
 

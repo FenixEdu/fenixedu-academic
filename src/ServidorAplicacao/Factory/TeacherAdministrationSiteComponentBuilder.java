@@ -89,7 +89,7 @@ import Dominio.ExecutionCourse;
 import Dominio.GroupProperties;
 import Dominio.IAnnouncement;
 import Dominio.IAttendsSet;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
@@ -109,12 +109,12 @@ import Dominio.ISite;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITeacher;
-import Dominio.ITurmaTurno;
-import Dominio.ITurno;
+import Dominio.ISchoolClassShift;
+import Dominio.IShift;
 import Dominio.Item;
 import Dominio.Section;
 import Dominio.StudentGroup;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
@@ -1469,7 +1469,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     				Iterator iterator = allStudentsGroup.iterator();
     				while (iterator.hasNext()) {
-    					ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+    					IShift shift = ((IStudentGroup) iterator.next()).getShift();
     					if (!allShifts.contains(shift)) {
     						allShifts.add(shift);
     					}
@@ -1484,7 +1484,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     				while (iter.hasNext()) {
 
-    					ITurno shift = (ITurno) iter.next();
+    					IShift shift = (IShift) iter.next();
     					List allStudentGroups = persistentStudentGroup
 						.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
     					infoSiteShift = new InfoSiteShift();
@@ -1628,7 +1628,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     				if (allStudentsGroup.size() != 0) {
     					Iterator iterator = allStudentsGroup.iterator();
     					while (iterator.hasNext()) {
-    						ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+    						IShift shift = ((IStudentGroup) iterator.next()).getShift();
     						if (!allShifts.contains(shift)) {
     							allShifts.add(shift);
     						}
@@ -1641,7 +1641,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     					InfoSiteShift infoSiteShiftAux = null;
 
     					while (iter.hasNext()) {
-    						ITurno shift = (ITurno) iter.next();
+    						IShift shift = (IShift) iter.next();
     						List allStudentGroupsAux = persistentStudentGroup
 							.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
     						infoSiteShiftAux = new InfoSiteShift();
@@ -1918,8 +1918,8 @@ public class TeacherAdministrationSiteComponentBuilder {
     		
     		if(groupProperties == null)return null;
     		
-    		ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(
-    				Turno.class, shiftCode);
+    		IShift shift = (IShift) sp.getITurnoPersistente().readByOID(
+    				Shift.class, shiftCode);
     	
     		List infoSiteGroupsByShiftList = new ArrayList();
     		InfoSiteShift infoSiteShift = new InfoSiteShift();
@@ -1983,8 +1983,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 					GroupProperties.class, groupPropertiesCode);
     		if(groupProperties == null)return null;
     		
-    		ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(
-    				Turno.class, shiftCode);
+    		IShift shift = (IShift) sp.getITurnoPersistente().readByOID(
+    				Shift.class, shiftCode);
     
     		List aux = new ArrayList();
     		List studentGroupsWithShift = groupProperties.getAttendsSet().getStudentGroupsWithShift();
@@ -2010,7 +2010,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     			infoSiteStudentsAndShiftByStudentGroup = new InfoSiteStudentsAndShiftByStudentGroup();
 				
     			IStudentGroup studentGroup = (IStudentGroup)iterAllStudentGroups.next();
-    			ITurno turno = studentGroup.getShift();
+    			IShift turno = studentGroup.getShift();
     			infoSiteStudentsAndShiftByStudentGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
     			infoSiteStudentsAndShiftByStudentGroup.setInfoShift(InfoShift.newInfoFromDomain(turno));
     			
@@ -2146,7 +2146,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             } else {
                 for (int i = 0; i < shifts.size(); i++) {
-                    ITurno shift = (ITurno) shifts.get(i);
+                    IShift shift = (IShift) shifts.get(i);
                     if (strategy.checkShiftType(groupProperties, shift)) {
 
                         //InfoShift infoShift = new InfoShift(shift.getNome(),
@@ -2166,9 +2166,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                         for (int j = 0; j < lessons.size(); j++)
                             //infoLessons.add(Cloner
-                                    //.copyILesson2InfoLesson((IAula) lessons
+                                    //.copyILesson2InfoLesson((ILesson) lessons
                                             //.get(j)));
-	                        infoLessons.add(InfoLesson.newInfoFromDomain((IAula) lessons
+	                        infoLessons.add(InfoLesson.newInfoFromDomain((ILesson) lessons
 	                                        .get(j)));
 
                         infoShift.setInfoLessons(infoLessons);
@@ -2176,10 +2176,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                         for (int j = 0; j < classesShifts.size(); j++)
                             //infoClasses
                                     //.add(Cloner
-                                            //.copyClass2InfoClass(((ITurmaTurno) classesShifts
+                                            //.copyClass2InfoClass(((ISchoolClassShift) classesShifts
                                                     //.get(j)).getTurma()));
                         	infoClasses
-                        	.add(InfoClass.newInfoFromDomain(((ITurmaTurno) classesShifts
+                        	.add(InfoClass.newInfoFromDomain(((ISchoolClassShift) classesShifts
                                         .get(j)).getTurma()));
                         infoShift.setInfoClasses(infoClasses);
                         infoShift.setIdInternal(shift.getIdInternal());

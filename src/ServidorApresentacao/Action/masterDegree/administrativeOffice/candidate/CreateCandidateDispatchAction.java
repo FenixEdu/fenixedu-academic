@@ -65,7 +65,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
                 result = (List) ServiceManagerServiceFactory.executeService(userView,
                         "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("O Curso de Mestrado", e);
+                throw new NonExistingActionException("O Degree de Mestrado", e);
             }
 
             request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
@@ -205,7 +205,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
              * try { degreeList = (ArrayList)
              * ServiceManagerServiceFactory.executeService(userView,
              * "ReadMasterDegrees", args); } catch (ExistingServiceException e) {
-             * throw new ExistingActionException("Curso" ,e); }
+             * throw new ExistingActionException("Degree" ,e); }
              * 
              * //BeanComparator nameComparator = new
              * BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");

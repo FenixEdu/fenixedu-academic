@@ -14,10 +14,10 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.Curso;
+import Dominio.Degree;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -47,7 +47,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             if (executionPeriod2Compare == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeId);
+            IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
             if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }

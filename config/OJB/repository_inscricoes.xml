@@ -269,7 +269,7 @@
 	</reference-descriptor>
 	<reference-descriptor
 			name="departmentCourse"
-			class-ref="Dominio.DisciplinaDepartamento"
+			class-ref="Dominio.DepartmentCourse"
 			proxy="true">
 		<foreignkey field-ref="departmentCourseKey"/> 
 	</reference-descriptor>
@@ -654,7 +654,7 @@
       />
 	<reference-descriptor
 			name="personResponsibleForGrade"
-			class-ref="Dominio.Pessoa"
+			class-ref="Dominio.Person"
 			proxy="true">
 		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>

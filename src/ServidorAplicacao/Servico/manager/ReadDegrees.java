@@ -7,7 +7,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -25,7 +25,7 @@ public class ReadDegrees implements IService {
         return (List) CollectionUtils.collect(degrees, new Transformer() {
 
             public Object transform(Object arg0) {
-                ICurso degree = (ICurso) arg0;
+                IDegree degree = (IDegree) arg0;
                 InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 return infoDegree;
             }

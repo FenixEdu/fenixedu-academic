@@ -13,13 +13,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
-import Dominio.ITurmaTurno;
-import Dominio.ITurno;
-import Dominio.TurmaTurno;
+import Dominio.ISchoolClass;
+import Dominio.ISchoolClassShift;
+import Dominio.IShift;
+import Dominio.SchoolClassShift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -37,7 +37,7 @@ public class AdicionarTurno implements IService {
 
     public Boolean run(InfoClass infoClass, InfoShift infoShift) throws FenixServiceException {
 
-        ITurmaTurno turmaTurno = null;
+        ISchoolClassShift turmaTurno = null;
         boolean result = false;
 
         try {
@@ -45,17 +45,17 @@ public class AdicionarTurno implements IService {
 
             IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
                     .getInfoExecutionPeriod());
-            ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
+            IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
                     .getInfoExecutionDegree());
             IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
                     .getInfoDisciplinaExecucao());
 
-            ITurma group = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
+            ISchoolClass group = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
                     infoClass.getNome(), executionDegree, executionPeriod);
-            ITurno shift = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
+            IShift shift = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
                     executionCourse);
 
-            turmaTurno = new TurmaTurno(group, shift);
+            turmaTurno = new SchoolClassShift(group, shift);
 
             try {
                 sp.getITurmaTurnoPersistente().simpleLockWrite(turmaTurno);

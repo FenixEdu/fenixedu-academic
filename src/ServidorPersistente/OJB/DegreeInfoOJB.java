@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.DegreeInfo;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeInfo;
@@ -18,9 +18,9 @@ public class DegreeInfoOJB extends PersistentObjectOJB implements IPersistentDeg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegree(Dominio.ICurso)
+     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegree(Dominio.IDegree)
      */
-    public List readDegreeInfoByDegree(ICurso degree) throws ExcepcaoPersistencia {
+    public List readDegreeInfoByDegree(IDegree degree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeKey", degree.getIdInternal());
 
@@ -30,10 +30,10 @@ public class DegreeInfoOJB extends PersistentObjectOJB implements IPersistentDeg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.ICurso,
+     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.IDegree,
      *      Dominio.IExecutionYear)
      */
-    public List readDegreeInfoByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+    public List readDegreeInfoByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeKey", degree.getIdInternal());

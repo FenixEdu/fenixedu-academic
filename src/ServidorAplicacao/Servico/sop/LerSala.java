@@ -9,7 +9,7 @@ package ServidorAplicacao.Servico.sop;
 
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -45,7 +45,7 @@ public class LerSala implements IServico {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ISala sala = sp.getISalaPersistente().readByName(keySala.getNomeSala());
+            IRoom sala = sp.getISalaPersistente().readByName(keySala.getNomeSala());
             if (sala != null)
                 infoSala = new InfoRoom(sala.getNome(), sala.getEdificio(), sala.getPiso(), sala
                         .getTipo(), sala.getCapacidadeNormal(), sala.getCapacidadeExame());

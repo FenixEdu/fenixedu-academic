@@ -12,7 +12,7 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IEmployee;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -87,7 +87,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
                         .getEnrolmentEvaluationType());
                 enrolmentEvaluation.setCheckSum(null);
                 //		employee
-                IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+                IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
                 IEmployee employee = readEmployee(person);
                 enrolmentEvaluation.setEmployee(employee);
                 enrolmentEvaluation.setExamDate(null);
@@ -107,7 +107,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
                     throw new NonExistingServiceException();
                 }
                 //		employee
-                IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+                IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
                 IEmployee employee = readEmployee(person);
 
                 infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
@@ -185,7 +185,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
         return infoEvaluationsWithError;
     }
 
-    private IEmployee readEmployee(IPessoa person) {
+    private IEmployee readEmployee(IPerson person) {
         IEmployee employee = null;
         IPersistentEmployee persistentEmployee;
         try {

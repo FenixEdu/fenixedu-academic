@@ -6,7 +6,7 @@ package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
@@ -22,7 +22,7 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
     }
 
     public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,
-            int numberOfStudentsToEnrole, ITurno shift) {
+            int numberOfStudentsToEnrole, IShift shift) {
 
         if (checkNumberOfGroups(groupProperties, shift)) {
             return new Integer(1);

@@ -1,5 +1,5 @@
 /*
- * FuncNaoDocente.java
+ * NonTeacherEmployee.java
  *
  */
 
@@ -9,7 +9,7 @@ package Dominio;
  * 
  * @author Ivo Brandão
  */
-public class FuncNaoDocente extends DomainObject {
+public class NonTeacherEmployee extends DomainObject {
 
     private int codigoInterno = 0;
 
@@ -18,13 +18,13 @@ public class FuncNaoDocente extends DomainObject {
     private Funcionario funcionario = null;
 
     /** Construtor por defeito */
-    public FuncNaoDocente() {
+    public NonTeacherEmployee() {
         this.codigoInterno = 0;
         this.chaveFuncionario = 0;
     }
 
     /** Construtor */
-    public FuncNaoDocente(int codigoInterno, int chaveFuncionario) {
+    public NonTeacherEmployee(int codigoInterno, int chaveFuncionario) {
         this.codigoInterno = codigoInterno;
         this.chaveFuncionario = chaveFuncionario;
     }
@@ -32,8 +32,8 @@ public class FuncNaoDocente extends DomainObject {
     /** Verifica se outro objecto e identico a este */
     public boolean equals(Object obj) {
 
-        return ((obj instanceof FuncNaoDocente)
-                && (codigoInterno == ((FuncNaoDocente) obj).getCodigoInterno()) && (chaveFuncionario == ((FuncNaoDocente) obj)
+        return ((obj instanceof NonTeacherEmployee)
+                && (codigoInterno == ((NonTeacherEmployee) obj).getCodigoInterno()) && (chaveFuncionario == ((NonTeacherEmployee) obj)
                 .getChaveFuncionario()));
     }
 

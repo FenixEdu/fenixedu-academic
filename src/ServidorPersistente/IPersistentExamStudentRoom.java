@@ -9,7 +9,7 @@ import java.util.List;
 
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
-import Dominio.ISala;
+import Dominio.IRoom;
 import Dominio.IStudent;
 
 /**
@@ -22,15 +22,15 @@ public interface IPersistentExamStudentRoom extends IPersistentObject {
 
     public List readBy(IStudent student) throws ExcepcaoPersistencia;
 
-    public List readBy(ISala room) throws ExcepcaoPersistencia;
+    public List readBy(IRoom room) throws ExcepcaoPersistencia;
 
-    public List readBy(IExam exam, ISala room) throws ExcepcaoPersistencia;
+    public List readBy(IExam exam, IRoom room) throws ExcepcaoPersistencia;
 
     public IExamStudentRoom readBy(IExam exam, IStudent student) throws ExcepcaoPersistencia;
 
-    public List readBy(IStudent student, ISala room) throws ExcepcaoPersistencia;
+    public List readBy(IStudent student, IRoom room) throws ExcepcaoPersistencia;
 
-    public IExamStudentRoom readBy(IExam exam, IStudent student, ISala room) throws ExcepcaoPersistencia;
+    public IExamStudentRoom readBy(IExam exam, IStudent student, IRoom room) throws ExcepcaoPersistencia;
 
     public void delete(IExamStudentRoom examStudentRoom) throws ExcepcaoPersistencia;
 

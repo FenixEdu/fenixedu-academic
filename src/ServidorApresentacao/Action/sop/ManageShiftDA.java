@@ -87,7 +87,7 @@ public class ManageShiftDA extends
             infoShiftNew = (InfoShift) ServiceUtils.executeService(userView, "EditarTurno",
                     argsCriarTurno);
         } catch (ExistingServiceException ex) {
-            throw new ExistingActionException("O Turno", ex);
+            throw new ExistingActionException("O Shift", ex);
         } catch (InvalidFinalAvailabilityException e0) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("errors.exception.invalid.finalAvailability", new ActionError(

@@ -8,10 +8,10 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
-import Dominio.ITurmaTurno;
-import Dominio.ITurno;
+import Dominio.ISchoolClassShift;
+import Dominio.IShift;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -64,7 +64,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses implements ISe
             } else {
 
                 for (int i = 0; i < shifts.size(); i++) {
-                    ITurno shift = (ITurno) shifts.get(i);
+                    IShift shift = (IShift) shifts.get(i);
                     InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
                             Cloner.copyShift2InfoShift(shift), null, null);
 
@@ -77,14 +77,14 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses implements ISe
 
                     for (int j = 0; j < lessons.size(); j++) {
                         InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-                        InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((IAula) lessons.get(j));
+                        InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((ILesson) lessons.get(j));
                         infoLesson.setInfoShift(infoShift);
                         infoLessons.add(infoLesson);
                     }
                     shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
 
                     for (int j = 0; j < classesShifts.size(); j++)
-                        infoClasses.add(Cloner.copyClass2InfoClass(((ITurmaTurno) classesShifts.get(j))
+                        infoClasses.add(Cloner.copyClass2InfoClass(((ISchoolClassShift) classesShifts.get(j))
                                 .getTurma()));
 
                     shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);

@@ -13,7 +13,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.IExecutionCourse;
 import Dominio.ISummary;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.Summary;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSummary;
@@ -87,9 +87,9 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentSummary#readByShift(Dominio.ITurno)
+     * @see ServidorPersistente.IPersistentSummary#readByShift(Dominio.IShift)
      */
-    public List readByShift(IExecutionCourse executionCourse, ITurno shift) throws ExcepcaoPersistencia {
+    public List readByShift(IExecutionCourse executionCourse, IShift shift) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
         criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
@@ -137,10 +137,10 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentSummary#readSummaryByUnique(Dominio.ITurno,
+     * @see ServidorPersistente.IPersistentSummary#readSummaryByUnique(Dominio.IShift,
      *      java.util.Calendar, java.util.Calendar)
      */
-    public ISummary readSummaryByUnique(ITurno shift, Calendar summaryDate, Calendar summaryHour)
+    public ISummary readSummaryByUnique(IShift shift, Calendar summaryDate, Calendar summaryHour)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.idInternal", shift.getIdInternal());

@@ -20,7 +20,7 @@ import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import DataBeans.util.InfoStudentCurricularPlansWithSelectedEnrollments;
 import Dominio.IEnrollment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
@@ -81,7 +81,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
             
             if (curricularPlanID.isAll() || curricularPlanID.isNewest())
             {
-                IPessoa person = (IPessoa)sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+                IPerson person = (IPerson)sp.getIPessoaPersistente().lerPessoaPorUsername(username);
                 List students = sp.getIPersistentStudent().readbyPerson(person);
                 List studentCPsTemp = null;
                 

@@ -31,9 +31,9 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ISite;
 import Dominio.ITeacher;
 import Dominio.Mark;
@@ -118,7 +118,7 @@ public class SubmitMarks implements IServico {
 
             //employee logged
             IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-            IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = readEmployee(pessoa);
             ITeacher teacher = ((ResponsibleFor) professors.get(0)).getTeacher();
 
@@ -166,7 +166,7 @@ public class SubmitMarks implements IServico {
             }
 
             while (iter.hasNext()) {
-                IFrequenta attend = (IFrequenta) iter.next();
+                IAttends attend = (IAttends) iter.next();
                 IEnrollment enrolment = attend.getEnrolment();
                 IEnrolmentEvaluation enrolmentEvaluation = null;
 
@@ -239,7 +239,7 @@ public class SubmitMarks implements IServico {
         List enrolmentListIds = (List) CollectionUtils.collect(attendList, new Transformer() {
 
             public Object transform(Object input) {
-                IFrequenta attend = (IFrequenta) input;
+                IAttends attend = (IAttends) input;
                 IEnrollment enrolment = attend.getEnrolment();
                 if(enrolment != null) {
                     if(enrolment.getExecutionPeriod().equals(executionPeriod))
@@ -264,7 +264,7 @@ public class SubmitMarks implements IServico {
         }
     }
 
-    private IMark getMark(IEvaluation evaluation, List markList, IFrequenta attend) {
+    private IMark getMark(IEvaluation evaluation, List markList, IAttends attend) {
         //                IMark mark = persistentMark.readBy(evaluation, attend);
         IMark mark = new Mark();
         mark.setAttend(attend);
@@ -357,7 +357,7 @@ public class SubmitMarks implements IServico {
         }
     }
 
-    private IEmployee readEmployee(IPessoa person) {
+    private IEmployee readEmployee(IPerson person) {
         IEmployee employee = null;
         IPersistentEmployee persistentEmployee;
         try {

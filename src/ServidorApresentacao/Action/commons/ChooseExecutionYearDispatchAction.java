@@ -53,7 +53,7 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction {
                 result = (List) ServiceManagerServiceFactory.executeService(userView,
                         "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("O Curso de Mestrado", e);
+                throw new NonExistingActionException("O Degree de Mestrado", e);
             }
 
             request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);

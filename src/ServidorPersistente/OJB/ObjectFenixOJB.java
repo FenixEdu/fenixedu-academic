@@ -344,7 +344,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
         //        if (object instanceof MasterDegreeCandidate || object instanceof
         // CandidateSituation
-        //                || object instanceof Summary || object instanceof Pessoa || object
+        //                || object instanceof Summary || object instanceof Person || object
         // instanceof Advisory) {
         //            Object newObject = ((TransactionImpl) odmg.currentTransaction())
         //                    .getObjectByIdentity(new Identity(object, pb));
@@ -432,7 +432,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
             //                    && (list.get(0) instanceof MasterDegreeCandidate
             //                            || list.get(0) instanceof CandidateSituation
             //                            || list.get(0) instanceof Summary || list.get(0) instanceof
-            // Pessoa || list
+            // Person || list
             //                            .get(0) instanceof Advisory)) {
             //                lockReadWithReplacement(list, pb);
             //

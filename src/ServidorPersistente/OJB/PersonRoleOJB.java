@@ -3,7 +3,7 @@ package ServidorPersistente.OJB;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IPersonRole;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.PersonRole;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -18,7 +18,7 @@ public class PersonRoleOJB extends PersistentObjectOJB implements IPersistentPer
         super();
     }
 
-    public IPersonRole readByPersonAndRole(IPessoa person, IRole role) throws ExcepcaoPersistencia {
+    public IPersonRole readByPersonAndRole(IPerson person, IRole role) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("role.roleType", new Integer(role.getRoleType().getValue()));

@@ -18,7 +18,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import Dominio.IBuilding;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBuilding;
@@ -29,7 +29,7 @@ public class EditarSala implements IService {
 
     public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException {
 
-        ISala sala = null;
+        IRoom sala = null;
         boolean result = false;
 
         try {
@@ -42,7 +42,7 @@ public class EditarSala implements IService {
             if (sala != null) {
 
                 if (!sala.getNome().equals(salaNova.getNome())) {
-                    ISala roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
+                    IRoom roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
                     if (roomWithSameName != null) {
                         throw new ExistingServiceException();
                     }

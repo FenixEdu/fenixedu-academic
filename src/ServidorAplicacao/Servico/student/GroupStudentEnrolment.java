@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -62,7 +62,7 @@ public class GroupStudentEnrolment implements IService {
             
             IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
             
-            IFrequenta attend = groupProperties.getAttendsSet().getStudentAttend(student);
+            IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
  
             if(attend == null){
             	throw new NotAuthorizedException();

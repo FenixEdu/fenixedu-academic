@@ -14,7 +14,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionDegree;
@@ -33,7 +33,7 @@ public class ReadExecutionDegreeRecentByDegreeId implements IService {
         CollectionUtils.filter(listExecutionDegrees, new Predicate(){
 
             public boolean evaluate(Object arg0) {
-                ICursoExecucao executionDegree = (ICursoExecucao) arg0;
+                IExecutionDegree executionDegree = (IExecutionDegree) arg0;
                 
                 return executionDegree.getCurricularPlan().getDegree().getIdInternal().equals(degreeId);
             }
@@ -41,7 +41,7 @@ public class ReadExecutionDegreeRecentByDegreeId implements IService {
         ComparatorChain chain = new ComparatorChain(new BeanComparator("curricularPlan.initialDate"));
         chain.addComparator(new BeanComparator("executionYear.year"));
         Collections.sort(listExecutionDegrees, chain);
-        ICursoExecucao executionDegree = (ICursoExecucao) listExecutionDegrees.get(listExecutionDegrees.size() -1);
+        IExecutionDegree executionDegree = (IExecutionDegree) listExecutionDegrees.get(listExecutionDegrees.size() -1);
         
         InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
         

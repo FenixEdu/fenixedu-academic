@@ -7,9 +7,9 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoDegreeInfoWithDegree;
-import Dominio.Curso;
+import Dominio.Degree;
 import Dominio.ExecutionPeriod;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeInfo;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -70,7 +70,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
 
             //Degree
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeId);
+            IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }

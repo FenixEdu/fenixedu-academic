@@ -14,7 +14,7 @@ import DataBeans.finalDegreeWork.InfoGroup;
 import DataBeans.finalDegreeWork.InfoGroupProposal;
 import DataBeans.finalDegreeWork.InfoGroupStudent;
 import DataBeans.finalDegreeWork.InfoProposal;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.ITeacher;
 import Dominio.finalDegreeWork.IGroup;
@@ -105,7 +105,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                                 ITeacher orientator = proposal.getOrientator();
                                 if (orientator != null) {
                                     InfoTeacher infoTeacher = new InfoTeacher();
-                                    IPessoa person = orientator.getPerson();
+                                    IPerson person = orientator.getPerson();
                                     if (person != null) {
                                         InfoPerson infoPerson = new InfoPerson();
                                         infoPerson.setNome(person.getNome());
@@ -116,7 +116,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                                 ITeacher coOrientator = proposal.getCoorientator();
                                 if (coOrientator != null) {
                                     InfoTeacher infoTeacher = new InfoTeacher();
-                                    IPessoa person = coOrientator.getPerson();
+                                    IPerson person = coOrientator.getPerson();
                                     if (person != null) {
                                         InfoPerson infoPerson = new InfoPerson();
                                         infoPerson.setNome(person.getNome());

@@ -9,8 +9,8 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -50,7 +50,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
     //                    executionYearOID, typeOfCourse);
     //            if (executionDegrees != null && !executionDegrees.isEmpty()) {
     //                for (int i = 0; i < executionDegrees.size(); i++) {
-    //                    infoExecutionDegrees.add(Cloner.get((ICursoExecucao)
+    //                    infoExecutionDegrees.add(Cloner.get((IExecutionDegree)
     // executionDegrees.get(i)));
     //                }
     //            }
@@ -60,7 +60,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
     //        return infoExecutionDegrees;
     //    }
 
-    public Object run(ICurso curso, IExecutionYear year) throws FenixServiceException {
+    public Object run(IDegree curso, IExecutionYear year) throws FenixServiceException {
         List infoExecutionDegrees = new ArrayList();
 
         try {
@@ -71,7 +71,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
             List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(curso, year);
             if (executionDegrees != null && !executionDegrees.isEmpty()) {
                 for (int i = 0; i < executionDegrees.size(); i++) {
-                    infoExecutionDegrees.add(Cloner.get((ICursoExecucao) executionDegrees.get(i)));
+                    infoExecutionDegrees.add(Cloner.get((IExecutionDegree) executionDegrees.get(i)));
                 }
             }
         } catch (ExcepcaoPersistencia ex) {

@@ -14,7 +14,7 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
 
     private IStudent student;
 
-    private ISala room;
+    private IRoom room;
 
     private Integer keyExam;
 
@@ -28,7 +28,7 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
     public ExamStudentRoom() {
     }
 
-    public ExamStudentRoom(IExam exam, IStudent student, ISala room) {
+    public ExamStudentRoom(IExam exam, IStudent student, IRoom room) {
         setExam(exam);
         setStudent(student);
         setRoom(room);
@@ -39,8 +39,8 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
 
         if (obj instanceof IExamStudentRoom) {
             IExamStudentRoom examStudentRoom = (IExamStudentRoom) obj;
-            ISala room = examStudentRoom.getRoom();
-            ISala thisRoom = this.getRoom();
+            IRoom room = examStudentRoom.getRoom();
+            IRoom thisRoom = this.getRoom();
             resultado = this.getExam().equals(examStudentRoom.getExam())
                     && (((thisRoom == null) && (room == null)) || ((thisRoom != null) && (thisRoom
                             .equals(room)))) && this.getStudent().equals(examStudentRoom.getStudent());
@@ -79,7 +79,7 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
     /**
      * @return
      */
-    public ISala getRoom() {
+    public IRoom getRoom() {
         return room;
     }
 
@@ -121,7 +121,7 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
     /**
      * @param sala
      */
-    public void setRoom(ISala sala) {
+    public void setRoom(IRoom sala) {
         room = sala;
     }
 

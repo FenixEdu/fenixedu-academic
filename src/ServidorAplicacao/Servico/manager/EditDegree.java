@@ -5,7 +5,7 @@ package ServidorAplicacao.Servico.manager;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -34,7 +34,7 @@ public class EditDegree implements IService {
 
         ISuportePersistente persistentSuport = null;
         ICursoPersistente persistentDegree = null;
-        ICurso oldDegree = null;
+        IDegree oldDegree = null;
 
         try {
 

@@ -15,8 +15,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.IGuide;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -32,14 +32,14 @@ public class ChooseGuideByPersonID implements IService {
 
         ISuportePersistente sp = null;
         List guides = null;
-        IPessoa person = null;
+        IPerson person = null;
 
         // Check if person exists
 
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            person = (IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class, personID);
+            person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class, personID);
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);

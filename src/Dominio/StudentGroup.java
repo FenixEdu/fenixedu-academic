@@ -17,7 +17,7 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 
     private IAttendsSet attendsSet;
 
-    private ITurno shift;
+    private IShift shift;
 	
     /** 
      * Construtor
@@ -44,7 +44,7 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	/** 
 	 * Construtor
 	 */
-	public StudentGroup(Integer groupNumber,IAttendsSet attendsSet,ITurno shift) {
+	public StudentGroup(Integer groupNumber,IAttendsSet attendsSet,IShift shift) {
 			
 		this.groupNumber = groupNumber;
 		this.attendsSet = attendsSet;
@@ -105,9 +105,9 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	}
 
 	/**
-	 * @return Turno
+	 * @return Shift
 	 */
-	public ITurno getShift() {
+	public IShift getShift() {
 		return shift;
 	}
 
@@ -150,7 +150,7 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	* Sets the shift.
 	* @param shift The shift to set
 	*/
-	public void setShift(ITurno shift) {
+	public void setShift(IShift shift) {
 		this.shift = shift;
 	}
 }

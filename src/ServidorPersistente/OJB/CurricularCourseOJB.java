@@ -7,7 +7,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.CurricularCourse;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IScientificArea;
@@ -238,10 +238,10 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndExecutionYear(Dominio.ICurso,
+     * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndExecutionYear(Dominio.IDegree,
      *      Dominio.IExecutionYear)
      */
-    public List readExecutedCurricularCoursesByDegreeAndExecutionYear(ICurso curso,
+    public List readExecutedCurricularCoursesByDegreeAndExecutionYear(IDegree curso,
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", curso.getIdInternal());
@@ -254,10 +254,10 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(Dominio.ICurso,
+     * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(Dominio.IDegree,
      *      java.lang.Integer, Dominio.IExecutionYear)
      */
-    public List readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(ICurso curso, Integer year,
+    public List readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(IDegree curso, Integer year,
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", curso.getIdInternal());

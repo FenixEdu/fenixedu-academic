@@ -3,7 +3,7 @@ package ServidorAplicacao.Servico.commons.externalPerson;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IWorkLocation;
 import Dominio.WorkLocation;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -61,7 +61,7 @@ public class EditExternalPerson implements IService {
                     WorkLocation.class, workLocationID);
             storedExternalPerson.setWorkLocation(storedWorkLocation);
 
-            IPessoa person = storedExternalPerson.getPerson();
+            IPerson person = storedExternalPerson.getPerson();
             sp.getIPessoaPersistente().lockWrite(person);
 
             person.setNome(name);

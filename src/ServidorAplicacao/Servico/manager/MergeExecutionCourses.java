@@ -21,7 +21,7 @@ import Dominio.IBibliographicReference;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupPropertiesExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -30,7 +30,7 @@ import Dominio.ISite;
 import Dominio.IStudent;
 import Dominio.ISummary;
 import Dominio.ISupportLesson;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -289,11 +289,11 @@ public class MergeExecutionCourses implements IService {
         List sourceShifts = persistentShift.readByExecutionCourse(source);
         Iterator iter = sourceShifts.iterator();
         while (iter.hasNext()) {
-            ITurno shift = (ITurno) iter.next();
+            IShift shift = (IShift) iter.next();
             /*
              * List sourceLessons = shift.getAssociatedLessons(); Iterator
              * iterator = sourceLessons.iterator(); while (iterator.hasNext()) {
-             * IAula lesson = (IAula) iterator.next();
+             * ILesson lesson = (ILesson) iterator.next();
              * persistentLesson.simpleLockWrite(lesson);
              * lesson.setDisciplinaExecucao(destination); }
              */
@@ -313,12 +313,12 @@ public class MergeExecutionCourses implements IService {
         List sourceAttends = source.getAttends();
         Map alreadyAttendingDestination = new HashMap();
         for (int i = 0; i < destination.getAttends().size(); i++) {
-            IFrequenta attend = (IFrequenta) destination.getAttends().get(i);
+            IAttends attend = (IAttends) destination.getAttends().get(i);
             alreadyAttendingDestination.put(attend.getAluno().getNumber().toString(), attend);
         }
         Iterator iter = sourceAttends.iterator();
         while (iter.hasNext()) {
-            IFrequenta attend = (IFrequenta) iter.next();
+            IAttends attend = (IAttends) iter.next();
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
                 attend.setDisciplinaExecucao(destination);
                 try {
@@ -339,12 +339,12 @@ public class MergeExecutionCourses implements IService {
         // if (sourceAttends != null) {
         // Iterator iter = sourceAttends.iterator();
         // while (iter.hasNext()) {
-        // IFrequenta attend = (IFrequenta) iter.next();
-        // final IFrequenta attend2Compare = attend;
+        // IAttends attend = (IAttends) iter.next();
+        // final IAttends attend2Compare = attend;
         // if (CollectionUtils.find(destinationAttends, new Predicate() {
         //
         // public boolean evaluate(Object arg0) {
-        // IFrequenta frequenta = (IFrequenta) arg0;
+        // IAttends frequenta = (IAttends) arg0;
         // if (frequenta.getAluno() == attend2Compare.getAluno()) {
         // return true;
         // }

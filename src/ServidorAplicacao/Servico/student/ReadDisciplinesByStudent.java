@@ -6,7 +6,7 @@ import java.util.List;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -55,7 +55,7 @@ public class ReadDisciplinesByStudent implements IServico {
                 List frequencies = sp.getIFrequentaPersistente()
                         .readByStudentNumberInCurrentExecutionPeriod(number);
                 for (int i = 0; i < frequencies.size(); i++) {
-                    IFrequenta frequent = (IFrequenta) frequencies.get(i);
+                    IAttends frequent = (IAttends) frequencies.get(i);
                     IExecutionCourse executionCourse = frequent.getDisciplinaExecucao();
 
                     disciplines.add(executionCourse);

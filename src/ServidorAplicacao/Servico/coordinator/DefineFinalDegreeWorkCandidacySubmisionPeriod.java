@@ -7,8 +7,8 @@ package ServidorAplicacao.Servico.coordinator;
 import java.util.Date;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.finalDegreeWork.IScheduleing;
 import Dominio.finalDegreeWork.Scheduleing;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -37,8 +37,8 @@ public class DefineFinalDegreeWorkCandidacySubmisionPeriod implements IService {
                 IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                         .getIPersistentFinalDegreeWork();
 
-                ICursoExecucao cursoExecucao = (ICursoExecucao) persistentFinalDegreeWork.readByOID(
-                        CursoExecucao.class, executionDegreeOID);
+                IExecutionDegree cursoExecucao = (IExecutionDegree) persistentFinalDegreeWork.readByOID(
+                        ExecutionDegree.class, executionDegreeOID);
 
                 if (cursoExecucao != null) {
                     IScheduleing scheduleing = persistentFinalDegreeWork

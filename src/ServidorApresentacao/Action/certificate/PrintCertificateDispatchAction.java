@@ -96,7 +96,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                 throw new RuntimeException("Error", e);
             }
             if ((certificate.equals("Matrícula")) || (certificate.equals("Matrícula e Inscrição"))
-                    || (certificate.equals("Duração do Curso"))) {
+                    || (certificate.equals("Duração do Degree"))) {
                 List enrolmentList = null;
                 Object args[] = { infoStudentCurricularPlan.getIdInternal() };
                 try {
@@ -116,7 +116,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                     session
                             .setAttribute(SessionConstants.MATRICULA_ENROLMENT, certificate
                                     .toUpperCase());
-                if (certificate.equals("Duração do Curso")) {
+                if (certificate.equals("Duração do Degree")) {
                     if (infoStudentCurricularPlan.getSpecialization().equals(
                             new Specialization(Specialization.MESTRADO))) {
                         certificate = new String("Matrícula");

@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoRoom;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -54,7 +54,7 @@ public class LerSalas implements IServico {
             Iterator iterator = salas.iterator();
             infoSalas = new ArrayList();
             while (iterator.hasNext()) {
-                ISala elem = (ISala) iterator.next();
+                IRoom elem = (IRoom) iterator.next();
                 infoSalas.add(new InfoRoom(elem.getNome(), elem.getEdificio(), elem.getPiso(), elem
                         .getTipo(), elem.getCapacidadeNormal(), elem.getCapacidadeExame()));
             }

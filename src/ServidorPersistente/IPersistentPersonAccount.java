@@ -1,7 +1,7 @@
 package ServidorPersistente;
 
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * 
@@ -11,5 +11,5 @@ import Dominio.IPessoa;
  */
 public interface IPersistentPersonAccount extends IPersistentObject {
 
-    public IPersonAccount readByPerson(IPessoa person) throws ExcepcaoPersistencia;
+    public IPersonAccount readByPerson(IPerson person) throws ExcepcaoPersistencia;
 }

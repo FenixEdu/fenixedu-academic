@@ -52,7 +52,7 @@ public class ReadAuthorsByPublicationId implements IServico {
             IPersistentPublication persitentPublication = sp.getIPersistentPublication();
             //IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             //IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-            //IPessoa person =
+            //IPerson person =
             //	persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             //IAuthor author =
             //	persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());

@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import Dominio.IGratuitySituation;
 import Dominio.IGuideEntry;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Util.PaymentType;
 import Util.transactions.TransactionType;
 
@@ -37,7 +37,7 @@ public class GratuityTransaction extends PaymentTransaction implements IGratuity
      */
     public GratuityTransaction(Double value, Timestamp transactionDate, String remarks,
             PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-            IPessoa responsiblePerson, IPersonAccount personAccount, IGuideEntry guideEntry,
+            IPerson responsiblePerson, IPersonAccount personAccount, IGuideEntry guideEntry,
             IGratuitySituation gratuitySituation) {
         super(value, transactionDate, remarks, paymentType, transactionType, wasInternalBalance,
                 responsiblePerson, personAccount, guideEntry);

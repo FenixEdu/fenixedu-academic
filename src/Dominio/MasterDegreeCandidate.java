@@ -42,11 +42,11 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     private String givenCreditsRemarks;
 
     // Instance from class Degree
-    private ICursoExecucao executionDegree = null;
+    private IExecutionDegree executionDegree = null;
 
     // Instance from class Country
 
-    private IPessoa person;
+    private IPerson person;
 
     // List of Situations
     private List situations;
@@ -82,7 +82,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
         person = null;
     }
 
-    public MasterDegreeCandidate(IPessoa person, ICursoExecucao executionDegree,
+    public MasterDegreeCandidate(IPerson person, IExecutionDegree executionDegree,
             Integer candidateNumber, Specialization specialization, String majorDegree,
             String majorDegreeSchool, Integer majorDegreeYear, Double average) {
         this.person = person;
@@ -179,7 +179,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     /**
      * @return
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
@@ -214,7 +214,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     /**
      * @return
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -256,7 +256,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     /**
      * @param execucao
      */
-    public void setExecutionDegree(ICursoExecucao execucao) {
+    public void setExecutionDegree(IExecutionDegree execucao) {
         executionDegree = execucao;
     }
 
@@ -291,7 +291,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     /**
      * @param pessoa
      */
-    public void setPerson(IPessoa pessoa) {
+    public void setPerson(IPerson pessoa) {
         person = pessoa;
     }
 

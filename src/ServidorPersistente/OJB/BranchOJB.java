@@ -7,7 +7,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.Branch;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
@@ -33,7 +33,7 @@ public class BranchOJB extends PersistentObjectOJB implements IPersistentBranch 
 
     }
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeCurricularPlan.idInternal", executionDegree.getCurricularPlan()
                 .getIdInternal());

@@ -20,7 +20,7 @@ import ServidorPersistente.IPersistentRoomOccupation;
  */
 public class RoomOccupationOJB extends ObjectFenixOJB implements IPersistentRoomOccupation {
     /*
-     * public List readBy(Sala room) throws ExcepcaoPersistencia { Criteria
+     * public List readBy(Room room) throws ExcepcaoPersistencia { Criteria
      * criteria = new Criteria(); criteria.addEqualTo("keyRoom",
      * room.getIdInternal()); return queryList(RoomOccupation.class, criteria); }
      */

@@ -14,7 +14,7 @@ import Dominio.GroupProperties;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.Student;
@@ -101,7 +101,7 @@ public class InsertAttendsSetMembers implements IService {
             
             
             while (iterAttends.hasNext()) {
-                IFrequenta existingAttend = (IFrequenta) iterAttends
+                IAttends existingAttend = (IAttends) iterAttends
                         .next();
                 IStudent existingAttendStudent = existingAttend.getAluno();
                 
@@ -127,7 +127,7 @@ public class InsertAttendsSetMembers implements IService {
             Iterator iterStudents1 = studentsList1.iterator();
             
             while (iterStudents1.hasNext()) {
-            	IFrequenta attend=null;
+            	IAttends attend=null;
                 IStudent student = (IStudent)iterStudents1.next();
             
                 List listaExecutionCourses = new ArrayList();

@@ -6,7 +6,7 @@ package ServidorAplicacao.Filtro.person;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
@@ -87,7 +87,7 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
             IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
             IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
 
-            IPessoa person = persistentPerson.lerPessoaPorUsername(user);
+            IPerson person = persistentPerson.lerPessoaPorUsername(user);
             //Try to read the grant owner from de database
             IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(person.getIdInternal());
 

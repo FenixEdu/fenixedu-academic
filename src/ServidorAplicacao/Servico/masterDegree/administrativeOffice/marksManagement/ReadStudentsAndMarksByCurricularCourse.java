@@ -26,7 +26,7 @@ import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -124,7 +124,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
                             }
                         });
                 if (enrolmentEvaluationsWithResponsiblePerson.size() > 0) {
-                    IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson
+                    IPerson person = ((IEnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson
                             .get(0)).getPersonResponsibleForGrade();
                     ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
                     infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);

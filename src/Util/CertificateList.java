@@ -70,7 +70,7 @@ public class CertificateList extends FenixUtil {
 
     public static final String MATRICULA_INSCRICAO_STRING = "Matrícula e Inscrição";
 
-    public static final String DURACAO_CURSO_STRING = "Duração do Curso";
+    public static final String DURACAO_CURSO_STRING = "Duração do Degree";
 
     public static final String INSCRICAO_STRING = "Inscrição";
 

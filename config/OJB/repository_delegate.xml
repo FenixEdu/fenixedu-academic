@@ -45,7 +45,7 @@
         jdbc-type="BIT"/>
     <reference-descriptor
 			name="degree"
-			class-ref="Dominio.Curso"
+			class-ref="Dominio.Degree"
 			proxy="false">
 		<foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>

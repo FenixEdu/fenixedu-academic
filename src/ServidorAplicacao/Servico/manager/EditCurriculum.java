@@ -12,7 +12,7 @@ import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.IExecutionYear;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -50,7 +50,7 @@ public class EditCurriculum implements IService {
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();
             }
-            IPessoa person = persistentPerson.lerPessoaPorUsername(username);
+            IPerson person = persistentPerson.lerPessoaPorUsername(username);
             if (person == null) {
                 throw new NonExistingServiceException();
             }

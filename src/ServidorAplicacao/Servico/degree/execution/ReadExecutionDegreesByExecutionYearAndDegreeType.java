@@ -14,7 +14,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -66,7 +66,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                     new Transformer() {
 
                         public Object transform(Object input) {
-                            ICursoExecucao executionDegree = (ICursoExecucao) input;
+                            IExecutionDegree executionDegree = (IExecutionDegree) input;
                             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
                                     .get(executionDegree);
                             return infoExecutionDegree;

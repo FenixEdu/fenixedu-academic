@@ -12,7 +12,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCostCenter;
 import DataBeans.managementAssiduousness.InfoMoneyCostCenter;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.managementAssiduousness.IMoneyCostCenter;
 import Dominio.managementAssiduousness.MoneyCostCenter;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -42,7 +42,7 @@ public class UpdateAllMoneyCostCenterByYear implements IService {
             IEmployee employeeWho = null;
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa personWho = personDAO.lerPessoaPorUsername(usernameWho);
+            IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
             if (personWho != null) {
                 IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
                 employeeWho = employeeDAO.readByPerson(personWho

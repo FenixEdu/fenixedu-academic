@@ -181,7 +181,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             Object[] oid = { executionDegreeId };
             InfoExecutionDegree degree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadExecutionDegreeByOID", oid);
 
-            request.setAttribute("searchType", "Consulta Por Curso");
+            request.setAttribute("searchType", "Consulta Por Degree");
             request.setAttribute("searchTarget", degree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso() + " em " + 
             		degree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
             request.setAttribute("searchDetails", searchDetails);

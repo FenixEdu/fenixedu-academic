@@ -1207,7 +1207,7 @@ public class Flexivel implements IStrategyHorarios
 	public void setFormAssociarHorarioConfirmar(
 		Locale locale,
 		ActionForm form,
-		Pessoa pessoa,
+		Person pessoa,
 		Funcionario funcionario,
 		Horario horario,
 		ArrayList listaRegime,
@@ -1556,7 +1556,7 @@ public class Flexivel implements IStrategyHorarios
 	public void setFormAssociarHorarioTipoConfirmar(
 		Locale locale,
 		ActionForm form,
-		Pessoa pessoa,
+		Person pessoa,
 		Funcionario funcionario,
 		HorarioTipo horarioTipo,
 		Horario horario,

@@ -13,7 +13,7 @@ public class AttendInAttendsSet extends DomainObject implements IAttendInAttends
 	
 	private Integer keyAttend;
 	private Integer keyAttendsSet;
-	private IFrequenta attend;
+	private IAttends attend;
 	private IAttendsSet attendsSet; 
 
 	
@@ -32,7 +32,7 @@ public class AttendInAttendsSet extends DomainObject implements IAttendInAttends
 	/** 
 	 * Construtor
 	 */
-	public AttendInAttendsSet(IFrequenta attend,IAttendsSet attendsSet) {
+	public AttendInAttendsSet(IAttends attend,IAttendsSet attendsSet) {
 			this.attend = attend;
 			this.attendsSet = attendsSet;
 	}
@@ -70,9 +70,9 @@ public class AttendInAttendsSet extends DomainObject implements IAttendInAttends
 	}
 	
 	/**
-	 * @return Frequenta
+	 * @return Attends
 	 */
-	public IFrequenta getAttend() {
+	public IAttends getAttend() {
 		return attend;
 	}
 	
@@ -102,7 +102,7 @@ public class AttendInAttendsSet extends DomainObject implements IAttendInAttends
 	* Sets the attend.
 	* @param attend The attend to set
 	*/
-	public void setAttend(IFrequenta attend) {
+	public void setAttend(IAttends attend) {
 		this.attend=attend;
 	}		
 	

@@ -12,12 +12,12 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IExam;
-import Dominio.ISala;
+import Dominio.IRoom;
 
 public interface ISalaPersistente extends IPersistentObject {
-    public ISala readByName(String nome) throws ExcepcaoPersistencia;
+    public IRoom readByName(String nome) throws ExcepcaoPersistencia;
 
-    public void delete(ISala sala) throws ExcepcaoPersistencia;
+    public void delete(IRoom sala) throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
 

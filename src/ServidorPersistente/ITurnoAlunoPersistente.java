@@ -15,8 +15,8 @@ import java.util.List;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import Util.TipoAula;
 
@@ -27,30 +27,30 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
     public List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
-    public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno) throws ExcepcaoPersistencia;
+    public ITurnoAluno readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia;
 
     public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia;
 
-    public List readByShift(ITurno shift) throws ExcepcaoPersistencia;
+    public List readByShift(IShift shift) throws ExcepcaoPersistencia;
 
     public List readByStudentAndExecutionCourse(IStudent student, IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;
 
     // FIXME : Method is all messed up !! Query, name and parameters
-    public ITurno readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
+    public IShift readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
             throws ExcepcaoPersistencia;
 
     public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
 
     public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
-            IExecutionCourse executionCourse, TipoAula lessonType, ITurma group)
+            IExecutionCourse executionCourse, TipoAula lessonType, ISchoolClass group)
             throws ExcepcaoPersistencia;
 
     /**
      * @param shift
      * @return
      */
-    public int readNumberOfStudentsByShift(ITurno shift);
+    public int readNumberOfStudentsByShift(IShift shift);
 
     /**
      * 
@@ -67,5 +67,5 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
      * @param oldShift
      * @return
      */
-    public List readStudentShiftByShift(ITurno oldShift) throws ExcepcaoPersistencia;
+    public List readStudentShiftByShift(IShift oldShift) throws ExcepcaoPersistencia;
 }

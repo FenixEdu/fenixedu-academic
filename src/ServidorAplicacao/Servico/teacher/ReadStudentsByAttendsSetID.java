@@ -10,7 +10,7 @@ import java.util.List;
 
 import DataBeans.util.Cloner;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -61,7 +61,7 @@ public class ReadStudentsByAttendsSetID implements IServico{
              
              for (Iterator iter= attendsSet.getAttends().iterator(); iter.hasNext();)
 			{
-				IFrequenta attend= (IFrequenta) iter.next();
+				IAttends attend= (IAttends) iter.next();
 				IStudent student = attend.getAluno();
                 infoStudents.add(Cloner.copyIStudent2InfoStudent(student));                
 			}

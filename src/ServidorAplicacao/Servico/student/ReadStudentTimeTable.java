@@ -11,13 +11,13 @@ import DataBeans.InfoPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionPeriod;
 import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
-import Dominio.ISala;
+import Dominio.IRoom;
 import Dominio.IStudent;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -47,16 +47,16 @@ public class ReadStudentTimeTable implements IService {
         Iterator shiftIter = studentShifts.iterator();
         while (shiftIter.hasNext()) {
             ITurnoAluno shiftStudent = (ITurnoAluno) shiftIter.next();
-            ITurno shift = shiftStudent.getShift();
+            IShift shift = shiftStudent.getShift();
             lessons.addAll(shift.getAssociatedLessons());
         }
 
         Iterator iter = lessons.iterator();
         List infoLessons = new ArrayList();
         while (iter.hasNext()) {
-            IAula lesson = (IAula) iter.next();
+            ILesson lesson = (ILesson) iter.next();
             InfoLesson infolesson = copyILesson2InfoLesson(lesson);
-            ITurno shift = lesson.getShift();
+            IShift shift = lesson.getShift();
             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift.getDisciplinaExecucao());
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
@@ -67,7 +67,7 @@ public class ReadStudentTimeTable implements IService {
         return infoLessons;
     }
 
-    private InfoLesson copyILesson2InfoLesson(IAula lesson) {
+    private InfoLesson copyILesson2InfoLesson(ILesson lesson) {
         InfoLesson infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLesson();
@@ -82,7 +82,7 @@ public class ReadStudentTimeTable implements IService {
             InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-            ISala room = roomOccupation.getRoom();
+            IRoom room = roomOccupation.getRoom();
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             infoRoomOccupation.setInfoRoom(infoRoom);
 
@@ -97,7 +97,7 @@ public class ReadStudentTimeTable implements IService {
      * @param sala
      * @return
      */
-    private InfoRoom copyISala2InfoRoom(ISala sala) {
+    private InfoRoom copyISala2InfoRoom(IRoom sala) {
         InfoRoom infoRoom = null;
         if (sala != null) {
             infoRoom = new InfoRoom();

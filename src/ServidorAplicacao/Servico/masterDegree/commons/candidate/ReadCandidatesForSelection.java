@@ -6,9 +6,9 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -31,8 +31,8 @@ public class ReadCandidatesForSelection implements IService {
             // Read the candidates
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = (CursoExecucao) executionDegreeDAO.readByOID(
-                    CursoExecucao.class, executionDegreeID);
+            IExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO.readByOID(
+                    ExecutionDegree.class, executionDegreeID);
 
             resultTemp = sp.getIPersistentCandidateSituation().readActiveSituationsBySituationList(
                     executionDegree, situations);

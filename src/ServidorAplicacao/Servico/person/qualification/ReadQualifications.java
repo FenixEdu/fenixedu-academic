@@ -13,7 +13,7 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoPersonWithInfoCountry;
 import DataBeans.person.InfoQualificationWithPersonAndCountry;
 import DataBeans.person.InfoSiteQualifications;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IQualification;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -61,7 +61,7 @@ public class ReadQualifications implements IServico {
             IPersistentQualification persistentQualification = sp.getIPersistentQualification();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
-            IPessoa person = persistentPerson.lerPessoaPorUsername(user);
+            IPerson person = persistentPerson.lerPessoaPorUsername(user);
             InfoPerson infoPerson = InfoPersonWithInfoCountry.newInfoFromDomain(person);
             List qualifications = persistentQualification.readQualificationsByPerson(person);
 

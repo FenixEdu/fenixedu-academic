@@ -9,7 +9,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -55,7 +55,7 @@ public class ReadClassesByExecutionCourse implements IServico {
 
             infoClasses = (List) CollectionUtils.collect(classes, new Transformer() {
                 public Object transform(Object arg0) {
-                    return Cloner.copyClass2InfoClass((ITurma) arg0);
+                    return Cloner.copyClass2InfoClass((ISchoolClass) arg0);
                 }
             });
         } catch (ExcepcaoPersistencia ex) {

@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionMapping;
 import Dominio.Funcionario;
 import Dominio.Horario;
 import Dominio.IStrategyHorarios;
-import Dominio.Pessoa;
+import Dominio.Person;
 import Dominio.SuporteStrategyHorarios;
 
 /**
@@ -1095,7 +1095,7 @@ public class AssociarHorarioForm extends ActionForm {
         }
     }
 
-    public void setForm(Locale locale, Pessoa pessoa, Funcionario funcionario, Horario horario,
+    public void setForm(Locale locale, Person pessoa, Funcionario funcionario, Horario horario,
             List listaRegime, boolean isExcepcaoHorario, String alterar) {
         IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
                 getModalidade());

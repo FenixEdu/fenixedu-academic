@@ -19,8 +19,8 @@ public class GroupPropertiesExecutionCourse extends DomainObject implements IGro
 	private ProposalState proposalState;
 	private Integer keySenderPerson;
 	private Integer keyReceiverPerson;
-	private IPessoa senderPerson;
-	private IPessoa receiverPerson; 
+	private IPerson senderPerson;
+	private IPerson receiverPerson; 
 	private Integer keySenderExecutionCourse;
 	private IExecutionCourse senderExecutionCourse;
 
@@ -127,9 +127,9 @@ public class GroupPropertiesExecutionCourse extends DomainObject implements IGro
 	}
 	
 	/**
-	 * @return IPessoa
+	 * @return IPerson
 	 */
-	public IPessoa getSenderPerson() {
+	public IPerson getSenderPerson() {
 		return senderPerson;
 	}
 	
@@ -155,9 +155,9 @@ public class GroupPropertiesExecutionCourse extends DomainObject implements IGro
 	}
 	
 	/**
-	 * @return IPessoa
+	 * @return IPerson
 	 */
-	public IPessoa getReceiverPerson() {
+	public IPerson getReceiverPerson() {
 		return receiverPerson;
 	}
 	
@@ -216,7 +216,7 @@ public class GroupPropertiesExecutionCourse extends DomainObject implements IGro
 	* Sets the senderPerson.
 	* @param senderPerson The senderPerson to set
 	*/
-	public void setSenderPerson(IPessoa senderPerson) {
+	public void setSenderPerson(IPerson senderPerson) {
 		this.senderPerson=senderPerson;
 	}		
 	
@@ -233,7 +233,7 @@ public class GroupPropertiesExecutionCourse extends DomainObject implements IGro
 	* Sets the receiverPerson.
 	* @param receiverPerson The receiverPerson to set
 	*/
-	public void setReceiverPerson(IPessoa receiverPerson) {
+	public void setReceiverPerson(IPerson receiverPerson) {
 		this.receiverPerson=receiverPerson;
 	}	
 

@@ -8,7 +8,7 @@ import org.apache.commons.collections.Transformer;
 import DataBeans.InfoExam;
 import DataBeans.util.Cloner;
 import Dominio.IExam;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -48,7 +48,7 @@ public class ReadEmptyRoomsForExam implements IServico {
 
         Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
             public Object transform(Object input) {
-                return Cloner.copyRoom2InfoRoom((ISala) input);
+                return Cloner.copyRoom2InfoRoom((IRoom) input);
             }
         };
 

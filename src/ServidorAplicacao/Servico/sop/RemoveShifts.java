@@ -17,9 +17,9 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turma;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.SchoolClass;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -31,7 +31,7 @@ public class RemoveShifts implements IService {
             ExcepcaoPersistencia {
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        final ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+        final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
         sp.getITurmaPersistente().simpleLockWrite(schoolClass);
         final List shifts = schoolClass.getAssociatedShifts();
@@ -39,7 +39,7 @@ public class RemoveShifts implements IService {
         
         Iterator iter = shifts.iterator();
         while (iter.hasNext()){
-            ITurno shift = (ITurno) iter.next();
+            IShift shift = (IShift) iter.next();
             
             if (shiftOIDs.contains(shift.getIdInternal())){
                 shiftsToRemove.add(shift);

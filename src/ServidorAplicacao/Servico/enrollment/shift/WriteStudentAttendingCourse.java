@@ -6,11 +6,11 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudent;
 import Dominio.ExecutionCourse;
-import Dominio.Frequenta;
+import Dominio.Attends;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Student;
@@ -73,11 +73,11 @@ public class WriteStudentAttendingCourse implements IService {
                     throw new ReachedAttendsLimitServiceException();
                 }
 
-                IFrequenta attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(
+                IAttends attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(
                         studentCurricularPlan.getStudent(), executionCourse);
 
                 if (attendsEntry == null) {
-                    attendsEntry = new Frequenta();
+                    attendsEntry = new Attends();
                     persistentAttend.simpleLockWrite(attendsEntry);
                     attendsEntry.setAluno(studentCurricularPlan.getStudent());
                     attendsEntry.setDisciplinaExecucao(executionCourse);
@@ -96,7 +96,7 @@ public class WriteStudentAttendingCourse implements IService {
 
     private void findEnrollmentForAttend(IPersistentEnrollment persistentEnrolment,
             IStudentCurricularPlan studentCurricularPlan, IExecutionCourse executionCourse,
-            IFrequenta attendsEntry) throws ExcepcaoPersistencia {
+            IAttends attendsEntry) throws ExcepcaoPersistencia {
         // checks if there is an enrollment for this attend
         Iterator iterCurricularCourses = executionCourse.getAssociatedCurricularCourses().iterator();
         while (iterCurricularCourses.hasNext()) {

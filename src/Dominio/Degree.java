@@ -1,5 +1,5 @@
 /*
- * Curso.java
+ * Degree.java
  *
  * Created on 31 de Outubro de 2002, 15:19
  */
@@ -15,7 +15,7 @@ import Util.TipoCurso;
  * @author Nuno Nunes & Joana Mota
  */
 
-public class Curso extends DomainObject implements ICurso {
+public class Degree extends DomainObject implements IDegree {
 
     protected String sigla;
 
@@ -30,14 +30,14 @@ public class Curso extends DomainObject implements ICurso {
     private String concreteClassForDegreeCurricularPlans;
 
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-    public Curso() {
+    public Degree() {
     }
 
-    public Curso(Integer idInternal) {
+    public Degree(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
-    public Curso(String sigla, String nome, TipoCurso tipoCurso) {
+    public Degree(String sigla, String nome, TipoCurso tipoCurso) {
         setSigla(sigla);
         setNome(nome);
         setTipoCurso(tipoCurso);
@@ -45,8 +45,8 @@ public class Curso extends DomainObject implements ICurso {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof ICurso) {
-            ICurso curso = (ICurso) obj;
+        if (obj instanceof IDegree) {
+            IDegree curso = (IDegree) obj;
             resultado = getSigla().equals(curso.getSigla());
         }
         return resultado;

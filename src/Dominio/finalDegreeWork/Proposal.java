@@ -7,7 +7,7 @@ package Dominio.finalDegreeWork;
 import java.util.List;
 
 import Dominio.DomainObject;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.ITeacher;
 import Util.FinalDegreeWorkProposalStatus;
 import Util.TipoCurso;
@@ -22,7 +22,7 @@ public class Proposal extends DomainObject implements IProposal {
 
     private Integer keyExecutionDegree;
 
-    private ICursoExecucao executionDegree;
+    private IExecutionDegree executionDegree;
 
     private String title;
 
@@ -156,7 +156,7 @@ public class Proposal extends DomainObject implements IProposal {
     /**
      * @return Returns the degreeCurricularPlan.
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
@@ -164,7 +164,7 @@ public class Proposal extends DomainObject implements IProposal {
      * @param degreeCurricularPlan
      *            The degreeCurricularPlan to set.
      */
-    public void setExecutionDegree(ICursoExecucao executionDegree) {
+    public void setExecutionDegree(IExecutionDegree executionDegree) {
         this.executionDegree = executionDegree;
     }
 

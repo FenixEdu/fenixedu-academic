@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.ITurno;
+import Dominio.IShift;
 import Util.TipoAula;
 
 public class InfoShift extends InfoObject {
@@ -226,7 +226,7 @@ public class InfoShift extends InfoObject {
         this.percentage = percentage;
     }
 
-    public void copyFromDomain(ITurno shift) {
+    public void copyFromDomain(IShift shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
             setNome(shift.getNome());
@@ -237,7 +237,7 @@ public class InfoShift extends InfoObject {
         }
     }
 
-    public static InfoShift newInfoFromDomain(ITurno shift) {
+    public static InfoShift newInfoFromDomain(IShift shift) {
         InfoShift infoShift = null;
         if (shift != null) {
             infoShift = new InfoShift();

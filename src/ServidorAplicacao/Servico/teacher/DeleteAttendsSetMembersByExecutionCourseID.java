@@ -13,7 +13,7 @@ import Dominio.ExecutionCourse;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -111,7 +111,7 @@ public class DeleteAttendsSetMembersByExecutionCourseID implements IServico {
             Iterator iterator = attendsSetElements.iterator();
             while (iterator.hasNext()) {
             	IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet)iterator.next();
-            	IFrequenta frequenta = (IFrequenta)attendInAttendsSet.getAttend();
+            	IAttends frequenta = (IAttends)attendInAttendsSet.getAttend();
             	if(executionCourseStudentNumbers.contains(frequenta.getAluno().getNumber())){
             		boolean found = false;
                     Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();

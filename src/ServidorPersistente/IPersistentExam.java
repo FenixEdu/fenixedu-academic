@@ -9,7 +9,7 @@ import java.util.List;
 
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
+import Dominio.IRoom;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -22,14 +22,14 @@ public interface IPersistentExam extends IPersistentObject {
 
     public void delete(IExam exam) throws ExcepcaoPersistencia;
 
-    public List readBy(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    public List readBy(IRoom room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
-    public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
+    public List readByRoomAndExecutionPeriod(IRoom room, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
     public List readBy(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia;
 
-    public List readByRoomAndWeek(ISala room, Calendar day) throws ExcepcaoPersistencia;
+    public List readByRoomAndWeek(IRoom room, Calendar day) throws ExcepcaoPersistencia;
 
     public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername)
             throws ExcepcaoPersistencia;

@@ -12,8 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoPerson;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
 import Dominio.publication.IPublication;
@@ -59,7 +59,7 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
 	        author.setOrganization(infoAuthor.getOrganization());
 	        InfoPerson infoPerson = infoAuthor.getInfoPessoa();
 	        if (keyPerson != null){
-		        IPessoa pessoa = new Pessoa();
+		        IPerson pessoa = new Person();
 		        infoPerson.copyToDomain(infoPerson, pessoa);
 		        author.setPerson(pessoa);
 	        }

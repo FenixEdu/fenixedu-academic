@@ -22,7 +22,7 @@ import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -102,7 +102,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
                 // responsible for all evaluations
                 // for this
                 //				curricularCourseScope
-                IPessoa person = ((IEnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
+                IPerson person = ((IEnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
                         .getPersonResponsibleForGrade();
                 ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
                 infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);

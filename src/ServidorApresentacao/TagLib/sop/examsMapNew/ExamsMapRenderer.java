@@ -162,9 +162,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			strBuffer.append("<th colspan='3' width='250'>1&ordf; &Eacute;poca</th>");
 			strBuffer.append("<th colspan='3'>2&ordf; &Eacute;poca</th></tr>");
 			strBuffer.append("<tr><td class='subheader' width='70px'>Dia</td>" +
-			"<td class='subheader' width='50px'>Hora</td><td class='subheader' width='130px'>Sala(s)</td>");
+			"<td class='subheader' width='50px'>Hora</td><td class='subheader' width='130px'>Room(s)</td>");
 			strBuffer.append("<td class='subheader' width='70px'>Dia</td>" +
-			"<td class='subheader' width='50px'>Hora</td><td class='subheader' width='130px'>Sala(s)</td></tr>");			
+			"<td class='subheader' width='50px'>Hora</td><td class='subheader' width='130px'>Room(s)</td></tr>");			
 		} else {
 			strBuffer.append("<strong>Disciplinas do " + year + "&ordm; ano:</strong>");
 		}

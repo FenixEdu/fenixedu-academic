@@ -1548,7 +1548,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		shiftTypeNames.add("Prático");
 		shiftTypeNames.add("Teórico-Prático");
 		shiftTypeNames.add("Laboratorial");
-		shiftTypeNames.add("Sem Turno");
+		shiftTypeNames.add("Sem Shift");
 		request.setAttribute("shiftTypeValues", shiftTypeValues);
 		request.setAttribute("shiftTypeNames", shiftTypeNames);
 		return mapping.findForward("insertGroupProperties");
@@ -1741,7 +1741,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		shiftTypeNames.add("Prática");
 		shiftTypeNames.add("Teórico-Prática");
 		shiftTypeNames.add("Laboratorial");
-		shiftTypeNames.add("Sem Turno");
+		shiftTypeNames.add("Sem Shift");
 
 		List enrolmentPolicyValues = new ArrayList();
 		enrolmentPolicyValues.add(new Integer(1));
@@ -2098,7 +2098,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		request.setAttribute("enrolmentPolicyName", enrolmentPolicyName);
 		
 		TipoAula shiftType = ((InfoSiteGroupProperties)siteView.getComponent()).getInfoGroupProperties().getShiftType();
-		String shiftTypeName = "Sem Turno";
+		String shiftTypeName = "Sem Shift";
 		if(shiftType!=null){
 			shiftTypeName = shiftType.getFullNameTipoAula();	 
 		}

@@ -598,7 +598,7 @@
     </reference-descriptor>
     <reference-descriptor
          name="shift"
-         class-ref="Dominio.Turno"
+         class-ref="Dominio.Shift"
          proxy="true"
     >
     	<foreignkey field-ref="keyShift"/>
@@ -620,7 +620,7 @@
     </reference-descriptor>
     <reference-descriptor
          name="room"
-         class-ref="Dominio.Sala"
+         class-ref="Dominio.Room"
          proxy="true"
     >
     	<foreignkey field-ref="keyRoom"/>
@@ -665,7 +665,7 @@
         
     <reference-descriptor
          name="shift"
-         class-ref="Dominio.Turno"
+         class-ref="Dominio.Shift"
          proxy="true"
 		refresh="true"
     >
@@ -721,7 +721,7 @@
         
     <reference-descriptor
          name="attend"
-         class-ref="Dominio.Frequenta"
+         class-ref="Dominio.Attends"
          proxy="true"
     >
 	<foreignkey field-ref="keyAttend"/>
@@ -1058,7 +1058,7 @@
     />
     <reference-descriptor
          name="attend"
-         class-ref="Dominio.Frequenta"
+         class-ref="Dominio.Attends"
          proxy="true"
     >
 	<foreignkey field-ref="keyAttend"/>
@@ -1143,7 +1143,7 @@
 	
 	<reference-descriptor
          name="senderPerson"
-         class-ref="Dominio.Pessoa"
+         class-ref="Dominio.Person"
          proxy="true"
     >
 	<foreignkey field-ref="keySenderPerson"/>
@@ -1151,7 +1151,7 @@
 	
 	<reference-descriptor
          name="receiverPerson"
-         class-ref="Dominio.Pessoa"
+         class-ref="Dominio.Person"
          proxy="true"
     >
 	<foreignkey field-ref="keyReceiverPerson"/>

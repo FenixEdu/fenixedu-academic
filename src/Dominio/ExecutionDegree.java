@@ -1,5 +1,5 @@
 /*
- * CursoExecucao.java
+ * ExecutionDegree.java
  *
  * Created on 2 de Novembro de 2002, 20:53
  */
@@ -13,7 +13,7 @@ import java.util.List;
  * @author rpfi
  */
 
-public class CursoExecucao extends DomainObject implements ICursoExecucao {
+public class ExecutionDegree extends DomainObject implements IExecutionDegree {
     private Integer keyCurricularPlan;
 
     private Integer keyCoordinator;
@@ -52,10 +52,10 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
     private Integer keyPeriodExamsSecondSemester;
 
     /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
-    public CursoExecucao() {
+    public ExecutionDegree() {
     }
 
-    public CursoExecucao(IExecutionYear executionYear, IDegreeCurricularPlan curricularPlan) {
+    public ExecutionDegree(IExecutionYear executionYear, IDegreeCurricularPlan curricularPlan) {
         setExecutionYear(executionYear);
         setCurricularPlan(curricularPlan);
     }
@@ -63,14 +63,14 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
     /**
      * @param executionDegreeId
      */
-    public CursoExecucao(Integer executionDegreeId) {
+    public ExecutionDegree(Integer executionDegreeId) {
         setIdInternal(executionDegreeId);
     }
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof ICursoExecucao) {
-            ICursoExecucao cursoExecucao = (ICursoExecucao) obj;
+        if (obj instanceof IExecutionDegree) {
+            IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
             resultado = getIdInternal().equals(cursoExecucao.getIdInternal());
         }
         return resultado;
@@ -94,7 +94,7 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 
     /**
      * 
-     * @see Dominio.ICursoExecucao#getExecutionYear()
+     * @see Dominio.IExecutionDegree#getExecutionYear()
      */
     public IExecutionYear getExecutionYear() {
         return executionYear;
@@ -102,7 +102,7 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 
     /**
      * 
-     * @see Dominio.ICursoExecucao#setExecutionYear(IExecutionYear)
+     * @see Dominio.IExecutionDegree#setExecutionYear(IExecutionYear)
      */
     public void setExecutionYear(IExecutionYear executionYear) {
         this.executionYear = executionYear;

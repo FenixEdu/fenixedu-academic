@@ -20,11 +20,11 @@ import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.teacher.professorship.TeacherExecutionCourseProfessorshipShiftsDTO;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.Teacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -65,7 +65,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
 
             Iterator iterator = executionCourseShiftsList.iterator();
             while (iterator.hasNext()) {
-                ITurno shift = (ITurno) iterator.next();
+                IShift shift = (IShift) iterator.next();
 
                 InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
                 infoShiftPercentage.setShift((InfoShift) Cloner.get(shift));
@@ -91,7 +91,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
                 List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(),
                         new Transformer() {
                             public Object transform(Object input) {
-                                IAula lesson = (IAula) input;
+                                ILesson lesson = (ILesson) input;
                                 return Cloner.copyILesson2InfoLesson(lesson);
                             }
                         });

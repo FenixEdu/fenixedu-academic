@@ -4,8 +4,8 @@
  */
 package DataBeans;
 
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 
 /**
  * @author João Mota
@@ -13,7 +13,7 @@ import Dominio.ICursoExecucao;
  */
 public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecutionDegree {
 
-    public void copyFromDomain(ICursoExecucao executionDegree) {
+    public void copyFromDomain(IExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
@@ -25,7 +25,7 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecuti
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
         InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree.copyFromDomain(executionDegree);
@@ -33,16 +33,16 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecuti
         return infoExecutionDegree;
     }
 
-    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, ICursoExecucao executionDegree) {
+    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, IExecutionDegree executionDegree) {
         super.copyToDomain(infoExecutionDegree, executionDegree);
         executionDegree.setCurricularPlan(InfoDegreeCurricularPlanWithDegree
                 .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
     }
 
-    public static ICursoExecucao newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
-        ICursoExecucao executionDegree = null;
+    public static IExecutionDegree newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
+        IExecutionDegree executionDegree = null;
         if (infoExecutionDegree != null) {
-            executionDegree = new CursoExecucao();
+            executionDegree = new ExecutionDegree();
             InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegreeWithInfoDegreeCurricularPlan = new InfoExecutionDegreeWithInfoDegreeCurricularPlan();
             infoExecutionDegreeWithInfoDegreeCurricularPlan.copyToDomain(infoExecutionDegree,
                     executionDegree);

@@ -9,7 +9,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GroupProperties;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -110,7 +110,7 @@ public class InsertStudentGroupMembers implements IService {
                 while (iterator.hasNext()) {
                     IStudent student = (IStudent) persistentStudent.readByOID(
                             Student.class, (Integer) iterator.next());
-                    IFrequenta attend = groupProperties.getAttendsSet().getStudentAttend(student);
+                    IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
                     
                     newStudentGroupAttend = persistentStudentGroupAttend
                             .readBy(existingStudentGroup, attend);
@@ -128,7 +128,7 @@ public class InsertStudentGroupMembers implements IService {
                 IStudent student = (IStudent) persistentStudent.readByOID(
                         Student.class, (Integer) iter.next());
 
-                IFrequenta attend = groupProperties.getAttendsSet().getStudentAttend(student);
+                IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
 
 
                 IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(

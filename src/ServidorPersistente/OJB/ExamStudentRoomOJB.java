@@ -13,7 +13,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.ExamStudentRoom;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
-import Dominio.ISala;
+import Dominio.IRoom;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExamStudentRoom;
@@ -37,13 +37,13 @@ public class ExamStudentRoomOJB extends PersistentObjectOJB implements IPersiste
         return queryList(ExamStudentRoom.class, criteria);
     }
 
-    public List readBy(ISala room) throws ExcepcaoPersistencia {
+    public List readBy(IRoom room) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyRoom", room.getIdInternal());
         return queryList(ExamStudentRoom.class, criteria);
     }
 
-    public List readBy(IExam exam, ISala room) throws ExcepcaoPersistencia {
+    public List readBy(IExam exam, IRoom room) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExam", exam.getIdInternal());
         criteria.addEqualTo("keyRoom", room.getIdInternal());
@@ -57,14 +57,14 @@ public class ExamStudentRoomOJB extends PersistentObjectOJB implements IPersiste
         return (IExamStudentRoom) queryObject(ExamStudentRoom.class, criteria);
     }
 
-    public List readBy(IStudent student, ISala room) throws ExcepcaoPersistencia {
+    public List readBy(IStudent student, IRoom room) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyRoom", room.getIdInternal());
         criteria.addEqualTo("keyStudent", student.getIdInternal());
         return queryList(ExamStudentRoom.class, criteria);
     }
 
-    public IExamStudentRoom readBy(IExam exam, IStudent student, ISala room) throws ExcepcaoPersistencia {
+    public IExamStudentRoom readBy(IExam exam, IStudent student, IRoom room) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExam", exam.getIdInternal());
         criteria.addEqualTo("keyRoom", room.getIdInternal());

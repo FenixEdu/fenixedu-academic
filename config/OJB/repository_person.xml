@@ -1,7 +1,7 @@
 <!-- ***********************************
-     Definitions for Dominio.Pessoa 
+     Definitions for Dominio.Person 
      *********************************** -->
-<class-descriptor class="Dominio.Pessoa"
+<class-descriptor class="Dominio.Person"
 				  proxy="dynamic"
                   table="PERSON">
     <field-descriptor

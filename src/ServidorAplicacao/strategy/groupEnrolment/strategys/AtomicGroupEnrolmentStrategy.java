@@ -9,7 +9,7 @@ import java.util.List;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
@@ -27,7 +27,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
     }
 
     public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,
-            int numberOfStudentsToEnrole, ITurno shift) {
+            int numberOfStudentsToEnrole, IShift shift) {
 
         if (checkNumberOfGroups(groupProperties, shift)) {
             Integer maximumCapacity = groupProperties.getMaximumCapacity();

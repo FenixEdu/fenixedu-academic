@@ -14,10 +14,10 @@ import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.util.Cloner;
 import Dominio.Contributor;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.Guide;
 import Dominio.IContributor;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IGuide;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPrice;
@@ -80,10 +80,10 @@ public class PrepareCreateGuide implements IService {
         Calendar calendar = Calendar.getInstance();
         year = new Integer(calendar.get(Calendar.YEAR));
 
-        ICursoExecucao executionDegree = null;
+        IExecutionDegree executionDegree = null;
         try {
-            executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree().readByOID(
-                    CursoExecucao.class, infoExecutionDegree.getIdInternal());
+            executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+                    ExecutionDegree.class, infoExecutionDegree.getIdInternal());
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
             throw newEx;

@@ -6,7 +6,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -42,7 +42,7 @@ public class ReadAllMasterDegrees implements IService {
         List degrees = new ArrayList();
         Iterator iterator = result.iterator();
         while (iterator.hasNext())
-            degrees.add(Cloner.copyIDegree2InfoDegree((ICurso) iterator.next()));
+            degrees.add(Cloner.copyIDegree2InfoDegree((IDegree) iterator.next()));
         return degrees;
 
     }

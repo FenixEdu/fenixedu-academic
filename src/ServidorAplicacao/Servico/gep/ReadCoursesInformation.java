@@ -26,22 +26,22 @@ import DataBeans.InfoTeacherWithPerson;
 import DataBeans.InfoTeacherWithPersonAndCategory;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
-import Dominio.Aula;
-import Dominio.CursoExecucao;
-import Dominio.IAula;
+import Dominio.Lesson;
+import Dominio.ExecutionDegree;
+import Dominio.ILesson;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionYear;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ResponsibleFor;
-import Dominio.Turno;
+import Dominio.Shift;
 import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -116,8 +116,8 @@ public class ReadCoursesInformation implements IService {
                 //                                    basic);
                 //                }
             } else {
-                ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                        CursoExecucao.class, executionDegreeId);
+                IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                        ExecutionDegree.class, executionDegreeId);
                 if (basic == null) {
                     professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
                 } else {
@@ -251,16 +251,16 @@ public class ReadCoursesInformation implements IService {
         });
         if (lessonsOfType != null && !lessonsOfType.isEmpty()) {
             Iterator iter = lessonsOfType.iterator();
-            ITurno shift = null;
+            IShift shift = null;
             List temp = new ArrayList();
             while (iter.hasNext()) {
                 List shifts;
                 InfoLesson infoLesson = (InfoLesson) iter.next();
-                IAula lesson = (IAula) persistentLesson
-                        .readByOID(Aula.class, infoLesson.getIdInternal());
+                ILesson lesson = (ILesson) persistentLesson
+                        .readByOID(Lesson.class, infoLesson.getIdInternal());
                 shifts = persistentShift.readByLesson(lesson);
                 if (shifts != null && !shifts.isEmpty()) {
-                    ITurno aux = (ITurno) shifts.get(0);
+                    IShift aux = (IShift) shifts.get(0);
                     if (shift == null) {
                         shift = aux;
                     }
@@ -487,14 +487,14 @@ public class ReadCoursesInformation implements IService {
         List lessons = new ArrayList();
 
         for (int i = 0; i < shifts.size(); i++) {
-            Turno shift = (Turno) shifts.get(i);
+            Shift shift = (Shift) shifts.get(i);
             lessons.addAll(shift.getAssociatedLessons());
         }
 
         List infoLessons = new ArrayList();
         Iterator iter = lessons.iterator();
         while (iter.hasNext()) {
-            IAula lesson = (IAula) iter.next();
+            ILesson lesson = (ILesson) iter.next();
             //CLONER
             //infoLessons.add(Cloner.copyILesson2InfoLesson(lesson));
             infoLessons.add(InfoLesson.newInfoFromDomain(lesson));

@@ -5,7 +5,7 @@
 package ServidorAplicacao.Servico.publico;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -21,7 +21,7 @@ public class ReadDegreeIdInternalByDegreeCode implements IService {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         ICursoPersistente degreeDAO = sp.getICursoPersistente();
 
-        ICurso degree = degreeDAO.readBySigla(degreeCode);
+        IDegree degree = degreeDAO.readBySigla(degreeCode);
 
         return degree != null ? degree.getIdInternal() : null;
 	}

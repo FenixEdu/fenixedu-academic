@@ -7,7 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -57,5 +57,5 @@ public interface IPersistentResponsibleFor extends IPersistentObject {
     public List readByTeacherAndExecutionCourseIds(ITeacher teacher, List executionCourseIds)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia;
 }

@@ -13,7 +13,7 @@ import java.util.ListIterator;
  */
 public class Employee extends DomainObject implements IEmployee {
 
-    private IPessoa person = null;
+    private IPerson person = null;
 
     private Integer keyPerson = null;
 
@@ -36,12 +36,12 @@ public class Employee extends DomainObject implements IEmployee {
         setIdInternal(idInternal);
     }
 
-    public Employee(IPessoa person, Integer employeeNumber) {
+    public Employee(IPerson person, Integer employeeNumber) {
         setPerson(person);
         setEmployeeNumber(employeeNumber);
     }
 
-    public Employee(IPessoa person, Integer employeeNumber, Integer workingHours, Date antiquity) {
+    public Employee(IPerson person, Integer employeeNumber, Integer workingHours, Date antiquity) {
         setPerson(person);
         setEmployeeNumber(employeeNumber);
         setWorkingHours(workingHours);
@@ -64,7 +64,7 @@ public class Employee extends DomainObject implements IEmployee {
         return keyPerson;
     }
 
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -84,7 +84,7 @@ public class Employee extends DomainObject implements IEmployee {
         this.keyPerson = keyPerson;
     }
 
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

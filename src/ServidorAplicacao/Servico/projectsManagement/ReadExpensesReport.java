@@ -16,7 +16,7 @@ import DataBeans.projectsManagement.InfoProject;
 import DataBeans.projectsManagement.InfoSummaryEURReportLine;
 import DataBeans.projectsManagement.InfoSummaryPTEReportLine;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.projectsManagement.IAdiantamentosReportLine;
 import Dominio.projectsManagement.ICabimentosReportLine;
@@ -102,7 +102,7 @@ public class ReadExpensesReport implements IService {
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = (IEmployee) sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

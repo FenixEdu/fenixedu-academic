@@ -9,7 +9,7 @@ import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
-public class Pessoa extends DomainObject implements IPessoa {
+public class Person extends DomainObject implements IPerson {
     private Boolean availableEmail = Boolean.FALSE;
 
     private Boolean availableWebSite = Boolean.FALSE;
@@ -106,7 +106,7 @@ public class Pessoa extends DomainObject implements IPessoa {
 
     /* Construtores */
 
-    public Pessoa() {
+    public Person() {
         //		this.numeroDocumentoIdentificacao = "";
         //		this.tipoDocumentoIdentificacao = null;
         //		this.localEmissaoDocumentoIdentificacao = "";
@@ -140,11 +140,11 @@ public class Pessoa extends DomainObject implements IPessoa {
         //		this.codigoFiscal = "";
     }
 
-    public Pessoa(String username) {
+    public Person(String username) {
         setUsername(username);
     }
 
-    public Pessoa(TipoDocumentoIdentificacao idDocumentType, String userName) {
+    public Person(TipoDocumentoIdentificacao idDocumentType, String userName) {
         //		this.numeroDocumentoIdentificacao = "";
         this.tipoDocumentoIdentificacao = idDocumentType;
         this.username = userName;
@@ -183,7 +183,7 @@ public class Pessoa extends DomainObject implements IPessoa {
      * Construtor sem país Acrescentado por Fernanda Quitério & Tânia Pousão
      * Devido ao JDBC
      */
-    public Pessoa(Integer codigoInterno, String numeroDocumentoIdentificacao,
+    public Person(Integer codigoInterno, String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Sexo sexo, EstadoCivil estadoCivil,
@@ -231,7 +231,7 @@ public class Pessoa extends DomainObject implements IPessoa {
      * Acrescentado por Fernanda Quitério & Tânia Pousão Devido à aplicacao
      * Assiduidade no usecase Inserir Funcionario
      */
-    public Pessoa(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao, String nome,
+    public Person(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao, String nome,
             String username, String password) {
         Calendar calendario = Calendar.getInstance();
         calendario.set(1970, Calendar.JANUARY, 31, 00, 00, 00);
@@ -270,7 +270,7 @@ public class Pessoa extends DomainObject implements IPessoa {
         this.codigoFiscal = "";
     }
 
-    public Pessoa(String numeroDocumentoIdentificacao,
+    public Person(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Sexo sexo, EstadoCivil estadoCivil,
@@ -316,8 +316,8 @@ public class Pessoa extends DomainObject implements IPessoa {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof IPessoa) {
-            IPessoa person = (IPessoa) obj;
+        if (obj instanceof IPerson) {
+            IPerson person = (IPerson) obj;
             resultado = (((this.numeroDocumentoIdentificacao.equals(person
                     .getNumeroDocumentoIdentificacao())) && (this.tipoDocumentoIdentificacao
                     .equals(person.getTipoDocumentoIdentificacao()))) || (this.username.equals(person

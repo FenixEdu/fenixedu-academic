@@ -15,7 +15,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
 
 public interface IPersistentCandidateSituation extends IPersistentObject {
@@ -44,7 +44,7 @@ public interface IPersistentCandidateSituation extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public List readActiveSituationsBySituationList(ICursoExecucao executionDegree, List situations)
+    public List readActiveSituationsBySituationList(IExecutionDegree executionDegree, List situations)
             throws ExcepcaoPersistencia;
 
     /**
@@ -60,7 +60,7 @@ public interface IPersistentCandidateSituation extends IPersistentObject {
      * @return A List of Candidates with Registration status for this Execution
      *         Degree
      */
-    public List readCandidateListforRegistration(ICursoExecucao executionDegree)
+    public List readCandidateListforRegistration(IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia;
 
 } // End of class definition

@@ -17,8 +17,8 @@ import java.util.List;
 
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -61,7 +61,7 @@ public class LerOcupacaoDeTurnos implements IServico {
             while (infoShiftsIterator.hasNext()) {
                 infoShift = (InfoShift) infoShiftsIterator.next();
 
-                ITurno shift = new Turno();
+                IShift shift = new Shift();
                 shift = Cloner.copyInfoShift2IShift(infoShift);
 
                 alunos = sp.getITurnoAlunoPersistente().readByShift(shift);

@@ -11,9 +11,9 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoRole;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
@@ -96,8 +96,8 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
                     return false;
                 }
 
-                ICursoExecucao executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree()
-                        .readByOID(CursoExecucao.class, infoExecutionDegree.getIdInternal());
+                IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                        .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
                 teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 

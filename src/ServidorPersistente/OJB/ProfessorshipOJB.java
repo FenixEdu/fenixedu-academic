@@ -12,7 +12,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -137,21 +137,21 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentTeacher#readByExecutionDegree(Dominio.ICursoExecucao)
+     * @see ServidorPersistente.IPersistentTeacher#readByExecutionDegree(Dominio.IExecutionDegree)
      */
     public List readByExecutionDegreesAndBasic(List executionDegrees, Boolean basic)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         List executionDegreesIds = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
             public Object transform(Object o) {
-                return ((ICursoExecucao) o).getCurricularPlan().getIdInternal();
+                return ((IExecutionDegree) o).getCurricularPlan().getIdInternal();
             }
         });
         criteria.addIn("executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
                 executionDegreesIds);
         if (executionDegrees != null && !executionDegrees.isEmpty()) {
             criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal",
-                    ((ICursoExecucao) executionDegrees.get(0)).getExecutionYear().getIdInternal());
+                    ((IExecutionDegree) executionDegrees.get(0)).getExecutionYear().getIdInternal());
         }
         criteria.addEqualTo("executionCourse.associatedCurricularCourses.basic", basic);
         return queryList(Professorship.class, criteria, true);
@@ -160,9 +160,9 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegree(Dominio.ICursoExecucao)
+     * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegree(Dominio.IExecutionDegree)
      */
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
@@ -175,10 +175,10 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     
     
 	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegreeAndExecutionPeriod(Dominio.ICursoExecucao, Dominio.IExecutionPeriod)
+	 * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegreeAndExecutionPeriod(Dominio.IExecutionDegree, Dominio.IExecutionPeriod)
 	 */
 	public List readByExecutionDegreeAndExecutionPeriod(
-			ICursoExecucao executionDegree, IExecutionPeriod executionPeriod)
+			IExecutionDegree executionDegree, IExecutionPeriod executionPeriod)
 			throws ExcepcaoPersistencia {
 		
 		Criteria criteria = new Criteria();
@@ -196,10 +196,10 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegreeAndBasic(Dominio.ICursoExecucao,
+     * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegreeAndBasic(Dominio.IExecutionDegree,
      *      java.lang.Boolean)
      */
-    public List readByExecutionDegreeAndBasic(ICursoExecucao executionDegree, Boolean basic)
+    public List readByExecutionDegreeAndBasic(IExecutionDegree executionDegree, Boolean basic)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
@@ -235,14 +235,14 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         List executionDegreesIds = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
             public Object transform(Object o) {
-                return ((ICursoExecucao) o).getCurricularPlan().getIdInternal();
+                return ((IExecutionDegree) o).getCurricularPlan().getIdInternal();
             }
         });
         criteria.addIn("executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
                 executionDegreesIds);
         if (executionDegrees != null && !executionDegrees.isEmpty()) {
             criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal",
-                    ((ICursoExecucao) executionDegrees.get(0)).getExecutionYear().getIdInternal());
+                    ((IExecutionDegree) executionDegrees.get(0)).getExecutionYear().getIdInternal());
         }
         return queryList(Professorship.class, criteria, true);
     }

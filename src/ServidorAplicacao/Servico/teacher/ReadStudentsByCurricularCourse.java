@@ -18,7 +18,7 @@ import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.ISite;
 import Dominio.IStudent;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -115,7 +115,7 @@ public class ReadStudentsByCurricularCourse implements IService {
         infoStudentList = (List) CollectionUtils.collect(attendList, new Transformer() {
 
             public Object transform(Object input) {
-                IFrequenta attend = (IFrequenta) input;
+                IAttends attend = (IAttends) input;
                 IStudent student = attend.getAluno();
                 //CLONER
                 //InfoStudent infoStudent =

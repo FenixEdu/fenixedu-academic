@@ -21,10 +21,10 @@ import Dominio.IAdvisory;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -79,7 +79,7 @@ public class NewProjectProposal implements IService
 			IExecutionCourse goalExecutionCourse = (IExecutionCourse)persistentExecutionCourse.readByOID(ExecutionCourse.class,goalExecutionCourseId);
 			IExecutionCourse startExecutionCourse = (IExecutionCourse)persistentExecutionCourse.readByOID(ExecutionCourse.class,objectCode);
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			IPessoa senderPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(senderPersonUsername)).getPerson();
+			IPerson senderPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(senderPersonUsername)).getPerson();
 			
 			if(groupProperties==null){
 				throw new InvalidArgumentsServiceException("error.noGroupProperties");
@@ -160,7 +160,7 @@ public class NewProjectProposal implements IService
 			while(iterProfessorshipAux.hasNext()){
 				IProfessorship professorshipAux = (IProfessorship)iterProfessorshipAux.next();
 				ITeacher teacherAux = professorshipAux.getTeacher();
-				IPessoa pessoa = teacherAux.getPerson();
+				IPerson pessoa = teacherAux.getPerson();
 				if(!(pessoa.equals(senderPerson))){
 					groupAux.add(pessoa);
 					if(!allOtherProfessors.contains(pessoa)){
@@ -189,7 +189,7 @@ public class NewProjectProposal implements IService
 				List attends = persistentAttend.readByExecutionCourse(goalExecutionCourse);
 				Iterator iterAttends = attends.iterator();
 				while(iterAttends.hasNext()){
-					IFrequenta attend =(IFrequenta)iterAttends.next();
+					IAttends attend =(IAttends)iterAttends.next();
 					if(!attendsSetStudentNumbers.contains(attend.getAluno().getNumber())){
 						IAttendInAttendsSet	attendInAttendsSet = new AttendInAttendsSet(attend,attendsSet);
 						persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
@@ -218,7 +218,7 @@ public class NewProjectProposal implements IService
 		return result;
 	}
 	
-	private IAdvisory createNewProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse, IGroupProperties groupProperties,IPessoa senderPerson) {
+	private IAdvisory createNewProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse, IGroupProperties groupProperties,IPerson senderPerson) {
         IAdvisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupProperties.getEnrolmentEndDay()!=null){
@@ -244,7 +244,7 @@ public class NewProjectProposal implements IService
     }
 	
 	
-	private IAdvisory createNewProjectProposalAdvisoryAux(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse, IGroupProperties groupProperties,IPessoa senderPerson) {
+	private IAdvisory createNewProjectProposalAdvisoryAux(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse, IGroupProperties groupProperties,IPerson senderPerson) {
         IAdvisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupProperties.getEnrolmentEndDay()!=null){
@@ -270,7 +270,7 @@ public class NewProjectProposal implements IService
     }
 
 	
-	private IAdvisory createNewProjectProposalAcceptedAdvisory(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse, IGroupProperties groupProperties,IPessoa senderPerson) {
+	private IAdvisory createNewProjectProposalAcceptedAdvisory(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse, IGroupProperties groupProperties,IPerson senderPerson) {
         IAdvisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupProperties.getEnrolmentEndDay()!=null){

@@ -11,7 +11,7 @@ package Dominio;
  * @author tfc130
  */
 public class ShiftStudent extends DomainObject implements ITurnoAluno {
-    private ITurno shift;
+    private IShift shift;
 
     private IStudent student;
 
@@ -24,12 +24,12 @@ public class ShiftStudent extends DomainObject implements ITurnoAluno {
     public ShiftStudent() {
     }
 
-    public ShiftStudent(ITurno shift, IStudent student) {
+    public ShiftStudent(IShift shift, IStudent student) {
         setShift(shift);
         setStudent(student);
     }
 
-    public void setShift(ITurno shift) {
+    public void setShift(IShift shift) {
         this.shift = shift;
     }
 
@@ -78,7 +78,7 @@ public class ShiftStudent extends DomainObject implements ITurnoAluno {
     /**
      * @return
      */
-    public ITurno getShift() {
+    public IShift getShift() {
         return shift;
     }
 

@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.assiduousness;
 
 import Dominio.Funcionario;
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
@@ -13,9 +13,9 @@ import ServidorPersistenteJDBC.SuportePersistente;
  * @author Fernanda Quitério & Tania Pousão
  */
 public class ServicoAutorizacaoPortalAssiduidade extends ServicoAutorizacao {
-    private Pessoa _pessoa;
+    private Person _pessoa;
 
-    public ServicoAutorizacaoPortalAssiduidade(Pessoa pessoa) {
+    public ServicoAutorizacaoPortalAssiduidade(Person pessoa) {
         _pessoa = pessoa;
     }
 

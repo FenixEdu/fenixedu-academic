@@ -76,7 +76,7 @@ public class AdicionarAulasFormAction extends
                 serviceResult = (List) ServiceUtils.executeService(userView, "AdicionarAula",
                         argsAdicionarAula);
             } catch (ExistingServiceException ex) {
-                throw new ExistingActionException("Essa relação Turno-Aula", ex);
+                throw new ExistingActionException("Essa relação Shift-Lesson", ex);
             }
             ActionErrors actionErrors = getActionErrors(serviceResult, infoTurno);
             if (actionErrors.isEmpty()) {

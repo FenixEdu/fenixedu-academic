@@ -21,12 +21,12 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
-import Dominio.ICursoExecucao;
+import Dominio.ILesson;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turma;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.SchoolClass;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -47,10 +47,10 @@ public class LerTurnosDeTurma implements IService {
 
             IExecutionPeriod executionPeriod = Cloner
                     .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
-            ITurma group = new Turma();
+            ISchoolClass group = new SchoolClass();
 
             group.setExecutionDegree(executionDegree);
             group.setExecutionPeriod(executionPeriod);
@@ -62,7 +62,7 @@ public class LerTurnosDeTurma implements IService {
             //			infoTurnos = new ArrayList();
 
             while (iterator.hasNext()) {
-                ITurno turno = (ITurno) iterator.next();
+                IShift turno = (IShift) iterator.next();
                 InfoShift infoTurno = (InfoShift) Cloner.get(turno);
 
                 List aulas = turno.getAssociatedLessons();
@@ -72,7 +72,7 @@ public class LerTurnosDeTurma implements IService {
                 InfoLesson infoLesson;
 
                 while (itLessons.hasNext()) {
-                    infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
+                    infoLesson = Cloner.copyILesson2InfoLesson((ILesson) itLessons.next());
 
                     infoLesson.setInfoShift(infoTurno);
                     infoLessons.add(infoLesson);

@@ -7,7 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeObjectives;
 
 /**
@@ -18,8 +18,8 @@ import Dominio.IDegreeObjectives;
  */
 public interface IPersistentDegreeObjectives extends IPersistentObject {
 
-    public IDegreeObjectives readCurrentByDegree(ICurso degree) throws ExcepcaoPersistencia;
+    public IDegreeObjectives readCurrentByDegree(IDegree degree) throws ExcepcaoPersistencia;
 
-    public List readByDegree(ICurso degree) throws ExcepcaoPersistencia;
+    public List readByDegree(IDegree degree) throws ExcepcaoPersistencia;
 
 }

@@ -22,8 +22,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
 import Dominio.IBuilding;
-import Dominio.ISala;
-import Dominio.Sala;
+import Dominio.IRoom;
+import Dominio.Room;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -39,7 +39,7 @@ public class CriarSala implements IService {
         final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
         final IPersistentBuilding persistentBuilding = persistentSupport.getIPersistentBuilding();
 
-        final ISala existingRoom = roomDAO.readByName(infoSala.getNome());
+        final IRoom existingRoom = roomDAO.readByName(infoSala.getNome());
 
         if (existingRoom != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoSala.getNome());
@@ -47,7 +47,7 @@ public class CriarSala implements IService {
 
         final IBuilding building = findBuilding(persistentBuilding, infoSala.getEdificio());
 
-        final ISala room = writeRoom(roomDAO, infoSala, building);
+        final IRoom room = writeRoom(roomDAO, infoSala, building);
 
         return Cloner.copyRoom2InfoRoom(room);
 
@@ -64,9 +64,9 @@ public class CriarSala implements IService {
         });
     }
 
-    protected ISala writeRoom(final ISalaPersistente roomDAO, final InfoRoom infoRoom, final IBuilding building)
+    protected IRoom writeRoom(final ISalaPersistente roomDAO, final InfoRoom infoRoom, final IBuilding building)
             throws ExcepcaoPersistencia {
-        final ISala room = new Sala();
+        final IRoom room = new Room();
         roomDAO.simpleLockWrite(room);
         room.setCapacidadeExame(infoRoom.getCapacidadeExame());
         room.setCapacidadeNormal(infoRoom.getCapacidadeNormal());

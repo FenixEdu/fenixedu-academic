@@ -8,7 +8,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -28,7 +28,7 @@ public class ReadStudentsByPerson implements IService {
         List infoStudents = new ArrayList();
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
+            IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
             List students = persistentSuport.getIPersistentStudent().readbyPerson(person);
             Iterator iterator = students.iterator();
             while (iterator.hasNext()) {

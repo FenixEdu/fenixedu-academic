@@ -34,7 +34,7 @@ public class WebSiteItem extends DomainObject implements IWebSiteItem {
 
     private IWebSiteSection webSiteSection;
 
-    private IPessoa editor;
+    private IPerson editor;
 
     private Integer keyWebSiteSection;
 
@@ -125,14 +125,14 @@ public class WebSiteItem extends DomainObject implements IWebSiteItem {
     /**
      * @return
      */
-    public IPessoa getEditor() {
+    public IPerson getEditor() {
         return editor;
     }
 
     /**
      * @param editor
      */
-    public void setEditor(IPessoa editor) {
+    public void setEditor(IPerson editor) {
         this.editor = editor;
     }
 

@@ -4,7 +4,7 @@
  */
 package DataBeans;
 
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import Dominio.ITurma;
  */
 public class InfoClassWithInfoExecutionDegree extends InfoClass {
 
-    public void copyFromDomain(ITurma turma) {
+    public void copyFromDomain(ISchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
             setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
@@ -20,7 +20,7 @@ public class InfoClassWithInfoExecutionDegree extends InfoClass {
         }
     }
 
-    public static InfoClass newInfoFromDomain(ITurma turma) {
+    public static InfoClass newInfoFromDomain(ISchoolClass turma) {
         InfoClassWithInfoExecutionDegree infoClass = null;
         if (turma != null) {
             infoClass = new InfoClassWithInfoExecutionDegree();

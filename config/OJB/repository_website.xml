@@ -238,7 +238,7 @@
       />
       <reference-descriptor
          name="editor"
-         class-ref="Dominio.Pessoa"
+         class-ref="Dominio.Person"
          proxy="false"
       >
          <foreignkey field-ref="keyEditor"/>

@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
-import Dominio.CentroCusto;
-import Dominio.FuncNaoDocente;
+import Dominio.CostCenter;
+import Dominio.NonTeacherEmployee;
 import Dominio.Funcionario;
 import Dominio.Horario;
 import Dominio.HorarioTipo;
-import Dominio.Pessoa;
+import Dominio.Person;
 import Dominio.StatusAssiduidade;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
@@ -36,11 +36,11 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 
     private StatusAssiduidade _status = null;
 
-    private CentroCusto _centroCusto = null;
+    private CostCenter _centroCusto = null;
 
-    private Pessoa _pessoa = null;
+    private Person _pessoa = null;
 
-    private FuncNaoDocente _funcNaoDocente = null;
+    private NonTeacherEmployee _funcNaoDocente = null;
 
     private List _rotacaoHorario = null;
 
@@ -155,15 +155,15 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
         return _status;
     }
 
-    public CentroCusto getCentroCusto() {
+    public CostCenter getCentroCusto() {
         return _centroCusto;
     }
 
-    public Pessoa getPessoa() {
+    public Person getPessoa() {
         return _pessoa;
     }
 
-    public FuncNaoDocente getFuncNaoDocente() {
+    public NonTeacherEmployee getFuncNaoDocente() {
         return _funcNaoDocente;
     }
 

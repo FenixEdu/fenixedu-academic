@@ -17,7 +17,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionPeriod;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
@@ -83,7 +83,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear) throws FenixServiceException {
 
-        ICursoExecucao executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
+        IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
         if (executionDegree != null) {
             executionDegree.setCurricularPlan(InfoDegreeCurricularPlan
                     .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));

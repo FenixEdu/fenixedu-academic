@@ -14,7 +14,7 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
 
     private Integer keyStudentGroup;
 
-    private IFrequenta attend;
+    private IAttends attend;
 
     private IStudentGroup studentGroup;
 
@@ -35,7 +35,7 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
     /**
      * Construtor
      */
-    public StudentGroupAttend(IStudentGroup studentGroup, IFrequenta attend) {
+    public StudentGroupAttend(IStudentGroup studentGroup, IAttends attend) {
 
         this.studentGroup = studentGroup;
         this.attend = attend;
@@ -87,9 +87,9 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
     }
 
     /**
-     * @return Frequenta
+     * @return Attends
      */
-    public IFrequenta getAttend() {
+    public IAttends getAttend() {
         return attend;
     }
 
@@ -129,7 +129,7 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
      * @param attend
      *            The attend to set
      */
-    public void setAttend(IFrequenta attend) {
+    public void setAttend(IAttends attend) {
         this.attend = attend;
     }
 

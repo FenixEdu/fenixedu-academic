@@ -13,13 +13,13 @@ import org.apache.struts.util.LabelValueBean;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudent;
 import Dominio.ExecutionCourse;
-import Dominio.Frequenta;
+import Dominio.Attends;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.Student;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -100,7 +100,7 @@ public class ReadStudentsByIdArray implements IService {
                 if (shifts[i].equals("Todos os Turnos")) {
                     continue;
                 }
-                ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, new Integer(shifts[i]));
+                IShift shift = (IShift) persistentShift.readByOID(Shift.class, new Integer(shifts[i]));
                 Iterator studentIt = persistentSuport.getITurnoAlunoPersistente().readByShift(shift)
                         .iterator();
                 while (studentIt.hasNext()) {
@@ -128,7 +128,7 @@ public class ReadStudentsByIdArray implements IService {
 
                     Iterator iterStudent = attendList.listIterator();
                     while (iterStudent.hasNext()) {
-                        IFrequenta attend = (Frequenta) iterStudent.next();
+                        IAttends attend = (Attends) iterStudent.next();
                         InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) attend
                                 .getAluno());
                         studentsList.add(infoStudent);

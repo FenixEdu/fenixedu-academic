@@ -11,7 +11,7 @@ import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -52,7 +52,7 @@ public class LerTurno implements IServico {
             IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno
                     .getInfoExecutionCourse());
 
-            ITurno turno = sp.getITurnoPersistente().readByNameAndExecutionCourse(
+            IShift turno = sp.getITurnoPersistente().readByNameAndExecutionCourse(
                     keyTurno.getShiftName(), executionCourse);
 
             if (turno != null) {

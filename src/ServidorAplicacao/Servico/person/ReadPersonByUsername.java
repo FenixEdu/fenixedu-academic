@@ -15,7 +15,7 @@ package ServidorAplicacao.Servico.person;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPersonWithInfoCountryAndAdvisories;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -36,7 +36,7 @@ public class ReadPersonByUsername implements IService {
         ISuportePersistente sp = null;
 
         String username = new String(userView.getUtilizador());
-        IPessoa person = null;
+        IPerson person = null;
 
         try {
             sp = SuportePersistenteOJB.getInstance();
@@ -61,7 +61,7 @@ public class ReadPersonByUsername implements IService {
 
         ISuportePersistente sp = null;
 
-        IPessoa person = null;
+        IPerson person = null;
 
         try {
             sp = SuportePersistenteOJB.getInstance();

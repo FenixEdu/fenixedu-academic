@@ -6,7 +6,7 @@ package ServidorPersistente.projectsManagement;
 
 import java.util.List;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.projectsManagement.IProjectAccess;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -32,13 +32,13 @@ public interface IPersistentProjectAccess extends IPersistentObject {
 
     public abstract boolean hasPersonProjectAccess(String personUsername, Integer projectCode) throws ExcepcaoPersistencia;
 
-    public abstract int countByPersonAndProject(IPessoa person, Integer keyProject) throws ExcepcaoPersistencia;
+    public abstract int countByPersonAndProject(IPerson person, Integer keyProject) throws ExcepcaoPersistencia;
 
-    public abstract int countByPerson(IPessoa person) throws ExcepcaoPersistencia;
+    public abstract int countByPerson(IPerson person) throws ExcepcaoPersistencia;
 
-    public abstract void deleteByPerson(IPessoa person) throws ExcepcaoPersistencia;
+    public abstract void deleteByPerson(IPerson person) throws ExcepcaoPersistencia;
 
-    public abstract void deleteByPersonAndDate(IPessoa person) throws ExcepcaoPersistencia;
+    public abstract void deleteByPersonAndDate(IPerson person) throws ExcepcaoPersistencia;
 
     public abstract void delete(IProjectAccess projectAccess) throws ExcepcaoPersistencia;
 }

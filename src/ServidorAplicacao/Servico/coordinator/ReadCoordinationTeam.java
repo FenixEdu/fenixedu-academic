@@ -11,9 +11,9 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCoordinator;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -36,8 +36,8 @@ public class ReadCoordinationTeam implements IService {
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
             if (executionDegree == null) {
                 throw new InvalidArgumentsServiceException("execution Degree unexisting");
             }

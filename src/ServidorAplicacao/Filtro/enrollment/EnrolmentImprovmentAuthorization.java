@@ -9,7 +9,7 @@ import java.util.List;
 
 import DataBeans.InfoRole;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter;
@@ -106,7 +106,7 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         
         if(user != null) {
             IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente(); 
-            IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(user);
+            IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(user);
             if(pessoa != null) {
                 IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
                 IEmployee employee = persistentEmployee.readByPerson(pessoa);

@@ -7,8 +7,8 @@ package ServidorAplicacao.Servico.sop;
 
 import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
-import Dominio.ISala;
-import Dominio.Sala;
+import Dominio.IRoom;
+import Dominio.Room;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -45,7 +45,7 @@ public class ReadRoomByOID implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ISalaPersistente roomDAO = sp.getISalaPersistente();
-            ISala room = (ISala) roomDAO.readByOID(Sala.class, oid);
+            IRoom room = (IRoom) roomDAO.readByOID(Room.class, oid);
             if (room != null) {
                 result = Cloner.copyRoom2InfoRoom(room);
             }

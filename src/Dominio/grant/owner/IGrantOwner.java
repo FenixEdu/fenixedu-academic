@@ -7,7 +7,7 @@ package Dominio.grant.owner;
 import java.util.Date;
 
 import Dominio.IDomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author Barbosa
@@ -16,7 +16,7 @@ import Dominio.IPessoa;
  */
 public interface IGrantOwner extends IDomainObject {
 
-    public IPessoa getPerson();
+    public IPerson getPerson();
 
     public Integer getNumber();
 
@@ -24,7 +24,7 @@ public interface IGrantOwner extends IDomainObject {
 
     public Integer getCardCopyNumber();
 
-    public void setPerson(IPessoa person);
+    public void setPerson(IPerson person);
 
     public void setNumber(Integer number);
 

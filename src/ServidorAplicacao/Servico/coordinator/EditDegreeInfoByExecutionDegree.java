@@ -6,10 +6,10 @@ import java.util.Calendar;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoDegreeInfoWithDegree;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.DegreeInfo;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeInfo;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -37,8 +37,8 @@ public class EditDegreeInfoByExecutionDegree implements IService {
             //Execution Degree
             IPersistentExecutionDegree cursoExecucaoPersistente = suportePersistente
                     .getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOID(
-                    CursoExecucao.class, infoExecutionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) cursoExecucaoPersistente.readByOID(
+                    ExecutionDegree.class, infoExecutionDegreeId);
 
             if (executionDegree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
@@ -48,7 +48,7 @@ public class EditDegreeInfoByExecutionDegree implements IService {
             }
 
             //Degree
-            ICurso degree = executionDegree.getCurricularPlan().getDegree();
+            IDegree degree = executionDegree.getCurricularPlan().getDegree();
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }

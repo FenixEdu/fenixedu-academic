@@ -39,7 +39,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
     private String code;
 
-    private IDisciplinaDepartamento departmentCourse;
+    private IDepartmentCourse departmentCourse;
 
     private IDegreeCurricularPlan degreeCurricularPlan;
 
@@ -167,11 +167,11 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
         this.degreeCurricularPlanKey = degreeCurricularPlanKey;
     }
 
-    public IDisciplinaDepartamento getDepartmentCourse() {
+    public IDepartmentCourse getDepartmentCourse() {
         return departmentCourse;
     }
 
-    public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse) {
+    public void setDepartmentCourse(IDepartmentCourse departmentCourse) {
         this.departmentCourse = departmentCourse;
     }
 

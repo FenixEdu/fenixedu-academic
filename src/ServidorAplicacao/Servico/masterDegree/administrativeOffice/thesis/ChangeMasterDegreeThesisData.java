@@ -12,7 +12,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IEmployee;
 import Dominio.IMasterDegreeThesisDataVersion;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudentCurricularPlan;
 import Dominio.MasterDegreeThesisDataVersion;
 import ServidorAplicacao.IUserView;
@@ -91,7 +91,7 @@ public class ChangeMasterDegreeThesisData implements IService {
                     throw new ExistingServiceException(
                             "error.exception.masterDegree.dissertationTitleAlreadyChosen");
 
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = sp.getIPersistentEmployee().readByPerson(
                     person.getIdInternal().intValue());
 

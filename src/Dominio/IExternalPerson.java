@@ -16,9 +16,9 @@ public interface IExternalPerson extends IDomainObject {
 
     public abstract Integer getKeyPerson();
 
-    public abstract void setPerson(IPessoa person);
+    public abstract void setPerson(IPerson person);
 
-    public abstract IPessoa getPerson();
+    public abstract IPerson getPerson();
 
     public abstract void setWorkLocation(IWorkLocation workLocation);
 

@@ -14,12 +14,12 @@ public interface ICoordinator extends IDomainObject {
     /**
      * @return
      */
-    public ICursoExecucao getExecutionDegree();
+    public IExecutionDegree getExecutionDegree();
 
     /**
      * @param executionCourse
      */
-    public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(IExecutionDegree executionDegree);
 
     /**
      * @return

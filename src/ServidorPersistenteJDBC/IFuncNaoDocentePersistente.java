@@ -1,25 +1,25 @@
 package ServidorPersistenteJDBC;
 
-import Dominio.FuncNaoDocente;
+import Dominio.NonTeacherEmployee;
 
 /**
  * 
  * @author Fernanda Quitério e Tania Pousão
  */
 public interface IFuncNaoDocentePersistente {
-    public boolean alterarFuncNaoDocente(FuncNaoDocente funcionario);
+    public boolean alterarFuncNaoDocente(NonTeacherEmployee funcionario);
 
     public boolean apagarFuncNaoDocente(int chaveFuncionario);
 
-    public boolean escreverFuncNaoDocente(FuncNaoDocente funcionario);
+    public boolean escreverFuncNaoDocente(NonTeacherEmployee funcionario);
 
-    public FuncNaoDocente lerFuncNaoDocente(int codigoInterno);
+    public NonTeacherEmployee lerFuncNaoDocente(int codigoInterno);
 
-    public FuncNaoDocente lerFuncNaoDocentePorFuncionario(int chaveFuncionario);
+    public NonTeacherEmployee lerFuncNaoDocentePorFuncionario(int chaveFuncionario);
 
-    public FuncNaoDocente lerFuncNaoDocentePorNumMecanografico(int numMecanografico);
+    public NonTeacherEmployee lerFuncNaoDocentePorNumMecanografico(int numMecanografico);
 
-    public FuncNaoDocente lerFuncNaoDocentePorPessoa(int chavePessoa);
+    public NonTeacherEmployee lerFuncNaoDocentePorPessoa(int chavePessoa);
 
     public int ultimoCodigoInterno();
 }

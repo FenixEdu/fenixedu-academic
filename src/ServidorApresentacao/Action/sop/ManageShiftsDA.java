@@ -105,7 +105,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
             infoShift.setInfoLessons(null);
             infoShift.setInfoClasses(null);
         } catch (ExistingServiceException ex) {
-            throw new ExistingActionException("O Turno", ex);
+            throw new ExistingActionException("O Shift", ex);
         }
 
         request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);

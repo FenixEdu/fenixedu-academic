@@ -19,7 +19,7 @@ import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoRole;
 import Dominio.ICandidateSituation;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import ServidorAplicacao.ICandidateView;
 import ServidorAplicacao.IServico;
@@ -61,7 +61,7 @@ public class Autenticacao implements IServico {
 
     public IUserView run(String utilizador, String password, String application)
             throws FenixServiceException, ExcepcaoAutenticacao {
-        IPessoa pessoa = null;
+        IPerson pessoa = null;
 
         try {
             pessoa = SuportePersistenteOJB.getInstance().getIPessoaPersistente().lerPessoaPorUsername(

@@ -196,7 +196,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
     private void renderExamsTableHeader(StringBuffer strBuffer) {
         strBuffer.append("<tr>");
         strBuffer.append("<td> Disciplina </td>");
-        strBuffer.append("<td> Curso e Ano </td>");
+        strBuffer.append("<td> Degree e Ano </td>");
         strBuffer.append("<td> Época </td>");
         strBuffer.append("<td> Data </td>");
         strBuffer.append("<td> Hora Inicio </td>");

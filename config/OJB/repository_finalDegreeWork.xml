@@ -149,7 +149,7 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.CursoExecucao">
+         class-ref="Dominio.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
       <reference-descriptor
@@ -290,7 +290,7 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.CursoExecucao">
+         class-ref="Dominio.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
 </class-descriptor>
@@ -319,7 +319,7 @@
       />
       <reference-descriptor
          name="executionDegree"
-         class-ref="Dominio.CursoExecucao">
+         class-ref="Dominio.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
 	<collection-descriptor

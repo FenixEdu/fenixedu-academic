@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 
 import commons.CollectionUtils;
 
@@ -15,7 +15,7 @@ import commons.CollectionUtils;
  */
 public class InfoExecutionDegreeWithCoordinators extends InfoExecutionDegreeWithCampus {
 
-    public void copyFromDomain(ICursoExecucao executionDegree) {
+    public void copyFromDomain(IExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setCoordinatorsList(copyICoordinator2InfoCoordinator(executionDegree.getCoordinatorsList()));
@@ -39,7 +39,7 @@ public class InfoExecutionDegreeWithCoordinators extends InfoExecutionDegreeWith
         return infoCoordinators;
     }
 
-    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
         InfoExecutionDegreeWithCoordinators infoExecutionDegreeWithCoordinators = null;
         if (executionDegree != null) {
             infoExecutionDegreeWithCoordinators = new InfoExecutionDegreeWithCoordinators();

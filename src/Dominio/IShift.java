@@ -1,5 +1,5 @@
 /*
- * ITurno.java
+ * IShift.java
  *
  * Created on 17 de Outubro de 2002, 19:25
  */
@@ -14,7 +14,7 @@ import java.util.List;
 
 import Util.TipoAula;
 
-public interface ITurno extends IDomainObject {
+public interface IShift extends IDomainObject {
     public String getNome();
 
     public TipoAula getTipo();

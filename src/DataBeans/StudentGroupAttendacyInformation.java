@@ -8,7 +8,7 @@ package DataBeans;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.StudentGroupAttend;
 
 /**
@@ -117,7 +117,7 @@ public class StudentGroupAttendacyInformation extends InfoObject {
 
         for (Iterator iterator = this.getGroupAttends().iterator(); iterator.hasNext();) {
             StudentGroupAttend studentGroupAttend = (StudentGroupAttend) iterator.next();
-            IFrequenta attendacy = studentGroupAttend.getAttend();
+            IAttends attendacy = studentGroupAttend.getAttend();
             if (attendacy.getAluno().getNumber().equals(studentNumber))
                 return true;
         }

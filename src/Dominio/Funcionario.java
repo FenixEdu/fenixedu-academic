@@ -18,7 +18,7 @@ public class Funcionario {
 
     private int codigoInterno = 0;
 
-    private IPessoa person = null;
+    private IPerson person = null;
 
     private int chavePessoa = 0;
 
@@ -229,7 +229,7 @@ public class Funcionario {
         return chavePessoa;
     }
 
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -237,7 +237,7 @@ public class Funcionario {
         this.chavePessoa = chavePessoa;
     }
 
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

@@ -2,8 +2,8 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuitySituation;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IGratuitySituation;
 import Dominio.IStudent;
 import Dominio.Student;
@@ -34,8 +34,8 @@ public class ReadGratuitySituationByExecutionDegreeIDAndStudentID implements ISe
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            ICursoExecucao cursoExecucao = (ICursoExecucao) sp.getIPersistentExecutionDegree()
-                    .readByOID(CursoExecucao.class, executionDegreeID);
+            IExecutionDegree cursoExecucao = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                    .readByOID(ExecutionDegree.class, executionDegreeID);
             IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, studentID);
 
             if ((cursoExecucao == null) || (student == null)) {

@@ -10,7 +10,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import Util.TipoDocumentoIdentificacao;
 
 public final class DadosForm extends ActionForm {
@@ -497,7 +497,7 @@ public final class DadosForm extends ActionForm {
         return errors;
     }
 
-    public void setForm(Pessoa pessoa) {
+    public void setForm(Person pessoa) {
         setCodigoInterno(pessoa.getIdInternal().intValue());
         setNumeroDocumentoIdentificacao(pessoa.getNumeroDocumentoIdentificacao());
         setTipoDocumentoIdentificacao(String.valueOf(pessoa.getTipoDocumentoIdentificacao()));
@@ -541,7 +541,7 @@ public final class DadosForm extends ActionForm {
         setPassword(pessoa.getPassword());
     }
 
-    public void setPessoa(Pessoa pessoa) {
+    public void setPessoa(Person pessoa) {
         if (getMorada() != null)
             pessoa.setMorada(getMorada());
         if (getLocalidade() != null)

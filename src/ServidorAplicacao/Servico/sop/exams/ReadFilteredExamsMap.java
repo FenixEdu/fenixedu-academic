@@ -25,9 +25,9 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriodAndExams;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -92,9 +92,9 @@ public class ReadFilteredExamsMap implements IService {
 
         // Translate to execute following queries
         //CLONER
-        //ICursoExecucao executionDegree =
+        //IExecutionDegree executionDegree =
         //Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-        //ICursoExecucao executionDegree =
+        //IExecutionDegree executionDegree =
         // InfoExecutionDegreeWithInfoDegreeCurricularPlan.newDomainFromInfo(infoExecutionDegree);
         //CLONER
         //IExecutionPeriod executionPeriod =
@@ -105,8 +105,8 @@ public class ReadFilteredExamsMap implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
                         
-            ICursoExecucao executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree()
-                    .readByOID(CursoExecucao.class, infoExecutionDegree.getIdInternal());
+            IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                    .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
             IPeriod period = null;
             

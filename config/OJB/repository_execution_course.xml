@@ -113,7 +113,7 @@
 	</collection-descriptor>
 	<collection-descriptor
 		name="attends"
-		element-class-ref="Dominio.Frequenta"
+		element-class-ref="Dominio.Attends"
 		refresh="true"
 		auto-retrieve="true"
 		auto-update="false"

@@ -25,7 +25,7 @@ public interface ICurricularCourse extends IDomainObject {
 
     public void setCode(java.lang.String code);
 
-    public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse);
+    public void setDepartmentCourse(IDepartmentCourse departmentCourse);
 
     public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
 
@@ -73,7 +73,7 @@ public interface ICurricularCourse extends IDomainObject {
 
     public java.lang.String getCode();
 
-    public IDisciplinaDepartamento getDepartmentCourse();
+    public IDepartmentCourse getDepartmentCourse();
 
     public IDegreeCurricularPlan getDegreeCurricularPlan();
 

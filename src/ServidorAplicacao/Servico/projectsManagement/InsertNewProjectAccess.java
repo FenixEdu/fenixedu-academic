@@ -11,7 +11,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IEmployee;
 import Dominio.IPersonRole;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.ITeacher;
 import Dominio.PersonRole;
@@ -39,7 +39,7 @@ public class InsertNewProjectAccess implements IService {
     public void run(UserView userView, String username, GregorianCalendar beginDate, GregorianCalendar endDate) throws FenixServiceException,
             ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-        IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
@@ -74,7 +74,7 @@ public class InsertNewProjectAccess implements IService {
     public void run(UserView userView, String username, String[] projectCodes, GregorianCalendar beginDate, GregorianCalendar endDate)
             throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-        IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
@@ -104,7 +104,7 @@ public class InsertNewProjectAccess implements IService {
         }
     }
 
-    private boolean hasProjectsManagerRole(IPessoa person) {
+    private boolean hasProjectsManagerRole(IPerson person) {
         Iterator iterator = person.getPersonRoles().iterator();
         while (iterator.hasNext())
             if (((IRole) iterator.next()).getRoleType().equals(RoleType.PROJECTS_MANAGER))
@@ -118,7 +118,7 @@ public class InsertNewProjectAccess implements IService {
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = (IEmployee) sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

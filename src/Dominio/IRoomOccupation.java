@@ -19,7 +19,7 @@ public interface IRoomOccupation extends IDomainObject {
 
     public Calendar getStartTime();
 
-    public ISala getRoom();
+    public IRoom getRoom();
 
     public IPeriod getPeriod();
 
@@ -29,12 +29,12 @@ public interface IRoomOccupation extends IDomainObject {
 
     public void setStartTime(Calendar calendar);
 
-    public void setRoom(ISala sala);
+    public void setRoom(IRoom sala);
 
     public void setPeriod(IPeriod period);
 
     public boolean roomOccupationForDateAndTime(IPeriod period, Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week, ISala room);
+            DiaSemana dayOfWeek, Integer frequency, Integer week, IRoom room);
 
     public boolean roomOccupationForDateAndTime(IPeriod period, Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer frequency, Integer week);

@@ -9,7 +9,7 @@ import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.InfoShiftWithInfoLessons;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -62,7 +62,7 @@ public class ReadShiftsByExecutionCourseID implements IServico {
 
             Iterator iterator = shifts.iterator();
             while (iterator.hasNext()) {
-                ITurno shift = (ITurno) iterator.next();
+                IShift shift = (IShift) iterator.next();
 
                 List studentsInShift = sp.getITurnoAlunoPersistente().readByShift(shift);
 

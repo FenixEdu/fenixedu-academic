@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.projectsManagement;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IEmployee;
 import Dominio.IPersonRole;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.ITeacher;
 import Dominio.PersonRole;
@@ -33,7 +33,7 @@ public class RemoveProjectAccess implements IService {
     public void run(IUserView userView, String personUsername, Integer projectCode) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        IPessoa person = (IPessoa) sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
+        IPerson person = (IPerson) sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
         if (persistentProjectAccess.countByPerson(person) == 1) {
             IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
             if (persistentSuportOracle.getIPersistentProject().countUserProject(getUserNumber(sp, person)) == 0) {
@@ -47,7 +47,7 @@ public class RemoveProjectAccess implements IService {
         persistentProjectAccess.delete(projectAccess);
     }
 
-    private Integer getUserNumber(ISuportePersistente sp, IPessoa person) throws ExcepcaoPersistencia {
+    private Integer getUserNumber(ISuportePersistente sp, IPerson person) throws ExcepcaoPersistencia {
         Integer userNumber = null;
         ITeacher teacher = (ITeacher) sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
         if (teacher != null)

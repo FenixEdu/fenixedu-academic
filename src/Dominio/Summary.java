@@ -36,7 +36,7 @@ public class Summary extends DomainObject implements ISummary {
 
     private Integer keyShift;
 
-    private ITurno shift;
+    private IShift shift;
 
     private Integer keyProfessorship;
 
@@ -54,7 +54,7 @@ public class Summary extends DomainObject implements ISummary {
 
     private Integer keyRoom;
 
-    private ISala room;
+    private IRoom room;
 
     /**
      *  
@@ -246,7 +246,7 @@ public class Summary extends DomainObject implements ISummary {
     /**
      * @return Returns the shift.
      */
-    public ITurno getShift() {
+    public IShift getShift() {
         return shift;
     }
 
@@ -254,7 +254,7 @@ public class Summary extends DomainObject implements ISummary {
      * @param shift
      *            The shift to set.
      */
-    public void setShift(ITurno shift) {
+    public void setShift(IShift shift) {
         this.shift = shift;
     }
 
@@ -336,7 +336,7 @@ public class Summary extends DomainObject implements ISummary {
     /**
      * @return Returns the room.
      */
-    public ISala getRoom() {
+    public IRoom getRoom() {
         return room;
     }
 
@@ -344,7 +344,7 @@ public class Summary extends DomainObject implements ISummary {
      * @param room
      *            The room to set.
      */
-    public void setRoom(ISala room) {
+    public void setRoom(IRoom room) {
         this.room = room;
     }
 

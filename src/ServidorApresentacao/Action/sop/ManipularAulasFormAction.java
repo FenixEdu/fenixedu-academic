@@ -25,10 +25,10 @@ public class ManipularAulasFormAction extends
         if (sessao != null) {
             /* Obtem o parametro do submit que indica a operacao a realizar */
 
-            if (request.getParameter("operation").equals("Editar Aula"))
+            if (request.getParameter("operation").equals("Editar Lesson"))
                 return (mapping.findForward("Editar"));
 
-            else if (request.getParameter("operation").equals("Apagar Aula"))
+            else if (request.getParameter("operation").equals("Apagar Lesson"))
                 return (mapping.findForward("Apagar"));
 
             else if (request.getParameter("operation").equals("Voltar"))

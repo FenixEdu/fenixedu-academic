@@ -16,7 +16,7 @@ public class Mark extends DomainObject implements IMark {
 
     private String publishedMark;
 
-    private IFrequenta attend;
+    private IAttends attend;
 
     private IEvaluation evaluation;
 
@@ -28,7 +28,7 @@ public class Mark extends DomainObject implements IMark {
 
     }
 
-    public Mark(String mark, String publishedMark, IFrequenta attend, IExam exam) {
+    public Mark(String mark, String publishedMark, IAttends attend, IExam exam) {
         setAttend(attend);
         setEvaluation(evaluation);
         setPublishedMark(publishedMark);
@@ -76,7 +76,7 @@ public class Mark extends DomainObject implements IMark {
     /**
      * @return
      */
-    public IFrequenta getAttend() {
+    public IAttends getAttend() {
         return attend;
     }
 
@@ -118,7 +118,7 @@ public class Mark extends DomainObject implements IMark {
     /**
      * @param attend
      */
-    public void setAttend(IFrequenta attend) {
+    public void setAttend(IAttends attend) {
         this.attend = attend;
     }
 

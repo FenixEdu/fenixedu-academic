@@ -7,7 +7,7 @@ package Dominio.sms;
 import java.util.Date;
 
 import Dominio.DomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Util.SmsDeliveryType;
 
 /**
@@ -26,7 +26,7 @@ public class SentSms extends DomainObject implements ISentSms {
 
     protected SmsDeliveryType deliveryType;
 
-    protected IPessoa person;
+    protected IPerson person;
 
     public SentSms() {
         super();
@@ -102,7 +102,7 @@ public class SentSms extends DomainObject implements ISentSms {
     /**
      * @return Returns the person.
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -110,7 +110,7 @@ public class SentSms extends DomainObject implements ISentSms {
      * @param person
      *            The person to set.
      */
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

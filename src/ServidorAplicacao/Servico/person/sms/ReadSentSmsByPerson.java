@@ -10,7 +10,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.sms.InfoSentSms;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.sms.ISentSms;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -38,7 +38,7 @@ public class ReadSentSmsByPerson implements IService {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
             IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
-            IPessoa person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
             List infoSentSmsList = new ArrayList();
 

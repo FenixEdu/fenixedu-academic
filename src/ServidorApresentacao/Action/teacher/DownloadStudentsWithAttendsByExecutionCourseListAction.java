@@ -68,7 +68,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String ATTENDACY_TYPE_IMPROVEMENT = "Melhoria";
 
-    private static final String COURSE = "Curso";
+    private static final String COURSE = "Degree";
 
     private static final String NAME = "Nome";
 
@@ -76,7 +76,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String EMAIL = "E-Mail";
 
-    private static final String SHIFT = "Turno ";
+    private static final String SHIFT = "Shift ";
 
     private static final String THEORETICAL = "Teórico";
 

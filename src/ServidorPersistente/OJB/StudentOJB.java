@@ -15,7 +15,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IExecutionYear;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.IStudent;
 import Dominio.Student;
@@ -62,7 +62,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         }
     }
 
-    public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPessoa person)
+    public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPerson person)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeType", degreeType);
@@ -86,7 +86,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         return queryList(Student.class, new Criteria());
     }
 
-    public IStudent readByPersonAndDegreeType(IPessoa person, TipoCurso degreeType)
+    public IStudent readByPersonAndDegreeType(IPerson person, TipoCurso degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.idInternal", person.getIdInternal());
@@ -118,7 +118,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
 
     }
 
-    public List readbyPerson(IPessoa person) throws ExcepcaoPersistencia {
+    public List readbyPerson(IPerson person) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("personKey", person.getIdInternal());

@@ -20,8 +20,8 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
-import Dominio.ITurno;
+import Dominio.ILesson;
+import Dominio.IShift;
 
 public class LerAulasDeTurno implements IService {
 
@@ -31,7 +31,7 @@ public class LerAulasDeTurno implements IService {
         //   try {
         //   ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ITurno shift = Cloner.copyInfoShift2Shift(new InfoShift(shiftKey.getShiftName(), null, null,
+        IShift shift = Cloner.copyInfoShift2Shift(new InfoShift(shiftKey.getShiftName(), null, null,
                 shiftKey.getInfoExecutionCourse()));
 
         //List aulas = sp.getITurnoAulaPersistente().readByShift(shift);
@@ -41,7 +41,7 @@ public class LerAulasDeTurno implements IService {
         infoAulas = new ArrayList();
 
         while (iterator.hasNext()) {
-            IAula elem = (IAula) iterator.next();
+            ILesson elem = (ILesson) iterator.next();
 
             InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
 

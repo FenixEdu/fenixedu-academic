@@ -14,7 +14,7 @@ import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -55,7 +55,7 @@ public class ReadShiftsByDistributedTest implements IService {
             List result = new ArrayList();
             ITurnoAlunoPersistente turnoAlunoPersistente = persistentSuport.getITurnoAlunoPersistente();
             while (itShiftList.hasNext()) {
-                ITurno shift = (ITurno) itShiftList.next();
+                IShift shift = (IShift) itShiftList.next();
                 List shiftStudents = turnoAlunoPersistente.readByShift(shift);
                 if (!studentsList.containsAll(shiftStudents))
                     result.add(Cloner.get(shift));

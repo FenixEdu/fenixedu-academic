@@ -97,7 +97,7 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Curso"
+			class-ref="Dominio.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
@@ -217,7 +217,7 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Curso"
+			class-ref="Dominio.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
@@ -337,7 +337,7 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Curso"
+			class-ref="Dominio.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
@@ -457,7 +457,7 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Curso"
+			class-ref="Dominio.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
@@ -577,7 +577,7 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Curso"
+			class-ref="Dominio.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
@@ -697,7 +697,7 @@
 	/>
 	<reference-descriptor
 			name="degree"
-			class-ref="Dominio.Curso"
+			class-ref="Dominio.Degree"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>

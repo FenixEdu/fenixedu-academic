@@ -88,7 +88,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         try {
             ServiceUtils.executeService(userView, "EditarTurma", argsCriarTurma);
         } catch (ExistingServiceException e) {
-            throw new ExistingActionException("A Turma", e);
+            throw new ExistingActionException("A SchoolClass", e);
         }
 
         request.removeAttribute(SessionConstants.CLASS_VIEW);

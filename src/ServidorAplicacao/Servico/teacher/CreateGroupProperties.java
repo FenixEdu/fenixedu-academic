@@ -18,7 +18,7 @@ import Dominio.GroupPropertiesExecutionCourse;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -112,7 +112,7 @@ public class CreateGroupProperties implements IService {
             IAttendInAttendsSet attendInAttendsSet;
             Iterator iterAttends = attends.iterator();
             while(iterAttends.hasNext()){
-            	IFrequenta frequenta = (IFrequenta)iterAttends.next();
+            	IAttends frequenta = (IAttends)iterAttends.next();
             	
             	attendInAttendsSet = new AttendInAttendsSet(frequenta,attendsSet);
             	persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);

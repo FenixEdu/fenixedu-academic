@@ -13,7 +13,7 @@ import DataBeans.projectsManagement.InfoProject;
 import DataBeans.projectsManagement.InfoProjectReport;
 import DataBeans.projectsManagement.InfoRevenueReportLine;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.projectsManagement.IMovementReport;
 import Dominio.projectsManagement.IRevenueReportLine;
@@ -74,7 +74,7 @@ public class ReadReport implements IService {
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = (IEmployee) sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

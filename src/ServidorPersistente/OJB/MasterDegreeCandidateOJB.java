@@ -18,10 +18,10 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
@@ -138,7 +138,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
     }
 
     public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-            String idDocumentNumber, Integer idDocumentType, ICursoExecucao executionDegree,
+            String idDocumentNumber, Integer idDocumentType, IExecutionDegree executionDegree,
             Specialization specialization) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("specialization", specialization);
@@ -155,7 +155,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
     }
 
     public IMasterDegreeCandidate readByUsernameAndExecutionDegreeAndSpecialization(String username,
-            ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
+            IExecutionDegree executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("specialization", specialization);
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
@@ -214,7 +214,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
     }
 
     public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
-            ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
+            IExecutionDegree executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("specialization", specialization);
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
@@ -228,8 +228,8 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 
     }
 
-    public IMasterDegreeCandidate readByExecutionDegreeAndPerson(ICursoExecucao executionDegree,
-            IPessoa person) throws ExcepcaoPersistencia {
+    public IMasterDegreeCandidate readByExecutionDegreeAndPerson(IExecutionDegree executionDegree,
+            IPerson person) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
@@ -244,7 +244,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
     }
 
     public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(
-            ICursoExecucao executionDegree, IPessoa person, Integer number) throws ExcepcaoPersistencia {
+            IExecutionDegree executionDegree, IPerson person, Integer number) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
@@ -258,7 +258,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 
     }
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         /*
          * crit.addEqualTo( "executionDegree.executionYear.year",

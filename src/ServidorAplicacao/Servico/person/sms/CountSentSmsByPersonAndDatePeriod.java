@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.person.sms;
 import java.util.Date;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.sms.SmsLimitReachedServiceException;
@@ -40,7 +40,7 @@ public class CountSentSmsByPersonAndDatePeriod implements IService {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
             IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
-            IPessoa person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
             Integer numberOfSms = persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(),
                     startDate, endDate);

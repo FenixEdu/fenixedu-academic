@@ -4,7 +4,7 @@
  */
 package DataBeans;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 
 /**
  * @author João Mota
@@ -13,7 +13,7 @@ import Dominio.ICursoExecucao;
 public class InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan extends
         InfoExecutionDegreeWithInfoDegreeCurricularPlan {
 
-    public void copyFromDomain(ICursoExecucao executionDegree) {
+    public void copyFromDomain(IExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setInfoExecutionYear(InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear()));
@@ -24,7 +24,7 @@ public class InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan ext
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
         InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan();

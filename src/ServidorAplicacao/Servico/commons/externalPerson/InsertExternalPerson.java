@@ -3,9 +3,9 @@ package ServidorAplicacao.Servico.commons.externalPerson;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IWorkLocation;
-import Dominio.Pessoa;
+import Dominio.Person;
 import Dominio.WorkLocation;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -32,7 +32,7 @@ public class InsertExternalPerson implements IService {
             String homepage, String email) throws FenixServiceException {
         IExternalPerson externalPerson = null;
         IExternalPerson storedExternalPerson = null;
-        IPessoa person = null;
+        IPerson person = null;
         IWorkLocation storedWorkLocation = null;
 
         try {
@@ -53,7 +53,7 @@ public class InsertExternalPerson implements IService {
             lastDocumentIdNumber = "" + nextID;
 
             externalPerson = new ExternalPerson();
-            person = new Pessoa();
+            person = new Person();
 
             person.setNome(name);
             person.setMorada(address);

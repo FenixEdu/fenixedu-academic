@@ -17,7 +17,7 @@ import Dominio.IAdvisory;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -75,7 +75,7 @@ public class RejectNewProjectProposal implements IService
 				throw new ExistingServiceException();
 			}
 			
-			IPessoa receiverPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(rejectorUserName)).getPerson();
+			IPerson receiverPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(rejectorUserName)).getPerson();
 			
 			IExecutionCourse executionCourse =  groupPropertiesExecutionCourse.getExecutionCourse();
 			groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
@@ -124,7 +124,7 @@ public class RejectNewProjectProposal implements IService
 			
 			
 			
-			IPessoa senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
+			IPerson senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
 			
 			// Create Advisory
             IAdvisory advisory = createRejectAdvisory(executionCourse,senderPerson, receiverPerson,groupPropertiesExecutionCourse);
@@ -144,7 +144,7 @@ public class RejectNewProjectProposal implements IService
 	
 	
 	
-	private IAdvisory createRejectAdvisory(IExecutionCourse executionCourse,IPessoa senderPerson, IPessoa receiverPerson,IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
+	private IAdvisory createRejectAdvisory(IExecutionCourse executionCourse,IPerson senderPerson, IPerson receiverPerson,IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
         IAdvisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()!=null){

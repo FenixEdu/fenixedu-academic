@@ -17,12 +17,12 @@ public interface IDegreeObjectives extends IDomainObject {
     /**
      * @return
      */
-    public abstract ICurso getDegree();
+    public abstract IDegree getDegree();
 
     /**
      * @param degree
      */
-    public abstract void setDegree(ICurso degree);
+    public abstract void setDegree(IDegree degree);
 
     /**
      * @return

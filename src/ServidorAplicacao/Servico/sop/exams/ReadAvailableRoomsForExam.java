@@ -12,7 +12,7 @@ import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
 import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentRoomOccupation;
@@ -32,7 +32,7 @@ public class ReadAvailableRoomsForExam implements IService {
 
         Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
             public Object transform(Object input) {
-                return Cloner.copyRoom2InfoRoom((ISala) input);
+                return Cloner.copyRoom2InfoRoom((IRoom) input);
             }
         };
 

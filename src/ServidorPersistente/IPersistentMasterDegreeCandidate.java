@@ -14,10 +14,10 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Util.SituationName;
 import Util.Specialization;
 
@@ -84,7 +84,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 */
 	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
 			String idDocumentNumber, Integer idDocumentType,
-			ICursoExecucao executionDegree, Specialization specialization)
+			IExecutionDegree executionDegree, Specialization specialization)
 			throws ExcepcaoPersistencia;
 
 	/**
@@ -96,7 +96,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IMasterDegreeCandidate readByUsernameAndExecutionDegreeAndSpecialization(
-			String username, ICursoExecucao executionDegree,
+			String username, IExecutionDegree executionDegree,
 			Specialization specialization) throws ExcepcaoPersistencia;
 
 	/**
@@ -131,7 +131,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(
-			Integer number, ICursoExecucao executionDegree,
+			Integer number, IExecutionDegree executionDegree,
 			Specialization specialization) throws ExcepcaoPersistencia;
 
 	/**
@@ -142,7 +142,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(
-			ICursoExecucao executionDegree, IPessoa person)
+			IExecutionDegree executionDegree, IPerson person)
 			throws ExcepcaoPersistencia;
 
 	/**
@@ -154,7 +154,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(
-			ICursoExecucao executionDegree, IPessoa person, Integer number)
+			IExecutionDegree executionDegree, IPerson person, Integer number)
 			throws ExcepcaoPersistencia;
 
 	/**
@@ -163,7 +163,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @return List
 	 * @throws ExcepcaoPersistencia
 	 */
-	public List readByExecutionDegree(ICursoExecucao executionDegree)
+	public List readByExecutionDegree(IExecutionDegree executionDegree)
 			throws ExcepcaoPersistencia;
 
 	/**

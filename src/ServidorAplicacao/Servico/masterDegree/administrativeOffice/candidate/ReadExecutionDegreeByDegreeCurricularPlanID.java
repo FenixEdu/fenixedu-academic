@@ -10,7 +10,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import Dominio.DegreeCurricularPlan;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -47,7 +47,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
         infoExecutionDegreeList = new ArrayList();
 
         for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
-            ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
+            IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
 
             InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
                     .newInfoFromDomain(executionDegree);

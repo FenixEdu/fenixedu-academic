@@ -11,7 +11,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExam;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
-import Dominio.Sala;
+import Dominio.Room;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -86,7 +86,7 @@ public class EditExamRooms implements IService {
         public Object transform(Object id) {
 
             try {
-                return persistentRoom.readByOID(Sala.class, (Integer) id);
+                return persistentRoom.readByOID(Room.class, (Integer) id);
             } catch (ExcepcaoPersistencia e) {
                 return null;
             }

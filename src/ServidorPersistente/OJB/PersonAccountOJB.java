@@ -3,7 +3,7 @@ package ServidorPersistente.OJB;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.PersonAccount;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentPersonAccount;
@@ -18,7 +18,7 @@ public class PersonAccountOJB extends ObjectFenixOJB implements IPersistentPerso
     public PersonAccountOJB() {
     }
 
-    public IPersonAccount readByPerson(IPessoa person) throws ExcepcaoPersistencia {
+    public IPersonAccount readByPerson(IPerson person) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("person.idInternal", person.getIdInternal());

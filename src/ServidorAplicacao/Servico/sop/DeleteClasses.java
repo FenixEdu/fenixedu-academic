@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.ITurma;
-import Dominio.Turma;
+import Dominio.ISchoolClass;
+import Dominio.SchoolClass;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -27,8 +27,8 @@ public class DeleteClasses implements IService {
 
         for (int i = 0; i < classOIDs.size(); i++) {
             Integer classId = (Integer) classOIDs.get(i);
-            final ITurma schoolClass = (ITurma) sp.getITurmaPersistente()
-                    .readByOID(Turma.class, classId);
+            final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente()
+                    .readByOID(SchoolClass.class, classId);
             sp.getITurmaPersistente().simpleLockWrite(schoolClass);
             final List shifts = schoolClass.getAssociatedShifts();
             final List shiftsToRemove = new ArrayList(shifts);

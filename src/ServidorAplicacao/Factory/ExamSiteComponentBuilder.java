@@ -17,7 +17,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -46,7 +46,7 @@ public class ExamSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, IExecutionPeriod executionPeriod,
-            ICursoExecucao executionDegree, List curricularYears) throws FenixServiceException {
+            IExecutionDegree executionDegree, List curricularYears) throws FenixServiceException {
 
         if (component instanceof InfoSiteExamMap) {
             return getInfoSiteExamMap((InfoSiteExamMap) component, executionPeriod, executionDegree,
@@ -58,7 +58,7 @@ public class ExamSiteComponentBuilder {
     }
 
     private ISiteComponent getInfoSiteExamMap(InfoSiteExamMap component,
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, List curricularYears)
+            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree, List curricularYears)
             throws FenixServiceException {
         //		List classes = new ArrayList();
         //		List infoClasses = new ArrayList();

@@ -22,15 +22,15 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
 import Dominio.CurricularYear;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -79,11 +79,11 @@ public class SearchExecutionCourses implements IServico {
             final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp
                     .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class,
                             infoExecutionPeriod.getIdInternal());
-            ICursoExecucao executionDegree = null;
+            IExecutionDegree executionDegree = null;
 
             if (infoExecutionDegree != null) {
-                executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree().readByOID(
-                        CursoExecucao.class, infoExecutionDegree.getIdInternal());
+                executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+                        ExecutionDegree.class, infoExecutionDegree.getIdInternal());
             }
 
             ICurricularYear curricularYear = null;
@@ -246,7 +246,7 @@ public class SearchExecutionCourses implements IServico {
                     List shifts = spTemp.getITurnoPersistente().readByExecutionCourse(executionCourse);
                     Iterator iterator = shifts.iterator();
                     while (iterator.hasNext()) {
-                        ITurno shift = (ITurno) iterator.next();
+                        IShift shift = (IShift) iterator.next();
 
                         if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
                             theoreticalCapacity = new Integer(theoreticalCapacity.intValue()

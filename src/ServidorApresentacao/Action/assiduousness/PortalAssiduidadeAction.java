@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoPortalAssiduidade;
@@ -33,7 +33,7 @@ public final class PortalAssiduidadeAction extends Action {
         HttpSession session = request.getSession();
         ActionErrors errors = new ActionErrors();
 
-        Pessoa pessoa = (Pessoa) session.getAttribute(Constants.USER_KEY);
+        Person pessoa = (Person) session.getAttribute(Constants.USER_KEY);
 
         ServicoAutorizacaoPortalAssiduidade servicoAutorizacaoPortalAssiduidade = new ServicoAutorizacaoPortalAssiduidade(
                 pessoa);

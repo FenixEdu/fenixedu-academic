@@ -11,7 +11,7 @@ import java.util.List;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
 import Dominio.IStudent;
@@ -97,9 +97,9 @@ public class PrepareEditAttendsSetMembers implements IServico{
             
             
             Iterator iterator2 = frequentasAttendsSet.iterator();
-            IFrequenta frequenta = null;
+            IAttends frequenta = null;
             while (iterator2.hasNext()) {
-            	frequenta = (IFrequenta)iterator2.next();
+            	frequenta = (IAttends)iterator2.next();
             	frequentasStudentNumbersInsert.add(frequenta.getAluno().getNumber());
             	
             	if (frequentasPossiveis.contains(frequenta)) {
@@ -112,7 +112,7 @@ public class PrepareEditAttendsSetMembers implements IServico{
             List frequentasInsert = new ArrayList();
             Iterator iteratorFreqPoss = frequentasPossiveis.iterator();
             while (iteratorFreqPoss.hasNext()) {
-            	frequenta = (IFrequenta)iteratorFreqPoss.next();
+            	frequenta = (IAttends)iteratorFreqPoss.next();
             	if(!frequentasStudentNumbersInsert.contains(frequenta.getAluno().getNumber())){
             		
             		frequentasStudentNumbersInsert.add(frequenta.getAluno().getNumber());
@@ -126,7 +126,7 @@ public class PrepareEditAttendsSetMembers implements IServico{
 
             while (iterator3.hasNext()) {
 
-                student = ((IFrequenta) iterator3.next()).getAluno();
+                student = ((IAttends) iterator3.next()).getAluno();
                 infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
             }
 

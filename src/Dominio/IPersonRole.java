@@ -6,11 +6,11 @@ package Dominio;
  */
 public interface IPersonRole extends IDomainObject {
 
-    public void setPerson(IPessoa person);
+    public void setPerson(IPerson person);
 
     public void setRole(IRole role);
 
-    public IPessoa getPerson();
+    public IPerson getPerson();
 
     public IRole getRole();
 

@@ -10,9 +10,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoBranch;
 import DataBeans.finalDegreeWork.InfoProposal;
 import Dominio.Branch;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.IBranch;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.finalDegreeWork.IProposal;
@@ -53,8 +53,8 @@ public class SubmitFinalWorkProposal implements IService {
             IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
 
             Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionCourse.readByOID(
-                    CursoExecucao.class, executionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionCourse.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
 
             IScheduleing scheduleing = persistentFinalWork
                     .readFinalDegreeWorkScheduleing(executionDegreeId);

@@ -44,13 +44,13 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 
         String parameter = request.getParameter("operation");
 
-        if (parameter.equals("Ver Sala")) {
+        if (parameter.equals("Ver Room")) {
             return prepararVerSala(mapping, form, request, response);
         }
-        if (parameter.equals("Editar Sala")) {
+        if (parameter.equals("Editar Room")) {
             return prepararEditarSala(mapping, form, request, response);
         }
-        if (parameter.equals("Apagar Sala")) {
+        if (parameter.equals("Apagar Room")) {
             return apagarSala(mapping, form, request, response);
         }
 

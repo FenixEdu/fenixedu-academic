@@ -12,7 +12,7 @@ import DataBeans.projectsManagement.InfoCoordinatorReport;
 import DataBeans.projectsManagement.InfoRubric;
 import DataBeans.projectsManagement.InfoSummaryReportLine;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.projectsManagement.ISummaryReportLine;
 import ServidorAplicacao.IUserView;
@@ -67,7 +67,7 @@ public class ReadSummaryReport implements IService {
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = (IEmployee) sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

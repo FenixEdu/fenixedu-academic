@@ -2,10 +2,10 @@ package ServidorAplicacao.Servico.coordinator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -46,8 +46,8 @@ public class LoggedCoordinatorCanEdit implements IService {
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeCode);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeCode);
 
             IExecutionYear executionYear = executionDegree.getExecutionYear();
 

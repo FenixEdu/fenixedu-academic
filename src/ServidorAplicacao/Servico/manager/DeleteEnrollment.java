@@ -11,7 +11,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrollment;
@@ -48,7 +48,7 @@ public class DeleteEnrollment implements IService {
             persistentEnrolmentEvaluation.delete(enrolmentEvaluation);
         }
 
-        IFrequenta attend = persistentAttend.readByEnrolment(enrollment);
+        IAttends attend = persistentAttend.readByEnrolment(enrollment);
         if (attend != null) {
             persistentAttend.simpleLockWrite(attend);
             attend.setEnrolment(null);

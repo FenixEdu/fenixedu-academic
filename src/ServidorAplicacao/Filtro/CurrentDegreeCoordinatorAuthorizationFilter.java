@@ -7,9 +7,9 @@ package ServidorAplicacao.Filtro;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
@@ -79,8 +79,8 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, (Integer) argumentos[0]);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, (Integer) argumentos[0]);
             IExecutionYear executionYear = executionDegree.getExecutionYear();
 
             ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(

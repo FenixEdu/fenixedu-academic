@@ -9,8 +9,8 @@ package DataBeans;
 import java.util.Date;
 import java.util.List;
 
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
@@ -808,7 +808,7 @@ public class InfoPerson extends InfoObject {
         this.availablePhoto = availablePhoto;
     }
 
-    public void copyFromDomain(IPessoa person) {
+    public void copyFromDomain(IPerson person) {
         super.copyFromDomain(person);
         if (person != null) {
             setNome(person.getNome());
@@ -866,7 +866,7 @@ public class InfoPerson extends InfoObject {
      * @param pessoa
      * @return
      */
-    public static InfoPerson newInfoFromDomain(IPessoa person) {
+    public static InfoPerson newInfoFromDomain(IPerson person) {
         InfoPerson infoPerson = null;
         if (person != null) {
             infoPerson = new InfoPerson();
@@ -875,7 +875,7 @@ public class InfoPerson extends InfoObject {
         return infoPerson;
     }
 
-    public void copyToDomain(InfoPerson infoPerson, IPessoa person) {
+    public void copyToDomain(InfoPerson infoPerson, IPerson person) {
         super.copyToDomain(infoPerson, person);
 
         person.setNome(infoPerson.getNome());
@@ -925,10 +925,10 @@ public class InfoPerson extends InfoObject {
         person.setAvailablePhoto(infoPerson.getAvailablePhoto());
     }
 
-    public static IPessoa newDomainFromInfo(InfoPerson infoPerson) {
-        IPessoa person = null;
+    public static IPerson newDomainFromInfo(InfoPerson infoPerson) {
+        IPerson person = null;
         if (infoPerson != null) {
-            person = new Pessoa();
+            person = new Person();
             infoPerson.copyToDomain(infoPerson, person);
         }
         return person;

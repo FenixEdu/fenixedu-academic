@@ -7,7 +7,7 @@ package ServidorPersistente.sms;
 import java.util.Date;
 import java.util.List;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
@@ -17,9 +17,9 @@ import ServidorPersistente.IPersistentObject;
  *  
  */
 public interface IPersistentSentSms extends IPersistentObject {
-    public abstract List readByPerson(IPessoa person) throws ExcepcaoPersistencia;
+    public abstract List readByPerson(IPerson person) throws ExcepcaoPersistencia;
 
-    public abstract List readByPerson(IPessoa person, Integer interval) throws ExcepcaoPersistencia;
+    public abstract List readByPerson(IPerson person, Integer interval) throws ExcepcaoPersistencia;
 
     public abstract Integer countByPersonAndDatePeriod(Integer personId, Date startDate, Date endDate)
             throws ExcepcaoPersistencia;

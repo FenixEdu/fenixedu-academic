@@ -10,15 +10,15 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GroupProperties;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -101,7 +101,7 @@ public class CreateStudentGroup implements IService {
     				IStudent student = persistentStudent
 					.readByUsername((String) iterator.next());
 
-    				IFrequenta attend = groupProperties.getAttendsSet().getStudentAttend(student);
+    				IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
     				
     				if(attend==null){
     					throw new InvalidArgumentsServiceException();
@@ -163,7 +163,7 @@ public class CreateStudentGroup implements IService {
             
             if(shiftCode != null){
             	persistentShift = persistentSupport.getITurnoPersistente();
-                ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
+                IShift shift = (IShift) persistentShift.readByOID(Shift.class,
                         shiftCode);
             newStudentGroup = new StudentGroup(groupNumber,attendsSet, shift);
             }else{
@@ -184,7 +184,7 @@ public class CreateStudentGroup implements IService {
 
                 IStudent student = persistentStudent
                         .readByUsername((String) iter.next());
-                IFrequenta attend = groupProperties.getAttendsSet().getStudentAttend(student);
+                IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
                 
                 IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(
                         newStudentGroup, attend);

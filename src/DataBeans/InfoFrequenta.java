@@ -1,12 +1,12 @@
 /*
- * Frequenta.java
+ * Attends.java
  *
  * Created on 20 de Outubro de 2002, 14:42
  */
 
 package DataBeans;
 
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 
 /**
  * 
@@ -58,7 +58,7 @@ public class InfoFrequenta extends InfoObject {
         boolean resultado = false;
         if (obj instanceof InfoFrequenta) {
             InfoFrequenta frequenta = (InfoFrequenta) obj;
-            resultado = //getCodigoInterno().equals(((Frequenta)obj).getCodigoInterno());
+            resultado = //getCodigoInterno().equals(((Attends)obj).getCodigoInterno());
             getAluno().equals(frequenta.getAluno())
                     && getDisciplinaExecucao().equals(getDisciplinaExecucao());
         }
@@ -83,11 +83,11 @@ public class InfoFrequenta extends InfoObject {
 
     }
 
-    public void copyFromDomain(IFrequenta frequenta) {
+    public void copyFromDomain(IAttends frequenta) {
         super.copyFromDomain(frequenta);
     }
 
-    public static InfoFrequenta newInfoFromDomain(IFrequenta frequenta) {
+    public static InfoFrequenta newInfoFromDomain(IAttends frequenta) {
         InfoFrequenta infoFrequenta = null;
         if (frequenta != null) {
             infoFrequenta = new InfoFrequenta();

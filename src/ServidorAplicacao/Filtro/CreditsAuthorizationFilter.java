@@ -11,7 +11,7 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoTeacher;
 import Dominio.IDepartment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IUserView;
@@ -52,7 +52,7 @@ public class CreditsAuthorizationFilter extends Filtro {
             ITeacher teacherToEdit = readTeacher(arguments[0], sp);
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
             IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();

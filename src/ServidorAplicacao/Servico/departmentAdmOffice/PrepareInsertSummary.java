@@ -23,10 +23,10 @@ import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
-import Dominio.ISala;
+import Dominio.IRoom;
 import Dominio.ISite;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.IPersistentExecutionCourse;
@@ -73,7 +73,7 @@ public class PrepareInsertSummary implements IService {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ITurno turno = (ITurno) arg0;
+                        IShift turno = (IShift) arg0;
                         return Cloner.copyShift2InfoShift(turno);
                     }
                 });
@@ -89,7 +89,7 @@ public class PrepareInsertSummary implements IService {
                 infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ISala room = (ISala) arg0;
+                        IRoom room = (IRoom) arg0;
                         return Cloner.copyRoom2InfoRoom(room);
                     }
                 });

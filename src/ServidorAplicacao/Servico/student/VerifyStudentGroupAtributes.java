@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.student;
 import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -122,7 +122,7 @@ public class VerifyStudentGroupAtributes implements IServico {
         	}
         
         	
-        		ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, shiftCode);
+        		IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
         		result = strategy.checkNumberOfGroups(groupProperties, shift);
             
 

@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IAdvisory;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentAdvisory;
 import Util.AdvisoryRecipients;
@@ -49,17 +49,17 @@ public class AdvisoryOJB extends PersistentObjectOJB implements IPersistentAdvis
             criteria.addNotEqualTo("personRoles.roleType", RoleType.getEnum(RoleType.TEACHER_TYPE));
         }
 
-        int numberOfRecipients = count(Pessoa.class, criteria);
+        int numberOfRecipients = count(Person.class, criteria);
         int numberOfElementsInSpan = 500;
         for (int i = 0; ((i - 1) * numberOfElementsInSpan) < numberOfRecipients; i++) {
             SuportePersistenteOJB.getInstance().confirmarTransaccao();
             SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            List people = readSpan(Pessoa.class, criteria, new Integer(numberOfElementsInSpan),
+            List people = readSpan(Person.class, criteria, new Integer(numberOfElementsInSpan),
                     new Integer(i));
 
             if (!people.isEmpty()) {
                 for (int j = 0; j < people.size(); j++) {
-                    IPessoa person = (IPessoa) people.get(j);
+                    IPerson person = (IPerson) people.get(j);
                     write(advisory, person);
                 }
             }
@@ -71,13 +71,13 @@ public class AdvisoryOJB extends PersistentObjectOJB implements IPersistentAdvis
 
         Iterator it = group.iterator();
         while (it.hasNext()) {
-            IPessoa person = (IPessoa) it.next();
+            IPerson person = (IPerson) it.next();
             simpleLockWrite(person);
             person.getAdvisories().add(advisory);
         }
     }
 
-    public void write(IAdvisory advisory, IPessoa person) throws ExcepcaoPersistencia {
+    public void write(IAdvisory advisory, IPerson person) throws ExcepcaoPersistencia {
         simpleLockWrite(person);
         person.getAdvisories().add(advisory);
     }

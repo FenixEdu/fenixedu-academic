@@ -29,7 +29,7 @@ import DataBeans.publication.InfoAuthor;
 import DataBeans.publication.InfoPublication;
 import DataBeans.publication.InfoPublicationType;
 import DataBeans.util.Cloner;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
 import Dominio.publication.IPublicationType;
@@ -429,7 +429,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             personList = (List) ServiceUtils.executeService(userView, "ReadPersonsNotAuthors", new Object[] { "%"+searchedAuthorName.replace(' ','%')+"%", userView });
             Iterator iter = personList.iterator();
             while (iter.hasNext()) {
-            	IPessoa pessoa = (IPessoa)iter.next();
+            	IPerson pessoa = (IPerson)iter.next();
             	InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorByPersonId", new Object[] { pessoa.getIdInternal() });
             	if (pessoa.getIdInternal() != null)
             		infoAuthor.setKeyPerson(pessoa.getIdInternal());
@@ -491,7 +491,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
 //
 //             List newAuthors = infoAuthorsPersons(authors, new Author());
 //
-//             List newPersons = infoAuthorsPersons(persons, new Pessoa());
+//             List newPersons = infoAuthorsPersons(persons, new Person());
 //
 //             List infoAuthorsPersons = joinAuthorsAndPersons(newAuthors, newPersons);
 //
@@ -578,7 +578,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
 		Iterator personsIterator = persons.iterator();
 		
 		while (personsIterator.hasNext()) {
-		    IPessoa person = (IPessoa) personsIterator.next();
+		    IPerson person = (IPerson) personsIterator.next();
 		    authorsIterator = authors.iterator();
 		    contains = Boolean.FALSE;
 		
@@ -617,7 +617,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
 
             infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
                 public Object transform(Object o) {
-                    IPessoa person = (IPessoa) o;
+                    IPerson person = (IPerson) o;
                     return Cloner.copyIPerson2InfoAuthorPerson(person);
                 }
             });

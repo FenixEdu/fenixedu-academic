@@ -11,9 +11,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoPeriod;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -30,12 +30,12 @@ public class ReadExecutionDegree implements IService {
      * Executes the service. Returns the current InfoExecutionDegree.
      */
     public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
-        ICursoExecucao executionDegree;
+        IExecutionDegree executionDegree;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree().readByOID(
-                    CursoExecucao.class, idInternal);
+            executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+                    ExecutionDegree.class, idInternal);
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

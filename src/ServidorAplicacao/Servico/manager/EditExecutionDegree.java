@@ -6,10 +6,10 @@ package ServidorAplicacao.Servico.manager;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import Dominio.Campus;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionYear;
 import Dominio.ICampus;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -36,8 +36,8 @@ public class EditExecutionDegree implements IService {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentExecutionDegree = persistentSuport.getIPersistentExecutionDegree();
 
-            ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, infoExecutionDegree.getIdInternal());
+            IExecutionDegree oldExecutionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
             IPersistentCampus campusDAO = persistentSuport.getIPersistentCampus();
 

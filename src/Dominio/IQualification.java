@@ -17,7 +17,7 @@ public interface IQualification extends IDomainObject {
 
     public void setDegree(String degree);
 
-    public void setPerson(IPessoa person);
+    public void setPerson(IPerson person);
 
     public void setLastModificationDate(Date lastModificationDate);
 
@@ -43,7 +43,7 @@ public interface IQualification extends IDomainObject {
 
     public String getDegree();
 
-    public IPessoa getPerson();
+    public IPerson getPerson();
 
     public Date getLastModificationDate();
 

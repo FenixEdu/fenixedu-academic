@@ -16,9 +16,9 @@ public interface IPersonAccount extends IDomainObject {
 
     public abstract void setBalance(Double balance);
 
-    public abstract IPessoa getPerson();
+    public abstract IPerson getPerson();
 
-    public abstract void setPerson(IPessoa person);
+    public abstract void setPerson(IPerson person);
 
     public abstract List getTransactions();
 

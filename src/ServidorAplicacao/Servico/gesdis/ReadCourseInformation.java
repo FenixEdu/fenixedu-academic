@@ -38,9 +38,9 @@ import DataBeans.gesdis.InfoSiteCourseInformation;
 import DataBeans.gesdis.InfoSiteEvaluationInformation;
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
 import DataBeans.util.Cloner;
-import Dominio.Aula;
+import Dominio.Lesson;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -54,7 +54,7 @@ import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ResponsibleFor;
 import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -390,21 +390,21 @@ public class ReadCourseInformation implements IService {
         if (lessonsOfType != null && !lessonsOfType.isEmpty()) {
 
             Iterator iter = lessonsOfType.iterator();
-            ITurno shift = null;
+            IShift shift = null;
 
             List temp = new ArrayList();
             while (iter.hasNext()) {
                 List shifts;
 
                 InfoLesson infoLesson = (InfoLesson) iter.next();
-                IAula lesson = (IAula) persistentLesson
-                        .readByOID(Aula.class, infoLesson.getIdInternal());
+                ILesson lesson = (ILesson) persistentLesson
+                        .readByOID(Lesson.class, infoLesson.getIdInternal());
 
                 shifts = persistentShift.readByLesson(lesson);
 
                 if (shifts != null && !shifts.isEmpty()) {
 
-                    ITurno aux = (ITurno) shifts.get(0);
+                    IShift aux = (IShift) shifts.get(0);
                     if (shift == null) {
                         shift = aux;
                     }
@@ -626,7 +626,7 @@ public class ReadCourseInformation implements IService {
 
         List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
         for (int i = 0; i < shifts.size(); i++) {
-            ITurno shift = (ITurno) shifts.get(i);
+            IShift shift = (IShift) shifts.get(i);
             List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
 
             lessons.addAll(aulasTemp);
@@ -635,10 +635,10 @@ public class ReadCourseInformation implements IService {
         List infoLessons = new ArrayList();
         Iterator iter = lessons.iterator();
         while (iter.hasNext()) {
-            IAula lesson = (IAula) iter.next();
+            ILesson lesson = (ILesson) iter.next();
 
             InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
-            ITurno shift = lesson.getShift();
+            IShift shift = lesson.getShift();
             InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
             infoLesson.setInfoShift(infoShift);
 

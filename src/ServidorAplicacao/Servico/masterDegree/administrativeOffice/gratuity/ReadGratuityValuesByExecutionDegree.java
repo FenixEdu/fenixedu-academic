@@ -15,8 +15,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IGratuityValues;
 import Dominio.IPaymentPhase;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -44,7 +44,7 @@ public class ReadGratuityValuesByExecutionDegree implements IService {
             sp = SuportePersistenteOJB.getInstance();
             IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
-            ICursoExecucao executionDegree = new CursoExecucao();
+            IExecutionDegree executionDegree = new ExecutionDegree();
             executionDegree.setIdInternal(executionDegreeID);
 
             gratuityValues = persistentGratuityValues

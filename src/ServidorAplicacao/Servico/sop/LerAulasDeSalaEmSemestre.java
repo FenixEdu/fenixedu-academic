@@ -20,10 +20,10 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
-import Dominio.ITurno;
+import Dominio.IRoom;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -50,16 +50,16 @@ public class LerAulasDeSalaEmSemestre implements IService {
                 executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
             }
 
-            ISala room = Cloner.copyInfoRoom2Room(infoRoom);
+            IRoom room = Cloner.copyInfoRoom2Room(infoRoom);
 
             List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
 
             Iterator iterator = lessonList.iterator();
             infoAulas = new ArrayList();
             while (iterator.hasNext()) {
-                IAula elem = (IAula) iterator.next();
+                ILesson elem = (ILesson) iterator.next();
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-                ITurno shift = elem.getShift();
+                IShift shift = elem.getShift();
                 if (shift == null) {
                     continue;
                 }

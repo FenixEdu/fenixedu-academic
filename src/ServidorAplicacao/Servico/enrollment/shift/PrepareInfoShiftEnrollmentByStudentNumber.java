@@ -22,14 +22,14 @@ import DataBeans.InfoShift;
 import DataBeans.InfoShiftWithInfoExecutionCourseAndInfoLessons;
 import DataBeans.InfoStudent;
 import DataBeans.enrollment.shift.InfoShiftEnrollment;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
-import Dominio.Frequenta;
-import Dominio.ICursoExecucao;
+import Dominio.Attends;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITurnoAluno;
@@ -144,7 +144,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
             Iterator iterator = attendList.iterator();
             while (iterator.hasNext()) {
-                IFrequenta attend = (Frequenta) iterator.next();
+                IAttends attend = (Attends) iterator.next();
                 IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 if (executionCourse != null
                         && executionCourse.getExecutionPeriod() != null
@@ -226,7 +226,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         Iterator iterator = executionDegrees.iterator();
         List infoExecutionDegreeList = new ArrayList();
         while (iterator.hasNext()) {
-            ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
+            IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
             infoExecutionDegreeList.add(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
                     .newInfoFromDomain(executionDegree));
         }
@@ -239,8 +239,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                CursoExecucao.class, infoExecutionDegree.getIdInternal());
+        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         List executionCourseList = persistentExecutionCourse.readByExecutionPeriodAndExecutionDegree(
                 executionPeriod, executionDegree);
@@ -267,13 +267,13 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
     private InfoExecutionDegree selectExecutionDegree(ISuportePersistente sp,
             List infoExecutionDegreeList, Integer executionDegreeIdChosen, IStudent student)
             throws ExcepcaoPersistencia {
-        ICursoExecucao executionDegree = null;
+        IExecutionDegree executionDegree = null;
 
         //read the execution degree chosen
         if (executionDegreeIdChosen != null) {
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(CursoExecucao.class,
+            executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(ExecutionDegree.class,
                     executionDegreeIdChosen);
             if (executionDegree != null) {
                 return InfoExecutionDegree.newInfoFromDomain(executionDegree);

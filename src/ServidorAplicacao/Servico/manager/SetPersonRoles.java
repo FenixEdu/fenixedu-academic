@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.Role;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -25,7 +25,7 @@ public class SetPersonRoles implements IService {
         Boolean result = new Boolean(false);
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPessoa person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(username);
+            IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(username);
             persistentSuport.getIPessoaPersistente().simpleLockWrite(person);
             person.setPersonRoles(new ArrayList());
             for (int i = 0; i < roleOIDs.size(); i++) {

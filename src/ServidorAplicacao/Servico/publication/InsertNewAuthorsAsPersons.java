@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
 import ServidorAplicacao.IServico;
@@ -50,7 +50,7 @@ public class InsertNewAuthorsAsPersons implements IServico {
 
             while (iterator.hasNext()) {
                 Integer idInternal = (Integer) iterator.next();
-                IPessoa person = (IPessoa) persistentPerson.readByOID(Pessoa.class, idInternal);
+                IPerson person = (IPerson) persistentPerson.readByOID(Person.class, idInternal);
                 IAuthor newAuthor = new Author();
                 IAuthor newAuthor1 = persistentAuthor.readAuthorByKeyPerson(idInternal);
                 if (newAuthor1 == null) {

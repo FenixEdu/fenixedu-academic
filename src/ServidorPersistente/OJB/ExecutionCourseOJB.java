@@ -23,7 +23,7 @@ import org.apache.ojb.odmg.HasBroker;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -61,7 +61,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
      *      Dominio.IExecutionPeriod, java.lang.String)
      */
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(Integer curricularYear,
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree)
+            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
@@ -82,7 +82,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
 
     /**/
     public List readByCurricularYearAndAllExecutionPeriodAndExecutionDegree(Integer curricularYear,
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree)
+            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
@@ -108,7 +108,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
      *      Dominio.IExecutionPeriod, java.lang.String)
      */
     public List readByExecutionPeriodAndExecutionDegree(IExecutionPeriod executionPeriod,
-            ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+            IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
@@ -190,10 +190,10 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
      * (non-Javadoc)
      * 
      * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(Dominio.IExecutionPeriod,
-     *      Dominio.ICursoExecucao, Dominio.ICurricularYear, java.lang.String)
+     *      Dominio.IExecutionDegree, Dominio.ICurricularYear, java.lang.String)
      */
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree,
+            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree,
             ICurricularYear curricularYear, String executionCourseName) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
@@ -271,7 +271,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegree(Dominio.CursoExecucao)
+     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegree(Dominio.ExecutionDegree)
      */
     public List readByDegreeCurricularPlanAndExecutionYear(IDegreeCurricularPlan degreeCurricularPlan,
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
@@ -285,10 +285,10 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegreeAndExecutionPeriod(Dominio.ICursoExecucao,
+     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegreeAndExecutionPeriod(Dominio.IExecutionDegree,
      *      Dominio.IExecutionPeriod)
      */
-    public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao executionDegree,
+    public List readByExecutionDegreeAndExecutionPeriod(IExecutionDegree executionDegree,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.idInternal",
@@ -367,7 +367,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
 			   Iterator iterator = executionDegreeList.iterator();
 			   while (iterator.hasNext()) {
 
-				ICursoExecucao cursoExecucao = (ICursoExecucao)iterator.next();
+				IExecutionDegree cursoExecucao = (IExecutionDegree)iterator.next();
 
 				executionArrayName.add(cursoExecucao.getCurricularPlan().getName());
 				executionArraySigla.add(cursoExecucao.getCurricularPlan().getDegree().getSigla() );

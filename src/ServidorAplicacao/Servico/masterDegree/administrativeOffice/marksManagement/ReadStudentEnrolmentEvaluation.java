@@ -12,7 +12,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.EnrolmentEvaluation;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -57,7 +57,7 @@ public class ReadStudentEnrolmentEvaluation implements IService {
             infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                     .newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 
-            IPessoa person = enrolmentEvaluation.getPersonResponsibleForGrade();
+            IPerson person = enrolmentEvaluation.getPersonResponsibleForGrade();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
             infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 

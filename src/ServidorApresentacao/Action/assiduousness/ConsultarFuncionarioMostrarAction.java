@@ -16,7 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import Dominio.Funcionario;
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
@@ -38,7 +38,7 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
 
-        Pessoa pessoa = (Pessoa) session.getAttribute(Constants.USER_KEY);
+        Person pessoa = (Person) session.getAttribute(Constants.USER_KEY);
 
         ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
         ServicoSeguroLerFuncionario servicoSeguroLerFuncionario = new ServicoSeguroLerFuncionario(

@@ -14,15 +14,15 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ShiftProfessorship;
 import Dominio.Teacher;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.credits.validator.CreditsValidator;
 import ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod;
 import ServidorAplicacao.Servico.credits.validator.OverlappingPeriodException;
@@ -55,10 +55,10 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
     }
 
-    private ITurno getIShift(ITurnoPersistente shiftDAO, InfoShiftProfessorship infoShiftProfessorship)
+    private IShift getIShift(ITurnoPersistente shiftDAO, InfoShiftProfessorship infoShiftProfessorship)
             throws ExcepcaoPersistencia {
-        ITurno shift = new Turno(infoShiftProfessorship.getInfoShift().getIdInternal());
-        shift = (ITurno) shiftDAO.readByOID(Turno.class, infoShiftProfessorship.getInfoShift()
+        IShift shift = new Shift(infoShiftProfessorship.getInfoShift().getIdInternal());
+        shift = (IShift) shiftDAO.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
                 .getIdInternal());
         return shift;
     }
@@ -149,7 +149,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
                 throw new InvalidProfessorshipPercentage();
             }
 
-            ITurno shift = getIShift(shiftDAO, infoShiftProfessorship);
+            IShift shift = getIShift(shiftDAO, infoShiftProfessorship);
 
             IShiftProfessorship shiftProfessorship = shiftProfessorshipDAO.readByProfessorshipAndShift(
                     professorship, shift);
@@ -162,7 +162,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
     }
 
     private void lockOrDeleteShiftProfessorship(IPersistentShiftProfessorship shiftProfessorshipDAO,
-            IProfessorship professorship, Double percentage, ITurno shift,
+            IProfessorship professorship, Double percentage, IShift shift,
             IShiftProfessorship shiftProfessorship, List shiftProfessorshipDeleted,
             List shiftProfessorshipAdded) throws ExcepcaoPersistencia, OverlappingPeriodException,
             FenixServiceException {
@@ -207,7 +207,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
             }
 
             for (int j = 0; j < fullShiftLessonList.size(); j++) {
-                IAula lesson = (IAula) lessonsList.get(j);
+                ILesson lesson = (ILesson) lessonsList.get(j);
                 if (overlapsWithAny(lesson, lessonsList)) {
                     throw new OverlappingLessonPeriod();
                 }
@@ -220,12 +220,12 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
      * @param lessonsList
      * @return
      */
-    private boolean overlapsWithAny(IAula lesson, List lessonsList) {
+    private boolean overlapsWithAny(ILesson lesson, List lessonsList) {
         DiaSemana lessonWeekDay = lesson.getDiaSemana();
         Calendar lessonStart = lesson.getInicio();
         Calendar lessonEnd = lesson.getFim();
         for (int i = 0; i < lessonsList.size(); i++) {
-            IAula otherLesson = (IAula) lessonsList.get(i);
+            ILesson otherLesson = (ILesson) lessonsList.get(i);
             if (!otherLesson.equals(lesson)) {
                 if (otherLesson.getDiaSemana().equals(lessonWeekDay)) {
                     Calendar otherStart = otherLesson.getInicio();

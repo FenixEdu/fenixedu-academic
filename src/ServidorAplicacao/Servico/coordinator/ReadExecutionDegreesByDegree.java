@@ -6,9 +6,9 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.Curso;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.Degree;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionDegree;
@@ -29,7 +29,7 @@ public class ReadExecutionDegreesByDegree implements IService {
         ISuportePersistente sp;
         List allExecutionDegrees = null;
         try {
-            ICurso degree = new Curso();
+            IDegree degree = new Degree();
             degree.setIdInternal(idDegree);
 
             sp = SuportePersistenteOJB.getInstance();
@@ -49,7 +49,7 @@ public class ReadExecutionDegreesByDegree implements IService {
         List allInfoExecutionDegrees = new ArrayList(allExecutionDegrees.size());
 
         while (iterator.hasNext())
-            allInfoExecutionDegrees.add(Cloner.get((ICursoExecucao) iterator.next()));
+            allInfoExecutionDegrees.add(Cloner.get((IExecutionDegree) iterator.next()));
 
         return allInfoExecutionDegrees;
     }

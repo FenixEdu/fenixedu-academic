@@ -12,10 +12,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudentWithInfoPerson;
 import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
-import Dominio.Frequenta;
+import Dominio.Attends;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -53,7 +53,7 @@ public class ReadStudentsWithoutDistributedTest implements IService {
                     .readStudentsByDistributedTest(distributedTest);
             Iterator it = attendList.iterator();
             while (it.hasNext()) {
-                IFrequenta attend = (Frequenta) it.next();
+                IAttends attend = (Attends) it.next();
 
                 if (!studentList.contains(attend.getAluno()))
                     infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));

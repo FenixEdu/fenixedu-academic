@@ -8,7 +8,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Coordinator;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -41,7 +41,7 @@ public class CoordinatorOJB extends PersistentObjectOJB implements
 		List executionDegrees = new ArrayList();
 		while (iter.hasNext()) {
 			ICoordinator coordinator = (ICoordinator) iter.next();
-			ICursoExecucao executionDegree = coordinator.getExecutionDegree();
+			IExecutionDegree executionDegree = coordinator.getExecutionDegree();
 
 			if (!executionDegrees.contains(executionDegree)) {
 				executionDegrees.add(executionDegree);
@@ -64,7 +64,7 @@ public class CoordinatorOJB extends PersistentObjectOJB implements
 		List degreeCurricularPlans = new ArrayList();
 
 		ICoordinator coordinator = null;
-		ICursoExecucao executionDegree = null;
+		IExecutionDegree executionDegree = null;
 
 		while (iter.hasNext()) {
 			//get coordinator from the coordinators list
@@ -82,7 +82,7 @@ public class CoordinatorOJB extends PersistentObjectOJB implements
 		return degreeCurricularPlans;
 	}
 
-	public List readCoordinatorsByExecutionDegree(ICursoExecucao executionDegree)
+	public List readCoordinatorsByExecutionDegree(IExecutionDegree executionDegree)
 			throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("executionDegree.idInternal", executionDegree
@@ -104,10 +104,10 @@ public class CoordinatorOJB extends PersistentObjectOJB implements
 	 * (non-Javadoc)
 	 * 
 	 * @see ServidorPersistente.IPersistentCoordinator#readCoordinatorByTeacherAndExecutionDegree(Dominio.ITeacher,
-	 *      Dominio.ICursoExecucao)
+	 *      Dominio.IExecutionDegree)
 	 */
 	public ICoordinator readCoordinatorByTeacherAndExecutionDegree(
-			ITeacher teacher, ICursoExecucao executionDegree)
+			ITeacher teacher, IExecutionDegree executionDegree)
 			throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("executionDegree.idInternal", executionDegree

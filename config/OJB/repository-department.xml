@@ -31,16 +31,16 @@
       />
 <!--	<collection-descriptor
 			name="disciplinasAssociadas"
-			element-class-ref="Dominio.DisciplinaDepartamento"
+			element-class-ref="Dominio.DepartmentCourse"
 			proxy="true">
 		<inverse-foreignkey field-ref="chaveDepartamento"/>
 	</collection-descriptor>     -->
 </class-descriptor>   
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DisciplinaDepartamento -->
+<!-- Definitions for Dominio.DepartmentCourse -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DisciplinaDepartamento" table="DEPARTMENT_COURSE">
+<class-descriptor class="Dominio.DepartmentCourse" table="DEPARTMENT_COURSE">
 	<field-descriptor
 		name="codigoInterno"
 		column="ID_INTERNAL"

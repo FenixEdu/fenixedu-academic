@@ -17,7 +17,7 @@ import DataBeans.InfoGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.util.Cloner;
 import Dominio.IGuide;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.reimbursementGuide.IReimbursementGuide;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -188,7 +188,7 @@ public class ChooseGuide implements IService {
 
         ISuportePersistente sp = null;
         List guides = null;
-        IPessoa person = null;
+        IPerson person = null;
 
         // Check if person exists
 

@@ -51,7 +51,7 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
             infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
                     "ReadPersonByUsername", args);
         } catch (ExcepcaoInexistente e) {
-            throw new NonExistingActionException("A Pessoa", e);
+            throw new NonExistingActionException("A Person", e);
         }
 
         request.setAttribute("infoPerson", infoPerson);
@@ -86,7 +86,7 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
             infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
                     "ReadPersonByUsername", args);
         } catch (ExcepcaoInexistente e) {
-            throw new NonExistingActionException("A Pessoa", e);
+            throw new NonExistingActionException("A Person", e);
         }
 
         request.setAttribute("infoPerson", infoPerson);

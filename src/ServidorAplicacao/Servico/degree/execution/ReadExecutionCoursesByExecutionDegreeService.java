@@ -12,9 +12,9 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -68,8 +68,8 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService {
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO.readByOID(
-                    CursoExecucao.class, executionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
 
             if (executionDegree == null) {
                 throw new NonExistingExecutionDegree();

@@ -14,7 +14,7 @@ import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -115,7 +115,7 @@ public class ReadGroupPropertiesShifts implements IServico {
             } else {
 
                 for (int i = 0; i < shifts.size(); i++) {
-                    ITurno shift = (ITurno) shifts.get(i);
+                    IShift shift = (IShift) shifts.get(i);
                     result = strategy.checkNumberOfGroups(groupProperties,
                             shift);
                     

@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.manager;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlan;
 import Dominio.DegreeCurricularPlan;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -28,7 +28,7 @@ public class EditDegreeCurricularPlan implements IService {
 
     public void run(InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException {
 
-        ICurso degree = null;
+        IDegree degree = null;
         IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
         IDegreeCurricularPlan oldDegreeCP = null;
         ICursoPersistente persistentDegree = null;

@@ -138,7 +138,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
             try {
                 if (certificateString.equals("Matrícula")
                         || certificateString.equals("Matrícula e Inscrição")
-                        || certificateString.equals("Duração do Curso")
+                        || certificateString.equals("Duração do Degree")
                         || certificateString.equals("Inscrição")) {
                     ArrayList states = new ArrayList();
                     states.add(StudentCurricularPlanState.ACTIVE_OBJ);

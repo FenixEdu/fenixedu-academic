@@ -32,7 +32,7 @@ public interface IGratuityValues extends IDomainObject {
 
     public Date getEndPayment();
 
-    public ICursoExecucao getExecutionDegree();
+    public IExecutionDegree getExecutionDegree();
 
     public IEmployee getEmployee();
 
@@ -56,7 +56,7 @@ public interface IGratuityValues extends IDomainObject {
 
     public void setEndPayment(Date endPayment);
 
-    public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(IExecutionDegree executionDegree);
 
     public void setEmployee(IEmployee employee);
 

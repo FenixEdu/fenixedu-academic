@@ -11,9 +11,9 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoRole;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -141,7 +141,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
                     .getPerson().getUsername());
             if (group != null) {
-                ICursoExecucao executionDegree = group.getExecutionDegree();
+                IExecutionDegree executionDegree = group.getExecutionDegree();
                 for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {
                     ICoordinator coordinator = (ICoordinator) executionDegree.getCoordinatorsList().get(
                             i);
@@ -202,8 +202,8 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                     IPersistentExecutionDegree persistentExecutionDegree = sp
                             .getIPersistentExecutionDegree();
 
-                    ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                            .readByOID(CursoExecucao.class, (Integer) arguments[0]);
+                    IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree
+                            .readByOID(ExecutionDegree.class, (Integer) arguments[0]);
 
                     if (executionDegree == null) {
                         return "noAuthorization";

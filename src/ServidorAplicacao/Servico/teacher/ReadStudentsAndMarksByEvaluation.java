@@ -21,7 +21,7 @@ import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
 import Dominio.ISite;
 import Dominio.Site;
@@ -86,7 +86,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
 
             List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
                 public Object transform(Object input) {
-                    IFrequenta attend = (IFrequenta) input;
+                    IAttends attend = (IAttends) input;
                     //CLONER
                     //InfoFrequenta infoAttend =
                     // Cloner.copyIFrequenta2InfoFrequenta(attend);

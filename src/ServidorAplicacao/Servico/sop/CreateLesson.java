@@ -21,13 +21,13 @@ import DataBeans.InfoPeriod;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import DataBeans.util.Cloner;
-import Dominio.Aula;
-import Dominio.IAula;
+import Dominio.Lesson;
+import Dominio.ILesson;
 import Dominio.IExecutionPeriod;
 import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
-import Dominio.ISala;
-import Dominio.ITurno;
+import Dominio.IRoom;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -45,7 +45,7 @@ public class CreateLesson implements IService {
         InfoLessonServiceResult result = null;
 
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-        ISala sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+        IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
         IRoomOccupation roomOccupation = Cloner.copyInfoRoomOccupation2RoomOccupation(infoLesson
                 .getInfoRoomOccupation());
@@ -54,11 +54,11 @@ public class CreateLesson implements IService {
         IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoPeriod);
         roomOccupation.setPeriod(period);
 
-        ITurno shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
+        IShift shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
         IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoLesson
                 .getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod());
 
-        IAula aula = new Aula(infoLesson.getDiaSemana(), infoLesson.getInicio(), infoLesson.getFim(),
+        ILesson aula = new Lesson(infoLesson.getDiaSemana(), infoLesson.getInicio(), infoLesson.getFim(),
                 infoLesson.getTipo(), sala, roomOccupation, shift);
         result = validTimeInterval(aula);
         if (result.getMessageType() == 1) {
@@ -69,7 +69,7 @@ public class CreateLesson implements IService {
             try {
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
                 if (infoShiftServiceResult.isSUCESS()) {
-                    IAula aula2 = new Aula();
+                    ILesson aula2 = new Lesson();
                     sp.getIAulaPersistente().simpleLockWrite(aula2);
 
                     sp.getIPersistentRoomOccupation().simpleLockWrite(roomOccupation);
@@ -131,7 +131,7 @@ public class CreateLesson implements IService {
          */
     }
 
-    private InfoLessonServiceResult validTimeInterval(IAula lesson) {
+    private InfoLessonServiceResult validTimeInterval(ILesson lesson) {
         InfoLessonServiceResult result = new InfoLessonServiceResult();
         if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime()) {
             result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
@@ -139,7 +139,7 @@ public class CreateLesson implements IService {
         return result;
     }
 
-    private InfoShiftServiceResult valid(ITurno shift, IAula lesson) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(IShift shift, ILesson lesson) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
         double hours = getTotalHoursOfShiftType(shift);
@@ -172,23 +172,23 @@ public class CreateLesson implements IService {
         return result;
     }
 
-    private double getTotalHoursOfShiftType(ITurno shift) throws ExcepcaoPersistencia {
+    private double getTotalHoursOfShiftType(IShift shift) throws ExcepcaoPersistencia {
         /*
-         * ITurno shiftCriteria = new Turno();
+         * IShift shiftCriteria = new Shift();
          * shiftCriteria.setNome(shift.getNome());
          * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
          * 
          * List lessonsOfShiftType = SuportePersistenteOJB .getInstance()
          * .getITurnoAulaPersistente() .readLessonsByShift(shiftCriteria);
          * 
-         * IAula lesson = null; double duration = 0; for (int i = 0; i <
+         * ILesson lesson = null; double duration = 0; for (int i = 0; i <
          * lessonsOfShiftType.size(); i++) { lesson = ((ITurnoAula)
          * lessonsOfShiftType.get(i)).getAula(); try { lesson.getIdInternal();
          * duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60); }
          * catch (Exception ex) { // all is ok // the lesson contained a proxy
          * to null. } } return duration;
          */
-        IAula lesson = null;
+        ILesson lesson = null;
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
         if (associatedLessons == null) {
@@ -197,7 +197,7 @@ public class CreateLesson implements IService {
             shift.setAssociatedLessons(associatedLessons);
         }
         for (int i = 0; i < associatedLessons.size(); i++) {
-            lesson = (IAula) associatedLessons.get(i);
+            lesson = (ILesson) associatedLessons.get(i);
             try {
                 lesson.getIdInternal();
                 duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
@@ -209,7 +209,7 @@ public class CreateLesson implements IService {
         return duration;
     }
 
-    private Integer getLessonDurationInMinutes(IAula lesson) {
+    private Integer getLessonDurationInMinutes(ILesson lesson) {
         int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
         int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
         int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);

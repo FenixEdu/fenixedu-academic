@@ -16,7 +16,7 @@ import Dominio.CostCenter;
 import Dominio.Employee;
 import Dominio.ICostCenter;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.managementAssiduousness.ExtraWorkRequests;
 import Dominio.managementAssiduousness.IExtraWorkRequests;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -50,7 +50,7 @@ public class ReadAndDeleteExtraWorkRequests implements IService {
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
             IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
 
-            IPessoa personWho = personDAO.lerPessoaPorUsername(usernameWho);
+            IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
             if (personWho != null) {
                 employeeWho = employeeDAO.readByPerson(personWho
                         .getIdInternal().intValue());

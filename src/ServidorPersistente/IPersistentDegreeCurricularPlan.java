@@ -2,7 +2,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Util.DegreeCurricularPlanState;
 import Util.TipoCurso;
@@ -14,12 +14,12 @@ public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
     public void deleteDegreeCurricularPlan(IDegreeCurricularPlan planoCurricular)
             throws ExcepcaoPersistencia;
 
-    public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree)
+    public IDegreeCurricularPlan readByNameAndDegree(String name, IDegree degree)
             throws ExcepcaoPersistencia;
 
-    public List readByDegree(ICurso degree) throws ExcepcaoPersistencia;
+    public List readByDegree(IDegree degree) throws ExcepcaoPersistencia;
 
-    public List readByDegreeAndState(ICurso degree, DegreeCurricularPlanState state)
+    public List readByDegreeAndState(IDegree degree, DegreeCurricularPlanState state)
             throws ExcepcaoPersistencia;
 
     public List readByDegreeTypeAndState(TipoCurso degreeType, DegreeCurricularPlanState state)

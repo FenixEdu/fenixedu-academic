@@ -21,12 +21,12 @@ import Dominio.ICreditsInScientificArea;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPersonRole;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.PersonRole;
-import Dominio.Pessoa;
+import Dominio.Person;
 import Dominio.Role;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
@@ -88,7 +88,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
             persistenceDAO.iniciarTransaccao();
 
             // -------------------------------------------------------------------------------------------------------
-            IPessoa person = (IPessoa) persistenceDAO.getIPessoaPersistente().readByOID(Pessoa.class,
+            IPerson person = (IPerson) persistenceDAO.getIPessoaPersistente().readByOID(Person.class,
                     PERSON_ID);
 
             IRole role = new Role();
@@ -160,7 +160,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
 
             // -------------------------------------------------------------------------------------------------------
             if (person != null) {
-                persistenceDAO.getIPessoaPersistente().deleteByOID(Pessoa.class, person.getIdInternal());
+                persistenceDAO.getIPessoaPersistente().deleteByOID(Person.class, person.getIdInternal());
             }
 
             if (student != null) {

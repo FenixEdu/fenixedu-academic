@@ -56,7 +56,7 @@ public class InsertStudentsFinalEvaluation implements IService {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             //			employee
-            //			IPessoa person =
+            //			IPerson person =
             // persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             //			Funcionario employee = readEmployee(person);
 
@@ -162,7 +162,7 @@ public class InsertStudentsFinalEvaluation implements IService {
         return enrolmentEvaluation;
     }
 
-    //	private Employee readEmployee(IPessoa person) {
+    //	private Employee readEmployee(IPerson person) {
     //		Employee employee = null;
     //		IPersistentEmployee persistentEmployee;
     //		try {

@@ -6,12 +6,12 @@ import java.util.Locale;
 
 import org.apache.struts.action.ActionForm;
 
-import Dominio.FuncNaoDocente;
+import Dominio.NonTeacherEmployee;
 import Dominio.Funcionario;
 import Dominio.Horario;
 import Dominio.HorarioTipo;
 import Dominio.IStrategyHorarios;
-import Dominio.Pessoa;
+import Dominio.Person;
 import Dominio.SuporteStrategyHorarios;
 
 /**
@@ -581,8 +581,8 @@ public class AssociarHorarioTipoConfirmarForm extends ActionForm {
         _excepcaoHorario = excepcaoHorario;
     }
 
-    public void setForm(Locale locale, Pessoa pessoa, Funcionario funcionario,
-            FuncNaoDocente funcNaoDocente, HorarioTipo horarioTipo, Horario horario, List listaRegime,
+    public void setForm(Locale locale, Person pessoa, Funcionario funcionario,
+            NonTeacherEmployee funcNaoDocente, HorarioTipo horarioTipo, Horario horario, List listaRegime,
             boolean isExcepcaoHorario) {
 
         IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(

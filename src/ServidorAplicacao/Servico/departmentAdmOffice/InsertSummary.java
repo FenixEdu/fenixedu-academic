@@ -8,16 +8,16 @@ import java.util.Calendar;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoSummary;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IProfessorship;
-import Dominio.ISala;
+import Dominio.IRoom;
 import Dominio.ISummary;
 import Dominio.ITeacher;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.Professorship;
-import Dominio.Sala;
+import Dominio.Room;
 import Dominio.Summary;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.utils.summary.SummaryUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -66,7 +66,7 @@ public class InsertSummary implements IService {
             //Shift
             ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
 
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, infoSummary.getInfoShift()
+            IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoSummary.getInfoShift()
                     .getIdInternal());
             if (shift == null) {
                 throw new FenixServiceException("error.summary.no.shift");
@@ -81,7 +81,7 @@ public class InsertSummary implements IService {
                         && infoSummary.getInfoRoom().getIdInternal() != null) {
                     ISalaPersistente persistentRoom = persistentSuport.getISalaPersistente();
 
-                    ISala room = (ISala) persistentRoom.readByOID(Sala.class, infoSummary.getInfoRoom()
+                    IRoom room = (IRoom) persistentRoom.readByOID(Room.class, infoSummary.getInfoRoom()
                             .getIdInternal());
 
                     summary.setRoom(room);
@@ -89,7 +89,7 @@ public class InsertSummary implements IService {
             } else {
                 summary.setIsExtraLesson(Boolean.FALSE);
 
-                IAula lesson = SummaryUtils.findlesson(shift, infoSummary);
+                ILesson lesson = SummaryUtils.findlesson(shift, infoSummary);
 
                 //room
                 summary.setRoom(lesson.getSala());//not necessary

@@ -6,8 +6,8 @@ package ServidorAplicacao.Filtro.coordinator;
 
 import java.util.List;
 
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter;
@@ -52,8 +52,8 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends DomainObjectA
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, objectId);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, objectId);
             ITeacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator);
 

@@ -11,9 +11,9 @@ import org.apache.commons.collections.CollectionUtils;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoRole;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -81,13 +81,13 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
         Integer executionDegreeID = (Integer) arguments[0];
 
-        ICursoExecucao executionDegree = null;
+        IExecutionDegree executionDegree = null;
 
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = (CursoExecucao) SuportePersistenteOJB.getInstance()
-                    .getIPersistentExecutionDegree().readByOID(CursoExecucao.class, executionDegreeID);
+            executionDegree = (ExecutionDegree) SuportePersistenteOJB.getInstance()
+                    .getIPersistentExecutionDegree().readByOID(ExecutionDegree.class, executionDegreeID);
 
         } catch (Exception e) {
             return false;

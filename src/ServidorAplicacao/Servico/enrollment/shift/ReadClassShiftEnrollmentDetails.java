@@ -25,11 +25,11 @@ import DataBeans.enrollment.shift.ShiftEnrollmentDetails;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import Dominio.Student;
-import Dominio.Turma;
+import Dominio.SchoolClass;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -83,9 +83,9 @@ public class ReadClassShiftEnrollmentDetails implements IService {
                     executionPeriod);
 
             //Class selected
-            ITurma klass = null;
+            ISchoolClass klass = null;
             if (klassId != null) {
-                klass = (ITurma) classDAO.readByOID(Turma.class, klassId);
+                klass = (ISchoolClass) classDAO.readByOID(SchoolClass.class, klassId);
             }
 
             //Shifts correspond to student attends
@@ -125,7 +125,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         List infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
             public Object transform(Object input) {
-                ITurno shift = (ITurno) input;
+                IShift shift = (IShift) input;
                 InfoShift infoShift = InfoShiftWithInfoExecutionCourse.newInfoFromDomain(shift);
                 return infoShift;
             }
@@ -157,7 +157,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @return
      */
     private Map createMapAndPopulateInfoClassList(ITurnoAlunoPersistente shiftStudentDAO,
-            List classList, List shiftsAttendList, List infoClassList, ITurma klassToTreat) {
+            List classList, List shiftsAttendList, List infoClassList, ISchoolClass klassToTreat) {
         Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
 
         /* shift id -> ShiftEnrollmentDetails */
@@ -172,7 +172,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
             executionCourseTreated.clear();
 
             //Clone class
-            ITurma klass = (ITurma) classList.get(i);
+            ISchoolClass klass = (ISchoolClass) classList.get(i);
             InfoClass infoClass = InfoClass.newInfoFromDomain(klass);
             infoClassList.add(infoClass);
 
@@ -184,7 +184,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
                         shiftsAttendList);
                 if (shiftsRequired != null) {
                     for (int j = 0; j < shiftsRequired.size(); j++) {
-                        ITurno shift = (ITurno) shiftsRequired.get(j);
+                        IShift shift = (IShift) shiftsRequired.get(j);
 
                         ShiftEnrollmentDetails shiftEnrollmentDetails = createShiftEnrollmentDetails(
                                 shiftStudentDAO, shiftsTreated, shift);
@@ -222,7 +222,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @return
      */
     private ExecutionCourseShiftEnrollmentDetails createExecutionCourseShiftEnrollmentDetails(
-            Map executionCourseTreated, ITurno shift) {
+            Map executionCourseTreated, IShift shift) {
         IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
         ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails = (ExecutionCourseShiftEnrollmentDetails) executionCourseTreated
                 .get(executionCourse.getIdInternal());
@@ -247,7 +247,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @return
      */
     private ShiftEnrollmentDetails createShiftEnrollmentDetails(ITurnoAlunoPersistente shiftStudentDAO,
-            Map shiftsTreated, ITurno shift) {
+            Map shiftsTreated, IShift shift) {
         ShiftEnrollmentDetails shiftEnrollmentDetails = (ShiftEnrollmentDetails) shiftsTreated.get(shift
                 .getIdInternal());
         if (shiftEnrollmentDetails == null) {
@@ -293,7 +293,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         return infoStudent;
     }
 
-    //   private InfoShift copyShift2InfoShift(ITurno shift) {
+    //   private InfoShift copyShift2InfoShift(IShift shift) {
     //        InfoShift infoShift = null;
     //        if (shift != null) {
     //            infoShift = new InfoShift();
@@ -326,7 +326,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
     //
     //                        public Object transform(Object arg0) {
     //
-    //                            return copyIClass2InfoClass((ITurma) arg0);
+    //                            return copyIClass2InfoClass((ISchoolClass) arg0);
     //                        }
     //
     //                    });
@@ -334,7 +334,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
     //        return infoClasses;
     //    }
     //
-    //    private InfoClass copyIClass2InfoClass(ITurma turma) {
+    //    private InfoClass copyIClass2InfoClass(ISchoolClass turma) {
     //        InfoClass infoClass = null;
     //        if (turma != null) {
     //            infoClass = new InfoClass();
@@ -353,7 +353,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
     //     * @return
     //     */
     //    private InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(
-    //            ICursoExecucao executionDegree) {
+    //            IExecutionDegree executionDegree) {
     //        InfoExecutionDegree infoExecutionDegree = null;
     //        if (executionDegree != null) {
     //            infoExecutionDegree = new InfoExecutionDegree();
@@ -390,7 +390,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
     //     * @param degree
     //     * @return
     //     */
-    //    private InfoDegree copyIDegree2InfoDegree(ICurso degree) {
+    //    private InfoDegree copyIDegree2InfoDegree(IDegree degree) {
     //        InfoDegree infoDegree = null;
     //        if (degree != null) {
     //            infoDegree = new InfoDegree();
@@ -414,7 +414,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
     //
     //                        public Object transform(Object arg0) {
     //
-    //                            return copyILesson2InfoLesson((IAula) arg0);
+    //                            return copyILesson2InfoLesson((ILesson) arg0);
     //                        }
     //
     //                    });
@@ -422,7 +422,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
     //        return infoLessons;
     //    }
     //
-    //    private Object copyILesson2InfoLesson(IAula lesson) {
+    //    private Object copyILesson2InfoLesson(ILesson lesson) {
     //        InfoLesson infoLesson = null;
     //        if (lesson != null) {
     //            infoLesson = new InfoLesson();
@@ -440,7 +440,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
     //     * @param sala
     //     * @return
     //     */
-    //    private InfoRoom copyISala2InfoRoom(ISala sala) {
+    //    private InfoRoom copyISala2InfoRoom(IRoom sala) {
     //        InfoRoom infoRoom = null;
     //        if (sala != null) {
     //            infoRoom = new InfoRoom();

@@ -20,7 +20,7 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import Dominio.ExecutionPeriod;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -136,7 +136,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
 
         IExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
         if (executionYear != null) {
-            ICursoExecucao executionDegree = executionDegreeDAO
+            IExecutionDegree executionDegree = executionDegreeDAO
                     .readByDegreeCurricularPlanAndExecutionYear(studentCurricularPlan
                             .getDegreeCurricularPlan(), executionYear);
 

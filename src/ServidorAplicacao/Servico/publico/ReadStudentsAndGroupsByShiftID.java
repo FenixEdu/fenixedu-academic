@@ -23,8 +23,8 @@ import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -57,8 +57,8 @@ public class ReadStudentsAndGroupsByShiftID implements IService
 
 			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
             .readByOID(GroupProperties.class, groupPropertiesId);
-			ITurno shift = (ITurno) persistentShift
-            .readByOID(Turno.class, shiftId);
+			IShift shift = (IShift) persistentShift
+            .readByOID(Shift.class, shiftId);
 			
 			
 			if(groupProperties == null){
@@ -122,7 +122,7 @@ public class ReadStudentsAndGroupsByShiftID implements IService
 	return infoSiteStudentsAndGroups;
 	}
 	
-	private List getStudentGroupsByShiftAndGroupProperties(IGroupProperties groupProperties,ITurno shift){
+	private List getStudentGroupsByShiftAndGroupProperties(IGroupProperties groupProperties,IShift shift){
 		List result = new ArrayList();
 		List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithShift();
 		Iterator iter = studentGroups.iterator();

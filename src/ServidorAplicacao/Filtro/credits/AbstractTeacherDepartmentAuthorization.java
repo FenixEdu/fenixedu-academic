@@ -9,7 +9,7 @@ import java.util.List;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import Dominio.IDepartment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IUserView;
@@ -54,7 +54,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
         if (teacherId != null) {
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
             ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);

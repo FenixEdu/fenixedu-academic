@@ -4,7 +4,7 @@
  */
 package Dominio.student;
 
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDomainObject;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
@@ -16,9 +16,9 @@ import Util.DelegateYearType;
  *  
  */
 public interface IDelegate extends IDomainObject {
-    public ICurso getDegree();
+    public IDegree getDegree();
 
-    public void setDegree(ICurso degree);
+    public void setDegree(IDegree degree);
 
     public IExecutionYear getExecutionYear();
 

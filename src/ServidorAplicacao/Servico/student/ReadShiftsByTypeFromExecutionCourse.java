@@ -10,7 +10,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
@@ -34,7 +34,7 @@ public class ReadShiftsByTypeFromExecutionCourse implements IService {
 
         return (List) CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {
-                final ITurno shift = (ITurno) arg0;
+                final IShift shift = (IShift) arg0;
                 return InfoShift.newInfoFromDomain(shift);
             }});
     }

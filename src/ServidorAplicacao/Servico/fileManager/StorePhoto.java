@@ -5,8 +5,8 @@
 package ServidorAplicacao.Servico.fileManager;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IPessoa;
-import Dominio.Pessoa;
+import Dominio.IPerson;
+import Dominio.Person;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.FileAlreadyExistsServiceException;
 import ServidorAplicacao.Servico.exceptions.FileNameTooLongServiceException;
@@ -32,7 +32,7 @@ public class StorePhoto implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = (IPessoa) persistentPerson.readByOID(Pessoa.class, personId);
+            IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);
 
             file.setUri(person.getSlideName());
             IFileSuport fileSuport = FileSuport.getInstance();

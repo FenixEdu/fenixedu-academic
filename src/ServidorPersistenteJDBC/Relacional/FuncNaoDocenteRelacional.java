@@ -3,7 +3,7 @@ package ServidorPersistenteJDBC.Relacional;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import Dominio.FuncNaoDocente;
+import Dominio.NonTeacherEmployee;
 import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
 
 /**
@@ -11,7 +11,7 @@ import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
  */
 public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 
-    public boolean alterarFuncNaoDocente(FuncNaoDocente funcionario) {
+    public boolean alterarFuncNaoDocente(NonTeacherEmployee funcionario) {
         boolean resultado = false;
 
         try {
@@ -49,7 +49,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
         return resultado;
     } /* apagarFuncNaoDocente */
 
-    public boolean escreverFuncNaoDocente(FuncNaoDocente funcionario) {
+    public boolean escreverFuncNaoDocente(NonTeacherEmployee funcionario) {
         boolean resultado = false;
 
         try {
@@ -68,8 +68,8 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
         return resultado;
     } /* escreverFuncNaoDocente */
 
-    public FuncNaoDocente lerFuncNaoDocente(int codigoInterno) {
-        FuncNaoDocente funcionario = null;
+    public NonTeacherEmployee lerFuncNaoDocente(int codigoInterno) {
+        NonTeacherEmployee funcionario = null;
 
         try {
             PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNC_NAO_DOCENTE "
@@ -79,7 +79,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 
             ResultSet resultado = sql.executeQuery();
             if (resultado.next()) {
-                funcionario = new FuncNaoDocente(resultado.getInt("codigoInterno"), resultado
+                funcionario = new NonTeacherEmployee(resultado.getInt("codigoInterno"), resultado
                         .getInt("chaveFuncionario"));
             }
             sql.close();
@@ -89,8 +89,8 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
         return funcionario;
     } /* lerFuncNaoDocente */
 
-    public FuncNaoDocente lerFuncNaoDocentePorFuncionario(int chaveFuncionario) {
-        FuncNaoDocente funcionario = null;
+    public NonTeacherEmployee lerFuncNaoDocentePorFuncionario(int chaveFuncionario) {
+        NonTeacherEmployee funcionario = null;
 
         try {
             PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNC_NAO_DOCENTE "
@@ -100,7 +100,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 
             ResultSet resultado = sql.executeQuery();
             if (resultado.next()) {
-                funcionario = new FuncNaoDocente(resultado.getInt("codigoInterno"), resultado
+                funcionario = new NonTeacherEmployee(resultado.getInt("codigoInterno"), resultado
                         .getInt("chaveFuncionario"));
             }
             sql.close();
@@ -111,8 +111,8 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
         return funcionario;
     } /* lerFuncNaoDocentePorFuncionario */
 
-    public FuncNaoDocente lerFuncNaoDocentePorNumMecanografico(int numMecanografico) {
-        FuncNaoDocente funcionario = null;
+    public NonTeacherEmployee lerFuncNaoDocentePorNumMecanografico(int numMecanografico) {
+        NonTeacherEmployee funcionario = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -135,7 +135,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 
             resultado = sql.executeQuery();
             if (resultado.next()) {
-                funcionario = new FuncNaoDocente(resultado.getInt("codigoInterno"), resultado
+                funcionario = new NonTeacherEmployee(resultado.getInt("codigoInterno"), resultado
                         .getInt("chaveFuncionario"));
             }
             sql.close();
@@ -146,8 +146,8 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
         return funcionario;
     }
 
-    public FuncNaoDocente lerFuncNaoDocentePorPessoa(int chavePessoa) {
-        FuncNaoDocente funcionario = null;
+    public NonTeacherEmployee lerFuncNaoDocentePorPessoa(int chavePessoa) {
+        NonTeacherEmployee funcionario = null;
 
         try {
             PreparedStatement sql = UtilRelacional
@@ -170,7 +170,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 
             resultado = sql.executeQuery();
             if (resultado.next()) {
-                funcionario = new FuncNaoDocente(resultado.getInt("codigoInterno"), resultado
+                funcionario = new NonTeacherEmployee(resultado.getInt("codigoInterno"), resultado
                         .getInt("chaveFuncionario"));
             }
             sql.close();

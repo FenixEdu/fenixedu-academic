@@ -12,11 +12,11 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.SiteView;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.ITurma;
-import Dominio.Turma;
+import Dominio.ISchoolClass;
+import Dominio.SchoolClass;
 import ServidorAplicacao.Factory.PublicSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -58,11 +58,11 @@ public class ClassSiteComponentService implements IService {
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
                     executionPeriodName, executionYear);
 
-            ICursoExecucao executionDegree = executionDegreeDAO
+            IExecutionDegree executionDegree = executionDegreeDAO
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
                             nameDegreeCurricularPlan, executionYear);
             PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
-            ITurma domainClass;
+            ISchoolClass domainClass;
             if (classId == null) {
                 domainClass = getDomainClass(className, curricularYear, executionPeriod,
                         executionDegree, sp);
@@ -71,7 +71,7 @@ public class ClassSiteComponentService implements IService {
                 }
             } else {
 
-                domainClass = (ITurma) persistentSchoolClass.readByOID(Turma.class, classId);
+                domainClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classId);
             }
             bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
             siteView = new SiteView(bodyComponent);
@@ -82,12 +82,12 @@ public class ClassSiteComponentService implements IService {
         return siteView;
     }
 
-    private ITurma getDomainClass(String className, Integer curricularYear,
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, ISuportePersistente sp)
+    private ISchoolClass getDomainClass(String className, Integer curricularYear,
+            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
         ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-        ITurma domainClass = null;
+        ISchoolClass domainClass = null;
         List domainList = new ArrayList();
         if (curricularYear == null) {
             domainClass = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(className,
@@ -101,10 +101,10 @@ public class ClassSiteComponentService implements IService {
                         executionPeriod);
 
                 if (domainList.size() != 0) {
-                    domainClass = (ITurma) domainList.get(0);
+                    domainClass = (ISchoolClass) domainList.get(0);
                 }
             } else {
-                domainClass = new Turma();
+                domainClass = new SchoolClass();
                 domainClass.setAnoCurricular(curricularYear);
                 domainClass.setExecutionDegree(executionDegree);
                 domainClass.setExecutionPeriod(executionPeriod);

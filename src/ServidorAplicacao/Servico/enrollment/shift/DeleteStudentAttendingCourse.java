@@ -6,7 +6,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudent;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentGroupAttend;
 import Dominio.Student;
@@ -94,7 +94,7 @@ public class DeleteStudentAttendingCourse implements IService {
             ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
             IPersistentStudentGroupAttend studentGroupAttendDAO = sp.getIPersistentStudentGroupAttend();
 
-            IFrequenta attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
+            IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
                     executionCourse);
             IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
             if (studentGroupAttend != null) {

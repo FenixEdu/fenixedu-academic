@@ -10,7 +10,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IAttendsSet;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroup;
@@ -49,7 +49,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
     public List readAllStudentGroupByAttendsSetAndShift(
         IAttendsSet attendsSet,
-        ITurno shift)
+        IShift shift)
         throws ExcepcaoPersistencia
     {
 
@@ -82,7 +82,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
     }
 
 
-    public List readAllStudentGroupByShift(ITurno shift) throws ExcepcaoPersistencia {
+    public List readAllStudentGroupByShift(IShift shift) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 

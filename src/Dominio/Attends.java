@@ -1,5 +1,5 @@
 /*
- * Frequenta.java
+ * Attends.java
  *
  * Created on 20 de Outubro de 2002, 14:42
  */
@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author  tfc130
  */
-public class Frequenta extends DomainObject implements IFrequenta {
+public class Attends extends DomainObject implements IAttends {
     protected IStudent _aluno;
 
     protected IExecutionCourse _disciplinaExecucao;
@@ -31,15 +31,15 @@ public class Frequenta extends DomainObject implements IFrequenta {
 	private List _attendInAttendsSet;
 
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-    public Frequenta() {
+    public Attends() {
     }
 
-	public Frequenta(IStudent aluno, IExecutionCourse disciplinaExecucao) {
+	public Attends(IStudent aluno, IExecutionCourse disciplinaExecucao) {
 		setAluno(aluno);
 		setDisciplinaExecucao(disciplinaExecucao);
 	}
 
-	public Frequenta(
+	public Attends(
 		IStudent aluno,
 		IExecutionCourse disciplinaExecucao,
 		IEnrollment enrolment) {
@@ -138,8 +138,8 @@ public class Frequenta extends DomainObject implements IFrequenta {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof IFrequenta) {
-            IFrequenta frequenta = (IFrequenta) obj;
+        if (obj instanceof IAttends) {
+            IAttends frequenta = (IAttends) obj;
 			resultado = getIdInternal().equals(frequenta.getIdInternal());
         }
         return resultado;

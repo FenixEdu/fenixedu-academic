@@ -15,7 +15,7 @@ import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -107,10 +107,10 @@ public class ImprovmentUnEnrollService implements IService {
         
         if(currentExecutionCourse != null) {
             List attends = currentExecutionCourse.getAttends();
-            IFrequenta attend = (IFrequenta) CollectionUtils.find(attends, new Predicate() {
+            IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
-                    IFrequenta frequenta = (IFrequenta) arg0;
+                    IAttends frequenta = (IAttends) arg0;
                     if(frequenta.getAluno().equals(student))
                     	return true;
                     return false;

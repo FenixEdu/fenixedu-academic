@@ -46,7 +46,7 @@
 	/>
 	<reference-descriptor
 	  name="degree"
-	  class-ref="Dominio.Curso">
+	  class-ref="Dominio.Degree">
 	  <foreignkey field-ref="keyDegree"/>
    </reference-descriptor>
     
@@ -316,7 +316,7 @@
 	/>
 	<reference-descriptor
 	  name="degree"
-	  class-ref="Dominio.Curso">
+	  class-ref="Dominio.Degree">
 	  <foreignkey field-ref="keyDegree"/>
    </reference-descriptor>
     
@@ -678,7 +678,7 @@
 	/>
 	<reference-descriptor
 	  name="degree"
-	  class-ref="Dominio.Curso">
+	  class-ref="Dominio.Degree">
 	  <foreignkey field-ref="keyDegree"/>
    </reference-descriptor>
     

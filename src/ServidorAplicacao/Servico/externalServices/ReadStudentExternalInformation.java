@@ -21,7 +21,7 @@ import DataBeans.externalServices.InfoExternalPersonInfo;
 import DataBeans.externalServices.InfoStudentExternalInformation;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
@@ -42,7 +42,7 @@ public class ReadStudentExternalInformation implements IService
                 .getIPessoaPersistente();
         IPersistentStudent persistentStudent = SuportePersistenteOJB.getInstance()
                 .getIPersistentStudent();
-        IPessoa person = persistentPerson.lerPessoaPorUsername(username);
+        IPerson person = persistentPerson.lerPessoaPorUsername(username);
         Collection students = persistentStudent.readbyPerson(person);
         for (Iterator iter = students.iterator(); iter.hasNext();)
         {
@@ -117,7 +117,7 @@ public class ReadStudentExternalInformation implements IService
      * @param infoPerson
      * @return
      */
-    private InfoExternalPersonInfo buildExternalPersonInfo(IPessoa person)
+    private InfoExternalPersonInfo buildExternalPersonInfo(IPerson person)
     {
         InfoExternalPersonInfo info = new InfoExternalPersonInfo();
         info.setAddress(this.buildInfoExternalAdressInfo(person));
@@ -139,7 +139,7 @@ public class ReadStudentExternalInformation implements IService
      * @param infoPerson
      * @return
      */
-    private InfoExternalIdentificationInfo buildExternalIdentificationInfo(IPessoa person)
+    private InfoExternalIdentificationInfo buildExternalIdentificationInfo(IPerson person)
     {
         InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
         info.setDocumentType(person.getTipoDocumentoIdentificacao().toString());
@@ -152,7 +152,7 @@ public class ReadStudentExternalInformation implements IService
      * @param infoPerson
      * @return
      */
-    private InfoExternalCitizenshipInfo builsExternalCitizenshipInfo(IPessoa person)
+    private InfoExternalCitizenshipInfo builsExternalCitizenshipInfo(IPerson person)
     {
         InfoExternalCitizenshipInfo info = new InfoExternalCitizenshipInfo();
         info.setArea(person.getFreguesiaNaturalidade());
@@ -165,7 +165,7 @@ public class ReadStudentExternalInformation implements IService
      * @param infoPerson
      * @return
      */
-    private InfoExternalAdressInfo buildInfoExternalAdressInfo(IPessoa person)
+    private InfoExternalAdressInfo buildInfoExternalAdressInfo(IPerson person)
     {
         InfoExternalAdressInfo info = new InfoExternalAdressInfo();
         info.setPostalCode(person.getCodigoPostal());

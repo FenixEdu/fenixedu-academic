@@ -96,7 +96,7 @@
 	
 	<reference-descriptor
        	name="responsiblePerson"
-       	class-ref="Dominio.Pessoa"
+       	class-ref="Dominio.Person"
        	proxy="true"
 		refresh="true"
     >

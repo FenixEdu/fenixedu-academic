@@ -22,14 +22,14 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
-import Dominio.IAula;
-import Dominio.ICursoExecucao;
+import Dominio.ILesson;
+import Dominio.IExecutionDegree;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
-import Dominio.ISala;
-import Dominio.ITurno;
+import Dominio.IRoom;
+import Dominio.IShift;
 import Dominio.Period;
 import Dominio.RoomOccupation;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -68,7 +68,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             endDay.setTimeInMillis(startDay.getTimeInMillis());
             endDay.add(Calendar.DATE, 6);
             Period weekPeriod = new Period(day, endDay);
-            ISala room = Cloner.copyInfoRoom2Room(infoRoom);
+            IRoom room = Cloner.copyInfoRoom2Room(infoRoom);
 
             Period lessonsPeriod = calculateLessonsSeason(executionPeriod);
             if (lessonsPeriod.intersectPeriods(weekPeriod)) {
@@ -77,7 +77,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
                 Iterator iterator = lessonList.iterator();
 
                 while (iterator.hasNext()) {
-                    IAula aula = (IAula) iterator.next();
+                    ILesson aula = (ILesson) iterator.next();
                     IRoomOccupation roomOccupation = aula.getRoomOccupation();
                     IPeriod period = roomOccupation.getPeriod();
                     if (period.intersectPeriods(weekPeriod)) {
@@ -101,7 +101,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
                         }
                         if (add) {
                             InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(aula);
-                            ITurno shift = aula.getShift();
+                            IShift shift = aula.getShift();
                             if (shift == null) {
                                 continue;
                             }
@@ -141,7 +141,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
 
             List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
-            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesList.get(0);
+            IExecutionDegree executionDegree = (IExecutionDegree) executionDegreesList.get(0);
 
             Calendar startSeason1 = null;
             Calendar endSeason2 = null;
@@ -154,7 +154,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             }
 
             for (int i = 1; i < executionDegreesList.size(); i++) {
-                executionDegree = (ICursoExecucao) executionDegreesList.get(i);
+                executionDegree = (IExecutionDegree) executionDegreesList.get(i);
                 Calendar startLessons;
                 Calendar endLessons;
                 if (semester == 1) {

@@ -12,25 +12,25 @@ package ServidorPersistente;
  */
 import java.util.List;
 
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import Util.TipoCurso;
 
 public interface ITurmaPersistente extends IPersistentObject {
 
-    public void delete(ITurma turma) throws ExcepcaoPersistencia;
+    public void delete(ISchoolClass turma) throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodAndCurricularYearAndExecutionDegree(
-            IExecutionPeriod executionPeriod, Integer curricularYear, ICursoExecucao executionDegree)
+            IExecutionPeriod executionPeriod, Integer curricularYear, IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionDegreeAndDegreeAndExecutionPeriod(ICursoExecucao execucao, ICurso degree,
+    public List readByExecutionDegreeAndDegreeAndExecutionPeriod(IExecutionDegree execucao, IDegree degree,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
     /**
@@ -47,20 +47,20 @@ public interface ITurmaPersistente extends IPersistentObject {
      * @param className
      * @param executionDegree
      * @param executionPeriod
-     * @return ITurma
+     * @return ISchoolClass
      */
-    public ITurma readByNameAndExecutionDegreeAndExecutionPeriod(String className,
-            ICursoExecucao executionDegree, IExecutionPeriod executionPeriod)
+    public ISchoolClass readByNameAndExecutionDegreeAndExecutionPeriod(String className,
+            IExecutionDegree executionDegree, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
     public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia;
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, TipoCurso curso)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao execucao,
+    public List readByExecutionDegreeAndExecutionPeriod(IExecutionDegree execucao,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
     /**

@@ -31,7 +31,7 @@ public class Curriculum extends DomainObject implements ICurriculum {
 
     private Integer keyCurricularCourse;
 
-    protected IPessoa personWhoAltered;
+    protected IPerson personWhoAltered;
 
     private Integer keyPersonWhoAltered;
 
@@ -204,7 +204,7 @@ public class Curriculum extends DomainObject implements ICurriculum {
     /**
      * @return Returns the personWhoAltered.
      */
-    public IPessoa getPersonWhoAltered() {
+    public IPerson getPersonWhoAltered() {
         return personWhoAltered;
     }
 
@@ -212,7 +212,7 @@ public class Curriculum extends DomainObject implements ICurriculum {
      * @param personWhoAltered
      *            The personWhoAltered to set.
      */
-    public void setPersonWhoAltered(IPessoa personWhoAltered) {
+    public void setPersonWhoAltered(IPerson personWhoAltered) {
         this.personWhoAltered = personWhoAltered;
     }
 

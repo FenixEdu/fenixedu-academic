@@ -9,7 +9,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.SiteView;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Factory.ExamSiteComponentBuilder;
@@ -50,7 +50,7 @@ public class ExamSiteComponentService implements IService {
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
                     executionPeriodName, executionYear);
 
-            ICursoExecucao executionDegree = executionDegreeDAO
+            IExecutionDegree executionDegree = executionDegreeDAO
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
                             nameDegreeCurricularPlan, executionYear);
             //			if (executionDegree != null) {

@@ -177,12 +177,12 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             // Create find query String
             String query = new String();
             query = "  - Ano Lectivo : " + executionYear + "<br />";
-            // query = " - Curso : " + degreeName + "<br />";
+            // query = " - Degree : " + degreeName + "<br />";
             if (specialization == null && situationName == null && candidateNumber == null)
                 query += "  - Todos os criterios";
             else {
                 if (degreeName != null)
-                    query += "  - Curso: " + degreeName + "<br />";
+                    query += "  - Degree: " + degreeName + "<br />";
                 if (specialization != null)
                     query += "  - Tipo de Especialização: " + specialization.toString() + "<br />";
                 if (situationName != null)
@@ -477,7 +477,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                 infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
                         .executeService(userView, "ChangeCandidate", args);
             } catch (ExistingServiceException e) {
-                throw new ExistingActionException("Esta Pessoa", e);
+                throw new ExistingActionException("Esta Person", e);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }

@@ -12,8 +12,8 @@ import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoDegreeInfoWithDegree;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DegreeInfo;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDegreeInfo;
 import Dominio.IExecutionYear;
@@ -58,8 +58,8 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
 
             Collections.sort(executionDegrees, new Comparator() {
                 public int compare(Object o1, Object o2) {
-                    return ((ICursoExecucao) o1).getExecutionYear().getBeginDate().compareTo(
-                            ((ICursoExecucao) o1).getExecutionYear().getBeginDate());
+                    return ((IExecutionDegree) o1).getExecutionYear().getBeginDate().compareTo(
+                            ((IExecutionDegree) o1).getExecutionYear().getBeginDate());
                 }
             });
 
@@ -68,7 +68,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
             }
 
             //Degree
-            ICurso degree = degreeCurricularPlan.getDegree();
+            IDegree degree = degreeCurricularPlan.getDegree();
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
@@ -79,7 +79,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
                     infoDegreeInfoId, true);
 
             //decide which is the execution year which we want to edit
-            ICursoExecucao executionDegree = (ICursoExecucao) getActiveExecutionYear(executionDegrees);
+            IExecutionDegree executionDegree = (IExecutionDegree) getActiveExecutionYear(executionDegrees);
             if (executionDegree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
@@ -156,24 +156,24 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
      * @param infoExecutionDegreeList a list of infoexecution degrees sorted by beginDate
      */
 
-    private ICursoExecucao getActiveExecutionYear(List executionDegreeList) {
+    private IExecutionDegree getActiveExecutionYear(List executionDegreeList) {
         Date todayDate = new Date();
         int i;
         for (i = 0; i < executionDegreeList.size(); i++) {
             //if the first is in the future, the rest is also
-            if ((ExecutionDegreeDuringDate(todayDate, (ICursoExecucao) executionDegreeList
+            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList
                     .get(i)) == 1)
                     && (i == 0))
-                return (ICursoExecucao) executionDegreeList.get(i);            
+                return (IExecutionDegree) executionDegreeList.get(i);            
             // if the last is in the past, there is no editable executionDegree
-            if ((ExecutionDegreeDuringDate(todayDate, (ICursoExecucao) executionDegreeList
+            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList
                     .get(i)) == 1)
                     && (i == executionDegreeList.size()-1))
                 return null;
             
-            if (ExecutionDegreeDuringDate(todayDate, (ICursoExecucao) executionDegreeList
+            if (ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList
                     .get(i)) == 0)
-                return (ICursoExecucao) executionDegreeList.get(i);
+                return (IExecutionDegree) executionDegreeList.get(i);
         }
         return null;
     }
@@ -185,7 +185,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
      * 			1 if it is in the future
      */
 
-    private int ExecutionDegreeDuringDate(Date date, ICursoExecucao info) {
+    private int ExecutionDegreeDuringDate(Date date, IExecutionDegree info) {
         if (date.after(info.getExecutionYear().getEndDate()))
             return -1;
         if ((date.after(info.getExecutionYear().getBeginDate()))

@@ -22,7 +22,7 @@ import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.ICandidateView;
 import ServidorAplicacao.Servico.CandidateView;
@@ -53,7 +53,7 @@ public class ChangeApplicationInfo implements IService {
 
         try {
             sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(newMasterDegreeCandidate
                             .getInfoExecutionDegree());
             existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()

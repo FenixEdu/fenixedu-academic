@@ -30,7 +30,7 @@ public class GratuityValues extends DomainObject implements IGratuityValues {
 
     private Date endPayment;
 
-    private ICursoExecucao executionDegree;
+    private IExecutionDegree executionDegree;
 
     private Integer keyExecutionDegree;
 
@@ -195,7 +195,7 @@ public class GratuityValues extends DomainObject implements IGratuityValues {
     /**
      * @return Returns the executionDegree.
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
@@ -203,7 +203,7 @@ public class GratuityValues extends DomainObject implements IGratuityValues {
      * @param executionDegree
      *            The executionDegree to set.
      */
-    public void setExecutionDegree(ICursoExecucao executionDegree) {
+    public void setExecutionDegree(IExecutionDegree executionDegree) {
         this.executionDegree = executionDegree;
     }
 

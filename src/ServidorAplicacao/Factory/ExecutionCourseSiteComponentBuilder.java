@@ -59,7 +59,7 @@ import DataBeans.InfoTeacherWithPerson;
 import DataBeans.util.CMSUtils;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -73,10 +73,10 @@ import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.ISummary;
 import Dominio.ITeacher;
-import Dominio.ITurmaTurno;
-import Dominio.ITurno;
+import Dominio.ISchoolClassShift;
+import Dominio.IShift;
 import Dominio.Professorship;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBibliographicReference;
@@ -168,7 +168,7 @@ public class ExecutionCourseSiteComponentBuilder {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ITurno turno = (ITurno) arg0;
+                        IShift turno = (IShift) arg0;
                         return InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(turno);
                     }
                 });
@@ -207,7 +207,7 @@ public class ExecutionCourseSiteComponentBuilder {
             }
 
             if (component.getShiftId() != null && component.getShiftId().intValue() > 0) {
-                ITurno shiftSelected = (ITurno) persistentShift.readByOID(Turno.class, component
+                IShift shiftSelected = (IShift) persistentShift.readByOID(Shift.class, component
                         .getShiftId());
                 if (shiftSelected == null) {
                     throw new FenixServiceException("no.shift");
@@ -321,7 +321,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
-            ITurno shift) throws ExcepcaoPersistencia {
+            IShift shift) throws ExcepcaoPersistencia {
 
         List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse);
 
@@ -360,7 +360,7 @@ public class ExecutionCourseSiteComponentBuilder {
                 if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
                     ListIterator iterLesson = shift.getAssociatedLessons().listIterator();
                     while (iterLesson.hasNext()) {
-                        IAula lesson = (IAula) iterLesson.next();
+                        ILesson lesson = (ILesson) iterLesson.next();
 
                         beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
                                 Calendar.HOUR_OF_DAY));
@@ -545,7 +545,7 @@ public class ExecutionCourseSiteComponentBuilder {
             } else {
 
                 for (int i = 0; i < shifts.size(); i++) {
-                    ITurno shift = (ITurno) shifts.get(i);
+                    IShift shift = (IShift) shifts.get(i);
                     InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
                             InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(shift),
                             null, null);
@@ -559,13 +559,13 @@ public class ExecutionCourseSiteComponentBuilder {
 
                     for (int j = 0; j < lessons.size(); j++)
                         infoLessons.add(InfoLessonWithInfoRoomAndInfoExecutionCourse
-                                .newInfoFromDomain((IAula) lessons.get(j)));
+                                .newInfoFromDomain((ILesson) lessons.get(j)));
 
                     shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
 
                     for (int j = 0; j < classesShifts.size(); j++)
                         infoClasses.add(InfoClassWithInfoExecutionDegree
-                                .newInfoFromDomain(((ITurmaTurno) classesShifts.get(j)).getTurma()));
+                                .newInfoFromDomain(((ISchoolClassShift) classesShifts.get(j)).getTurma()));
 
                     shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
 
@@ -603,7 +603,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
             for (int i = 0; i < shifts.size(); i++) {
-                ITurno shift = (ITurno) shifts.get(i);
+                IShift shift = (IShift) shifts.get(i);
                 List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
 
                 aulas.addAll(aulasTemp);
@@ -612,7 +612,7 @@ public class ExecutionCourseSiteComponentBuilder {
             Iterator iterator = aulas.iterator();
             infoLessonList = new ArrayList();
             while (iterator.hasNext()) {
-                IAula elem = (IAula) iterator.next();
+                ILesson elem = (ILesson) iterator.next();
                 //                InfoLesson infoLesson =
                 // InfoLessonWithInfoRoomAndInfoExecutionCourse
                 //                        .newInfoFromDomain(elem);
@@ -628,7 +628,7 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    private InfoLesson copyILesson2InfoLesson(IAula lesson) {
+    private InfoLesson copyILesson2InfoLesson(ILesson lesson) {
         InfoLesson infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLesson();
@@ -643,7 +643,7 @@ public class ExecutionCourseSiteComponentBuilder {
                     .getRoomOccupation());
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-            ITurno shift = lesson.getShift();
+            IShift shift = lesson.getShift();
             InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
             infoLesson.setInfoShift(infoShift);
         }

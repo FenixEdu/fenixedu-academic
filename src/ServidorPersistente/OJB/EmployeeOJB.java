@@ -12,7 +12,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.Employee;
 import Dominio.EmployeeHistoric;
 import Dominio.IEmployee;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
 
@@ -39,7 +39,7 @@ public class EmployeeOJB extends PersistentObjectOJB implements IPersistentEmplo
         return (Employee) queryObject(Employee.class, criteria);
     }
 
-    public IEmployee readByPerson(IPessoa person) throws ExcepcaoPersistencia {
+    public IEmployee readByPerson(IPerson person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", person.getIdInternal());
         return (Employee) queryObject(Employee.class, criteria);

@@ -16,7 +16,7 @@ import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -69,7 +69,7 @@ public class ReadAllClasses implements IServico {
             infoClasses = new ArrayList();
             Iterator iter = classes.iterator();
             while (iter.hasNext()) {
-                ITurma dClass = (ITurma) iter.next();
+                ISchoolClass dClass = (ISchoolClass) iter.next();
                 InfoClass infoClass = Cloner.copyClass2InfoClass(dClass);
                 infoClasses.add(infoClass);
             }

@@ -15,7 +15,7 @@ import Dominio.GratuityValues;
 import Dominio.IEmployee;
 import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import Dominio.reimbursementGuide.IReimbursementGuideEntry;
@@ -64,7 +64,7 @@ public class EditGratuitySituationById implements IService {
 
             //employee who made register
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(infoGratuitySituation
+            IPerson person = persistentPerson.lerPessoaPorUsername(infoGratuitySituation
                     .getInfoEmployee().getPerson().getUsername());
             if (person != null) {
                 IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();

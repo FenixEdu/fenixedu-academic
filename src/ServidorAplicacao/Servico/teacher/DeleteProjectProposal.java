@@ -17,7 +17,7 @@ import Dominio.IAdvisory;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
@@ -83,7 +83,7 @@ public class DeleteProjectProposal implements IServico {
             persistentGroupPropertiesExecutionCourse = persistentSupport.getIPersistentGroupPropertiesExecutionCourse();
             IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-			IPessoa withdrawalPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(withdrawalPersonUsername)).getPerson();
+			IPerson withdrawalPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(withdrawalPersonUsername)).getPerson();
             IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(GroupProperties.class,groupPropertiesCode);
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,executionCourseCode);
             IExecutionCourse startExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,objectCode);
@@ -157,7 +157,7 @@ public class DeleteProjectProposal implements IServico {
     }
     
     
-    private IAdvisory createDeleteProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse,IPessoa withdrawalPerson, IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
+    private IAdvisory createDeleteProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,IExecutionCourse startExecutionCourse,IPerson withdrawalPerson, IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
         IAdvisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()!=null){

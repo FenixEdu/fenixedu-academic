@@ -2,7 +2,7 @@ package ServidorAplicacao.Servico.teacher;
 
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -51,7 +51,7 @@ public class CourseOfTheExpectedDegree implements IServico {
         boolean result = false;
 
         ICurricularCourse curricularCourse = null;
-        ICurso degree = null;
+        IDegree degree = null;
 
         ISuportePersistente sp;
         try {

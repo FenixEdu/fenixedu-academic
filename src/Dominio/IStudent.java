@@ -24,7 +24,7 @@ public interface IStudent extends IDomainObject {
 
     public StudentState getState();
 
-    public IPessoa getPerson();
+    public IPerson getPerson();
 
     public IStudentKind getStudentKind();
 
@@ -38,7 +38,7 @@ public interface IStudent extends IDomainObject {
 
     public void setState(StudentState state);
 
-    public void setPerson(IPessoa person);
+    public void setPerson(IPerson person);
 
     public void setDegreeType(TipoCurso degreeType);
 

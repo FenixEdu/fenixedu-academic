@@ -21,7 +21,7 @@ import Dominio.IEvaluation;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import ServidorAplicacao.utils.ExamsNotEnrolledPredicate;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -82,7 +82,7 @@ public class ReadExamsByStudent implements IService {
 
                 Iterator examsToEnrollIterator = attends.iterator();
                 while (examsToEnrollIterator.hasNext()) {
-                    examsToEnroll.addAll(((IFrequenta) examsToEnrollIterator.next())
+                    examsToEnroll.addAll(((IAttends) examsToEnrollIterator.next())
                             .getDisciplinaExecucao().getAssociatedExams());
                 }
 

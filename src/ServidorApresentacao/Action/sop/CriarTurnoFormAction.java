@@ -41,7 +41,7 @@ public class CriarTurnoFormAction extends FenixExecutionDegreeAndCurricularYearC
             try {
                 ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);
             } catch (ExistingServiceException ex) {
-                throw new ExistingActionException("O Turno", ex);
+                throw new ExistingActionException("O Shift", ex);
             }
 
             return mapping.findForward("Sucesso");

@@ -8,7 +8,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeInfo;
 import Dominio.DegreeCurricularPlan;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDegreeInfo;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -49,7 +49,7 @@ public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
             }
 
             //Degree
-            ICurso degree = null;
+            IDegree degree = null;
             degree = degreeCurricularPlan.getDegree();
 
             if (degree == null) {

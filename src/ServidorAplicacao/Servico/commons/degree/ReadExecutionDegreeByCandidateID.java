@@ -3,8 +3,8 @@ package ServidorAplicacao.Servico.commons.degree;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.MasterDegreeCandidate;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -19,7 +19,7 @@ public class ReadExecutionDegreeByCandidateID implements IService {
 
     public InfoExecutionDegree run(Integer candidateID) throws NonExistingServiceException {
 
-        ICursoExecucao executionDegree = null;
+        IExecutionDegree executionDegree = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -28,8 +28,8 @@ public class ReadExecutionDegreeByCandidateID implements IService {
                     .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                             candidateID);
 
-            executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree().readByOID(
-                    CursoExecucao.class, masterDegreeCandidate.getExecutionDegree().getIdInternal());
+            executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+                    ExecutionDegree.class, masterDegreeCandidate.getExecutionDegree().getIdInternal());
 
         } catch (ExcepcaoPersistencia ex) {
             throw new RuntimeException(ex);

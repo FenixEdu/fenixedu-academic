@@ -12,13 +12,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.CandidateSituation;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.MasterDegreeCandidate;
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.person.GenerateUsername;
@@ -46,7 +46,7 @@ public class CreateMasterDegreeCandidate implements IService {
 
         ISuportePersistente sp = null;
 
-        IPessoa person = null;
+        IPerson person = null;
 
         try {
             sp = SuportePersistenteOJB.getInstance();
@@ -54,8 +54,8 @@ public class CreateMasterDegreeCandidate implements IService {
             IPersistentMasterDegreeCandidate masterDegreeDAO = sp.getIPersistentMasterDegreeCandidate();
 
             // Read the Execution of this degree in the current execution Year
-            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO.readByOID(
-                    CursoExecucao.class, newMasterDegreeCandidate.getInfoExecutionDegree()
+            IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO.readByOID(
+                    ExecutionDegree.class, newMasterDegreeCandidate.getInfoExecutionDegree()
                             .getIdInternal());
 
             IMasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeDAO
@@ -115,7 +115,7 @@ public class CreateMasterDegreeCandidate implements IService {
 
             if (person == null) {
                 // Create the new Person
-                person = new Pessoa();
+                person = new Person();
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
                 person.setNome(newMasterDegreeCandidate.getInfoPerson().getNome());

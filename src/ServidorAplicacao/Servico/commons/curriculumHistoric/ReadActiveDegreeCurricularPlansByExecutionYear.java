@@ -10,7 +10,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlanWithDegree;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -37,7 +37,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear implements IService 
             List infoDegreeCurricularPlans = (List) CollectionUtils.collect(executionDegrees,
                     new Transformer() {
                         public Object transform(Object obj) {
-                            ICursoExecucao cursoExecucao = (ICursoExecucao) obj;
+                            IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
                             IDegreeCurricularPlan degreeCurricularPlan = cursoExecucao
                                     .getCurricularPlan();
                             return InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);

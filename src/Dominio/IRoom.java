@@ -1,5 +1,5 @@
 /*
- * ISala.java
+ * IRoom.java
  *
  * Created on 17 de Outubro de 2002, 16:45
  */
@@ -15,7 +15,7 @@ import java.util.List;
 
 import Util.TipoSala;
 
-public interface ISala extends Serializable, IDomainObject {
+public interface IRoom extends Serializable, IDomainObject {
     public String getNome();
 
     public String getEdificio();

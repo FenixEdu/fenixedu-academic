@@ -9,9 +9,9 @@ import org.apache.commons.collections.CollectionUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudent;
 import Dominio.ExecutionCourse;
-import Dominio.Frequenta;
+import Dominio.Attends;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITurnoAluno;
@@ -115,10 +115,10 @@ public class WriteStudentAttendingCourses implements IService {
             while (i.hasNext()) {
                 IExecutionCourse executionCourse = (IExecutionCourse) i.next();
 
-                IFrequenta attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
+                IAttends attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
                         executionCourse);
                 if (attendsEntry == null) {
-                    attendsEntry = new Frequenta();
+                    attendsEntry = new Attends();
                     persistentAttend.simpleLockWrite(attendsEntry);
                     attendsEntry.setAluno(student);
                     attendsEntry.setDisciplinaExecucao(executionCourse);
@@ -139,7 +139,7 @@ public class WriteStudentAttendingCourses implements IService {
         List executionCourses = new ArrayList();
         Iterator iter = attends.iterator();
         while (iter.hasNext()) {
-            IFrequenta attend = (IFrequenta) iter.next();
+            IAttends attend = (IAttends) iter.next();
             executionCourses.add(attend.getDisciplinaExecucao());
         }
         return executionCourses;
@@ -154,7 +154,7 @@ public class WriteStudentAttendingCourses implements IService {
             Iterator iterator = attendingCoursesToRemove.iterator();
             while (iterator.hasNext()) {
                 IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
-                IFrequenta attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
+                IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
                         executionCourse);
                 IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
 

@@ -21,9 +21,9 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -49,7 +49,7 @@ public class LerAulasDeDisciplinaExecucaoETipo implements IService {
 
             List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
             for (int i = 0; i < shifts.size(); i++) {
-                ITurno shift = (ITurno) shifts.get(i);
+                IShift shift = (IShift) shifts.get(i);
                 List aulasTemp = sp.getIAulaPersistente().readLessonsByShiftAndLessonType(shift,
                         tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
 
@@ -59,9 +59,9 @@ public class LerAulasDeDisciplinaExecucaoETipo implements IService {
             Iterator iterator = aulas.iterator();
             infoAulas = new ArrayList();
             while (iterator.hasNext()) {
-                IAula lesson = (IAula) iterator.next();
+                ILesson lesson = (ILesson) iterator.next();
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
-                ITurno shift = lesson.getShift();
+                IShift shift = lesson.getShift();
                 InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
                 infoLesson.setInfoShift(infoShift);
 

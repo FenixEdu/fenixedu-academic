@@ -90,7 +90,7 @@
 	/>
 	<reference-descriptor
 			name="person"
-			class-ref="Dominio.Pessoa"
+			class-ref="Dominio.Person"
 			proxy="false"
 			refresh="true">
 		<foreignkey field-ref="personKey"/>

@@ -19,9 +19,9 @@ import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.CursoExecucao;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionYear;
@@ -33,22 +33,22 @@ import Util.TipoCurso;
 
 public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistentExecutionDegree {
 
-    public void delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+    public void delete(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
 
         super.delete(executionDegree);
 
     }
     
     public List readAll() throws ExcepcaoPersistencia{
-        return queryList(CursoExecucao.class, null);
+        return queryList(ExecutionDegree.class, null);
     }
 
     public void deleteAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        List result = queryList(CursoExecucao.class, criteria);
+        List result = queryList(ExecutionDegree.class, criteria);
         Iterator iterator = result.iterator();
         while (iterator.hasNext()) {
-            delete((ICursoExecucao) iterator.next());
+            delete((IExecutionDegree) iterator.next());
         }
     }
 
@@ -58,14 +58,14 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
     public List readByExecutionYear(String executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear);
-        return queryList(CursoExecucao.class, criteria, "KEY_DEGREE_CURRICULAR_PLAN", true);
+        return queryList(ExecutionDegree.class, criteria, "KEY_DEGREE_CURRICULAR_PLAN", true);
     }
 
     /**
-     * @see ServidorPersistente.IPersistentExecutionDegree#readByDegreeAndExecutionYear(Dominio.ICurso,
+     * @see ServidorPersistente.IPersistentExecutionDegree#readByDegreeAndExecutionYear(Dominio.IDegree,
      *      Dominio.IExecutionYear)
      */
-    public ICursoExecucao readByDegreeCurricularPlanAndExecutionYear(
+    public IExecutionDegree readByDegreeCurricularPlanAndExecutionYear(
             IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         return readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan
@@ -79,7 +79,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
      * @return
      * @throws ExcepcaoPersistencia
      */
-    public ICursoExecucao readByDegreeCurricularPlanIDAndExecutionYear(
+    public IExecutionDegree readByDegreeCurricularPlanIDAndExecutionYear(
             Integer degreeCurricularPlanID, String executionYear)
             throws ExcepcaoPersistencia {
         
@@ -87,28 +87,28 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         criteria.addEqualTo("executionYear.year", executionYear);
         criteria.addEqualTo("curricularPlan.idInternal", degreeCurricularPlanID);
         
-        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+        return (IExecutionDegree) queryObject(ExecutionDegree.class, criteria);
     }
 
     /**
-     * @see ServidorPersistente.IPersistentExecutionDegree#readByDegreeAndExecutionYear(Dominio.ICurso,
+     * @see ServidorPersistente.IPersistentExecutionDegree#readByDegreeAndExecutionYear(Dominio.IDegree,
      *      Dominio.IExecutionYear)
      */
-    public ICursoExecucao readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+    public IExecutionDegree readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
             String degreeInitials, String nameDegreeCurricularPlan, IExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.name", nameDegreeCurricularPlan);
         criteria.addEqualTo("curricularPlan.degree.sigla", degreeInitials);
-        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+        return (IExecutionDegree) queryObject(ExecutionDegree.class, criteria);
     }
 
     public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear);
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", TipoCurso.MESTRADO_OBJ);
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
     public List readByDegreeAndExecutionYearList(String degreeCode, IExecutionYear executionYear)
@@ -116,21 +116,21 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.degree.sigla", degreeCode);
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
-    public List readByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+    public List readByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.degree.idInternal", degree.getIdInternal());
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
     public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("coordinatorsList.teacher.teacherNumber", teacher.getTeacherNumber());
-        QueryByCriteria queryByCriteria = new QueryByCriteria(CursoExecucao.class, criteria, false);
+        QueryByCriteria queryByCriteria = new QueryByCriteria(ExecutionDegree.class, criteria, false);
         queryByCriteria.addOrderBy("curricularPlan.degree.nome", true);
         queryByCriteria.addOrderBy("executionYear.year", false);
         return queryList(queryByCriteria);
@@ -147,7 +147,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear.getYear());
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
-        return queryList(CursoExecucao.class, criteria, "keyCurricularPlan", true);
+        return queryList(ExecutionDegree.class, criteria, "keyCurricularPlan", true);
     }
 
     /*
@@ -171,44 +171,44 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
                 });
 
         criteria.addIn("keyCurricularPlan", degreeCurricularPlansIds);
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
     public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
     /**
      * FIXME: This method doesn't make sense... should return a list.
      */
-    public ICursoExecucao readbyDegreeCurricularPlanID(Integer degreeCurricularPlanID)
+    public IExecutionDegree readbyDegreeCurricularPlanID(Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularPlan.idInternal", degreeCurricularPlanID);
-        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+        return (IExecutionDegree) queryObject(ExecutionDegree.class, criteria);
     }
 
     /**
      * FIXME: This method doesn't make sense... should return a list
      */
-    public ICursoExecucao readByDegreeCodeAndDegreeCurricularPlanName(String code, String name)
+    public IExecutionDegree readByDegreeCodeAndDegreeCurricularPlanName(String code, String name)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularPlan.degree.sigla", code);
         criteria.addEqualTo("curricularPlan.name", name);
 
-        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+        return (IExecutionDegree) queryObject(ExecutionDegree.class, criteria);
     }
 
-    public List readExecutionsDegreesByDegree(ICurso degree) throws ExcepcaoPersistencia {
+    public List readExecutionsDegreesByDegree(IDegree degree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("curricularPlan.degree.idInternal", degree.getIdInternal());
 
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
     /*
@@ -222,17 +222,17 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         criteria.addEqualTo("curricularPlan.curricularCourses.associatedExecutionCourses.idInternal",
                 executionCourse.getIdInternal());
         criteria.addEqualTo("coordinatorsList.teacher.idInternal", teacher.getIdInternal());
-        return queryList(CursoExecucao.class, criteria, true);
+        return queryList(ExecutionDegree.class, criteria, true);
     }
 
-    public ICursoExecucao readByDegreeCurricularPlanNameAndExecutionYear(String name,
+    public IExecutionDegree readByDegreeCurricularPlanNameAndExecutionYear(String name,
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("academicYear", executionYear.getIdInternal());
         criteria.addLike("curricularPlan.name", name);
 
-        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+        return (IExecutionDegree) queryObject(ExecutionDegree.class, criteria);
 
     }
 
@@ -240,7 +240,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", new TipoCurso(TipoCurso.LICENCIATURA));
         criteria.addEqualTo("executionYear.state", new PeriodState(PeriodState.CURRENT));
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
     public List readByExecutionYearOIDAndDegreeType(Integer executionYearOID, TipoCurso degreeType)
@@ -248,22 +248,22 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.idInternal", executionYearOID);
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
-        return queryList(CursoExecucao.class, criteria, "keyCurricularPlan", true);
+        return queryList(ExecutionDegree.class, criteria, "keyCurricularPlan", true);
     }
 
     public List readExecutionDegreesbyDegreeCurricularPlanID(Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularPlan.idInternal", degreeCurricularPlanID);
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 
-    public ICursoExecucao readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
+    public IExecutionDegree readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
             Integer degreeCurricularPlanID, Integer executionYearID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularPlan.idInternal", degreeCurricularPlanID);
         criteria.addEqualTo("executionYear.idInternal", executionYearID);
-        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
+        return (IExecutionDegree) queryObject(ExecutionDegree.class, criteria);
     }
 
     /*
@@ -277,7 +277,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("academicYear", executionYear.getIdInternal());
         criteria.addLike("curricularPlan.degree.nome", name);
-        return (List) queryList(CursoExecucao.class, criteria);
+        return (List) queryList(ExecutionDegree.class, criteria);
 
     }
 
@@ -293,12 +293,12 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
         criteria.addEqualTo("academicYear", executionYear.getIdInternal());
         criteria.addLike("curricularPlan.degree.nome", name);
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
-        return (List) queryList(CursoExecucao.class, criteria);
+        return (List) queryList(ExecutionDegree.class, criteria);
     }
 
     public List readByExecutionYearOID(Integer executionYearOID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.idInternal", executionYearOID);
-        return queryList(CursoExecucao.class, criteria);
+        return queryList(ExecutionDegree.class, criteria);
     }
 }

@@ -34,16 +34,16 @@ import Dominio.ExecutionCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.ISite;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -124,7 +124,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 {
                     public boolean evaluate (Object o)
                     {
-                        IFrequenta attendance = (IFrequenta)o;
+                        IAttends attendance = (IAttends)o;
                         
                         List scps = attendance.getAluno().getStudentCurricularPlans();
                         
@@ -154,7 +154,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 List newAttends = new ArrayList();
                 Iterator attendsIterator = attends.iterator();
                 while(attendsIterator.hasNext()){
-                    IFrequenta attendacy = (IFrequenta)attendsIterator.next();
+                    IAttends attendacy = (IAttends)attendsIterator.next();
                     
                     // improvement student (he/she is enrolled)
                     if (improvementFilter && attendacy.getEnrolment() != null &&
@@ -182,12 +182,12 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 while(shiftIterator.hasNext()) {
                  
                     Integer shiftId = (Integer)shiftIterator.next();
-	                final ITurno turno = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,shiftId);
+	                final IShift turno = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,shiftId);
 	                                
 	                Iterator attendsIterator = attends.iterator();
 	                
 	                while(attendsIterator.hasNext()){
-	                    IFrequenta attendance = (IFrequenta)attendsIterator.next();
+	                    IAttends attendance = (IAttends)attendsIterator.next();
 	                
 	                    //	if an attendance is related to a Shift
 	                    IStudent student = attendance.getAluno();
@@ -216,7 +216,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             List infoCompositions = new ArrayList();
             Iterator it = attends.iterator();
             while(it.hasNext()){
-                IFrequenta iFrequenta = (IFrequenta)it.next();
+                IAttends iFrequenta = (IAttends)it.next();
                 
                 InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups infoComposition = new InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups();
                 
@@ -312,7 +312,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return siteView;
     }
     
-    IStudentCurricularPlan getStudentCurricularPlanFromAttends(IFrequenta attendance)
+    IStudentCurricularPlan getStudentCurricularPlanFromAttends(IAttends attendance)
     {
         if (attendance.getEnrolment() == null)
             return GetActiveCurricularPlan(attendance.getAluno().getStudentCurricularPlans());
@@ -328,7 +328,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         
         while (attendsIterator.hasNext())
         {
-            IFrequenta attendance = (IFrequenta)attendsIterator.next();
+            IAttends attendance = (IAttends)attendsIterator.next();
             IDegreeCurricularPlan dcp = getStudentCurricularPlanFromAttends(attendance).getDegreeCurricularPlan();
             
             if (!degreeCurricularPlans.contains(dcp))
@@ -337,13 +337,13 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return degreeCurricularPlans;
     }
     
-    private Map getShiftsByAttends(List shifts, IFrequenta attend, ISuportePersistente sp)
+    private Map getShiftsByAttends(List shifts, IAttends attend, ISuportePersistente sp)
     throws FenixServiceException{
         Map result = new HashMap();
         
         Iterator it = shifts.iterator();
         while(it.hasNext()){
-            ITurno sh = (ITurno)it.next();
+            IShift sh = (IShift)it.next();
             try {
                 ITurnoAluno ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(sh, attend.getAluno());
                 
@@ -381,7 +381,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List result = new ArrayList();
         
         for(Iterator shIterator = shifts.iterator();shIterator.hasNext();){
-            ITurno sh = (ITurno)shIterator.next();
+            IShift sh = (IShift)shIterator.next();
             result.add(InfoShiftWithInfoExecutionCourseAndInfoLessons.newInfoFromDomain(sh));
         }
         
@@ -433,7 +433,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                         public Object transform( Object input )
                         {
                             IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) input;
-                            IFrequenta attendacy = studentGroupAttend.getAttend();
+                            IAttends attendacy = studentGroupAttend.getAttend();
                             return attendacy;
                         }
                     });
@@ -444,7 +444,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return result;
     }
     
-    private Map getInfoStudentGroupsByAttends(Map studentsGroupsAttendsListMap, IFrequenta attends){
+    private Map getInfoStudentGroupsByAttends(Map studentsGroupsAttendsListMap, IAttends attends){
         Map result = new HashMap();
         
         Collection studentsGroups = studentsGroupsAttendsListMap.keySet();

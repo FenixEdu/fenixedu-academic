@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import Dominio.DomainObject;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 
 /**
  * @author Luis Cruz
@@ -18,7 +18,7 @@ public class Scheduleing extends DomainObject implements IScheduleing {
 
     private Integer keyExecutionDegree;
 
-    private ICursoExecucao executionDegree;
+    private IExecutionDegree executionDegree;
 
     private Date startOfProposalPeriodDate;
 
@@ -149,7 +149,7 @@ public class Scheduleing extends DomainObject implements IScheduleing {
     /**
      * @return Returns the executionDegree.
      */
-    public ICursoExecucao getExecutionDegree() {
+    public IExecutionDegree getExecutionDegree() {
         return executionDegree;
     }
 
@@ -157,7 +157,7 @@ public class Scheduleing extends DomainObject implements IScheduleing {
      * @param executionDegree
      *            The executionDegree to set.
      */
-    public void setExecutionDegree(ICursoExecucao executionDegree) {
+    public void setExecutionDegree(IExecutionDegree executionDegree) {
         this.executionDegree = executionDegree;
     }
 

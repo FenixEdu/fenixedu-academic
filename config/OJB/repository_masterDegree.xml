@@ -89,7 +89,7 @@
 
       	  <reference-descriptor
          	name="person"
-         	class-ref="Dominio.Pessoa"
+         	class-ref="Dominio.Person"
 			refresh="true"
       	  >
           <foreignkey field-ref="personKey"/>
@@ -98,7 +98,7 @@
 	  
       	  <reference-descriptor
          	name="executionDegree"
-         	class-ref="Dominio.CursoExecucao"
+         	class-ref="Dominio.ExecutionDegree"
          	proxy="true"
 			refresh="true"
       	  >
@@ -334,7 +334,7 @@
       
       <reference-descriptor
          	name="person"
-         	class-ref="Dominio.Pessoa"
+         	class-ref="Dominio.Person"
          	proxy="true"
 			refresh="true"
       	  >
@@ -343,7 +343,7 @@
       
      <reference-descriptor
      	name="executionDegree"
-     	class-ref="Dominio.CursoExecucao"
+     	class-ref="Dominio.ExecutionDegree"
      	proxy="true"
 			refresh="true"
       >
@@ -654,7 +654,7 @@
 		  />
 	   <reference-descriptor
          	name="person"
-         	class-ref="Dominio.Pessoa"
+         	class-ref="Dominio.Person"
          	proxy="true"
 			refresh="true"
       	  >
@@ -1079,7 +1079,7 @@
 
 		<reference-descriptor
         	name="person"
-	        class-ref="Dominio.Pessoa"
+	        class-ref="Dominio.Person"
       	>
     	    <foreignkey field-ref="keyPerson"/>
 		</reference-descriptor>
@@ -1472,7 +1472,7 @@
     />   	
     <reference-descriptor
       	name="executionDegree"
-       	class-ref="Dominio.CursoExecucao"
+       	class-ref="Dominio.ExecutionDegree"
        	proxy="false"
 		refresh="true"
     >

@@ -8,9 +8,9 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuitySituation;
 import DataBeans.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
@@ -78,8 +78,8 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
             if (executionDegreeId != null) {
 
-                ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO.readByOID(
-                        CursoExecucao.class, executionDegreeId);
+                IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO.readByOID(
+                        ExecutionDegree.class, executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
             } else {
@@ -113,7 +113,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             double totalRemaingValue = 0;
 
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
-                ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
+                IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
                 IGratuityValues gratuityValues = gratuityValuesDAO
                         .readGratuityValuesByExecutionDegree(executionDegree);
 

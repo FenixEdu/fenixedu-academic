@@ -19,10 +19,10 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -72,13 +72,13 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID implements I
             infoExecutionCourse.setAssociatedInfoShifts(new ArrayList());
             List shifts = persistentShift.readByExecutionCourse(executionCourse);
             for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-                ITurno shift = (ITurno) iterator.next();
+                IShift shift = (IShift) iterator.next();
                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
                 infoShift.setInfoLessons(new ArrayList());
                 List lessons = shift.getAssociatedLessons();
                 for (int i = 0; i < lessons.size(); i++) {
-                    IAula lesson = (IAula) lessons.get(i);
+                    ILesson lesson = (ILesson) lessons.get(i);
                     InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                     infoLesson.setInfoSala(InfoRoom.newInfoFromDomain(lesson.getSala()));
 

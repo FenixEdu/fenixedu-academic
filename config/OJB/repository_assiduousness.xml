@@ -42,7 +42,7 @@
   	jdbc-type="BIT"/>
   <reference-descriptor
          name="person"
-         class-ref="Dominio.Pessoa">
+         class-ref="Dominio.Person">
          <foreignkey field-ref="keyPerson"/>
   </reference-descriptor>
   <collection-descriptor
@@ -232,7 +232,7 @@
 <!-- Old classes -->
 
 <class-descriptor 
-  class="Dominio.FuncNaoDocente"
+  class="Dominio.NonTeacherEmployee"
   table="ass_FUNC_NAO_DOCENTE"
 >
   <field-descriptor id="0"
@@ -258,45 +258,6 @@
   	class-ref="Dominio.Employee">
   	<foreignkey field-ref="chaveFuncionario"/>
   </reference-descriptor>  
-</class-descriptor>
-
-<class-descriptor 
-	class="Dominio.CentroCusto" 
-	table="ass_CENTRO_CUSTO">
-  <field-descriptor 
-  	name="codigoInterno" 
-  	column="codigoInterno" 
-  	jdbc-type="INTEGER"
-    primarykey="true" autoincrement="true"/>
-  <field-descriptor id="0"
-    name="idInternal"
-    column="codigoInterno"
-    jdbc-type="INTEGER"
-    primarykey="true"
-    autoincrement="true"
-  />    
-  <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-  />
-  <field-descriptor 
-  	name="sigla" 
-  	column="sigla" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="departamento" 
-  	column="departamento" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="seccao1" 
-  	column="seccao1" 
-  	jdbc-type="VARCHAR"/>
-  <field-descriptor 
-  	name="seccao2" 
-  	column="seccao2" 
-  	jdbc-type="VARCHAR"/>
 </class-descriptor>
 
 <class-descriptor 
@@ -424,27 +385,27 @@
   />
   <reference-descriptor
          name="person"
-         class-ref="Dominio.Pessoa">
+         class-ref="Dominio.Person">
          <foreignkey field-ref="chavePessoa"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="workingPlaceCostCenter"
-         class-ref="Dominio.CentroCusto"
+         class-ref="Dominio.CostCenter"
          proxy="true">
          <foreignkey field-ref="chaveCCLocalTrabalho"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="mailingCostCenter"
-         class-ref="Dominio.CentroCusto"
+         class-ref="Dominio.CostCenter"
          proxy="true">
          <foreignkey field-ref="chaveCCCorrespondencia"/>
   </reference-descriptor>   
 
   <reference-descriptor
          name="salaryCostCenter"
-         class-ref="Dominio.CentroCusto">
+         class-ref="Dominio.CostCenter">
          <foreignkey field-ref="chaveCCVencimento"/>
   </reference-descriptor>    
 </class-descriptor>-->

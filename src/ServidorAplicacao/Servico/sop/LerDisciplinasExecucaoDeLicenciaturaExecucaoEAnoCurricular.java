@@ -16,7 +16,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.CurricularYear;
 import Dominio.ICurricularYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -62,7 +62,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular implemen
             IExecutionPeriod executionPeriod = Cloner
                     .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
             ICurricularYear curricularYearFromDB = (ICurricularYear) sp.getIPersistentCurricularYear()

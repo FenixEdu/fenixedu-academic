@@ -652,13 +652,13 @@ public class Turnos implements IStrategyHorarios {
     } /* setDatasHorario */
 
     public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form,
-            Pessoa pessoa, Funcionario funcionario, Horario horario,
+            Person pessoa, Funcionario funcionario, Horario horario,
             ArrayList listaRegime, boolean isExcepcaoHorario, String alterar) {
         /* não é necessario */
     } /* setFormAssociarHorarioConfirmar */
 
     public void setFormAssociarHorarioTipoConfirmar(Locale locale,
-            ActionForm form, Pessoa pessoa, Funcionario funcionario,
+            ActionForm form, Person pessoa, Funcionario funcionario,
             HorarioTipo horarioTipo, Horario horario, ArrayList listaRegime,
             boolean isExcepcaoHorario) {
         /* não é necessario */

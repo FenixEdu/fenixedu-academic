@@ -51,7 +51,7 @@
 <!--
     <collection-descriptor
          name="rolePersons"
-         element-class-ref="Dominio.Pessoa"
+         element-class-ref="Dominio.Person"
          proxy="true"
          indirection-table = "PERSON_ROLE"
          auto-retrieve="true"
@@ -107,7 +107,7 @@
       
      <reference-descriptor
          name="person"
-         class-ref="Dominio.Pessoa"
+         class-ref="Dominio.Person"
          proxy="false"
 	  >
          <foreignkey field-ref="keyPerson"/>
@@ -146,7 +146,7 @@
 
       <reference-descriptor
          name="person"
-         class-ref="Dominio.Pessoa"
+         class-ref="Dominio.Person"
          proxy="false">
          <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>       

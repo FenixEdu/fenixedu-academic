@@ -9,10 +9,10 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Coordinator;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
-import Dominio.IPessoa;
+import Dominio.IExecutionDegree;
+import Dominio.IPerson;
 import Dominio.IRole;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -44,8 +44,8 @@ public class AddCoordinator implements IService {
                 throw new NonExistingServiceException();
             }
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = new CursoExecucao(executionDegreeId);
-            executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(CursoExecucao.class,
+            IExecutionDegree executionDegree = new ExecutionDegree(executionDegreeId);
+            executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(ExecutionDegree.class,
                     executionDegreeId);
             if (executionDegree == null) {
                 throw new InvalidArgumentsServiceException();
@@ -67,7 +67,7 @@ public class AddCoordinator implements IService {
                     IPersistentRole persistentRole = sp.getIPersistentRole();
                     IRole role = persistentRole.readByRoleType(RoleType.COORDINATOR);
 
-                    IPessoa person = teacher.getPerson();
+                    IPerson person = teacher.getPerson();
                     IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
                     persistentPerson.simpleLockWrite(person);
 

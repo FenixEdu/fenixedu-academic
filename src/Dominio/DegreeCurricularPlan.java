@@ -37,7 +37,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
     protected String concreteClassForStudentCurricularPlans;
 
-    protected ICurso degree;
+    protected IDegree degree;
 
     protected String name;
 
@@ -117,7 +117,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         return curricularCourses;
     }
 
-    public ICurso getDegree() {
+    public IDegree getDegree() {
         return degree;
     }
 
@@ -177,7 +177,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         this.curricularCourses = curricularCourses;
     }
 
-    public void setDegree(ICurso degree) {
+    public void setDegree(IDegree degree) {
         this.degree = degree;
     }
 

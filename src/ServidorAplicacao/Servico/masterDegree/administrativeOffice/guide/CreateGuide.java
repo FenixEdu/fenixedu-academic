@@ -15,11 +15,11 @@ import DataBeans.InfoGuideSituation;
 import DataBeans.util.Cloner;
 import Dominio.Guide;
 import Dominio.IContributor;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IGuideSituation;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -50,7 +50,7 @@ public class CreateGuide implements IService {
         IContributor contributor = null;
         IGuide guide = new Guide();
         IGuideSituation guideSituation = null;
-        IPessoa person = null;
+        IPerson person = null;
 
         // Check the Guide Situation
         if (situationOfGuide.equals(SituationOfGuide.ANNULLED_TYPE))
@@ -109,7 +109,7 @@ public class CreateGuide implements IService {
             }
 
             // Get the Execution Degree
-            ICursoExecucao executionDegree = sp.getIPersistentExecutionDegree()
+            IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
                                     .getInfoDegree().getSigla(),

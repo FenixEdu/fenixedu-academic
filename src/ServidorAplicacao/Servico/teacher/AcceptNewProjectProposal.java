@@ -18,10 +18,10 @@ import Dominio.IAdvisory;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -87,7 +87,7 @@ public class AcceptNewProjectProposal implements IService
 				throw new ExistingServiceException();
 			}
 			
-			IPessoa receiverPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(acceptancePersonUserName)).getPerson();
+			IPerson receiverPerson = ((ITeacher) persistentTeacher.readTeacherByUsername(acceptancePersonUserName)).getPerson();
 			
 			IExecutionCourse executionCourseAux = groupPropertiesExecutionCourse.getExecutionCourse();
 			if(executionCourseAux.getGroupPropertiesByName(groupPropertiesExecutionCourse.getGroupProperties().getName())!=null){
@@ -111,7 +111,7 @@ public class AcceptNewProjectProposal implements IService
 			List attends = persistentAttend.readByExecutionCourse(executionCourse);
 			Iterator iterAttends = attends.iterator();
 			while(iterAttends.hasNext()){
-				IFrequenta attend =(IFrequenta)iterAttends.next();
+				IAttends attend =(IAttends)iterAttends.next();
 				if(!attendsSetStudentNumbers.contains(attend.getAluno().getNumber())){
 					IAttendInAttendsSet	attendInAttendsSet = new AttendInAttendsSet(attend,attendsSet);
 					persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
@@ -121,7 +121,7 @@ public class AcceptNewProjectProposal implements IService
 			}
 			
 			
-			IPessoa senderPerson = groupPropertiesExecutionCourse.getSenderPerson();		
+			IPerson senderPerson = groupPropertiesExecutionCourse.getSenderPerson();		
 			List groupPropertiesExecutionCourseList = groupProperties.getGroupPropertiesExecutionCourse();
 			Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
 			List groupTeachers = new ArrayList();
@@ -176,7 +176,7 @@ public class AcceptNewProjectProposal implements IService
 	}
 	
 	private IAdvisory createAcceptAdvisory(IExecutionCourse executionCourse,IExecutionCourse personExecutionCourse,
-			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse, IPessoa receiverPerson, IPessoa senderPerson) {
+			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse, IPerson receiverPerson, IPerson senderPerson) {
         IAdvisory advisory = new Advisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if(groupPropertiesExecutionCourse.getGroupProperties().getEnrolmentEndDay()!=null){

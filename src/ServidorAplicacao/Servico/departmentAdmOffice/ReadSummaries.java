@@ -19,14 +19,14 @@ import DataBeans.InfoSummary;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
 import Dominio.ISummary;
 import Dominio.ITeacher;
-import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.IShift;
+import Dominio.Shift;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -106,7 +106,7 @@ public class ReadSummaries implements IServico {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ITurno turno = (ITurno) arg0;
+                        IShift turno = (IShift) arg0;
                         return Cloner.copyShift2InfoShift(turno);
                     }
                 });
@@ -128,7 +128,7 @@ public class ReadSummaries implements IServico {
             }
 
             if (shiftId != null && shiftId.intValue() > 0) {
-                ITurno shiftSelected = (ITurno) persistentShift.readByOID(Turno.class, shiftId);
+                IShift shiftSelected = (IShift) persistentShift.readByOID(Shift.class, shiftId);
                 if (shiftSelected == null) {
                     throw new FenixServiceException("no.shift");
                 }
@@ -217,7 +217,7 @@ public class ReadSummaries implements IServico {
     }
 
     private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
-            ITurno shift) throws ExcepcaoPersistencia {
+            IShift shift) throws ExcepcaoPersistencia {
 
         List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse);
 
@@ -256,7 +256,7 @@ public class ReadSummaries implements IServico {
                 if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
                     ListIterator iterLesson = shift.getAssociatedLessons().listIterator();
                     while (iterLesson.hasNext()) {
-                        IAula lesson = (IAula) iterLesson.next();
+                        ILesson lesson = (ILesson) iterLesson.next();
 
                         beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
                                 Calendar.HOUR_OF_DAY));

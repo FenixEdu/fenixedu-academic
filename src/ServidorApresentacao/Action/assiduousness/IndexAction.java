@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.PersistenceException;
@@ -64,7 +64,7 @@ public final class IndexAction extends Action {
             }
         }
 
-        Pessoa pessoa = servicoSeguroLerPessoa.getPessoa();
+        Person pessoa = servicoSeguroLerPessoa.getPessoa();
 
         session.setMaxInactiveInterval(-1); // sessao nunca expira
 

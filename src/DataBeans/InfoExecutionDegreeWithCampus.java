@@ -1,6 +1,6 @@
 package DataBeans;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 
 /**
  * @author Fernanda Quitério Created on 27/Jul/2004
@@ -8,14 +8,14 @@ import Dominio.ICursoExecucao;
  */
 public class InfoExecutionDegreeWithCampus extends InfoExecutionDegree {
 
-    public void copyFromDomain(ICursoExecucao executionDegree) {
+    public void copyFromDomain(IExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setInfoCampus(InfoCampus.newInfoFromDomain(executionDegree.getCampus()));
         }
     }
 
-    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
         InfoExecutionDegreeWithCampus infoExecutionDegreeWithCampus = null;
         if (executionDegree != null) {
             infoExecutionDegreeWithCampus = new InfoExecutionDegreeWithCampus();

@@ -11,8 +11,8 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -40,8 +40,8 @@ public class ClassesComparatorByNumberOfCourses implements Comparator {
     }
 
     public int compare(Object obj1, Object obj2) {
-        ITurma domainClass1 = (ITurma) obj1;
-        ITurma domainClass2 = (ITurma) obj2;
+        ISchoolClass domainClass1 = (ISchoolClass) obj1;
+        ISchoolClass domainClass2 = (ISchoolClass) obj2;
         List shifts1 = domainClass1.getAssociatedShifts();
         List shifts2 = domainClass2.getAssociatedShifts();
         List executionCourses1 = getExecutionCoursesFromShifts(shifts1);
@@ -63,7 +63,7 @@ public class ClassesComparatorByNumberOfCourses implements Comparator {
         Iterator iter = list.iterator();
         List executionCourses = new ArrayList();
         while (iter.hasNext()) {
-            ITurno shift = (ITurno) iter.next();
+            IShift shift = (IShift) iter.next();
             executionCourses.add(shift.getDisciplinaExecucao());
         }
         return executionCourses;

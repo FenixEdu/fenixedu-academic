@@ -12,7 +12,7 @@ import Dominio.GroupProperties;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -78,7 +78,7 @@ public class DeleteGroupProperties implements IService
 			Iterator iterAttendInAttendsSet = attendsSet.getAttendInAttendsSet().iterator();
 			while(iterAttendInAttendsSet.hasNext()){
 				IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet)iterAttendInAttendsSet.next();
-				IFrequenta frequenta = attendInAttendsSet.getAttend();
+				IAttends frequenta = attendInAttendsSet.getAttend();
 				frequenta.removeAttendInAttendsSet(attendInAttendsSet);
 				persistentAttendInAttendsSet.delete(attendInAttendsSet);
 			}

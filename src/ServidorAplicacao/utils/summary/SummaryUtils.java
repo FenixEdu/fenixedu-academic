@@ -8,8 +8,8 @@ import java.util.Calendar;
 import java.util.ListIterator;
 
 import DataBeans.InfoSummary;
-import Dominio.IAula;
-import Dominio.ITurno;
+import Dominio.ILesson;
+import Dominio.IShift;
 
 /**
  * @author João Mota
@@ -31,7 +31,7 @@ public class SummaryUtils {
      * @param summaryHour
      * @return
      */
-    public static boolean verifyValidDateSummary(IAula lesson, Calendar summaryDate, Calendar summaryHour) {
+    public static boolean verifyValidDateSummary(ILesson lesson, Calendar summaryDate, Calendar summaryHour) {
         Calendar dateAndHourSummary = Calendar.getInstance();
         dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
         dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
@@ -69,11 +69,11 @@ public class SummaryUtils {
      * @param infoSummary
      * @return
      */
-    public static IAula findlesson(ITurno shift, InfoSummary infoSummary) {
+    public static ILesson findlesson(IShift shift, InfoSummary infoSummary) {
         if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
             ListIterator iterator = shift.getAssociatedLessons().listIterator();
             while (iterator.hasNext()) {
-                IAula lesson = (IAula) iterator.next();
+                ILesson lesson = (ILesson) iterator.next();
                 if (lesson.getIdInternal().equals(infoSummary.getLessonIdSelected())) {
                     return lesson;
                 }

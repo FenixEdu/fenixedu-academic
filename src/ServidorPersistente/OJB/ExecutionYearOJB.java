@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IExecutionYear;
@@ -52,7 +52,7 @@ public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistent
             Criteria crit2 = new Criteria();
             crit2.addEqualTo("executionYear.year", executionYear.getYear());
 
-            List executionDegrees = queryList(CursoExecucao.class, crit2);
+            List executionDegrees = queryList(ExecutionDegree.class, crit2);
 
             if ((executionPeriods == null || executionPeriods.isEmpty())
                     && (executionDegrees == null || executionDegrees.isEmpty())) {

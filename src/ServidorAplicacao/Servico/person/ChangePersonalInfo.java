@@ -14,7 +14,7 @@ package ServidorAplicacao.Servico.person;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -35,7 +35,7 @@ public class ChangePersonalInfo implements IService {
             FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
-        IPessoa person = null;
+        IPerson person = null;
 
         try {
             sp = SuportePersistenteOJB.getInstance();

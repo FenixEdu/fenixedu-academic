@@ -33,7 +33,7 @@ public class CreateSentSms implements IService {
         //            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
         //            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
         //
-        //            IPessoa person =
+        //            IPerson person =
         // ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
         //
         //            //count number of sent SMS's by this person

@@ -17,7 +17,7 @@ import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurno;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -32,11 +32,11 @@ public class CriarTurno implements IService {
 
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        final ITurno newShift = Cloner.copyInfoShift2Shift(infoTurno);
+        final IShift newShift = Cloner.copyInfoShift2Shift(infoTurno);
 
         final ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-        final ITurno existingShift = shiftDAO.readByNameAndExecutionCourse(newShift.getNome(), newShift
+        final IShift existingShift = shiftDAO.readByNameAndExecutionCourse(newShift.getNome(), newShift
                 .getDisciplinaExecucao());
 
         if (existingShift != null) {

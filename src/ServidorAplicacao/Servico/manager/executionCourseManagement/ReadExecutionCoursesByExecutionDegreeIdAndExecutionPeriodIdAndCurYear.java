@@ -8,9 +8,9 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -51,8 +51,8 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
                         .readByExecutionPeriodWithNoCurricularCourses(executionPeriod);
 
             } else {
-                ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                        CursoExecucao.class, executionDegreeId);
+                IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                        ExecutionDegree.class, executionDegreeId);
 
                 executionCourseList = executionCourseDAO
                         .readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,

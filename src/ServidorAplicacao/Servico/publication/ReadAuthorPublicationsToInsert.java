@@ -17,7 +17,7 @@ import DataBeans.SiteView;
 import DataBeans.publication.InfoPublication;
 import DataBeans.publication.InfoSitePublications;
 import DataBeans.util.Cloner;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.ITeacher;
 import Dominio.publication.Author;
 import Dominio.publication.IPublication;
@@ -83,7 +83,7 @@ public class ReadAuthorPublicationsToInsert implements IService {
     private List getInfoPublications(ISuportePersistente sp, ITeacher teacher)
             throws ExcepcaoPersistencia {
 
-        IPessoa pessoa = teacher.getPerson();
+        IPerson pessoa = teacher.getPerson();
         Integer keyPerson = pessoa.getIdInternal();
 
         IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();

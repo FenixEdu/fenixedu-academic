@@ -8,13 +8,13 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.CandidateSituation;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.MasterDegreeCandidate;
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -53,16 +53,16 @@ public class CreateCandidateSituation implements IService {
             sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
             if (infoExecutionDegree.getIdInternal() != null) {
-                executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                        CursoExecucao.class, infoExecutionDegree.getIdInternal());
+                executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                        ExecutionDegree.class, infoExecutionDegree.getIdInternal());
             }
 
-            IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
+            IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
             if (infoPerson.getIdInternal() != null) {
-                person = (IPessoa) persistentPerson.readByOID(Pessoa.class, infoPerson.getIdInternal());
+                person = (IPerson) persistentPerson.readByOID(Person.class, infoPerson.getIdInternal());
             }
 
             masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()

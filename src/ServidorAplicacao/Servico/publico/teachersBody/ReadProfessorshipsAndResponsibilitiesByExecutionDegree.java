@@ -19,9 +19,9 @@ import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoProfessorshipWithAll;
 import DataBeans.teacher.professorship.DetailedProfessorship;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -52,8 +52,8 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements I
             IPersistentExecutionDegree persistentExecutionDegree = ps.getIPersistentExecutionDegree();
             IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
             IPersistentResponsibleFor persistentResponsibleFor = ps.getIPersistentResponsibleFor();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
 
             List professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
             List responsibleFors = persistentResponsibleFor.readByExecutionDegree(executionDegree);

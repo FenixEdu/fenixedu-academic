@@ -9,8 +9,8 @@ import java.util.List;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoPeriod;
-import Dominio.CursoExecucao;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IPeriod;
 import Dominio.Period;
 import ServidorAplicacao.IServico;
@@ -49,8 +49,8 @@ public class EditExecutionDegreePeriods implements IServico {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentExecutionDegree = persistentSuport.getIPersistentExecutionDegree();
 
-            ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, infoExecutionDegree.getIdInternal(), false);
+            IExecutionDegree oldExecutionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, infoExecutionDegree.getIdInternal(), false);
 
             InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree
                     .getInfoPeriodExamsFirstSemester();

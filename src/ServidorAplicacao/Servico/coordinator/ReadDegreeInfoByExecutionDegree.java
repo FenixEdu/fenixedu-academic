@@ -7,9 +7,9 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeInfo;
-import Dominio.CursoExecucao;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import Dominio.ExecutionDegree;
+import Dominio.IDegree;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeInfo;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.IPersistentDegreeInfo;
@@ -36,8 +36,8 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
             //Execution degree
             IPersistentExecutionDegree cursoExecucaoPersistente = suportePersistente
                     .getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOID(
-                    CursoExecucao.class, infoExecutionDegreeId);
+            IExecutionDegree executionDegree = (IExecutionDegree) cursoExecucaoPersistente.readByOID(
+                    ExecutionDegree.class, infoExecutionDegreeId);
 
             if (executionDegree == null) {
                 throw new FenixServiceException("error.invalidExecutionDegree");
@@ -48,7 +48,7 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
             }
 
             //Degree
-            ICurso degree = null;
+            IDegree degree = null;
             degree = executionDegree.getCurricularPlan().getDegree();
 
             if (degree == null) {

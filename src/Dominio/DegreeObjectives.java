@@ -19,7 +19,7 @@ public class DegreeObjectives extends DomainObject implements IDegreeObjectives 
 
     private String operacionalObjectives;
 
-    private ICurso degree;
+    private IDegree degree;
 
     private Integer keyDegree;
 
@@ -64,14 +64,14 @@ public class DegreeObjectives extends DomainObject implements IDegreeObjectives 
     /**
      * @return
      */
-    public ICurso getDegree() {
+    public IDegree getDegree() {
         return degree;
     }
 
     /**
      * @param degree
      */
-    public void setDegree(ICurso degree) {
+    public void setDegree(IDegree degree) {
         this.degree = degree;
     }
 

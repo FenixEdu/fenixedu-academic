@@ -19,7 +19,7 @@ import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IMark;
 import Dominio.IMetadata;
 import Dominio.IOnlineTest;
@@ -172,7 +172,7 @@ public class ChangeStudentTestQuestion implements IService {
                             IOnlineTest onlineTest = (IOnlineTest) persistentSuport
                                     .getIPersistentOnlineTest().readByDistributedTest(
                                             studentTestQuestion.getDistributedTest());
-                            IFrequenta attend = persistentSuport.getIFrequentaPersistente()
+                            IAttends attend = persistentSuport.getIFrequentaPersistente()
                                     .readByAlunoAndDisciplinaExecucao(studentTestQuestion.getStudent(),
                                             executionCourse);
                             IMark mark = persistentSuport.getIPersistentMark()

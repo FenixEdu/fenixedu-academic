@@ -10,7 +10,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GroupProperties;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
@@ -128,9 +128,9 @@ public class CreateStudentGroupWithoutShift implements IService {
 		            
                     Iterator iterAttends = groupProperties.getAttendsSet().getAttends().iterator();
 		            boolean found = false;
-		            IFrequenta attend = null;
+		            IAttends attend = null;
 		            while(iterAttends.hasNext() && !found){
-		            	attend = (IFrequenta)iterAttends.next();
+		            	attend = (IAttends)iterAttends.next();
 		            	if (attend.getAluno().equals(student)) {
 		            		found=true;
 		            		}
@@ -166,9 +166,9 @@ public class CreateStudentGroupWithoutShift implements IService {
                 
                 Iterator iterAttends = groupProperties.getAttendsSet().getAttends().iterator();
 	            boolean found = false;
-	            IFrequenta attend = null;
+	            IAttends attend = null;
 	            while(iterAttends.hasNext() && !found){
-	            	attend = (IFrequenta)iterAttends.next();
+	            	attend = (IAttends)iterAttends.next();
 	            	if (attend.getAluno().equals(student)) {
 	            		found=true;
 	            		}

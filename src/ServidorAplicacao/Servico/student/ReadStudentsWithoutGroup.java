@@ -17,9 +17,9 @@ import DataBeans.InfoSiteStudentsWithoutGroup;
 import DataBeans.InfoStudent;
 import Dominio.GroupProperties;
 import Dominio.IAttendsSet;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -115,9 +115,9 @@ public class ReadStudentsWithoutGroup implements IService {
 //		userStudent = persistentStudent.readByUsername(username);
 		IStudent userStudent = null;
 		for (final Iterator iterator = attends.iterator(); iterator.hasNext(); ) {
-			final IFrequenta attend = (IFrequenta) iterator.next();
+			final IAttends attend = (IAttends) iterator.next();
 			final IStudent student = attend.getAluno();
-			final IPessoa person = student.getPerson();
+			final IPerson person = student.getPerson();
 			if (person.getUsername().equalsIgnoreCase(username)) {
 				userStudent = student;
 				break;
@@ -144,7 +144,7 @@ public class ReadStudentsWithoutGroup implements IService {
 
 		final List infoStudentList = new ArrayList(attendsWithOutGroupsSet.size());
 		for (final Iterator iterator = attendsWithOutGroupsSet.iterator(); iterator.hasNext(); ) {
-			final IFrequenta attend = (IFrequenta) iterator.next();
+			final IAttends attend = (IAttends) iterator.next();
 			final IStudent student = attend.getAluno();
 
 			if (!student.equals(userStudent)) {

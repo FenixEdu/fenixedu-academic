@@ -21,19 +21,19 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
-import Dominio.Aula;
+import Dominio.Lesson;
 import Dominio.Exam;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IPeriod;
-import Dominio.ISala;
-import Dominio.ITurma;
-import Dominio.ITurmaTurno;
-import Dominio.ITurno;
+import Dominio.IRoom;
+import Dominio.ISchoolClass;
+import Dominio.ISchoolClassShift;
+import Dominio.IShift;
 import Dominio.Period;
 import Dominio.RoomOccupation;
-import Dominio.Sala;
-import Dominio.TurmaTurno;
+import Dominio.Room;
+import Dominio.SchoolClassShift;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
@@ -41,17 +41,17 @@ import Util.TipoSala;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 
-    public ISala readByName(String nome) throws ExcepcaoPersistencia {
+    public IRoom readByName(String nome) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
-        return (ISala) queryObject(Sala.class, crit);
+        return (IRoom) queryObject(Room.class, crit);
     }
 
-    public void delete(ISala sala) throws ExcepcaoPersistencia {
+    public void delete(IRoom sala) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("sala.nome", sala.getNome());
 
-        List result = queryList(Aula.class, crit);
+        List result = queryList(Lesson.class, crit);
         if (result.size() != 0) {
             throw new notAuthorizedPersistentDeleteException("Cannot delete rooms with classes");
         }
@@ -61,7 +61,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     }
 
     public List readAll() throws ExcepcaoPersistencia {
-        return queryList(Sala.class, new Criteria());
+        return queryList(Room.class, new Criteria());
     }
 
     /**
@@ -86,7 +86,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
             StringBuffer oqlQuery = new StringBuffer("select sala from ");
             boolean hasPrevious = false;
 
-            oqlQuery.append(Sala.class.getName()).append(" where ");
+            oqlQuery.append(Room.class.getName()).append(" where ");
             if (nome != null) {
                 hasPrevious = true;
                 oqlQuery.append("nome = \"").append(nome).append("\"");
@@ -172,7 +172,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
             }
             Criteria crit2 = new Criteria();
             crit2.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
-            List allExamRooms = queryList(Sala.class, crit2);
+            List allExamRooms = queryList(Room.class, crit2);
             availableRooms = (List) CollectionUtils.subtract(allExamRooms, occupiedRooms);
 
         }
@@ -184,42 +184,42 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
         criteria.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
         //        criteria.addNotLike("edificio", "Tagus%");
         //        criteria.addNotLike("edificio", "Local%");
-        return queryList(Sala.class, criteria);
+        return queryList(Room.class, criteria);
     }
 
     public List readByPavillion(String pavillion) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("edificio", pavillion);
-        return queryList(Sala.class, criteria);
+        return queryList(Room.class, criteria);
     }
 
     public List readByPavillions(List pavillionsName) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addIn("edificio", pavillionsName);
-        return queryList(Sala.class, criteria);
+        return queryList(Room.class, criteria);
     }
 
     public List readByNormalCapacity(Integer capacity) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addGreaterOrEqualThan("capacidadeNormal", capacity);
-        return queryList(Sala.class, criteria);
+        return queryList(Room.class, criteria);
     }
 
     /**
      * Returns a class list
      * 
-     * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ITurma)
+     * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ISchoolClass)
      */
-    public List readByShift(ITurno group) throws ExcepcaoPersistencia {
+    public List readByShift(IShift group) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("turno.idInternal", group.getIdInternal());
 
-        List result = queryList(TurmaTurno.class, crit);
+        List result = queryList(SchoolClassShift.class, crit);
 
         List classList = new ArrayList();
         Iterator resultIterator = result.iterator();
         while (resultIterator.hasNext()) {
-            ITurmaTurno classShift = (ITurmaTurno) resultIterator.next();
+            ISchoolClassShift classShift = (ISchoolClassShift) resultIterator.next();
             classList.add(classShift.getTurma());
         }
         return classList;
@@ -246,15 +246,15 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
         Criteria criteriaRoom = new Criteria();
         criteriaRoom.addIn("roomOccupations", queryRoomOccupation);
         criteriaRoom.addOrCriteria(criteriaRoomUnoccupied);
-        //Query queryRoom = new QueryByCriteria(Sala.class, criteriaRoom,
+        //Query queryRoom = new QueryByCriteria(Room.class, criteriaRoom,
         // true);
 
-        return queryList(Sala.class, criteriaRoom, true);
+        return queryList(Room.class, criteriaRoom, true);
     }
 
     public List readAllBuildings() throws ExcepcaoPersistencia {
         try {
-            String oqlQuery = "select distinct building from " + Sala.class.getName();
+            String oqlQuery = "select distinct building from " + Room.class.getName();
             query.create(oqlQuery);
             List result = (List) query.execute();
             lockRead(result);

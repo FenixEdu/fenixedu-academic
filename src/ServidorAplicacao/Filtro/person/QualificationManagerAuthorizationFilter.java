@@ -7,7 +7,7 @@ package ServidorAplicacao.Filtro.person;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.person.InfoQualification;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IQualification;
 import Dominio.Qualification;
 import Dominio.grant.owner.IGrantOwner;
@@ -124,7 +124,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(username);
+            IPerson person = persistentPerson.lerPessoaPorUsername(username);
 
             boolean isNew = (infoQualification.getIdInternal() == null)
                     || (infoQualification.getIdInternal().equals(new Integer(0)));

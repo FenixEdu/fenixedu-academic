@@ -14,9 +14,9 @@ import DataBeans.InfoCoordinatorWithInfoPerson;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
 import DataBeans.util.Cloner;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICoordinator;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -43,8 +43,8 @@ public class ReadExecutionDegreeByOID implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = sp.getIPersistentObject();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentObject.readByOID(
-                    CursoExecucao.class, oid);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentObject.readByOID(
+                    ExecutionDegree.class, oid);
             if (executionDegree != null) {
 
                 infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus

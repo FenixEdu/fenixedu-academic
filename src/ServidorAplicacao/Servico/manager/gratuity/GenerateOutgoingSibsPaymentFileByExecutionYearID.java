@@ -17,7 +17,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionYear;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
@@ -98,7 +98,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
             // add lines gratuity
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 
-                ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
+                IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
 
                 IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
 

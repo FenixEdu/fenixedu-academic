@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import Dominio.DomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author Barbosa
@@ -23,7 +23,7 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
 
     private Integer cardCopyNumber;
 
-    private IPessoa person;
+    private IPerson person;
 
     private Integer keyPerson;
 
@@ -89,7 +89,7 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
     /**
      * @return Integer
      */
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
@@ -119,7 +119,7 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
      * @param Person
      *            The Person to set
      */
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 

@@ -1,5 +1,5 @@
 /*
- * IAula.java
+ * ILesson.java
  *
  * Created on 17 de Outubro de 2002, 20:44
  */
@@ -16,7 +16,7 @@ import java.util.Calendar;
 import Util.DiaSemana;
 import Util.TipoAula;
 
-public interface IAula extends Serializable, IDomainObject {
+public interface ILesson extends Serializable, IDomainObject {
     public DiaSemana getDiaSemana();
 
     public Calendar getInicio();
@@ -25,9 +25,9 @@ public interface IAula extends Serializable, IDomainObject {
 
     public TipoAula getTipo();
 
-    public ISala getSala();
+    public IRoom getSala();
 
-    public ITurno getShift();
+    public IShift getShift();
 
     public IExecutionPeriod getExecutionPeriod();
 
@@ -43,9 +43,9 @@ public interface IAula extends Serializable, IDomainObject {
 
     public void setTipo(TipoAula tipo);
 
-    public void setSala(ISala sala);
+    public void setSala(IRoom sala);
 
-    public void setShift(ITurno turno);
+    public void setShift(IShift turno);
 
     public void setExecutionPeriod(IExecutionPeriod executionPeriod);
 

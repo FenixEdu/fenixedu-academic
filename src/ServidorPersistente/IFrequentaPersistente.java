@@ -15,17 +15,17 @@ import Util.TipoCurso;
 
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IStudent;
 
 public interface IFrequentaPersistente extends IPersistentObject {
-    public IFrequenta readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
+    public IAttends readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
             throws ExcepcaoPersistencia;
 
-    public IFrequenta readByAlunoAndDisciplinaExecucao(IStudent aluno,
+    public IAttends readByAlunoAndDisciplinaExecucao(IStudent aluno,
             IExecutionCourse disciplinaExecucao) throws ExcepcaoPersistencia;
 
-    public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia;
+    public void delete(IAttends frequenta) throws ExcepcaoPersistencia;
 
     public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;
@@ -36,7 +36,7 @@ public interface IFrequentaPersistente extends IPersistentObject {
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 
-    public IFrequenta readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia;
+    public IAttends readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia;
 
     public List readByUsername(String username) throws ExcepcaoPersistencia;
 }

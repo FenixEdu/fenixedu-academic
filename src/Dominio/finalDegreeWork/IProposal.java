@@ -6,7 +6,7 @@ package Dominio.finalDegreeWork;
 
 import java.util.List;
 
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
 import Util.FinalDegreeWorkProposalStatus;
@@ -34,9 +34,9 @@ public interface IProposal extends IDomainObject {
 
     public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage);
 
-    public ICursoExecucao getExecutionDegree();
+    public IExecutionDegree getExecutionDegree();
 
-    public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(IExecutionDegree executionDegree);
 
     public TipoCurso getDegreeType();
 

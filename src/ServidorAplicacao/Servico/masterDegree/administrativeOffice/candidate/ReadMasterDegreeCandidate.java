@@ -15,9 +15,9 @@ import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -38,7 +38,7 @@ public class ReadMasterDegreeCandidate implements IService {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
             // Read the candidates
@@ -81,9 +81,9 @@ public class ReadMasterDegreeCandidate implements IService {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            ICursoExecucao executionDegree = Cloner
+            IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
+            IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
 
             // Read the candidates
 

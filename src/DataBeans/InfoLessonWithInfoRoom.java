@@ -4,7 +4,7 @@
  */
 package DataBeans;
 
-import Dominio.IAula;
+import Dominio.ILesson;
 
 /**
  * @author João Mota
@@ -12,14 +12,14 @@ import Dominio.IAula;
  */
 public class InfoLessonWithInfoRoom extends InfoLesson {
 
-    public void copyFromDomain(IAula lesson) {
+    public void copyFromDomain(ILesson lesson) {
         super.copyFromDomain(lesson);
         if (lesson != null) {
             setInfoSala(InfoRoom.newInfoFromDomain(lesson.getSala()));
         }
     }
 
-    public static InfoLesson newInfoFromDomain(IAula lesson) {
+    public static InfoLesson newInfoFromDomain(ILesson lesson) {
         InfoLessonWithInfoRoom infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLessonWithInfoRoom();

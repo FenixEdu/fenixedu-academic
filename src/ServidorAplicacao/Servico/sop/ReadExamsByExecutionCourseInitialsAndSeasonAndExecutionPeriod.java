@@ -17,7 +17,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -81,7 +81,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
                         List tempAssociatedCurricularCourses = executionCourse
                                 .getAssociatedCurricularCourses();
                         for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
-                            ICurso tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses
+                            IDegree tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses
                                     .get(k)).getDegreeCurricularPlan().getDegree();
                             infoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
                         }

@@ -20,10 +20,10 @@ import DataBeans.InfoClass;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turma;
+import Dominio.ILesson;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
+import Dominio.SchoolClass;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
@@ -37,10 +37,10 @@ public class LerAulasDeTurma implements IService {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
         ITurmaPersistente persistentDomainClass = sp.getITurmaPersistente();
-        ITurma group = null;
+        ISchoolClass group = null;
         if (infoClass.getIdInternal() != null) {
 
-            group = (ITurma) persistentDomainClass.readByOID(Turma.class, infoClass.getIdInternal());
+            group = (ISchoolClass) persistentDomainClass.readByOID(SchoolClass.class, infoClass.getIdInternal());
         } else {
             group = Cloner.copyInfoClass2Class(infoClass);
         }
@@ -52,14 +52,14 @@ public class LerAulasDeTurma implements IService {
         infoLessonList = new ArrayList();
 
         while (iterator.hasNext()) {
-            ITurno shift = (ITurno) iterator.next();
+            IShift shift = (IShift) iterator.next();
             List lessonList = shift.getAssociatedLessons();
             Iterator lessonIterator = lessonList.iterator();
             while (lessonIterator.hasNext()) {
-                IAula elem = (IAula) lessonIterator.next();
-                // IAula lesson = (IAula)
+                ILesson elem = (ILesson) lessonIterator.next();
+                // ILesson lesson = (ILesson)
                 // sp.getIAulaPersistente().readByOID(
-                // Aula.class, elem.getIdInternal());
+                // Lesson.class, elem.getIdInternal());
                 // InfoLesson infoLesson =
                 // Cloner.copyILesson2InfoLesson(elem);
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);

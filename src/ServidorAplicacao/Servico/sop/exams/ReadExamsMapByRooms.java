@@ -24,7 +24,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomExamsMap;
 import DataBeans.util.Cloner;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -117,7 +117,7 @@ public class ReadExamsMapByRooms implements IService {
 
             List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
-            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesList.get(0);
+            IExecutionDegree executionDegree = (IExecutionDegree) executionDegreesList.get(0);
             
             Calendar startSeason1 = null;
             Calendar endSeason2 = null;
@@ -130,7 +130,7 @@ public class ReadExamsMapByRooms implements IService {
             }
 
             for (int i = 1; i < executionDegreesList.size(); i++) {
-                executionDegree = (ICursoExecucao) executionDegreesList.get(i);
+                executionDegree = (IExecutionDegree) executionDegreesList.get(i);
                 Calendar startExams;
                 Calendar endExams;
                 if (semester == 1) {

@@ -13,7 +13,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IBranch;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
@@ -129,7 +129,7 @@ public interface IPersistentStudentCurricularPlan extends IPersistentObject {
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
     public List readAllActiveStudentCurricularPlansByDegreeWithEnrollmentsInExecutionPeriod(
-            IExecutionPeriod executionPeriod, ICurso degree) throws ExcepcaoPersistencia;
+            IExecutionPeriod executionPeriod, IDegree degree) throws ExcepcaoPersistencia;
 
     public List readAllByStudentNumberAndSpecialization(Integer studentNumber, TipoCurso degreeType,
             Specialization specialization) throws ExcepcaoPersistencia;

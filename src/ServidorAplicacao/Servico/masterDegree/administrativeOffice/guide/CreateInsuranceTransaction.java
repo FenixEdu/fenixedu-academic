@@ -13,7 +13,7 @@ import Dominio.GuideEntry;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.transactions.IInsuranceTransaction;
 import Dominio.transactions.InsuranceTransaction;
@@ -46,7 +46,7 @@ public class CreateInsuranceTransaction implements IService {
 
         IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson(),
                 TipoCurso.MESTRADO_OBJ);
-        IPessoa responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        IPerson responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
         List insuranceTransactionList = insuranceTransactionDAO
                 .readAllNonReimbursedByExecutionYearAndStudent(guide.getExecutionDegree()

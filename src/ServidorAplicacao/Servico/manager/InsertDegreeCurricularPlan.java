@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.manager;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlan;
 import Dominio.DegreeCurricularPlan;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -34,7 +34,7 @@ public class InsertDegreeCurricularPlan implements IService {
                     .getIPersistentDegreeCurricularPlan();
 
             ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
-            ICurso degree = persistentDegree.readByIdInternal(infoDegreeCurricularPlan.getInfoDegree()
+            IDegree degree = persistentDegree.readByIdInternal(infoDegreeCurricularPlan.getInfoDegree()
                     .getIdInternal());
             if (degree == null)
                 throw new NonExistingServiceException();

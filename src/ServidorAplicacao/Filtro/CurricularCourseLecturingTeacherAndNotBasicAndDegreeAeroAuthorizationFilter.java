@@ -13,7 +13,7 @@ import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
-import Dominio.ICurso;
+import Dominio.IDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
@@ -158,7 +158,7 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
 
         InfoCurricularCourse infoCurricularCourse = null;
         ICurricularCourse curricularCourse = null;
-        ICurso degree = null;
+        IDegree degree = null;
 
         ISuportePersistente sp;
         try {

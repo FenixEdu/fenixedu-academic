@@ -15,7 +15,7 @@ import Dominio.GuideEntry;
 import Dominio.IEmployee;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.reimbursementGuide.IReimbursementGuide;
 import Dominio.reimbursementGuide.IReimbursementGuideEntry;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
@@ -122,7 +122,7 @@ public class CreateReimbursementGuide implements IService {
             //read employee
             IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
             IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = persistentEmployee.readByPerson(person);
 
             //reimbursement Guide Situation

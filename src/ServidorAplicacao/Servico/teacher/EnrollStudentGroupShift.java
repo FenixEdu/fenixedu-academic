@@ -8,9 +8,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -61,7 +61,7 @@ public class EnrollStudentGroupShift implements IService {
             }
             
             persistentShift = persistentSupport.getITurnoPersistente();
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
+            IShift shift = (IShift) persistentShift.readByOID(Shift.class,
                     newShiftCode);
             
             if (shift == null) {

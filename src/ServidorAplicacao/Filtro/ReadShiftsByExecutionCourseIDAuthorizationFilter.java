@@ -15,7 +15,7 @@ import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.ICoordinator;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
@@ -124,7 +124,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                     // Check if the Coordinator is the logged one
                     Iterator executionDegreesIterator = executionDegrees.iterator();
                     while (executionDegreesIterator.hasNext()) {
-                        ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesIterator
+                        IExecutionDegree executionDegree = (IExecutionDegree) executionDegreesIterator
                                 .next();
 
                         //modified by Tânia Pousão

@@ -36,9 +36,9 @@ import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.StudentGroup;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -153,7 +153,7 @@ public class GroupSiteComponentBuilder {
             throws FenixServiceException {
 
     	List infoSiteStudentsAndGroups = new ArrayList();
-    	ITurno shift = null;
+    	IShift shift = null;
     	if(value.intValue()==1){
     		infoSiteStudentsAndGroups = readStudentsAndGroupsByShift(groupPropertiesCode, shiftCode);
     		shift = readShift(shiftCode);
@@ -190,8 +190,8 @@ public class GroupSiteComponentBuilder {
 
     			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
 				.readByOID(GroupProperties.class, groupPropertiesCode);
-    			ITurno shift = (ITurno) persistentShift
-				.readByOID(Turno.class, shiftCode);
+    			IShift shift = (IShift) persistentShift
+				.readByOID(Shift.class, shiftCode);
 	
     			if(groupProperties == null){
     				throw new ExistingServiceException();
@@ -390,7 +390,7 @@ public class GroupSiteComponentBuilder {
     	}
 
     
-    	private List getStudentGroupsByShiftAndGroupProperties(IGroupProperties groupProperties, ITurno shift){
+    	private List getStudentGroupsByShiftAndGroupProperties(IGroupProperties groupProperties, IShift shift){
     		List result = new ArrayList();
     		List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithShift();
     		Iterator iter = studentGroups.iterator();
@@ -417,16 +417,16 @@ public class GroupSiteComponentBuilder {
     		return result;
     	}
     	
-    	private ITurno readShift(Integer shiftCode)
+    	private IShift readShift(Integer shiftCode)
         throws ExcepcaoInexistente, FenixServiceException {
-    		ITurno shift = null;
+    		IShift shift = null;
     		try
 			{
     			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
     			ITurnoPersistente persistentShift =  sp.getITurnoPersistente();
     			
-    			shift = (ITurno) persistentShift
-				.readByOID(Turno.class, shiftCode);
+    			shift = (IShift) persistentShift
+				.readByOID(Shift.class, shiftCode);
 			}
     		catch (ExcepcaoPersistencia e){
     			e.printStackTrace();
@@ -498,7 +498,7 @@ public class GroupSiteComponentBuilder {
 
             		Iterator iterator = allStudentsGroup.iterator();
             		while (iterator.hasNext()) {
-            			ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+            			IShift shift = ((IStudentGroup) iterator.next()).getShift();
             			if (!allShifts.contains(shift)) {
             				allShifts.add(shift);
 
@@ -513,7 +513,7 @@ public class GroupSiteComponentBuilder {
             		InfoSiteShift infoSiteShift = null;
 
             		while (iter.hasNext()) {
-           			ITurno shift = (ITurno) iter.next();
+           			IShift shift = (IShift) iter.next();
     					List allStudentGroups = persistentStudentGroup
 						.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
 
@@ -648,7 +648,7 @@ public class GroupSiteComponentBuilder {
     				if (allStudentsGroup.size() != 0) {
     					Iterator iterator = allStudentsGroup.iterator();
     					while (iterator.hasNext()) {
-    						ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+    						IShift shift = ((IStudentGroup) iterator.next()).getShift();
     						if (!allShifts.contains(shift)) {
     							allShifts.add(shift);
     						}
@@ -661,7 +661,7 @@ public class GroupSiteComponentBuilder {
     					InfoSiteShift infoSiteShiftAux = null;
 
     					while (iter.hasNext()) {
-    						ITurno shift = (ITurno) iter.next();
+    						IShift shift = (IShift) iter.next();
     						List allStudentGroupsAux = persistentStudentGroup
 							.readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet(), shift);
     						infoSiteShiftAux = new InfoSiteShift();

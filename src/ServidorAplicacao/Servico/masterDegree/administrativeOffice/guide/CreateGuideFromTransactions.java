@@ -12,11 +12,11 @@ import DataBeans.util.Cloner;
 import Dominio.Guide;
 import Dominio.GuideEntry;
 import Dominio.IContributor;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IGuideSituation;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.transactions.IGratuityTransaction;
 import Dominio.transactions.IInsuranceTransaction;
 import Dominio.transactions.IPaymentTransaction;
@@ -55,7 +55,7 @@ public class CreateGuideFromTransactions implements IService {
         IContributor contributor = null;
         IGuide guide = new Guide();
         IGuideSituation guideSituation = null;
-        IPessoa person = null;
+        IPerson person = null;
 
         // Check the Guide Situation
         if (situationOfGuide.equals(SituationOfGuide.ANNULLED_TYPE))
@@ -96,7 +96,7 @@ public class CreateGuideFromTransactions implements IService {
             }
 
             // Get the Execution Degree
-            ICursoExecucao executionDegree = sp.getIPersistentExecutionDegree()
+            IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
                                     .getInfoDegree().getSigla(),

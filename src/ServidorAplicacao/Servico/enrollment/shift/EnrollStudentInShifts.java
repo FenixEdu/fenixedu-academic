@@ -14,11 +14,11 @@ import DataBeans.InfoShift;
 import DataBeans.enrollment.shift.ShiftEnrollmentErrorReport;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import Dominio.ShiftStudent;
 import Dominio.Student;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -128,7 +128,7 @@ public class EnrollStudentInShifts implements IService {
         Iterator iter = filteredShiftsIdsToEnroll.iterator();
         while (iter.hasNext()) {
             Integer shiftId = (Integer) iter.next();
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, shiftId);
+            IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
             if (shift == null) {
                 errorReport.getUnExistingShifts().add(shiftId);
             } else {
@@ -156,7 +156,7 @@ public class EnrollStudentInShifts implements IService {
         return shiftsToUnEnroll;
     }
 
-    //    private InfoShift copyShift2InfoShift(ITurno shift) {
+    //    private InfoShift copyShift2InfoShift(IShift shift) {
     //        InfoShift infoShift = null;
     //        if (shift != null) {
     //            infoShift = new InfoShift();
@@ -189,7 +189,7 @@ public class EnrollStudentInShifts implements IService {
     //
     //                        public Object transform(Object arg0) {
     //
-    //                            return copyIClass2InfoClass((ITurma) arg0);
+    //                            return copyIClass2InfoClass((ISchoolClass) arg0);
     //                        }
     //
     //                    });
@@ -197,7 +197,7 @@ public class EnrollStudentInShifts implements IService {
     //        return infoClasses;
     //    }
     //
-    //    private InfoClass copyIClass2InfoClass(ITurma turma) {
+    //    private InfoClass copyIClass2InfoClass(ISchoolClass turma) {
     //        InfoClass infoClass = null;
     //        if (turma != null) {
     //            infoClass = new InfoClass();
@@ -216,7 +216,7 @@ public class EnrollStudentInShifts implements IService {
     //     * @return
     //     */
     //    private InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(
-    //            ICursoExecucao executionDegree) {
+    //            IExecutionDegree executionDegree) {
     //        InfoExecutionDegree infoExecutionDegree = null;
     //        if (executionDegree != null) {
     //            infoExecutionDegree = new InfoExecutionDegree();
@@ -253,7 +253,7 @@ public class EnrollStudentInShifts implements IService {
     //     * @param degree
     //     * @return
     //     */
-    //    private InfoDegree copyIDegree2InfoDegree(ICurso degree) {
+    //    private InfoDegree copyIDegree2InfoDegree(IDegree degree) {
     //        InfoDegree infoDegree = null;
     //        if (degree != null) {
     //            infoDegree = new InfoDegree();
@@ -277,7 +277,7 @@ public class EnrollStudentInShifts implements IService {
     //
     //                        public Object transform(Object arg0) {
     //
-    //                            return copyILesson2InfoLesson((IAula) arg0);
+    //                            return copyILesson2InfoLesson((ILesson) arg0);
     //                        }
     //
     //                    });
@@ -285,7 +285,7 @@ public class EnrollStudentInShifts implements IService {
     //        return infoLessons;
     //    }
     //
-    //    private Object copyILesson2InfoLesson(IAula lesson) {
+    //    private Object copyILesson2InfoLesson(ILesson lesson) {
     //        InfoLesson infoLesson = null;
     //        if (lesson != null) {
     //            infoLesson = new InfoLesson();
@@ -303,7 +303,7 @@ public class EnrollStudentInShifts implements IService {
     //     * @param sala
     //     * @return
     //     */
-    //    private InfoRoom copyISala2InfoRoom(ISala sala) {
+    //    private InfoRoom copyISala2InfoRoom(IRoom sala) {
     //        InfoRoom infoRoom = null;
     //        if (sala != null) {
     //            infoRoom = new InfoRoom();

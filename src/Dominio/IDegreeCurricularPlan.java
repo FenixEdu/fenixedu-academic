@@ -18,7 +18,7 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 
     public List getCurricularCourses();
 
-    public ICurso getDegree();
+    public IDegree getDegree();
 
     public Integer getDegreeDuration();
 
@@ -50,7 +50,7 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 
     public void setCurricularCourses(List curricularCourses);
 
-    public void setDegree(ICurso degree);
+    public void setDegree(IDegree degree);
 
     public void setDegreeDuration(Integer degreeDuration);
 

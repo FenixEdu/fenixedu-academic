@@ -13,13 +13,13 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GuideSituation;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IGratuitySituation;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IGuideSituation;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.transactions.GratuityTransaction;
 import Dominio.transactions.IPaymentTransaction;
@@ -79,7 +79,7 @@ public class ChangeGuideSituation implements IService {
         SituationOfGuide situationOfGuide = new SituationOfGuide(situationOfGuideString);
 
         IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPessoa employeePerson = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        IPerson employeePerson = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
         // Get the active Situation
         //        IGuideSituation guideSituation = new GuideSituation();
@@ -149,12 +149,12 @@ public class ChangeGuideSituation implements IService {
 
                         guideEntry = (IGuideEntry) guideEntryIterator.next();
 
-                        IPessoa studentPerson = guide.getPerson();
+                        IPerson studentPerson = guide.getPerson();
 
                         IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
                                 studentPerson, TipoCurso.MESTRADO_OBJ);
 
-                        ICursoExecucao executionDegree = guide.getExecutionDegree();
+                        IExecutionDegree executionDegree = guide.getExecutionDegree();
 
                         //Write Gratuity Transaction
                         if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE)) {

@@ -12,7 +12,7 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
+import Dominio.IAttends;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
@@ -76,7 +76,7 @@ public class ReadEnroledExecutionCourses implements IService {
         allInfoExecutionCourses = new ArrayList();
 
         while (iter.hasNext()) {
-            IExecutionCourse executionCourse = ((IFrequenta) iter.next()).getDisciplinaExecucao();
+            IExecutionCourse executionCourse = ((IAttends) iter.next()).getDisciplinaExecucao();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
                 List allGroupProperties = executionCourse.getGroupProperties();
                 boolean result = checkPeriodEnrollment(allGroupProperties);

@@ -6,10 +6,10 @@ package ServidorAplicacao.Servico.enrollment.shift;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudent;
-import Dominio.ITurno;
+import Dominio.IShift;
 import Dominio.ITurnoAluno;
 import Dominio.Student;
-import Dominio.Turno;
+import Dominio.Shift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -38,7 +38,7 @@ public class UnEnrollStudentFromShift implements IService {
         try {
             ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-            ITurno shift = (ITurno) persistentSupport.getITurnoPersistente().readByOID(Turno.class,
+            IShift shift = (IShift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
                     shiftId);
             if (shift == null) {
                 throw new ShiftNotFoundServiceException();

@@ -19,12 +19,12 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSiteClasses;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
-import Dominio.ICursoExecucao;
+import Dominio.ILesson;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.ITurma;
-import Dominio.ITurno;
+import Dominio.ISchoolClass;
+import Dominio.IShift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -50,7 +50,7 @@ public class PublicSiteComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, ITurma domainClass)
+    public ISiteComponent getComponent(ISiteComponent component, ISchoolClass domainClass)
             throws FenixServiceException {
 
         if (component instanceof InfoSiteTimetable) {
@@ -67,7 +67,7 @@ public class PublicSiteComponentBuilder {
      * @param classes
      * @return
      */
-    private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, ITurma domainClass)
+    private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, ISchoolClass domainClass)
             throws FenixServiceException {
         List classes = new ArrayList();
         List infoClasses = new ArrayList();
@@ -78,13 +78,13 @@ public class PublicSiteComponentBuilder {
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
             IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
-            ICursoExecucao executionDegree = domainClass.getExecutionDegree();
+            IExecutionDegree executionDegree = domainClass.getExecutionDegree();
 
             classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod,
                     domainClass.getAnoCurricular(), executionDegree);
 
             for (int i = 0; i < classes.size(); i++) {
-                ITurma taux = (ITurma) classes.get(i);
+                ISchoolClass taux = (ISchoolClass) classes.get(i);
                 infoClasses.add(copyClass2InfoClass(taux));
             }
 
@@ -101,7 +101,7 @@ public class PublicSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ITurma domainClass)
+    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ISchoolClass domainClass)
             throws FenixServiceException {
         List infoLessonList = null;
 
@@ -118,7 +118,7 @@ public class PublicSiteComponentBuilder {
             infoExecutionPeriod = domainClass.getExecutionPeriod();
             
             while (iterator.hasNext()) {
-                ITurno shift = (ITurno) iterator.next();
+                IShift shift = (IShift) iterator.next();
                 InfoShift infoShift = copyIShift2InfoShift(shift);
                 InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(shift
                         .getDisciplinaExecucao());
@@ -128,7 +128,7 @@ public class PublicSiteComponentBuilder {
                 List lessonList = shift.getAssociatedLessons();
                 Iterator lessonIterator = lessonList.iterator();
                 while (lessonIterator.hasNext()) {
-                    IAula elem = (IAula) lessonIterator.next();
+                    ILesson elem = (ILesson) lessonIterator.next();
                     InfoLesson infoLesson = copyILesson2InfoLesson(elem);
 
                     if (infoLesson != null) {
@@ -150,7 +150,7 @@ public class PublicSiteComponentBuilder {
         return component;
     }
 
-    private InfoLesson copyILesson2InfoLesson(IAula lesson) {
+    private InfoLesson copyILesson2InfoLesson(ILesson lesson) {
         InfoLesson infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLesson();
@@ -190,7 +190,7 @@ public class PublicSiteComponentBuilder {
      * @param shift
      * @return
      */
-    private InfoShift copyIShift2InfoShift(ITurno shift) {
+    private InfoShift copyIShift2InfoShift(IShift shift) {
         InfoShift infoShift = null;
         if (shift != null) {
             infoShift = new InfoShift();
@@ -204,7 +204,7 @@ public class PublicSiteComponentBuilder {
      * @param taux
      * @return
      */
-    private InfoClass copyClass2InfoClass(ITurma taux) {
+    private InfoClass copyClass2InfoClass(ISchoolClass taux) {
         InfoClass infoClass = null;
         if (taux != null) {
             infoClass = new InfoClass();

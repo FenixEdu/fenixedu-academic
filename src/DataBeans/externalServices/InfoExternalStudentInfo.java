@@ -12,7 +12,7 @@ import java.util.Collection;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
-import Dominio.ITurno;
+import Dominio.IShift;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>

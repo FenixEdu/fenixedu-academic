@@ -12,9 +12,9 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
+import Dominio.IRoom;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
@@ -56,7 +56,7 @@ public class ReadEmptyRoomsService implements IService {
             List infoRoomList = new ArrayList();
 
             while (roomListIterator.hasNext()) {
-                ISala element = (ISala) roomListIterator.next();
+                IRoom element = (IRoom) roomListIterator.next();
                 try {
                     InfoRoom infoRoomElement = Cloner.copyRoom2InfoRoom(element);
                     infoRoomList.add(infoRoomElement);
@@ -67,7 +67,7 @@ public class ReadEmptyRoomsService implements IService {
             // remove predicate
             infoRoomList = (List) CollectionUtils.select(infoRoomList, new RoomLessonPredicate());
 
-            IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
+            ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 
             IExecutionPeriod executionPeriod = Cloner
                     .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
@@ -79,7 +79,7 @@ public class ReadEmptyRoomsService implements IService {
 
             /* remove lesson's rooms from room list */
             while (lessonIterator.hasNext()) {
-                IAula lessonAux = (IAula) lessonIterator.next();
+                ILesson lessonAux = (ILesson) lessonIterator.next();
                 InfoLesson infoLessonAux = Cloner.copyILesson2InfoLesson(lessonAux);
                 if (infoLesson.getIdInternal() != null
                         && !infoLesson.getIdInternal().equals(infoLessonAux.getIdInternal())) {

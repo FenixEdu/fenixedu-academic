@@ -20,10 +20,10 @@ import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -149,7 +149,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
                 List infoTeachers = new ArrayList();
                 if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-                    IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
+                    IPerson person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
                             .getPersonResponsibleForGrade();
                     ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
                     infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
@@ -169,8 +169,8 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
                         if (enrolmentEvaluation != null) {
                             if (enrolmentEvaluation.getEmployee() != null) {
-                                IPessoa person2 = (IPessoa) sp.getIPessoaPersistente().readByOID(
-                                        Pessoa.class,
+                                IPerson person2 = (IPerson) sp.getIPessoaPersistente().readByOID(
+                                        Person.class,
                                         enrolmentEvaluation.getEmployee().getPerson().getIdInternal(),
                                         false);
                                 infoEnrolmentEvaluation.setInfoEmployee(Cloner

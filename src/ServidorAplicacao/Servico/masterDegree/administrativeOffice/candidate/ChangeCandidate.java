@@ -20,9 +20,9 @@ import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import Dominio.ICountry;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.MasterDegreeCandidate;
-import Dominio.Pessoa;
+import Dominio.Person;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -44,9 +44,9 @@ public class ChangeCandidate implements IService {
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
-        IPessoa person = null;
+        IPerson person = null;
         IMasterDegreeCandidate masterDegreeCandidate = null;
-        //		IPessoa candidatePerson = null;
+        //		IPerson candidatePerson = null;
         try {
             sp = SuportePersistenteOJB.getInstance();
 
@@ -57,7 +57,7 @@ public class ChangeCandidate implements IService {
                 throw new ExcepcaoInexistente("Unknown Candidate !!");
             }
 
-            person = (IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class,
+            person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                     masterDegreeCandidate.getPerson().getIdInternal(), true);
 
             person.setTipoDocumentoIdentificacao(newCandidate.getInfoPerson()

@@ -4,7 +4,7 @@ import java.util.List;
 
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Util.BranchType;
 
@@ -21,7 +21,7 @@ public interface IPersistentBranch extends IPersistentObject {
 
     public void delete(IBranch branch) throws ExcepcaoPersistencia;
 
-    public List readByExecutionDegree(ICursoExecucao execucao) throws ExcepcaoPersistencia;
+    public List readByExecutionDegree(IExecutionDegree execucao) throws ExcepcaoPersistencia;
 
     public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia;

@@ -22,11 +22,11 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import DataBeans.enrollment.InfoCurricularCourse2Enroll;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
@@ -80,8 +80,8 @@ public class ReadCurricularCoursesToEnroll implements IService {
 
             //Execution Degree
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeID);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeID);
             if (executionDegree == null) {
                 throw new FenixServiceException("error.degree.noData");
             }

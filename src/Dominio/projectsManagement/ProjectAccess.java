@@ -7,7 +7,7 @@ package Dominio.projectsManagement;
 import java.util.Calendar;
 
 import Dominio.DomainObject;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 
 /**
  * @author Susana Fernandes
@@ -16,7 +16,7 @@ import Dominio.IPessoa;
 public class ProjectAccess extends DomainObject implements IProjectAccess {
     private Integer keyPerson;
 
-    private IPessoa person;
+    private IPerson person;
 
     private Integer keyProjectCoordinator;
 
@@ -66,11 +66,11 @@ public class ProjectAccess extends DomainObject implements IProjectAccess {
         this.keyProjectCoordinator = keyProjectCoordinator;
     }
 
-    public IPessoa getPerson() {
+    public IPerson getPerson() {
         return person;
     }
 
-    public void setPerson(IPessoa person) {
+    public void setPerson(IPerson person) {
         this.person = person;
     }
 }

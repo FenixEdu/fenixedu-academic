@@ -11,10 +11,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.InfoDegreeCurricularPlan;
-import Dominio.CursoExecucao;
+import Dominio.ExecutionDegree;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -40,8 +40,8 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
                 throw new FenixServiceException("nullDegree");
             }
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
-                    CursoExecucao.class, executionDegreeCode);
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeCode);
 
             if (executionDegree == null) {
                 throw new NonExistingServiceException();
@@ -74,7 +74,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
         return infoDegreeCurricularPlan;
     }
 
-    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(ICursoExecucao executionDegree,
+    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(IExecutionDegree executionDegree,
             List allCurricularCourses) {
         //CLONER
         //InfoDegreeCurricularPlan infoDegreeCurricularPlan =

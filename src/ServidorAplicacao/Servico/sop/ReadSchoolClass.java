@@ -7,8 +7,8 @@ package ServidorAplicacao.Servico.sop;
 
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
-import Dominio.ITurma;
-import Dominio.Turma;
+import Dominio.ISchoolClass;
+import Dominio.SchoolClass;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -46,7 +46,7 @@ public class ReadSchoolClass implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
-            ITurma schoolClass = (ITurma) persistentSchoolClass.readByOID(Turma.class, infoSchoolClass
+            ISchoolClass schoolClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, infoSchoolClass
                     .getIdInternal());
             if (schoolClass != null) {
                 result = Cloner.copyClass2InfoClass(schoolClass);

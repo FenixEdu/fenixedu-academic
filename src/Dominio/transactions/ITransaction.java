@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import Dominio.IDomainObject;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Util.PaymentType;
 import Util.transactions.TransactionType;
 
@@ -18,13 +18,13 @@ public interface ITransaction extends IDomainObject {
     /**
      * @return Returns the responsiblePerson.
      */
-    public abstract IPessoa getResponsiblePerson();
+    public abstract IPerson getResponsiblePerson();
 
     /**
      * @param responsiblePerson
      *            The responsiblePerson to set.
      */
-    public abstract void setResponsiblePerson(IPessoa responsiblePerson);
+    public abstract void setResponsiblePerson(IPerson responsiblePerson);
 
     /**
      * @return Returns the wasInternalBalance.

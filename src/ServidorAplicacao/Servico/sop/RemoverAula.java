@@ -11,7 +11,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IAula;
+import Dominio.ILesson;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -25,11 +25,11 @@ public class RemoverAula implements IService {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            //ISala room =
+            //IRoom room =
             // sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
-            //ITurno shift = Cloner.copyInfoShift2Shift(infoShift);
-            IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
+            //IShift shift = Cloner.copyInfoShift2Shift(infoShift);
+            ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 
             sp.getIAulaPersistente().delete(lesson);
             //      sp.getITurnoAulaPersistente().delete(shift,

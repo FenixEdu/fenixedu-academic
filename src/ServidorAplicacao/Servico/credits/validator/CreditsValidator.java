@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.IAula;
+import Dominio.ILesson;
 import Dominio.IExecutionPeriod;
 import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
@@ -121,7 +121,7 @@ public abstract class CreditsValidator {
         if (shiftProfessorship.getPercentage().doubleValue() == 100) {
             Iterator iterator = shiftProfessorship.getShift().getAssociatedLessons().iterator();
             while (iterator.hasNext()) {
-                IAula lesson = (IAula) iterator.next();
+                ILesson lesson = (ILesson) iterator.next();
                 validatePeriod(teacher, period, lesson.getDiaSemana(), new Date(lesson.getInicio()
                         .getTimeInMillis()), new Date(lesson.getFim().getTimeInMillis()),
                         PeriodType.LESSON_PERIOD);

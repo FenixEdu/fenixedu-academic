@@ -8,11 +8,11 @@ package Dominio;
  * comments go to Window>Preferences>Java>Code Generation.
  */
 public interface IPrivilegio {
-    public IPessoa getPessoa();
+    public IPerson getPessoa();
 
     public String getServico();
 
-    public void setPessoa(IPessoa pessoa);
+    public void setPessoa(IPerson pessoa);
 
     public void setServico(String servico);
 }

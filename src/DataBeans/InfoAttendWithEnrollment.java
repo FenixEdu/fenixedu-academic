@@ -1,5 +1,5 @@
 /*
- * Frequenta.java Created on 20 de Outubro de 2002, 14:42
+ * Attends.java Created on 20 de Outubro de 2002, 14:42
  */
 
 package DataBeans;
@@ -49,7 +49,7 @@ public class InfoAttendWithEnrollment extends InfoObject implements Serializable
         boolean resultado = false;
         if (obj instanceof InfoFrequenta) {
             InfoFrequenta frequenta = (InfoFrequenta) obj;
-            resultado = //getCodigoInterno().equals(((Frequenta)obj).getCodigoInterno());
+            resultado = //getCodigoInterno().equals(((Attends)obj).getCodigoInterno());
             getAluno().equals(frequenta.getAluno())
                     && getDisciplinaExecucao().equals(getDisciplinaExecucao());
         }

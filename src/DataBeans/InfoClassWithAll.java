@@ -1,6 +1,6 @@
 package DataBeans;
 
-import Dominio.ITurma;
+import Dominio.ISchoolClass;
 
 /**
  * @author Fernanda Quitério Created on 9/Ago/2004
@@ -8,7 +8,7 @@ import Dominio.ITurma;
  */
 public class InfoClassWithAll extends InfoClassWithInfoExecutionDegree {
 
-    public void copyFromDomain(ITurma turma) {
+    public void copyFromDomain(ISchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
             setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(turma
@@ -16,7 +16,7 @@ public class InfoClassWithAll extends InfoClassWithInfoExecutionDegree {
         }
     }
 
-    public static InfoClass newInfoFromDomain(ITurma turma) {
+    public static InfoClass newInfoFromDomain(ISchoolClass turma) {
         InfoClassWithAll infoClass = null;
         if (turma != null) {
             infoClass = new InfoClassWithAll();

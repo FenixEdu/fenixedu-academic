@@ -5,7 +5,7 @@ package ServidorAplicacao.Filtro.person;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IQualification;
 import Dominio.Qualification;
 import Dominio.grant.owner.IGrantOwner;
@@ -127,7 +127,7 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(username);
+            IPerson person = persistentPerson.lerPessoaPorUsername(username);
 
             IPersistentQualification persistentQualification = sp.getIPersistentQualification();
             IQualification qualification = (IQualification) persistentQualification.readByOID(

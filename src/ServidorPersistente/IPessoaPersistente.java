@@ -9,7 +9,7 @@ package ServidorPersistente;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
@@ -23,15 +23,15 @@ public interface IPessoaPersistente extends IPersistentObject {
      * @throws InvocationTargetException
      * @deprecated
      */
-    public void escreverPessoa(IPessoa pessoa) throws ExcepcaoPersistencia, ExistingPersistentException,
+    public void escreverPessoa(IPerson pessoa) throws ExcepcaoPersistencia, ExistingPersistentException,
             IllegalAccessException, InvocationTargetException;
 
     public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
 
-    public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia;
+    public void apagarPessoa(IPerson pessoa) throws ExcepcaoPersistencia;
 
-    public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia;
+    public IPerson lerPessoaPorUsername(String username) throws ExcepcaoPersistencia;
 
     public List findPersonByName(String name) throws ExcepcaoPersistencia;
 
@@ -51,7 +51,7 @@ public interface IPessoaPersistente extends IPersistentObject {
     //public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name,
     // String email, String username, String documentIdNumber) throws
     // ExcepcaoPersistencia;
-    public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
+    public IPerson lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
 
     public List lerTodasAsPessoas() throws ExcepcaoPersistencia;

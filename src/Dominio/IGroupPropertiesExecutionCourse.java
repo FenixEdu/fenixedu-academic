@@ -17,9 +17,9 @@ public interface IGroupPropertiesExecutionCourse extends IDomainObject{
 	public IExecutionCourse getExecutionCourse();
 	public ProposalState getProposalState();
 	public Integer getKeySenderPerson();
-	public IPessoa getSenderPerson();
+	public IPerson getSenderPerson();
 	public Integer getKeyReceiverPerson();
-	public IPessoa getReceiverPerson();
+	public IPerson getReceiverPerson();
 	public Integer getKeySenderExecutionCourse(); 
 	public IExecutionCourse getSenderExecutionCourse(); 
 	
@@ -29,9 +29,9 @@ public interface IGroupPropertiesExecutionCourse extends IDomainObject{
 	public void setExecutionCourse(IExecutionCourse executionCourse);
 	public void setProposalState(ProposalState proposalState);
 	public void setKeySenderPerson(Integer keySenderPerson);
-	public void setSenderPerson(IPessoa senderPerson);
+	public void setSenderPerson(IPerson senderPerson);
 	public void setKeyReceiverPerson(Integer keyReceiverPerson);
-	public void setReceiverPerson(IPessoa receiverPerson);
+	public void setReceiverPerson(IPerson receiverPerson);
 	public void setKeySenderExecutionCourse(Integer keySenderExecutionCourse); 
 	public void setSenderExecutionCourse(IExecutionCourse senderExecutionCourse); 
 }

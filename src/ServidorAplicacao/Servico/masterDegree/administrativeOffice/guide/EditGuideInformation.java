@@ -17,14 +17,14 @@ import Dominio.Guide;
 import Dominio.GuideEntry;
 import Dominio.GuideSituation;
 import Dominio.IContributor;
-import Dominio.ICursoExecucao;
+import Dominio.IExecutionDegree;
 import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IGuideSituation;
 import Dominio.IPersonAccount;
-import Dominio.IPessoa;
+import Dominio.IPerson;
 import Dominio.IStudent;
 import Dominio.transactions.GratuityTransaction;
 import Dominio.transactions.IPaymentTransaction;
@@ -257,10 +257,10 @@ public class EditGuideInformation implements IService {
                         guideEntry.setIdInternal(null);
                         guideEntry.setGuide(newGuideVersion);
 
-                        IPessoa studentPerson = guide.getPerson();
+                        IPerson studentPerson = guide.getPerson();
                         IStudent student = sp.getIPersistentStudent().readByUsername(
                                 studentPerson.getUsername());
-                        ICursoExecucao executionDegree = guide.getExecutionDegree();
+                        IExecutionDegree executionDegree = guide.getExecutionDegree();
 
                         //Write Gratuity Transaction
                         if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE)) {
@@ -385,8 +385,8 @@ public class EditGuideInformation implements IService {
         IGuide guide = new Guide();
         SuportePersistenteOJB sp = null;
         IContributor contributor = null;
-        IPessoa person = null;
-        ICursoExecucao executionDegree = null;
+        IPerson person = null;
+        IExecutionDegree executionDegree = null;
 
         // Read the needed information from the DataBase
         try {

@@ -8,8 +8,8 @@ package ServidorAplicacao.Servico.sop;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoLesson;
 import DataBeans.util.Cloner;
-import Dominio.Aula;
-import Dominio.IAula;
+import Dominio.Lesson;
+import Dominio.ILesson;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
@@ -29,10 +29,10 @@ public class ReadLessonByOID implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-            IAula lesson = (IAula) lessonDAO.readByOID(Aula.class, oid);
+            ILesson lesson = (ILesson) lessonDAO.readByOID(Lesson.class, oid);
             if (lesson != null) {
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
-                //				ITurno shift = lesson.getShift();
+                //				IShift shift = lesson.getShift();
                 //				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
                 //				infoLesson.setInfoShift(infoShift);
 

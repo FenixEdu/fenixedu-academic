@@ -14,7 +14,7 @@ import Dominio.IRoomOccupation;
  *  
  */
 public interface IPersistentRoomOccupation extends IPersistentObject {
-    //public List readBy(Sala room) throws ExcepcaoPersistencia;
+    //public List readBy(Room room) throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
 
     public void delete(IRoomOccupation roomOccupation) throws ExcepcaoPersistencia;
