@@ -327,6 +327,7 @@
 	
 	<!-- Section viewer -->
 	<action name="sectionForm"
+		
 		path="/viewSection"
         type="ServidorApresentacao.Action.teacher.ViewSectionAction">    
      <forward name="Sucess" path="/viewSection.jsp"/>         
@@ -361,7 +362,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
        <forward name="editItem" path="/editItem.jsp"/>
-       <forward name="viewSection" path="/viewSection.do"/>
+       <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
 	
 	<!-- Insert Item -->
@@ -378,7 +379,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
        <forward name="insertItem" path="/insertItem.jsp"/>
-       <forward name="viewSection" path="/viewSection.do"/>
+       <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
 		
 	
