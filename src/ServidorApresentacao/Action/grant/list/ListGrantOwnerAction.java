@@ -163,12 +163,12 @@ public class ListGrantOwnerAction extends FenixDispatchAction
 				{
 					//Read all the information about the grant owner
 					Object[] args = { grantOwnerId };
-					List listGrantOwners = (List) ServiceUtils.executeService(userView, "ShowGrantOwner", args);
+					List listGrantOwnerCompleteInfo = (List) ServiceUtils.executeService(userView, "ShowGrantOwner", args);
 
-					if(listGrantOwners != null && listGrantOwners.size() != 0)
+					if(listGrantOwnerCompleteInfo != null && listGrantOwnerCompleteInfo.size() != 0)
 					{
 						//Set the request
-						request.setAttribute("listGrantOwner", listGrantOwners);
+						request.setAttribute("listGrantOwner", listGrantOwnerCompleteInfo);
 					}
 				}
 				catch (FenixServiceException e)

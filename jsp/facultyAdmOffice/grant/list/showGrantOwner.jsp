@@ -499,32 +499,37 @@
 <center><b><bean:message key="label.grant.contract.information"/></b></center>
 
 <logic:present name="infoListGrantContractList">
-    <table border="0" cellspacing="1" cellpadding="1">
-    	
-  	    <logic:iterate id="infoListGrantContract" name="infoListGrantContractList">
-    	<table>
+   	
+    <logic:iterate id="infoListGrantContract" name="infoListGrantContractList">
+    
+    <%-- Contract --%>
+	<table>
 		<tr>
-			
-			infoGrantContract
 			<td align="left">
-				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
+				<bean:message key="label.grant.contract.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantContractOrientationTeacherNumber" size="10"/>
-				<bean:message key="label.requiredfield"/>
-				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
-					<bean:message key="link.teacher.showList"/>
-				</html:link>
+				<bean:write name="infoListGrantContract" property="infoGrantContract.contractNumber"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+	            <bean:message key="label.grant.contract.state"/>:&nbsp;
+			</td>
+			<td>
+				<logic:equal name="infoListGrantContract" property="infoGrantContract.contractActive" value="true">
+				    <bean:message key="label.grant.contract.state.open"/>
+                </logic:equal>
+                <logic:equal name="infoListGrantContract" property="infoGrantContract.contractActive" value="false">
+				    <bean:message key="label.grant.contract.state.close"/>
+                </logic:equal>
 			</td>
 		</tr>
 		<tr>
 			<td align="left">
 				<bean:message key="label.grant.contract.type"/>:&nbsp;
-			</td>
 			<td>
-				<html:select property="grantType">
-					<html:options collection="grantTypeList" property="sigla" labelProperty="name"/>
-				</html:select>*
+				<bean:write name="infoListGrantContract" property="infoGrantContract.grantTypeInfo.name"/>
 			</td>
 		</tr>
 		<tr>
@@ -532,9 +537,11 @@
 				<bean:message key="label.grant.contract.regime.dateAcceptTerm"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateAcceptTerm" size="10"/>
-				&nbsp;
-				<bean:message key="label.dateformat"/>
+				<logic:present name="infoListGrantContract" property="infoGrantContract.dateAcceptTerm">
+					<dt:format pattern="yyyy-MM-dd">
+					<bean:write name="infoListGrantContract" property="infoGrantContract.dateAcceptTerm.time"/>				
+					</dt:format>
+				</logic:present>
 			</td>
 		</tr>
 		<tr>
@@ -542,22 +549,40 @@
 				<bean:message key="label.grant.contract.endMotive"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="endContractMotive" size="40"/>
+				<logic:present name="infoListGrantContract" property="infoGrantContract.endContractMotive">
+					<bean:write name="infoListGrantContract" property="infoGrantContract.endContractMotive"/>
+				</logic:present>
 			</td>
 		</tr>	
 	</table>
-
-	<br/><br/><strong><p><bean:message key="label.grant.contract.regime.information"/></p></strong>
-
+	<br/>
+	<%-- Contract Regime --%>
+	<logic:iterate id="infoGrantContractRegime" name="infoListGrantContractList.infoGrantContractRegimes">
+	<center><b><bean:message key="label.grant.contract.regime.list.information"/></b></center>
 	<table>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.regime.state"/>:&nbsp;
+			</td>
+			<td>
+				<logic:equal name="infoGrantContractRegime" property="state" value="1">
+				    <bean:message key="label.grant.contract.regime.state.actual"/>
+                </logic:equal>
+                <logic:equal name="infoGrantContractRegime" property="state" value="0">
+				    <bean:message key="label.grant.contract.regime.state.past"/>
+                </logic:equal>
+			</td>
+		</tr>
 		<tr>
 			<td align="left">
 				<bean:message key="label.grant.contract.regime.beginDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginContract" size="10"/>
-				<bean:message key="label.requiredfield"/>&nbsp;
-				<bean:message key="label.dateformat"/>
+				<logic:present name="infoGrantContractRegime" property="dateBeginContract">
+					<dt:format pattern="yyyy-MM-dd">
+					<bean:write name="infoGrantContractRegime" property="dateBeginContract.time"/>				
+					</dt:format>
+				</logic:present>
 			</td>
 		</tr>
 		<tr>
@@ -565,9 +590,22 @@
 				<bean:message key="label.grant.contract.regime.endDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateEndContract" size="10"/>
-				<bean:message key="label.requiredfield"/>&nbsp;
-				<bean:message key="label.dateformat"/>
+				<logic:present name="infoGrantContractRegime" property="dateEndContract">
+					<dt:format pattern="yyyy-MM-dd">
+					<bean:write name="infoGrantContractRegime" property="dateEndContract.time"/>				
+					</dt:format>
+				</logic:present>			
+ 			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
+			</td>
+			<td>
+				<logic:present name="infoGrantContractRegime" property="infoTeacher">
+				<bean:write name="infoGrantContractRegime" property="infoTeacher.infoPerson.nome"/>				
+				&nbsp;(n.<bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>)				
+				</logic:present>			
 			</td>
 		</tr>
 		<tr>
@@ -575,9 +613,11 @@
 				<bean:message key="label.grant.contract.regime.dateSendDispatchCC"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateSendDispatchCC" size="10"/>
-				&nbsp;
-				<bean:message key="label.dateformat"/>
+				<logic:present name="infoGrantContractRegime" property="dateSendDispatchCC">
+					<dt:format pattern="yyyy-MM-dd">
+					<bean:write name="infoGrantContractRegime" property="dateSendDispatchCC.time"/>				
+					</dt:format>
+				</logic:present>
 			</td>
 		</tr>
 		<tr>
@@ -585,9 +625,11 @@
 				<bean:message key="label.grant.contract.regime.dateDispatchCC"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateDispatchCC"  size="10"/>
-				&nbsp;
-				<bean:message key="label.dateformat"/>
+				<logic:present name="infoGrantContractRegime" property="dateDispatchCC">
+					<dt:format pattern="yyyy-MM-dd">
+					<bean:write name="infoGrantContractRegime" property="dateDispatchCC.time"/>				
+					</dt:format>
+				</logic:present>
 			</td>
 		</tr>
 		<tr>
@@ -595,9 +637,11 @@
 				<bean:message key="label.grant.contract.regime.dateSendDispatchCD"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateSendDispatchCD" size="10"/>
-				&nbsp;
-				<bean:message key="label.dateformat"/>
+				<logic:present name="infoGrantContractRegime" property="dateSendDispatchCD">
+					<dt:format pattern="yyyy-MM-dd">
+					<bean:write name="infoGrantContractRegime" property="dateSendDispatchCD.time"/>				
+					</dt:format>
+				</logic:present>
 			</td>
 		</tr>
 		<tr>
@@ -605,32 +649,132 @@
 				<bean:message key="label.grant.contract.regime.dateDispatchCD"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateDispatchCD" size="10"/>
-				&nbsp;
-				<bean:message key="label.dateformat"/>
+				<logic:present name="infoGrantContractRegime" property="dateDispatchCD.time">
+					<dt:format pattern="yyyy-MM-dd">
+					<bean:write name="infoGrantContractRegime" property="dateDispatchCD"/>				
+					</dt:format>
+				</logic:present>
 			</td>
 		</tr>
 	</table>
-    	
-    	
-            <td class="listClasses">
-                <logic:present name="infoGrantContract" property="grantOrientationTeacherInfo">
-                    <bean:write name="infoGrantContract" property="grantOrientationTeacherInfo.orientationTeacherInfo.infoPerson.nome"/>
-                </logic:present>
-                <logic:notPresent name="infoGrantContract" property="grantOrientationTeacherInfo">
-                    ---
-                </logic:notPresent>
-            </td>
-            <td class="listClasses">
-                <logic:equal name="infoGrantContract" property="contractActive" value="true">
-                    <bean:message key="label.grant.contract.state.open"/>
-                </logic:equal>
-                <logic:equal name="infoGrantContract" property="contractActive" value="false">
-                     <bean:message key="label.grant.contract.state.close"/>
-                </logic:equal>
-            </td>
-        </tr>
-    </logic:iterate>
+	</logic:iterate>
+	<br/>
+	<%-- Subsidy --%>
+	<center><b><bean:message key="label.grant.subsidy.information"/></b></center>
+	<logic:iterate id="infoListGrantSubsidy" name="infoListGrantContractList.infoListGrantSubsidys">
+	
+		<%--  --%>
+		<table>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.subsidy.dateBeginSubsidy"/>:&nbsp;
+				</td>
+				<td>
+					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="dateBeginSubsidy">
+						<dt:format pattern="yyyy-MM-dd">
+						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="dateBeginSubsidy.time"/>				
+						</dt:format>
+					</logic:present>				
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.subsidy.dateEndSubsidy"/>:&nbsp;
+				</td>
+				<td>
+					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="dateEndSubsidy">
+						<dt:format pattern="yyyy-MM-dd">
+						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="dateEndSubsidy.time"/>				
+						</dt:format>
+					</logic:present>				
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.subsidy.state"/>:&nbsp;
+				</td>
+				<td>
+					<logic:equal name="infoListGrantSubsidy.infoGrantSubsidy" property="state" value="1">
+					    <bean:message key="label.grant.subsidy.state.actual"/>
+	                </logic:equal>
+	                <logic:equal name="infoListGrantSubsidy.infoGrantSubsidy" property="state" value="0">
+					    <bean:message key="label.grant.subsidy.state.past"/>
+	                </logic:equal>
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.subsidy.value"/>:&nbsp;
+				</td>
+				<td>
+					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="value">
+						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="value"/>				
+					</logic:present>				
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.subsidy.valueFullName"/>:&nbsp;
+				</td>
+				<td>
+					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="valueFullName">
+						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="valueFullName"/>				
+					</logic:present>				
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;
+				</td>
+				<td>
+					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="totalCost">
+						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="totalCost"/>				
+					</logic:present>				
+				</td>
+			</tr>			
+		</table>
+	
+		<%-- Parts --%>
+		<center><b><bean:message key="label.grant.part.information"/></b></center>
+		<logic:iterate id="infoGrantPart" name="infoListGrantSubsidy.infoGrantParts">
+		<table>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.part.percentage"/>:&nbsp;
+				</td>
+				<td>
+					<logic:present name="infoGrantPart" property="percentage">
+						<bean:write name="infoGrantPart" property="percentage"/>				
+					</logic:present>				
+				</td>
+			</tr>
+			<tr>
+				<td align="left" colspan="2">
+					<bean:message key="label.grant.part.grantPaymentEntity.designation"/> *&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<logic:present name="infoGrantPart" property="infoGrantPaymentEntity">
+						<bean:write name="infoGrantPart" property="infoGrantPaymentEntity.designation"/>				
+					</logic:present>				
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					<bean:message key="label.grant.part.responsibleTeacher.number"/>:&nbsp;
+				</td>
+				<td>
+					<logic:present name="infoGrantPart" property="infoResponsibleTeacher">
+						<bean:write name="infoGrantPart" property="infoResponsibleTeacher.teacherNumber"/>				
+					</logic:present>								
+				</td>
+			</tr>
+		</table>	
+		</logic:iterate> <%-- Grant Part --%>
+	</logic:iterate> <%-- Grant Subsidy --%>
+	
+    </logic:iterate> <%-- Grant Contract --%>
     </table>
 </logic:present>
 
