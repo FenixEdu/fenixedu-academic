@@ -152,8 +152,8 @@
 
       <field property="birthYear" depends="required,integer,range">
         <arg0 key="candidate.year"/>
-        <arg1 key="1900" resource="false"/>
-        <arg2 key="2100" resource="false"/>        
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>1900</var-value>
@@ -194,8 +194,8 @@
 
       <field property="idIssueDateYear" depends="required,integer,range">
         <arg0 key="candidate.year"/>
-        <arg1 key="1900" resource="false"/>
-        <arg2 key="2100" resource="false"/>        
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>1900</var-value>
@@ -206,7 +206,7 @@
         </var>
       </field>
 
-      <field property="average" depends="required,double,required">
+      <field property="average" depends="required,float,floatRange">
         <arg0 key="candidate.average" />
 		<arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
