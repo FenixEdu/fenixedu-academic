@@ -443,6 +443,11 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>            
+
+		<form-bean name="teacherCreditsSheetForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionPeriodId" type="java.lang.Integer"/>
+		</form-bean>            
+
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
     <global-exceptions>
@@ -1166,6 +1171,7 @@
             <forward name="successfull-prepare" path="/showTeacherCreditsSheet.do"/>
         </action>
         <action path="/showTeacherCreditsSheet" 
+		name="teacherCreditsSheetForm"
             type="ServidorApresentacao.Action.credits.ReadTeacherCreditsSheetAction">
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
