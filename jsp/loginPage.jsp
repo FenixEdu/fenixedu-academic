@@ -23,6 +23,7 @@
            <p>Caso precise de esclarecimentos adicionais ou n&atilde;o consiga
            efectuar o seu login contacte a equipa de suporte utilizando: <a href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</a><br />
          </p>
+         		<span class="error">Caso seja aluno</span>, deverá usar como Username L seguido do seu número de estudante (ex: L90123). Para password, caso não a tenha modificado ainda, deverá usar o seu número do seu documento de identificação.         
          </td>
        </tr>
        <tr>
