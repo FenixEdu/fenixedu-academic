@@ -33,6 +33,48 @@
       	locking="true"
       />
 
+	 <field-descriptor
+         name="enrollmentBeginDate"
+         column="ENROLLMENT_BEGIN_DATE"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+
+	  <field-descriptor
+         name="enrollmentEndDate"
+         column="ENROLLMENT_END_DATE"
+        jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+      />
+
+	  <field-descriptor
+         name="enrollmentBeginTime"
+         column="ENROLLMENT_BEGIN_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+
+	  <field-descriptor
+         name="enrollmentEndTime"
+         column="ENROLLMENT_END_TIME"
+        jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+      />
+
+	  <field-descriptor
+         name="hasTheme"
+         column="HAS_THEME"
+         jdbc-type="INTEGER"
+         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+      />
+
+	  <field-descriptor
+         name="hasCaseStudy"
+         column="HAS_CASE_STUDY"
+         jdbc-type="INTEGER"
+         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+      />
+
 	<collection-descriptor
          name="equivalencies"
          element-class-ref="Dominio.Seminaries.CourseEquivalency"
