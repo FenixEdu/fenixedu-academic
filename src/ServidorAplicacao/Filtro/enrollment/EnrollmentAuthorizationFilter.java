@@ -122,28 +122,20 @@ public class EnrollmentAuthorizationFilter extends
                                 + student.getNumber().toString());
                     }
 
-                } else if (roles
-                        .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                        || roles
-                                .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                    IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(
-                            arguments, sp);
+                } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                        || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+                    IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments,
+                            sp);
 
                     if (studentCurricularPlan.getStudent() == null) {
                         return "noAuthorization";
                     }
                     if (insideEnrollmentPeriod(studentCurricularPlan, sp)) {
-                        ITutor tutor = verifyStudentWithTutor(
-                                studentCurricularPlan.getStudent(), sp);
+                        ITutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent(), sp);
                         if (tutor != null) {
-                            return new String(
-                                    "error.enrollment.student.withTutor+"
-                                            + tutor.getTeacher()
-                                                    .getTeacherNumber()
-                                                    .toString()
-                                            + "+"
-                                            + tutor.getTeacher().getPerson()
-                                                    .getNome());
+                            return new String("error.enrollment.student.withTutor+"
+                                    + tutor.getTeacher().getTeacherNumber().toString() + "+"
+                                    + tutor.getTeacher().getPerson().getNome());
                         }
                     }
                     return null;

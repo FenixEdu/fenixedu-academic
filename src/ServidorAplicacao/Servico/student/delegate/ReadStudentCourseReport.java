@@ -219,8 +219,8 @@ public class ReadStudentCourseReport implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrollmentState enrolmentState = enrolment.getEnrollmentState();
-            if (enrolmentState.equals(EnrollmentState.APROVED)) {
+            EnrollmentState enrollmentState = enrolment.getEnrollmentState();
+            if (enrollmentState.equals(EnrollmentState.APROVED)) {
                 approved++;
             }
         }
@@ -237,9 +237,9 @@ public class ReadStudentCourseReport implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrollmentState enrolmentState = enrolment.getEnrollmentState();
-            if (enrolmentState.equals(EnrollmentState.APROVED)
-                    || enrolmentState.equals(EnrollmentState.NOT_APROVED)) {
+            EnrollmentState enrollmentState = enrolment.getEnrollmentState();
+            if (enrollmentState.equals(EnrollmentState.APROVED)
+                    || enrollmentState.equals(EnrollmentState.NOT_APROVED)) {
                 evaluated++;
             }
         }

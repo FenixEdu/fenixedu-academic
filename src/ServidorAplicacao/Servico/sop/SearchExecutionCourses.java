@@ -195,9 +195,9 @@ public class SearchExecutionCourses implements IServico {
                             Iterator iter = enrolments.iterator();
                             while (iter.hasNext()) {
                                 IEnrollment enrolment = (IEnrollment) iter.next();
-                                EnrollmentState enrolmentState = enrolment
+                                EnrollmentState enrollmentState = enrolment
                                         .getEnrollmentState();
-                                if (enrolmentState
+                                if (enrollmentState
                                         .equals(EnrollmentState.APROVED)) {
                                     approved++;
                                 }
@@ -211,11 +211,11 @@ public class SearchExecutionCourses implements IServico {
                             Iterator iter = enrolments.iterator();
                             while (iter.hasNext()) {
                                 IEnrollment enrolment = (IEnrollment) iter.next();
-                                EnrollmentState enrolmentState = enrolment
+                                EnrollmentState enrollmentState = enrolment
                                         .getEnrollmentState();
-                                if (enrolmentState
+                                if (enrollmentState
                                         .equals(EnrollmentState.APROVED)
-                                        || enrolmentState
+                                        || enrollmentState
                                                 .equals(EnrollmentState.NOT_APROVED)) {
                                     evaluated++;
                                 }

@@ -86,7 +86,7 @@ public class Enrolment extends DomainObject implements IEnrollment
 	}
 
 	/**
-	 * @return Returns the enrolmentState.
+	 * @return Returns the enrollmentState.
 	 */
 	public EnrollmentState getEnrollmentState()
 	{
@@ -94,11 +94,11 @@ public class Enrolment extends DomainObject implements IEnrollment
 	}
 
 	/**
-	 * @param enrolmentState The enrolmentState to set.
+	 * @param enrollmentState The enrollmentState to set.
 	 */
-	public void setEnrollmentState(EnrollmentState enrolmentState)
+	public void setEnrollmentState(EnrollmentState enrollmentState)
 	{
-		this.enrollmentState = enrolmentState;
+		this.enrollmentState = enrollmentState;
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class Enrolment extends DomainObject implements IEnrollment
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "idInternal = " + super.getIdInternal() + "; ";
 		result += "studentCurricularPlan = " + this.getStudentCurricularPlan() + "; ";
-		result += "enrolmentState = " + this.getEnrollmentState() + "; ";
+		result += "enrollmentState = " + this.getEnrollmentState() + "; ";
 		result += "execution Period = " + this.getExecutionPeriod() + "; ";
 		result += "curricularCourse = " + this.getCurricularCourse() + "]\n";
 		return result;

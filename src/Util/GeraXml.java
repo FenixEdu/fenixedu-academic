@@ -189,7 +189,7 @@ public class GeraXml extends FenixUtil {
             Integer studentNumber, Integer degreeCurricularPlanID) {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
 
-        EnrollmentState enrolmentState = EnrollmentState.getEnum("msg."
+        EnrollmentState enrollmentState = EnrollmentState.getEnum("msg."
                 + curricularCourseData[1]);
         EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 
@@ -235,7 +235,7 @@ public class GeraXml extends FenixUtil {
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setExecutionPeriod(executionPeriod);
-                enrolment.setEnrollmentState(enrolmentState);
+                enrolment.setEnrollmentState(enrollmentState);
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
                 enrolment.setCondition(EnrollmentCondition.FINAL);
             } catch (RuntimeException e1) {

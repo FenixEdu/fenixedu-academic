@@ -49,7 +49,7 @@ public class GetEnrolmentList implements IServico {
 		return "GetEnrolmentList";
 	}
 
-	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan, EnrollmentState enrolmentState) throws FenixServiceException, Exception {
+	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan, EnrollmentState enrollmentState) throws FenixServiceException, Exception {
 
 		ISuportePersistente sp = null;
 		List enrolmentList = null;
@@ -59,7 +59,7 @@ public class GetEnrolmentList implements IServico {
 			
 			// Read the list 
 			
-			enrolmentList = sp.getIPersistentEnrolment().readEnrolmentsByStudentCurricularPlanAndEnrolmentState(iStudentCurricularPlan, enrolmentState);
+			enrolmentList = sp.getIPersistentEnrolment().readEnrolmentsByStudentCurricularPlanAndEnrolmentState(iStudentCurricularPlan, enrollmentState);
 	
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");

@@ -27,7 +27,7 @@ public interface IPersistentEnrollment extends IPersistentObject
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
         IStudentCurricularPlan studentCurricularPlan,
-        EnrollmentState enrolmentState)
+        EnrollmentState enrollmentState)
         throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
@@ -86,7 +86,7 @@ public interface IPersistentEnrollment extends IPersistentObject
 
     public List readAllByStudentCurricularPlanAndEnrolmentStateAndExecutionPeriod(
         IStudentCurricularPlan studentCurricularPlan,
-        EnrollmentState enrolmentState,
+        EnrollmentState enrollmentState,
         IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia;
 
@@ -104,7 +104,7 @@ public interface IPersistentEnrollment extends IPersistentObject
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(
         IStudentCurricularPlan studentCurricularPlan,
-        EnrollmentState enrolmentState,
+        EnrollmentState enrollmentState,
         CurricularCourseType curricularCourseType)
         throws ExcepcaoPersistencia;
 

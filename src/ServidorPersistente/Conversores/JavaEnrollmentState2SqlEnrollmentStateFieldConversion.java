@@ -19,8 +19,8 @@ public class JavaEnrollmentState2SqlEnrollmentStateFieldConversion implements Fi
     
 	public Object javaToSql(Object obj) throws ConversionException {
 		if (obj instanceof EnrollmentState) {
-			EnrollmentState enrolmentState = (EnrollmentState) obj;
-			return new Integer(enrolmentState.getValue());
+			EnrollmentState enrollmentState = (EnrollmentState) obj;
+			return new Integer(enrollmentState.getValue());
 		}
 		return obj;
 	}
@@ -31,18 +31,18 @@ public class JavaEnrollmentState2SqlEnrollmentStateFieldConversion implements Fi
      */
 
 	public Object sqlToJava(Object obj) throws ConversionException {
-		EnrollmentState enrolmentState = null;
+		EnrollmentState enrollmentState = null;
 		if (obj instanceof Integer) {
-			Integer enrolmentStateId = (Integer) obj;
+			Integer enrollmentStateId = (Integer) obj;
 			
-			enrolmentState = EnrollmentState.getEnum(enrolmentStateId.intValue());
-			if (enrolmentState == null) {
+			enrollmentState = EnrollmentState.getEnum(enrollmentStateId.intValue());
+			if (enrollmentState == null) {
 				throw new IllegalArgumentException(this.getClass().getName() + ": Illegal EnrolmentState type!(" + obj + ")");
 			}
 		} else {
 			throw new IllegalArgumentException("Illegal EnrolmentState type!(" + obj + ")");
 		}
-		return enrolmentState;
+		return enrollmentState;
 
 	}
     
