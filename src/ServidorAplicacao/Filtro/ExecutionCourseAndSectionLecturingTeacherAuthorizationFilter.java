@@ -100,6 +100,9 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 						false);
 			}
 			IPersistentSection persistentSection = sp.getIPersistentSection();
+			if (argumentos[1]==null) {
+				return true;
+			}
 			if (argumentos[1] instanceof InfoSection) {
 				infoSection = (InfoSection) argumentos[1];
 				section = Cloner.copyInfoSection2ISection(infoSection);
