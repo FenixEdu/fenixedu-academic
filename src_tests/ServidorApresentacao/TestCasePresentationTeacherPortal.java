@@ -18,9 +18,9 @@ import Util.RoleType;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public abstract class TestCasePresentationGesdisPortal extends TestCaseActionExecution{
+public abstract class TestCasePresentationTeacherPortal extends TestCaseActionExecution{
 
-	public TestCasePresentationGesdisPortal (String testName) {
+	public TestCasePresentationTeacherPortal (String testName) {
 			super(testName);
 		}
 
