@@ -22,6 +22,8 @@ public class InfoExecutionPeriod extends InfoObject {
 
     private Date endDate;
 
+    private InfoExecutionPeriod previousInfoExecutionPeriod;
+
     public InfoExecutionPeriod() {
 
     }
@@ -209,5 +211,21 @@ public class InfoExecutionPeriod extends InfoObject {
             infoExecutionPeriod.copyFromDomain(period);
         }
         return infoExecutionPeriod;
+    }
+
+    /**
+     * @return Returns the previousInfoExecutionPeriod.
+     */
+    public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
+        return previousInfoExecutionPeriod;
+    }
+
+    /**
+     * @param previousInfoExecutionPeriod
+     *            The previousInfoExecutionPeriod to set.
+     */
+    public void setPreviousInfoExecutionPeriod(
+            InfoExecutionPeriod previousInfoExecutionPeriod) {
+        this.previousInfoExecutionPeriod = previousInfoExecutionPeriod;
     }
 }

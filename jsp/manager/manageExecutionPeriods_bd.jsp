@@ -11,7 +11,7 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 
 
 <logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>" scope="request">
-
+<%--
 	<html:form action="/createExecutionPeriodForm">
 		Criar Periodo Execução: 
 		<span class="error"><html:errors /></span>
@@ -67,7 +67,7 @@ de uma elevada quantidade de dados pelo que demoram alguns minutos a processar.
 			</tr>
 		</table>
 	</html:form>
-
+ --%>
 	<bean:message key="list.title.execution.periods"/>
 	<br />
 	<table>
