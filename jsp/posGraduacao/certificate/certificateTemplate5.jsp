@@ -13,3 +13,4 @@ do curso de  <bean:write name="infoStudentCurricularPlan" property="specializati
 			<logic:equal name="infoStudentCurricularPlan" property="specialization" value="Especialização">
  				ministrado neste instituto,obteve aproveitamento nas disciplinas abaixo discriminada.
 			</logic:equal>
+			<br />
