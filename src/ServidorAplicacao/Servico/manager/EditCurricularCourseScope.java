@@ -3,18 +3,15 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import DataBeans.InfoCurricularCourseScope;
 import Dominio.Branch;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
 import Dominio.IBranch;
-import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
@@ -22,6 +19,7 @@ import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac1
@@ -42,10 +40,11 @@ public class EditCurricularCourseScope implements IServico {
 	}
 	
 
-	public List run(Integer oldCurricularCourseScopeId, InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
+	public void run(Integer oldCurricularCourseScopeId, InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
 
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		ICurricularCourseScope oldCurricularCourseScope = null;
+//		boolean result = false;
 		
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
@@ -57,7 +56,7 @@ public class EditCurricularCourseScope implements IServico {
 			curricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
 			
 			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
-			ICurricularCourse curricularCourse = oldCurricularCourseScope.getCurricularCourse();	
+//			ICurricularCourse curricularCourse = oldCurricularCourseScope.getCurricularCourse();	
 				
 						
 			Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
@@ -72,12 +71,13 @@ public class EditCurricularCourseScope implements IServico {
 			curricularSemester.setIdInternal(curricularSemesterId);
 			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(curricularSemester, false);
 		
-			ICurricularCourseScope newCurricularCourseScope = 
-			        persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, newCurricularSemester, newBranch );
-
+			
 		
-			if(newCurricularCourseScope == null) {
-				newCurricularCourseScope = new CurricularCourseScope();
+			if(oldCurricularCourseScope != null) {
+				
+//				ICurricularCourseScope newCurricularCourseScope = 
+//									persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, newCurricularSemester, newBranch );
+
 				oldCurricularCourseScope.setCredits(newInfoCurricularCourseScope.getCredits());
 				oldCurricularCourseScope.setTheoreticalHours(newInfoCurricularCourseScope.getTheoreticalHours());
 				oldCurricularCourseScope.setPraticalHours(newInfoCurricularCourseScope.getPraticalHours());
@@ -91,17 +91,18 @@ public class EditCurricularCourseScope implements IServico {
 				//it already includes the curricular year
 				oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
 					
-				persistentCurricularCourseScope.simpleLockWrite(oldCurricularCourseScope);
-				return null;
+				
+				try {
+					persistentCurricularCourseScope.lockWrite(oldCurricularCourseScope);
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException("O âmbito do "+newCurricularSemester.getCurricularYear().getYear()+"º ano/ "+newCurricularSemester.getSemester()+"º semestre, do ramo"+newBranch.getCode(), ex);
+				}
+				
+//				result = true;
 			}
 		
-			List errors = new ArrayList(3);
 			
-			errors.add(0,newCurricularSemester.getCurricularYear().getYear());	
-			errors.add(1, newCurricularSemester.getSemester());
-			errors.add(2, newBranch.getCode());	
-			
-			return errors;
+//			return new Boolean(result);
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);

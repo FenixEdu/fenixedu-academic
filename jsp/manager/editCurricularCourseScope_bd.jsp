@@ -5,7 +5,10 @@
 
 				
 <h2><bean:message key="label.manager.edit.curricularCourse" /></h2>
-<br/>
+<br>
+
+<span class="error"><html:errors/></span>
+
 <table>
 <html:form action="/editCurricularCourseScope" method="get">
 	<html:hidden property="page" value="1"/>
@@ -57,9 +60,6 @@
 			<td>
 				<html:text size="60" property="theoreticalHours" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="theoreticalHours"/></span>
-			</td>
 		</tr>
 		
 		<tr>
@@ -69,9 +69,6 @@
 			<td>
 				<html:text size="60" property="praticalHours" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="praticalHours"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -79,9 +76,6 @@
 			</td>
 			<td>
 				<html:text size="60" property="theoPratHours" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="theoPratHours"/></span>
 			</td>
 		</tr>
 		<tr>
@@ -91,9 +85,6 @@
 			<td>
 				<html:text size="60" property="labHours" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="labHours"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -101,9 +92,6 @@
 			</td>
 			<td>
 				<html:text size="60" property="maxIncrementNac" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="maxIncrementNac"/></span>
 			</td>
 		</tr>
 		<tr>
@@ -113,9 +101,6 @@
 			<td>
 				<html:text size="60" property="minIncrementNac" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="minIncrementNac"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -124,9 +109,6 @@
 			<td>
 				<html:text size="60" property="weight" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="weight"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -134,9 +116,6 @@
 			</td>
 			<td>
 				<html:text size="60" property="credits" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="credits"/></span>
 			</td>
 		</tr>
 		

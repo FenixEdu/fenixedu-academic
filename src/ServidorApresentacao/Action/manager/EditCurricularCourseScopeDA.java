@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -25,8 +23,10 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -57,7 +57,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
-		System.out.println("11111111111111111111111111111VELHO CURRICULAR COURSEScope" + oldInfoCurricularCourseScope);
+//		System.out.println("11111111111111111111111111111VELHO CURRICULAR COURSEScope" + oldInfoCurricularCourseScope);
 
 		if (oldInfoCurricularCourseScope.getTheoreticalHours() != null)
 			dynaForm.set("theoreticalHours", oldInfoCurricularCourseScope.getTheoreticalHours().toString());
@@ -118,7 +118,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		return mapping.findForward("editCurricularCourseScope");
 	}
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException/*,ExistingActionException*/ {
 
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -197,23 +197,26 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 		Object args[] = { oldCurricularCourseScopeId, newInfoCurricularCourseScope};
 		GestorServicos manager = GestorServicos.manager();
-		List serviceResult = null;
+//		Boolean serviceResult = null;
 
 		try {
-			serviceResult = (List) manager.executar(userView, "EditCurricularCourseScope", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		if (serviceResult != null) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			if (serviceResult.get(0) != null) {
-				error = new ActionError("message.existingCurricularCourseScope", serviceResult.get(0), serviceResult.get(1), serviceResult.get(2));
-				actionErrors.add("message.existingCurricularCourseScope", error);
-			}
-			saveErrors(request, actionErrors);
-		}
+			manager.executar(userView, "EditCurricularCourseScope", args);
+		}  catch (ExistingServiceException e) {
+				   throw new ExistingActionException(e.getMessage(), e);
+			   }
+catch (FenixServiceException fenixServiceException) {
+	throw new FenixActionException(fenixServiceException.getMessage());
+}
+	
+//		if (serviceResult != null) {
+//			ActionErrors actionErrors = new ActionErrors();
+//			ActionError error = null;
+//			if (serviceResult.get(0) != null) {
+//				error = new ActionError("message.existingCurricularCourseScope", serviceResult.get(0), serviceResult.get(1), serviceResult.get(2));
+//				actionErrors.add("message.existingCurricularCourseScope", error);
+//			}
+//			saveErrors(request, actionErrors);
+//		}
 
 		request.setAttribute("infoCurricularCourseScope", newInfoCurricularCourseScope);
 

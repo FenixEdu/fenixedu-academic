@@ -3,18 +3,17 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import DataBeans.InfoCurricularCourse;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac1
@@ -35,7 +34,7 @@ public class EditCurricularCourse implements IServico {
 	}
 	
 
-	public List run(Integer oldCurricularCourseId,InfoCurricularCourse  newInfoCurricularCourse,Integer degreeCPId) throws FenixServiceException {
+	public void run(Integer oldCurricularCourseId,InfoCurricularCourse  newInfoCurricularCourse) throws FenixServiceException {
 	
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 		ICurricularCourse oldCurricularCourse = null;
@@ -48,26 +47,25 @@ public class EditCurricularCourse implements IServico {
 			String newName = newInfoCurricularCourse.getName();
 			String newCode = newInfoCurricularCourse.getCode();
 	
-			ICurricularCourse newCurricularCourse = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(degreeCPId, newName, newCode);
+//			ICurricularCourse newCurricularCourse = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(degreeCPId, newName, newCode);
 		
-			if(newCurricularCourse == null) {
-				newCurricularCourse = new CurricularCourse();
+			if(oldCurricularCourse != null) {
+				
 				oldCurricularCourse.setName(newName);
 				oldCurricularCourse.setCode(newCode);
 				oldCurricularCourse.setType(newInfoCurricularCourse.getType());
 				oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
 				oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
 				
-				persistentCurricularCourse.simpleLockWrite(oldCurricularCourse);
-				return null;
+				
+				try {
+					persistentCurricularCourse.lockWrite(oldCurricularCourse);
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException("A disciplina curricular de nome "+newName+" e sigla "+newCode, ex);
+				}
 			}
 		
-			List errors = new ArrayList(2);
-			
-			errors.add(0, newName);
-			errors.add(1, newCode);	
-			
-			return errors;
+		
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);

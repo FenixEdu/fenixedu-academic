@@ -278,6 +278,10 @@
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditCurricularCourseDA"
         validate="true">  
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
        <forward name="editCurricularCourse" path="df.page.edit-curricular-course"/>
        <forward name="readDegreeCP" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
@@ -295,6 +299,10 @@
 		scope="request"
 		type="ServidorApresentacao.Action.manager.EditCurricularCourseScopeDA"
         validate="true">  
+          <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
        <forward name="editCurricularCourseScope" path="df.page.edit-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
 	</action>
@@ -311,7 +319,6 @@
        <forward name="insertCurricularCourseScope" path="df.page.insert-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
 	</action>
-	
 	
     <!--=====Actions for execution degree==== -->
     

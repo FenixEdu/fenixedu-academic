@@ -3,14 +3,10 @@
  */
 package ServidorApresentacao.Action.manager;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,8 +16,10 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoCurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CurricularCourseType;
@@ -43,9 +41,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			DynaActionForm dynaForm = (DynaActionForm) form;
 			
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+//			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 			Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-			Integer degreeId = new Integer(request.getParameter("degreeId"));
+//			Integer degreeId = new Integer(request.getParameter("degreeId"));
 
 			InfoCurricularCourse oldInfoCurricularCourse = null;
 
@@ -95,7 +93,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		
 		Integer degreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		Integer oldCurricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-		Integer degreeId = new Integer(request.getParameter("degreeId"));
+//		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		
 		InfoCurricularCourse newInfoCurricularCourse = new InfoCurricularCourse();	
 		
@@ -126,14 +124,6 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			newInfoCurricularCourse.setMandatory(mandatory);
 		}
 		
-//		if(universityString.compareTo("") != 0) {
-//			university
-//			
-//			University university = new University(); 
-//			
-//			newInfoCurricularCourse.setUniversity(university);
-//		}
-//		
 		if(basicString.compareTo("") != 0) {
 			Boolean basic = new Boolean(basicString); 
 			newInfoCurricularCourse.setBasic(basic);
@@ -141,24 +131,27 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		
 		
 			
-		Object args[] = { oldCurricularCourseId,  newInfoCurricularCourse, degreeCPId };
+		Object args[] = { oldCurricularCourseId,  newInfoCurricularCourse };
 		GestorServicos manager = GestorServicos.manager();
-		List serviceResult = null;
+//		List serviceResult = null;
 		try {
-				serviceResult = (List) manager.executar(userView, "EditCurricularCourse", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+			manager.executar(userView, "EditCurricularCourse", args);
+		}  catch (ExistingServiceException e) {
+				   throw new ExistingActionException(e.getMessage(), e);
+			   }
+catch (FenixServiceException fenixServiceException) {
+	throw new FenixActionException(fenixServiceException.getMessage());
+}
 		
-		if(serviceResult != null) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			if(serviceResult.get(0) != null) {
-				error = new ActionError("message.existingCurricularCourse", serviceResult.get(0),  serviceResult.get(1));
-				actionErrors.add("message.existingCurricularCourse", error);
-			}			
-			saveErrors(request, actionErrors);
-		}
+//		if(serviceResult != null) {
+//			ActionErrors actionErrors = new ActionErrors();
+//			ActionError error = null;
+//			if(serviceResult.get(0) != null) {
+//				error = new ActionError("message.existingCurricularCourse", serviceResult.get(0),  serviceResult.get(1));
+//				actionErrors.add("message.existingCurricularCourse", error);
+//			}			
+//			saveErrors(request, actionErrors);
+//		}
 //		request.setAttribute("degreeId", degreeId);
 		return mapping.findForward("readDegreeCP");
 	}			

@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <h2><bean:message key="label.manager.edit.curricularCourse" /></h2>
-<br/>
+<br>
+
+<span class="error"><html:errors/></span>
 <table>
 <html:form action="/editCurricularCourse" method="get">
 	<html:hidden property="page" value="1"/>
@@ -22,9 +24,7 @@
 			<td>
 				<html:text size="60" property="name" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="name"/></span>
-			</td>
+			
 		</tr>
 
 		<tr>
@@ -34,9 +34,7 @@
 			<td>
 				<html:text size="60" property="code" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="code"/></span>
-			</td>
+			
 		</tr>
 
 		<tr>
