@@ -101,18 +101,22 @@ public class FrequentaOJB
 	}
 
 	public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select frequentas from " + Frequenta.class.getName();
-			oqlQuery += " where aluno.number = $1";
-			query.create(oqlQuery);
-			query.bind(id);
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria criteria = new Criteria ();
+		criteria.addEqualTo("aluno.number", id);
+		return queryList(Frequenta.class, criteria);
+		
+//		try {
+//			String oqlQuery =
+//				"select frequentas from " + Frequenta.class.getName();
+//			oqlQuery += " where aluno.number = $1";
+//			query.create(oqlQuery);
+//			query.bind(id);
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			return result;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
 	}
 	public List readByStudentNumberInCurrentExecutionPeriod(Integer number)
 		throws ExcepcaoPersistencia {
