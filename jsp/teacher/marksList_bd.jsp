@@ -45,7 +45,11 @@
 				</logic:equal>
 		   </logic:present>
 		   </td>
-		</tr> 
+		</tr>
+		<tr>
+	    	<td colspan="4" class="infoop"><bean:message key="label.marksOnline.instructions" /></td>
+		</tr>
+		<tr><td><br></br></td></tr>
 		<tr>
 			
 			<td class="listClasses-header">
@@ -66,7 +70,7 @@
 		
 		<logic:present name="marksListComponent" property="marksList">  
 			<bean:size id="size" name="marksListComponent" property="marksList" />	
-			<html:hidden property="sizeList" value="<%= size.toString() %>" />							
+			<html:hidden property="sizeList" value="<%= size.toString() %>" /> 
 				    			    		
 	    	<logic:iterate id="markElem" name="marksListComponent" property="marksList" indexId="markId" type="DataBeans.InfoMark" > 
 	    	
