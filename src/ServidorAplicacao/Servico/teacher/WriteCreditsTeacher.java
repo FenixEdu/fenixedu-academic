@@ -14,6 +14,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Tânia Pousão
@@ -33,7 +34,7 @@ public class WriteCreditsTeacher implements IServico {
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
 	public String getNome() {
-		return "WriteCredits";
+		return "WriteCreditsTeacher";
 	}
 
 	public Boolean run(InfoTeacher infoTeacher, Integer tfcStudentNumber) throws FenixServiceException {
@@ -51,12 +52,17 @@ public class WriteCreditsTeacher implements IServico {
 			ICredits creditsTeacher = new Credits();
 			creditsTeacher.setTeacher(teacher);
 			creditsTeacher.setExecutionPeriod(executionPeriod);
-			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
-			creditsTeacher.setCredits(new Double(0));
-			
-			//escreve teacher's credits
+						
+			// mark teacher's credits for write
 			IPersistentCreditsTeacher creditsTeacherDAO = sp.getIPersistentCreditsTeacher();
-			creditsTeacherDAO.lockWrite(creditsTeacher);								
+
+			try{
+				creditsTeacherDAO.lockWrite(creditsTeacher);
+			}catch (ExistingPersistentException e){
+				creditsTeacher = creditsTeacherDAO.readByUnique(creditsTeacher);
+			}
+			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
+			
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException();
