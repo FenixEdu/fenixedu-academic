@@ -112,4 +112,10 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlan implements ID
 
         return curricularCourses;
     }
+    
+    public List getSecundaryAreas() {
+        List sec = super.getSecundaryAreas();
+        sec.addAll(getSpecializationAreas());
+        return sec;
+    }
 }
