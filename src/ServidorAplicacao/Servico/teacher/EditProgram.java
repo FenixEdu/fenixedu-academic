@@ -1,18 +1,14 @@
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.Iterator;
-import java.util.List;
-
 import DataBeans.InfoSiteProgram;
+import Dominio.CurricularCourse;
 import Dominio.Curriculum;
-import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -37,46 +33,38 @@ public class EditProgram implements IServico {
 
 	public boolean run(
 		Integer infoExecutionCourseCode,
+		Integer infoCurricularCourseCode,
 		InfoSiteProgram infoSiteProgramNew)
 		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentCurriculum persistentCurriculum =
 				sp.getIPersistentCurriculum();
-
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					new DisciplinaExecucao(infoExecutionCourseCode),
+			IPersistentCurricularCourse persistentCurricularCourse =
+				sp.getIPersistentCurricularCourse();
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) persistentCurricularCourse.readByOId(
+					new CurricularCourse(infoCurricularCourseCode),
 					false);
 
-			List curricularCourses =
-				executionCourse.getAssociatedCurricularCourses();
-			Iterator iter = curricularCourses.iterator();
-			while (iter.hasNext()) {
-				ICurricularCourse curricularCourse =
-					(ICurricularCourse) iter.next();
-				ICurriculum curriculum = null;
-				curriculum =
-					persistentCurriculum.readCurriculumByCurricularCourse(
-						curricularCourse);
+			ICurriculum curriculum = null;
+			curriculum =
+				persistentCurriculum.readCurriculumByCurricularCourse(
+					curricularCourse);
 
+			if (curriculum != null) {
 				persistentCurriculum.lockWrite(curriculum);
-
-				if (curriculum != null) {
-					curriculum.setCurricularCourse(curricularCourse);
-					curriculum.setProgram(infoSiteProgramNew.getProgram());
-					curriculum.setProgramEn(infoSiteProgramNew.getProgramEn());
-				} else {
-					curriculum =
-						new Curriculum(
-							curricularCourse,
-							infoSiteProgramNew.getProgram(),
-							infoSiteProgramNew.getProgramEn());
-				}
-
+				curriculum.setCurricularCourse(curricularCourse);
+				curriculum.setProgram(infoSiteProgramNew.getProgram());
+				curriculum.setProgramEn(infoSiteProgramNew.getProgramEn());
+			} else {
+				curriculum =
+					new Curriculum(
+						curricularCourse,
+						infoSiteProgramNew.getProgram(),
+						infoSiteProgramNew.getProgramEn());
+				persistentCurriculum.lockWrite(curriculum);
 			}
 
 		} catch (ExcepcaoPersistencia e) {

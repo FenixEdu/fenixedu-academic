@@ -1,18 +1,14 @@
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.Iterator;
-import java.util.List;
-
 import DataBeans.InfoSiteObjectives;
+import Dominio.CurricularCourse;
 import Dominio.Curriculum;
-import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
-import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -37,35 +33,32 @@ public class EditObjectives implements IServico {
 
 	public boolean run(
 		Integer infoExecutionCourseCode,
+		Integer infoCurricularCourseCode,
 		InfoSiteObjectives infoSiteObjectivesNew)
 		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+			
 			IPersistentCurriculum persistentCurriculum =
 				sp.getIPersistentCurriculum();
-
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					new DisciplinaExecucao(infoExecutionCourseCode),
-					false);
-
-			List curricularCourses =
-				executionCourse.getAssociatedCurricularCourses();
-			Iterator iter = curricularCourses.iterator();
-			while (iter.hasNext()) {
-				ICurricularCourse curricularCourse =
-					(ICurricularCourse) iter.next();
+			IPersistentCurricularCourse persistentCurricularCourse =
+				sp.getIPersistentCurricularCourse();
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) persistentCurricularCourse.readByOId(
+						new CurricularCourse(infoCurricularCourseCode),
+						false);
+		
+			
+		
+		
 				ICurriculum curriculum = null;
 				curriculum =
 					persistentCurriculum.readCurriculumByCurricularCourse(
 						curricularCourse);
 
-				persistentCurriculum.lockWrite(curriculum);
-
 				if (curriculum != null) {
+					persistentCurriculum.lockWrite(curriculum);
 					curriculum.setCurricularCourse(curricularCourse);
 					curriculum.setGeneralObjectives(
 						infoSiteObjectivesNew.getGeneralObjectives());
@@ -76,6 +69,7 @@ public class EditObjectives implements IServico {
 					curriculum.setOperacionalObjectivesEn(
 						infoSiteObjectivesNew.getOperacionalObjectivesEn());
 				} else {
+					System.out.println("novo curriculo");
 					curriculum =
 						new Curriculum(
 							curricularCourse,
@@ -83,9 +77,10 @@ public class EditObjectives implements IServico {
 							infoSiteObjectivesNew.getOperacionalObjectives(),
 							infoSiteObjectivesNew.getGeneralObjectivesEn(),
 							infoSiteObjectivesNew.getOperacionalObjectivesEn());
+					persistentCurriculum.lockWrite(curriculum);
 				}
 
-			}
+			
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
