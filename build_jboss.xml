@@ -315,6 +315,7 @@
                deprecation="${compile.deprecation}"
                encoding="${encoding}">
 			<src path="${src}"/>
+			<include name="_development/**/*.java"/>
        		<include name="constants/**/*.java"/>
 			<include name="commons/**/*.java"/>
        		<include name="DataBeans/**/*.java"/>
@@ -728,6 +729,29 @@
 	            <include name="**/**/IstFtpServerConfig.properties"/>
 			</fileset>
 		</delete>
+	</target>
+
+	<target name="dmlGenerator">
+		<java classname="dml.DmlCompiler" fork="yes">
+			<arg value="-f"/>
+			<arg value="-d"/>
+			<arg value="tmp"/>
+			<arg value="-p"/>
+			<arg value="Dominio"/>
+			<arg value="dml.file"/>
+			<classpath>
+				<pathelement path="${build.app-server}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="/usr/local/jboss/client">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="/usr/local/ant/lib">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
 	</target>
 
 	<target name="myTest"
