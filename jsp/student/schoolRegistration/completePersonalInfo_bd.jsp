@@ -8,12 +8,12 @@
  <h2><bean:message key="label.person.title.personalConsult" /></h2>
  
 <p align="center">
-	<span class="error"><html:errors property="DayOfEmissionDateOfDocumentId"/></span>
-	<span class="error"><html:errors property="MonthOfEmissionDateOfDocumentId"/></span>
-	<span class="error"><html:errors property="YearOfEmissionDateOfDocumentId"/></span>
-	<span class="error"><html:errors property="DayOfExpirationDateOfDocumentId"/></span>
-	<span class="error"><html:errors property="MonthOfExpirationDateOfDocumentId"/></span>
-	<span class="error"><html:errors property="YearOfExpirationDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="dayOfEmissionDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="monthOfEmissionDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="yearOfEmissionDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="dayOfExpirationDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="monthOfExpirationDateOfDocumentId"/></span>
+	<span class="error"><html:errors property="yearOfExpirationDateOfDocumentId"/></span>
 	<span class="error"><html:errors property="nameOfFather"/></span>
 	<span class="error"><html:errors property="nameOfMother" /></span>
 	<span class="error"><html:errors property="parishOfBirth"/></span>
@@ -21,7 +21,7 @@
 	<span class="error"><html:errors property="districtOfBirth"/></span>
 	<span class="error"><html:errors property="address"/></span>
 	<span class="error"><html:errors property="area"/></span>
-	<span class="error"><html:errors property="PrimaryAreaCode"/></span>
+	<span class="error"><html:errors property="areaCode"/></span>
 	<span class="error"><html:errors property="areaOfAreaCode"/></span>
 	<span class="error"><html:errors property="parishOfResidence"/></span>
 	<span class="error"><html:errors property="districtSubdivisionOfResidence"/></span>
@@ -29,6 +29,9 @@
 	<span class="error"><html:errors property="contributorNumber"/></span>
 	<span class="error"><html:errors property="occupation"/></span>
 	<span class="error"><html:errors property="maritalStatus"/></span>
+	<span class="error"><html:errors property="phone"/></span>
+	<span class="error"><html:errors property="mobile"/></span>
+	
 </p>
 
 
@@ -186,8 +189,7 @@
           <tr>
             <td width="30%"><bean:message key="label.person.postCode" /></td>
             <td class="greytxt">
-            	<html:text size="4" maxlength="4" property="primaryAreaCode"/> - 
-            	<html:text size="3" maxlength="3" property="secondaryAreaCode"/>
+            	<html:text size="8" maxlength="8" property="areaCode"/> XXXX-XXX 
           </tr>
           <!-- Area do Codigo Postal -->
           <tr>

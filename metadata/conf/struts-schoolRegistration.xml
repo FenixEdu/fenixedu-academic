@@ -38,8 +38,7 @@
 		<form-property name="districtOfBirth" type="java.lang.String" />
 		<form-property name="address" type="java.lang.String" />
 		<form-property name="area" type="java.lang.String" />
-		<form-property name="primaryAreaCode" type="java.lang.Integer" />
-		<form-property name="secondaryAreaCode" type="java.lang.Integer" />
+		<form-property name="areaCode" type="java.lang.String" />
 		<form-property name="areaOfAreaCode" type="java.lang.String" />
 		<form-property name="parishOfResidence" type="java.lang.String" />
 		<form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
@@ -98,6 +97,10 @@
    			validate="true"
    			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
       	    >
+      	    <exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+						
       	    <forward name="beginTransaction" path="/index.do" />
       	    <forward name="changePassword" path="definition.schoolRegistration.changePassword" />
       	</action>
@@ -109,6 +112,11 @@
             validate="true"
       	    type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
       	    >
+      	    
+      	    <exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+						
       		<forward name="beginTransaction" path="/index.do" />
       	  	<forward name="Success" path="definition.schoolRegistration.personalInfo" />      	      
       	</action>
@@ -120,6 +128,11 @@
 			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
 			input="/viewPersonalInfo.do?method=visualizeFirstTimeStudentPersonalInfoAction&amp;page=0"
 			>
+			
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+						
 			<forward name="beginTransaction" path="/index.do" />
 			<forward name="viewQuestions" path="definition.schoolRegistration.inquiry"/>
 		</action>
@@ -131,6 +144,11 @@
 			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
 			input="/showStudentInquiry.do?method=viewInquiryQuestions&amp;page=0"
 			>
+			
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			
 			<forward name="beginTransaction" path="/index.do" />
 		</action>
     </action-mappings>
