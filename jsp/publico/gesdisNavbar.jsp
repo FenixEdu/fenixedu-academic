@@ -9,7 +9,7 @@
 <h3>Navega&ccedil;&atilde;o Local</h3>	
 <ul>	
 <li><html:link page="/viewSite.do">
-	<bean:message key="link.home"/>
+	<bean:message key="link.inicialPage"/>
 </html:link></li>
 <li><html:link  page="/accessAnnouncements.do">
 	<bean:message key="link.announcements"/>

@@ -56,6 +56,7 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 			oqlQuery += " where site.executionCourse.sigla = $1";
 			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
 			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
+			oqlQuery += " order by lastModifiedDate desc";
 
 			query.create(oqlQuery);
 			query.bind(site.getExecutionCourse().getSigla());
@@ -81,7 +82,7 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 			oqlQuery += " where site.executionCourse.sigla = $1";
 			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
 			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
-			oqlQuery += " order by creationDate desc";
+			oqlQuery += " order by lastModifiedDate desc";
 
 			//should be done with max to reduce overhead
 

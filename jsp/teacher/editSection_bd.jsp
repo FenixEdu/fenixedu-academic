@@ -12,6 +12,14 @@
 <table>
 	<tr>
 		<td>
+			<html:link page="/editSection.do?method=prepareChangeParent" >
+				<bean:message key="message.parentSection"/>
+			</html:link>
+			<br>
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<bean:message key="message.sectionName"/>
 		</td>
 		<td>
@@ -37,23 +45,6 @@
 	</logic:notPresent>
 </tr>
 <%--
-	<tr>
-		<td>
-			<bean:message key="message.parentSection"/>
-		</td>
-		<td>
-			<html:select property="parentSection" >
-				<html:options collection="ALL_SECTIONS" property="name" />
-			</html:select>
-		</td>
-	</tr>
-
-	<tr>
-		<td>
-			<app:generateSectionMenu name="ALL_SECTIONS" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" renderer="sectionChooser" />
-		</td>
-	</tr>	
-
 	<% int index = 0; %>
 	<logic:iterate id="section" name="ALL_SECTIONS" />
 		<tr>

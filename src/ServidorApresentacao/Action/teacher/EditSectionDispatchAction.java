@@ -47,21 +47,16 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 		List all = (List) session.getAttribute(SessionConstants.SECTIONS);
 		List allSections = new ArrayList();
-		allSections.addAll(allSections);
+		allSections.addAll(all);
 
 		session.removeAttribute("ALL_SECTIONS");
 
 		//remove parent section, current section and all of it's daughters
 		allSections.remove(currentSection.getSuperiorInfoSection());
 		allSections.remove(currentSection);
-
+		
 		try {
-			allSections =
-				this.removeDaughters(
-					userView,
-					infoSite,
-					currentSection,
-					allSections);
+			allSections = this.removeDaughters(userView, infoSite, currentSection, allSections);
 		} catch (FenixActionException fenixActionException) {
 			throw fenixActionException;
 		}
@@ -179,22 +174,14 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("viewSite");
 	}
 
-	private List removeDaughters(
-		UserView userView,
-		InfoSite infoSite,
-		InfoSection infoSection,
-		List allSections)
+	private List removeDaughters(UserView userView, InfoSite infoSite, InfoSection infoSection, List allSections)
 		throws FenixActionException {
 
 		List sections = new ArrayList();
 		Object args[] = { infoSite, infoSection };
 		GestorServicos manager = GestorServicos.manager();
 		try {
-			sections =
-				(List) manager.executar(
-					userView,
-					"ReadSectionsBySiteAndSuperiorSection",
-					args);
+			sections = (List) manager.executar(userView, "ReadSectionsBySiteAndSuperiorSection", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -210,6 +197,14 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		return allSections;
 	}
 
+	public ActionForward prepareChangeParent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = request.getSession();
+		
+		return mapping.findForward("changeParent");		
+	}
+	
 	public ActionForward changeParent(
 		ActionMapping mapping,
 		ActionForm form,
