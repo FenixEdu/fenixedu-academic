@@ -25,6 +25,7 @@ import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -56,7 +57,7 @@ public class CriarAula implements IServico {
 	}
 
 	public InfoLessonServiceResult run(InfoLesson infoLesson)
-		throws FenixServiceException, ExistingServiceException {
+		throws FenixServiceException {
 
 		InfoLessonServiceResult result = null;
 
@@ -95,9 +96,7 @@ public class CriarAula implements IServico {
 
 			if (result.isSUCESS() && resultB) {
 				try {
-					System.out.println("Before lockWrite");
 					sp.getIAulaPersistente().lockWrite(aula);
-					System.out.println("After lockWrite");
 				} catch (ExistingPersistentException ex) {
 					throw new ExistingServiceException(ex);
 				}
@@ -116,7 +115,8 @@ public class CriarAula implements IServico {
 	 * @param aula
 	 * @return InfoLessonServiceResult
 	 */
-	private boolean validNoInterceptingLesson(IAula lesson) throws ExistingServiceException {
+	private boolean validNoInterceptingLesson(IAula lesson)
+		throws ExistingServiceException, InterceptingServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -127,26 +127,21 @@ public class CriarAula implements IServico {
 				persistentLesson.readLessonsInBroadPeriod(lesson);
 
 			System.out.println("Tenho aulas:" + lessonMatchList.size());
-			
+
 			if (lessonMatchList.size() > 0) {
-				System.out.println("lessonMatchList is going to blow up...");
 				if (lessonMatchList.contains(lesson)) {
-					System.out.println("After contains");
 					throw new ExistingServiceException();
 				} else {
-					System.out.println("Another After contains");
-					// TODO: throw new exception : INTERCEPTINGMATCHEXCEPTION 
-					return false;
+					throw new InterceptingServiceException();
 				}
 			} else {
 				return true;
 			}
 		} catch (ExcepcaoPersistencia e) {
 			return false;
-
 		}
 	}
-	
+
 	private InfoLessonServiceResult validTimeInterval(IAula lesson) {
 		InfoLessonServiceResult result = new InfoLessonServiceResult();
 

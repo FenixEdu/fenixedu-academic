@@ -25,6 +25,7 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.DiaSemana;
 import Util.TipoAula;
@@ -150,7 +151,6 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		} catch (ExistingServiceException ex) {
 			// all is ok
 		} catch (Exception ex) {
-			// all is ok
 			fail("Unexpected exception " + ex);
 		}
 	}
@@ -180,9 +180,12 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		 UserView userView = new UserView("user", privileges);
 		 try {
 			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
-			assertEquals("testCreateExistingLessonInterceptingMatch", ((InfoLessonServiceResult) result).getMessageType(), InfoLessonServiceResult.CLASSES_EXISTING_IN_TIME_INTERVAL);
+			fail("testCreateExistingLessonInterceptingMatch: Expected an Exception");
+		 } catch (InterceptingServiceException ex) {
+		 	assertNotNull("testCreateExistingLessonInterceptingMatch");
 		 } catch (Exception ex) {
 			ex.printStackTrace();
+			fail("testCreateExistingLessonInterceptingMatch: Unexpected Exception");
 		 }
 	 }
 

@@ -19,8 +19,10 @@ import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.sop.exceptions.InterceptingActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -94,8 +96,10 @@ public class CriarAulaFormAction extends FenixAction {
 						userView,
 						"CriarAula",
 						argsCriarAula);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException("1", e);
+			} catch (ExistingServiceException ex) {
+				throw new ExistingActionException("A aula", ex);
+			} catch (InterceptingServiceException ex) {
+				throw new InterceptingActionException(infoSala.getNome(), ex);
 			}
 			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
 

@@ -278,11 +278,12 @@
               validate="true"
               >
 		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
-			       key="error.exception.existing.lesson"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-                   />              
-<!--        <forward name="Sucesso" path="/principalAulas.do"/> -->
-			<forward name="Sucesso" path="/gestaoHorarios.do"/>
+                   />
+		<exception type="ServidorApresentacao.Action.sop.exceptions.InterceptingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+		<forward name="Sucesso" path="/gestaoHorarios.do"/>
       </action>
 
       <action path="/escolherAulas"

@@ -25,6 +25,16 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
  */
 public class FenixErrorExceptionHandler extends ExceptionHandler {
 
+
+
+
+	/**
+	 * 
+	 */
+	public FenixErrorExceptionHandler() {
+		super();
+	}
+
 	/**
 			 * Handle the exception.
 			 * Return the <code>ActionForward</code> instance (if any) returned by
@@ -52,32 +62,25 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 		ActionForward forward = null;
 
 		ActionError error = null;
-	 	String property = null;
+		String property = null;
 
-	  
+		// Figure out the error
+		if (ex instanceof FenixActionException) {
+			error = ((FenixActionException) ex).getError();
+			Object[] xpto = error.getValues();
+			property = ((FenixActionException) ex).getProperty();
+		} else {
+			error = new ActionError(ae.getKey(), ex.getMessage());
+			property = error.getKey();
+		}
 
-	  // Figure out the error
-	  if (ex instanceof FenixActionException) {
-		  error = ((FenixActionException) ex).getError();
-		  System.out.println("error.getValues() = " + error.getValues());
-		  Object[] xpto = error.getValues(); 
-		  System.out.println("xpto1 = " + xpto[0]);
-		  property = ((FenixActionException) ex).getProperty();
-	  } else {
-		  error = new ActionError(ae.getKey(), ex.getMessage());
-		  property = error.getKey();
-	  }
+		// Store the exception
+		request.setAttribute(Globals.EXCEPTION_KEY, ex);
+		super.storeException(request, property, error, forward, ae.getScope());
+		// Executing super will remove error just added from session.
+		//super.execute(ex, ae, mapping, formInstance, request, response);
 
-	  // Store the exception
-	  request.setAttribute(Globals.EXCEPTION_KEY, ex);
-	  super.storeException(request, property, error, forward, ae.getScope());
-	  super.execute(ex, ae, mapping, formInstance, request, response);
-
-	System.out.println("Mapping mandou para o FenixErrorExceptionHandler " + mapping);
-	
 		return mapping.getInputForward();
 	}
-	
-	
 
 }
