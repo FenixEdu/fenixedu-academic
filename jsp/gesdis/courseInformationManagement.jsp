@@ -105,10 +105,10 @@
 <br />
 <p class="infoop"><span class="emphasis-box">2</span>
 <bean:message key="message.courseInformation.LecturingTeachers" /></p>
-<br />
+<style="margin-top:10px">
 <bean:message key="message.courseInformation.numberOfStudents"/>
 <bean:write name="siteCourseInformation" property="infoExecutionCourse.numberOfAttendingStudents"/>
-<table border="0" cellspacing="1" style="margin-top:10px">
+<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 <tr>
 	<td class="listClasses-header"> <bean:message key="message.courseInformation.nameOfTeacher"/></td>
 	<td class="listClasses-header"> <bean:message key="message.courseInformation.categoryOfTeacher"/></td>
