@@ -295,26 +295,26 @@ insert into ENROLMENT values (21, 1, 21, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (22, 1, 22, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (23, 1, 23, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (24, 1, 24, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (25, 1, 50, 1, 3, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (25, 1, 50, 1, 1, 'Dominio.Enrolment', null);
 
 insert into ENROLMENT values (26, 1, 27, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (27, 1, 28, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (28, 1, 29, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (29, 1, 30, 1, 1, 'Dominio.Enrolment', null);
 
-#insert into ENROLMENT values (30, 1, 26, 1, 2, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (31, 1, 35, 1, 2, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (32, 1, 37, 1, 2, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (33, 1, 38, 1, 2, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (30, 1, 26, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (31, 1, 35, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (32, 1, 37, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (33, 1, 38, 1, 1, 'Dominio.Enrolment', null);
 
-#insert into ENROLMENT values (34, 1, 42, 1, 1, 'Dominio.Enrolment', null);
-#insert into ENROLMENT values (35, 1, 43, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (34, 1, 42, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (35, 1, 43, 1, 1, 'Dominio.Enrolment', null);
 #insert into ENROLMENT values (36, 1, 44, 1, 1, 'Dominio.Enrolment', null);
 #insert into ENROLMENT values (37, 1, 45, 1, 1, 'Dominio.Enrolment', null);
 
-#insert into ENROLMENT values (38, 1, 51, 1, 4, 'Dominio.EnrolmentInOptionalCurricularCourse', 25);
-#insert into ENROLMENT values (39, 1, 52, 1, 4, 'Dominio.EnrolmentInOptionalCurricularCourse', 26);
-#insert into ENROLMENT values (40, 1, 53, 1, 4, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (38, 1, 51, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 25);
+#insert into ENROLMENT values (39, 1, 52, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 26);
+#insert into ENROLMENT values (40, 1, 53, 1, 1, 'Dominio.Enrolment', null);
 
 #insert into ENROLMENT values (41, 1, 54, 1, 1, 'Dominio.Enrolment', null);
 #insert into ENROLMENT values (42, 1, 55, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 39);
@@ -432,14 +432,14 @@ insert into RESTRICTION values (51, 'Dominio.CurricularCourseDoneRestriction', 3
 #-----------------------------
 ;
 DELETE FROM ENROLMENT_PERIOD;
-INSERT into ENROLMENT_PERIOD values (1, 1, 3, SYSDATE(), '2010-01-10');
+INSERT into ENROLMENT_PERIOD values (1, 1, 2, SYSDATE(), '2010-01-10');
 
 # Isto e para sair
 ;
 DELETE FROM EXECUTION_PERIOD;
-INSERT INTO EXECUTION_PERIOD values (1, '1º Semestre', 1, 'NO', 1);
+INSERT INTO EXECUTION_PERIOD values (1, '1º Semestre', 1, 'A', 1);
 INSERT INTO EXECUTION_PERIOD values (2, '2º Semestre', 1, 'NO', 2);
-INSERT INTO EXECUTION_PERIOD values (3, '1º Semestre', 2, 'A', 1);
+INSERT INTO EXECUTION_PERIOD values (3, '1º Semestre', 2, 'NO', 1);
 INSERT INTO EXECUTION_PERIOD values (4, '2º Semestre', 2, 'NO', 2);
 INSERT INTO EXECUTION_PERIOD values (5, '1º Semestre', 3, 'NO', 1);
 INSERT INTO EXECUTION_PERIOD values (6, '2º Semestre', 3, 'NO', 2);
@@ -455,8 +455,8 @@ INSERT INTO EXECUTION_PERIOD values (15, '1º Semestre', 8, 'NO', 1);
 INSERT INTO EXECUTION_PERIOD values (16, '2º Semestre', 8, 'NO', 2);
 
 DELETE FROM EXECUTION_YEAR;
-INSERT INTO EXECUTION_YEAR values (1, '2002/2003','NO');
-INSERT INTO EXECUTION_YEAR values (2, '2003/2004','A');
+INSERT INTO EXECUTION_YEAR values (1, '2002/2003','A');
+INSERT INTO EXECUTION_YEAR values (2, '2003/2004','NO');
 INSERT INTO EXECUTION_YEAR values (3, '2005/2006','NO');
 INSERT INTO EXECUTION_YEAR values (4, '2006/2007','NO');
 INSERT INTO EXECUTION_YEAR values (5, '2007/2008','NO');
