@@ -42,7 +42,6 @@ public class EditExamAction extends FenixAction {
 			Season season = new Season(new Integer((String) chooseDayAndShiftForm.get("season")));
 			Calendar examDate = Calendar.getInstance();
 			Calendar examTime = Calendar.getInstance();
-			InfoExecutionCourse executionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 
 			Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
 			Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
