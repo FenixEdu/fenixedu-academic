@@ -615,7 +615,7 @@
     </filterChain>    
     <filterChain>
         <name>StudentIsUserAndHasStudentRoleFilter</name>
-        <expression>! (!StudentIsUserFilter || !StudentAuthorization)</expression>
+        <expression>StudentIsUserFilter &amp;&amp; StudentAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
