@@ -46,27 +46,31 @@ public class ViewSectionAction extends FenixAction {
 		HttpSession session = request.getSession(false);
 
 		String indexString = (String) request.getParameter("index");
-		Integer index = new Integer(indexString);
 
-		List sectionsList =
-			(List) session.getAttribute(SessionConstants.SECTIONS);
+		if (indexString != null) {
 
-		InfoSection infoSection =
-			(InfoSection) sectionsList.get(index.intValue());
+			Integer index = new Integer(indexString);
 
-		session.setAttribute(SessionConstants.INFO_SECTION, infoSection);
+			List sectionsList =
+				(List) session.getAttribute(SessionConstants.SECTIONS);
 
-		GestorServicos gestor = GestorServicos.manager();
+			InfoSection infoSection =
+				(InfoSection) sectionsList.get(index.intValue());
 
-		Object argsViewSection[] = { infoSection };
+			session.setAttribute(SessionConstants.INFO_SECTION, infoSection);
 
-		List infoItems =
-			(List) gestor.executar(null, "ReadItems", argsViewSection);
+			GestorServicos gestor = GestorServicos.manager();
 
-		session.setAttribute(
-			SessionConstants.INFO_SECTION_ITEMS_LIST,
-			infoItems);
+			Object argsViewSection[] = { infoSection };
 
+			List infoItems =
+				(List) gestor.executar(null, "ReadItems", argsViewSection);
+
+			session.setAttribute(
+				SessionConstants.INFO_SECTION_ITEMS_LIST,
+				infoItems);
+
+		}
 		return mapping.findForward("Sucess");
 
 	}

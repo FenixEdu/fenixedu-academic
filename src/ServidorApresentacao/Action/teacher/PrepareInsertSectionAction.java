@@ -42,7 +42,40 @@ public class PrepareInsertSectionAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+
+		HttpSession session = request.getSession();
+
+		InfoSite infoSite =
+			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		InfoSection parentSection =
+			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+
+		ArrayList sections;
+		Object args[] = { infoSite, parentSection };
+		GestorServicos manager = GestorServicos.manager();
+		System.out.println("antes do servico");
+		try {
+			sections = 
+				(ArrayList)manager.executar(
+					userView,
+					"ReadSectionsBySiteAndSuperiorSection",
+					args);
+			System.out.println("SECTIONS"+sections);
 			
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		System.out.println("depois do servico");
+			
+		if (sections.size() != 0)
+			session.setAttribute(SessionConstants.CHILDREN_SECTIONS, sections);
+		else
+			session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
+
 		return mapping.findForward("createSection");
 	}
 }
