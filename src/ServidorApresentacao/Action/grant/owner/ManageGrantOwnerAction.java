@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -27,43 +28,49 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ManageGrantOwnerAction extends DispatchAction
 {
-
-    /*
+	/*
 	 * Fills the form with the correspondent data
 	 */
-    public ActionForward prepareManageGrantOwnerForm(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-    	Integer idInternal = null;
-    	if(request.getParameter("idInternal") != null)
-    		 idInternal = new Integer(request.getParameter("idInternal"));
-    	else
-    		idInternal = new Integer(0);
-    		
-        InfoGrantOwner infoGrantOwner = null;
+	public ActionForward prepareManageGrantOwnerForm(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		Integer idInternal = null;
 
-        if (idInternal.intValue() == 0)
-        {
-            //ERRO!!!!!
-        }
+		if (request.getParameter("idInternal") != null)
+			idInternal = new Integer(request.getParameter("idInternal"));
 
-        Object[] args = { idInternal };
-        IUserView userView = SessionUtils.getUserView(request);
-        infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
+	
+		if (idInternal.intValue() == 0)
+		{
+			//TODO... excepcao
+		}
 
-        if (infoGrantOwner != null)
-            request.setAttribute("infoGrantOwner", infoGrantOwner);
-        //Ler contractos
-        List infoGrantContractList =
-            (List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
+		Object[] args = { idInternal };
+		IUserView userView = SessionUtils.getUserView(request);
+		InfoGrantOwner infoGrantOwner =
+			(InfoGrantOwner) ServiceUtils.executeService(userView, "ReadGrantOwner", args);
 
-        if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
-            request.setAttribute("infoGrantContractList", infoGrantContractList);
+		if (infoGrantOwner == null)
+		{
+			//TODO... excepcao.. o grant owner nao existe
+		}
+		request.setAttribute("infoGrantOwner", infoGrantOwner);
+		
+		//Read contracts od grant owner
+		List infoGrantContractList =
+			(List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
+		
+		InfoGrantContract testContract = (InfoGrantContract) infoGrantContractList.get(0);
+System.out.println("GRANT RESPONSIBLE TEACHER: " + testContract.getGrantResponsibleTeacherInfo().getResponsibleTeacherInfo().getTeacherNumber().toString());
 
-        return mapping.findForward("manage-grant-owner");
-    }
+		//If they exist put them on request
+		if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
+			request.setAttribute("infoGrantContractList", infoGrantContractList);
+		
+		return mapping.findForward("manage-grant-owner");
+	}
 }

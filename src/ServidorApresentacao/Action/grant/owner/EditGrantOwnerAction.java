@@ -4,6 +4,8 @@
 
 package ServidorApresentacao.Action.grant.owner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.EstadoCivil;
@@ -46,12 +49,14 @@ public class EditGrantOwnerAction extends DispatchAction
 	{
 		String personUsername = null;
 		Integer idInternal = null;
-		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 
-		personUsername = request.getParameter("personUsername");
+		//Get the information to search
+		if (request.getParameter("personUsername") != null)
+			personUsername = request.getParameter("personUsername");
 		if (request.getParameter("idInternal") != null)
 			idInternal = new Integer(request.getParameter("idInternal"));
 
+		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 		/*
 		 * 3 cases: personId and idInternal not null = grant owner exists personId not null and
 		 * idInternal null = person exists, but grant owner doesn't personId and idInternal null =
@@ -66,10 +71,9 @@ public class EditGrantOwnerAction extends DispatchAction
 					SessionUtils.getUserView(request),
 					"ReadGrantOwner",
 					args);
-
 		} else if (personUsername != null)
 		{
-			//Read the person
+			//Read the person (grant owner doesn't exist)
 			Object[] args = { personUsername };
 			InfoPerson infoPerson = null;
 			infoPerson =
@@ -84,14 +88,17 @@ public class EditGrantOwnerAction extends DispatchAction
 		 * Fill the form (grant owner e person information)
 		 */
 		DynaValidatorForm grantOwnerInformationForm = (DynaValidatorForm) form;
+
 		if (infoGrantOwner.getIdInternal() != null)
 		{
+			//If Grant Owner exists
 			setFormGrantOwnerInformation(grantOwnerInformationForm, infoGrantOwner);
 		}
 		if (infoGrantOwner.getPersonInfo() != null
 			&& infoGrantOwner.getPersonInfo().getIdInternal() != null
-			&& infoGrantOwner.getPersonInfo().getIdInternal() != new Integer(0))
+			&& !infoGrantOwner.getPersonInfo().getIdInternal().equals(new Integer(0)))
 		{
+			//If the person exists
 			setFormPersonalInformation(grantOwnerInformationForm, infoGrantOwner);
 		}
 
@@ -115,25 +122,61 @@ public class EditGrantOwnerAction extends DispatchAction
 				null);
 		request.setAttribute("countryList", countryList);
 
+		if (infoGrantOwner.getIdInternal() != null)
+			request.setAttribute("idInternalGrantOwner", infoGrantOwner.getIdInternal().toString());
+
 		return mapping.findForward("edit-grant-owner-form");
 	}
 
+	public ActionForward doEdit(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
+		InfoGrantOwner infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
+
+		Object[] args = { infoGrantOwner };
+		IUserView userView = SessionUtils.getUserView(request);
+		ServiceUtils.executeService(userView, "CreateGrantOwner", args);
+
+		//Read the grant owner by person
+		Object[] args2 = { infoGrantOwner.getPersonInfo().getIdInternal()};
+		infoGrantOwner =
+			(InfoGrantOwner) ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"ReadGrantOwnerByPerson",
+				args2);
+
+		if (infoGrantOwner != null)
+			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
+
+		return mapping.findForward("manage-grant-owner");
+	}
+
+	/*
+	 * Populates form from InfoPerson
+	 */
 	private void setFormPersonalInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner)
+		throws Exception
 	{
 		InfoPerson infoPerson = infoGrantOwner.getPersonInfo();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		if (infoPerson.getNome() != null)
-			form.set("name", infoPerson.getNome());
+		form.set("idInternalPerson", infoPerson.getIdInternal().toString());
 		form.set("idNumber", infoPerson.getNumeroDocumentoIdentificacao());
-		form.set("idType", infoPerson.getTipoDocumentoIdentificacao().getTipo());
 		if (infoPerson.getLocalEmissaoDocumentoIdentificacao() != null)
 			form.set("idLocation", infoPerson.getLocalEmissaoDocumentoIdentificacao());
 		if (infoPerson.getDataEmissaoDocumentoIdentificacao() != null)
 			form.set("idDate", infoPerson.getDataEmissaoDocumentoIdentificacao().toString());
-		if (infoPerson.getDataValidadeDocumentoIdentificacao() != null)
-			form.set("idValidDate", infoPerson.getDataValidadeDocumentoIdentificacao().toString());
+		if (infoPerson.getDataValidadeDocumentoIdentificacao() != null) 
+			form.set("idValidDate", sdf.format(infoPerson.getDataValidadeDocumentoIdentificacao()));
+		if (infoPerson.getNome() != null)
+			form.set("name", infoPerson.getNome());
 		if (infoPerson.getNascimento() != null)
-			form.set("birthdate", infoPerson.getNascimento().toString());
+			form.set("birthdate", sdf.format(infoPerson.getNascimento()));
 		if (infoPerson.getNomePai() != null)
 			form.set("fatherName", infoPerson.getNomePai());
 		if (infoPerson.getNomeMae() != null)
@@ -172,94 +215,81 @@ public class EditGrantOwnerAction extends DispatchAction
 			form.set("socialSecurityNumber", infoPerson.getNumContribuinte());
 		if (infoPerson.getProfissao() != null)
 			form.set("profession", infoPerson.getProfissao());
+		if (infoPerson.getUsername() != null)
+			form.set("personUsername", infoPerson.getUsername());
+		if (infoPerson.getPassword() != null)
+			form.set("password", infoPerson.getPassword());
 		if (infoPerson.getCodigoFiscal() != null)
 			form.set("fiscalCode", infoPerson.getCodigoFiscal());
+		form.set("idType", infoPerson.getTipoDocumentoIdentificacao().getTipo());
 		if (infoPerson.getSexo() != null)
 			form.set("sex", infoPerson.getSexo().getSexo());
 		if (infoPerson.getEstadoCivil() != null)
 			form.set("maritalStatus", infoPerson.getEstadoCivil().getEstadoCivil());
 		if (infoPerson.getInfoPais() != null)
 			form.set("country", infoPerson.getInfoPais().getIdInternal());
-		if (infoPerson.getUsername() != null)
-			form.set("personUsername", infoPerson.getUsername());
-		if (infoPerson.getPassword() != null)
-			form.set("password", infoPerson.getPassword());
-
 	}
-
+	/*
+	 * Populates form from InfoGrantOwner
+	 */
 	private void setFormGrantOwnerInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner)
-	{
-		if (infoGrantOwner.getDateSendCGD() != null)
-			form.set("dateSendCGD", infoGrantOwner.getDateSendCGD().toString());
-		if (infoGrantOwner.getCardCopyNumber() != null)
-			form.set("cardCopyNumber", infoGrantOwner.getCardCopyNumber().toString());
-		if (infoGrantOwner.getIdInternal() != null)
-			form.set("idInternal", infoGrantOwner.getIdInternal().toString());
-	}
-
-	public ActionForward doEdit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
 		throws Exception
 	{
-		DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
-		InfoGrantOwner infoGrantOwner = null;
-		infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
-
-		Object[] args = { infoGrantOwner };
-		IUserView userView = SessionUtils.getUserView(request);
-		ServiceUtils.executeService(userView, "CreateGrantOwner", args);
-
-		//Read the grant owner by person
-		Object[] args2 = { infoGrantOwner.getPersonInfo().getUsername()};
-		System.out.println(
-			"##############Username to edit: " + infoGrantOwner.getPersonInfo().getUsername());
-		infoGrantOwner =
-			(InfoGrantOwner) ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"ReadGrantOwnerByPerson",
-				args2);
-
-		if (infoGrantOwner != null)
-			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
-		else
-			System.out.println("###########Nao editou bem!");
-		ActionForward actionForward = mapping.findForward("manage-grant-owner");
-		return actionForward;
+		form.set("idInternal", infoGrantOwner.getIdInternal().toString());
+		form.set("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber().toString());
+		if (infoGrantOwner.getCardCopyNumber() != null)
+			form.set("cardCopyNumber", infoGrantOwner.getCardCopyNumber().toString());
+		if (infoGrantOwner.getDateSendCGD() != null)
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			form.set("dateSendCGD", sdf.format(infoGrantOwner.getDateSendCGD()));
+		}
 	}
 
+	/*
+	 * Populate infoGrantOwner from form
+	 */
 	private InfoGrantOwner populateInfoFromForm(DynaValidatorForm editGrantOwnerForm)
-	//throws FenixServiceException
+		throws FenixServiceException
 	{
 		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 		InfoPerson infoPerson = new InfoPerson();
 
 		//Format of date in the form
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		/*
-		 * try { //TODO: tirar estes comentários if (editGrantOwnerForm.get("idDate") != null ||
-		 * editGrantOwnerForm.get("idDate").equals("")) infoPerson.setDataEmissaoDocumentoIdentificacao(
-		 * sdf.parse((String) editGrantOwnerForm.get("idDate"))); if
-		 * (editGrantOwnerForm.get("idValidDate") != null ||
-		 * editGrantOwnerForm.get("idValidDate").equals(""))
-		 * infoPerson.setDataValidadeDocumentoIdentificacao( sdf.parse((String)
-		 * editGrantOwnerForm.get("idValidDate"))); if (editGrantOwnerForm.get("birthDate") != null ||
-		 * editGrantOwnerForm.get("birthDate").equals("")) infoPerson.setNascimento(sdf.parse((String)
-		 * editGrantOwnerForm.get("birthdate"))); if (editGrantOwnerForm.get("dateSendCGD") != null ||
-		 * editGrantOwnerForm.get("dateSendCGD").equals(""))
-		 * infoGrantOwner.setDateSendCGD(sdf.parse((String) editGrantOwnerForm.get("dateSendCGD"))); }
-		 * catch (ParseException e) { throw new FenixServiceException();
-		 */
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+		try
+		{
+			if (editGrantOwnerForm.get("idDate") != null
+				&& !editGrantOwnerForm.get("idDate").equals(""))
+				infoPerson.setDataEmissaoDocumentoIdentificacao(
+					sdf.parse((String) editGrantOwnerForm.get("idDate")));
+			if (editGrantOwnerForm.get("idValidDate") != null
+				&& !editGrantOwnerForm.get("idValidDate").equals(""))
+				infoPerson.setDataValidadeDocumentoIdentificacao(
+					sdf.parse((String) editGrantOwnerForm.get("idValidDate")));
+			if (editGrantOwnerForm.get("birthdate") != null
+				&& !editGrantOwnerForm.get("birthdate").equals(""))
+				infoPerson.setNascimento(sdf.parse((String) editGrantOwnerForm.get("birthdate")));
+			if (editGrantOwnerForm.get("dateSendCGD") != null
+				&& !editGrantOwnerForm.get("dateSendCGD").equals(""))
+				infoGrantOwner.setDateSendCGD(sdf.parse((String) editGrantOwnerForm.get("dateSendCGD")));
+		} catch (ParseException e)
+		{
+			throw new FenixServiceException();
+		}
+
+		//GrantOwner
+		infoGrantOwner.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternal")));
+		infoGrantOwner.setGrantOwnerNumber(
+			new Integer((String) editGrantOwnerForm.get("grantOwnerNumber")));
 		infoGrantOwner.setCardCopyNumber(new Integer((String) editGrantOwnerForm.get("cardCopyNumber")));
-		infoPerson.setNome((String) editGrantOwnerForm.get("name"));
+
+		//Person
+		infoGrantOwner.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternalPerson")));
 		infoPerson.setNumeroDocumentoIdentificacao((String) editGrantOwnerForm.get("idNumber"));
-		TipoDocumentoIdentificacao tipoDocumentoIdentificacao = new TipoDocumentoIdentificacao();
-		tipoDocumentoIdentificacao.setTipo((Integer) editGrantOwnerForm.get("idType"));
-		infoPerson.setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
 		infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editGrantOwnerForm.get("idLocation"));
+		infoPerson.setNome((String) editGrantOwnerForm.get("name"));
 		infoPerson.setNomePai((String) editGrantOwnerForm.get("fatherName"));
 		infoPerson.setNomeMae((String) editGrantOwnerForm.get("motherName"));
 		infoPerson.setNacionalidade((String) editGrantOwnerForm.get("nationality"));
@@ -279,21 +309,27 @@ public class EditGrantOwnerAction extends DispatchAction
 		infoPerson.setEnderecoWeb((String) editGrantOwnerForm.get("homepage"));
 		infoPerson.setNumContribuinte((String) editGrantOwnerForm.get("socialSecurityNumber"));
 		infoPerson.setProfissao((String) editGrantOwnerForm.get("profession"));
+		infoPerson.setUsername((String) editGrantOwnerForm.get("personUsername"));
+		infoPerson.setPassword((String) editGrantOwnerForm.get("password"));
 		infoPerson.setCodigoFiscal((String) editGrantOwnerForm.get("fiscalCode"));
+
+		TipoDocumentoIdentificacao tipoDocumentoIdentificacao = new TipoDocumentoIdentificacao();
+		tipoDocumentoIdentificacao.setTipo((Integer) editGrantOwnerForm.get("idType"));
+		infoPerson.setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
+
 		Sexo sexo = new Sexo();
 		sexo.setSexo((Integer) editGrantOwnerForm.get("sex"));
 		infoPerson.setSexo(sexo);
+
 		EstadoCivil estadoCivil = new EstadoCivil();
 		estadoCivil.setEstadoCivil((Integer) editGrantOwnerForm.get("maritalStatus"));
 		infoPerson.setEstadoCivil(estadoCivil);
+
 		InfoCountry infoCountry = new InfoCountry();
 		infoCountry.setIdInternal((Integer) editGrantOwnerForm.get("country"));
 		infoPerson.setInfoPais(infoCountry);
-		infoPerson.setPassword((String) editGrantOwnerForm.get("password"));
-		infoPerson.setUsername((String) editGrantOwnerForm.get("personUsername"));
 
 		infoGrantOwner.setPersonInfo(infoPerson);
-		//infoGrantOwner.setIdInternal(new Integer((String)editGrantOwnerForm.get("idInternal")));
 		return infoGrantOwner;
 	}
 }
