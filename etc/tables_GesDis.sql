@@ -122,4 +122,15 @@ create table BIBLIOGRAPHIC_REFERENCE (
    unique U1 (TITLE, AUTHORS, REFERENCE, `YEAR`))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
+#----------------------------
+# Table structure for Evaluation
+#----------------------------
+drop table if exists EVALUATION;
+create table EVALUATION (
+   ID_INTERNAL int(11) unsigned not null auto_increment,   
+   KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
+   EVALUATION_ELEMENTS text,
+   primary key (ID_INTERNAL),
+   unique ID_INTERNAL (KEY_EXECUTION_COURSE))
+   type=InnoDB comment="InnoDB free: 372736 kB";
 
