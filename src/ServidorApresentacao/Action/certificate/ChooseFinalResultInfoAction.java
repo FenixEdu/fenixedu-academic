@@ -97,6 +97,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
             session.removeAttribute(SessionConstants.ENROLMENT_LIST);
             session.removeAttribute(SessionConstants.INFO_EXECUTION_YEAR);
             session.removeAttribute(SessionConstants.CONCLUSION_DATE);
+			session.removeAttribute(SessionConstants.INFO_BRANCH);		
             session.removeAttribute("total");
             session.removeAttribute("givenCredits");
 
