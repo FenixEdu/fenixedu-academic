@@ -267,6 +267,11 @@
 			  tofile="${env.JBOSS_HOME}/server/all/deploy/${deploy.jar.app-server}"/>
 	</target>
 
+    <target name="clean-web-client"
+    		description="Removes any generated files for the web-client">
+		<delete dir="${build.web-client}"/>
+    </target>
+
 	<target name="prepare-web-client"
 			description="Copy configuration files to compile dir">
 		<!-- Create build directories as needed -->
