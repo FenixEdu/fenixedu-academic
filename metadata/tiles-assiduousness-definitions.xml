@@ -14,6 +14,11 @@
 	  <put name="title" value="report.title" />
 	  <put name="headers" value="" />
 	  <put name="rows" value="" />
-	  <put name="width" value="" />		
+	  <put name="width" value="100%" />		
+	</definition>
+	<definition name="definition.summary" page="/summary.jsp">
+	  <put name="title" value="" />
+	  <put name="headers" value="" />
+	  <put name="rows" value="" />
 	</definition>
 </tiles-definitions>

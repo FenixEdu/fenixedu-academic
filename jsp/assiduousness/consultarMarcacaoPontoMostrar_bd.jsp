@@ -14,7 +14,8 @@
     <tr>
       <td colspan='2'>
   			<h2>       
-              <bean:message key="consultar.marcacao" />
+              <bean:message key="consultar.marcacao" />:&nbsp;&nbsp;
+              <bean:write name="numMecanografico" scope="session"/>
 			</h2>          
           <br>
       </td>

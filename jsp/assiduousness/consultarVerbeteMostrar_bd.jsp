@@ -45,15 +45,16 @@
       </td>
     </tr>
     <tr>
-      <td colspan='2'>
+      <td colspan="2">
       	<bean:define id="headers" name="MostrarListaForm" property="headers2" />      	
 		<bean:define id="body" name="MostrarListaForm" property="body2" />	
 		<tiles:insert definition="definition.report" flush="true">
 			<tiles:put name="title" value="resumo.valores" />
+			<tiles:put name="width" value="100%" />
 			<tiles:put name="headers" beanName="headers" />
 			<tiles:put name="rows" beanName="body" />
 		</tiles:insert>
-      </td>
+      </td>            
     </tr>
     <tr>
       <td colspan="2" align="left"><br></td>

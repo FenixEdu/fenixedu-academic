@@ -15,7 +15,7 @@
     <tr>
       <td colspan='2'>
             <h2>
-              <bean:message key="consultar.justificacoes" />&nbsp;&nbsp;
+              <bean:message key="consultar.justificacoes" />:&nbsp;&nbsp;
               <bean:write name="numMecanografico" scope="session"/>
             </h2>
       <br>

@@ -156,7 +156,7 @@
              	<td width="30%">
                 	<bean:message key="prompt.expediente"/>:
             	</td>
-            	<td class="greytxt">>
+            	<td class="greytxt">
                 	<bean:message key="prompt.das"/> <bean:write name="horario" property="inicioExpedienteHoras" /><b>:</b><bean:write name="horario" property="inicioExpedienteMinutos" />&nbsp;<bean:write name="horario" property="diaAnteriorExpediente" />
                 	<bean:message key="prompt.as"/> <bean:write name="horario" property="fimExpedienteHoras" /><b>:</b><bean:write name="horario" property="fimExpedienteMinutos" />&nbsp;<bean:write name="horario" property="diaSeguinteExpediente" />
            		</td>

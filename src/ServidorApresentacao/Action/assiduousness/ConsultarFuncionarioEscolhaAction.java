@@ -338,7 +338,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 			listaResumo.add(4, FormataCalendar.horasSaldo(calendario));
 
 			ArrayList listaTrabExtra = new ArrayList();
-
 			// saldo primeiro escalao diurno
 			calendario.clear();
 			calendario.setTimeInMillis(((Long) listaSaldos.get(2)).longValue());
@@ -371,7 +370,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 			listagem.add(listaResumo);
 			listagem.add(listaHeadersTrabExtra);
 			listagem.add(listaTrabExtra);
-
+	
 			request.setAttribute("listagem", listagem);
 			request.setAttribute("forward", mapping.findForward("ConsultarVerbeteMostrar"));
 			session.setAttribute("linkBotao", "ConsultarFuncionarioMostrar");
