@@ -19,8 +19,6 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
     public static final int READ_LOCK = 6;
     public static final int QUERY = 7;
     public static final int CLOSE_DATABASE = 8;
-	public static final int EXISTING = 9;
-	public static final int NON_EXISTING = 10;
 
     private int _erro;
     private String errorKey;
@@ -72,8 +70,6 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
 			case 6:  this.errorKey = "exception.error.readLock";
 			case 7:  this.errorKey = "exception.error.query";
 			case 8:  this.errorKey = "exception.error.closeDatabase";
-			case 9:  this.errorKey = "exception.error.existing";
-			case 10: this.errorKey = "exception.error.nonExisting";
 			default: this.errorKey = "exception.error.unknown"; 
 		}
 	}

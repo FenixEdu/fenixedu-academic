@@ -58,8 +58,9 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 			List result = (List) query.execute();
 			lockRead(result);
 
+			// FIXME: Check the exception
 			if (result.size() != 0) 
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.EXISTING);
+				throw new ExcepcaoPersistencia();
 			else 
 				super.lockWrite(licenciatura);				
 		} catch (QueryException ex) {

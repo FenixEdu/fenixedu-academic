@@ -27,10 +27,4 @@ public class ExistingException extends ExcepcaoPersistencia {
 		super(msg);
 	}
 
-
-	public String getErrorKey() {
-		// return something meaningfull.
-		return "exception.error.somethingMeaningfull";
-	}
-
 }

@@ -121,13 +121,9 @@ public class Aula implements IAula {
       resultado = getDiaSemana().equals(aula.getDiaSemana()) &&
                   (getInicio().get(Calendar.HOUR_OF_DAY) == aula.getInicio().get(Calendar.HOUR_OF_DAY)) &&
                   (getInicio().get(Calendar.MINUTE) == aula.getInicio().get(Calendar.MINUTE)) &&
-              
                   (getFim().get(Calendar.HOUR_OF_DAY) == aula.getFim().get(Calendar.HOUR_OF_DAY)) &&
                   (getFim().get(Calendar.MINUTE) == aula.getFim().get(Calendar.MINUTE)) &&
-                  
-                  getSala().getNome().equals(aula.getSala().getNome()) &&
-                  getTipo().equals(aula.getTipo());
-//                 
+                  getSala().getNome().equals(aula.getSala().getNome());
     }
 
     return resultado;

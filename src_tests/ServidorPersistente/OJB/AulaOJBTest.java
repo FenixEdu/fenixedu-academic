@@ -29,6 +29,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingException;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -139,7 +140,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		assertNotNull(executionCourse);
 		persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
-		fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
+		fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula" + ex);
 	}
 
 	lesson.setDiaSemana(weekDay);
@@ -153,8 +154,11 @@ public class AulaOJBTest extends TestCaseOJB {
       persistentLesson.lockWrite(lesson);
       persistentSupport.confirmarTransaccao();
       fail("testCreateExistingAula");
+    } catch (ExistingException eex) {
+    	// all is ok
+    	System.out.println("Caught ExistingException" + eex);
     } catch (ExcepcaoPersistencia ex) {
-      //all is ok
+      fail("Caught ExcepcaoPersistencia" + ex);
     }
   }
 

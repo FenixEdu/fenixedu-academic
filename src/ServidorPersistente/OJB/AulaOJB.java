@@ -26,6 +26,7 @@ import Dominio.ITurnoAula;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.exceptions.ExistingException;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -60,12 +61,39 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public void lockWrite(IAula aula) throws ExcepcaoPersistencia {
-		// read lesson
-		// if (llesson not in database) then write it
+	public void lockWrite(IAula lessonToWrite)
+		throws ExcepcaoPersistencia, ExistingException {
+		IAula lessonFromDB = null;
+		if (lessonToWrite == null)
+			// Should we throw an exception saying nothing to write or
+			// something of the sort?
+			// By default, if OJB received a null object it would complain.
+			return;
+
+		// read lesson		
+		lessonFromDB =
+			this.readByDiaSemanaAndInicioAndFimAndSala(
+				lessonToWrite.getDiaSemana(),
+				lessonToWrite.getInicio(),
+				lessonToWrite.getFim(),
+				lessonToWrite.getSala());
+
+		// if (lesson not in database) then write it
+		if (lessonFromDB == null)
+			super.lockWrite(lessonToWrite);
 		// else if (lesson is mapped to the database then write any existing changes)
-		// else throw an AlreadyExists exception.
-		super.lockWrite(aula);
+		else if ((lessonToWrite instanceof Aula) &&
+				 ((Aula) lessonFromDB).getCodigoInterno().equals(
+		          ((Aula) lessonToWrite).getCodigoInterno())) {
+
+			lessonFromDB.setDisciplinaExecucao(
+				lessonToWrite.getDisciplinaExecucao());
+			lessonFromDB.setTipo(lessonToWrite.getTipo());
+			// No need to werite it because it is already mapped.
+			//super.lockWrite(lessonToWrite);
+			// else throw an AlreadyExists exception.
+		} else
+			throw new ExistingException();
 	}
 
 	public void delete(IAula aula) throws ExcepcaoPersistencia {
@@ -216,38 +244,28 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				+ "and inicio <$2 "
 				+ "and diaSemana = $3 "
 				+ "and sala.nome = $4 ) "
-
 				+ "or ( fim > $5 "
 				+ "and fim < $6 "
 				+ "and diaSemana = $7 "
 				+ "and sala.nome = $8 )"
-
 				+ "or ( inicio = $9 "
 				+ "and fim = $10 "
 				+ "and diaSemana = $11 "
 				+ "and sala.nome = $12 )"
-
 				+ "or ( inicio <= $13 "
 				+ "and fim >= $14"
 				+ "and diaSemana = $15 "
 				+ "and sala.nome = $16 )"
-
 				+ "or ( inicio = $17 "
 				+ "and fim <= $18 "
 				+ "and diaSemana = $19 "
 				+ "and sala.nome = $20 )";
-
 
 			query.create(oqlQuery);
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
 			query.bind(lesson.getSala().getNome());
-		
-			query.bind(lesson.getInicio());
-			query.bind(lesson.getFim());
-			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala().getNome());
 
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
@@ -259,12 +277,15 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			query.bind(lesson.getDiaSemana());
 			query.bind(lesson.getSala().getNome());
 
-
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
 			query.bind(lesson.getSala().getNome());
 
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getDiaSemana());
+			query.bind(lesson.getSala().getNome());
 
 			lessonList = (List) query.execute();
 			lockRead(lessonList);
