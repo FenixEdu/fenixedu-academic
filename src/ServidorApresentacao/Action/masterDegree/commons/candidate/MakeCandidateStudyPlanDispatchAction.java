@@ -93,12 +93,13 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
             {
                 degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName(); //getInfoDegree().getSigla();
             }
+          
           /*  else
             {
                 degree = (String) approvalForm.get("degree");
             }*/
         }
-
+		String degreeSigla = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
         List candidateList = null;
 
         List admitedSituations = new ArrayList();
@@ -136,7 +137,8 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         Collections.sort(candidateList, nameComparator);
 
         request.setAttribute("executionYear", executionYear);
-      //  request.setAttribute("degree", degree);
+        request.setAttribute("degree", degree);
+		request.setAttribute("degreeSigla", degreeSigla);
 		request.setAttribute(SessionConstants.EXECUTION_DEGREE,String.valueOf( executionDegree));
         request.setAttribute("candidateList", candidateList);
         return mapping.findForward("PrepareSuccess");
@@ -233,7 +235,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         request.setAttribute("candidateID", chooseMDForm.get("candidateID"));
 
         String degree = (String) chooseMDForm.get("masterDegree");
-System.out.println("na action " + degree);
+
 
         request.setAttribute("degree", degree);
 
@@ -261,6 +263,7 @@ System.out.println("na action " + degree);
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
         String executionYear = getFromRequest("executionYear", request);
+
         String degree = getFromRequest("degree", request);
         String candidateID = getFromRequest("candidateID", request);
 
@@ -271,12 +274,12 @@ System.out.println("na action " + degree);
         {
             degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         }
-
+       
         if ((executionYear == null) || (executionYear.length() == 0))
         {
             executionYear = infoExecutionDegree.getInfoExecutionYear().getYear();
         }
-
+        String curricularPlanCode = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
@@ -287,13 +290,17 @@ System.out.println("na action " + degree);
         List curricularCourseList = null;
         try
         {
-            Object args[] = { executionYear, degree };
+
+            Object args[] = { executionYear, degree,curricularPlanCode };
             curricularCourseList =
                 (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadCurricularCoursesByDegree",
                     args);
+
+
         }
+
         catch (NonExistingServiceException e)
         {
             ActionErrors errors = new ActionErrors();
@@ -317,6 +324,7 @@ System.out.println("na action " + degree);
                     userView,
                     "ReadCandidateEnrolmentsByCandidateID",
                     args);
+
         }
         catch (NotAuthorizedException e)
         {
@@ -560,6 +568,7 @@ System.out.println("na action " + degree);
 
         try
         {
+			
             Object args[] = { selection, candidateID, attributedCredits, givenCreditsRemarks };
             ServiceManagerServiceFactory.executeService(userView, "WriteCandidateEnrolments", args);
         }
@@ -583,6 +592,7 @@ System.out.println("na action " + degree);
         {
             throw new FenixActionException(e);
         }
+        
 
         Iterator coursesIter = candidateEnrolments.iterator();
         float credits = attributedCredits.floatValue();
@@ -590,6 +600,7 @@ System.out.println("na action " + degree);
         while (coursesIter.hasNext())
         {
             InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) coursesIter.next();
+
             credits += infoCandidateEnrolment.getInfoCurricularCourse().getCredits().floatValue();
         }
 
