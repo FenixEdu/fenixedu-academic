@@ -65,6 +65,7 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="index" path="/index.do" redirect="true"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+      <forward name="globalOutOfPeriod" path="definition.out.of.period"/>              
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -88,13 +89,17 @@
       <action name="curricularCourseEnrolmentForm"
               type="ServidorApresentacao.Action.student.CurricularCourseEnrolmentManagerDispatchAction"
               path="/curricularCourseEnrolmentManager"
-              input="/viewEnrolment.jsp"
+              input="/curricularCourseEnrolmentManager.do?method=start"
               parameter="method"
               scope="session"
               validate="false">
     	<exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
 		           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
                    handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+    	<exception type="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
+		           key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+                   
         <forward name="beginTransaction" path="/curricularCourseEnrolmentManager.do?method=start"/>              
 
         <forward name="showAvailableCurricularCourses" path="/showAvailableCurricularCourses.jsp"/>
