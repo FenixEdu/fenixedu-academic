@@ -109,14 +109,41 @@
 	</td>
 </tr>
 						<logic:iterate name="list" id="sublist" property="list" indexId="groupIndex">
-
-		<tr>
 		<bean:size id="rowspan" name="sublist" property="list" />
+		<tr  >
+
 		<td class="listClasses" rowspan="<bean:write name='rowspan'/>">
 			<bean:write name="sublist" property="type"/>
 		</td>
-		
-							<logic:iterate id="shiftWithLessons" name="sublist"  property="list" >
+							<logic:iterate id="shiftWithLessons" name="sublist"  property="list"  offset="0" length="1">
+											<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
+						
+									<td class="listClasses">				
+														<logic:iterate id="lesson" name="shiftWithLessons" property="infoLessons">
+														
+														<bean:write name="lesson" property="diaSemana"/>
+															das
+															<dt:format pattern="HH:mm">
+																<bean:write name="lesson" property="inicio.time.time"/>
+															</dt:format>
+															até as 
+															<dt:format pattern="HH:mm">
+																<bean:write name="lesson" property="fim.time.time"/>
+															</dt:format>
+															na sala
+															<bean:write name="lesson" property="infoSala.nome"/>
+															<br />
+														</logic:iterate>
+										</td>
+									<td class="listClasses">
+										<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />			
+									</td>					
+							</logic:iterate>
+
+
+
+		</tr>		
+							<logic:iterate id="shiftWithLessons" name="sublist"  property="list" offset="1">
 								<tr>
 											<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
 						
@@ -133,7 +160,7 @@
 																<bean:write name="lesson" property="fim.time.time"/>
 															</dt:format>
 															na sala
-															<bean:write name="lesson" property="infoSala.nome"/> 
+															<bean:write name="lesson" property="infoSala.nome"/>
 															<br />
 														</logic:iterate>
 										</td>
@@ -143,7 +170,7 @@
 								</tr>
 							</logic:iterate>
 					<bean:define id="index" value="<%=  (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-				</tr>
+				
 						</logic:iterate>
 					</logic:iterate>
 					
