@@ -4,20 +4,13 @@
 
 package ServidorAplicacao.Filtro.person;
 
-import DataBeans.person.InfoQualification;
-import DataBeans.util.Cloner;
 import Dominio.IPessoa;
-import Dominio.IQualification;
-import Dominio.ITeacher;
-import Dominio.Qualification;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.IPersistentQualification;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -125,98 +118,9 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
 				return true;
 				
 			return false;
-
 		} catch (Exception e)
 		{
 			return false; //The qualification user is not a grant owner.
-		}
-	}
-
-	/**
-	 * Verifies if the qualification user ir a teacher
-	 * 
-	 * @param arguments
-	 * @return true or false
-	 */
-	private boolean isTeacher(InfoQualification infoqualification)
-	{
-		ISuportePersistente persistentSuport = null;
-		IPersistentTeacher persistentTeacher = null;
-
-		try
-		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentTeacher = persistentSuport.getIPersistentTeacher();
-
-			//Try to read the teacher from de database
-			ITeacher teacher = null;
-			teacher =
-				persistentTeacher.readTeacherByUsername(infoqualification.getInfoPerson().getUsername());
-
-			if (teacher != null) //The teacher exists!
-			{
-				return true;
-			}
-			return false; //The qualification user is not a teacher
-
-		} catch (Exception e)
-		{
-			return false;
-		}
-	}
-
-	/**
-	 * Verifies if the qualification to be changed is owned by the user that is running the service
-	 * 
-	 * @param arguments
-	 * @return true or false
-	 */
-	private boolean isOwnQualification(String username, InfoQualification infoqualification)
-	{
-		try
-		{
-			if (username.equals(infoqualification.getInfoPerson().getUsername()))
-			{
-				return true;
-			}
-		} catch (Exception e)
-		{
-			return false;
-		}
-		return false;
-	}
-
-	/**
-	 * Returns the qualification form the database
-	 * 
-	 * @param arguments
-	 * @return infoqualification
-	 */
-	private InfoQualification getInfoQualification(Integer qualificationKey)
-	{
-		ISuportePersistente persistentSuport = null;
-		IPersistentQualification persistentQualification = null;
-
-		try
-		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentQualification = persistentSuport.getIPersistentQualification();
-
-			//Try to read the qualification from the database
-			IQualification qualification = null;
-			qualification =
-				(IQualification) persistentQualification.readByOID(
-					Qualification.class,
-					qualificationKey);
-
-			if (qualification == null)
-				return null;
-			else
-				return Cloner.copyIQualification2InfoQualification(qualification);
-
-		} catch (Exception e)
-		{
-			return null;
 		}
 	}
 }

@@ -72,35 +72,35 @@ public class QualificationManagerAuthorizationFilter extends Filtro
                 throw new NotAuthorizedException();
             }
 
-            if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
-                throw new NotAuthorizedException();
-
-            boolean isNew = (arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0));
-
-            if (!isNew)
+            InfoQualification infoqualification = null;
+            if( (arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0)))
             {
-                boolean valid = false;
-                
-                InfoQualification infoQualification = getInfoQualification((Integer) arguments[0]);
+            	//New Qualification, second argument is a qualification
+            	infoqualification = (InfoQualification)arguments[1];
+            } else
+            {
+				infoqualification = getInfoQualification((Integer) arguments[0]);
+            }
 
-                if (infoQualification == null)
-                    throw new NotAuthorizedException();
-
-                //Verify if:
-                // 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
-                // 2: The user ir a Teacher and the qualification is his own
-
-                if (isGrantOwner(infoQualification))
-                    valid = true;
-
-                if (isTeacher(infoQualification)
-                    && isOwnQualification(id.getUtilizador(), infoQualification))
-                    valid = true;
+			if (infoqualification == null)
+				throw new NotAuthorizedException();
+            
+			boolean valid = false;
+			//Verify if:
+			// 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
+			// 2: The user ir a Teacher and the qualification is his own
+            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
+            	 && isGrantOwner(infoqualification))
+            	valid = true;
+            
+            if(AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
+            	&& isTeacher(infoqualification)
+            	&& isOwnQualification(id.getUtilizador(), infoqualification))
+                valid = true;
 
                 if (!valid)
                     throw new NotAuthorizedException();
-            }
+                
         } catch (RuntimeException e)
         {
             throw new NotAuthorizedException();
