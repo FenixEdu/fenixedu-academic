@@ -156,8 +156,8 @@ public final class RenderTimeTableTag extends TagSupport {
 				(endTimeTableHour.intValue() - startTimeTableHour.intValue())
 					* (60 / slotSizeMinutes.intValue()));
 
-		System.out.println("Numero de horas:" + numberOfHours);
-		System.out.println("Numero de dias:" + numberOfDays);
+//		System.out.println("Numero de horas:" + numberOfHours);
+//		System.out.println("Numero de dias:" + numberOfDays);
 		TimeTable timeTable =
 			new TimeTable(
 				numberOfHours,
