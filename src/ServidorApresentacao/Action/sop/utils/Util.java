@@ -161,4 +161,85 @@ public class Util {
 		minutesList.add("30");
 		return minutesList;
 	}
+
+	/**
+	 * Method getDaysOfMonth.
+	 * @return ArrayList
+	 */
+	public static ArrayList getDaysOfMonth() {
+		ArrayList daysOfMonthList = new ArrayList();
+
+		daysOfMonthList.add("1");
+		daysOfMonthList.add("2");
+		daysOfMonthList.add("3");
+		daysOfMonthList.add("4");
+		daysOfMonthList.add("5");
+		daysOfMonthList.add("6");
+		daysOfMonthList.add("7");
+		daysOfMonthList.add("8");
+		daysOfMonthList.add("9");
+		daysOfMonthList.add("10");
+		daysOfMonthList.add("11");
+		daysOfMonthList.add("12");
+		daysOfMonthList.add("13");
+		daysOfMonthList.add("14");
+		daysOfMonthList.add("15");
+		daysOfMonthList.add("16");
+		daysOfMonthList.add("17");
+		daysOfMonthList.add("18");
+		daysOfMonthList.add("19");
+		daysOfMonthList.add("20");
+		daysOfMonthList.add("21");
+		daysOfMonthList.add("22");
+		daysOfMonthList.add("23");
+		daysOfMonthList.add("24");
+		daysOfMonthList.add("25");
+		daysOfMonthList.add("26");
+		daysOfMonthList.add("27");
+		daysOfMonthList.add("28");
+		daysOfMonthList.add("29");
+		daysOfMonthList.add("30");
+		daysOfMonthList.add("31");
+		return daysOfMonthList;
+	}
+
+	/**
+	 * Method getMonthsOfYear.
+	 * @return ArrayList
+	 */
+	public static ArrayList getMonthsOfYear() {
+		ArrayList monthsOfYearList = new ArrayList();
+
+		monthsOfYearList.add("1");
+		monthsOfYearList.add("2");
+		monthsOfYearList.add("3");
+		monthsOfYearList.add("4");
+		monthsOfYearList.add("5");
+		monthsOfYearList.add("6");
+		monthsOfYearList.add("7");
+		monthsOfYearList.add("8");
+		monthsOfYearList.add("9");
+		monthsOfYearList.add("10");
+		monthsOfYearList.add("11");
+		monthsOfYearList.add("12");
+		return monthsOfYearList;
+	}
+
+	/**
+	 * Method getYears.
+	 * @return ArrayList
+	 * @deprecated : This is not to be used... it is just
+	 *               a temporay solution until years are
+	 *               properly read from the database.
+	 */
+	public static ArrayList getYears() {
+		ArrayList yearsList = new ArrayList();
+
+		yearsList.add("2002");
+		yearsList.add("2003");
+		yearsList.add("2004");
+		return yearsList;
+	}
+
+
 }

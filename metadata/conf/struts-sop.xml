@@ -173,10 +173,22 @@
         <form-property name="method" type="java.lang.String" initial="createClass"/>
         <form-property name="page" type="java.lang.Integer" initial="0"/>        
       </form-bean>
+      
+	  <!-- ========== EXAMS ========== -->
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="examDayAndShiftForm"
+                type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="day" type="java.lang.Integer"/>
+        <form-property name="month" type="java.lang.Integer"/>
+        <form-property name="year" type="java.lang.Integer"/>
+        <form-property name="beginning" type="java.lang.Integer"/>
+     </form-bean>
+
+      
      </form-beans>
 
-
-    
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
 		<exception type="java.lang.Exception"
@@ -688,9 +700,23 @@
               >
         
       </action>
-      
-      
-      
+
+	<!-- ========== EXAMES ========== -->
+	<action path="/chooseDayAndShift"
+			attribute="examDayAndShiftForm"
+			name="examDayAndShiftForm"
+            type="ServidorApresentacao.Action.sop.ChooseExamDayAndShiftDispatchAction"
+            parameter="method"
+            scope="request"
+            input="/chooseDayAndShift.jsp"
+            validate="true"
+            >
+         <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
+         <forward name="Sucesso" path="/escolherAulas.do"/>
+         <forward name="Alterar Sala" path="/changeLessonRoom.jsp"/>
+	 </action>
+	
+	
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"
