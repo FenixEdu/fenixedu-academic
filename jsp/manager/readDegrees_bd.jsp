@@ -3,9 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<logic:present name="degreesList" scope="request">
-<logic:notEmpty name="degreesList" >
-		<h2><bean:message key="label.manager.degrees"/></h2>
+<h2><bean:message key="label.manager.degrees"/></h2>
 <ul style="list-style-type: square;">
 <li><html:link page="/insertDegree.do?method=prepareInsert"><bean:message key="label.manager.insert.degree"/></html:link></li>
 </ul>
@@ -14,6 +12,8 @@
 
 <span class="error"><html:errors/></span>
 
+<logic:present name="degreesList" scope="request">
+<logic:notEmpty name="degreesList" >
 <html:form action="/deleteDegrees" method="get">
 
  <bean:define id="onclick">
