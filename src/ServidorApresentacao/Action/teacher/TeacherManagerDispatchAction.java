@@ -6,6 +6,7 @@
  */
 package ServidorApresentacao.Action.teacher;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,19 +50,39 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 				(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 			Object args[] = { infoSite.getInfoExecutionCourse()};
 			GestorServicos serviceManager = GestorServicos.manager();
+			boolean result=false;
 			List teachers =
 				(List) serviceManager.executar(
 					userView,
 					"ReadTeachersByExecutionCourseProfessorship",
 					args);
-			if (teachers!=null && !teachers.isEmpty()){
-			session.setAttribute(
-				SessionConstants.TEACHERS_LIST,
-			teachers);}
+			if (teachers != null && !teachers.isEmpty()) {
+				session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
+			}
+
+			List responsibleTeachers =
+				(List) serviceManager.executar(
+					userView,
+					"ReadTeachersByExecutionCourseResponsibility",
+					args);
+			if (responsibleTeachers != null
+				&& !responsibleTeachers.isEmpty()&& teachers!=null) {
+			 Iterator iter = responsibleTeachers.iterator();
+			 result=true;
+			 while (iter.hasNext()){
+			 	result=result && teachers.contains(iter.next());		
+			 }
+			 session.setAttribute(SessionConstants.IS_RESPONSIBLE,new Boolean(result));
+			 
+				}	
+					
+			
+			
+
 			return mapping.findForward("viewTeachers");
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
-		} 
+		}
 
 	}
 

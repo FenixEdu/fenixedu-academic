@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <span class="error"><html:errors/></span>	
 
+
+
 <logic:notPresent name="<%= SessionConstants.TEACHERS_LIST %>">
 
 </logic:notPresent>
@@ -31,3 +33,18 @@
 </logic:iterate>	
 </table>
 </logic:present>
+
+<logic:equal name="<%= SessionConstants.IS_RESPONSIBLE %>" value="true">
+<table>
+<tr><td>
+	<html:link page="/viewSite.do">
+	<bean:message key="link.addTeacher"/>
+</html:link>
+</tr>
+<tr><td>
+	<html:link page="/viewSite.do">
+	<bean:message key="link.removeTeacher"/>
+</html:link>
+</tr>
+</table>
+</logic:equal>

@@ -45,11 +45,16 @@ public class ReadSite extends FenixAction {
 				
 			InfoTeacher infoTeacher = (InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);	
 			List infoSites = (List) session.getAttribute(SessionConstants.INFO_SITES_LIST);
-			
+			InfoSite site=null;
 			String index = (String) request.getParameter("index");
-			System.out.println("index= "+index);
-			InfoSite site = (InfoSite) infoSites.get((new Integer(index)).intValue());
-			session.setAttribute(SessionConstants.INFO_SITE,site);	
+			if(index!=null){
+			
+			site = (InfoSite) infoSites.get((new Integer(index)).intValue());
+				}
+			else {
+			site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);	
+			}
+			session.setAttribute(SessionConstants.INFO_SITE,site);
 			//TODO: Read Sections
 			//TODO: Read last Anouncement	
 				

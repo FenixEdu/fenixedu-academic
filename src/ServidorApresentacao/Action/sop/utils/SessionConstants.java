@@ -68,9 +68,9 @@ public abstract class SessionConstants {
 	public static final String INFO_TEACHER = "info_teacher";	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
-
 	public static final String TEACHERS_LIST ="teachers_list";
 	public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
+	public static final String IS_RESPONSIBLE = "is_responsible";
 	// Master Degree 
 	public static final String SPECIALIZATIONS = "specializations"; 
 	public static final String DEGREE_LIST = "degree_list";
