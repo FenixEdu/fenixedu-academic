@@ -4,15 +4,15 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="../CSS/dotist_student.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_student.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
 <table width="100%%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="header" width="25%"><img alt="" height="60" src="../images/dotist_student.gif" width="192" />
+    <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_student.gif" width="192" />
 	</td>
     <td class="header"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
     </td>

@@ -785,16 +785,11 @@ public class Pessoa implements IPessoa {
 	public String toString() {
 		String result = "Person :\n";
 		result += "\n  - Internal Code : " + codigoInterno;
-		result += "\n  - Identification Document Number : "
-			+ numeroDocumentoIdentificacao;
-		result += "\n  - Identification Document Type : "
-			+ tipoDocumentoIdentificacao;
-		result += "\n  - Identification Document Issue Place : "
-			+ localEmissaoDocumentoIdentificacao;
-		result += "\n  - Identification Document Issue Date : "
-			+ dataEmissaoDocumentoIdentificacao;
-		result += "\n  - Identification Document Expiration Date : "
-					+ dataValidadeDocumentoIdentificacao;
+		result += "\n  - Identification Document Number : "+ numeroDocumentoIdentificacao;
+		result += "\n  - Identification Document Type : "+ tipoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Place : "+ localEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Date : "+ dataEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Expiration Date : "+ dataValidadeDocumentoIdentificacao;
 		result += "\n  - Name : " + nome;
 		result += "\n  - Sex : " + sexo;
 		result += "\n  - Marital Status : " + estadoCivil;
@@ -819,6 +814,8 @@ public class Pessoa implements IPessoa {
 		result += "\n  - Username : " + username;
 		result += "\n  - Password : " + password;
 		result += "\n  - Occupation : " + profissao;
+		result += "\n  - Pais : " + pais;
+		result += "\n  - Codigo Fiscal : " + codigoFiscal;
 		return result;
 	}
 

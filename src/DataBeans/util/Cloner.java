@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import Util.TipoCurso;
-
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoClass;
 import DataBeans.InfoCountry;
@@ -75,13 +73,12 @@ import Dominio.Site;
 import Dominio.Student;
 import Dominio.Turma;
 import Dominio.Turno;
-
+import Util.TipoCurso;
 
 /**
  * @author jpvl
+ *
  */
-
-
 public abstract class Cloner {
 
 	public static ITurno copyInfoShift2Shift(InfoShift infoShift) {
@@ -539,7 +536,9 @@ public abstract class Cloner {
 	 */
 	public static IPessoa copyInfoPerson2IPerson(InfoPerson infoPerson) {
 		IPessoa person = new Pessoa();
+		ICountry country = Cloner.copyInfoCountry2ICountry(infoPerson.getInfoPais());
 		copyObjectProperties(person, infoPerson);
+		person.setPais(country);
 		return person;
 	}
 
@@ -550,7 +549,10 @@ public abstract class Cloner {
 	 */
 	public static InfoPerson copyIPerson2InfoPerson(IPessoa person) {
 		InfoPerson infoPerson = new InfoPerson();
+		InfoCountry infoCountry = Cloner.copyICountry2InfoCountry(person.getPais());
+		
 		copyObjectProperties(infoPerson, person);
+		infoPerson.setInfoPais(infoCountry);
 		return infoPerson;
 	}
 
@@ -1035,7 +1037,7 @@ public abstract class Cloner {
 	 * @param infoCurriculum
 	 * @return ICurriculum
 	 */
-	public static ICurriculum copyInfoCurriculum2ICurriculum(InfoCurriculum infoCurriculum) {
+	public static ICurriculum copyICurriculum2InfoCurriculum(InfoCurriculum infoCurriculum) {
 		ICurriculum curriculum = new Curriculum();
 
 		IDisciplinaExecucao executionCourse =

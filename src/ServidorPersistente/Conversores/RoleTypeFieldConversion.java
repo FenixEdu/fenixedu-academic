@@ -44,6 +44,9 @@ public class RoleTypeFieldConversion implements FieldConversion {
 					break;
 				case RoleType.TIME_TABLE_MANAGER_TYPE :
 					roleType = RoleType.TIME_TABLE_MANAGER;
+					break;
+				case RoleType.MASTER_DEGREE_CANDIDATE_TYPE :
+					roleType = RoleType.MASTER_DEGREE_CANDIDATE;
 
 			}
 		}else{

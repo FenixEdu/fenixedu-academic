@@ -22,7 +22,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- * @author Joana Mota (jccm@rnl.ist.utl.pt)
+ *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ChangePersonPasswordAction extends ServidorApresentacao.Action.FenixAction {
 	

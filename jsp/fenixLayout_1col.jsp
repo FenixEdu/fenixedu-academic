@@ -6,8 +6,8 @@
 <head>
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="../CSS/dotist.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_student.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <html:errors/>
@@ -15,7 +15,7 @@
 <!-- Header -->
 <table width="100%%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="header" width="25%"><img alt="" height="60" src="../images/dotist_sop.gif" width="192" />
+    <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_sop.gif" width="192" />
 	</td>
     <td class="header"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
     </td>

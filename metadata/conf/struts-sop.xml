@@ -222,8 +222,7 @@
       <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"/>
       <action path="/manipularTurnos" forward="/manipularTurnos.jsp"/>
       
-    <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
-
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
      
 <!--      <action path="/editarTurno" forward="/editarTurno.jsp"/>-->
@@ -707,7 +706,7 @@
       <!-- Action For LogOff -->
       <action path="/logoff"
       	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/index.do"/>
+      	  <forward name="Success" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
       </action>
 
       
