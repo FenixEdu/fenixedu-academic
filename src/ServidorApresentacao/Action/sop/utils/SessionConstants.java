@@ -67,10 +67,13 @@ public abstract class SessionConstants {
 	public static final String CONTRIBUTOR_LIST = "contributor_list";
 	public static final String UNEXISTING_CONTRIBUTOR = "unexisting_contributor";
 	public static final String CONTRIBUTOR = "contributor";
+	public static final String CONTRIBUTOR_ACTION = "contributor_action";
 	public static final String GUIDE_REQUESTER_LIST = "guide_requester_list";
 	public static final String GUIDE = "guide";
+	public static final String GUIDE_SITUATION_LIST = "guide_situation_list";
+	public static final String PAYMENT_TYPE = "payment_type";
 
-	public static final String CONTRIBUTOR_ACTION = "CONTRIBUTOR_ACTION_VERIFY_THIS_CONSTANT";
+
 
 	// -------------------------------------------------------------------------------
 	//    Person Constants - For Person

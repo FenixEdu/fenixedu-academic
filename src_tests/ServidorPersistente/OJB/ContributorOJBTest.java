@@ -138,6 +138,37 @@ public class ContributorOJBTest extends TestCaseOJB {
 		} catch(ExcepcaoPersistencia ex) {
 				fail("testAllContributors: unexpected exception");
 		}
+	
+	}
+		
+	public void testReadContributorListByNumber() {
+		System.out.println("Test 5 - Read Contributor List By Number");        
+		List contributorList = null;
+		IContributor contributor = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			contributorList = persistentContributor.readContributorListByNumber(new Integer(123));
+			assertTrue(!contributorList.isEmpty());
+			contributor = (IContributor) contributorList.get(0);
+			assertEquals(contributor.getContributorNumber(),new Integer(123));	
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testReadContributorListByNumber: unexpected exception");
+		}
+	
+		
+		
+		try {
+			persistentSupport.iniciarTransaccao();
+			contributorList = persistentContributor.readContributorListByNumber(null);
+			assertTrue(!contributorList.isEmpty());
+			assertEquals(contributorList.size(), 2);
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testReadContributorListByNumber: unexpected exception");
+		}
+
 	}
  
 
