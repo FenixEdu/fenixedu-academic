@@ -68,6 +68,8 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     private Integer enrollmentWeigth;
 
     private Boolean mandatoryEnrollment;
+    
+    private Boolean enrollmentAllowed;
 
     public CurricularCourse() {
     }
@@ -442,4 +444,16 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
     // -------------------------------------------------------------
+    /**
+     * @return Returns the enrollmentAllowed.
+     */
+    public Boolean getEnrollmentAllowed() {
+        return enrollmentAllowed;
+    }
+    /**
+     * @param enrollmentAllowed The enrollmentAllowed to set.
+     */
+    public void setEnrollmentAllowed(Boolean enrollmentAllowed) {
+        this.enrollmentAllowed = enrollmentAllowed;
+    }
 }

@@ -67,6 +67,8 @@ public interface ICurricularCourse extends IDomainObject {
 	public ICurricularYear getCurricularYearByBranchAndSemester(IBranch branch, Integer semester);
 	public String getCurricularCourseUniqueKeyForEnrollment();
 	public boolean hasActiveScopeInGivenSemester(final Integer semester);
+    public Boolean getEnrollmentAllowed();
+    public void setEnrollmentAllowed(Boolean enrollmentAllowed);
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
