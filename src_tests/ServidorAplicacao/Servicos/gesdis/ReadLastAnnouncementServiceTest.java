@@ -143,6 +143,10 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 22);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 		Date date = calendar.getTime();
 
 //		announcement = new Announcement("announcement2deTFCI", date, date, "information2", site);
