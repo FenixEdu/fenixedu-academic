@@ -12,12 +12,14 @@ public class EnrolmentEvaluationType {
 	public static final int SPECIAL = 3;
 	public static final int EXTERNAL = 4;
 	public static final int FIRST_TIME = 5; // This one is used to represent "epoca" (time) 1.
+	public static final int EQUIVALENCE = 6; 
 
 	public static final EnrolmentEvaluationType NORMAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 	public static final EnrolmentEvaluationType IMPROVEMENT_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
 	public static final EnrolmentEvaluationType SPECIAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL);
 	public static final EnrolmentEvaluationType EXTERNAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.EXTERNAL);
 	public static final EnrolmentEvaluationType FIRST_TIME_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.FIRST_TIME);
+	public static final EnrolmentEvaluationType EQUIVALENCE_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE);
 
 	private Integer type;
 
@@ -74,6 +76,9 @@ public class EnrolmentEvaluationType {
 				break;
 			case EXTERNAL :
 				valueS = "EXTERNAL";
+				break;
+			case EQUIVALENCE :
+				valueS = "EQUIVALENCE";
 				break;
 			default:
 				break;
