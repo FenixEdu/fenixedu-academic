@@ -39,7 +39,7 @@
             <bean:message key="label.grant.contract.type"/>
         </td>
         <td class="listClasses-header">
-            <bean:message key="label.grant.contract.responsibleTeacher"/>
+            <bean:message key="label.grant.contract.orientationTeacher"/>
         </td>
         <td class="listClasses-header">&nbsp;</td>
         <td class="listClasses-header">&nbsp;</td>
@@ -75,10 +75,10 @@
                 <bean:write name="infoGrantContract" property="grantTypeInfo.name"/>
             </td>       
             <td class="listClasses">
-                <logic:present name="infoGrantContract" property="grantResponsibleTeacherInfo">
-                    <bean:write name="infoGrantContract" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.nome"/>
+                <logic:present name="infoGrantContract" property="grantOrientationTeacherInfo">
+                    <bean:write name="infoGrantContract" property="grantOrientationTeacherInfo.orientationTeacherInfo.infoPerson.nome"/>
                 </logic:present>
-                <logic:notPresent name="infoGrantContract" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.nome">
+                <logic:notPresent name="infoGrantContract" property="grantOrientationTeacherInfo">
                     ---
                 </logic:notPresent>
             </td>

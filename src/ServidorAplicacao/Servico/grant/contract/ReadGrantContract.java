@@ -8,13 +8,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
-import DataBeans.grant.contract.InfoGrantResponsibleTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantOrientationTeacher;
-import Dominio.grant.contract.IGrantResponsibleTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -22,7 +20,6 @@ import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
-import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 
 /**
  * @author Barbosa
@@ -78,18 +75,10 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentGrantResponsibleTeacher pgrt = sp.getIPersistentGrantResponsibleTeacher();
 			IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
 
 			InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
 			IGrantContract contract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContract);
-
-			//get the GrantResponsibleTeacher for the contract
-			IGrantResponsibleTeacher responsibleTeacher =
-				pgrt.readActualGrantResponsibleTeacherByContract(contract, new Integer(0));
-			InfoGrantResponsibleTeacher infoResponsibleTeacher =
-				Cloner.copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher(responsibleTeacher);
-			infoGrantContract.setGrantResponsibleTeacherInfo(infoResponsibleTeacher);
 
 			//get the GrantOrientationTeacher for the contract
 			IGrantOrientationTeacher orientationTeacher =

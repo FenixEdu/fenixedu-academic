@@ -17,11 +17,9 @@ import Dominio.IDomainObject;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.grant.contract.GrantOrientationTeacher;
-import Dominio.grant.contract.GrantResponsibleTeacher;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantOrientationTeacher;
-import Dominio.grant.contract.IGrantResponsibleTeacher;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantContractEndDateBeforeBeginDateException;
@@ -29,10 +27,6 @@ import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherEndDate
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodConflictException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherEndDateBeforeBeginDateException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoundException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherPeriodConflictException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherPeriodNotWithinContractPeriodException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -42,7 +36,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantContract;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
-import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 import ServidorPersistente.grant.IPersistentGrantType;
 
 /**
@@ -85,21 +78,9 @@ public class EditGrantContract extends EditDomainObjectService
 		ISuportePersistente sp)
 		throws FenixServiceException
 	{
-		Date beginResponsibleDate = infoGrantContract.getGrantResponsibleTeacherInfo().getBeginDate();
 		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
 		try
 		{
-			//check that new RESPONSIBILITY period does NOT CONFLICT with any other
-			IPersistentGrantResponsibleTeacher grt = sp.getIPersistentGrantResponsibleTeacher();
-			IGrantResponsibleTeacher responsibleTeacher =
-				grt.readActualGrantResponsibleTeacherByContract(
-					grantContract,
-					infoGrantContract.getGrantResponsibleTeacherInfo().getIdInternal());
-
-			if ((responsibleTeacher != null)
-				&& (beginResponsibleDate.before(responsibleTeacher.getEndDate())))
-				throw new GrantResponsibleTeacherPeriodConflictException();
-
 			//check that new ORIENTATION period does NOT CONFLICT with any other
 			IPersistentGrantOrientationTeacher got = sp.getIPersistentGrantOrientationTeacher();
 			IGrantOrientationTeacher orientationTeacher =
@@ -123,16 +104,8 @@ public class EditGrantContract extends EditDomainObjectService
 	{
 		Date beginContractDate = infoGrantContract.getDateBeginContract();
 		Date endContractDate = infoGrantContract.getDateEndContract();
-		Date beginResponsibleDate = infoGrantContract.getGrantResponsibleTeacherInfo().getBeginDate();
-		Date endResponsibleDate = infoGrantContract.getGrantResponsibleTeacherInfo().getEndDate();
 		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
 		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
-
-		//check if RESPONSIBILITY period is WITHIN contract period
-		if (!((beginResponsibleDate.after(beginContractDate)
-			|| beginContractDate.equals(beginResponsibleDate))
-			&& (endResponsibleDate.before(endContractDate) || endContractDate.equals(endResponsibleDate))))
-			throw new GrantResponsibleTeacherPeriodNotWithinContractPeriodException();
 
 		//check if ORIENTATION period is WITHIN contract period
 		if (!((beginOrientationDate.after(beginContractDate)
@@ -151,8 +124,6 @@ public class EditGrantContract extends EditDomainObjectService
 
 		Date beginContractDate = infoGrantContract.getDateBeginContract();
 		Date endContractDate = infoGrantContract.getDateEndContract();
-		Date beginResponsibleDate = infoGrantContract.getGrantResponsibleTeacherInfo().getBeginDate();
-		Date endResponsibleDate = infoGrantContract.getGrantResponsibleTeacherInfo().getEndDate();
 		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
 		Date endOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getEndDate();
 
@@ -161,9 +132,7 @@ public class EditGrantContract extends EditDomainObjectService
 			//check that endDate is after beginDate (GrantContract)
 			if (endContractDate.before(beginContractDate))
 				throw new GrantContractEndDateBeforeBeginDateException();
-			//check that endDate is after beginDate (GrantResponsibleTeacher)
-			if (endResponsibleDate.before(beginResponsibleDate))
-				throw new GrantResponsibleTeacherEndDateBeforeBeginDateException();
+			
 			//check that endDate is after beginDate (GrantOrientationTeacher)
 			if (endOrientationDate.before(beginOrientationDate))
 				throw new GrantOrientationTeacherEndDateBeforeBeginDateException();
@@ -195,35 +164,10 @@ public class EditGrantContract extends EditDomainObjectService
 	{
 		try
 		{
-			IPersistentGrantResponsibleTeacher rt = sp.getIPersistentGrantResponsibleTeacher();
 			IPersistentGrantOrientationTeacher ot = sp.getIPersistentGrantOrientationTeacher();
 			InfoGrantContract infoGrantContract = (InfoGrantContract) infoObject;
-			IGrantResponsibleTeacher oldGrantResponsibleTeacher = null;
-			IGrantResponsibleTeacher newGrantResponsibleTeacher = new GrantResponsibleTeacher();
 			IGrantOrientationTeacher oldGrantOrientationTeacher = null;
 			IGrantOrientationTeacher newGrantOrientationTeacher = new GrantOrientationTeacher();
-
-			//check if the GrantResponsible relation exists
-			Integer responsibleId = infoGrantContract.getGrantResponsibleTeacherInfo().getIdInternal();
-			if ((responsibleId != null) && !(responsibleId.equals(new Integer(0))))
-			{
-				//lock the existent object to write (EDIT)
-				newGrantResponsibleTeacher =
-					(IGrantResponsibleTeacher) rt.readByOId(
-						Cloner.copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(
-							infoGrantContract.getGrantResponsibleTeacherInfo()),
-						true);
-			}
-			else
-				rt.simpleLockWrite(newGrantResponsibleTeacher);
-
-			Integer ack_opt_lock = newGrantResponsibleTeacher.getAckOptLock();
-			oldGrantResponsibleTeacher =
-				Cloner.copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(
-					infoGrantContract.getGrantResponsibleTeacherInfo());
-			PropertyUtils.copyProperties(newGrantResponsibleTeacher, oldGrantResponsibleTeacher);
-			newGrantResponsibleTeacher.setAckOptLock(ack_opt_lock);
-			newGrantResponsibleTeacher.setGrantContract((IGrantContract) newDomainObject);
 
 			//check if the GrantOrientation relation exists
 			Integer orientationId = infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal();
@@ -231,7 +175,7 @@ public class EditGrantContract extends EditDomainObjectService
 			{
 				//lock the existent object to write (EDIT)
 				newGrantOrientationTeacher =
-					(IGrantOrientationTeacher) rt.readByOId(
+					(IGrantOrientationTeacher) ot.readByOId(
 						Cloner.copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(
 							infoGrantContract.getGrantOrientationTeacherInfo()),
 						true);
@@ -241,7 +185,7 @@ public class EditGrantContract extends EditDomainObjectService
 			oldGrantOrientationTeacher =
 				Cloner.copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(
 					infoGrantContract.getGrantOrientationTeacherInfo());
-			ack_opt_lock = newGrantOrientationTeacher.getAckOptLock();
+			Integer ack_opt_lock = newGrantOrientationTeacher.getAckOptLock();
 			PropertyUtils.copyProperties(newGrantOrientationTeacher, oldGrantOrientationTeacher);
 			newGrantOrientationTeacher.setGrantContract((IGrantContract) newDomainObject);
 			newGrantOrientationTeacher.setAckOptLock(ack_opt_lock);
@@ -273,27 +217,6 @@ public class EditGrantContract extends EditDomainObjectService
 			throw new FenixServiceException(persistentException.getMessage());
 		}
 		return infoGrantType;
-	}
-
-	private InfoTeacher checkIfGrantResponsibleTeacherExists(
-		Integer teacherNumber,
-		IPersistentTeacher pt)
-		throws FenixServiceException
-	{
-		InfoTeacher infoTeacher = null;
-		ITeacher teacher = null;
-		try
-		{
-			teacher = pt.readByNumber(teacherNumber);
-			if (teacher == null)
-				throw new GrantResponsibleTeacherNotFoundException();
-			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-		}
-		catch (ExcepcaoPersistencia persistentException)
-		{
-			throw new FenixServiceException(persistentException.getMessage());
-		}
-		return infoTeacher;
 	}
 
 	private InfoTeacher checkIfGrantOrientationTeacherExists(
@@ -332,14 +255,6 @@ public class EditGrantContract extends EditDomainObjectService
 
 			infoGrantContract.setGrantTypeInfo(
 				checkIfGrantTypeExists(infoGrantContract.getGrantTypeInfo().getSigla(), pGrantType));
-
-			infoGrantContract.getGrantResponsibleTeacherInfo().setResponsibleTeacherInfo(
-				checkIfGrantResponsibleTeacherExists(
-					infoGrantContract
-						.getGrantResponsibleTeacherInfo()
-						.getResponsibleTeacherInfo()
-						.getTeacherNumber(),
-					pTeacher));
 
 			infoGrantContract.getGrantOrientationTeacherInfo().setOrientationTeacherInfo(
 				checkIfGrantOrientationTeacherExists(

@@ -8,20 +8,17 @@ package ServidorAplicacao.Servicos.grant.contract;
 import java.util.Calendar;
 import java.util.Date;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoTeacher;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
-import DataBeans.grant.contract.InfoGrantResponsibleTeacher;
 import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoundException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Barbosa
@@ -100,7 +97,6 @@ public class CreateGrantContractTest
 
     protected Object[] getArguments(
         InfoGrantType grantType,
-        InfoGrantResponsibleTeacher responsibleTeacher,
         InfoGrantOrientationTeacher orientationTeacher)
     {
         InfoGrantContract infoGrantContract = new InfoGrantContract();
@@ -133,10 +129,8 @@ public class CreateGrantContractTest
         infoGrantContract.setDateEndContract(dateEndContract);
 
         infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
-        infoGrantContract.setGrantTypeInfo(grantType);
-        responsibleTeacher.setGrantContractInfo(infoGrantContract);
-        orientationTeacher.setGrantContractInfo(infoGrantContract);
-        infoGrantContract.setGrantResponsibleTeacherInfo(responsibleTeacher);
+        infoGrantContract.setGrantTypeInfo(grantType);      
+        orientationTeacher.setGrantContractInfo(infoGrantContract);     
         infoGrantContract.setGrantOrientationTeacherInfo(orientationTeacher);
 
         Object[] args = { infoGrantContract };
@@ -151,15 +145,10 @@ public class CreateGrantContractTest
     protected Object[] getAuthorizeArguments()
     {
         InfoGrantType grantType = new InfoGrantType();
-        InfoGrantResponsibleTeacher responsibleTeacherInfo = new InfoGrantResponsibleTeacher();
         InfoGrantOrientationTeacher orientationTeacherInfo = new InfoGrantOrientationTeacher();
-        InfoTeacher responsibleTeacher = new InfoTeacher();
         InfoTeacher orientationTeacher = new InfoTeacher();
 
         grantType.setSigla("M");
-
-        responsibleTeacher.setIdInternal(new Integer(1));
-        responsibleTeacher.setTeacherNumber(new Integer(1));
 
         orientationTeacher.setIdInternal(new Integer(2));
         orientationTeacher.setTeacherNumber(new Integer(6));
@@ -174,7 +163,6 @@ public class CreateGrantContractTest
         calendar.set(Calendar.MILLISECOND, 0);
         Date dateBegin = calendar.getTime();
         calendar.getTimeZone();
-        responsibleTeacherInfo.setBeginDate(dateBegin);
         orientationTeacherInfo.setBeginDate(dateBegin);
 
         calendar = Calendar.getInstance();
@@ -187,13 +175,11 @@ public class CreateGrantContractTest
         calendar.set(Calendar.MILLISECOND, 0);
         Date dateEnd = calendar.getTime();
         calendar.getTimeZone();
-        responsibleTeacherInfo.setEndDate(dateEnd);
         orientationTeacherInfo.setEndDate(dateEnd);
 
-        responsibleTeacherInfo.setResponsibleTeacherInfo(responsibleTeacher);
         orientationTeacherInfo.setOrientationTeacherInfo(orientationTeacher);
 
-        Object[] args = getArguments(grantType, responsibleTeacherInfo, orientationTeacherInfo);
+        Object[] args = getArguments(grantType, orientationTeacherInfo);
         return args;
     }
 
@@ -202,15 +188,6 @@ public class CreateGrantContractTest
         Object[] args = getAuthorizeArguments();
         InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
         infoGrantContract.getGrantTypeInfo().setSigla("G");
-        return args;
-    }
-
-    protected Object[] getUnauthorizeArgumentsUnknownResponsibleTeacher()
-    {
-        Object[] args = getAuthorizeArguments();
-        InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
-        infoGrantContract.getGrantResponsibleTeacherInfo().getResponsibleTeacherInfo().setTeacherNumber(
-            new Integer(69));
         return args;
     }
 
@@ -239,7 +216,6 @@ public class CreateGrantContractTest
         Date dateEnd = calendar.getTime();
         infoGrantContract.setDateEndContract(dateEnd);
         infoGrantContract.setIdInternal(new Integer(1));
-        infoGrantContract.getGrantResponsibleTeacherInfo().setIdInternal(new Integer(1));
         infoGrantContract.getGrantOrientationTeacherInfo().setIdInternal(new Integer(1));
         return args;
     }
@@ -365,31 +341,6 @@ public class CreateGrantContractTest
         }
     }
 
-    /*
-	 * Grant Contract Creation/Edition Unsuccessfull: unknown (responsible) teacher
-	 */
-    public void testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher()
-    {
-        try
-        {
-            String[] args = getAuthenticatedAndAuthorizedUser();
-            IUserView id = authenticateUser(args);
-            Object[] args2 = getUnauthorizeArgumentsUnknownResponsibleTeacher();
-
-            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
-
-            fail("Creating a new GrantContract with Unknown Responsible Teacher: test failed!");
-        } catch (GrantResponsibleTeacherNotFoundException e)
-        {
-            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-            System.out.println(
-                getNameOfServiceToBeTested()
-                    + " was SUCCESSFULY runned by test: testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher");
-        } catch (Exception e)
-        {
-            fail("Creating a new GrantContract with Unknown Responsible Teacher " + e);
-        }
-    }
 
     /*
 	 * Grant Contract Creation/Edition Unsuccessfull: unknown (grant orientation) teacher

@@ -19,7 +19,7 @@ public class InfoGrantOrientationTeacher extends InfoObject
 {
 	private Date beginDate;
 	private Date endDate;
-	private InfoTeacher OrientationTeacherInfo;
+	private InfoTeacher orientationTeacherInfo;
 	private InfoGrantContract grantContractInfo;
 	
     /**
@@ -75,15 +75,15 @@ public class InfoGrantOrientationTeacher extends InfoObject
      */
     public InfoTeacher getOrientationTeacherInfo()
     {
-        return OrientationTeacherInfo;
+        return orientationTeacherInfo;
     }
 
     /**
      * @param orientationTeacherInfo
      */
-    public void setOrientationTeacherInfo(InfoTeacher orientationTeacherInfo)
+    public void setOrientationTeacherInfo(InfoTeacher orientationTeacher)
     {
-        OrientationTeacherInfo = orientationTeacherInfo;
+        orientationTeacherInfo = orientationTeacher;
     }
 
 }

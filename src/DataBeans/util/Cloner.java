@@ -114,7 +114,6 @@ import DataBeans.grant.contract.InfoGrantOrientationTeacher;
 import DataBeans.grant.contract.InfoGrantPart;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import DataBeans.grant.contract.InfoGrantProject;
-import DataBeans.grant.contract.InfoGrantResponsibleTeacher;
 import DataBeans.grant.contract.InfoGrantSubsidy;
 import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.grant.owner.InfoGrantOwner;
@@ -154,7 +153,6 @@ import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.GrantOrientationTeacher;
 import Dominio.grant.contract.GrantPart;
 import Dominio.grant.contract.GrantProject;
-import Dominio.grant.contract.GrantResponsibleTeacher;
 import Dominio.grant.contract.GrantSubsidy;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantContract;
@@ -163,7 +161,6 @@ import Dominio.grant.contract.IGrantOrientationTeacher;
 import Dominio.grant.contract.IGrantPart;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import Dominio.grant.contract.IGrantProject;
-import Dominio.grant.contract.IGrantResponsibleTeacher;
 import Dominio.grant.contract.IGrantSubsidy;
 import Dominio.grant.contract.IGrantType;
 import Dominio.grant.owner.GrantOwner;
@@ -1016,64 +1013,6 @@ public abstract class Cloner
 			copyObjectProperties(infoGrantType, grantType);
 		}
 		return infoGrantType;
-	}
-
-	/**
-	 * Method copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher.
-	 * 
-	 * @param infoGrantResponsibleTeacher
-	 * @return IGrantResponsibleTeacher
-	 */
-	public static IGrantResponsibleTeacher copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(InfoGrantResponsibleTeacher infoGrantResponsibleTeacher)
-	{
-		IGrantResponsibleTeacher grantResponsibleTeacher = null;
-
-		if (infoGrantResponsibleTeacher != null)
-		{
-			grantResponsibleTeacher = new GrantResponsibleTeacher();
-			copyObjectProperties(grantResponsibleTeacher, infoGrantResponsibleTeacher);
-			IGrantContract grantContract = null;
-			grantContract =
-				Cloner.copyInfoGrantContract2IGrantContract(
-					infoGrantResponsibleTeacher.getGrantContractInfo());
-			ITeacher responsibleTeacher = null;
-			if (infoGrantResponsibleTeacher.getResponsibleTeacherInfo() != null)
-				responsibleTeacher =
-					Cloner.copyInfoTeacher2Teacher(
-						infoGrantResponsibleTeacher.getResponsibleTeacherInfo());
-
-			grantResponsibleTeacher.setGrantContract(grantContract);
-			grantResponsibleTeacher.setResponsibleTeacher(responsibleTeacher);
-		}
-		return grantResponsibleTeacher;
-	}
-
-	/**
-	 * Method copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher.
-	 * 
-	 * @param grantResponsibleTeacher
-	 * @return InfoGrantResponsibleTeacher
-	 */
-	public static InfoGrantResponsibleTeacher copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher(IGrantResponsibleTeacher grantResponsibleTeacher)
-	{
-		InfoGrantResponsibleTeacher infoGrantResponsibleTeacher = null;
-
-		if (grantResponsibleTeacher != null)
-		{
-			infoGrantResponsibleTeacher = new InfoGrantResponsibleTeacher();
-			copyObjectProperties(infoGrantResponsibleTeacher, grantResponsibleTeacher);
-			InfoGrantContract infoGrantContract = null;
-			infoGrantContract =
-				Cloner.copyIGrantContract2InfoGrantContract(grantResponsibleTeacher.getGrantContract());
-			InfoTeacher infoResponsibleTeacher = null;
-			if (grantResponsibleTeacher.getResponsibleTeacher() != null)
-				infoResponsibleTeacher =
-					Cloner.copyITeacher2InfoTeacher(grantResponsibleTeacher.getResponsibleTeacher());
-
-			infoGrantResponsibleTeacher.setResponsibleTeacherInfo(infoResponsibleTeacher);
-			infoGrantResponsibleTeacher.setGrantContractInfo(infoGrantContract);
-		}
-		return infoGrantResponsibleTeacher;
 	}
 
 	/**

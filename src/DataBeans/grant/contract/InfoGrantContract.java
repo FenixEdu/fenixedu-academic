@@ -28,7 +28,6 @@ public class InfoGrantContract extends InfoObject
     private String endContractMotive;
 	private InfoGrantOwner grantOwnerInfo;
     private InfoGrantType grantTypeInfo;
-    private InfoGrantResponsibleTeacher grantResponsibleTeacherInfo;
 	private InfoGrantOrientationTeacher grantOrientationTeacherInfo;
     
     public InfoGrantContract()
@@ -145,22 +144,6 @@ public class InfoGrantContract extends InfoObject
     public void setGrantOrientationTeacherInfo(InfoGrantOrientationTeacher grantOrientationTeacherInfo)
     {
         this.grantOrientationTeacherInfo = grantOrientationTeacherInfo;
-    }
-
-    /**
-     * @return
-     */
-    public InfoGrantResponsibleTeacher getGrantResponsibleTeacherInfo()
-    {
-        return grantResponsibleTeacherInfo;
-    }
-
-    /**
-     * @param grantResponsibleTeacherInfo
-     */
-    public void setGrantResponsibleTeacherInfo(InfoGrantResponsibleTeacher grantResponsibleTeacherInfo)
-    {
-        this.grantResponsibleTeacherInfo = grantResponsibleTeacherInfo;
     }
 
 	/**

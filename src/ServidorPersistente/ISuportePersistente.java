@@ -24,7 +24,6 @@ import ServidorPersistente.grant.IPersistentGrantOwner;
 import ServidorPersistente.grant.IPersistentGrantPart;
 import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
 import ServidorPersistente.grant.IPersistentGrantProject;
-import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
@@ -189,8 +188,6 @@ public interface ISuportePersistente
     public IPersistentGrantContract getIPersistentGrantContract();
     //by Barbosa (November 19th, 2003)
     public IPersistentGrantType getIPersistentGrantType();
-    //by Barbosa (November 20th, 2003)
-    public IPersistentGrantResponsibleTeacher getIPersistentGrantResponsibleTeacher();
     //by Barbosa (November 20th, 2003)
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
     public IPersistentGrantCostCenter getIPersistentGrantCostCenter();

@@ -115,10 +115,6 @@
 	        	</var>
 		    </field>
 		    
-            <field property="grantResponsibleTeacher" depends="required, integer" page="1">
-                <msg name="number" key="errors.integer"/>
-				<arg0 key="label.grant.contract.responsibleTeacher" resource="true"/>
-            </field>
             <field property="grantOrientationTeacher" depends="required, integer" page="1">
 				<msg name="number" key="errors.integer"/>
 				<arg0 key="label.grant.contract.orientationTeacher" resource="true"/>

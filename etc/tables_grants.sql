@@ -68,23 +68,6 @@ CREATE TABLE GRANT_TYPE (
 
 
 #
-# Table structure for table 'grant_responsible_teacher'
-#
-
-DROP TABLE IF EXISTS GRANT_RESPONSIBLE_TEACHER;
-CREATE TABLE GRANT_RESPONSIBLE_TEACHER (
-  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-   ACK_OPT_LOCK int(11),
-  DATE_BEGIN date NOT NULL,
-  DATE_END date default NULL,
-  KEY_GRANT_CONTRACT int(11) unsigned NOT NULL default '0',
-  KEY_GRANT_TEACHER int(11) unsigned NOT NULL default '0',
-  PRIMARY KEY  (ID_INTERNAL),
-  UNIQUE KEY UNIQUE1 (DATE_BEGIN,DATE_END,KEY_GRANT_CONTRACT,KEY_GRANT_TEACHER)
-) TYPE=InnoDB;
-
-
-#
 # Table structure for table 'grant_orientation_teacher'
 #
 

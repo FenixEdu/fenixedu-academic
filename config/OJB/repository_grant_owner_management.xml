@@ -201,61 +201,6 @@
    
    
 <!-- ************************************************************** -->
-<!-- Definitions for Dominio.grant.contract.GrantResponsibleTeacher -->
-<!-- ************************************************************** -->
-   <class-descriptor
-   	  class="Dominio.grant.contract.GrantResponsibleTeacher"
-   	  table="grant_responsible_teacher"
-   >
-      <field-descriptor 
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-       <field-descriptor
-		name="beginDate"
-		column="DATE_BEGIN"
-		jdbc-type="DATE"
-	/>
-	 <field-descriptor
-		name="endDate"
-		column="DATE_END"
-		jdbc-type="DATE"
-	/>
-	 <field-descriptor
-		name="keyTeacher"
-		column="KEY_GRANT_TEACHER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyContract"
-		column="KEY_GRANT_CONTRACT"
-		jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
-		name="responsibleTeacher"
-		class-ref="Dominio.Teacher"
-		proxy="true">
-		<foreignkey field-ref="keyTeacher"/>
-	</reference-descriptor> 
-	<reference-descriptor
-		name="grantContract"
-		class-ref="Dominio.grant.contract.GrantContract"
-		proxy="true">
-		<foreignkey field-ref="keyContract"/>
-	</reference-descriptor> 
-   </class-descriptor>
-   
-   
-<!-- ************************************************************** -->
 <!-- Definitions for Dominio.grant.contract.GrantOrientationTeacher -->
 <!-- ************************************************************** -->
    <class-descriptor

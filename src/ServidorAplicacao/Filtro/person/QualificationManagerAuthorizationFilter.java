@@ -6,7 +6,6 @@ package ServidorAplicacao.Filtro.person;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.person.InfoQualification;
 import Dominio.IPessoa;
 import Dominio.IQualification;
@@ -54,7 +53,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 	 *      pt.utl.ist.berserk.ServiceResponse)
 	 */
 	public void execute(ServiceRequest request, ServiceResponse response)
-		throws FilterException, Exception
+		throws Exception
 	{
 		IUserView id = getRemoteUser(request);
 		Object[] arguments = getServiceCallArguments(request);

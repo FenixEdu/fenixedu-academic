@@ -45,7 +45,6 @@ import ServidorPersistente.OJB.grant.contract.GrantOrientationTeacherOJB;
 import ServidorPersistente.OJB.grant.contract.GrantPartOJB;
 import ServidorPersistente.OJB.grant.contract.GrantPaymentEntityOJB;
 import ServidorPersistente.OJB.grant.contract.GrantProjectOJB;
-import ServidorPersistente.OJB.grant.contract.GrantResponsibleTeacherOJB;
 import ServidorPersistente.OJB.grant.contract.GrantSubsidyOJB;
 import ServidorPersistente.OJB.grant.contract.GrantTypeOJB;
 import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
@@ -81,7 +80,6 @@ import ServidorPersistente.grant.IPersistentGrantOwner;
 import ServidorPersistente.grant.IPersistentGrantPart;
 import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
 import ServidorPersistente.grant.IPersistentGrantProject;
-import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
@@ -607,10 +605,6 @@ public class SuportePersistenteOJB
 	//By Barbosa (November 19th, 2003)
 	public IPersistentGrantType getIPersistentGrantType() {
 		return new GrantTypeOJB();
-	}
-	//By Barbosa (November 20th, 2003)
-	public IPersistentGrantResponsibleTeacher getIPersistentGrantResponsibleTeacher() {
-		return new GrantResponsibleTeacherOJB();
 	}
 	//By Barbosa (November 20th, 2003)
 	public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {

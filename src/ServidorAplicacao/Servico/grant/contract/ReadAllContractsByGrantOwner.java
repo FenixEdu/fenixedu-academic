@@ -11,18 +11,15 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
-import DataBeans.grant.contract.InfoGrantResponsibleTeacher;
 import DataBeans.util.Cloner;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantOrientationTeacher;
-import Dominio.grant.contract.IGrantResponsibleTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantContract;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
-import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 
 /**
  * @author Barbosa
@@ -41,14 +38,12 @@ public class ReadAllContractsByGrantOwner implements IService
 	public List run(Integer grantOwnerId) throws FenixServiceException
 	{
 		List contracts = null;
-		IPersistentGrantResponsibleTeacher pgrt = null;
 		IPersistentGrantOrientationTeacher pgot = null;
 		IPersistentGrantContract pgc = null;
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			pgc = sp.getIPersistentGrantContract();
-			pgrt = sp.getIPersistentGrantResponsibleTeacher();
 			pgot = sp.getIPersistentGrantOrientationTeacher();
 			contracts = pgc.readAllContractsByGrantOwner(grantOwnerId);
 		} catch (ExcepcaoPersistencia e)
@@ -70,13 +65,6 @@ public class ReadAllContractsByGrantOwner implements IService
 				IGrantContract grantContract = (IGrantContract) contractIter.next();
 				InfoGrantContract infoGrantContract = Cloner.copyIGrantContract2InfoGrantContract(grantContract);
 				
-				//get the GrantResponsibleTeacher for each contract
-				IGrantResponsibleTeacher responsibleTeacher =
-					pgrt.readActualGrantResponsibleTeacherByContract(grantContract, new Integer(0));
-				InfoGrantResponsibleTeacher infoResponsibleTeacher =
-					Cloner.copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher(responsibleTeacher);
-				infoGrantContract.setGrantResponsibleTeacherInfo(infoResponsibleTeacher);
-			
 				//get the GrantOrientationTeacher for each contract
 				IGrantOrientationTeacher orientationTeacher =
 					pgot.readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));

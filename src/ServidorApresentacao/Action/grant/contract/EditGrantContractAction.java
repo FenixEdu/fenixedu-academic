@@ -21,24 +21,13 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoTeacher;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
-import DataBeans.grant.contract.InfoGrantResponsibleTeacher;
 import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantContractEndDateBeforeBeginDateException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
-import ServidorAplicacao
-	.Servico
-	.exceptions
-	.grant
-	.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoundException;
-import ServidorAplicacao
-	.Servico
-	.exceptions
-	.grant
-	.GrantResponsibleTeacherPeriodNotWithinContractPeriodException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -147,12 +136,6 @@ public class EditGrantContractAction extends DispatchAction
 		DynaValidatorForm editGrantContractForm = (DynaValidatorForm) form;
 		InfoGrantContract infoGrantContract = populateInfoFromForm(editGrantContractForm);
 
-		Integer responsibleTeacherNumber =
-			infoGrantContract
-				.getGrantResponsibleTeacherInfo()
-				.getResponsibleTeacherInfo()
-				.getTeacherNumber();
-
 		Integer orientationTeacherNumber =
 			infoGrantContract
 				.getGrantOrientationTeacherInfo()
@@ -164,15 +147,6 @@ public class EditGrantContractAction extends DispatchAction
 			Object[] args = { infoGrantContract };
 			IUserView userView = SessionUtils.getUserView(request);
 			ServiceUtils.executeService(userView, "EditGrantContract", args);
-		}
-		catch (GrantResponsibleTeacherPeriodNotWithinContractPeriodException e)
-		{
-			return setError(
-				request,
-				mapping,
-				"errors.grant.contract.responsible.teacher.periodconflict",
-				null,
-				null);
 		}
 		catch (GrantOrientationTeacherPeriodNotWithinContractPeriodException e)
 		{
@@ -190,15 +164,6 @@ public class EditGrantContractAction extends DispatchAction
 		catch (GrantTypeNotFoundException e)
 		{
 			return setError(request, mapping, "errors.grant.type.not.found", null, null);
-		}
-		catch (GrantResponsibleTeacherNotFoundException e)
-		{
-			return setError(
-				request,
-				mapping,
-				"errors.grant.contract.responsible.teacher.not.found",
-				null,
-				responsibleTeacherNumber);
 		}
 		catch (GrantOrientationTeacherNotFoundException e)
 		{
@@ -253,13 +218,6 @@ public class EditGrantContractAction extends DispatchAction
 		form.set("grantType", infoGrantContract.getGrantTypeInfo().getSigla());
 		form.set("contractNumber", infoGrantContract.getContractNumber().toString());
 		form.set(
-			"grantResponsibleTeacher",
-			infoGrantContract
-				.getGrantResponsibleTeacherInfo()
-				.getResponsibleTeacherInfo()
-				.getTeacherNumber()
-				.toString());
-		form.set(
 			"grantOrientationTeacher",
 			infoGrantContract
 				.getGrantOrientationTeacherInfo()
@@ -267,9 +225,6 @@ public class EditGrantContractAction extends DispatchAction
 				.getTeacherNumber()
 				.toString());
 		form.set("idInternal", infoGrantContract.getGrantOwnerInfo().getIdInternal());
-		form.set(
-			"grantResponsibleTeacherIdInternal",
-			infoGrantContract.getGrantResponsibleTeacherInfo().getIdInternal());
 		form.set(
 			"grantOrientationTeacherIdInternal",
 			infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
@@ -280,9 +235,7 @@ public class EditGrantContractAction extends DispatchAction
 	{
 		InfoGrantContract infoGrantContract = new InfoGrantContract();
 		InfoGrantOrientationTeacher orientationTeacher = new InfoGrantOrientationTeacher();
-		InfoGrantResponsibleTeacher responsibleTeacher = new InfoGrantResponsibleTeacher();
 		InfoTeacher orientationInfoTeacher = new InfoTeacher();
-		InfoTeacher responsibleInfoTeacher = new InfoTeacher();
 		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 		InfoGrantType grantType = new InfoGrantType();
 
@@ -295,8 +248,6 @@ public class EditGrantContractAction extends DispatchAction
 		{
 			infoGrantContract.setDateBeginContract(
 				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
-			responsibleTeacher.setBeginDate(
-				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
 			orientationTeacher.setBeginDate(
 				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
 		}
@@ -304,8 +255,6 @@ public class EditGrantContractAction extends DispatchAction
 			&& !editGrantContractForm.get("dateEndContract").equals(""))
 		{
 			infoGrantContract.setDateEndContract(
-				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
-			responsibleTeacher.setEndDate(
 				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
 			orientationTeacher.setEndDate(
 				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
@@ -352,13 +301,6 @@ public class EditGrantContractAction extends DispatchAction
 		orientationTeacher.setIdInternal(
 			(Integer) editGrantContractForm.get("grantOrientationTeacherIdInternal"));
 		infoGrantContract.setGrantOrientationTeacherInfo(orientationTeacher);
-
-		responsibleInfoTeacher.setTeacherNumber(
-			new Integer((String) editGrantContractForm.get("grantResponsibleTeacher")));
-		responsibleTeacher.setResponsibleTeacherInfo(responsibleInfoTeacher);
-		responsibleTeacher.setIdInternal(
-			(Integer) editGrantContractForm.get("grantResponsibleTeacherIdInternal"));
-		infoGrantContract.setGrantResponsibleTeacherInfo(responsibleTeacher);
 
 		return infoGrantContract;
 	}

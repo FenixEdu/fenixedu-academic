@@ -19,7 +19,6 @@
 	<%-- contract --%>
 	<html:hidden property="idGrantContract"/>
 	<html:hidden property="contractNumber"/>
-	<html:hidden property="grantResponsibleTeacherIdInternal"/>
 	<html:hidden property="grantOrientationTeacherIdInternal"/>
 
 	<%-- grant owner --%>
@@ -63,20 +62,7 @@
 			<td>
 				<html:text property="endContractMotive"/>
 			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.responsibleTeacher"/>:&nbsp;
-			</td>
-			<td>
-				<html:text property="grantResponsibleTeacher"/>
-				<bean:message key="label.requiredfield"/>&nbsp;
-				<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
-					<bean:message key="link.teacher.showList"/>
-				</html:link>
-			</td>
-		</tr>
-	
+		</tr>	
 		<tr>
 			<td align="left">
 				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
@@ -84,6 +70,10 @@
 			<td>
 				<html:text property="grantOrientationTeacher"/>
 				<bean:message key="label.requiredfield"/>
+				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
+					<bean:message key="link.teacher.showList"/>
+				</html:link>
+				
 			</td>
 		</tr>
 		<tr>

@@ -94,8 +94,6 @@
 
 				<form-property name="endContractMotive" type="java.lang.String"/>
 				<form-property name="grantType" type="java.lang.String"/>
-				<form-property name="grantResponsibleTeacher" type="java.lang.String"/>
-				<form-property name="grantResponsibleTeacherIdInternal" type="java.lang.Integer"/>
 				<form-property name="grantOrientationTeacher" type="java.lang.String"/>
 				<form-property name="grantOrientationTeacherIdInternal" type="java.lang.Integer"/>
 				<form-property name="idGrantContract" type="java.lang.Integer"/>
