@@ -770,6 +770,30 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         return list;
     }
 
+    protected Iterator readSpanIterator(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan, Integer spanNumber)
+    {
+    	if (numberOfElementsInSpan == null || numberOfElementsInSpan.intValue() == 0)
+    	{
+    		throw new IllegalArgumentException("Invalid numberOfElementsInSpan!");
+    	}
+    	PersistenceBroker pb = getCurrentPersistenceBroker();
+    	Query query = getQuery(classToQuery, criteria);
+
+    	int startIndex = 1;
+    	if (spanNumber.intValue() != 0)
+    	{
+    		startIndex = spanNumber.intValue() * numberOfElementsInSpan.intValue();
+    	}
+    	
+    	query.setStartAtIndex(startIndex);
+    	
+    	int endIndex = startIndex + numberOfElementsInSpan.intValue() - 1;
+
+    	query.setEndAtIndex(endIndex);
+    	Iterator iterator = pb.getIteratorByQuery(query);
+    	return iterator;
+    }
+
     /**
 	 * @see ObjectFenixOJB#count(PersistenceBroker, Query)
 	 */
@@ -823,6 +847,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject
     {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         pb.store(domainObject);
+    }
+
+    public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia
+    {
+    	Object object = iterator.next();
+    	lockRead(object);
+    	return object;
     }
 
 }

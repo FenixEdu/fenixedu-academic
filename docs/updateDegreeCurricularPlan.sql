@@ -1,1 +1,0 @@
-alter table DEGREE_CURRICULAR_PLAN change INITIAL_DATE INITIAL_DATE date not null;

@@ -61,11 +61,18 @@ public class StartMigrationProcess implements IService
 				{
 					String args[] = { flag, "true", fileName1 };
 					CreateAndUpdateAllStudentsPastEnrolments.main(args);
+//					CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans instance =
+//						new CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans();
+//					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName1);
 				} else if (method.equals("thisSemester"))
 				{
 					String args[] = { flag, "true", fileName2 };
 					UpdateStudentEnrolments.main(args);
+//					CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans instance =
+//						new CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPlans();
+//					instance.run(Boolean.valueOf(flag), Boolean.TRUE, fileName2);
 				}
+//				persistentSuport.confirmarTransaccao();
 			} else
 			{
 				throw new ExcepcaoAutenticacao("Autenticacao incorrecta");

@@ -100,7 +100,7 @@ public class UpdateStudentEnrolments
 			out.println("[INFO] Updating a total of [" + numberOfStudents.intValue() + "] student curriculums.");
 			sp.confirmarTransaccao();
 	
-			int numberOfElementsInSpan = 1;
+			int numberOfElementsInSpan = 100;
 			int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
 			numberOfSpans = numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 	
@@ -109,22 +109,29 @@ public class UpdateStudentEnrolments
 				sp.iniciarTransaccao();
 				sp.clearCache();
 				out.println("[INFO] Reading MWStudents...");
-				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-				sp.confirmarTransaccao();
+//				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
+//				sp.confirmarTransaccao();
+				Iterator iterator = persistentMWAluno.readAllBySpanIterator(new Integer(span), new Integer(numberOfElementsInSpan));
+
+//				out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
 	
-				out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
-	
-				Iterator iterator = result.iterator();
+//				Iterator iterator = result.iterator();
 				while (iterator.hasNext())
 				{
-					oldStudent = (MWStudent) iterator.next();
-					sp.iniciarTransaccao();
+//					oldStudent = (MWStudent) iterator.next();
+//					sp.iniciarTransaccao();
+
+					oldStudent = (MWStudent) persistentMWAluno.lockIteratorNextObj(iterator);
+
 					oldStudent.setEnrolments(persistentEnrolment.readByStudentNumber(oldStudent.getNumber()));
 					UpdateStudentEnrolments.updateStudentEnrolment(oldStudent, sp);
-					sp.confirmarTransaccao();
-					UpdateStudentEnrolments.enrollmentsCreated.clear();
-					UpdateStudentEnrolments.enrollmentEvaluationsCreated.clear();
+//					sp.confirmarTransaccao();
+//					UpdateStudentEnrolments.enrollmentsCreated.clear();
+//					UpdateStudentEnrolments.enrollmentEvaluationsCreated.clear();
 				}
+				sp.confirmarTransaccao();
+				UpdateStudentEnrolments.enrollmentsCreated.clear();
+				UpdateStudentEnrolments.enrollmentEvaluationsCreated.clear();
 			}
 		} catch (Throwable e)
 		{

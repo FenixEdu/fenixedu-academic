@@ -123,41 +123,54 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				
 				fenixPersistentSuport.iniciarTransaccao();
 				out.println("[INFO] Reading MWStudents...");
-				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-				fenixPersistentSuport.confirmarTransaccao();
-		
-				out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
-		
-				Iterator iterator = result.iterator();
+//				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
+//				fenixPersistentSuport.confirmarTransaccao();
+				Iterator iterator = persistentMWAluno.readAllBySpanIterator(new Integer(span), new Integer(numberOfElementsInSpan));
+
+//				out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
+				
+//				Iterator iterator = result.iterator();
 				while (iterator.hasNext())
 				{
-					mwStudent = (MWStudent) iterator.next();
+//					mwStudent = (MWStudent) iterator.next();
+//					fenixPersistentSuport.iniciarTransaccao();
 	
-					fenixPersistentSuport.iniciarTransaccao();
-	
+					mwStudent = (MWStudent) persistentMWAluno.lockIteratorNextObj(iterator);
+
 					mwStudent.setEnrolments(persistentMWEnrolment.readByStudentNumber(mwStudent.getNumber()));
 
 					CreateAndUpdateAllStudentsPastEnrolments.createAndUpdateAllStudentPastEnrolments(mwStudent, fenixPersistentSuport);
 	
 					try
 					{
-						fenixPersistentSuport.confirmarTransaccao();
+//						fenixPersistentSuport.confirmarTransaccao();
 					} catch (NullPointerException e) {
 						// NOTE [DAVID]: Isto é apenas para prevenir uma situação de excepção
 						// ao confirmar a transacção que eu não consegui decifrar ainda.
 						ReportAllPastEnrollmentMigration.addClassCastExceptions(mwStudent);
 					}
 
-					ReportAllPastEnrollmentMigration.addStudentCurricularPlansMigrated(CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.size());
-					ReportAllPastEnrollmentMigration.addEnrolmentsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.size());
-					ReportAllPastEnrollmentMigration.addEnrollmentEvaluationsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.size());
-					ReportAllPastEnrollmentMigration.addCurricularCoursesMigrated(CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.size());
-
-					CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.clear();
-					CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.clear();
-					CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
-					CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.clear();
+//					ReportAllPastEnrollmentMigration.addStudentCurricularPlansMigrated(CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.size());
+//					ReportAllPastEnrollmentMigration.addEnrolmentsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.size());
+//					ReportAllPastEnrollmentMigration.addEnrollmentEvaluationsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.size());
+//					ReportAllPastEnrollmentMigration.addCurricularCoursesMigrated(CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.size());
+//
+//					CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.clear();
+//					CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.clear();
+//					CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
+//					CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.clear();
 				}
+				fenixPersistentSuport.confirmarTransaccao();
+			
+				ReportAllPastEnrollmentMigration.addStudentCurricularPlansMigrated(CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.size());
+				ReportAllPastEnrollmentMigration.addEnrolmentsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.size());
+				ReportAllPastEnrollmentMigration.addEnrollmentEvaluationsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.size());
+				ReportAllPastEnrollmentMigration.addCurricularCoursesMigrated(CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.size());
+
+				CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.clear();
+				CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.clear();
+				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
+				CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.clear();
 			}
 		} catch (Throwable e) {
 			out.println("[ERROR 201] Exception migrating student [" + mwStudent.getNumber() + "] enrolments!");

@@ -1,5 +1,6 @@
 package ServidorPersistente;
 
+import java.util.Iterator;
 import java.util.List;
 
 import Dominio.IDomainObject;
@@ -39,4 +40,5 @@ public interface IPersistentObject
     void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia;
 
     public IDomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
+    public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia;
 }

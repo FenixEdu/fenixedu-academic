@@ -11,15 +11,17 @@
 
 package middleware.persistentMiddlewareSupport;
 
+import java.util.Iterator;
 import java.util.List;
 
 import middleware.middlewareDomain.MWStudent;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentObject;
 
 
-public interface IPersistentMWAluno  {
-    
+public interface IPersistentMWAluno extends IPersistentObject
+{
     /**
      * 
      * @return All the STudents from the old Database
@@ -36,6 +38,6 @@ public interface IPersistentMWAluno  {
      */
     public MWStudent readByNumber(Integer number)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
 
-
+    public Iterator readAllBySpanIterator(Integer spanNumber, Integer numberOfElementsInSpan);
 	
 }

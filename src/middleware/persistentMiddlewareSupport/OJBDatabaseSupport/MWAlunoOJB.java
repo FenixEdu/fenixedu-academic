@@ -1,6 +1,7 @@
 
 package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
+import java.util.Iterator;
 import java.util.List;
 
 import middleware.middlewareDomain.MWStudent;
@@ -54,5 +55,10 @@ public class MWAlunoOJB extends ObjectFenixOJB implements IPersistentMWAluno {
 		return new Integer(count(MWStudent.class, new Criteria()));
 	}
 
-    
+	public Iterator readAllBySpanIterator(Integer spanNumber, Integer numberOfElementsInSpan)
+	{
+		Criteria criteria = new Criteria();
+		return readSpanIterator(MWStudent.class, criteria, numberOfElementsInSpan, spanNumber);
+	}
+	
 }
