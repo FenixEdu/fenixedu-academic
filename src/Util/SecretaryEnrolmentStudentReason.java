@@ -15,15 +15,10 @@ import java.util.Map;
 public class SecretaryEnrolmentStudentReason extends FenixValuedEnum {
 
     public static final int LEIC_5TH_YEAR_TYPE = 1;
-
-    public static final int GAY_TYPE = 2;
     
     public static final SecretaryEnrolmentStudentReason LEIC_5TH_YEAR = new SecretaryEnrolmentStudentReason(
             "leic.5th.year", SecretaryEnrolmentStudentReason.LEIC_5TH_YEAR_TYPE);
-
-    public static final SecretaryEnrolmentStudentReason GAY = new SecretaryEnrolmentStudentReason("gay",
-            SecretaryEnrolmentStudentReason.GAY_TYPE);
-
+    
     public SecretaryEnrolmentStudentReason(String name, int value) {
         super(name, value);
     }
