@@ -122,7 +122,6 @@ public abstract class EnrolmentContextManager {
 
 		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(studentCurricularPlanCurricularCourses);
 		enrolmentContext.setStudent(student);
-		enrolmentContext.setSemester(semester);
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(computeCurricularCoursesScopesNotYetDoneByStudent(degreeCurricularPlanCurricularCourses, studentEnroledAndDoneCurricularCourses));
 		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
 		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
