@@ -230,15 +230,13 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
         if (documentIdNumber != null && documentIdNumber.length() > 0)
         {
         	criteria.addLike("numeroDocumentoIdentificacao", documentIdNumber);
-        }                
-        criteria.addOrderBy("nome");
-
+        }
         result.add(0, new Integer(count(Pessoa.class, criteria)));
         
         if(startIndex == null && numberOfElementsInSpan == null) {
-            personList = queryList(Pessoa.class, criteria); 
+            personList = queryList(Pessoa.class, criteria, "nome", false); 
         } else  if(startIndex != null && numberOfElementsInSpan != null) {       
-            personList = readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex);
+            personList = readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex, "nome", false);
         }               
         result.add(personList);        
         
