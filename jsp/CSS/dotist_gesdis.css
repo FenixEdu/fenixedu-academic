@@ -46,8 +46,7 @@ h4 {
 	}
 	
 .px10 {
-	font: 10px Arial, Helvetica, sans-serif;
-	font-weight: bold;
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
 	color: #333;
 	background-color: transparent;
 	}
@@ -294,6 +293,7 @@ a:hover {
 
 .bckgr-blue {
 	background-color: #EBEFFA;
+	padding: 10px;
 	}
 	
 /* logout orange span */
