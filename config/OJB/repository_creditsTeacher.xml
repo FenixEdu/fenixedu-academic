@@ -60,7 +60,7 @@
 
       <field-descriptor name="credits" column="CREDITS" jdbc-type="DOUBLE"/>
 
-      <field-descriptor name="type" column="TYPE" jdbc-type="INTEGER"/>
+      <field-descriptor name="creditLineType" column="CREDIT_LINE_TYPE" conversion="ServidorPersistente.Conversores.CreditLineTypeFieldConversion" jdbc-type="INTEGER"/>
 
       <field-descriptor name="explanation" column="EXPLANATION" jdbc-type="VARCHAR"/>
       

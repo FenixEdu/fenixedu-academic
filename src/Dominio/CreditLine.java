@@ -11,7 +11,7 @@ import Util.CreditLineType;
 public class CreditLine extends DomainObject implements ICreditLine
 {
 	private Double credits;
-	private CreditLineType type;
+	private CreditLineType creditLineType;
 	private String explanation;
 	private Date startDate;
 	private Date endDate;
@@ -38,8 +38,8 @@ public class CreditLine extends DomainObject implements ICreditLine
 				|| (creditLine.getExplanation().equals(this.getExplanation())))
 			&& ((creditLine.getTeacher() == null && this.getTeacher() == null)
 				|| (creditLine.getTeacher().equals(this.getTeacher())))
-			&& ((creditLine.getType() == null && this.getType() == null)
-				|| (creditLine.getType().equals(this.getType()))))
+			&& ((creditLine.getCreditLineType() == null && this.getCreditLineType() == null)
+				|| (creditLine.getCreditLineType().equals(this.getCreditLineType()))))
 		{
 			result = true;
 		}
@@ -50,7 +50,7 @@ public class CreditLine extends DomainObject implements ICreditLine
 		String result = "[CREDIT_LINE";
 		result += ", Id internal =" + this.getIdInternal();
 		result += ", credits =" + this.getCredits();
-		result += ", type =" + this.getType().toString();
+		result += ", type =" + this.getCreditLineType().toString();
 		result += ", explanation =" + this.getExplanation();
 		result += ", start date =" + this.getStartDate();
 		result += ", end date =" + this.getEndDate();
@@ -140,16 +140,16 @@ public class CreditLine extends DomainObject implements ICreditLine
 	} /**
 	   * @return Returns the type.
 	   */
-	public CreditLineType getType()
+	public CreditLineType getCreditLineType()
 	{
-		return type;
+		return creditLineType;
 	} /**
 	   * @param type
 	   *            The type to set.
 	   */
-	public void setType(CreditLineType type)
+	public void setCreditLineType(CreditLineType creditLineType)
 	{
-		this.type = type;
+		this.creditLineType = creditLineType;
 	}
 
 }

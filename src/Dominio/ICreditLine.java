@@ -28,7 +28,7 @@ public interface ICreditLine extends IDomainObject
 	public ITeacher getTeacher();
 	public void setTeacher(ITeacher teacher);
 	
-	public CreditLineType getType();
-	public void setType(CreditLineType type);
+	public CreditLineType getCreditLineType();
+	public void setCreditLineType(CreditLineType creditLineType);
 
 }
