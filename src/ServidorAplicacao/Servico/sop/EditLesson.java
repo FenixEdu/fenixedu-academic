@@ -104,6 +104,7 @@ public class EditLesson implements IServico {
 					aulaNova.getTipo(),
 					salaNova,
 					null);
+			newLesson.setIdInternal(aula.getIdInternal());
 
 			if (aula != null) {
 				result = valid(newLesson);
@@ -119,7 +120,7 @@ public class EditLesson implements IServico {
 						infoShift.getIdInternal());
 
 				InfoShiftServiceResult infoShiftServiceResult =
-					valid(shift, aula);
+					valid(shift, newLesson);
 
 				if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
 					// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
@@ -217,7 +218,7 @@ public class EditLesson implements IServico {
 		InfoShiftServiceResult result = new InfoShiftServiceResult();
 		result.setMessageType(InfoShiftServiceResult.SUCESS);
 
-		double hours = getTotalHoursOfShiftType(shift);
+		double hours = getTotalHoursOfShiftType(shift, lesson);
 		double lessonDuration =
 			(getLessonDurationInMinutes(lesson).doubleValue()) / 60;
 
@@ -280,7 +281,7 @@ public class EditLesson implements IServico {
 		return result;
 	}
 
-	private double getTotalHoursOfShiftType(ITurno shift)
+	private double getTotalHoursOfShiftType(ITurno shift, IAula alteredLesson)
 		throws ExcepcaoPersistencia {
 		ITurno shiftCriteria = new Turno();
 		shiftCriteria.setNome(shift.getNome());
@@ -296,7 +297,9 @@ public class EditLesson implements IServico {
 		double duration = 0;
 		for (int i = 0; i < lessonsOfShiftType.size(); i++) {
 			lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
-			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
+			if (!lesson.getIdInternal().equals(alteredLesson.getIdInternal())) {
+				duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
+			}
 
 		}
 		return duration;
