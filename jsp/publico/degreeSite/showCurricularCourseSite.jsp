@@ -17,10 +17,10 @@
 		<bean:write name="infoDegree" property="tipoCurso" />&nbsp<bean:write name="infoDegree" property="nome" />
 	</html:link>&gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId") %>" >
-	<bean:message key="label.curricularPlan"/>
+		<bean:message key="label.curricularPlan"/>
 	</html:link>&gt;&nbsp;
 	<html:link page="<%= "/showDegreeCurricularPlan.do?method=showCurricularPlan&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + pageContext.findAttribute("degreeCurricularPlanId").toString() + "&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
-	<bean:message key="label.curriculum"/>
+		<bean:message key="label.curriculum"/>
 	</html:link>&gt;&nbsp;
 	<bean:write name="infoCurricularCourse" property="name" />
 	
@@ -51,16 +51,15 @@
 		</tr>
 		<tr>
 			<td class="box_cell">
-				<ul>
-					<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
-						<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
-						<p><html:link page="<%= "/showCourseSite.do?method=showExecutionCourseSite&amp;executionCourseId=" +  pageContext.findAttribute("executionCourseId")+ "&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId") %>" >
+				<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
+					<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
+					<p>
+					<html:link page="<%= "/viewSite.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseId").toString() + "&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" target="_blank" >
 						<bean:write name="infoExecutionCourse" property="nome" />
-						</html:link>
-						<br />
-						</p>
-					</logic:iterate>
-				</ul>
+					</html:link>
+					<br />
+					</p>
+				</logic:iterate>
 			</td>
 		</tr>  
   </table>
