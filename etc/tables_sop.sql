@@ -111,7 +111,7 @@ create table ATTEND (
 
 #----------------------------
 # Table structure for EXECUTION_PERIOD
-# State : A = Actual; O= Open; NO= Not open; C= Closed
+# State : C = Current; O= Open; NO= Not open; CL= Closed
 #----------------------------
 drop table if exists EXECUTION_PERIOD;
 create table EXECUTION_PERIOD (
@@ -186,6 +186,19 @@ create table EXAM_STUDENT (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EXAM int(11) not null,
    KEY_STUDENT int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXAM, KEY_STUDENT))
+   type=InnoDB;
+
+#----------------------------
+# Table structure for exam_student_room
+#----------------------------
+drop table if exists EXAM_STUDENT_ROOM;
+create table EXAM_STUDENT_ROOM (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EXAM int(11) not null,
+   KEY_STUDENT int(11) not null,
+   KEY_ROOM int(11) not null,   
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXAM, KEY_STUDENT))
    type=InnoDB;
