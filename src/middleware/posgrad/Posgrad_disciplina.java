@@ -16,6 +16,8 @@ public class Posgrad_disciplina
   private Double creditos;
   private String sigla;
   private String tipo;
+  private String optativa;
+  private Integer codigoCurricularCourse;
 
   public long getCodigocursomestrado()
   {
@@ -91,6 +93,34 @@ public void setSigla(String string) {
  */
 public void setTipo(String string) {
 	tipo = string;
+}
+
+/**
+ * @return
+ */
+public Integer getCodigoCurricularCourse() {
+	return codigoCurricularCourse;
+}
+
+/**
+ * @param integer
+ */
+public void setCodigoCurricularCourse(Integer integer) {
+	codigoCurricularCourse = integer;
+}
+
+/**
+ * @return
+ */
+public String getOptativa() {
+	return optativa;
+}
+
+/**
+ * @param string
+ */
+public void setOptativa(String string) {
+	optativa = string;
 }
 
 }

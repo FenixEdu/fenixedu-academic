@@ -36,14 +36,14 @@ public class MigrateAreasCientificas2FenixBrach {
 	}
 
 
-	public void main(String args[]) throws Exception{
+	public static void main(String args[]) throws Exception{
 		MigrateAreasCientificas2FenixBrach migrateAreasCientificas2FenixBrach = new MigrateAreasCientificas2FenixBrach();
 		
-		broker.beginTransaction();
-		broker.clearCache();
+		migrateAreasCientificas2FenixBrach.broker.beginTransaction();
+		migrateAreasCientificas2FenixBrach.broker.clearCache();
 		migrateAreasCientificas2FenixBrach.migratePosgradAreaCientifica2FenixBrach();
 		
-		broker.commitTransaction();
+		migrateAreasCientificas2FenixBrach.broker.commitTransaction();
 	}
 
 	private void migratePosgradAreaCientifica2FenixBrach() throws Exception{
@@ -53,6 +53,7 @@ public class MigrateAreasCientificas2FenixBrach {
 		Query query = null;
 		Criteria criteria = null;
 		QueryByCriteria queryByCriteria = null;
+		DegreeCurricularPlan degreeCurricularPlan = null;
 		try {
 			System.out.print("Reading PosGrad Areas Cientificas ...");
 			List areasCientificasPG = getAreasCientificas();
@@ -111,7 +112,7 @@ public class MigrateAreasCientificas2FenixBrach {
 					throw new Exception("Error Reading Fenix Degree Curricular Plan");
 				}
 				
-				DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0); 
+				degreeCurricularPlan = (DegreeCurricularPlan) result.get(0); 
 								
 				branch2Write.setDegreeCurricularPlan(degreeCurricularPlan);					
 
@@ -126,7 +127,6 @@ public class MigrateAreasCientificas2FenixBrach {
 										
 					criteria = new Criteria();
 					branch2Write.setCode(NameUtils.generateCode(areaCientifica.getNome(), ++numOfChars));
-					criteria.addEqualTo("name", branch2Write.getName());
 					criteria.addEqualTo("code", branch2Write.getCode());
 					criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
 					query = new QueryByCriteria(Branch.class,criteria);
@@ -136,12 +136,17 @@ public class MigrateAreasCientificas2FenixBrach {
 						writableBranch = true;
 				}
 				broker.store(branch2Write);
+				
+				areaCientifica.setCodigoInternoRamo(branch2Write.getInternalID());
+				broker.store(areaCientifica);
+				
 			}
 			System.out.println("  Done !");
 
 		} catch (Exception e){
 			System.out.println();
-			throw new Exception("Error Migrating Area Cientifica " + areaCientifica.getNome() , e);
+			throw new Exception("Error Migrating Area Cientifica " + areaCientifica.getNome() + "\nCurso: " +
+								degreeCurricularPlan.getDegree().getNome(), e);
 			
 		}
 	}

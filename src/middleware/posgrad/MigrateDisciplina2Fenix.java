@@ -16,13 +16,12 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
 import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
+import Util.TipoCurso;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -38,14 +37,14 @@ public class MigrateDisciplina2Fenix {
 	}
 
 
-	public void main(String args[]) throws Exception{
+	public static void main(String args[]) throws Exception{
 		MigrateDisciplina2Fenix migrateDisciplina2Fenix = new MigrateDisciplina2Fenix();
 		
-		broker.beginTransaction();
-		broker.clearCache();
+		migrateDisciplina2Fenix.broker.beginTransaction();
+		migrateDisciplina2Fenix.broker.clearCache();
 		migrateDisciplina2Fenix.migratePosGradDisciplina2Fenix();
 		
-		broker.commitTransaction();
+		migrateDisciplina2Fenix.broker.commitTransaction();
 	}
 
 
@@ -57,6 +56,8 @@ public class MigrateDisciplina2Fenix {
 		Query query = null;
 		Criteria criteria = null;
 		QueryByCriteria queryByCriteria = null;
+		int coursesWritten = 0;
+		int coursesNotWritten = 0;
 		try {
 			System.out.print("Reading PosGrad Curricular Courses ...");
 			List curricularCoursesPG = getDisciplinas();
@@ -75,6 +76,7 @@ public class MigrateDisciplina2Fenix {
 					(curricularCourse2Convert.getCodigocursomestrado() == 15) ||
 					(curricularCourse2Convert.getCodigocursomestrado() == 31) ||
 					(curricularCourse2Convert.getCodigocursomestrado() == 50)){
+						coursesNotWritten++;
 					continue;
 				}
 				
@@ -93,7 +95,9 @@ public class MigrateDisciplina2Fenix {
 
 				Posgrad_curso_mestrado oldDegree = (Posgrad_curso_mestrado) result.get(0);
 				
+				criteria = new Criteria();
 				criteria.addEqualTo("nome", oldDegree.getNomemestrado());
+				criteria.addEqualTo("tipoCurso", TipoCurso.MESTRADO_OBJ);
 				query = new QueryByCriteria(Curso.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);
 				
@@ -122,14 +126,14 @@ public class MigrateDisciplina2Fenix {
 				// Check to see if the Curricular Course Already Exists
 				
 				criteria = new Criteria();
-				
-				// Values By Default
 				criteria.addEqualTo("name", curricularCourse2Convert.getNome());
 				criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
 				query = new QueryByCriteria(CurricularCourse.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);		
 				
 				if (result.size() != 0) {
+					System.out.println("- " + curricularCourse2Convert.getNome() + "[" + result.size() + "]");
+					
 					continue;
 				}
 				
@@ -139,41 +143,21 @@ public class MigrateDisciplina2Fenix {
 				// Read The Credits
 
 				curricularCourse2Write.setCredits(curricularCourse2Convert.getCreditos());
+				curricularCourse2Write.setMandatory(checkIfMandatory(curricularCourse2Convert));
 				
 				curricularCourse2Write.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
 				curricularCourse2Write.setDegreeCurricularPlan(degreeCurricularPlan);
 				curricularCourse2Write.setDepartmentCourse(null);
 				curricularCourse2Write.setLabHours(new Double(0.0));
-				curricularCourse2Write.setMandatory(Boolean.TRUE);
 				curricularCourse2Write.setName(curricularCourse2Convert.getNome());
 				curricularCourse2Write.setPraticalHours(new Double(0.0));
 				curricularCourse2Write.setTheoPratHours(new Double(0.0));
 				curricularCourse2Write.setTheoreticalHours(new Double(0.0));
 				
-				
 				curricularCourse2Write.setType(getType(curricularCourse2Convert));
-				
-				// Check the Curricular Course type
-				if (curricularCourse2Convert.getNome().indexOf("(M)") != -1){
-					curricularCourse2Write.setType(CurricularCourseType.M_TYPE_COURSE_OBJ);
-				} else if (curricularCourse2Convert.getNome().indexOf("(P)") != -1){
-					curricularCourse2Write.setType(CurricularCourseType.P_TYPE_COURSE_OBJ);
-				} else if (curricularCourse2Convert.getNome().indexOf("(D/M)") != -1){
-					curricularCourse2Write.setType(CurricularCourseType.DM_TYPE_COURSE_OBJ);
-				} else if (curricularCourse2Convert.getNome().indexOf("(A)") != -1){
-					curricularCourse2Write.setType(CurricularCourseType.A_TYPE_COURSE_OBJ);
-				} else if (curricularCourse2Convert.getNome().indexOf("(M/L)") != -1){
-					curricularCourse2Write.setType(CurricularCourseType.ML_TYPE_COURSE_OBJ);
-				} else curricularCourse2Write.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
-				
-				
 
 				// Check if the Curricular Course Exists
-				if (curricularCourse2Convert.getSigla() != null){
-					curricularCourse2Write.setCode(curricularCourse2Convert.getSigla());
-				} else {
-					curricularCourse2Write.setCode(NameUtils.generateCode(curricularCourse2Convert.getNome(), 1));
-				}
+				curricularCourse2Write.setCode(curricularCourse2Convert.getSigla());
 				
 				boolean writableCourse = false;
 				int i = 1;
@@ -186,8 +170,6 @@ public class MigrateDisciplina2Fenix {
 					query = new QueryByCriteria(CurricularCourse.class,criteria);
 					result = (List) broker.getCollectionByQuery(query);
 					
-					
-					
 					if (result.size() == 0){
 						writableCourse = true;
 					} else {
@@ -196,16 +178,14 @@ public class MigrateDisciplina2Fenix {
 				}
 				
 				broker.store(curricularCourse2Write);
+				coursesWritten++;
+				curricularCourse2Convert.setCodigoCurricularCourse(curricularCourse2Write.getIdInternal());
+				broker.store(curricularCourse2Convert);
 				
-				// Create Scopes
-				
-				ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-				
-							
-	
 			}
+			System.out.println("  Curricular Courses Written : " + coursesWritten);
+			System.out.println("  Curricular Courses NOT Written : " + coursesNotWritten);
 			System.out.println("  Done !");
-
 		} catch (Exception e){
 			System.out.println();
 			throw new Exception("Error Migrating Curricular Course " + curricularCourse2Convert.getNome() , e);
@@ -248,6 +228,23 @@ public class MigrateDisciplina2Fenix {
 		Query query = new QueryByCriteria(Posgrad_disciplina.class,criteria);
 		return (List) broker.getCollectionByQuery(query);
 	}
+
+	private Boolean checkIfMandatory(Posgrad_disciplina curricularCourse2Convert) {
+		
+		if (curricularCourse2Convert.getOptativa() == null){
+			return Boolean.TRUE;
+		} else if (curricularCourse2Convert.getOptativa().equalsIgnoreCase("f")){
+			return Boolean.TRUE;
+		} else if (curricularCourse2Convert.getOptativa().equalsIgnoreCase("o")){
+			return Boolean.FALSE;
+		}
+
+		
+		
+		return Boolean.FALSE;
+	}
+
+
 
 
 }

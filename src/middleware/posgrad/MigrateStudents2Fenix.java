@@ -15,6 +15,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import Dominio.Funcionario;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -43,14 +44,14 @@ public class MigrateStudents2Fenix {
 	}
 
 
-	public void main(String args[]) throws Exception{
+	public static void main(String args[]) throws Exception{
 		MigrateStudents2Fenix migrateStudents2Fenix = new MigrateStudents2Fenix();
 		
-		broker.beginTransaction();
-		broker.clearCache();
+		migrateStudents2Fenix.broker.beginTransaction();
+		migrateStudents2Fenix.broker.clearCache();
 		migrateStudents2Fenix.migrateStudents2Fenix();
 		
-		broker.commitTransaction();
+		migrateStudents2Fenix.broker.commitTransaction();
 	}
 
 	private void migrateStudents2Fenix() throws Exception{
@@ -60,6 +61,9 @@ public class MigrateStudents2Fenix {
 		Query query = null;
 		Criteria criteria = null;
 		QueryByCriteria queryByCriteria = null;
+		int studentsWritten = 0;
+		int rolesWritten = 0;
+		
 		try {
 			System.out.print("A Ler Alunos de Pos-Graduacao ...");
 			List studentsPG = getStudents();
@@ -141,25 +145,35 @@ public class MigrateStudents2Fenix {
 					student2Write.setState(new StudentState(StudentState.INSCRITO));
 					student2Write.setStudentKind(studentGroupInfo);
 					broker.store(student2Write);
+					studentsWritten++;
 					
-				} else {
-					System.out.println("O Aluno " + student2Convert.getNumero() + " ja existe. ");
 				} 
-
 
 				// Give the Student Role (This student may not exist but the person may already be a 
 				// Graduate Student) 
 					
 				IPersonRole personRole = RoleUtils.readPersonRole((Pessoa) person, RoleType.STUDENT, broker);
 				if (personRole == null){
+					rolesWritten++;
 					person.getPersonRoles().add(RoleUtils.readRole(RoleType.STUDENT, broker));												
 				}
 					
-				// Update The Username
-				person.setUsername("M" + student2Convert.getNumero());
-				broker.store(person);
-		
+				// Check if the person is a Employee
+				
+				criteria = new Criteria();
+				
+				criteria.addEqualTo("chavePessoa", person.getIdInternal());
+				query = new QueryByCriteria(Funcionario.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);
+
+				if (result.size() == 0){
+					// Update The Username
+					person.setUsername("M" + student2Convert.getNumero());
+					broker.store(person);
+				} 
 			}
+			System.out.println("  Students Written: " + studentsWritten);
+			System.out.println("  Roles Written: " + rolesWritten);
 			System.out.println("  Done !");
 		} catch(Exception e) {;
 			System.out.println("Error converting Student " + student2Convert.getNumero());

@@ -36,6 +36,7 @@ import ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.EnrolmentState;
+import Util.Specialization;
 
 /**
  * 
@@ -78,6 +79,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.FINAL_RESULT_SIMPLE);
 			session.removeAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE);
 			session.removeAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE);
+			session.removeAttribute(SessionConstants.DATE);
 			
 			
 			InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) session.getAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
@@ -109,7 +111,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 					if (enrolmentList.size() == 0){
 						ActionErrors errors = new ActionErrors();
 						errors.add("AlunoNãoExiste",
-									new ActionError("error.enrolment.notExist"));
+							new ActionError("error.enrolment.notExist"));
 						saveErrors(request, errors);
 						return new ActionForward(mapping.getInput());
 					}
@@ -143,7 +145,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 					if (enrolmentList.size() == 0){
 						ActionErrors errors = new ActionErrors();
 						errors.add("AlunoNãoExiste",
-									new ActionError("error.enrolment.notExist"));
+								new ActionError("error.enrolment.notExist"));
 						saveErrors(request, errors);
 						return new ActionForward(mapping.getInput());
 					}
@@ -162,73 +164,99 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 					session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
 					session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);	
 					
-					if (certificate.equals("Aproveitamento"))
+					if (certificate.equals("Aproveitamento")){
+						if ( normalEnrolment.size() == 0){
+							ActionErrors errors = new ActionErrors();
+							errors.add("AlunoNãoExiste",
+									new ActionError("error.enrolment.notExist"));
+							saveErrors(request, errors);
+							return new ActionForward(mapping.getInput());
+						}
 						session.setAttribute(SessionConstants.APROVMENT, certificate.toUpperCase());
-				    else
-						if (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))
+					}
+				    else						
+						if (certificate.equals("Aproveitamento de Disciplinas Extra Curricular")){
+							if ( extraEnrolment.size() == 0){
+								ActionErrors errors = new ActionErrors();
+								errors.add("AlunoNãoExiste",
+									new ActionError("error.enrolment.notExist"));
+								saveErrors(request, errors);
+								return new ActionForward(mapping.getInput());
+							}						
 							session.setAttribute(SessionConstants.EXTRA_CURRICULAR_APROVMENT, certificate.toUpperCase());
+						}
 						
 				}
-				if ((certificate.equals("Fim parte escolar simples")) 
-				   || (certificate.equals("Fim parte escolar discriminada sem média")) 
-				   || (certificate.equals("Fim parte escolar discriminada com média"))){
+				if (infoStudentCurricularPlan.getSpecialization().equals(new Specialization(Specialization.MESTRADO))){
 						
-					InfoFinalResult infoFinalResult = null;
-					try {	
-						Object args[] = {infoStudentCurricularPlan};	
-						infoFinalResult =  (InfoFinalResult) serviceManager.executar(userView, "FinalResult", args);
-					}catch (FenixServiceException e){
-						throw new FenixServiceException ("");	
-					}
-					if (infoFinalResult == null){
-						throw new FinalResulUnreachedActionException("");
-					}
-					Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
-					try {
-						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
-	
-					} catch (NonExistingServiceException e) {
-						throw new NonExistingActionException("Inscrição", e);
-					}
-					if (enrolmentList.size() == 0){
-						ActionErrors errors = new ActionErrors();
-						errors.add("AlunoNãoExiste",
-									new ActionError("error.enrolment.notExist"));
-						saveErrors(request, errors);
-						return new ActionForward(mapping.getInput());
-					}
-					InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-					String conclusionDate = "00/00/00";
-					String dataAux = null;					
-					Object result = null;
-					List normalEnrolment = new ArrayList();
-					List extraEnrolment = new ArrayList();
-					Iterator iterator = enrolmentList.iterator();
-					int i = 0;
-					while(iterator.hasNext()) {	
-						result = iterator.next();
-						infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
-						dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
-						if (conclusionDate.compareTo(dataAux) == -1){
-							conclusionDate = dataAux;
-						}		
-						if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
-							extraEnrolment.add(result);		
-						else
-							normalEnrolment.add(result);			 
-					}			
-					
-					session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
-					session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);						
-					session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
-					session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);
-					
-					if (certificate.equals("Fim parte escolar simples"))	
-						session.setAttribute(SessionConstants.FINAL_RESULT_SIMPLE, certificate.toUpperCase());
-					if (certificate.equals("Fim parte escolar discriminada sem média"))	
-						session.setAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE, certificate.toUpperCase());
-					if (certificate.equals("Fim parte escolar discriminada com média"))	
-						session.setAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());					
+						if ((certificate.equals("Fim parte escolar simples")) 
+						   || (certificate.equals("Fim parte escolar discriminada sem média")) 
+						   || (certificate.equals("Fim parte escolar discriminada com média"))){
+								
+							InfoFinalResult infoFinalResult = null;
+							try {	
+								Object args[] = {infoStudentCurricularPlan};	
+								infoFinalResult =  (InfoFinalResult) serviceManager.executar(userView, "FinalResult", args);
+							}catch (FenixServiceException e){
+								throw new FenixServiceException ("");	
+							}
+							if (infoFinalResult == null){
+								throw new FinalResulUnreachedActionException("");
+							}
+							Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
+							try {
+								enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+			
+							} catch (NonExistingServiceException e) {
+								throw new NonExistingActionException("Inscrição", e);
+							}
+							if (enrolmentList.size() == 0){
+								ActionErrors errors = new ActionErrors();
+								errors.add("AlunoNãoExiste",
+											new ActionError("error.enrolment.notExist"));
+								saveErrors(request, errors);
+								return new ActionForward(mapping.getInput());
+							}
+							InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+							String conclusionDate = "00/00/00";
+							String dataAux = null;					
+							Object result = null;
+							List normalEnrolment = new ArrayList();
+							List extraEnrolment = new ArrayList();
+							Iterator iterator = enrolmentList.iterator();
+							int i = 0;
+							while(iterator.hasNext()) {	
+								result = iterator.next();
+								infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
+								dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
+								if (conclusionDate.compareTo(dataAux) == -1){
+									conclusionDate = dataAux;
+								}		
+								if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+									extraEnrolment.add(result);		
+								else
+									normalEnrolment.add(result);			 
+							}			
+							
+							session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
+							session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);						
+							session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
+							session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);
+							
+							if (certificate.equals("Fim parte escolar simples"))	
+								session.setAttribute(SessionConstants.FINAL_RESULT_SIMPLE, certificate.toUpperCase());
+							if (certificate.equals("Fim parte escolar discriminada sem média"))	
+								session.setAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE, certificate.toUpperCase());
+							if (certificate.equals("Fim parte escolar discriminada com média"))	
+								session.setAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());					
+						}
+				}
+				else{
+					ActionErrors errors = new ActionErrors();
+					errors.add("AlunoNãoExiste",
+								new ActionError("error.invalidStudentType"));
+					saveErrors(request, errors);
+					return new ActionForward(mapping.getInput());
 				}
 			}	
 			

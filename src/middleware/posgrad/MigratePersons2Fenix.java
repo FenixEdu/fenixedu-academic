@@ -1,5 +1,6 @@
 package middleware.posgrad;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,14 +34,14 @@ public class MigratePersons2Fenix {
 	}
 
 
-	public void main(String args[]) throws Exception{
+	public static void main(String args[]) throws Exception{
 		MigratePersons2Fenix migratePersons2Fenix = new MigratePersons2Fenix();
 		
-		broker.beginTransaction();
-		broker.clearCache();
+		migratePersons2Fenix.broker.beginTransaction();
+		migratePersons2Fenix.broker.clearCache();
 		migratePersons2Fenix.migratePosgradPessoa2Fenix();
 		
-		broker.commitTransaction();
+		migratePersons2Fenix.broker.commitTransaction();
 	}
 	
 	private void migratePosgradPessoa2Fenix() throws Exception{
@@ -49,6 +50,9 @@ public class MigratePersons2Fenix {
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
+		int personsWritten = 0;
+		int rolesWritten = 0;
+		
 		try {
 			System.out.print("A Ler Pessoas de Pos-Graduacao ...");
 			List pessoasPG = getPessoas();
@@ -60,7 +64,7 @@ public class MigratePersons2Fenix {
 			while(iterator.hasNext()){
 				person2Convert = (Posgrad_pessoa) iterator.next();
 				person2Write = new Pessoa();
-				// Remoe the PosGrad User
+				// Remove the PosGrad User
 				
 				if ((person2Convert.getUsername().equalsIgnoreCase("posgrad2002")) && (person2Convert.getPassword().equalsIgnoreCase("aplica2002")))
 					continue;
@@ -82,6 +86,8 @@ public class MigratePersons2Fenix {
 
 				if (result.size() == 0){
 					copyPessoaPG2Person(person2Write, person2Convert, identificationDocumentType);
+					person2Write.setPersonRoles(new ArrayList());
+					personsWritten++;
 				} else {
 					person2Write = (IPessoa) result.get(0);
 					
@@ -100,16 +106,20 @@ public class MigratePersons2Fenix {
 						// A pessoa nao e um funcionario. Entao vamos fazer update dos campos todos
 						copyPessoaPG2Person(person2Write, person2Convert, identificationDocumentType);
 					}
+					
 				}
-				
 				
 				IPersonRole personRole = RoleUtils.readPersonRole((Pessoa) person2Write, RoleType.PERSON, broker);
 				if (personRole == null){
  			  		person2Write.getPersonRoles().add(RoleUtils.readRole(RoleType.PERSON, broker));
+					rolesWritten++;
 				}
 				broker.store(person2Write);				
 			}
+			System.out.println("   Persons Written : " + personsWritten);
+			System.out.println("   Roles Written : " + rolesWritten);
 			System.out.println("   Success !");
+		
 		} catch(Exception e) {
 			System.out.println("Erro na Pessoa de Pos-Graduacao : " + person2Convert.getNome());
 			throw new Exception(e);
@@ -177,13 +187,16 @@ public class MigratePersons2Fenix {
 			person2Write.setConcelhoMorada(person2Convert.getConcelhomorada());
 			person2Write.setDistritoMorada(person2Convert.getDistritomorada());
 			person2Write.setTelefone(person2Convert.getTelefone());
-			person2Write.setTelemovel(person2Convert.getTelemovel());
-			person2Write.setEmail(person2Convert.getEmail());
-			person2Write.setEnderecoWeb(person2Convert.getEnderecoweb());
+//			person2Write.setTelemovel(person2Convert.getTelemovel());
+//			person2Write.setEmail(person2Convert.getEmail());
+//			person2Write.setEnderecoWeb(person2Convert.getEnderecoweb());
 			person2Write.setNumContribuinte(person2Convert.getNumcontribuinte());
 			person2Write.setProfissao(person2Convert.getProfissao());
 			person2Write.setUsername(person2Convert.getUsername());
-			person2Write.setPassword(PasswordEncryptor.encryptPassword(person2Convert.getPassword()));
+			
+			
+			// FIXME: Depois de correr a primeira vez comentar a linha seguinte
+			person2Write.setPassword(PasswordEncryptor.encryptPassword(person2Convert.getNumerodocumentoidentificacao()));
 		
 		} catch(Exception e){
 			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());

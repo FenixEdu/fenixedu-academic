@@ -53,6 +53,6 @@ public class NameUtils {
 						result += String.valueOf(aux.substring(0, numOfChars));
 			}
 		}
-		return result;
+		return result.toUpperCase();
 	}
 }

@@ -14,6 +14,8 @@ public class Posgrad_area_cientifica
   private long codigointerno;
 
   private String nome;
+  
+  private Integer codigoInternoRamo;
 
   public String getAnolectivo()
   {
@@ -59,5 +61,19 @@ public class Posgrad_area_cientifica
     return  " [anoLectivo] " + anolectivo + " [codigoCursoMestrado] " + codigocursomestrado + " [codigoInterno] " + codigointerno + " [nome] " + nome;
 
   }
+/**
+ * @return
+ */
+public Integer getCodigoInternoRamo() {
+	return codigoInternoRamo;
+}
+
+/**
+ * @param integer
+ */
+public void setCodigoInternoRamo(Integer integer) {
+	codigoInternoRamo = integer;
+}
+
 }
 
