@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<h3><bean:message key="title.editSiteAndEmail"/></h3>
+<h3><bean:message key="title.personalizationOptions"/></h3>
 	<table border="0" style="text-align: left;">
 
 

@@ -20,7 +20,17 @@
 </logic:notPresent>
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
-	
+ <logic:present name="<%= SessionConstants.INFO_SITE %>" property="initialStatement">
+	<table cellspacing="0">
+        <tr>
+          <td class="citation">
+            <p>&quot;<bean:write name="<%= SessionConstants.INFO_SITE %>" property="initialStatement" />&quot;</p>
+          </td>
+        </tr>
+      </table>		
+      <br/>
+      <br/>
+	</logic:present>		
  <logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" scope="session">		
         <table id="anuncios" align="center" cellspacing="0">
           <tr>
@@ -62,6 +72,22 @@
 			<br/>
 			<br/>
     </logic:present>
+     <logic:present name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite">	
+     	<h2><bean:message key="message.siteAddress" /></h2>
+	<bean:define id="alternativeSite" name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite"/>
+	<html:link href="<%=(String)pageContext.findAttribute("alternativeSite") %>" target="_blank">
+			<bean:write name="alternativeSite" />
+	</html:link>
+			<br/>
+			<br/>
+</logic:present>
+     <logic:present name="<%= SessionConstants.INFO_SITE %>" property="introduction">
+	<h2><bean:message key="message.introduction" /></h2>
+      <p><bean:write name="<%= SessionConstants.INFO_SITE %>" property="introduction" /></p>
+        	
+      <br/>
+      <br/>
+	</logic:present>	
 			
 	<bean:message key="property.executionCourse.associatedCurricularCourses"/>
 	<logic:present name="publico.infoCurricularCourses" scope="session">
