@@ -50,7 +50,7 @@ public class ViewAllRoomsSchedulesAction extends Action {
 					SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE,
 					infoViewClassScheduleList);
 				request.setAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+					SessionConstants.INFO_EXECUTION_PERIOD,
 					infoExecutionPeriod);
 			}
 

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>~
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -10,17 +10,18 @@
 	<logic:iterate id="viewRoomSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
 		<table width="100%" cellspacing="0">
 			<tr>
-				<td class="infoselected">
+				<td class="infoselected"> <p>O período execução seleccionado &eacute;:</p>
 					<strong>
-						<jsp:getProperty name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="name"/> -
-						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" property="infoExecutionYear.year"/>
+						<bean:define id="infoExecutionPeriod" name="<%=SessionConstants.INFO_EXECUTION_PERIOD %>" scope="request"/>
+						<bean:write name="infoExecutionPeriod" property="name"/> - 
+						<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
 					</strong>
 		         </td>
 		    </tr>
 		</table>
-
+		<br />
+		<br />
 		<bean:define id="infoRoom" name="viewRoomSchedule" property="infoRoom"/>		
-		<bean:write name="infoRoom"/>
         <table width="100%">
         	<tr>
             	<td class="listClasses-header">
@@ -65,7 +66,7 @@
 		</table>
 		<br />
 		<br />	
-	   	<bean:define id="lessons" name="viewClassSchedule" property="classLessons"/>
+	   	<bean:define id="lessons" name="viewRoomSchedule" property="roomLessons"/>
 		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
 		<br style="page-break-before:always;" />
 	</logic:iterate>
