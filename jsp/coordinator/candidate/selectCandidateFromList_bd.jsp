@@ -34,10 +34,10 @@
     
 	    <table>
     		<tr>
-				<td><bean:message key="label.name" /></td>
-				<td><bean:message key="label.masterDegree.administrativeOffice.specialization" /></td>
-				<td><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></td>
-				<td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
+	    		<td class="listClasses-header"><bean:message key="label.name" /></td>
+				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.specialization" /></td>
+				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.candidateSituation" /></td>
+				<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
 			</tr>
     		
         
@@ -46,16 +46,16 @@
     				<bean:write name="link"/><bean:write name="indexCandidate"/>
     			</bean:define>
     			<tr>
-    				<td>
+    				<td class="listClasses">
       				    <html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
     						<bean:write name="candidate" property="infoPerson.nome" />
     					</html:link>
     				</td>
-    				<td><bean:write name="candidate" property="specialization" /></td>
-    				<td><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
+    				<td class="listClasses"><bean:write name="candidate" property="specialization" /></td>
+    				<td class="listClasses"><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
 		            <logic:present name="candidate" property="infoCandidateSituation.date" >
 	    	            <bean:define id="date" name="candidate" property="infoCandidateSituation.date" />
-						<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+						<td class="listClasses"><%= Data.format2DayMonthYear((Date) date) %></td>   
 					</logic:present>
     			</tr>
     		</logic:iterate>
