@@ -62,7 +62,6 @@
       	  <reference-descriptor
          	name="person"
          	class-ref="Dominio.Pessoa"
-         	proxy="true"
 			refresh="true"
       	  >
           <foreignkey field-id-ref="2"/>
