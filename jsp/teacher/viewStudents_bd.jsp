@@ -13,12 +13,14 @@
     <span class="error"><html:errors/></span>
     <table>        
 		<tr>
+			
 			<td>
-				<h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>
+			 <h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>
 		   </td>
 			<logic:present name="studentsComponent" property="infoCurricularCourseScope">  		
 			<td>
-				&nbsp;-&nbsp;
+				<h2>
+				&nbsp;-&nbsp;				
 				<bean:define id="ano" name="studentsComponent" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year" />
 				<bean:define id="semestre" name="studentsComponent" property="infoCurricularCourseScope.infoCurricularSemester.semester" />					
 				<bean:write name="studentsComponent" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.sigla" />
@@ -28,8 +30,10 @@
 				</logic:notEqual>						
 				<bean:message key="label.year" arg0="<%= String.valueOf(ano) %>"/>
 				<bean:message key="label.period" arg0="<%= String.valueOf(semestre) %>"/>
+				</h2>
 		   </td>
 		   </logic:present>
+		   
 		</tr> 
 		<tr>
 			<td class="listClasses-header">
