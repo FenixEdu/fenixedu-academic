@@ -16,7 +16,6 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.Aula;
-import Dominio.IAula;
 import Dominio.ISala;
 import Dominio.Sala;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -71,7 +70,6 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     
     public void delete(ISala sala) throws ExcepcaoPersistencia {
 		try {
-			IAula aula = null;
 			String oqlQuery = "select all from " + Aula.class.getName();
 			oqlQuery += " where sala.nome = $1";
 			query.create(oqlQuery);

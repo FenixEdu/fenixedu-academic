@@ -96,7 +96,6 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 	 */
 	public List readTeacherByExecutionCourseProfessorship(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 		try {
-			ITeacher teacher = null;
 			String oqlQuery = "select teacher from " + Teacher.class.getName();			
 			oqlQuery += " where professorShipsExecutionCourses.executionPeriod.executionYear.year = $1";
 			oqlQuery += " and professorShipsExecutionCourses.sigla = $2";
@@ -121,7 +120,6 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 	 */
 	public List readTeacherByExecutionCourseResponsibility(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 		try {
-				ITeacher teacher = null;
 				String oqlQuery = "select teacher from " + Teacher.class.getName();
 				oqlQuery += " where responsibleForExecutionCourses.executionPeriod.executionYear.year = $1";
 				oqlQuery += " and responsibleForExecutionCourses.sigla = $2";

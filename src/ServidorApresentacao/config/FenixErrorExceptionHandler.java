@@ -67,7 +67,6 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 		// Figure out the error
 		if (ex instanceof FenixActionException) {
 			error = ((FenixActionException) ex).getError();
-			Object[] xpto = error.getValues();
 			property = ((FenixActionException) ex).getProperty();
 		} else {
 			error = new ActionError(ae.getKey(), ex.getMessage());

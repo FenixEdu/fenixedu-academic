@@ -134,9 +134,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
-		ActionErrors errors = new ActionErrors();
-		InfoExecutionPeriod infoExecPeriod = null;
-		InfoExecutionCourse infoExecCourse = null;
 		String exeCourseCode = null;
 
 		if (session != null) {

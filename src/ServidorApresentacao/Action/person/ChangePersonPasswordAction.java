@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidPasswordServiceException;
 import ServidorApresentacao.Action.exceptions.InvalidPasswordActionException;
@@ -41,9 +40,6 @@ public class ChangePersonPasswordAction extends ServidorApresentacao.Action.base
 			String newPassword = (String) changePasswordForm.get("newPassword");
 
 			// Check the old Password
-			
-			InfoMasterDegreeCandidate masterDegreeCandidate = null;
-		  
 			Object args[] = { userView, oldPassword, newPassword };
 		  
 			try {
