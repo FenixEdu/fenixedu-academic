@@ -156,7 +156,12 @@ public class ManageLessonDA
 			infoRoom.setCapacidadeNormal(new Integer(0));
 			infoRoom.setCapacidadeExame(new Integer(0));
 
+			InfoLesson lessonBeingEdited = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
+
 			InfoLesson infoLesson = new InfoLesson();
+			if (lessonBeingEdited != null) {
+				infoLesson.setIdInternal(lessonBeingEdited.getIdInternal());
+			}
 			infoLesson.setDiaSemana(weekDay);
 			infoLesson.setInicio(inicio);
 			infoLesson.setFim(fim);
