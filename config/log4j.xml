@@ -2,83 +2,73 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-        
-  <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
-    <layout class="org.apache.log4j.PatternLayout">
-   	 <param name= "ConversionPattern" value= "%5p [%t] (%F:%L) - %m%n"/>
-    </layout>
-  </appender>
 
- <appender name= "profileLog" class= "org.apache.log4j.DailyRollingFileAppender">
-	<param name= "File" value= "@log.profile.dir@/@log.profile.filename@"/>
-	<param name= "DatePattern" value= "'.'yyyy-MM-dd"/>
-	<layout class= "org.apache.log4j.PatternLayout">
-		<param name= "ConversionPattern" value= "%d{HH:mm:ss.SSS} %m%n"/>
-	</layout>
-	<filter class= "org.apache.log4j.varia.LevelRangeFilter">
-		<param name= "LevelMin" value= "INFO"/>
-		<param name= "LevelMax" value= "WARN"/>
-		<param name= "AcceptOnMatch" value= "true"/>
-	</filter > 
-	<filter class= "org.apache.log4j.varia.DenyAllFilter"/>
- </appender >
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name= "ConversionPattern" value= "%5p [%t] (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
 
-    <appender name="EMAIL"  class="org.apache.log4j.net.SMTPAppender">
-        <param name="BufferSize" value="512" />
-        <param name="SMTPHost" value="@log4j.email.smtp.host@" />
-        <param name="From" value="@log4j.email.smtp.from@" />
-        <param name="To" value="@log4j.email.smtp.to@" />
-        <param name="Subject" value="@log4j.email.smtp.subject@" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern"
-              value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
-        </layout>
-<!--
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="ERROR"/>
-            <param name="LevelMax" value="FATAL"/>
-        </filter>
--->
-    </appender>
+	<appender name= "profileLog" class= "org.apache.log4j.DailyRollingFileAppender">
+		<param name= "File" value= "@log.profile.dir@/@log.profile.filename@"/>
+		<param name= "DatePattern" value= "'.'yyyy-MM-dd"/>
+		<layout class= "org.apache.log4j.PatternLayout">
+			<param name= "ConversionPattern" value= "%d{HH:mm:ss.SSS} %m%n"/>
+		</layout>
+		<filter class= "org.apache.log4j.varia.LevelRangeFilter">
+			<param name= "LevelMin" value= "INFO"/>
+			<param name= "LevelMax" value= "WARN"/>
+			<param name= "AcceptOnMatch" value= "true"/>
+		</filter > 
+		<filter class= "org.apache.log4j.varia.DenyAllFilter"/>
+	</appender >
 
-  <logger name="org.apache.ojb.broker.accesslayer.sql">
-  	<level value="error"/>
-  	<appender-ref ref="ConsoleAppender"/>
-  </logger>
-  
-  <logger name="org.apache.ojb.broker.accesslayer.StatementsForClass">
-    <level value="error"/>
-    <appender-ref ref="ConsoleAppender"/>
-  </logger>
-  
-  <logger name="org.apache.ojb.broker.accesslayer.sql.SqlGeneratorDefaultImpl">
-    <level value="error"/>
-    <appender-ref ref="ConsoleAppender"/>
-  </logger>
-  
-  <logger name="org.apache.ojb.odmg">
-    <level value="error"/>
-    <appender-ref ref="ConsoleAppender"/>
-  </logger>
-  
-  <logger name="com.atlassian.util.profiling" additivity="false">
-    <level value="info"/>
-    <appender-ref ref="profileLog"/>
-  </logger>
+	<appender name="EMAIL"  class="org.apache.log4j.net.SMTPAppender">
+		<param name="BufferSize" value="512" />
+		<param name="SMTPHost" value="@log4j.email.smtp.host@" />
+		<param name="From" value="@log4j.email.smtp.from@" />
+		<param name="To" value="@log4j.email.smtp.to@" />
+		<param name="Subject" value="@log4j.email.smtp.subject@" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
+		</layout>
+	</appender>
 
-  <logger name="net.sourceforge.fenixedu.applicationTier.Servico.student.InsertStudentTestResponses">
-    <level value="debug"/>
-    <appender-ref ref="ConsoleAppender"/>
-  </logger>
+	<logger name="org.apache.ojb.broker.accesslayer.sql">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="org.apache.ojb.broker.accesslayer.StatementsForClass">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="org.apache.ojb.broker.accesslayer.sql.SqlGeneratorDefaultImpl">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="org.apache.ojb.odmg">
+		<level value="error"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
 
-  <logger name="net.sourceforge.fenixedu.tools.DMLGenerator" additivity="false">
-    <level value="info"/>
-    <appender-ref ref="ConsoleAppender"/>
-  </logger>
+	<logger name="com.atlassian.util.profiling" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="profileLog"/>
+	</logger>
 
-  <root>
-    <priority value="warn"/>    
-    <appender-ref ref="ConsoleAppender"/>
-  </root>
+	<logger name="net.sourceforge.fenixedu.applicationTier.Servico.student.InsertStudentTestResponses">
+		<level value="debug"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
+	<logger name="net.sourceforge.fenixedu" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
+	<root>
+		<priority value="warn"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</root>
 
 </log4j:configuration>
