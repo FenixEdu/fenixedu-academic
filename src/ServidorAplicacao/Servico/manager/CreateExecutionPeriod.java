@@ -4,6 +4,8 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import java.util.Calendar;
+
 import DataBeans.InfoExecutionPeriod;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -85,6 +87,8 @@ public class CreateExecutionPeriod implements IServico {
 							.getYear());
 				executionYearToCreate.setState(
 					new PeriodState(PeriodState.NOT_OPEN));
+				executionYearToCreate.setBeginDate(Calendar.getInstance().getTime());
+				executionYearToCreate.setEndDate(Calendar.getInstance().getTime());
 
 				executionYearDAO.writeExecutionYear(executionYearToCreate);
 			}
@@ -104,6 +108,8 @@ public class CreateExecutionPeriod implements IServico {
 					infoExecutionPeriodOfWorkingArea.getSemester());
 				executionPeriodToCreate.setState(
 					new PeriodState(PeriodState.OPEN));
+				executionPeriodToCreate.setBeginDate(Calendar.getInstance().getTime());
+				executionPeriodToCreate.setEndDate(Calendar.getInstance().getTime());
 
 				executionPeriodDAO.writeExecutionPeriod(
 					executionPeriodToCreate);
@@ -111,6 +117,9 @@ public class CreateExecutionPeriod implements IServico {
 				throw new ExistingExecutionPeriod();
 			}
 
+			sp.confirmarTransaccao();
+			sp.iniciarTransaccao();
+			
 			// Export data to new execution period
 			executionPeriodDAO.transferData(
 				executionPeriodToCreate,
