@@ -4,17 +4,18 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
 import Dominio.CursoExecucao;
-import Dominio.Employee;
 import Dominio.GratuityValues;
 import Dominio.ICursoExecucao;
 import Dominio.IEmployee;
 import Dominio.IGratuityValues;
+import Dominio.IPessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
@@ -22,6 +23,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentGratuityValues;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -102,17 +104,52 @@ public class InsertGratuityData implements IServico
 				//execution Degree
 				ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
 				ICursoExecucao executionDegree = new CursoExecucao();
-				executionDegree.setIdInternal(infoGratuityValues.getInfoExecutionDegree().getIdInternal());
-				
-				executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+				executionDegree.setIdInternal(
+					infoGratuityValues.getInfoExecutionDegree().getIdInternal());
+
+				executionDegree =
+					(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
 				gratuityValues.setExecutionDegree(executionDegree);
 			}
+
+			//employee who made register
+			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+			IPessoa person =
+				persistentPerson.lerPessoaPorUsername(
+					infoGratuityValues.getInfoEmployee().getPerson().getUsername());
+			if (person != null)
+			{
+				IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+				IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+				gratuityValues.setEmployee(employee);
+			}
+
+			Calendar now = Calendar.getInstance();
+			gratuityValues.setWhen(now.getTime());
 			
-			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-			IEmployee employee = new Employee();
-			employee = (IEmployee) persistentEmployee.readByOId(employee, false);
+			gratuityValues.setAnualValue(infoGratuityValues.getAnualValue());
+			gratuityValues.setScholarShipValue(infoGratuityValues.getScholarShipValue());
+			gratuityValues.setFinalProofValue(infoGratuityValues.getFinalProofValue());
+			gratuityValues.setCreditValue(infoGratuityValues.getCreditValue());
+			gratuityValues.setCourseValue(infoGratuityValues.getCourseValue());
+			gratuityValues.setProofRequestPayment(infoGratuityValues.getProofRequestPayment());
+			gratuityValues.setStartPayment(infoGratuityValues.getStartPayment());
+			gratuityValues.setEndPayment(infoGratuityValues.getEndPayment());
 			
-			
+//			
+//			private Double anualValue;
+//			private Double scholarShipValue;
+//			private Double finalProofValue;
+//			private Double courseValue;
+//			private Double creditValue;
+//			private Boolean proofRequestPayment;
+//			private Date startPayment;
+//			private Date endPayment;
+
+			//TODO: write all payment phases
+
+			//TODO: update gratuity values in all student curricular plan that belong to this execution
+			// degree
 
 		}
 		catch (ExcepcaoPersistencia e)
@@ -121,12 +158,10 @@ public class InsertGratuityData implements IServico
 			throw new FenixServiceException("exception persistent error!");
 		}
 
-		//write all payment phases
-
-		//update gratuity values in all student curricular plan that belong to this execution degree
-
 		return Boolean.TRUE;
 	}
+
+
 
 	private void validateGratuity(InfoGratuityValues infoGratuityValues) throws FenixServiceException
 	{

@@ -74,7 +74,7 @@ public class ExemptionGratuityAction extends DispatchAction
 
 		return mapping.findForward("chooseStudent");
 	}
-
+	
 	public ActionForward readStudent(
 		ActionMapping mapping,
 		ActionForm actionForm,
