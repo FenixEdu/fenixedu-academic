@@ -66,9 +66,12 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 
 		  // If the Candidate's situation is already resolved then he can't change it
 		  
-		 if(!masterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PENDENTE_STRING))
+		 if(!masterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PENDENTE_STRING)){
+		 	// Put information in Session
+		 	
+		 	request.setAttribute("situation", masterDegreeCandidate.getInfoCandidateSituation());
 		 	return mapping.findForward("Unchangeable");		
-		
+		 }
 
 		  changePersonalInfoForm.set("identificationDocumentNumber", masterDegreeCandidate.getIdentificationDocumentNumber());
 		  changePersonalInfoForm.set("identificationDocumentType", masterDegreeCandidate.getIdentificationDocumentType());
