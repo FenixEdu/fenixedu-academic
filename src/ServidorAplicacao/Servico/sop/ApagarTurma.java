@@ -11,11 +11,11 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import java.util.List;
-
-import DataBeans.ClassKey;
+import DataBeans.InfoClass;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
-import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -44,6 +44,33 @@ public class ApagarTurma implements IServico {
 		return "ApagarTurma";
 	}
 
+	public Object run(InfoClass infoClass) {
+
+		ITurma turma1 = null;
+		ITurma turma2 = null;
+		boolean result = false;
+
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
+			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree());
+
+			turma1 = sp.getITurmaPersistente().readByExecutionPeriodAndClassNameAndExecutionDegree(executionPeriod, infoClass.getNome(), executionDegree);
+			sp.getITurmaPersistente().delete(turma1);
+			turma2 = sp.getITurmaPersistente().readByExecutionPeriodAndClassNameAndExecutionDegree(executionPeriod, infoClass.getNome(), executionDegree);
+
+			if( (turma1!= null) && (turma2 == null) ) {
+				result = true;
+			}
+
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+		}
+
+		return new Boolean(result);
+	}
+
+/*
 	public Object run(ClassKey keyTurma) {
 
 		ITurma turma1 = new Turma();
@@ -73,5 +100,5 @@ public class ApagarTurma implements IServico {
 
 		return new Boolean(result);
 	}
-
+*/
 }
