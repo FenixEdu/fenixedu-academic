@@ -21,7 +21,9 @@ public class GrantContractOJB
     {
     }
 
-    public IGrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,Integer grantOwnerId)
+    public IGrantContract readGrantContractByNumberAndGrantOwner(
+        Integer grantContractNumber,
+        Integer grantOwnerId)
         throws ExcepcaoPersistencia
     {
         IGrantContract grantContract = null;
@@ -43,7 +45,8 @@ public class GrantContractOJB
         criteria.addEqualTo("key_grant_owner", grantOwnerId);
         criteria.addOrderBy("number", false);
         grantContract = (IGrantContract) queryObject(GrantContract.class, criteria);
-        maxGrantContractNumber = grantContract.getContractNumber();
+        if (grantContract != null)
+            maxGrantContractNumber = grantContract.getContractNumber();
         return maxGrantContractNumber;
     }
 }
