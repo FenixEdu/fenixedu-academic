@@ -146,7 +146,7 @@
 	</logic:present>
 	
 	<html:hidden property="page" value="2"/>
-	<html:link page="<%="/printMarks.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("curricularCourseCode")%>">
+	<!-- <html:link page="<%="/printMarks.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("curricularCourseCode")%>">
 		<bean:message key="link.masterDegree.administrativeOffice.print" />
-	</html:link>
+	</html:link>-->
 	</logic:present>
