@@ -58,7 +58,8 @@ public class RowMarksFile
             enrolmentEvaluation
                 .getEnrolment()
                 .getCurricularCourse()
-                .getCurricularYearByBranch(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch())
+                .getCurricularYearByBranch(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch()
+                        , enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester())
                 .getYear());
         setCurricularSemester(
             enrolmentEvaluation
@@ -94,7 +95,8 @@ public class RowMarksFile
             enrolmentEvaluation
                 .getEnrolment()
                 .getCurricularCourse()
-                .getCurricularYearByBranch(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch())
+                .getCurricularYearByBranch(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch()
+                        , enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester())
                 .getYear());
         setCurricularSemester(
             enrolmentEvaluation

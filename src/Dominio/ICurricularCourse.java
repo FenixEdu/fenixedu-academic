@@ -62,7 +62,7 @@ public interface ICurricularCourse extends IDomainObject {
 	public Double getWeigth();
 	public Boolean getMandatoryEnrollment();
 
-	public ICurricularYear getCurricularYearByBranch(IBranch branch);
+	public ICurricularYear getCurricularYearByBranch(IBranch branch, Integer semester);
 	public boolean curricularCourseIsMandatory();
 
 	// -------------------------------------------------------------

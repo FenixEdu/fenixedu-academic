@@ -1,53 +1,79 @@
 package Dominio.degree.enrollment.rules;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class MaximumCurricularCourseEnrollmentRule implements IEnrollmentRule {
+public class MaximumCurricularCourseEnrollmentRule extends SelectionUponMaximumNumberEnrollmentRule implements IEnrollmentRule {
 
-    List temporaryEnrollments;
+    List enrollments;
     int maxCoursesToBeEnrolled;
 
-    public MaximumCurricularCourseEnrollmentRule(IStudentCurricularPlan studentCurricularPlan) {
+    public MaximumCurricularCourseEnrollmentRule(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod) {
 
+        super(executionPeriod, studentCurricularPlan.getBranch());
         maxCoursesToBeEnrolled = studentCurricularPlan.getMaximumNumberOfCoursesToEnroll().intValue();
-        temporaryEnrollments = studentCurricularPlan.getStudentTemporarilyEnrolledEnrollments();
+        enrollments = studentCurricularPlan.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
 
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) {
 
-        double maxWeightOfEnrolledCurricularCourses = 0;
+        double maxEnrolledCurricularCourses = 0;
         double numberOfEnrolledCurricularCourses = 0;
-        double weightOfCurricularCoursesToEnroll = 0;
+        double availableCurricularCoursesToEnroll = 0;
         ArrayList filterCurricularCoursesToBeEnrolledIn = new ArrayList();
         
-        Iterator iterator = temporaryEnrollments.iterator();
-
-        while (iterator.hasNext()) {
-            IEnrolment enrollment = (IEnrolment) iterator.next();
+       
+        for(int i = 0; i < enrollments.size(); i++){
+            IEnrolment enrollment = (IEnrolment) enrollments.get(i);
             numberOfEnrolledCurricularCourses += enrollment.getCurricularCourse().getEnrollmentWeigth().doubleValue();
         }
 
-		weightOfCurricularCoursesToEnroll = maxWeightOfEnrolledCurricularCourses - numberOfEnrolledCurricularCourses;
-        iterator = curricularCoursesToBeEnrolledIn.iterator();
-        while (iterator.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-            if(curricularCourse.getWeigth().doubleValue() > weightOfCurricularCoursesToEnroll)
+		availableCurricularCoursesToEnroll = maxEnrolledCurricularCourses - numberOfEnrolledCurricularCourses;
+         
+		curricularCoursesToBeEnrolledIn = sortCurricularCourseByCurricularYear(curricularCoursesToBeEnrolledIn);
+        curricularCoursesToBeEnrolledIn = filterCurricularCoursesThatExeceedAcumulatedValue(curricularCoursesToBeEnrolledIn);
+		
+        for(int i = 0; i < enrollments.size(); i++){
+            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToBeEnrolledIn.get(i);
+            if(curricularCourse.getWeigth().doubleValue() > availableCurricularCoursesToEnroll)
             	filterCurricularCoursesToBeEnrolledIn.add(curricularCourse);
         }
         
         curricularCoursesToBeEnrolledIn.removeAll(filterCurricularCoursesToBeEnrolledIn);
 
         return curricularCoursesToBeEnrolledIn;
+    }
+    
+    /**
+     * 
+     * @param curricularCoursesSortedByYear
+     * @return
+     */
+    private List filterCurricularCoursesThatExeceedAcumulatedValue(List curricularCoursesSortedByYear) {
+
+        int acumulatedEnrollments = 0;
+        int iterator = 0;
+        for (; iterator < curricularCoursesSortedByYear.size(); iterator++) {
+            IEnrolment enrollment = (IEnrolment) curricularCoursesSortedByYear.get(iterator);
+            ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
+            acumulatedEnrollments += curricularCourse.getEnrollmentWeigth().intValue();
+
+            if (acumulatedEnrollments >= maxCoursesToBeEnrolled) {
+
+                curricularCoursesSortedByYear = getCurricularCoursesFromPreviousAndCurrentYear(curricularCoursesSortedByYear, iterator);
+                break;
+            }
+        }
+        return curricularCoursesSortedByYear;
     }
 }
