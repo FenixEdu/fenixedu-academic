@@ -93,7 +93,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 		
 				System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
 		
-				MakeEquivalencesForAllStudentsPastEnrolments.printIndexes(span, numberOfElementsInSpan);
+//				MakeEquivalencesForAllStudentsPastEnrolments.printIndexes(span, numberOfElementsInSpan);
 				
 				Iterator iterator = result.iterator();
 				while (iterator.hasNext()) {
@@ -310,8 +310,8 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			enrolmentEvaluation.setWhen(newDate);
 
 			UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates++;
-			System.out.println("[INFO] Date updated from: [" + whenAltered.toString() + "] to [" + newDate.toString() + "].");
-			System.out.println("[INFO] Number of EnrolmentEvaluations dates yet updated: [" + UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates + "]");
+//			System.out.println("[INFO] Date updated from: [" + whenAltered.toString() + "] to [" + newDate.toString() + "].");
+//			System.out.println("[INFO] Number of EnrolmentEvaluations dates yet updated: [" + UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates + "]");
 		}
 	}
 
