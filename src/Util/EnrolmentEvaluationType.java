@@ -17,8 +17,9 @@ public class EnrolmentEvaluationType {
 	public static final int EXTERNAL = 4; // avaliacao feita fora do IST
 	public static final int EQUIVALENCE = 5; // avaliacao feita por equivalencia
 	public static final int CLOSED = 6; // inscricao com avaliacao fechada
-	public static final int FIRST_SEASON = 7; // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guarda histórico, não usar para mais nada!
-	public static final int SECOND_SEASON = 8; // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guarda histórico, não usar para mais nada!
+	public static final int FIRST_SEASON = 7; // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guardar histórico, não usar para mais nada!
+	public static final int SECOND_SEASON = 8; // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guardar histórico, não usar para mais nada!
+	public static final int NO_SEASON = 9; // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guardar histórico, não usar para mais nada!
 
 	public static final EnrolmentEvaluationType NORMAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 	public static final EnrolmentEvaluationType IMPROVEMENT_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
@@ -28,6 +29,7 @@ public class EnrolmentEvaluationType {
 	public static final EnrolmentEvaluationType CLOSED_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED);
 	public static final EnrolmentEvaluationType FIRST_SEASON_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.FIRST_SEASON);
 	public static final EnrolmentEvaluationType SECOND_SEASON_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.SECOND_SEASON);
+	public static final EnrolmentEvaluationType NO_SEASON_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.NO_SEASON);
 
 	public static final String NORMAL_STRING = "Epoca Normal";
 	public static final String IMPROVEMENT_STRING = "Melhoria de Nota";
