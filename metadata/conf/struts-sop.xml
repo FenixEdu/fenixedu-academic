@@ -975,6 +975,13 @@
           <forward name="Sucess" path="/viewRoomForExams.jsp"/>
       </action>
 
+      <action path="/consultAllRoomsForExams"
+              type="ServidorApresentacao.Action.sop.ViewAllRoomsForExamsFormAction"
+              >
+          <forward name="Sucess" path="/viewAllRoomsForExams.jsp"/>
+      </action>
+
+
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"
 				input="/siteViewerError.jsp"

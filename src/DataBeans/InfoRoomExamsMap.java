@@ -18,6 +18,7 @@ import java.util.List;
 public class InfoRoomExamsMap {
 
 	List exams;
+	InfoRoom infoRoom;
 	Calendar startSeason1;
 	Calendar endSeason1;
 	Calendar startSeason2;
@@ -95,6 +96,20 @@ public class InfoRoomExamsMap {
 	 */
 	public void setExams(List exams) {
 		this.exams = exams;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoRoom getInfoRoom() {
+		return infoRoom;
+	}
+
+	/**
+	 * @param room
+	 */
+	public void setInfoRoom(InfoRoom room) {
+		infoRoom = room;
 	}
 
 }

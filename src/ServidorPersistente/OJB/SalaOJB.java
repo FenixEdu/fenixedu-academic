@@ -14,6 +14,7 @@ package ServidorPersistente.OJB;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Aula;
@@ -259,6 +260,14 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 		}
 
 		return availableRooms;
+	}
+
+	public List readForRoomReservation() throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addNotEqualTo("tipo",new TipoSala(TipoSala.LABORATORIO));
+		criteria.addNotLike("edificio","Tagus%");
+		criteria.addNotLike("edificio","Local%");
+		return queryList(Sala.class,criteria);
 	}
 
 }

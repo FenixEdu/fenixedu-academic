@@ -12,4 +12,5 @@
   <li><html:link page="/chooseDayAndShiftForm.do?method=prepare&amp;nextPage=viewExams"><bean:message key="link.exams.listByDayAndShift"/></html:link></li>
   <li><html:link page="/chooseExamsContextDA.do?method=prepare&amp;nextPage=listByDegreeAndAcademicYear&amp;inputPage=chooseExamsContext"><bean:message key="link.exams.listByDegreeAndAcademicYear"/></html:link></li>
   <li><html:link page="/viewAllExamsByDegreeAndCurricularYear.do?method=prepare"><bean:message key="link.exams.listAllByDegreeAndAcademicYear"/></html:link></li>
+  <li><html:link page="/consultAllRoomsForExams.do"><bean:message key="link.exams.viewAllRoomOccupation"/></html:link></li>
 </ul>
