@@ -117,7 +117,9 @@ public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry {
     public ArrayList readAllCountrys() throws ExcepcaoPersistencia {
         try {
             ArrayList countryList = new ArrayList();
-            String oqlQuery = "select all from " + Country.class.getName();
+            String oqlQuery = "select all from " + Country.class.getName()
+            				+ " order by name asc";
+            		
             query.create(oqlQuery);
             List result = (List) query.execute();
             super.lockRead(result);
