@@ -671,7 +671,9 @@ public abstract class Cloner {
 		site.setInitialSection(initialSection);
 		site.setSections(sections);
 		site.setAnnouncements(announcements);
-
+		if (initialSection.getSite()==null) {
+							initialSection.setSite(site);
+						}
 		return site;
 	}
 	
@@ -691,6 +693,8 @@ public abstract class Cloner {
 		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
 					site.getInitialSection());
 		
+		
+		
 		List infoSections = Cloner.copyListISections2ListInfoSections(site.getSections());
 		List infoAnnouncements = Cloner.copyListIAnnouncements2ListInfoAnnouncements(site.getAnnouncements());
 		
@@ -700,7 +704,9 @@ public abstract class Cloner {
 		infoSite.setInitialInfoSection(initialInfoSection);
 		infoSite.setInfoSections(infoSections);
 		infoSite.setInfoAnnouncements(infoAnnouncements);
-		
+		if (initialInfoSection.getInfoSite()==null) {
+					initialInfoSection.setInfoSite(infoSite);
+				}
 		return infoSite;
 	}
 
@@ -715,8 +721,8 @@ public abstract class Cloner {
 		ISection section = new Section();
 
 		ISection fatherSection = null;
-
-		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
+//we no longer clone the site. because the section only exists in the context of a site
+//		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
 
 		InfoSection infoSuperiorSection =
 			(InfoSection) infoSection.getSuperiorInfoSection();
@@ -733,7 +739,7 @@ public abstract class Cloner {
 		copyObjectProperties(section, infoSection);
 
 		section.setSuperiorSection(fatherSection);
-		section.setSite(site);
+//		section.setSite(site);
 		section.setInferiorSections(inferiorSections);
 		section.setItems(items);
 		
@@ -754,8 +760,8 @@ public abstract class Cloner {
    		InfoSection infoSection = new InfoSection();
 
 		InfoSection fatherInfoSection = null;
-
-		InfoSite infoSite = Cloner.copyISite2InfoSite(section.getSite());
+//see above
+//		InfoSite infoSite = Cloner.copyISite2InfoSite(section.getSite());
 
 		ISection superiorSection =(ISection) section.getSuperiorSection();
 			
@@ -771,7 +777,7 @@ public abstract class Cloner {
 		copyObjectProperties(infoSection, section);
 
 		infoSection.setSuperiorInfoSection(fatherInfoSection);
-		infoSection.setInfoSite(infoSite);
+//		infoSection.setInfoSite(infoSite);
 		infoSection.setInferiorInfoSections(inferiorInfoSections);
 		infoSection.setInfoItems(infoItems);
 		
