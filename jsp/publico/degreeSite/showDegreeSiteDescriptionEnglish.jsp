@@ -75,9 +75,9 @@
 							</logic:empty>		
 							
 							<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.enderecoWeb">
-								<logic:notEmpty name="infoCoordinator" property="infoTeacher.infoPerson.email">
+								<logic:empty name="infoCoordinator" property="infoTeacher.infoPerson.email">
 									<bean:write name="infoCoordinator" property="infoTeacher.infoPerson.nome" />											
-								</logic:notEmpty>						
+								</logic:empty>						
 							</logic:empty>	
 							
 							<logic:lessThan name="executionDegreesSize" value="executionDegreesSize" >
