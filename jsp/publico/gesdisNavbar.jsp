@@ -21,7 +21,7 @@
 <html:link page="/accessProgram.do?method=acessProgram">
 	<li><bean:message key="link.program"/></li>
 </html:link>
-<html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference">
+<html:link page="/accessBibliographicReferences.do?method=viewBibliographicReference">
 	<li><bean:message key="link.bibliography"/></li>
 </html:link>
 	<html:link page="/accessTeachers.do">

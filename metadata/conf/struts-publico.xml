@@ -222,13 +222,12 @@
 	<!-- Start of Gesdis-->
 	<action path="/viewTimeTable" forward="/viewTimeTable.jsp"/>
 
-	<action     path="/bibliographicReferenceManager"
-				parameter="method"      			
-				scope="session"
-      			input="/editBibliographicReference.jsp"
-                type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"            
-                validate="true">	           
-				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
+	<action     
+		path="/accessBibliographicReferences"
+		parameter="method"      			
+		scope="session"
+        type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction">	           
+		<forward name="bibliographyManagement" path="/bibliographicReferences.jsp"/>
 	</action>             
 
 	<!-- access to announcements -->
