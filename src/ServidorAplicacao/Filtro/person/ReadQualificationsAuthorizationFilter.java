@@ -6,6 +6,7 @@ package ServidorAplicacao.Filtro.person;
 
 import DataBeans.person.InfoQualification;
 import DataBeans.util.Cloner;
+import Dominio.IPessoa;
 import Dominio.IQualification;
 import Dominio.ITeacher;
 import Dominio.Qualification;
@@ -17,6 +18,7 @@ import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentQualification;
 import ServidorPersistente.IPersistentTeacher;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantOwner;
@@ -26,11 +28,11 @@ import Util.RoleType;
  * @author Barbosa
  * @author Pica
  */
-public class QualificationManagerAuthorizationFilter extends Filtro
+public class ReadQualificationsAuthorizationFilter extends Filtro
 {
 
-	public final static QualificationManagerAuthorizationFilter instance =
-		new QualificationManagerAuthorizationFilter();
+	public final static ReadQualificationsAuthorizationFilter instance =
+		new ReadQualificationsAuthorizationFilter();
 
 	/**
 	 * The singleton access method of this class.
@@ -72,44 +74,19 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 				throw new NotAuthorizedException();
 			}
 
-			InfoQualification infoqualification = null;
-			try
-			{
-				//Read the qualification
-				//If the id is null and there is a infoqualification as second argument
-				if (arguments[0] == null && arguments[1] != null) //Create!
-					infoqualification = (InfoQualification) arguments[1];
-				else
-					infoqualification = getInfoQualification((Integer) arguments[0]);
-
-			} catch (Exception e)
-			{
-				throw new NotAuthorizedException();
-			}
-
-			if (infoqualification == null)
-				throw new NotAuthorizedException();
-
 			//Verify if:
 			// 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
 			// 2: The user ir a Teacher and the qualification is his own
-			boolean valido = false;
-
-			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-				&& isGrantOwner(infoqualification))
+			if ((!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
+				|| (!isGrantOwner((String) arguments[0])))
 			{
-				valido = true;
-			}
-
-			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
-				&& isTeacher(infoqualification)
-				&& isOwnQualification(id.getUtilizador(), infoqualification))
-			{
-				valido = true;
-			}
-
-			if (!valido)
 				throw new NotAuthorizedException();
+			}
+
+			if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
+			{
+				throw new NotAuthorizedException();
+			}
 
 		} catch (RuntimeException e)
 		{
@@ -123,26 +100,26 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 	 * @param arguments
 	 * @return true or false
 	 */
-	private boolean isGrantOwner(InfoQualification infoqualification)
+	private boolean isGrantOwner(String user)
 	{
-		ISuportePersistente persistentSuport = null;
-		IPersistentGrantOwner persistentGrantOwner = null;
-
 		try
 		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
+			IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
 
+			IPessoa person = persistentPerson.lerPessoaPorUsername(user);
+			
+			if (person == null)
+				return false;
+			
 			//Try to read the grant owner from de database
 			IGrantOwner grantowner = null;
-			grantowner =
-				persistentGrantOwner.readGrantOwnerByPerson(
-					infoqualification.getInfoPerson().getIdInternal());
+			grantowner = persistentGrantOwner.readGrantOwnerByPerson(person.getIdInternal());
 
 			if (grantowner != null) //The grant owner exists!
-			{
 				return true;
-			}
+				
 			return false;
 
 		} catch (Exception e)
