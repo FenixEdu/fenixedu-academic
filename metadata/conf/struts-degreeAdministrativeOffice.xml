@@ -148,6 +148,12 @@
         	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
       	</action>
+		
+		<!-- ****************** View Student Schedule **************************** -->
+		<action path="/viewStudentSchedule"
+		      	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentScheduleAction">
+			<forward name="sucess" path="/student/classTimeTable.jsp"/>        	
+      	</action>
       	
       	
       	<!-- ****************** Enrollment Without Rules **************************** -->

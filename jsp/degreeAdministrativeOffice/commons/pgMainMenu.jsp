@@ -3,7 +3,7 @@
 
 <ul>
 	<li>
-		<html:link page="<%="/viewStudentCurriculum.do?method=prepareView"%>"><bean:message key="link.student.curriculum"/></html:link>
+		<html:link page="<%="/viewStudentCurriculum.do?method=prepareView"%>"><bean:message key="link.student.information"/></html:link>
 	</li>
 
 	<li>

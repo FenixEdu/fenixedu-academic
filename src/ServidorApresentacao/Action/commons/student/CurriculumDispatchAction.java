@@ -89,11 +89,12 @@ public class CurriculumDispatchAction extends DispatchAction {
 
         String studentNumber = getStudent(request);
         List infoStudents = null;
+        InfoPerson infoPerson = null;
 
         if (studentNumber == null) {
             try {
                 Object args1[] = { userView.getUtilizador() };
-                InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
+                infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
                         userView, "ReadPersonByUsername", args1);
 
                 Object args2[] = { infoPerson };
@@ -109,6 +110,7 @@ public class CurriculumDispatchAction extends DispatchAction {
                         userView, "ReadStudentByNumberAndAllDegreeTypes", args);
                 infoStudents = new ArrayList();
                 infoStudents.add(infoStudent);
+                infoPerson = infoStudent.getInfoPerson();
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -133,6 +135,7 @@ public class CurriculumDispatchAction extends DispatchAction {
         getExecutionDegree(request);
 
         request.setAttribute("studentCPs", result);
+        request.setAttribute("studentPerson", infoPerson);
 
         return mapping.findForward("ShowStudentCurricularPlans");
     }

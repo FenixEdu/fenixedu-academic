@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2><bean:message key="title.student.curriculum"/></h2>
+<h2><bean:message key="title.student.information"/></h2>
 <html:errors/>
 <html:form action="/viewCurriculum" focus="studentNumber">
 	<html:hidden property="method" value="getStudentCP"/>
