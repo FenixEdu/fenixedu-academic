@@ -10,7 +10,7 @@ import java.util.Calendar;
  * @author Ana e Ricardo
  *
  */
-public class InfoPeriod {
+public class InfoPeriod extends InfoObject {
 
 	protected Calendar startDate;
 	protected Calendar endDate;

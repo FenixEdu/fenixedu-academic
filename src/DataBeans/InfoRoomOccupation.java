@@ -12,7 +12,7 @@ import Util.DiaSemana;
  * @author Ana e Ricardo
  *
  */
-public class InfoRoomOccupation {
+public class InfoRoomOccupation extends InfoObject {
 
 	protected Calendar startTime;
 	protected Calendar endTime;
