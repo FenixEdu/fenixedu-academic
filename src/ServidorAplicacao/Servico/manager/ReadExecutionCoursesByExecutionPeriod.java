@@ -64,7 +64,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-			final IPersistentExecutionCourse persistentExecutionCourse =
+			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIPersistentExecutionCourse();
 
 			IExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
