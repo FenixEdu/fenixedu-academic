@@ -338,6 +338,16 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 				number = ((IStudent) result.get(0)).getNumber();
 			}
 			
+			
+			
+			// FIXME: ISTO E UMA SOLUCAO TEMPORARIA DEVIDO A EXISTIREM ALUNOS NA SECRETARIA QUE 
+			// POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
+			
+			if (degreeType.equals(TipoCurso.MESTRADO_OBJ) && (number.intValue() < 5411)){
+				number = new Integer(5411);
+			}
+			
+			
 			return new Integer(number.intValue() + 1);
 
 		} catch (QueryException ex) {
