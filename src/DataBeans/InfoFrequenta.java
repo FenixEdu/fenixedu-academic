@@ -6,7 +6,6 @@
 
 package DataBeans;
 
-import Dominio.IDomainObject;
 import Dominio.IFrequenta;
 
 /**
