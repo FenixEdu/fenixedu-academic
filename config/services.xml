@@ -5456,7 +5456,8 @@
     <service>
         <name>ReadNotClosedExecutionYears</name>
         <description>Retrieves only current and future execution years</description>
-        <implementation>ServidorAplicacao.Servico.commons.ReadNotClosedExecutionYears</implementation>
+        <implementationClass>
+            ServidorAplicacao.Servico.commons.ReadNotClosedExecutionYears</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
