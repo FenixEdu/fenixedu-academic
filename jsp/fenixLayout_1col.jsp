@@ -30,7 +30,7 @@
   </tr>
 </table>
 <!-- End NavGeral -->
-<!-- Navbar Lateral e Body Content -->
+<!-- Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
      <td valign="top" nowrap="nowrap">
@@ -42,7 +42,7 @@
 	</td>
   </tr>
 </table>
-<!--End Navbar Lateral e Body Content -->
+<!--End Body Content -->
 <!-- Footer -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
