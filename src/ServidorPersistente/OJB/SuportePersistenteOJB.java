@@ -20,6 +20,7 @@ import org.odmg.ODMGException;
 import org.odmg.ODMGRuntimeException;
 import org.odmg.Transaction;
 
+import ServidorPersistente.*;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -402,6 +403,13 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentPrecedence getIPersistentPrecedence() {
 		// TODO Auto-generated method stub
 		return new PrecedenceOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentRestriction()
+	 */
+	public IPersistentRestriction getIPersistentRestriction() {
+		return new PersistentRestriction();
 	}
 
 }

@@ -6,6 +6,7 @@
 
 package ServidorPersistente;
 
+
 /**
  *
  * @author  ars
@@ -82,4 +83,5 @@ public interface ISuportePersistente {
 	public IPersistentPersonRole getIPersistentPersonRole();
 
 	public IPersistentPrecedence getIPersistentPrecedence();
+	public IPersistentRestriction getIPersistentRestriction();
 }
