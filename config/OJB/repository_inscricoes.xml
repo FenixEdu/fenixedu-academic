@@ -332,7 +332,7 @@
 		jdbc-type="INTEGER"
 	/>    
 	<field-descriptor
-		name="enrolmentState"
+		name="enrollmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
@@ -412,7 +412,7 @@
 		jdbc-type="INTEGER"
 	/>    
 	<field-descriptor
-		name="enrolmentState"
+		name="enrollmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
