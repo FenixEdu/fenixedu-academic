@@ -95,6 +95,11 @@
 		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
 	/>
 
+	<field-descriptor
+		name="numerusClausus"
+		column="NUMERUS_CLAUSUS"
+		jdbc-type="INTEGER"
+	/>
 
 	<reference-descriptor
 			name="degree"
