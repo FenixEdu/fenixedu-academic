@@ -135,6 +135,8 @@ import Dominio.teacher.ProfessionalCareer;
 import Dominio.teacher.ServiceProviderRegime;
 import Dominio.teacher.TeachingCareer;
 import Dominio.teacher.WeeklyOcupation;
+import Dominio.teacher.professorship.IShiftProfessorship;
+import Dominio.teacher.professorship.ShiftProfessorship;
 import Util.EvaluationType;
 import Util.State;
 
