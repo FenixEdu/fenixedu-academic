@@ -33,17 +33,3 @@
 <html:link page="/viewExecutionCourseShifts.do">
 		<li><bean:message key="link.executionCourse.shifts"/></li>
 </html:link>
-
-<h3><bean:message key="label.contacts" /></h3>
-<logic:present name="<%=SessionConstants.INFO_SITE%>" property="mail" >
-<bean:define id="mail" name="<%=SessionConstants.INFO_SITE%>" property="mail"/>
-<html:link href="<%= "mailto:" + pageContext.findAttribute("mail") %>">
-<bean:write name="mail" />		
-</html:link>
-</logic:present>
-<logic:iterate id="responsible" name="<%=SessionConstants.RESPONSIBLE_TEACHERS_LIST %>" />
-<p class="contacto"><bean:message key="label.prof"/> <bean:write name="responsible" property="infoPerson.nome"/><p/>
-<p class="contacto"><bean:write name="responsible" property="infoPerson.email"/><p/>
-<p class="contacto"><bean:write name="responsible" property="infoPerson.enderecoWeb"/><p/>	
-</logic:iterate>	
-
