@@ -64,7 +64,9 @@
   
 
 
-
+<html:link page="/editItem.do?method=prepareEdit" indexed="true">
+	<bean:message key="button.editItem"/>
+</html:link>
 <br> 
 
 </logic:iterate>

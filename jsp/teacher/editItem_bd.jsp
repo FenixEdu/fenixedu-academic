@@ -5,6 +5,7 @@
 
 <table align="center">
 <html:form action="/editItem">
+
 <tr>
 	<td>
 		<bean:message key="message.itemInformation"/>
@@ -41,6 +42,8 @@
 </tr>
 
 
+<html:hidden property="method" value="edit" />
+
 <html:reset  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>			
@@ -48,4 +51,5 @@
 		<bean:message key="button.save"/>
 	</html:submit>
 </html:form>
+
 </table>

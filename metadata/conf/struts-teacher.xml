@@ -334,7 +334,7 @@
 		type="ServidorApresentacao.Action.teacher.EditItemDispatchAction"
         validate="false" >
        <forward name="editItem" path="/editItem.jsp"/>
-       <forward name="viewSection" path="/viewSection.jsp"/>
+       <forward name="viewSection" path="/viewSection.do"/>
 	</action>
 	
 	<!-- Insert Item -->
