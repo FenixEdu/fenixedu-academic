@@ -134,7 +134,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 		DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		Integer objectCode = getObjectCode(request);
 		String alternativeSite =
@@ -922,7 +922,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		Integer sectionCode = getSectionCode(request);
 		Integer objectCode = getObjectCode(request);
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
@@ -958,7 +958,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		Integer sectionCode = getSectionCode(request);
 		Integer objectCode = getObjectCode(request);
 		DynaActionForm sectionForm = (DynaValidatorForm) form;

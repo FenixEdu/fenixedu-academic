@@ -40,7 +40,7 @@ public class InsertSectionAction extends FenixAction {
 		String sectionName = (String) dynaForm.get("name");
 		String order = (String) dynaForm.get("sectionOrder");
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);

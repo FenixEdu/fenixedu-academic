@@ -48,7 +48,7 @@ public class WriteMarksAction extends DispatchAction {
 	public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception, NotExecuteException {
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		ActionErrors actionErrors = new ActionErrors();
 		
 		String lineReader = null;
@@ -234,7 +234,7 @@ public class WriteMarksAction extends DispatchAction {
 	public ActionForward writeMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		ActionErrors actionErrors = new ActionErrors();
 
 		List marksList = new ArrayList();

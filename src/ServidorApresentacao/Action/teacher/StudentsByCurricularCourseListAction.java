@@ -36,7 +36,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
 		HttpServletResponse response)
 		throws FenixActionException
 	{
-		HttpSession session= request.getSession();
+		HttpSession session= request.getSession(false);
 		Integer objectCode= null;
         Integer shiftID=null;
         try

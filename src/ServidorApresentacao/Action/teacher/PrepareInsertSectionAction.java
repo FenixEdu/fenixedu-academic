@@ -41,7 +41,7 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
@@ -83,7 +83,7 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);

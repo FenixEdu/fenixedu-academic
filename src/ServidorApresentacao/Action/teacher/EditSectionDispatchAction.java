@@ -38,7 +38,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -97,9 +97,9 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		String sectionName = (String) sectionForm.get("name");
 		Integer order = (Integer) sectionForm.get("sectionOrder");
 		order=new Integer(order.intValue()-1);
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
-		String parentName = (String) sectionForm.get("parentSection");
+		
 
 		
 
@@ -169,7 +169,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 	public ActionForward prepareChangeParent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession();
+	
 		
 		return mapping.findForward("changeParent");		
 	}
@@ -181,7 +181,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		DynaActionForm sectionForm = (DynaValidatorForm) form;
 		Integer index = (Integer) sectionForm.get("sectionIndex");

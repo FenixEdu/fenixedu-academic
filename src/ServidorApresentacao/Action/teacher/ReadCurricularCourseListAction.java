@@ -24,7 +24,7 @@ public class ReadCurricularCourseListAction extends DispatchAction {
 
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		Integer objectCode = null;
 		String objectCodeString = request.getParameter("objectCode");

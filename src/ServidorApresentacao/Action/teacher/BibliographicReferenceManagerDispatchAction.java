@@ -287,7 +287,7 @@ public class BibliographicReferenceManagerDispatchAction
 										
 		String index = request.getParameter("index");
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		ArrayList referenceList = null;
 		if (index != null) {

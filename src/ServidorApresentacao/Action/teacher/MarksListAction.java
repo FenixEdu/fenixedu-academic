@@ -47,7 +47,7 @@ public class MarksListAction extends DispatchAction {
 	public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -84,7 +84,7 @@ public class MarksListAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -124,7 +124,7 @@ public class MarksListAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		Integer evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -155,7 +155,7 @@ public class MarksListAction extends DispatchAction {
 	 */
 	public ActionForward publishMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		Integer evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -197,7 +197,7 @@ public class MarksListAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		ActionErrors actionErrors = new ActionErrors();
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Integer evaluationCode = getFromRequest("evaluationCode", request);
@@ -298,7 +298,7 @@ public class MarksListAction extends DispatchAction {
 	public ActionForward submitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 		ActionErrors actionErrors = new ActionErrors();
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Integer evaluationCode = getFromRequest("evaluationCode", request);
