@@ -51,10 +51,13 @@ public class DegreeCurricularPlanState {
 		switch (value) {
 			case ACTIVE :
 				valueS = "ACTIVE";
+				break;
 			case NOT_ACTIVE :
 				valueS = "NOT_ACTIVE";
+				break;
 			case CONCLUDED :
 				valueS = "CONCLUDED";
+				break;
 		}
 
 		return "[" + this.getClass().getName() + ": " + valueS + "]";
