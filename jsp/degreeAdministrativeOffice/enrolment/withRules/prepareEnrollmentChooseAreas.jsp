@@ -12,6 +12,7 @@
 	<html:hidden property="executionPeriod" value="<%=pageContext.findAttribute("executionPeriod").toString()%>"/>
 	<html:hidden property="executionYear" value="<%=pageContext.findAttribute("executionYear").toString()%>"/>
 	<html:hidden property="studentCurricularPlanId" value="<%=pageContext.findAttribute("studentCurricularPlanId").toString()%>"/>
+	<html:hidden property="degreeCurricularPlanID" />
 	<logic:present name="executionDegreeId">
 		<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	</logic:present>

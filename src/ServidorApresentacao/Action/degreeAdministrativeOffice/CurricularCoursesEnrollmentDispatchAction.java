@@ -200,6 +200,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
         
         Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
+        if (degreeCurricularPlanID == null) {
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        }
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
@@ -425,7 +428,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         Object[] args = { executionDegreeId, null, studentNumber };
         try {
             if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)) || userView
-                    .getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))) {
+                    .getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) || 
+                    userView.getRoles().contains(new InfoRole(RoleType.TEACHER)))) {
                 infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                         .executeService(userView, "ShowAvailableCurricularCoursesNew", args);
             } else {
