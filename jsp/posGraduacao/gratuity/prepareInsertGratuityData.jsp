@@ -10,23 +10,36 @@
 	<logic:present name="showNextSelects">
 		<html:hidden property="executionYear"/>
 		<html:hidden property="page" value="1"/>
+		
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="center" class="infoselected">
+					<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>
+					<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
+				</td>
+			</tr>
+		</table>
+		<br />
 	</logic:present>
+	
 	<table>
-		<tr>
-			<td>
-				<bean:message key="label.masterDegree.gratuity.executionYear"/>
-			</td>
-			<td>
-				<html:select property="executionYear" onchange="document.insertGratuityDataForm.method.value='prepareInsertGratuityDataChooseDegree';document.insertGratuityDataForm.submit();">
-					<html:option value="" key="label.manager.executionCourseManagement.select">
-						<bean:message key="label.manager.executionCourseManagement.select"/>
-					</html:option>
-					<html:optionsCollection name="executionYears"/>
-				</html:select>
-			</td>
-		</tr>
+		<logic:notPresent name="showNextSelects">
+			<tr>
+				<td>
+					<bean:message key="label.masterDegree.gratuity.executionYear"/>
+				</td>
+				<td>
+					<html:select property="executionYear" onchange="document.insertGratuityDataForm.method.value='prepareInsertGratuityDataChooseDegree';document.insertGratuityDataForm.submit();">
+						<html:option value="" key="label.manager.executionCourseManagement.select">
+							<bean:message key="label.manager.executionCourseManagement.select"/>
+						</html:option>
+						<html:optionsCollection name="executionYears"/>
+					</html:select>
+				</td>
+			</tr>
+		</logic:notPresent>
 		<logic:present name="showNextSelects">
-<%--			<tr>
+			<%--<tr>
 				<td>
 					<bean:message key="label.masterDegree.gratuity.specializationArea"/>
 				</td>

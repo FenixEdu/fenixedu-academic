@@ -16,8 +16,20 @@
 	<html:hidden property="method" value="studentsGratuityList"/>
 	<html:hidden property="executionYear"/>
 	<html:hidden property="page" value="2"/>
+	
+			
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td align="center" class="infoselected">
+				<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>
+				<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
+			</td>
+		</tr>
+	</table>
+	<br />
 </logic:present>
 <table>
+		<logic:notPresent name="showNextSelects">
 		<tr>
 			<td>
 				<bean:message key="label.masterDegree.gratuity.executionYear"/>
@@ -31,6 +43,7 @@
 				</html:select>
 			</td>
 		</tr>
+		</logic:notPresent>
 		<logic:present name="showNextSelects">			
 			<tr>
 				<td>

@@ -86,6 +86,9 @@ public class ExemptionGratuityAction extends DispatchAction
 		List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
 		request.setAttribute("executionYears", executionYearLabels);
 
+		DynaActionForm studentForm = (DynaActionForm) actionForm;
+		studentForm.set("studentNumber", null);
+		
 		return mapping.findForward("chooseStudent");
 	}
 
@@ -124,9 +127,15 @@ public class ExemptionGratuityAction extends DispatchAction
 
 		String parameter = request.getParameter("studentNumber");
 		Integer studentNumber = null;
-		if (parameter != null)
+		try
 		{
 			studentNumber = new Integer(parameter);
+		}
+		catch (NumberFormatException e)
+		{
+			errors.add("errors", new ActionError("error.tutor.numberAndRequired"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
 		}
 		request.setAttribute("studentNumber", studentNumber);
 
@@ -211,11 +220,11 @@ public class ExemptionGratuityAction extends DispatchAction
 		//read gratuity values of the execution course
 		InfoGratuityValues infoGratuityValues = null;
 		Object args3[] =
-		{ infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear };
+			{ infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear };
 		try
 		{
 			infoGratuityValues =
-			(InfoGratuityValues) ServiceManagerServiceFactory.executeService(
+				(InfoGratuityValues) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear",
 					args3);
@@ -224,13 +233,13 @@ public class ExemptionGratuityAction extends DispatchAction
 		{
 			fenixServiceException.printStackTrace();
 			errors.add(
-					"noGratuitySituation",
-					new ActionError("error.impossible.insertExemptionGratuity"));
+				"noGratuitySituation",
+				new ActionError("error.impossible.insertExemptionGratuity"));
 			errors.add(
-					"noGratuityValues",
-					new ActionError(
-							"error.impossible.problemsWithDegree",
-							infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
+				"noGratuityValues",
+				new ActionError(
+					"error.impossible.problemsWithDegree",
+					infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
 			saveErrors(request, errors);
 			return mapping.findForward("chooseStudent");
 		}
@@ -239,10 +248,7 @@ public class ExemptionGratuityAction extends DispatchAction
 		if (infoGratuityValues == null)
 		{
 			request.setAttribute("noGratuityValues", "true");
-			errors.add(
-					"noGratuityValues",
-					new ActionError(
-							"error.impossible.noGratuityValues"));
+			errors.add("noGratuityValues", new ActionError("error.impossible.noGratuityValues"));
 			saveErrors(request, errors);
 			return mapping.findForward("chooseStudent");
 		}
@@ -250,10 +256,10 @@ public class ExemptionGratuityAction extends DispatchAction
 		{
 			request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
 		}
-		
+
 		//read gratuity situation of the student
 		InfoGratuitySituation infoGratuitySituation = null;
-		Object args2[] = { studentCurricularPlanID, infoGratuityValues.getIdInternal() };
+		Object args2[] = { studentCurricularPlanID, infoGratuityValues.getIdInternal()};
 		try
 		{
 			infoGratuitySituation =
@@ -277,7 +283,6 @@ public class ExemptionGratuityAction extends DispatchAction
 			request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
 		}
 
-		
 		DynaActionForm exemptionGrauityForm = (DynaActionForm) actionForm;
 		fillForm(infoGratuitySituation, request, exemptionGrauityForm);
 
@@ -300,7 +305,7 @@ public class ExemptionGratuityAction extends DispatchAction
 						"valueExemptionGratuity",
 						String.valueOf(exemptionPercentage));
 				}
-				else if(exemptionPercentage.intValue() > 0)
+				else if (exemptionPercentage.intValue() > 0)
 				{
 					exemptionGrauityForm.set("valueExemptionGratuity", "-1");
 					exemptionGrauityForm.set(

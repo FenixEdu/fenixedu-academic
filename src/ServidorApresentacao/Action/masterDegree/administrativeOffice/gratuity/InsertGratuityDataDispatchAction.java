@@ -113,6 +113,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		DynaActionForm gratuityForm = (DynaActionForm) form;
 
 		String executionYear = (String) gratuityForm.get("executionYear");
+		request.setAttribute("executionYear", executionYear);
 
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
 		infoExecutionYear.setYear(executionYear);
