@@ -145,9 +145,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
-            return (new ActionForward(mapping.getInput()));
+//            return (new ActionForward(mapping.getInput()));
         }
 
         //execution degrees of this degree
@@ -202,9 +202,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
-            return (new ActionForward(mapping.getInput()));
+//            return (new ActionForward(mapping.getInput()));
 
         }
 

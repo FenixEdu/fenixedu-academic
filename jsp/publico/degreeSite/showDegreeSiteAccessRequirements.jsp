@@ -73,7 +73,7 @@
 	</logic:notEmpty>
 
 </logic:present>
-
+<%--
 <logic:notPresent name="infoDegreeInfo">
 	<h1><p><bean:message key="error.impossibleDegreeSite" /></p></h1>
-</logic:notPresent>
+</logic:notPresent> --%>
