@@ -23,9 +23,11 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
@@ -42,6 +44,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
@@ -62,6 +65,7 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 	protected ITurmaPersistente _turmaPersistente = null;
 	protected IPessoaPersistente _pessoaPersistente = null;
 	protected IPersistentExecutionYear persistentExecutionYear = null;
+	protected IPersistentExecutionPeriod persistentExecutionPeriod = null;
 	protected IPlanoCurricularCursoPersistente persistentCurricularPlan = null;
 	protected ICurso curso1 = null;
 	protected ICurso curso2 = null;
@@ -127,6 +131,10 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		_suportePersistente.iniciarTransaccao();
 		persistentExecutionYear.lockWrite(executionYear);
 		_suportePersistente.confirmarTransaccao();
+		IExecutionPeriod executionPeriod = new ExecutionPeriod("2º semestre",executionYear);
+		_suportePersistente.iniciarTransaccao();
+		persistentExecutionPeriod.lockWrite(executionPeriod);
+		_suportePersistente.confirmarTransaccao();
 		IPlanoCurricularCurso curricularPlan =
 			new PlanoCurricularCurso("plano1", curso1);
 		IPlanoCurricularCurso curricularPlan2 =
@@ -140,26 +148,25 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		_suportePersistente.iniciarTransaccao();
 		_cursoPersistente.lockWrite(curso1);
 		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao1 =
-			new CursoExecucao("2002/03", curso1, executionYear, curricularPlan);
+		_cursoExecucao1 = new CursoExecucao(executionYear, curricularPlan);
 		_suportePersistente.iniciarTransaccao();
 		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
 		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao2 =
-			new CursoExecucao(
-				"2002/03",
-				curso2,
-				executionYear,
-				curricularPlan2);
+		_cursoExecucao2 = new CursoExecucao(executionYear, curricularPlan2);
 		_suportePersistente.iniciarTransaccao();
 		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
 		_suportePersistente.confirmarTransaccao();
 
-		_turma1 = new Turma("10501", new Integer(1), new Integer(1), curso1);
+		_turma1 =
+			new Turma(
+				"10501",
+				new Integer(1),
+				_cursoExecucao1,
+				executionPeriod);
 		_suportePersistente.iniciarTransaccao();
 		_turmaPersistente.lockWrite(_turma1);
 		_suportePersistente.confirmarTransaccao();
-		_turma2 = new Turma("14501", new Integer(1), new Integer(1), curso2);
+		_turma2 = new Turma("14501", new Integer(1), _cursoExecucao2,executionPeriod);
 		_suportePersistente.iniciarTransaccao();
 		_turmaPersistente.lockWrite(_turma2);
 		_suportePersistente.confirmarTransaccao();
@@ -300,7 +307,8 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 				_suportePersistente.getIPersistentExecutionYear();
 			persistentCurricularPlan =
 				_suportePersistente.getIPlanoCurricularCursoPersistente();
-				System.out.println("*******correu tudo bem no startPersistentLayer");
+			persistentExecutionPeriod =
+				_suportePersistente.getIPersistentExecutionPeriod();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when opening database");
 		}
@@ -309,7 +317,7 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 
 	protected void cleanData() {
 		try {
-			
+
 			_suportePersistente.iniciarTransaccao();
 			_cursoExecucaoPersistente.deleteAll();
 			_suportePersistente.confirmarTransaccao();
@@ -327,6 +335,9 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 			_suportePersistente.confirmarTransaccao();
 			_suportePersistente.iniciarTransaccao();
 			persistentExecutionYear.deleteAll();
+			_suportePersistente.confirmarTransaccao();
+			_suportePersistente.iniciarTransaccao();
+			persistentExecutionPeriod.deleteAll();
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when cleaning data");
