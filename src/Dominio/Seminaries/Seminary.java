@@ -108,16 +108,16 @@ public class Seminary extends DomainObject implements ISeminary
 	 */
 	public boolean equals(Object obj)
 	{
-		boolean retorno= false;
+		boolean equalsResult= false;
 		if (obj instanceof ISeminary)
 		{
 			ISeminary seminary= (ISeminary) obj;
 			if (seminary.getName() == null)
-				retorno= (this.getName() == null);
+				equalsResult= (this.getName() == null);
 			else
-				retorno= this.getName().equalsIgnoreCase(seminary.getName());
+				equalsResult= this.getName().equalsIgnoreCase(seminary.getName());
 		}
-		return false;
+		return equalsResult;
 	}
 	/**
 	 * @return

@@ -88,15 +88,15 @@ public class Modality extends DomainObject implements IModality
      */
 	public boolean equals(Object obj)
 	{
-		boolean retorno= false;
+		boolean equalsResult= false;
 		if (obj instanceof IModality)
 		{
 			IModality modality= (IModality) obj;
 			if (modality.getName() == null)
-				retorno= (this.getName() == null);
+				equalsResult= (this.getName() == null);
 			else
-				retorno= this.getName().equalsIgnoreCase(modality.getName());
+				equalsResult= this.getName().equalsIgnoreCase(modality.getName());
 		}
-		return false;
+		return equalsResult;
 	}
 }

@@ -92,16 +92,16 @@ public class Theme extends DomainObject implements ITheme
 	 */
 	public boolean equals(Object obj)
 	{
-		boolean retorno= false;
+		boolean equalsResult= false;
 		if (obj instanceof ITheme)
 		{
 			ITheme theme= (ITheme) obj;
 			if (theme.getName() == null)
-				retorno= (this.getName() == null);
+				equalsResult= (this.getName() == null);
 			else
-				retorno = this.getName().equalsIgnoreCase(theme.getName());
+				equalsResult = this.getName().equalsIgnoreCase(theme.getName());
 		}
-		return false;
+		return equalsResult;
 	}
 	/**
 	 * @return
