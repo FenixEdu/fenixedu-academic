@@ -55,48 +55,52 @@ public class RowMarksFile {
     }
 
     public RowMarksFile(IEnrolmentEvaluation enrolmentEvaluation) {
-        setDegreeCode(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan()
-                .getDegreeCurricularPlan().getDegree().getIdInternal());
-        // TODO: qq coisa
-        //        setCurricularYear(
-        //            enrolmentEvaluation
-        //                .getEnrolment()
-        //                .getCurricularCourse()
-        //                .getCurricularYearByBranchAndSemester(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch()
-        //                        , enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester())
-        //                .getYear());
-        setCurricularSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester());
+        setDegreeCode(enrolmentEvaluation.getEnrolment()
+                .getStudentCurricularPlan().getDegreeCurricularPlan()
+                .getDegree().getIdInternal());
+        setCurricularYear(enrolmentEvaluation.getEnrolment()
+                .getCurricularCourse().getCurricularYearByBranchAndSemester(
+                        enrolmentEvaluation.getEnrolment()
+                                .getStudentCurricularPlan().getBranch(),
+                        enrolmentEvaluation.getEnrolment().getExecutionPeriod()
+                                .getSemester()).getYear());
+        setCurricularSemester(enrolmentEvaluation.getEnrolment()
+                .getExecutionPeriod().getSemester());
         setCurricularSeason(new Integer(0));
-        setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode());
+        setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse()
+                .getCode());
         setMark(enrolmentEvaluation.getGrade());
         setEvaluationDate(enrolmentEvaluation.getExamDate());
-        setStudentNumber(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent()
-                .getNumber());
-        setTeacherNumber(readEmployee(enrolmentEvaluation.getPersonResponsibleForGrade())
+        setStudentNumber(enrolmentEvaluation.getEnrolment()
+                .getStudentCurricularPlan().getStudent().getNumber());
+        setTeacherNumber(readEmployee(
+                enrolmentEvaluation.getPersonResponsibleForGrade())
                 .getEmployeeNumber());
         setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
 
     }
 
     public void transform(IEnrolmentEvaluation enrolmentEvaluation) {
-        setDegreeCode(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan()
-                .getDegreeCurricularPlan().getDegree().getIdInternal());
-        // TODO: qq coisa
-        //        setCurricularYear(
-        //            enrolmentEvaluation
-        //                .getEnrolment()
-        //                .getCurricularCourse()
-        //                .getCurricularYearByBranchAndSemester(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getBranch()
-        //                        , enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester())
-        //                .getYear());
-        setCurricularSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getSemester());
+        setDegreeCode(enrolmentEvaluation.getEnrolment()
+                .getStudentCurricularPlan().getDegreeCurricularPlan()
+                .getDegree().getIdInternal());
+        setCurricularYear(enrolmentEvaluation.getEnrolment()
+                .getCurricularCourse().getCurricularYearByBranchAndSemester(
+                        enrolmentEvaluation.getEnrolment()
+                                .getStudentCurricularPlan().getBranch(),
+                        enrolmentEvaluation.getEnrolment().getExecutionPeriod()
+                                .getSemester()).getYear());
+        setCurricularSemester(enrolmentEvaluation.getEnrolment()
+                .getExecutionPeriod().getSemester());
         setCurricularSeason(new Integer(0));
-        setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode());
+        setCourseCode(enrolmentEvaluation.getEnrolment().getCurricularCourse()
+                .getCode());
         setMark(enrolmentEvaluation.getGrade());
         setEvaluationDate(enrolmentEvaluation.getExamDate());
-        setStudentNumber(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent()
-                .getNumber());
-        setTeacherNumber(readEmployee(enrolmentEvaluation.getPersonResponsibleForGrade())
+        setStudentNumber(enrolmentEvaluation.getEnrolment()
+                .getStudentCurricularPlan().getStudent().getNumber());
+        setTeacherNumber(readEmployee(
+                enrolmentEvaluation.getPersonResponsibleForGrade())
                 .getEmployeeNumber());
         setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
     }

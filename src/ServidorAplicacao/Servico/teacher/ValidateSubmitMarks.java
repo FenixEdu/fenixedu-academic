@@ -21,6 +21,7 @@ import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -81,6 +82,7 @@ public class ValidateSubmitMarks implements IServico {
                     .getIFrequentaPersistente();
             List attendList = persistentAttend
                     .readByExecutionCourse(executionCourse);
+            
 
             //verifySubmitMarks(attendList);
 
@@ -108,6 +110,17 @@ public class ValidateSubmitMarks implements IServico {
                 throw new FenixServiceException(
                         "errors.submitMarks.yetSubmited");
             }
+            
+            //marks list
+            IPersistentMark persistentMark = sp.getIPersistentMark();
+            List markList = persistentMark.readBy(evaluation);
+            
+            //Check if there is any mark. If not, we can not submit
+            if(markList.isEmpty())
+            {
+                throw new FenixServiceException("errors.submitMarks.noMarks");
+            }
+
 
             InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
 

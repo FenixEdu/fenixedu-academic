@@ -19,7 +19,9 @@ import org.apache.commons.collections.Transformer;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoFrequenta;
+import DataBeans.InfoFrequentaWithInfoStudentAndPerson;
 import DataBeans.InfoMark;
+import DataBeans.InfoMarkWithInfoAttendAndInfoStudent;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
@@ -181,6 +183,12 @@ public class SubmitMarks implements IServico {
             verifyAlreadySubmittedMarks(attendList, enrolmentEvaluationDAO);
 
             List markList = persistentMark.readBy(evaluation);
+            
+            //Check if there is any mark. If not, we can not submit
+            if(markList.isEmpty())
+            {
+                throw new FenixServiceException("errors.submitMarks.noMarks");
+            }
 
             while (iter.hasNext()) {
                 IFrequenta attend = (IFrequenta) iter.next();
@@ -193,13 +201,13 @@ public class SubmitMarks implements IServico {
                     //CLONER
                     //enrolmentEvaluationsByDegree.put(new String("mestrado"),
                             //Cloner.copyIFrequenta2InfoFrequenta(attend));
-                    enrolmentEvaluationsByDegree.put(new String("mestrado"), InfoFrequenta.newInfoFromDomain(attend));
+                    enrolmentEvaluationsByDegree.put(new String("mestrado"), InfoFrequentaWithInfoStudentAndPerson.newInfoFromDomain(attend));
                     continue;
                 }
 
                 //check if this student is enrolled
                 if (enrolment == null) {
-                    enrolmentEvaluationsByDegree.put(new String("notEnrolled"), InfoFrequenta.newInfoFromDomain(attend));
+                    enrolmentEvaluationsByDegree.put(new String("notEnrolled"), InfoFrequentaWithInfoStudentAndPerson.newInfoFromDomain(attend));
                     //enrolmentEvaluationsByDegree.put(new String("notEnrolled"),
                             //Cloner.copyIFrequenta2InfoFrequenta(attend));
                     continue;
@@ -219,7 +227,7 @@ public class SubmitMarks implements IServico {
                     //CLONER
                     //infoMark.setInfoFrequenta(Cloner
                             //.copyIFrequenta2InfoFrequenta(attend));
-                    infoMark.setInfoFrequenta(InfoFrequenta.newInfoFromDomain(attend));
+                    infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson.newInfoFromDomain(attend));
                     infoMark.setMark("NA");
                     enrolmentEvaluationsByDegree.put(new String("infoMarks"),
                             infoMark);
@@ -233,7 +241,7 @@ public class SubmitMarks implements IServico {
                     //CLONER
                     //enrolmentEvaluationsByDegree.put(new String("infoMarks"),
                             //Cloner.copyIMark2InfoMark(mark));
-                    enrolmentEvaluationsByDegree.put(new String("infoMarks"), InfoMark.newInfoFromDomain(mark));
+                    enrolmentEvaluationsByDegree.put(new String("infoMarks"), InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark));
 
                 }
 

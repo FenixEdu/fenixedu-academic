@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoFrequenta;
+import DataBeans.InfoFrequentaWithInfoStudentAndPerson;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
@@ -127,7 +128,7 @@ public class InsertEvaluationMarks implements IServico {
                         //CLONER
                         //infoMark.setInfoFrequenta(Cloner
                                 //.copyIFrequenta2InfoFrequenta(attend));
-                        infoMark.setInfoFrequenta(InfoFrequenta.newInfoFromDomain(attend));
+                        infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson.newInfoFromDomain(attend));
                         marksErrorsInvalidMark.add(infoMark);
                     } else {
                         newHashMarks.put(attend.getAluno().getNumber()
@@ -203,7 +204,6 @@ public class InsertEvaluationMarks implements IServico {
         TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
                 commonComponent, infoSiteMarks);
 
-        System.out.println("ultima instrução do serviço");
         return siteView;
     }
 
