@@ -12,6 +12,7 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  */
 
 import DataBeans.InfoAnnouncement;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IAnnouncement;
@@ -39,7 +40,7 @@ public class DeleteAnnouncement implements IServico {
 		return "DeleteAnnouncement";
 	}
 
-	public Boolean run(InfoSite infoSite, InfoAnnouncement infoAnnouncement)
+	public Boolean run(InfoExecutionCourse infoExecutionCourse,InfoSite infoSite, InfoAnnouncement infoAnnouncement)
 		throws FenixServiceException {
 
 		try {

@@ -120,7 +120,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			Object args[] = { infoSite, infoAnnouncement };
+			Object args[] = { infoSite.getInfoExecutionCourse(),infoSite, infoAnnouncement };
 			GestorServicos manager = GestorServicos.manager();
 			manager.executar(userView, "DeleteAnnouncement", args);
 		
