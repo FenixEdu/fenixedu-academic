@@ -47,6 +47,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 
 		if (!(announcements.isEmpty()))
 			return mapping.findForward("AnnouncementManagement");
-		else return mapping.findForward("EditAnnouncement");
+		else {session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
+			return mapping.findForward("EditAnnouncement");} 
 	}
 }

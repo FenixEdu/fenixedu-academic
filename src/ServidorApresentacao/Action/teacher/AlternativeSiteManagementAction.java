@@ -91,6 +91,6 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		session.setAttribute(SessionConstants.INFO_SITE,infoSiteNew);
 		session.setAttribute("alternativeSiteForm", alternativeSiteForm);
 
-		return mapping.findForward("editAlternativeSite");
+		return mapping.findForward("viewSite");
 	}
 }

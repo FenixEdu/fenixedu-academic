@@ -242,7 +242,9 @@
 	<action 
 		type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
 		path="/accessAnnouncements">
-        <forward name="AnnouncementManagement" path="/announcements.jsp" />       
+        <forward name="AnnouncementManagement" path="/announcements.jsp" />  
+         <forward name="EditAnnouncement" path="/announcements.jsp" /> 
+             
 	</action>
 
 	<!-- access to alternative site -->
