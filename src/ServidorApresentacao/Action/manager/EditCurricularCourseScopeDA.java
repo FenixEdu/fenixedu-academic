@@ -76,6 +76,9 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			if(oldInfoCurricularCourseScope.getLabHours() != null)
 				dynaForm.set("labHours", oldInfoCurricularCourseScope.getLabHours().toString());
 			
+			if(oldInfoCurricularCourseScope.getCredits() != null)
+				dynaForm.set("credits", oldInfoCurricularCourseScope.getCredits().toString());
+			
 			if(oldInfoCurricularCourseScope.getMaxIncrementNac() != null)
 				dynaForm.set("maxIncrementNac", oldInfoCurricularCourseScope.getMaxIncrementNac());
 			
@@ -84,10 +87,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			
 			if(oldInfoCurricularCourseScope.getWeigth() != null)
 				dynaForm.set("weight", oldInfoCurricularCourseScope.getWeigth());
-
-			if(oldInfoCurricularCourseScope.getCredits() != null)
-				dynaForm.set("credits", oldInfoCurricularCourseScope.getCredits().toString());
-				
+			
 			dynaForm.set("branchCode", oldInfoCurricularCourseScope.getInfoBranch().getCode().toString());
 				
 			if(oldInfoCurricularCourseScope.getInfoCurricularSemester() != null)
@@ -101,7 +101,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			request.setAttribute("degreeId", degreeId);
 			request.setAttribute("curricularCourseId", curricularCourseId);
 			request.setAttribute("curricularCourseScopeId", curricularCourseScopeId);
-			return mapping.findForward("editCurricularCourse");
+			return mapping.findForward("editCurricularCourseScope");
 		}
 				
 
@@ -134,8 +134,10 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 //			} catch(FenixServiceException e) {
 //				throw new FenixActionException(e);
 //			}
-			    
-		String creditsString = (String) dynaForm.get("credits");
+			
+		String curricularYearString = (String) dynaForm.get("curricularYear");
+		String curricularSemesterString = (String) dynaForm.get("curricularSemester");	    
+		String branchCode = (String) dynaForm.get("branchCode");
 		String theoreticalHoursString = (String) dynaForm.get("theoreticalHours");
 		String praticalHoursString = (String) dynaForm.get("praticalHours");
 		String theoPratHoursString = (String) dynaForm.get("theoPratHours");
@@ -143,11 +145,34 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		String maxIncrementNacString = (String) dynaForm.get("maxIncrementNac");
 		String minIncrementNacString = (String) dynaForm.get("minIncrementNac");
 		String weightString = (String) dynaForm.get("weight");
-		String branchCode = (String) dynaForm.get("branchCode");
-		String curricularSemesterString = (String) dynaForm.get("curricularSemester");
-		String curricularYearString = (String) dynaForm.get("curricularYear");
+		String creditsString = (String) dynaForm.get("credits");
 		
 		
+		
+
+//		se nao tiver os years nao faz sentido ter os semesters
+				
+		 if(curricularYearString.compareTo("") != 0) {
+		 	InfoCurricularYear infoCurricularYear = new InfoCurricularYear(new Integer(curricularYearString));
+
+		  if(curricularSemesterString.compareTo("") != 0) {
+			 InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester(); 
+			 infoCurricularSemester.setSemester(new Integer(curricularSemesterString));
+			 infoCurricularSemester.setInfoCurricularYear(infoCurricularYear);
+			 newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
+		 }
+		}
+		//			ponho so o que eh unico para poder ler no servico
+				  //pq embora nenhum das propriedades do branch possa tar a null a nivel do java nao tem problema
+		
+		if(branchCode.compareTo("") != 0) {
+			  InfoBranch infoBranch = new InfoBranch();
+			  infoBranch.setCode(branchCode);
+			  newInfoCurricularCourseScope.setInfoBranch(infoBranch);
+		}
+
+		
+			
 		if(theoreticalHoursString.compareTo("") != 0) {
 			Double theoreticalHours = new Double(theoreticalHoursString); 
 			newInfoCurricularCourseScope.setTheoreticalHours(theoreticalHours);
@@ -190,29 +215,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			newInfoCurricularCourseScope.setCredits(credits);
 		}
 		
-		//ponho so o que eh unico para poder ler no servico
-		//pq embora nenhum das propriedades do branch possa tar a null a nivel do java nao tem problema
 		
-		if(branchCode.compareTo("") != 0) {
-					InfoBranch infoBranch = new InfoBranch();
-					infoBranch.setCode(branchCode);
-					newInfoCurricularCourseScope.setInfoBranch(infoBranch);
-				}
-
-//se nao tiver os years nao faz sentido ter os semesters
-				
-		if(curricularYearString.compareTo("") != 0) {
-			InfoCurricularYear infoCurricularYear = new InfoCurricularYear(new Integer(curricularYearString));
-
-			if(curricularSemesterString.compareTo("") != 0) {
-				InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester(); 
-				infoCurricularSemester.setSemester(new Integer(curricularSemesterString));
-				infoCurricularSemester.setInfoCurricularYear(infoCurricularYear);
-				newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
-			}
-	    }
-		
-			
 		Object args[] = { oldCurricularCourseScopeId,  newInfoCurricularCourseScope, curricularCourseId, degreeCPId };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
@@ -232,6 +235,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			saveErrors(request, actionErrors);
 		}
 		request.setAttribute("degreeId", degreeId);
+		request.setAttribute("infoCurricularCourseScope",newInfoCurricularCourseScope);
 		//nao sei s se pode apagar
 		request.setAttribute("degreeCPId", degreeCPId);
 		return mapping.findForward("readCurricularCourse");

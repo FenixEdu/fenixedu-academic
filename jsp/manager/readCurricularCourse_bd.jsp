@@ -135,6 +135,11 @@
 						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
 						</td>
 	 				</tr>
+	 				<%--PASSAR O ID DO SCOPE PA TIRAR O INFO NA ACTION--%>
+	 				<ul style="list-style-type: square;">
+						<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getAttribute("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScopeId"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>
+					</ul>
+	 				
 	 			</logic:iterate>			
 			</table>
 			

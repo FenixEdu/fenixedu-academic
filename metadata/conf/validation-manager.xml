@@ -75,6 +75,8 @@
       
     </form>
     
+    <!--isto es mm assim a msg do AplicationResourses?????????-->
+    
     <!--validation to the form to insert and edit a CurricularCourse-->
     <form name="curricularCourseForm">
       <field property="name" depends="required" page="1" >
@@ -101,6 +103,44 @@
       <field property="yearToExportDataFrom" depends="required" page="1">
         <arg0 key="property.year.toImport" resource="true"/>
       </field>      
+    </form>
+ 
+ 
+  <!--validation to the form to insert and edit a CurricularCourseScope-->
+    <form name="curricularCourseScopeForm">
+      <field property="curricularYear" depends="required,integer" page="1">
+       <arg0 key="message.manager.curricular.course.scope.curricularYear" resource="true" />
+      </field>
+      <field property="curricularSemester" depends="required,integer" page="1">
+        <arg0 key="message.manager.curricular.course.scope.curricularSemester" resource="true" />
+      </field>
+      <field property="branchCode" depends="required" page="1">
+        <arg0 key="message.manager.curricular.course.scope.branchCode" resource="true" />
+      </field>
+      <field property="theoreticalHours" depends="double" page="1" >
+        <arg0 key="message.manager.curricular.course.scope.theoreticalHours" resource="true"/>
+      </field>
+      <field property="praticalHours" depends="double" page="1" >
+        <arg0 key="message.manager.curricular.course.scope.praticalHours" resource="true"/>
+      </field>
+      <field property="theoPratHours" depends="double" page="1" >
+        <arg0 key="message.manager.curricular.course.scope.theoPratHours" resource="true"/>
+      </field>
+      <field property="labHours" depends="double" page="1" >
+        <arg0 key="message.manager.curricular.course.scope.labHours" resource="true"/>
+      </field>
+      <field property="maxIncrementNac" depends="required,integer" page="1" >
+        <arg0 key="message.manager.curricular.course.scope.maxIncrementNac" resource="true"/>
+      </field>
+      <field property="minIncrementNac" depends="required,integer" page="1" >
+        <arg0 key="message.manager.curricular.course.scope.minIncrementNac" resource="true"/>
+      </field>
+      <field property="weight" depends="required,integer" page="1" >
+        <arg0 key="message.manager.curricular.course.scope.weight" resource="true"/>
+      </field>
+      <field property="credits" depends="double" page="1">
+        <arg0 key="message.manager.curricular.course.scope.credits" resource="true" />
+      </field>
     </form>
     
     </formset>
