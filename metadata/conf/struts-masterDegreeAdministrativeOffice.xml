@@ -226,7 +226,7 @@
 			<form-property name="studentGuideList" type="java.lang.String"/>
       </form-bean>
 
-	  <!-- Bean to Choose Execution Course and Master Degree  -->
+	  <!-- Bean to Choose Curricular Course and Master Degree  -->
       <form-bean name="marksManagementForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
@@ -235,6 +235,7 @@
             <form-property name="degree" type="java.lang.String" />
             <form-property name="curricularCourseCode" type="java.lang.Integer" />
       </form-bean>
+
 	  <!-- Bean for The Choosing of a Year -->
       <form-bean name="studentNumberForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -242,6 +243,18 @@
 
          <form-property name="page" type="java.lang.Integer" />
          <form-property name="studentNumber" type="java.lang.String" />
+	  </form-bean>
+	  
+	  <!-- Bean to submit final evaluation -->
+      <form-bean name="marksSubmissionForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="studentName" type="java.lang.String" />
+            <form-property name="studentNumber" type="java.lang.Integer" />
+            <form-property name="grade" type="java.lang.String" />
+            <form-property name="teacherNumber" type="java.lang.Integer" />
       </form-bean>
 
    </form-beans>
@@ -775,7 +788,7 @@
 	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/> 
       </action>
       
-      <action path="/marksSubmissionAction"
+      <action path="/marksSubmission"
       		  input="/marksManagement/marksSubmission.jsp"
       	      name="marksSubmissionForm"
 		      parameter="method"

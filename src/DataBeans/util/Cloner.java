@@ -1673,6 +1673,7 @@ public abstract class Cloner {
 	 * @return InfoEnrolmentEvaluation
 	 */
 	public static InfoEnrolmentEvaluation copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(IEnrolmentEvaluation enrolmentEvaluation) {
+//		properties of infoEnrolment are not copied for not to get into loop
 		InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 		InfoPerson infoPerson = copyIPerson2InfoPerson(enrolmentEvaluation.getPersonResponsibleForGrade());
 		copyObjectProperties(infoEnrolmentEvaluation, enrolmentEvaluation);
@@ -1686,6 +1687,7 @@ public abstract class Cloner {
 	 * @return InfoEnrolmentEvaluation
 	 */
 	public static IEnrolmentEvaluation copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
+//		properties of infoEnrolment are not copied for not to get into loop
 		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 		IPessoa pessoa = copyInfoPerson2IPerson(infoEnrolmentEvaluation.getInfoPersonResponsibleForGrade());
 		copyObjectProperties(enrolmentEvaluation, infoEnrolmentEvaluation);
