@@ -1,0 +1,228 @@
+
+
+
+
+<!-- Definitions for . -->
+<class-descriptor 
+  class="almeida.Almeida_curricular_course"
+  table="ALMEIDA_CURRICULAR_COURSE"
+>
+  <field-descriptor id="0"
+    name="id_internal"
+    column="ID_INTERNAL"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />
+  <field-descriptor id="1"
+    name="code"
+    column="CODE"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="2"
+    name="name"
+    column="NAME"
+    jdbc-type="VARCHAR"
+  />
+</class-descriptor>
+
+<class-descriptor 
+  class="almeida.Almeida_enrolment"
+  table="ALMEIDA_ENROLMENT"
+>
+  <field-descriptor id="0"
+    name="id_internal"
+    column="ID_INTERNAL"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />
+  <field-descriptor id="1"
+    name="numalu"
+    column="NUMALU"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="2"
+    name="anoins"
+    column="ANOINS"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="3"
+    name="anodis"
+    column="ANODIS"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="4"
+    name="semdis"
+    column="SEMDIS"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="5"
+    name="epoca"
+    column="EPOCA"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="6"
+    name="coddis"
+    column="CODDIS"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="7"
+    name="curso"
+    column="CURSO"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="8"
+    name="ramo"
+    column="RAMO"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="9"
+    name="result"
+    column="RESULT"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="10"
+    name="numdoc"
+    column="NUMDOC"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="11"
+    name="datexa"
+    column="DATEXA"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="12"
+    name="coduniv"
+    column="CODUNIV"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="13"
+    name="observ"
+    column="OBSERV"
+    jdbc-type="VARCHAR"
+  />
+</class-descriptor>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -20,6 +20,7 @@
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
 <!ENTITY teacher-credits SYSTEM "repository_creditsTeacher.xml">
 <!ENTITY assiduousness SYSTEM "repository_assiduousness.xml">
+<!ENTITY almeida-enrolment SYSTEM "repository_almeida_enrolment.xml">
 ]>
 
 
@@ -45,5 +46,6 @@
     &almeida;
     &posgrad;
     &assiduousness;
+    &almeida-enrolment;
 	
 </descriptor-repository>

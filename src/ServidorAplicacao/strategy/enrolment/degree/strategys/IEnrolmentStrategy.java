@@ -9,11 +9,11 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
  */
 public interface IEnrolmentStrategy {
 
+	public EnrolmentContext getEnrolmentContext();
+	public void setEnrolmentContext(EnrolmentContext enrolmentContext);
+
 	public EnrolmentContext getAvailableCurricularCourses();
 	public EnrolmentContext validateEnrolment();
 	public EnrolmentContext getOptionalCurricularCourses();
 	public EnrolmentContext getDegreesForOptionalCurricularCourses();
-		
-	public EnrolmentContext getEnrolmentContext();
-	public void setEnrolmentContext(EnrolmentContext enrolmentContext);
 }
