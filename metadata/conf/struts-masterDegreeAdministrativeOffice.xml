@@ -1826,6 +1826,17 @@
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 	</action>
 	
+	<!-- visualize master degree thesis history -->
+	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeThesisHistoryDispatchAction"
+				path="/visualizeMasterDegreeThesisHistory"
+				parameter="method"
+				scope="request">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="/thesis/visualizeMasterDegreeThesisHistory.jsp"/>
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+	</action>
 	
 	<!-- change master degree proof -->
 	<action		name="changeMasterDegreeProofForm"
@@ -1887,6 +1898,19 @@
 			<forward name="errorNonExistingProofVersion" path="/thesis/indexThesis.jsp"/>
 	</action>	
 
+	<!-- visualize master degree proof history -->
+	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeProofHistoryDispatchAction"
+				path="/visualizeMasterDegreeProofHistory"
+				parameter="method"
+				scope="request">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="/thesis/visualizeMasterDegreeProofHistory.jsp"/>
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+			<forward name="errorNonExistingProofVersion" path="/thesis/indexThesis.jsp"/>
+	</action>	
+	
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
