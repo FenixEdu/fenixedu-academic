@@ -241,6 +241,7 @@
           <forward name="AccessItemManagement" path="/viewSection.do"/>
     </action>
 	
+	
 	<!-- Actions For Objectives and Program -->
 	<action 
 		name="executionCourseObjectivesForm"
@@ -295,12 +296,14 @@
        <forward name="viewSite" path="/viewSite.do"/>
 	</action>
 
+	<!-- Edit Section -->
 	<action name="sectionForm"
+		input="/createSection.jsp"
 		path="/editSection"
 		parameter="method"
 		type="ServidorApresentacao.Action.teacher.EditSectionDispatchAction"
         validate="false" >
-       <forward name="editSection" path="/createSection.jsp"/>
+       <forward name="editSection" path="/editSection.do?method=edit"/>
        <forward name="viewSite" path="/viewSite.do"/>
 	</action>
 	

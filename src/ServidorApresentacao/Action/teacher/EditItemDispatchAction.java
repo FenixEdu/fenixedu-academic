@@ -38,11 +38,10 @@ public class EditItemDispatchAction extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		System.out.println("prepareEdit");
 		return mapping.findForward("editItem");
 	}
 
-	public ActionForward execute(
+	public ActionForward edit(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
