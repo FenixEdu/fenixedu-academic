@@ -54,13 +54,19 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		return mapping.findForward("prepareEnrollmentChooseStudent");
 	}
 
-	private String getExecutionDegree(HttpServletRequest request)
+	private Integer getExecutionDegree(HttpServletRequest request)
 	{
-		String executionDegreeId  = request.getParameter("executionDegreeId");
-		if(executionDegreeId == null) {
-			executionDegreeId = (String) request.getAttribute("executionDegreeId");
+		Integer executionDegreeId = null;
+		
+		String executionDegreeIdString  = request.getParameter("executionDegreeId");
+		if(executionDegreeIdString == null) {
+			executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
+		}
+		if(executionDegreeIdString != null){
+			executionDegreeId = Integer.valueOf(executionDegreeIdString);
 		}
 		request.setAttribute("executionDegreeId", executionDegreeId);
+		
 		return executionDegreeId;
 	}
 
@@ -88,7 +94,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
 
-		String executionDegreeId = getExecutionDegree(request);		
+		Integer executionDegreeId = getExecutionDegree(request);		
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
@@ -200,7 +206,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
 		maintainEnrollmentState(request, studentNumber);
 
-		String executionDegreeId = getExecutionDegree(request);
+		Integer executionDegreeId = getExecutionDegree(request);
 		List infoBranches = null;
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
@@ -281,7 +287,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 		Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
 
-		String executionDegreeId = getExecutionDegree(request);
+		Integer executionDegreeId = getExecutionDegree(request);
 		Object[] args = { executionDegreeId, studentCurricularPlanId, specializationArea, secondaryArea };
 		try
 		{
@@ -345,7 +351,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		List toEnroll = Arrays.asList(curricularCoursesToEnroll);
 		if (toEnroll.size() == 1)
 		{
-			String executionDegreeId = getExecutionDegree(request);
+			Integer executionDegreeId = getExecutionDegree(request);
 			Object[] args = { executionDegreeId, studentCurricularPlanId, toEnroll.get(0), null };
 			try
 			{
@@ -390,7 +396,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer studentCurricularPlanId =
 				Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
-			String executionDegreeId = getExecutionDegree(request);
+			Integer executionDegreeId = getExecutionDegree(request);
 			Object[] args = { executionDegreeId, studentCurricularPlanId, (Integer) toUnenroll.get(0)};
 			try
 			{
@@ -424,7 +430,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
-		String executionDegreeId = getExecutionDegree(request);
+		Integer executionDegreeId = getExecutionDegree(request);
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
