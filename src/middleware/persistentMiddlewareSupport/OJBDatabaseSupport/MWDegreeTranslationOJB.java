@@ -10,6 +10,7 @@ import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSup
 
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.ICurso;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 
@@ -19,13 +20,27 @@ import ServidorPersistente.OJB.ObjectFenixOJB;
 public class MWDegreeTranslationOJB extends ObjectFenixOJB implements IPersistentMWDegreeTranslation
 {
 
-	/* (non-Javadoc)
-	 * @see middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation#readByDegreeCode()
+    /* (non-Javadoc)
+     * @see middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation#readByDegreeCode()
+     */
+    public MWDegreeTranslation readByDegreeCode(Integer degreeCode)
+        throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degreeCode", degreeCode);
+        return (MWDegreeTranslation) queryObject(MWDegreeTranslation.class, criteria);
+    }
+
+	/**
+	 * @author Nuno Correia
+	 * @author Ricardo Rodrigues
 	 */
-	public MWDegreeTranslation readByDegreeCode(Integer degreeCode) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("degreeCode", degreeCode);
-		return (MWDegreeTranslation) queryObject(MWDegreeTranslation.class, criteria);
-	}
+	
+    public MWDegreeTranslation readByDegree(ICurso degree)
+        throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyDegree", degree.getIdInternal());
+        return (MWDegreeTranslation) queryObject(MWDegreeTranslation.class, criteria);
+    }
 }
