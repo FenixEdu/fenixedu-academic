@@ -244,12 +244,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		sections.add(section2);
 		sections.add(section3);
 		sections.add(section4);
-		List sections1=new ArrayList();
-				sections1.add(section1);
-				sections1.add(section2);
-				sections1.add(section3);
-				sections1.add(section4);
-		sections.add(sections1);		
+		
 		session.setAttribute(SessionConstants.SECTIONS,sections);
 		
 //read responsible
