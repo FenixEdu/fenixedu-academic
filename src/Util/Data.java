@@ -150,9 +150,9 @@ public class Data {
 	}
 
 	/**
-	 * 
+	 * Formats date in format d separator M separator YYYY
 	 * @param Date to Format
-	 * @return Date formated to day-month-year
+	 * @return String separator
 	 * 
 	 */
 	public static String format2DayMonthYear(java.util.Date date, String separator) {
@@ -168,6 +168,13 @@ public class Data {
 		result += separator;
 		result += calendar.get(Calendar.YEAR);
 		return result;
+	}
+	/**
+	 *	Formats data in format d-M-YYYY 
+	 * @param Date to Format
+	 */
+	public static String format2DayMonthYear(java.util.Date date) {
+		return Data.format2DayMonthYear(date, "-");
 	}
 	
 	public static java.util.Date convertStringDate(String stringToConvert, String separator) {
