@@ -250,8 +250,8 @@ public class ExemptionGratuityAction extends DispatchAction
 		{
 			fenixServiceException.printStackTrace();
 			errors.add(
-					"noGratuitySituation",
-					new ActionError("error.impossible.insertExemptionGratuity"));
+				"noGratuitySituation",
+				new ActionError("error.impossible.insertExemptionGratuity"));
 			errors.add(
 				"noGratuityValues",
 				new ActionError(
@@ -285,21 +285,29 @@ public class ExemptionGratuityAction extends DispatchAction
 		if (infoGratuitySituation != null)
 		{
 			Integer exemptionPercentage = infoGratuitySituation.getExemptionPercentage();
-			if (ExemptionGratuityType.percentageOfExemption().contains(exemptionPercentage))
+			if (exemptionPercentage != null)
 			{
-				exemptionGrauityForm.set("valueExemptionGratuity", String.valueOf(exemptionPercentage));
-			}
-			else
-			{
-				exemptionGrauityForm.set("valueExemptionGratuity", "-1");
-				exemptionGrauityForm.set(
-					"otherValueExemptionGratuity",
-					String.valueOf(exemptionPercentage));
+				if (ExemptionGratuityType.percentageOfExemption().contains(exemptionPercentage))
+				{
+					exemptionGrauityForm.set(
+						"valueExemptionGratuity",
+						String.valueOf(exemptionPercentage));
+				}
+				else
+				{
+					exemptionGrauityForm.set("valueExemptionGratuity", "-1");
+					exemptionGrauityForm.set(
+						"otherValueExemptionGratuity",
+						String.valueOf(exemptionPercentage));
+				}
 			}
 
-			exemptionGrauityForm.set(
-				"justificationExemptionGratuity",
-				String.valueOf(infoGratuitySituation.getExemptionType().getValue()));
+			if (infoGratuitySituation.getExemptionType() != null)
+			{
+				exemptionGrauityForm.set(
+					"justificationExemptionGratuity",
+					String.valueOf(infoGratuitySituation.getExemptionType().getValue()));
+			}
 			exemptionGrauityForm.set(
 				"otherJustificationExemptionGratuity",
 				infoGratuitySituation.getExemptionDescription());
