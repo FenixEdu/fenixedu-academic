@@ -1,60 +1,109 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import Dominio.ISummary;
-import Dominio.Summary;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentSummary;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import java.util.Calendar;
+
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import Util.TipoAula;
 
 /**
- * @author João Mota
- * @author Susana Fernandes
- * 
+ * @author Leonor Almeida
+ * @author Sérgio Montelobo
  */
-public class InsertSummaryTest extends TestCaseDeleteAndEditServices {
+public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 
+	/**
+	 * @param testName
+	 */
 	public InsertSummaryTest(String testName) {
 		super(testName);
 	}
 
-	protected void setUp() {
-		super.setUp();
+	protected String getDataSetFilePath() {
+		return "etc/testInsertSummaryDataSet.xml";
 	}
 
-	protected void tearDown() {
-		super.tearDown();
+	protected String getExpectedDataSetFilePath() {
+		return "etc/testExpectedInsertSummaryDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
 		return "InsertSummary";
 	}
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISummary summary = new Summary(new Integer(261));
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
-			IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-			summary = (ISummary) persistentSummary.readByOId(summary, false);
-			sp.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-		fail("excepcao");
-		}
-		Object[] argsDeleteItem =
-			{
-				new Integer(25),
-				summary.getSummaryDate(),
-				summary.getSummaryHour(),
-				summary.getSummaryType().getTipo(),
-				summary.getTitle(),
-				summary.getSummaryText()};
-		
-		return argsDeleteItem;
+	protected String[] getAuthorizedUser() {
+
+		String[] args = { "user", "pass", getApplication()};
+		return args;
 	}
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+	protected String[] getUnauthorizedUser() {
+
+		String[] args = { "julia", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getNonTeacherUser() {
+
+		String[] args = { "jccm", "pass", getApplication()};
+		return args;
+	}
+
+	protected Object[] getAuthorizeArguments() {
+
+		Integer executionCourseId = new Integer(24);
+		Integer summaryId = new Integer(262);
+
+		Calendar summaryDate = Calendar.getInstance();
+		summaryDate.set(Calendar.DAY_OF_MONTH, 1);
+		summaryDate.set(Calendar.MONTH, 2);
+		summaryDate.set(Calendar.YEAR, 1999);
+
+		Calendar summaryHour = Calendar.getInstance();
+		summaryHour.set(Calendar.HOUR_OF_DAY, 12);
+		summaryHour.set(Calendar.MINUTE, 0);
+
+		int tipoAula = TipoAula.DUVIDAS;
+		String title = "Titulo";
+		String text = "Texto do sumario";
+
+		Object[] args =
+			{
+				executionCourseId,
+				summaryId,
+				summaryDate,
+				summaryHour,
+				new Integer(tipoAula),
+				title,
+				text };
+		return args;
+	}
+
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
+	}
+
+	public void testSuccessfull() {
+
+		try {
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				getAuthorizeArguments());
+
+			// verificar as alteracoes da bd
+			compareDataSet(getExpectedDataSetFilePath());
+		}
+		catch (FenixServiceException ex) {
+			fail("Insert the Summary of a Site" + ex);
+		}
+		catch (Exception ex) {
+			fail("Insert the Summary of a Site" + ex);
+		}
 	}
 }
