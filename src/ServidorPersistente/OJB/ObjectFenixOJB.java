@@ -47,6 +47,7 @@ import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 import org.odmg.Transaction;
 
+import Dominio.IDomainObject;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
@@ -205,25 +206,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	}
 	
 	
-	public Object readByOId(Object obj) throws ExcepcaoPersistencia {
-		PersistenceBroker broker = null;
-		boolean needsCommit = false;
-		tx = odmg.currentTransaction();
-		if (tx == null || !tx.isOpen()) {
-			broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			System.out.println("não há transacção, vou iniciar");
-			needsCommit = true;
-			broker.beginTransaction();
-		} else {
-			broker = ((HasBroker) tx).getBroker();
-		}
-		
+	public IDomainObject readByOId(IDomainObject obj) throws ExcepcaoPersistencia {
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+				
 		Identity identity = new Identity(obj,broker);
-		Object result = broker.getObjectByIdentity(identity);
-		if(needsCommit==true){
-			broker.commitTransaction();
-		}
-		return result;
+		IDomainObject result = (IDomainObject) broker.getObjectByIdentity(identity);
+		
+		return  result;
 		
 	}
 
