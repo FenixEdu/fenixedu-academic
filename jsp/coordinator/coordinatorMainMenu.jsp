@@ -129,6 +129,14 @@
 				
 			</li>
 			
+			<li>
+				<html:link page="<%= "/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;executionDegreeId=" + executionDegreeID %>">
+			    <bean:message key="link.student.enrollment" /></html:link>
+			    <br/>
+				<br/>
+				</html:link>
+			</li>		
+			
 		</ul>
 	</logic:notEqual> 
 	
