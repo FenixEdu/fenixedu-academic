@@ -2,6 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="DataBeans.InfoEnrolment" %>
+<%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
+<%@ page import="DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+
 <span class="error"><html:errors/></span>
 
 <h2 align="left"><bean:message key="title.studentCurricularPlan"/></h2>
@@ -23,16 +29,28 @@
 	</tr>		
 	<tr>
 		<td>
+			<b><bean:message key="label.student.specialization" /></b>
+			<bean:write name="studentCurricularPlan" property="specialization" />
+		</td>
+	</tr>		
+	<tr>
+		<td>
 			<b><bean:message key="label.student.state" /></b>
 			<bean:write name="studentCurricularPlan" property="currentState" />
 		</td>						
-	</tr>
+	</tr>	
 	<tr>
 		<td>
 			<b><bean:message key="label.student.startDate" /></b>
 			<bean:write name="studentCurricularPlan" property="startDate" />
 		</td>								
-	</tr>
+	</tr>	
+	<tr>
+		<td>
+			<b><bean:message key="label.student.credits" /></b>
+			<bean:write name="studentCurricularPlan" property="givenCredits" />
+		</td>
+	</tr>	
 	<tr>
 		<td>
 			<b><bean:message key="label.student.completedCourses" /></b>	
@@ -71,14 +89,24 @@
 						</tr>	
 						<tr>
 							<th align="left"><bean:message key="label.enrolment.curricularCourse"/></th>
+							<th align="left"><bean:message key="label.enrolment.type"/></th>
 							<th align="left"><bean:message key="label.enrolment.state"/></th>
-							<th align="left"><bean:message key="label.enrolment.year"/></th>
+							<th align="left"><bean:message key="label.enrolment.year"/></th>							
 						</tr>
 						<logic:iterate id="infoEnrolment" name="studentCurricularPlan" property="infoEnrolments">
 							<tr>	
 								<td>
 									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.code" />&nbsp;
 									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name" />
+								</td>
+								<td>
+									<%if (infoEnrolment instanceof InfoEnrolmentInOptionalCurricularCourse) { %>
+										<bean:message key="label.enrolment.type.optional" />
+									<%} else if (infoEnrolment instanceof InfoEnrolmentInExtraCurricularCourse) { %>
+										<bean:message key="label.enrolment.type.extra" />
+									<%} else { %> 										
+										<bean:message key="label.enrolment.type.normal" />
+									<%}	%>								
 								</td>
 								<td>
 									<bean:define id="state" name="infoEnrolment" property="enrolmentState" />
