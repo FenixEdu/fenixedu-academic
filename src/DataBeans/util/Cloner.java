@@ -3335,25 +3335,79 @@ public abstract class Cloner
         return department;
     }
 
-    public static InfoSummary copyISummary2InfoSummary(ISummary summary)
-    {
-        InfoSummary infoSummary = new InfoSummary();
-        copyObjectProperties(infoSummary, summary);
-        InfoExecutionCourse infoExecutionCourse =
-            (InfoExecutionCourse) get(summary.getExecutionCourse());
-        infoSummary.setInfoExecutionCourse(infoExecutionCourse);
-        return infoSummary;
-    }
+ public static InfoSummary copyISummary2InfoSummary(ISummary summary)
+	{
+		if (summary == null)
+			return null;
 
-    public static ISummary copyInfoSummary2ISummary(InfoSummary infoSummary)
-    {
-        ISummary summary = new Summary();
-        copyObjectProperties(summary, infoSummary);
-        IExecutionCourse executionCourse =
-            copyInfoExecutionCourse2ExecutionCourse(infoSummary.getInfoExecutionCourse());
-        summary.setExecutionCourse(executionCourse);
-        return summary;
-    }
+		InfoSummary infoSummary = new InfoSummary();
+		copyObjectProperties(infoSummary, summary);
+
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) get(summary.getExecutionCourse());
+		infoSummary.setInfoExecutionCourse(infoExecutionCourse);
+
+		if (summary.getShift() != null)
+		{
+			InfoShift infoShift = copy(summary.getShift());
+			infoSummary.setInfoShift(infoShift);
+		}
+		if (summary.getProfessorship() != null)
+		{
+			InfoProfessorship infoProfessorship = copyIProfessorship2InfoProfessorship(summary
+							.getProfessorship());
+			infoSummary.setInfoProfessorship(infoProfessorship);
+		}
+		if (summary.getTeacher() != null)
+		{
+			InfoTeacher infoTeacher = copyITeacher2InfoTeacher(summary.getTeacher());
+			infoSummary.setInfoTeacher(infoTeacher);
+		}
+		
+		if (summary.getRoom() != null)
+		{
+			InfoRoom infoRoom = copyRoom2InfoRoom(summary.getRoom());
+			infoSummary.setInfoRoom(infoRoom);
+		}
+		return infoSummary;
+	}
+
+	public static ISummary copyInfoSummary2ISummary(InfoSummary infoSummary)
+	{
+		if (infoSummary != null)
+			return null;
+
+		ISummary summary = new Summary();
+		copyObjectProperties(summary, infoSummary);
+		IExecutionCourse executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoSummary
+						.getInfoExecutionCourse());
+		summary.setExecutionCourse(executionCourse);
+
+		if (infoSummary.getInfoShift() != null)
+		{
+			ITurno shift = copyInfoShift2IShift(infoSummary.getInfoShift());
+			summary.setShift(shift);
+		}
+
+		if (infoSummary.getInfoProfessorship() != null)
+		{
+			IProfessorship professorship = copyInfoProfessorship2IProfessorship(infoSummary
+							.getInfoProfessorship());
+			summary.setProfessorship(professorship);
+		}
+
+		if (infoSummary.getInfoTeacher() != null)
+		{
+			ITeacher teacher = copyInfoTeacher2Teacher(infoSummary.getInfoTeacher());
+			summary.setTeacher(teacher);
+		}
+		
+		if (infoSummary.getInfoRoom() != null)
+		{
+			ISala room = copyInfoRoom2Room(infoSummary.getInfoRoom());
+			summary.setRoom(room);
+		}
+		return summary;
+	}
 
     /**
      * @param infoGratuity
@@ -3828,7 +3882,7 @@ public abstract class Cloner
     {
         InfoTestScope infoTestScope = new InfoTestScope();
         if (testScope.getDomainObject() instanceof IExecutionCourse)
-            infoTestScope.setInfoObject((InfoExecutionCourse) get(testScope.getDomainObject()));
+            infoTestScope.setInfoObject(get(testScope.getDomainObject()));
         return infoTestScope;
     }
 

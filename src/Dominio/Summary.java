@@ -25,9 +25,26 @@ public class Summary extends DomainObject implements ISummary {
 	private Calendar summaryHour;
 	private Date lastModifiedDate;
 	private String summaryText;
-	private TipoAula summaryType;
+
 	private IExecutionCourse executionCourse;
 	private Integer keyExecutionCourse;
+	private TipoAula summaryType;
+
+	private Integer keyShift;
+	private ITurno shift;
+	
+	private Integer keyProfessorship;
+	private IProfessorship professorship;
+	private Integer keyTeacher;
+	private ITeacher teacher;
+	private String teacherName;
+	
+	private Integer studentsNumber;
+	private Boolean isExtraLesson;
+	
+	private Integer keyRoom;
+	private ISala room;
+	
 
 	/**
 	 * 
@@ -82,6 +99,20 @@ public class Summary extends DomainObject implements ISummary {
 	public void setKeyExecutionCourse(Integer keyExecutionCourse) {
 		this.keyExecutionCourse = keyExecutionCourse;
 	}
+	/**
+	 * @return Returns the summaryType.
+	 */
+	public TipoAula getSummaryType()
+	{
+		return summaryType;
+	}
+	/**
+	 * @param summaryType The summaryType to set.
+	 */
+	public void setSummaryType(TipoAula summaryType)
+	{
+		this.summaryType = summaryType;
+	}
 
 	/**
 	 * @return
@@ -95,20 +126,6 @@ public class Summary extends DomainObject implements ISummary {
 	 */
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
-	}
-
-	/**
-	 * @return
-	 */
-	public TipoAula getSummaryType() {
-		return summaryType;
-	}
-
-	/**
-	 * @param summaryType
-	 */
-	public void setSummaryType(TipoAula summaryType) {
-		this.summaryType = summaryType;
 	}
 
 	/**
@@ -154,6 +171,143 @@ public class Summary extends DomainObject implements ISummary {
 	}
 
 	/**
+	 * @return Returns the keyProfessorship.
+	 */
+	public Integer getKeyProfessorship() {
+		return keyProfessorship;
+	}
+	/**
+	 * @param keyProfessorship The keyProfessorship to set.
+	 */
+	public void setKeyProfessorship(Integer keyProfessorship) {
+		this.keyProfessorship = keyProfessorship;
+	}
+	/**
+	 * @return Returns the keyShift.
+	 */
+	public Integer getKeyShift() {
+		return keyShift;
+	}
+	/**
+	 * @param keyShift The keyShift to set.
+	 */
+	public void setKeyShift(Integer keyShift) {
+		this.keyShift = keyShift;
+	}
+	/**
+	 * @return Returns the keyTeacher.
+	 */
+	public Integer getKeyTeacher() {
+		return keyTeacher;
+	}
+	/**
+	 * @param keyTeacher The keyTeacher to set.
+	 */
+	public void setKeyTeacher(Integer keyTeacher) {
+		this.keyTeacher = keyTeacher;
+	}
+	/**
+	 * @return Returns the professorship.
+	 */
+	public IProfessorship getProfessorship() {
+		return professorship;
+	}
+	/**
+	 * @param professorship The professorship to set.
+	 */
+	public void setProfessorship(IProfessorship professorship) {
+		this.professorship = professorship;
+	}
+	/**
+	 * @return Returns the shift.
+	 */
+	public ITurno getShift() {
+		return shift;
+	}
+	/**
+	 * @param shift The shift to set.
+	 */
+	public void setShift(ITurno shift) {
+		this.shift = shift;
+	}
+	/**
+	 * @return Returns the studentNumber.
+	 */
+	public Integer getStudentsNumber() {
+		return studentsNumber;
+	}
+	/**
+	 * @param studentNumber The studentNumber to set.
+	 */
+	public void setStudentsNumber(Integer studentsNumber) {
+		this.studentsNumber = studentsNumber;
+	}
+	/**
+	 * @return Returns the teacher.
+	 */
+	public ITeacher getTeacher() {
+		return teacher;
+	}
+	/**
+	 * @param teacher The teacher to set.
+	 */
+	public void setTeacher(ITeacher teacher) {
+		this.teacher = teacher;
+	}
+	/**
+	 * @return Returns the teacherName.
+	 */
+	public String getTeacherName() {
+		return teacherName;
+	}
+	/**
+	 * @param teacherName The teacherName to set.
+	 */
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+	/**
+	 * @return Returns the isExtraLesson.
+	 */
+	public Boolean getIsExtraLesson() {
+		return isExtraLesson;
+	}
+	/**
+	 * @param isExtraLesson The isExtraLesson to set.
+	 */
+	public void setIsExtraLesson(Boolean isExtraLesson) {
+		this.isExtraLesson = isExtraLesson;
+	}
+	
+	/**
+	 * @return Returns the keyRoom.
+	 */
+	public Integer getKeyRoom()
+	{
+		return keyRoom;
+	}
+	/**
+	 * @param keyRoom The keyRoom to set.
+	 */
+	public void setKeyRoom(Integer keyRoom)
+	{
+		this.keyRoom = keyRoom;
+	}
+	/**
+	 * @return Returns the room.
+	 */
+	public ISala getRoom()
+	{
+		return room;
+	}
+	/**
+	 * @param room The room to set.
+	 */
+	public void setRoom(ISala room)
+	{
+		this.room = room;
+	}
+	/**
 	 * @param obj
 	 */
 	public boolean compareTo(Object obj) {
@@ -163,8 +317,8 @@ public class Summary extends DomainObject implements ISummary {
 
 			resultado =
 				(summary != null)
-					&& this.getExecutionCourse().equals(
-						summary.getExecutionCourse())
+					&& this.getShift().equals(
+						summary.getShift())
 					&& this.getSummaryDate().equals(summary.getSummaryDate())
 					&& this.getSummaryHour().equals(summary.getSummaryHour())
 					&& this.getSummaryText().equals(summary.getSummaryText())
@@ -172,4 +326,6 @@ public class Summary extends DomainObject implements ISummary {
 		}
 		return resultado;
 	}
+
+
 }

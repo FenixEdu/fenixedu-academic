@@ -779,14 +779,13 @@ public class TeacherAdministrationSiteComponentBuilder
 	 * @return
 	 */
     private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site)
-        throws FenixServiceException
     {
         IExecutionCourse executionCourse = site.getExecutionCourse();
 
         List evaluations = executionCourse.getAssociatedEvaluations();
         Iterator iter = evaluations.iterator();
 
-        boolean hasFinalEvaluation = false;
+        //boolean hasFinalEvaluation = false;
         List infoEvaluations = new ArrayList();
         List infoFinalEvaluations = new ArrayList();
 		List infoOnlineTests = new ArrayList();
@@ -801,7 +800,7 @@ public class TeacherAdministrationSiteComponentBuilder
             }
             else if (evaluation instanceof IFinalEvaluation)
             {
-                hasFinalEvaluation = true;
+                //hasFinalEvaluation = true;
                 infoFinalEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
             }
 			else if (evaluation instanceof IOnlineTest)

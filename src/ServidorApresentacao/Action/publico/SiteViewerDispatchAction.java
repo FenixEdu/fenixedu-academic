@@ -209,36 +209,48 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         return mapping.findForward("sucess");
     }
 
-    public ActionForward summaries(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
+    public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException
     {
 
         ISiteComponent summariesComponent = new InfoSiteSummaries();
-        String typeFilter = request.getParameter("typeFilter");
-        TipoAula summaryType = null;
-        if (typeFilter != null)
+        
+        Integer lessonType = null;
+        if (request.getParameter("bySummaryType") != null
+                && request.getParameter("bySummaryType").length() > 0)
         {
-            summaryType = mapFromStringToLessonType(typeFilter);
+            lessonType = new Integer(request.getParameter("bySummaryType"));
+            ((InfoSiteSummaries) summariesComponent).setLessonType(lessonType);
         }
-        ((InfoSiteSummaries) summariesComponent).setSummaryType(summaryType);
+
+        Integer shiftId = null;
+        if (request.getParameter("byShift") != null && request.getParameter("byShift").length() > 0)
+        {
+            shiftId = new Integer(request.getParameter("byShift"));
+            ((InfoSiteSummaries) summariesComponent).setShiftId(shiftId);
+        }
+
+        Integer professorShiftId = null;
+        if (request.getParameter("byTeacher") != null && request.getParameter("byTeacher").length() > 0)
+        {
+            professorShiftId = new Integer(request.getParameter("byTeacher"));
+            ((InfoSiteSummaries) summariesComponent).setTeacherId(professorShiftId);
+        }        
+        
         SiteView siteView = readSiteView(request, summariesComponent, null, null, null);
 
-        Collections.sort(
-            ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent()).getInfoSummaries(),
-            Collections.reverseOrder());
+        Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent())
+                .getInfoSummaries(), Collections.reverseOrder());
         request.setAttribute("siteView", siteView);
 
         return mapping.findForward("sucess");
 
     }
+
     /**
-    	 * @param typeFilter
-    	 * @return
-    	 */
+     * @param typeFilter
+     * @return
+     */
     private TipoAula mapFromStringToLessonType(String typeFilter)
     {
         TipoAula result = null;
@@ -258,6 +270,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 
         return result;
     }
+
     public ActionForward curricularCourse(
         ActionMapping mapping,
         ActionForm form,

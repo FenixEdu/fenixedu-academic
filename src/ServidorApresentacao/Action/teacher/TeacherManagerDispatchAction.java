@@ -159,7 +159,6 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws FenixActionException
     {
 
         return mapping.findForward("associateTeacher");

@@ -1,7 +1,5 @@
 /*
  * Created on 19/Mai/2003
- * 
- *  
  */
 package ServidorAplicacao.Filtro;
 
@@ -28,10 +26,9 @@ import Util.RoleType;
 
 /**
  * @author João Mota
- *  
  */
 public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extends
-                                                                         AuthorizationByRoleFilter
+        AuthorizationByRoleFilter
 {
 
     public ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter()
@@ -53,7 +50,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
@@ -63,14 +60,13 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         try
         {
             if ((id == null) || (id.getRoles() == null)
-                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                            || !lecturesExecutionCourse(id, arguments)
-                            || !SummaryBelongsExecutionCourse(id, arguments))
+                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                    || !lecturesExecutionCourse(id, arguments)
+                    || !SummaryBelongsExecutionCourse(id, arguments))
             {
                 throw new NotAuthorizedFilterException();
             }
-        }
-        catch (RuntimeException ex)
+        } catch (RuntimeException ex)
         {
             throw new NotAuthorizedFilterException(ex.getMessage());
         }
@@ -102,31 +98,44 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            }
-            else
+            } else
             {
                 executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                                new ExecutionCourse((Integer) argumentos[0]), false);
+                        new ExecutionCourse((Integer) argumentos[0]), false);
             }
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
             if (argumentos[1] instanceof InfoSummary)
             {
                 infoSummary = (InfoSummary) argumentos[1];
-                summary = Cloner.copyInfoSummary2ISummary(infoSummary);
+                //summary = Cloner.copyInfoSummary2ISummary(infoSummary);
+                summary = new Summary();
+                summary.setIdInternal(infoSummary.getIdInternal());
                 summary = (ISummary) persistentSummary.readByOId(summary, false);
-            }
-            else
+                if(summary == null) {
+                    return false;
+                }
+            } else
             {
-                summary = (ISummary) persistentSummary.readByOId(
-                                new Summary((Integer) argumentos[1]), false);
-
+                summary = (ISummary) persistentSummary.readByOId(new Summary((Integer) argumentos[1]),
+                        false);
+                if(summary == null) {
+                    return false;
+                }
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             return false;
         }
-        return summary.getExecutionCourse().equals(executionCourse);
+        
+        if (summary.getShift() != null && summary.getShift().getDisciplinaExecucao() != null)
+        {
+            return summary.getShift().getDisciplinaExecucao().equals(executionCourse);
+        } else if (summary.getExecutionCourse() != null)
+        {
+            return summary.getExecutionCourse().equals(executionCourse);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -153,11 +162,10 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            }
-            else
+            } else
             {
                 executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                                new ExecutionCourse((Integer) argumentos[0]), false);
+                        new ExecutionCourse((Integer) argumentos[0]), false);
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -165,11 +173,10 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             if (teacher != null && executionCourse != null)
             {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(
-                                teacher, executionCourse);
+                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(teacher,
+                        executionCourse);
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             return false;
         }

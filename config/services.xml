@@ -701,7 +701,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-           <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="StudentOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -3768,6 +3768,15 @@
     <service>
         <name>ReadSummaries</name>
         <implementationClass>ServidorAplicacao.Servico.teacher.ReadSummaries</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>    
+    <service>
+        <name>PrepareInsertSummary</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.PrepareInsertSummary</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

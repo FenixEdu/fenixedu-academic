@@ -613,26 +613,88 @@
         name="keyExecutionCourse"
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
-	/>
+	/>	
 	<field-descriptor id="8"
         name="summaryType"
         column="SUMMARY_TYPE"
         jdbc-type="INTEGER"
          conversion="ServidorPersistente.Conversores.TipoAula2EnumTipoAulaFieldConversion"
 	/>	
-      <field-descriptor
+	
+	<field-descriptor
+        name="keyShift"
+        column="KEY_SHIFT"
+        jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+        name="keyProfessorship"
+        column="KEY_PROFESSORSHIP"
+        jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+        name="keyTeacher"
+        column="KEY_TEACHER"
+        jdbc-type="INTEGER"
+	/>		
+	<field-descriptor
+        name="keyRoom"
+        column="KEY_ROOM"
+        jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+        name="teacherName"
+        column="TEACHER_NAME"
+        jdbc-type="LONGVARCHAR"
+	/>		
+	<field-descriptor
+        name="studentsNumber"
+        column="STUDENTS_NUMBER"
+        jdbc-type="INTEGER"
+	/>    
+	<field-descriptor
+	  	name="isExtraLesson" 
+  		column="EXTRA_LESSON" 
+	  	jdbc-type="BIT"/>
+    <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
-      />
+    />
     <reference-descriptor
          name="executionCourse"
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-    
-	<foreignkey field-id-ref="7"/>
+    	<foreignkey field-id-ref="7"/>
+    </reference-descriptor>
+    <reference-descriptor
+         name="shift"
+         class-ref="Dominio.Turno"
+         proxy="true"
+    >
+    	<foreignkey field-ref="keyShift"/>
+    </reference-descriptor>
+    <reference-descriptor
+         name="professorship"
+         class-ref="Dominio.Professorship"
+         proxy="true"
+    >
+    	<foreignkey field-ref="keyProfessorship"/>
+    </reference-descriptor>
+    <reference-descriptor
+         name="teacher"
+         class-ref="Dominio.Teacher"
+         proxy="true"
+    >
+    	<foreignkey field-ref="keyTeacher"/>
+    </reference-descriptor>
+    <reference-descriptor
+         name="room"
+         class-ref="Dominio.Sala"
+         proxy="true"
+    >
+    	<foreignkey field-ref="keyRoom"/>
     </reference-descriptor>
     <attribute
      	attribute-name="cacheable"

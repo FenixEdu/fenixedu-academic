@@ -127,6 +127,13 @@
 		<form-property name="executionDegreeOID" type="java.lang.String"/>
 		<form-property name="branchOID" type="java.lang.String"/>
       </form-bean>
+	<form-bean name="showSummaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+        <form-property name="bySummaryType" type="java.lang.String"/>  
+        <form-property name="byShift" type="java.lang.String"/>
+        <form-property name="byTeacher" type="java.lang.String"/>
+        <form-property name="objectCode" type="java.lang.String"/>
+   		<form-property name="page" type="java.lang.Integer" initial="0"/>
+	</form-bean>
 
   </form-beans>     
      
@@ -279,12 +286,21 @@
 
 	<!-- Start of Gesdis-->
 		
- 		
-	 
-	<!-- Site viewer -->
+ 	<!-- Summaries -->	
 	<action 
 		path="/viewSite"
-		name="chooseExecutionCourseForm"
+		name="chooseSummariesForm"
+		input="/executionCourseNotFound.jsp"
+		parameter="method"
+		validate="true"
+        type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
+     <forward name="sucess" path="/executionCourseSite.jsp"/>   
+   	</action>
+   	
+	<!-- Site viewer -->
+	<action 
+		path="/viewSiteSummaries"
+		name="showSummaryForm"
 		input="/executionCourseNotFound.jsp"
 		parameter="method"
 		validate="true"
