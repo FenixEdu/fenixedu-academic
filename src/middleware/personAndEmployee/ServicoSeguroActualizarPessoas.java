@@ -165,6 +165,7 @@ public class ServicoSeguroActualizarPessoas
 						{
 							person2Write = (IPessoa) pessoa;
 							newPersons++;
+							System.out.println("New Person: " + pessoa.getNome());
 						}
 						else
 						{
@@ -191,6 +192,7 @@ public class ServicoSeguroActualizarPessoas
 							{
 								person2Write.getPersonRoles().add(role);
 								newRoles++;
+								System.out.println("New Role: " + pessoa.getNome());
 							}
 						}
 
@@ -311,7 +313,7 @@ public class ServicoSeguroActualizarPessoas
 
 								broker.store(employeePerson);
 							}
-
+							System.out.println("New Inactive Person: " + pessoaFromDB.getNome());
 							counter++;
 						}
 					}
