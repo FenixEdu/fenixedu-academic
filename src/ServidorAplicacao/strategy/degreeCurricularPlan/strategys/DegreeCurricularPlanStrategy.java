@@ -2,6 +2,7 @@ package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import DataBeans.InfoFinalResult;
 import Dominio.IDegreeCurricularPlan;
@@ -13,6 +14,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CurricularCourseType;
 import Util.EnrolmentState;
+import Util.EvaluationType;
 import Util.MarkType;
 import Util.NumberUtils;
 
@@ -40,9 +42,41 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		this.degreeCurricularPlan = degreeCurricularPlan;
 	}
 
-
 	public boolean checkMark(String mark){
-		return MarkType.getMarks(degreeCurricularPlan.getMarkType()).contains(mark);
+	    return MarkType.getMarks(degreeCurricularPlan.getMarkType()).contains(mark);
+	}
+	
+	public boolean checkMark(String mark, EvaluationType et){
+
+	    if(et.getType().intValue() == EvaluationType.FINAL)
+	    { 
+	        return MarkType.getMarks(degreeCurricularPlan.getMarkType()).contains(mark);
+	    }
+	    else
+	    {
+	        boolean result = false;			
+			StringTokenizer st = new StringTokenizer(mark, ".");
+
+	        if(st.countTokens() > 0 && st.countTokens() < 3)
+	        {
+	            result = MarkType.getMarksEvaluation(degreeCurricularPlan.getMarkType()).contains(st.nextToken());
+	            if(result && st.hasMoreTokens())
+	            {
+	                try
+	                {
+	                    Double markDouble = new Double(mark);
+	                    if(markDouble.doubleValue() < 0 || markDouble.doubleValue() > 20)
+	                    {
+	                        result = false;
+	                    }
+	                }catch(NumberFormatException ex)
+	                {
+	                    return false;
+	                }
+	            }
+	        }
+	        return result;        
+	    }
 	}
 
 	public Double calculateStudentRegularAverage(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia{

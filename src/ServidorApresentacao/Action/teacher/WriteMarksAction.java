@@ -41,90 +41,105 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class WriteMarksAction extends DispatchAction {
-	List invalidRecords = null;
-	public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception, NotExecuteException {
-		
-		HttpSession session = request.getSession(false);
-		ActionErrors actionErrors = new ActionErrors();
-		
-		String lineReader = null;
-				
-		Integer objectCode = getObjectCode(request);
-		Integer evaluationCode = getEvaluationCode(request);
+public class WriteMarksAction extends DispatchAction
+{
+    List invalidRecords = null;
+    public ActionForward loadFile(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception, NotExecuteException
+    {
 
-		//	Read uploaded file
-		DynaActionForm marksForm = (DynaActionForm) form;
-		
-		FormFile formFile = (FormFile) marksForm.get("theFile");
-        if (!(formFile.getContentType().equals("text/plain"))){
-			prepareInputForward(request, session, objectCode, evaluationCode);
-			actionErrors.add(
-					"FileNotExist",
-					new ActionError(
-						"error.ficheiro.impossivelLer"));
+        HttpSession session = request.getSession(false);
+        ActionErrors actionErrors = new ActionErrors();
 
-			saveErrors(request, actionErrors);
-			return mapping.findForward("loadMarks");
-		}
+        String lineReader = null;
 
-		InputStreamReader input = new InputStreamReader(formFile.getInputStream());
-		BufferedReader reader = new BufferedReader(input);
+        Integer objectCode = getObjectCode(request);
+        Integer evaluationCode = getEvaluationCode(request);
 
-		//parsing uploaded file
-		int n = 0;
-		try {
-			lineReader = reader.readLine();
-		} catch (IOException e) {
-			throw new NotExecuteException("error.ficheiro.impossivelLer");
-		}
-		do {
-		
-			if ((lineReader != null) && (lineReader.length() != 0)) {
-				n++;
-			}
-			try {
-				lineReader = reader.readLine();
-			} catch (IOException e) {
-				throw new NotExecuteException("error.ficheiro.impossivelLer");
-			}
-		}while ((lineReader != null) );
-		if (n == 0){
-			prepareInputForward(request, session, objectCode, evaluationCode);
-			actionErrors.add(
-					"BadFormatFile",
-					new ActionError(
-						"error.file.badFormat"));
-			saveErrors(request, actionErrors);
-			return mapping.findForward("loadMarks");
+        //	Read uploaded file
+        DynaActionForm marksForm = (DynaActionForm)form;
 
-		}
-		reader.close();
-		input = new InputStreamReader(formFile.getInputStream());
-		reader = new BufferedReader(input);
+        FormFile formFile = (FormFile)marksForm.get("theFile");
+        if (!(formFile.getContentType().equals("text/plain")))
+        {
+            prepareInputForward(request, session, objectCode, evaluationCode);
+            actionErrors.add("FileNotExist", new ActionError("error.ficheiro.impossivelLer"));
 
-		String[] studentsNumbers = new String[n];
-		String[] marks = new String[n];
+            saveErrors(request, actionErrors);
+            return mapping.findForward("loadMarks");
+        }
 
-		int j = 0;
-		try {
-			lineReader = reader.readLine();
-		} catch (IOException e) {
-			throw new NotExecuteException("error.ficheiro.impossivelLer");
-		}
-		StringTokenizer stringTokenizer = null;
-		do {
+        InputStreamReader input = new InputStreamReader(formFile.getInputStream());
+        BufferedReader reader = new BufferedReader(input);
 
-			/* leitura do ficheiro de notas linha a linha */
-			if ((lineReader != null) && (lineReader.length() != 0)) {
-				stringTokenizer = new StringTokenizer(lineReader);
-				studentsNumbers[j] = stringTokenizer.nextToken().trim();
-				try {
-					marks[j] = stringTokenizer.nextToken().trim();
-				} catch (NoSuchElementException e1) {
+        //parsing uploaded file
+        int n = 0;
+        try
+        {
+            lineReader = reader.readLine();
+        } catch (IOException e)
+        {
+            throw new NotExecuteException("error.ficheiro.impossivelLer");
+        }
+        do
+        {
+
+            if ((lineReader != null) && (lineReader.length() != 0))
+            {
+                n++;
+            }
+            try
+            {
+                lineReader = reader.readLine();
+            } catch (IOException e)
+            {
+                throw new NotExecuteException("error.ficheiro.impossivelLer");
+            }
+        } while ((lineReader != null));
+        if (n == 0)
+        {
+            prepareInputForward(request, session, objectCode, evaluationCode);
+            actionErrors.add("BadFormatFile", new ActionError("error.file.badFormat"));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("loadMarks");
+
+        }
+        reader.close();
+        input = new InputStreamReader(formFile.getInputStream());
+        reader = new BufferedReader(input);
+
+        String[] studentsNumbers = new String[n];
+        String[] marks = new String[n];
+
+        int j = 0;
+        try
+        {
+            lineReader = reader.readLine();
+        } catch (IOException e)
+        {
+            throw new NotExecuteException("error.ficheiro.impossivelLer");
+        }
+        StringTokenizer stringTokenizer = null;
+        do
+        {
+
+            /* leitura do ficheiro de notas linha a linha */
+            if ((lineReader != null) && (lineReader.length() != 0))
+            {
+                stringTokenizer = new StringTokenizer(lineReader);
+                try
+                {
+                    studentsNumbers[j] = stringTokenizer.nextToken().trim();
+                    Integer testNumber = new Integer(studentsNumbers[j]);
+                }
+				catch (NumberFormatException e2)
+				{
 					prepareInputForward(request, session, objectCode, evaluationCode);
 					actionErrors.add("BadFormatFile", new ActionError("error.file.badFormat"));
 
@@ -132,261 +147,342 @@ public class WriteMarksAction extends DispatchAction {
 					return mapping.findForward("loadMarks");
 
 				}
-				j++;
-			}
-			try {
-				lineReader = reader.readLine();
-			} catch (IOException e) {
-				throw new NotExecuteException("error.ficheiro.impossivelLer");
-			}
+            
+                try
+                {
+                    marks[j] = stringTokenizer.nextToken().trim();
 
-		} while ((lineReader != null) );
-		reader.close();
-		
-		
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+                } catch (NoSuchElementException e1)
+                {
+                    prepareInputForward(request, session, objectCode, evaluationCode);
+                    actionErrors.add("BadFormatFile", new ActionError("error.file.badFormat"));
 
-		List marksList = new ArrayList();
-		invalidRecords = new ArrayList();
-		for (int i = 0; i < marks.length; i++) {
+                    saveErrors(request, actionErrors);
+                    return mapping.findForward("loadMarks");
 
-			InfoMark infoMark = new InfoMark();
-			infoMark = getMarkStudent(studentsNumbers, marks, i, userView);
+                }
+                
+                j++;
+            }
+            try
+            {
+                lineReader = reader.readLine();
+            } catch (IOException e)
+            {
+                throw new NotExecuteException("error.ficheiro.impossivelLer");
+            }
 
-			marksList.add(infoMark);
-		}
+        } while ((lineReader != null));
+        reader.close();
 
-		Object[] args = { objectCode, evaluationCode, marksList };
-		GestorServicos manager = GestorServicos.manager();
-		TeacherAdministrationSiteView siteView = null;
+        IUserView userView = (IUserView)session.getAttribute(SessionConstants.U_VIEW);
 
-		try {
-			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertEvaluationMarks", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("objectCode", objectCode);
-		request.setAttribute("evaluationCode", evaluationCode);
-		
-		// check for errors in service
-		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
-		if (infoSiteMarks.getStudentsListErrors() != null && infoSiteMarks.getStudentsListErrors().size() > 0) {
-			ListIterator iterator = infoSiteMarks.getStudentsListErrors().listIterator();
-			int i = 0;
-			while (iterator.hasNext()) {
+        List marksList = new ArrayList();
+        invalidRecords = new ArrayList();
+        for (int i = 0; i < marks.length; i++)
+        {
 
-				InfoMark infoMark = (InfoMark) iterator.next();
-				if (infoMark != null) {
-					actionErrors.add(
-						"studentNonExistence",
-						new ActionError(
-							"errors.student.nonExisting",
-							String.valueOf((infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
-				} else {
+            InfoMark infoMark = new InfoMark();
+            infoMark = getMarkStudent(studentsNumbers, marks, i, userView);
 
-					actionErrors.add("studentInvalid", new ActionError("errors.registo.invalid", invalidRecords.get(i)));
-					i++;
-				}
-			}
-			saveErrors(request, actionErrors);
+            marksList.add(infoMark);
+        }
 
-		}
-		if (infoSiteMarks.getMarksListErrors() != null && infoSiteMarks.getMarksListErrors().size() > 0) {
-			ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
-			while (iterator.hasNext()) {
-				InfoMark infoMark = (InfoMark) iterator.next();
-				actionErrors.add(
-					"invalidMark",
-					new ActionError(
-						"errors.invalidMark",
-						infoMark.getMark(),
-						String.valueOf((infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
+        Object[] args = { objectCode, evaluationCode, marksList };
+        GestorServicos manager = GestorServicos.manager();
+        TeacherAdministrationSiteView siteView = null;
 
-			}
-			saveErrors(request, actionErrors);
+        try
+        {
+            siteView =
+                (TeacherAdministrationSiteView)manager.executar(userView, "InsertEvaluationMarks", args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("objectCode", objectCode);
+        request.setAttribute("evaluationCode", evaluationCode);
 
-		}
-		if (infoSiteMarks.getMarksListErrors() != null || infoSiteMarks.getStudentsListErrors() != null) {
-			return mapping.getInputForward();
-		}
-		return mapping.findForward("success");
-	}
+        // check for errors in service
+        InfoSiteMarks infoSiteMarks = (InfoSiteMarks)siteView.getComponent();
+        if (infoSiteMarks.getStudentsListErrors() != null
+            && infoSiteMarks.getStudentsListErrors().size() > 0)
+        {
+            ListIterator iterator = infoSiteMarks.getStudentsListErrors().listIterator();
+            int i = 0;
+            while (iterator.hasNext())
+            {
 
-	private void prepareInputForward(HttpServletRequest request, HttpSession session, Integer objectCode, Integer evaluationCode)
-		throws FenixActionException {
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		ISiteComponent commonComponent = new InfoSiteCommon();
-		Object[] args = { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
+                InfoMark infoMark = (InfoMark)iterator.next();
+                if (infoMark != null)
+                {
+                    actionErrors.add(
+                        "studentNonExistence",
+                        new ActionError(
+                            "errors.student.nonExisting",
+                            String.valueOf(
+                                (infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
+                } else
+                {
 
-		try {
-			TeacherAdministrationSiteView siteView =
-				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
+                    actionErrors.add(
+                        "studentInvalid",
+                        new ActionError("errors.registo.invalid", invalidRecords.get(i)));
+                    i++;
+                }
+            }
+            saveErrors(request, actionErrors);
 
-			request.setAttribute("siteView", siteView);
-			request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("evaluationCode", evaluationCode);
-	}
+        }
+        if (infoSiteMarks.getMarksListErrors() != null && infoSiteMarks.getMarksListErrors().size() > 0)
+        {
+            ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
+            while (iterator.hasNext())
+            {
+                InfoMark infoMark = (InfoMark)iterator.next();
+                actionErrors.add(
+                    "invalidMark",
+                    new ActionError(
+                        "errors.invalidMark",
+                        infoMark.getMark(),
+                        String.valueOf(
+                            (infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
 
-	public ActionForward writeMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+            }
+            saveErrors(request, actionErrors);
 
-		HttpSession session = request.getSession(false);
-		ActionErrors actionErrors = new ActionErrors();
+        }
+        if (infoSiteMarks.getMarksListErrors() != null || infoSiteMarks.getStudentsListErrors() != null)
+        {
+            return mapping.getInputForward();
+        }
+        return mapping.findForward("success");
+    }
 
-		List marksList = new ArrayList();
+    private void prepareInputForward(
+        HttpServletRequest request,
+        HttpSession session,
+        Integer objectCode,
+        Integer evaluationCode)
+        throws FenixActionException
+    {
+        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
+        ISiteComponent commonComponent = new InfoSiteCommon();
+        Object[] args =
+            { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
-		Integer sizeList = getSizeList(request);
+        try
+        {
+            TeacherAdministrationSiteView siteView =
+                (TeacherAdministrationSiteView)ServiceUtils.executeService(
+                    userView,
+                    "TeacherAdministrationSiteComponentService",
+                    args);
 
-		//transform form into list with student's number and students's mark
-		for (int i = 0; i < sizeList.intValue(); i++) {
-			InfoMark infoMark = new InfoMark();
-			infoMark = getMark(request, i);
+            request.setAttribute("siteView", siteView);
+            request.setAttribute(
+                "objectCode",
+                ((InfoSiteCommon)siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("evaluationCode", evaluationCode);
+    }
 
-			marksList.add(infoMark);
-		}
+    public ActionForward writeMarks(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		Integer objectCode = getObjectCode(request);
-		Integer evaluationCode = getEvaluationCode(request);
+        HttpSession session = request.getSession(false);
+        ActionErrors actionErrors = new ActionErrors();
 
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        List marksList = new ArrayList();
 
-		Object[] args = { objectCode, evaluationCode, marksList };
-		GestorServicos manager = GestorServicos.manager();
-		TeacherAdministrationSiteView siteView = null;
+        Integer sizeList = getSizeList(request);
 
-		try {
-			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertEvaluationMarks", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        //transform form into list with student's number and students's mark
+        for (int i = 0; i < sizeList.intValue(); i++)
+        {
+            InfoMark infoMark = new InfoMark();
+            infoMark = getMark(request, i);
+            marksList.add(infoMark);
+        }
 
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("objectCode", objectCode);
-		request.setAttribute("evaluationCode", evaluationCode);
+        Integer objectCode = getObjectCode(request);
+        Integer evaluationCode = getEvaluationCode(request);
 
-		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
-		//Check if ocurr errors in service
-		if ((infoSiteMarks.getMarksListErrors() != null && infoSiteMarks.getMarksListErrors().size() > 0)
-			|| (infoSiteMarks.getStudentsListErrors() != null && infoSiteMarks.getStudentsListErrors().size() > 0)) {
+        IUserView userView = (IUserView)session.getAttribute(SessionConstants.U_VIEW);
 
-			if (infoSiteMarks.getMarksListErrors() != null && infoSiteMarks.getMarksListErrors().size() > 0) {
-				//list with	errors Invalid Marks
-				ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
-				while (iterator.hasNext()) {
-					InfoMark infoMark = (InfoMark) iterator.next();
+        Object[] args = { objectCode, evaluationCode, marksList };
+        GestorServicos manager = GestorServicos.manager();
+        TeacherAdministrationSiteView siteView = null;
 
-					actionErrors.add(
-						"invalidMark",
-						new ActionError(
-							"errors.invalidMark",
-							infoMark.getMark(),
-							String.valueOf((infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
-				}
-			}
+        try
+        {
+            siteView =
+                (TeacherAdministrationSiteView)manager.executar(userView, "InsertEvaluationMarks", args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-			if (infoSiteMarks.getStudentsListErrors() != null && infoSiteMarks.getStudentsListErrors().size() > 0) {
-				//list with	errors Student Existence
-				ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
-				while (iterator.hasNext()) {
-					InfoMark infoMark = (InfoMark) iterator.next();
-				
-					actionErrors.add(
-						"studentExistence",
-						new ActionError(
-							"errors.student.nonExisting",
-							String.valueOf((infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
-				}
-			}
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
-		}
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("objectCode", objectCode);
+        request.setAttribute("evaluationCode", evaluationCode);
 
-		return mapping.findForward("viewMarksOptions");
-	}
+        InfoSiteMarks infoSiteMarks = (InfoSiteMarks)siteView.getComponent();
+        //Check if ocurr errors in service
+        if ((infoSiteMarks.getMarksListErrors() != null
+            && infoSiteMarks.getMarksListErrors().size() > 0)
+            || (infoSiteMarks.getStudentsListErrors() != null
+                && infoSiteMarks.getStudentsListErrors().size() > 0))
+        {
 
-	private InfoMark getMark(HttpServletRequest request, int index) {
-		String mark = request.getParameter("markElem[" + index + "].mark");
-		Integer studentCode = Integer.valueOf(request.getParameter("markElem[" + index + "].studentCode"));
+            if (infoSiteMarks.getMarksListErrors() != null
+                && infoSiteMarks.getMarksListErrors().size() > 0)
+            {
+                //list with errors Invalid Marks
+                ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
+                while (iterator.hasNext())
+                {
+                    InfoMark infoMark = (InfoMark)iterator.next();
 
-		if ( studentCode != null) {
-			//infoMark with only student code and mark
-			InfoStudent infoStudent = new InfoStudent();
-			infoStudent.setIdInternal(studentCode);
+                    actionErrors.add(
+                        "invalidMark",
+                        new ActionError(
+                            "errors.invalidMark",
+                            infoMark.getMark(),
+                            String.valueOf(
+                                (infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
+                }
+            }
 
-			InfoFrequenta infoFrequenta = new InfoFrequenta();
-			infoFrequenta.setAluno(infoStudent);
+            if (infoSiteMarks.getStudentsListErrors() != null
+                && infoSiteMarks.getStudentsListErrors().size() > 0)
+            {
+                //list with errors Student Existence
+                ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
+                while (iterator.hasNext())
+                {
+                    InfoMark infoMark = (InfoMark)iterator.next();
 
-			InfoMark infoMark = new InfoMark();
-			infoMark.setInfoFrequenta(infoFrequenta);
+                    actionErrors.add(
+                        "studentExistence",
+                        new ActionError(
+                            "errors.student.nonExisting",
+                            String.valueOf(
+                                (infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
+                }
+            }
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
 
-			infoMark.setMark(mark);
+        return mapping.findForward("viewMarksOptions");
+    }
 
+    private InfoMark getMark(HttpServletRequest request, int index)
+    {
+        String mark = request.getParameter("markElem[" + index + "].mark");
+        Integer studentCode =
+            Integer.valueOf(request.getParameter("markElem[" + index + "].studentCode"));
+		Integer studentNumber =
+					Integer.valueOf(request.getParameter("markElem[" + index + "].studentNumber"));
 
-			return infoMark;
-		}
-		return null;
-	}
+        if (studentCode != null)
+        {
+            InfoStudent infoStudent = new InfoStudent();
+            infoStudent.setIdInternal(studentCode);
+            infoStudent.setNumber(studentNumber);
 
-	private Integer getSizeList(HttpServletRequest request) {
-		Integer objectCode = null;
-		String objectCodeString = (String) request.getAttribute("sizeList");
-		if (objectCodeString == null) {
-			objectCodeString = request.getParameter("sizeList");
-		}
-		if (objectCodeString != null) {
-			objectCode = new Integer(objectCodeString);
-		}
-		return objectCode;
-	}
+            InfoFrequenta infoFrequenta = new InfoFrequenta();
+            infoFrequenta.setAluno(infoStudent);
 
-	private Integer getEvaluationCode(HttpServletRequest request) {
-		String evaluationCodeString = (String) request.getAttribute("evaluationCode");
-		if (evaluationCodeString == null) {
-			evaluationCodeString = request.getParameter("evaluationCode");
-		}
-		Integer evaluationCode = new Integer(evaluationCodeString);
-		return evaluationCode;
-	}
+            InfoMark infoMark = new InfoMark();
+            infoMark.setInfoFrequenta(infoFrequenta);
 
-	private Integer getObjectCode(HttpServletRequest request) {
-		Integer objectCode = null;
-		String objectCodeString = (String) request.getAttribute("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = request.getParameter("objectCode");
-		}
-		if (objectCodeString != null) {
-			objectCode = new Integer(objectCodeString);
-		}
-		return objectCode;
-	}
+            infoMark.setMark(mark);
 
-	private InfoMark getMarkStudent(String[] student, String[] mark, int index, IUserView userView) throws FenixActionException {
-		String markString = mark[index];
-		Integer studentInt = null;
+            return infoMark;
+        }
+        return null;
+    }
 
-		InfoStudent infoStudent = new InfoStudent();
-		InfoFrequenta infoFrequenta = new InfoFrequenta();
-		try {
-			studentInt = new Integer(student[index]);
-		} catch (NumberFormatException e) {
-			invalidRecords.add(student[index]);
-		}
-		if (markString != null && studentInt != null) {
-			//infoMark with only student code and mark
-			infoStudent.setNumber(studentInt);
-			infoFrequenta.setAluno(infoStudent);
+    private Integer getSizeList(HttpServletRequest request)
+    {
+        Integer objectCode = null;
+        String objectCodeString = (String)request.getAttribute("sizeList");
+        if (objectCodeString == null)
+        {
+            objectCodeString = request.getParameter("sizeList");
+        }
+        if (objectCodeString != null)
+        {
+            objectCode = new Integer(objectCodeString);
+        }
+        return objectCode;
+    }
 
-			InfoMark infoMark = new InfoMark();
-			infoMark.setInfoFrequenta(infoFrequenta);
+    private Integer getEvaluationCode(HttpServletRequest request)
+    {
+        String evaluationCodeString = (String)request.getAttribute("evaluationCode");
+        if (evaluationCodeString == null)
+        {
+            evaluationCodeString = request.getParameter("evaluationCode");
+        }
+        Integer evaluationCode = new Integer(evaluationCodeString);
+        return evaluationCode;
+    }
 
-			infoMark.setMark(markString);
+    private Integer getObjectCode(HttpServletRequest request)
+    {
+        Integer objectCode = null;
+        String objectCodeString = (String)request.getAttribute("objectCode");
+        if (objectCodeString == null)
+        {
+            objectCodeString = request.getParameter("objectCode");
+        }
+        if (objectCodeString != null)
+        {
+            objectCode = new Integer(objectCodeString);
+        }
+        return objectCode;
+    }
 
-			return infoMark;
-		}
-		return null;
-	}
+    private InfoMark getMarkStudent(String[] student, String[] mark, int index, IUserView userView)
+        throws FenixActionException
+    {
+        String markString = mark[index];
+        Integer studentInt = null;
+
+        InfoStudent infoStudent = new InfoStudent();
+        InfoFrequenta infoFrequenta = new InfoFrequenta();
+        try
+        {
+            studentInt = new Integer(student[index]);
+        } catch (NumberFormatException e)
+        {
+            invalidRecords.add(student[index]);
+        }
+        if (markString != null && studentInt != null)
+        {
+            //infoMark with only student code and mark
+            infoStudent.setNumber(studentInt);
+            infoFrequenta.setAluno(infoStudent);
+
+            InfoMark infoMark = new InfoMark();
+            infoMark.setInfoFrequenta(infoFrequenta);
+
+            infoMark.setMark(markString);
+
+            return infoMark;
+        }
+        return null;
+    }
 }

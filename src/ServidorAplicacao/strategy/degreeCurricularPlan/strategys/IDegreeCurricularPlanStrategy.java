@@ -4,6 +4,7 @@ import DataBeans.InfoFinalResult;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
+import Util.EvaluationType;
 
 /**
  * 
@@ -25,6 +26,8 @@ public interface IDegreeCurricularPlanStrategy {
 	 * @param The String with the mark to test
 	 */
 	public boolean checkMark(String mark);
+	
+	public boolean checkMark(String mark, EvaluationType et);
 	
 	
 	/**
