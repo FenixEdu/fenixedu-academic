@@ -120,18 +120,20 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 			infoMasterDegreeProofVersion = new InfoMasterDegreeProofVersion();
 
 			DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
+			
+			Calendar calendar = new GregorianCalendar();
 
 			changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
 			changeMasterDegreeThesisForm.set("degreeType", degreeType);
 			changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion.getDissertationTitle());
 			changeMasterDegreeThesisForm.set("finalResult", new Integer(MasterDegreeClassification.UNDEFINED_TYPE));
 			changeMasterDegreeThesisForm.set("attachedCopiesNumber", new Integer(0));
-			changeMasterDegreeThesisForm.set("proofDateDay", new Integer(0));
-			changeMasterDegreeThesisForm.set("proofDateMonth", new Integer(0));
-			changeMasterDegreeThesisForm.set("proofDateYear", new Integer(0));
-			changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", new Integer(0));
-			changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", new Integer(0));
-			changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", new Integer(0));
+			changeMasterDegreeThesisForm.set("proofDateDay", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
+			changeMasterDegreeThesisForm.set("proofDateMonth", new Integer(calendar.get(Calendar.MONTH)));
+			changeMasterDegreeThesisForm.set("proofDateYear", new Integer(calendar.get(Calendar.YEAR)));
+			changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
+			changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", new Integer(calendar.get(Calendar.MONTH)));
+			changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", new Integer(calendar.get(Calendar.YEAR)));
 
 			return mapping.findForward("start");
 
