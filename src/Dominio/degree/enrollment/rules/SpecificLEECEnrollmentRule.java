@@ -15,9 +15,11 @@ import Dominio.CurricularCourseGroup;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IScientificArea;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ScientificArea;
+import Dominio.degree.enrollment.CurricularCourse2Enroll;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
 import ServidorPersistente.IPersistentCreditsInSpecificScientificArea;
@@ -38,10 +40,12 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) {
+
         if ((studentCurricularPlan.getBranch() != null)
                 && (studentCurricularPlan.getSecundaryBranch() != null)) {
             try {
-                return specificAlgorithm(this.studentCurricularPlan, curricularCoursesToBeEnrolledIn);
+                List result = specificAlgorithm(this.studentCurricularPlan);
+                return filter(studentCurricularPlan, curricularCoursesToBeEnrolledIn, result);
             } catch (ExcepcaoPersistencia e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -59,8 +63,7 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         return creditsInSpecializationArea;
     }
 
-    private List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan,
-            List curricularCoursesToBeEnrolledIn) throws ExcepcaoPersistencia {
+    private List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
 
         HashMap creditsInScientificAreas = new HashMap();
         HashMap creditsInSpecializationAreaGroups = new HashMap();
@@ -101,8 +104,7 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
 
         return selectCurricularCourses(studentCurricularPlan, creditsInSpecializationAreaGroups,
                 creditsInSecundaryAreaGroups, creditsInAnySecundaryArea,
-                specializationAndSecundaryAreaCurricularCoursesToCountForCredits,
-                curricularCoursesToBeEnrolledIn);
+                specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
     }
 
     private void getGivenCreditsInScientificAreas(IStudentCurricularPlan studentCurricularPlan,
@@ -495,8 +497,8 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
     private List selectCurricularCourses(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSpecializationAreaGroups, HashMap creditsInSecundaryAreaGroups,
             int creditsInAnySecundaryArea,
-            List specializationAndSecundaryAreaCurricularCoursesToCountForCredits,
-            List curricularCoursesToBeEnrolledIn) throws ExcepcaoPersistencia {
+            List specializationAndSecundaryAreaCurricularCoursesToCountForCredits) throws ExcepcaoPersistencia {
+
         boolean isSpecializationAreaDone = isSpecializationAreaDone(studentCurricularPlan,
                 creditsInSpecializationAreaGroups);
         boolean isSecundaryAreaDone = isSecundaryAreaDone(studentCurricularPlan,
@@ -532,8 +534,7 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         finalListOfCurricularCourses
                 .removeAll(specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
 
-        return (List) CollectionUtils.intersection(finalListOfCurricularCourses,
-                curricularCoursesToBeEnrolledIn);
+        return finalListOfCurricularCourses;
     }
 
     private boolean isSpecializationAreaDone(IStudentCurricularPlan studentCurricularPlan,
@@ -698,6 +699,62 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         }
         return false;
 
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private List filter(IStudentCurricularPlan studentCurricularPlan,
+            List curricularCoursesToBeEnrolledIn,
+            final List selectedCurricularCoursesFromSpecializationAndSecundaryAreas) {
+
+        IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+
+        final List curricularCoursesFromCommonAreas = getCommonAreasCurricularCourses(degreeCurricularPlan);
+
+        List curricularCoursesFromCommonAreasToMantain = (List) CollectionUtils.select(
+                curricularCoursesToBeEnrolledIn, new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
+                        return curricularCoursesFromCommonAreas.contains(curricularCourse2Enroll
+                                .getCurricularCourse());
+                    }
+                });
+
+        List curricularCoursesFromOtherAreasToMantain = (List) CollectionUtils.select(
+                curricularCoursesToBeEnrolledIn, new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
+                        return selectedCurricularCoursesFromSpecializationAndSecundaryAreas
+                                .contains(curricularCourse2Enroll.getCurricularCourse());
+                    }
+                });
+
+        List result = new ArrayList();
+        result.addAll(curricularCoursesFromCommonAreasToMantain);
+        result.addAll(curricularCoursesFromOtherAreasToMantain);
+        
+        return result;
+    }
+
+    private List getCommonAreasCurricularCourses(IDegreeCurricularPlan degreeCurricularPlan) {
+
+        List curricularCoursesFromCommonAreas = new ArrayList();
+        List commonAreas = degreeCurricularPlan.getCommonAreas();
+        int commonAreasSize = commonAreas.size();
+        for (int i = 0; i < commonAreasSize; i++) {
+            IBranch area = (IBranch) commonAreas.get(i);
+            curricularCoursesFromCommonAreas.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
+                    area, AreaType.BASE_OBJ));
+        }
+        
+        return curricularCoursesFromCommonAreas;
     }
 
 }

@@ -3,6 +3,7 @@ package Dominio;
 import java.util.ArrayList;
 import java.util.List;
 
+import Dominio.degree.enrollment.rules.SpecificLEECEnrollmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
 import ServidorPersistente.ISuportePersistente;
@@ -20,6 +21,17 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
 	{
 		ojbConcreteClass = getClass().getName();
 	}
+
+    public List getListOfEnrollmentRules(
+            IStudentCurricularPlan studentCurricularPlan,
+            IExecutionPeriod executionPeriod) {
+        
+        List result = super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod);
+        
+        result.add(new SpecificLEECEnrollmentRule(studentCurricularPlan));
+        
+        return result;
+    }
 
     public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
 
