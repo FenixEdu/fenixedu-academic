@@ -101,7 +101,7 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 
         List departmentList = null;
 
-        String code = workingCC.getSigla();
+        String code = workingCC.getCode();
 
         if (code != null && !(code.equals("")))
         {

@@ -14,7 +14,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.CentroCusto;
+import Dominio.CostCenter;
 import Dominio.Employee;
 import Dominio.EmployeeHistoric;
 import Dominio.ICostCenter;
@@ -84,78 +84,77 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 		Iterator iteradorNovo = lista.iterator();
 		while (iteradorNovo.hasNext())
 		{
-			Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
-
-			Integer numeroMecanografico =
-				new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
-			String sigla = (String) instanciaTemporaria.get("sigla");
-			String departamento = (String) instanciaTemporaria.get("departamento");
-			String seccao1 = (String) instanciaTemporaria.get("seccao1");
-			String seccao2 = (String) instanciaTemporaria.get("seccao2");
-
-			ICostCenter costCenter = null;
-
-			// verify if the cost center already exists in data base. If not write it.
-			Criteria criteria = new Criteria();
-			Query query = null;
-
-			criteria.addEqualTo("sigla", sigla);
-			query = new QueryByCriteria(CentroCusto.class, criteria);
-			List resultCC = (List) broker.getCollectionByQuery(query);
-			if (resultCC.size() == 0)
+			try
 			{
-				costCenter = new CentroCusto(sigla, departamento, seccao1, seccao2);
-				broker.store(costCenter);
-				
-				//read the new cost center
-				criteria = new Criteria();
-				query = null;
-				criteria.addEqualTo("sigla", sigla);
-				query = new QueryByCriteria(CentroCusto.class, criteria);
-				List resultCCNew = (List) broker.getCollectionByQuery(query);
-				if(resultCCNew.size() == 0) {
-					throw new Exception("Erro a Ler centro de custo do Funcionario " + numeroMecanografico);
+				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
+
+				Integer numeroMecanografico =
+					new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
+				String sigla = (String) instanciaTemporaria.get("sigla");
+				String departamento = (String) instanciaTemporaria.get("departamento");
+				String seccao1 = (String) instanciaTemporaria.get("seccao1");
+				String seccao2 = (String) instanciaTemporaria.get("seccao2");
+
+				ICostCenter costCenter = null;
+
+				// verify if the cost center already exists in data base. If not write it.
+				Criteria criteria = new Criteria();
+				Query query = null;
+
+				criteria.addEqualTo("code", sigla);
+				query = new QueryByCriteria(CostCenter.class, criteria);
+				List resultCC = (List) broker.getCollectionByQuery(query);
+				if (resultCC.size() == 0)
+				{
+					costCenter = new CostCenter(sigla, departamento, seccao1, seccao2);
+					broker.store(costCenter);
 				}
 				else
 				{
-					costCenter = (CentroCusto) resultCCNew.get(0);
+					costCenter = (CostCenter) resultCC.get(0);
+				}
+
+				IEmployee employee = null;
+				// Read the employee
+				criteria = new Criteria();
+				query = null;
+				criteria.addEqualTo("employeeNumber", numeroMecanografico);
+				query = new QueryByCriteria(Employee.class, criteria);
+				List resultEmployee = (List) broker.getCollectionByQuery(query);
+
+				if (resultEmployee.size() == 0)
+				{
+					throw new Exception(
+						"Erro ao Ler centro de custo do Funcionario " + numeroMecanografico);
+				}
+				else
+				{
+					employee = (IEmployee) resultEmployee.get(0);
+				}
+
+				//Read hisctoric employee
+				employee.fillEmployeeHistoric();
+				IEmployeeHistoric employeeHistoric = employee.getEmployeeHistoric();
+				if (employeeHistoric == null
+					|| employeeHistoric.getWorkingPlaceCostCenter() == null
+					|| !employeeHistoric.getWorkingPlaceCostCenter().equals(costCenter))
+				{
+					employeeHistoric = new EmployeeHistoric();
+					employeeHistoric.setEmployee(employee);
+					employeeHistoric.setWorkingPlaceCostCenter(costCenter);
+					employeeHistoric.setBeginDate(Calendar.getInstance().getTime());
+					employeeHistoric.setWhen(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+					employeeHistoric.setWho(new Integer(0));
+
+					broker.store(employeeHistoric);
 				}
 			}
-			else
+			catch (Exception exception)
 			{
-				costCenter = (CentroCusto) resultCC.get(0);
-			}
-
-			IEmployee employee = null;
-			// Read the employee
-			criteria = new Criteria();
-			query = null;
-			criteria.addEqualTo("employeeNumber", numeroMecanografico);
-			query = new QueryByCriteria(Employee.class, criteria);
-			List resultEmployee = (List) broker.getCollectionByQuery(query);
-
-			if (resultEmployee.size() == 0)
-			{
+				exception.printStackTrace();
 				continue;
-			}
-			else
-			{
-				employee = (IEmployee) resultEmployee.get(0);
-			}
-
-			//Read hisctoric employee
-			IEmployeeHistoric employeeHistoric = employee.getEmployeeHistoric();
-			if(employeeHistoric == null || employeeHistoric.getWorkingPlaceCostCenter() == null
-			|| !employeeHistoric.getWorkingPlaceCostCenter().equals(costCenter)){
-				employeeHistoric = new EmployeeHistoric();
-				employeeHistoric.setEmployee(employee);
-				employeeHistoric.setWorkingPlaceCostCenter(costCenter);
-				employeeHistoric.setBeginDate(Calendar.getInstance().getTime());
-				employeeHistoric.setWhen(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-				employeeHistoric.setWho(new Integer(0));
-				
-				broker.store(employeeHistoric);
-			} 		
+			}			
 		}
+		broker.commitTransaction();
 	}
 }

@@ -7,41 +7,41 @@ package Dominio;
 /**
  * @author jpvl
  */
-public interface ICostCenter {
+public interface ICostCenter extends IDomainObject{
 	/**
 	 * @return String
 	 */
-	public abstract String getDepartamento();
+	public abstract String getDepartament();
 	/**
 	 * @return String
 	 */
-	public abstract String getSeccao1();
+	public abstract String getSection1();
 	/**
 	 * @return String
 	 */
-	public abstract String getSeccao2();
+	public abstract String getSection2();
 	/**
 	 * @return String
 	 */
-	public abstract String getSigla();
+	public abstract String getCode();
 	/**
 	 * Sets the departamento.
 	 * @param departamento The departamento to set
 	 */
-	public abstract void setDepartamento(String departamento);
+	public abstract void setDepartament(String departament);
 	/**
-	 * Sets the seccao1.
-	 * @param seccao1 The seccao1 to set
+	 * Sets the section1.
+	 * @param section1 The section1 to set
 	 */
-	public abstract void setSeccao1(String seccao1);
+	public abstract void setSection1(String section1);
 	/**
-	 * Sets the seccao2.
-	 * @param seccao2 The seccao2 to set
+	 * Sets the section2.
+	 * @param section2 The section2 to set
 	 */
-	public abstract void setSeccao2(String seccao2);
+	public abstract void setSection2(String section2);
 	/**
 	 * Sets the sigla.
 	 * @param sigla The sigla to set
 	 */
-	public abstract void setSigla(String sigla);
+	public abstract void setCode(String code);
 }

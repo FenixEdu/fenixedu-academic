@@ -3,7 +3,7 @@
   class="Dominio.Employee"
   table="ass_FUNCIONARIO"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="idInternal"
     column="codigoInterno"
     jdbc-type="INTEGER"
@@ -16,43 +16,40 @@
    	jdbc-type="INTEGER"
    	locking="true"
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="keyPerson"
     column="chavePessoa"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="employeeNumber"
     column="numeroMecanografico"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="3"
+  <field-descriptor
     name="workingHours"
     column="chaveHorarioActual"
     jdbc-type="INTEGER"
    />
-  <field-descriptor id="4"
+  <field-descriptor
     name="antiquity"
     column="antiguidade"
     jdbc-type="DATE"
-  />
-    
-  <field-descriptor id="5" 
+  />    
+  <field-descriptor
   	name="active" 
   	column="ACTIVE" 
   	jdbc-type="BIT"/>
-  
   <reference-descriptor
          name="person"
          class-ref="Dominio.Pessoa">
          <foreignkey field-ref="keyPerson"/>
   </reference-descriptor>
-  
   <collection-descriptor
 	name="historicList"
 	element-class-ref="Dominio.EmployeeHistoric"
 	auto_retrieve="true"
-	proxy="false">
+	proxy="true">
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor> 
 </class-descriptor>
@@ -61,7 +58,7 @@
   class="Dominio.EmployeeNotTeacher"
   table="ass_FUNC_NAO_DOCENTE"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="idInternal"
     column="codigoInterno"
     jdbc-type="INTEGER"
@@ -74,7 +71,7 @@
    	jdbc-type="INTEGER"
    	locking="true"
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="keyEmployee"
     column="chaveFuncionario"
     jdbc-type="INTEGER"
@@ -90,70 +87,70 @@
   class="Dominio.EmployeeHistoric"
   table="ass_FUNCIONARIO_HISTORICO"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="idInternal"
     column="codigoInterno"
     jdbc-type="INTEGER"
     primarykey="true"
     autoincrement="true"
   />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-  <field-descriptor id="1"
+  <field-descriptor
+  	name="ackOptLock"
+    column="ACK_OPT_LOCK"
+    jdbc-type="INTEGER"
+    locking="true"
+  />
+  <field-descriptor
     name="keyEmployee"
     column="chaveFuncionario"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="keyResponsableEmployee"
     column="chaveFuncResponsavel"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="3"
+  <field-descriptor
     name="keyWorkingPlaceCostCenter"
     column="chaveCCLocalTrabalho"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="4"
+  <field-descriptor
     name="keyMailingCostCenter"
     column="chaveCCCorrespondencia"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="5"
+  <field-descriptor
     name="keySalaryCostCenter"
     column="chaveCCVencimento"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="6"
+  <field-descriptor
     name="calendar"
     column="calendario"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="7"
+  <field-descriptor
     name="keyStatus"
     column="chaveStatus"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="8"
+  <field-descriptor
     name="beginDate"
     column="dataInicio"
     jdbc-type="DATE"
   />
-  <field-descriptor id="9"
+  <field-descriptor
     name="endDate"
     column="dataFim"
     jdbc-type="DATE"
   />
-  <field-descriptor id="10"
+  <field-descriptor
     name="who"
     column="quem"
     jdbc-type="INTEGER"    
   />
-  <field-descriptor id="11"
+  <field-descriptor
     name="when"
     column="quando"
     jdbc-type="TIMESTAMP"
@@ -173,21 +170,21 @@
   
   <reference-descriptor
          name="workingPlaceCostCenter"
-         class-ref="Dominio.CentroCusto"
+         class-ref="Dominio.CostCenter"
          proxy="true">
          <foreignkey field-ref="keyWorkingPlaceCostCenter"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="mailingCostCenter"
-         class-ref="Dominio.CentroCusto"
+         class-ref="Dominio.CostCenter"
          proxy="true">
          <foreignkey field-ref="keyMailingCostCenter"/>
   </reference-descriptor>   
 
   <reference-descriptor
          name="salaryCostCenter"
-         class-ref="Dominio.CentroCusto">
+         class-ref="Dominio.CostCenter">
          <foreignkey field-ref="keySalaryCostCenter"/>
   </reference-descriptor>
   
@@ -198,6 +195,39 @@
   </reference-descriptor>  
 </class-descriptor>
 
+<class-descriptor 
+	class="Dominio.CostCenter" 
+	table="ass_CENTRO_CUSTO">
+  <field-descriptor id="0"
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />    
+  <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+  />
+  <field-descriptor 
+  	name="code" 
+  	column="sigla" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="departament" 
+  	column="departamento" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="section1" 
+  	column="seccao1" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="section2" 
+  	column="seccao2" 
+  	jdbc-type="VARCHAR"/>
+</class-descriptor>
 
 <!-- Old classes -->
 
@@ -238,12 +268,19 @@
   	column="codigoInterno" 
   	jdbc-type="INTEGER"
     primarykey="true" autoincrement="true"/>
-      <field-descriptor
+  <field-descriptor id="0"
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />    
+  <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
-      />
+  />
   <field-descriptor 
   	name="sigla" 
   	column="sigla" 
