@@ -5,6 +5,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+
+<bean:define id="executionCourse" name="<%= SessionConstants.INFO_SITE %>" property="infoExecutionCourse"/>
+<bean:define id="executionCourseName" name="executionCourse" property="sigla"/>
+	
+<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
+<bean:define id="executionPeriodName" name="executionPeriod" property="name"/>
+
+<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
+<bean:define id="executionYearYear" name="executionYear" property="year"/>
+
 <div id="nav">
    <h3>Navega&ccedil;&atilde;o Local</h3>	
 <ul>	
@@ -17,10 +27,10 @@
             <dd><html:link page="/accessObjectives.do?method=acessObjectives">
 				<bean:message key="link.objectives"/>
 				</html:link></dd>
-            <dd><html:link page="/accessProgram.do?method=acessProgram">
+            <dd><html:link page="<%= "/accessProgram.do?method=acessProgram" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
 				<bean:message key="link.program"/>
 				</html:link></dd>
-            <dd><html:link page="/accessBibliographicReferences.do?method=viewBibliographicReference">
+            <dd><html:link page="<%= "/accessBibliographicReferences.do?method=viewBibliographicReference" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
 				<bean:message key="link.bibliography"/>
 				</html:link></dd>
 			<dd><html:link page="/curricularCourses.do">

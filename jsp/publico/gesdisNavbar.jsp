@@ -30,7 +30,7 @@
             <dd><html:link page="/accessObjectives.do?method=acessObjectives">
 				<bean:message key="link.objectives"/>
 				</html:link></dd>
-            <dd><html:link page="/accessProgram.do?method=acessProgram">
+            <dd><html:link page="<%= "/accessProgram.do?method=acessProgram" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
 				<bean:message key="link.program"/>
 				</html:link></dd>
             <dd><html:link page="<%= "/accessBibliographicReferences.do?method=viewBibliographicReference" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
