@@ -586,6 +586,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 //			System.out.println(mwEnrolment.toString());
 		}
 
+		CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
 		return enrolment;
 	}
 
@@ -886,6 +887,10 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		return executionPeriod;
 	}
 
+	/**
+	 * @param mwEnrolment
+	 * @return
+	 */
 	private static String getAcurateGrade(MWEnrolment mwEnrolment)
 	{
 		String grade = mwEnrolment.getGrade();
@@ -921,6 +926,46 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		} else
 		{
 			return (new Integer(intGrade)).toString();
+		}
+	}
+
+	/**
+	 * @param enrolment
+	 * @param enrolmentEvaluation
+	 */
+	private static void updateEnrollmentStateAndEvaluationType(IEnrolment enrolment, IEnrolmentEvaluation enrolmentEvaluation)
+	{
+		MWEnrolment mwEnrolment = new MWEnrolment();
+		mwEnrolment.setGrade(enrolmentEvaluation.getGrade());
+		EnrolmentState enrolmentStateFromEnrolmentEvaluation = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentStateByGrade(mwEnrolment);
+
+		if (!enrolment.getEnrolmentState().equals(enrolmentStateFromEnrolmentEvaluation))
+		{
+			if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED) && enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.APROVED))
+			{
+				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
+				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+			} else if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED) && enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.ANNULED))
+			{
+				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
+				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+			} else if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_EVALUATED) && enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.NOT_APROVED))
+			{
+				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
+				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+			} else if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_EVALUATED) && enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.APROVED))
+			{
+				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
+				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+			} else if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_EVALUATED) && enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.ANNULED))
+			{
+				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
+				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+			} else if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED) && enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.ANNULED))
+			{
+				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
+				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+			}
 		}
 	}
 }

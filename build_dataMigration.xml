@@ -1118,6 +1118,14 @@
 		</java>
 	</target>
 
+	<target name="migrate-all-student-curricular-plans" depends="compile-proj">
+		<exec executable="${sql}/middleware/commands/migrateAllStudenCurricularPlans.sh" os="Linux, Unix">
+			<arg value="stop"/>
+		</exec>
+		<exec executable="${sql}/middleware/commands/migrateAllStudenCurricularPlans.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
+		</exec>
+	</target>
+
 	<!-- ********************************************************* -->
 
 	<!-- ***************** ADDED BY TANIA POUSAO ***************** -->

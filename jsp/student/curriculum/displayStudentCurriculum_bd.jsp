@@ -36,6 +36,9 @@
 		  		<bean:message key="label.executionYear" />
 		  	</td >
 		  	<td class="listClasses-header">
+		  		<bean:message key="label.curricular.year" />
+		  	</td >
+		  	<td class="listClasses-header">
 		  		<bean:message key="label.semester" />
 		  	</td >
 		  	<td class="listClasses-header">
@@ -55,6 +58,9 @@
 			    <bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
 			  </td>
 			  <td class="listClasses">
+			    <bean:write name="enrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
+			  </td>
+			  <td class="listClasses">
 			    <bean:write name="enrolment" property="infoExecutionPeriod.name"/>
 			  </td>
 			  <td class="listClasses">
@@ -71,7 +77,6 @@
 				<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
 					<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
 				</logic:equal>
-	
 			  </td>
 	  		</tr>
 	    </logic:iterate>
