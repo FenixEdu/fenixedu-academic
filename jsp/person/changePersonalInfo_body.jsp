@@ -13,6 +13,7 @@
   </head>
   <body>
 
+   <span class="error"><html:errors/></span>
    <table>
    		<bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
     	<html:form action="/changePersonalInfoDispatchAction?method=change">
@@ -51,8 +52,6 @@
       	<html:hidden property="idExpirationDateYear" />
       	<html:hidden property="areaOfAreaCode" />
    	  
-      <span class="error"><html:errors/></span>
-
         <tr>
           <td colspan="2"><h2><bean:message key="label.person.title.changePersonalInfo" /></h2></td>
         </tr>
