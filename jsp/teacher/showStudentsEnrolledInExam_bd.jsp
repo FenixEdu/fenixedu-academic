@@ -7,7 +7,8 @@
 
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="exam" name="component" property="infoExam"/>
-
+<bean:define id="executionCourseCode"  name="siteView" property="commonComponent.executionCourse.idInternal"/>
+<bean:define id="examCode"  name="exam" property="idInternal"/>
 <br/>
 <table cellspacing="1" border="0">
 	<tr>
@@ -25,7 +26,11 @@
 		<td class="listClasses"><bean:write name="exam" property="beginningHour"/></td>
 		<td class="listClasses"><bean:write name="component" property="size"/></td>
 		<logic:notEqual name="component" property="size" value="0">		
-			<td class="listClasses"><html:link page="/"><bean:message key="link.student.room.distribution"/></html:link></td>		
+			<td class="listClasses">
+				<html:link page='<%= "/distributeStudentsByRoom.do?method=prepare&objectCode=" + executionCourseCode + "&examCode=" + examCode %>'>
+					<bean:message key="link.student.room.distribution"/>
+				</html:link>
+			</td>		
 		</logic:notEqual>		
 	</tr>
 </table>
