@@ -51,7 +51,7 @@ public class FiltroAutorizacao extends Filtro {
     if (privilegios != null) {
       result = privilegios.contains(servico.getNome());
     }
-      System.out.println(result);
+//      System.out.println(result);
     if (!result){
       throw new NotAuthorizedException("User " + userView.getUtilizador() +
 				       " does not have privileges to run service " +
