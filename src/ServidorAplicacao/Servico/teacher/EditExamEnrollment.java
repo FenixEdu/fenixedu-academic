@@ -1,14 +1,14 @@
 /*
- * CreateExam.java
+ * EditExamEnrollment.java
  *
- * Created on 2003/03/28
+ * Created on 2003/05/28
  */
 
 package ServidorAplicacao.Servico.teacher;
 
 /**
  *
- * @author Luis Cruz & Sara Ribeiro
+ * @author João Mota
  **/
 
 import java.util.Calendar;
