@@ -15,7 +15,6 @@
 </logic:present>
 
 	<h2><bean:message key="label.numerusClausus" /> <bean:write name="numerusClausus" /></h2>
-
     <logic:present name="candidateList">
             <bean:message key="title.masterDegree.administrativeOffice.listCandidates" />
         <br /><br />
@@ -37,7 +36,7 @@
         		</tr>
         	</logic:iterate>
         	</table>	
-		   <html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
 		   <html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
+		   <html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
         </html:form>	
    </logic:present>

@@ -124,7 +124,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             try {
                 Calendar serviceStartTime = null;
                 Calendar serviceEndTime = null;
-
+                
                 IServiceManager manager = ServiceManager.getInstance();
                 if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                     serviceStartTime = Calendar.getInstance();

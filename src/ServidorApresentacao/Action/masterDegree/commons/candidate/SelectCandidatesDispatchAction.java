@@ -51,7 +51,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
         Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-
+		request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
         if (executionYear == null)
         {
             executionYear = (String) approvalForm.get("executionYear");
@@ -162,6 +162,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         generateToken(request);
         saveToken(request);
+
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
         request.setAttribute("candidateList", candidateList);
         return mapping.findForward("PrepareSuccess");
@@ -186,13 +187,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String degree = (String) approvalForm.get("degree");
         Integer executionDegree = null;
         executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-        /*
-         * if (request.getParameter("executionDegreeID") == null){
-         * executionDegree =
-         * Integer.valueOf((String)request.getAttribute("executionDegreeID")); }
-         * else{ executionDegree =
-         * Integer.valueOf(request.getParameter("executionDegreeID")); }
-         */
         List candidatesAdmited = new ArrayList();
 
         try
@@ -736,5 +730,15 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         }
         return false;
     }
+    
+	private Object getFromRequest(String parameter, HttpServletRequest request)
+		{
+			Object parameterString = request.getParameter(parameter);
+			if (parameterString == null)
+			{
+				parameterString = request.getAttribute(parameter);
+			}
+			return parameterString;
+		}
 
 }

@@ -28,8 +28,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoCountry;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -43,6 +41,7 @@ import Util.EstadoCivil;
 import Util.Sexo;
 import Util.SituationName;
 import Util.TipoDocumentoIdentificacao;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
@@ -310,9 +309,9 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 			InfoCandidateSituation infoCandidateSituation =
 				infoMasterDegreeCandidate.getInfoCandidateSituation();
 
-			if (infoCandidateSituation == null
-				|| !infoCandidateSituation.getSituation().equals(
-					SituationName.PENDENTE_STRING)) {
+			if ((infoCandidateSituation == null)
+				|| !(infoCandidateSituation.getSituation().equals(
+					SituationName.PENDENTE_OBJ))) {
 				session.setAttribute(
 					SessionConstants.CANDIDATE_SITUATION,
 					infoCandidateSituation);
@@ -388,7 +387,6 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 				
 				generateToken(request);
 				saveToken(request);
-
 			return mapping.findForward("prepareReady");
 		} else
 			throw new Exception();
@@ -491,9 +489,13 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
 		changeApplicationInfoForm.set("fatherName", infoPerson.getNomePai());
 		changeApplicationInfoForm.set("motherName", infoPerson.getNomeMae());
-		changeApplicationInfoForm.set(
-			"nationality",
-			infoPerson.getInfoPais().getNationality());
+		if (infoPerson.getInfoPais()!= null){
+			changeApplicationInfoForm.set(
+			"nationality",infoPerson.getInfoPais().getNationality());
+		}else{
+			changeApplicationInfoForm.set(
+						"nationality",null);
+		}
 		changeApplicationInfoForm.set(
 			"birthPlaceParish",
 			infoPerson.getFreguesiaNaturalidade());
