@@ -10,18 +10,24 @@ package ServidorAplicacao.Servicos.sop;
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionCourseAndExams;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorAplicacao.Servicos.TestCaseServices;
+import Util.Season;
 import Util.TipoCurso;
 
 public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
-	extends TestCaseReadServices {
+	extends TestCaseServices {
+
 	public ReadExamsByExecutionDegreeAndCurricularYearServiceTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -45,38 +51,15 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 		super.tearDown();
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ReadExamsByExecutionDegreeAndCurricularYear";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		InfoExecutionYear infoExecutionYear =
-			new InfoExecutionYear("2002/2003");
-		InfoDegree infoDegree =
-			new InfoDegree(
-				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores",
-				TipoCurso.LICENCIATURA_STRING);
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			new InfoDegreeCurricularPlan("plano1", infoDegree);
-		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
-		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("3º Semestre",new InfoExecutionYear("2002/2003"));
-		Integer curricularYear = new Integer(1);
-
-		Object[] result = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-		return result;
+	protected boolean needsAuthorization() {
+		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+	protected Object[] getArgumentsForCallToService() {
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoDegree infoDegree =
@@ -94,21 +77,49 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-	protected int getNumberOfItemsToRetrieve() {
-		return 1;
-	}
+	protected boolean verifyServiceResult(Object result) {
+		assertNotNull("Result of call to service was null!", result);
+		assertEquals(
+			"Type of result was unexpected!",
+			ArrayList.class.getName(),
+			result.getClass().getName());
+		List resultList = (List) result;
+		assertEquals(
+					"Result size was unexpected!",
+					1,
+					resultList.size());
+		assertEquals(
+			"Type of result was unexpected!",
+			InfoExecutionCourseAndExams.class.getName(),
+			resultList.get(0).getClass().getName());
+		InfoExecutionCourseAndExams infoExecutionCourseAndExams =
+			(InfoExecutionCourseAndExams) resultList.get(0);
+		assertNotNull(
+			"First season exam of execution course was null!",
+			infoExecutionCourseAndExams.getInfoExam1());
+		assertEquals(
+					"First season exam of execution course is inconsistent!",
+					new Season(Season.SEASON1),
+					infoExecutionCourseAndExams.getInfoExam1().getSeason());
+		assertNotNull(
+			"Second season exam of execution course was null!",
+			infoExecutionCourseAndExams.getInfoExam2());
+		assertEquals(
+					"Second season exam of execution course is inconsistent!",
+					new Season(Season.SEASON2),
+					infoExecutionCourseAndExams.getInfoExam2().getSeason());
+		assertEquals(
+					"Unexpected number of students attending course!",
+					new Integer(0),
+					infoExecutionCourseAndExams.getNumberStudentesAttendingCourse());		
+		assertNotNull(
+					"Execution course was null!",
+					infoExecutionCourseAndExams.getInfoExecutionCourse());		
+		assertEquals(
+					"Execution course was null!",
+					"AC",
+					infoExecutionCourseAndExams.getInfoExecutionCourse().getSigla());
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-	protected Object getObjectToCompare() {
-		return null;
-	}
-
-	protected boolean needsAuthorization() {
 		return true;
 	}
 
