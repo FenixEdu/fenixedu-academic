@@ -53,6 +53,12 @@
         <form-property name="index" type="java.lang.String" />
       </form-bean>
 
+	 <form-bean name="enroledExecutionCoursesForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="executionCourseCode" type="java.lang.String" />
+      </form-bean>
+      
      </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -290,6 +296,37 @@
         <forward name="Inexistente" path="/naoExecutado.do"/>
       </action>
  	-->
+ 			<!-- GROUPS -->
+ 	   
+ 	   <action type="ServidorApresentacao.Action.student.ViewEnroledExecutionCoursesAction"
+              path="/viewEnroledExecutionCourses"
+              scope="request"
+              validate="true">
+        <forward name="sucess" path="view-Enroled-ExecutionCourses"/>
+      </action>
+      
+ 	<action type="ServidorApresentacao.Action.student.ViewExecutionCourseProjectsAction"
+              path="/viewExecutionCourseProjects"
+              scope="request"
+              name="enroledExecutionCoursesForm"
+              validate="true">
+        <forward name="sucess" path="view-ExecutionCourse-Projects"/>
+      </action>
+ 	
+ 	<action type="ServidorApresentacao.Action.student.ViewProjectStudentGroupsAction"
+              path="/viewProjectStudentGroups"
+              scope="request"
+              validate="true">
+        <forward name="sucess" path="view-Project-StudentGroups"/>
+      </action>
+      
+      	<action type="ServidorApresentacao.Action.student.ViewStudentGroupInformationAction"
+              path="/viewStudentGroupInformation"
+              scope="request"
+              validate="true">
+        <forward name="sucess" path="view-StudentGroup-Information"/>
+      </action>
+      
      </action-mappings>     
 
     

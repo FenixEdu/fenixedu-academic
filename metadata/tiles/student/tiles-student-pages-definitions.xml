@@ -55,6 +55,20 @@
 		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp" />
 	</definition>	
 
+	<!-- GROUPS DEFINITIONS-->
+	<definition name="view-Enroled-ExecutionCourses" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewEnroledExecutionCourses_bd.jsp" />		
+	</definition>
 	
-
+	<definition name="view-ExecutionCourse-Projects" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewExecutionCourseProjects_bd.jsp" />		
+	</definition>
+	<definition name="view-Project-StudentGroups" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewAllGroups_bd.jsp" />		
+	</definition>
+	<definition name="view-StudentGroup-Information" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentGroupInformation_bd.jsp" />		
+	</definition>
+	
+	<!-- END OF GROUPS DEFINITIONS -->
 </tiles-definitions>
