@@ -17,7 +17,7 @@
 
 <tr>
 <td>
- <bean:write name="itr" property="infoCurricularCourse.name" />
+ <bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
  <bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  com 
  <logic:iterate id="itr1" name="itr" property="infoEvaluations">

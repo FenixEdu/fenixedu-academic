@@ -27,7 +27,7 @@
 <logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 <tr>
 <td>
-<bean:write name="itr" property="infoCurricularCourse.name" />
+<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
 </td>
 </tr>
 </logic:iterate>
@@ -42,7 +42,7 @@
 <logic:iterate id="itr" name="infoEnrolmentExtraCurricularPlan">
 <tr>
 <td>
-<bean:write name="itr" property="infoCurricularCourse.name" />
+<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
 </td>
 </tr>
 </logic:iterate>
@@ -55,7 +55,7 @@
 
 <tr>
 <td>
- <bean:write name="itr" property="infoCurricularCourse.name" />
+ <bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
  <bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  com 
  <logic:iterate id="itr1" name="itr" property="infoEvaluations">
@@ -74,7 +74,7 @@
 
 <tr>
 <td>
- <bean:write name="itr" property="infoCurricularCourse.name" />
+ <bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
  <bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  com 
  <logic:iterate id="itr1" name="itr" property="infoEvaluations">

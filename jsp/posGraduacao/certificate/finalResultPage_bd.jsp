@@ -58,14 +58,14 @@
  	<tr>
      <logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
         <tr>
-        <td ><bean:write name="itr" property="infoCurricularCourse.name" /></td>
+        <td ><bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" /></td>
      	
  			<td align="center">
  				<logic:iterate id="itr1" name="itr" property="infoEvaluations">
  					<bean:write name="itr1" property="grade" />
  				</logic:iterate>
  			</td>
- 			<td align="center">	<bean:write name="itr" property="infoCurricularCourse.credits" /></td>  	
+ 			<td align="center">	<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.credits" /></td>  	
      	</tr>
 	</logic:iterate>
 	</table> 
