@@ -8351,5 +8351,5 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>
+	</service> -->
 </serviceDefinitions>
