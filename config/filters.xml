@@ -39,6 +39,14 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>CreditsManagerAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.credits.CreditsManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+	
+    <filter>
         <name>StudentAuthorization</name>
         <implementationClass>ServidorAplicacao.Filtro.StudentAuthorizationFilter</implementationClass>
         <description/>
