@@ -1,5 +1,5 @@
 /*  -------------------------------------
-	GESDIS CSS - ALTERNATE | 01.04.2003
+	GESDIS CSS - ALTERNATE | 07.04.2003
 	------------------------------------- */
 
 /*****************************************
@@ -21,6 +21,11 @@ p 	{
 	margin-top: 0;
 	margin-bottom: 1em;
 	background-color: transparent;
+	}
+	
+td	{
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
 	}
 
 /* Nome da disciplina */
@@ -398,4 +403,43 @@ p.contacto {
 	border-right-style: solid;	
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-}		
+}
+		
+/*****************************************************************
+	TABLE Classes: Info TD + Info TD with Icons + ListClasses
+******************************************************************/
+
+.infoIcons {
+	background-color: #EBECED;
+	vertical-align: middle;
+	padding-left: 10px;
+	border-bottom-width: 1px dotted #333;
+	width: 15px;
+}
+
+.infoop {
+	background-color: #EBECED;
+	vertical-align: middle;
+	padding: 10px 10px;
+	border-bottom: 1px dotted #333;
+}
+
+.infoselected {
+	background-color: #FFFFCC;
+	padding: 10px 20px;
+	border-width: 1px dotted #333;
+}
+
+.formTD{
+	text-align: left;
+	height: 30px;
+	width: 100px;
+}
+
+.listClasses{
+background-color: #EBECED;
+border: 1px solid #666;
+text-align: center;
+width: 150px;
+height: 30px;
+}
