@@ -43,7 +43,7 @@ public abstract class ItemBelongsExecutionCourseTest
 
 		} catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o serviço"
+				"Não foi possivel correr o servico"
 					+ getNameOfServiceToBeTested());
 
 		}
