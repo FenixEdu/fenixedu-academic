@@ -6,11 +6,13 @@
 
 package Dominio;
 
+import fileSuport.INode;
+
 /**
  *
  * @author  ars
  */
-public interface IItem extends IDomainObject {
+public interface IItem extends IDomainObject,INode {
 	public String getName();
 	public ISection getSection();
 	public Integer getItemOrder();

@@ -1,6 +1,7 @@
 package Dominio;
 
 import Util.PeriodState;
+import fileSuport.INode;
 
 
 /**
@@ -10,7 +11,7 @@ import Util.PeriodState;
  * Dominio
  * 
  */
-public interface IExecutionPeriod extends IDomainObject {
+public interface IExecutionPeriod extends IDomainObject,INode {
 	public String getName();
 	public IExecutionYear getExecutionYear();
 	public void setExecutionYear(IExecutionYear executionYear);

@@ -1,6 +1,7 @@
 package Dominio;
 
 import Util.PeriodState;
+import fileSuport.INode;
 
 /**
  * Created on 11/Fev/2003
@@ -74,6 +75,20 @@ public class ExecutionYear extends DomainObject implements IExecutionYear {
 	public PeriodState getState() {
 		return this.state;
 	}
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getSlideName()
+	 */
+	public String getSlideName() {
+		String result="/"+getYear().trim().replaceAll("/","-").replaceAll("\\","-");	
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getParentNode()
+	 */
+	public INode getParentNode() {
+		return null;
+	}
 
+	
 
 }

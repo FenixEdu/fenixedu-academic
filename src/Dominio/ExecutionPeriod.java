@@ -1,6 +1,7 @@
 package Dominio;
 
 import Util.PeriodState;
+import fileSuport.INode;
 
 /**
  * Created on 11/Fev/2003
@@ -129,6 +130,21 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 	 */
 	public void setSemester(Integer semester) {
 		this.semester = semester;		
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getSlideName()
+	 */
+	public String getSlideName() {
+		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll("\\","-");
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getParentNode()
+	 */
+	public INode getParentNode() {		
+		return getExecutionYear();
 	}
 
 }

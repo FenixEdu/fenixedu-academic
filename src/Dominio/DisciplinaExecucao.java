@@ -2,6 +2,8 @@ package Dominio;
 
 import java.util.List;
 
+import fileSuport.INode;
+
 public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecucao {
 
 	private String nome;
@@ -270,6 +272,21 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	 */
 	public void setAttendingStudents(List list) {
 		attendingStudents = list;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getSlideName()
+	 */
+	public String getSlideName() {
+		String result = getParentNode().getSlideName()+"/"+getSigla()+"-"+getNome();
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getParentNode()
+	 */
+	public INode getParentNode() {		
+		return getExecutionPeriod();
 	}
 
 }

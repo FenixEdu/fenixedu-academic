@@ -6,24 +6,24 @@ package Dominio;
 
 import java.util.Date;
 
+import fileSuport.INode;
+
 /**
  * @author Ivo Brandão
  */
-public interface ISection extends IDomainObject{
+public interface ISection extends IDomainObject,INode{
 	
 	String getName();
 	Integer getSectionOrder();
 	Date getLastModifiedDate();
 	ISite getSite();
 	ISection getSuperiorSection();
-//	List getInferiorSections();
-//	List getItems();
+
     
 	void setName(String name);
 	void setSectionOrder(Integer order);
 	void setLastModifiedDate(Date lastModifiedDate);
 	void setSite(ISite site);
 	void setSuperiorSection(ISection section);
-//	void setInferiorSections(List inferiorSections);
-//	void setItems(List items);
+
 }

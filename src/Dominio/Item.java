@@ -6,6 +6,9 @@
 
 package Dominio;
 
+import fileSuport.INode;
+
+
 /**
  *
  * @author  ars
@@ -156,6 +159,21 @@ public class Item extends DomainObject implements IItem {
 	 */
 	public void setUrgent(Boolean urgent) {
 		this.urgent = urgent;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getSlideName()
+	 */
+	public String getSlideName() {
+		String result=getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll("\\","-");
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getParentNode()
+	 */
+	public INode getParentNode() {		
+		return getSection();
 	}
 
 }

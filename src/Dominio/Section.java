@@ -7,6 +7,8 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import fileSuport.INode;
+
 /**
  * @author Ivo Brandão
  */
@@ -20,8 +22,7 @@ public class Section extends DomainObject implements ISection {
 	private Integer keySite;
 	private ISection superiorSection;
 	private Integer keySuperiorSection;
-	//	private List inferiorSections;
-	//	private List items;
+	
 
 	/** 
 	 * Construtor
@@ -238,5 +239,24 @@ public class Section extends DomainObject implements ISection {
 		result += "]";
 
 		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getSlideName()
+	 */
+	public String getSlideName() {
+		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll("\\","-");
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getParentNode()
+	 */
+	public INode getParentNode() {
+		if (getSuperiorSection()==null) {
+			return getSite().getExecutionCourse();
+		}else {
+			return getSuperiorSection();
+		}
 	}
 }
