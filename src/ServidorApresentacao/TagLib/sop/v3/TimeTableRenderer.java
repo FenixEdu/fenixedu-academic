@@ -109,11 +109,7 @@ public class TimeTableRenderer {
 								.append("' ");
 						}
 
-						if (infoLessonWrapper != null
-							&& infoLessonWrapper
-								.getNumberOfCollisions()
-								.intValue()
-								== 0) {
+						if (canExpand(infoLessonWrapper)) {
 							strBuffer
 								.append(" colspan ='")
 								.append(
@@ -122,6 +118,7 @@ public class TimeTableRenderer {
 							colspan = lessonSlotListResolved.length;
 							slotIndex = lessonSlotListResolved.length - 1;
 						}
+
 						strBuffer.append(" class='");
 						strBuffer.append(
 							getSlotCssClass(
@@ -182,6 +179,16 @@ public class TimeTableRenderer {
 		strBuffer.append("</table>");
 		return strBuffer;
 	}
+	/**
+	 * @param infoLessonWrapper
+	 * @return boolean
+	 */
+	private boolean canExpand(InfoLessonWrapper infoLessonWrapper) {
+		return (
+			(infoLessonWrapper != null)
+				&& (infoLessonWrapper.getNumberOfCollisions().intValue() == 0));
+	}
+
 	/**
 	 * Method getEmptyLessonSlotNumber.
 	 * @param lessonSlotListResolved
@@ -249,18 +256,23 @@ public class TimeTableRenderer {
 				&& ((nextSlot.getLessonSlotList() != null)
 					&& (!nextSlot.getLessonSlotList().isEmpty()))) {
 				List nextLessonSlotList = nextSlot.getLessonSlotList();
-				if (nextLessonSlotList.size() - 1 >= slotIndex) {
+				
+//				if (nextLessonSlotList.size() - 1 >= slotIndex) {
 					Iterator nextLessonSlotListIterator =
 						nextLessonSlotList.iterator();
 					while (nextLessonSlotListIterator.hasNext()) {
 						LessonSlot lessonSlot =
 							(LessonSlot) nextLessonSlotListIterator.next();
-						if (lessonSlot.getStartIndex() == hourIndex + 1) {
+						if (((lessonSlot.getStartIndex() == hourIndex + 1)
+							&& (nextLessonSlotList.size() - 1 >= slotIndex)||
+							canExpand(lessonSlot.getInfoLessonWrapper()))) {
 							strBuffer.append("_lessonAfter");
 							break;
 						}
 					}
-				}
+//				}else{
+//						
+//				}
 
 			}
 		}
