@@ -7,7 +7,6 @@ import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterException;
