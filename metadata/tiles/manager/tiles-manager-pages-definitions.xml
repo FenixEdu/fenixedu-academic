@@ -48,15 +48,15 @@
 	</definition>
 	<definition name="df.page.edit-curricular-course" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editCurricularCourse_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
 	<definition name="df.page.edit-curricular-course-scope" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/editCurricularCourseScope_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
 	<definition name="df.page.insert-curricular-course-scope" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertCurricularCourseScope_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->

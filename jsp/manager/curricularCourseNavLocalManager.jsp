@@ -11,14 +11,20 @@
 </strong></p>
 
 <p><strong>&nbsp; &raquo;
-		<html:link page="<%= "/readDegree.do?degreeId=" + request.getParameter("degreeId")%>">
+		<html:link page="<%= "/readDegree.do?degreeId=" + request.getParameter("degreeId") %>">
 		<bean:message key="label.manager.backReadDegree" />
 		</html:link>
 </strong></p>
 
 <p><strong>&nbsp; &nbsp; &raquo;
-		<html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>">
+		<html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") %>">
 		<bean:message key="label.manager.backReadDegreeCurricularPlan" />
+		</html:link>
+</strong></p>
+
+<p><strong>&nbsp; &nbsp; &nbsp;&raquo;
+		<html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&curricularCourseId=" + request.getParameter("curricularCourseId") %>">
+		<bean:message key="label.manager.backReadCurricularCourse" />
 		</html:link>
 </strong></p>
 

@@ -10,7 +10,7 @@
 		</html:link>
 </strong></p>
 
-<p><strong>&raquo;
+<p><strong>&nbsp; &raquo;
 		<html:link page="<%= "/readDegree.do?degreeId=" + request.getParameter("degreeId")%>">
 		<bean:message key="label.manager.backReadDegree" />
 		</html:link>
