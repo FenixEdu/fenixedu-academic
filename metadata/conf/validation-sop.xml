@@ -49,7 +49,7 @@
       </field>
         <field property="selectAllCurricularYears"
                depends="multiBoxWithSelectAllCheckBox" page="1">
-                  <arg0 key="property.curricularYear"/>
+                  <arg0 key="ano curricular" resource="true"/>
                   <var>
                      <var-name>secondProperty</var-name>
                      <var-value>selectedCurricularYears</var-value>
