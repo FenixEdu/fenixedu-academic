@@ -229,6 +229,10 @@
 					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
 					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
 			/>
+			<exception type="ServidorAplicacao.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
+					key="error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+			/>
         <forward name="prepareEnrollmentViewWarning" path="prepare-enrollment-view-warning"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
 		<forward name="showShiftsEnrollment" path="show-shifts-enrollment"/>
@@ -638,6 +642,9 @@
 				input="df.page.main">
 			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.exceptions.ExistingServiceException"
+						key="error.message.no.valid.student.for.enrollmnt"
 						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
 			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
 			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
