@@ -13,6 +13,7 @@ import Util.TestType;
  * @author Susana Fernandes
  */
 public class DistributedTest extends DomainObject implements IDistributedTest {
+	private String title;
 	private String testInformation;
 	private Calendar beginDate;
 	private Calendar endDate;
@@ -21,8 +22,9 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 	private TestType testType;
 	private CorrectionAvailability correctionAvailability;
 	private Boolean studentFeedback;
-	private ITest test;
-	private Integer keyTest;
+	private Integer numberOfQuestions;
+	private IDisciplinaExecucao executionCourse;
+	private Integer keyExecutionCourse;
 
 	public DistributedTest() {
 	}
@@ -51,16 +53,8 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 		return endHour;
 	}
 
-	public Integer getKeyTest() {
-		return keyTest;
-	}
-
 	public Boolean getStudentFeedback() {
 		return studentFeedback;
-	}
-
-	public ITest getTest() {
-		return test;
 	}
 
 	public TestType getTestType() {
@@ -87,16 +81,8 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 		endHour = calendar;
 	}
 
-	public void setKeyTest(Integer integer) {
-		keyTest = integer;
-	}
-
 	public void setStudentFeedback(Boolean studentFeedback) {
 		this.studentFeedback = studentFeedback;
-	}
-
-	public void setTest(ITest test) {
-		this.test = test;
 	}
 
 	public void setTestType(TestType type) {
@@ -107,9 +93,40 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 		return testInformation;
 	}
 
-
 	public void setTestInformation(String string) {
 		testInformation = string;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String string) {
+		title = string;
+	}
+
+	public IDisciplinaExecucao getExecutionCourse() {
+		return executionCourse;
+	}
+
+	public Integer getKeyExecutionCourse() {
+		return keyExecutionCourse;
+	}
+
+	public void setExecutionCourse(IDisciplinaExecucao execucao) {
+		executionCourse = execucao;
+	}
+
+	public void setKeyExecutionCourse(Integer integer) {
+		keyExecutionCourse = integer;
+	}
+
+	public Integer getNumberOfQuestions() {
+		return numberOfQuestions;
+	}
+
+	public void setNumberOfQuestions(Integer integer) {
+		numberOfQuestions = integer;
 	}
 
 }

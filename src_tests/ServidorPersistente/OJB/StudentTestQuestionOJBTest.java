@@ -53,15 +53,15 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
-			IStudent student = new Student(new Integer(11));
+			IStudent student = new Student(new Integer(9));
 			student =
 				(IStudent) persistentSuport.getIPersistentStudent().readByOId(
 					student,
 					false);
-			assertNotNull("there is no student with id=11", student);
+			assertNotNull("there is no student with id=9", student);
 
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(1));
+				new DistributedTest(new Integer(25));
 			distributedTest =
 				(IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest()
@@ -69,7 +69,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 					distributedTest,
 					false);
 			assertNotNull(
-				"there is no distributedTest with id=1",
+				"there is no distributedTest with id=25",
 				distributedTest);
 
 			List result =
@@ -81,7 +81,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 				result);
 			assertEquals(
 				"wrong number of student test questions",
-				2,
+				1,
 				result.size());
 			persistentSuport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
@@ -96,7 +96,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(1));
+				new DistributedTest(new Integer(26));
 			distributedTest =
 				(IDistributedTest) persistentSuport
 					.getIPersistentDistributedTest()
@@ -104,7 +104,7 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 					distributedTest,
 					false);
 			assertNotNull(
-				"there is no distributedTest with id=1",
+				"there is no distributedTest with id=26",
 				distributedTest);
 			List result =
 				persistentSuport
@@ -147,6 +147,40 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 				result);
 			assertEquals(
 				"wrong number of student test questions",
+				5,
+				result.size());
+			persistentSuport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("exception: ExcepcaoPersistencia");
+		}
+	}
+
+	public void testReadStudentsByDistributedTest() {
+		System.out.println("4-> Test ReadStudentsByDistributedTest");
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+			IDistributedTest distributedTest =
+				new DistributedTest(new Integer(27));
+			distributedTest =
+				(IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest()
+					.readByOId(
+					distributedTest,
+					false);
+			assertNotNull(
+				"there is no distributedTest with id=27",
+				distributedTest);
+			List result =
+				persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readStudentsByDistributedTest(distributedTest);
+			assertNotNull(
+				"there are no students for this distributedTest",
+				result);
+			assertEquals(
+				"wrong number of student test questions",
 				3,
 				result.size());
 			persistentSuport.confirmarTransaccao();
@@ -155,17 +189,60 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 		}
 	}
 
-	public void testDeleteByDistributedTest() {
-		System.out.println("4-> Test DeleteByDistributedTest");
+	public void testReadStudentTestQuestionsByDistributedTest() {
+		System.out.println(
+			"5-> Test ReadStudentTestQuestionsByDistributedTest");
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
 
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(2));
+				new DistributedTest(new Integer(25));
+			distributedTest =
+				(IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest()
+					.readByOId(
+					distributedTest,
+					false);
 			assertNotNull(
-				"there is no distributed test with id=2",
+				"there is no distributedTest with id=25",
+				distributedTest);
+
+			List result =
+				persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readStudentTestQuestionsByDistributedTest(distributedTest);
+			assertNotNull(
+				"there are no students tests questions for this distributedTest",
+				result);
+			assertEquals(
+				"wrong number of student test questions",
+				1,
+				result.size());
+			persistentSuport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("exception: ExcepcaoPersistencia");
+		}
+	}
+
+	public void testDeleteByDistributedTest() {
+		System.out.println("6-> Test DeleteByDistributedTest");
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			persistentSuport.iniciarTransaccao();
+
+			IDistributedTest distributedTest =
+				new DistributedTest(new Integer(25));
+			distributedTest =
+				(IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest()
+					.readByOId(
+					distributedTest,
+					false);
+			assertNotNull(
+				"there is no distributed test with id=25",
 				distributedTest);
 
 			persistentSuport
@@ -195,30 +272,42 @@ public class StudentTestQuestionOJBTest extends TestCaseOJB {
 	}
 
 	public void testDelete() {
-		System.out.println("5-> Test Delete");
+		System.out.println("7-> Test Delete");
 		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();
-			
-			IStudentTestQuestion studentTestQuestion = new StudentTestQuestion(new Integer(25));
-			assertNotNull("there is no studentTestQuestion with id=25", studentTestQuestion);
-			studentTestQuestion = (IStudentTestQuestion) persistentSuport.getIPersistentStudentTestQuestion().readByOId(studentTestQuestion, true);
-			persistentSuport.getIPersistentStudentTestQuestion().delete(studentTestQuestion);
+
+			IStudentTestQuestion studentTestQuestion =
+				new StudentTestQuestion(new Integer(51));
+			assertNotNull(
+				"there is no studentTestQuestion with id=51",
+				studentTestQuestion);
+			studentTestQuestion =
+				(IStudentTestQuestion) persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readByOId(studentTestQuestion, true);
+			persistentSuport.getIPersistentStudentTestQuestion().delete(
+				studentTestQuestion);
 			persistentSuport.confirmarTransaccao();
-			
+
 			persistentSuport.iniciarTransaccao();
 			IDistributedTest distributedTest =
-							new DistributedTest(new Integer(2));
-						assertNotNull(
-							"there is no distributed test with id=2",
-							distributedTest);
-			List result = persistentSuport.getIPersistentStudentTestQuestion().readByDistributedTest(distributedTest);
+				new DistributedTest(new Integer(25));
+			assertNotNull(
+				"there is no distributed test with id=25",
+				distributedTest);
+			List result =
+				persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readByDistributedTest(
+					distributedTest);
 			assertNotNull(
 				"there is no student test questions for this distributed test",
 				result);
 			assertEquals(
 				"wrong number of student test questions",
-				1,
+				0,
 				result.size());
 
 			persistentSuport.confirmarTransaccao();

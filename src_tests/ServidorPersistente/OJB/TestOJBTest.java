@@ -71,7 +71,7 @@ public class TestOJBTest extends TestCaseOJB {
 				"there are no tests for this executionCourse",
 				result);
 
-			assertEquals("wrong number of tests", 2, result.size());
+			assertEquals("wrong number of tests", 3, result.size());
 			persistentSuport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			fail("exception: ExcepcaoPersistencia");
@@ -107,7 +107,7 @@ public class TestOJBTest extends TestCaseOJB {
 			assertNotNull(
 				"there are no test for this executionCourse",
 				result);
-			assertEquals("wrong number of test", 1, result.size());
+			assertEquals("wrong number of test", 2, result.size());
 			persistentSuport.confirmarTransaccao();
 
 		} catch (ExcepcaoPersistencia e) {

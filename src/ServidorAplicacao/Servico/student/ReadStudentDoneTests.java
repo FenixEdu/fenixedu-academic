@@ -72,7 +72,7 @@ public class ReadStudentDoneTests implements IServico {
 						false);
 				if (!(compareDates(distributedTest.getEndDate(),
 					distributedTest.getEndHour()))
-					&& distributedTest.getTest().getKeyExecutionCourse().equals(
+					&& distributedTest.getKeyExecutionCourse().equals(
 						executionCourseId)) {
 					InfoDistributedTest infoDistributedTest =
 						Cloner.copyIDistributedTest2InfoDistributedTest(
@@ -89,7 +89,7 @@ public class ReadStudentDoneTests implements IServico {
 		}
 		return infoSite;
 	}
-	
+
 	private boolean compareDates(Calendar date, Calendar hour) {
 		Calendar calendar = Calendar.getInstance();
 		CalendarDateComparator dateComparator = new CalendarDateComparator();

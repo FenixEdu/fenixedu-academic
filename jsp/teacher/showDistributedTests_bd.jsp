@@ -24,11 +24,10 @@
 	</tr>
 	<logic:iterate id="distributedTest" name="component" property="infoDistributedTests" type="DataBeans.InfoDistributedTest">
 	<tr>
-		<bean:define id="test" name="distributedTest" property="infoTest"/>
 		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal" />
 		<td class="listClasses">
 			<html:link page="<%= "/testDistribution.do?method=showDistributedTestStudents&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
-				<bean:write name="test" property="title"/>
+				<bean:write name="distributedTest" property="title"/>
 			</html:link>
 		</td>
 		<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>

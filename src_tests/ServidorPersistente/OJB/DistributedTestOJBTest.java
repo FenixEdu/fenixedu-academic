@@ -12,11 +12,9 @@ import Dominio.DisciplinaExecucao;
 import Dominio.DistributedTest;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IDistributedTest;
-import Dominio.ITest;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentDistributedTest;
-import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.ISuportePersistente;
 
 /**
@@ -80,60 +78,6 @@ public class DistributedTestOJBTest extends TestCaseOJB {
 		}
 	}
 
-	public void testReadByTest() {
-		System.out.println("2-> Test ReadByTest");
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-			persistentSuport.iniciarTransaccao();
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
-			ITest test = new Dominio.Test(new Integer(3));
-			test = (ITest) persistentTest.readByOId(test, false);
-			assertNotNull("there is no test with id=3", test);
-			IPersistentDistributedTest persistentDistributedTest =
-				persistentSuport.getIPersistentDistributedTest();
-			List result = persistentDistributedTest.readByTest(test);
-			assertNotNull(
-				"there are no distributed tests for this test",
-				result);
-
-			assertEquals("wrong number of distributed tests", 3, result.size());
-			persistentSuport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			fail("exception: ExcepcaoPersistencia");
-		}
-	}
-
-	public void testDeleteByTest() {
-		System.out.println("3-> Test DeleteByTest");
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-			persistentSuport.iniciarTransaccao();
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
-			ITest test = new Dominio.Test(new Integer(3));
-			test = (ITest) persistentTest.readByOId(test, false);
-			assertNotNull("there is no test with id=3", test);
-			IPersistentDistributedTest persistentDistributedTest =
-				persistentSuport.getIPersistentDistributedTest();
-			persistentDistributedTest.deleteByTest(test);
-
-			persistentSuport.confirmarTransaccao();
-			persistentSuport.iniciarTransaccao();
-
-			List result = persistentDistributedTest.readByTest(test);
-			assertNotNull(
-				"there are no distributed tests for this test",
-				result);
-			assertEquals("wrong number of distributed tests", 0, result.size());
-			persistentSuport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			fail("exception: ExcepcaoPersistencia");
-		}
-	}
-
 	public void testDelete() {
 		System.out.println("4-> Test Delete");
 		try {
@@ -145,17 +89,26 @@ public class DistributedTestOJBTest extends TestCaseOJB {
 			IDistributedTest distributedTest =
 				new DistributedTest(new Integer(25));
 			assertNotNull(
-				"there is no test question with id=8",
+				"there is no distributedTest with id=25",
 				distributedTest);
 			persistentDistributedTest.delete(distributedTest);
 			persistentSuport.confirmarTransaccao();
 			persistentSuport.iniciarTransaccao();
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
-			ITest test = new Dominio.Test(new Integer(3));
-			assertNotNull("there is no test with id=3", test);
-			List result = persistentDistributedTest.readByTest(test);
-			assertNotNull("there is no distributed test for this Test", result);
+			IDisciplinaExecucao executrionCourse =
+				new DisciplinaExecucao(new Integer(26));
+			executrionCourse =
+				(IDisciplinaExecucao) persistentSuport
+					.getIDisciplinaExecucaoPersistente()
+					.readByOId(executrionCourse, false);
+			assertNotNull(
+				"there is no executionCourse with id=26",
+				executrionCourse);
+			List result =
+				persistentDistributedTest.readByExecutionCourse(
+					executrionCourse);
+			assertNotNull(
+				"there is no distributed test for this executionCourse",
+				result);
 			assertEquals("wrong number of questions", 2, result.size());
 			persistentSuport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

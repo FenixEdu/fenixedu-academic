@@ -16,10 +16,13 @@ import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
+import Dominio.IStudentTestLog;
 import Dominio.IStudentTestQuestion;
+import Dominio.StudentTestLog;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentStudentTestLog;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import UtilTests.ParseQuestion;
@@ -39,7 +42,7 @@ public class ReadStudentTest implements IServico {
 		return "ReadStudentTest";
 	}
 
-	public Object run(String userName, Integer distributedTestId)
+	public Object run(String userName, Integer distributedTestId, Boolean log)
 		throws FenixServiceException {
 		List infoStudentTestQuestionList = new ArrayList();
 		try {
@@ -65,6 +68,8 @@ public class ReadStudentTest implements IServico {
 				persistentSuport
 					.getIPersistentStudentTestQuestion()
 					.readByStudentAndDistributedTest(student, distributedTest);
+			if (studentTestQuestionList.size() == 0)
+				throw new FenixServiceException();
 			Iterator it = studentTestQuestionList.iterator();
 			while (it.hasNext()) {
 				IStudentTestQuestion studentTestQuestion =
@@ -85,6 +90,18 @@ public class ReadStudentTest implements IServico {
 				}
 
 				infoStudentTestQuestionList.add(infoStudentTestQuestion);
+			}
+			if (log.booleanValue()) {
+				IPersistentStudentTestLog persistentStudentTestLog =
+					persistentSuport.getIPersistentStudentTestLog();
+
+				IStudentTestLog studentTestLog = new StudentTestLog();
+				studentTestLog.setDistributedTest(distributedTest);
+				studentTestLog.setStudent(student);
+				studentTestLog.setDate(null);
+				studentTestLog.setEvent(new String("Ler Ficha de Trabalho"));
+
+				persistentStudentTestLog.simpleLockWrite(studentTestLog);
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

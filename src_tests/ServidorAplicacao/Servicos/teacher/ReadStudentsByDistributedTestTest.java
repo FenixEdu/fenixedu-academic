@@ -38,7 +38,7 @@ public class ReadStudentsByDistributedTestTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(26), new Integer(1)};
+		Object[] args = { new Integer(26), new Integer(26)};
 		return args;
 	}
 

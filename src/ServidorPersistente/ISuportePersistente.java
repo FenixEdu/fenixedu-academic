@@ -160,6 +160,7 @@ public interface ISuportePersistente {
 	public IPersistentTestQuestion getIPersistentTestQuestion();
 	public IPersistentDistributedTest getIPersistentDistributedTest();
 	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
+	public IPersistentStudentTestLog getIPersistentStudentTestLog();
 	
 	public IPersistentAdvisory getIPersistentAdvisory();
 }

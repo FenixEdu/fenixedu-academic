@@ -64,7 +64,6 @@ public class InsertTest implements IServico {
 			test.setCreationDate(null);
 			test.setLastModifiedDate(null);
 			test.setExecutionCourse(executionCourse);
-			test.setVisible(new Boolean(true));
 			persistentTest.simpleLockWrite(test);
 			return test.getIdInternal();
 		} catch (ExcepcaoPersistencia e) {

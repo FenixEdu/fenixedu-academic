@@ -64,10 +64,8 @@ public class ReadTests implements IServico {
 			Iterator iter = tests.iterator();
 			while (iter.hasNext()) {
 				ITest test = (ITest) iter.next();
-				if (test.getVisible().booleanValue() == true) {
-					InfoTest infoTest = Cloner.copyITest2InfoTest(test);
-					result.add(infoTest);
-				}
+				InfoTest infoTest = Cloner.copyITest2InfoTest(test);
+				result.add(infoTest);
 			}
 			InfoSiteTests bodyComponent = new InfoSiteTests();
 			bodyComponent.setInfoTests(result);

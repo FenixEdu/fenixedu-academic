@@ -5,26 +5,27 @@
 
 <logic:present name="infoStudentTestQuestionList">
 	<center>
-	<logic:empty name="infoStudentTestQuestionList">
-		<h2><bean:message key="message.studentTest.no.available"/></h2>
-	</logic:empty>
+<logic:empty name="infoStudentTestQuestionList">
+	<h2><bean:message key="message.studentTest.no.available"/></h2>
+</logic:empty>
 	
-	<logic:notEmpty name="infoStudentTestQuestionList" >
-	<html:form action="/studentTests" method="GET">
-	<html:hidden property="method" value="chooseAction"/>
-
-
+<logic:notEmpty name="infoStudentTestQuestionList" >
+	
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
-	<bean:define id="test" name="distributedTest" property="infoTest" type="DataBeans.InfoTest"/>
-		
-	<bean:define id="objectCode" name="test" property="infoExecutionCourse.idInternal"/>
+	<bean:define id="objectCode" name="distributedTest" property="infoExecutionCourse.idInternal"/>
+	
+	<html:form action="/studentTests">
+	<html:hidden property="method" value="doTest"/>
+	
 	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
 	
-		<h2><bean:write name="test" property="title"/></h2>
-		<td><b><bean:write name="distributedTest" property="testInformation"/></b>	
+		<h2><bean:write name="distributedTest" property="title"/></h2>
+		<b><bean:write name="distributedTest" property="testInformation"/></b>
+		<br/><br/>
+		<b><bean:write name="date"/></b>
 	</center>
 	<br/>
 	<br/>
@@ -97,7 +98,14 @@
 						<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
 						<%	if(cardinality.equals("Single")){ %>
 							</td></tr><tr><td>
+							<bean:define id="testType" name="distributedTest" property="testType.type"/>
+							<bean:define id="responsed" name="testQuestion" property="response"/>
+							
+							<%if(((Integer)testType).intValue()==1 && ((Integer)responsed).intValue()!=0){%>
+								<html:radio property='<%="option["+ optionOrder+"]"%>' value="<%= indexOption.toString() %>" disabled="true"/>
+							<%}else{%>
 								<html:radio property='<%="option["+ optionOrder+"]"%>' value="<%= indexOption.toString() %>"/>
+							<%}%>
 							</td><td>
 						<% }else if(cardinality.equals("Multiple")){ %>
 							</td></tr><tr><td>
@@ -120,12 +128,18 @@
 	<br/>
 	<table align="center">
 	<tr>
-		<td><html:submit styleClass="inputbutton" property="button"><bean:message key="button.submitTest"/></html:submit></td>
-		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td>
-		<td><html:submit styleClass="inputbutton" property="button"><bean:message key="button.back"/></html:submit></td>
+		<td><html:submit styleClass="inputbutton" property="submit"><bean:message key="button.submitTest"/></html:submit></td>
+		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td></html:form>
+		<td>
+			<html:form action="/studentTests">
+			<html:hidden property="method" value="viewTestsToDo"/>
+			<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
+			<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
+			<html:submit styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit>
+		</td></html:form>
 	</tr>
 	</table>
-	</html:form>
+	
 	</logic:notEmpty>
 </logic:present>
 <center>

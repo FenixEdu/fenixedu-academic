@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-  <tiles:insert page="/fenixLayoutStudent_2col.jsp" flush="true">
+<tiles:insert page="/fenixLayout_2col.jsp" flush="true">
   <tiles:put name="title" value=".IST - Portal do Estudante" />
   <tiles:put name="serviceName" value="Portal do Estudante" />
   <tiles:put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />

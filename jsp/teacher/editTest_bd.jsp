@@ -26,20 +26,17 @@
 		</tr>
 	</logic:notEqual>
 </table>
-<br/>
 <table>
 	<tr>
 		<td><div class="gen-button">
 		<html:link page="<%= "/testEdition.do?method=prepareEditTestHeader&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="link.editTestHeader" />
-		</html:link></div>
-		&nbsp;
-		<div class="gen-button">
+		</html:link>&nbsp;&nbsp;&nbsp;</div></td>
+		<td><div class="gen-button">
 		<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="label.test.insertQuestion"/>
-		</html:link></div>
-		&nbsp;
-		<div class="gen-button">
+		</html:link>&nbsp;&nbsp;&nbsp;</div></td>
+		<td><div class="gen-button">
 		<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="link.showTests"/>
 		</html:link></div></td>
@@ -58,13 +55,13 @@
 			<div class="gen-button">
 			<html:link page="<%= "/testQuestionEdition.do?method=prepareEditTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="link.editTestQuestion" />
-			</html:link></div></td>
+			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
 			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="link.removeTestQuestion" />
 			</html:link></div></td>
 		</tr></table></td></tr>
-		<br/><tr>
+		<tr>
 			<td>
 				<bean:define id="index" value="0"/>
 				<bean:define id="imageLabel" value="false"/>
@@ -144,7 +141,7 @@
 			<div class="gen-button">
 			<html:link page="<%= "/testsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 			<bean:message key="label.test.insertQuestion" />
-			</html:link></div></td>
+			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
 			<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 			<bean:message key="link.showTests" />

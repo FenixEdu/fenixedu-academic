@@ -19,10 +19,9 @@
 	</tr>
 	<logic:iterate id="distributedTest" name="infoSiteDistributedTests" property="infoDistributedTests" type="DataBeans.InfoDistributedTest">
 	<tr>
-		<bean:define id="test" name="distributedTest" property="infoTest"/>
 		<td class="listClasses">
 			<html:link page="/studentTests.do?method=prepareToDoTest" paramId="testCode" paramName="distributedTest" paramProperty="idInternal">
-				<bean:write name="test" property="title"/>
+				<bean:write name="distributedTest" property="title"/>
 			</html:link>
 		</td>
 		<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>

@@ -2,23 +2,55 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2><bean:message key="title.showDistributedTest"/></h2>
+<h2><bean:message key="title.editDistributedTest"/></h2>
+
+<script language="Javascript" type="text/javascript">
+<!--
+var select = false;
+var disable = false;
+
+function invertSelect(){
+	if ( select == false ) { 
+		select = true; 
+	} else { 
+		select = false;
+	}
+	for (var i=1;i<document.distributedTestForm.selected.length;i++){
+		var e = document.distributedTestForm.selected[i];
+		if (select == true) { e.checked = true; } else { e.checked = false; }
+	}
+}
+
+function disableSelects() { 
+	if ( disable == false ) { 
+		disable = true; 
+	} else { 
+		disable = false;
+	}
+	var e0 = document.distributedTestForm.selected[0];
+	for (var i=1;i<document.distributedTestForm.selected.length;i++){
+		var e = document.distributedTestForm.selected[i];
+		if (disable == true) { e0.checked=true; e.disabled = true;} else { e.disabled = false; e0.checked=false; }
+	}
+}
+
+
+function cleanSelect() { 
+	select = false; 
+	document.distributedTestForm.selected[1].checked = false; 
+}
+
+// -->
+</script>
 
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="infoDistributedTest" name="component" property="infoDistributedTest"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
 
-<bean:define id="visible" name="infoDistributedTest" property="infoTest.visible"/>
-<logic:equal name="visible" value="false">
-	<span class="error"><bean:message key="message.tests.no.editDistributedTests"/></span>
-</logic:equal>
-<logic:notEqual name="visible" value="false">
-
-
 <html:form action="/distributedTestEdition">
 <html:hidden property="page" value="1"/>
-<html:hidden property="method" value="editDistributedTest"/>
+<html:hidden property="method" value="chooseDistributionFor"/>
 <html:hidden property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 
@@ -58,39 +90,59 @@
 <br/>
 <table>
 	<tr>
-		<bean:define id="thisType" name="infoDistributedTest" property="testType.typeString"/>
-		<bean:define id="thisTypeCode" name="infoDistributedTest" property="testType.type"/>
-		<td><b><bean:message key="message.testType"/>:</b></td>
-		<td>
-		<html:select property="testType">
-			<html:option value="<%=thisTypeCode.toString()%>"><bean:write name="thisType"/></html:option>
-			<html:options collection="testTypeList" property="value" labelProperty="label"/>
-		</html:select>
-		</td>
+		<td><b><bean:message key="message.testType"/></b></td>
 	</tr>
+	<logic:iterate id="testType" name="testTypeList" type="org.apache.struts.util.LabelValueBean">
+		<tr><td></td>
+			<td><bean:write name="testType" property="label"/></td>
+			<td><html:radio property="testType" value="<%=testType.getValue()%>"/></td>
+		</tr>
+	</logic:iterate>
+</table>
+<br/>
+<table>
 	<tr>
-		<bean:define id="thisCorrectionAvailability" name="infoDistributedTest" property="correctionAvailability.typeString"/>
-		<bean:define id="thisCorrectionAvailabilityCode" name="infoDistributedTest" property="correctionAvailability.availability"/>
-		<td><b><bean:message key="message.availableCorrection"/>:</b></td>
-		<td>
-			<html:select property="availableCorrection">
-			<html:option value="<%=thisCorrectionAvailabilityCode.toString()%>"><bean:write name="thisCorrectionAvailability"/></html:option>
-			<html:options collection="correctionAvailabilityList" property="value" labelProperty="label"/>
-			</html:select>
-		</td>
+		<td><b><bean:message key="message.availableCorrection"/></b></td>
 	</tr>
+	<logic:iterate id="correctionAvailability" name="correctionAvailabilityList" type="org.apache.struts.util.LabelValueBean">
+		<tr><td></td>
+			<td><bean:write name="correctionAvailability" property="label"/></td>
+			<td><html:radio property="availableCorrection" value="<%=correctionAvailability.getValue()%>"/></td>
+		</tr>
+	</logic:iterate>
+</table>
+<br/>
+<table>
 	<tr>
-		<bean:define id="thisStudentFeedback" name="infoDistributedTest" property="studentFeedback"/>
-		<td><b><bean:message key="message.studentFeedback"/>:</b></td>
-		<td>
-			<html:select property="studentFeedback">
-				<html:options collection="studentFeedbackList" property="value" labelProperty="label"/>
-			</html:select>
-		</td>
+		<td><b><bean:message key="message.studentFeedback"/></b></td>
+	</tr>
+	<tr><td></td>
+		<td><bean:message key="option.manager.true"/></td><td><html:radio property="studentFeedback" value="true"/></td>
+	</tr>
+	<tr><td></td>
+		<td><bean:message key="option.manager.false"/></td><td><html:radio property="studentFeedback" value="false"/></td>
 	</tr>
 </table>
 <br/>
-<html:submit styleClass="inputbutton"><bean:message key="button.save"/></html:submit> 
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>  
-</html:form>
-</logic:notEqual>
+<table>
+	<tr>
+		<td><b><bean:message key="label.add"/>:</b></td>
+		<td><html:submit styleClass="inputbutton" property="addShifts"><bean:message key="link.executionCourse.shifts"/></html:submit></td>
+		<td><html:submit styleClass="inputbutton" property="addStudents"><bean:message key="link.students"/></html:submit></td>
+	</tr>
+</table>
+<br/>
+<br/>
+<table align="center">
+<tr>
+	<td><html:submit styleClass="inputbutton" property="save"><bean:message key="button.save"/></html:submit></td>
+	<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td></html:form>
+	<td>
+		<html:form action="/testDistribution">
+		<html:hidden property="page" value="0"/>
+		<html:hidden property="method" value="showDistributedTests"/>
+		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+			<html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
+	</td></html:form>
+</tr>
+</table>

@@ -37,21 +37,6 @@
 			<form-property name="objectCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
-		<form-bean name="testDistributionForm"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
-			<form-property name="testInformation" type="java.lang.String"/>
-			<form-property name="testBeginDate" type="java.lang.String"/>
-			<form-property name="testBeginHour" type="java.lang.String"/>
-			<form-property name="testEndDate" type="java.lang.String"/>
-			<form-property name="testEndHour" type="java.lang.String"/>
-			<form-property name="testType" type="java.lang.String" initial="1"/>
-			<form-property name="availableCorrection" type="java.lang.String" initial="1"/>
-			<form-property name="studentFeedback" type="java.lang.String" initial="true"/>
-			<form-property name="selectedShifts" type="java.lang.String"/>
-			<form-property name="objectCode" type="java.lang.String"/>
-			<form-property name="testCode" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>
 		<form-bean name="distributedTestForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="testInformation" type="java.lang.String"/>
@@ -62,10 +47,13 @@
 			<form-property name="testType" type="java.lang.String"/>
 			<form-property name="availableCorrection" type="java.lang.String"/>
 			<form-property name="studentFeedback" type="java.lang.String"/>
+			<form-property name="selected" type="java.lang.String"/>
+			<form-property name="insertByShifts" type="java.lang.String"/>
 			<form-property name="objectCode" type="java.lang.String"/>
 			<form-property name="testCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
+
 		<!-- summary form -->
 		<form-bean name="summaryForm"
 		   type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
@@ -786,6 +774,7 @@
 				<forward name="chooseDeleteTestAction" path="/chooseDeleteTestAction.jsp"/>
 				<forward name="showStudentTest" path="/showStudentTest.jsp"/>
 				<forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
+				<forward name="showStudentTestLog" path="/showStudentTestLog.jsp"/>
 		</action>
 		<action path="/questionsManagement"
 				name="questionForm"
@@ -820,7 +809,7 @@
 				<forward name="editTest" path="/editTest.jsp"/>
 		</action>
 		<action path="/testDistribution"
-				name="testDistributionForm"
+				name="distributedTestForm"
 				input="/testDistribution.do?method=prepareDistributeTest&amp;page=0"
 				scope="request"
 				parameter="method"
@@ -829,6 +818,26 @@
 				<forward name="distributeTest" path="/distributeTest.jsp"/>
 				<forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
 				<forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
+				<forward name="distributeTestByShifts" path="/distributeTestByShifts.jsp"/>
+				<forward name="distributeTestByStudents" path="/distributeTestByStudents.jsp"/>
+		</action>
+		<action path="/testDistributionByShifts"
+				name="distributedTestForm"
+				input="/testDistribution.do?method=chooseShifts&amp;page=1"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TestsManagementAction"
+				validate="true">
+				<forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
+		</action>
+		<action path="/testDistributionByStudents"
+				name="distributedTestForm"
+				input="/testDistribution.do?method=chooseStudents&amp;page=1"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TestsManagementAction"
+				validate="true">
+				<forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
 		</action>
 		<action path="/distributedTestEdition"
 				name="distributedTestForm"
@@ -839,6 +848,8 @@
 				validate="true">
 				<forward name="editDistributedTest" path="/editDistributedTest.jsp"/>
 				<forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
+				<forward name="addShiftsToDistributedTest" path="/addShiftsToDistributedTest.jsp"/>
+				<forward name="addStudentsToDistributedTest" path="/addStudentsToDistributedTest.jsp"/>
 		</action>
 	<!-- End Action for Tests Administration Site -->
 		

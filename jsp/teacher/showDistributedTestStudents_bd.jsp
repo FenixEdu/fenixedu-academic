@@ -20,13 +20,17 @@
 		<bean:define id="person" name="student" property="infoPerson"/>
 		<bean:define id="studentCode" name="student" property="idInternal"/>
 		<tr>
-			<td class="listClasses">
-				<html:link page="<%= "/testsManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>">
-					<bean:write name="student" property="number"/>
-				</html:link>
-			</td>
+			<td class="listClasses"><bean:write name="student" property="number"/></td>
 			<td class="listClasses"><bean:write name="person" property="nome"/></td>
+			<td><html:link page="<%= "/testsManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showStudentTest"/></html:link></td>
+			<td><html:link page="<%= "/testsManagement.do?method=showStudentTestLog&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showLog"/></html:link></td>
 		</tr>
 	</logic:iterate>
 </table>
+<br/>
+<html:form action="/testDistribution">
+<html:hidden property="method" value="showDistributedTests"/>
+<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+	<html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit>
+</html:form>	
 </logic:notEqual>

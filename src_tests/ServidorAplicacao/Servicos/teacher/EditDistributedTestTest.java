@@ -52,20 +52,56 @@ public class EditDistributedTestTest extends TestCaseDeleteAndEditServices {
 		} catch (ExcepcaoPersistencia e) {
 			fail("excepcao");
 		}
+
+		String[] selected = { new String("19")};
 		Object[] args =
 			{
-				new Integer(24),
+				new Integer(26),
+				new Integer(25),
+				new String("nova informação do teste"),
 				distributedTest.getBeginDate(),
 				distributedTest.getBeginHour(),
 				distributedTest.getEndDate(),
 				distributedTest.getEndHour(),
 				distributedTest.getTestType(),
 				distributedTest.getCorrectionAvailability(),
-				distributedTest.getStudentFeedback()};
+				distributedTest.getStudentFeedback(),
+				selected,
+				new Boolean(true)};
 		return args;
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+		IDistributedTest distributedTest = new DistributedTest(new Integer(25));
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+			IPersistentDistributedTest persistentDistributedTest =
+				sp.getIPersistentDistributedTest();
+			distributedTest =
+				(IDistributedTest) persistentDistributedTest.readByOId(
+					distributedTest,
+					false);
+			sp.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("excepcao");
+		}
+
+		String[] selected = { new String("19")};
+		Object[] args =
+			{
+				new Integer(26),
+				new Integer(0),
+				new String("nova informação do teste"),
+				distributedTest.getBeginDate(),
+				distributedTest.getBeginHour(),
+				distributedTest.getEndDate(),
+				distributedTest.getEndHour(),
+				distributedTest.getTestType(),
+				distributedTest.getCorrectionAvailability(),
+				distributedTest.getStudentFeedback(),
+				selected,
+				new Boolean(true)};
+		return args;
 	}
 }

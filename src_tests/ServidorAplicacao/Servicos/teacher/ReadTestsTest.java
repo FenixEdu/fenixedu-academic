@@ -45,7 +45,7 @@ public class ReadTestsTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(25)};
+		Object[] args = { new Integer(26)};
 		return args;
 	}
 
@@ -63,23 +63,35 @@ public class ReadTestsTest extends TestCaseReadServices {
 			IDisciplinaExecucaoPersistente persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(new Integer(25));
+				new DisciplinaExecucao(new Integer(26));
 			executionCourse =
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
 					executionCourse,
 					false);
 			assertNotNull("executionCourse null", executionCourse);
 			IPersistentTest persistentTest = sp.getIPersistentTest();
-			ITest test = new Test(new Integer(7));
-			test = (ITest) persistentTest.readByOId(test, false);
-			assertNotNull("test null", test);
+			ITest test3 = new Test(new Integer(3));
+			test3 = (ITest) persistentTest.readByOId(test3, false);
+			assertNotNull("test null", test3);
 
+			ITest test4 = new Test(new Integer(4));
+			test4 = (ITest) persistentTest.readByOId(test4, false);
+			assertNotNull("test null", test4);
+
+			ITest test5 = new Test(new Integer(5));
+			test5 = (ITest) persistentTest.readByOId(test5, false);
+			assertNotNull("test null", test5);
 			sp.confirmarTransaccao();
+
 			infoExecutionCourse =
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(
 					executionCourse);
-			InfoTest infoTest = Cloner.copyITest2InfoTest(test);
-			infoTestList.add(infoTest);
+			InfoTest infoTest3 = Cloner.copyITest2InfoTest(test3);
+			InfoTest infoTest4 = Cloner.copyITest2InfoTest(test4);
+			InfoTest infoTest5 = Cloner.copyITest2InfoTest(test5);
+			infoTestList.add(infoTest3);
+			infoTestList.add(infoTest4);
+			infoTestList.add(infoTest5);
 		} catch (ExcepcaoPersistencia e) {
 			fail("exception: ExcepcaoPersistencia ");
 		}

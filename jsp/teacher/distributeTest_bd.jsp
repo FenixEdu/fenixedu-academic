@@ -4,33 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.distributeTest"/></h2>
 
-<script language="Javascript" type="text/javascript">
-<!--
-var select = false;
-
-function invertSelect(){
-	if ( select == false ) { 
-		select = true; 
-	} else { 
-		select = false;
-	}
-	for (var i=0;i<document.testDistributionForm.selectedShifts.length;i++){
-		var e = document.testDistributionForm.selectedShifts[i];
-		if ( select == true ) { e.checked = true; } else { e.checked = false; }
-	}
-}
-
-function cleanSelect() { 
-	select = false; 
-	document.testDistributionForm.selectedShifts[0].checked = false; 
-}
-
-// -->
-</script>
-
 <html:form action="/testDistribution">
 <html:hidden property="page" value="1"/>
-<html:hidden property="method" value="distributeTest"/>
+<html:hidden property="method" value="chooseDistributionFor"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 
@@ -45,25 +21,25 @@ function cleanSelect() {
 		<td><bean:message key="message.testBeginDate"/><bean:message key="message.dateFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text property="testBeginDate"/></td><td><span class="error"><html:errors property="testBeginDate"/></span></td>
+		<td><html:text property="beginDateFormatted"/></td><td><span class="error"><html:errors property="beginDateFormatted"/></span></td>
 	<tr/>
 	<tr>
 		<td><bean:message key="message.testBeginHour"/><bean:message key="message.hourFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text property="testBeginHour"/></td><td><span class="error"><html:errors property="testBeginHour"/></span></td>
+		<td><html:text property="beginHourFormatted"/></td><td><span class="error"><html:errors property="beginHourFormatted"/></span></td>
 	<tr/>
 	<tr>
 		<td><bean:message key="message.testEndDate"/><bean:message key="message.dateFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text property="testEndDate"/></td><td><span class="error"><html:errors property="testEndDate"/></span></td>
+		<td><html:text property="endDateFormatted"/></td><td><span class="error"><html:errors property="endDateFormatted"/></span></td>
 	<tr/>
 	<tr>
 		<td><bean:message key="message.testEndHour"/><bean:message key="message.hourFormat"/></td>
 	</tr>
 	<tr>
-		<td><html:text property="testEndHour"/></td><td><span class="error"><html:errors property="testEndHour"/></span></td>
+		<td><html:text property="endHourFormatted"/></td><td><span class="error"><html:errors property="endHourFormatted"/></span></td>
 	<tr/>
 </table>
 <br/>
@@ -107,40 +83,24 @@ function cleanSelect() {
 <br/>
 <table>
 	<tr>
-		<td><b><bean:message key="message.selectShifts"/></b></td><td/><td/><td/><td><span class="error"><html:errors property="selectedShifts"/></span></td>
+		<td><b><bean:message key="label.distributeFor"/>:</b></td>
+		<td><html:submit styleClass="inputbutton" property="shifts"><bean:message key="link.executionCourse.shifts"/></html:submit></td>
+		<td><html:submit styleClass="inputbutton" property="students"><bean:message key="link.students"/></html:submit></td>
 	</tr>
-	<tr><td></td>
-		<td><b><bean:message key="label.allStudents"/></b></td>
-		<td>
-		<html:multibox property="selectedShifts" onclick="invertSelect()">
-		    <bean:message key="label.allStudents"/>
-		</html:multibox> 
-		</td>	
-	<tr><td></td>
-		<td class="listClasses-header"><bean:message key="link.executionCourse.shifts"/></td>
-		<td class="listClasses-header"><bean:message key="label.curricularCourseType"/></td>
-		<td class="listClasses-header"></td>
-	</tr>
-	<logic:iterate id="shiftType" name="shiftTypes">
-		<bean:define id="iterateType" name="shiftType" property="value"/>
-		<logic:iterate id="shiftList" name="shifts">
-			<bean:define id="thisShiftType" name="shiftList" property="tipo"/>
-			<% if((thisShiftType.toString()).equals(iterateType.toString())){ %>
-				<tr><td></td>
-				<td class="listClasses"><bean:write name="shiftList" property="nome"/></td>
-				<td class="listClasses"><bean:write name="shiftType" property="label"/></td>
-				<td class="listClasses">
-					<html:multibox property="selectedShifts" onclick="cleanSelect()">
-				    <bean:write name="shiftList" property="idInternal"/>
-					</html:multibox> 
-				</td>
-				</tr>
-			<%}%>
-		</logic:iterate>
-	</logic:iterate>
 </table>
 <br/>
 <br/>
-<html:submit styleClass="inputbutton"><bean:message key="button.save"/></html:submit> 
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>  
-</html:form>
+<table align="center">
+	<tr>
+		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
+		</html:form>
+		</td>
+		<td><html:form action="/testsManagement">
+			<html:hidden property="page" value="0"/>
+			<html:hidden property="method" value="showTests"/>
+			<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+				<html:submit styleClass="inputbutton" property="action"><bean:message key="label.back"/></html:submit>
+			</html:form>
+		</td>
+	</tr>
+</table>

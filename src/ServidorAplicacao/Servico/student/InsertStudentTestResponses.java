@@ -14,10 +14,13 @@ import DataBeans.comparators.CalendarHourComparator;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
+import Dominio.IStudentTestLog;
 import Dominio.IStudentTestQuestion;
+import Dominio.StudentTestLog;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentStudentTestLog;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TestType;
@@ -44,6 +47,7 @@ public class InsertStudentTestResponses implements IServico {
 		String[] options)
 		throws FenixServiceException {
 		List infoStudentTestQuestionList = new ArrayList();
+
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -62,6 +66,10 @@ public class InsertStudentTestResponses implements IServico {
 					.readByOId(
 					distributedTest,
 					false);
+			String event = new String("Submeter Teste;");
+			for (int i = 0; i < options.length; i++)
+				event = event.concat(options[i] + ";");
+
 			if (compareDates(distributedTest.getEndDate(),
 				distributedTest.getEndHour())) {
 				List studentTestQuestionList =
@@ -71,14 +79,16 @@ public class InsertStudentTestResponses implements IServico {
 							student,
 							distributedTest);
 				Iterator it = studentTestQuestionList.iterator();
+				if (studentTestQuestionList.size() == 0)
+					return false;
 				while (it.hasNext()) {
 					IStudentTestQuestion studentTestQuestion =
 						(IStudentTestQuestion) it.next();
 					if (studentTestQuestion.getResponse().intValue() != 0
-						&& distributedTest.getTestType().equals(new TestType(1)))
-						System.out.println("Não posso aceitar resposta");
-					//não pode aceitar nova resposta
-					else {
+						&& distributedTest.getTestType().equals(
+							new TestType(1))) {
+						//não pode aceitar nova resposta
+					} else {
 						studentTestQuestion.setResponse(
 							new Integer(
 								options[studentTestQuestion
@@ -91,6 +101,16 @@ public class InsertStudentTestResponses implements IServico {
 							studentTestQuestion);
 					}
 				}
+				IPersistentStudentTestLog persistentStudentTestLog =
+					persistentSuport.getIPersistentStudentTestLog();
+
+				IStudentTestLog studentTestLog = new StudentTestLog();
+				studentTestLog.setDistributedTest(distributedTest);
+				studentTestLog.setStudent(student);
+				studentTestLog.setDate(null);
+				studentTestLog.setEvent(event);
+
+				persistentStudentTestLog.simpleLockWrite(studentTestLog);
 			} else
 				return false;
 		} catch (ExcepcaoPersistencia e) {

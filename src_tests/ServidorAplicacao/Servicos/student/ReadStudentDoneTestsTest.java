@@ -53,7 +53,7 @@ public class ReadStudentDoneTestsTest extends TestCaseReadServices {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
-			IDistributedTest distributedTest = new DistributedTest(new Integer(1));
+			IDistributedTest distributedTest = new DistributedTest(new Integer(26));
 			distributedTest = (IDistributedTest)sp.getIPersistentDistributedTest().readByOId(distributedTest, false);
 			sp.confirmarTransaccao();
 

@@ -13,6 +13,7 @@ import Util.TestType;
  * @author Susana Fernandes
  */
 public class InfoDistributedTest extends InfoObject {
+	private String Title;
 	private String TestInformation;
 	private Calendar beginDate;
 	private Calendar endDate;
@@ -21,11 +22,16 @@ public class InfoDistributedTest extends InfoObject {
 	private TestType testType;
 	private CorrectionAvailability correctionAvailability;
 	private Boolean studentFeedback;
-	private InfoTest infoTest;
+	private Integer numberOfQuestions;
+	private InfoExecutionCourse infoExecutionCourse;
 
 	public InfoDistributedTest() {
 	}
-	
+
+	public String getTitle() {
+		return Title;
+	}
+
 	public String getTestInformation() {
 		return TestInformation;
 	}
@@ -53,14 +59,21 @@ public class InfoDistributedTest extends InfoObject {
 		return studentFeedback;
 	}
 
-	public InfoTest getInfoTest() {
-		return infoTest;
-	}
-
 	public TestType getTestType() {
 		return testType;
 	}
 
+	public Integer getNumberOfQuestions() {
+		return numberOfQuestions;
+	}
+
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
+
+	public void setTitle(String string) {
+		Title = string;
+	}
 	public void setTestInformation(String string) {
 		TestInformation = string;
 	}
@@ -89,12 +102,16 @@ public class InfoDistributedTest extends InfoObject {
 		studentFeedback = boolean1;
 	}
 
-	public void setInfoTest(InfoTest infoTest) {
-		this.infoTest = infoTest;
-	}
-
 	public void setTestType(TestType type) {
 		testType = type;
+	}
+
+	public void setNumberOfQuestions(Integer integer) {
+		numberOfQuestions = integer;
+	}
+
+	public void setInfoExecutionCourse(InfoExecutionCourse course) {
+		infoExecutionCourse = course;
 	}
 
 	public String getBeginDateFormatted() {
@@ -182,10 +199,9 @@ public class InfoDistributedTest extends InfoObject {
 		if (obj instanceof InfoDistributedTest) {
 			InfoDistributedTest infoDistributedTest = (InfoDistributedTest) obj;
 			result =
-				getIdInternal().equals(infoDistributedTest.getIdInternal());
-			result =
-				result
-					|| (getBeginDate().equals(infoDistributedTest.getBeginDate()))
+				(getIdInternal().equals(infoDistributedTest.getIdInternal()))
+					&& (getTitle().equals(infoDistributedTest.getTitle()))
+					&& (getBeginDate().equals(infoDistributedTest.getBeginDate()))
 					&& (getBeginHour().equals(infoDistributedTest.getBeginHour()))
 					&& (getEndDate().equals(infoDistributedTest.getEndDate()))
 					&& (getEndHour().equals(infoDistributedTest.getEndHour()))
@@ -195,7 +211,10 @@ public class InfoDistributedTest extends InfoObject {
 							infoDistributedTest.getCorrectionAvailability()))
 					&& (getStudentFeedback()
 						.equals(infoDistributedTest.getStudentFeedback()))
-					&& (getInfoTest().equals(infoDistributedTest.getInfoTest()));
+					&& (getNumberOfQuestions()
+						.equals(infoDistributedTest.getNumberOfQuestions()))
+					&& (getInfoExecutionCourse()
+						.equals(infoDistributedTest.getInfoExecutionCourse()));
 		}
 		return result;
 	}

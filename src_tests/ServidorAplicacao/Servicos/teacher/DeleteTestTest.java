@@ -31,11 +31,12 @@ public class DeleteTestTest extends TestCaseDeleteAndEditServices {
 		return true;
 	}
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = {new Integer(3)};
+		Object[] args = {new Integer(26), new Integer(3)};
 		return args;
 	}
 	
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+		Object[] args = {new Integer(26), new Integer(0)};
+		return args;
 	}
 }

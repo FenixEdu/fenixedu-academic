@@ -15,17 +15,16 @@
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
-	<bean:define id="test" name="distributedTest" property="infoTest" type="DataBeans.InfoTest"/>
 	<bean:define id="student" name="testQuestion" property="student" type="DataBeans.InfoStudent"/>
 	<bean:define id="person" name="student" property="infoPerson" type="DataBeans.InfoPerson"/>
 	<bean:define id="studentCode" name="person" property="username"/>
 	
-	<bean:define id="objectCode" name="test" property="infoExecutionCourse.idInternal"/>
+	<bean:define id="objectCode" name="distributedTest" property="infoExecutionCourse.idInternal"/>
 	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden property="distributedTestCode" value="<%= testCode.toString() %>"/>
 	
 	
-		<h2><bean:write name="test" property="title"/></h2>
+		<h2><bean:write name="distributedTest" property="title"/></h2>
 		<b><bean:write name="distributedTest" property="testInformation"/></b>	
 	</center>
 	<br/>

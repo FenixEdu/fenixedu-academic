@@ -9,7 +9,8 @@ import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 /**
  * @author Susana Fernandes
  */
-public class InsertStudentTestResponsesTest extends TestCaseDeleteAndEditServices {
+public class InsertStudentTestResponsesTest
+	extends TestCaseDeleteAndEditServices {
 
 	public InsertStudentTestResponsesTest(String testName) {
 		super(testName);
@@ -22,22 +23,24 @@ public class InsertStudentTestResponsesTest extends TestCaseDeleteAndEditService
 	protected void tearDown() {
 		super.tearDown();
 	}
-	
+
 	protected String getNameOfServiceToBeTested() {
 		return "InsertStudentTestResponses";
 	}
-	
+
 	protected boolean needsAuthorization() {
 		return true;
 	}
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		String[] options = {new String("1")}; 
-		Object[] args = {new String("15"), new Integer(2), options};
+		String[] options = { new String("1")};
+		Object[] args = { new String("13"), new Integer(25), options };
 		return args;
 	}
-	
+
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+		String[] options = { new String("1")};
+		Object[] args = { new String("15"), new Integer(25), options };
+		return args;
 	}
 
 }

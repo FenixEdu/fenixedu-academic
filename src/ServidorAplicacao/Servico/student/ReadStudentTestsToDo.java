@@ -74,7 +74,7 @@ public class ReadStudentTestsToDo implements IServico {
 					distributedTest.getBeginHour(),
 					distributedTest.getEndDate(),
 					distributedTest.getEndHour()))
-					&& distributedTest.getTest().getKeyExecutionCourse().equals(
+					&& distributedTest.getKeyExecutionCourse().equals(
 						executionCourseId)) {
 					InfoDistributedTest infoDistributedTest =
 						Cloner.copyIDistributedTest2InfoDistributedTest(

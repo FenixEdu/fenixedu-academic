@@ -67,7 +67,7 @@
 	</td>
 	<td>
 		<div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=prepareDeleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
+			<html:link page="<%= "/testsManagement.do?method=deleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
 				<bean:message key="link.removeTest" />
 			</html:link>
 		</div>

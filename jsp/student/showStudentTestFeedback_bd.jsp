@@ -32,23 +32,21 @@
 </table>
 </logic:equal>
 
+<html:form action="/studentTests">
+<html:hidden property="method" value="prepareToDoTest"/>
+<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+
 <logic:present name="infoStudentTestQuestionList">
 <logic:notEmpty name="infoStudentTestQuestionList" >
-	<html:form action="/studentTests">
-	<html:hidden property="method" value="chooseAction"/>
 
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
-	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
-	<bean:define id="test" name="distributedTest" property="infoTest" type="DataBeans.InfoTest"/>
-		
-	<bean:define id="objectCode" name="test" property="infoExecutionCourse.idInternal"/>
-	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
-	<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
+	<bean:define id="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 	<br/>
 	<br/>
 	<center>
-		<h2><bean:write name="test" property="title"/></h2>
+		<h2><bean:write name="distributedTest" property="title"/></h2>
 		<b><bean:write name="distributedTest" property="testInformation"/></b>	
 	</center>
 	<table width="100%" border="0" cellpadding="0" cellspacing="10">
@@ -121,7 +119,6 @@
 						<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
 						<%	if(cardinality.equals("Single")){ %>
 							</td>
-							<bean:define id="correction" name="distributedTest" property="correctionAvailability" type="Util.CorrectionAvailability"/>
 							
 							<bean:define id="responsed" name="testQuestion" property="response"/>
 							<logic:notEqual name="responsed" value="0">
@@ -183,9 +180,9 @@
 	</table>
 	<br/>
 	<br/>
-	<center>
-		<html:submit styleClass="inputbutton" property="button"><bean:message key="button.back"/></html:submit>
-	</center>
-	</html:form>
 </logic:notEmpty>
 </logic:present>
+<center>
+	<html:submit styleClass="inputbutton"><bean:message key="button.back"/></html:submit>
+</center>
+</html:form>

@@ -10,5 +10,4 @@
 <ul>
 <li><html:link page="/studentTests.do?method=viewTestsToDo" paramId="objectCode" paramName="objectCode"><bean:message key="link.toDoTests"/></html:link></li>
 <li><html:link page="/studentTests.do?method=viewDoneTests" paramId="objectCode" paramName="objectCode"><bean:message key="link.doneTests"/></html:link></li>
-<!-- <li><bean:message key="link.doneTests"/></li> -->
 </ul>

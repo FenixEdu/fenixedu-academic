@@ -32,7 +32,7 @@ public class InsertTestAsNewTestTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = {new Integer(3)};
+		Object[] args = { new Integer(26), new Integer(3)};
 		return args;
 	}
 
@@ -45,6 +45,6 @@ public class InsertTestAsNewTestTest extends TestCaseReadServices {
 	}
 
 	protected Object getObjectToCompare() {
-		return new Integer(8);
+		return new Integer(6);
 	}
 }

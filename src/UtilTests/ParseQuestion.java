@@ -83,7 +83,10 @@ public class ParseQuestion extends DefaultHandler {
 			shuffleStudentTestQuestionOptions(
 				infoStudentTestQuestion.getOptionShuffle(),
 				infoStudentTestQuestion.getQuestion().getOptions()));
-		infoStudentTestQuestion.getQuestion().setCorrectResponse(newResponseList( infoStudentTestQuestion.getQuestion().getCorrectResponse(), infoStudentTestQuestion.getQuestion().getOptions()));
+		infoStudentTestQuestion.getQuestion().setCorrectResponse(
+			newResponseList(
+				infoStudentTestQuestion.getQuestion().getCorrectResponse(),
+				infoStudentTestQuestion.getQuestion().getOptions()));
 		return infoStudentTestQuestion;
 	}
 
@@ -268,17 +271,15 @@ public class ParseQuestion extends DefaultHandler {
 			String tag = element.getQName();
 			Attributes atts = element.getAttributes();
 
-			if (tag.equals("render_choice")) {
-				if (!(atts.getValue(atts.getIndex("shuffle")).equals("Yes")))
-					return "";
-			} else if (tag.equals("response_label")) {
+			if (tag.equals("response_label")) {
 				if (atts.getValue(atts.getIndex("rshuffle")).equals("Yes")) {
 					v.add("");
 					vRandom.add(new Integer(v.size()).toString());
-				} else
-					v.add(new Integer(v.size()).toString());
+					continue;
+				}else v.add(new Integer(v.size()+1).toString());
 			}
 		}
+
 		Random r = new Random();
 		boolean ready = false;
 		it = vRandom.iterator();
@@ -309,7 +310,6 @@ public class ParseQuestion extends DefaultHandler {
 					oldList,
 					newOptions,
 					new Integer(aux[i]).intValue());
-
 		Iterator it = newOptions.iterator();
 		return newOptions;
 	}
@@ -331,7 +331,6 @@ public class ParseQuestion extends DefaultHandler {
 	private List newResponseList(List responseList, List optionList) {
 		Iterator itResponse = responseList.iterator();
 		List auxList = new ArrayList();
-
 		while (itResponse.hasNext()) {
 			int index = 1;
 			String response = (String) itResponse.next();

@@ -4,10 +4,14 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.ojb.odmg.HasBroker;
 
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -37,18 +41,56 @@ public class StudentTestQuestionOJB
 			distributedTest.getIdInternal());
 		return queryList(StudentTestQuestion.class, criteria);
 	}
-	
+
 	public List readByDistributedTest(IDistributedTest distributedTest)
-			throws ExcepcaoPersistencia {
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-			return queryList(StudentTestQuestion.class, criteria);
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"keyDistributedTest",
+			distributedTest.getIdInternal());
+		return queryList(StudentTestQuestion.class, criteria);
 	}
-	
+
 	public List readByStudent(IStudent student) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyStudent", student.getIdInternal());
 		return queryList(StudentTestQuestion.class, criteria);
+	}
+
+	public List readStudentsByDistributedTest(IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"keyDistributedTest",
+			distributedTest.getIdInternal());
+
+		PersistenceBroker pb =
+			((HasBroker) odmg.currentTransaction()).getBroker();
+		QueryByCriteria queryCriteria =
+			new QueryByCriteria(StudentTestQuestion.class, criteria, false);
+		queryCriteria.addGroupBy("keyStudent");
+		List result = (List) pb.getCollectionByQuery(queryCriteria);
+
+		lockRead(result);
+
+		List studentList = new ArrayList();
+
+		Iterator iterator = result.iterator();
+		while (iterator.hasNext()) {
+			IStudentTestQuestion studentTestQuestion =
+				(IStudentTestQuestion) iterator.next();
+			studentList.add(studentTestQuestion.getStudent());
+		}
+		return studentList;
+
+	}
+
+	public List readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest)
+		throws ExcepcaoPersistencia {
+		IStudentTestQuestion studentTestQuestion =
+			(StudentTestQuestion) readByDistributedTest(distributedTest).get(0);
+		return readByStudentAndDistributedTest(studentTestQuestion.getStudent(), distributedTest);
 	}
 
 	public void deleteByDistributedTest(IDistributedTest distributedTest)

@@ -22,67 +22,11 @@
 	</field>
    </form>
    
-   <form name="testDistributionForm">
-   
-   	<field property="selectedShifts" depends="required" page="1">
-    	<arg0 key="title.shifts" resource="true"/>
-    </field>
-   
-	<field property="testBeginDate" depends="required, mask, date" page="1">
-		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-		<arg0 key="message.testBeginDate" resource="true"/>
-		<var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
-        </var>
-        <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)$</var-value>
-        </var>
-	</field>
-	<field property="testEndDate" depends="required, mask, date" page="1">
-		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-		<arg0 key="message.testEndDate" resource="true"/>
-		<var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
-        </var>
-        <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)$</var-value>
-        </var>
-	</field>
-	<field property="testBeginHour" depends="required, mask, date" page="1">
-		<msg name="date" key="error.invalid.hour"/>
-   		<msg name="mask" key="error.invalid.hour"/>   		
-   		<arg0 key="message.testBeginHour" resource="true"/>
-		<var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..):(.||..))$</var-value>
-        </var>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
-        </var>
-	</field>
-	<field property="testEndHour" depends="required, mask, date" page="1">
-		<msg name="date" key="error.invalid.hour"/>
-   		<msg name="mask" key="error.invalid.hour"/>   		
-   		<arg0 key="message.testEndHour" resource="true"/>
-		<var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..):(.||..))$</var-value>
-        </var>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
-        </var>
-	</field>
-   </form>
    <form name="distributedTestForm">
-	<field property="beginDateFormatted" depends="required, mask, date" page="1">
+   	<field property="selected" depends="required" page="2">
+    	<arg0 key="message.shiftsOrStudents" resource="true"/>
+    </field>
+   	<field property="beginDateFormatted" depends="required, mask, date" page="1">
 		<msg name="date" key="errors.invalid.date"/>
    		<msg name="mask" key="errors.invalid.date"/>
 		<arg0 key="message.testBeginDate" resource="true"/>

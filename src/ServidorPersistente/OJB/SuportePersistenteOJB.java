@@ -35,8 +35,6 @@ import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCandidateEnrolment;
 import ServidorPersistente.IPersistentCandidateSituation;
-import ServidorPersistente
-	.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCreditsTeacher;
@@ -75,6 +73,7 @@ import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentPersonRole;
+import ServidorPersistente.IPersistentPossibleCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentPrice;
 import ServidorPersistente.IPersistentProfessorship;
@@ -89,6 +88,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.IPersistentStudentKind;
+import ServidorPersistente.IPersistentStudentTestLog;
 import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.IPersistentTeacher;
@@ -662,6 +662,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	
 	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion(){
 		return new StudentTestQuestionOJB();
+	}
+	
+	public IPersistentStudentTestLog getIPersistentStudentTestLog(){
+		return new StudentTestLogOJB();
 	}
 	
 	public IPersistentAdvisory getIPersistentAdvisory() {

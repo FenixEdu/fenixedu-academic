@@ -10,7 +10,7 @@
 	
 	<logic:notEmpty name="studentExecutionCoursesList" >
 	
-	<h2><bean:message key="title.StudentExecutionCourses"/></h2>
+	<h2><bean:message key="link.myExecutionCourses"/></h2>
 	<table>
 		<tr>
 			<td class="listClasses-header"><bean:message key="label.curricular.course.acronym"/></td>

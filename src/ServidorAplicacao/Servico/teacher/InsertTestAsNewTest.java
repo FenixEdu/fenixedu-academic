@@ -13,6 +13,7 @@ import Dominio.Test;
 import Dominio.TestQuestion;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
@@ -38,14 +39,18 @@ public class InsertTestAsNewTest implements IServico {
 		return "InsertTestAsNewTest";
 	}
 
-	public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException {
+	public Integer run(Integer executionCourseId, Integer oldTestId)
+		throws FenixServiceException {
 		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-			
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			IPersistentTest persistentTest =
+				persistentSuport.getIPersistentTest();
+
 			ITest oldTest = new Test(oldTestId);
-			oldTest = (ITest)persistentTest.readByOId(oldTest, false);
-			
+			oldTest = (ITest) persistentTest.readByOId(oldTest, false);
+			if (oldTest == null)
+				throw new InvalidArgumentsServiceException();
 			ITest test = new Test();
 
 			test.setTitle(oldTest.getTitle());
@@ -55,27 +60,28 @@ public class InsertTestAsNewTest implements IServico {
 			test.setLastModifiedDate(null);
 			test.setKeyExecutionCourse(oldTest.getKeyExecutionCourse());
 			test.setExecutionCourse(oldTest.getExecutionCourse());
-			test.setVisible(new Boolean(true));
 			persistentTest.simpleLockWrite(test);
 
-			IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
-			
+			IPersistentTestQuestion persistentTestQuestion =
+				persistentSuport.getIPersistentTestQuestion();
+
 			List testQuestionList = persistentTestQuestion.readByTest(oldTest);
-			
-			Iterator it= testQuestionList.iterator();
-			while(it.hasNext()){
+
+			Iterator it = testQuestionList.iterator();
+			while (it.hasNext()) {
 				ITestQuestion testQuestion = (ITestQuestion) it.next();
 				ITestQuestion newTestQuestion = new TestQuestion();
 				newTestQuestion.setKeyQuestion(testQuestion.getKeyQuestion());
 				newTestQuestion.setQuestion(testQuestion.getQuestion());
-				newTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
-				newTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
-				
+				newTestQuestion.setTestQuestionOrder(
+					testQuestion.getTestQuestionOrder());
+				newTestQuestion.setTestQuestionValue(
+					testQuestion.getTestQuestionValue());
+
 				newTestQuestion.setKeyTest(test.getIdInternal());
 				newTestQuestion.setTest(test);
 				persistentTestQuestion.simpleLockWrite(newTestQuestion);
 			}
-
 			return test.getIdInternal();
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

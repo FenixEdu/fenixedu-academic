@@ -15,21 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 import org.dbunit.util.Base64;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteDistributedTest;
+import DataBeans.InfoSiteStudents;
 import DataBeans.InfoSiteTest;
 import DataBeans.InfoSiteTestQuestion;
+import DataBeans.InfoStudentTestLog;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
+import DataBeans.comparators.InfoShiftComparatorByLessonType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -417,39 +420,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		return mapping.findForward("showTests");
 	}
 
-	public ActionForward prepareDeleteTest(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
-		Integer testCode = getCodeFromRequest(request, "testCode");
-		Object[] args = { executionCourseCode, testCode };
-		List result = null;
-		try {
-			result =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadDistributedTestByTestId",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		if (result.size() == 0) {
-			return deleteTest(mapping, form, request, response);
-		}
-		request.setAttribute("testCode", testCode);
-		request.setAttribute("objectCode", executionCourseCode);
-		request.setAttribute("siteView", readSiteView(request));
-		return mapping.findForward("chooseDeleteTestAction");
-	}
-
 	public ActionForward deleteTest(
 		ActionMapping mapping,
 		ActionForm form,
@@ -471,24 +441,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		}
 		request.setAttribute("objectCode", executionCourseCode);
 		return showTests(mapping, form, request, response);
-	}
-
-	public ActionForward chooseTestAction(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-
-		String option = request.getParameter("button");
-		if (option.equals("sim"))
-			return deleteTest(mapping, form, request, response);
-		else if (option.equals("Alterar"))
-			return editTest(mapping, form, request, response);
-		else if (option.equals("Guardar"))
-			return editAsNewTest(mapping, form, request, response);
-		else
-			return showTests(mapping, form, request, response);
 	}
 
 	public ActionForward showImage(
@@ -547,39 +499,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 		return null;
-	}
-
-	public ActionForward prepareEditTest(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
-		Integer testCode = getCodeFromRequest(request, "testCode");
-		Object[] args = { executionCourseCode, testCode };
-		List result = null;
-		try {
-			result =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadDistributedTestByTestId",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		request.setAttribute(
-			"distributedTestListSize",
-			new Integer(result.size()));
-		request.setAttribute("testCode", testCode);
-		request.setAttribute("objectCode", executionCourseCode);
-		request.setAttribute("siteView", readSiteView(request));
-		return mapping.findForward("chooseEditTestAction");
 	}
 
 	public ActionForward editTest(
@@ -680,18 +599,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer objectCode = getCodeFromRequest(request, "objectCode");
 		Integer testCode = getCodeFromRequest(request, "testCode");
 
-		List shifts = null;
-		try {
-			Object[] args = { objectCode };
-			shifts =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadShiftsByExecutionCourseCode",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
 		List testTypeList = (new TestType()).getAllTypes();
 		request.setAttribute("testTypeList", testTypeList);
 		List correctionAvailabilityList =
@@ -700,19 +607,103 @@ public class TestsManagementAction extends FenixDispatchAction {
 			"correctionAvailabilityList",
 			correctionAvailabilityList);
 
-		List shitfTypes = new ArrayList();
-
-		shitfTypes.add(new LabelValueBean("Teórica", "T"));
-		shitfTypes.add(new LabelValueBean("Prática", "P"));
-		shitfTypes.add(new LabelValueBean("Teórico-prática", "TP"));
-		shitfTypes.add(new LabelValueBean("Laboratorial", "L"));
-
-		request.setAttribute("shiftTypes", shitfTypes);
-		request.setAttribute("shifts", shifts);
 		request.setAttribute("siteView", readSiteView(request));
 		request.setAttribute("testCode", testCode);
 		request.setAttribute("objectCode", objectCode);
+
+		((DynaActionForm) form).set("testType", "1");
+		((DynaActionForm) form).set("availableCorrection", "1");
+		((DynaActionForm) form).set("studentFeedback", "true");
+
 		return mapping.findForward("distributeTest");
+	}
+
+	public ActionForward chooseDistributionFor(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		if (request.getParameter("shifts") != null)
+			return chooseShifts(mapping, form, request, response);
+		else if (request.getParameter("students") != null)
+			return chooseStudents(mapping, form, request, response);
+		else if (request.getParameter("addShifts") != null)
+			return chooseAddShifts(mapping, form, request, response);
+		else if (request.getParameter("addStudents") != null)
+			return chooseAddStudents(mapping, form, request, response);
+		else if (request.getParameter("save") != null)
+			return editDistributedTest(mapping, form, request, response);
+		else
+			return showDistributedTests(mapping, form, request, response);
+	}
+
+	public ActionForward chooseShifts(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+
+		List shifts = null;
+		try {
+			Object[] args = { objectCode, null };
+			shifts =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadShiftsByDistributedTest",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		Collections.sort(shifts, new InfoShiftComparatorByLessonType());
+		request.setAttribute("siteView", readSiteView(request));
+		request.setAttribute("shifts", shifts);
+		request.setAttribute("testCode", testCode);
+		request.setAttribute("objectCode", objectCode);
+		return mapping.findForward("distributeTestByShifts");
+	}
+
+	public ActionForward chooseStudents(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		TeacherAdministrationSiteView siteView = null;
+		Object[] args = { objectCode, null };
+		try {
+			siteView =
+				(TeacherAdministrationSiteView) ServiceUtils.executeService(
+					userView,
+					"ReadStudentsByCurricularCourse",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		InfoSiteStudents infoSiteStudents =
+			(InfoSiteStudents) siteView.getComponent();
+		Collections.sort(
+			infoSiteStudents.getStudents(),
+			new BeanComparator("number"));
+
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("testCode", testCode);
+		request.setAttribute("objectCode", objectCode);
+		return mapping.findForward("distributeTestByStudents");
 	}
 
 	public ActionForward distributeTest(
@@ -729,10 +720,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer testCode = getCodeFromRequest(request, "testCode");
 
 		String testInformation = request.getParameter("testInformation");
-		String testBeginDate = request.getParameter("testBeginDate");
-		String testBeginHour = request.getParameter("testBeginHour");
-		String testEndDate = request.getParameter("testEndDate");
-		String testEndHour = request.getParameter("testEndHour");
+		String testBeginDate = request.getParameter("beginDateFormatted");
+		String testBeginHour = request.getParameter("beginHourFormatted");
+		String testEndDate = request.getParameter("endDateFormatted");
+		String testEndHour = request.getParameter("endHourFormatted");
 		String testType = request.getParameter("testType");
 		String availableCorrection =
 			request.getParameter("availableCorrection");
@@ -743,7 +734,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Calendar endDate = string2Date(testEndDate);
 		Calendar endHour = string2Hour(testEndHour);
 
-		String[] selectedShifts = request.getParameterValues("selectedShifts");
+		String[] selected = request.getParameterValues("selected");
+		String insertByShifts = request.getParameter("insertByShifts");
 
 		Object[] args =
 			{
@@ -757,7 +749,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 				new TestType(new Integer(testType)),
 				new CorrectionAvailability(new Integer(availableCorrection)),
 				new Boolean(studentFeedback),
-				selectedShifts };
+				selected,
+				new Boolean(insertByShifts)};
 
 		SiteView siteView = null;
 		try {
@@ -769,28 +762,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 		return showDistributedTests(mapping, form, request, response);
-	}
-
-	private Calendar string2Date(String date) {
-		String[] dateTokens = date.split("/");
-		Calendar result = Calendar.getInstance();
-		result.set(
-			Calendar.DAY_OF_MONTH,
-			(new Integer(dateTokens[0])).intValue());
-		result.set(Calendar.MONTH, (new Integer(dateTokens[1])).intValue() - 1);
-		result.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
-		return result;
-	}
-
-	private Calendar string2Hour(String hour) {
-		String[] hourTokens = hour.split(":");
-		Calendar result = Calendar.getInstance();
-		result.set(
-			Calendar.HOUR_OF_DAY,
-			(new Integer(hourTokens[0])).intValue());
-		result.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
-		result.set(Calendar.SECOND, new Integer(0).intValue());
-		return result;
 	}
 
 	public ActionForward showDistributedTests(
@@ -847,52 +818,105 @@ public class TestsManagementAction extends FenixDispatchAction {
 		}
 
 		List testTypeList = (new TestType()).getAllTypes();
-		for (int i = 0; i < testTypeList.size(); i++) {
-			if (((LabelValueBean) testTypeList.get(i))
-				.getLabel()
-				.equalsIgnoreCase(
-					((InfoSiteDistributedTest) siteView.getComponent())
-						.getInfoDistributedTest()
-						.getTestType()
-						.getTypeString()))
-				testTypeList.remove(testTypeList.get(i));
-		}
 		request.setAttribute("testTypeList", testTypeList);
-
 		List correctionAvailabilityList =
 			(new CorrectionAvailability()).getAllAvailabilities();
-		for (int i = 0; i < correctionAvailabilityList.size(); i++) {
-			if (((LabelValueBean) correctionAvailabilityList.get(i))
-				.getLabel()
-				.equalsIgnoreCase(
-					((InfoSiteDistributedTest) siteView.getComponent())
-						.getInfoDistributedTest()
-						.getCorrectionAvailability()
-						.getTypeString()))
-				correctionAvailabilityList.remove(
-					correctionAvailabilityList.get(i));
-		}
 		request.setAttribute(
 			"correctionAvailabilityList",
 			correctionAvailabilityList);
 
-		List studentFeedbackList = new ArrayList();
-		studentFeedbackList.add(new LabelValueBean("Sim", "true"));
-		if (((InfoSiteDistributedTest) siteView.getComponent())
-			.getInfoDistributedTest()
-			.getStudentFeedback()
-			.booleanValue()
-			== true)
-			studentFeedbackList.add(1, new LabelValueBean("Não", "false"));
-		else
-			studentFeedbackList.add(0, new LabelValueBean("Não", "false"));
-		request.setAttribute("studentFeedbackList", studentFeedbackList);
+		((DynaActionForm) form).set(
+			"testType",
+			((InfoSiteDistributedTest) siteView.getComponent())
+				.getInfoDistributedTest()
+				.getTestType()
+				.getType()
+				.toString());
+		((DynaActionForm) form).set(
+			"availableCorrection",
+			((InfoSiteDistributedTest) siteView.getComponent())
+				.getInfoDistributedTest()
+				.getCorrectionAvailability()
+				.getAvailability()
+				.toString());
+		((DynaActionForm) form).set(
+			"studentFeedback",
+			((InfoSiteDistributedTest) siteView.getComponent())
+				.getInfoDistributedTest()
+				.getStudentFeedback()
+				.toString());
 
 		request.setAttribute("distributedTestCode", distributedTestCode);
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("editDistributedTest");
 	}
 
+	public ActionForward chooseAddShifts(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+
+		List shifts = null;
+		try {
+			Object[] args = { objectCode, distributedTestCode };
+			shifts =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadShiftsByDistributedTest",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		Collections.sort(shifts, new InfoShiftComparatorByLessonType());
+		request.setAttribute("siteView", readSiteView(request));
+		request.setAttribute("shifts", shifts);
+		request.setAttribute("distributedTestCode", distributedTestCode);
+		request.setAttribute("objectCode", objectCode);
+		return mapping.findForward("addShiftsToDistributedTest");
+	}
+	public ActionForward chooseAddStudents(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+
+		List students = null;
+		try {
+			Object[] args = { objectCode, distributedTestCode };
+			students =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadStudentsWithoutDistributedTest",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		Collections.sort(students, new BeanComparator("number"));
+		request.setAttribute("siteView", readSiteView(request));
+		request.setAttribute("students", students);
+		request.setAttribute("distributedTestCode", distributedTestCode);
+		request.setAttribute("objectCode", objectCode);
+		return mapping.findForward("addStudentsToDistributedTest");
+	}
 	public ActionForward editDistributedTest(
 		ActionMapping mapping,
 		ActionForm form,
@@ -919,6 +943,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Calendar beginHour = string2Hour(testBeginHour);
 		Calendar endDate = string2Date(testEndDate);
 		Calendar endHour = string2Hour(testEndHour);
+		String[] selected = request.getParameterValues("selected");
+		String insertByShifts = request.getParameter("insertByShifts");
 
 		Object[] args =
 			{
@@ -931,7 +957,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 				endHour,
 				new TestType(new Integer(testType)),
 				new CorrectionAvailability(new Integer(availableCorrection)),
-				new Boolean(studentFeedback)};
+				new Boolean(studentFeedback),
+				selected,
+				new Boolean(insertByShifts)};
 
 		try {
 			ServiceUtils.executeService(userView, "EditDistributedTest", args);
@@ -1009,7 +1037,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		int numQuestions =
 			((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
 				.getDistributedTest()
-				.getInfoTest()
 				.getNumberOfQuestions()
 				.intValue();
 
@@ -1025,6 +1052,49 @@ public class TestsManagementAction extends FenixDispatchAction {
 		((DynaActionForm) form).set("option", option);
 		readSiteView(request);
 		return mapping.findForward("showStudentTest");
+	}
+
+	public ActionForward showStudentTestLog(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+		Integer studentCode = getCodeFromRequest(request, "studentCode");
+
+		List infoStudentTestLogList = null;
+		try {
+			infoStudentTestLogList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadStudentTestLog",
+					new Object[] {
+						objectCode,
+						distributedTestCode,
+						studentCode });
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		Iterator it = infoStudentTestLogList.iterator();
+		int maxQuestionNumber = 0;
+		while (it.hasNext()) {
+			InfoStudentTestLog infoStudentTestLog =
+				(InfoStudentTestLog) it.next();
+			if (maxQuestionNumber < infoStudentTestLog.getEventList().size())
+				maxQuestionNumber = infoStudentTestLog.getEventList().size();
+		}
+		request.setAttribute("questionNumber", new Integer(maxQuestionNumber));
+		readSiteView(request);
+		request.setAttribute("infoStudentTestLogList", infoStudentTestLogList);
+		request.setAttribute("distributedTestCode", distributedTestCode);
+		return mapping.findForward("showStudentTestLog");
 	}
 
 	private SiteView readSiteView(HttpServletRequest request)
@@ -1056,19 +1126,42 @@ public class TestsManagementAction extends FenixDispatchAction {
 	private Integer getCodeFromRequest(
 		HttpServletRequest request,
 		String codeString) {
-		Integer code = null;
-		String thisCodeString = request.getParameter(codeString);
-		if (thisCodeString == null) {
-			Object o = request.getAttribute(codeString);
-			if (o instanceof String)
-				thisCodeString = (String) o;
-			else if (o instanceof Integer)
-				code = (Integer) o;
-		} else if (thisCodeString != null) {
-			code = new Integer(thisCodeString);
-		}
 
+		Integer code = null;
+
+		Object objectCode = request.getAttribute(codeString);
+		if (objectCode != null) {
+			if (objectCode instanceof String)
+				code = new Integer((String) objectCode);
+			else if (objectCode instanceof Integer)
+				code = (Integer) objectCode;
+		} else {
+			String thisCodeString = request.getParameter(codeString);
+			if (thisCodeString != null)
+				code = new Integer(thisCodeString);
+		}
 		return code;
 	}
 
+	private Calendar string2Date(String date) {
+		String[] dateTokens = date.split("/");
+		Calendar result = Calendar.getInstance();
+		result.set(
+			Calendar.DAY_OF_MONTH,
+			(new Integer(dateTokens[0])).intValue());
+		result.set(Calendar.MONTH, (new Integer(dateTokens[1])).intValue() - 1);
+		result.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
+		return result;
+	}
+
+	private Calendar string2Hour(String hour) {
+		String[] hourTokens = hour.split(":");
+		Calendar result = Calendar.getInstance();
+		result.set(
+			Calendar.HOUR_OF_DAY,
+			(new Integer(hourTokens[0])).intValue());
+		result.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
+		result.set(Calendar.SECOND, new Integer(0).intValue());
+		return result;
+	}
 }

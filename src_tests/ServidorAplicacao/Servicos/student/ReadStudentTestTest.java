@@ -39,7 +39,8 @@ public class ReadStudentTestTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new String("15"), new Integer(2)};
+		Object[] args =
+			{ new String("13"), new Integer(25), new Boolean(false)};
 		return args;
 	}
 

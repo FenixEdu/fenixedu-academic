@@ -37,7 +37,6 @@ CREATE TABLE TESTS (
   CREATION_DATE timestamp not null default 'NOW()',
   LAST_MODIFICATION_DATE timestamp not null default 'NOW()',
   KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
-  VISIBLE int(1) not null default '1',
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;
 
@@ -63,6 +62,7 @@ CREATE TABLE TEST_QUESTION(
 drop table if exists DISTRIBUTED_TESTS;
 CREATE TABLE DISTRIBUTED_TESTS(
   ID_INTERNAL int(11) unsigned not null auto_increment,
+  TITLE text not null,
   TEST_INFORMATION text,
   TEST_BEGIN_DATE date,
   TEST_BEGIN_HOUR time,
@@ -71,7 +71,8 @@ CREATE TABLE DISTRIBUTED_TESTS(
   TEST_TYPE int(1) not null default '0',
   CORRECTION_AVAILABILITY int(1) not null default '0',
   STUDENT_FEEDBACK int(1) not null default '0',
-  KEY_TEST int(11) unsigned not null default '0',
+  NUMBER_OF_QUESTIONS int(2) not null default '0',
+  KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;
 
@@ -90,4 +91,18 @@ CREATE TABLE STUDENT_TEST_QUESTION(
   OPTION_SHUFFLE text,
   PRIMARY KEY  (ID_INTERNAL),
   unique U1 (KEY_STUDENT, KEY_DISTRIBUTED_TEST, KEY_XML_DOCUMENT)
+) TYPE=InnoDB;
+
+#-------------------------------------
+# Table structure for STUDENT_TEST_LOG
+#-------------------------------------
+drop table if exists STUDENT_TEST_LOG;
+CREATE TABLE STUDENT_TEST_LOG(
+  ID_INTERNAL int(11) unsigned not null auto_increment,
+  KEY_STUDENT int(11) unsigned not null default '0',
+  KEY_DISTRIBUTED_TEST int(11) unsigned not null default '0',
+  DATE timestamp not null default 'NOW()',
+  EVENT text,
+  PRIMARY KEY  (ID_INTERNAL),
+  index INDEX1 (KEY_STUDENT, KEY_DISTRIBUTED_TEST, DATE)
 ) TYPE=InnoDB;

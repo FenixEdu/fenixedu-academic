@@ -39,7 +39,7 @@ public class ReadStudentTestsToDoTest extends TestCaseReadServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new String("15"), new Integer(26)};
+		Object[] args = { new String("14"), new Integer(26)};
 		return args;
 	}
 
@@ -54,7 +54,7 @@ public class ReadStudentTestsToDoTest extends TestCaseReadServices {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IDistributedTest distributedTest =
-				new DistributedTest(new Integer(2));
+				new DistributedTest(new Integer(27));
 			distributedTest =
 				(IDistributedTest) sp
 					.getIPersistentDistributedTest()

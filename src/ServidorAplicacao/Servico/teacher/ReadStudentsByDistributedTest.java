@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
-import Dominio.IStudentTestQuestion;
+import Dominio.IStudent;
+import Dominio.Student;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -52,22 +52,14 @@ public class ReadStudentsByDistributedTest implements IServico {
 					distributedTest,
 					false);
 
-			List studentTestQuestionList =
+			List studentList =
 				persistentSuport
 					.getIPersistentStudentTestQuestion()
-					.readByDistributedTest(
-					distributedTest);
-
-			Iterator it = studentTestQuestionList.iterator();
-
+					.readStudentsByDistributedTest(distributedTest);
+			Iterator it = studentList.iterator();
 			while (it.hasNext()) {
-				IStudentTestQuestion studentTestQuestion =
-					(IStudentTestQuestion) it.next();
-				InfoStudent infoStudent =
-					Cloner.copyIStudent2InfoStudent(
-						studentTestQuestion.getStudent());
-				if (!infoStudentList.contains(infoStudent))
-					infoStudentList.add(infoStudent);
+				IStudent student = (Student) it.next();
+				infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

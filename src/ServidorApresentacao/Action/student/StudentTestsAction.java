@@ -5,6 +5,7 @@
 package ServidorApresentacao.Action.student;
 
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -131,7 +132,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 					"ReadStudentTest",
 					new Object[] {
 						userView.getUtilizador(),
-						new Integer(testCode)});
+						new Integer(testCode),
+						new Boolean(true)});
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -143,7 +145,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 		int numQuestions =
 			((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
 				.getDistributedTest()
-				.getInfoTest()
 				.getNumberOfQuestions()
 				.intValue();
 
@@ -152,27 +153,14 @@ public class StudentTestsAction extends FenixDispatchAction {
 		while (it.hasNext()) {
 			InfoStudentTestQuestion infoStudentTestQuestion =
 				(InfoStudentTestQuestion) it.next();
-			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()- 1]=infoStudentTestQuestion.getResponse().toString();
+			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
+				- 1] =
+				infoStudentTestQuestion.getResponse().toString();
 		}
 
+		request.setAttribute("date", getDate());
 		((DynaActionForm) form).set("option", option);
 		return mapping.findForward("doTest");
-	}
-
-	public ActionForward chooseAction(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-
-		String button = request.getParameter("button");
-
-		if (button.equals("Voltar"))
-			return testsFirstPage(mapping, form, request, response);
-		else if (button.equals("Submeter Ficha"))
-			return doTest(mapping, form, request, response);
-		return viewTestsToDo(mapping, form, request, response);
 	}
 
 	public ActionForward showImage(
@@ -233,7 +221,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		String[] options= (String[]) ((DynaActionForm)form).get("option");
+		String[] options = (String[]) ((DynaActionForm) form).get("option");
 		String testCode = request.getParameter("testCode");
 		String objectCode = request.getParameter("objectCode");
 
@@ -254,41 +242,71 @@ public class StudentTestsAction extends FenixDispatchAction {
 					"ReadStudentTest",
 					new Object[] {
 						userView.getUtilizador(),
-						new Integer(testCode)});
+						new Integer(testCode),
+						new Boolean(false)});
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 		Collections.sort(infoStudentTestQuestionList);
 		request.setAttribute("objectCode", objectCode);
+		request.setAttribute("testCode", testCode);
 		request.setAttribute("sent", sent);
 
 		if (sent.booleanValue()) {
 			Iterator it = infoStudentTestQuestionList.iterator();
+			int numQuestions =
+				((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
+					.getDistributedTest()
+					.getNumberOfQuestions()
+					.intValue();
+			String[] option = new String[numQuestions];
 			int correctResponseNumber = 0;
 			int incorrectResponseNumber = 0;
 			int responseNumber = 0;
 			Integer numberOfQuestions = new Integer(0);
 			Boolean studentFeedback = new Boolean(false);
 			CorrectionAvailability correction = null;
-			
-			while (it.hasNext()) {
 
-				InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) it.next();
-				correction = infoStudentTestQuestion.getDistributedTest().getCorrectionAvailability();
-				studentFeedback = infoStudentTestQuestion.getDistributedTest().getStudentFeedback();
+			while (it.hasNext()) {
+				InfoStudentTestQuestion infoStudentTestQuestion =
+					(InfoStudentTestQuestion) it.next();
+				option[infoStudentTestQuestion
+					.getTestQuestionOrder()
+					.intValue()
+					- 1] =
+					infoStudentTestQuestion.getResponse().toString();
+				correction =
+					infoStudentTestQuestion
+						.getDistributedTest()
+						.getCorrectionAvailability();
+				studentFeedback =
+					infoStudentTestQuestion
+						.getDistributedTest()
+						.getStudentFeedback();
 				if (studentFeedback.booleanValue()) {
-					numberOfQuestions =	infoStudentTestQuestion.getDistributedTest().getInfoTest().getNumberOfQuestions();
-					studentFeedback = infoStudentTestQuestion.getDistributedTest().getStudentFeedback();
-					if (infoStudentTestQuestion.getResponse().intValue() != 0) {
+					numberOfQuestions =
+						infoStudentTestQuestion
+							.getDistributedTest()
+							.getNumberOfQuestions();
+					studentFeedback =
+						infoStudentTestQuestion
+							.getDistributedTest()
+							.getStudentFeedback();
+					if (infoStudentTestQuestion.getResponse().intValue()
+						!= 0) {
 						responseNumber++;
-						if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(infoStudentTestQuestion.getResponse()))
-								correctResponseNumber++;
+						if (infoStudentTestQuestion
+							.getQuestion()
+							.getCorrectResponse()
+							.contains(infoStudentTestQuestion.getResponse()))
+							correctResponseNumber++;
 						else
 							incorrectResponseNumber++;
 					}
 				} else
 					break;
 			}
+			((DynaActionForm) form).set("option", option);
 			request.setAttribute("studentFeedback", studentFeedback);
 			if (studentFeedback.booleanValue()) {
 				request.setAttribute(
@@ -305,7 +323,9 @@ public class StudentTestsAction extends FenixDispatchAction {
 					new Integer(numberOfQuestions.intValue() - responseNumber));
 			}
 			if (correction.getTypeString().equals("Sempre"))
-				request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
+				request.setAttribute(
+					"infoStudentTestQuestionList",
+					infoStudentTestQuestionList);
 		}
 
 		return mapping.findForward("studentFeedback");
@@ -331,24 +351,54 @@ public class StudentTestsAction extends FenixDispatchAction {
 					"ReadStudentTest",
 					new Object[] {
 						userView.getUtilizador(),
-						new Integer(testCode)});
+						new Integer(testCode),
+						new Boolean(false)});
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
 		Collections.sort(infoStudentTestQuestionList);
-		request.setAttribute("infoStudentTestQuestionList",infoStudentTestQuestionList);
+		request.setAttribute(
+			"infoStudentTestQuestionList",
+			infoStudentTestQuestionList);
 
-		int numQuestions =((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0)).getDistributedTest().getInfoTest().getNumberOfQuestions().intValue();
+		int numQuestions =
+			((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
+				.getDistributedTest()
+				.getNumberOfQuestions()
+				.intValue();
 
 		Iterator it = infoStudentTestQuestionList.iterator();
 		String[] option = new String[numQuestions];
 		while (it.hasNext()) {
-			InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) it.next();
-			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()- 1] =	infoStudentTestQuestion.getResponse().toString();
+			InfoStudentTestQuestion infoStudentTestQuestion =
+				(InfoStudentTestQuestion) it.next();
+			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
+				- 1] =
+				infoStudentTestQuestion.getResponse().toString();
 		}
 		((DynaActionForm) form).set("option", option);
 		return mapping.findForward("showTestCorrection");
 	}
 
+	private String getDate() {
+		String result = new String();
+		Calendar calendar = Calendar.getInstance();
+		result += calendar.get(Calendar.DAY_OF_MONTH);
+		result += "/";
+		result += calendar.get(Calendar.MONTH) + 1;
+		result += "/";
+		result += calendar.get(Calendar.YEAR);
+		result += " ";
+		result += calendar.get(Calendar.HOUR_OF_DAY);
+		result += ":";
+		if (calendar.get(Calendar.MINUTE) < 10)
+			result += "0";
+		result += calendar.get(Calendar.MINUTE);
+		result += ":";
+		if (calendar.get(Calendar.SECOND) < 10)
+			result += "0";
+		result += calendar.get(Calendar.SECOND);
+		return result;
+	}
 }
