@@ -72,12 +72,12 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 		if (specialization != null && specialization.getSpecialization() != null)
 		{
 			criteria.addEqualTo(
-					"studentCurricularPlan.Specialization.specialization",
+					"studentCurricularPlan.specialization",
 					specialization.getSpecialization());
 		}
 		else //all specialization required, but not records with  specialization null
 		{
-			criteria.addNotNull("studentCurricularPlan.Specialization.specialization");
+			criteria.addNotNull("studentCurricularPlan.specialization");
 		}
 		
 		return queryList(GratuitySituation.class, criteria);
@@ -111,12 +111,12 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 		if (specialization != null && specialization.getSpecialization() != null)
 		{
 			criteria.addEqualTo(
-				"studentCurricularPlan.Specialization.specialization",
+				"studentCurricularPlan.specialization",
 				specialization.getSpecialization());
 		}
 		else //all specialization required, but not records with  specialization null
 		{
-			criteria.addNotNull("studentCurricularPlan.Specialization.specialization");
+			criteria.addNotNull("studentCurricularPlan.specialization");
 		}
 
  		if (situation != null)

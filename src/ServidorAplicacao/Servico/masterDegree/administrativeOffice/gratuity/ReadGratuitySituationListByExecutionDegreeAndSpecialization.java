@@ -118,13 +118,13 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				persistentGratuitySituation.readGratuitySituationListByExecutionDegreeAndSpecialization(
 					executionDegree,
 					specialization);
-
+						
 			List infoGratuitySituationList = new ArrayList();
 			double totalPayedValue = 0;
 			double totalRemaingValue = 0;
 
 			if (gratuitySituationList != null && gratuitySituationList.size() > 0)
-			{
+			{				
 				ListIterator listIterator = gratuitySituationList.listIterator();
 				//while it is cloner each element of the list
 				//it is calculate the total values of payed and remaning values.
@@ -143,7 +143,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 					fillSituationType(infoGratuitySituation);
 
-					if (infoGratuitySituation.getSituationType().equals(gratuitySituationType))
+					if (gratuitySituationType == null || infoGratuitySituation.getSituationType().equals(gratuitySituationType))
 					{
 						infoGratuitySituationList.add(infoGratuitySituation);
 
@@ -154,7 +154,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 							totalRemaingValue + infoGratuitySituation.getRemainingValue().doubleValue();
 					}
 				}
-			}
+			} 
 
 			//build the result that is a hash map with a list, total payed and remaining value
 			result = new HashMap();
@@ -305,12 +305,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			}
 
 			//discount exemption
-			if (infoGratuitySituation.getExemptionPercentage() != null && infoGratuitySituation.getExemptionPercentage().doubleValue() > 0)
+			if (infoGratuitySituation.getExemptionPercentage() != null
+				&& infoGratuitySituation.getExemptionPercentage().doubleValue() > 0)
 			{
 				double exemptionDiscount =
 					infoGratuitySituation.getRemainingValue().doubleValue()
 						* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
-				infoGratuitySituation.setRemainingValue(new Double(infoGratuitySituation.getRemainingValue().doubleValue()-exemptionDiscount));
+				infoGratuitySituation.setRemainingValue(
+					new Double(
+						infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount));
 			}
 		}
 	}

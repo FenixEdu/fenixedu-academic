@@ -33,7 +33,7 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	private Double payedValue;//attributes auxiliaries for calculations
 	private Double remainingValue;//attributes auxiliaries for calculations
 	private GratuitySituationType situationType; //attributes auxiliaries for calculations 
-	private Boolean insurancePayed; //attributes auxiliaries for calculations
+	private Boolean insurancePayed = Boolean.FALSE; //attributes auxiliaries for calculations
 		
 	/**
 	 * @return Returns the insurancePayed.

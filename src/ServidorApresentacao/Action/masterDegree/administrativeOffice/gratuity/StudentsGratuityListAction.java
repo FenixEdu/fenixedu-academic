@@ -343,6 +343,10 @@ public class StudentsGratuityListAction extends DispatchAction
 		{
 			//order list by student's name
 			Collections.sort(infoGratuitySituationList, new BeanComparator("remainingValue"));
+		} else if (orderingType.equals(new String("insurance")))
+		{
+			//order list by student's name
+			//Collections.sort(infoGratuitySituationList, new BeanComparator("insurancePayed"));
 		}
 	}
 
