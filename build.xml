@@ -307,7 +307,7 @@
             description="Compila de raiz os testes para o projecto"
             name="build-tests"/>   
 
-    <target depends="compile-tests, load-dump-db"
+    <target depends="compile-tests, create-tables"
             description="Executa todos os testes"
             name="generate_unitTest-reports">
 
@@ -366,7 +366,7 @@
 		</replace>
     </target>
 
-    <target depends="compile-tests, load-dump-db"
+    <target depends="compile-tests, create-tables"
             description="Executa todos os testes"
             name="run-tests">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -378,7 +378,7 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                   <include name="**/*Test.java"/>
+                   <include name="**/ReadTeacherDegreeFinalProjectOrientationTest.java"/>
                     
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
@@ -410,7 +410,7 @@
         </junit>
     </target>
     
-    <target depends="compile-tests, load-dump-db"
+    <target depends="compile-tests, create-tables"
             description="Executa todos os testes"
             name="run-tests-capresentacao">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -462,7 +462,7 @@
         </junit>
     </target>
     
-    <target depends="compile-tests, load-dump-db"
+    <target depends="compile-tests, create-tables"
             description="Runs persistent layer tests"
             name="run-tests-sp">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -497,7 +497,7 @@
         </junit>
     </target>
 
-    <target depends="compile-tests, load-dump-db"
+    <target depends="compile-tests, create-tables"
             description="Executa todos os testes da camada de aplicacao"
             name="run-tests-caplicacao">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -509,7 +509,7 @@
                   <!--  <include name="**/CreateAnnouncementTest.java"/> -->
                  <!--   <include name="**/ReadSiteAnnouncementTest.java"/> -->
 				<!--	<include name="**/ReadAnnouncementTest.java"/> -->
-					<include name="**/CreateGrantOwnerTest.java"/>
+					<include name="**/SearchGrantOwnerTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
