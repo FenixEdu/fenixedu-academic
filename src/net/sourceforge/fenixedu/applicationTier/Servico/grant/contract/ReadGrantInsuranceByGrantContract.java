@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsur
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 

@@ -15,6 +15,7 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.ManageableCollection;

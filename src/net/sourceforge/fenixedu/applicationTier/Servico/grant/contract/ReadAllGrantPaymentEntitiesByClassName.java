@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPayme
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 
 import org.apache.commons.collections.CollectionUtils;

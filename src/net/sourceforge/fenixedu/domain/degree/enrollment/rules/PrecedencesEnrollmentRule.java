@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.precedences.PrecedenceContext;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
 
 import org.apache.commons.collections.CollectionUtils;

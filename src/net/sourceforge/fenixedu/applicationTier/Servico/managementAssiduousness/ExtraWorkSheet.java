@@ -44,7 +44,7 @@ import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWork;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
