@@ -96,6 +96,7 @@
     <message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADM_OFFICE" null="false"/>
 	<message-resources parameter="ServidorApresentacao.SchoolRegistrationResources" key="SCHOOL_REGISTRATION_RESOURCES" null="false"/>
 	<message-resources parameter="ServidorApresentacao.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>
+	<message-resources parameter="ServidorApresentacao.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

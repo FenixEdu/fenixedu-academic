@@ -37,6 +37,8 @@ import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
+import ServidorPersistente.inquiries.IPersistentOldInquiriesSummary;
+import ServidorPersistente.inquiries.IPersistentOldInquiriesTeachersRes;
 import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWork;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkCompensation;
@@ -454,7 +456,13 @@ public interface ISuportePersistente {
     public IPersistentAttendsSet getIPersistentAttendsSet();
 
     public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse();
-
+    
+    // Rita Ferreira e João Fialho
+    public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
+    
+    public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
+        
+    //
     public IPersistentCostCenter getIPersistentCostCenter();
     
     public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();

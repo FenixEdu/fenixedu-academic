@@ -25,13 +25,16 @@
 	</definition>
 	<definition name="showCurricularPlans" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
-		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlans.jsp" />
-		
+		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlans.jsp" />		
 	</definition>
 	<definition name="showCurricularPlansEnglish" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showDegreeSiteCurricularPlansEnglish.jsp" />
-	</definition>	
+	</definition>
+	<definition name="viewDegreeEvaluation" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
+		<put name="body" value="/publico/degreeSite/viewDegreeEvaluation.jsp" />
+	</definition>
 	<definition name="showDegreeCurricularPlan" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlan.jsp"/>

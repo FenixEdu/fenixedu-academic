@@ -157,8 +157,17 @@
    		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
 
-  </form-beans>     
+  <!-- OLD INQUIRIES SUMMARY -->
+	<form-bean name="viewDegreeEvaluationForm"
+		type="org.apache.struts.validator.DynaValidatorForm"
+		dynamic="true">
+   		<form-property name="executionPeriodId" type="java.lang.Integer" initial="0"/>
+   		<form-property name="semester" type="java.lang.Integer" initial="0"/>
+	</form-bean>
      
+
+  </form-beans>     
+  
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
@@ -588,7 +597,7 @@
 	     <forward  name="showDegrees" path="showDegrees"/>  		  
      </action>	 
    
-    <action path="/showDegreeSite" 
+    <action path="/showDegreeSite" name="viewDegreeEvaluationForm"
      		type="ServidorApresentacao.Action.publico.ShowDegreeSiteAction" 
      		parameter="method"
      		input="/showDegrees.do?method=nonMaster"
@@ -599,6 +608,7 @@
 	     <forward  name="showAccessRequirementsEnglish" path="showAccessRequirementsEnglish"/>  
 	     <forward  name="showCurricularPlans" path="showCurricularPlans"/>
 	     <forward  name="showCurricularPlansEnglish" path="showCurricularPlansEnglish"/>  	  
+	     <forward  name="viewDegreeEvaluation" path="viewDegreeEvaluation"/>  	  
      </action>
      
      <action path="/showDegreeCurricularPlan" 

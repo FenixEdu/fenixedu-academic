@@ -47,6 +47,9 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
     public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriod(String courseInitials,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
+    public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriodId(String courseInitials,
+            Integer executionPeriodId) throws ExcepcaoPersistencia;
+
     public void deleteExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;

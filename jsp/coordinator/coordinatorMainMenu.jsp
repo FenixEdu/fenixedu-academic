@@ -137,6 +137,16 @@
 				</html:link>
 			</li>		
 			
+			<%--
+			<li>
+				<html:link page="<%="/viewOldInquiriesTeachersResults.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					<bean:message key="link.view.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+				    <br/>
+					<br/>
+				</html:link>
+			</li>
+			--%>
+			
 		</ul>
 	</logic:notEqual> 
 	
@@ -154,7 +164,7 @@
 		<li>
 			<html:link page="<%= "/viewCoordinationTeam.do?method=viewTeam&degreeCurricularPlanID="+ 
 			degreeCurricularPlanID.toString()  %>" >
-				Equipa de Coordenação
+				Equipa de CoordenaÃ§Ã£o
 			</html:link> 
 			<br/>
 			<br/>

@@ -37,6 +37,15 @@
 			<bean:message key="label.exams"/>
         </html:link>
 	</li>
+	
+	<%--
+	<li>
+    	<html:link page="<%= "/showDegreeSite.do?method=viewDegreeEvaluation&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
+			<bean:message key="link.view.degree.evaluation" bundle="INQUIRIES_RESOURCES"/>
+        </html:link>
+	</li>
+	--%>
+	
 	<%--/viewAllExamsByDegreeAndCurricularYear.do?method=listClasses--%>
 </ul>
 </logic:notPresent>

@@ -155,4 +155,16 @@
 	<definition name="studentsGratuityList" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/gratuity/studentsGratuityList.jsp"/>
 	</definition>
+
+	<!-- =================== View Old Inquiries Teacher's Results ============== -->
+	<definition name="inquiry-choose-execution-period-and-course" 
+		extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/inquiries/chooseExecutionPeriodAndCourse.jsp"></put>
+	</definition>
+	
+	<definition name="show-old-inquiries-teacher-res" 
+		extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/inquiries/showOldInquiriesTeacherRes.jsp"></put>
+	</definition>
+
 </tiles-definitions>

@@ -58,6 +58,7 @@
 <!ENTITY faqSection SYSTEM "repository_faqSection.xml">
 <!ENTITY glossaryEntry SYSTEM "repository_glossaryEntry.xml">
 <!ENTITY executionPeriod SYSTEM "repository_execution_period.xml">
+<!ENTITY oldInquiries SYSTEM "repository_old_inquiries.xml">
 <!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 <!ENTITY projectsManagement SYSTEM "repository_projectsManagement.xml">
 ]>
@@ -124,6 +125,7 @@
 	&faqSection;
 	&glossaryEntry;
 	&executionPeriod;
+	&oldInquiries;
 	&managementAssiduousness;
 	&projectsManagement;
 	

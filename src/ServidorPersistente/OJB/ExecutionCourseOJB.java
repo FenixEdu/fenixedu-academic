@@ -140,6 +140,16 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
     }
 
+    public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriodId(String courseInitials,
+            Integer executionPeriodId) throws ExcepcaoPersistencia {
+
+        Criteria criteria = new Criteria();
+
+        criteria.addEqualTo("keyExecutionPeriod", executionPeriodId);
+        criteria.addEqualTo("sigla", courseInitials);
+        return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
+    }
+
     public void deleteExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
         Criteria crit1 = new Criteria();

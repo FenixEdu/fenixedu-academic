@@ -29,5 +29,9 @@
 		<put name="body-context" value="" /> 
 		<put name="navLocalExtra" value="/coordinator/enrollment/enrollmentStudentMenu.jsp" />		
 	</definition>
+
+	<!-- =================== View Old Inquiries Teacher's Results ============== -->
+	<definition name="view.old.inquiries.teachers.results.page" extends="definition.coordinator.two-column">	  
+	</definition>
 	
 </tiles-definitions>		

@@ -86,4 +86,18 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value=""></put>
 	</definition>    
+
+	<!-- =================== View Old Inquiries Teacher's Results ============== -->
+	<definition name="view.old.inquiries.teachers.results.page" page="/teacherLayout_2col.jsp">
+	  <put name="serviceName" value="Portal Docente" />	
+	  <put name="institutionName" value="Instituto Superior Técnico" />
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="body" value="" />
+	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />	  
+	  <put name="title" value=""/>
+	  <put name="link" value=""/>
+	</definition>	
+
 </tiles-definitions>

@@ -856,6 +856,8 @@ public class InfoPerson extends InfoObject {
             setUsername(person.getUsername());
 
             setAvailablePhoto(person.getAvailablePhoto());
+            
+            setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
 
         }
     }

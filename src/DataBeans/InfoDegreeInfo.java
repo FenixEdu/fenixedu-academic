@@ -364,6 +364,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             setProfessionalExitsEn(degreeInfo.getProfessionalExitsEn());
             setTestIngression(degreeInfo.getTestIngression());
             setTestIngressionEn(degreeInfo.getTestIngressionEn());
+            setInfoDegree(InfoDegree.newInfoFromDomain(degreeInfo.getDegree()));
         }
     }
 

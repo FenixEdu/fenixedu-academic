@@ -41,4 +41,13 @@
   		<bean:message key="link.curriculumHistoric.consult" bundle="CURRICULUM_HISTORIC_RESOURCES" />
   	</html:link>  
   </li>
+  
+  <%--
+  <li>
+	<html:link href="<%= request.getContextPath() + "/teacher/viewOldInquiriesTeachersResults.do?method=prepare" %>">
+		<bean:message key="link.view.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+	</html:link>
+  </li>
+  --%>
+  
 </ul>

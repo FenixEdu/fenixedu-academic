@@ -441,5 +441,17 @@
 		extends="copy.site.execution.course.page">
 		<put name="body" value="/gesdis/viewExecutionCourses.jsp"></put>
 	</definition>	
+
+	<!-- =================== View Old Inquiries Teacher's Results ============== -->
+	<definition name="inquiry-choose-execution-period-and-course" 
+		extends="view.old.inquiries.teachers.results.page">
+		<put name="body" value="/teacher/inquiries/chooseExecutionPeriodAndCourse.jsp"></put>
+	</definition>
+	
+	<definition name="show-old-inquiries-teacher-res" 
+		extends="view.old.inquiries.teachers.results.page">
+		<put name="body" value="/teacher/inquiries/showOldInquiriesTeacherRes.jsp"></put>
+	</definition>
+	
 	
 </tiles-definitions>

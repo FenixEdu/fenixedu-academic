@@ -58,6 +58,8 @@ import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
 import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideEntryOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
+import ServidorPersistente.OJB.inquiries.OldInquiriesSummaryOJB;
+import ServidorPersistente.OJB.inquiries.OldInquiriesTeachersResOJB;
 import ServidorPersistente.OJB.log.EnrolmentLogOJB;
 import ServidorPersistente.OJB.log.IPersistentEnrolmentLog;
 import ServidorPersistente.OJB.managementAssiduousness.CostCenterOJB;
@@ -127,6 +129,8 @@ import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
+import ServidorPersistente.inquiries.IPersistentOldInquiriesSummary;
+import ServidorPersistente.inquiries.IPersistentOldInquiriesTeachersRes;
 import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWork;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkCompensation;
@@ -1265,6 +1269,14 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     	return new PublicationAuthorOJB();
     }
 
+    // Rita Ferreira e João Fialho
+	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
+		return new OldInquiriesSummaryOJB();
+	}
+	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
+	    return new OldInquiriesTeachersResOJB();
+	}
+	//
     public IPersistentPublicationTeacher getIPersistentPublicationTeacher(){
     	return new PublicationTeacherOJB();
     }

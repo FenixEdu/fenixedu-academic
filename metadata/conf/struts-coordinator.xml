@@ -286,6 +286,14 @@
 			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
 		</form-bean>	
 
+		<!-- =================== View Old Inquiries Teacher's Results ============== -->
+		<form-bean name="viewOldInquiriesTeachersResultsForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+        	<form-property name="executionPeriodId" type="java.lang.Integer" />
+		</form-bean>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -753,6 +761,18 @@
 				<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
 				<forward name="show-final-degree-work-list" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
 	</action>
+
+		<!-- =================== View Old Inquiries Teacher's Results ============== -->
+		<action path="/viewOldInquiriesTeachersResults"
+			type="ServidorApresentacao.Action.coordinator.inquiries.ViewOldInquiriesTeachersResultsAction"
+			name = "viewOldInquiriesTeachersResultsForm"
+			scope="request"
+			input="/viewOldInquiriesTeachersResults.do?method=prepare&amp;page=0"
+			parameter="method"
+			>
+			<forward name="chooseExecutionPeriodAndCourse" path="inquiry-choose-execution-period-and-course"/>
+			<forward name="showOldInquiriesTeacherRes" path="show-old-inquiries-teacher-res"/>
+		</action>
 
     </action-mappings>
     

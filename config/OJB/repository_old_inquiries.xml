@@ -1,0 +1,639 @@
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.inquiries.OldInquiriesSummary -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.inquiries.OldInquiriesSummary"
+                  table="OLD_INQUIRIES_SUMMARY">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+    <field-descriptor
+        name="inquiryId"
+        column="INQUIRY_ID"
+        jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+        name="gepExecutionYear"
+        column="GEP_EXECUTION_YEAR"
+        jdbc-type="INTEGER"
+	/>
+         
+    <field-descriptor
+        name="keyExecutionPeriod"
+        column="KEY_EXECUTION_PERIOD"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionPeriod"
+	  class-ref="Dominio.ExecutionPeriod">
+	  <foreignkey field-ref="keyExecutionPeriod"/>
+   </reference-descriptor>
+	            
+    <field-descriptor
+         name="semester"
+         column="SEMESTER"
+    	 jdbc-type="INTEGER"/>
+    	 
+   	<field-descriptor
+         name="degreeKey"
+         column="KEY_DEGREE"
+    	 jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="degree"
+	  class-ref="Dominio.DegreeInfo">
+	  <foreignkey field-ref="degreeKey"/>
+   </reference-descriptor>
+    
+    <field-descriptor
+         name="gepDegreeName"
+         column="GEP_DEGREE_NAME"
+    	 jdbc-type="VARCHAR"/>
+    	 
+    <field-descriptor
+         name="averageAppreciationTeachers"
+         column="AVERAGE_APPRECIATION_TEACHERS"
+    	  jdbc-type="DOUBLE"
+    />
+    	 
+    <field-descriptor
+         name="averageAppreciationCourse"
+         column="AVERAGE_APPRECIATION_COURSE"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="curricularYear"
+         column="CURRICULAR_YEAR"
+    	  jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="representationQuota"
+         column="REPRESENTATION_QUOTA"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="courseCode"
+         column="COURSE_CODE"
+         jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor
+         name="gepCourseId"
+         column="GEP_COURSE_ID"
+         jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="gepCourseName"
+         column="GEP_COURSE_NAME"
+    	  jdbc-type="VARCHAR"
+    />
+
+     <field-descriptor
+        name="numberEnrollments"
+         column="NUMBER_ENROLLMENTS"
+    	  jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="numberApproved"
+         column="NUMBER_APPROVED"
+    	  jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="numberEvaluated"
+         column="NUMBER_EVALUATED"
+    	  jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="numberAnswers"
+         column="NUMBER_ANSWERS"
+    	  jdbc-type="INTEGER"
+    />
+    <field-descriptor
+         name="roomAverage"
+         column="ROOM_AVERAGE"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="firstEnrollment"
+         column="FIRST_ENROLLMENT"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="average2_2"
+         column="AVERAGE_2_2"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="average2_3"
+         column="AVERAGE_2_3"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="average2_4"
+         column="AVERAGE_2_4"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="average2_5"
+         column="AVERAGE_2_5"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="average2_6"
+         column="AVERAGE_2_6"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average2_7_numerical"
+         column="AVERAGE_2_7_NUMERICAL"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average2_7_interval"
+         column="AVERAGE_2_7_INTERVAL"
+    	  jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor
+         name="average2_8"
+         column="AVERAGE_2_8"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_3_numerical"
+         column="AVERAGE_3_3_NUMERICAL"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_3_interval"
+         column="AVERAGE_3_3_INTERVAL"
+    	  jdbc-type="VARCHAR"
+    />
+     <field-descriptor
+         name="average3_4_numerical"
+         column="AVERAGE_3_4_NUMERICAL"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_4_interval"
+         column="AVERAGE_3_4_INTERVAL"
+    	  jdbc-type="VARCHAR"
+    />
+		
+    <field-descriptor
+         name="average3_5"
+         column="AVERAGE_3_5"
+    	  jdbc-type="DOUBLE"
+    />
+    <field-descriptor
+         name="average3_6"
+         column="AVERAGE_3_6"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_7"
+         column="AVERAGE_3_7"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_8"
+         column="AVERAGE_3_8"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_9"
+         column="AVERAGE_3_9"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_10"
+         column="AVERAGE_3_10"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average3_11"
+         column="AVERAGE_3_11"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average6_1"
+         column="AVERAGE_6_1"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average6_2"
+         column="AVERAGE_6_2"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="average6_3"
+         column="AVERAGE_6_3"
+    	  jdbc-type="DOUBLE"
+    />
+	
+</class-descriptor>
+
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.inquiries.OldInquiriesTeachersRes -->
+<!-- ******************************************************************************************************************************* -->
+
+<class-descriptor class="Dominio.inquiries.OldInquiriesTeachersRes"
+                  table="OLD_INQUIRIES_TEACHERS_RES">
+
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+    <field-descriptor
+        name="inquiryId"
+        column="INQUIRY_ID"
+        jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+        name="gepExecutionYear"
+        column="GEP_EXECUTION_YEAR"
+        jdbc-type="INTEGER"
+	/>
+         
+    <field-descriptor
+        name="keyExecutionPeriod"
+        column="KEY_EXECUTION_PERIOD"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionPeriod"
+	  class-ref="Dominio.ExecutionPeriod">
+	  <foreignkey field-ref="keyExecutionPeriod"/>
+   </reference-descriptor>
+	            
+    <field-descriptor
+         name="semester"
+         column="SEMESTER"
+    	 jdbc-type="INTEGER"/>
+    	 
+   	<field-descriptor
+         name="keyDegree"
+         column="KEY_DEGREE"
+    	 jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="degree"
+	  class-ref="Dominio.Curso">
+	  <foreignkey field-ref="keyDegree"/>
+   </reference-descriptor>
+    
+    <field-descriptor
+         name="curricularYear"
+         column="CURRICULAR_YEAR"
+    	  jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="gepCourseId"
+         column="GEP_COURSE_ID"
+         jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="courseCode"
+         column="COURSE_CODE"
+         jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor
+        name="keyCurricularCourse"
+        column="KEY_CURRICULAR_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="curricularCourse"
+	  class-ref="Dominio.CurricularCourse">
+	  <foreignkey field-ref="keyCurricularCourse"/>
+   </reference-descriptor>
+
+    <field-descriptor
+         name="gepCourseName"
+         column="GEP_COURSE_NAME"
+    	  jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor
+         name="classType"
+         column="CLASS_TYPE"
+    	  jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor
+         name="classTypeLong"
+         column="CLASS_TYPE_LONG"
+    	  jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor
+         name="teacherNumber"
+         column="TEACHER_NUMBER"
+         jdbc-type="INTEGER"
+    />
+
+   	<field-descriptor
+         name="keyTeacher"
+         column="KEY_TEACHER"
+    	 jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="teacher"
+	  class-ref="Dominio.Teacher">
+	  <foreignkey field-ref="keyTeacher"/>
+   </reference-descriptor>
+
+    <field-descriptor
+         name="active"
+         column="ACTIVE"
+    	  jdbc-type="VARCHAR"
+    />
+	
+	<field-descriptor
+         name="teacherName"
+         column="TEACHER_NAME"
+    	  jdbc-type="VARCHAR"
+    />
+	
+	<field-descriptor
+         name="category"
+         column="CATEGORY"
+    	  jdbc-type="VARCHAR"
+    />
+	
+    <field-descriptor
+         name="departmentCode"
+         column="DEPARTMENT_CODE"
+         jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="mail"
+         column="MAIL"
+         jdbc-type="INTEGER"
+    />
+
+    <field-descriptor
+         name="numAnswers3_3"
+         column="N_ANSWERS_3_3"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_3"
+         column="AVERAGE_3_3"
+    	  jdbc-type="VARCHAR"
+    />
+
+	<field-descriptor
+         name="deviation3_3"
+         column="DEVIATION_3_3"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_3"
+         column="TOLERANCE_3_3"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="numAnswers3_4"
+         column="N_ANSWERS_3_4"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_4"
+         column="AVERAGE_3_4"
+    	  jdbc-type="VARCHAR"
+    />
+
+	<field-descriptor
+         name="deviation3_4"
+         column="DEVIATION_3_4"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_4"
+         column="TOLERANCE_3_4"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="numAnswers3_5"
+         column="N_ANSWERS_3_5"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_5"
+         column="AVERAGE_3_5"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="deviation3_5"
+         column="DEVIATION_3_5"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_5"
+         column="TOLERANCE_3_5"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="numAnswers3_6"
+         column="N_ANSWERS_3_6"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_6"
+         column="AVERAGE_3_6"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="deviation3_6"
+         column="DEVIATION_3_6"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_6"
+         column="TOLERANCE_3_6"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="numAnswers3_7"
+         column="N_ANSWERS_3_7"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_7"
+         column="AVERAGE_3_7"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="deviation3_7"
+         column="DEVIATION_3_7"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_7"
+         column="TOLERANCE_3_7"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="numAnswers3_8"
+         column="N_ANSWERS_3_8"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_8"
+         column="AVERAGE_3_8"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="deviation3_8"
+         column="DEVIATION_3_8"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_8"
+         column="TOLERANCE_3_8"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="numAnswers3_9"
+         column="N_ANSWERS_3_9"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_9"
+         column="AVERAGE_3_9"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="deviation3_9"
+         column="DEVIATION_3_9"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_9"
+         column="TOLERANCE_3_9"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="numAnswers3_10"
+         column="N_ANSWERS_3_10"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_10"
+         column="AVERAGE_3_10"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="deviation3_10"
+         column="DEVIATION_3_10"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_10"
+         column="TOLERANCE_3_10"
+    	  jdbc-type="DOUBLE"
+    />
+	
+    <field-descriptor
+         name="numAnswers3_11"
+         column="N_ANSWERS_3_11"
+         jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+         name="average3_11"
+         column="AVERAGE_3_11"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="deviation3_11"
+         column="DEVIATION_3_11"
+    	  jdbc-type="DOUBLE"
+    />
+
+	<field-descriptor
+         name="tolerance3_11"
+         column="TOLERANCE_3_11"
+    	  jdbc-type="DOUBLE"
+    />
+
+    <field-descriptor
+         name="totalNumberAnswers"
+         column="TOTAL_N_ANSWERS"
+         jdbc-type="INTEGER"
+    />
+
+</class-descriptor>
