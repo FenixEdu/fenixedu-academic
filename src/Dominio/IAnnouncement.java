@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 /**
  * @author Ivo Brandão
  */
-public interface IAnnouncement {
+public interface IAnnouncement extends IDomainObject {
 
 	String getTitle();
 	Timestamp getCreationDate();

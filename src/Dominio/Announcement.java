@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 /**
  * @author Ivo Brandão
  */
-public class Announcement implements IAnnouncement {
+public class Announcement  extends DomainObject implements IAnnouncement {
 
-	private Integer internalCode;
+	
 	private String title;
 	private Timestamp creationDate;
 	private Timestamp lastModifiedDate;
@@ -63,7 +63,7 @@ public class Announcement implements IAnnouncement {
 	 */
 	public String toString() {
 		String result = "[ANNOUNCEMENT";
-		result += ", codInt=" + getInternalCode();
+		
 		result += ", creationDate=" + getCreationDate();
 		result += ", lastModifiedDate=" + getLastModifiedDate();
 		result += ", information=" + getInformation();
@@ -86,13 +86,7 @@ public class Announcement implements IAnnouncement {
 		return information;
 	}
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
-
+	
 	/**
 	 * @return Integer
 	 */
@@ -137,14 +131,7 @@ public class Announcement implements IAnnouncement {
 		this.information = information;
 	}
 
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
-	}
-
+	
 	/**
 	 * Sets the keySite.
 	 * @param keySite The keySite to set
