@@ -1,9 +1,9 @@
 /*
- * Created on Jun 4, 2004
- *
+ * Created on Jun 15, 2004
  */
 package ServidorAplicacao.Servicos.grant.contract;
 
+import DataBeans.grant.contract.InfoGrantContractRegime;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -15,14 +15,15 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Pica
  * @author Barbosa
  */
-public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
-
-    /**
-     * @param name
-     */
-    public DeleteGrantPartTest(String name) {
-        super(name);
-    }
+public class ReadGrantContractRegimeTest extends ServiceNeedsAuthenticationTestCase
+{
+	/**
+	 * @param name
+	 */
+	public ReadGrantContractRegimeTest(String name)
+	{
+		super(name);
+	}
 
     /*
      * (non-Javadoc)
@@ -30,7 +31,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
      */
     protected String getNameOfServiceToBeTested() {
-        return "DeleteGrantPart";
+        return "ReadGrantContractRegime";
     }
 
     /*
@@ -39,14 +40,9 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
      */
     protected String getDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartDataSet.xml";
+        return "etc/datasets_templates/servicos/grant/contract/testReadGrantContractRegimeDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartExpectedDataSet.xml";
-    }
-    
-    
     /*
      * (non-Javadoc)
      * 
@@ -96,6 +92,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
         return args;
     }
 
+    
     /*
      * (non-Javadoc)
      * 
@@ -108,55 +105,66 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
     /***************************************************************************
      * 
      * Begining of the tests
-     * 
      *  
+     *
      */
-
+    
     /*
-     * Delete a GrantPart Successfull
+     * Read a GrantContractRegime Successfull
      */
-    public void testDeleteGrantPartSuccessfull() {
+    public void testReadGrantContractRegimeSuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
-            Object[] args2 = { new Integer(1)};
+            Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantContractRegime result = (InfoGrantContractRegime) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
+
+            //Check the read result
+            Integer grantContractRegimeId = new Integer(1);
+            if (!result.getIdInternal().equals(grantContractRegimeId))
+                    fail("Reading a GrantContractRegime Successfull: invalid grant ContractRegime read!");
+            //TODO.. verify other values...
 
             //Verify unchanged database
-            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartSuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadGrantContractRegimeSuccessfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Reading a GrantContractRegime " + e);
         } catch (Exception e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Reading a GrantContractRegime " + e);
         }
     }
 
     /*
-     * Delete a GrantPart Unsuccessfull
+     * Read a GrantContractRegime Unsuccessfull
      */
-    public void testDeleteGrantPartUnsuccessfull() {
+    public void testReadGrantContractRegimeUnsuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantContractRegime result = (InfoGrantContractRegime) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
-            fail("Deleting a GrantPart Unsuccessfull: grant Part should not exist do te deleted!");
+            //Check the read result
+            if (result != null)
+                    fail("Reading a GrantContractRegime Unsuccessfull: grant ContractRegime should not exist!");
 
-        } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartUnsuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadContractRegimeTypeUnsuccessfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading a GrantContractRegime Unsuccessfull " + e);
         } catch (Exception e) {
-            fail("Delete a GrantPart Unsuccessfull " + e);
+            fail("Reading a GrantContractRegime Unsuccessfull " + e);
         }
     }
-
+	
 }

@@ -1,9 +1,9 @@
 /*
- * Created on Jun 4, 2004
- *
+ * Created on Jun 16, 2004
  */
 package ServidorAplicacao.Servicos.grant.contract;
 
+import DataBeans.grant.contract.InfoGrantContract;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -15,22 +15,26 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Pica
  * @author Barbosa
  */
-public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
+public class ReadLastGrantContractCreatedByGrantOwnerTest
+		extends
+			ServiceNeedsAuthenticationTestCase
+{
 
-    /**
-     * @param name
-     */
-    public DeleteGrantPartTest(String name) {
-        super(name);
-    }
-
-    /*
+	/**
+	 * @param name
+	 */
+	public ReadLastGrantContractCreatedByGrantOwnerTest(String name)
+	{
+		super(name);
+	}
+	
+	    /*
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
      */
     protected String getNameOfServiceToBeTested() {
-        return "DeleteGrantPart";
+        return "ReadLastGrantContractCreatedByGrantOwner";
     }
 
     /*
@@ -39,14 +43,9 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
      */
     protected String getDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartDataSet.xml";
+        return "etc/datasets_templates/servicos/grant/contract/testReadLastGrantContractCreatedByGrantOwnerDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartExpectedDataSet.xml";
-    }
-    
-    
     /*
      * (non-Javadoc)
      * 
@@ -96,6 +95,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
         return args;
     }
 
+    
     /*
      * (non-Javadoc)
      * 
@@ -108,55 +108,66 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
     /***************************************************************************
      * 
      * Begining of the tests
-     * 
      *  
+     *
      */
-
+    
     /*
-     * Delete a GrantPart Successfull
+     * Read the Last GrantContract by Grant Owner Successfull
      */
-    public void testDeleteGrantPartSuccessfull() {
+    public void testReadLastGrantContractByGrantOwnerSuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
-            Object[] args2 = { new Integer(1)};
+            Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
+
+            //Check the read result
+            Integer grantContractId = new Integer(2);
+            Integer grantContractNumber = new Integer(2);
+            if (!result.getIdInternal().equals(grantContractId) || !result.getContractNumber().equals(grantContractNumber))
+                    fail("Reading a GrantContract Successfull: invalid grant contract read!");
 
             //Verify unchanged database
-            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartSuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadLastGrantContractCreatedByGrantOwnerTest Successfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Reading LastGrantContractCreatedByGrantOwner " + e);
         } catch (Exception e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Reading LastGrantContractCreatedByGrantOwner " + e);
         }
     }
 
     /*
-     * Delete a GrantPart Unsuccessfull
+     * Read the Last GrantContract By GrantOwner Unsuccessfull (unKnowned grant owner)
      */
-    public void testDeleteGrantPartUnsuccessfull() {
+    public void testReadLastGrantContractCreatedByGrantOwnerUnsuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
-            fail("Deleting a GrantPart Unsuccessfull: grant Part should not exist do te deleted!");
+            //Check the read result
+            if (result != null && result.getIdInternal() != null)
+                    fail("Reading LastGrantContractCreatedByGrantOwner Unsuccessfull: grant contract should not exist!");
 
-        } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartUnsuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadLastGrantContractCreatedByGrantOwner was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading LastGrantContractCreatedByGrantOwner Unsuccessfull " + e);
         } catch (Exception e) {
-            fail("Delete a GrantPart Unsuccessfull " + e);
+            fail("Reading LastGrantContractCreatedByGrantOwner Unsuccessfull " + e);
         }
-    }
+    }	
 
 }

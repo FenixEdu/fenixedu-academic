@@ -1,26 +1,26 @@
 /*
- * Created on Jun 4, 2004
+ * Created on Jun 15, 2004
  *
  */
 package ServidorAplicacao.Servicos.grant.contract;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
 
 
 /**
  * @author Pica
  * @author Barbosa
  */
-public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
+public class DeleteGrantContractTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param name
      */
-    public DeleteGrantPartTest(String name) {
+    public DeleteGrantContractTest(String name) {
         super(name);
     }
 
@@ -30,7 +30,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
      */
     protected String getNameOfServiceToBeTested() {
-        return "DeleteGrantPart";
+        return "DeleteGrantContract";
     }
 
     /*
@@ -39,11 +39,11 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
      */
     protected String getDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartDataSet.xml";
+        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantContractDataSet.xml";
     }
 
     protected String getExpectedDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartExpectedDataSet.xml";
+        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantContractExpectedDataSet.xml";
     }
     
     
@@ -84,7 +84,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      */
     protected Object[] getAuthorizeArguments() {
 
-        Integer idInternal = new Integer(1);
+        Integer idInternal = new Integer(2);
         Object[] args = { idInternal };
         return args;
     }
@@ -113,32 +113,32 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      */
 
     /*
-     * Delete a GrantPart Successfull
+     * Delete a GrantContract Successfull
      */
-    public void testDeleteGrantPartSuccessfull() {
+    public void testDeleteGrantContractSuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
-            Object[] args2 = { new Integer(1)};
+            Object[] args2 = getAuthorizeArguments();
 
             ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
-            //Verify unchanged database
+            //Verify changed database
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartSuccessfull was SUCCESSFULY runned by: "
+                    .println("testDeleteGrantContractSuccessfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Deleting a GrantContract " + e);
         } catch (Exception e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Deleting a GrantContract " + e);
         }
     }
 
     /*
-     * Delete a GrantPart Unsuccessfull
+     * Delete a GrantContract Unsuccessfull
      */
-    public void testDeleteGrantPartUnsuccessfull() {
+    public void testDeleteGrantContractUnsuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
@@ -146,17 +146,18 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
 
             ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
-            fail("Deleting a GrantPart Unsuccessfull: grant Part should not exist do te deleted!");
+            fail("Deleting a GrantContract Unsuccessfull: grant Contract should not exist do te deleted!");
 
         } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartUnsuccessfull was SUCCESSFULY runned by: "
+                    .println("testDeleteGrantContractUnsuccessfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (Exception e) {
-            fail("Delete a GrantPart Unsuccessfull " + e);
+            fail("Delete a GrantContract Unsuccessfull " + e);
         }
     }
+
 
 }

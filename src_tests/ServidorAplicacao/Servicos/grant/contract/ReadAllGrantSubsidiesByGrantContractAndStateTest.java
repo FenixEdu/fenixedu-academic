@@ -1,6 +1,5 @@
 /*
- * Created on Jun 4, 2004
- *
+ * Created on Jun 16, 2004
  */
 package ServidorAplicacao.Servicos.grant.contract;
 
@@ -12,19 +11,21 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
+
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ReadAllGrantPaymentEntitiesByClassNameTest extends
-        ServiceNeedsAuthenticationTestCase {
-
-    /**
-     * @param name
-     */
-    public ReadAllGrantPaymentEntitiesByClassNameTest(String name) {
-        super(name);
-    }
+public class ReadAllGrantSubsidiesByGrantContractAndStateTest
+		extends ServiceNeedsAuthenticationTestCase
+{
+	/**
+	 * @param name
+	 */
+	public ReadAllGrantSubsidiesByGrantContractAndStateTest(String name)
+	{
+		super(name);
+	}
 
     /*
      * (non-Javadoc)
@@ -32,7 +33,7 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
      */
     protected String getNameOfServiceToBeTested() {
-        return "ReadAllGrantPaymentEntitiesByClassName";
+        return "ReadAllGrantSubsidiesByGrantContractAndState";
     }
 
     /*
@@ -41,7 +42,7 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
      */
     protected String getDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testReadGrantPaymentEntityDataSet.xml";
+        return "etc/datasets_templates/servicos/grant/contract/testReadAllGrantSubsidiesByGrantContractAndStateDataSet.xml";
     }
 
     /*
@@ -81,25 +82,29 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends
      */
     protected Object[] getAuthorizeArguments() {
 
-        String classname = "Dominio.grant.contract.GrantCostCenter";
-        Object[] args = { classname };
+        Integer idInternal = new Integer(1);
+        Integer state = new Integer(1); //Active subsidies
+        Object[] args = { idInternal , state};
         return args;
     }
 
-    protected Object[] getAuthorizeArgumentsGrantProject() {
+    protected Object[] getAuthorizeArguments2() {
 
-        String classname = "Dominio.grant.contract.GrantProject";
-        Object[] args = { classname };
+        Integer idInternal = new Integer(1);
+        Integer state = new Integer(0); //Desactivated subsidies
+        Object[] args = { idInternal , state};
         return args;
     }
-
+    
     protected Object[] getUnauthorizeArguments() {
 
-        String classname = "bogus";
-        Object[] args = { classname };
+        Integer idInternal = new Integer(666); //Invalid Contract...
+        Integer state = new Integer(0); //Desactivated subsidies
+        Object[] args = { idInternal , state};
         return args;
     }
 
+    
     /*
      * (non-Javadoc)
      * 
@@ -112,89 +117,93 @@ public class ReadAllGrantPaymentEntitiesByClassNameTest extends
     /***************************************************************************
      * 
      * Begining of the tests
-     * 
      *  
+     *
      */
-
+    
     /*
-     * Read a GrantPaymentEntity Successfull (Cost Centers)
+     * Read all GrantSubsidies actives by Contract Successfull
      */
-    public void testReadAllGrantPaymentEntitiesByClassNameSuccessfull1() {
+    public void testReadAllGrantSubsidiesByGrantContractAndStateSuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
-            if (result == null || result.size() != 2)
-                    fail("Reading a AllGrantPaymentEntityByClassName (Cost Center) Successfull: invalid grant payment entity read!");
+            if (result == null || result.size() != 1)
+                    fail("Reading AllGrantSubsidiesByGrantContractAndState Successfull: invalid grant Subsidy read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testReadAllGrantPaymentEntityByClassName (CostCenter) was SUCCESSFULY runned by: "
+                    .println("testReadAllGrantSubsidiesByGrantContractAndState Successfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Reading a AllGrantPaymentEntityByClassName " + e);
+            fail("Reading AllGrantSubsidiesByGrantContractAndState " + e);
         } catch (Exception e) {
-            fail("Reading a AllGrantPaymentEntityByClassName " + e);
+            fail("Reading AllGrantSubsidiesByGrantContractAndState " + e);
         }
     }
 
     /*
-     * Read a GrantPaymentEntity Successfull (Projects)
+     * Read all GrantSubsidies desactives by Contract Successfull
      */
-    public void testReadAllGrantPaymentEntitiesByClassNameSuccessfull2() {
+    public void testReadAllGrantSubsidiesByGrantContractAndStateSuccessfull2() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
-            Object[] args2 = getAuthorizeArgumentsGrantProject();
+            Object[] args2 = getAuthorizeArguments2();
 
-            List result = (List) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
-            if (result == null && result.size() != 3)
-                    fail("Reading a AllGrantPaymentEntityByClassName (Projects) Successfull: invalid grant payment entity read!");
+            if (result == null || result.size() != 2)
+                    fail("Reading AllGrantSubsidiesByGrantContractAndState Successfull: invalid grant Subsidy read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testReadAllGrantPaymentEntityByClassName (Projects) was SUCCESSFULY runned by: "
+                    .println("testReadAllGrantSubsidiesByGrantContractAndState Successfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Reading a AllGrantPaymentEntityByClassName " + e);
+            fail("Reading AllGrantSubsidiesByGrantContractAndState " + e);
         } catch (Exception e) {
-            fail("Reading a AllGrantPaymentEntityByClassName " + e);
+            fail("Reading AllGrantSubsidiesByGrantContractAndState " + e);
         }
     }
 
+    
     /*
-     * Read a GrantPaymentEntity Unsuccessfull
+     * Read all GrantSubsidies Unsuccessfull (invalid contract)
      */
-    public void testReadGrantPaymentEntityUnsuccessfull() {
+    public void testReadAllGrantSubsidiesByGrantContractUnsuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
-            fail("Reading a GrantPaymentEntity Unsuccessfull: grant payment entity should not exist!");
+            //Check the read result
+            if (result != null && result.size() != 0)
+                    fail("Reading AllGrantSubsidiesByGrantContractAndState Unsuccessfull: grant Subsidies should not exist!");
 
-        } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("test ReadAllGrantPaymentEntityByClassName Unsuccessful was SUCCESSFULY runned by: "
+                    .println("testReadAllGrantSubsidiesByGrantContractAndState was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading AllGrantSubsidiesByGrantContractAndState Unsuccessfull " + e);
         } catch (Exception e) {
-            fail("Reading AllGrantPaymentEntityByClassName Unsuccessfull " + e);
+            fail("Reading AllGrantSubsidiesByGrantContractAndState Unsuccessfull " + e);
         }
-    }
+    }	
 
 }

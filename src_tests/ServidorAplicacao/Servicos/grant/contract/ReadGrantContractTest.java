@@ -28,136 +28,142 @@ public class ReadGrantContractTest extends ServidorAplicacao.Servicos.ServiceNee
 		super(testName);
 	}
 
-	/*
-	*  (non-Javadoc)
-	* @see ServiceNeedsAuthenticationTestCase#getApplication()
-	*/
-	protected String getApplication()
-	{
-		return Autenticacao.INTRANET;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "ReadGrantContract";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadGrantContract";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+     */
+    protected String getDataSetFilePath() {
+        return "etc/datasets_templates/servicos/grant/contract/testReadGrantContractDataSet.xml";
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/grant/contract/testReadGrantContractDataSet.xml";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+     */
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "16", "pass", getApplication() };
+        return args;
+    }
 
-	/*
-	 *  (non-Javadoc)
-	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-	 */
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
-		String[] args = { "16", "pass", getApplication()};
-		return args;
-	}
-	/*
-	 *  (non-Javadoc)
-	 * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-	 */
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+     */
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-	/*
-		 *  (non-Javadoc)
-		 * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
-		 */
-	protected String[] getNotAuthenticatedUser()
-	{
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
+     */
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-	/*
-	 *  (non-Javadoc)
-	 * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-	 */
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer idInternal = new Integer(2);
-		Object[] args = { idInternal };
-		return args;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
+    protected Object[] getAuthorizeArguments() {
 
-	protected Object[] getUnauthorizeArguments()
-	{
-		Integer idInternal = new Integer(69);
-		Object[] args = { idInternal };
-		return args;
-	}
+        Integer idInternal = new Integer(1);
+        Object[] args = { idInternal };
+        return args;
+    }
 
-	/************  Inicio dos testes ao serviço**************/
+    protected Object[] getUnauthorizeArguments() {
 
-	/*
-	 * Read a GrantContract Successfull
-	 */
-	public void testReadGrantContractSuccessfull()
-	{
-		try
-		{
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView id = authenticateUser(args);
-			Object[] args2 = getAuthorizeArguments();
+        Integer idInternal = new Integer(666);
+        Object[] args = { idInternal };
+        return args;
+    }
 
-			InfoGrantContract result =
-				(InfoGrantContract) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected String getApplication() {
+        return Autenticacao.INTRANET;
+    }
 
-			//Check the read result
-			Integer grantContractId = new Integer(2);
-			if (!result.getIdInternal().equals(grantContractId))
-				fail("Reading a GrantContract Successfull: invalid grant contract read!");
+    /***************************************************************************
+     * 
+     * Begining of the tests
+     *  
+     *
+     */
+    
+    /*
+     * Read a GrantContract Successfull
+     */
+    public void testReadGrantContractSuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArguments();
 
-			//Verify unchanged database
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			System.out.println(
-				"testReadGrantContractSuccessfull was SUCCESSFULY runned by: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Reading a GrantContract Successfull " + e);
-		} catch (Exception e)
-		{
-			fail("Reading a GrantContract Successfull " + e);
-		}
-	}
+            InfoGrantContract result = (InfoGrantContract) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
-	/*
-		 * Read a GrantContract Unsuccessfull
-		 */
-	public void testReadGrantContractUnsuccessfull()
-	{
-		try
-		{
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView id = authenticateUser(args);
-			Object[] args2 = getUnauthorizeArguments();
+            //Check the read result
+            Integer grantContractId = new Integer(1);
+            if (!result.getIdInternal().equals(grantContractId))
+                    fail("Reading a GrantContract Successfull: invalid grant contract read!");
+            //TODO.. verify other values...
 
-			InfoGrantContract result =
-				(InfoGrantContract) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            //Verify unchanged database
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out
+                    .println("testReadGrantContractSuccessfull was SUCCESSFULY runned by: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading a GrantContract " + e);
+        } catch (Exception e) {
+            fail("Reading a GrantContract " + e);
+        }
+    }
 
-			//Check the read result
-			if (result != null)
-				fail("Reading a GrantContract Unsuccessfull: grant contract should not exist!");
+    /*
+     * Read a GrantContract Unsuccessfull
+     */
+    public void testReadGrantContractUnsuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getUnauthorizeArguments();
 
-			//Verify unchanged database
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			System.out.println(
-				"testReadGrantContractUnsuccessfull was SUCCESSFULY runned by: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Reading a GrantContract Unsuccessfull " + e);
-		} catch (Exception e)
-		{
-			fail("Reading a GrantContract Unsuccessfull " + e);
-		}
-	}
+            ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
+
+             fail("Reading a GrantContract Unsuccessfull: grant contract should not exist!");
+
+        } catch (FenixServiceException e) {
+            //Verify unchanged database
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out
+                    .println("testReadContractTypeUnsuccessfull was SUCCESSFULY runned by: "
+                            + getNameOfServiceToBeTested());
+        } catch (Exception e) {
+            fail("Reading a GrantContract Unsuccessfull " + e);
+        }
+    }	
 }

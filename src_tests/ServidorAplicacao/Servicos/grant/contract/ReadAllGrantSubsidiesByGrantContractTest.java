@@ -1,8 +1,9 @@
 /*
- * Created on Jun 4, 2004
- *
+ * Created on Jun 15, 2004
  */
 package ServidorAplicacao.Servicos.grant.contract;
+
+import java.util.List;
 
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -15,14 +16,15 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Pica
  * @author Barbosa
  */
-public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
-
-    /**
-     * @param name
-     */
-    public DeleteGrantPartTest(String name) {
-        super(name);
-    }
+public class ReadAllGrantSubsidiesByGrantContractTest extends ServiceNeedsAuthenticationTestCase
+{
+	/**
+	 * @param name
+	 */
+	public ReadAllGrantSubsidiesByGrantContractTest(String name)
+	{
+		super(name);
+	}
 
     /*
      * (non-Javadoc)
@@ -30,7 +32,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
      */
     protected String getNameOfServiceToBeTested() {
-        return "DeleteGrantPart";
+        return "ReadAllGrantSubsidiesByGrantContract";
     }
 
     /*
@@ -39,14 +41,9 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
      * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
      */
     protected String getDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartDataSet.xml";
+        return "etc/datasets_templates/servicos/grant/contract/testReadAllGrantSubsidiesByGrantContractDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/contract/testDeleteGrantPartExpectedDataSet.xml";
-    }
-    
-    
     /*
      * (non-Javadoc)
      * 
@@ -96,6 +93,7 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
         return args;
     }
 
+    
     /*
      * (non-Javadoc)
      * 
@@ -108,55 +106,64 @@ public class DeleteGrantPartTest extends ServiceNeedsAuthenticationTestCase {
     /***************************************************************************
      * 
      * Begining of the tests
-     * 
      *  
+     *
      */
-
+    
     /*
-     * Delete a GrantPart Successfull
+     * Read all GrantSubsidies by Contract Successfull
      */
-    public void testDeleteGrantPartSuccessfull() {
+    public void testReadAllGrantSubsidiesByGrantContractSuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
-            Object[] args2 = { new Integer(1)};
+            Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
+
+            //Check the read result
+            if (result == null || result.size() != 3)
+                    fail("Reading AllGrantSubsidiesByGrantContract Successfull: invalid grant Subsidy read!");
 
             //Verify unchanged database
-            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartSuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadAllGrantSubsidiesByGrantContractSuccessfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Reading AllGrantSubsidiesByGrantContract " + e);
         } catch (Exception e) {
-            fail("Deleting a GrantPart " + e);
+            fail("Reading AllGrantSubsidiesByGrantContract " + e);
         }
     }
 
     /*
-     * Delete a GrantPart Unsuccessfull
+     * Read all GrantSubsidies Unsuccessfull (invalid contract)
      */
-    public void testDeleteGrantPartUnsuccessfull() {
+    public void testReadAllGrantSubsidiesByGrantContractUnsuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory
+                    .executeService(id, getNameOfServiceToBeTested(), args2);
 
-            fail("Deleting a GrantPart Unsuccessfull: grant Part should not exist do te deleted!");
+            //Check the read result
+            if (result != null && result.size() != 0)
+                    fail("Reading AllGrantSubsidiesByGrantContract Unsuccessfull: grant Subsidies should not exist!");
 
-        } catch (FenixServiceException e) {
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testDeleteGrantPartUnsuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadAllGrantSubsidiesByGrantContract was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading AllGrantSubsidiesByGrantContract Unsuccessfull " + e);
         } catch (Exception e) {
-            fail("Delete a GrantPart Unsuccessfull " + e);
+            fail("Reading AllGrantSubsidiesByGrantContract Unsuccessfull " + e);
         }
-    }
+    }	
 
 }
