@@ -84,19 +84,6 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-		DynaValidatorForm editExamForm = (DynaValidatorForm) form;
-
-		GestorServicos gestor = GestorServicos.manager();
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-
-		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
 		InfoExamsMap infoExamsMap =
 			(InfoExamsMap) session.getAttribute(
@@ -130,7 +117,6 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		DynaValidatorForm editExamForm = (DynaValidatorForm) form;
 
-		GestorServicos gestor = GestorServicos.manager();
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
