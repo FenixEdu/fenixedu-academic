@@ -109,7 +109,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
     protected void tearDown() {
         super.tearDown();
     }
-    
+     
     public void testLockWrite() {
 		IAnnouncement announcement = null;
 
