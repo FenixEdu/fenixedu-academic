@@ -31,10 +31,6 @@ public class CreateAnnouncementTest
 	protected String getExpectedDataSetFilePath() {
 		return "etc/datasets/servicos/teacher/testCreateAnnouncementExpectedDataSet.xml";
 	}
-	
-	protected String getExistingExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testCreateExistingAnnouncementExpectedDataSet.xml";
-	}
 
 	protected String getNameOfServiceToBeTested() {
 		return "CreateAnnouncement";
@@ -105,7 +101,7 @@ public class CreateAnnouncementTest
 			fail("testCreateExistingAnnouncement");
 
 		} catch (ExistingServiceException e) {
-			compareDataSetUsingExceptedDataSetTableColumns(getExistingExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 			System.out.println(
 				"testCreateExistingAnnouncement was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
