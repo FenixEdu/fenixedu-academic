@@ -42,8 +42,8 @@ public class DuplicateDegreeCurricularPlan {
 
 	public static void main(String args[]) throws Exception {
 
-		String originalDCPNames[] = new String[13];
-		String newDCPNames[] = new String[13];
+		String originalDCPNames[] = new String[15];
+		String newDCPNames[] = new String[15];
 
 		originalDCPNames[0] = "MC02/03";
 		newDCPNames[0] = "MC03/05";
@@ -84,6 +84,12 @@ public class DuplicateDegreeCurricularPlan {
 		originalDCPNames[12] = "MUGT02/03";
 		newDCPNames[12] = "MUGT03/05";
 
+		originalDCPNames[13] = "ML02/03";
+		newDCPNames[13] = "ML03/05";
+
+		originalDCPNames[14] = "MB02/03";
+		newDCPNames[14] = "MB03/05";
+
 
 		for(int i = 0; i < originalDCPNames.length ; i++){
 
@@ -106,6 +112,49 @@ public class DuplicateDegreeCurricularPlan {
 			DuplicateDegreeCurricularPlan.createExecutionCourses(degreeCurricularPlan, executionPeriod, new Integer(1), DuplicateDegreeCurricularPlan.broker);
 			
 		}
+		
+		
+		
+		String dcps[] = new String[5];
+
+		dcps[0] = "MGEDT03/04";
+		dcps[1] = "ML03/05";
+		dcps[2] = "MCEM03/04";
+		dcps[3] = "MEQ03/04";
+		dcps[4] = "MCO03/04";
+
+
+		for(int i = 0; i < dcps.length ; i++){
+
+			
+			Criteria criteria = new Criteria();
+			Query query = null;
+			List result = null;
+
+			criteria.addEqualTo("name", dcps[i]);
+			query = new QueryByCriteria(DegreeCurricularPlan.class, criteria);
+			result = (List) broker.getCollectionByQuery(query);
+	
+			if (result.size() != 1){
+				throw new Exception("Error Reading Degree Curricular Plan [" + dcps[i] + "]");
+			}
+		
+			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) result.get(0);
+
+			IExecutionYear executionYear = new ExecutionYear();
+			executionYear.setYear("2003/2004");
+			
+			IExecutionPeriod executionPeriod = new ExecutionPeriod();
+			executionPeriod.setName("1 Semestre");
+			executionPeriod.setExecutionYear(executionYear);
+			
+			DuplicateDegreeCurricularPlan.createExecutionCourses(degreeCurricularPlan, executionPeriod, new Integer(1), DuplicateDegreeCurricularPlan.broker);
+			
+		}
+		
+		
+		
+				
 
 
 
