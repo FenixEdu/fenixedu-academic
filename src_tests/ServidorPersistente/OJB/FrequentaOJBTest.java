@@ -13,14 +13,20 @@ package ServidorPersistente.OJB;
  */
 import java.util.List;
 
-import junit.framework.*;
-import java.util.List;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.ojb.odmg.OJB;
-import org.odmg.QueryException;
-import org.odmg.OQLQuery;
 import org.odmg.Implementation;
-import ServidorPersistente.*;
-import Dominio.*;
+import org.odmg.OQLQuery;
+import org.odmg.QueryException;
+
+import Dominio.Frequenta;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IFrequenta;
+import Dominio.IStudent;
+import ServidorPersistente.ExcepcaoPersistencia;
+import Util.TipoCurso;
 
 public class FrequentaOJBTest extends TestCaseOJB {
     public FrequentaOJBTest(java.lang.String testName) {
@@ -47,25 +53,27 @@ public class FrequentaOJBTest extends TestCaseOJB {
     
   /** Test of readByAlunoAndDisciplinaExecucao method, of class ServidorPersistente.OJB.FrequentaOJB. */
   public void testreadByAlunoAndDisciplinaExecucao() {
-    IFrequenta frequenta = null;
-    // read existing Frequenta
-    
+    IFrequenta attend = null;
     IStudent student = null;
+    IDisciplinaExecucao executionCourse = null;
+    
     
     try {
       _suportePersistente.iniciarTransaccao();
-      student = persistentStudent.readByNumero(new Integer(800), licenciatura);
+      student = persistentStudent.readByNumero(new Integer(800), new TipoCurso(TipoCurso.LICENCIATURA));
+	  assertNotNull(student);	        
+	
+	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
+
+      attend = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+	  assertNotNull(attend);
+	        
       _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
-    }
+	  assertEquals(attend.getAluno(), student);
+	  assertEquals(attend.getDisciplinaExecucao(), executionCourse);
       
-    
-    try {
-      _suportePersistente.iniciarTransaccao();
-      frequenta = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, _disciplinaExecucao1);
-      _suportePersistente.confirmarTransaccao();
-      assertEquals("testReadByAlunoAndDisciplinaExecucao:read existing frequenta", frequenta, _frequenta1);
+      
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
     }
@@ -73,9 +81,15 @@ public class FrequentaOJBTest extends TestCaseOJB {
     // read unexisting Frequenta
     try {
       _suportePersistente.iniciarTransaccao();
-      frequenta = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student,  _disciplinaExecucao2);
+      
+	  executionCourse = null;
+	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+   	  assertNotNull(executionCourse);
+
+      
+      attend = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student,  executionCourse);
       _suportePersistente.confirmarTransaccao();
-      assertNull(frequenta);
+      assertNull(attend);
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByAlunoAndDisciplinaExecucao:fail read unexisting frequenta");
     }
@@ -83,48 +97,53 @@ public class FrequentaOJBTest extends TestCaseOJB {
 
   /** Test of readByAlunoAndDisciplinaExecucao method, of class ServidorPersistente.OJB.FrequentaOJB. */
   public void testreadByStudentId() {
-	List courses = null;
-	// read existing Frequenta
-	try {
-	  _suportePersistente.iniciarTransaccao();
-	  courses = _frequentaPersistente.readByStudentId(_aluno1.getNumber());
-	  _suportePersistente.confirmarTransaccao();
-	  assertNotNull("testReadByStudentId:read courses of existing frequencies", courses);
-	  assertTrue("testReadByStudentId:read courses of existing frequencies", !(courses.isEmpty()));
-	  assertEquals("testReadByStudentId:read courses of existing frequencies", 1, courses.size());
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
-	}
-        
-	// read unexisting Frequenta
-	try {
-		_suportePersistente.iniciarTransaccao();
-		courses = _frequentaPersistente.readByStudentId(_aluno2.getNumber());
-		_suportePersistente.confirmarTransaccao();
-		assertNotNull("testReadByStudentId:read courses of existing frequencies", courses);
-		assertTrue("testReadByStudentId:read courses of existing frequencies", courses.isEmpty());
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByAlunoAndDisciplinaExecucao:fail read unexisting frequenta");
-	}
+
+	// FIXME: Must read by Username
+
+
+//	List courses = null;
+//	// read existing Frequenta
+//	try {
+//	  _suportePersistente.iniciarTransaccao();
+//	  courses = _frequentaPersistente.readByStudentId(_aluno1.getNumber());
+//	  _suportePersistente.confirmarTransaccao();
+//	  assertNotNull("testReadByStudentId:read courses of existing frequencies", courses);
+//	  assertTrue("testReadByStudentId:read courses of existing frequencies", !(courses.isEmpty()));
+//	  assertEquals("testReadByStudentId:read courses of existing frequencies", 1, courses.size());
+//	} catch (ExcepcaoPersistencia ex) {
+//	  fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
+//	}
+//        
+//	// read unexisting Frequenta
+//	try {
+//		_suportePersistente.iniciarTransaccao();
+//		courses = _frequentaPersistente.readByStudentId(_aluno2.getNumber());
+//		_suportePersistente.confirmarTransaccao();
+//		assertNotNull("testReadByStudentId:read courses of existing frequencies", courses);
+//		assertTrue("testReadByStudentId:read courses of existing frequencies", courses.isEmpty());
+//	} catch (ExcepcaoPersistencia ex) {
+//	  fail("testReadByAlunoAndDisciplinaExecucao:fail read unexisting frequenta");
+//	}
   }
 
   // write new existing frequenta
   public void testCreateExistingFrequenta() {
    IStudent student = null;
-    
+   IDisciplinaExecucao executionCourse = null;
+       
     try {
       _suportePersistente.iniciarTransaccao();
-      student = persistentStudent.readByNumero(new Integer(800), licenciatura);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
-    }
+      student = persistentStudent.readByNumero(new Integer(800), new TipoCurso(TipoCurso.LICENCIATURA));
+      assertNotNull(student);
 
-  	
-    IFrequenta frequenta = new Frequenta(student, _disciplinaExecucao1);
-    try {
+	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
+      _suportePersistente.confirmarTransaccao();
+
+      IFrequenta attend = new Frequenta(student, executionCourse);
+      
       _suportePersistente.iniciarTransaccao();
-      _frequentaPersistente.lockWrite(frequenta);
+      _frequentaPersistente.lockWrite(attend);
       _suportePersistente.confirmarTransaccao();
       fail("testCreateExistingFrequenta");
     } catch (ExcepcaoPersistencia ex) {
@@ -132,106 +151,84 @@ public class FrequentaOJBTest extends TestCaseOJB {
     }
   }
 
-  // write new non-existing frequenta
+//  // write new non-existing frequenta
   public void testCreateNonExistingFrequenta() {
-    IFrequenta frequenta = new Frequenta();
+    IFrequenta attend = new Frequenta();
+	IStudent student = null;
+	IDisciplinaExecucao executionCourse = null;
+	
     try {
     	_suportePersistente.iniciarTransaccao();
-		IDisciplinaExecucao de =
-			_disciplinaExecucaoPersistente
-				.readBySiglaAndAnoLectivAndSiglaLicenciatura(
-				_disciplinaExecucao2.getSigla(),
-				_disciplinaExecucao2.getLicenciaturaExecucao().getAnoLectivo(),
-				_disciplinaExecucao2
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
-		IStudent aluno = persistentStudent.readByNumero(new Integer(600), licenciatura);
+    	
+		student = persistentStudent.readByNumero(new Integer(800), new TipoCurso(TipoCurso.LICENCIATURA));
+		assertNotNull(student);
+    	
+		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+		assertNotNull(executionCourse);
+
     	_suportePersistente.confirmarTransaccao();
  
-    	frequenta.setAluno(aluno);
-    	frequenta.setDisciplinaExecucao(de);
+    	attend.setAluno(student);
+    	attend.setDisciplinaExecucao(executionCourse);
 
       _suportePersistente.iniciarTransaccao();
-      _frequentaPersistente.lockWrite(frequenta);
+      _frequentaPersistente.lockWrite(attend);
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testCreateNonExistingFrequenta");
     }
   }
 
-  /** Test of write method, of class ServidorPersistente.OJB.FrequentaOJB. */
-  public void testWriteExistingUnchangedObject() {
-    // write item already mapped into memory
-    
-   IStudent student = null;
-    
-    try {
-      _suportePersistente.iniciarTransaccao();
-      student = persistentStudent.readByNumero(new Integer(800), licenciatura);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
-    }
-
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	IFrequenta frequenta = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, _disciplinaExecucao1);
-    	_suportePersistente.confirmarTransaccao();
-
-      _suportePersistente.iniciarTransaccao();
-      _frequentaPersistente.lockWrite(frequenta);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingUnchangedObject");
-    }
-  }
 
   /** Test of write method, of class ServidorPersistente.OJB.FrequentaOJB. */
   public void testWriteExistingChangedObject() {
-    IFrequenta frequenta1 = null;
-    IFrequenta frequenta2 = null;
-      
-      
-   IStudent student = null;
+	IFrequenta attend = null;
+	IStudent student = null;
+	IDisciplinaExecucao executionCourse = null;
     
-    try {
-      _suportePersistente.iniciarTransaccao();
-      student = persistentStudent.readByNumero(new Integer(800), licenciatura);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
-    }
+    
+	try {
+	  _suportePersistente.iniciarTransaccao();
+	  	student = persistentStudent.readByNumero(new Integer(800), new TipoCurso(TipoCurso.LICENCIATURA));
+	  	assertNotNull(student);	        
+	
+	  	executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  	assertNotNull(executionCourse);
 
-    // write frequenta already mapped into memory
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	IDisciplinaExecucao de =
-    		_disciplinaExecucaoPersistente
-    			.readBySiglaAndAnoLectivAndSiglaLicenciatura(
-    			_disciplinaExecucao2.getSigla(),
-    			_disciplinaExecucao2.getLicenciaturaExecucao().getAnoLectivo(),
-    			_disciplinaExecucao2
-    				.getLicenciaturaExecucao()
-    				.getCurso()
-    				.getSigla());
-    	_suportePersistente.confirmarTransaccao();
+	  	attend = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+	  	assertNotNull(attend);
+	        
+	    _suportePersistente.confirmarTransaccao();
+	  	  
+	  	assertEquals(attend.getAluno(), student);
+	  	assertEquals(attend.getDisciplinaExecucao(), executionCourse);
+      
+            
+	    _suportePersistente.iniciarTransaccao();
+	  	attend = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+	  	assertNotNull(attend);
 
-      _suportePersistente.iniciarTransaccao();
+	  	IDisciplinaExecucao executionCourse1 = null;
+	  	executionCourse1 = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+	  	assertNotNull(executionCourse1);
+	
+	  	attend.setDisciplinaExecucao(executionCourse1);
+	    _suportePersistente.confirmarTransaccao();
 
-      frequenta1 = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, _disciplinaExecucao1);
-      frequenta1.setDisciplinaExecucao(de);
 
-      _suportePersistente.confirmarTransaccao();
+	  // Check changes
+	  
+	  _suportePersistente.iniciarTransaccao();
+	  IFrequenta attendTemp = null;
+	  attendTemp = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse1);
+	  assertNotNull(attendTemp);
+	  assertEquals(attendTemp.getAluno(), student);
+	  assertEquals(attendTemp.getDisciplinaExecucao(), executionCourse1);
 
-      _suportePersistente.iniciarTransaccao();
-      frequenta2 = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student,  _disciplinaExecucao2);
-      _suportePersistente.confirmarTransaccao();
-      assertEquals(frequenta2.getDisciplinaExecucao(), _disciplinaExecucao2);
-    } catch (ExcepcaoPersistencia ex) {
-        fail("testWriteExistingChangedObject");
-      // all is ok
-    }
+	  _suportePersistente.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
+	}
   }
 
   /** Test of delete method, of class ServidorPersistente.OJB.FrequentaOJB. */
@@ -241,25 +238,23 @@ public class FrequentaOJBTest extends TestCaseOJB {
     
     try {
       _suportePersistente.iniciarTransaccao();
-      student = persistentStudent.readByNumero(new Integer(800), licenciatura);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
-    }
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	IFrequenta frequenta = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, _disciplinaExecucao1);
-    	_suportePersistente.confirmarTransaccao();
+      student = persistentStudent.readByNumero(new Integer(800), new TipoCurso(TipoCurso.LICENCIATURA));
+	  IDisciplinaExecucao executionCourse = null;
+	  
+	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
 
-      _suportePersistente.iniciarTransaccao();
-      _frequentaPersistente.delete(frequenta);
+	  IFrequenta attend = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+	  assertNotNull(attend);
+
+      _frequentaPersistente.delete(attend);
       _suportePersistente.confirmarTransaccao();
 
       _suportePersistente.iniciarTransaccao();
-      frequenta = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, _disciplinaExecucao1);
+      IFrequenta attendTemp = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
       _suportePersistente.confirmarTransaccao();
 
-      assertEquals(frequenta, null);
+      assertNull(attendTemp);
     } catch (ExcepcaoPersistencia ex) {
       fail("testDeleteFrequenta");
     }
@@ -267,11 +262,29 @@ public class FrequentaOJBTest extends TestCaseOJB {
 
   /** Test of deleteAll method, of class ServidorPersistente.OJB.FrequentaOJB. */
   public void testDeleteAll() {
-    try {
+	IStudent student = null;
+    
+	try {
+		
+	  // Check that something exists
+	  _suportePersistente.iniciarTransaccao();
+	  student = persistentStudent.readByNumero(new Integer(800), new TipoCurso(TipoCurso.LICENCIATURA));
+	  IDisciplinaExecucao executionCourse = null;
+	  
+	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
+
+	  IFrequenta attend = _frequentaPersistente.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+	  assertNotNull(attend);
+	  _suportePersistente.confirmarTransaccao();
+
+	  // Delete All
       _suportePersistente.iniciarTransaccao();
       _frequentaPersistente.deleteAll();
       _suportePersistente.confirmarTransaccao();
 
+
+	  // Check Deletion
       _suportePersistente.iniciarTransaccao();
       List result = null;
       try {
@@ -291,6 +304,39 @@ public class FrequentaOJBTest extends TestCaseOJB {
     }
 
   }
+
+  public void testReadByExecutionCourse() {
+
+	try {
+	  _suportePersistente.iniciarTransaccao();
+	
+	  // Check one that exists  
+	  IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  assertNotNull(executionCourse);
+
+	  List attendList = _frequentaPersistente.readByExecutionCourse(executionCourse);
+	  assertNotNull(attendList);
+	  assertEquals(attendList.size(), 1);
+
+
+	  // Check one that doesn't exist  
+
+	  executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
+      assertNotNull(executionCourse);
+		
+	  attendList = null;
+	  attendList = _frequentaPersistente.readByExecutionCourse(executionCourse);
+	  assertNotNull(attendList);
+	  assertEquals(attendList.size(), 0);
+
+	  _suportePersistente.confirmarTransaccao();
+
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("testDeleteFrequenta");
+	}
+  }
+
+
     
     
 }

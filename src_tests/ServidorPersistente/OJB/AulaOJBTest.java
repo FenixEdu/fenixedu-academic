@@ -26,6 +26,7 @@ import org.odmg.QueryException;
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Util.DiaSemana;
@@ -387,5 +388,74 @@ public class AulaOJBTest extends TestCaseOJB {
     }
   }
 
+  public void testReadByRoomAndExecutionPeriod() {
+	
+	  ISala room = null;
+	  IExecutionPeriod executionPeriod = null;
+	  List lessons = null;
+	  
+	  try {
+		_suportePersistente.iniciarTransaccao();
+	  	room = _salaPersistente.readByName("GA1");
+	  	assertNotNull(room);
+	  	
+	  	executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+	  	assertNotNull(executionPeriod);
+	  	
+	  	lessons = _aulaPersistente.readByRoomAndExecutionPeriod(room, executionPeriod);
+	  	assertNotNull(lessons);
+	  	assertEquals(lessons.size(), 21);
 
+		room = null;
+		room = _salaPersistente.readByName("GA2");
+		assertNotNull(room);
+
+		lessons = null;
+		lessons = _aulaPersistente.readByRoomAndExecutionPeriod(room, executionPeriod);
+		assertNotNull(lessons);
+		assertEquals(lessons.size(), 6);
+
+
+		_suportePersistente.confirmarTransaccao();
+	  	
+	  } catch (ExcepcaoPersistencia ex) {
+		fail("testReadByRoomAndExecutionPeriod : fail");
+  	  }
+  }
+  
+  public void testReadByExecutionCourseAndLessonType() {
+	
+	  IDisciplinaExecucao executionCourse = null;
+	  List lessons = null;
+	  
+	  try {
+		_suportePersistente.iniciarTransaccao();
+	  	
+		executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		assertNotNull(executionCourse);
+	  	
+		lessons = _aulaPersistente.readByExecutionCourseAndLessonType(executionCourse, new TipoAula(TipoAula.TEORICA));
+		assertNotNull(lessons);
+		assertEquals(lessons.size(), 5);
+		
+		lessons = null;
+		lessons = _aulaPersistente.readByExecutionCourseAndLessonType(executionCourse, new TipoAula(TipoAula.PRATICA));
+		assertNotNull(lessons);
+		assertEquals(lessons.size(), 0);
+		
+		_suportePersistente.confirmarTransaccao();
+	  	
+	  } catch (ExcepcaoPersistencia ex) {
+		fail("testReadByRoomAndExecutionPeriod : fail");
+	  }
+  }
+  
+  public void testReadLessonsInPeriod() {
+	
+	// FIXME: 
+	
+  }
+	
+  
+  
 }
