@@ -158,7 +158,8 @@
   <!-- ========== Controller Configuration ================================ -->
   <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
   
-  <message-resources parameter="ServidorApresentacao.AssiduousnessResources" null="false"/>
+	<message-resources parameter="ServidorApresentacao.AssiduousnessResources" null="false"/>
+	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
   
   <plug-in className="org.apache.struts.tiles.TilesPlugin" >
     <set-property property="definitions-config"

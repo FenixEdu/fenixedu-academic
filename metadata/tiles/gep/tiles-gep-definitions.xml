@@ -4,7 +4,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.gep.two-column" extends="df.layout.two-column">
-	  <put name="title" value=".IST - Gabinete de Estudo e Planeamento" />
+	  <put name="title" value="Gabinete de Estudo e Planeamento" />
 	  <put name="serviceName" value="Gabinete de Estudo e Planeamento" />
 	  <put name="navLocal" value="/gep/commons/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
@@ -13,7 +13,7 @@
       <put name="footer" value="/copyright.jsp" />
 	</definition>
 	<definition name="definition.gep.one-column" extends="df.layout.one-column">
-	    <put name="title" value=".IST - Gabinete de Estudo e Planeamento" />
+	    <put name="title" value="Gabinete de Estudo e Planeamento" />
         <put name="serviceName" value="Gabinete de Estudo e Planeamento" />
         <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	</definition>

@@ -3,7 +3,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.person.masterPage" extends="df.layout.two-column">
-		<put name="title" value=".IST - Área Pessoal"/>
+		<put name="title" value="Área Pessoal"/>
 		<put name="serviceName" value="Área Pessoal"/>
 		<put name="navGeral" value="/person/commonNavGeralPerson.jsp"/>
 		<put name="navLocal" value="/person/mainMenu.jsp"/>

@@ -4,7 +4,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.delegate.two-column" extends="df.layout.two-column">
-	  <put name="title" value=".IST - Delegado" />
+	  <put name="title" value="Delegado" />
 	  <put name="serviceName" value="Delegado" />
 	  <put name="navLocal" value="/delegate/commons/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
@@ -13,7 +13,7 @@
       <put name="footer" value="/copyright.jsp" />
 	</definition>
 	<definition name="definition.delegate.one-column" extends="df.layout.one-column">
-	    <put name="title" value=".IST - Delegado" />
+	    <put name="title" value="Delegado" />
         <put name="serviceName" value="Delegado" />
         <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	</definition>

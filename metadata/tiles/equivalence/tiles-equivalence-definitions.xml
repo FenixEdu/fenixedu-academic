@@ -12,21 +12,21 @@
 		<put name="navLocal" value="/equivalence/commons/enrollmentEquivalenceMainMenu.jsp"/>
 		<put name="body-context" value=""/>
 		<put name="body" value=""/>
-		<put name="footer" value="/copyrightDefault.jsp"/>
+		<put name="footer" value="/copyright.jsp"/>
 	</definition>
 
 	<definition name="definition.equivalence.for.degreeAdministrativeOffice.masterPage" extends="definition.equivalence.masterPage">
-		<put name="title" value=".IST - Secretaria de Graduação - Equivalências"/>
+		<put name="title" value="Secretaria de Graduação - Equivalências"/>
 		<put name="serviceName" value="Secretaria de Graduação"/>
 	</definition>
 
 	<definition name="definition.equivalence.for.coordinator.masterPage" extends="definition.equivalence.masterPage">
-		<put name="title" value=".IST - Portal de Coordenador - Equivalências"/>
+		<put name="title" value="Portal de Coordenador - Equivalências"/>
 		<put name="serviceName" value="Portal de Coordenador"/>
 	</definition>
 
 	<definition name="definition.equivalence.for.masterDegreeAdministrativeOffice.masterPage" extends="definition.equivalence.masterPage">
-		<put name="title" value=".IST - Secretaria de Pós-Graduação - Equivalências"/>
+		<put name="title" value="Secretaria de Pós-Graduação - Equivalências"/>
 		<put name="serviceName" value="Secretaria de Pós-Graduação"/>
 	</definition>
 

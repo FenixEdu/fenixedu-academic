@@ -4,7 +4,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="departmentAdmOffice.masterPage" extends="df.layout.two-column">
-	  <put name="title" value=".IST - Secretaria de Departamento" />
+	  <put name="title" value="Secretaria de Departamento" />
 	  <put name="serviceName" value="Secretaria de Departamento" />
 	  <put name="navLocal" value="/departmentAdmOffice/commons/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />

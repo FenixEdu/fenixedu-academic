@@ -4,12 +4,12 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.manager.masterPage" extends="df.layout.two-column">
-	  <put name="title" value=".IST - Portal de Gerência" />
+	  <put name="title" value="Portal de Gerência" />
 	  <put name="serviceName" value="Portal de Gerência" />
 	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
 	  <put name="navGeral" value="/manager/commons/commonNavGeralManager.jsp" />
 	  <put name="body-context" value=""/>
       <put name="body" value="" />
-      <put name="footer" value="/manager/commons/commonFooterManager.jsp" />
+      <put name="footer" value="/copyright.jsp" />
 	</definition>	
 </tiles-definitions>

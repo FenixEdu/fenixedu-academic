@@ -3,7 +3,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.directiveCouncil.masterPage" extends="df.layout.two-column">
-		<put name="title" value=".IST - Conselho Directivo"/>
+		<put name="title" value="Conselho Directivo"/>
 		<put name="serviceName" value="Conselho Directivo"/>
 		<put name="navLocal" value="/directiveCouncil/pgMainMenu.jsp"/>
 		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>

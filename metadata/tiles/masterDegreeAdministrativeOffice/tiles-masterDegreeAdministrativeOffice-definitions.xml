@@ -3,13 +3,13 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.masterDegreeAdministrativeOffice.masterPage" extends="df.layout.two-column.posGrad">
-		<put name="title" value=".IST - Secretaria de Pós-Graduação"/>
+		<put name="title" value="Secretaria de Pós-Graduação"/>
 		<put name="serviceName" value="Secretaria de Pós-Graduação"/>
 		<put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp"/>
 		<put name="navLocal" value="/posGraduacao/pgMainMenu.jsp"/>
 		<put name="body-context" value=""/>
 		<put name="body" value=""/>
-		<put name="footer" value="/posGraduacao/copyrightDefault.jsp"/>
+		<put name="footer" value="/copyright.jsp"/>
 	</definition>
 
 <!-- **************************************************************************************************************************** -->

@@ -197,6 +197,7 @@
 	<!-- ========== MESSAGE RESOURCES DEFINITIONS =========================== -->
 	<!-- ==================================================================== -->
 	<message-resources parameter="ServidorApresentacao.EquivalenceResources" null="false"/>
+	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 
 	<!-- ==================================================================== -->
 	<!-- ========== PLUG INS CONFIGURATION ================================== -->

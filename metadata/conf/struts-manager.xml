@@ -1565,6 +1565,7 @@
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.ManagerResources" null="false"/>
+	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 			
