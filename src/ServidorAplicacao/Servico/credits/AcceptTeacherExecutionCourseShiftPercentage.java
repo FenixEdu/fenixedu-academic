@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import Dominio.ExecutionCourse;
