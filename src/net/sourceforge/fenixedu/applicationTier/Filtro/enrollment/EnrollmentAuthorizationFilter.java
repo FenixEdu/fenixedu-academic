@@ -80,7 +80,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
      */
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         try {
-            List roles = getRoleList((List) id.getRoles());
+            List roles = getRoleList(id.getRoles());
 
             ISuportePersistente sp = null;
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
