@@ -62,14 +62,13 @@ public class GenerateUsername  {
 			sp = SuportePersistenteOJB.getInstance();
 			IPessoa person = null;
 			int i = 1;
-			
-			while ((person = sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null){
-				username2Test = new String(username + i++); 
+			while ((person = sp.getIPessoaPersistente().lerPessoaPorUsername(username2Test)) != null){
+			//while ((person = sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null){	
+				username2Test = new String(username + i++);
 			}
 			
 		} catch (ExcepcaoPersistencia ex) {
 			NotExecutedException newEx = new NotExecutedException("Persistence layer error");
-			newEx.fillInStackTrace();
 			throw newEx;
 		}
 		return username2Test;
