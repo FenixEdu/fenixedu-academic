@@ -17,6 +17,9 @@ import DataBeans.InfoPerson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
+import DataBeans.gesdis.InfoItem;
+import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoSite;
 import Dominio.Aula;
 import Dominio.Country;
 import Dominio.CurricularCourse;
@@ -33,17 +36,23 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ISala;
+import Dominio.ISection;
+import Dominio.ISite;
 import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
+import Dominio.Item;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
 import Dominio.PlanoCurricularCurso;
 import Dominio.Sala;
+import Dominio.Section;
+import Dominio.Site;
 import Dominio.Student;
 import Dominio.Turma;
 import Dominio.Turno;
@@ -554,5 +563,68 @@ public abstract class Cloner {
 		copyObjectProperties(infoCountry, country);
 		return infoCountry;
 	}
+	
+	/**
+		 * Method copyInfoSite2ISite.
+		 * @param infoSite
+		 * @return ISite
+		 */
+	public static ISite copyInfoSite2ISite(InfoSite infoSite) {
+			ISite site = new Site();
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoSite.getInfoExecutionCourse());
+			
+			copyObjectProperties(site, infoSite);
+			site.setExecutionCourse(executionCourse);
+			
+			return site;
+		}
+	
+	
+	
+	/**
+		 * Method copyInfoSection2ISection.
+		 * @param infoSection
+		 * @return ISection
+		 **/
+	
+	public static ISection copyInfoSection2ISection(InfoSection infoSection) {
+			
+			ISection section = new Section();
+			
+			ISite site = Cloner.copyInfoSite2ISite(infoSection.getSite());
+			
+			InfoSection infoSuperiorSection = (InfoSection) infoSection.getSuperiorSection();
+		    
+		    ISection fatherSection = Cloner.copyInfoSection2ISection(infoSuperiorSection);
+				 	
+			copyObjectProperties(section, infoSection);
+			
+			section.setSuperiorSection(fatherSection);
+			section.setSite(site);
+			
+			return section;			
+		
+		}
 
+		/**
+		 * Method copyInfoItem2IItem.
+		 * @param infoItem
+		 * @return IItem
+		 **/
+	
+	public static IItem copyInfoItem2IItem(InfoItem infoItem) {
+			
+			IItem item = new Item();
+			
+			ISection section = Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
+				 	
+			copyObjectProperties(item, infoItem);
+			
+			item.setSection(section);
+			
+			return item;			
+		
+		}
+
+	
 }
