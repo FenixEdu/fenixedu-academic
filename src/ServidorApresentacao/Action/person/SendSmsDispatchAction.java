@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoPerson;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.sms.SmsLimitReachedServiceException;
@@ -46,19 +47,42 @@ public class SendSmsDispatchAction extends FenixDispatchAction
 
 		IUserView userView = SessionUtils.getUserView(request);
 
+		//check if person has mobile
+		Object args[] = { userView };
+		InfoPerson infoPerson = null;
+
+		try
+		{
+			infoPerson =
+				(InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUsername", args);
+		}
+		catch (FenixServiceException e1)
+		{
+			throw new FenixActionException();
+		}
+
+		if (infoPerson.getTelemovel().length() == 0)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("noMobileDefined", new ActionError("error.person.noMobileDefined"));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("error");
+		}
+
+		//check if person has enough credits
 		Integer remainingSmsNumber = null;
 
 		Date startDate = getStartMonthDate();
 		Date endDate = getEndMonthDate();
 
-		Object args[] = { userView, startDate, endDate };
+		Object args2[] = { userView, startDate, endDate };
 		try
 		{
 			remainingSmsNumber =
 				(Integer) ServiceUtils.executeService(
 					userView,
 					"CountSentSmsByPersonAndDatePeriod",
-					args);
+					args2);
 
 		}
 		catch (SmsLimitReachedServiceException e)
@@ -92,7 +116,12 @@ public class SendSmsDispatchAction extends FenixDispatchAction
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm sendSmsForm = (DynaActionForm) form;
 
-		String message = (String) sendSmsForm.get("message");
+		String smsSingature =
+			" "
+				+ this.getResources(request).getMessage(
+					"message.person.smsSignature",
+					userView.getUtilizador());
+		String message = ((String) sendSmsForm.get("message")) + smsSingature;
 		Integer destinationPhoneNumber = (Integer) sendSmsForm.get("destinationPhoneNumber");
 
 		Date startDate = getStartMonthDate();
