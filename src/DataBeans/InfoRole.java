@@ -92,5 +92,9 @@ public class InfoRole{
 			((o instanceof InfoRole) &&
 		
 			this.roleType.equals(((InfoRole)o).getRoleType()));
-	} 
+	}
+	
+	public int hashCode(){
+		return this.roleType.getId(); 
+	}
 }
