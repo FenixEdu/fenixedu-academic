@@ -19,7 +19,14 @@ public class InfoExam {
 	protected Date day;
 	protected Calendar beginning;
 	protected Calendar end;
-	protected Season season;	
+	protected Season season;
+
+	// The following variable serves the purpose of indicating the
+	// execution course associated with this exam through which
+	// the exam was obtained. It should serve only for view purposes!!!
+	// It was created to be used and set by the ExamsMap Utilities.
+	// It has no meaning in the buisness logic.
+	private InfoExecutionCourse infoExecutionCourse;
 
 	public InfoExam() {
 	}
@@ -100,6 +107,20 @@ public class InfoExam {
 	 */
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
+
+	/**
+	 * @param course
+	 */
+	public void setInfoExecutionCourse(InfoExecutionCourse course) {
+		infoExecutionCourse = course;
 	}
 
 }
