@@ -5,9 +5,14 @@
  */
 package ServidorAplicacao.Servico.commons;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
+import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -41,7 +46,7 @@ public class ReadExecutionDegreeByOID implements IServico {
 
 	public InfoExecutionDegree run(Integer oid) throws FenixServiceException {
 
-		InfoExecutionDegree result = null;
+		InfoExecutionDegree infoExecutionDegree = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ICursoExecucaoPersistente executionDegreeDAO =
@@ -51,14 +56,28 @@ public class ReadExecutionDegreeByOID implements IServico {
 					CursoExecucao.class,
 					oid);
 			if (executionDegree != null) {
-				result =
+				infoExecutionDegree =
 					Cloner.copyIExecutionDegree2InfoExecutionDegree(
 						executionDegree);
+				
+				if (executionDegree.getCoordinatorsList() != null)
+				{
+					List infoCoordinatorList = new ArrayList();
+					ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
+					while (iteratorCoordinator.hasNext())
+					{
+						ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+
+						infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+					}
+
+					infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
+				}			
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
 
-		return result;
+		return infoExecutionDegree;
 	}
 }

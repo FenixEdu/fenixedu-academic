@@ -8,6 +8,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
 import Dominio.Curso;
 import Dominio.ExecutionPeriod;
+import Dominio.ICoordinator;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
@@ -107,7 +108,20 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico
 
                 InfoExecutionDegree infoExecutionDegree =
                     Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                if (executionDegree.getCoordinatorsList() != null)
+                {
+                	List infoCoordinatorList = new ArrayList();
+                	ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
+                	while (iteratorCoordinator.hasNext())
+                	{
+                		ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
 
+                		infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+                	}
+
+                	infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
+                }
+                
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
         } catch (Exception e)

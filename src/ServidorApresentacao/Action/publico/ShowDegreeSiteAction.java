@@ -165,6 +165,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         request.setAttribute("infoExecutionDegrees", executionDegreeList);
+        
         if (inEnglish == null || inEnglish.booleanValue() == false)
         {
             return mapping.findForward("showDescription");

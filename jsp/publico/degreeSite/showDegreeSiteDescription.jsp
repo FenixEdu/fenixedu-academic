@@ -51,7 +51,6 @@
 
 	 		    <br />
 			  	<bean:size id="executionDegreesSize" name="infoExecutionDegrees" />
-
 			  	<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees" indexId="executionDegreesSize" >
 			  		<logic:iterate id="infoCoordinator" name="infoExecutionDegree" property="coordinatorsList">
 					  	<bean:message key="label.title.coordinator" />&nbsp; 
