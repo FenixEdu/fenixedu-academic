@@ -39,9 +39,8 @@
       <forward name="firstPage" path="/index.do"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
 
-		<forward name="candidateSection" path="/candidateSection.do"/>
-		<forward name="studentSection" path="/studentSection.do"/>
 		<forward name="equivalenceForCoordinator" path="/equivalence.do?method=begin"/>
+		<forward name="backForCoordinator" path="/index.do?"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->

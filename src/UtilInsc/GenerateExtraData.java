@@ -40,6 +40,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DegreeCurricularPlanState;
+import Util.MarkType;
 import Util.TipoCurso;
 
 /**
@@ -145,6 +146,8 @@ public class GenerateExtraData {
 			degreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(3));
 			degreeCurricularPlan.setName("Plano Curricular do Curso Da Tanga " + i);
 			degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE_OBJ);
+			degreeCurricularPlan.setMarkType(MarkType.TYPE20_OBJ);
+			degreeCurricularPlan.setNeededCredits(new Double(0));
 			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 			try {
 				persistentDegreeCurricularPlan.lockWrite(degreeCurricularPlan);

@@ -44,8 +44,7 @@
 		<forward name="enrolment" path="/degreeAdministrativeOffice/globalEnrolment.do" contextRelative="true"/>
 		<forward name="equivalenceForDegreeAdministrativeOffice" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
 
-		<forward name="candidateSection" path="/coordinator/candidateSection.do" contextRelative="true"/>
-		<forward name="studentSection" path="/coordinator/studentSection.do" contextRelative="true"/>
+		<forward name="backForCoordinator" path="/coordinator/index.do?" contextRelative="true"/>
 		<forward name="equivalenceForCoordinator" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
 
 		<forward name="ciaplIndex" path="/index.do" contextRelative="true"/>

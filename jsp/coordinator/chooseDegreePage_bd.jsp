@@ -5,6 +5,7 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="Util.TipoCurso" %>
 
    <span class="error"><html:errors/></span>
 
@@ -32,9 +33,10 @@
                 </html:link>
 			   </td>
 			   <td>
+        	      <logic:equal name="degree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
 			     	<%= candidateAmmounts.get(i++) %>
 			   		<bean:message key="label.masterDegree.coordinator.candidatesAmmount"/> 
-                
+        	      </logic:equal>
 			   </td>
 			  </tr>
         	</logic:iterate>
