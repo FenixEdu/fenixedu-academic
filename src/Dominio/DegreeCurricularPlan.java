@@ -1,6 +1,7 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.List;
 
 import Util.DegreeCurricularPlanState;
 
@@ -12,6 +13,7 @@ import Util.DegreeCurricularPlanState;
 
 public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 
+	private List curricularCourses;
 	private Integer idInternal;
 	private Integer keyDegree;
 	private ICurso degree;
@@ -173,6 +175,27 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	 */
 	public void setInitialDate(Date initialDate) {
 		this.initialDate = initialDate;
+	}
+
+	/* (non-Javadoc)
+	 * @see Dominio.IDegreeCurricularPlan#getCurricularCourses()
+	 */
+	public List getCurricularCourses() {
+		return this.curricularCourses;
+	}
+
+	/* (non-Javadoc)
+	 * @see Dominio.IDegreeCurricularPlan#setCurricularCourses(java.util.List)
+	 */
+	public void setCurricularCourses(List curricularCourses) {
+		this.curricularCourses = curricularCourses;		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return name.hashCode();
 	}
 
 }
