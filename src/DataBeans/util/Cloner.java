@@ -53,6 +53,7 @@ import DataBeans.InfoSite;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentKind;
+import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
@@ -131,6 +132,7 @@ import Dominio.ISite;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.IStudentKind;
+import Dominio.ISummary;
 import Dominio.ITeacher;
 import Dominio.ITeacherShiftPercentage;
 import Dominio.ITurma;
@@ -147,6 +149,7 @@ import Dominio.Site;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Dominio.StudentKind;
+import Dominio.Summary;
 import Dominio.Teacher;
 import Dominio.TeacherShiftPercentage;
 import Dominio.Turma;
@@ -2006,5 +2009,21 @@ public abstract class Cloner {
 		copyObjectProperties(infoDeparment, department);
 		return infoDeparment;
 	}
+	
+	public static InfoSummary copyISummary2InfoSummary(ISummary summary){
+		InfoSummary infoSummary = new InfoSummary();
+		copyObjectProperties(infoSummary,summary);
+		InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(summary.getExecutionCourse());
+		infoSummary.setInfoExecutionCourse(infoExecutionCourse);
+		return infoSummary;
+	}
+	
+	public static ISummary copyInfoSummary2ISummary(InfoSummary infoSummary){
+			ISummary summary = new Summary();
+			copyObjectProperties(summary,infoSummary);
+			IDisciplinaExecucao executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoSummary.getInfoExecutionCourse());
+			summary.setExecutionCourse(executionCourse);
+			return summary;
+		}
 
 }

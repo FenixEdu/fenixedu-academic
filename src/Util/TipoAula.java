@@ -10,7 +10,7 @@ package Util;
  *
  * @author  tfc130
  */
-public class TipoAula {
+public class TipoAula implements Comparable {
     public static final int TEORICA = 1;
     public static final int PRATICA = 2;
     public static final int TEORICO_PRATICA = 3;
@@ -77,4 +77,16 @@ public class TipoAula {
     	}
         return "Error: Invalid lesson type";
     }
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object arg0) {
+		if (getTipo().intValue() > ((TipoAula) arg0).getTipo().intValue()) {
+			return 1;
+		} else if (getTipo().intValue() < ((TipoAula) arg0).getTipo().intValue()) {
+			return -1;
+		} else {
+		return 0;
+	}}
 }

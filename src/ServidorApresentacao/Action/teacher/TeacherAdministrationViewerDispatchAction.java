@@ -2,6 +2,10 @@ package ServidorApresentacao.Action.teacher;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
@@ -31,9 +36,13 @@ import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteSections;
+import DataBeans.InfoSiteSummaries;
+import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSiteTeachers;
+import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -1396,5 +1405,259 @@ public class TeacherAdministrationViewerDispatchAction
 		readSiteView(request, null, null, null, null);
 
 		return mapping.findForward("createTest");
+	}
+
+	public ActionForward showSummaries(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		String executionCourseIdString = request.getParameter("objectCode");
+		Integer executionCourseId = new Integer(executionCourseIdString);
+		HttpSession session = request.getSession(false);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		Object[] args = { executionCourseId };
+		SiteView siteView = null;
+		try {
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ReadSummaries",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		
+		Collections.sort(((InfoSiteSummaries)((ExecutionCourseSiteView)siteView).getComponent()).getInfoSummaries());
+
+		request.setAttribute("siteView", siteView);
+
+		return mapping.findForward("showSummaries");
+	}
+
+	public ActionForward prepareInsertSummary(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		readSiteView(request, null, null, null, null);
+		List lessonTypeValues = new ArrayList();
+
+		lessonTypeValues.add(new Integer(1));
+		lessonTypeValues.add(new Integer(2));
+		lessonTypeValues.add(new Integer(3));
+		lessonTypeValues.add(new Integer(4));
+		lessonTypeValues.add(new Integer(5));
+		lessonTypeValues.add(new Integer(6));
+		List lessonTypeNames = new ArrayList();
+		lessonTypeNames.add("Teórica");
+		lessonTypeNames.add("Prática");
+		lessonTypeNames.add("Teórico-Prática");
+		lessonTypeNames.add("Laboratorial");
+		lessonTypeNames.add("Dúvidas");
+		lessonTypeNames.add("Reserva");
+		request.setAttribute("lessonTypeValues", lessonTypeValues);
+		request.setAttribute("lessonTypeNames", lessonTypeNames);
+		return mapping.findForward("insertSummary");
+	}
+
+	public ActionForward insertSummary(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		String executionCourseIdString = request.getParameter("objectCode");
+		Integer executionCourseId = new Integer(executionCourseIdString);
+		HttpSession session = request.getSession(false);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		String summaryDateString = request.getParameter("summaryDate");
+		String summaryHourString = request.getParameter("summaryHour");
+		String summaryType = request.getParameter("summaryType");
+		String title = request.getParameter("title");
+		String summaryText = request.getParameter("summaryText");
+
+		String[] dateTokens = summaryDateString.split("/");
+		Calendar summaryDate = Calendar.getInstance();
+		summaryDate.set(
+			Calendar.DAY_OF_MONTH,
+			(new Integer(dateTokens[0])).intValue());
+		summaryDate.set(
+			Calendar.MONTH,
+			(new Integer(dateTokens[1])).intValue()-1);
+		summaryDate.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
+
+		String[] hourTokens = summaryHourString.split(":");
+		Calendar summaryHour = Calendar.getInstance();
+		summaryHour.set(
+			Calendar.HOUR_OF_DAY,
+			(new Integer(hourTokens[0])).intValue());
+		summaryHour.set(
+			Calendar.MINUTE,
+			(new Integer(hourTokens[1])).intValue());
+
+		Object[] args =
+			{
+				executionCourseId,
+				summaryDate,
+				summaryHour,
+				new Integer(summaryType),
+				title,
+				summaryText };
+
+		try {
+			ServiceUtils.executeService(userView, "InsertSummary", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		return showSummaries(mapping, form, request, response);
+	}
+	public ActionForward deleteSummary(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		String summaryIdString = request.getParameter("summaryCode");
+		Integer summaryId = new Integer(summaryIdString);
+		HttpSession session = request.getSession(false);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			String executionCourseIdString = request.getParameter("objectCode");
+						Integer executionCourseId = new Integer(executionCourseIdString);
+		Object[] args = { executionCourseId,summaryId };
+
+		try {
+			ServiceUtils.executeService(userView, "DeleteSummary", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		return showSummaries(mapping, form, request, response);
+	}
+
+	public ActionForward prepareEditSummary(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		String summaryIdString = request.getParameter("summaryCode");
+		Integer summaryId = new Integer(summaryIdString);
+		HttpSession session = request.getSession(false);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			String executionCourseIdString = request.getParameter("objectCode");
+				Integer executionCourseId = new Integer(executionCourseIdString);
+		Object[] args = { executionCourseId,summaryId };
+		SiteView siteView = null;
+		try {
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ReadSummary",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		List lessonTypeValues = new ArrayList();
+
+		lessonTypeValues.add(new Integer(1));
+		lessonTypeValues.add(new Integer(2));
+		lessonTypeValues.add(new Integer(3));
+		lessonTypeValues.add(new Integer(4));
+		lessonTypeValues.add(new Integer(5));
+		lessonTypeValues.add(new Integer(6));
+		List lessonTypeNames = new ArrayList();
+		lessonTypeNames.add("Teórica");
+		lessonTypeNames.add("Prática");
+		lessonTypeNames.add("Teórico-Prática");
+		lessonTypeNames.add("Laboratorial");
+		lessonTypeNames.add("Dúvidas");
+		lessonTypeNames.add("Reserva");
+
+		Integer summaryType =
+			((InfoSiteSummary) siteView.getComponent())
+				.getInfoSummary()
+				.getSummaryType()
+				.getTipo();
+		lessonTypeValues.remove(summaryType.intValue() - 1);
+		String summaryTypeName =
+			lessonTypeNames.remove(summaryType.intValue() - 1).toString();
+
+		request.setAttribute("summaryTypeName", summaryTypeName);
+		request.setAttribute("summaryTypeValue", summaryType);
+		request.setAttribute("lessonTypeValues", lessonTypeValues);
+		request.setAttribute("lessonTypeNames", lessonTypeNames);
+		request.setAttribute("siteView", siteView);
+		return mapping.findForward("editSummary");
+	}
+	public ActionForward editSummary(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		String summaryIdString = request.getParameter("summaryCode");
+		String executionCourseIdString = request.getParameter("objectCode");
+		Integer executionCourseId = new Integer(executionCourseIdString);
+		Integer summaryId = new Integer(summaryIdString);
+		HttpSession session = request.getSession(false);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		String summaryDateString = request.getParameter("summaryDateFormatted");
+		String summaryHourString = request.getParameter("summaryHourFormatted");
+		String summaryType = request.getParameter("summaryType");
+
+		String title = request.getParameter("title");
+		String summaryText = request.getParameter("summaryText");
+
+		String[] dateTokens = summaryDateString.split("/");
+		Calendar summaryDate = Calendar.getInstance();
+		summaryDate.set(
+			Calendar.DAY_OF_MONTH,
+			(new Integer(dateTokens[0])).intValue());
+		summaryDate.set(
+			Calendar.MONTH,
+			(new Integer(dateTokens[1])).intValue() - 1);
+		summaryDate.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
+
+		String[] hourTokens = summaryHourString.split(":");
+		Calendar summaryHour = Calendar.getInstance();
+		summaryHour.set(
+			Calendar.HOUR_OF_DAY,
+			(new Integer(hourTokens[0])).intValue());
+		summaryHour.set(
+			Calendar.MINUTE,
+			(new Integer(hourTokens[1])).intValue());
+
+		Object[] args =
+			{executionCourseId,
+				summaryId,
+				summaryDate,
+				summaryHour,
+				new Integer(summaryType),
+				title,
+				summaryText };
+
+		try {
+			ServiceUtils.executeService(userView, "EditSummary", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		return showSummaries(mapping, form, request, response);
 	}
 }
