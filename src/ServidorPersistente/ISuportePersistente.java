@@ -50,6 +50,7 @@ import ServidorPersistente.publication.IPersistentPublicationTeacher;
 import ServidorPersistente.publication.IPersistentPublicationType;
 import ServidorPersistente.sms.IPersistentSentSms;
 import ServidorPersistente.student.IPersistentDelegate;
+import ServidorPersistente.student.IPersistentSenior;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
@@ -115,6 +116,8 @@ public interface ISuportePersistente {
     public IPersistentExecutionDegree getIPersistentExecutionDegree();
 
     public IPersistentStudent getIPersistentStudent();
+    
+    public IPersistentSenior getIPersistentSenior();
 
     public IPersistentBibliographicReference getIPersistentBibliographicReference();
 

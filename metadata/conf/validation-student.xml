@@ -65,5 +65,59 @@
 			</field>
 		</form>
  
+	<form name="seniorInfoForm">
+		<field property="expectedDegreeTerminationDay" depends="required, intRange" page="1">
+			<arg0 key="label.senior.expectedDegreeTerminationDay" />
+			<arg1 name="intRange" key="${var:min}" resource="false"/>
+			<arg2 name="intRange" key="${var:max}" resource="false"/>
+			<var>
+				<var-name>min</var-name>
+				<var-value>1</var-value>
+			</var>
+		    <var>
+		        <var-name>max</var-name>
+		        <var-value>31</var-value>
+		    </var>
+		</field>
+		<field property="expectedDegreeTerminationMonth" depends="required, intRange" page="1">
+			<arg0 key="label.senior.expectedDegreeTerminationMonth" />
+			<arg1 name="intRange" key="${var:min}" resource="false"/>
+			<arg2 name="intRange" key="${var:max}" resource="false"/>
+			<var>
+				<var-name>min</var-name>
+				<var-value>1</var-value>
+			</var>
+		    <var>
+		        <var-name>max</var-name>
+		        <var-value>12</var-value>
+		    </var>
+		</field>
+		<field property="expectedDegreeTerminationYear" depends="required, integer, validateDate" page="1">
+			<arg0 key="label.senior.expectedDegreeTerminationYear" />
+			<var>
+            	<var-name>month</var-name>
+				<var-value>expectedDegreeTerminationMonth</var-value>
+			</var>
+			<var>
+				<var-name>day</var-name>
+				<var-value>expectedDegreeTerminationDay</var-value>
+			</var>
+		</field>
+		<field property="expectedDegreeAverageGrade" depends="required, intRange" page="1">
+			<arg0 key="label.senior.expectedDegreeAverageGrade" />
+			<arg1 name="intRange" key="${var:min}" resource="false"/>
+			<arg2 name="intRange" key="${var:max}" resource="false"/>
+			<var>
+				<var-name>min</var-name>
+				<var-value>10</var-value>
+			</var>
+		    <var>
+		        <var-name>max</var-name>
+		        <var-value>20</var-value>
+		    </var>
+		</field>
+	</form>
+   	   
+ 
   </formset>
 </form-validation>

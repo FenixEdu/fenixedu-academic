@@ -143,4 +143,14 @@
 	<definition name="df.page.finalDegreeWork.attribution" extends="definition.student.masterPage">
 		<put name="body" value="/student/finalDegreeWork/attribution.jsp"/>
 	</definition>
+	
+	<!-- SENIOR INFO DEFINITIONS -->
+	<definition name="senior-info-management" extends="definition.student.masterPage">
+		<put name="body" value="/student/seniorInfoManagement.jsp" />
+	</definition>
+	<definition name="senior-info" extends="definition.student.masterPage">
+		<put name="body" value="/student/seniorInfo.jsp" />
+	</definition>
+	<!-- END SENIOR INFO DEFINITIONS -->
+	
 </tiles-definitions>

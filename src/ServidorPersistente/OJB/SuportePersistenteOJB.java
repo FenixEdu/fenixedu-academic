@@ -72,6 +72,7 @@ import ServidorPersistente.OJB.publication.PublicationTeacherOJB;
 import ServidorPersistente.OJB.publication.PublicationTypeOJB;
 import ServidorPersistente.OJB.sms.SentSmsOJB;
 import ServidorPersistente.OJB.student.DelegateOJB;
+import ServidorPersistente.OJB.student.SeniorOJB;
 import ServidorPersistente.OJB.teacher.CareerOJB;
 import ServidorPersistente.OJB.teacher.CategoryOJB;
 import ServidorPersistente.OJB.teacher.ExternalActivityOJB;
@@ -132,6 +133,7 @@ import ServidorPersistente.publication.IPersistentPublicationTeacher;
 import ServidorPersistente.publication.IPersistentPublicationType;
 import ServidorPersistente.sms.IPersistentSentSms;
 import ServidorPersistente.student.IPersistentDelegate;
+import ServidorPersistente.student.IPersistentSenior;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
@@ -350,6 +352,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentStudent getIPersistentStudent() {
         return new StudentOJB();
+    }
+    
+    public IPersistentSenior getIPersistentSenior() {
+        return new SeniorOJB();
     }
 
     public IPersistentDepartment getIDepartamentoPersistente() {

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <ul>
-	<li>Inscrições</li>
+	<li>InscriÃ§Ãµes</li>
 	<ul>	
 		<li><html:link page="<%="/warningFirst.do"%>"><bean:message key="link.student.enrollment"/></html:link></li>
 	 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning"><bean:message key="link.shift.enrolment"/></html:link></li>
@@ -30,4 +30,7 @@
 		<li><html:link page="/finalDegreeWorkCandidacy.do?method=prepareCandidacy&amp;page=0"><bean:message key="link.finalDegreeWork.candidacy"/></html:link></li>
 		<li><html:link page="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"><bean:message key="link.finalDegreeWork.confirmAttribution"/></html:link></li>
 	</ul>
+</ul>
+<ul>
+  	<li><html:link page="/seniorInformation.do?method=prepareEdit&amp;page=0" ><bean:message key="link.senior.info"/></html:link></li>
 </ul>

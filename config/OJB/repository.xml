@@ -37,6 +37,7 @@
 <!ENTITY degreeCurricularPlan SYSTEM "repository_degree_curricular_plan.xml">
 <!ENTITY degree SYSTEM "repository_degree.xml">
 <!ENTITY student SYSTEM "repository_student.xml">
+<!ENTITY senior SYSTEM "repository_senior.xml">
 <!ENTITY curricularCourseEquivalence SYSTEM "repository_curricular_course_equivalence.xml">
 <!ENTITY branch SYSTEM "repository_branch.xml">
 <!ENTITY executionYear SYSTEM "repository_execution_year.xml">
@@ -102,6 +103,7 @@
     &degreeCurricularPlan;
     &degree;
 	&student;
+	&senior;
 	&curricularCourseEquivalence;
     &branch;
     &executionYear;
