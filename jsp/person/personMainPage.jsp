@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <tiles:insert page="/fenixLayout_2col.jsp" flush="true">
-  <tiles:put name="title" value=".IST - Área Pessoal" />
+  <tiles:put name="title" value="Área Pessoal" />
   <tiles:put name="serviceName" value="Área Pessoal" />
   <tiles:put name="navLocal" value="/person/mainMenu.jsp" />
   <tiles:put name="navGeral" value="/person/commonNavGeralPerson.jsp" />

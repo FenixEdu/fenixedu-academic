@@ -3,5 +3,5 @@
   <tiles:put name="title" value=".IST" />
   <tiles:put name="serviceName" value=".IST - Página de Erro" />
   <tiles:put name="body" value="/error_bd.jsp" />
-  <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+  <tiles:put name="footer" value="/copyright.jsp" />
 </tiles:insert>
