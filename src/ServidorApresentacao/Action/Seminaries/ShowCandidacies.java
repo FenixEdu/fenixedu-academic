@@ -315,6 +315,7 @@ public class ShowCandidacies extends FenixAction
 				infoCandidacyDetails.setMotivation(candidacy.getMotivation());
 				infoCandidacyDetails.setCurricularCourse(curricularCourse);
 				candidaciesExtendedInfo.add(infoCandidacyDetails);
+				Collections.sort(candidaciesExtendedInfo, new BeanComparator("student.number"));
 			}
 		}
 		catch (Exception e)
