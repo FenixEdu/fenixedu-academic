@@ -1,0 +1,722 @@
+
+
+class Dominio.EvaluationExecutionCourse {
+	Integer keyExecutionCourse;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyEvaluation;
+}
+
+class Dominio.ExecutionDegree {
+	Integer keyPeriodExamsSecondSemester;
+	Integer keyPeriodLessonsSecondSemester;
+	Boolean temporaryExamMap;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyPeriodExamsFirstSemester;
+	Integer keyPeriodLessonsFirstSemester;
+	Integer academicYear;
+	Integer keyCurricularPlan;
+	Integer keyCampus;
+}
+
+class Dominio.Room {
+	Integer keyBuilding;
+	String name;
+	Integer ackOptLock;
+	Integer idInternal;
+	String building;
+	Integer normalCapacity;
+	Integer examCapacity;
+	Integer floor;
+}
+
+class Dominio.Exam {
+	Integer ackOptLock;
+	Integer idInternal;
+	String ojbConcreteClass;
+	String publishmentMessage;
+}
+
+class Dominio.ExamStudentRoom {
+	Integer keyRoom;
+	Integer ackOptLock;
+	Integer keyStudent;
+	Integer idInternal;
+	Integer keyExam;
+}
+
+class Dominio.WrittenTest {
+	Integer ackOptLock;
+	Integer idInternal;
+	String ojbConcreteClass;
+	String publishmentMessage;
+}
+
+class Dominio.WrittenEvaluationCurricularCourseScope {
+	Integer keyWrittenEvaluation;
+	Integer keyCurricularCourseScope;
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
+class Dominio.ShiftStudent {
+	Integer keyShift;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyStudent;
+}
+
+class Dominio.ExamExecutionCourse {
+	Integer keyExecutionCourse;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyExam;
+}
+
+class Dominio.Shift {
+	String name;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyExecutionCourse;
+	Integer availabilityFinal;
+	Integer capacity;
+}
+
+class Dominio.RoomOccupation {
+	Integer weekOfBiweeklyStart;
+	Integer keyRoom;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer frequency;
+	Integer keyPeriod;
+}
+
+class Dominio.Lesson {
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyExecutionPeriod;
+	Integer keyShift;
+	Integer keyRoomOccupation;
+	Integer keyRoom;
+}
+
+class Dominio.SchoolClassShift {
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyClass;
+	Integer keyShift;
+}
+
+class Dominio.Period {
+	Integer keyPeriod;
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
+class Dominio.ExecutionCourse {
+	String name;
+	Double theoreticalHours;
+	String code;
+	Integer ackOptLock;
+	Double labHours;
+	Integer idInternal;
+	Integer keyExecutionPeriod;
+	Double praticalHours;
+	String comment;
+	Double theoPratHours;
+}
+
+class Dominio.SchoolClass {
+	Integer keyExecutionDegree;
+	String name;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyExecutionPeriod;
+	Integer curricularYear;
+}
+
+class Dominio.FinalEvaluation {
+	String ojbConcreteClass;
+	Integer ackOptLock;
+	Integer idInternal;
+	String publishmentMessage;
+}
+
+class Dominio.ExecutionPeriod {
+	Integer keyExecutionYear;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyPreviousExecutionPeriod;
+	String name;
+	Integer semester;
+}
+
+class Dominio.ExecutionYear {
+	Integer ackOptLock;
+	String year;
+	Integer idInternal;
+}
+
+class Dominio.Building {
+	Integer ackOptLock;
+	String name;
+	Integer idInternal;
+}
+
+class Dominio.Attends {
+	Integer keyExecutionCourse;
+	Integer keyStudent;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyEnrolment;
+}
+
+class Dominio.Evaluation {
+	Integer ackOptLock;
+	String ojbConcreteClass;
+	Integer idInternal;
+}
+
+class Dominio.WrittenEvaluation {
+	Integer ackOptLock;
+	Integer idInternal;
+	String ojbConcreteClass;
+	String publishmentMessage;
+}
+
+relation ExecutionCourseCurricularCourse {
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	Dominio.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+}
+
+relation ExecutionPeriodExecutionYear {
+	Dominio.ExecutionPeriod playsRole executionPeriods {
+		multiplicity *;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation SchoolClassShiftShift {
+	Dominio.SchoolClassShift playsRole schoolClassShifts {
+		multiplicity *;
+	}
+	Dominio.Shift playsRole shift;
+}
+
+relation LessonRoom {
+	Dominio.Lesson playsRole roomOccupations {
+		multiplicity *;
+	}
+	Dominio.Room playsRole room;
+}
+
+relation AttendsAttendInAttendsSet {
+	Dominio.Attends playsRole attend;
+	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+		multiplicity *;
+	}
+}
+
+relation StudentGroupShift {
+	Dominio.StudentGroup playsRole studentGroups {
+		multiplicity *;
+	}
+	Dominio.Shift playsRole shift;
+}
+
+relation ShiftExecutionCourse {
+	Dominio.Shift playsRole shifts {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExecutionPeriodSchoolClass {
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+	Dominio.SchoolClass playsRole schoolClasses {
+		multiplicity *;
+	}
+}
+
+relation EnrolmentPeriodExecutionPeriod {
+	Dominio.EnrolmentPeriod playsRole enrolmentPeriod {
+		multiplicity *;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ShiftStudentShift {
+	Dominio.ShiftStudent playsRole shiftStudents {
+		multiplicity *;
+	}
+	Dominio.Shift playsRole shift;
+}
+
+relation ShiftLesson {
+	Dominio.Shift playsRole shift;
+	Dominio.Lesson playsRole associatedLessons {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreeCoordinator {
+	Dominio.ExecutionDegree playsRole executionDegree;
+	Dominio.Coordinator playsRole coordinatorsList {
+		multiplicity *;
+	}
+}
+
+relation ExamExecutionCourseExam {
+	Dominio.ExamExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	Dominio.Exam playsRole exam;
+}
+
+relation WrittenTestRoomOccupation {
+	Dominio.WrittenTest playsRole writtenTests {
+		multiplicity 0..1;
+	}
+	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+		multiplicity *;
+	}
+}
+
+relation RoomBuilding {
+	Dominio.Room playsRole rooms {
+		multiplicity *;
+	}
+	Dominio.Building playsRole building;
+}
+
+relation ExecutionCourseAttends {
+	Dominio.ExecutionCourse playsRole executionCourse;
+	Dominio.Attends playsRole attends {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseExecutionPeriod {
+	Dominio.ExecutionCourse playsRole executionCourses {
+		multiplicity *;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation SchoolClassShift {
+	Dominio.SchoolClass playsRole associatedClasses {
+		multiplicity *;
+	}
+	Dominio.Shift playsRole associatedShifts {
+		multiplicity *;
+	}
+}
+
+relation LessonExecutionPeriod {
+	Dominio.Lesson playsRole lessons {
+		multiplicity *;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation WrittenEvaluationRoomOccupation {
+	Dominio.WrittenEvaluation playsRole writtenEvaluation {
+		multiplicity 0..1;
+	}
+	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseEvaluation {
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	Dominio.Evaluation playsRole associatedEvaluations {
+		multiplicity *;
+	}
+}
+
+relation AttendsStudent {
+	Dominio.Attends playsRole attends {
+		multiplicity *;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation SchoolClassExecutionDegree {
+	Dominio.SchoolClass playsRole schoolClasses {
+		multiplicity *;
+	}
+	Dominio.ExecutionDegree playsRole executionDegree;
+}
+
+relation ExamStudentRoomStudent {
+	Dominio.ExamStudentRoom playsRole examStudentRoom {
+		multiplicity *;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation RoomOccupationRoom {
+	Dominio.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
+	}
+	Dominio.Room playsRole room;
+}
+
+relation PeriodRoomOccupation {
+	Dominio.Period playsRole period;
+	Dominio.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreePeriodExamsSecondSemester {
+	Dominio.ExecutionDegree playsRole executionDegree {
+		multiplicity *;
+	}
+	Dominio.Period playsRole periodExamsSecondSemester;
+}
+
+relation EvaluationExecutionCourseExecutionCourse {
+	Dominio.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExecutionDegreeDegreeCurricularPlan {
+	Dominio.ExecutionDegree playsRole executionDegrees {
+		multiplicity *;
+	}
+	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ExecutionCourseProfessorship {
+	Dominio.ExecutionCourse playsRole executionCourse;
+	Dominio.Professorship playsRole professorships {
+		multiplicity *;
+	}
+}
+
+relation OldInquiriesCoursesResExecutionPeriod {
+	Dominio.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+		multiplicity *;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation SiteExecutionCourse {
+	Dominio.Site playsRole site;
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExecutionCourseResponsible {
+	Dominio.ExecutionCourse playsRole executionCourse;
+	Dominio.ResponsibleFor playsRole responsibleTeachers {
+		multiplicity *;
+	}
+}
+
+relation AttendsEnrolment {
+	Dominio.Attends playsRole attends {
+		multiplicity *;
+	}
+	Dominio.Enrolment playsRole enrolment;
+}
+
+relation WrittenTestExecutionCourse {
+	Dominio.WrittenTest playsRole writtenTests {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation FinalDegreeWorkProposalExecutionDegree {
+	Dominio.finalDegreeWork.Proposal playsRole proposal {
+		multiplicity *;
+	}
+	Dominio.ExecutionDegree playsRole executionDegree;
+}
+
+relation WrittenEvaluationCurricularCourseScopeWrittenEvaluation {
+	Dominio.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
+		multiplicity *;
+	}
+	Dominio.WrittenEvaluation playsRole writtenEvaluation;
+}
+
+relation ExamStudentRoomExam {
+	Dominio.ExamStudentRoom playsRole examStudentRoom {
+		multiplicity *;
+	}
+	Dominio.Exam playsRole exam;
+}
+
+relation InsuranceTransactionExecutionYear {
+	Dominio.transactions.InsuranceTransaction playsRole insuranceTransactions {
+		multiplicity *;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation SummaryRoom {
+	Dominio.Summary playsRole summaries {
+		multiplicity *;
+	}
+	Dominio.Room playsRole room;
+}
+
+relation OnlineTestExecutionCourse {
+	Dominio.OnlineTest playsRole onlinesTests {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation LessonRoomOccupation {
+	Dominio.Lesson playsRole lesson {
+		multiplicity 0..1;
+	}
+	Dominio.RoomOccupation playsRole roomOccupation;
+}
+
+relation InsuranceValueExecutionYear {
+	Dominio.InsuranceValue playsRole insuranceValue;
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation ExecutionDegreePeriodExamsFirstSemester {
+	Dominio.ExecutionDegree playsRole executionDegree {
+		multiplicity *;
+	}
+	Dominio.Period playsRole periodExamsFirstSemester;
+}
+
+relation ExamStudentRoomRoom {
+	Dominio.ExamStudentRoom playsRole examStudentRoom {
+		multiplicity *;
+	}
+	Dominio.Room playsRole room;
+}
+
+relation EvaluationExecutionCourseEvaluation {
+	Dominio.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+		multiplicity *;
+	}
+	Dominio.Evaluation playsRole evaluation;
+}
+
+relation WrittenEvaluationExecutionCourse {
+	Dominio.WrittenEvaluation playsRole writtenEvaluations {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation ExamExecutionCourse {
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	Dominio.Exam playsRole associatedExams {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseBibliographicReference {
+	Dominio.BibliographicReference playsRole bibliographicReferences {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation SchoolClassShiftSchoolClass {
+	Dominio.SchoolClassShift playsRole schoolClassShifts {
+		multiplicity *;
+	}
+	Dominio.SchoolClass playsRole schoolClass;
+}
+
+relation ShiftStudentStudent {
+	Dominio.ShiftStudent playsRole shiftStudents {
+		multiplicity *;
+	}
+	Dominio.Student playsRole student;
+}
+
+relation SummaryShift {
+	Dominio.Summary playsRole summaries {
+		multiplicity *;
+	}
+	Dominio.Turno playsRole shift;
+}
+
+relation FinalEvaluationExecutionCourse {
+	Dominio.FinalEvaluation playsRole finalEvaluations {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreePeriodLessonsFirstSemester {
+	Dominio.ExecutionDegree playsRole executionDegree {
+		multiplicity *;
+	}
+	Dominio.Period playsRole periodLessonsFirstSemester;
+}
+
+relation MasterDegreeCandidateExecutionDegree {
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
+	}
+	Dominio.ExecutionDegree playsRole executionDegree;
+}
+
+relation ExecutionPeriodExecutionPeriod {
+	Dominio.ExecutionPeriod playsRole nextExecutionPeriod;
+	Dominio.ExecutionPeriod playsRole previousExecutionPeriod;
+}
+
+relation ShiftShiftProfessorship {
+	Dominio.Shift playsRole shift;
+	Dominio.ShiftProfessorship playsRole associatedShiftProfessorship {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreeCampus {
+	Dominio.ExecutionDegree playsRole executionDegrees {
+		multiplicity *;
+	}
+	Dominio.Campus playsRole campus;
+}
+
+relation OldInquiriesSummaryExecutionPeriod {
+	Dominio.inquiries.OldInquiriesSummary playsRole oldInquiriesSummaries {
+		multiplicity *;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ExecutionCourseExecutionCourseProperty {
+	Dominio.ExecutionCourse playsRole executionCourse;
+	Dominio.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
+		multiplicity *;
+	}
+}
+
+relation StudentExecutionYear {
+	Dominio.Student playsRole students {
+		multiplicity *;
+	}
+	Dominio.ExecutionYear playsRole registrationYear;
+}
+
+relation MarkAttends {
+	Dominio.Mark playsRole mark;
+	Dominio.Attends playsRole attend;
+}
+
+relation ExecutionCourseGroupPropertiesExecutionCourse {
+	Dominio.ExecutionCourse playsRole executionCourse;
+	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+}
+
+relation ExamExecutionCourseExecutionCourse {
+	Dominio.ExamExecutionCourse playsRole examExecutionCourse {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation DelegateExecutionYear {
+	Dominio.student.Delegate playsRole delegates {
+		multiplicity *;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation OldInquiriesTeachersResExecutionPeriod {
+	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+		multiplicity *;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ExecutionDegreePeriodLessonsSecondSemester {
+	Dominio.ExecutionDegree playsRole executionDegree {
+		multiplicity *;
+	}
+	Dominio.Period playsRole periodLessonsSecondSemester;
+}
+
+relation SummaryExecutionCourse {
+	Dominio.Summary playsRole summaries {
+		multiplicity *;
+	}
+	Dominio.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExamCurricularCourseScope {
+	Dominio.Exam playsRole exams {
+		multiplicity *;
+	}
+	Dominio.CurricularCourseScope playsRole associatedCurricularCourseScope {
+		multiplicity *;
+	}
+}
+
+relation EnrolmentExecutionPeriod {
+	Dominio.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	Dominio.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ExamRoomOccupation {
+	Dominio.Exam playsRole exam {
+		multiplicity 0..1;
+	}
+	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseStudent {
+	Dominio.ExecutionCourse playsRole executionCourses {
+		multiplicity *;
+	}
+	Dominio.Student playsRole attendingStudents {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreeExecutionYear {
+	Dominio.ExecutionDegree playsRole executionDegrees {
+		multiplicity *;
+	}
+	Dominio.ExecutionYear playsRole executionYear;
+}
+
+relation MarkEvaluation {
+	Dominio.Mark playsRole marks {
+		multiplicity *;
+	}
+	Dominio.Evaluation playsRole evaluation;
+}
