@@ -43,6 +43,8 @@ public class ReadStudent implements IServico {
     return "ReadStudent";
   }
 
+  // FIXME: We have to read the student by type also !!
+
   public Object run(Integer number) {
 
     InfoStudent infoStudent = null;

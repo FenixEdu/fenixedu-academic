@@ -60,6 +60,8 @@ public class InfoStudent {
 	 _degreeType = degreeType;
 	}
 
+
+  // FIXME: The type of degree should be tested also
   public boolean equals(Object obj) {
     boolean resultado = false;
     if (obj instanceof InfoStudent) {

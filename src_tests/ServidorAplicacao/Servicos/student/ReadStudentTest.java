@@ -15,7 +15,7 @@ import junit.framework.*;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.Servicos.*;
 
-public class ReadStudentTest extends TestCaseServicos {
+public class ReadStudentTest extends TestCaseReadServices {
     public ReadStudentTest(java.lang.String testName) {
     super(testName);
   }
@@ -38,51 +38,36 @@ public class ReadStudentTest extends TestCaseServicos {
     super.tearDown();
   }
 
-  // read student by unauthorized user
-  public void testUnauthorizedReadStudent() {
-    Object argsReadStudent[] = new Object[1];
-    argsReadStudent[0] = new Integer(45498);
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView2, "ReadStudent", argsReadStudent);
-        fail("testUnauthorizedReadStudent");
-      } catch (Exception ex) {
-        assertNull("testUnauthorizedReadStudent", result);
-      }
+  // FIXME: When the service is corrected, correct me too :)
+  protected String getNameOfServiceToBeTested() {
+	  return "ReadStudent";
   }
 
-  // read existing student by authorized user
-  public void testReadExistingStudent() {
-	Object argsReadStudent[] = new Object[1];
-	argsReadStudent[0] = new Integer(600);
+  protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-	Object result = null; 
-	  try {
-		result = _gestor.executar(_userView, "ReadStudent", argsReadStudent);
-		assertNotNull("testReadExistingStudent", result);
-		InfoStudent res = (InfoStudent) result;
-		assertEquals("testReadExistingStudent", _aluno1.getNumber(), res.getNumber());
-		assertEquals("testReadExistingStudent", _aluno1.getState(), res.getState());
-		assertEquals("testReadExistingStudent", _aluno1.getPerson().getNome(),
-		                                        res.getInfoPerson().getNome());
-	  } catch (Exception ex) {
-		fail("testReadExistingStudent");
-	  }
+	  Object[] result = { new Integer(99999) };
+	  return result;
+	}
+
+  protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+	Object[] result = { new Integer(600)};
+	return result;
   }
 
-  // read non-existing student by authorized user
-  public void testReadUnExistingStudent() {
-	Object argsReadStudent[] = new Object[1];
-	argsReadStudent[0] = new Integer(601);
-
-	Object result = null; 
-	  try {
-		result = _gestor.executar(_userView, "ReadStudent", argsReadStudent);
-		assertNull("testReadExistingStudent", result);
-	  } catch (Exception ex) {
-		fail("testReadExistingStudent");
-	  }
+  protected int getNumberOfItemsToRetrieve() {
+	  return 0;
   }
+
+  protected Object getObjectToCompare() {
+  	
+	InfoStudent infoStudent = new InfoStudent();
+	// FIXME: When the equals for the InfoStudent is corrected it's necessary to set the Type of Degree
+	infoStudent.setNumber(new Integer(600));
+	
+	return infoStudent;
+  }
+
+
 
 }
