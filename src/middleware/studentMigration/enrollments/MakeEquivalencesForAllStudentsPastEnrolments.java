@@ -74,7 +74,9 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				fenixPersistentSuport.confirmarTransaccao();
 		
 				System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
-		
+				
+				MakeEquivalencesForAllStudentsPastEnrolments.printIndexes(span, numberOfElementsInSpan);
+				
 				Iterator iterator = result.iterator();
 				while (iterator.hasNext()) {
 					student = (IStudent) iterator.next();
@@ -420,68 +422,22 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		}
 	}
 
-//	/**
-//	 * @param enrollmentsList
-//	 * @param fenixPersistentSuport
-//	 * @return
-//	 * @throws Throwable
-//	 */
-//	protected static List keepOnlyImprovments(List enrollmentsList, ISuportePersistente fenixPersistentSuport) throws Throwable
-//	{
-//		IPersistentEnrolment enrolmentDAO = fenixPersistentSuport.getIPersistentEnrolment();
-//
-//		List enrollmentsToRemove = new ArrayList();
-//		List enrollmentsToReturn = new ArrayList();
-//		
-//		Iterator enrollmentIterator = enrollmentsList.iterator();
-//		while (enrollmentIterator.hasNext())
-//		{
-//			IEnrolment enrolment = (IEnrolment) enrollmentIterator.next();
-//			List evaluations = enrolment.getEvaluations();
-//			Iterator evaluationIterator = evaluations.iterator();
-//			while (evaluationIterator.hasNext())
-//			{
-//				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) evaluationIterator.next();
-//				if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
-//				{
-//					List enrolmentsInSameCourse = enrolmentDAO.readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourseScope().getCurricularCourse(), enrolment.getExecutionPeriod());
-//					List evaluationsInSameCourse = new ArrayList();
-//					
-//					if(enrolmentsInSameCourse != null || !enrolmentsInSameCourse.isEmpty())
-//					{
-//						Iterator iterator = enrolmentsInSameCourse.iterator();
-//						while (iterator.hasNext())
-//						{
-//							IEnrolment enrolmentTemp = (IEnrolment) iterator.next();
-//							evaluationsInSameCourse.addAll(enrolmentTemp.getEvaluations());
-//						}
-//
-//						iterator = evaluationsInSameCourse.iterator();
-//						while (iterator.hasNext())
-//						{
-//							IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) iterator.next();
-//							try
-//							{
-//								Integer improvmentGrade = new Integer(enrolmentEvaluation.getGrade());
-//								Integer currentGrade = new Integer(evaluation.getGrade());
-//								if(currentGrade.intValue() <= improvmentGrade.intValue())
-//								{
-//									if(!enrollmentsToRemove.contains(evaluation.getEnrolment()))
-//									{
-//										enrollmentsToRemove.add(evaluation.getEnrolment());
-//									}
-//								}
-//							} catch(NumberFormatException e)
-//							{
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//
-//		enrollmentsToReturn.addAll(enrollmentsList);
-//		enrollmentsToReturn.removeAll(enrollmentsToRemove);
-//		return enrollmentsToReturn;
-//	}
+	/**
+	 * @param span
+	 * @param numberOfElementsInSpan
+	 */
+	protected static void printIndexes(int span, int numberOfElementsInSpan)
+	{
+		int startIndex = 1;
+		if (span != 0)
+		{
+			startIndex = span * numberOfElementsInSpan;
+		}
+		int endIndex = startIndex + numberOfElementsInSpan - 1;
+		if (startIndex == 1)
+		{
+			endIndex = numberOfElementsInSpan - 1;
+		}
+		System.out.println("[INFO] Indexes from [" + startIndex + "] to [" + endIndex + "].");
+	}
 }
