@@ -79,7 +79,7 @@ public class EditCurriculum implements IServico {
 				return new Boolean(false);
 			}
 			
-
+//TODO: KEEP STORY OF CURRICULAR INFORMATION
 			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
