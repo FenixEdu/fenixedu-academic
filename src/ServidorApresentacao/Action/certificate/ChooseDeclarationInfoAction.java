@@ -4,6 +4,7 @@ package ServidorApresentacao.Action.certificate;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
@@ -73,7 +75,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-
+			String anoLectivo;
 			DynaActionForm chooseDeclaration = (DynaActionForm) form;
 			
 			GestorServicos serviceManager = GestorServicos.manager();	
@@ -101,7 +103,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			infoStudent.setNumber(requesterNumber);
 			infoStudent.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
 			session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
-			Object args[] = {infoStudent, new Specialization(graduationType)};
+			
 	        
 	        // output
 			InfoStudentCurricularPlan infoStudentCurricularPlan = null;
@@ -110,6 +112,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			
 			//get informations
 			try {
+				Object args[] = {infoStudent, new Specialization(graduationType)};
 				infoStudentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "CreateDeclaration", args);
 
 			} catch (NonExistingServiceException e) {
@@ -120,19 +123,47 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 				throw new NonExistingActionException("O aluno");
 			}
 				
-		    else {			
+		    else {	
+				
 				try {
 					infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);
 
 				} catch (RuntimeException e) {
 					throw new RuntimeException("Error", e);
 				}
+			   List enrolmentList = null;
+			   Object args[] = {infoStudentCurricularPlan };
+			   try
+			   {
+				   enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+
+			   } catch (NonExistingServiceException e)
+			   {
+				   throw new NonExistingActionException("Inscrição", e);
+			   }
+
+			   if (enrolmentList.size() == 0)
+				   anoLectivo = infoExecutionYear.getYear();
+			   else
+				   anoLectivo =
+					   ((InfoEnrolment) enrolmentList.get(0))
+						   .getInfoExecutionPeriod()
+						   .getInfoExecutionYear()
+						   .getYear();
+
+				
+				
+				
+				
+				
+				
 				Locale locale = new Locale("pt", "PT");
 				Date date = new Date();
 				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 				session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);		
 				session.setAttribute(SessionConstants.DATE, formatedDate);			
 				session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);	
+				request.setAttribute("anoLectivo",anoLectivo);
 				return mapping.findForward("ChooseSuccess"); 
 		    }
 			
