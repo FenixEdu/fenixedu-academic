@@ -183,8 +183,6 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
         EmployeeHistoric employeeHistoric = getEmployee(teacher);
 
         ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
-        ICostCenter mailingCC = employeeHistoric.getMailingCostCenter();
-
         Criteria criteria = new Criteria();
         if (workingCC != null)
         {
