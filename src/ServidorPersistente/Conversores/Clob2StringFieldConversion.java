@@ -22,23 +22,18 @@ public class Clob2StringFieldConversion implements FieldConversion
 
     public Object javaToSql(Object source)
     {
-//		System.out.println("*********************SOURCE = "+ source+ ";className:"+source.getClass().getName());
 		String str = (String) source; 
 		Clob clob = new com.mysql.jdbc.Clob(str);
 		try {
 			clob.setAsciiStream(str.length());
 		} catch (SQLException e) {
-//			System.out.println("*************************************************************************");
 			e.printStackTrace(System.out);
 		}
-		
-		
     	return clob;
     }
 
     public Object sqlToJava(Object source)
     {
-//		System.out.println("==================================SQL 2 JAVA :"+source+";className:"+source.getClass().getName());
         if (source instanceof Clob)
         {
             Clob c = (Clob) source;
@@ -51,12 +46,10 @@ public class Clob2StringFieldConversion implements FieldConversion
 			} catch (SQLException e) {
 				e.printStackTrace(System.out);
 			}
-//			System.out.println("*********************************SQL 2 JAVA :"+str);
             return str;
         }
         else
         {
-//			System.out.println("==================================SQL 2 JAVA :"+source+";className:"+source.getClass().getName());
          	return source;   
         }
     }
