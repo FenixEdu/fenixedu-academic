@@ -41,8 +41,10 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			IAula aula = null;
 			String oqlQuery =
 				"select diasemanainiciofimsala from " + Aula.class.getName();
-			oqlQuery
-				+= " where diaSemana = $1 and inicio = $2 and fim = $3 and sala.nome = $4";
+			oqlQuery += " where diaSemana = $1";
+			oqlQuery += " and inicio = $2";
+			oqlQuery += " and fim = $3";
+			oqlQuery += " and sala.nome = $4";
 			query.create(oqlQuery);
 			query.bind(diaSemana);
 			query.bind(inicio);

@@ -19,7 +19,6 @@ import Dominio.ITurnoAluno;
 import Dominio.ITurnoAula;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -41,7 +40,6 @@ import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 import Util.DiaSemana;
 import Util.TipoAula;
@@ -118,8 +116,6 @@ public class TestCaseServicos extends TestCase {
 	}
 	
 	protected void setUp() {
-		ligarSuportePersistente();
-//		cleanData();
 		
 		try {
 			dbAcessPoint = new dbaccess();
@@ -462,29 +458,22 @@ public class TestCaseServicos extends TestCase {
 ////		} catch (ExcepcaoPersistencia excepcao) {
 ////			fail("Exception when setUp");
 ////		}
-//		_gestor = GestorServicos.manager();
-//		String argsAutenticacao[] = { "user", "pass" };
-//		String argsAutenticacao2[] = { "4", "a" };
-//		try {
-//			/* user View from _pessoa1 */
-//			_userView =
-//				(IUserView) _gestor.executar(
-//					null,
-//					"Autenticacao",
-//					argsAutenticacao);
-//		} catch (Exception ex) {
-//			System.out.println("Servio no executado: " + ex);
-//		}
-//		try {
-//			_userView2 =
-//				(IUserView) _gestor.executar(
-//					null,
-//					"Autenticacao",
-//					argsAutenticacao2);
-//		} catch (Exception ex) {
-//			System.out.println("Servio no executado: " + ex);
-//		}
+
+		_gestor = GestorServicos.manager();
+		String argsAutenticacao[] = { "user", "pass" };
+		String argsAutenticacao2[] = { "4", "a" };
+		try {
+			_userView = (IUserView) _gestor.executar(null, "Autenticacao", argsAutenticacao);
+		} catch (Exception ex) {
+			System.out.println("Servio no executado: " + ex);
+		}
+		try {
+			_userView2 = (IUserView) _gestor.executar(null, "Autenticacao", argsAutenticacao2);
+		} catch (Exception ex) {
+			System.out.println("Servio no executado: " + ex);
+		}
 	}
+
 	protected void tearDown() {
 		try {
 			dbAcessPoint.openConnection();
@@ -493,61 +482,6 @@ public class TestCaseServicos extends TestCase {
 			dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println("Tear down failed: " +ex);
-		}
-	}
-	protected void ligarSuportePersistente() {
-		try {
-			_suportePersistente = SuportePersistenteOJB.getInstance();
-			_pessoaPersistente = _suportePersistente.getIPessoaPersistente();
-			_aulaPersistente = _suportePersistente.getIAulaPersistente();
-			_salaPersistente = _suportePersistente.getISalaPersistente();
-			_turmaPersistente = _suportePersistente.getITurmaPersistente();
-			_turnoPersistente = _suportePersistente.getITurnoPersistente();
-			_turnoAlunoPersistente = _suportePersistente.getITurnoAlunoPersistente();
-			_turnoAulaPersistente =	_suportePersistente.getITurnoAulaPersistente();
-			_turmaTurnoPersistente = _suportePersistente.getITurmaTurnoPersistente();
-			_cursoExecucaoPersistente =	_suportePersistente.getICursoExecucaoPersistente();
-			_cursoPersistente = _suportePersistente.getICursoPersistente();
-			_disciplinaCurricularPersistente = _suportePersistente.getIPersistentCurricularCourse();
-			_disciplinaExecucaoPersistente = _suportePersistente.getIDisciplinaExecucaoPersistente();
-			_alunoPersistente = _suportePersistente.getIPersistentStudent();
-			_frequentaPersistente =	_suportePersistente.getIFrequentaPersistente();
-			_persistentDepartmentCourse = _suportePersistente.getIDisciplinaDepartamentoPersistente();
-			_persistentDegreeCurricularPlan = _suportePersistente.getIPlanoCurricularCursoPersistente();
-			_persistentDepartment = _suportePersistente.getIDepartamentoPersistente();
-			_persistentStudentCurricularPlan = _suportePersistente.getIStudentCurricularPlanPersistente();
-			persistentExecutionPeriod = _suportePersistente.getIPersistentExecutionPeriod();
-			persistentExecutionYear = _suportePersistente.getIPersistentExecutionYear();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when opening database");
-		}
-	}
-	protected void cleanData() {
-		try {
-			_suportePersistente.iniciarTransaccao();
-			_pessoaPersistente.apagarTodasAsPessoas();
-			_aulaPersistente.deleteAll();
-			_salaPersistente.deleteAll();
-			_turmaPersistente.deleteAll();
-			_turnoPersistente.deleteAll();
-			_turnoAlunoPersistente.deleteAll();
-			_turnoAulaPersistente.deleteAll();
-			_turmaTurnoPersistente.deleteAll();
-			_cursoExecucaoPersistente.deleteAll();
-			_cursoPersistente.deleteAll();
-			_disciplinaCurricularPersistente.deleteAllCurricularCourse();
-			_disciplinaExecucaoPersistente.apagarTodasAsDisciplinasExecucao();
-			_alunoPersistente.deleteAll();
-			_frequentaPersistente.deleteAll();
-			_persistentDepartmentCourse.apagarTodasAsDisciplinasDepartamento();
-			_persistentDegreeCurricularPlan.apagarTodosOsPlanosCurriculares();
-			_persistentDepartment.apagarTodosOsDepartamentos();
-			_persistentStudentCurricularPlan.deleteAll();
-			persistentExecutionPeriod.deleteAll();
-			persistentExecutionYear.deleteAll();
-			_suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when cleaning data");
 		}
 	}
 }
