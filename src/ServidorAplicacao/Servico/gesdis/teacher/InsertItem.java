@@ -11,7 +11,6 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.gesdis.InfoItem;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
@@ -70,12 +69,8 @@ public class InsertItem implements IServico {
 			IItem item = (IItem) iterItems.next();
 			int itemOrder = item.getItemOrder().intValue();
 
-			if (itemOrder >= insertItemOrder) {
-			
+			if (itemOrder >= insertItemOrder) 
 				item.setItemOrder(new Integer(itemOrder+1));
-				persistentItem.lockWrite(item);
-
-			   }
 
 		   }
 
