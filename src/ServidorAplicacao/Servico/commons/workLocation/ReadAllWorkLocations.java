@@ -34,7 +34,7 @@ public class ReadAllWorkLocations implements IService
     {
     }
 
-    public Object run(String workLocationName) throws FenixServiceException
+    public Object run() throws FenixServiceException
     {
         List infoWorkLocations = new ArrayList();
 
