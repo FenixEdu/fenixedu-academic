@@ -8,6 +8,6 @@
 	<tiles:put name="executionCourseLink">
 		/manageTeacherExecutionCourseSupportLessons.do?page=0&amp;method=showForm&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>
 	</tiles:put>
-	<tiles:put name="infoProfessorshipList" beanName="infoProfessorshipList"/>
+	<tiles:put name="detailedProfessorshipList" beanName="detailedProfessorshipList"/>
 	<tiles:put name="paramId" value="executionCourseId"/>
 </tiles:insert>

@@ -19,7 +19,7 @@
 <logic:messagesPresent>
 	<html:errors />
 </logic:messagesPresent>
-<logic:notEmpty name="infoProfessorshipList" >	
+<logic:notEmpty name="detailedProfessorshipList" >	
 	<bean:define id="executionCourseLink">
 	/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>	
 	</bean:define>
@@ -29,8 +29,11 @@
 				<td class="listClasses-header">
 					<bean:message key="label.execution-course.acronym" />
 				</td>
-				<td class="listClasses-header">
+				<td class="listClasses-header" style="text-align:left">
 					<bean:message key="label.execution-course.name" />
+				</td>
+				<td class="listClasses-header" style="text-align:left">
+					<bean:message key="label.execution-course.degrees" />
 				</td>
 				<td class="listClasses-header">
 					<bean:message key="label.execution-period" />
@@ -39,19 +42,30 @@
 					<bean:message key="label.professorship.remove" />
 				</td>
 			</tr>
-			<logic:iterate id="professorship" name="infoProfessorshipList">
+			<logic:iterate id="detailedProfessorship" name="detailedProfessorshipList">
+				<bean:define id="professorship" name="detailedProfessorship" property="infoProfessorship"/>
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
 				<tr>
-					<td class="listClasses">
+					<td class="listClasses" >
 						<html:link page="<%= executionCourseLink %>" paramId="executionCourseId" paramName="infoExecutionCourse" paramProperty="idInternal">
 							<bean:write name="infoExecutionCourse" property="sigla"/>
 						</html:link>
 					</td>			
-					<td class="listClasses">
+					<td class="listClasses" style="text-align:left">
 						<html:link page="<%= executionCourseLink %>" paramId="executionCourseId" paramName="infoExecutionCourse" paramProperty="idInternal">
 							<bean:write name="infoExecutionCourse" property="nome"/>
 						</html:link>
 					</td>
+					<td class="listClasses" style="text-align:left">
+						<bean:define id="infoDegreeList" name="detailedProfessorship" property="infoDegreeList" />
+						<bean:size id="degreeSizeList" name="infoDegreeList"/>
+						<logic:iterate id="infoDegree" name="infoDegreeList" indexId="index">
+							<bean:write name="infoDegree" property="sigla" /> 
+							<logic:notEqual name="degreeSizeList" value="<%= String.valueOf(index.intValue() + 1) %>">
+							,
+							</logic:notEqual>
+						</logic:iterate>
+					</td>					
 					<td class="listClasses">
 						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>&nbsp;-&nbsp;
 						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>
