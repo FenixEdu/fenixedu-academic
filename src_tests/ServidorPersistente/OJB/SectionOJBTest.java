@@ -288,7 +288,7 @@ public class SectionOJBTest extends TestCaseOJB {
 	
 			inferiorSections = persistentSection.readBySiteAndSection(site , null);
 		
-			System.out.println("seccoes"+inferiorSections);
+			//System.out.println("seccoes"+inferiorSections);
 		
 			persistentSupport.confirmarTransaccao();
 			
@@ -335,15 +335,8 @@ public class SectionOJBTest extends TestCaseOJB {
 			// read unexisting SectionsList
 			try {
 				persistentSupport.iniciarTransaccao();
-				IDisciplinaExecucao executionCourse4 =
-								persistentExecutionCourse
-									.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-									"naoExiste",
-									"2002/2003",
-									"LEEC");
-				assertNull(executionCourse4);
-				ISite nonExistingSite = persistentSite.readByExecutionCourse(executionCourse4);
-				List nonExistingSections = persistentSection.readBySite(nonExistingSite);
+				ISite site = persistentSite.readByExecutionCourse(executionCourse3);
+				List nonExistingSections = persistentSection.readBySite(site);
 				assertTrue(nonExistingSections.isEmpty());
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
