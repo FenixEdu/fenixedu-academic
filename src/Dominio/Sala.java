@@ -27,6 +27,10 @@ public class Sala extends DomainObject implements ISala {
 	public Sala() {
 	}
 
+	public Sala(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
+	
 	public Sala(
 		String nome,
 		String edificio,

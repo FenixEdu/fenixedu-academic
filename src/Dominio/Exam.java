@@ -26,7 +26,12 @@ public class Exam extends DomainObject implements IExam {
 	protected Calendar enrollmentEndDay;
 	protected Calendar enrollmentEndTime;
 
-	public Exam() {}
+	public Exam() {
+	}
+
+	public Exam(Integer idInternal) {
+		setIdInternal(idInternal);
+	}
 
 	public boolean equals(Object obj) {
 		if (obj instanceof Exam) {
@@ -39,22 +44,34 @@ public class Exam extends DomainObject implements IExam {
 
 	public String toString() {
 		return "[EXAM:"
-		    + " id= '"              + this.getIdInternal()      + "'\n"
-			+ " day= '"             + this.getDay()             + "'\n"
-			+ " beginning= '"       + this.getBeginning()       + "'\n"
-			+ " end= '"             + this.getEnd()             + "'\n"
-			+ " season= '"          + this.getSeason()          + "'\n"
+			+ " id= '"
+			+ this.getIdInternal()
+			+ "'\n"
+			+ " day= '"
+			+ this.getDay()
+			+ "'\n"
+			+ " beginning= '"
+			+ this.getBeginning()
+			+ "'\n"
+			+ " end= '"
+			+ this.getEnd()
+			+ "'\n"
+			+ " season= '"
+			+ this.getSeason()
+			+ "'\n"
 			+ "";
 	}
 
-
-	public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
+	public Exam(
+		Calendar day,
+		Calendar beginning,
+		Calendar end,
+		Season season) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
 		this.setSeason(season);
 	}
-
 
 	/**
 	 * @return Calendar
