@@ -26,9 +26,6 @@
 <li><html:link page="/viewEvaluation.do?method=viewEvaluation">
 	<bean:message key="link.evaluation"/>
 </html:link></li>
-<li><html:link page="/viewExams.do">
-	<bean:message key="link.exams"/>
-</html:link></li>
 <li><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference&page=0">
 	<bean:message key="link.bibliography"/>
 </html:link></li>
