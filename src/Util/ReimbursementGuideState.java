@@ -4,139 +4,69 @@
  */
 package Util;
 
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.struts.util.LabelValueBean;
+import org.apache.commons.lang.enum.ValuedEnum;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
  *13/Nov/2003
  *
  */
-public class ReimbursementGuideState
+public class ReimbursementGuideState extends ValuedEnum
 {
 
-    public static final int ISSUED = 1;
-    public static final int APPROVED = 2;
-    public static final int PAYED = 3;
-    public static final int ANNULLED = 4;
+    public static final int ISSUED_TYPE = 1;
+    public static final int APPROVED_TYPE = 2;
+    public static final int PAYED_TYPE = 3;
+    public static final int ANNULLED_TYPE = 4;
 
-    public static final ReimbursementGuideState ISSUED_TYPE = new ReimbursementGuideState(ISSUED);
-    public static final ReimbursementGuideState APPROVED_TYPE = new ReimbursementGuideState(APPROVED);
-    public static final ReimbursementGuideState PAYED_TYPE = new ReimbursementGuideState(PAYED);
-    public static final ReimbursementGuideState ANNULLED_TYPE = new ReimbursementGuideState(ANNULLED);
+    public static final ReimbursementGuideState ISSUED =
+        new ReimbursementGuideState("issued", ReimbursementGuideState.ISSUED_TYPE);
+    public static final ReimbursementGuideState APPROVED =
+        new ReimbursementGuideState("approved", ReimbursementGuideState.APPROVED_TYPE);
+    public static final ReimbursementGuideState PAYED =
+        new ReimbursementGuideState("payed", ReimbursementGuideState.PAYED_TYPE);
+    public static final ReimbursementGuideState ANNULLED =
+        new ReimbursementGuideState("annulled", ReimbursementGuideState.ANNULLED_TYPE);
 
-    public static final String ISSUED_STRING = "Emitida";
-    public static final String APPROVED_STRING = "Aprovada";
-    public static final String PAYED_STRING = "Paga";
-    public static final String ANNULLED_STRING = "Anulada";
-    public static final String DEFAULT = "[Escolha uma Situação]";
-
-    private Integer reimbursementGuideState;
-
-    public ReimbursementGuideState()
+    private ReimbursementGuideState(String name, int value)
     {
+        super(name, value);
+    }
+    public static ReimbursementGuideState getEnum(String reimbursementGuideState)
+    {
+        return (ReimbursementGuideState) getEnum(ReimbursementGuideState.class, reimbursementGuideState);
     }
 
-    public ReimbursementGuideState(int type)
+    public static ReimbursementGuideState getEnum(int reimbursementGuideState)
     {
-        this.reimbursementGuideState = new Integer(type);
+        return (ReimbursementGuideState) getEnum(ReimbursementGuideState.class, reimbursementGuideState);
     }
 
-    public ReimbursementGuideState(Integer type)
+    public static Map getEnumMap()
     {
-        this.reimbursementGuideState = type;
+        return getEnumMap(ReimbursementGuideState.class);
     }
 
-    public ReimbursementGuideState(String type)
+    public static List getEnumList()
     {
-        if (type.equals(ReimbursementGuideState.ANNULLED_STRING))
-        {
-            this.reimbursementGuideState = new Integer(ReimbursementGuideState.ANNULLED);
-        }
-        if (type.equals(ReimbursementGuideState.PAYED_STRING))
-        {
-            this.reimbursementGuideState = new Integer(ReimbursementGuideState.PAYED);
-        }
-        if (type.equals(ReimbursementGuideState.APPROVED_STRING))
-        {
-            this.reimbursementGuideState = new Integer(ReimbursementGuideState.APPROVED);
-        }
-        if (type.equals(ReimbursementGuideState.ISSUED_STRING))
-        {
-            this.reimbursementGuideState = new Integer(ReimbursementGuideState.ISSUED);
-        }
+        return getEnumList(ReimbursementGuideState.class);
     }
 
-    public boolean equals(Object obj)
+    public static Iterator iterator()
     {
-        boolean resultado = false;
-        if (obj instanceof ReimbursementGuideState)
-        {
-            ReimbursementGuideState ds = (ReimbursementGuideState) obj;
-            resultado = this.getReimbursementGuideState().equals(ds.getReimbursementGuideState());
-        }
-        return resultado;
-    }
-
-    public static ArrayList toArrayList()
-    {
-        ArrayList result = new ArrayList();
-        result.add(new LabelValueBean(ReimbursementGuideState.DEFAULT, null));
-        result.add(
-            new LabelValueBean(
-                ReimbursementGuideState.ANNULLED_STRING,
-                ReimbursementGuideState.ANNULLED_STRING));
-        result.add(
-            new LabelValueBean(
-                ReimbursementGuideState.PAYED_STRING,
-                ReimbursementGuideState.PAYED_STRING));
-        //		result.add(
-        //			new LabelValueBean(
-        //				ReimbursementGuideState.APPROVED_STRING,
-        //				ReimbursementGuideState.APPROVED_STRING));
-        result.add(
-            new LabelValueBean(
-                ReimbursementGuideState.ISSUED_STRING,
-                ReimbursementGuideState.ISSUED_STRING));
-        return result;
+        return iterator(ReimbursementGuideState.class);
     }
 
     public String toString()
     {
-        if (reimbursementGuideState.intValue() == ReimbursementGuideState.ANNULLED)
-        {
-            return ReimbursementGuideState.ANNULLED_STRING;
-        }
-        if (reimbursementGuideState.intValue() == ReimbursementGuideState.PAYED)
-        {
-            return ReimbursementGuideState.PAYED_STRING;
-        }
-        if (reimbursementGuideState.intValue() == ReimbursementGuideState.APPROVED)
-        {
-            return ReimbursementGuideState.APPROVED_STRING;
-        }
-        if (reimbursementGuideState.intValue() == ReimbursementGuideState.ISSUED)
-        {
-            return ReimbursementGuideState.ISSUED_STRING;
-        }
-        return "ERRO!"; // Nunca e atingido
-    }
+        String result = "Reimbursement Guide State:\n";
+        result += "\n  - Reimbursement Guide State : " + this.getName();
 
-    /**
-     * @return
-     */
-    public Integer getReimbursementGuideState()
-    {
-        return this.reimbursementGuideState;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setReimbursementGuideState(Integer situation)
-    {
-        this.reimbursementGuideState = situation;
+        return result;
     }
 
 }

@@ -2,7 +2,7 @@
  * Created on 12/Nov/2003
  *
  */
-package Dominio.reimbursementGuide;
+package DataBeans.guide.reimbursementGuide;
 
 import java.util.Calendar;
 import java.util.List;
@@ -10,8 +10,8 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import Dominio.DomainObject;
-import Dominio.IGuide;
+import DataBeans.InfoGuide;
+import DataBeans.InfoObject;
 import Util.State;
 
 /**
@@ -22,21 +22,20 @@ import Util.State;
  *@author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
  *
  */
-public class ReimbursementGuide extends DomainObject implements IReimbursementGuide
+public class InfoReimbursementGuide extends InfoObject
 {
 
     protected Integer number;
-    protected IGuide guide;
+    protected InfoGuide infoGuide;
     protected Double value;
     protected String justification;
     protected Calendar creationDate;
-    protected List reimbursementGuideSituations;
-    private Integer keyGuide;
+    protected List infoReimbursementGuideSituations;
 
     /**
      * 
      */
-    public ReimbursementGuide()
+    public InfoReimbursementGuide()
     {
 
     }
@@ -44,7 +43,7 @@ public class ReimbursementGuide extends DomainObject implements IReimbursementGu
     /**
      * @param reimbursementGuideId
      */
-    public ReimbursementGuide(Integer reimbursementGuideId)
+    public InfoReimbursementGuide(Integer reimbursementGuideId)
     {
         setIdInternal(reimbursementGuideId);
     }
@@ -84,17 +83,17 @@ public class ReimbursementGuide extends DomainObject implements IReimbursementGu
     /**
      * @return
      */
-    public IGuide getGuide()
+    public InfoGuide getInfoGuide()
     {
-        return guide;
+        return infoGuide;
     }
 
     /**
      * @param paymentGuide
      */
-    public void setGuide(IGuide paymentGuide)
+    public void setInfoGuide(InfoGuide paymentGuide)
     {
-        this.guide = paymentGuide;
+        this.infoGuide = paymentGuide;
     }
 
     /**
@@ -116,22 +115,6 @@ public class ReimbursementGuide extends DomainObject implements IReimbursementGu
     /**
      * @return
      */
-    public Integer getKeyGuide()
-    {
-        return keyGuide;
-    }
-
-    /**
-     * @param keyPaymentGuide
-     */
-    public void setKeyGuide(Integer keyPaymentGuide)
-    {
-        this.keyGuide = keyPaymentGuide;
-    }
-
-    /**
-     * @return
-     */
     public Integer getNumber()
     {
         return number;
@@ -148,33 +131,34 @@ public class ReimbursementGuide extends DomainObject implements IReimbursementGu
     /**
      * @return
      */
-    public List getReimbursementGuideSituations()
+    public List getInfoReimbursementGuideSituations()
     {
-        return reimbursementGuideSituations;
+        return infoReimbursementGuideSituations;
     }
 
     /**
-     * @param reimbursementGuideSituations
+     * @param infoReimbursementGuideSituations
      */
-    public void setReimbursementGuideSituations(List reimbursementGuideSituations)
+    public void setInfoReimbursementGuideSituations(List infoReimbursementGuideSituations)
     {
-        this.reimbursementGuideSituations = reimbursementGuideSituations;
+        this.infoReimbursementGuideSituations = infoReimbursementGuideSituations;
     }
 
-    public IReimbursementGuideSituation getActiveReimbursementGuideSituation()
+    /**
+     * @return
+     */
+    public InfoReimbursementGuideSituation getActiveInfoReimbursementGuideSituation()
     {
-
         return (
-            IReimbursementGuideSituation) CollectionUtils
-                .find(getReimbursementGuideSituations(), new Predicate()
+            InfoReimbursementGuideSituation) CollectionUtils
+                .find(getInfoReimbursementGuideSituations(), new Predicate()
         {
             public boolean evaluate(Object obj)
             {
-                IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
+                InfoReimbursementGuideSituation situation = (InfoReimbursementGuideSituation) obj;
                 return situation.getState().getState().intValue() == State.ACTIVE;
             }
         });
-
     }
 
 }

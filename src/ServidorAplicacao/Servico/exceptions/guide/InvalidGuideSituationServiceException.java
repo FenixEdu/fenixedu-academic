@@ -12,7 +12,10 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
  * <br>
  * <strong>Description:</strong><br>
  * This exception is throw when one tries to create a reimbursement guide associated with 
- * a payment guide with an active situation that is not PAYED. 
+ * a payment guide with an active situation that is not PAYED, or when one tries to change 
+ * the reimbursement guide ssituation state to an invalid one. See EditReimbursementGuide 
+ * service for details. 
+ * 
  */
 public class InvalidGuideSituationServiceException extends InvalidArgumentsServiceException
 {

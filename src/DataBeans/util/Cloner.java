@@ -96,6 +96,8 @@ import DataBeans.degree.finalProject.InfoDegreeFinalProject;
 import DataBeans.degree.finalProject.InfoOrientation;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.grant.owner.InfoGrantOwner;
+import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
+import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import DataBeans.person.InfoQualification;
 import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
@@ -123,6 +125,8 @@ import Dominio.gesdis.CourseReport;
 import Dominio.gesdis.ICourseReport;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
+import Dominio.reimbursementGuide.IReimbursementGuide;
+import Dominio.reimbursementGuide.IReimbursementGuideSituation;
 import Dominio.teacher.Category;
 import Dominio.teacher.ExternalActivity;
 import Dominio.teacher.ICareer;
@@ -185,11 +189,12 @@ public abstract class Cloner
             Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
 
         copyObjectProperties(infoExecutionCourse, executionCourse);
-         
-        if (infoExecutionPeriod!=null){
-            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);      
+
+        if (infoExecutionPeriod != null)
+        {
+            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
         }
-      
+
         infoExecutionCourse.setNumberOfAttendingStudents(
             new Integer(
                 executionCourse.getAttendingStudents() == null
@@ -3655,22 +3660,50 @@ public abstract class Cloner
         return shiftProfessorship;
     }
     public static IQualification copyInfoQualification2IQualification(InfoQualification infoQualification)
-       {
-           IQualification qualification = new Qualification();
-           IPessoa person = copyInfoPerson2IPerson(infoQualification.getInfoPerson());
-           copyObjectProperties(qualification, infoQualification);
-        
-           qualification.setPerson(person);
-           return qualification;
-       }
-    
-       public static InfoQualification copyIQualification2InfoQualification(IQualification qualification)
-       {
-           InfoQualification infoQualification = new InfoQualification();
-           InfoPerson infoPerson = copyIPerson2InfoPerson(qualification.getPerson());
-           copyObjectProperties(infoQualification, qualification);
-        
-           infoQualification.setInfoPerson(infoPerson);
-           return infoQualification;
-       }
+    {
+        IQualification qualification = new Qualification();
+        IPessoa person = copyInfoPerson2IPerson(infoQualification.getInfoPerson());
+        copyObjectProperties(qualification, infoQualification);
+
+        qualification.setPerson(person);
+        return qualification;
+    }
+
+    public static InfoQualification copyIQualification2InfoQualification(IQualification qualification)
+    {
+        InfoQualification infoQualification = new InfoQualification();
+        InfoPerson infoPerson = copyIPerson2InfoPerson(qualification.getPerson());
+        copyObjectProperties(infoQualification, qualification);
+
+        infoQualification.setInfoPerson(infoPerson);
+        return infoQualification;
+    }
+
+    public static InfoReimbursementGuide copyIReimbursementGuide2InfoReimbursementGuide(IReimbursementGuide reimbursementGuide)
+    {
+        InfoReimbursementGuide infoReimbursementGuide = new InfoReimbursementGuide();
+        InfoGuide infoGuide = copyIGuide2InfoGuide(reimbursementGuide.getGuide());
+
+        copyObjectProperties(infoReimbursementGuide, reimbursementGuide);
+        infoReimbursementGuide.setInfoGuide(infoGuide);
+
+        return infoReimbursementGuide;
+    }
+
+    public static InfoReimbursementGuideSituation copyIReimbursementGuideSituation2InfoReimbursementGuideSituation(IReimbursementGuideSituation reimbursementGuideSituation)
+    {
+        InfoReimbursementGuideSituation infoReimbursementGuideSituation =
+            new InfoReimbursementGuideSituation();
+        InfoReimbursementGuide infoReimbursementGuide =
+            copyIReimbursementGuide2InfoReimbursementGuide(
+                reimbursementGuideSituation.getReimbursementGuide());
+        InfoEmployee infoEmployee =
+            copyIEmployee2InfoEmployee(reimbursementGuideSituation.getEmployee());
+        copyObjectProperties(infoReimbursementGuideSituation, reimbursementGuideSituation);
+        infoReimbursementGuideSituation.setInfoReimbursementGuide(infoReimbursementGuide);
+        infoReimbursementGuideSituation.setInfoEmployee(infoEmployee);
+
+        return infoReimbursementGuideSituation;
+    }
+
 }

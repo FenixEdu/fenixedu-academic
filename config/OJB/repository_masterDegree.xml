@@ -1005,6 +1005,13 @@
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
+      <collection-descriptor
+         name="reimbursementGuideSituations"
+         refresh="true"
+         element-class-ref="Dominio.reimbursementGuide.ReimbursementGuideSituation"
+       >
+       <inverse-foreignkey field-ref="keyReimbursementGuide"/>
+     </collection-descriptor>
   
 <!--
     <collection-descriptor

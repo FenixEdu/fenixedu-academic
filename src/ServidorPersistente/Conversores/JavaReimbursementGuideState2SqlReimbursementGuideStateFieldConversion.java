@@ -18,8 +18,8 @@ public class JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversi
     {
         if (source instanceof ReimbursementGuideState)
         {
-            ReimbursementGuideState s = (ReimbursementGuideState) source;
-            return s.getReimbursementGuideState();
+            ReimbursementGuideState state = (ReimbursementGuideState) source;
+            return new Integer(state.getValue());
         } else
         {
             return source;
@@ -31,7 +31,7 @@ public class JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversi
         if (source instanceof Integer)
         {
             Integer src = (Integer) source;
-            return new ReimbursementGuideState(src);
+            return ReimbursementGuideState.getEnum(src.intValue());
         } else
         {
             return source;

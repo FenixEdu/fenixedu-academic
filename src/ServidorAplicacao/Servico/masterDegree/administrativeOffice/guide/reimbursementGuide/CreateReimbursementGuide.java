@@ -79,11 +79,11 @@ public class CreateReimbursementGuide implements IServico
     {
         return "CreateReimbursementGuide";
     }
- /**
-  *  @throws FenixServiceException, InvalidReimbursementValueServiceException,
-  *  InvalidGuideSituationServiceException, InvalidReimbursementValueSumServiceException
-  */
- 
+    /**
+     *  @throws FenixServiceException, InvalidReimbursementValueServiceException,
+     *  InvalidGuideSituationServiceException, InvalidReimbursementValueSumServiceException
+     */
+
     public void run(Integer guideId, String justification, Double value, IUserView userView)
         throws FenixServiceException
     {
@@ -136,7 +136,7 @@ public class CreateReimbursementGuide implements IServico
             reimbursementGuideSituation.setEmployee(employee);
             reimbursementGuideSituation.setModificationDate(Calendar.getInstance());
             reimbursementGuideSituation.setReimbursementGuide(reimbursementGuide);
-            reimbursementGuideSituation.setReimbursementGuideState(ReimbursementGuideState.ISSUED_TYPE);
+            reimbursementGuideSituation.setReimbursementGuideState(ReimbursementGuideState.ISSUED);
             reimbursementGuideSituation.setRemarks(justification);
             reimbursementGuideSituation.setState(new State(State.ACTIVE));
 
@@ -149,6 +149,8 @@ public class CreateReimbursementGuide implements IServico
     /**
      * @param reimbursementGuides
      * @return
+     * 
+     * Only sums the reimbursement guide's values of those that were not annulled
      */
     private Double sumReimbursementGuidesValue(List reimbursementGuides)
     {
@@ -157,7 +159,13 @@ public class CreateReimbursementGuide implements IServico
         while (iter.hasNext())
         {
             IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
-            sum = new Double(sum.doubleValue() + reimbursementGuide.getValue().doubleValue());
+            if (!reimbursementGuide
+                .getActiveReimbursementGuideSituation()
+                .getReimbursementGuideState()
+                .equals(ReimbursementGuideState.ANNULLED))
+            {
+                sum = new Double(sum.doubleValue() + reimbursementGuide.getValue().doubleValue());
+            }
         }
         return sum;
     }
