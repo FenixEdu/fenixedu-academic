@@ -16,13 +16,13 @@ import java.io.UnsupportedEncodingException;
  * 
  */
 public class FileSuportObject {
-	
+
 	private String uri;
 	private String fileName;
 	private String contentType;
 	private byte[] content;
 	private String linkName;
-	private String rootUri; 
+	private String rootUri;
 
 	/**
 	 * 
@@ -41,7 +41,11 @@ public class FileSuportObject {
 	 * @param fileName
 	 */
 	public void setFileName(String fileName) {
-		this.fileName = fileName;
+		try {
+			this.fileName = new String(fileName.getBytes(), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			this.fileName = fileName;
+		}
 	}
 
 	/**
@@ -50,8 +54,6 @@ public class FileSuportObject {
 	public boolean isStored() {
 		return false;
 	}
-
-	
 
 	/**
 	 * @return
@@ -107,7 +109,7 @@ public class FileSuportObject {
 	 */
 	public void setLinkName(String linkName) {
 		try {
-			this.linkName = new String(linkName.getBytes(),"ISO-8859-1");
+			this.linkName = new String(linkName.getBytes(), "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			this.linkName = linkName;
 		}

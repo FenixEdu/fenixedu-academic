@@ -189,14 +189,12 @@ public class FileSuport implements IFileSuport {
 		String linkName)
 		throws SlideException {
 		try {
+			System.out.println("addContents");
 			beginTransaction();
 			
 			SubjectNode file = 	new SubjectNode();
 			structure.create(slideToken, file, path);
 			content.create(slideToken, path, true);
-			commitTransaction();
-		
-			beginTransaction();
 			NodeRevisionDescriptor currentRevisionDescriptor =
 				new NodeRevisionDescriptor(-1);
 			currentRevisionDescriptor.setContentType(contenType);
@@ -217,14 +215,14 @@ public class FileSuport implements IFileSuport {
 			try {
 				abortTransaction();
 			} catch (Exception e1) {
-				//instance = new FileSuport();
+				
 			} 
 			throw e;
 		} catch (Exception e) {
 			try {
 				abortTransaction();
 			} catch (Exception e1) {
-				//instance = new FileSuport();
+				
 			}
 			throw new SlideException("runtime exception");
 		}
@@ -239,7 +237,7 @@ public class FileSuport implements IFileSuport {
 	private void commitTransaction() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
 			System.out.println("beforeCommit->"+token.getStatus());
 			token.commit();		
-		System.out.println("afterCommit->"+token.getStatus());		
+			System.out.println("afterCommit->"+token.getStatus());		
 		}
 	
 	private void abortTransaction() throws IllegalStateException, SecurityException, SystemException{
@@ -265,7 +263,7 @@ public class FileSuport implements IFileSuport {
 	public void makeFolder(SlideToken slideToken, String folder)
 		throws SlideException {
 		try {
-
+			System.out.println("makeFolder");
 			beginTransaction();
 			structure.create(slideToken, new SubjectNode(), folder);
 			commitTransaction();
@@ -273,7 +271,7 @@ public class FileSuport implements IFileSuport {
 			try {
 				abortTransaction();
 			} catch (Exception e1) {
-//				instance = new FileSuport();
+
 			} 	
 			throw new SlideException("");
 		}
@@ -501,7 +499,7 @@ public class FileSuport implements IFileSuport {
 			filePath="/files"+filePath;
 		}
 		try {
-			
+			System.out.println("deleteFile");
 			beginTransaction();
 			ObjectNode objectNode =
 				structure.retrieve(getSlideToken(), filePath);
@@ -517,21 +515,21 @@ public class FileSuport implements IFileSuport {
 			try {
 				abortTransaction();
 			} catch (Exception e1) {
-//				instance=new FileSuport();
+
 			} 
 			throw e;
 		} catch (RuntimeException e) {
 			try {
 				abortTransaction();
 			} catch (Exception e1) {
-//				instance=new FileSuport();
+
 			} 
 			throw new SlideException("runtime exception");
 		} catch (Exception e) {
 			try {
 				abortTransaction();
 			} catch (Exception e1) {
-//				instance=new FileSuport();
+
 			} 
 			throw new SlideException("runtime exception");
 		}
