@@ -39,7 +39,7 @@ public class ServicoSeguroActualizarFuncsNaoDocentes
 	/** Construtor */
 	public ServicoSeguroActualizarFuncsNaoDocentes(String[] args)
 	{
-		ficheiro = "E:/Projectos/_carregamentos/naodocente.dat"; //args[0];
+		ficheiro = args[0];
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */

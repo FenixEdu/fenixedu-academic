@@ -32,8 +32,6 @@ public class LeituraFicheiroFuncionarioCentroCusto {
     this.lista = new ArrayList();
     this.ficheiro = null;
     this.leitura = null;
-
-    File file = null;
         
     String linhaFicheiro = null;
     Hashtable instancia = null; 
@@ -79,7 +77,7 @@ public class LeituraFicheiroFuncionarioCentroCusto {
     }
     
     try {			
-    	file.delete();			
+    	ficheiro.delete();			
     } catch (Exception e) {
     	throw new NotExecuteException("error.ficheiro.impossivelApagar");
     }
