@@ -34,7 +34,8 @@ turnos, horário e carga curricular
 <br />
 <p>
 Nesta área encontrará a informação relativamente a uma sala, onde poderá consultar o horário lectivo dessa mesma sala.
-</p>  
+</p>
+
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
@@ -44,4 +45,15 @@ Nesta área encontrará a informação relativamente a uma sala, onde poderá consult
 <br />
 <p>
 Nesta área encontrará a informação relativamente aos exames, onde poderá consultar as datas de avaliação (1ª e 2ª época).
-</p>  
+</p>
+<br />
+<br />  
+<table width="100%">
+	<tr>
+		<td><img src="<%= request.getContextPath() %>/images/dotist_info.gif" alt="" />
+		</td>
+		<td class="px9">
+		<bean:message key="message.gesdis.info" />
+		</td>
+	</tr>
+</table>  
