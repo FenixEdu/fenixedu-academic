@@ -38,7 +38,7 @@
 			<form-property name="studentOID" type="java.lang.Integer"/>
 		</form-bean>
 
-		<form-bean name="seeStudentCurricularPlansForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="seeStudentAndCurricularPlansForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="studentName" type="java.lang.String"/>
@@ -1542,16 +1542,23 @@
        </action>
       <!-- end of edit student information -->
 
-	  <action	name="seeStudentCurricularPlansForm"
+
+		<action	name="seeStudentAndCurricularPlansForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentAndCurricularPlansDispatchAction"
-				path="/seeStudentCurricularPlans"
+				path="/seeStudentAndCurricularPlans"
 				parameter="method"
 				scope="request"
 				input="seeStudentCurricularPlans.do?method=start"
-				validate="true">
+				validate="false">
 			<forward name="start" path="df.page.searchStudents"/>
 			<forward name="viewStudents" path="df.page.viewStudents"/>
+		</action>
 
+		<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentCurricularPlansAction"
+				path="/seeStudentCurricularPlans"
+				scope="request"
+				validate="false">
+			<forward name="viewStudentCurricularPlans" path="df.page.viewStudentCurricularPlans"/>
 		</action>
 
     </action-mappings>

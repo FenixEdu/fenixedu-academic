@@ -11,4 +11,8 @@
 		<put name="body" value="/posGraduacao/student/studentCurricularPlan/viewStudents.jsp"/>
 	</definition>
 
+	<definition name="df.page.viewStudentCurricularPlans" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
+		<put name="body" value="/posGraduacao/student/studentCurricularPlan/viewStudentCurricularPlans.jsp"/>
+	</definition>
+
 </tiles-definitions>

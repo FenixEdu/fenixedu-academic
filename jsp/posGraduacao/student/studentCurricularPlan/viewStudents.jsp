@@ -11,33 +11,39 @@
 <center>
 <br/>
 <br/>
-<table border="0" cellspacing="3" cellpadding="3">
+<table border="0" cellspacing="3" cellpadding="10">
 	<tr>
-		<th align="center"><bean:message key="label.masterDegree.administrativeOffice.studentNumber"/></th>
-		<th align="center"><bean:message key="label.masterDegree.administrativeOffice.studentName"/></th>
-		<th align="center">&nbsp;</th>
-		<th align="center">&nbsp;</th>
-		<bean:define id="link">/chooseStudentToVisualizeInformations.do?method=execute&studentNumber=</bean:define>
+		<th align="left"><bean:message key="label.masterDegree.administrativeOffice.studentNumber"/></th>
+		<th align="left"><bean:message key="label.masterDegree.administrativeOffice.studentName"/></th>
+		<th align="left">&nbsp;</th>
+		<th align="left">&nbsp;</th>
 	</tr>
 	<logic:iterate id="infoStudent" name="studentList" indexId="index">
-		
+		<bean:define id="seeStudentCurricularPlansLink">
+			/seeStudentCurricularPlans.do?studentId=<bean:write name="infoStudent" property="idInternal"/>
+		</bean:define>
+<%--
+		<bean:define id="qqCoisaLink">
+			/qqCoisa.do?studentId=<bean:write name="infoStudent" property="idInternal"/>
+		</bean:define>
+--%>
 		<tr>
-			<bean:define id="studentDataLink">
-	        		<bean:write name="link"/><bean:write name="infoStudent" property="number"/>
-	        </bean:define>
-			<td align="center">
+			<td align="left">
 				<bean:write name="infoStudent" property="number"/>
 			</td>
-			<td align="center">
+			<td align="left">
 				<bean:write name="infoStudent" property="infoPerson.nome"/>
 			</td>
-			<td align="center">
-				<html:link page="/seeStudentCurricularPlans.do?method=start">
+			<td align="left">
+				<html:link page="<%= pageContext.findAttribute("seeStudentCurricularPlansLink").toString() %>">
 					<bean:message key="label.masterDegree.administrativeOffice.studentCurricularPlans"/>
 				</html:link>
 			</td>
-			<td align="center">
-				<html:link page='<%= pageContext.findAttribute("studentDataLink").toString() %>'>
+			<td align="left">
+				<bean:define id="studentDataLink">
+		        		/chooseStudentToVisualizeInformations.do?method=execute&studentNumber=<bean:write name="infoStudent" property="number"/>
+		        </bean:define>
+				<html:link page="<%= pageContext.findAttribute("studentDataLink").toString() %>">
 					<bean:message key="label.masterDegree.administrativeOffice.studentData"/>
 				</html:link>
 			</td>

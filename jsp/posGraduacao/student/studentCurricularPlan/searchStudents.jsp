@@ -10,7 +10,7 @@
 <center>
 <br/>
 <br/>
-<html:form action="/seeStudentCurricularPlans.do">
+<html:form action="/seeStudentAndCurricularPlans.do">
 	<html:hidden property="method" value="read"/>
 	<html:hidden property="page" value="1"/>
 	<table border="0">

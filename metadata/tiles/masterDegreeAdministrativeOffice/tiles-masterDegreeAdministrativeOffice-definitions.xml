@@ -19,6 +19,6 @@
 	</definition>
 
 	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
-		<put name="body-context" value="/posGraduacao/student/studentCurricularPlan/studentCurricularPlanContext.jsp"/>
+		<put name="body-context" value="/posGraduacao/student/studentCurricularPlan/studentContext.jsp"/>
 	</definition>
 </tiles-definitions>

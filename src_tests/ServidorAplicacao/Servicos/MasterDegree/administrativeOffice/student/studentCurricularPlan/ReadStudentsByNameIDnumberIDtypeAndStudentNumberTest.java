@@ -56,8 +56,8 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 			dbAcessPoint = new dbaccess();
 			dbAcessPoint.setDbName("fenix");
 			dbAcessPoint.openConnection();
-			dbAcessPoint.backUpDataBaseContents(this.getDBBackupDataSetFilePath());
-//			dbAcessPoint.loadDataBase(getDataSetFilePath());
+//			dbAcessPoint.backUpDataBaseContents(this.getDBBackupDataSetFilePath());
+			dbAcessPoint.loadDataBase(getDataSetFilePath());
 			dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
@@ -78,20 +78,20 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 	}
 
 	protected void tearDown() {
-//		try {
-//			dbAcessPoint.openConnection();
-//			dbAcessPoint.loadDataBase(this.getDBBackupDataSetFilePath());
-//			dbAcessPoint.closeConnection();
-//		} catch (Exception ex) {
-//			System.out.println(ex.toString());
-//			fail("Loading Database With DB Backup Data Set!");
-//		}
+		try {
+			dbAcessPoint.openConnection();
+			dbAcessPoint.loadDataBase(this.getDBBackupDataSetFilePath());
+			dbAcessPoint.closeConnection();
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
+			fail("Loading Database With DB Backup Data Set!");
+		}
 	}
 
 	public void testReadStudentsByNameIDnumberIDtypeAndStudentNumber() {
 		List result = null;
 
-		String studentName = "Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx";
+		String studentName = "david%";
 		Integer studentNumber = new Integer(5090);
 		String idNumber = "13426";
 		TipoDocumentoIdentificacao idType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
