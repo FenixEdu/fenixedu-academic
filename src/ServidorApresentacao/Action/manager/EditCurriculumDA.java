@@ -86,7 +86,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
 		infoCurriculum.setOperacionalObjectivesEn((String) editForm.get("operacionalObjectivesEn"));
 		infoCurriculum.setProgramEn((String) editForm.get("programEn"));
 
-		Object args[] = { infoCurriculum, request.getParameter("language") };
+		Object args[] = { infoCurriculum, request.getParameter("language"), userView.getUtilizador() };
 		
 		try {
 				ServiceUtils.executeService(userView, "EditCurriculum", args);

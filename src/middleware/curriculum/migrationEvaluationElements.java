@@ -14,6 +14,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão Created on 24/Out/2003
+ * @deprecated
  */
 /********************************************************************************************/
 //this file is not used anymore

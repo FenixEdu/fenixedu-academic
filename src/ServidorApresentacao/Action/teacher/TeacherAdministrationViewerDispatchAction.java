@@ -30,7 +30,6 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
-import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
@@ -43,8 +42,6 @@ import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteGroupProperties;
 import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
-import DataBeans.InfoSiteObjectives;
-import DataBeans.InfoSitePrograms;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
@@ -318,179 +315,179 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.findForward("insertAnnouncement");
         }
     }
-    //	========================  Objectives Management  ========================
-    public ActionForward viewObjectives(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        ISiteComponent objectivesComponent = new InfoSiteObjectives();
-        readSiteView(request, objectivesComponent, null, null, null);
-        return mapping.findForward("viewObjectives");
-    }
-    public ActionForward prepareEditObjectives(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        ISiteComponent objectivesComponent = new InfoCurriculum();
-
-        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
-        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
-
-        try
-        {
-            readSiteView(request, objectivesComponent, null, curricularCourseCode, null);
-        } catch (FenixActionException e1)
-        {
-            throw e1;
-        }
-
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
-
-        if (siteView.getComponent() != null)
-        {
-            DynaActionForm objectivesForm = (DynaActionForm) form;
-
-            objectivesForm.set(
-                "generalObjectives",
-                ((InfoCurriculum) siteView.getComponent()).getGeneralObjectives());
-            objectivesForm.set(
-                "generalObjectivesEn",
-                ((InfoCurriculum) siteView.getComponent()).getGeneralObjectivesEn());
-            objectivesForm.set(
-                "operacionalObjectives",
-                ((InfoCurriculum) siteView.getComponent()).getOperacionalObjectives());
-            objectivesForm.set(
-                "operacionalObjectivesEn",
-                ((InfoCurriculum) siteView.getComponent()).getOperacionalObjectivesEn());
-        }
-        request.setAttribute("curricularCourseCode", curricularCourseCode);
-        return mapping.findForward("editObjectives");
-    }
-
-    public ActionForward editObjectives(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        HttpSession session = request.getSession(false);
-        Integer objectCode = getObjectCode(request);
-        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
-        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
-        DynaActionForm objectivesForm = (DynaActionForm) form;
-
-        InfoCurriculum infoCurriculumNew = new InfoCurriculum();
-
-        infoCurriculumNew.setIdInternal(curricularCourseCode);
-        infoCurriculumNew.setGeneralObjectives((String) objectivesForm.get("generalObjectives"));
-        infoCurriculumNew.setGeneralObjectivesEn((String) objectivesForm.get("generalObjectivesEn"));
-        infoCurriculumNew.setOperacionalObjectives((String) objectivesForm.get("operacionalObjectives"));
-        infoCurriculumNew.setOperacionalObjectivesEn(
-            (String) objectivesForm.get("operacionalObjectivesEn"));
-
-        Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
-
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
-        try
-        {
-            serviceManager.executar(userView, "EditObjectives", args);
-
-        } catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
-        return viewObjectives(mapping, form, request, response);
-    }
-
-    //	========================  Program Management  ========================
-    public ActionForward viewProgram(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        ISiteComponent programComponent = new InfoSitePrograms();
-        readSiteView(request, programComponent, null, null, null);
-        return mapping.findForward("viewProgram");
-    }
-
-    public ActionForward prepareEditProgram(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-
-        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
-        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
-        ISiteComponent programComponent = new InfoCurriculum();
-
-        try
-        {
-            readSiteView(request, programComponent, null, curricularCourseCode, null);
-
-        } catch (FenixActionException e1)
-        {
-            throw e1;
-        }
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
-
-        if (siteView.getComponent() != null)
-        {
-            DynaActionForm programForm = (DynaActionForm) form;
-            programForm.set("program", ((InfoCurriculum) siteView.getComponent()).getProgram());
-            programForm.set("programEn", ((InfoCurriculum) siteView.getComponent()).getProgramEn());
-        }
-
-        request.setAttribute("curricularCourseCode", curricularCourseCode);
-        return mapping.findForward("editProgram");
-    }
-
-    public ActionForward editProgram(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-
-        HttpSession session = request.getSession(false);
-        Integer objectCode = getObjectCode(request);
-        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
-        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
-
-        DynaActionForm programForm = (DynaActionForm) form;
-
-        InfoCurriculum infoCurriculumNew = new InfoCurriculum();
-        infoCurriculumNew.setIdInternal(curricularCourseCode);
-        infoCurriculumNew.setProgram((String) programForm.get("program"));
-        infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
-
-        Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
-
-        try
-        {
-            serviceManager.executar(userView, "EditProgram", args);
-        } catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
-        return viewProgram(mapping, form, request, response);
-    }
+//    //	========================  Objectives Management  ========================
+//    public ActionForward viewObjectives(
+//        ActionMapping mapping,
+//        ActionForm form,
+//        HttpServletRequest request,
+//        HttpServletResponse response)
+//        throws FenixActionException
+//    {
+//        ISiteComponent objectivesComponent = new InfoSiteObjectives();
+//        readSiteView(request, objectivesComponent, null, null, null);
+//        return mapping.findForward("viewObjectives");
+//    }
+//    public ActionForward prepareEditObjectives(
+//        ActionMapping mapping,
+//        ActionForm form,
+//        HttpServletRequest request,
+//        HttpServletResponse response)
+//        throws FenixActionException
+//    {
+//        ISiteComponent objectivesComponent = new InfoCurriculum();
+//
+//        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+//        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+//
+//        try
+//        {
+//            readSiteView(request, objectivesComponent, null, curricularCourseCode, null);
+//        } catch (FenixActionException e1)
+//        {
+//            throw e1;
+//        }
+//
+//        TeacherAdministrationSiteView siteView =
+//            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+//
+//        if (siteView.getComponent() != null)
+//        {
+//            DynaActionForm objectivesForm = (DynaActionForm) form;
+//
+//            objectivesForm.set(
+//                "generalObjectives",
+//                ((InfoCurriculum) siteView.getComponent()).getGeneralObjectives());
+//            objectivesForm.set(
+//                "generalObjectivesEn",
+//                ((InfoCurriculum) siteView.getComponent()).getGeneralObjectivesEn());
+//            objectivesForm.set(
+//                "operacionalObjectives",
+//                ((InfoCurriculum) siteView.getComponent()).getOperacionalObjectives());
+//            objectivesForm.set(
+//                "operacionalObjectivesEn",
+//                ((InfoCurriculum) siteView.getComponent()).getOperacionalObjectivesEn());
+//        }
+//        request.setAttribute("curricularCourseCode", curricularCourseCode);
+//        return mapping.findForward("editObjectives");
+//    }
+//
+//    public ActionForward editObjectives(
+//        ActionMapping mapping,
+//        ActionForm form,
+//        HttpServletRequest request,
+//        HttpServletResponse response)
+//        throws FenixActionException
+//    {
+//        HttpSession session = request.getSession(false);
+//        Integer objectCode = getObjectCode(request);
+//        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+//        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+//        DynaActionForm objectivesForm = (DynaActionForm) form;
+//
+//        InfoCurriculum infoCurriculumNew = new InfoCurriculum();
+//
+//        infoCurriculumNew.setIdInternal(curricularCourseCode);
+//        infoCurriculumNew.setGeneralObjectives((String) objectivesForm.get("generalObjectives"));
+//        infoCurriculumNew.setGeneralObjectivesEn((String) objectivesForm.get("generalObjectivesEn"));
+//        infoCurriculumNew.setOperacionalObjectives((String) objectivesForm.get("operacionalObjectives"));
+//        infoCurriculumNew.setOperacionalObjectivesEn(
+//            (String) objectivesForm.get("operacionalObjectivesEn"));
+//
+//        Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
+//
+//        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+//        GestorServicos serviceManager = GestorServicos.manager();
+//        try
+//        {
+//            serviceManager.executar(userView, "EditObjectives", args);
+//
+//        } catch (FenixServiceException e)
+//        {
+//            throw new FenixActionException(e);
+//        }
+//        return viewObjectives(mapping, form, request, response);
+//    }
+//
+//    //	========================  Program Management  ========================
+//    public ActionForward viewProgram(
+//        ActionMapping mapping,
+//        ActionForm form,
+//        HttpServletRequest request,
+//        HttpServletResponse response)
+//        throws FenixActionException
+//    {
+//        ISiteComponent programComponent = new InfoSitePrograms();
+//        readSiteView(request, programComponent, null, null, null);
+//        return mapping.findForward("viewProgram");
+//    }
+//
+//    public ActionForward prepareEditProgram(
+//        ActionMapping mapping,
+//        ActionForm form,
+//        HttpServletRequest request,
+//        HttpServletResponse response)
+//        throws FenixActionException
+//    {
+//
+//        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+//        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+//        ISiteComponent programComponent = new InfoCurriculum();
+//
+//        try
+//        {
+//            readSiteView(request, programComponent, null, curricularCourseCode, null);
+//
+//        } catch (FenixActionException e1)
+//        {
+//            throw e1;
+//        }
+//        TeacherAdministrationSiteView siteView =
+//            (TeacherAdministrationSiteView) request.getAttribute("siteView");
+//
+//        if (siteView.getComponent() != null)
+//        {
+//            DynaActionForm programForm = (DynaActionForm) form;
+//            programForm.set("program", ((InfoCurriculum) siteView.getComponent()).getProgram());
+//            programForm.set("programEn", ((InfoCurriculum) siteView.getComponent()).getProgramEn());
+//        }
+//
+//        request.setAttribute("curricularCourseCode", curricularCourseCode);
+//        return mapping.findForward("editProgram");
+//    }
+//
+//    public ActionForward editProgram(
+//        ActionMapping mapping,
+//        ActionForm form,
+//        HttpServletRequest request,
+//        HttpServletResponse response)
+//        throws FenixActionException
+//    {
+//
+//        HttpSession session = request.getSession(false);
+//        Integer objectCode = getObjectCode(request);
+//        String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+//        Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+//
+//        DynaActionForm programForm = (DynaActionForm) form;
+//
+//        InfoCurriculum infoCurriculumNew = new InfoCurriculum();
+//        infoCurriculumNew.setIdInternal(curricularCourseCode);
+//        infoCurriculumNew.setProgram((String) programForm.get("program"));
+//        infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
+//
+//        Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
+//        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+//        GestorServicos serviceManager = GestorServicos.manager();
+//
+//        try
+//        {
+//            serviceManager.executar(userView, "EditProgram", args);
+//        } catch (FenixServiceException e)
+//        {
+//            throw new FenixActionException(e);
+//        }
+//        return viewProgram(mapping, form, request, response);
+//    }
 
     //	========================  EvaluationMethod Management  ========================
     public ActionForward viewEvaluationMethod(

@@ -16,7 +16,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Fernanda Quitério
  *
- * 
+ * @deprecated
  */
 public class EditProgram implements IServico {
 

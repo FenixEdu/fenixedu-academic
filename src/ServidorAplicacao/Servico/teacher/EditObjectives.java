@@ -16,8 +16,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Fernanda Quitério
  *
- * 
+ * @deprecated 
  */
+
 public class EditObjectives implements IServico {
 
 	private static EditObjectives service = new EditObjectives();
@@ -48,6 +49,7 @@ public class EditObjectives implements IServico {
 			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
 			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+
 			if (curriculum != null) {		
 				curriculum.setCurricularCourse(curricularCourse);
 				curriculum.setGeneralObjectives(infoCurriculumNew.getGeneralObjectives());
