@@ -29,79 +29,79 @@
     <form name="changePersonalInfoForm">
       
       <field property="name" depends="required" page="1">
-        <arg0 key="candidate.name" />
+        <arg0 key="label.person.name" />
       </field>
       
       <field property="fatherName" depends="required" page="1">
-        <arg0 key="candidate.fatherName" />
+        <arg0 key="label.person.fatherName" />
       </field>
       
       <field property="motherName" depends="required" page="1">
-        <arg0 key="candidate.motherName" />
+        <arg0 key="label.person.motherName" />
       </field>
       
       <field property="birthPlaceParish" depends="required" page="1">
-        <arg0 key="candidate.birthPlaceParish" />
+        <arg0 key="label.person.birthPlaceParish" />
       </field>
       
       <field property="birthPlaceMunicipality" depends="required" page="1">
-        <arg0 key="candidate.birthPlaceMunicipality" />
+        <arg0 key="label.person.birthPlaceMunicipality" />
       </field>
       
       <field property="birthPlaceDistrict" depends="required" page="1">
-        <arg0 key="candidate.birthPlaceDistrict" />
+        <arg0 key="label.person.birthPlaceDistrict" />
       </field>
       
-      <field property="identificationDocumentNumber" depends="required,integer" page="1">
-        <arg0 key="candidate.identificationDocumentNumber" />
+      <field property="identificationDocumentNumber" depends="required" page="1">
+        <arg0 key="label.person.identificationDocumentNumber" />
       </field>
       
       <field property="identificationDocumentIssuePlace" depends="required" page="1">
-        <arg0 key="candidate.identificationDocumentIssuePlace" />
+        <arg0 key="label.person.identificationDocumentIssuePlace" />
       </field>
       
       <field property="address" depends="required" page="1">
-        <arg0 key="candidate.address" />
+        <arg0 key="label.person.address" />
       </field>
       
       <field property="place" depends="required" page="1">
-        <arg0 key="candidate.place" />
+        <arg0 key="label.person.place" />
       </field>
       
       <field property="postCode" depends="required" page="1">
-        <arg0 key="candidate.postCode" />
+        <arg0 key="label.person.postCode" />
       </field>
       
       <field property="addressParish" depends="required" page="1">
-        <arg0 key="candidate.addressParish" />
+        <arg0 key="label.person.addressParish" />
       </field>
       
       <field property="addressMunicipality" depends="required" page="1">
-        <arg0 key="candidate.addressMunicipality" />
+        <arg0 key="label.person.addressMunicipality" />
       </field>
       
       <field property="addressDistrict" depends="required" page="1">
-        <arg0 key="candidate.addressDistrict" />
+        <arg0 key="label.person.addressDistrict" />
       </field>
       
       <field property="telephone" depends="required,integer" page="1">
-        <arg0 key="candidate.telephone" />
+        <arg0 key="label.person.telephone" />
       </field>
       
       <field property="mobilePhone" depends="required,integer" page="1">
-        <arg0 key="candidate.mobilePhone" />
+        <arg0 key="label.person.mobilePhone" />
       </field>
       
       <field property="email" depends="email" page="1">
         <arg0 key="Este" resource="false" />
       </field>
 
-      <field property="contributorNumber" depends="required,integer" page="1">
-        <arg0 key="candidate.contributorNumber" />
+      <field property="contributorNumber" depends="required" page="1">
+        <arg0 key="label.person.contributorNumber" />
       </field>
 	
       <field property="occupation" depends="required" page="1">
-        <arg0 key="candidate.occupation" />
+        <arg0 key="label.person.occupation" />
       </field>
 	
         <field property="birthYear"
@@ -151,6 +151,13 @@
         </var>
         
       </field>
+      
+      
+      <field property="sex" depends="required" page="1">
+        <arg0 key="label.person.sex" />
+      </field>
+      
+      
     </form>
 
 

@@ -10,23 +10,6 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
       
-      <!-- Dynamic-FormBean for Authorization -->
-      <form-bean name="authenticationForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="username" type="java.lang.String" />
-        <form-property name="password" type="java.lang.String" />
-      </form-bean>
-
-      <!-- Dynamic-FormBean for Password Change -->
-      <form-bean name="changePasswordForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="oldPassword" type="java.lang.String" />
-        <form-property name="newPassword" type="java.lang.String" />
-        <form-property name="reTypeNewPassword" type="java.lang.String" />
-      </form-bean>
-
 
       <form-bean name="errorMailForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -38,52 +21,14 @@
 
       <!-- Bean for change of Application Information -->
       <form-bean name="changeApplicationInfoForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-        
-        	<form-property name="identificationDocumentType" type="java.lang.String" />
-        	<form-property name="identificationDocumentNumber" type="java.lang.String" />
-        	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
-        	<form-property name="name" type="java.lang.String" />
-        	<form-property name="sex" type="java.lang.String" />
-        	<form-property name="maritalStatus" type="java.lang.String" />
-        	<form-property name="specialization" type="java.lang.String" />
-        	<form-property name="nationality" type="java.lang.String" />
+
+            <form-property name="page" type="java.lang.Integer" />
         	<form-property name="average" type="java.lang.String" />
-         	<form-property name="country" type="java.lang.String" />
-        	<form-property name="candidateNumber" type="java.lang.Integer" />
-        	<form-property name="applicationYear" type="java.lang.String" />
-        	<form-property name="degreeName" type="java.lang.String" />
-        	<form-property name="degreeCode" type="java.lang.String" />
         	<form-property name="majorDegree" type="java.lang.String" />
         	<form-property name="majorDegreeSchool" type="java.lang.String" />
         	<form-property name="majorDegreeYear" type="java.lang.Integer" />
-        	<form-property name="fatherName" type="java.lang.String" />
-        	<form-property name="motherName" type="java.lang.String" />
-        	<form-property name="birthPlaceParish" type="java.lang.String" />
-        	<form-property name="birthPlaceMunicipality" type="java.lang.String" />
-        	<form-property name="birthPlaceDistrict" type="java.lang.String" />
-        	<form-property name="address" type="java.lang.String" />
-        	<form-property name="place" type="java.lang.String" />
-        	<form-property name="postCode" type="java.lang.String" />
-        	<form-property name="addressParish" type="java.lang.String" />
-        	<form-property name="addressMunicipality" type="java.lang.String" />
-        	<form-property name="addressDistrict" type="java.lang.String" />
-        	<form-property name="telephone" type="java.lang.String" />
-        	<form-property name="mobilePhone" type="java.lang.String" />
-        	<form-property name="email" type="java.lang.String" />
-        	<form-property name="webSite" type="java.lang.String" />
-        	<form-property name="contributorNumber" type="java.lang.String" />
-        	<form-property name="occupation" type="java.lang.String" />
-        	<form-property name="birthDay" type="java.lang.String" /> 
-            <form-property name="birthMonth" type="java.lang.String" /> 
-        	<form-property name="birthYear" type="java.lang.String" /> 
-        	<form-property name="idIssueDateDay" type="java.lang.String" /> 
-            <form-property name="idIssueDateMonth" type="java.lang.String" /> 
-        	<form-property name="idIssueDateYear" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateDay" type="java.lang.String" /> 
-            <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
-        	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
       </form-bean>
 
     </form-beans>
@@ -115,23 +60,11 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
       <action path="/index" forward="/indexCand.jsp"/>
-      <action path="/changePasswordForward" forward="/changePassword.jsp"/>
-      <action path="/authentication" forward="/autenticacaoCand.jsp"/>
       <action path="/naoExecutado" forward="/error.jsp"/>
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
+      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       
-
-      <!-- action definition -->
-      <action name="authenticationForm"
-              type="ServidorApresentacao.Action.masterDegree.candidate.AuthenticationFormAction"
-              path="/authenticationForm"
-              input="/autenticacaoCand.jsp"
-              scope="request"
-              attribute="authenticationForm">
-        <exception type="ServidorAplicacao.NotExecutedException"
-                   key="ServidorAplicacao.NotExecutedException"
-                   path="/authentication.do"/>
-        <forward name="Candidate" path="/candidato/indexCand.jsp" contextRelative="true" redirect="true"/>
-      </action>
+      
 	
       <!-- Action for Visualization Of the Candidate's Application Information -->
       <action path="/visualizeApplicationInfo"
@@ -142,45 +75,9 @@
       <!-- Action For LogOff -->
       <action path="/logoff"
       	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/index.do"/>      	      
+      	  <forward name="Success" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>     	      
       </action>
       
-      <!-- Action to Prepare the Change of the Candidate's Application Information -->
-      <action path="/changeApplicationInfo"
-	      attribute="changeApplicationInfoForm"
-	      name="changeApplicationInfoForm"
-	      validate="false"
-              scope="request"
-      	      type="ServidorApresentacao.Action.masterDegree.candidate.PrepareApplicationInfoChangeFormAction">
-      	  <forward name="Success" path="/changeApplicationInfo.jsp"/>
-      	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
-      </action>
-
-      <!-- Action to Change Candidate's Application Information -->
-      <action path="/changeApplicationInfoForm"
-      	      attribute="changeApplicationInfoForm"
-      	      name="changeApplicationInfoForm"
-              type="ServidorApresentacao.Action.masterDegree.candidate.ChangeCandidateApplicationFormAction"
-              input="/changeApplicationInfo.jsp"
-              scope="request">
-        <forward name="Success" path="/changeSuccess.jsp"/>
-      </action>
-
-      <!-- Action to Change Candidate's Password -->
-      <action path="/changePasswordForm"
-      	      attribute="changePasswordForm"
-      	      name="changePasswordForm"
-              type="ServidorApresentacao.Action.person.ChangePersonPasswordAction"
-              input="/changePassword.jsp"
-              scope="request">
-  	  <exception type="ServidorApresentacao.Action.exceptions.InvalidPasswordActionException"
-				 key="ServidorApresentacao.Action.exceptions.InvalidPasswordActionException"
-                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-                 />
-        <forward name="Success" path="/changePasswordSuccess.jsp"/>
-      </action>
-
-
       	<!-- ExceptionHandling -->   
       <action parameter="method"
               name="errorMailForm" 

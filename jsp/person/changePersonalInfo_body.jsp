@@ -14,6 +14,7 @@
 
    <table>
   	  <html:form action="/changePersonalInfoDispatchAction?method=change">
+   	  <html:hidden property="page" value="1"/>
       <span class="error"><html:errors/></span>
 
         <tr>

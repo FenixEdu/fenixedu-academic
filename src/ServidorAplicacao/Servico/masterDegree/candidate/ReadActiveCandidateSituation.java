@@ -24,8 +24,8 @@ import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
 import Dominio.IMasterDegreeCandidate;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.UserView;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -33,28 +33,28 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CandidateSituationValidation;
 
-public class ReadMasterDegreeCandidateByUsername implements IServico {
+public class ReadActiveCandidateSituation implements IServico {
     
-    private static ReadMasterDegreeCandidateByUsername servico = new ReadMasterDegreeCandidateByUsername();
+    private static ReadActiveCandidateSituation servico = new ReadActiveCandidateSituation();
     
     /**
      * The singleton access method of this class.
      **/
-    public static ReadMasterDegreeCandidateByUsername getService() {
+    public static ReadActiveCandidateSituation getService() {
         return servico;
     }
     
     /**
      * The actor of this class.
      **/
-    private ReadMasterDegreeCandidateByUsername() { 
+    private ReadActiveCandidateSituation() { 
     }
     
     /**
      * Returns The Service Name */
     
     public final String getNome() {
-        return "ReadMasterDegreeCandidateByUsername";
+        return "ReadActiveCandidateSituation";
     }
     
     
@@ -80,19 +80,23 @@ public class ReadMasterDegreeCandidateByUsername implements IServico {
 		
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 		
+		// Fill in the blanks
+		
+		
+		
 		// Search the candidate's active situation
 		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-
+	
 		while(iterator.hasNext()){
 			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
 			
 			if ((candidateSituationTemp.getValidation().getCandidateSituationValidation()).equals(new Integer(CandidateSituationValidation.ACTIVE))) {
-				infoMasterDegreeCandidate.setInfoCandidateSituation(new InfoCandidateSituation(candidateSituationTemp.getDate(),
-										 							candidateSituationTemp.getRemarks(),
-										  							candidateSituationTemp.getSituation().toString()));
+				InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation(candidateSituationTemp);
+				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+				return infoMasterDegreeCandidate; 
 			}
+				
 		}
-		
-		return infoMasterDegreeCandidate;
+		return null;
     }
 }

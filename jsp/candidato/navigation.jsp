@@ -3,13 +3,11 @@
 
 <html>
   <head>
-    <title><bean:message key="candidate.titleMain" /></title>
+    <title><bean:message key="title.candidate.main" /></title>
   </head>
   <body>
-    <html:link page="/visualizeApplicationInfo.do">Visualizar a Informação de Candidatura</html:link><br/>
-    <html:link page="/changeApplicationInfo.do">Alterar a Informação de Candidatura</html:link><br/>
-    <html:link page="/changePasswordForward.do">Alterar a Password</html:link><br/>
-    <html:link page="/logoff.do">LogOff</html:link><br/>
+    <html:link page="/visualizeApplicationInfo.do"><bean:message key="link.candidate.visualizeSituation" /></html:link><br/>
+    <html:link page="/logoff.do"><bean:message key="link.candidate.logoff" /></html:link><br/>
     
   </body>
 </html>

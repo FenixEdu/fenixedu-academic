@@ -39,15 +39,14 @@ public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.
 	if (session != null) {
       IUserView userView = (IUserView) session.getAttribute("UserView");
       GestorServicos gestor = GestorServicos.manager();
-	  InfoMasterDegreeCandidate masterDegreeCandidate = null;
 	  
       Object args[] = new Object[1];
 	  args[0] = userView;
 	  
-      masterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ReadMasterDegreeCandidateByUsername", args);
+      InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ReadActiveCandidateSituation", args);
 	  
-	  
-      request.setAttribute("applicationInfo", masterDegreeCandidate);
+	   
+      request.setAttribute("applicationInfo", infoMasterDegreeCandidate);
       return mapping.findForward("Success");
     } else
       throw new Exception();   

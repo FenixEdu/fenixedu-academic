@@ -209,6 +209,8 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		  changePersonalInfoForm.set("occupation", infoPerson.getProfissao());
 		  changePersonalInfoForm.set("username", infoPerson.getUsername());
 		  
+		  System.out.println(infoPerson);
+		  
 		  if (infoPerson.getSexo() != null);
 		  	changePersonalInfoForm.set("sex", infoPerson.getSexo().toString());
 		  if (infoPerson.getEstadoCivil() != null)

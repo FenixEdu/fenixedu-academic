@@ -32,8 +32,8 @@
       <form-bean name="changePersonalInfoForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-<!--            <form-property name="page" type="java.lang.Integer" />
--->
+            <form-property name="page" type="java.lang.Integer" />
+
         	<form-property name="identificationDocumentType" type="java.lang.String" />
         	<form-property name="identificationDocumentNumber" type="java.lang.String" />
         	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
@@ -121,7 +121,7 @@
 	     attribute="changePersonalInfoForm"
 	          name="changePersonalInfoForm"
 	         input="/changePersonalInfo.jsp"
-	      validate="false"
+	      validate="true"
 		 parameter="method"
       	      type="ServidorApresentacao.Action.person.ChangePersonalInfoDispatchAction">
       	  <forward name="Success" path="/changeSuccess.jsp"/>
