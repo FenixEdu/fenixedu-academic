@@ -60,18 +60,18 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 	public void testSuccessfulExecutionOfAction() {
 
-		testIt(	(HashMap) getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
+		doTest(	(HashMap) getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
 				(HashMap) getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
-				getSuccessfulForward(), getExistingAttributesListToVerifyInSuccessfulExecution(),
-				getNonExistingAttributesListToVerifyInSuccessfulExecution());
+				getSuccessfulForward(), (HashMap) getExistingAttributesListToVerifyInSuccessfulExecution(),
+				(HashMap) getNonExistingAttributesListToVerifyInSuccessfulExecution() );
 	}
 
 	public void testUnsuccessfulExecutionOfAction() {
 
-		testIt(	(HashMap) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
+		doTest(	(HashMap) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
 				(HashMap) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
-				getUnsuccessfulForward(), getExistingAttributesListToVerifyInUnsuccessfulExecution(),
-				getNonExistingAttributesListToVerifyInUnsuccessfulExecution()	);
+				getUnsuccessfulForward(), (HashMap) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
+				(HashMap) getNonExistingAttributesListToVerifyInUnsuccessfulExecution()	);
 	}
    
 	/**
@@ -81,8 +81,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param existingAttributesList
 	 * @param nonExistingAttributesList
 	 */
-	protected void testIt(HashMap itemsToPutInRequest, HashMap itemsToPutInSession, String forward,
-	List existingAttributesList, List nonExistingAttributesList) {
+	protected void doTest(HashMap itemsToPutInRequest, HashMap itemsToPutInSession, String forward,
+	HashMap existingAttributesList, HashMap nonExistingAttributesList) {
 
 		String pathOfAction = getRequestPathInfoPathAction();
 		String nameOfAction = getRequestPathInfoNameAction();
@@ -115,7 +115,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 			}
 		}
 
-		if( (pathOfAction != null) && (nameOfAction != null) && (itemsToPutInSession != null) && (itemsToPutInRequest != null) && (forward != null) ) {
+		if( (pathOfAction != null) && (nameOfAction != null) &&
+			(itemsToPutInSession != null) && (itemsToPutInRequest != null) &&
+			(forward != null) ) {
 //			perform
 			actionPerform();
 //			checks for errors
@@ -123,10 +125,24 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 //			checks forward
 			verifyForward(forward);
 
-			CurricularYearAndSemesterAndInfoExecutionDegree ctx = SessionUtils.getContext(getRequest());
-			assertNotNull("Context is null!", ctx);
-			
-			verifyScopeAttributes(getScope(), existingAttributesList, nonExistingAttributesList);
+//			CurricularYearAndSemesterAndInfoExecutionDegree ctx = SessionUtils.getContext(getRequest());
+//			assertNotNull("Context is null!", ctx);
+
+			Set keys = null;
+			Iterator keysIterator = null;
+			if(existingAttributesList != null) {
+				keys = existingAttributesList.keySet();
+				keysIterator = keys.iterator();
+			} else if(nonExistingAttributesList != null) {
+				keys = nonExistingAttributesList.keySet();
+				keysIterator = keys.iterator();
+			}
+			if(keys != null) {
+				while(keysIterator.hasNext()) {
+					Integer key = (Integer) keysIterator.next();
+					verifyScopeAttributes(key.intValue(), (List) existingAttributesList.get(key), (List) nonExistingAttributesList.get(key));
+				}
+			}
 		}
    }
 
@@ -135,7 +151,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param existingAttributesList
 	 * @param nonExistingAttributesList
 	 */
-	protected void verifyScopeAttributes(int scope, List existingAttributesList, List nonExistingAttributesList) {
+	private void verifyScopeAttributes(int scope, List existingAttributesList, List nonExistingAttributesList) {
 
 		Enumeration attNames = null;
 		switch(scope) {
@@ -149,10 +165,10 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 				attNames = getActionServlet().getServletContext().getAttributeNames();
 				break;
 			default:
-				break;
+				throw new IllegalArgumentException("Unknown scope! Use " + ScopeConstants.class.getName());
 		}
-		verifyAttributes(attNames, existingAttributesList);
-		verifyAttributes(attNames, nonExistingAttributesList);
+		verifyAttributes(attNames, existingAttributesList, true);
+		verifyAttributes(attNames, nonExistingAttributesList, false);
 	}
 
 	/**
@@ -160,13 +176,13 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param list
 	 * @param exists
 	 */
-	private void verifyAttributes(Enumeration attNames, List list) {
+	private void verifyAttributes(Enumeration attNames, List list, boolean contains) {
 
 		if( (list != null) && (attNames != null) ) {
 			while(attNames.hasMoreElements()) {
 				String attName = (String) attNames.nextElement();
 				String message = null;
-				if(list.contains(attName)) {
+				if(list.contains(attName) == contains) {
 					message = "Scope contains attribute ";
 				} else {
 					message = "Scope doesn't contain attribute ";
@@ -185,7 +201,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each object to put in session.
 	 * This method must return null if not to be used.
 	 */
-	protected abstract Map getItemsToPutInSessionForActionToBeTestedSuccessfuly();
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+		return null;
+	}
 
 	/**
 	 * This method must return a Map with all the items that should be in session to execute
@@ -194,7 +212,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each object to put in session.
 	 * This method must return null if not to be used.
 	 */
-	protected abstract Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly();
+	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		return null;
+	}
 
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
@@ -203,7 +223,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
-	protected abstract Map getItemsToPutInRequestForActionToBeTestedSuccessfuly();
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		return null;
+	}
 
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
@@ -212,7 +234,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
-	protected abstract Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly();
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		return null;
+	}
 
 	/**
 	 * This method must return a List with the attributes that are supose to be present in a specified scope
@@ -220,7 +244,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected abstract List getExistingAttributesListToVerifyInSuccessfulExecution();
+	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		return null;
+	}
 
 	/**
 	 * This method must return a List with the attributes that are not supose to be present in a specified scope
@@ -228,7 +254,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected abstract List getNonExistingAttributesListToVerifyInSuccessfulExecution();
+	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		return null;
+	}
 
 	/**
 	 * This method must return a List with the attributes that are supose to be present in a specified scope
@@ -236,7 +264,9 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected abstract List getExistingAttributesListToVerifyInUnsuccessfulExecution();
+	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		return null;
+	}
 
 	/**
 	 * This method must return a List with the attributes that are not supose to be present in a specified scope
@@ -244,37 +274,45 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * The scope is specified by the method getScope().
 	 * This method must return null if not to be used.
 	 */
-	protected abstract List getNonExistingAttributesListToVerifyInUnsuccessfulExecution();
+	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		return null;
+	}
 
 	/**
 	 * This method must return one of these 3 constants: ScopeConstants.SESSION;
 	 * ScopeConstants.REQUEST; ScopeConstants.APP_CONTEXT.
 	 */
-	protected abstract int getScope();
+	protected int getScope() {
+		return ScopeConstants.SESSION;
+	}
 
 	/**
-	 * This method must a string identifying the servlet configuration file.
+	 * This method must return a string identifying the servlet configuration file.
 	 */
 	protected abstract String getServletConfigFile();
 	
 	/**
-	 * This method must a string identifying the action path of the request path.
+	 * This method must return a string identifying the action path of the request path.
 	 */
 	protected abstract String getRequestPathInfoPathAction();
 	
 	/**
-	 * This method must a string identifying the action name of the request path.
+	 * This method must return a string identifying the action name of the request path.
 	 */
 	protected abstract String getRequestPathInfoNameAction();
 
 	/**
-	 * This method must a string identifying the forward when the action executes successfuly.
+	 * This method must return a string identifying the forward when the action executes successfuly.
 	 */
-	protected abstract String getSuccessfulForward();
+	protected String getSuccessfulForward() {
+		return null;
+	}
 
 	/**
-	 * This method must a string identifying the forward when the action executes unsuccessfuly.
+	 * This method must return a string identifying the forward when the action executes unsuccessfuly.
 	 */
-	protected abstract String getUnsuccessfulForward();
+	protected String getUnsuccessfulForward() {
+		return null;
+	}
 
 }

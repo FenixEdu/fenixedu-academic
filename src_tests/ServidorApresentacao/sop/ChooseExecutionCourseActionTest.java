@@ -1,7 +1,8 @@
 package ServidorApresentacao.sop;
   
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -10,9 +11,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCaseActionExecution;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -21,7 +20,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * 
  * @author Ivo Brandão
  */
-public class ChooseExecutionCourseActionTest extends TestCasePresentation {
+public class ChooseExecutionCourseActionTest extends TestCaseActionExecution {
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
@@ -29,128 +28,171 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentation {
 
 	public static Test suite() {
 		TestSuite suite = new TestSuite(ChooseExecutionCourseActionTest.class);
-
 		return suite;
 	}
 	
 	public void setUp() {
 		super.setUp();
-
-		//defines struts config file to use
-		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
 	}
 
 	public ChooseExecutionCourseActionTest(String testName) {
 		super(testName);
 	}
 
-	public void testSuccessfulChooseExecutionCourse() {
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 
-		//required to put form escolherDisciplinaExecucaoForm in session
-		setRequestPathInfo("/sop", "/escolherDisciplinaExecucaoForm");
-		addRequestParameter("courseInitials", "TFCI");
+		HashMap items = new HashMap();
+		items.put("courseInitials", "TFCI");
+		return items;
+	}
 
-		//create execution period
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		HashMap items = new HashMap();
+		items.put("courseInitials", "");
+		return items;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+
+		HashMap items = new HashMap();
+
+		// create execution period
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
 
-		getSession().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		items.put(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
-		//curricular year
+		// curricular year
 		Integer curricularYear = new Integer(2);
-		getSession().setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
+		items.put(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
 
-		//execution degree
+		// execution degree
 		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
-		getSession().setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+		items.put(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
 
-		//privileges
-		HashSet privileges = new HashSet();
-		privileges.add("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");		
-		IUserView userView = new UserView("user", privileges);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-				
-		//list of EXECUTION_COURSE_LIST_KEY
+		// list of EXECUTION_COURSE_LIST_KEY
 		try {
-		Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-
-		ArrayList infoCourseList =
-			(ArrayList) ServiceUtils.executeService(
-				userView,
-				"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
-				args);
-		
-		getSession().setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
+			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
+			ArrayList infoCourseList = (ArrayList) ServiceUtils.executeService(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
+			items.put(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 		} catch (Exception exception){
 			exception.printStackTrace(System.out);
 			fail("testSuccessfulChooseExecutionCourse - executing service");
 		}
-		
-		//perform
-		actionPerform();
 
-		//checks for errors
-		verifyNoActionErrors();
-
-		//checks forward
-		verifyForward("forwardChoose"); 
+		return items;
 	}
 
-	public void testUnSuccessfulChooseExecutionCourse() {
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
 
-		//required to put form escolherDisciplinaExecucaoForm in session
-		setRequestPathInfo("/sop", "/escolherDisciplinaExecucaoForm");
-		addRequestParameter("courseInitials", "");
+		HashMap items = new HashMap();
 
-		//create execution period
+		// create execution period
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
 
-		getSession().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		items.put(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
-		//curricular year
+		// curricular year
 		Integer curricularYear = new Integer(2);
-		getSession().setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
+		items.put(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
 
-		//execution degree
+		// execution degree
 		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
-		getSession().setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+		items.put(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
 
-		//privileges
-		HashSet privileges = new HashSet();
-		privileges.add("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");		
-		IUserView userView = new UserView("user", privileges);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-				
-		//list of EXECUTION_COURSE_LIST_KEY
+		// list of EXECUTION_COURSE_LIST_KEY
 		try {
-		Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-
-		ArrayList infoCourseList =
-			(ArrayList) ServiceUtils.executeService(
-				userView,
-				"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
-				args);
-		
-		getSession().setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
+			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
+			ArrayList infoCourseList = (ArrayList) ServiceUtils.executeService(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
+			items.put(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 		} catch (Exception exception){
 			exception.printStackTrace(System.out);
 			fail("testUnSuccessfulChooseExecutionCourse - executing service");
 		}
-		
-		//perform
-		actionPerform();
 
-		//checks for errors
-		verifyNoActionErrors();
-
-		//checks forward
-		verifyForward("showForm"); 
+		return items;
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
+	 */
+	protected String getRequestPathInfoNameAction() {
+		return "/escolherDisciplinaExecucaoForm";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
+	 */
+	protected String getRequestPathInfoPathAction() {
+		return "/sop";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
+	 */
+	protected String getServletConfigFile() {
+		return "/WEB-INF/tests/web-sop.xml";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
+	 */
+	protected String getSuccessfulForward() {
+		return "forwardChoose";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getUnsuccessfulForward()
+	 */
+	protected String getUnsuccessfulForward() {
+		return "showForm";
+	}
+
 }
