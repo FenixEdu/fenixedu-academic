@@ -142,27 +142,27 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
             throw new FenixActionException(e);
         }
 
-		/* * * get master degree proof history * * */
-		Object argsMasterDegreeProofHistory[] = { infoStudentCurricularPlan };
-		List masterDegreeProofHistory = null;
+        /* * * get master degree proof history * * */
+        Object argsMasterDegreeProofHistory[] = { infoStudentCurricularPlan };
+        List masterDegreeProofHistory = null;
 
-		try
-		{
-			masterDegreeProofHistory =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan",
-					argsMasterDegreeProofHistory);
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        try
+        {
+            masterDegreeProofHistory =
+                (List) ServiceUtils.executeService(
+                    userView,
+                    "ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan",
+                    argsMasterDegreeProofHistory);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		if (masterDegreeProofHistory.isEmpty() == false)
-		{
-			request.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY, masterDegreeProofHistory);
-		}
+        if (masterDegreeProofHistory.isEmpty() == false)
+        {
+            request.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY, masterDegreeProofHistory);
+        }
 
         if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
             request.setAttribute(
@@ -171,7 +171,9 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
 
         if (infoMasterDegreeProofVersion.getInfoExternalJuries().isEmpty() == false)
         {
-        	request.setAttribute(SessionConstants.EXTERNAL_JURIES_LIST, infoMasterDegreeProofVersion.getInfoExternalJuries());
+            request.setAttribute(
+                SessionConstants.EXTERNAL_JURIES_LIST,
+                infoMasterDegreeProofVersion.getInfoExternalJuries());
         }
 
         int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();

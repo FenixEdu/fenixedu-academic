@@ -10,11 +10,14 @@
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 <bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT %>" />
 <bean:define id="attachedCopiesNumber" name="<%= SessionConstants.ATTACHED_COPIES_NUMBER %>" />
-<bean:define id="proofDate" name="<%= SessionConstants.PROOF_DATE %>" />
-<bean:define id="thesisDeliveryDate" name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" />
 <bean:define id="responsibleEmployee" name="<%= SessionConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= SessionConstants.LAST_MODIFICATION %>" scope="request"/>
-
+<logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+	<bean:define id="proofDate" name="<%= SessionConstants.PROOF_DATE %>" />
+</logic:present>
+<logic:present name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+	<bean:define id="thesisDeliveryDate" name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" />
+</logic:present>
 			
 <h2 align="center">
 	<bean:message key="title.masterDegree.administrativeOffice.thesis.visualizeProofHistory"/> - 
@@ -49,16 +52,33 @@
 		</tr>
 		
 		<!-- Proof Date -->
-		<tr >
-			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
-			<td><bean:write name="proofDate"/></td>
-		</tr>
+		<logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
+				<td><bean:write name="proofDate"/></td>
+			</tr>
+		</logic:present>
+		<logic:notPresent name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
+				<td><bean:message key="message.masterDegree.administrativeOffice.proofDateNotDefined" /></td>
+			</tr>
+		</logic:notPresent>
+		
 		
 		<!-- Thesis Delivery Date -->
-		<tr >
-			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
-			<td><bean:write name="thesisDeliveryDate"/></td>
-		</tr>
+		<logic:present name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
+				<td><bean:write name="thesisDeliveryDate"/></td>
+			</tr>
+		</logic:present>
+		<logic:notPresent name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
+				<td><bean:message key="message.masterDegree.administrativeOffice.thesisDeliveryDateNotDefined" /></td>
+			</tr>
+		</logic:notPresent>
 			
 	
 	<!-- Final Result -->
