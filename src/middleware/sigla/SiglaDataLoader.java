@@ -21,12 +21,13 @@ import Dominio.BibliographicReference;
 import Dominio.Curriculum;
 import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
+import Dominio.EvaluationMethod;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
@@ -256,7 +257,7 @@ public class SiglaDataLoader {
 		throws ExcepcaoPersistencia {
 		ISite site = null;
 		ICurriculum curriculum = null;
-		IEvaluation evaluation = null;
+		IEvaluationMethod evaluation = null;
 
 		try {
 
@@ -277,7 +278,7 @@ public class SiglaDataLoader {
 			}
 			query = new QueryByCriteria(Evaluation.class, crit);
 
-			evaluation = (IEvaluation) broker.getObjectByQuery(query);
+			evaluation = (IEvaluationMethod) broker.getObjectByQuery(query);
 			site = updateSite(site, siglaCurricularCourses);
 
 			curriculum =
@@ -288,7 +289,7 @@ public class SiglaDataLoader {
 					siglaCurricularCoursesEng,
 					broker);
 			if (evaluation == null) {
-				evaluation = new Evaluation(executionCourse);
+				evaluation = new EvaluationMethod(executionCourse);
 			}
 			evaluation =
 				updateEvaluation(evaluation, siglaCurricularCourses, broker);
@@ -321,8 +322,8 @@ public class SiglaDataLoader {
 	 * @param siglaCurricularCoursesEng
 	 * @return
 	 */
-	private IEvaluation updateEvaluationEng(
-		IEvaluation evaluation,
+	private IEvaluationMethod updateEvaluationEng(
+		IEvaluationMethod evaluation,
 		List siglaCurricularCoursesEng,
 		PersistenceBroker broker) {
 
@@ -404,8 +405,8 @@ public class SiglaDataLoader {
 	 * @param siglaCurricularCourses
 	 * @return
 	 */
-	private IEvaluation updateEvaluation(
-		IEvaluation evaluation,
+	private IEvaluationMethod updateEvaluation(
+		IEvaluationMethod evaluation,
 		List siglaCurricularCourses,
 		PersistenceBroker broker) {
 		String crit_av = "";
