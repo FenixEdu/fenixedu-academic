@@ -22,9 +22,9 @@ import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.DegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;

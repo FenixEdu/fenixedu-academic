@@ -11,9 +11,10 @@ package ServidorAplicacao.Servicos.student;
  *
  * @author tfc130
  */
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import DataBeans.InfoStudent;
-import ServidorAplicacao.Servicos.*;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 public class ReadStudentTest extends TestCaseReadServices {
     public ReadStudentTest(java.lang.String testName) {

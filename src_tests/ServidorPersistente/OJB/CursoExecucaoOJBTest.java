@@ -21,13 +21,13 @@ import org.odmg.QueryException;
 import Dominio.CursoExecucao;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**

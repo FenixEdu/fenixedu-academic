@@ -6,6 +6,7 @@
 
 package Dominio;
 
+import Util.StudentState;
 import Util.TipoCurso;
 
 /**
@@ -14,13 +15,13 @@ import Util.TipoCurso;
  */
 
 public interface IStudent {
-    Integer getNumber();
-    Integer getState();
-    IPessoa getPerson();
-    TipoCurso getDegreeType();
-    
-    void setNumber(Integer number);
-    void setState(Integer state);
-    void setPerson(IPessoa person);
-    void setDegreeType(TipoCurso degreeType);
+	Integer getNumber();
+	StudentState getState();
+	IPessoa getPerson();
+	TipoCurso getDegreeType();
+
+	void setNumber(Integer number);
+	void setState(StudentState state);
+	void setPerson(IPessoa person);
+	void setDegreeType(TipoCurso degreeType);
 }

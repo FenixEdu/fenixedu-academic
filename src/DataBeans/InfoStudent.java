@@ -6,6 +6,7 @@
 
 package DataBeans;
 
+import Util.StudentState;
 import Util.TipoCurso;
 
 /**
@@ -15,13 +16,13 @@ import Util.TipoCurso;
 
 public class InfoStudent {
 	protected Integer _number;
-	protected Integer _state=new Integer(1);
+	protected StudentState _state = new StudentState(1);
 	private InfoPerson _infoPerson;
 	protected TipoCurso _degreeType;
 	
 	public InfoStudent() {}
 
-	public InfoStudent(Integer numero,Integer estado, InfoPerson pessoa, TipoCurso degreeType) {
+	public InfoStudent(Integer numero,StudentState estado, InfoPerson pessoa, TipoCurso degreeType) {
 	  setNumber(numero);
 	  setState(estado);
 	  setInfoPerson(pessoa);
@@ -44,11 +45,11 @@ public class InfoStudent {
 	  _number = numero;
 	 }
 
-	 public Integer getState() {
+	 public StudentState getState() {
 		 return _state;
 	 }
 
-	  public void setState(Integer estado) {
+	  public void setState(StudentState estado) {
 		 _state = estado;
 	 }
 

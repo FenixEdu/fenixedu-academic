@@ -1,34 +1,26 @@
 /*
- * JavaEspecializacao2SqlEspecializacaoFieldConversion.java
+ * JavaStudentState2SqlStudentStateFieldConversion.java
  *
- * Created on 18 de Novembro de 2002, 17:37
- */
-
-/**
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * Created on 21 de Novembro de 2002, 15:57
  */
 
 package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.Specialization;
+import Util.StudentState;
 
-public class JavaSpecialization2SqlSpecializationFieldConversion implements FieldConversion {
+public class JavaStudentState2SqlStudentStateFieldConversion implements FieldConversion {
     
     /*
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source)
     {
-        if (source instanceof Specialization)
+        if (source instanceof StudentState)
         {
-            Specialization s = (Specialization) source;
-            return s.getSpecialization();
+            StudentState s = (StudentState) source;
+            return s.getState();
         }
         else {
             return source;
@@ -43,7 +35,7 @@ public class JavaSpecialization2SqlSpecializationFieldConversion implements Fiel
         if (source instanceof Integer)
         {
             Integer src = (Integer) source;
-            return new Specialization(src);
+            return new StudentState(src);
         }
         else
         {

@@ -18,8 +18,8 @@ import org.odmg.QueryException;
 
 import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionYear;
 import Dominio.ITurma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;

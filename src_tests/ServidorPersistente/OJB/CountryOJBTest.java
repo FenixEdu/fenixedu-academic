@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import Dominio.Country;
 import Dominio.ICountry;
 import ServidorPersistente.ExcepcaoPersistencia;

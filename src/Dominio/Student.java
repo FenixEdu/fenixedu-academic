@@ -1,5 +1,6 @@
 package Dominio;
 
+import Util.StudentState;
 import Util.TipoCurso;
 
 /**
@@ -12,7 +13,7 @@ public class Student implements IStudent {
 
 	protected Integer number;
 //	FIXME: DAVID-RICARDO: Criar um tipo enumerado para este atributo.
-	protected Integer state;
+	protected StudentState state;
 	protected TipoCurso degreeType;
 
 	private Integer internalCode;
@@ -28,7 +29,7 @@ public class Student implements IStudent {
 		setPersonKey(null);
 	}
 
-	public Student(Integer number, Integer state, IPessoa person, TipoCurso degreeType) {
+	public Student(Integer number, StudentState state, IPessoa person, TipoCurso degreeType) {
 		setNumber(number);
 		setState(state);
 		setPerson(person);
@@ -99,9 +100,9 @@ public class Student implements IStudent {
 
 	/**
 	 * Returns the state.
-	 * @return Integer
+	 * @return StudentState
 	 */
-	public Integer getState() {
+	public StudentState getState() {
 		return state;
 	}
 
@@ -149,7 +150,7 @@ public class Student implements IStudent {
 	 * Sets the state.
 	 * @param state The state to set
 	 */
-	public void setState(Integer state) {
+	public void setState(StudentState state) {
 		this.state = state;
 	}
 

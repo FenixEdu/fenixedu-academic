@@ -32,9 +32,7 @@ import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-
 import Util.Data;
 import Util.EstadoCivil;
 import Util.Sexo;

@@ -11,6 +11,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.StudentState;
 import Util.TipoCurso;
 
 /**
@@ -73,7 +74,7 @@ public class StudentOJBTest extends TestCaseOJB {
 		assertNotNull(person);
 
 		// Student ja existente
-		IStudent student = new Student(new Integer(600), new Integer(567), person, new TipoCurso(1));
+		IStudent student = new Student(new Integer(600), new StudentState(567), person, new TipoCurso(1));
 
 		System.out.println("\n- Test 1.1 : Write Existing Student\n");
 		try {
@@ -94,7 +95,7 @@ public class StudentOJBTest extends TestCaseOJB {
 		}
 
 		// Student inexistente
-		student = new Student(new Integer(123), new Integer(1), person, new TipoCurso(10));
+		student = new Student(new Integer(123), new StudentState(1), person, new TipoCurso(10));
 
 		System.out.println("\n- Test 1.2 : Write Non Existing Student\n");
 		try {

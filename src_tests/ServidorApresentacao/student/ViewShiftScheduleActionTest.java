@@ -51,6 +51,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
 import Util.RoleType;
+import Util.StudentState;
 import Util.TipoAula;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
@@ -116,7 +117,7 @@ public class ViewShiftScheduleActionTest extends MockStrutsTestCase {
 			TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 	privileges.add(new Privilegio(person, new String("ReadShiftLessons")));
 	person.setPrivilegios(privileges);
-	IStudent student = new Student(new Integer(45498), new Integer(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
+	IStudent student = new Student(new Integer(45498), new StudentState(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
 
 	IDisciplinaExecucao discipline1 = null;
 //		new DisciplinaExecucao(

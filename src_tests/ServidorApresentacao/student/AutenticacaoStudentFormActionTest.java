@@ -20,6 +20,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.StudentState;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
 
@@ -72,7 +73,7 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
 	_student1 =
 		new Student(
 			new Integer(12345),
-			new Integer(567),
+			new StudentState(567),
 			_person1,
 			new TipoCurso(TipoCurso.LICENCIATURA));
 	_persistentStudent.lockWrite(_student1);
@@ -103,7 +104,7 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
 	_student3 =
 		new Student(
 			new Integer(12345),
-			new Integer(567),
+			new StudentState(567),
 			_person3,
 			new TipoCurso(TipoCurso.MESTRADO));
 	_persistentStudent.lockWrite(_student3);

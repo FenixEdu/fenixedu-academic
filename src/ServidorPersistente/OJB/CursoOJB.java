@@ -17,9 +17,9 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.Curso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.DegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;

@@ -7,23 +7,24 @@ import java.util.Date;
 import java.util.StringTokenizer;
 
 import Dominio.Curso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ICurso;
-import Dominio.IPessoa;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Pessoa;
-import Dominio.DegreeCurricularPlan;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.StudentCurricularPlanState;
+import Util.StudentState;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
 
@@ -140,7 +141,7 @@ public class LoadStudents extends DataFileLoader {
 		}
 		student.setDegreeType(new TipoCurso(TipoCurso.LICENCIATURA));
 		student.setNumber(new Integer(numero));
-		student.setState(new Integer(0));
+		student.setState(new StudentState(0));
 
 		iAlunoPersistente.lockWrite(student);
 

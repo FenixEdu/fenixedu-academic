@@ -12,10 +12,10 @@ import DataBeans.util.Cloner;
 import Dominio.IBibliographicReference;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author PTRLV

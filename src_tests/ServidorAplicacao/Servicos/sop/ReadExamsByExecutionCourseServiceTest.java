@@ -11,12 +11,8 @@ package ServidorAplicacao.Servicos.sop;
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
-import java.util.Calendar;
-import java.util.Date;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;

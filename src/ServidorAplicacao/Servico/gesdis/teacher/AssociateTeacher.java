@@ -1,6 +1,7 @@
 package ServidorAplicacao.Servico.gesdis.teacher;
 
 import java.util.List;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;

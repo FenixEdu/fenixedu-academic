@@ -1,7 +1,6 @@
 package Dominio;
 
 import java.util.Date;
-
 import java.util.List;
 
 import Util.StudentCurricularPlanState;

@@ -4,8 +4,8 @@ package ServidorAplicacao;
  * @author jorge
  **/
 
-import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class InvocadorServicosTransaccional extends InvocadorServicos {

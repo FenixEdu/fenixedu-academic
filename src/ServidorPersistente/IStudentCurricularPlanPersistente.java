@@ -13,10 +13,9 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
-
-import Dominio.IStudentCurricularPlan;
 
 public interface IStudentCurricularPlanPersistente extends IPersistentObject {
     IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber, TipoCurso degreeType ) throws ExcepcaoPersistencia;

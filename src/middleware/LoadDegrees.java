@@ -7,12 +7,12 @@ import java.util.StringTokenizer;
 
 import Dominio.Curso;
 import Dominio.CursoExecucao;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.DegreeCurricularPlan;
+import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;

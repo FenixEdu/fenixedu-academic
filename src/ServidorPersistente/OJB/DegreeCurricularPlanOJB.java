@@ -9,11 +9,11 @@ import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.DegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;

@@ -55,6 +55,7 @@ import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
+import Util.StudentState;
 import Util.TipoAula;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
@@ -196,7 +197,7 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 		_person1.setPrivilegios(privileges);
 		_personDAO.escreverPessoa(_person1);
 
-		_student1 = new Student(new Integer(1), new Integer(1), _person1, new TipoCurso(TipoCurso.LICENCIATURA));
+		_student1 = new Student(new Integer(1), new StudentState(1), _person1, new TipoCurso(TipoCurso.LICENCIATURA));
 		_studentDAO.lockWrite(_student1);
 
 		/* Person and student 2 */
@@ -213,7 +214,7 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 		_person2.setPrivilegios(privileges);
 		_personDAO.escreverPessoa(_person2);
 
-		_student2 = new Student(new Integer(2), new Integer(2), _person2, new TipoCurso(TipoCurso.LICENCIATURA));
+		_student2 = new Student(new Integer(2), new StudentState(2), _person2, new TipoCurso(TipoCurso.LICENCIATURA));
 		_studentDAO.lockWrite(_student2);
 
 		/* Assist info */

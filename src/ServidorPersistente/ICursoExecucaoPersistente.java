@@ -13,8 +13,8 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionYear;
 
 public interface ICursoExecucaoPersistente extends IPersistentObject {
 	/**

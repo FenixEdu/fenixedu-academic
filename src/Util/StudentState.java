@@ -1,0 +1,78 @@
+package Util;
+
+/**
+ * @author dcs-rjao
+ *
+ * 25/Mar/2003
+ */
+public class StudentState {
+
+	public static final int BASE = 1;
+	public static final int INSCRITO = 2;
+	public static final int PRESCRITO = 3;
+	public static final int INTERRUPCAO = 4;
+	public static final int AUSENTE = 5;
+	public static final int LICENCIADO = 6;
+
+	private Integer state;
+
+	/** Creates a new instance of StudentState */
+	public StudentState() {
+	}
+
+	public StudentState(int state) {
+		this.state = new Integer(state);
+	}
+
+	public StudentState(Integer state) {
+		this.state = state;
+	}
+
+	/** Getter for property state.
+	 * @return Value of property state.
+	 *
+	 */
+	public java.lang.Integer getState() {
+		return state;
+	}
+
+	/** Setter for property state.
+	 * @param state New value of property state.
+	 *
+	 */
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public boolean equals(Object o) {
+		if (o instanceof StudentState) {
+			StudentState aux = (StudentState) o;
+			return this.state.equals(aux.getState());
+		} else {
+			return false;
+		}
+	}
+
+	public String toString() {
+
+		int value = this.state.intValue();
+		String valueS = null;
+
+		switch (value) {
+			case BASE :
+				valueS = "BASE";
+			case INSCRITO :
+				valueS = "INSCRITO";
+			case PRESCRITO :
+				valueS = "PRESCRITO";
+			case INTERRUPCAO :
+				valueS = "INTERRUPCAO";
+			case AUSENTE :
+				valueS = "AUSENTE";
+			case LICENCIADO :
+				valueS = "LICENCIADO";
+		}
+
+		return "[" + this.getClass().getName() + ": " + valueS + "]";
+	}
+}

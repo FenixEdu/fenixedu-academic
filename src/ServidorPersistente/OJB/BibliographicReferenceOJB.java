@@ -1,6 +1,8 @@
 package ServidorPersistente.OJB;
 import java.util.List;
+
 import org.odmg.QueryException;
+
 import Dominio.BibliographicReference;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;

@@ -25,18 +25,18 @@ import org.odmg.QueryException;
 
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.ITurma;
 import Dominio.Turma;
 import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 

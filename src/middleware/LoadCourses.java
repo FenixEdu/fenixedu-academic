@@ -7,10 +7,10 @@ import java.util.StringTokenizer;
 
 import Dominio.CurricularCourse;
 import Dominio.Curso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.DegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;

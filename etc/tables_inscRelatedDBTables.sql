@@ -124,21 +124,6 @@ create table STUDENT_CURRICULAR_PLAN (
 #==================================================================================
 
 #----------------------------
-# Table structure for STUDENT
-#----------------------------
-drop table if exists STUDENT;
-create table STUDENT (
-   ID_INTERNAL int(11) not null auto_increment,
-   NUMBER int(11) not null,
-   KEY_PERSON int(11) not null,
-   STATE int(11) not null,
-   DEGREE_TYPE int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (NUMBER, DEGREE_TYPE),
-   unique U2 (DEGREE_TYPE, KEY_PERSON))
-   type=InnoDB;
-
-#----------------------------
 # Table structure for ENROLMENT
 #----------------------------
 drop table if exists ENROLMENT;
