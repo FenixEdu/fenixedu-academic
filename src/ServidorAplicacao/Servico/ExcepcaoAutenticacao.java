@@ -1,9 +1,11 @@
 package ServidorAplicacao.Servico;
 
+import ServidorAplicacao.FenixServiceException;
+
 /**
  * @author jorge
  */
-public class ExcepcaoAutenticacao extends Exception {
+public class ExcepcaoAutenticacao extends FenixServiceException {
 
   /**
    * Constructor for ExcepcaoAutenticacao.

@@ -1,9 +1,11 @@
 package ServidorAplicacao.Servico;
 
+import ServidorAplicacao.FenixServiceException;
+
 /**
  * @author jorge
  */
-public class ExcepcaoInexistente extends Exception {
+public class ExcepcaoInexistente extends FenixServiceException {
 
   /**
    * Constructor for ExcepcaoInexistente.

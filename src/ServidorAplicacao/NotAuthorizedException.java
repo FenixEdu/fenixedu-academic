@@ -1,6 +1,6 @@
 package ServidorAplicacao;
 
-public class NotAuthorizedException extends Exception {
+public class NotAuthorizedException extends FenixServiceException {
 
     public NotAuthorizedException() {
     }

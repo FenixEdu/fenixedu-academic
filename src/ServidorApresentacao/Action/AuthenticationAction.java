@@ -11,10 +11,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
-import ServidorApresentacao.Action.base.*;
+import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -27,8 +29,9 @@ public class AuthenticationAction extends FenixAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
-
+		throws FenixActionException {
+			IUserView userView = null;
+			try {
 		DynaActionForm authenticationForm = (DynaActionForm) form;
 
 		GestorServicos gestor = GestorServicos.manager();
@@ -36,9 +39,9 @@ public class AuthenticationAction extends FenixAction {
 			{
 				authenticationForm.get("username"),
 				authenticationForm.get("password")};
-		IUserView userView = null;
+		
 
-		try {
+		
 			userView =
 				(IUserView) gestor.executar(
 					null,
@@ -52,7 +55,9 @@ public class AuthenticationAction extends FenixAction {
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 
-		}
+		} catch (FenixServiceException e) {
+		throw new FenixActionException(e);
+	}
 
 		// Invalidate existing session if it exists
 		HttpSession sessao = request.getSession(false);

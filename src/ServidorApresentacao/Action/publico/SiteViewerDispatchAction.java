@@ -20,7 +20,6 @@ import DataBeans.RoomKey;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -57,9 +56,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 				infoRoom = (InfoRoom) gestor.executar(userView, "LerSala", args);
 			} catch(FenixServiceException nee) {
 				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-			} catch(ExcepcaoInexistente ein) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(ein.getMessage()));
-			} finally {
+			}  finally {
 				if(!errors.isEmpty()) {
 					saveErrors(request, errors);
 					return mapping.getInputForward();
