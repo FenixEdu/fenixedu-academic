@@ -83,7 +83,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			fail("testInsertExistingSection");
 
 		} catch (ExistingServiceException e) {
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertExistingSectionDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertExistingSectionDataSet.xml");
 			System.out.println(
 				"testInsertExistingSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -128,7 +128,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			persistentSection.delete(iSection);
 			persistentSuport.confirmarTransaccao();
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSectionBeforeFirstDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertSectionBeforeFirstDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingSectionBeforeFirst was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -173,7 +173,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			persistentSection.delete(iSection);
 			persistentSuport.confirmarTransaccao();
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSectionInMiddleDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertSectionInMiddleDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingSectionInMiddle was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -218,7 +218,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			persistentSection.delete(iSection);
 			persistentSuport.confirmarTransaccao();
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSectionBeforeEndDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertSectionBeforeEndDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingSectionBeforeEnd was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -248,7 +248,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			fail("testInsertExistingSubSection");
 
 		} catch (ExistingServiceException e) {
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertExistingSubSectionDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertExistingSubSectionDataSet.xml");
 			System.out.println(
 				"testInsertExistingSubSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -308,7 +308,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			persistentSection.delete(newISection);
 			persistentSuport.confirmarTransaccao();
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertSubSectionDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertSubSectionDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingSubSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

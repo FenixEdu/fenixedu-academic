@@ -108,7 +108,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 			fail("testInsertExistingItem");
 
 		} catch (ExistingServiceException e) {
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertExistingItemDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertExistingItemDataSet.xml");
 			System.out.println(
 				"testInsertExistingItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -161,7 +161,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 
 			persistentItem.delete(iItem);
 			persistentSuport.confirmarTransaccao();
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertItemBeforeFirstDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertItemBeforeFirstDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingItemBeforeFirst was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -215,7 +215,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 
 			persistentItem.delete(iItem);
 			persistentSuport.confirmarTransaccao();
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertItemInMiddleDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertItemInMiddleDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingItemInMiddle was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -269,7 +269,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 
 			persistentItem.delete(iItem);
 			persistentSuport.confirmarTransaccao();
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertItemBeforeEndDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedInsertItemBeforeEndDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingItemBeforeEnd was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

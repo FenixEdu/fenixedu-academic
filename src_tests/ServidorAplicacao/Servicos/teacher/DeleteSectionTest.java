@@ -65,7 +65,7 @@ public class DeleteSectionTest extends SectionBelongsExecutionCourseTest {
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedDeleteSectionDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteSectionDataSet.xml");
 			System.out.println(
 				"testDeleteExistingSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

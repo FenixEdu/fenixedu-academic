@@ -86,7 +86,7 @@ public class EditItemTest extends ItemBelongsExecutionCourseTest {
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedEditItemDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedEditItemDataSet.xml");
 			System.out.println(
 				"testEditExistingItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

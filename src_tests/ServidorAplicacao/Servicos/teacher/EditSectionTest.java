@@ -69,7 +69,7 @@ public class EditSectionTest extends SectionBelongsExecutionCourseTest {
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-			compareDataSet("etc/datasets/servicos/teacher/testExpectedEditSectionDataSet.xml");
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedEditSectionDataSet.xml");
 			System.out.println(
 				"testEditExistingSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
