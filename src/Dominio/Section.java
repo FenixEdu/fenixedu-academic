@@ -20,8 +20,8 @@ public class Section implements ISection {
 	private Integer keySite;	
 	private ISection superiorSection;
 	private Integer keySuperiorSection;
-	private List inferiorSections;
-	private List items;
+//	private List inferiorSections;
+//	private List items;
 	
 	/** 
 	 * Construtor
@@ -51,16 +51,16 @@ public class Section implements ISection {
 		setLastModifiedDate(lastModifiedDate);
 		setSite(site);
 		setSuperiorSection(superiorSection);
-		setInferiorSections(inferiorSections);
-		setItems(items);
+//		setInferiorSections(inferiorSections);
+//		setItems(items);
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getInferiorSections() {
-		return inferiorSections;
-	}
+//	/**
+//	 * @return List
+//	 */
+//	public List getInferiorSections() {
+//		return inferiorSections;
+//	}
 
 	/**
 	 * @return Integer
@@ -69,12 +69,12 @@ public class Section implements ISection {
 		return internalCode;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getItems() {
-		return items;
-	}
+//	/**
+//	 * @return List
+//	 */
+//	public List getItems() {
+//		return items;
+//	}
 
 	/**
 	 * @return Integer
@@ -118,13 +118,13 @@ public class Section implements ISection {
 		return superiorSection;
 	}
 
-	/**
-	 * Sets the inferiorSections.
-	 * @param inferiorSections The inferiorSections to set
-	 */
-	public void setInferiorSections(List inferiorSections) {
-		this.inferiorSections = inferiorSections;
-	}
+//	/**
+//	 * Sets the inferiorSections.
+//	 * @param inferiorSections The inferiorSections to set
+//	 */
+//	public void setInferiorSections(List inferiorSections) {
+//		this.inferiorSections = inferiorSections;
+//	}
 
 	/**
 	 * Sets the internalCode.
@@ -134,13 +134,13 @@ public class Section implements ISection {
 		this.internalCode = internalCode;
 	}
 
-	/**
-	 * Sets the items.
-	 * @param items The items to set
-	 */
-	public void setItems(List items) {
-		this.items = items;
-	}
+//	/**
+//	 * Sets the items.
+//	 * @param items The items to set
+//	 */
+//	public void setItems(List items) {
+//		this.items = items;
+//	}
 
 	/**
 	 * Sets the keySite.
@@ -230,7 +230,7 @@ public class Section implements ISection {
 		result += ", lastModifiedDate=" + getLastModifiedDate();
 //		result += ", site=" + getSite();
 		result += ", superiorSection=" + getSuperiorSection();
-		result += ", inferiorSections=" + getInferiorSections();
+//		result += ", inferiorSections=" + getInferiorSections();
 		//result += ", items=" + getItems();
 		result += "]";
 
