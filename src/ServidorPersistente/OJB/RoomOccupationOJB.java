@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IAula;
 import Dominio.IPeriod;
 import Dominio.IRoomOccupation;
 import Dominio.RoomOccupation;

@@ -23,8 +23,6 @@ import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.ITurno;
-import Dominio.Turno;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;

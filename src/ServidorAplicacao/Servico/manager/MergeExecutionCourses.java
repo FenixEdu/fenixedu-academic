@@ -13,7 +13,6 @@ import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
-import Dominio.IAula;
 import Dominio.IBibliographicReference;
 import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
@@ -30,7 +29,6 @@ import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentDistributedTest;

@@ -5,14 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import Dominio.IStudent;
@@ -95,23 +93,6 @@ public class ReadStudentTimeTable implements IService {
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
         }
         return infoLesson;
-    }
-
-    /**
-     * @param executionCourse
-     * @return
-     */
-    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(
-            IExecutionCourse executionCourse) {
-        InfoExecutionCourse infoExecutionCourse = null;
-        if (executionCourse != null) {
-            infoExecutionCourse = new InfoExecutionCourse();
-            infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
-            infoExecutionCourse.setNome(executionCourse.getNome());
-            infoExecutionCourse.setSigla(executionCourse.getSigla());
-
-        }
-        return infoExecutionCourse;
     }
 
     /**

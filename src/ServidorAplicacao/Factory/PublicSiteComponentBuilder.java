@@ -14,7 +14,6 @@ import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
-import DataBeans.InfoRoom;
 import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
 import DataBeans.InfoSiteClasses;
@@ -24,7 +23,6 @@ import Dominio.IAula;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.ISala;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -181,20 +179,6 @@ public class PublicSiteComponentBuilder {
                             .getExecutionPeriod()));
         }
         return infoExecutionCourse;
-    }
-
-    /**
-     * @param sala
-     * @return
-     */
-    private InfoRoom copyISala2InfoRoom(ISala sala) {
-        InfoRoom infoRoom = null;
-        if (sala != null) {
-            infoRoom = new InfoRoom();
-            infoRoom.setIdInternal(sala.getIdInternal());
-            infoRoom.setNome(sala.getNome());
-        }
-        return infoRoom;
     }
 
     /**

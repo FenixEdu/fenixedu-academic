@@ -11,8 +11,6 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import Dominio.ISala;
-import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;

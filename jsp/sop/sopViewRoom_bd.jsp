@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <span class="error"><html:errors/></span>  

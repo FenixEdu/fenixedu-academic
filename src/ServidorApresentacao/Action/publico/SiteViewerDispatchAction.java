@@ -47,7 +47,6 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.TipoAula;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction
 {
@@ -614,27 +613,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         }
         return siteView;
     }
-	private Integer getFromRequest(String parameter, HttpServletRequest request)
-	{
-		Integer parameterCode = null;
-		String parameterCodeString = request.getParameter(parameter);
-		if (parameterCodeString == null)
-		{
-			parameterCodeString = (String) request.getAttribute(parameter);
-		}
-		if (parameterCodeString != null)
-		{
-			try
-			{
-				parameterCode = new Integer(parameterCodeString);
-			}
-			catch (Exception exception)
-			{
-				return null;
-			}
-		}
-		return parameterCode;
-	}
 	private void setFromRequest(HttpServletRequest request) {
 		InfoExecutionDegree infoExecutionDegree =
 						  (InfoExecutionDegree) request.getAttribute(

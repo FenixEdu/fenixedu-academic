@@ -13,10 +13,8 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.ITurno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 

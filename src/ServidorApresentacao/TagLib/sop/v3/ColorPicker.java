@@ -13,56 +13,44 @@ import DataBeans.InfoShowOccupation;
  * @author jpvl
  */
 public abstract class ColorPicker {
-	private HashMap lessonColors;
-	private int colorIndex = 0;
-	private String[] colorPallete =
-		{
-			"#33CCFF",
-			"#99CCFF",
-			"#66CCFF",
-			"#00CC99",
-			"#33CC99",
-			"#66CC99",
-			"#99CC99",
-			"#33CC66",
-			"#66CC66",
-			"#99CC66",
-			"#33CC33",
-			"#66CC33",
-			"#99CC33",
-			"#33CCCC",
-			"#99CCCC",
-			"#66CCCC" };
+    private HashMap lessonColors;
 
-	public ColorPicker() {
-		lessonColors = new HashMap();
-	}
+    private int colorIndex = 0;
 
-	public String getBackgroundColor(InfoLessonWrapper infoLessonWrapper) {
-		if ((infoLessonWrapper == null)
-//			|| (infoLessonWrapper.getInfoLesson() == null)) {
-		    || (infoLessonWrapper.getInfoShowOccupation() == null)) {
-			/* blank slot color*/
-			return "#CCCCCC";
-		} else {		    
-			//InfoLesson infoLesson = infoLessonWrapper.getInfoLesson();
-		    InfoShowOccupation infoShowOccupation = infoLessonWrapper.getInfoShowOccupation();
+    private String[] colorPallete = { "#33CCFF", "#99CCFF", "#66CCFF", "#00CC99", "#33CC99", "#66CC99",
+            "#99CC99", "#33CC66", "#66CC66", "#99CC66", "#33CC33", "#66CC33", "#99CC33", "#33CCCC",
+            "#99CCCC", "#66CCCC" };
 
-			String colorKeyInfoLesson = getColorKeyFromInfoLesson(infoShowOccupation);
+    public ColorPicker() {
+        lessonColors = new HashMap();
+    }
 
-			String color = (String) lessonColors.get(colorKeyInfoLesson);
+    public String getBackgroundColor(InfoLessonWrapper infoLessonWrapper) {
+        if ((infoLessonWrapper == null)
+        //			|| (infoLessonWrapper.getInfoLesson() == null)) {
+                || (infoLessonWrapper.getInfoShowOccupation() == null)) {
+            /* blank slot color */
+            return "#CCCCCC";
+        }
 
-			if (color == null) {
-				color = colorPallete [colorIndex % colorPallete.length];
-				colorIndex++;
-				lessonColors.put(colorKeyInfoLesson, color);
-			}
-			return color;
-		}
+        //InfoLesson infoLesson = infoLessonWrapper.getInfoLesson();
+        InfoShowOccupation infoShowOccupation = infoLessonWrapper.getInfoShowOccupation();
 
-	}
+        String colorKeyInfoLesson = getColorKeyFromInfoLesson(infoShowOccupation);
 
-	//abstract protected String getColorKeyFromInfoLesson(InfoLesson infoLesson);
-	abstract protected String getColorKeyFromInfoLesson(InfoShowOccupation infoShowOccupation);
+        String color = (String) lessonColors.get(colorKeyInfoLesson);
+
+        if (color == null) {
+            color = colorPallete[colorIndex % colorPallete.length];
+            colorIndex++;
+            lessonColors.put(colorKeyInfoLesson, color);
+        }
+        return color;
+
+    }
+
+    //abstract protected String getColorKeyFromInfoLesson(InfoLesson
+    // infoLesson);
+    abstract protected String getColorKeyFromInfoLesson(InfoShowOccupation infoShowOccupation);
 
 }

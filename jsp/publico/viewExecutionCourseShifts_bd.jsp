@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoLesson"%>
