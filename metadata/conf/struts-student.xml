@@ -9,15 +9,6 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
-      <!-- AUTORIZACAO -->
-      <!-- Dynamic-FormBean for Student Authentication -->
-      <form-bean name="authenticationStudentForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="username" type="java.lang.String" />
-        <form-property name="password" type="java.lang.String" />
-      </form-bean>
-	
 	  <!-- Dynamic-FormBean para EscolherCertidao -->
       <form-bean name="escolherCertidaoForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -70,30 +61,9 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
-      <action path="/index" forward="/authenticationStudent.jsp"/>
+      <action path="/index" forward="/main.jsp"/>
       <action path="/authenticationStudent" forward="/authenticationStudent.jsp"/>
-    
-      <!--<action path="/obtainCertificate" forward="/obtainCertificate.jsp"/>-->
 
-      <!-- action definitions -->
-      <!-- AUTHENTICATION -->
-      <action name="authenticationStudentForm"
-              type="ServidorApresentacao.Action.student.AuthenticationStudentFormAction"
-              path="/authenticationStudentForm"
-              input="/authenticationStudent.jsp"
-              scope="request"
-              attribute="authenticationStudentForm">
-        <exception type="ServidorAplicacao.NotExecutedException"
-                   key="ServidorAplicacao.NotExecutedException"
-                   path="/authenticationStudent.do"/>
-        <exception type="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-                   key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-                   path="/authenticationStudent.do"/>
-        <forward name="Student"
-                 path="/student/main.jsp"
-                 contextRelative="true"
-                 redirect="true"/>
-      </action>
       <!-- SHIFT ENROLMENT -->
       <action 
               type="ServidorApresentacao.Action.student.ViewEnrolmentAction"
