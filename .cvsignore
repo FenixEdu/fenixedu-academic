@@ -8,4 +8,4 @@ deploy
 junit*
 web
 bin
-buid.properties
+build.properties
