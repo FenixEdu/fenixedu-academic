@@ -4,7 +4,6 @@
 package ServidorAplicacao.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,27 +57,17 @@ public class SaveTeachersBody implements IServico {
 	 * Executes the service.
 	 */
 
-	public Boolean run(Integer[] responsiblesIds, Integer[] teachersIds, Integer executionCourseId) throws FenixServiceException {
+	public Boolean run(List responsibleTeachersIds, List professorShipTeachersIds, Integer executionCourseId) throws FenixServiceException {
 
 		try {
 				boolean result = true;
-				List responsibleTeachersIds = Arrays.asList(responsiblesIds);
-				List professorShipTeachersIds = Arrays.asList(teachersIds);
+				Integer id;
 			
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
 				if(executionCourse == null)
 					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-
-				// if person doesn´t teach, can´t be responsible either
-				Iterator iter = responsibleTeachersIds.iterator();
-				Integer id;
-				while(iter.hasNext()) {
-					id = (Integer) iter.next();
-					if(!professorShipTeachersIds.contains(id))
-						responsibleTeachersIds.remove(id);
-				}
 
 				// RESPONSIBLES MODIFICATIONS
 				
@@ -139,11 +128,11 @@ public class SaveTeachersBody implements IServico {
 				Iterator oldProfIterator = oldProfessorShipTeachersIds.iterator();
 				while(oldProfIterator.hasNext()) {
 					id = (Integer) oldProfIterator.next();
-					if(!professorShipTeachersIds.contains(id))
+					if(!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id))
 						persistentProfessorShip.deleteByOID(Professorship.class, ((IProfessorship) oldProfessorShips.get(oldProfessorShipTeachersIds.indexOf(id))).getIdInternal());
 				}
 				
-				// add new responsibles
+				// add new professorShips
 				Iterator newProfIterator = professorShipTeachersIds.iterator();
 				IProfessorship professorShipToWrite;
 				while(newProfIterator.hasNext()) {
