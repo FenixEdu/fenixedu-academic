@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeg
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroConsultarJustificacoesPorDia;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroConsultarMarcacaoPonto;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroLerFimAssiduidade;
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroLerFuncionarioPorDia;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroLerHorario;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroLerInicioAssiduidade;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroLerJustificacoesComValidade;
@@ -28,6 +29,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteExc
 import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployeeWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
+import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IStrategyHorarios;
@@ -47,6 +49,7 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
 import net.sourceforge.fenixedu.util.Comparador;
+import net.sourceforge.fenixedu.util.FormataCalendar;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -58,15 +61,74 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  */
 public class ExtraWorkSheet implements IService {
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+    // VARIAVEÍS GLOBAIS DO SERVIÇO SEGURO CONSULTAR VERBETE
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
     private Integer _numMecanografico;
 
     private Timestamp _dataInicioEscolha = null;
 
     private Timestamp _dataFimEscolha = null;
 
+    private Boolean _oracleDB = null;
+
     private Locale _locale = null;
 
+    private ArrayList _listaFuncionarios = new ArrayList();
+
+    private ArrayList _listaEstados = new ArrayList();
+
+    private ArrayList _listaCartoes = null;
+
+    private ArrayList _listaRegimes = null;
+
+    private ArrayList _listaMarcacoesPonto = null;
+
+    private ArrayList _listaSaldos = new ArrayList();
+
+    private ArrayList _listaJustificacoes = null;
+
+    private ArrayList _listaParamJustificacoes = null;
+
     private Horario _horario = null;
+
+    private long _saldoPrimEscalao = 0;
+
+    private long _saldoSegEscalao = 0;
+
+    private long _saldoDepoisSegEscalao = 0;
+
+    private long _saldoNegativo = 0;
+
+    private long _saldoNocturno = 0;
+
+    private long _saldoNoctPrimEscalao = 0;
+
+    private long _saldoNoctSegEscalao = 0;
+
+    private long _saldoNoctDepoisSegEscalao = 0;
+
+    private long _saldoHNFinal = 0;
+
+    private long _saldoPFFinal = 0;
+
+    private long _saldoDSC = 0;
+
+    private long _saldoDS = 0;
+
+    private long _saldoFeriado = 0;
+
+    private int _numRefeicoesNocturno = 0;
+
+    private Timestamp _dataConsulta = null;
+
+    private Calendar _calendarioConsulta = null;
+
+    private Timestamp _dataInicio = null;
+
+    private Timestamp _dataFim = null;
+
+    private Funcionario _funcionario = null;
 
     private boolean _mesInjustificado = false;
 
@@ -74,29 +136,11 @@ public class ExtraWorkSheet implements IService {
 
     private boolean _statusPendente = false;
 
-    private List _listaFuncionarios = new ArrayList();
+    // private ArrayList _listaVerbeteDiaria = new ArrayList();
 
-    private List _listaEstados = new ArrayList();
+    // private ArrayList _listaVerbeteBody = new ArrayList();
 
-    private List _listaCartoes = null;
-
-    private List _listaRegimes = null;
-
-    private List _listaMarcacoesPonto = null;
-
-    private List _listaJustificacoes = null;
-
-    private List _listaParamJustificacoes = null;
-
-    private List _listaSaldos = new ArrayList();
-
-    private Timestamp _dataConsulta = null;
-
-    Calendar _calendarioConsulta = null;
-
-    private Timestamp _dataInicio = null;
-
-    private Timestamp _dataFim = null;
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
 
     public ExtraWorkSheet() {
         super();
@@ -150,174 +194,65 @@ public class ExtraWorkSheet implements IService {
             Locale locale) throws Exception {
         List extraWorkListPerDay = new ArrayList();
 
-        try {
-            //
-            SuportePersistente.getInstance().iniciarTransaccao();
+        _numMecanografico = employeeNumber;
+        System.out.println("-------------->" + _numMecanografico);
+        _dataInicioEscolha = firstDay;
+        _dataFimEscolha = lastDay;
+        _oracleDB = Boolean.TRUE;
+        _locale = locale;
 
-            // inicializar variáveis globais
-            _numMecanografico = employeeNumber;
-            System.out.println("-------------->" + _numMecanografico);
-            _dataInicioEscolha = firstDay;
-            _dataFimEscolha = lastDay;
-            _locale = locale;
-            _dataConsulta = new Timestamp(_dataInicioEscolha.getTime());
+        _dataConsulta = new Timestamp(_dataInicioEscolha.getTime());
 
-            lerStatusAssiduidade();
-            lerFimAssiduidade();
-            lerInicioAssiduidade();
-            construirEscolhasMarcacoesPonto();
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IPersistentExtraWork persistentExtraWork = sp.getIPersistentExtraWork();
 
-            verificarMesInjustificado();
-            if (!_mesInjustificado) {
-                Calendar calendario = Calendar.getInstance();
-                calendario.setLenient(false);
-                
-                ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-                IPersistentExtraWork persistentExtraWork = sp.getIPersistentExtraWork();
-
-                // ====Inicio da construcao da lista a mostrar no jsp ====
-                while (!_dataConsulta.after(_dataFimEscolha)) {
-                    _calendarioConsulta = Calendar.getInstance();
-                    _calendarioConsulta.setLenient(false);
-
-                    calendario.clear();
-                    calendario.setTimeInMillis(_dataConsulta.getTime());
-
-                    System.out.println("-------------->" + _dataConsulta);
-
-                    limpaListaSaldos(0);
-
-                    calculateWorkHours(calendario);
-
-                    // ***Dia
-                    IExtraWork extraWork = new ExtraWork();
-                    extraWork.setDay(calendario.getTime());
-                    if (((Long) _listaSaldos.get(0)).longValue() > 0) {
-                        System.out.println("-------------->>>>Extra Work at "
-                                + new Date(((Long) _listaSaldos.get(0)).longValue()));
-                        extraWork.setBeginHour(calculateBeginExtraWork());
-                        extraWork.setEndHour(calculateEndExtraWork());
-                        extraWork.setTotalExtraWork(calculateHourExtraWork(0, -1));
-                        extraWork.setDiurnalFirstHour(calculateHourExtraWork(2, -1));
-                        extraWork.setDiurnalAfterSecondHour(calculateHourExtraWork(3, 4));
-                        extraWork.setNocturnalFirstHour(calculateHourExtraWork(8, -1));
-                        extraWork.setNocturnalAfterSecondHour(calculateHourExtraWork(9, 10));
-                        extraWork.setRestDay(calculateHourExtraWork(5, 6));
-
-                        // extraWork.setMealSubsidy();//TODO
-
-                        // verify if already exists authorization
-                        IExtraWork extraWorkAuthorization = persistentExtraWork.readExtraWorkByDay(extraWork.getDay());
-                        if(extraWorkAuthorization != null) {
-                            extraWork.setIdInternal(extraWorkAuthorization.getIdInternal());
-                            
-                            extraWork.setDiurnalFirstHourAuthorized(extraWorkAuthorization.getDiurnalFirstHourAuthorized());
-                            extraWork.setDiurnalAfterSecondHourAuthorized(extraWorkAuthorization.getDiurnalAfterSecondHourAuthorized());
-                            extraWork.setNocturnalFirstHourAuthorized(extraWorkAuthorization.getNocturnalFirstHourAuthorized()); 
-                            extraWork.setNocturnalAfterSecondHourAuthorized(extraWorkAuthorization.getNocturnalAfterSecondHourAuthorized());
-                            extraWork.setRestDayAuthorized(extraWorkAuthorization.getRestDayAuthorized());
-                            extraWork.setMealSubsidyAuthorized(extraWorkAuthorization.getMealSubsidyAuthorized());                            
-                        }
-                    }
-
-                    // ***Add
-                    extraWorkListPerDay.add(extraWork);
-
-                    // aumenta um dia no intervalo de consulta do verbete
-                    calendario.clear();
-                    calendario.setTimeInMillis(_dataConsulta.getTime());
-                    calendario.add(Calendar.DAY_OF_MONTH, +1);
-                    _dataConsulta.setTime(calendario.getTimeInMillis());
-                }
-            }
-
-            SuportePersistente.getInstance().confirmarTransaccao();
-        } catch (Exception e) {
-            e.printStackTrace();
-            SuportePersistente.getInstance().cancelarTransaccao();
-            throw e;
-        }
+        // invoca a função execute do ServicoSeguroConsultarVerbete
+        execute(extraWorkListPerDay, persistentExtraWork);
 
         return extraWorkListPerDay;
-    } /* buildSheet */
+    }
 
-    private void calculateWorkHours(Calendar calendario) throws NotExecuteException {
-        // consulta do horario do funcionario neste dia
-        lerHorario();
+    // Função que será chama no fim do ciclo do metodo execute do ServicoSeguroConsultarVerbete
+    // extraWork(extraWorkListPerDay, calendario, persistentExtraWork);
+    private void extraWork(List extraWorkListPerDay, Calendar calendario,
+            IPersistentExtraWork persistentExtraWork) throws Exception {
+        IExtraWork extraWork = new ExtraWork();
+        extraWork.setDay(calendario.getTime());
+        if (((Long) _listaSaldos.get(0)).longValue() > 0) {
+            System.out.println("-------------->>>>Extra Work at "
+                    + new Date(((Long) _listaSaldos.get(0)).longValue()));
+            extraWork.setBeginHour(calculateBeginExtraWork());
+            extraWork.setEndHour(calculateEndExtraWork());
+            extraWork.setTotalExtraWork(calculateHourExtraWork(0, -1, false));
+            extraWork.setDiurnalFirstHour(calculateHourExtraWork(2, -1, true));
+            extraWork.setDiurnalAfterSecondHour(calculateHourExtraWork(3, 4, true));
+            extraWork.setNocturnalFirstHour(calculateHourExtraWork(8, -1, true));
+            extraWork.setNocturnalAfterSecondHour(calculateHourExtraWork(9, 10, true));
+            extraWork.setRestDay(calculateHourExtraWork(5, 6, true));
+            extraWork.setMealSubsidy(new Integer(((Long) _listaSaldos.get(12)).intValue()));
 
-        // Se o status do funcionário é Pendente então não vale a
-        // pena continuar os cálculos
-        verificarStatusAssiduidade();
-        if (_statusPendente) {
-            _statusPendente = false;
-            return;
+            // verify if already exists authorization
+            IExtraWork extraWorkAuthorization = persistentExtraWork.readExtraWorkByDay(extraWork
+                    .getDay());
+            if (extraWorkAuthorization != null) {
+                extraWork.setIdInternal(extraWorkAuthorization.getIdInternal());
+
+                extraWork.setDiurnalFirstHourAuthorized(extraWorkAuthorization
+                        .getDiurnalFirstHourAuthorized());
+                extraWork.setDiurnalAfterSecondHourAuthorized(extraWorkAuthorization
+                        .getDiurnalAfterSecondHourAuthorized());
+                extraWork.setNocturnalFirstHourAuthorized(extraWorkAuthorization
+                        .getNocturnalFirstHourAuthorized());
+                extraWork.setNocturnalAfterSecondHourAuthorized(extraWorkAuthorization
+                        .getNocturnalAfterSecondHourAuthorized());
+                extraWork.setRestDayAuthorized(extraWorkAuthorization.getRestDayAuthorized());
+                extraWork.setMealSubsidyAuthorized(extraWorkAuthorization
+                        .getMealSubsidyAuthorized());
+            }
         }
 
-        // Se os dias do funcionário são injustificados então não
-        // vale a pena continuar os cálculos
-        verificarDiasInjustificados(calendario);
-        if (_diasInjustificados) {
-            _diasInjustificados = false;
-            return;
-        }
-
-        // consulta das marcacoes do funcionario neste dia, tendo
-        // atencao ao expediente deste horario
-        calcularIntervaloConsulta();
-        consultarMarcacoesPonto();
-
-        // consulta das justificacoes do funcionario neste dia
-        consultarJustificacoesPorDia();
-        buscarParamJustificacoes();
-
-        // Dias de Descanso com marcacoes e sem justificacoes,
-        // logo calcula o saldo
-        if ((_horario.getSigla() != null)
-                && (_horario.getSigla().equals(Constants.DSC)
-                        || _horario.getSigla().equals(Constants.DS) || _horario.getSigla().equals(
-                        Constants.FERIADO))) {
-            if (_listaMarcacoesPonto.size() > 0) {
-                calcularSaldoDiario(); // SALDO
-            }
-        } else { // Dias Uteis
-            if (_listaParamJustificacoes.size() > 0) {
-                // acrescenta as justificacoes na lista de marcacoes
-                // de ponto como se fossem marcacoes de ponto
-                completaListaMarcacoes();
-            }
-
-            calcularSaldoDiario(); // SALDO
-
-            IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
-                    _horario.getModalidade());
-            horarioStrategy.setSaldosHorarioVerbeteBody(_horario, (ArrayList) _listaRegimes,
-                    (ArrayList) _listaParamJustificacoes, (ArrayList) _listaMarcacoesPonto,
-                    (ArrayList) _listaSaldos);
-
-            // actualiza o saldo
-            if (_listaParamJustificacoes.size() > 0) {
-                ListIterator iterJustificacoes = _listaJustificacoes.listIterator();
-
-                ParamJustificacao paramJustificacao = null;
-                Justificacao justificacao = null;
-                while (iterJustificacoes.hasNext()) {
-                    justificacao = (Justificacao) iterJustificacoes.next();
-                    paramJustificacao = (ParamJustificacao) _listaParamJustificacoes
-                            .get(iterJustificacoes.previousIndex());
-
-                    // actualiza saldo diario
-                    IStrategyJustificacoes justificacaoStrategy = SuporteStrategyJustificacoes
-                            .getInstance().callStrategy(paramJustificacao.getTipo());
-                    justificacaoStrategy.updateSaldosHorarioVerbeteBody(justificacao,
-                            paramJustificacao, _horario, _listaRegimes, _listaMarcacoesPonto,
-                            _listaSaldos); // SALDO
-                }
-            }
-
-            // calculo das horas extraordinarias diurnas e
-            // nocturnas
-            calcularHorasEscalao();
-        }
+        // ***Add
+        extraWorkListPerDay.add(extraWork);
     }
 
     private Date calculateBeginExtraWork() {
@@ -343,7 +278,7 @@ public class ExtraWorkSheet implements IService {
         return new Date(endExtraWorkMillis);
     }
 
-    private Date calculateHourExtraWork(int index, int index2) {
+    private Date calculateHourExtraWork(int index, int index2, boolean round) {
         long balance = ((Long) _listaSaldos.get(index)).longValue();
         if (index2 != -1) {
             balance = balance + ((Long) _listaSaldos.get(index2)).longValue();
@@ -352,18 +287,288 @@ public class ExtraWorkSheet implements IService {
         if (balance <= 0) {
             return null;
         }
+
         // o calendario tem sempre uma hora a mais quando se pretende a duracao,
         // entao acerta-se
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(balance);
         calendar.add(Calendar.HOUR_OF_DAY, -1);
 
+        if (round) {
+            int mount = 0;
+            if (calendar.get(Calendar.MINUTE) > 0 && calendar.get(Calendar.MINUTE) < 30) {
+                mount = 30 - calendar.get(Calendar.MINUTE);
+            } else if (calendar.get(Calendar.MINUTE) > 30 && calendar.get(Calendar.MINUTE) < 60) {
+                mount = 60 - calendar.get(Calendar.MINUTE);
+            }
+            calendar.add(Calendar.MINUTE, mount);
+        }
+        
         return calendar.getTime();
     }
 
     // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+    // FUNÇÃO EXECUTE DO SERVIÇO SEGURO CONSULTAR VERBETE
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+    public void execute(List extraWorkListPerDay, IPersistentExtraWork persistentExtraWork)
+            throws Exception {
+        SuportePersistente.getInstance().iniciarTransaccao();
+        try {
+            limpaListaSaldos(0);
+
+            lerFuncionario();
+            lerStatusAssiduidade();
+            lerFimAssiduidade();
+            lerInicioAssiduidade();
+            construirEscolhasMarcacoesPonto();
+            verificarMesInjustificado();
+
+            if (!_mesInjustificado) {
+                Calendar agora = Calendar.getInstance();
+                agora.set(Calendar.HOUR_OF_DAY, 00);
+                agora.set(Calendar.MINUTE, 00);
+                agora.set(Calendar.SECOND, 00);
+                agora.set(Calendar.MILLISECOND, 00);
+                Timestamp agoraTimestamp = new Timestamp(agora.getTimeInMillis());
+
+                _calendarioConsulta = Calendar.getInstance();
+                _calendarioConsulta.setLenient(false);
+
+                Calendar calendario = Calendar.getInstance();
+                calendario.setLenient(false);
+
+                // limpaListaSaldos(0);
+
+                // ==================================== Inicio da construcao da
+                // lista a mostrar no jsp =======================================
+                while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {
+                    System.out.println("-------------->" + _dataConsulta);
+
+                    calendario.clear();
+                    calendario.setTimeInMillis(_dataConsulta.getTime());
+
+                    limpaListaSaldos(0);
+
+                    // consulta do horario do funcionario neste dia
+                    lerHorario();
+
+                    // Se o status do funcionário é Pendente então não vale a pena
+                    // continuar os cálculos
+                    verificarStatusAssiduidade();
+                    if (_statusPendente) {
+                        _statusPendente = false;
+                        continue;
+                    }
+
+                    // Se os dias do funcionário são injustificados então não vale a
+                    // pena continuar os cálculos
+                    verificarDiasInjustificados(_funcionario, calendario);
+                    if (_diasInjustificados) {
+                        _diasInjustificados = false;
+                        continue;
+                    }
+
+                    // consulta das marcacoes do funcionario neste dia, tendo
+                    // atencao ao expediente deste horario
+                    calcularIntervaloConsulta();
+                    consultarMarcacoesPonto();
+
+                    // consulta das justificacoes do funcionario neste dia
+                    consultarJustificacoesPorDia();
+                    buscarParamJustificacoes();
+
+                    // formata o verbete
+                    /*
+                     * _listaVerbeteDiaria.add(0, FormataCalendar.data(calendario)); // data
+                     * _listaVerbeteDiaria.add(1, "&nbsp;" + _horario.preencheSigla(_locale) +
+                     * "&nbsp;"); // horário _listaVerbeteDiaria.add(2, new String("&nbsp;")); //
+                     * saldo HN _listaVerbeteDiaria.add(3, new String("&nbsp;")); // saldo PF
+                     * _listaVerbeteDiaria.add(4, formataJustificacoes()); // justificacoes
+                     * _listaVerbeteDiaria.add(5, formataMarcacoes()); // marcacoes
+                     */
+
+                    if ((_horario.getSigla() != null)
+                            && (_horario.getSigla().equals(Constants.DSC)
+                                    || _horario.getSigla().equals(Constants.DS) || _horario
+                                    .getSigla().equals(Constants.FERIADO))) {
+                        // Dias de Descanso com marcacoes e sem justificacoes, logo
+                        // calcula o saldo
+
+                        // calculo do saldo de dias de descanso
+                        if (_listaMarcacoesPonto.size() > 0) {
+
+                            // calculo do saldo diário
+                            calcularSaldoDiario();
+
+                            calendario.clear();
+                            calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
+                            /*
+                             * _listaVerbeteDiaria.set(2, FormataCalendar
+                             * .horasMinutosDuracao(calendario)); // saldo HN
+                             */
+
+                            IStrategyHorarios horarioStrategy = SuporteStrategyHorarios
+                                    .getInstance().callStrategy(_horario.getModalidade());
+                            if (((Long) _listaSaldos.get(0)).longValue() > horarioStrategy
+                                    .duracaoDiaria(_horario)) {
+                                _listaSaldos.set(0, new Long(horarioStrategy
+                                        .duracaoDiaria(_horario)));
+                            }
+
+                            // para diferenciar entre feriados ao sabado e ao
+                            // domingo
+                            calendario.clear();
+                            calendario.setTimeInMillis(_dataConsulta.getTime());
+
+                            if (_horario.getSigla().equals(Constants.DSC)) {
+                                // saldo de sabado
+                                _saldoDSC = _saldoDSC + ((Long) _listaSaldos.get(0)).longValue();
+                            } else if (_horario.getSigla().equals(Constants.DSC)
+                                    || (_horario.getSigla().equals(Constants.FERIADO) && calendario
+                                            .get(Calendar.DAY_OF_MONTH) != Calendar.SUNDAY)) {
+                                // saldo de feriado ao sabado ou dias de semana
+                                _saldoFeriado = _saldoFeriado
+                                        + ((Long) _listaSaldos.get(0)).longValue();
+                            } else {
+                                // saldo de domingo e saldo de feriado ao domingo
+                                _saldoDS = _saldoDS + ((Long) _listaSaldos.get(0)).longValue();
+                            }
+                            // ANTES
+                            // if (_horario.getSigla().equals(Constants.DSC)
+                            // || (_horario.getSigla().equals(Constants.FERIADO)
+                            // && calendario.get(Calendar.DAY_OF_MONTH) !=
+                            // Calendar.SUNDAY)) {
+                            // // saldo de sabado e feriado ao sabado ou dias de
+                            // semana
+                            // _saldoDSC = _saldoDSC + ((Long)
+                            // _listaSaldos.get(0)).longValue();
+                            // } else {
+                            // // saldo de domingo e saldo de feriado ao domingo
+                            // _saldoDS = _saldoDS + ((Long)
+                            // _listaSaldos.get(0)).longValue();
+                            // }
+                        }
+                    } else { // Dias Uteis
+                        if (_listaParamJustificacoes.size() > 0) {
+                            // acrescenta as justificacoes na lista de marcacoes de
+                            // ponto como se fossem marcacoes de ponto
+                            completaListaMarcacoes();
+                        }
+
+                        // calculo do saldo diário
+                        calcularSaldoDiario();
+
+                        // nao efectua calculos de saldo para dias além do dia de
+                        // hoje
+                        if (!_dataConsulta.after(agoraTimestamp)) {
+                            IStrategyHorarios horarioStrategy = SuporteStrategyHorarios
+                                    .getInstance().callStrategy(_horario.getModalidade());
+                            horarioStrategy.setSaldosHorarioVerbeteBody(_horario, _listaRegimes,
+                                    _listaParamJustificacoes, _listaMarcacoesPonto, _listaSaldos);
+                        }
+                        // actualiza o saldo
+                        if (_listaParamJustificacoes.size() > 0) {
+                            ListIterator iterJustificacoes = _listaJustificacoes.listIterator();
+
+                            ParamJustificacao paramJustificacao = null;
+                            Justificacao justificacao = null;
+                            while (iterJustificacoes.hasNext()) {
+                                justificacao = (Justificacao) iterJustificacoes.next();
+                                paramJustificacao = (ParamJustificacao) _listaParamJustificacoes
+                                        .get(iterJustificacoes.previousIndex());
+
+                                // actualiza saldo diario
+                                IStrategyJustificacoes justificacaoStrategy = SuporteStrategyJustificacoes
+                                        .getInstance().callStrategy(paramJustificacao.getTipo());
+                                justificacaoStrategy.updateSaldosHorarioVerbeteBody(justificacao,
+                                        paramJustificacao, _horario, _listaRegimes,
+                                        _listaMarcacoesPonto, _listaSaldos);
+                            }
+                        }
+
+                        if (_dataConsulta.before(agoraTimestamp)) {
+                            // verifica se este dia nao teve assiduidade
+                            if (_listaMarcacoesPonto.size() == 0
+                                    && _listaParamJustificacoes.size() == 0
+                                    && (!_dataConsulta.after(agoraTimestamp))) {
+                                /*
+                                 * _listaVerbeteDiaria.set(4, new String(" <b>" +
+                                 * Constants.INJUSTIFICADO + " </b>"));
+                                 */
+                            }
+
+                            // saldo global dos dias de consulta não conta com o dia
+                            // de hoje pois ainda não terminou
+                            _saldoHNFinal = _saldoHNFinal
+                                    + ((Long) _listaSaldos.get(0)).longValue();
+                            _saldoPFFinal = _saldoPFFinal
+                                    + ((Long) _listaSaldos.get(1)).longValue();
+                            // calculo das horas extraordinarias diurnas e nocturnas
+                            calcularHorasEscalao();
+                        }
+                        /*
+                         * calendario.clear(); calendario.setTimeInMillis(((Long)
+                         * _listaSaldos.get(0)).longValue()); _listaVerbeteDiaria.set(2,
+                         * FormataCalendar.horasMinutosDuracao(calendario)); // saldo HN
+                         */
+                        /*
+                         * calendario.clear(); calendario.setTimeInMillis(((Long)
+                         * _listaSaldos.get(1)).longValue()); _listaVerbeteDiaria.set(3,
+                         * FormataCalendar.horasMinutosDuracao(calendario)); // saldo PF
+                         */
+                    }
+
+                    extraWork(extraWorkListPerDay, calendario, persistentExtraWork);
+
+                    // aumenta um dia no intervalo de consulta do verbete
+                    calendario.clear();
+                    calendario.setTimeInMillis(_dataConsulta.getTime());
+                    calendario.add(Calendar.DAY_OF_MONTH, +1);
+                    _dataConsulta.setTime(calendario.getTimeInMillis());
+
+                    // junta a lista diaria à lista do verbete
+                    /*
+                     * _listaVerbeteBody.addAll(_listaVerbeteDiaria); _listaVerbeteDiaria.clear();
+                     */
+                }
+                descontaSaldoNegativo();
+            }
+            _listaSaldos.set(0, new Long(_saldoHNFinal));
+            _listaSaldos.set(1, new Long(_saldoPFFinal));
+            _listaSaldos.set(2, new Long(_saldoPrimEscalao));
+            _listaSaldos.set(3, new Long(_saldoSegEscalao));
+            _listaSaldos.set(4, new Long(_saldoDepoisSegEscalao));
+            _listaSaldos.set(5, new Long(_saldoDSC));
+            _listaSaldos.set(6, new Long(_saldoDS));
+            _listaSaldos.set(7, new Long(_saldoNocturno));
+            _listaSaldos.set(8, new Long(_saldoNoctPrimEscalao));
+            _listaSaldos.set(9, new Long(_saldoNoctSegEscalao));
+            _listaSaldos.set(10, new Long(_saldoNoctDepoisSegEscalao));
+            _listaSaldos.set(11, new Long(_saldoFeriado));
+            _listaSaldos.set(12, new Integer(_numRefeicoesNocturno));
+
+            SuportePersistente.getInstance().confirmarTransaccao();
+        } catch (Exception e) {
+            e.printStackTrace();
+            SuportePersistente.getInstance().cancelarTransaccao();
+            throw e;
+        }
+    }
+
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
     // FUNÇÕES AUXILIARES DO SERVIÇO SEGURO CONSULTAR VERBETE
     // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+    private void lerFuncionario() throws NotExecuteException {
+        ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
+        ServicoSeguroLerFuncionarioPorDia servicoSeguroLerFuncionarioPorDia = new ServicoSeguroLerFuncionarioPorDia(
+                servicoAutorizacao, _numMecanografico.intValue(), _dataConsulta);
+        servicoSeguroLerFuncionarioPorDia.execute();
+
+        _funcionario = servicoSeguroLerFuncionarioPorDia.getFuncionario();
+    }
+
     private void lerStatusAssiduidade() throws NotExecuteException {
         ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 
@@ -417,7 +622,7 @@ public class ExtraWorkSheet implements IService {
                 servicoAutorizacao, _listaFuncionarios, _listaCartoes, _dataInicioEscolha,
                 _dataFimEscolha);
         servicoSeguro.execute();
-        _listaCartoes = servicoSeguro.getListaCartoes();
+        _listaCartoes = (ArrayList) servicoSeguro.getListaCartoes();
 
     } /* construirEscolhasMarcacoesPonto */
 
@@ -456,6 +661,8 @@ public class ExtraWorkSheet implements IService {
                     // o funcionario faltou o mes todo, logo tem que se avisar
                     // no verbete
                     _mesInjustificado = true;
+
+                    /* construirListaDiasInjustificados(_dataFimEscolha); */
                 }
             }
         }
@@ -473,11 +680,11 @@ public class ExtraWorkSheet implements IService {
         ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 
         ServicoSeguroLerMarcacoesPonto servicoSeguroLerMarcacoesPonto = new ServicoSeguroLerMarcacoesPonto(
-                servicoAutorizacao, _listaFuncionarios, _listaCartoes, null, new Timestamp(
-                        calendarioInicio.getTimeInMillis()), new Timestamp(calendarioFim
-                        .getTimeInMillis()), Boolean.TRUE);
+                servicoAutorizacao, (ArrayList) _listaFuncionarios, (ArrayList) _listaCartoes,
+                null, new Timestamp(calendarioInicio.getTimeInMillis()), new Timestamp(
+                        calendarioFim.getTimeInMillis()), _oracleDB);
         servicoSeguroLerMarcacoesPonto.execute();
-        List lista = servicoSeguroLerMarcacoesPonto.getListaMarcacoesPonto();
+        ArrayList lista = (ArrayList) servicoSeguroLerMarcacoesPonto.getListaMarcacoesPonto();
 
         if ((lista == null) || (lista.size() <= 0)) {
             ServicoSeguroLerJustificacoesComValidade servicoSeguroLerJustificacoes = new ServicoSeguroLerJustificacoesComValidade(
@@ -485,7 +692,7 @@ public class ExtraWorkSheet implements IService {
                             .getTimeInMillis()), new Date(calendarioFim.getTimeInMillis()));
             servicoSeguroLerJustificacoes.execute();
 
-            lista = servicoSeguroLerJustificacoes.getListaJustificacoes();
+            lista = (ArrayList) servicoSeguroLerJustificacoes.getListaJustificacoes();
             if ((lista == null) || (lista.size() <= 0)) {
                 // o funcionario nao teve assiduidade neste intervalo de datas
                 return false;
@@ -493,6 +700,46 @@ public class ExtraWorkSheet implements IService {
         }
         return true;
     } /* verAssiduidade */
+
+    /*
+     * private void construirListaDiasInjustificados(Timestamp dataFim) throws NotExecuteException {
+     * Calendar calendario = Calendar.getInstance(); calendario.setLenient(false); while
+     * (_dataConsulta.before((Timestamp) dataFim)) { calendario.clear();
+     * calendario.setTimeInMillis(_dataConsulta.getTime()); _listaVerbeteDiaria.add(0,
+     * FormataCalendar.data(calendario));
+     *  // consulta do horario do funcionario numa determinada data try { lerHorario(); } catch
+     * (NotExecuteException nee) { throw new NotExecuteException(nee.getMessage()); }
+     * 
+     * _listaVerbeteDiaria.add(1, "&nbsp;" + _horario.preencheSigla(_locale) + "&nbsp;");
+     * _listaVerbeteDiaria.add(2, new String("&nbsp;")); _listaVerbeteDiaria.add(3, new
+     * String("&nbsp;"));
+     * 
+     * _listaJustificacoes = new ArrayList(); _listaParamJustificacoes = new ArrayList();
+     * _listaVerbeteDiaria.add(4, new String(" <b>" + Constants.INJUSTIFICADO + " </b>"));
+     * 
+     * _listaMarcacoesPonto = new ArrayList(); _listaVerbeteDiaria.add(5, formataMarcacoes()); //
+     * calcula o saldo diario de trabalho
+     * 
+     * if (!((_horario.getSigla() != null) && (_horario.getSigla().equals(Constants.DSC) ||
+     * _horario.getSigla().equals(Constants.DS) || _horario.getSigla().equals( Constants.FERIADO)))) {
+     * IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance()
+     * .callStrategy(_horario.getModalidade());
+     * horarioStrategy.setSaldosHorarioVerbeteBody(_horario, _listaRegimes,
+     * _listaParamJustificacoes, _listaMarcacoesPonto, _listaSaldos);
+     * 
+     * calendario.clear(); calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
+     * _listaVerbeteDiaria.set(2, FormataCalendar.horasMinutosDuracao(calendario));
+     * calendario.clear(); calendario.setTimeInMillis(((Long) _listaSaldos.get(1)).longValue());
+     * _listaVerbeteDiaria.set(3, FormataCalendar.horasMinutosDuracao(calendario));
+     * 
+     * _saldoHNFinal = _saldoHNFinal + ((Long) _listaSaldos.get(0)).longValue(); _saldoPFFinal =
+     * _saldoPFFinal + ((Long) _listaSaldos.get(1)).longValue(); } // diminui um dia no intervalo de
+     * consulta do verbete calendario.clear(); calendario.setTimeInMillis(_dataConsulta.getTime());
+     * calendario.add(Calendar.DAY_OF_MONTH, +1);
+     * _dataConsulta.setTime(calendario.getTimeInMillis());
+     *  // junta a lista diária à lista verbete _listaVerbeteBody.addAll(_listaVerbeteDiaria);
+     * _listaVerbeteDiaria.clear(); limpaListaSaldos(0); } }
+     *//* construirListaDiasInjustificados */
 
     private void lerHorario() throws NotExecuteException {
 
@@ -502,7 +749,7 @@ public class ExtraWorkSheet implements IService {
 
         servicoSeguro.execute();
         _horario = servicoSeguro.getHorario();
-        _listaRegimes = servicoSeguro.getListaRegimes();
+        _listaRegimes = (ArrayList) servicoSeguro.getListaRegimes();
     } /* lerHorario */
 
     /*
@@ -521,6 +768,13 @@ public class ExtraWorkSheet implements IService {
 
         while (servicoSeguroLerStatusAssiduidadeFuncionario.getListaEstadosStatusAssiduidade()
                 .contains(Constants.ASSIDUIDADE_PENDENTE)) {
+            // enquanto tiver status pendente escreve o status a que corresponde
+            /*
+             * construirListaDiasPendente( (StatusAssiduidade)
+             * servicoSeguroLerStatusAssiduidadeFuncionario .getListaStatusAssiduidade().get(0), new
+             * Timestamp(calendarioFim .getTimeInMillis()));
+             */
+
             calendarioFim.add(Calendar.DAY_OF_MONTH, 1);
             // se o ciclo ultrapassar a data fim de escolha já não nos interessa
             // continuar
@@ -535,7 +789,32 @@ public class ExtraWorkSheet implements IService {
         }
     } /* verificarStatusAssiduidade */
 
-    private void verificarDiasInjustificados(Calendar calendario) throws NotExecuteException {
+    /*
+     * private void construirListaDiasPendente(StatusAssiduidade status, Timestamp dataFim) throws
+     * NotExecuteException { Calendar calendario = Calendar.getInstance();
+     * calendario.setLenient(false); while (!_dataConsulta.after((Timestamp) dataFim)) {
+     * calendario.clear(); calendario.setTimeInMillis(_dataConsulta.getTime());
+     * _listaVerbeteDiaria.add(0, FormataCalendar.data(calendario));
+     *  // consulta do horario do funcionario numa determinada data try { lerHorario(); } catch
+     * (NotExecuteException nee) { throw new NotExecuteException(nee.getMessage()); }
+     * 
+     * _listaVerbeteDiaria.add(1, "&nbsp;" + _horario.preencheSigla(_locale) + "&nbsp;");
+     * _listaVerbeteDiaria.add(2, new String("00:00")); _listaVerbeteDiaria.add(3, new
+     * String("00:00"));
+     * 
+     * _listaJustificacoes = new ArrayList(); _listaParamJustificacoes = new ArrayList();
+     * _listaVerbeteDiaria.add(4, new String(" <b>" + status.getSigla() + " </b>"));
+     * 
+     * _listaMarcacoesPonto = new ArrayList(); _listaVerbeteDiaria.add(5, formataMarcacoes());
+     *  // aumenta um dia no intervalo de consulta do verbete calendario.clear();
+     * calendario.setTimeInMillis(_dataConsulta.getTime()); calendario.add(Calendar.DAY_OF_MONTH,
+     * +1); _dataConsulta.setTime(calendario.getTimeInMillis());
+     *  // junta a lista diária à lista verbete _listaVerbeteBody.addAll(_listaVerbeteDiaria);
+     * _listaVerbeteDiaria.clear(); } }
+     *//* construirListaDiasPendente */
+
+    private void verificarDiasInjustificados(Funcionario funcionario, Calendar calendario)
+            throws NotExecuteException {
 
         IFeriadoPersistente iFeriadoPersistente = SuportePersistente.getInstance()
                 .iFeriadoPersistente();
@@ -558,7 +837,8 @@ public class ExtraWorkSheet implements IService {
                 calendarioAnterior.setTimeInMillis(calendario.getTimeInMillis());
                 while (calendarioAnterior.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
                         || calendarioAnterior.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-                        || iFeriadoPersistente.diaFeriado(calendarioAnterior.getTime())) {
+                        || iFeriadoPersistente.calendarioFeriado(funcionario.getCalendario(),
+                                calendarioAnterior.getTime())) {
                     calendarioAnterior.add(Calendar.DAY_OF_MONTH, -1);
                 }
 
@@ -573,7 +853,8 @@ public class ExtraWorkSheet implements IService {
                     calendarioPosterior.set(Calendar.SECOND, 59);
                     while (calendarioPosterior.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
                             || calendarioPosterior.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-                            || iFeriadoPersistente.diaFeriado(calendarioPosterior.getTime())) {
+                            || iFeriadoPersistente.calendarioFeriado(funcionario.getCalendario(),
+                                    calendarioAnterior.getTime())) {
                         calendarioPosterior.add(Calendar.DAY_OF_MONTH, 1);
                     }
                     Timestamp dataFimConsulta = new Timestamp(calendarioPosterior.getTimeInMillis());
@@ -593,7 +874,10 @@ public class ExtraWorkSheet implements IService {
 
                     if (!verAssiduidade(new Timestamp(calendarioAnterior.getTimeInMillis()),
                             dataFimConsulta)) {
-                        _diasInjustificados = true;
+                        /*
+                         * construirListaDiasInjustificados(dataFimConsulta); _diasInjustificados =
+                         * true;
+                         */
                     }
                 }
             }
@@ -636,10 +920,59 @@ public class ExtraWorkSheet implements IService {
         ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
         ServicoSeguroConsultarMarcacaoPonto servicoSeguro = new ServicoSeguroConsultarMarcacaoPonto(
                 servicoAutorizacao, _listaFuncionarios, _listaCartoes, _listaEstados, _dataInicio,
-                _dataFim, Boolean.TRUE);
+                _dataFim, _oracleDB);
         servicoSeguro.execute();
-        _listaMarcacoesPonto = servicoSeguro.getListaMarcacoesPonto();
+        _listaMarcacoesPonto = (ArrayList) servicoSeguro.getListaMarcacoesPonto();
     } /* consultarMarcacaoPonto */
+
+    private String formataMarcacoes() {
+        Calendar calendario = Calendar.getInstance();
+        String marcacoes = new String();
+
+        if (_listaMarcacoesPonto.size() > 0) {
+            // lista ordenada das marcacoes de ponto
+            Comparador comparadorMarcacoes = new Comparador(new String("MarcacaoPonto"),
+                    new String("crescente"));
+            Collections.sort(_listaMarcacoesPonto, comparadorMarcacoes);
+
+            // formatacao do campo das marcacoes
+            ListIterator iteradorMarcacoes = _listaMarcacoesPonto.listIterator();
+            MarcacaoPonto entrada = null;
+            MarcacaoPonto saida = null;
+
+            while (iteradorMarcacoes.hasNext()) {
+                entrada = (MarcacaoPonto) iteradorMarcacoes.next();
+
+                // escreve marcacao no verbete
+                calendario.clear();
+                calendario.setTime(entrada.getData());
+                if (entrada.getEstado().equals("regularizada")) {
+                    marcacoes = marcacoes
+                            .concat("<b>" + FormataCalendar.horas(calendario) + "</b>");
+                } else {
+                    marcacoes = marcacoes.concat(FormataCalendar.horas(calendario));
+                }
+
+                if (iteradorMarcacoes.hasNext()) {
+                    saida = (MarcacaoPonto) iteradorMarcacoes.next();
+                    // escreve marcacao no verbete
+                    calendario.clear();
+                    calendario.setTime(saida.getData());
+                    marcacoes = marcacoes.concat("-");
+                    if (saida.getEstado().equals("regularizada")) {
+                        marcacoes = marcacoes.concat("<b>" + FormataCalendar.horas(calendario)
+                                + "</b>");
+                    } else {
+                        marcacoes = marcacoes.concat(FormataCalendar.horas(calendario));
+                    }
+                }
+            }
+        } else { // nao existem marcacoes de ponto neste dia
+            marcacoes = marcacoes.concat("&nbsp;");
+        }
+
+        return marcacoes;
+    } /* formataMarcacoes */
 
     private void consultarJustificacoesPorDia() throws NotExecuteException {
 
@@ -647,7 +980,7 @@ public class ExtraWorkSheet implements IService {
         ServicoSeguroConsultarJustificacoesPorDia servicoSeguro = new ServicoSeguroConsultarJustificacoesPorDia(
                 servicoAutorizacao, _numMecanografico.intValue(), _dataInicio);
         servicoSeguro.execute();
-        _listaJustificacoes = servicoSeguro.getListaJustificacoes();
+        _listaJustificacoes = (ArrayList) servicoSeguro.getListaJustificacoes();
 
         // lista ordenada das justificacoes
         Comparador comparadorJustificacoes = new Comparador(new String("Justificacao"), new String(
@@ -662,8 +995,51 @@ public class ExtraWorkSheet implements IService {
                 servicoAutorizacao, _listaJustificacoes);
 
         servicoSeguro.execute();
-        _listaParamJustificacoes = servicoSeguro.getListaJustificacoes();
+        _listaParamJustificacoes = (ArrayList) servicoSeguro.getListaJustificacoes();
     } /* buscarParamJustificacoes */
+
+    private String formataJustificacoes() {
+        String justificacoes = new String();
+
+        // formata justificacoes para o jsp
+        if (_listaParamJustificacoes.size() > 0) {
+            ListIterator iterJustificacoes = _listaJustificacoes.listIterator();
+
+            ParamJustificacao paramJustificacao = null;
+            while (iterJustificacoes.hasNext()) {
+                iterJustificacoes.next();
+                paramJustificacao = (ParamJustificacao) _listaParamJustificacoes
+                        .get(iterJustificacoes.previousIndex());
+
+                if ((_horario.getSigla() != null)
+                        && (_horario.getSigla().equals(Constants.DSC)
+                                || _horario.getSigla().equals(Constants.DS) || _horario.getSigla()
+                                .equals(Constants.FERIADO))) { // Dias
+                    // de
+                    // Descanso
+                    if (paramJustificacao.getTipoDias().equals(Constants.TODOS)) {
+                        // formatacao necessaria para o caso de varias
+                        // justificacoes por dia
+                        justificacoes = justificacoes.concat(new String(paramJustificacao
+                                .getSigla()));
+                        if (iterJustificacoes.hasNext()) {
+                            justificacoes = justificacoes.concat("<br>");
+                        }
+                    } else {
+                        justificacoes = justificacoes.concat("&nbsp;");
+                    }
+                } else {
+                    justificacoes = justificacoes.concat(new String(paramJustificacao.getSigla()));
+                    if (iterJustificacoes.hasNext()) {
+                        justificacoes = justificacoes.concat("<br>");
+                    }
+                }
+            }
+        } else { // nao existem justificacoes de ponto neste dia
+            justificacoes = justificacoes.concat("&nbsp;");
+        }
+        return justificacoes;
+    } /* formataJustificacoes */
 
     private void completaListaMarcacoes() {
         ListIterator iterador = _listaJustificacoes.listIterator();
@@ -686,6 +1062,7 @@ public class ExtraWorkSheet implements IService {
 
         // retirar os segundos que nao entram na contabilidade do saldo
         CollectionUtils.transform(_listaMarcacoesPonto, new Transformer() {
+
             public Object transform(Object arg0) {
                 MarcacaoPonto marcacao = (MarcacaoPonto) arg0;
 
@@ -742,6 +1119,7 @@ public class ExtraWorkSheet implements IService {
                 }
             }
         }
+
         limpaListaSaldos(saldo);
     }
 
@@ -772,25 +1150,6 @@ public class ExtraWorkSheet implements IService {
         return false;
     }
 
-    private void calcularHorasEscalao() {
-        long saldo = ((Long) _listaSaldos.get(0)).longValue();
-
-        if (saldo > 0) {
-            IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
-                    _horario.getModalidade());
-            horarioStrategy.calcularHorasExtraordinarias(_horario,
-                    (ArrayList) _listaMarcacoesPonto, (ArrayList) _listaSaldos);
-        }
-    } /* calcularHorasEscalao */
-
-    private void calcularTrabalhoNocturno(MarcacaoPonto entrada, MarcacaoPonto saida) {
-        IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
-                _horario.getModalidade());
-
-        _listaSaldos.set(7, new Long(horarioStrategy.calcularTrabalhoNocturno(_horario, entrada,
-                saida)));
-    } /* calcularTrabalhoNocturno */
-
     private void limpaListaSaldos(long saldo) {
         _listaSaldos.clear();
         // horario normal
@@ -815,5 +1174,88 @@ public class ExtraWorkSheet implements IService {
         _listaSaldos.add(new Long(0));
         // trabalho extraordinário nocturno depois 2º escalao
         _listaSaldos.add(new Long(0));
+        // horas em dia de descanso Feriado
+        _listaSaldos.add(new Long(0));
+        // número de refeições devido a trabalho extra nocturno
+        _listaSaldos.add(new Long(0));
     }
+
+    private void calcularHorasEscalao() {
+        long saldo = ((Long) _listaSaldos.get(0)).longValue();
+        if (saldo > 0) {
+            IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
+                    _horario.getModalidade());
+            horarioStrategy.calcularHorasExtraordinarias(_horario, _listaMarcacoesPonto,
+                    _listaSaldos);
+
+            _saldoPrimEscalao = _saldoPrimEscalao + ((Long) _listaSaldos.get(2)).longValue();
+            _saldoSegEscalao = _saldoSegEscalao + ((Long) _listaSaldos.get(3)).longValue();
+            _saldoDepoisSegEscalao = _saldoDepoisSegEscalao
+                    + ((Long) _listaSaldos.get(4)).longValue();
+            _saldoNoctPrimEscalao = _saldoNoctPrimEscalao
+                    + ((Long) _listaSaldos.get(8)).longValue();
+            _saldoNoctSegEscalao = _saldoNoctSegEscalao + ((Long) _listaSaldos.get(9)).longValue();
+            _saldoNoctDepoisSegEscalao = _saldoNoctDepoisSegEscalao
+                    + ((Long) _listaSaldos.get(10)).longValue();
+            if (((Long) _listaSaldos.get(8)).longValue() > 0) {
+                _numRefeicoesNocturno++;
+            }
+        } else {
+            _saldoNegativo = _saldoNegativo + saldo;
+        }
+    } /* calcularHorasEscalao */
+
+    private void descontaSaldoNegativo() {
+        // valor negativo de saldo, portanto retira o valor em primeiro lugar do
+        // saldoDepoisSegEscalao,
+        // depois do saldoSegEscalao e por ultimo do saldoPrimEscalao
+        if (_saldoNoctPrimEscalao != 0 || _saldoNoctSegEscalao != 0
+                || _saldoNoctDepoisSegEscalao != 0 || _saldoPrimEscalao != 0
+                || _saldoSegEscalao != 0 || _saldoDepoisSegEscalao != 0) {
+            if (-_saldoNegativo > _saldoNoctDepoisSegEscalao) {
+                _saldoNegativo = _saldoNegativo + _saldoNoctDepoisSegEscalao;
+                _saldoNoctDepoisSegEscalao = 0;
+                if (-_saldoNegativo > _saldoNoctSegEscalao) {
+                    _saldoNegativo = _saldoNegativo + _saldoNoctSegEscalao;
+                    _saldoNoctSegEscalao = 0;
+                    if (-_saldoNegativo > _saldoNoctPrimEscalao) {
+                        _saldoNegativo = _saldoNegativo + _saldoNoctPrimEscalao;
+                        _saldoNoctPrimEscalao = 0;
+                        if (-_saldoNegativo > _saldoDepoisSegEscalao) {
+                            _saldoNegativo = _saldoNegativo + _saldoDepoisSegEscalao;
+                            _saldoDepoisSegEscalao = 0;
+                            if (-_saldoNegativo > _saldoSegEscalao) {
+                                _saldoNegativo = _saldoNegativo + _saldoSegEscalao;
+                                _saldoSegEscalao = 0;
+                                if (-_saldoNegativo > _saldoPrimEscalao) {
+                                    _saldoPrimEscalao = 0;
+                                } else {
+                                    _saldoPrimEscalao = _saldoPrimEscalao + _saldoNegativo;
+                                }
+                            } else {
+                                _saldoSegEscalao = _saldoSegEscalao + _saldoNegativo;
+                            }
+                        } else {
+                            _saldoDepoisSegEscalao = _saldoDepoisSegEscalao + _saldoNegativo;
+                        }
+                    } else {
+                        _saldoNoctPrimEscalao = _saldoNoctPrimEscalao + _saldoNegativo;
+                    }
+                } else {
+                    _saldoNoctSegEscalao = _saldoNoctSegEscalao + _saldoNegativo;
+                }
+            } else {
+                _saldoNoctDepoisSegEscalao = _saldoNoctDepoisSegEscalao + _saldoNegativo;
+            }
+        }
+    } /* descontaSaldoNegativo */
+
+    private void calcularTrabalhoNocturno(MarcacaoPonto entrada, MarcacaoPonto saida) {
+        IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
+                _horario.getModalidade());
+
+        _saldoNocturno = _saldoNocturno
+                + horarioStrategy.calcularTrabalhoNocturno(_horario, entrada, saida);
+    } /* calcularTrabalhoNocturno */
+    // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
 }

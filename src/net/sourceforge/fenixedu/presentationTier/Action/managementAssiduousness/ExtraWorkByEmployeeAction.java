@@ -39,14 +39,12 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
     public static String TODO_EXTRA_WORK_AUTHORIZE = "authorize";
 
     public ActionForward prepareInputs(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("inputDateAndEmployee");
     }
 
-    public ActionForward extraWorkSheetByEmployeeAndMoth(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward extraWorkSheetByEmployeeAndMoth(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession();
 
@@ -54,109 +52,118 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
         String usernameWhoKey = userView.getUtilizador();
 
         DynaActionForm extraWorkByEmployeeFormBean = (DynaActionForm) form;
-        Integer employeeNumber = (Integer) extraWorkByEmployeeFormBean
-                .get("employeeNumber");
+        Integer employeeNumber = (Integer) extraWorkByEmployeeFormBean.get("employeeNumber");
         Integer moth = (Integer) extraWorkByEmployeeFormBean.get("moth");
         Integer year = (Integer) extraWorkByEmployeeFormBean.get("year");
 
         Calendar firstDayCalendar = Calendar.getInstance();
-        firstDayCalendar.set(year.intValue(), moth.intValue() - 1, 1, 00, 00,
-                00);
+        firstDayCalendar.set(year.intValue(), moth.intValue() - 1, 1, 00, 00, 00);
         Timestamp firstDay = new Timestamp(firstDayCalendar.getTimeInMillis());
-
-        int lastDayMoth = firstDayCalendar
-                .getActualMaximum(Calendar.DAY_OF_MONTH);
+        System.out.println("-------------->" + firstDay);	
+        
+        int lastDayMoth = firstDayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Calendar lastDayCalendar = Calendar.getInstance();
-        lastDayCalendar.set(year.intValue(), moth.intValue() - 1, lastDayMoth,
-                00, 00, 00);
+        lastDayCalendar.set(year.intValue(), moth.intValue() - 1, lastDayMoth, 23, 59, 59);
         Timestamp lastDay = new Timestamp(lastDayCalendar.getTimeInMillis());
-
+        System.out.println("-------------->" + lastDay);
+        
         Locale locale = request.getLocale();
 
         List infoExtraWorkList = null;
         Object[] args = { employeeNumber, firstDay, lastDay, locale };
         try {
-            infoExtraWorkList = (List) ServiceManagerServiceFactory
-                    .executeService(userView, "ExtraWorkSheet", args);
+            infoExtraWorkList = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ExtraWorkSheet", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
-            actionErrors.add("error.impossivel.extraWork.sheet",
-                    new ActionError("error.impossivel.extraWork.sheet"));
+            actionErrors.add("error.impossivel.extraWork.sheet", new ActionError(
+                    "error.impossivel.extraWork.sheet"));
             saveErrors(request, actionErrors);
 
             return mapping.getInputForward();
         }
         if (infoExtraWorkList == null || infoExtraWorkList.size() <= 1) {
-            actionErrors.add("error.impossivel.extraWork.sheet",
-                    new ActionError("error.impossivel.extraWork.sheet"));
+            actionErrors.add("error.impossivel.extraWork.sheet", new ActionError(
+                    "error.impossivel.extraWork.sheet"));
             saveErrors(request, actionErrors);
 
             return mapping.getInputForward();
         }
 
         request.setAttribute("infoEmployee", infoExtraWorkList.get(0));
-        request.setAttribute("infoExtraWorkList", infoExtraWorkList.subList(1,
-                infoExtraWorkList.size()));
+        request.setAttribute("infoExtraWorkList", infoExtraWorkList.subList(1, infoExtraWorkList
+                .size()));
         request.setAttribute("year", year);
         request.setAttribute("moth", moth);
-        System.out.println("--->" + infoExtraWorkList.size());	
+        extraWorkByEmployeeFormBean.set("moth", moth);
+        extraWorkByEmployeeFormBean.set("year", year);
+
+        System.out.println("--->" + infoExtraWorkList.size());
 
         return (mapping.findForward("extraWorkSheet"));
     }
 
     public ActionForward writeExtraWork(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        ActionErrors actionErrors = new ActionErrors();
-        HttpSession session = request.getSession();
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            ActionErrors actionErrors = new ActionErrors();
+            HttpSession session = request.getSession();
 
-        IUserView userView = SessionUtils.getUserView(request);
-        String usernameWhoKey = userView.getUtilizador();
+            IUserView userView = SessionUtils.getUserView(request);
+            String usernameWhoKey = userView.getUtilizador();
 
-        DynaActionForm extraWorkByEmployeeFormBean = (DynaActionForm) form;
-        Integer employeeNumber = (Integer) extraWorkByEmployeeFormBean
-                .get("employeeNumber");
-        String compensation = (String) extraWorkByEmployeeFormBean
-                .get("compensation");
+            DynaActionForm extraWorkByEmployeeFormBean = (DynaActionForm) form;
+            Integer employeeNumber = (Integer) extraWorkByEmployeeFormBean.get("employeeNumber");
+            Integer moth = (Integer) extraWorkByEmployeeFormBean.get("moth");
+            Integer year = (Integer) extraWorkByEmployeeFormBean.get("year");
+            String compensation = (String) extraWorkByEmployeeFormBean.get("compensation");
 
-        List infoExtraWorkList = null;
-        if (extraWorkByEmployeeFormBean.get("size") != null) {
-            Integer sizeList = (Integer) extraWorkByEmployeeFormBean
-                    .get("size");
+            List infoExtraWorkList = null;
+            if (extraWorkByEmployeeFormBean.get("size") != null) {
+                Integer sizeList = (Integer) extraWorkByEmployeeFormBean.get("size");
 
-            infoExtraWorkList = new ArrayList();
-            for (int i = 0; i < sizeList.intValue(); i++) {
-                InfoExtraWork infoExtraWork = getExtraWork(request, i);
-                if (infoExtraWork != null) {
-                    infoExtraWorkList.add(infoExtraWork);
+                infoExtraWorkList = new ArrayList();
+                for (int i = 0; i < sizeList.intValue(); i++) {
+                    InfoExtraWork infoExtraWork = getExtraWork(request, i);
+                    if (infoExtraWork != null) {
+                        infoExtraWorkList.add(infoExtraWork);
+                    }
                 }
             }
-        }
+            System.out.println("writeExtraWork--->" + infoExtraWorkList.size());
+            List infoExtraWorkListAfterWrite = null;
+            if (infoExtraWorkList != null && infoExtraWorkList.size() > 0) {
 
-        List infoExtraWorkListAfterWrite = null;
-        Object[] args = { usernameWhoKey, infoExtraWorkList, employeeNumber, compensation };
-        try {
-            infoExtraWorkListAfterWrite = (List) ServiceManagerServiceFactory
-                    .executeService(userView, "WriteExtraWork", args);
-        } catch (FenixServiceException e) {
+                Object[] args = { usernameWhoKey, infoExtraWorkList, employeeNumber, compensation };
+                try {
+                    infoExtraWorkListAfterWrite = (List) ServiceManagerServiceFactory
+                            .executeService(userView, "WriteExtraWork", args);
+                } catch (FenixServiceException e) {
+                    e.printStackTrace();
+                    actionErrors.add("error.extra.work", new ActionError(
+                            "error.impossivel.extraWork.write"));
+                    saveErrors(request, actionErrors);
+
+                    return mapping.getInputForward();
+                }
+                if (infoExtraWorkListAfterWrite == null || infoExtraWorkListAfterWrite.size() <= 0) {
+                    actionErrors.add("error.extra.work", new ActionError(
+                            "error.impossivel.extraWork.write"));
+                    saveErrors(request, actionErrors);
+
+                    return mapping.getInputForward();
+                }
+            }
+
+            request.setAttribute("infoExtraWorkList", infoExtraWorkListAfterWrite);
+            request.setAttribute("infoEmployee", infoExtraWorkListAfterWrite.get(0));
+            request.setAttribute("year", year);
+            request.setAttribute("moth", moth);
+            extraWorkByEmployeeFormBean.set("moth", moth);
+            extraWorkByEmployeeFormBean.set("year", year);
+        } catch (Exception e) {
             e.printStackTrace();
-            actionErrors.add("error.extra.work", new ActionError(
-                    "error.impossivel.extraWork.write"));
-            saveErrors(request, actionErrors);
-
-            return mapping.getInputForward();
         }
-        if (infoExtraWorkListAfterWrite == null
-                || infoExtraWorkListAfterWrite.size() <= 0) {
-            actionErrors.add("error.extra.work", new ActionError(
-                    "error.impossivel.extraWork.write"));
-            saveErrors(request, actionErrors);
-
-            return mapping.getInputForward();
-        }
-
-        request.setAttribute("infoExtraWorkList", infoExtraWorkListAfterWrite);
-
         return (mapping.findForward("extraWorkSheet"));
     }
 
@@ -169,60 +176,47 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
             Date nocturnalFirstHour = null;
             Date nocturnalAfterSecondHour = null;
             Date restDay = null;
-            
-            SimpleDateFormat simpleHourDateFormat = new SimpleDateFormat(
-            "HH:mm");
+
+            SimpleDateFormat simpleHourDateFormat = new SimpleDateFormat("HH:mm");
             simpleHourDateFormat.setLenient(false);
-               
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].diurnalFirstHour") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].diurnalFirstHour")
+
+            if (request.getParameter("infoExtraWork[" + index + "].diurnalFirstHour") != null
+                    && request.getParameter("infoExtraWork[" + index + "].diurnalFirstHour")
                             .length() > 0) {
-                diurnalFirstHour = simpleHourDateFormat.parse(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].diurnalFirstHour"));
+                diurnalFirstHour = simpleHourDateFormat.parse(request.getParameter("infoExtraWork["
+                        + index + "].diurnalFirstHour"));
                 existsExtraWork = true;
             }
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].diurnalAfterSecondHour") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index
-                                    + "].diurnalAfterSecondHour").length() > 0) {
+            if (request.getParameter("infoExtraWork[" + index + "].diurnalAfterSecondHour") != null
+                    && request.getParameter("infoExtraWork[" + index + "].diurnalAfterSecondHour")
+                            .length() > 0) {
                 diurnalAfterSecondHour = simpleHourDateFormat.parse(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].diurnalAfterSecondHour"));
+                        .getParameter("infoExtraWork[" + index + "].diurnalAfterSecondHour"));
                 existsExtraWork = true;
             }
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].nocturnalFirstHour") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].nocturnalFirstHour")
+            if (request.getParameter("infoExtraWork[" + index + "].nocturnalFirstHour") != null
+                    && request.getParameter("infoExtraWork[" + index + "].nocturnalFirstHour")
                             .length() > 0) {
                 nocturnalFirstHour = simpleHourDateFormat.parse(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].nocturnalFirstHour"));
+                        .getParameter("infoExtraWork[" + index + "].nocturnalFirstHour"));
                 existsExtraWork = true;
             }
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].nocturnalAfterSecondHour") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index
-                                    + "].nocturnalAfterSecondHour").length() > 0) {
+            if (request.getParameter("infoExtraWork[" + index + "].nocturnalAfterSecondHour") != null
+                    && request
+                            .getParameter("infoExtraWork[" + index + "].nocturnalAfterSecondHour")
+                            .length() > 0) {
                 nocturnalAfterSecondHour = simpleHourDateFormat.parse(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].nocturnalAfterSecondHour"));
+                        .getParameter("infoExtraWork[" + index + "].nocturnalAfterSecondHour"));
                 existsExtraWork = true;
             }
             if (request.getParameter("infoExtraWork[" + index + "].restDay") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].restDay").length() > 0) {
-                restDay = simpleHourDateFormat.parse(request
-                        .getParameter("infoExtraWork[" + index + "].restDay"));
+                    && request.getParameter("infoExtraWork[" + index + "].restDay").length() > 0) {
+                restDay = simpleHourDateFormat.parse(request.getParameter("infoExtraWork[" + index
+                        + "].restDay"));
                 existsExtraWork = true;
             }
 
-            if(!existsExtraWork)  {
+            if (!existsExtraWork) {
                 return null;
             }
 
@@ -237,62 +231,44 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
             Boolean nocturnalFirstHourAuthorized = new Boolean(false);
             Boolean nocturnalAfterSecondHourAuthorized = new Boolean(false);
             Boolean restDayAuthorized = new Boolean(false);
-            
 
-            if (request
-                    .getParameter("infoExtraWork[" + index + "].idInternal") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].idInternal")
-                            .length() > 0) {
-                idInternal = Integer.valueOf(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].idInternal"));
+            if (request.getParameter("infoExtraWork[" + index + "].idInternal") != null
+                    && request.getParameter("infoExtraWork[" + index + "].idInternal").length() > 0) {
+                idInternal = Integer.valueOf(request.getParameter("infoExtraWork[" + index
+                        + "].idInternal"));
             }
-            
-            SimpleDateFormat simpleDayDateFormat = new SimpleDateFormat(
-                    "dd/MM/yyyy");
+
+            SimpleDateFormat simpleDayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             simpleDayDateFormat.setLenient(false);
 
             if (request.getParameter("infoExtraWork[" + index + "].day") != null
-                    && request.getParameter("infoExtraWork[" + index + "].day")
-                            .length() > 0) {
-                day = simpleDayDateFormat.parse(request
-                        .getParameter("infoExtraWork[" + index + "].day"));
+                    && request.getParameter("infoExtraWork[" + index + "].day").length() > 0) {
+                day = simpleDayDateFormat.parse(request.getParameter("infoExtraWork[" + index
+                        + "].day"));
             }
             if (request.getParameter("infoExtraWork[" + index + "].beginHour") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].beginHour").length() > 0) {
-                beginHour = simpleHourDateFormat
-                        .parse(request.getParameter("infoExtraWork[" + index
-                                + "].beginHour"));
+                    && request.getParameter("infoExtraWork[" + index + "].beginHour").length() > 0) {
+                beginHour = simpleHourDateFormat.parse(request.getParameter("infoExtraWork["
+                        + index + "].beginHour"));
             }
             if (request.getParameter("infoExtraWork[" + index + "].endHour") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].endHour").length() > 0) {
-                endHour = simpleHourDateFormat.parse(request
-                        .getParameter("infoExtraWork[" + index + "].endHour"));
+                    && request.getParameter("infoExtraWork[" + index + "].endHour").length() > 0) {
+                endHour = simpleHourDateFormat.parse(request.getParameter("infoExtraWork[" + index
+                        + "].endHour"));
             }
 
-            if (request
-                    .getParameter("infoExtraWork[" + index + "].mealSubsidy") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].mealSubsidy")
-                            .length() > 0) {
-                mealSubsidy = Integer.valueOf(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].mealSubsidy"));
+            if (request.getParameter("infoExtraWork[" + index + "].mealSubsidy") != null
+                    && request.getParameter("infoExtraWork[" + index + "].mealSubsidy").length() > 0) {
+                mealSubsidy = Integer.valueOf(request.getParameter("infoExtraWork[" + index
+                        + "].mealSubsidy"));
             }
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].mealSubsidyAuthorized") != null) {
-                mealSubsidyAuthorized = Boolean.valueOf(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].mealSubsidyAuthorized"));
+            if (request.getParameter("infoExtraWork[" + index + "].mealSubsidyAuthorized") != null) {
+                mealSubsidyAuthorized = Boolean.valueOf(request.getParameter("infoExtraWork["
+                        + index + "].mealSubsidyAuthorized"));
             }
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].diurnalFirstHourAuthorized") != null) {
-                diurnalFirstHourAuthorized = Boolean.valueOf(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].diurnalFirstHourAuthorized"));
+            if (request.getParameter("infoExtraWork[" + index + "].diurnalFirstHourAuthorized") != null) {
+                diurnalFirstHourAuthorized = Boolean.valueOf(request.getParameter("infoExtraWork["
+                        + index + "].diurnalFirstHourAuthorized"));
             }
             if (request.getParameter("infoExtraWork[" + index
                     + "].diurnalAfterSecondHourAuthorized") != null) {
@@ -300,11 +276,9 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
                         .getParameter("infoExtraWork[" + index
                                 + "].diurnalAfterSecondHourAuthorized"));
             }
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].nocturnalFirstHourAuthorized") != null) {
+            if (request.getParameter("infoExtraWork[" + index + "].nocturnalFirstHourAuthorized") != null) {
                 nocturnalFirstHourAuthorized = Boolean.valueOf(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].nocturnalFirstHourAuthorized"));
+                        .getParameter("infoExtraWork[" + index + "].nocturnalFirstHourAuthorized"));
             }
             if (request.getParameter("infoExtraWork[" + index
                     + "].nocturnalAfterSecondHourAuthorized") != null) {
@@ -312,13 +286,11 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
                         .getParameter("infoExtraWork[" + index
                                 + "].nocturnalAfterSecondHourAuthorized"));
             }
-            if (request.getParameter("infoExtraWork[" + index
-                    + "].restDayAuthorized") != null) {
-                restDayAuthorized = Boolean.valueOf(request
-                        .getParameter("infoExtraWork[" + index
-                                + "].restDayAuthorized"));
+            if (request.getParameter("infoExtraWork[" + index + "].restDayAuthorized") != null) {
+                restDayAuthorized = Boolean.valueOf(request.getParameter("infoExtraWork[" + index
+                        + "].restDayAuthorized"));
             }
-            
+
             InfoExtraWork infoExtraWork = new InfoExtraWork();
             infoExtraWork.setIdInternal(idInternal);
             infoExtraWork.setDay(day);
@@ -327,17 +299,13 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
             infoExtraWork.setMealSubsidy(mealSubsidy);
             infoExtraWork.setMealSubsidyAuthorized(mealSubsidyAuthorized);
             infoExtraWork.setDiurnalFirstHour(diurnalFirstHour);
-            infoExtraWork
-                    .setDiurnalFirstHourAuthorized(diurnalFirstHourAuthorized);
+            infoExtraWork.setDiurnalFirstHourAuthorized(diurnalFirstHourAuthorized);
             infoExtraWork.setDiurnalAfterSecondHour(diurnalAfterSecondHour);
-            infoExtraWork
-                    .setDiurnalAfterSecondHourAuthorized(diurnalAfterSecondHourAuthorized);
+            infoExtraWork.setDiurnalAfterSecondHourAuthorized(diurnalAfterSecondHourAuthorized);
             infoExtraWork.setNocturnalFirstHour(nocturnalFirstHour);
-            infoExtraWork
-                    .setNocturnalFirstHourAuthorized(nocturnalFirstHourAuthorized);
+            infoExtraWork.setNocturnalFirstHourAuthorized(nocturnalFirstHourAuthorized);
             infoExtraWork.setNocturnalAfterSecondHour(nocturnalAfterSecondHour);
-            infoExtraWork
-                    .setNocturnalAfterSecondHourAuthorized(nocturnalAfterSecondHourAuthorized);
+            infoExtraWork.setNocturnalAfterSecondHourAuthorized(nocturnalAfterSecondHourAuthorized);
             infoExtraWork.setRestDay(restDay);
             infoExtraWork.setRestDayAuthorized(restDayAuthorized);
 
@@ -355,11 +323,9 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
             Boolean forDelete = new Boolean(false);
 
             if (request.getParameter("infoExtraWork[" + index + "].idInternal") != null
-                    && request.getParameter(
-                            "infoExtraWork[" + index + "].idInternal").length() > 0) {
-                idInternal = Integer
-                        .valueOf(request.getParameter("infoExtraWork[" + index
-                                + "].idInternal"));
+                    && request.getParameter("infoExtraWork[" + index + "].idInternal").length() > 0) {
+                idInternal = Integer.valueOf(request.getParameter("infoExtraWork[" + index
+                        + "].idInternal"));
             }
 
             if (idInternal != null) {

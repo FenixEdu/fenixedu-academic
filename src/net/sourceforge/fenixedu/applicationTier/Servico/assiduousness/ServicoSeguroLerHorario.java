@@ -3,19 +3,19 @@ package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 import java.sql.Timestamp;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Funcionario;
-import net.sourceforge.fenixedu.domain.Horario;
-import net.sourceforge.fenixedu.domain.HorarioTipo;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+import net.sourceforge.fenixedu.domain.Funcionario;
+import net.sourceforge.fenixedu.domain.Horario;
+import net.sourceforge.fenixedu.domain.HorarioTipo;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncionarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IHorarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IHorarioTipoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IRegimePersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 /**
  * 

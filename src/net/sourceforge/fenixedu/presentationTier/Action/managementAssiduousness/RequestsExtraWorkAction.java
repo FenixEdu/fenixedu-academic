@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
-import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequests;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
+import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequests;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -32,29 +32,73 @@ import org.apache.struts.action.DynaActionForm;
  * 
  */
 public class RequestsExtraWorkAction extends FenixDispatchAction {
-    public ActionForward prepareRequests(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepareInputs(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        return mapping.findForward("inputs");
+    }
+
+    public ActionForward prepareRequests(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        ActionErrors actionErrors = new ActionErrors();
+        HttpSession session = request.getSession();
+        try {
+            IUserView userView = SessionUtils.getUserView(request);
+            String usernameWhoKey = userView.getUtilizador();
+            
+            DynaActionForm requestsExtraWorkFormBean = (DynaActionForm) form;
+            String beginDateForm = (String) requestsExtraWorkFormBean.get("beginDate");
+            String endDateForm = (String) requestsExtraWorkFormBean.get("endDate");
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            simpleDateFormat.setLenient(false);
+            Date beginDate = simpleDateFormat.parse(beginDateForm);
+            Date endDate = simpleDateFormat.parse(endDateForm);
+
+            String costCenterCode = (String) requestsExtraWorkFormBean.get("cc");
+            String costCenterCodeMoney = (String) requestsExtraWorkFormBean.get("ccMoney");
+
+            List infoExtraWorkRequestsList = null;
+            Object[] args = { usernameWhoKey, beginDate, endDate, costCenterCode,
+                    costCenterCodeMoney };
+            try {
+                infoExtraWorkRequestsList = (List) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadExtraWorkRequests", args);
+            } catch (FenixServiceException e) {
+                e.printStackTrace();
+            }
+            if (infoExtraWorkRequestsList != null && infoExtraWorkRequestsList.size() > 0) {
+                if (infoExtraWorkRequestsList.size() < 10) {
+                    for (int i = infoExtraWorkRequestsList.size(); i < 10; i++) {
+                        InfoExtraWorkRequests infoExtraWorkRequests = new InfoExtraWorkRequests();
+                        infoExtraWorkRequests.setInfoEmployee(new InfoEmployee());
+                        infoExtraWorkRequestsList.add(infoExtraWorkRequests);
+                    }
+                }
+                request.setAttribute("infoExtraWorkRequestsList", infoExtraWorkRequestsList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (request.getAttribute("infoExtraWorkRequestsList") == null
-                || (request.getAttribute("infoExtraWorkRequestsList") != null 
-                        && ((List)request.getAttribute("infoExtraWorkRequestsList")).size() <= 0 )) {
+                || (request.getAttribute("infoExtraWorkRequestsList") != null && ((List) request
+                        .getAttribute("infoExtraWorkRequestsList")).size() <= 0)) {
             List infoExtraWorkRequestsList = new ArrayList();
             for (int i = 0; i < 10; i++) {
                 InfoExtraWorkRequests infoExtraWorkRequests = new InfoExtraWorkRequests();
                 infoExtraWorkRequests.setInfoEmployee(new InfoEmployee());
                 infoExtraWorkRequestsList.add(infoExtraWorkRequests);
             }
-            request.setAttribute("infoExtraWorkRequestsList",
-                    infoExtraWorkRequestsList);
+            request.setAttribute("infoExtraWorkRequestsList", infoExtraWorkRequestsList);
         }
 
         return mapping.findForward("inputResquets");
     }
 
-    public ActionForward requestsExtraWork(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward requestsExtraWork(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
             ActionErrors actionErrors = new ActionErrors();
             HttpSession session = request.getSession();
@@ -63,31 +107,24 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
             String usernameWhoKey = userView.getUtilizador();
 
             DynaActionForm requestsExtraWorkFormBean = (DynaActionForm) form;
-            String beginDateForm = (String) requestsExtraWorkFormBean
-                    .get("beginDate");
-            String endDateForm = (String) requestsExtraWorkFormBean
-                    .get("endDate");
+            String beginDateForm = (String) requestsExtraWorkFormBean.get("beginDate");
+            String endDateForm = (String) requestsExtraWorkFormBean.get("endDate");
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                    "dd/MM/yyyy");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             simpleDateFormat.setLenient(false);
             Date beginDate = simpleDateFormat.parse(beginDateForm);
             Date endDate = simpleDateFormat.parse(endDateForm);
 
-            String costCenterCode = (String) requestsExtraWorkFormBean
-                    .get("cc");
-            String costCenterCodeMoney = (String) requestsExtraWorkFormBean
-                    .get("ccMoney");
+            String costCenterCode = (String) requestsExtraWorkFormBean.get("cc");
+            String costCenterCodeMoney = (String) requestsExtraWorkFormBean.get("ccMoney");
 
             List infoExtraWorkRequestsList = null;
             if (requestsExtraWorkFormBean.get("size") != null) {
-                Integer sizeList = (Integer) requestsExtraWorkFormBean
-                        .get("size");
+                Integer sizeList = (Integer) requestsExtraWorkFormBean.get("size");
 
                 infoExtraWorkRequestsList = new ArrayList();
                 for (int i = 0; i < sizeList.intValue(); i++) {
-                    InfoExtraWorkRequests infoExtraWorkRequests = getExtraWorkRequests(
-                            request, i);
+                    InfoExtraWorkRequests infoExtraWorkRequests = getExtraWorkRequests(request, i);
                     if (infoExtraWorkRequests != null) {
                         infoExtraWorkRequests.setBeginDate(beginDate);
                         infoExtraWorkRequests.setEndDate(endDate);
@@ -97,12 +134,11 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
             }
 
             List infoExtraWorkRequestsListAfterWrite = null;
-            Object[] args = { usernameWhoKey, infoExtraWorkRequestsList,
-                    costCenterCode, costCenterCodeMoney };
+            Object[] args = { usernameWhoKey, infoExtraWorkRequestsList, costCenterCode,
+                    costCenterCodeMoney };
             try {
                 infoExtraWorkRequestsListAfterWrite = (List) ServiceManagerServiceFactory
-                        .executeService(userView, "WriteExtraWorkRequests",
-                                args);
+                        .executeService(userView, "WriteExtraWorkRequests", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
                 actionErrors.add("error.extra.work.requests", new ActionError(
@@ -120,17 +156,15 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
                 return mapping.getInputForward();
             }
 
-            request.setAttribute("infoExtraWorkRequestsList",
-                    infoExtraWorkRequestsListAfterWrite);
+            request.setAttribute("infoExtraWorkRequestsList", infoExtraWorkRequestsListAfterWrite);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return (mapping.findForward("requestsExtraWorkConfirmation"));
     }
 
-    public ActionForward readAndDeleteRequests(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward readAndDeleteRequests(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession();
         DynaActionForm requestsExtraWorkFormBean = (DynaActionForm) form;
@@ -142,13 +176,11 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
 
             List infoExtraWorkRequestsList = null;
             if (requestsExtraWorkFormBean.get("size") != null) {
-                Integer sizeList = (Integer) requestsExtraWorkFormBean
-                        .get("size");
+                Integer sizeList = (Integer) requestsExtraWorkFormBean.get("size");
 
                 infoExtraWorkRequestsList = new ArrayList();
                 for (int i = 0; i < sizeList.intValue(); i++) {
-                    InfoExtraWorkRequests infoExtraWorkRequests = getIDExtraWorkRequests(
-                            request, i);
+                    InfoExtraWorkRequests infoExtraWorkRequests = getIDExtraWorkRequests(request, i);
                     if (infoExtraWorkRequests != null) {
                         infoExtraWorkRequestsList.add(infoExtraWorkRequests);
                     }
@@ -159,8 +191,7 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
             Object[] args = { usernameWhoKey, infoExtraWorkRequestsList };
             try {
                 infoExtraWorkRequestsListAfter = (List) ServiceManagerServiceFactory
-                        .executeService(userView,
-                                "ReadAndDeleteExtraWorkRequests", args);
+                        .executeService(userView, "ReadAndDeleteExtraWorkRequests", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
                 actionErrors.add("error.extra.work.requests", new ActionError(
@@ -169,55 +200,46 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
 
                 return mapping.getInputForward();
             }
-            if (infoExtraWorkRequestsListAfter != null
-                    && infoExtraWorkRequestsListAfter.size() > 0) {
-                request.setAttribute("infoExtraWorkRequestsList",
-                        infoExtraWorkRequestsListAfter);
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                        "dd/MM/yyyy");
-                simpleDateFormat.setLenient(false);
+            request.setAttribute("infoExtraWorkRequestsList", infoExtraWorkRequestsListAfter);
 
-                Date beginDate = ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter
-                        .get(0)).getBeginDate();
-                if (beginDate != null) {
-                    requestsExtraWorkFormBean.set("beginDate", simpleDateFormat
-                            .format(beginDate));
-                }
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            simpleDateFormat.setLenient(false);
 
-                Date endDate = ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter
-                        .get(0)).getEndDate();
-                if (endDate != null) {
-                    requestsExtraWorkFormBean.set("endDate", simpleDateFormat
-                            .format(endDate));
-                }
-
-                requestsExtraWorkFormBean.set("cc",
-                        ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter
-                                .get(0)).getInfoCostCenterExtraWork().getCode());
-                requestsExtraWorkFormBean.set("ccMoney",
-                        ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter
-                                .get(0)).getInfoCostCenterMoney().getCode());
-            } else {
-                return prepareRequests(mapping, requestsExtraWorkFormBean, request,
-    	                response);
+            Date beginDate = ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter.get(0))
+                    .getBeginDate();
+            if (beginDate != null) {
+                requestsExtraWorkFormBean.set("beginDate", simpleDateFormat.format(beginDate));
             }
+
+            Date endDate = ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter.get(0))
+                    .getEndDate();
+            if (endDate != null) {
+                requestsExtraWorkFormBean.set("endDate", simpleDateFormat.format(endDate));
+            }
+
+            requestsExtraWorkFormBean.set("cc",
+                    ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter.get(0))
+                            .getInfoCostCenterExtraWork().getCode());
+            requestsExtraWorkFormBean.set("ccMoney",
+                    ((InfoExtraWorkRequests) infoExtraWorkRequestsListAfter.get(0))
+                            .getInfoCostCenterMoney().getCode());
+
+            return prepareRequests(mapping, requestsExtraWorkFormBean, request, response);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
 
         String todo = (String) requestsExtraWorkFormBean.get("todo");
-        if(todo != null && todo.length() > 0 && todo.equals("editar")) {
-	        return prepareRequests(mapping, requestsExtraWorkFormBean, request,
-	                response);
-        } 
-        
-        return (mapping.findForward("requestsExtraWorkConfirmation"));        
+        if (todo != null && todo.length() > 0 && todo.equals("editar")) {
+            return prepareRequests(mapping, requestsExtraWorkFormBean, request, response);
+        }
+
+        return (mapping.findForward("requestsExtraWorkConfirmation"));
     }
 
-    private InfoExtraWorkRequests getExtraWorkRequests(
-            HttpServletRequest request, int index) {
+    private InfoExtraWorkRequests getExtraWorkRequests(HttpServletRequest request, int index) {
         try {
             Integer employeeNumber = null;
             Integer idInternal = null;
@@ -232,62 +254,44 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
             if (request.getParameter("infoExtraWorkRequests[" + index
                     + "].infoEmployee.employeeNumber") != null
                     && request.getParameter(
-                            "infoExtraWorkRequests[" + index
-                                    + "].infoEmployee.employeeNumber").length() > 0) {
-                employeeNumber = Integer.valueOf(request
-                        .getParameter("infoExtraWorkRequests[" + index
-                                + "].infoEmployee.employeeNumber"));
+                            "infoExtraWorkRequests[" + index + "].infoEmployee.employeeNumber")
+                            .length() > 0) {
+                employeeNumber = Integer.valueOf(request.getParameter("infoExtraWorkRequests["
+                        + index + "].infoEmployee.employeeNumber"));
 
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].idInternal") != null
-                        && request.getParameter(
-                                "infoExtraWorkRequests[" + index
-                                        + "].idInternal").length() > 0) {
-                    idInternal = Integer.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].idInternal"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].idInternal") != null
+                        && request.getParameter("infoExtraWorkRequests[" + index + "].idInternal")
+                                .length() > 0) {
+                    idInternal = Integer.valueOf(request.getParameter("infoExtraWorkRequests["
+                            + index + "].idInternal"));
                 }
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].option1") != null) {
-                    option1 = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].option1"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].option1") != null) {
+                    option1 = Boolean.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                            + "].option1"));
                 }
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].option2") != null) {
-                    option2 = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].option2"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].option2") != null) {
+                    option2 = Boolean.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                            + "].option2"));
                 }
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].option3") != null) {
-                    option3 = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].option3"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].option3") != null) {
+                    option3 = Boolean.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                            + "].option3"));
                 }
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].option4") != null) {
-                    option4 = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].option4"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].option4") != null) {
+                    option4 = Boolean.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                            + "].option4"));
                 }
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].option5") != null) {
-                    option5 = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].option5"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].option5") != null) {
+                    option5 = Boolean.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                            + "].option5"));
                 }
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].option6") != null) {
-                    option6 = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].option6"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].option6") != null) {
+                    option6 = Boolean.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                            + "].option6"));
                 }
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].option7") != null) {
-                    option7 = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].option7"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].option7") != null) {
+                    option7 = Boolean.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                            + "].option7"));
                 }
             }
 
@@ -295,8 +299,7 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
                 InfoExtraWorkRequests extraWorkRequests = new InfoExtraWorkRequests();
                 extraWorkRequests.setIdInternal(idInternal);
                 extraWorkRequests.setInfoEmployee(new InfoEmployee());
-                extraWorkRequests.getInfoEmployee().setEmployeeNumber(
-                        employeeNumber);
+                extraWorkRequests.getInfoEmployee().setEmployeeNumber(employeeNumber);
                 extraWorkRequests.setOption1(option1);
                 extraWorkRequests.setOption2(option2);
                 extraWorkRequests.setOption3(option3);
@@ -314,26 +317,20 @@ public class RequestsExtraWorkAction extends FenixDispatchAction {
         return null;
     }
 
-    private InfoExtraWorkRequests getIDExtraWorkRequests(
-            HttpServletRequest request, int index) {
+    private InfoExtraWorkRequests getIDExtraWorkRequests(HttpServletRequest request, int index) {
         try {
             Integer idInternal = null;
             Boolean forDelete = new Boolean(false);
 
-            if (request.getParameter("infoExtraWorkRequests[" + index
-                    + "].idInternal") != null
-                    && request.getParameter(
-                            "infoExtraWorkRequests[" + index + "].idInternal")
+            if (request.getParameter("infoExtraWorkRequests[" + index + "].idInternal") != null
+                    && request.getParameter("infoExtraWorkRequests[" + index + "].idInternal")
                             .length() > 0) {
-                idInternal = Integer.valueOf(request
-                        .getParameter("infoExtraWorkRequests[" + index
-                                + "].idInternal"));
+                idInternal = Integer.valueOf(request.getParameter("infoExtraWorkRequests[" + index
+                        + "].idInternal"));
 
-                if (request.getParameter("infoExtraWorkRequests[" + index
-                        + "].forDelete") != null) {
-                    forDelete = Boolean.valueOf(request
-                            .getParameter("infoExtraWorkRequests[" + index
-                                    + "].forDelete"));
+                if (request.getParameter("infoExtraWorkRequests[" + index + "].forDelete") != null) {
+                    forDelete = Boolean.valueOf(request.getParameter("infoExtraWorkRequests["
+                            + index + "].forDelete"));
                 }
             }
 

@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.applicationTier.Executor;
 import net.sourceforge.fenixedu.applicationTier.PersistenceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAutorizacaoPortalAssiduidade;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroPortalAssiduidade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+import net.sourceforge.fenixedu.domain.Person;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * 

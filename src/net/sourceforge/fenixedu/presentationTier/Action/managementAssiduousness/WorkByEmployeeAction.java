@@ -71,7 +71,15 @@ public class WorkByEmployeeAction extends FenixDispatchAction {
         simpleDateFormat.setLenient(false);
 
         Date bedinDate = simpleDateFormat.parse(beginDateForm);
-        Date endDate = simpleDateFormat.parse(endDateForm);
+        
+        Date endDate = simpleDateFormat.parse(endDateForm);        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(endDate.getTime());
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        endDate = calendar.getTime();
+        
         System.out.println("-->bedinDate: " + bedinDate);
         System.out.println("-->endDate: " + endDate);
 
@@ -106,7 +114,7 @@ public class WorkByEmployeeAction extends FenixDispatchAction {
         ServicoSeguroConsultarVerbete servicoSeguroConsultarVerbete = new ServicoSeguroConsultarVerbete(
                 servicoAutorizacaoLer, employeeNumber, new Timestamp(bedinDate
                         .getTime()), new Timestamp(endDate
-                        .getTime()), locale);
+                        .getTime()), Boolean.TRUE, locale);
 
         try {
             Executor.getInstance().doIt(servicoSeguroConsultarVerbete);
