@@ -6,7 +6,8 @@ LOAD DATA INFILE '@load.data.infile.root@medias.txt' into table mw_AVERAGE;
 LOAD DATA INFILE '@load.data.infile.root@curriculo.txt' into table mw_ENROLMENT_temp;
 LOAD DATA INFILE '@load.data.infile.root@nomedis.txt' into table mw_CURRICULAR_COURSE;
 LOAD DATA INFILE '@load.data.infile.root@disciplinas.txt' into table mw_CURRICULAR_COURSE_SCOPE_temp;
--- LOAD DATA INFILE '@load.data.infile.root@student-class-distribution.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES;
+--LOAD DATA INFILE '@load.data.infile.root@student-class-distribution.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES;
+--LOAD DATA INFILE '@load.data.infile.root@student-class-distribution-2nd-phase.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES (STUDENT_NUMBER, DEGREE_CODE,CLASS_NAME);
 LOAD DATA INFILE '@load.data.infile.root@escolas.txt' into table mw_UNIVERSITY;
 
 
