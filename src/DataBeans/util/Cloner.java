@@ -660,20 +660,18 @@ public abstract class Cloner {
 			Cloner.copyInfoExecutionCourse2ExecutionCourse(
 				infoSite.getInfoExecutionCourse());
 		
-		ISection initialSection = Cloner.copyInfoSection2ISection(
-			infoSite.getInitialInfoSection());
+//		ISection initialSection = Cloner.copyInfoSection2ISection(
+//			infoSite.getInitialInfoSection());
 		
-		List sections = Cloner.copyListInfoSections2ListISections(infoSite.getInfoSections());
-		List announcements = Cloner.copyListInfoAnnouncements2ListIAnnouncements(infoSite.getInfoAnnouncements());
+//		List sections = Cloner.copyListInfoSections2ListISections(infoSite.getInfoSections());
+//		List announcements = Cloner.copyListInfoAnnouncements2ListIAnnouncements(infoSite.getInfoAnnouncements());
 		
 		copyObjectProperties(site, infoSite);
 		site.setExecutionCourse(executionCourse);
-		site.setInitialSection(initialSection);
-		site.setSections(sections);
-		site.setAnnouncements(announcements);
-		if (initialSection.getSite()==null) {
-							initialSection.setSite(site);
-						}
+//		site.setInitialSection(initialSection);
+//		site.setSections(sections);
+//		site.setAnnouncements(announcements);
+		
 		return site;
 	}
 	
@@ -690,23 +688,21 @@ public abstract class Cloner {
 			Cloner.copyIExecutionCourse2InfoExecutionCourse(
 				site.getExecutionCourse());
 				
-		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
-					site.getInitialSection());
+//		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
+//					site.getInitialSection());
 		
 		
 		
-		List infoSections = Cloner.copyListISections2ListInfoSections(site.getSections());
-		List infoAnnouncements = Cloner.copyListIAnnouncements2ListInfoAnnouncements(site.getAnnouncements());
-		
+//		List infoSections = Cloner.copyListISections2ListInfoSections(site.getSections());
+//		List infoAnnouncements = Cloner.copyListIAnnouncements2ListInfoAnnouncements(site.getAnnouncements());
+//		
 				
 		copyObjectProperties(infoSite, site);
 		infoSite.setInfoExecutionCourse(infoExecutionCourse);
-		infoSite.setInitialInfoSection(initialInfoSection);
-		infoSite.setInfoSections(infoSections);
-		infoSite.setInfoAnnouncements(infoAnnouncements);
-		if (initialInfoSection.getInfoSite()==null) {
-					initialInfoSection.setInfoSite(infoSite);
-				}
+//		infoSite.setInitialInfoSection(initialInfoSection);
+//		infoSite.setInfoSections(infoSections);
+//		infoSite.setInfoAnnouncements(infoAnnouncements);
+	
 		return infoSite;
 	}
 
@@ -721,8 +717,8 @@ public abstract class Cloner {
 		ISection section = new Section();
 
 		ISection fatherSection = null;
-//we no longer clone the site. because the section only exists in the context of a site
-//		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
+
+		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
 
 		InfoSection infoSuperiorSection =
 			(InfoSection) infoSection.getSuperiorInfoSection();
@@ -739,7 +735,7 @@ public abstract class Cloner {
 		copyObjectProperties(section, infoSection);
 
 		section.setSuperiorSection(fatherSection);
-//		section.setSite(site);
+		section.setSite(site);
 		section.setInferiorSections(inferiorSections);
 		section.setItems(items);
 		
@@ -760,8 +756,8 @@ public abstract class Cloner {
    		InfoSection infoSection = new InfoSection();
 
 		InfoSection fatherInfoSection = null;
-//see above
-//		InfoSite infoSite = Cloner.copyISite2InfoSite(section.getSite());
+
+		InfoSite infoSite = Cloner.copyISite2InfoSite(section.getSite());
 
 		ISection superiorSection =(ISection) section.getSuperiorSection();
 			
@@ -777,7 +773,7 @@ public abstract class Cloner {
 		copyObjectProperties(infoSection, section);
 
 		infoSection.setSuperiorInfoSection(fatherInfoSection);
-//		infoSection.setInfoSite(infoSite);
+		infoSection.setInfoSite(infoSite);
 		infoSection.setInferiorInfoSections(inferiorInfoSections);
 		infoSection.setInfoItems(infoItems);
 		
