@@ -114,7 +114,6 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
 
         teacherInstitutionWorkTimeForm.set("weekDay", getWeekDayString(infoTeacherInstitutionWorkTime
                 .getWeekDay()));
-        ;
         Date startTime = infoTeacherInstitutionWorkTime.getStartTime();
         Date endTime = infoTeacherInstitutionWorkTime.getEndTime();
 
