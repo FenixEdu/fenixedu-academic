@@ -120,7 +120,7 @@ public class Precedence extends DomainObject implements IPrecedence
 
 	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
 	{
-		List restrictions = getRestrictions();
+	    List restrictions = getRestrictions();
 		
 		int size = restrictions.size();
 		CurricularCourseEnrollmentType evaluate = ((IRestriction) restrictions.get(0)).evaluate(precedenceContext);

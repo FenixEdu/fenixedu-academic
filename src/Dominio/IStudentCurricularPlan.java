@@ -68,7 +68,7 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public boolean areNewAreasCompatible(IBranch specializationArea,IBranch secundaryArea) throws ExcepcaoPersistencia, BothAreasAreTheSameServiceException, InvalidArgumentsServiceException;
     public boolean getCanChangeSpecializationArea();
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(ICurricularCourse curricularCourse,
-            IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia;
+            IExecutionPeriod currentExecutionPeriod);
     public Integer getCreditsInSecundaryArea() ;
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) ;
     public Integer getCreditsInSpecializationArea() ;

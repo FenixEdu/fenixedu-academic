@@ -65,7 +65,7 @@ public abstract class PrecedencesEnrollmentRule implements IEnrollmentRule
 					evaluate = evaluate.or(precedence.evaluate(precedenceContext));
 				}
 				
-				curricularCourse2Enroll.setEnrollmentType(evaluate);
+				curricularCourse2Enroll.setEnrollmentType(evaluate.and(curricularCourse2Enroll.getEnrollmentType()));
 				curricularCourses2Enroll.add(curricularCourse2Enroll);
 			}
 		}
