@@ -11,7 +11,7 @@
 <bean:define id="objectCode" name="component" property="infoSite.idInternal"/>
 <bean:define id="lessonTypes" name="component" property="lessonTypes" />
 <bean:define id="shifts" name="component" property="infoShifts" />
-<%--<bean:define id="professorships" name="component" property="infoProfessorships" />
+<bean:define id="professorships" name="component" property="infoProfessorships" />
 
 <html:form action="/viewSiteSummaries">
 <html:hidden property="page" value="1"/>
@@ -163,5 +163,5 @@
 		</tr>
 		<tr><td>&nbsp;</td></tr>    		      
 	</logic:iterate>		
-</table>--%>
+</table>
 </logic:present>
