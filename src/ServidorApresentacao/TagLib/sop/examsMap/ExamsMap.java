@@ -63,18 +63,21 @@ public class ExamsMap {
 			for (int j = 0; j < infoExams.size(); j++) {
 				InfoExam infoExam = (InfoExam) infoExams.get(j);
 
-				// TODO : if day is the same then add it to the list
-				 				
+				if (sameDayAsExam(day, infoExam)) {
+					infoExam.setInfoExecutionCourse(infoExecutionCourse);
+					result.add(infoExam);
+				}
 			}
 		}
 
 		return result;
 	}
 
-//	private boolean sameDayAsExam(Calendar day, InfoExam infoExam) {
-//		return (day.get(Calendar.YEAR) == infoExam.g);
-//	}
-
+	private boolean sameDayAsExam(Calendar day, InfoExam infoExam) {
+		return day.get(Calendar.YEAR) == infoExam.getDay().get(Calendar.YEAR) &&
+			   day.get(Calendar.MONTH) == infoExam.getDay().get(Calendar.MONTH) &&
+			   day.get(Calendar.DAY_OF_MONTH) == infoExam.getDay().get(Calendar.DAY_OF_MONTH);
+	}
 
 // ------------------------------------------------------------------------------------------
 // --- Utils Para Manupulação de Datas ------------------------------------------------------ 

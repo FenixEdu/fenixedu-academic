@@ -7,6 +7,7 @@ package ServidorApresentacao.TagLib.sop.examsMap.renderers;
 
 import java.util.Calendar;
 
+import DataBeans.InfoExam;
 import ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot;
 
 /**
@@ -18,6 +19,7 @@ public class ExamsMapContentRenderer
 	public StringBuffer render(ExamsMapSlot examsMapSlot) {
 		StringBuffer strBuffer = new StringBuffer();
 		
+		strBuffer.append("<strong>");
 		strBuffer.append(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH));
 		if (examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1) {
 			strBuffer.append(" de ");
@@ -26,6 +28,15 @@ public class ExamsMapContentRenderer
 		if (examsMapSlot.getDay().get(Calendar.DAY_OF_YEAR) == 1) {
 			strBuffer.append(", ");
 			strBuffer.append(examsMapSlot.getDay().get(Calendar.YEAR));
+		}
+		strBuffer.append("</strong>");
+		strBuffer.append("</br>");
+
+		// Write exam info
+		for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
+			InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
+			strBuffer.append(infoExam.getInfoExecutionCourse().getSigla());
+			strBuffer.append("</br>");
 		}
 
 		return strBuffer;

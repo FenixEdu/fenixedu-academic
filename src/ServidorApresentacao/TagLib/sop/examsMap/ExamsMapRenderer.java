@@ -39,13 +39,9 @@ public class ExamsMapRenderer {
 			strBuffer.append("<tr>");
 			for(int slot = 0; slot < daysOfWeek.length; slot++) {			
 				strBuffer.append("<td>");
-				strBuffer.append("<strong>");
 				strBuffer.append(
 					examsMapSlotContentRenderer.render(
 						(ExamsMapSlot) examsMap.getDays().get(week*daysOfWeek.length + slot)));
-				strBuffer.append("</strong>");
-				strBuffer.append("</br>");
-				
 				strBuffer.append("</td>");
 			}
 			strBuffer.append("</tr>");
