@@ -668,6 +668,279 @@
  
  
  <!-- End of definitions for class CANDIDATE_ENROLMENT -->
+ 
+ <!-- Definitions for class Dominio.MasterDegreeThesis -->
+	
+ <class-descriptor
+              class="Dominio.MasterDegreeThesis"
+              table="MASTER_DEGREE_THESIS"
+      >
+      
+      <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />
+        
+      <field-descriptor 
+           name="keyStudentCurricularPlan"    
+           column="KEY_STUDENT_CURRICULAR_PLAN"  
+           jdbc-type="INTEGER"
+        />
+        
+    <collection-descriptor
+         name="masterDegreeProofVersions"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true"
+         element-class-ref="Dominio.MasterDegreeProofVersion"
+       >
+       <inverse-foreignkey field-ref="keyMasterDegreeThesis"/>
+     </collection-descriptor>
+        
+     <collection-descriptor
+         name="masterDegreeThesisDataVersions"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true"
+         element-class-ref="Dominio.MasterDegreeThesisDataVersion"
+       >
+       <inverse-foreignkey field-ref="keyMasterDegreeThesis"/>
+     </collection-descriptor>  
 
+	   <reference-descriptor
+         	name="studentCurricularPlan"
+         	class-ref="Dominio.StudentCurricularPlan"
+      	  >
+          <foreignkey field-ref="keyStudentCurricularPlan"/>
+       </reference-descriptor>
+
+ </class-descriptor>  
+
+<!-- End of definitions for class Dominio.MasterDegreeThesis -->
    
+<!-- Definitions for class Dominio.MasterDegreeThesisDataVersion -->
+	
+ <class-descriptor
+              class="Dominio.MasterDegreeThesisDataVersion"
+              table="MASTER_DEGREE_THESIS_DATA_VERSION"
+      >
+      
+      <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />  
+        
+        <field-descriptor 
+           name="keyMasterDegreeThesis"    
+           column="KEY_MASTER_DEGREE_THESIS"  
+           jdbc-type="INTEGER"
+        />
+        
+        <field-descriptor 
+           name="keyEmployee"    
+           column="KEY_EMPLOYEE"  
+           jdbc-type="INTEGER"
+        />
+        
+		<field-descriptor 
+           name="dissertationTitle"    
+           column="DISSERTATION_TITLE"  
+           jdbc-type="VARCHAR"
+        />
+        
+		<field-descriptor 
+           name="lastModification"    
+           column="LAST_MODIFICATION"  
+           jdbc-type="TIMESTAMP"
+        />
+        
+        <field-descriptor
+	     name="currentState"
+	     column="CURRENT_STATE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
+	  	/>
+                
+        <collection-descriptor
+        	name="guiders"
+	        element-class-ref="Dominio.Teacher"
+    	    auto-retrieve="true"
+        	proxy="true"
+	        refresh="true"
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER"
+      	>
+    	    <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
+        	<fk-pointing-to-element-class column="KEY_TEACHER"/>
+      	</collection-descriptor>
+        
+        <collection-descriptor
+	        name="assistentGuiders"
+    	    element-class-ref="Dominio.Teacher"
+        	auto-retrieve="true"
+	        proxy="true"
+    	    indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER"
+      	>
+        	<fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
+	        <fk-pointing-to-element-class column="KEY_TEACHER"/>
+      	</collection-descriptor>
+      	        
+        <collection-descriptor
+    	    name="externalAssistentGuiders"
+        	element-class-ref="Dominio.ExternalPerson"
+	        auto-retrieve="true"
+    	    proxy="true"
+        	indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER"
+      	>
+	        <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
+    	    <fk-pointing-to-element-class column="KEY_EXTERNAL_PERSON"/>
+      	</collection-descriptor>
+      	  
+		<reference-descriptor
+        	name="masterDegreeThesis"
+	        class-ref="Dominio.MasterDegreeThesis"
+      	>
+    	    <foreignkey field-ref="keyMasterDegreeThesis"/>
+		</reference-descriptor>      	  
+
+		<reference-descriptor
+   		    name="responsibleEmployee"
+        	class-ref="Dominio.Employee"
+      	>
+	        <foreignkey field-ref="keyEmployee"/>
+		</reference-descriptor> 	
+		      	  
+   </class-descriptor>       
+        
+<!-- End of definitions for class Dominio.MasterDegreeThesisDataVersion -->         
+   
+<!-- Definitions for class Dominio.MasterDegreeProofVersion -->
+	
+ <class-descriptor
+              class="Dominio.MasterDegreeProofVersion"
+              table="MASTER_DEGREE_PROOF_VERSION"
+      >
+      
+      <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />  
+        
+        <field-descriptor 
+           name="keyMasterDegreeThesis"    
+           column="KEY_MASTER_DEGREE_THESIS"  
+           jdbc-type="INTEGER"
+        />
+        
+        <field-descriptor 
+           name="keyEmployee"    
+           column="KEY_EMPLOYEE"  
+           jdbc-type="INTEGER"
+        />
+        
+        <field-descriptor 
+           name="lastModification"    
+           column="LAST_MODIFICATION"  
+           jdbc-type="TIMESTAMP"
+        />
+
+        <field-descriptor 
+           name="proofDate"    
+           column="PROOF_DATE"  
+           jdbc-type="TIMESTAMP"
+        />
+
+        <field-descriptor 
+           name="thesisDeliveryDate"    
+           column="THESIS_DELIVERY_DATE"  
+           jdbc-type="TIMESTAMP"
+        />        
+
+        <field-descriptor 
+           name="finalResult"    
+           column="FINAL_RESULT"  
+           jdbc-type="INTEGER"
+           conversion="ServidorPersistente.Conversores.JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldConversion"
+        />          
+
+        <field-descriptor 
+           name="attachedCopiesNumber"    
+           column="ATTACHED_COPIES_NUMBER"  
+           jdbc-type="INTEGER"
+        />
+        
+        <field-descriptor
+	     name="currentState"
+	     column="CURRENT_STATE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
+	  	/>  
+
+		<reference-descriptor
+        	name="masterDegreeThesis"
+	        class-ref="Dominio.MasterDegreeThesis"
+      	>
+    	    <foreignkey field-ref="keyMasterDegreeThesis"/>
+		</reference-descriptor>      	  
+
+		<reference-descriptor
+   		    name="responsibleEmployee"
+        	class-ref="Dominio.Employee"
+      	>
+	        <foreignkey field-ref="keyEmployee"/>
+		</reference-descriptor> 
+                
+ </class-descriptor>  
+   
+<!-- End of definitions for class Dominio.MasterDegreeProofVersion -->
+
+
+<!-- Definitions for class Dominio.ExternalPerson -->
+	
+ <class-descriptor
+              class="Dominio.ExternalPerson"
+              table="EXTERNAL_PERSON"
+      >
+      
+      <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />  
+        
+        <field-descriptor 
+           name="keyPerson"    
+           column="KEY_PERSON"  
+           jdbc-type="INTEGER"
+        />     
+
+        <field-descriptor 
+           name="workLocation"    
+           column="WORK_LOCATION"  
+           jdbc-type="VARCHAR"
+        />          
+
+		<reference-descriptor
+        	name="person"
+	        class-ref="Dominio.Pessoa"
+      	>
+    	    <foreignkey field-ref="keyPerson"/>
+		</reference-descriptor>
+                
+ </class-descriptor>  
+   
+<!-- End of definitions for class Dominio.ExternalPerson -->
+
 <!-- Mapping of User defined classes ends here -->
