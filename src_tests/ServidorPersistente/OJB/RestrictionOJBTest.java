@@ -168,9 +168,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		
 		IStudentCurricularPlanPersistente studentCurricularPlanDAO = sp.getIStudentCurricularPlanPersistente();
 		
-	
 		
-		Integer semester = new Integer(2);
 		IStudent student = null;
 
 		try {
@@ -182,7 +180,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 			student = studentCurricularPlan.getStudent();
 			assertNotNull(student);
 
-			enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(student, semester);
+			enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(student);
 
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

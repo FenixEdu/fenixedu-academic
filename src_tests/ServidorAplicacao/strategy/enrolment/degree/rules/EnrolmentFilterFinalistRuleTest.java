@@ -40,7 +40,7 @@ public class EnrolmentFilterFinalistRuleTest extends BaseEnrolmentRuleTestCase {
 		List finalSpan = null;
 		List initialSpan = new ArrayList();
 
-		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
+		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan.addAll(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 
 		doApplyRule(new EnrolmentFilterFinalistRule(), enrolmentContext);

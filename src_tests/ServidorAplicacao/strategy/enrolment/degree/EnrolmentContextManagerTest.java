@@ -64,8 +64,7 @@ public class EnrolmentContextManagerTest extends TestCaseServicos {
 			sp.iniciarTransaccao();
 			enrolmentContext =
 				EnrolmentContextManager.initialEnrolmentContext(
-					studentCurricularPlan.getStudent(),
-					new Integer(2));
+					studentCurricularPlan.getStudent());
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e2) {
 			e2.printStackTrace(System.out);

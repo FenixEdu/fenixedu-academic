@@ -36,7 +36,7 @@ public class EnrolmentFilterPrecedenceRuleTest extends BaseEnrolmentRuleTestCase
 		List finalSpan = new ArrayList();
 		List initialSpan = null;
 		
-		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
+		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();		
 		
 		doApplyRule(new EnrolmentFilterPrecedenceRule(), enrolmentContext);
@@ -46,7 +46,7 @@ public class EnrolmentFilterPrecedenceRuleTest extends BaseEnrolmentRuleTestCase
 		assertEquals("Final span size:",true, initialSpan.size() > finalSpan.size());
 		assertEquals ("Contains assertion!",true,initialSpan.containsAll(finalSpan));
 		
-		enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));		
+		enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA));		
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		
 		doApplyRule(new EnrolmentFilterPrecedenceRule(), enrolmentContext);

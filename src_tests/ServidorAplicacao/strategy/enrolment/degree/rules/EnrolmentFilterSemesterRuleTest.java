@@ -41,7 +41,7 @@ public class EnrolmentFilterSemesterRuleTest extends BaseEnrolmentRuleTestCase {
 		List finalSpan = new ArrayList();
 		List initialSpan = null;
 
-		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
+		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
 		doApplyRule(new EnrolmentFilterSemesterRule(), enrolmentContext);

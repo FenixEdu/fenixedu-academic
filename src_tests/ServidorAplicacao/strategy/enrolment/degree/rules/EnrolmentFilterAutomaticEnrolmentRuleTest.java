@@ -41,7 +41,7 @@ public class EnrolmentFilterAutomaticEnrolmentRuleTest extends BaseEnrolmentRule
 		List initialSpan = new ArrayList();
 		List automaticSpan = null;
 
-		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
+		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 		initialSpan.addAll(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 
 		doApplyRule(new EnrolmentFilterAutomaticEnrolmentRule(), enrolmentContext);

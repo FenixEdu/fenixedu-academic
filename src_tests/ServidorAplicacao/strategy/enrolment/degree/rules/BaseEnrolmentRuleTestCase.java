@@ -59,7 +59,7 @@ abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 		return "etc/testDataSetForRestrictionsTests.xml";
 	}
 	
-	public EnrolmentContext getEnrolmentContext(Integer studentNumber, TipoCurso degreeType, Integer semester){
+	public EnrolmentContext getEnrolmentContext(Integer studentNumber, TipoCurso degreeType){
 		EnrolmentContext enrolmentContext = null;
 		
 		IStudentCurricularPlanPersistente studentCurricularPlanDAO = sp.getIStudentCurricularPlanPersistente();
@@ -69,7 +69,7 @@ abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 			IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanDAO.readActiveStudentCurricularPlan(studentNumber, degreeType);
 			assertNotNull(studentCurricularPlan);
 			
-			enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(studentCurricularPlan.getStudent(), semester);
+			enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(studentCurricularPlan.getStudent());
 
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
