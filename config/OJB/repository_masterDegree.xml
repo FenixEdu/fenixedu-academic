@@ -1513,11 +1513,11 @@
         primarykey="true"
         autoincrement="true"
    	/>
-   	<field-descriptor
+   <!--	<field-descriptor
    		name="payedValue"
    		column="PAYED_VALUE"
    		jdbc-type="DOUBLE"   		
-   	/>
+   	/> -->
    	<field-descriptor
    		name="remainingValue"
    		column="REMAINING_VALUE"
