@@ -36,14 +36,6 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class ChooseExamsMapContextDA extends DispatchAction {
 
-	protected static final String INFO_DEGREE_INITIALS_PARAMETER =
-		"degreeInitials";
-	protected static final String SEMESTER_PARAMETER = "semester";
-	protected static final String CURRICULAR_YEAR_PARAMETER = "curricularYear";
-
-	/* (non-Javadoc)
-	 * @see org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.String)
-	 */
 	public ActionForward prepare(
 		ActionMapping mapping,
 		ActionForm form,
@@ -63,8 +55,6 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			semestres.add(new LabelValueBean("1 º", "1"));
 			semestres.add(new LabelValueBean("2 º", "2"));
 			session.setAttribute("semestres", semestres);
-
-			String[] curricularYears = { "1", "2", "3", "4", "5" };
 
 			List curricularYearsList = new ArrayList();
 			curricularYearsList.add("1");
@@ -142,12 +132,6 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
-			/* FIXME : get semestre with executionPeriod */
-			Integer semestre = new Integer(2);
-
-			System.out.println(
-				"selectedCurricularYears= "
-					+ chooseExamContextoForm.get("selectedCurricularYears"));
 			String[] selectedCurricularYears =
 				(String[]) chooseExamContextoForm.get(
 					"selectedCurricularYears");

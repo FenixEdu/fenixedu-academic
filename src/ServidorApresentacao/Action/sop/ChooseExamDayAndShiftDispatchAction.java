@@ -96,6 +96,7 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		examDateAndTime.set(Calendar.HOUR_OF_DAY, beginning.intValue());
 		examDateAndTime.set(Calendar.MINUTE, 0);
 		examDateAndTime.set(Calendar.SECOND, 0);
+		examDateAndTime.set(Calendar.MILLISECOND, 0);
 
 		session.setAttribute(
 			SessionConstants.EXAM_DATEANDTIME_STR,
