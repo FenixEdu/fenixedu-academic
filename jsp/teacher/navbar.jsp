@@ -16,6 +16,7 @@
 <li><html:link page="/viewEvaluation.do?method=viewEvaluation"><bean:message key="link.evaluation"/></html:link></li>
 <li><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference&page=0"><bean:message key="link.bibliography"/></html:link></li>
 <li><html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship"><bean:message key="link.teachers"/></html:link></li>
+<li><html:link page="/viewExams.do"><bean:message key="link.exams"/></html:link></li>
 <li><html:link page="/prepareInsertSection.do?method=prepareInsertRootSection"><bean:message key="link.createRootSection"/></html:link></li>
 </ul>
 <ul>

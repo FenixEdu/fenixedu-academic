@@ -6,7 +6,7 @@
 <span class="error"><html:errors/></span>	
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="exam" name="component" property="infoExam"/>
-<h2><bean:message key="label.students.enrolled.exam"/></h2>
+
 <br/>
 <table>
 <tr>
@@ -22,16 +22,20 @@
 	<td class="listClasses"><bean:write name="component" property="size"/></td>
 </tr>
 </table>
+<br/>
+<logic:notEmpty name="component" property="infoStudents" >
+<h2><bean:message key="label.students.enrolled.exam"/></h2>
 <table>
 <tr>
 <td class="listClasses-header"><bean:message key="label.number"/></td>
 <td class="listClasses-header"><bean:message key="label.name"/></td>
 </tr>
 <logic:iterate id="student" name="component" property="infoStudents">
-<bean:define id="person" name="student" property="person"/>
+<bean:define id="person" name="student" property="infoPerson"/>
 <tr>
 <td class="listClasses"><bean:write name="student" property="number"/></td>
 <td class="listClasses"><bean:write name="person" property="nome"/></td>
 </tr>
 </logic:iterate>
 </table>
+</logic:notEmpty>

@@ -4,7 +4,11 @@
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
+import DataBeans.ISiteComponent;
+import DataBeans.InfoExam;
 import DataBeans.InfoExamEnrollment;
+import DataBeans.InfoSiteTeacherExamEnrollment;
+import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
 import Dominio.IExam;
@@ -48,11 +52,12 @@ public class ReadExamEnrollment implements IServico {
 	 * 
 	 **/
 
-	public InfoExamEnrollment run(
+	public Object run(
 		Integer disciplinaExecucaoIdInternal,
 		Integer examIdInternal)
 		throws FenixServiceException {
 		try {
+		
 			IExam exam = new Exam();
 			exam.setIdInternal(examIdInternal);
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -64,7 +69,10 @@ public class ReadExamEnrollment implements IServico {
 			IExamEnrollment examEnrollment =
 				persistentExamEnrollment.readIExamEnrollmentByExam(exam);
 			InfoExamEnrollment infoExamEnrollment = Cloner.copyIExamEnrollment2InfoExamEnrollment(examEnrollment);
-			return infoExamEnrollment;
+			InfoExam infoExam =Cloner.copyIExam2InfoExam(exam);
+			ISiteComponent component = new InfoSiteTeacherExamEnrollment(infoExam,infoExamEnrollment);
+			SiteView siteView = new SiteView(component);
+			return siteView;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

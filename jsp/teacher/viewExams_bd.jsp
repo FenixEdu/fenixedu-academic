@@ -11,17 +11,22 @@
 	<td class="listClasses-header" ><bean:message key="label.day"/></td>
 	<td class="listClasses-header" ><bean:message key="label.beginning"/></td>	
 	<td class="listClasses-header" ><bean:message key="label.students.enrolled.exam"/></td>
+	<td class="listClasses-header" ><bean:message key="label.exam.enrollment"/></td>
 </tr>
 <logic:iterate id="exam" name="infoExamList">
-	<bean:define id="idInternal" name="exam" property="inInternal"/>
+	<bean:define id="idInternal" name="exam" property="idInternal"/>
 <tr>
 	<td class="listClasses"><bean:write name="exam" property="season"/></td>
 	<td class="listClasses"><bean:write name="exam" property="date"/></td>
 	<td class="listClasses"><bean:write name="exam" property="beginningHour"/></td>
-	<td class="listClasses-header" >
+	<td class="listClasses" >
 		<html:link 
-			page="<%= "/showStudentsEnrolledInExamAction.do?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("idInternal") %>" >
+			page="<%= "/showStudentsEnrolledInExam.do?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("idInternal") %>" >
 			<bean:message key="label.students.enrolled.exam"/></html:link></td>
+	<td class="listClasses" >
+		<html:link 
+			page="<%= "/examEnrollmentManager.do?method=prepareEditExamEnrollment&amp;objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("idInternal") %>" >
+			<bean:message key="label.edit.exam.enrollment"/></html:link></td>		
 </tr>
 </logic:iterate>
 </table>

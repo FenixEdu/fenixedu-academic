@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import ServidorAplicacao.IServico;
@@ -64,11 +64,12 @@ public class ReadExams implements IServico {
 	 * 
 	 **/
 
-	public List run(InfoExecutionCourse infoExecutionCourse)
+	public List run(Integer executionCourseCode)
 		throws FenixServiceException {
 			try {
 					ISuportePersistente sp;
-				IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+				IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseCode);
+				
 				sp = SuportePersistenteOJB.getInstance();
 				IDisciplinaExecucaoPersistente persistentExecutionCourse=sp.getIDisciplinaExecucaoPersistente();
 				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse);

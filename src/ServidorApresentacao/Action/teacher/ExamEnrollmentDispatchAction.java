@@ -14,11 +14,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExamEnrollment;
+import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
@@ -32,34 +34,34 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
-		
-		HttpSession session = request.getSession();
+		throws FenixActionException {
+
+		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
-		Integer examIdInternal =
-			(Integer) request.getAttribute("examIdInternal");
+		Integer examIdInternal = new Integer( request.getParameter("examCode"));
 		Integer disciplinaExecucaoIdInternal =
 			(Integer) request.getAttribute("objectCode");
-
+		
 		Object args[] = { disciplinaExecucaoIdInternal, examIdInternal };
 
-		InfoExamEnrollment infoExamEnrollment =
-			(InfoExamEnrollment) ServiceUtils.executeService(
-				userView,
-				"ReadExamEnrollment",
-				args);
-
-		request.setAttribute("examIdInternal", examIdInternal);
-		request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
-
-		if (infoExamEnrollment != null) {
-			request.setAttribute("infoExamEnrollment", infoExamEnrollment);
-			return mapping.findForward("editEnrollment");
-		} else {
-
-			return mapping.findForward("createEnrollment");
+		SiteView siteView= null;
+		try {
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ReadExamEnrollment",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
+
+		request.setAttribute("examCode", examIdInternal);
+		System.out.println("objectCode->"+ disciplinaExecucaoIdInternal);
+		request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
+		
+		request.setAttribute("siteView",siteView);
+		return mapping.findForward("prepareEditExamEnrollment");
 
 	}
 
@@ -141,12 +143,12 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer examIdInternal =
-			(Integer) request.getAttribute("examIdInternal");
+			(Integer) request.getAttribute("examCode");
 		Integer disciplinaExecucaoIdInternal =
 			(Integer) request.getAttribute("objectCode");
 
 		Integer examEnrollment =
-			(Integer) examEnrollmentForm.get("examEnrollmentIdInternal");
+			(Integer) request.getAttribute("examEnrollmentCode");
 
 		Integer beginDay = (Integer) examEnrollmentForm.get("beginDay");
 		Integer beginMonth = (Integer) examEnrollmentForm.get("beginMonth");
