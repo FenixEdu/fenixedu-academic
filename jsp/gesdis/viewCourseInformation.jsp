@@ -167,10 +167,10 @@
 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
 		<tr>
-			<td> <bean:write name="infoCurriculum" property="generalObjectives"/></td>
+			<td> <bean:write name="infoCurriculum" property="generalObjectives" filter="false"/></td>
 		</tr>
 		<tr>
-			<td> <bean:write name="infoCurriculum" property="operacionalObjectives"/></td>
+			<td> <bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/></td>
 		</tr>
 		</logic:iterate>
 	</table>
@@ -180,7 +180,7 @@
 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
 		<tr>
-			<td> <bean:write name="infoCurriculum" property="program"/></td>
+			<td> <bean:write name="infoCurriculum" property="program" filter="false"/></td>
 		</tr>
 		</logic:iterate>
 	</table>
@@ -225,7 +225,7 @@
 	<bean:message key="message.courseInformation.courseAvaliationMethods" /></p>
 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td><bean:write name="siteCourseInformation" property="infoEvaluationMethod.evaluationElements"/></td>
+			<td><bean:write name="siteCourseInformation" property="infoEvaluationMethod.evaluationElements" filter="false"/></td>
 		</tr>
 	</table>
 	<br />
