@@ -188,7 +188,7 @@ public class DMLRelationDescriptor
             Vector foreignKeyFields = collectionDescriptor.getForeignKeyFields();
             for (final Iterator fkIiterator = foreignKeyFields.iterator(); fkIiterator.hasNext(); ) {
                 //System.out.println("   fkIiterator= " + fkIiterator.next());
-                if (foreignKeyField.equals(foreignKeyField)) {
+                if (foreignKeyField.equals(foreignKeyField) && collectionDescriptor.getItemClassName().equals(objectReferenceDescriptor.getClassDescriptor().getClassOfObject())) {
                     return collectionDescriptor;
                 }
             }
