@@ -6,7 +6,11 @@
 <%@ page import="DataBeans.InfoStudent" %>
 <%@ page import="DataBeans.InfoTeacher" %>
 <%@ page import="DataBeans.InfoExternalPerson" %>
+<%@ page import="DataBeans.InfoMasterDegreeThesisDataVersion" %>
 <%@ page import="DataBeans.InfoEmployee" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 <bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" scope="request"/>
@@ -121,7 +125,9 @@
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
 			<td>&nbsp;</td>									
 		</tr>			
+
 		<logic:iterate id="externalAssistentGuider" name="externalAssistentsGuidersList">
+
 			<tr>
 				<td>&nbsp;</td>
 				<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
@@ -134,6 +140,7 @@
 		</tr>		
 	</logic:present>
 	
+	<!-- last modification -->
 	<tr>
 		<td align="left" colspan="4">
 			<bean:message key="label.masterDegree.administrativeOffice.lastModification"/>
@@ -142,6 +149,67 @@
 			<bean:write name="responsibleEmployee" property="person.nome" />
 		</td>
 	</tr>			
+	<tr> 
+		<td>&nbsp;</td>
+	</tr>
+	
+	<!-- history -->
+	<logic:present name="<%= SessionConstants.MASTER_DEGREE_THESIS_HISTORY %>" scope="request">
+	
+		<tr>
+			<th align="left" colspan="4">
+				<bean:message key="label.masterDegree.administrativeOffice.history"/>
+			</th>		
+		</tr>
+		
+		<bean:define id="masterDegreeThesisHistory" name="<%= SessionConstants.MASTER_DEGREE_THESIS_HISTORY %>" type="java.util.List"/>
+	
+		<tr>			
+			<th align="left" colspan="4">
+				<bean:message key="label.masterDegree.administrativeOffice.modificationDate"/> - 
+				<bean:message key="label.masterDegree.administrativeOffice.employee"/>
+			</th>					
+		</tr>		
+	
+		
+		<%
+			Date modification = null;
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy k:mm:ss");
+			String formattedModification = null;
+			
+			java.util.Hashtable paramsHistory = null;
+			InfoStudent infoStudent = (InfoStudent) student;
+		%>
+		
+		<logic:iterate id="masterDegreeThesisDataVersion" name="masterDegreeThesisHistory" type="DataBeans.InfoMasterDegreeThesisDataVersion" >
+			
+			
+			<%
+				modification = new Date(masterDegreeThesisDataVersion.getLastModification().getTime());				
+				formattedModification = simpleDateFormat.format(modification);
+				
+				paramsHistory = new java.util.Hashtable();
+				paramsHistory.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+				paramsHistory.put("studentNumber", infoStudent.getNumber());
+				paramsHistory.put("masterDegreeThesisDataVersionID", masterDegreeThesisDataVersion.getIdInternal());
+				paramsHistory.put("method", "getStudentAndMasterDegreeThesisDataVersion");
+				pageContext.setAttribute("parametersHistory", paramsHistory, PageContext.PAGE_SCOPE);
+	
+				
+			%>
+			
+			
+			<tr>
+				<td align="left" colspan="4" >
+					<html:link page="/visualizeMasterDegreeThesisHistory.do" name="parametersHistory">
+						<%= formattedModification %> - <%= masterDegreeThesisDataVersion.getInfoResponsibleEmployee().getPerson().getNome() %>
+					</html:link>
+				</td>				
+			</tr>		
+					
+		</logic:iterate>	
+	
+	</logic:present>
 					
 </table>
 

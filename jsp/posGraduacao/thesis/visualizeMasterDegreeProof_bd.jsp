@@ -5,7 +5,10 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoStudent" %>
 <%@ page import="DataBeans.InfoTeacher" %>
-
+<%@ page import="DataBeans.InfoMasterDegreeProofVersion" %>
+<%@ page import="DataBeans.InfoEmployee" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 <bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" />
@@ -117,6 +120,65 @@
 				<bean:write name="responsibleEmployee" property="person.nome" />
 			</td>
 		</tr>
+		
+		
+		<!-- history -->
+		<logic:present name="<%= SessionConstants.MASTER_DEGREE_PROOF_HISTORY %>" scope="request">
+	
+			<tr>
+				<th align="left" colspan="4">
+					<bean:message key="label.masterDegree.administrativeOffice.history"/>
+				</th>		
+			</tr>
+			
+			<bean:define id="masterDegreeProofHistory" name="<%= SessionConstants.MASTER_DEGREE_PROOF_HISTORY %>" type="java.util.List"/>
+		
+			<tr>			
+				<th align="left" colspan="4">
+					<bean:message key="label.masterDegree.administrativeOffice.modificationDate"/> - 
+					<bean:message key="label.masterDegree.administrativeOffice.employee"/>
+				</th>					
+			</tr>		
+		
+			
+			<%
+				Date modification = null;
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy k:mm:ss");
+				String formattedModification = null;
+				
+				java.util.Hashtable paramsHistory = null;
+				InfoStudent infoStudent = (InfoStudent) student;
+			%>
+			
+			<logic:iterate id="masterDegreeProofVersion" name="masterDegreeProofHistory" type="DataBeans.InfoMasterDegreeProofVersion" >
+				
+				
+				<%
+					modification = new Date(masterDegreeProofVersion.getLastModification().getTime());				
+					formattedModification = simpleDateFormat.format(modification);
+					
+					paramsHistory = new java.util.Hashtable();
+					paramsHistory.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+					paramsHistory.put("studentNumber", infoStudent.getNumber());
+					paramsHistory.put("masterDegreeProofVersionID", masterDegreeProofVersion.getIdInternal());
+					paramsHistory.put("method", "getStudentAndMasterDegreeProofVersion");
+					pageContext.setAttribute("parametersHistory", paramsHistory, PageContext.PAGE_SCOPE);
+		
+					
+				%>
+				
+				
+				<tr>
+					<td align="left" colspan="4" >
+						<html:link page="/visualizeMasterDegreeProofHistory.do" name="parametersHistory">
+							<%= formattedModification %> - <%= masterDegreeProofVersion.getInfoResponsibleEmployee().getPerson().getNome() %>
+						</html:link>
+					</td>				
+				</tr>		
+						
+			</logic:iterate>	
+		
+		</logic:present>
 		
 	</table>
 
