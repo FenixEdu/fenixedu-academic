@@ -43,27 +43,39 @@ public class UpdateStudent {
 		IPersistentMWAluno persistentAluno = mws.getIPersistentMWAluno();
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 		
-		System.out.println("Reading Students ....");
+//		System.out.println("Reading Students ....");
+//		sp.iniciarTransaccao();
+//		List result = persistentAluno.readAll();
+//		sp.confirmarTransaccao();
+//		System.out.println("Updating " + result.size() + " students ...");
 		sp.iniciarTransaccao();
-		List result = persistentAluno.readAll();
+		Integer numberOfStudents = persistentAluno.countAll();
 		sp.confirmarTransaccao();
-		System.out.println("Updating " + result.size() + " students ...");
-
-				
-		Iterator iterator = result.iterator();
-		while(iterator.hasNext()) {
-			MWAluno student = (MWAluno) iterator.next();
-			
-			try {
-				
-				sp.iniciarTransaccao();
-				sp.clearCache();	
-				UpdateStudent.updateCorrectStudents(student, sp);
-				sp.confirmarTransaccao();
-			} catch(Exception e) {
-				System.out.println("Error Migrating Student " + student.getNumber());
-				e.printStackTrace(System.out);
+		int numberOfElementsInSpan = 500;
+		
+		int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
+		numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
+		
+		for (int span = 0; span < numberOfSpans; span++) {
+			sp.iniciarTransaccao();
+			sp.clearCache();	
+			System.out.println("Reading Students...");
+			List result = persistentAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
+			System.out.println("Updating " + result.size() + " students ...");
+			sp.confirmarTransaccao();		
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()) {
+				MWAluno student = (MWAluno) iterator.next();
+				try {
+					sp.iniciarTransaccao();
+					UpdateStudent.updateCorrectStudents(student, sp);
+					sp.confirmarTransaccao();
+				} catch(Exception e) {
+					System.out.println("Error Migrating Student " + student.getNumber());
+					e.printStackTrace(System.out);
+				}
 			}
+
 		}
 	}
 
