@@ -27,6 +27,7 @@ import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoExam;
+import DataBeans.InfoExamEnrollment;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -71,6 +72,7 @@ import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Equivalence;
 import Dominio.Evaluation;
 import Dominio.Exam;
+import Dominio.ExamEnrollment;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Guide;
@@ -99,6 +101,7 @@ import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
 import Dominio.IEvaluation;
 import Dominio.IExam;
+import Dominio.IExamEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IGuide;
@@ -1903,5 +1906,23 @@ public abstract class Cloner {
 		professorship.setTeacher(teacher);
 					
 		return professorship;
+	}
+	
+	public static InfoExamEnrollment copyIExamEnrollment2InfoExamEnrollment(IExamEnrollment examEnrollment) {
+			InfoExamEnrollment infoExamEnrollment = new InfoExamEnrollment();
+			copyObjectProperties(infoExamEnrollment,examEnrollment);
+			InfoExam infoExam = Cloner.copyIExam2InfoExam(examEnrollment.getExam());
+			infoExamEnrollment.setInfoExam(infoExam);
+					
+			return infoExamEnrollment;
+		}
+		
+	public static IExamEnrollment copyInfoExamEnrollment2IExamEnrollment(InfoExamEnrollment infoExamEnrollment){
+		IExamEnrollment examEnrollment = new ExamEnrollment();
+		copyObjectProperties(examEnrollment,infoExamEnrollment);
+		IExam exam = Cloner.copyInfoExam2IExam(infoExamEnrollment.getInfoExam());
+		examEnrollment.setExam(exam);
+		
+		return examEnrollment;	
 	}
 }
