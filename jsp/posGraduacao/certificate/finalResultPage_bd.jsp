@@ -3,13 +3,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.ArrayList" %>
+
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
 <bean:define id="infoExecutionYear" name="<%= SessionConstants.INFO_EXECUTION_YEAR %>" scope="session" />
 <bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.ENROLMENT_LIST%>" />
 <table width="90%">
 	<tr> 
-    	<td align="center" ><h2>Folha de Apuramento Final</h2><b>Ano lectivo <bean:write name="infoExecutionYear" property="year"/></b><br /><br /><br /><br /></td>
+    	<td align="center" ><h2>Folha de Apuramento Final</h2><b>Ano lectivo <bean:write name="infoExecutionYear" /></b><br /><br /><br /><br /></td>
     <tr>
  		<td>Curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
  			<b><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>

@@ -225,13 +225,13 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						} catch (RuntimeException e) {
 							throw new RuntimeException("Error", e);
 						}
-						
 						Locale locale = new Locale("pt", "PT");
 						Date date = new Date();
+						String anoLectivo = ((InfoEnrolment) newEnrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
 						String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 						session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);		
 						session.setAttribute(SessionConstants.DATE, formatedDate);			
-						session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);	
+						session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR,anoLectivo);	
 						session.setAttribute(SessionConstants.ENROLMENT_LIST, newEnrolmentList);	
 						session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);	
 
