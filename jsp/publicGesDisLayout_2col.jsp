@@ -16,7 +16,9 @@
 <logic:notPresent name="<%=SessionConstants.INFO_SITE %>" property="style">
 <link href="<%= request.getContextPath() %>/CSS/gesdis-web.css" rel="stylesheet" type="text/css" />	
 </logic:notPresent>		
+
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/gesdis-print.css" rel="stylesheet" media="print" type="text/css" />	
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 <title><tiles:getAsString name="title" ignore="true" /></title>
 </head>
@@ -26,12 +28,12 @@
 <table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
      <td  align="left" valign="top" bgcolor="#B5BED6"  class="barraist">
-     <img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" />
+     <div id="header"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></div>
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
       <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324 height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
-	  <h4><tiles:getAsString name="institutionName" ignore="true"/></h4>
-	  		<tiles:insert attribute="degrees" ignore="true" />	
+	  <div id="invisible"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
+	  		<div id="invisible"><tiles:insert attribute="degrees" ignore="true" /></div>	
       <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
       <br />
 	  <tiles:insert attribute="body" />      
