@@ -17,9 +17,14 @@
 		<th align="center"><bean:message key="label.masterDegree.administrativeOffice.studentName"/></th>
 		<th align="center">&nbsp;</th>
 		<th align="center">&nbsp;</th>
+		<bean:define id="link">/chooseStudentToVisualizeInformations.do?method=execute&studentNumber=</bean:define>
 	</tr>
 	<logic:iterate id="infoStudent" name="studentList" indexId="index">
+		
 		<tr>
+			<bean:define id="studentDataLink">
+	        		<bean:write name="link"/><bean:write name="infoStudent" property="number"/>
+	        </bean:define>
 			<td align="center">
 				<bean:write name="infoStudent" property="number"/>
 			</td>
@@ -32,7 +37,7 @@
 				</html:link>
 			</td>
 			<td align="center">
-				<html:link page="/seeStudentCurricularPlans.do?method=start">
+				<html:link page='<%= pageContext.findAttribute("studentDataLink").toString() %>'>
 					<bean:message key="label.masterDegree.administrativeOffice.studentData"/>
 				</html:link>
 			</td>
