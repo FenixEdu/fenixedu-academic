@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.grant.stat;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.stat.InfoStatGrantOwner;
+import DataBeans.grant.stat.InfoStatResultGrantOwner;
 import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -32,20 +33,34 @@ public class CalculateStatGrantOwnerByCriteria implements IService {
                     .getIPersistentGrantContract();
             IPersistentGrantOwner persistentGrantOwner = suportePersistente.getIPersistentGrantOwner();
 
+            //Querys count
             Integer totalNumberOfGrantOwners = persistentGrantOwner.countAll();
             Integer numberOfGrantOwnersByCriteria = persistentGrantContract.countAllByCriteria(
                     infoStatGrantOwner.getJustActiveContracts(), infoStatGrantOwner
                             .getJustInactiveContracts(), infoStatGrantOwner.getDateBeginContract(),
                     infoStatGrantOwner.getDateEndContract(), infoStatGrantOwner.getGrantType(),
-                    "grantOwner.number");
+                    "grantOwner.idInternal");
+            Integer totalNumberOfGrantContracts = persistentGrantContract.countAll();
+            Integer numberOfGrantContractsByCriteria = persistentGrantContract.countAllByCriteria(
+                    infoStatGrantOwner.getJustActiveContracts(), infoStatGrantOwner
+                            .getJustInactiveContracts(), infoStatGrantOwner.getDateBeginContract(),
+                    infoStatGrantOwner.getDateEndContract(), infoStatGrantOwner.getGrantType(), null);
+            //Set the result info
+            InfoStatResultGrantOwner infoStatResultGrantOwner = new InfoStatResultGrantOwner();
+            infoStatResultGrantOwner.setNumberOfGrantContractsByCriteria(numberOfGrantContractsByCriteria);
+            infoStatResultGrantOwner.setNumberOfGrantOwnerByCriteria(numberOfGrantOwnersByCriteria);
+            infoStatResultGrantOwner.setTotalNumberOfGrantContracts(totalNumberOfGrantContracts);
+            infoStatResultGrantOwner.setTotalNumberOfGrantOwners(totalNumberOfGrantOwners);
 
-            if(infoStatGrantOwner.getGrantType() != null) {
+            if (infoStatGrantOwner.getGrantType() != null) {
                 //Read the sigla for presentation reasons
                 IPersistentGrantType persistentGrantType = suportePersistente.getIPersistentGrantType();
-                IGrantType granttype = (IGrantType)persistentGrantType.readByOID(GrantType.class, infoStatGrantOwner.getGrantType());
-                infoStatGrantOwner.setGrantTypeSigla(granttype.getSigla()); 
+                IGrantType granttype = (IGrantType) persistentGrantType.readByOID(GrantType.class,
+                        infoStatGrantOwner.getGrantType());
+                infoStatGrantOwner.setGrantTypeSigla(granttype.getSigla());
             }
-            Object[] result = { totalNumberOfGrantOwners, numberOfGrantOwnersByCriteria , infoStatGrantOwner};
+
+            Object[] result = { infoStatResultGrantOwner, infoStatGrantOwner };
             return result;
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

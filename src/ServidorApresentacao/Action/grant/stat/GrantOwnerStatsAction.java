@@ -80,10 +80,9 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
 		    filterType = new Integer(3);
 		}
         request.setAttribute("filterType", filterType);
-		request.setAttribute("infoStatGrantOwner", result[2]);
-		request.setAttribute("totalNumberGrantOwners", result[0]);
-		request.setAttribute("resultNumberGrantOwners", result[1]);
-		
+        request.setAttribute("infoStatResultGrantOwner", result[0]);
+		request.setAttribute("infoStatGrantOwner", result[1]);
+
 		return mapping.findForward("grantowner-stats-results");
 	}
 

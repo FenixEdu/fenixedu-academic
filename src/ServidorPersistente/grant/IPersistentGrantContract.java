@@ -22,4 +22,5 @@ public interface IPersistentGrantContract extends IPersistentObject
 	public List readAllActiveContractsByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia;
 	public Integer countAllByCriteria(Boolean justActiveContracts,Boolean justDesactiveContracts, Date dateBeginContract,Date dateEndContract, Integer grantTypeId, String groupBy) throws ExcepcaoPersistencia;
 	public List readAllContractsByCriteria(String orderBy, Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract, Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
+	public Integer countAll();
 }

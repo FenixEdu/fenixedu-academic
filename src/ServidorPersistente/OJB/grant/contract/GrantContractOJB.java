@@ -167,6 +167,9 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
         return new Integer(count(GrantContract.class, criteria));
     }
             
+    public Integer countAll() {
+        return new Integer(count(GrantContract.class, new Criteria()));
+    }
 
 
 }

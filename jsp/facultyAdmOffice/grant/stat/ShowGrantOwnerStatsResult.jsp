@@ -46,13 +46,14 @@
 	
 <b><bean:message key="label.grant.stat.grantowner.result"/>:</b><br/>
 
+<logic:present name="infoStatResultGrantOwner"></logic:present>
 <table>
-<tr>
+<tr>    
 	<td>
 		<bean:message key="label.stat.grantowner.totalValue"/>:&nbsp;
 	</td>
 	<td>
-		<bean:write name="totalNumberGrantOwners"/>
+		<bean:write name="infoStatResultGrantOwner" property="totalNumberOfGrantOwners"/>
 	</td>
 </tr>
 <tr>
@@ -60,7 +61,26 @@
 		<bean:message key="label.stat.grantowner.numberOfResultsOfCriteria"/>:&nbsp;
 	</td>
 	<td>
-		<bean:write name="resultNumberGrantOwners"/>
+		<bean:write name="infoStatResultGrantOwner" property="numberOfGrantOwnerByCriteria"/>
 	</td>
 </tr>
+<tr>
+	<td>
+		<bean:message key="label.stat.grantcontract.totalValue"/>:&nbsp;
+	</td>
+	<td>
+		<bean:write name="infoStatResultGrantOwner" property="totalNumberOfGrantContracts"/>
+	</td>
+</tr>
+<tr>
+	<td>
+		<bean:message key="label.stat.grantcontract.numberOfResultsOfCriteria"/>:&nbsp;
+	</td>
+	<td>
+		<bean:write name="infoStatResultGrantOwner" property="numberOfGrantContractsByCriteria"/>
+	</td>
+</tr>
+
+
 </table>
+</logic:present>
