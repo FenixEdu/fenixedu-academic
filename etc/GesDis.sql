@@ -10,8 +10,8 @@ use ciapl ;
 #----------------------------
 # Table structure for announcement
 #----------------------------
-drop table if exists announcement;
-create table announcement (
+drop table if exists ANNOUNCEMENT;
+create table ANNOUNCEMENT (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    TITLE varchar(100),
    CREATION_DATE date,
@@ -24,8 +24,8 @@ create table announcement (
 #----------------------------
 # Table structure for curriculum
 #----------------------------
-drop table if exists curriculum;
-create table curriculum (
+drop table if exists CURRICULUM;
+create table CURRICULUM (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EXECUTION_COURSE int(11) not null default '0',
    GENERAL_OBJECTIVES varchar(50),
@@ -37,8 +37,8 @@ create table curriculum (
 #----------------------------
 # Table structure for item
 #----------------------------
-drop table if exists item;
-create table item (
+drop table if exists ITEM;
+create table ITEM (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
    `ORDER` int(11) unsigned,
@@ -52,7 +52,7 @@ create table item (
 #----------------------------
 # Table structure for section
 #----------------------------
-drop table if exists section;
+drop table if exists SECTION;
 create table section (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
@@ -66,7 +66,7 @@ create table section (
 #----------------------------
 # Table structure for site
 #----------------------------
-drop table if exists site;
+drop table if exists SITE;
 create table site (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
