@@ -360,7 +360,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IStudentCurricularPlan readStudentCurricularPlanByUnique(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, StudentCurricularPlanState studentCurricularPlanState) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("student.internalCode", student.getInternalCode());
+		criteria.addEqualTo("student.idInternal", student.getIdInternal());
 		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
 		criteria.addEqualTo("branch.internalID", branch.getInternalID());
 		criteria.addEqualTo("currentState", studentCurricularPlanState);
