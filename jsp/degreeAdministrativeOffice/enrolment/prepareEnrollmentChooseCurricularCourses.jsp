@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.CurricularCourseType" %>
+<%@ page import="Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
 
 <script type="text/javascript" language="JavaScript">
 <!--
@@ -129,12 +129,16 @@
 				<td>
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
 					<logic:equal name="enrollmentElem" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
-						<logic:notEmpty name="enrollmentElem" property="infoCurricularCourseForOption">
-							-&nbsp;<bean:write name="enrollmentElem" property="infoCurricularCourseForOption.name"/>
-						</logic:notEmpty>
-						<logic:empty name="enrollmentElem" property="infoCurricularCourseForOption">
-							-&nbsp;<bean:message key="message.not.regular.optional.enrollment"/>
-						</logic:empty>
+						<% if (pageContext.findAttribute("enrollmentElem") instanceof InfoEnrolmentInOptionalCurricularCourse)
+						   {%>
+							<logic:notEmpty name="enrollmentElem" property="infoCurricularCourseForOption">
+								-&nbsp;<bean:write name="enrollmentElem" property="infoCurricularCourseForOption.name"/>
+							</logic:notEmpty>
+							<logic:empty name="enrollmentElem" property="infoCurricularCourseForOption">
+								-&nbsp;<bean:message key="message.not.regular.optional.enrollment"/>
+							</logic:empty>
+						   <%}
+						%>
 					</logic:equal>
 				</td>
 				<td>
