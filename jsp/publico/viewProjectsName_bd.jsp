@@ -15,7 +15,7 @@
 	<logic:notEmpty name="component" property="infoGroupPropertiesList">
 	
 	
-<table width="90%" cellpadding="5" border="0" style="text-align: left;" >
+<table align="center" width="95%" cellspacing='1' cellpadding='1'>
         
         <tbody>
         
@@ -35,10 +35,15 @@
 							
 							
                     </td>
+                    <td class="listClasses">
                     
-                     <td class="listClasses">
-                    <html:textarea readonly="true" name="infoGroupProperties" property="projectDescription" cols="50" rows="6"/>
-                   
+             		<logic:notEmpty name="infoGroupProperties" property="projectDescription">
+                     	<bean:write name="infoGroupProperties" property="projectDescription"/>
+                	</logic:notEmpty>
+                	
+             		<logic:empty name="infoGroupProperties" property="projectDescription">
+                     	<bean:message key="message.project.wihtout.description"/>
+                	</logic:empty>
                 	</td>
                 </tr>
 

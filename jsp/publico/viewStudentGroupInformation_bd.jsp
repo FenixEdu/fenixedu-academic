@@ -13,9 +13,9 @@
 	</logic:empty> 
 
 	<logic:notEmpty name="component" property="infoSiteStudentInformationList">
-	
-	<table width="85%" cellpadding="0" border="0">
-		<h2><bean:message key="title.StudentGroupInformation"/></h2>
+	<table align="center" width="85%" cellspacing='1' cellpadding='1'>
+	<h2><bean:message key="title.StudentGroupInformation"/></h2>
+	<br/>	
 	<br>
 	<tr>
 		<td class="listClasses-header" width="20%"><bean:message key="label.numberWord" />
@@ -32,15 +32,7 @@
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
 			</td>		
 
-		</tr>
-<%--			<bean:define id="aux" name="mailingList"/>
-			<logic:lessThan name="aux" value="1">
-				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
-			</logic:lessThan>
-			<logic:greaterThan name="aux" value="0">
-				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
-			</logic:greaterThan>
---%>			
+		</tr>			
 	 		
 	 </logic:iterate>
 	 

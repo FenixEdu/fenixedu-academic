@@ -27,46 +27,43 @@
 	
 <logic:notEmpty name="component" property="infoSiteShifts">
 		
-<table width="100%" border="0" style="text-align: left;">
+<table align="center" width="95%" cellspacing='1' cellpadding='1'>
 	<h2><bean:message key="title.ProjectsShifts"/></h2>
-	<tbody>
+	<br/>
+	<tbody>	
+			
+	<tr>
+		<td class="listClasses-header" width="20%" rowspan="2">
+			<bean:message key="property.shift"/>
+		</td>
+		<td class="listClasses-header" colspan="4" width="60%">
+			<bean:message key="property.lessons"/>
+		</td>
+		<td class="listClasses-header" width="20%" rowspan="2">
+			<bean:message key="property.groups"/>
+		</td>
+	</tr>
+					
+	<tr>
+		<td class="listClasses-header" width="20%">
+			<bean:message key="property.lesson.weekDay"/>
+		</td>
+		<td class="listClasses-header" width="10%">
+			<bean:message key="property.lesson.beginning"/>
+		</td>
+		<td class="listClasses-header" width="10%">
+			<bean:message key="property.lesson.end"/>
+		</td>
+		<td class="listClasses-header" width="20%">
+			<bean:message key="property.lesson.room"/>
+		</td>
+	</tr>		
     
      <logic:iterate id="infoSiteShift" name="component" property="infoSiteShifts" >
-     <tr>
-      <td>
-        <br>
-        
+
 			<logic:notEmpty name="infoSiteShift" property="infoShift">
 			<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
-			<table width="100%" cellpadding="3" border="0" style="text-align: left;" > 		
-							
-					<tr >
-						<td class="listClasses-header" width="20%" rowspan="2">
-							<bean:message key="property.shift"/>
-						</td>
-						<td class="listClasses-header" colspan="4" width="60%">
-							<bean:message key="property.lessons"/>
-						</td>
-						<td class="listClasses-header" width="20%" rowspan="2">
-							<bean:message key="property.groups"/>
-						</td>
-					</tr>
-					<tr>
-						<td class="listClasses-header" width="20%">
-							<bean:message key="property.lesson.weekDay"/>
-						</td>
-						<td class="listClasses-header" width="10%">
-							<bean:message key="property.lesson.beginning"/>
-						</td>
-						<td class="listClasses-header" width="10%">
-							<bean:message key="property.lesson.end"/>
-						</td>
-						<td class="listClasses-header" width="20%">
-							<bean:message key="property.lesson.room"/>
-						</td>
-					</tr>			
-													
-											
+															
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                 	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
@@ -123,16 +120,12 @@
 						</tr>
 					
 					</logic:iterate>
-			 </tbody>
-			</table>
+		
 
         </logic:notEmpty>
-             
-		<br>
-         	        
+                    
         </logic:iterate>
-       	</td>
-       </tr>
+       
       </tbody>
 </table>
 </logic:notEmpty>

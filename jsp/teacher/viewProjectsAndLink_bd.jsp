@@ -61,6 +61,15 @@
                 	
                 	 <td align="left" class="listClasses" >
                 	 
+                	 <logic:empty name="infoGroupProperties" property="maximumCapacity">
+                	 <logic:empty name="infoGroupProperties" property="minimumCapacity">
+                	 <logic:empty name="infoGroupProperties" property="groupMaximumNumber">
+                	 	<bean:message key="message.project.wihtout.properties"/>
+                	 </logic:empty>
+                	 </logic:empty>
+                	 </logic:empty>
+                	 
+                	 
                 	 <logic:notEmpty name="infoGroupProperties" property="maximumCapacity">
                 	 <b><bean:message key="label.teacher.viewProjectsAndLink.MaximumCapacity"/>:</b> <bean:write name="infoGroupProperties" property="maximumCapacity"/>
                 	 <br/>

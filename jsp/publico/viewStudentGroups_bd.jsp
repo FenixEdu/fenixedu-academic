@@ -25,7 +25,6 @@
 	
 <logic:notEmpty name="component" property="infoSiteStudentGroupsList">	
 <table width="100%" border="0" style="text-align: left;">
-	<h2><bean:message key="title.StudentGroups"/></h2>
 	<tbody>
       <tr>
       <td>
@@ -35,8 +34,9 @@
 			<logic:notEmpty name="component" property="infoSiteShift">
 			<bean:define id="infoSiteShift" name="component" property="infoSiteShift"/>
 			<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
-			<table width="90%" cellpadding="0" border="0" style="text-align: left;" > 		
-					
+			<table align="center" width="95%" cellspacing='1' cellpadding='1'> 		
+					<h2><bean:message key="title.StudentGroups"/></h2>
+					<br/>
 					<tr >
 						<td class="listClasses-header" width="20%" rowspan="2">
 							<bean:message key="property.shift"/>
