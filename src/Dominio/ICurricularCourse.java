@@ -120,6 +120,9 @@ public interface ICurricularCourse extends IDomainObject {
 
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester,
             final IBranch branch);
+    
+    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester,
+            final IBranch branch);
 
     public Boolean getEnrollmentAllowed();
 
