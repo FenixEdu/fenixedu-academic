@@ -96,9 +96,6 @@
         <arg0 key="message.sectionName" resource="true"/>
       </field>
 
-      <field property="sectionOrder" depends="required" page="1">
-        <arg0 key="message.sectionOrder" resource="true"/>
-      </field>
     </form>         
 		          
 		<!-- validation for itemForm -->
@@ -106,19 +103,11 @@
       <field property="information" depends="required" page="1">
         <arg0 key="message.itemInformation" resource="true"/>
       </field>
-
-      <field property="itemOrder" depends="required" page="1">
-        <arg0 key="message.itemOrder" resource="true"/>
-      </field>
-      
       
       <field property="itemName" depends="required" page="1">
         <arg0 key="message.itemName" resource="true"/>
       </field>
 
-      <field property="urgent" depends="required" page="1">
-        <arg0 key="message.itemUrgent" resource="true"/>
-      </field>
       
     </form>
     
