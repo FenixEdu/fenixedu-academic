@@ -1,8 +1,13 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+<!-- Definitions for Dominio.teacher.Career -->
 <class-descriptor class="Dominio.teacher.Career">
     <extent-class class-ref="Dominio.teacher.ProfessionalCareer"/>
     <extent-class class-ref="Dominio.teacher.TeachingCareer"/>
 </class-descriptor>
 
+<!-- Definitions for Dominio.teacher.ProfessionalCareer -->
 <class-descriptor class="Dominio.teacher.ProfessionalCareer" table="CAREER">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
@@ -16,6 +21,7 @@
 	</reference-descriptor>
 </class-descriptor>
 
+<!-- Definitions for Dominio.teacher.TeachingCareer -->
 <class-descriptor class="Dominio.teacher.TeachingCareer" table="CAREER">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
@@ -31,3 +37,4 @@
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
+<!-- Mapping of User defined classses ends here -->

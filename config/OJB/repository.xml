@@ -74,4 +74,5 @@
 	&coordinator;
 	&places;
     &grant_owner_management;
+    &teacher;
 </descriptor-repository>

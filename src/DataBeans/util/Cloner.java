@@ -94,7 +94,10 @@ import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.grant.owner.InfoGrantOwner;
+import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
+import DataBeans.teacher.InfoProfessionalCareer;
+import DataBeans.teacher.InfoTeachingCareer;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.*;
@@ -109,10 +112,16 @@ import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.ITheme;
 import Dominio.gesdis.CourseReport;
 import Dominio.gesdis.ICourseReport;
-import Dominio.teacher.Category;
-import Dominio.teacher.ICategory;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
+import Dominio.teacher.Category;
+import Dominio.teacher.ICareer;
+import Dominio.teacher.ICategory;
+import Dominio.teacher.IProfessionalCareer;
+import Dominio.teacher.ITeachingCareer;
+import Dominio.teacher.ProfessionalCareer;
+import Dominio.teacher.TeachingCareer;
+import Util.CareerType;
 import Util.EvaluationType;
 import Util.State;
 
@@ -3408,5 +3417,86 @@ public abstract class Cloner
         copyObjectProperties(campus, infoCampus);
 
         return campus;
+    }
+
+    public static InfoCareer copyICareer2InfoCareer(ICareer career)
+    {
+        InfoCareer infoCareer = null;
+
+        if (career instanceof IProfessionalCareer)
+        {
+            IProfessionalCareer professionalCareer = (IProfessionalCareer) career;
+            infoCareer = copyIProfessionalCareer2InfoProfessionalCareer(professionalCareer);
+        } else
+        {
+            ITeachingCareer teachingCareer = (ITeachingCareer) career;
+            infoCareer = copyITeachingCareer2InfoTeachingCareer(teachingCareer);
+        }
+
+        return infoCareer;
+    }
+
+    public static ICareer copyInfoCareer2ICareer(InfoCareer infoCareer)
+    {
+        ICareer career = null;
+
+        if (infoCareer instanceof InfoProfessionalCareer)
+        {
+            InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer) infoCareer;
+            career = copyInfoProfessionalCareer2IProfessionalCareer(infoProfessionalCareer);
+        } else
+        {
+            InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) infoCareer;
+            career = copyInfoTeachingCareer2ITeachingCareer(infoTeachingCareer);
+        }
+
+        return career;
+    }
+
+    private static InfoProfessionalCareer copyIProfessionalCareer2InfoProfessionalCareer(IProfessionalCareer professionalCareer)
+    {
+        InfoProfessionalCareer infoProfessionalCareer = new InfoProfessionalCareer();
+        InfoTeacher infoTeacher = copyITeacher2InfoTeacher(professionalCareer.getTeacher());
+        copyObjectProperties(infoProfessionalCareer, professionalCareer);
+
+        infoProfessionalCareer.setInfoTeacher(infoTeacher);
+
+        return infoProfessionalCareer;
+    }
+
+    private static IProfessionalCareer copyInfoProfessionalCareer2IProfessionalCareer(InfoProfessionalCareer infoProfessionalCareer)
+    {
+        IProfessionalCareer professionalCareer = new ProfessionalCareer();
+        ITeacher teacher = copyInfoTeacher2Teacher(infoProfessionalCareer.getInfoTeacher());
+        copyObjectProperties(professionalCareer, infoProfessionalCareer);
+
+        professionalCareer.setTeacher(teacher);
+        return professionalCareer;
+    }
+
+    private static InfoTeachingCareer copyITeachingCareer2InfoTeachingCareer(ITeachingCareer teachingCareer)
+    {
+        InfoTeachingCareer infoTeachingCareer = new InfoTeachingCareer();
+        InfoTeacher infoTeacher = copyITeacher2InfoTeacher(teachingCareer.getTeacher());
+        InfoCategory infoCategory = copyICategory2InfoCategory(teachingCareer.getCategory());
+        copyObjectProperties(infoTeachingCareer, teachingCareer);
+
+        infoTeachingCareer.setInfoTeacher(infoTeacher);
+        infoTeachingCareer.setInfoCategory(infoCategory);
+
+        return infoTeachingCareer;
+    }
+
+    private static ITeachingCareer copyInfoTeachingCareer2ITeachingCareer(InfoTeachingCareer infoTeachingCareer)
+    {
+        ITeachingCareer teachingCareer = new TeachingCareer();
+        ITeacher teacher = copyInfoTeacher2Teacher(infoTeachingCareer.getInfoTeacher());
+        ICategory category = copyInfoCategory2ICategory(infoTeachingCareer.getInfoCategory());
+        copyObjectProperties(teachingCareer, infoTeachingCareer);
+
+        teachingCareer.setTeacher(teacher);
+        teachingCareer.setCategory(category);
+
+        return teachingCareer;
     }
 }
