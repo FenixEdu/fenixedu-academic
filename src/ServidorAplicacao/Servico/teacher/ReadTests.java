@@ -29,55 +29,49 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadTests implements IServico
-{
+public class ReadTests implements IServico {
 
     private static ReadTests service = new ReadTests();
 
-    public static ReadTests getService()
-    {
+    public static ReadTests getService() {
         return service;
     }
 
-    public String getNome()
-    {
+    public String getNome() {
         return "ReadTests";
     }
-    public SiteView run(Integer executionCourseId) throws FenixServiceException
-    {
+
+    public SiteView run(Integer executionCourseId) throws FenixServiceException {
 
         ISuportePersistente persistentSuport;
-        try
-        {
+        try {
             persistentSuport = SuportePersistenteOJB.getInstance();
 
-            IPersistentExecutionCourse persistentExecutionCourse =
-                persistentSuport.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-            if (executionCourse == null)
-            {
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+            IPersistentTest persistentTest = persistentSuport
+                    .getIPersistentTest();
             List tests = persistentTest.readByTestScopeObject(executionCourse);
             List result = new ArrayList();
             Iterator iter = tests.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 ITest test = (ITest) iter.next();
                 InfoTest infoTest = Cloner.copyITest2InfoTest(test);
                 result.add(infoTest);
             }
             InfoSiteTests bodyComponent = new InfoSiteTests();
             bodyComponent.setInfoTests(result);
-            bodyComponent.setExecutionCourse(
-                 (InfoExecutionCourse) Cloner.get(executionCourse));
-            SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+            bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
+                    .get(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
+                    bodyComponent);
             return siteView;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

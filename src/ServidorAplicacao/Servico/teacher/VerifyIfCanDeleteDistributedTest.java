@@ -18,36 +18,30 @@ import Util.tests.TestType;
 /**
  * @author Susana Fernandes
  */
-public class VerifyIfCanDeleteDistributedTest implements IService
-{
-	public VerifyIfCanDeleteDistributedTest()
-	{
-	}
+public class VerifyIfCanDeleteDistributedTest implements IService {
+    public VerifyIfCanDeleteDistributedTest() {
+    }
 
-	public boolean run(Integer executionCourseId, Integer distributedTestId)
-			throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IDistributedTest distributedTest = (IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest().readByOId(new DistributedTest(distributedTestId),
-							false);
-			if (distributedTest == null)
-			{
-				throw new InvalidArgumentsServiceException();
-			}
-			if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION)
-			{
-				if (persistentSuport.getIPersistentStudentTestQuestion().countResponsedOrNotResponsed(
-						null, true, distributedTest) != 0)
-					return false;
-			}
-			return true;
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-	}
+    public boolean run(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+            IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+                    .getIPersistentDistributedTest().readByOID(
+                            DistributedTest.class, distributedTestId);
+            if (distributedTest == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+            if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
+                if (persistentSuport.getIPersistentStudentTestQuestion()
+                        .countResponsedOrNotResponsed(null, true,
+                                distributedTest) != 0)
+                    return false;
+            }
+            return true;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

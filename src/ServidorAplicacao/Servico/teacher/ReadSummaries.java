@@ -81,17 +81,18 @@ public class ReadSummaries implements IServico {
                     .getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(
-                    executionCourseId);
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOId(executionCourse, false);
-            if (executionCourse == null) { throw new FenixServiceException(
-                    "no.executionCourse"); }
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new FenixServiceException("no.executionCourse");
+            }
 
             IPersistentSite persistentSite = persistentSuport
                     .getIPersistentSite();
             ISite site = persistentSite.readByExecutionCourse(executionCourse);
-            if (site == null) { throw new FenixServiceException("no.site"); }
+            if (site == null) {
+                throw new FenixServiceException("no.site");
+            }
 
             //execution courses's lesson types for display to filter summary
             List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
@@ -150,12 +151,11 @@ public class ReadSummaries implements IServico {
             }
 
             if (shiftId != null && shiftId.intValue() > 0) {
-                ITurno shiftSelected = new Turno();
-                shiftSelected.setIdInternal(shiftId);
-                shiftSelected = (ITurno) persistentShift.readByOId(
-                        shiftSelected, false);
-                if (shiftSelected == null) { throw new FenixServiceException(
-                        "no.shift"); }
+                ITurno shiftSelected = (ITurno) persistentShift.readByOID(
+                        Turno.class, shiftId);
+                if (shiftSelected == null) {
+                    throw new FenixServiceException("no.shift");
+                }
 
                 List summariesByShift = persistentSummary.readByShift(
                         executionCourse, shiftSelected);
@@ -174,14 +174,13 @@ public class ReadSummaries implements IServico {
             }
 
             if (professorShiftId != null && professorShiftId.intValue() > 0) {
-                IProfessorship professorshipSelected = new Professorship();
-                professorshipSelected.setIdInternal(professorShiftId);
-                professorshipSelected = (IProfessorship) persistentProfessorship
-                        .readByOId(professorshipSelected, false);
+                IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship
+                        .readByOID(Professorship.class, professorShiftId);
 
                 if (professorshipSelected == null
-                        || professorshipSelected.getTeacher() == null) { throw new FenixServiceException(
-                        "no.shift"); }
+                        || professorshipSelected.getTeacher() == null) {
+                    throw new FenixServiceException("no.shift");
+                }
 
                 List summariesByProfessorship = persistentSummary
                         .readByTeacher(executionCourse, professorshipSelected
@@ -208,9 +207,9 @@ public class ReadSummaries implements IServico {
                 }
             }
 
-            if ((summaryType == null || summaryType.intValue() == 0) 
-            && (shiftId == null || shiftId.intValue() == 0)
-            && (professorShiftId == null || professorShiftId.intValue() == 0)) {
+            if ((summaryType == null || summaryType.intValue() == 0)
+                    && (shiftId == null || shiftId.intValue() == 0)
+                    && (professorShiftId == null || professorShiftId.intValue() == 0)) {
                 summaries = persistentSummary
                         .readByExecutionCourseShifts(executionCourse);
                 List summariesByExecutionCourse = persistentSummary
@@ -341,12 +340,16 @@ public class ReadSummaries implements IServico {
         List allSummaries = new ArrayList();
 
         if (summaries == null || summaries.size() <= 0) {
-            if (summariesByExecutionCourse == null) { return new ArrayList(); }
+            if (summariesByExecutionCourse == null) {
+                return new ArrayList();
+            }
             return summariesByExecutionCourse;
         }
 
         if (summariesByExecutionCourse == null
-                || summariesByExecutionCourse.size() <= 0) { return summaries; }
+                || summariesByExecutionCourse.size() <= 0) {
+            return summaries;
+        }
 
         List intersection = (List) CollectionUtils.intersection(summaries,
                 summariesByExecutionCourse);
@@ -357,7 +360,9 @@ public class ReadSummaries implements IServico {
                 summariesByExecutionCourse, intersection));
         allSummaries.addAll(intersection);
 
-        if (allSummaries == null) { return new ArrayList(); }
+        if (allSummaries == null) {
+            return new ArrayList();
+        }
         return allSummaries;
     }
 

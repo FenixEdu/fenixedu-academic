@@ -33,58 +33,63 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class ReadTest implements IService
-{
+public class ReadTest implements IService {
 
     private String path = new String();
 
-    public ReadTest()
-    {
+    public ReadTest() {
     }
 
     public SiteView run(Integer executionCourseId, Integer testId, String path)
-            throws FenixServiceException
-    {
+            throws FenixServiceException {
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport;
-        try
-        {
+        try {
             persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-            executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse,
-                    false);
-            if (executionCourse == null) { throw new InvalidArgumentsServiceException(); }
-            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-            ITest test = new Test(testId);
-            test = (ITest) persistentTest.readByOId(test, false);
-            if (test == null) { throw new InvalidArgumentsServiceException(); }
+            IExecutionCourse executionCourse = new ExecutionCourse(
+                    executionCourseId);
+            executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+            IPersistentTest persistentTest = persistentSuport
+                    .getIPersistentTest();
+            ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
+            if (test == null) {
+                throw new InvalidArgumentsServiceException();
+            }
             IPersistentTestQuestion persistentTestQuestion = persistentSuport
                     .getIPersistentTestQuestion();
             List questions = persistentTestQuestion.readByTest(test);
             List result = new ArrayList();
             Iterator iter = questions.iterator();
             ParseQuestion parse = new ParseQuestion();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 ITestQuestion testQuestion = (ITestQuestion) iter.next();
                 InfoTestQuestion infoTestQuestion = Cloner
                         .copyITestQuestion2InfoTestQuestion(testQuestion);
-                try
-                {
-                    infoTestQuestion.setQuestion(parse.parseQuestion(infoTestQuestion.getQuestion()
-                            .getXmlFile(), infoTestQuestion.getQuestion(), this.path));
-                    if (infoTestQuestion.getQuestion().getQuestionType().getType().equals(
-                            new Integer(QuestionType.LID)))
-                        infoTestQuestion.getQuestion().setResponseProcessingInstructions(
-                                parse.newResponseList(infoTestQuestion.getQuestion()
-                                        .getResponseProcessingInstructions(), infoTestQuestion
-                                        .getQuestion().getOptions()));
+                try {
+                    infoTestQuestion.setQuestion(parse.parseQuestion(
+                            infoTestQuestion.getQuestion().getXmlFile(),
+                            infoTestQuestion.getQuestion(), this.path));
+                    if (infoTestQuestion.getQuestion().getQuestionType()
+                            .getType().equals(new Integer(QuestionType.LID)))
+                        infoTestQuestion
+                                .getQuestion()
+                                .setResponseProcessingInstructions(
+                                        parse
+                                                .newResponseList(
+                                                        infoTestQuestion
+                                                                .getQuestion()
+                                                                .getResponseProcessingInstructions(),
+                                                        infoTestQuestion
+                                                                .getQuestion()
+                                                                .getOptions()));
 
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
                 result.add(infoTestQuestion);
@@ -92,12 +97,12 @@ public class ReadTest implements IService
             InfoSiteTest infoSiteTest = new InfoSiteTest();
             infoSiteTest.setInfoTestQuestions(result);
             infoSiteTest.setInfoTest(Cloner.copyITest2InfoTest(test));
-            infoSiteTest.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
-            SiteView siteView = new ExecutionCourseSiteView(infoSiteTest, infoSiteTest);
+            infoSiteTest.setExecutionCourse((InfoExecutionCourse) Cloner
+                    .get(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(infoSiteTest,
+                    infoSiteTest);
             return siteView;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

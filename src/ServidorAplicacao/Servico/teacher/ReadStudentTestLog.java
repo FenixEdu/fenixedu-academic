@@ -24,57 +24,53 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTestLog implements IServico
-{
-	private static ReadStudentTestLog service = new ReadStudentTestLog();
+public class ReadStudentTestLog implements IServico {
+    private static ReadStudentTestLog service = new ReadStudentTestLog();
 
-	public static ReadStudentTestLog getService()
-	{
-		return service;
-	}
+    public static ReadStudentTestLog getService() {
+        return service;
+    }
 
-	public String getNome()
-	{
-		return "ReadStudentTestLog";
-	}
+    public String getNome() {
+        return "ReadStudentTestLog";
+    }
 
-	public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId)
-			throws FenixServiceException
-	{
-		ISuportePersistente persistentSuport;
-		List infoStudentTestLogList = new ArrayList();
-		try
-		{
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			IStudent student = new Student(studentId);
-			student = (IStudent) persistentSuport.getIPersistentStudent().readByOId(student, false);
-			if (student == null)
-				throw new FenixServiceException();
-			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
-			if (distributedTest == null)
-				throw new FenixServiceException();
-			distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest()
-					.readByOId(distributedTest, false);
-			List studentTestLogList = persistentSuport.getIPersistentStudentTestLog()
-					.readByStudentAndDistributedTest(student, distributedTest);
-			Iterator it = studentTestLogList.iterator();
-			while (it.hasNext())
-			{
-				IStudentTestLog studentTestLog = (IStudentTestLog) it.next();
-				InfoStudentTestLog infoStudentTestLog = Cloner
-						.copyIStudentTestLog2InfoStudentTestLog(studentTestLog);
-				String[] eventTokens = infoStudentTestLog.getEvent().split(";");
-				List eventList = new ArrayList();
-				for (int i = 0; i < eventTokens.length; i++)
-					eventList.add(eventTokens[i]);
-				infoStudentTestLog.setEventList(eventList);
-				infoStudentTestLogList.add(infoStudentTestLog);
-			}
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-		return infoStudentTestLogList;
-	}
+    public List run(Integer executionCourseId, Integer distributedTestId,
+            Integer studentId) throws FenixServiceException {
+        ISuportePersistente persistentSuport;
+        List infoStudentTestLogList = new ArrayList();
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            IStudent student = (IStudent) persistentSuport
+                    .getIPersistentStudent()
+                    .readByOID(Student.class, studentId);
+            if (student == null) {
+                throw new FenixServiceException();
+            }
+            IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+                    .getIPersistentDistributedTest().readByOID(
+                            DistributedTest.class, distributedTestId);
+            if (distributedTest == null) {
+                throw new FenixServiceException();
+            }
+            List studentTestLogList = persistentSuport
+                    .getIPersistentStudentTestLog()
+                    .readByStudentAndDistributedTest(student, distributedTest);
+            Iterator it = studentTestLogList.iterator();
+            while (it.hasNext()) {
+                IStudentTestLog studentTestLog = (IStudentTestLog) it.next();
+                InfoStudentTestLog infoStudentTestLog = Cloner
+                        .copyIStudentTestLog2InfoStudentTestLog(studentTestLog);
+                String[] eventTokens = infoStudentTestLog.getEvent().split(";");
+                List eventList = new ArrayList();
+                for (int i = 0; i < eventTokens.length; i++)
+                    eventList.add(eventTokens[i]);
+                infoStudentTestLog.setEventList(eventList);
+                infoStudentTestLogList.add(infoStudentTestLog);
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return infoStudentTestLogList;
+    }
 }

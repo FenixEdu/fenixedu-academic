@@ -16,67 +16,68 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério
- *
  * 
+ *  
  */
 public class TeacherAdministrationSiteComponentService implements IServico {
 
-	private static TeacherAdministrationSiteComponentService _servico = new TeacherAdministrationSiteComponentService();
+    private static TeacherAdministrationSiteComponentService _servico = new TeacherAdministrationSiteComponentService();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+     * The actor of this class.
+     */
 
-	private TeacherAdministrationSiteComponentService() {
+    private TeacherAdministrationSiteComponentService() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "TeacherAdministrationSiteComponentService";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "TeacherAdministrationSiteComponentService";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadExecutionCourse
-	 */
-	public static TeacherAdministrationSiteComponentService getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return ReadExecutionCourse
+     */
+    public static TeacherAdministrationSiteComponentService getService() {
+        return _servico;
+    }
 
-	public Object run(
-		Integer infoExecutionCourseCode,
-		ISiteComponent commonComponent,
-		ISiteComponent bodyComponent,
-		Integer infoSiteCode,
-		Object obj1,
-		Object obj2)
-		throws FenixServiceException {
-		TeacherAdministrationSiteView siteView = null;
+    public Object run(Integer infoExecutionCourseCode,
+            ISiteComponent commonComponent, ISiteComponent bodyComponent,
+            Integer infoSiteCode, Object obj1, Object obj2)
+            throws FenixServiceException {
+        TeacherAdministrationSiteView siteView = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-			IPersistentSite persistentSite = sp.getIPersistentSite();
-			ISite site = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            IPersistentSite persistentSite = sp.getIPersistentSite();
+            ISite site = null;
 
-			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(infoExecutionCourseCode), false);
-			site = persistentSite.readByExecutionCourse(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            site = persistentSite.readByExecutionCourse(executionCourse);
 
-			TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder.getInstance();
-			commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
-			bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, obj1, obj2);
+            TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
+                    .getInstance();
+            commonComponent = componentBuilder.getComponent(commonComponent,
+                    site, null, null, null);
+            bodyComponent = componentBuilder.getComponent(bodyComponent, site,
+                    commonComponent, obj1, obj2);
 
-			siteView = new TeacherAdministrationSiteView(commonComponent, bodyComponent);
-			
-			
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            siteView = new TeacherAdministrationSiteView(commonComponent,
+                    bodyComponent);
 
-		return siteView;
-	}
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+        return siteView;
+    }
 }

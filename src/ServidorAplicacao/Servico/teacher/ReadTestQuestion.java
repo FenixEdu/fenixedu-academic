@@ -51,25 +51,26 @@ public class ReadTestQuestion implements IService {
                     .getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(
-                    executionCourseId);
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOId(executionCourse, false);
-            if (executionCourse == null)
-                    throw new InvalidArgumentsServiceException();
-
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
             IPersistentTest persistentTest = persistentSuport
                     .getIPersistentTest();
-            ITest test = new Test(testId);
-            test = (ITest) persistentTest.readByOId(test, false);
-            if (test == null) throw new InvalidArgumentsServiceException();
+            ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
+            if (test == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
             IPersistentQuestion persistentQuestion = persistentSuport
                     .getIPersistentQuestion();
             IQuestion question = new Question(questionId);
-            question = (IQuestion) persistentQuestion
-                    .readByOId(question, false);
-            if (question == null) throw new InvalidArgumentsServiceException();
+            question = (IQuestion) persistentQuestion.readByOID(Question.class,
+                    questionId);
+            if (question == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
             InfoQuestion infoQuestion = Cloner
                     .copyIQuestion2InfoQuestion(question);
@@ -79,10 +80,10 @@ public class ReadTestQuestion implements IService {
                         infoQuestion, this.path);
                 if (infoQuestion.getQuestionType().getType().equals(
                         new Integer(QuestionType.LID)))
-                        infoQuestion.setResponseProcessingInstructions(parse
-                                .newResponseList(infoQuestion
-                                        .getResponseProcessingInstructions(),
-                                        infoQuestion.getOptions()));
+                    infoQuestion.setResponseProcessingInstructions(parse
+                            .newResponseList(infoQuestion
+                                    .getResponseProcessingInstructions(),
+                                    infoQuestion.getOptions()));
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }
@@ -119,9 +120,8 @@ public class ReadTestQuestion implements IService {
                     .next();
             if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
                     || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
-                    if (maxValue.compareTo(responseProcessing
-                            .getResponseValue()) < 0)
-                            maxValue = responseProcessing.getResponseValue();
+                if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
+                    maxValue = responseProcessing.getResponseValue();
         }
         if (maxValue.compareTo(questionValue) != 0) {
             it = infoQuestion.getResponseProcessingInstructions().iterator();
