@@ -15,6 +15,7 @@ import Dominio.ICurricularSemester;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -59,6 +60,8 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IServico {
 			
 				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal()), false);
+				if(curricularCourse == null)
+					throw new NonExistingServiceException();
 			
 				IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
 				IBranch temporaryBranch = new Branch();

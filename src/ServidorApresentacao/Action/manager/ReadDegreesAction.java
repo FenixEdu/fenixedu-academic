@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.comparators.ComparatorByNameForInfoDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -42,7 +43,10 @@ public class ReadDegreesAction extends FenixAction {
 								"ReadDegrees",
 								null);
 		
-					Collections.sort(degrees);
+				Collections.sort(
+				degrees,
+				new ComparatorByNameForInfoDegree());
+			
 					request.setAttribute("Lista de licenciaturas", degrees);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);

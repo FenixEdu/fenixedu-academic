@@ -34,7 +34,7 @@
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DegreeCurricularPlan -->
+<!-- Definitions for Dominio.DegreeCurricularPlan --> 
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="Dominio.DegreeCurricularPlan" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor

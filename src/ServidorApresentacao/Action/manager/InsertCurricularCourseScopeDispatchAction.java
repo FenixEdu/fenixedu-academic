@@ -32,6 +32,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -150,6 +151,8 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 				 	
 			} catch (ExistingServiceException ex) {
 				throw new ExistingActionException(ex.getMessage(), ex);
+			} catch (NonExistingServiceException exception) {
+				throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegreeCurricularPlan"));
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}

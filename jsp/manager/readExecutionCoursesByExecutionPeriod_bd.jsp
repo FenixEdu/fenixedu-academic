@@ -37,11 +37,13 @@
 			</td>
 		</tr>
 		<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
+		<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>
+							
 			<tr>	
 				<td class="listClasses">
-					<html:multibox property="executionCourseId">
-						<bean:write name="infoExecutionCourse" property="idInternal"/>
-					</html:multibox> 
+				 
+					<html:radio property="executionCourseId" idName="infoExecutionCourse" value="idInternal" />	
+							
 				</td>			
 				<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>
 				</td>

@@ -248,6 +248,9 @@
         <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
          	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                  handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertDegreeCurricularPlan" path="df.page.insert-degree-curricular-plan"/>
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
@@ -390,6 +393,9 @@
         validate="true">
         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+             	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertCurricularCourseScope" path="df.page.insert-curricular-course-scope"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      

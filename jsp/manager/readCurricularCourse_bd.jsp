@@ -45,7 +45,7 @@
 	
 	<logic:present name="executionCoursesList" scope="request">
 		<logic:notEmpty name="executionCoursesList">
-			<table width="50%" cellpadding="0" border="0">
+			<table width="80%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
 					</td>
@@ -62,7 +62,7 @@
 						</td>
 						<td class="listClasses"><bean:write name="executionCourse" property="sigla"/>
 						</td>
-						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/>
+						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/> <b>/</b> <bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
 						</td>
 	 				</tr>
 	 			</logic:iterate>						

@@ -7,17 +7,14 @@ import java.util.List;
 
 import Dominio.CurricularCourse;
 import Dominio.DisciplinaExecucao;
-import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -46,12 +43,6 @@ public class AssociateExecutionCoursesToCurricularCourse implements IServico {
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
-				IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
-				IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(executionPeriodId), false);
-				
-				if(executionPeriod == null)
-					throw new NonExistingServiceException();
-				
 				IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 				IDisciplinaExecucao executionCourse;
 				
@@ -59,19 +50,21 @@ public class AssociateExecutionCoursesToCurricularCourse implements IServico {
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
 				
 				if(curricularCourse == null)
-					throw new NonExistingServiceException();
+					throw new NonExistingServiceException("b", null);
 					
 				List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-		
 				
 				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
 				if(executionCourse == null)
-					throw new NonExistingServiceException();
+					throw new NonExistingServiceException("c", null);
 				else {
-						if(!executionCourses.contains(executionCourse)) {
+						List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+						if(!executionCourses.contains(executionCourse) && !curricularCourses.contains(curricularCourse)) {
 							persistentCurricularCourse.simpleLockWrite(curricularCourse);
 							executionCourses.add(executionCourse);
+							curricularCourses.add(curricularCourse);
 							curricularCourse.setAssociatedExecutionCourses(executionCourses);
+							executionCourse.setAssociatedCurricularCourses(curricularCourses);
 						}
 				}	 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {

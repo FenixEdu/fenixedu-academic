@@ -22,10 +22,12 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
@@ -115,6 +117,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 
 		} catch (ExistingServiceException ex) {
 			throw new ExistingActionException(ex.getMessage(), ex);
+		} catch (NonExistingServiceException exception) {
+			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegree"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
