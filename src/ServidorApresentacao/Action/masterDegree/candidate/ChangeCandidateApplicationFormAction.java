@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoCountry;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -56,6 +57,11 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 							  new Integer(((String) changePersonalInformationForm.get("idIssueDateMonth"))).intValue(),
 							  new Integer(((String) changePersonalInformationForm.get("idIssueDateDay"))).intValue());
 					
+ 	  InfoCountry country = new InfoCountry();
+ 	  country.setName((String) changePersonalInformationForm.get("country"));
+ 	  
+ 	  InfoCountry nationality = new InfoCountry();
+ 	  nationality.setNationality((String) changePersonalInformationForm.get("nationality"));
  
       Object changeArgs[] = new Object[1];
       InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate( 
@@ -86,16 +92,15 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 						   (String) changePersonalInformationForm.get("sex"),
 						   (String) changePersonalInformationForm.get("identificationDocumentType"),
 						   (String) changePersonalInformationForm.get("maritalStatus"),
-						   (String) changePersonalInformationForm.get("country"), 
-						   (String) changePersonalInformationForm.get("nationality"), 
+						   country, 
+						   nationality, 
 						   (String) changePersonalInformationForm.get("specialization"),
 						   ((Integer) changePersonalInformationForm.get("applicationYear")), 
 						   ((Integer) changePersonalInformationForm.get("candidateNumber")),
-						   ((Double) changePersonalInformationForm.get("average")),
+						   (new Double(Double.parseDouble((String) changePersonalInformationForm.get("average")))),
 						   birthDate.getTime(),
 						   idDocumentIssueDate.getTime());
-      
-      
+           
       	InfoMasterDegreeCandidate sessionInfoMasterDegreeCandidate = (InfoMasterDegreeCandidate) sessao.getAttribute("candidateInformation"); 
 		
 		infoMasterDegreeCandidate.setInfoDegree(sessionInfoMasterDegreeCandidate.getInfoDegree());
