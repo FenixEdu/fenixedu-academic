@@ -316,3 +316,142 @@ insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3130, 34839);
 
 -----------------------------------------------------------
 -----------------------------------------------------------
+
+
+-----------------------------------------------------------
+-------- Curso de Química - 93
+
+insert into EXECUTION_COURSE values (34880, 'COMPUTAÇÃO E PROGRAMAÇÃO', 'CP', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3594, 34880);
+
+insert into EXECUTION_COURSE values (34881, 'ELECTROMAGNETISMO E ÓPTICA', 'EO', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3607, 34881);
+
+insert into EXECUTION_COURSE values (34882, 'LABORATÓRIO DE QUÍMICA I', 'LQI', 0, 0, 0, 4, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3235, 34882);
+
+insert into EXECUTION_COURSE values (34883, 'QUÍMICA QUÂNTICA E COMPUTACIONAL', 'QQC', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3617, 34883);
+
+insert into EXECUTION_COURSE values (34884, 'LABORATÓRIO DE QUÍMICA IV', 'LQIV', 0, 0, 0, 4, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3406, 34884);
+
+insert into EXECUTION_COURSE values (34885, 'MECANISMOS REACCIONAIS', 'MR', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3363, 34885);
+
+insert into EXECUTION_COURSE values (34886, 'QUÍMICA ORGANOMETÁLICA', 'QO', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3377, 34886);
+
+insert into EXECUTION_COURSE values (34887, 'QUÍMICA DOS MATERIAIS', 'QM', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3620, 34887);
+
+insert into EXECUTION_COURSE values (34888, 'LABORATÓRIO DE QUÍMICA V', 'LQV', 0, 0, 0, 4, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3621, 34888);
+
+insert into EXECUTION_COURSE values (34889, 'QUÍMICA MEDICINAL', 'QM', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3624, 34889);
+
+insert into EXECUTION_COURSE values (34890, 'SÍNTESE E CARACTERIZAÇÃO DE NANOMATERIAIS', 'SCN', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3625, 34890);
+
+insert into EXECUTION_COURSE values (34891, 'QUIMIOMETRIA', 'Q', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3453, 34891);
+
+insert into EXECUTION_COURSE values (34892, 'ESTÁGIO', 'E', 0, 0, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3522, 34892);
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+-------- Curso de Engenharia Física e Tecnológica - 94
+
+insert into EXECUTION_COURSE values (34893, 'ANÁLISE MATEMÁTICA I A', 'AMIA', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3577, 34893);
+
+insert into EXECUTION_COURSE values (34894, 'ÁLGEBRA LINEAR A', 'ALA', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3575, 34894);
+
+insert into EXECUTION_COURSE values (34895, 'FÍSICA EXPERIMENTAL I', 'FEI', 2, 0, 0, 4, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3539, 34895);
+
+insert into EXECUTION_COURSE values (34896, 'TERMODINÂMICA E ESTRUTURA DA MATÉRIA', 'TEM', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3609, 34896);
+
+insert into EXECUTION_COURSE values (34897, 'ANÁLISE MATEMÁTICA III A', 'AMIIIA', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3581, 34897);
+
+insert into EXECUTION_COURSE values (34898, 'PROJECTO I', 'PI', 0, 0, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3324, 34898);
+
+insert into EXECUTION_COURSE values (34899, 'TÓPICOS EM FÍSICA DE PARTÍCULAS', 'TFP', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3230, 34899);
+
+insert into EXECUTION_COURSE values (34900, 'FÍSICA DOS MEIOS CONTÍNUOS', 'FMC', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3429, 34900);
+
+insert into EXECUTION_COURSE values (34901, 'INSTRUMENTAÇÃO ELECTRÓNICA', 'IE', 2, 0, 0, 4, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3341, 34901);
+
+insert into EXECUTION_COURSE values (34902, 'MECÂNICA ESTATÍSTICA E TRANSIÇÕES DE FASE', 'METF', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3566, 34902);
+
+insert into EXECUTION_COURSE values (34903, 'TEORIA DOS GRUPOS EM FÍSICA', 'TGF', 3, 1, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3570, 34903);
+
+insert into EXECUTION_COURSE values (34904, 'MÉTODOS DA FÍSICA NUCLEAR EM CIÊNCIA E TECNOLOGIA', 'MFNCT', 2, 0, 0, 4, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3574, 34904);
+
+insert into EXECUTION_COURSE values (34905, 'CIÊNCIA E TECNOLOGIA DOS MATERIAIS', 'CTM', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3626, 34905);
+
+insert into EXECUTION_COURSE values (34906, 'COMPLEMENTOS DE ELECTRÓNICA', 'CE', 2, 2, 0, 2, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3627, 34906);
+
+insert into EXECUTION_COURSE values (34907, 'LABORATÓRIO DE ASTROFÍSICA', 'LA', 2, 0, 0, 3, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3512, 34907);
+
+insert into EXECUTION_COURSE values (34908, 'MICRO E NANOTECNOLOGIAS', 'MN', 2, 0, 0, 3, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3629, 34908);
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+-------- Curso de Engenharia Biomédica - 95
+
+insert into EXECUTION_COURSE values (34909, 'ELEMENTOS DE PROGRAMAÇÃO', 'EP', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3595, 34909);
+
+insert into EXECUTION_COURSE values (34910, 'ANÁLISE MATEMÁTICA I A', 'AMIA', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3578, 34910);
+
+insert into EXECUTION_COURSE values (34911, 'ÁLGEBRA LINEAR A', 'ALA', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3576, 34911);
+
+insert into EXECUTION_COURSE values (34912, 'MECÂNICA E ONDAS', 'MO', 3, 2, 0, 1, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3606, 34912);
+
+insert into EXECUTION_COURSE values (34913, '', 'ANÁLISE MATEMÁTICA III A', 'AMIIIA', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3582, 34913);
+
+insert into EXECUTION_COURSE values (34914, '', 'ANÁLISE E SIMULAÇÃO NUMÉRICA', 'ASN', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3588, 34914);
+
+insert into EXECUTION_COURSE values (34915, '', 'TERMODINÂMICA E ESTRUTURA DA MATÉRIA', 'TEM', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3610, 34915);
+
+insert into EXECUTION_COURSE values (34916, '', 'MECÂNICA DOS MEIOS CONTÍNUOS', 'MMC', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3196, 34916);
+
+insert into EXECUTION_COURSE values (34917, '', 'MECÂNICA QUÂNTICA', 'MQ', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3246, 34917);
+
+insert into EXECUTION_COURSE values (34918, '', 'SINAIS E SISTEMAS', 'SS', 3, 2, 0, 0, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3489, 34918);
+
+insert into EXECUTION_COURSE values (34919, '', 'MECANISMOS GERAIS DE DOENÇA', 'MGD', 3, 0, 0, 2, 1, 2, "");
+insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, 3655, 34919);
+
+-----------------------------------------------------------
+-----------------------------------------------------------
