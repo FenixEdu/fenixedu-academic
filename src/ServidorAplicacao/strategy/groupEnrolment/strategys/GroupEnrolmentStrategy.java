@@ -4,12 +4,14 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.strategy.enrolmentGroupPolicy.strategys;
+package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
+import java.util.Calendar;
 import java.util.List;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
+import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.ISuportePersistente;
@@ -22,7 +24,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 
-public abstract class EnrolmentGroupPolicyStrategy implements IEnrolmentGroupPolicyStrategy{
+public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy{
 
 	private IGroupProperties groupProperties = null;
 	int numberOfStudentsToEnrole;
@@ -53,21 +55,40 @@ public abstract class EnrolmentGroupPolicyStrategy implements IEnrolmentGroupPol
 	}
 	
 	public boolean checkNumberOfGroups(IGroupProperties groupProperties)
+	{
+		boolean result = false;
+		try
 		{
-			boolean result = false;
-			try
-			{
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
-				List groups = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-				int numberOfGroups = groups.size();
-				if(numberOfGroups < groupProperties.getGroupMaximumNumber().intValue())
-					result = true;
-			
-			}catch (ExcepcaoPersistencia e) {
-			 }
-			return result;
-		}
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+			List groups = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
+			int numberOfGroups = groups.size();
+			if(numberOfGroups < groupProperties.getGroupMaximumNumber().intValue())
+				result = true;
 		
+		}catch (ExcepcaoPersistencia e) {
+		 }
+		return result;
+	}
+		
+	public boolean checkEnrolmentDate(IGroupProperties groupProperties,Calendar actualDate)
+	{
+		boolean result = false;
+		if(actualDate.after(groupProperties.getEnrolmentBeginDay()) && actualDate.before(groupProperties.getEnrolmentEndDay()))
+			result = true;
+		
+		return result;
+	}
+		
+	public boolean checkShiftType(IGroupProperties groupProperties,ITurno shift)
+	{
+		boolean result = false;
+		if(shift.getTipo().equals(groupProperties.getShiftType()))
+			result = true;
+		
+		return result;
+	}
+
+	
 	public abstract boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup);
 }

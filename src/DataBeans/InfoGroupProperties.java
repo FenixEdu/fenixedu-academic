@@ -6,7 +6,10 @@
  */
 package DataBeans;
 
+import java.util.Calendar;
+
 import Util.EnrolmentGroupPolicyType;
+import Util.TipoAula;
 
 /**
  * @author asnr and scpo
@@ -23,6 +26,10 @@ public class InfoGroupProperties extends InfoObject{
 		private Integer groupMaximumNumber;
 		private String name;
 		private InfoExecutionCourse infoExecutionCourse;
+		private TipoAula shiftType;
+		private Calendar enrolmentBeginDay;
+		private Calendar enrolmentEndDay;
+
 	
 		/** 
 		 * Construtor
@@ -41,7 +48,8 @@ public class InfoGroupProperties extends InfoObject{
 		 */
 		public InfoGroupProperties(Integer maximumCapacity,Integer minimumCapacity,
 								Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
-								Integer groupMaximumNumber,InfoExecutionCourse infoExecutionCourse,String name) {
+								Integer groupMaximumNumber,InfoExecutionCourse infoExecutionCourse,String name,
+								TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay) {
 			this.maximumCapacity=maximumCapacity;
 			this.minimumCapacity=minimumCapacity;
 			this.idealCapacity=idealCapacity;
@@ -49,7 +57,11 @@ public class InfoGroupProperties extends InfoObject{
 			this.groupMaximumNumber=groupMaximumNumber;
 			this.infoExecutionCourse=infoExecutionCourse;
 			this.name = name;
-			}
+			this.shiftType = shiftType;
+			this.enrolmentBeginDay = enrolmentBeginDay;
+			this.enrolmentEndDay = enrolmentEndDay;
+		
+		}
 	
 		/**
 		 * @see java.lang.Object#equals(java.lang.Object)
@@ -75,6 +87,9 @@ public class InfoGroupProperties extends InfoObject{
 			result += ", groupMaximumNumber=" + getGroupMaximumNumber();
 			result += ", name=" + getName();
 			result += ", infoExecutionCourse=" + getInfoExecutionCourse();
+			result += ", shiftType=" + getShiftType();
+			result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
+			result += ", enrolmentEndDay=" + getEnrolmentEndDay();
 			result += "]";
 			return result;
 		}
@@ -132,7 +147,26 @@ public class InfoGroupProperties extends InfoObject{
 			return infoExecutionCourse;
 		}
 	
-		
+	    /**
+		* @return Tipo Aula
+		**/
+		public TipoAula getShiftType() {
+			return shiftType;
+		}
+	
+		/**
+		* @return Calendar
+		**/
+		public Calendar getEnrolmentBeginDay() {
+			return enrolmentBeginDay;
+		}
+
+		/**
+		* @return Calendar
+		**/
+		public Calendar getEnrolmentEndDay() {
+			return enrolmentEndDay;
+		}
 	
 		/**
 		* Sets the maximumCapacity.
@@ -188,5 +222,28 @@ public class InfoGroupProperties extends InfoObject{
 		public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 			this.infoExecutionCourse=infoExecutionCourse;
 		}	
+		
+		/**
+		* Sets the shiftType.
+	 	* @param shiftType The shiftType to set
+		*/
+		public void setShiftType(TipoAula shiftType) {
+			this.shiftType=shiftType;
+		}
 
+		/**
+		* Sets the enrolmentBeginDay.
+		* @param enrolmentBeginDay The enrolmentBeginDay to set
+		*/
+		public void setEnrolmentBeginDay(Calendar enrolmentBeginDay) {
+			this.enrolmentBeginDay=enrolmentBeginDay;
+		}
+
+		/**
+		* Sets the enrolmentEndDay.
+		* @param enrolmentEndDay The enrolmentEndDay to set
+		*/
+		public void setEnrolmentEndDay(Calendar enrolmentEndDay) {
+			this.enrolmentEndDay=enrolmentEndDay;
+		}
 }

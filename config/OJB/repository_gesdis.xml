@@ -681,7 +681,28 @@
     	jdbc-type="VARCHAR"
     />
 	
-    <field-descriptor id="8"
+	<field-descriptor id="8"
+		name="shiftType"
+        column="SHIFT_TYPE"
+    	jdbc-type="INTEGER"
+    	conversion="ServidorPersistente.Conversores.TipoAula2EnumTipoAulaFieldConversion"
+    />
+    
+    <field-descriptor id="9"
+        name="enrolmentBeginDay"
+        column="ENROLMENT_BEGIN_DAY"
+        jdbc-type="DATE"
+        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+    />
+
+    <field-descriptor id="10"
+        name="enrolmentEndDay"
+        column="ENROLMENT_END_DAY"
+        jdbc-type="DATE"
+        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+    />    
+    
+    <field-descriptor id="11"
          name="keyExecutionCourse"
          column="KEY_EXECUTION_COURSE"
     	  jdbc-type="INTEGER"
@@ -692,7 +713,7 @@
          class-ref="Dominio.DisciplinaExecucao"
          proxy="true"
     >
-	<foreignkey field-id-ref="8"/>
+	<foreignkey field-id-ref="11"/>
 	
 	</reference-descriptor>
 

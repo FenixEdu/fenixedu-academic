@@ -5,7 +5,10 @@
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package Dominio;
+import java.util.Calendar;
+
 import Util.EnrolmentGroupPolicyType;
+import Util.TipoAula;
 
 /**
  * @author asnr and scpo
@@ -24,6 +27,11 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	private String name;
 	private Integer keyExecutionCourse;
 	private IDisciplinaExecucao executionCourse;
+	private TipoAula shiftType;
+	private Calendar enrolmentBeginDay;
+	private Calendar enrolmentEndDay;
+
+
 	
 	/** 
 	 * Construtor
@@ -50,7 +58,8 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	 */
 	public GroupProperties(Integer maximumCapacity,Integer minimumCapacity,
 							Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
-	 						Integer groupMaximumNumber,String name,IDisciplinaExecucao executionCourse) {
+	 						Integer groupMaximumNumber,String name,IDisciplinaExecucao executionCourse,
+							TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay) {
 		this.maximumCapacity=maximumCapacity;
 		this.minimumCapacity=minimumCapacity;
 		this.idealCapacity=idealCapacity;
@@ -58,6 +67,10 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		this.groupMaximumNumber=groupMaximumNumber;
 		this.name = name;
 		this.executionCourse=executionCourse;
+		this.shiftType = shiftType;
+		this.enrolmentBeginDay = enrolmentBeginDay;
+		this.enrolmentEndDay = enrolmentEndDay;
+		
 		}
 	
 	/**
@@ -84,6 +97,9 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		result += ", groupMaximumNumber=" + getGroupMaximumNumber();
 		result += ", name=" + getName();
 		result += ", executionCourse=" + getExecutionCourse();
+		result += ", shiftType=" + getShiftType();
+		result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
+		result += ", enrolmentEndDay=" + getEnrolmentEndDay();
 		result += "]";
 		return result;
 	}
@@ -140,12 +156,35 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 
 
 	/**
-	 * @return Turno
+	 * @return DisciplinaExecucao
 	 */
 	public IDisciplinaExecucao getExecutionCourse() {
 		return executionCourse;
 	}
 	
+	/**
+	* @return Tipo Aula
+	**/
+	public TipoAula getShiftType() {
+		return shiftType;
+	}
+	
+	/**
+	* @return Calendar
+	**/
+	public Calendar getEnrolmentBeginDay() {
+		return enrolmentBeginDay;
+	}
+
+	/**
+	* @return Calendar
+	**/
+	public Calendar getEnrolmentEndDay() {
+		return enrolmentEndDay;
+	}
+
+
+
 	/**
 	* Sets the keyExecutionCourse.
 	* @param keyExecutionCourse The keyExecutionCourse to set
@@ -193,12 +232,13 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		this.groupMaximumNumber=groupMaximumNumber;
 	}	
 	/**
-	* Sets the projectName.
-	* @param projectName The projectName to set
+	* Sets the name.
+	* @param name The name to set
 	*/
-		public void setName(String name) {
-			this.name=name;
-		}
+	public void setName(String name) {
+		this.name=name;
+	}
+	
 	/**
 	* Sets the executionCourse.
 	* @param executionCourse The executionCourse to set
@@ -207,4 +247,28 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		this.executionCourse=executionCourse;
 	}	
 
+	/**
+	* Sets the shiftType.
+	* @param shiftType The shiftType to set
+	*/
+	public void setShiftType(TipoAula shiftType) {
+		this.shiftType=shiftType;
 	}
+
+	/**
+	* Sets the enrolmentBeginDay.
+	* @param enrolmentBeginDay The enrolmentBeginDay to set
+	*/
+	public void setEnrolmentBeginDay(Calendar enrolmentBeginDay) {
+		this.enrolmentBeginDay=enrolmentBeginDay;
+	}
+
+	/**
+	* Sets the enrolmentEndDay.
+	* @param enrolmentEndDay The enrolmentEndDay to set
+	*/
+	public void setEnrolmentEndDay(Calendar enrolmentEndDay) {
+		this.enrolmentEndDay=enrolmentEndDay;
+	}
+
+}

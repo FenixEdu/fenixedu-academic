@@ -193,6 +193,9 @@ create table GROUP_PROPERTIES (
    ENROLMENT_POLICY int(11),
    GROUP_MAXIMUM_NUMBER int(11) unsigned not null default'0',
    NAME varchar(50) not null,
+   SHIFT_TYPE int(11),
+   ENROLMENT_BEGIN_DAY date,
+   ENROLMENT_END_DAY date,
    KEY_EXECUTION_COURSE int(11) unsigned not null default'0',
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (NAME,KEY_EXECUTION_COURSE))

@@ -4,7 +4,7 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.strategy.enrolmentGroupPolicy.strategys;
+package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
 import Dominio.IGroupProperties;
 import Util.EnrolmentGroupPolicyType;
@@ -16,17 +16,17 @@ import Util.EnrolmentGroupPolicyType;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 
-public class EnrolmentGroupPolicyStrategyFactory implements IEnrolmentGroupPolicyStrategyFactory{
+public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFactory{
 	//public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory {
 
-		private static EnrolmentGroupPolicyStrategyFactory instance = null;
+		private static GroupEnrolmentStrategyFactory instance = null;
 
-		private EnrolmentGroupPolicyStrategyFactory() {
+		private GroupEnrolmentStrategyFactory() {
 		}
 
-		public static synchronized EnrolmentGroupPolicyStrategyFactory getInstance() {
+		public static synchronized GroupEnrolmentStrategyFactory getInstance() {
 			if (instance == null) {
-				instance = new EnrolmentGroupPolicyStrategyFactory();
+				instance = new GroupEnrolmentStrategyFactory();
 			}
 			return instance;
 		}
@@ -39,9 +39,9 @@ public class EnrolmentGroupPolicyStrategyFactory implements IEnrolmentGroupPolic
 
 
 
-		public IEnrolmentGroupPolicyStrategy getEnrolmentGroupPolicyStrategyInstance(IGroupProperties groupProperties) {
+		public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties) {
 		
-			IEnrolmentGroupPolicyStrategy strategyInstance = null;
+			IGroupEnrolmentStrategy strategyInstance = null;
 			EnrolmentGroupPolicyType policy = groupProperties.getEnrolmentPolicy();
 			
 			if (policy == null)
@@ -49,11 +49,11 @@ public class EnrolmentGroupPolicyStrategyFactory implements IEnrolmentGroupPolic
 
 
 			if (policy.equals(new EnrolmentGroupPolicyType(1))){
-				strategyInstance = new AtomicGroupStrategy();
+				strategyInstance = new AtomicGroupEnrolmentStrategy();
 			} 
 			else 
 				if (policy.equals(new EnrolmentGroupPolicyType(2))){
-					strategyInstance = new IndividualGroupStrategy(); 
+					strategyInstance = new IndividualGroupEnrolmentStrategy(); 
 				}  
 				return strategyInstance;
 			}

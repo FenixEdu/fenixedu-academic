@@ -4,7 +4,7 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package ServidorAplicacao.strategy.enrolmentGroupPolicy.strategys;
+package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
 import Dominio.IGroupProperties;
 
@@ -14,7 +14,7 @@ import Dominio.IGroupProperties;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface IEnrolmentGroupPolicyStrategyFactory {
-	public IEnrolmentGroupPolicyStrategy getEnrolmentGroupPolicyStrategyInstance(IGroupProperties groupProperties);
+public interface IGroupEnrolmentStrategyFactory {
+	public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties);
 		
 }
