@@ -1,0 +1,17 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.page.read-degrees" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/readDegrees_bd.jsp" />
+	</definition>
+	<definition name="df.page.read-degree" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/readDegree_bd.jsp" />
+	</definition>
+	<definition name="df.page.main-page" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/welcomScreen.jsp" />
+	</definition>
+	<definition name="df.page.degrees-to-delete" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/degreesToDelete_bd.jsp" />
+	</definition>
+</tiles-definitions>

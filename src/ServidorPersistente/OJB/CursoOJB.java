@@ -65,14 +65,14 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 			super.lockWrite(degreeToWrite);
 		// else If the degree is mapped to the database, then write any existing changes.
 		else if (
-			(degreeToWrite instanceof Curso)
-				&& ((Curso) degreeFromDB).getCodigoInterno().equals(
-					((Curso) degreeToWrite).getCodigoInterno())) {
+			degreeFromDB.getIdInternal().equals(
+				degreeToWrite.getIdInternal())) {
 			super.lockWrite(degreeToWrite);
 			// else Throw an already existing exception
 		} else
 			throw new ExistingPersistentException();
 	}
+
 
 	public void delete(ICurso degree) throws ExcepcaoPersistencia {
 		try {
@@ -82,20 +82,21 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 			String oqlQuery =
 				"select degreeCurricularPlan from "
 					+ DegreeCurricularPlan.class.getName();
-			oqlQuery += " where degree.sigla = $1 ";
+			oqlQuery += " where degree.nome = $1 ";
 
 			query.create(oqlQuery);
-			query.bind(degree.getSigla());
+			query.bind(degree.getNome());
 			List result = (List) query.execute();
 
-			if (!result.isEmpty()) {
+			if (result.isEmpty())
 				super.delete(degree);
-			} else
-				throw new CantDeletePersistentException();
 
+			else
+				throw new CantDeletePersistentException();
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {

@@ -151,7 +151,7 @@ public static void main(String args[]) throws Exception{
 				// Get the Degree Curricular Plan for the new Degree
 				
 				criteria = new Criteria();
-				criteria.addEqualTo("degreeKey", degree.getCodigoInterno());
+				criteria.addEqualTo("degreeKey", degree.getIdInternal());
 				query = new QueryByCriteria(DegreeCurricularPlan.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);		
 				

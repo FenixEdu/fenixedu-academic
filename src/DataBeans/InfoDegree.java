@@ -15,7 +15,7 @@ import Util.TipoCurso;
  *
  * @author  tfc130
  */
-public class InfoDegree implements Serializable {
+public class InfoDegree extends InfoObject implements Serializable,Comparable {
 	protected String sigla;
 	protected String nome;
 	protected TipoCurso tipoCurso;
@@ -73,7 +73,7 @@ public class InfoDegree implements Serializable {
 	}
 
 	public String toString() {
-		String result = "[INFOLICENCIATURA";
+		String result = "[INFOCURSO";
 		result += ", sigla=" + this.sigla;
 		result += ", nome=" + this.nome;
 		result += ", tipoCurso=" + this.tipoCurso;
@@ -127,5 +127,11 @@ public class InfoDegree implements Serializable {
 	public void setDegreeTypeString(String degreeTypeString) {
 		this.degreeTypeString = degreeTypeString;
 	}
+//alphabetic order
+	public int compareTo(Object arg0) {	
+
+			InfoDegree degree =(InfoDegree) arg0;
+			return this.getNome().compareTo(degree.getNome());
+					}
 
 }

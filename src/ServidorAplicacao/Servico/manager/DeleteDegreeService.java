@@ -1,15 +1,10 @@
-/*
- * Created on 15/Mai/2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoDegree;
 import Dominio.ICurso;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -18,9 +13,6 @@ import ServidorPersistente.exceptions.CantDeletePersistentException;
 
 /**
  * @author lmac1
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class DeleteDegreeService implements IServico{
 
@@ -38,7 +30,7 @@ public class DeleteDegreeService implements IServico{
 	}
 
 	public Boolean run(InfoDegree infoDegree)
-		throws FenixServiceException {
+		throws FenixServiceException	 {
 
 		try {
 			
@@ -54,7 +46,7 @@ public class DeleteDegreeService implements IServico{
 			return new Boolean(true);	
 		   
 		}catch (CantDeletePersistentException e) {
-			throw new FenixServiceException(e);
+			throw new CantDeleteServiceException(e);
 		}catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 			}

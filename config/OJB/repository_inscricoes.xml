@@ -70,7 +70,7 @@
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="Dominio.Curso" table="DEGREE">
 	<field-descriptor
-		name="codigoInterno"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"

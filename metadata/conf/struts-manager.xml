@@ -44,8 +44,8 @@
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-    <!-- page fronting actions -->
-    <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/mainPage.jsp"/>
+    <!-- page fronting actions  -->
+    <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="df.page.main-page"/>
   
     <!--<action	path="/index"
             type="ServidorApresentacao.Action.manager.ReadDegreesAction">    
@@ -53,30 +53,66 @@
 	</action>-->
      
    
-	 <!-- Action for reading all degrees -->
+	 <!-- Action for reading all degrees  -->
       <action path="/readDegrees"
-             input="mainPage.jsp"
+             input="mainPageInput.do"
       	      type="ServidorApresentacao.Action.manager.ReadDegreesAction">
-      	  <forward name="readDegrees" path="/readDegrees.jsp"/>      	      
+      	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
+      
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
-             input="readDegrees_bd.jsp"
+             input="readDegreesInput.do"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
-      	  <forward name="viewDegree" path="/readDegree.jsp"/>      	      
+      	  <forward name="viewDegree" path="/df.page.read-degree"/>      	      
       </action>
          
-      
-	<!-- Action for deletinging a degree -->
-      <!--input="readDegree_bd.jsp"-->  
+	<!-- Action for deleting a degree -->
+     
       <action path="/deleteDegree"
-             type="ServidorApresentacao.Action.manager.DeleteDegreeAction">
-      	  <forward name="readDegrees" path="/readDegrees.jsp"/>      	      
+      	     input="readDegreesInput.do"
+      	     type="ServidorApresentacao.Action.manager.DeleteDegreeAction">
+             
+	<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+         	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
+             
+      	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
+      
+       <!--<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+         	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />  PARA BAIXO QUANDO TIVER COMPLETO-->
+               
+       	<!-- Action for deleting a set of degrees -->
+       		
+       <action path="/degreesToDelete"
+      	     input="selectDegreesInput.do"
+      	     type="ServidorApresentacao.Action.manager.DegreesToDeleteAction">
+      	  <forward name="degreesToDelete" path="df.page.degrees-to-delete"/>      	      
+      </action>
+      
+     <action path="/readDegreesInput"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.read-degrees"/>      	      
+      </action>
+      
+      <action path="/mainPageInput"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.main-page"/>      	      
+      </action>
+      
+      <action path="/selectDegreesInput"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.degrees-to-delete"/>      	      
+      </action>
+      
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.ApplicationResources" />
@@ -86,5 +122,11 @@
       <set-property property="pathnames" 
 		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-manager.xml"/>
 	</plug-in>
+	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-pages-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>    
 
 </struts-config>

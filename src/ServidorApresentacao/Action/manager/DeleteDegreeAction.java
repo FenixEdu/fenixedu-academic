@@ -1,9 +1,3 @@
-/*
- * Created on 16/Mai/2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package ServidorApresentacao.Action.manager;
 
 import java.util.Collections;
@@ -18,18 +12,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoDegree;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.exceptions.CantDeleteActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author lmac1
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class DeleteDegreeAction extends FenixAction{
 	
@@ -49,30 +42,42 @@ public class DeleteDegreeAction extends FenixAction{
 		List infoDegrees =
 							(List) session.getAttribute(
 								SessionConstants.INFO_DEGREES_LIST);
+								
 		
 		InfoDegree infoDegree = (InfoDegree) infoDegrees.get(index.intValue());		
 		
+		Object deleteDegreeArguments[] = { infoDegree };
+		GestorServicos manager = GestorServicos.manager();
 		try {
-			Object deleteDegreeArguments[] = { infoDegree };
-			GestorServicos manager = GestorServicos.manager();
 			
 			Boolean result = (Boolean) manager.executar(userView, "DeleteDegreeService", deleteDegreeArguments);
-
 			session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);
 			
-			List allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService",null);
+		} 
+		catch (CantDeleteServiceException e) {
+     	    throw new CantDeleteActionException(e);
+     	     }
+		catch (FenixServiceException fenixServiceException) {
+	    	throw new FenixActionException(fenixServiceException.getMessage());
+			}
 
+			List allInfoDegrees;
+		try{
+			
+			allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService",null);
+			
+		   }
+			catch (FenixServiceException fenixServiceException){
+			   throw new FenixActionException(fenixServiceException.getMessage());
+		   }
+		     
 		    Collections.sort(allInfoDegrees);
 			session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
 		    
 		    
         	
 		 return mapping.findForward("readDegrees");
-		          
-		   }
-			catch (FenixServiceException fenixServiceException){
-					   throw new FenixActionException(fenixServiceException.getMessage());
-				   }
+
 			
 		}			
 			

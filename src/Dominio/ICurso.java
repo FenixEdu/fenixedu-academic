@@ -14,7 +14,7 @@ import Util.TipoCurso;
  *
  * @author  rpfi
  */
-public interface ICurso {
+public interface ICurso extends IDomainObject{
   public String getSigla();
   public String getNome();
   public TipoCurso getTipoCurso();

@@ -15,14 +15,12 @@ import Util.TipoCurso;
  * @author  Nuno Nunes & Joana Mota
  */
 
-public class Curso implements ICurso {
+public class Curso extends DomainObject implements ICurso {
 	protected String sigla;
 	protected String nome;
 	protected TipoCurso tipoCurso;
 	private List degreeCurricularPlans;
 
-	// códigos internos da base de dados
-	private Integer codigoInterno;
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
 	public Curso() {
@@ -45,7 +43,7 @@ public class Curso implements ICurso {
 
 	public String toString() {
 		String result = "[CURSO";
-		result += ", codInt=" + codigoInterno;
+		result += ", codInt=" + getIdInternal();
 		result += ", sigla=" + sigla;
 		result += ", nome=" + nome;
 		result += ", tipoCurso=" + tipoCurso;
@@ -53,13 +51,6 @@ public class Curso implements ICurso {
 		return result;
 	}
 
-	/**
-	 * Returns the codigoInterno.
-	 * @return int
-	 */
-	public Integer getCodigoInterno() {
-		return codigoInterno;
-	}
 
 	/**
 	 * Returns the nome.
@@ -83,14 +74,6 @@ public class Curso implements ICurso {
 	 */
 	public TipoCurso getTipoCurso() {
 		return tipoCurso;
-	}
-
-	/**
-	 * Sets the codigoInterno.
-	 * @param codigoInterno The codigoInterno to set
-	 */
-	public void setCodigoInterno(Integer codigoInterno) {
-		this.codigoInterno = codigoInterno;
 	}
 
 	/**

@@ -12,8 +12,8 @@ import java.util.List;
 
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -61,7 +61,7 @@ public class ReadDegreesService implements IServico {
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
 //SERAH PRECISO?
-	//if (allSites == null || allSites.isEmpty()) throw new InvalidArgumentsServiceException();
+	if (allDegrees == null || allDegrees.isEmpty()) {return allDegrees;}
 
 	// build the result of this service
 	Iterator iterator = allDegrees.iterator();
