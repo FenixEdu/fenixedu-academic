@@ -805,6 +805,10 @@
 			input="/editExam.jsp"
     		type="ServidorApresentacao.Action.sop.EditExamAction"
     		>
+    	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        		   />
     	<forward name="viewExamsByDayAndShift" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	</action>
 
