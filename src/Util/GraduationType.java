@@ -36,6 +36,11 @@ public class GraduationType {
 		this.type = type;
 	}
 
+	public GraduationType(String type) {
+		if (type.equals(GraduationType.MAJOR_DEGREE_STRING)) this.type = new Integer(GraduationType.MAJOR_DEGREE);
+		if (type.equals(GraduationType.MASTER_DEGREE_STRING)) this.type = new Integer(GraduationType.MASTER_DEGREE);
+	}
+
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof GraduationType) {

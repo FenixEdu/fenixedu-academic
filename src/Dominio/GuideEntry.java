@@ -24,9 +24,8 @@ public class GuideEntry implements IGuideEntry {
   protected Integer quantity;
   
   protected IGuide guide;
- 
-
-  public GuideEntry() { }
+  
+ public GuideEntry() { }
     
   public GuideEntry(GraduationType graduationType,DocumentType documentType,String description,Integer quantity,Double price,IGuide guide) {
 	this.description = description;
@@ -38,6 +37,7 @@ public class GuideEntry implements IGuideEntry {
 
 
   }
+  
   
   public boolean equals(Object obj) {
     boolean resultado = false;
@@ -66,6 +66,7 @@ public class GuideEntry implements IGuideEntry {
     return result;
   }
 
+	
   
 	
 	/**

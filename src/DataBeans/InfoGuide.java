@@ -7,6 +7,9 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.List;
+
+import Util.GuideRequester;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -20,16 +23,22 @@ public class InfoGuide implements Serializable{
 	private String remarks;
 	private InfoPerson infoPerson;
 	private InfoContributor infoContributor;
+	private List infoGuideEntries;
+	private GuideRequester guideRequester; 
+	private InfoExecutionDegree infoExecutionDegree;
 
 	public InfoGuide() {} 
 		
-	public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson, InfoContributor infoContributor){	 		
+	public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson, InfoContributor infoContributor, GuideRequester guideRequester,
+			InfoExecutionDegree infoExecutionDegree){	 		
 		this.number = number;
 		this.year = year;
 		this.total = total;
 		this.remarks = remarks;
 		this.infoPerson = infoPerson;
 		this.infoContributor = infoContributor;
+		this.guideRequester = guideRequester;
+		this.infoExecutionDegree = infoExecutionDegree;
 	}
 	
 	public boolean equals(Object obj) {
@@ -52,18 +61,40 @@ public class InfoGuide implements Serializable{
 	  result += ", contributor=" + infoContributor;
 	  result += ", total=" + total;
 	  result += ", remarks=" + remarks;
+	  result += ", infoGuideEntries=" + infoGuideEntries;
+	  result += ", guideRequester=" + guideRequester;
+	  result += ", infoExecutionDegree=" + infoExecutionDegree;
 	  result += "]";
 	  return result;
 	}
-    
 
-
+	    
+	/**
+	 * @return
+	 */
+	public GuideRequester getGuideRequester() {
+		return guideRequester;
+	}
 
 	/**
 	 * @return
 	 */
 	public InfoContributor getInfoContributor() {
 		return infoContributor;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoExecutionDegree getInfoExecutionDegree() {
+		return infoExecutionDegree;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoGuideEntries() {
+		return infoGuideEntries;
 	}
 
 	/**
@@ -102,10 +133,31 @@ public class InfoGuide implements Serializable{
 	}
 
 	/**
+	 * @param requester
+	 */
+	public void setGuideRequester(GuideRequester requester) {
+		guideRequester = requester;
+	}
+
+	/**
 	 * @param contributor
 	 */
 	public void setInfoContributor(InfoContributor contributor) {
 		infoContributor = contributor;
+	}
+
+	/**
+	 * @param degree
+	 */
+	public void setInfoExecutionDegree(InfoExecutionDegree degree) {
+		infoExecutionDegree = degree;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoGuideEntries(List list) {
+		infoGuideEntries = list;
 	}
 
 	/**

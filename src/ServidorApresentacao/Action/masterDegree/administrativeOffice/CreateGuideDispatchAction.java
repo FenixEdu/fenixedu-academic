@@ -17,8 +17,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
@@ -121,7 +119,9 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			// Get the Information
 			String graduationType = (String) createGuideForm.get("graduationType");
 			String degree = (String) createGuideForm.get("degree");
-			Integer number = Integer.valueOf((String) createGuideForm.get("number"));
+			String numberString = (String) createGuideForm.get("number");
+			
+			Integer number = new Integer(numberString);
 			String requesterType = (String) createGuideForm.get("requester");
 			
 			String contributorNumberString = (String) createGuideForm.get("contributorNumber");
@@ -155,14 +155,12 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			if(contributorNumberFromList != null) contributorNumberToRead = contributorNumberFromList;
 
 			InfoGuide infoGuide = null;
+
 			try {
 				Object args[] = {graduationType, infoExecutionDegree, number, requesterType, contributorNumberToRead, contributorName, contributorAddress };
 				infoGuide = (InfoGuide) serviceManager.executar(userView, "PrepareCreateGuide", args);
 			} catch (NonExistingContributorServiceException e) {
-				ActionMessages actionMessages = new ActionMessages();
-				ActionMessage actionMessage = new ActionMessage("teste");
-				actionMessages.add("teste1", actionMessage);
-				saveMessages(request, actionMessages);
+				session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
 				return mapping.getInputForward();
 			} catch (NonExistingServiceException e) {
 				ActionError actionError = new ActionError("error.nonExisting.requester");
@@ -172,15 +170,16 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				return mapping.getInputForward();
 			}
 			
+			session.removeAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR);
+
 			session.setAttribute(SessionConstants.GUIDE, infoGuide);
 			
-			if (requesterType.equals(GuideRequester.CANDIDATE_STRING))
+			if (requesterType.equals(GuideRequester.CANDIDATE_STRING)){
 				return mapping.findForward("CreateCandidateGuide");
-			
+			}			
 			
 			if (requesterType.equals(GuideRequester.STUDENT_STRING))
 				return mapping.findForward("ChooseItems");
-			
 
 			return null;
 		} else throw new Exception();   

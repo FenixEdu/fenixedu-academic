@@ -23,6 +23,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGuide;
+import DataBeans.InfoGuideEntry;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
@@ -56,6 +57,7 @@ import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Guide;
+import Dominio.GuideEntry;
 import Dominio.IAnnouncement;
 import Dominio.IAula;
 import Dominio.IBibliographicReference;
@@ -75,6 +77,7 @@ import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IGuide;
+import Dominio.IGuideEntry;
 import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
@@ -1218,6 +1221,16 @@ public abstract class Cloner {
 		copyObjectProperties(guide, infoGuide);
 		guide.setContributor(Cloner.copyInfoContributor2IContributor(infoGuide.getInfoContributor()));
 		guide.setPerson(Cloner.copyInfoPerson2IPerson(infoGuide.getInfoPerson()));
+		guide.setExecutionDegree(Cloner.copyInfoExecutionDegree2ExecutionDegree(infoGuide.getInfoExecutionDegree()));
+		
+		if (infoGuide.getInfoGuideEntries() != null){
+			Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
+			List guideEntries = new ArrayList();
+			while(iterator.hasNext()) {
+				guideEntries.add(Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator.next())); 
+			}
+			guide.setGuideEntries(guideEntries);			
+		}
 		return guide;
 	}
 
@@ -1232,7 +1245,42 @@ public abstract class Cloner {
 		copyObjectProperties(infoGuide, guide);
 		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(guide.getContributor()));
 		infoGuide.setInfoPerson(Cloner.copyIPerson2InfoPerson(guide.getPerson()));
+		infoGuide.setInfoExecutionDegree(Cloner.copyIExecutionDegree2InfoExecutionDegree(guide.getExecutionDegree()));
+		
+		List infoGuideEntries = new ArrayList();
+		if (guide.getGuideEntries() != null) {
+			Iterator iterator = guide.getGuideEntries().iterator();
+			while (iterator.hasNext()){
+				infoGuideEntries.add(Cloner.copyIGuideEntry2InfoGuideEntry((IGuideEntry) iterator.next()));
+			}
+		}
+		infoGuide.setInfoGuideEntries(infoGuideEntries);
 		return infoGuide;
 	}
+
+	/**
+	 * 
+	 * @param guideEntry
+	 * @return InfoGuideEntry
+	 */
+	public static InfoGuideEntry copyIGuideEntry2InfoGuideEntry(IGuideEntry guideEntry) {
+		InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+		copyObjectProperties(infoGuideEntry, guideEntry);
+		infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideEntry.getGuide()));
+		return infoGuideEntry;
+	}
+
+	/**
+	 * 
+	 * @param infoGuideEntry
+	 * @return IGuideEntry
+	 */
+	public static IGuideEntry copyInfoGuideEntry2IGuideEntry(InfoGuideEntry infoGuideEntry) {
+		IGuideEntry guideEntry = new GuideEntry();
+		copyObjectProperties(guideEntry, infoGuideEntry);
+		guideEntry.setGuide(Cloner.copyInfoGuide2IGuide(infoGuideEntry.getInfoGuide()));
+		return guideEntry;
+	}
+
 
 }

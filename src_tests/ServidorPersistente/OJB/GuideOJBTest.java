@@ -5,13 +5,18 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.Guide;
 import Dominio.IContributor;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
 import Dominio.IGuide;
 import Dominio.IPessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentContributor;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.GuideRequester;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -23,6 +28,9 @@ public class GuideOJBTest extends TestCaseOJB {
 	IPersistentGuide persistentGuide = null;
 	IPessoaPersistente persistentPerson = null;
 	IPersistentContributor persistentContributor = null;
+	ICursoExecucaoPersistente persistentExecutionDegree = null;
+	IPersistentExecutionYear persistentExecutionYear = null;
+	
 	
 	public GuideOJBTest(java.lang.String testName) {
 		super(testName);
@@ -49,6 +57,8 @@ public class GuideOJBTest extends TestCaseOJB {
 		persistentGuide = persistentSupport.getIPersistentGuide();
 		persistentPerson = persistentSupport.getIPessoaPersistente();
 		persistentContributor = persistentSupport.getIPersistentContributor();
+		persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 	}
     
 	protected void tearDown() {
@@ -66,6 +76,11 @@ public class GuideOJBTest extends TestCaseOJB {
 			IContributor contributor = persistentContributor.readByContributorNumber(new Integer(123));
 			assertNotNull(contributor);
 			
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear);
+			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Licenciatura de Engenharia Electrotecnica e de Computadores", executionYear);
+			assertNotNull(executionDegree);
+			
 			
 			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
 			assertNotNull(guide);
@@ -75,6 +90,7 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getContributor(), contributor);
 			assertEquals(guide.getRemarks(), "guia1");
 			assertEquals(guide.getTotal(), new Double(600.04));
+			assertEquals(guide.getGuideRequester(), GuideRequester.CANDIDATE_TYPE);
 			
 			guide = persistentGuide.readByNumberAndYear(new Integer(2), new Integer(2003));
 			assertNotNull(guide);
@@ -84,6 +100,10 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getContributor(), contributor);
 			assertEquals(guide.getRemarks(), "guia2");
 			assertEquals(guide.getTotal(), new Double(400.04));
+			assertEquals(guide.getExecutionDegree(), executionDegree);
+			
+			assertEquals(guide.getGuideEntries().size(), 2);
+			assertEquals(guide.getGuideRequester(), GuideRequester.CANDIDATE_TYPE);
 					
 
 			guide = persistentGuide.readByNumberAndYear(new Integer(5), new Integer(2003));
@@ -126,6 +146,12 @@ public class GuideOJBTest extends TestCaseOJB {
 			
 				IContributor contributor = persistentContributor.readByContributorNumber(new Integer(123));
 				assertNotNull(contributor);
+
+				IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+				assertNotNull(executionYear);
+				ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Licenciatura de Engenharia Electrotecnica e de Computadores", executionYear);
+				assertNotNull(executionDegree);
+
 			
 				guide.setNumber(new Integer(2));
 				guide.setYear(new Integer(2000));
@@ -133,6 +159,9 @@ public class GuideOJBTest extends TestCaseOJB {
 				guide.setPerson(person);
 				guide.setRemarks("non-existing guide");
 				guide.setTotal(new Double(20.05));
+				guide.setGuideRequester(GuideRequester.CANDIDATE_TYPE);
+				guide.setExecutionDegree(executionDegree);
+				
 			
 				persistentGuide.write(guide);
 						

@@ -30,9 +30,9 @@ INSERT INTO CONTRIBUTOR values (2, 456, 'Nome2', 'Morada2');
 #-----------------------------
 DELETE FROM GUIDE;
 DELETE FROM GUIDE;
-INSERT INTO GUIDE values (1, 1, 2003, 1, 6, 600.04, 'guia1');
-INSERT INTO GUIDE values (2, 2, 2003, 1, 6, 400.04, 'guia2');
-INSERT INTO GUIDE values (3, 1, 2002, 2, 6, 200.04, 'guia3');
+INSERT INTO GUIDE values (1, 1, 2003, 1, 6, 600.04, 'guia1', 1, 10);
+INSERT INTO GUIDE values (2, 2, 2003, 1, 6, 400.04, 'guia2', 1, 10);
+INSERT INTO GUIDE values (3, 1, 2002, 2, 6, 200.04, 'guia3', 1, 10);
 
 
 #-----------------------------
@@ -69,5 +69,8 @@ DELETE FROM PRICE;
 DELETE FROM PRICE;
 INSERT INTO PRICE values (1, 1, 1, 'De conclusão de mestrado', '11.47');
 INSERT INTO PRICE values (2, 1, 2, 'Doc2', '12.45');
-INSERT INTO PRICE values (3, 2, 3, 'Doc3', '13.47');
+INSERT INTO PRICE values (3, 1, 3, 'Doc3', '13.47');
+INSERT INTO PRICE values (4, 2, 4, 'Mestrado', '75');
+INSERT INTO PRICE values (5, 2, 4, 'Integrado', '75');
+INSERT INTO PRICE values (6, 2, 4, 'Especialização', '75');
 

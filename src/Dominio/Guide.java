@@ -1,5 +1,9 @@
 package Dominio;
 
+import java.util.List;
+
+import Util.GuideRequester;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -9,6 +13,7 @@ public class Guide implements IGuide {
   protected Integer internalCode;
   protected Integer keyPerson;
   protected Integer keyContributor;
+  protected Integer keyExecutionDegree;
   
   
   protected Integer number;
@@ -18,17 +23,24 @@ public class Guide implements IGuide {
   
   protected IPessoa person;
   protected IContributor contributor;
+  protected ICursoExecucao executionDegree;
+  
+  protected GuideRequester guideRequester;
+  
+  protected List guideEntries;
+  
 
   public Guide() { }
     
-  public Guide(Integer number,Integer year,Double total, String remarks,IPessoa person,IContributor contributor) {
+  public Guide(Integer number,Integer year,Double total, String remarks,IPessoa person,IContributor contributor, GuideRequester guideRequester, ICursoExecucao executionDegree) {
 	this.contributor = contributor;
 	this.number = number;
 	this.person = person;
 	this.remarks = remarks;
 	this.total = total;
 	this.year = year;
-
+	this.guideRequester = guideRequester;
+	this.executionDegree = executionDegree;
   }
   
   public boolean equals(Object obj) {
@@ -52,15 +64,41 @@ public class Guide implements IGuide {
     result += ", contributor=" + contributor;
 	result += ", total=" + total;
 	result += ", remarks=" + remarks;
+	result += ", guideEntries=" + guideEntries;
+	result += ", guide Requester=" + guideRequester;
+	result += ", execution Degree=" + executionDegree;
     result += "]";
     return result;
   }
+
+	
 
 	/**
 	 * @return
 	 */
 	public IContributor getContributor() {
 		return contributor;
+	}
+	
+	/**
+	 * @return
+	 */
+	public ICursoExecucao getExecutionDegree() {
+		return executionDegree;
+	}
+	
+	/**
+	 * @return
+	 */
+	public List getGuideEntries() {
+		return guideEntries;
+	}
+	
+	/**
+	 * @return
+	 */
+	public GuideRequester getGuideRequester() {
+		return guideRequester;
 	}
 	
 	/**
@@ -127,6 +165,27 @@ public class Guide implements IGuide {
 	}
 	
 	/**
+	 * @param execucao
+	 */
+	public void setExecutionDegree(ICursoExecucao execucao) {
+		executionDegree = execucao;
+	}
+	
+	/**
+	 * @param list
+	 */
+	public void setGuideEntries(List list) {
+		guideEntries = list;
+	}
+	
+	/**
+	 * @param requester
+	 */
+	public void setGuideRequester(GuideRequester requester) {
+		guideRequester = requester;
+	}
+	
+	/**
 	 * @param integer
 	 */
 	public void setInternalCode(Integer integer) {
@@ -180,6 +239,20 @@ public class Guide implements IGuide {
 	 */
 	public void setYear(Integer integer) {
 		year = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyExecutionDegree() {
+		return keyExecutionDegree;
+	}
+	
+	/**
+	 * @param integer
+	 */
+	public void setKeyExecutionDegree(Integer integer) {
+		keyExecutionDegree = integer;
 	}
 
 }

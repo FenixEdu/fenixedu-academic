@@ -15,7 +15,7 @@
    <table>
 
     <html:form action="/createGuideDispatchAction?method=requesterChosen">
-       <!-- Degree -->
+      <!-- Degree -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.degree"/> </td>
          <td>
@@ -60,9 +60,8 @@
          <td><html:text property="contributorNumber"/>
          
          
-         <logic:messagesNotPresent message="true">
-
-
+         <logic:notPresent name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">
+     	  <html:hidden property="page" value="1"/>
                   &nbsp;&nbsp;ou&nbsp;&nbsp; 
                  <html:select property="contributorList">
                    <option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
@@ -70,11 +69,11 @@
             	 </html:select>        
              </td>
            </tr> 
-		</logic:messagesNotPresent >
+		</logic:notPresent >
 		
-		<logic:messagesPresent message="true" >
+		<logic:present name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">
 		
-     	  <html:hidden property="page" value="1"/>
+     	  <html:hidden property="page" value="2"/>
              </td>
            </tr> 
     		<h2><bean:message key="error.masterDegree.administrativeOffice.nonExistingContributor"/></h2>
@@ -87,7 +86,7 @@
              <td><bean:message key="label.masterDegree.administrativeOffice.contributorAddress"/> </td>
              <td><html:text property="contributorAddress"/>
     		</tr>
-		</logic:messagesPresent >
+		</logic:present >
       </table>
 
              <html:submit value="Seguinte" styleClass="button" property="ok"/>

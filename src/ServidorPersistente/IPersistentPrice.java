@@ -3,6 +3,8 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.IPrice;
+import Util.DocumentType;
 import Util.GraduationType;
 
 /**
@@ -25,6 +27,16 @@ public interface IPersistentPrice extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readByGraduationType(GraduationType graduationType) throws ExcepcaoPersistencia; 
-		
+
+
+	/**
+	 * 
+	 * @param graduationType
+	 * @param documentType
+	 * @param description
+	 * @return IPrice
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IPrice readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType, DocumentType documentType, String description) throws ExcepcaoPersistencia; 		
 
 }

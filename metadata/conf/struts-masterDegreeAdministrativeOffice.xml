@@ -60,6 +60,16 @@
         	<form-property name="contributorList" type="java.lang.String" />
       </form-bean>
 
+	  <!-- Bean for ready to create a guide  -->
+      <form-bean name="guideCreateReady" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+        	<form-property name="othersDescription" type="java.lang.String" />
+        	<form-property name="othersPrice" type="java.lang.String" />
+      </form-bean>
+
+
       <form-bean name="errorMailForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -181,6 +191,7 @@
       	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
       	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
       </action>
+
       <!-- action to create a guide -->
       <action attribute="createGuideForm"
       		  input="/guide/createGuide.jsp"
@@ -190,9 +201,21 @@
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
               validate="true">
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
-	         <forward name="CreateCandidateGuide" path="/guide/createCandidateGuide.jsp"/>  
+	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
       </action>
 
+
+      <!-- TTTEEEEMMMMPPPPP -->
+      <action attribute="guideCreateReady"
+      		  input="/guide/createGuideReady.jsp"
+      	      name="guideCreateReady"
+		      path="/createGuideReadyDispatchAction"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
+              validate="true">
+	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
+	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
+      </action>
 
 
     </action-mappings>

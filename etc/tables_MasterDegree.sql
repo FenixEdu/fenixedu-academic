@@ -60,6 +60,8 @@ create table GUIDE (
    KEY_PERSON integer(11) not null default '0',
    TOTAL float(11,2) not null default '0.00',
    REMARKS text,
+   GUIDE_REQUESTER integer(11) not null,
+   KEY_EXECUTION_DEGREE integer(11) not null,
    primary key (ID_INTERNAL),
    unique u1 (NUMBER,YEAR))
    type=InnoDB;

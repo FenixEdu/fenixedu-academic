@@ -5,8 +5,10 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import Dominio.IPrice;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentPrice;
+import Util.DocumentType;
 import Util.GraduationType;
 
 /**
@@ -53,7 +55,7 @@ public class PriceOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			List result = persistentPrice.readAll();
 			assertTrue(!result.isEmpty());
-			assertEquals(result.size(), 3);
+			assertEquals(result.size(), 6);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex) {
 			fail("testReadAllPrices: unexpected exception");
@@ -67,11 +69,31 @@ public class PriceOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			List result = persistentPrice.readByGraduationType(GraduationType.MAJOR_DEGREE_TYPE);
 			assertTrue(!result.isEmpty());
-			assertEquals(result.size(), 2);
+			assertEquals(result.size(), 3);
 			
 			result = persistentPrice.readByGraduationType(GraduationType.MASTER_DEGREE_TYPE);
 			assertTrue(!result.isEmpty());
-			assertEquals(result.size(), 1);
+			assertEquals(result.size(), 3);
+
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testReadAllByGraduationType: unexpected exception" + ex);
+		}
+	}
+
+	public void testReadByGraduationTypeAndDocumentTypeAndDescription() {
+		System.out.println("Test 3 - Read By Graduation Type And Document Type And Description");        
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			IPrice price = persistentPrice.readByGraduationTypeAndDocumentTypeAndDescription(GraduationType.MASTER_DEGREE_TYPE, DocumentType.APPLICATION_EMOLUMENT_TYPE, "Mestrado");
+			assertNotNull(price);
+		
+			assertEquals(price.getDescription(), "Mestrado");
+			assertEquals(price.getDocumentType(), DocumentType.APPLICATION_EMOLUMENT_TYPE);
+			assertEquals(price.getGraduationType(), GraduationType.MASTER_DEGREE_TYPE);
+			assertEquals(price.getPrice(), new Double(75));
+			
 
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex) {

@@ -4,6 +4,6 @@
   <tiles:put name="serviceName" value="Secretaria de Pós-Graduação" />
   <tiles:put name="navLocal" value="/posGraduacao/guide/guideMenu.jsp" />
   <tiles:put name="navGeral" value="/posGraduacao/globalNav.jsp" />
-  <tiles:put name="body" value="/posGraduacao/guide/createCandidateGuide_bd.jsp" />
+  <tiles:put name="body" value="/posGraduacao/guide/createGuideReady_bd.jsp" />
   <tiles:put name="footer" value="/posGraduacao/copyrightDefault.jsp" />
 </tiles:insert>

@@ -1,6 +1,5 @@
 /*
- * Sexo.java
- *
+ * 
  * Created on 13 de Novembro de 2002, 22:17
  */
 
@@ -33,7 +32,6 @@ public class GuideRequester {
     
     private Integer type;
 
-    /** Creates a new instance of Sexo */
     public GuideRequester() {
     }
     

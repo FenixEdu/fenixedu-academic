@@ -232,6 +232,17 @@
 	     column="REMARKS"
 	     jdbc-type="VARCHAR"
 	  />
+	  <field-descriptor 
+	     name="guideRequester"
+	     column="GUIDE_REQUESTER"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaGuideRequester2SqlGuideRequesterFieldConversion"
+	  />
+	   <field-descriptor 
+	     name="keyExecutionDegree"
+	     column="KEY_EXECUTION_DEGREE"
+	     jdbc-type="INTEGER"
+	  />
 	  
  	  <reference-descriptor
          	name="contributor"
@@ -248,6 +259,21 @@
       	  >
           <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>
+      
+     <reference-descriptor
+     	name="executionDegree"
+     	class-ref="Dominio.CursoExecucao"
+     	proxy="true"
+      >
+      <foreignkey field-ref="keyExecutionDegree"/>
+      </reference-descriptor>
+       
+    <collection-descriptor
+         name="guideEntries"
+         element-class-ref="Dominio.GuideEntry"
+       >
+       <inverse-foreignkey field-ref="keyGuide"/>
+     </collection-descriptor>
        
 	 </class-descriptor>
 	 
