@@ -1,10 +1,9 @@
 package ServidorAplicacao.Servico.gesdis;
 
 /**
- * Serviço ObterSitios.
+ * Created on 19/03/2003
  *
- * @author Joao Pereira
- * @author Ivo Brandão
+ * @author lmac1
  */
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class ReadSections implements IServico {
   }
 
   /**
-   * Executes the service. Returns the current collection of infosections.
+   * Executes the service. Returns the current collection of all infosections that belong to a site.
    */
   public List run(InfoSite infoSite) throws FenixServiceException {
     
