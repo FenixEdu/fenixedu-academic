@@ -35,7 +35,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
 import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
-import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextLookupDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -48,7 +48,7 @@ import Util.TipoAula;
  * @author Luis Cruz & Sara Ribeiro
  */
 public class LessonManagerDispatchAction
-	extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+	extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextLookupDispatchAction {
 
 	public static String INVALID_TIME_INTERVAL =
 		"errors.lesson.invalid.time.interval";
@@ -69,6 +69,8 @@ public class LessonManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		System.out.println("################## Start if Create Room ###################");
 
 		DynaActionForm criarAulaForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
@@ -189,20 +191,40 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
+		System.out.println("################## Start if Store Changes ###################");
+
+		System.out.println("Parameter InfoLesson OID= " + request.getParameter("infoAula_oid"));
+		System.out.println("Attribute InfoLesson OID= " + request.getAttribute("infoAula_oid"));
+
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
 		ContextUtils.setExecutionPeriodContext(request);
 		ContextUtils.setExecutionDegreeContext(request);
 		ContextUtils.setCurricularYearContext(request);
+		ContextUtils.setExecutionCourseContext(request);
 
 		if (sessao != null) {
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
 			GestorServicos gestor = GestorServicos.manager();
-			InfoLesson iAulaAntiga =
-				(InfoLesson) request.getAttribute("infoAula");
+			
+			RequestUtils.setLessonTypes(request);
+			
+			Integer oldLessonOID = new Integer(request.getParameter("infoAula_oid"));
+
+			Object args[] =	{ oldLessonOID };
+
+			InfoLesson iAulaAntiga = null;
+				iAulaAntiga =
+					(InfoLesson) gestor.executar(
+						userView,
+						"ReadLessonByOID",
+						args);
+			
+			//InfoLesson iAulaAntiga =
+			//	(InfoLesson) request.getAttribute("infoAula");
 
 			Calendar inicio = Calendar.getInstance();
 			inicio.set(
@@ -270,7 +292,7 @@ public class LessonManagerDispatchAction
 
 			InfoExecutionCourse iDE =
 				(InfoExecutionCourse) request.getAttribute(
-					"infoDisciplinaExecucao");
+					SessionConstants.EXECUTION_COURSE);
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
@@ -290,10 +312,14 @@ public class LessonManagerDispatchAction
 			if (actionErrors.isEmpty()) {
 				//sessao.removeAttribute("infoAula");
 
+				System.out.println("Store Changes, if...................");
+
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} else {
+				System.out.println("Store Changes, else...................");
+				
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
@@ -308,18 +334,34 @@ public class LessonManagerDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
+		System.out.println("################## Start of Change Room ###################");
+
+
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
 		ContextUtils.setExecutionPeriodContext(request);
 		ContextUtils.setExecutionDegreeContext(request);
 		ContextUtils.setCurricularYearContext(request);
+		ContextUtils.setExecutionCourseContext(request);
 
 		if (sessao != null) {
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
 			GestorServicos gestor = GestorServicos.manager();
+
+			RequestUtils.setLessonTypes(request);
+
+			Integer oldLessonOID = new Integer(request.getParameter("infoAula_oid"));
+			Object argsLesson[] =	{ oldLessonOID };
+			InfoLesson iAulaAntiga = null;
+				iAulaAntiga =
+					(InfoLesson) gestor.executar(
+						userView,
+						"ReadLessonByOID",
+						argsLesson);
+			request.setAttribute("infoAula", iAulaAntiga);
 
 			DiaSemana weekDay =
 				new DiaSemana(
@@ -360,9 +402,9 @@ public class LessonManagerDispatchAction
 				infoLesson.setFim(fim);
 
 				InfoExecutionPeriod infoExecutionPeriod =
-					(InfoExecutionPeriod) (sessao
+					(InfoExecutionPeriod) (request
 						.getAttribute(
-							SessionConstants.INFO_EXECUTION_PERIOD_KEY));
+							SessionConstants.EXECUTION_PERIOD));
 
 				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
@@ -397,10 +439,15 @@ public class LessonManagerDispatchAction
 				request.setAttribute("listaSalas", listaSalas);
 				request.setAttribute("listaInfoSalas", emptyRoomsList);
 
+				System.out.println("Change Room, if...................");
+
 				String parameter =
 					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} else {
+				
+				System.out.println("Change Room, else...................");
+				
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
@@ -414,6 +461,9 @@ public class LessonManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		System.out.println("################## Start of Choose Room ###################");
+
 
 		//super.execute(mapping, form, request, response);
 		ContextUtils.setExecutionPeriodContext(request);

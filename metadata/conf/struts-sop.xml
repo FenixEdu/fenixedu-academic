@@ -485,7 +485,7 @@
              parameter="operation"
              name="aulaForm"
              scope="request"
-             input="/editarAula.jsp">             
+             input="/prepararEditarAula.do">
 		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 				   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
