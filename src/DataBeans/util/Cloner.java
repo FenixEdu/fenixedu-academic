@@ -2578,11 +2578,12 @@ public abstract class Cloner
 		if (enrolment instanceof IEnrolmentInOptionalCurricularCourse)
 		{
 			infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
-			infoCurricularCourseOption =
-				Cloner.copyCurricularCourse2InfoCurricularCourse(
-					((IEnrolmentInOptionalCurricularCourse) enrolment).getCurricularCourseForOption());
-			((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment).setInfoCurricularCourseForOption(
-				infoCurricularCourseOption);
+			ICurricularCourse curricularCourseForOption = ((IEnrolmentInOptionalCurricularCourse) enrolment).getCurricularCourseForOption();
+			if (curricularCourseForOption != null)
+			{
+				infoCurricularCourseOption = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourseForOption);
+				((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment).setInfoCurricularCourseForOption(infoCurricularCourseOption);
+			}
 		}
 		else if (enrolment instanceof IEnrolmentInExtraCurricularCourse)
 		{

@@ -3,13 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<%@ page import="java.util.Collection" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoGuideSituation" %>
-<%@ page import="DataBeans.InfoGuide" %>
-<%@ page import="Util.State" %>
 <%@ page import="Util.SituationOfGuide" %>
-<%@ page import="ServidorAplicacao.Servico.UserView" %>
 
    	  <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session" type="DataBeans.InfoGuide"/>  		
       <bean:define id="number" name="infoGuide" property="number" />

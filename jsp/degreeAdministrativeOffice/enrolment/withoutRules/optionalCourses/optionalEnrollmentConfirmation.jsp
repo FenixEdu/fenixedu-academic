@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.EnrolmentState" %>
+<%@ page import="Util.EnrolmentState, Util.CurricularCourseType" %>
 
 <h2><bean:message key="title.student.LEEC.optional.enrollment"/></h2>
 
@@ -98,6 +98,14 @@
 				</td>
 				<td class="listClasses" style="text-align:left">
 					<bean:write name="curriculumElem" property="infoCurricularCourse.name"/>
+					<logic:equal name="curriculumElem" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
+						<logic:notEmpty name="curriculumElem" property="infoCurricularCourseForOption">
+							-&nbsp;<bean:write name="curriculumElem" property="infoCurricularCourseForOption.name"/>
+						</logic:notEmpty>
+						<logic:empty name="curriculumElem" property="infoCurricularCourseForOption">
+							-&nbsp;<bean:message key="message.not.regular.optional.enrollment"/>
+						</logic:empty>
+					</logic:equal>
 				</td>
 			  <td class="listClasses">
 				<logic:notEqual name="curriculumElem" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">

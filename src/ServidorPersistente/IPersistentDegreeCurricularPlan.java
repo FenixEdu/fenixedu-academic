@@ -6,6 +6,7 @@ import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DegreeCurricularPlanState;
+import Util.TipoCurso;
 
 public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
 
@@ -16,4 +17,5 @@ public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
 	public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree) throws ExcepcaoPersistencia;
 	public List readByDegree(ICurso degree) throws ExcepcaoPersistencia;
 	public List readByDegreeAndState(ICurso degree,DegreeCurricularPlanState state) throws ExcepcaoPersistencia;
+    public List readByDegreeTypeAndState(TipoCurso degreeType, DegreeCurricularPlanState state) throws ExcepcaoPersistencia;
 }

@@ -29,6 +29,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoObject;
 import DataBeans.InfoStudent;
+import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -160,6 +161,7 @@ public class OptionalCoursesEnrollmentManagerDispatchAction extends DispatchActi
 
 		optionalCoursesEnrolmentForm.set("executionDegreeID", selectedExecutionDegree.getIdInternal());
 		keepFromElementsValues(optionalCoursesEnrolmentForm, request);
+		keepStudentEnrolmentContext(infoStudent, infoExecutionYear, request);
 
 		return mapping.findForward("showAvailableExecutionDegrees");
 	}
@@ -628,4 +630,25 @@ public class OptionalCoursesEnrollmentManagerDispatchAction extends DispatchActi
 
 		Collections.sort(curriculum, chainComparator);
 	}
+
+	/**
+	 * @param infoStudent
+	 * @param infoExecutionYear
+	 * @param request
+	 */
+	private void keepStudentEnrolmentContext(InfoStudent infoStudent, InfoExecutionYear infoExecutionYear, HttpServletRequest request)
+	{
+		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+
+		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+		infoStudentCurricularPlan.setInfoStudent(infoStudent);
+		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+
+		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
+		infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
+
+		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
+	}
+
 }

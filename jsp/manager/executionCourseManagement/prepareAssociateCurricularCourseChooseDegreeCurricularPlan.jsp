@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoExecutionPeriod" %>
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
 <span class="error"><html:errors/></span>

@@ -11,6 +11,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DegreeCurricularPlanState;
+import Util.TipoCurso;
 
 /**
  * @author dcs-rjao
@@ -106,4 +107,13 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 
         return (IDegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
     }
+
+    public List readByDegreeTypeAndState(TipoCurso degreeType, DegreeCurricularPlanState state) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degree.tipoCurso", degreeType);
+        criteria.addEqualTo("state", state);
+        return queryList(DegreeCurricularPlan.class, criteria);
+    }
+
 }

@@ -20,7 +20,6 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
-import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
@@ -31,11 +30,11 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.CurricularCourseType;
 import Util.EnrolmentState;
 import Util.TipoCurso;
 
@@ -79,14 +78,15 @@ public class ReadCurricularCoursesToEnroll implements IService
 			}
 
 			//Degree Curricular Plan
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-				sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-			degreeCurricularPlan.setIdInternal(executionDegree.getCurricularPlan().getIdInternal());
-			degreeCurricularPlan =
-				(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
-					degreeCurricularPlan,
-					false);
+			IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
+//			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+//				sp.getIPersistentDegreeCurricularPlan();
+//			IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+//			degreeCurricularPlan.setIdInternal(executionDegree.getCurricularPlan().getIdInternal());
+//			degreeCurricularPlan =
+//				(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
+//					degreeCurricularPlan,
+//					false);
 			if (degreeCurricularPlan == null && degreeCurricularPlan.getCurricularCourses() == null)
 			{
 				throw new FenixServiceException("error.degree.noData");
@@ -98,7 +98,7 @@ public class ReadCurricularCoursesToEnroll implements IService
 			if ((curricularYearsList == null || curricularYearsList.size() <= 0)
 				&& (curricularSemestersList == null || curricularSemestersList.size() <= 0))
 			{
-				curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
+				curricularCoursesFromDegreeCurricularPlan = filterOptionalCourses(degreeCurricularPlan.getCurricularCourses());
 			}
 			else
 			{
@@ -106,7 +106,7 @@ public class ReadCurricularCoursesToEnroll implements IService
 				final List curricularYearsListFinal = verifyYears(curricularYearsList);
 				final List curricularSemestersListFinal = verifySemesters(curricularSemestersList);
 
-				curricularCoursesFromDegreeCurricularPlan =
+				List result =
 					(
 						List) CollectionUtils
 							.select(degreeCurricularPlan.getCurricularCourses(), new Predicate()
@@ -136,6 +136,8 @@ public class ReadCurricularCoursesToEnroll implements IService
 					}
 
 				});
+				
+				curricularCoursesFromDegreeCurricularPlan = filterOptionalCourses(result);
 			}
 
 			//Student Curricular Plan
@@ -273,5 +275,24 @@ public class ReadCurricularCoursesToEnroll implements IService
 			infoCurricularCoursesToChoose);
 
 		return infoStudentEnrolmentContext;
+	}
+
+	/**
+	 * @param curricularCourses
+	 * @return List
+	 * @author David Santos
+	 */
+	private List filterOptionalCourses(List curricularCourses)
+	{
+		List result = (List) CollectionUtils.select(curricularCourses, new Predicate()
+		{
+			public boolean evaluate(Object arg0)
+			{
+				ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+				return !curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
+			}
+		});
+		
+		return result;
 	}
 }

@@ -577,4 +577,21 @@
 				 process-enrolments-no-longer-coming">
 	</target>
 
+<!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+	<target name="run-stats-for-GEP" depends="compile-proj">
+		<java classname="Tools.GEPDataGenerator" fork="yes" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg line="out.txt"/>
+		</java>
+	</target>
+
 </project>

@@ -20,7 +20,7 @@
 	<property name="build.web-client.webinf" value="${build.web-client}/WEB-INF"/>
 	<property name="build.web-client.webinf.classes" value="${build.web-client.webinf}/classes"/>
 	<property name="build.web-client.webinf.libs" value="${build.web-client.webinf}/lib"/>
-	<property name="build.standalone" value="${build.home}/standalone"/>
+	<property name="build.standalone" value="${build.home}/standalone/${app.name}"/>
 	<property name="build.standalone.webinf" value="${build.standalone}/WEB-INF"/>
 	<property name="build.standalone.webinf.classes" value="${build.standalone.webinf}/classes"/>
 	<property name="build.standalone.webinf.libs" value="${build.standalone.webinf}/lib"/>
@@ -551,4 +551,21 @@
 		</copy>
 	</target>
 
+	<target name="delete-property-values">
+		<delete>
+			<fileset dir="${build.app-server}">
+				<include name="**/**/*.xml"/>
+		    	<include name="**/**/slide.properties"/>
+		    	<include name="**/ServidorPersistenteConfig.properties"/>
+		    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
+		    	<include name="**/**/IstFtpServerConfig.properties"/>
+		    	<include name="**/**/DegreeGradesFtpServerConfig.properties"/>
+			</fileset>
+			<fileset dir="${build.web-client}">
+				<include name="**/**/*.xml"/>
+				<include name="**/**/ApplicationResources.properties"/>
+	            <include name="**/**/IstFtpServerConfig.properties"/>
+			</fileset>
+		</delete>
+	</target>
 </project>

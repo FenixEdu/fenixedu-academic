@@ -8,6 +8,8 @@ NEW FEATURES:
 -manager area: it's now possible to dissociate an execution course from a curricular course in the curricular course site.
 -added to InfoAttendWithEnrollment a map with the shifts a student is enrolled in
 -added the shifts the students are enrolled in to the student list table and also to the excell file in the teacher and coordinator areas
+- Added 'Enrollment in Optional Curricular Courses' feature for the Degree Administrative Office Portal.
+- Added a script for generating data for GEP.
 
 
 NOTES:
@@ -30,6 +32,8 @@ CHANGES:
 - ReadStudentsByCurricularCourse is now a berserk service
 - list of students of an execution course now displays "total number of enrollments" instead of "number of enrollments"
 - teachers can now view the list of credits of all execution periods with credits
+- New way of showing enrollments in optional curricular courses in the various enrollment interfaces and in the student curriculum.
+- Some JSPs were cleaned up for compilation warnings removal.
 
 BUG FIXES:
 - fixed [#116 ]- www.ist.utl.pt/serviços/	
@@ -47,6 +51,7 @@ BUG FIXES:
 - fixed bug [ #127 ] edit curricular course information in the manager portal doesn't work
 - fixed bug [ #128 ] class cast Exception in ExamEnrollmentManager
 - fixed bug [ #131 ] cannot store files to fenix
+- Fixed a bug in Cloner.java when cloning EnrolmentInOptionalCourse to InfoEnrolmentInOptionalCourse
  
 KNOWN ISSUES:
 - method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 

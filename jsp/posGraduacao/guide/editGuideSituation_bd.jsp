@@ -2,15 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoGuideSituation" %>
-<%@ page import="DataBeans.InfoGuide" %>
-<%@ page import="Util.State" %>
 <%@ page import="Util.Data" %>
 <%@ page import="Util.SituationOfGuide" %>
-<%@ page import="ServidorAplicacao.Servico.UserView" %>
 
    		<bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session"/>  		
    		<bean:define id="guideSituation" name="infoGuide" property="infoGuideSituation"/>  		

@@ -6,9 +6,6 @@
 
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.lang.String" %>
-<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="DataBeans.InfoShift"%>
 

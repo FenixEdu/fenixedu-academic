@@ -1363,13 +1363,13 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		List optionalAndTFCCurricularCourses = new ArrayList();
 		
 		List result =
-			curricularCourseDAO.readAllByDegreeCurricularPlanAndType(
-				studentEnrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan(),
-				CurricularCourseType.OPTIONAL_COURSE_OBJ);
+//			curricularCourseDAO.readAllByDegreeCurricularPlanAndType(
+//				studentEnrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan(),
+//				CurricularCourseType.OPTIONAL_COURSE_OBJ);
+//
+//		optionalAndTFCCurricularCourses.addAll(result);
 
-		optionalAndTFCCurricularCourses.addAll(result);
-
-		result =
+//		result =
 			curricularCourseDAO.readAllByDegreeCurricularPlanAndType(
 				studentEnrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan(),
 				CurricularCourseType.TFC_COURSE_OBJ);
