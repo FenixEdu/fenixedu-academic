@@ -14,7 +14,6 @@
                     <td>
                         <br>
                         <h2><bean:write name="announcement" property="title"/></h2>
-						<bean:write name="announcement" property="creationDate"/>
                     </td>
                 </tr>
                 <tr>
@@ -25,6 +24,7 @@
                 </tr>
                 <tr>
                 	<td>
+                		<bean:message key="label.creationDate" /><bean:write name="announcement" property="creationDate"/></BR>
                 		<bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/>
                 	</td>
             	</tr>
