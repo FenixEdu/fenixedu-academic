@@ -3,9 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-
 <h2><bean:message key="title.teacherInformation"/></h2>
-
 <logic:present name="infoSiteTeacherInformation"> 
 		<table class="infoselected" width="100%">
 			<tr>

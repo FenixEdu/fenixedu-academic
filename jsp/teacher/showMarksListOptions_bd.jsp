@@ -1,8 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="Util.EvaluationType" %>
-<%@ page import="org.apache.struts.Globals" %>
 <p></p>
 <br />
 

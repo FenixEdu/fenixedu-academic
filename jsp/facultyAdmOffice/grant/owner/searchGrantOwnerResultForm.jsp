@@ -2,8 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="org.apache.struts.util.RequestUtils" %>
-
 <%-- Present number of hits of search --%>
 <bean:size id="resultSize" name="infoGrantOwnerList"/>
 <p><bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/></p>
@@ -40,7 +38,6 @@
 		<td class="listClasses-header">
 		</td>				
 	</tr>
-	
 	<%-- Table with result of search --%>
 	<logic:iterate id="infoGrantOwner" name="infoGrantOwnerList">
 		<tr>
