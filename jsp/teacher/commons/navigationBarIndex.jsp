@@ -7,6 +7,11 @@
   	</html:link>
   </li>
   <li>
+  	<html:link href="<%= request.getContextPath() + "/teacher/prepareTeacherCreditsSheet.do" %>">
+  		<bean:message key="link.teacher.tutor.operations"/>
+  	</html:link>  
+  </li>  
+  <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/teacherInformation.do?method=prepareEdit&amp;page=0" %>">
   		<bean:message key="link.manage.teacherInformation"/>
   	</html:link>
@@ -14,8 +19,7 @@
   <li>
   	<html:link href="<%= request.getContextPath() + "/teacher/prepareTeacherCreditsSheet.do" %>">
   		<bean:message key="link.view.teacher.credits.sheet"/>
-  	</html:link>
-  
+  	</html:link>  
   </li>
 <%--  <li>
   	<html:link forward="creditsManagement" paramId="teacherOID" paramName="infoTeacher" paramProperty="idInternal">

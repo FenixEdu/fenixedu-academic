@@ -45,7 +45,7 @@
 					<br/>
 				</li>
 				<li>
-					<html:link 		page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0">
+					<html:link page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0">
 				<bean:message key="link.studentListByCourse" /></html:link>
 		        	<br/>
 					<br/>
@@ -81,7 +81,7 @@
 				<br/>
 			</li>
 			<li>
-				<html:link page="/tutorManagement.do?method=prepareChooseTutor" paramId="executionDegreeId" paramName="infoExecutionDegree" paramProperty="idInternal">
+				<html:link page="/studentEnrollementSection.do" paramId="executionDegreeId" paramName="infoExecutionDegree" paramProperty="idInternal">
 					<bean:message key="label.coordinator.studentInformation"/>
 				</html:link>
 				<br/>

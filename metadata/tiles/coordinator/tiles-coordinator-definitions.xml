@@ -15,14 +15,18 @@
 	</definition>
 	
 	<definition name="definition.coordinator.two-column.extra-menu" extends="df.layout.two-column.extra-menu">	  
-	   <put name="title" value=".IST - Coordenador" />
-  	 <put name="serviceName" value="Portal do Coordenador" />
- 	   <put name="navLocal" value="/coordinator/coordinatorMainMenu.jsp" /> 	   
- 	   <put name="navLocalExtra" value="" /> 	   
- 	   <put name="navGeral" value="/coordinator/commonNavGeralCoordinator.jsp" />
-     <put name="body-context" value="/coordinator/context.jsp" />  
-     <put name="body" value="" />
-     <put name="footer" value="/coordinator/copyrightDefault.jsp" />
+		<put name="title" value=".IST - Coordenador" />
+  		<put name="serviceName" value="Portal do Coordenador" />
+ 	   	<put name="navLocal" value="/coordinator/coordinatorMainMenu.jsp" /> 	   
+ 	   	<put name="navLocalExtra" value="" /> 	   
+ 	   	<put name="navGeral" value="/coordinator/commonNavGeralCoordinator.jsp" />
+	     <put name="body-context" value="/coordinator/context.jsp" />  
+    	 <put name="body" value="" />
+	     <put name="footer" value="/coordinator/copyrightDefault.jsp" />
+	</definition>
+	
+	<definition name="definition.coordinator.two-column.extra-menu.student" extends="definition.coordinator.two-column.extra-menu">	  
+		<put name="navLocalExtra" value="/coordinator/enrollment/enrollmentStudentMenu.jsp" />		
 	</definition>
 	
 </tiles-definitions>		

@@ -65,6 +65,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 	{
 		try
 		{
+			System.out.println("-->hasProvilege");
 			List roles = getRoleList((List) id.getRoles());
 
 			ISuportePersistente sp = null;
@@ -99,14 +100,17 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				//verify if the coodinator is of the LEEC degree
 				if (roles.contains(RoleType.COORDINATOR))
 				{
+					System.out.println("-->RoleType.COORDINATOR");
 					ITeacher teacher = readTeacher(id, sp);
 					if (teacher == null)
 					{
+						System.out.println("-->RoleType.COORDINATOR: false teacher");
 						return false;
 					}
 
 					if (!verifyCoordinatorLEEC(teacher, arguments, sp))
 					{
+						System.out.println("-->RoleType.COORDINATOR: false coordinator LEEC");
 						return false;
 					}
 				}
@@ -159,7 +163,6 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 	}
 
 	private IStudent readStudent(Integer studentCurricularPlanId, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
 	{
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 			sp.getIStudentCurricularPlanPersistente();
@@ -239,6 +242,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		throws ExcepcaoPersistencia
 	{
 
+		System.out.println("-->verifyCoordinatorLEEC: args" + arguments[0]);
 		IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 		ICoordinator coordinator =
 			persistentCoordinator.readCoordinatorByTeacherAndExecutionDegreeId(
@@ -246,6 +250,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				(Integer) arguments[0]);
 		if (coordinator == null)
 		{
+			System.out.println("-->verifyCoordinatorLEEC: false coordinator");
 			return false;
 		}
 
@@ -257,6 +262,8 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			degreeCode = coordinator.getExecutionDegree().getCurricularPlan().getDegree().getSigla();
 		}
 
+		System.out.println("-->verifyCoordinatorLEEC: degreeCode= " + degreeCode);
+		System.out.println("-->verifyCoordinatorLEEC: " + DEGREE_LEEC_CODE.equals(degreeCode));
 		return DEGREE_LEEC_CODE.equals(degreeCode);
 	}
 
