@@ -61,6 +61,11 @@
 		<put name="body" value="/departmentAdmOffice/teacher/workingTime/editTeacherInstitutionWorkingTime.jsp"/>
 	</definition>
 
+	<definition name="listDepartmentTeachers" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/listDeparmentTeachers.jsp"/>
+	</definition>
+
+
 
 
 </tiles-definitions>
