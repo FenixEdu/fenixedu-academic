@@ -85,7 +85,7 @@ public class CreateWorkingArea implements IServico {
 							.getInfoExecutionYear()
 							.getYear());
 				executionYearOfWorkingArea.setState(
-					new PeriodState(PeriodState.OPEN));
+					new PeriodState(PeriodState.NOT_OPEN));
 
 				executionYearDAO.writeExecutionYear(executionYearOfWorkingArea);
 			}
@@ -121,12 +121,17 @@ public class CreateWorkingArea implements IServico {
 						* executionPeriodOfWorkingArea.getSemester().intValue()));
 			workingArea.setState(new PeriodState(PeriodState.OPEN));
 
-			// first make sure it doesn't exist.
 			try {
 				executionPeriodDAO.writeExecutionPeriod(workingArea);
 			} catch (ExistingPersistentException ex) {
 				throw new ExistingExecutionPeriod();
 			}
+
+			// Export data to working area
+			executionPeriodDAO.transferData(
+				workingArea,
+				executionPeriodToExportDataFrom,
+				new Boolean(false));
 
 			result = new Boolean(true);
 		} catch (ExcepcaoPersistencia ex) {
@@ -199,7 +204,6 @@ public class CreateWorkingArea implements IServico {
 		private ExistingExecutionPeriod(int errorType) {
 			super(errorType);
 		}
-
 
 		/**
 		 * @param message

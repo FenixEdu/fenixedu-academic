@@ -34,6 +34,9 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 * @return boolean
 	 */
 	public boolean delete(IExecutionPeriod executionPeriod);
+	
+	public boolean deleteWorkingArea(IExecutionPeriod executionPeriod);
+	
 	/**
 	 * 
 	 * @return boolean
@@ -66,6 +69,16 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	public IExecutionPeriod readBySemesterAndExecutionYear(
 		Integer semester,
 		IExecutionYear year)
+		throws ExcepcaoPersistencia;
+
+	/**
+	 * @param workingArea
+	 * @param executionPeriodToExportDataFrom
+	 */
+	public void transferData(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom,
+		Boolean transferAllData)
 		throws ExcepcaoPersistencia;
 
 	public List readPublic() throws ExcepcaoPersistencia;

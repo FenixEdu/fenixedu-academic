@@ -61,7 +61,7 @@ public class DeleteWorkingArea implements IServico {
 							.getYear()));
 
 			if (executionPeriodToDelete != null) {
-				executionPeriodDAO.delete(executionPeriodToDelete);
+				executionPeriodDAO.deleteWorkingArea(executionPeriodToDelete);
 				result = new Boolean(true);
 			}
 		} catch (ExcepcaoPersistencia ex) {

@@ -7,7 +7,10 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
+import Dominio.ICurricularCourse;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -115,6 +118,22 @@ public class ExecutionPeriodOJB
 		}
 		return true;
 	}
+
+	public boolean deleteWorkingArea(IExecutionPeriod executionPeriod) {
+		if (executionPeriod.getSemester().intValue() > 0) {
+			return false;
+		}
+
+		try {
+			deleteAllDataRelatedToExecutionPeriod(executionPeriod);
+
+			super.delete(executionPeriod);
+		} catch (ExcepcaoPersistencia e) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#deleteAll()
 	 */
@@ -217,6 +236,105 @@ public class ExecutionPeriodOJB
 		criteria.addNotEqualTo("state", PeriodState.NOT_OPEN);
 		criteria.addGreaterThan("semester",new Integer(0));
 		return queryList(ExecutionPeriod.class, criteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#transferData(Dominio.IExecutionPeriod, Dominio.IExecutionPeriod)
+	 */
+	public void transferData(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom,
+		Boolean transferAllData)
+		throws ExcepcaoPersistencia {
+		// Clear all data from executionPeriodToImportDataTo.
+		deleteAllDataRelatedToExecutionPeriod(executionPeriodToImportDataTo);
+
+		// Transfer data
+		Criteria criteria = new Criteria();
+		// Execution Courses
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+		List executionCoursesToTransfer =
+			queryList(DisciplinaExecucao.class, criteria);
+		for (int i = 0; i < executionCoursesToTransfer.size(); i++) {
+			createExecutionCourse(
+				executionCoursesToTransfer.get(i),
+				executionPeriodToImportDataTo,
+				transferAllData);
+		}
+	}
+
+	private void deleteAllDataRelatedToExecutionPeriod(IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		// Execution Courses
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+		List executionCourses = queryList(DisciplinaExecucao.class, criteria);
+
+		for (int i = 0; i < executionCourses.size(); i++) {
+			IDisciplinaExecucao executionCourse =
+				(IDisciplinaExecucao) executionCourses.get(i);
+			SuportePersistenteOJB
+				.getInstance()
+				.getIDisciplinaExecucaoPersistente()
+				.deleteExecutionCourse(executionCourse);
+		}
+	}
+
+	private void createExecutionCourse(
+		Object arg0,
+		IExecutionPeriod executionPeriodToImportDataTo,
+		Boolean transferAllData) {
+		DisciplinaExecucao executionCourseToTransfer =
+			(DisciplinaExecucao) arg0;
+		DisciplinaExecucao executionCourseToCreate = new DisciplinaExecucao();
+
+		executionCourseToCreate.setAssociatedCurricularCourses(new ArrayList());
+		executionCourseToCreate.setAssociatedEvaluations(new ArrayList());
+		executionCourseToCreate.setAssociatedExams(new ArrayList());
+		executionCourseToCreate.setComment("");
+		executionCourseToCreate.setExecutionPeriod(
+			executionPeriodToImportDataTo);
+		executionCourseToCreate.setIdInternal(null);
+		executionCourseToCreate.setLabHours(
+			executionCourseToTransfer.getLabHours());
+		executionCourseToCreate.setNome(executionCourseToTransfer.getNome());
+		executionCourseToCreate.setPraticalHours(
+			executionCourseToTransfer.getPraticalHours());
+		executionCourseToCreate.setSigla(executionCourseToTransfer.getSigla());
+		executionCourseToCreate.setTheoPratHours(
+			executionCourseToTransfer.getTheoPratHours());
+		executionCourseToCreate.setTheoreticalHours(
+			executionCourseToTransfer.getTheoreticalHours());
+
+		try {
+			// It's Ok to just write it with no verification because:
+			//   - all date from this execution period has been cleared
+			//   - suposedly all data related to the other execution period
+			//     is correct.
+			lockWrite(executionCourseToCreate);
+		} catch (ExcepcaoPersistencia e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (int i = 0;
+			i
+				< executionCourseToTransfer
+					.getAssociatedCurricularCourses()
+					.size();
+			i++) {
+			ICurricularCourse curricularCourse =
+				(ICurricularCourse) executionCourseToTransfer
+					.getAssociatedCurricularCourses()
+					.get(i);
+			executionCourseToCreate.getAssociatedCurricularCourses().add(
+				curricularCourse);
+		}
+
 	}
 
 }
