@@ -1,4 +1,5 @@
-#select id_internal as key_execution_course,key_teacher,1 from execution_degree;
+alter table METADATA add visibility bit not null default "1";
+alter table XML_DOCUMENTS add visibility bit not null default "1";
 
 select CONCAT(
 		"insert into COORDINATOR (key_execution_degree,key_teacher,responsible) values (",
@@ -6,4 +7,3 @@ select CONCAT(
          ","
          ,key_teacher,
           ",1);" ) as "" from EXECUTION_DEGREE; 
-              
