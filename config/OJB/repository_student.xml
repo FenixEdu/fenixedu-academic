@@ -58,11 +58,6 @@
 		conversion="ServidorPersistente.Conversores.EntryPhase2SqlEntryPhaseFieldConversion"         
 	/>
 	<field-descriptor
-		name="keyRegistrationYear"
-		column="KEY_REGISTRATION_YEAR"
-		jdbc-type="INTEGER"      	
-	/>
-	<field-descriptor
 		name="ackOptLock"
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
