@@ -417,13 +417,11 @@
       
      <collection-descriptor
 			name="teacherPublications"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			element-class-ref="Dominio.publication.Publication"
 			indirection-table="PUBLICATION_TEACHER"
 			proxy="true"
-			refresh="true"
-	        auto-update="false"
-		    auto-delete="false">
+			refresh="true">
 		<fk-pointing-to-this-class column="KEY_TEACHER"/>
 		<fk-pointing-to-element-class column="KEY_PUBLICATION"/>
 	</collection-descriptor>
