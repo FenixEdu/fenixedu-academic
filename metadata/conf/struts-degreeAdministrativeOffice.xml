@@ -69,6 +69,10 @@
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.FenixActionException"
+		  	       key="ServidorAplicacao.FenixActionException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       path="/naoExistente.do"
@@ -241,12 +245,9 @@
 				validate="true"
 				input="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent">
 				
-			   <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
-    			    key="ServidorApresentacao.Action.exceptions.FenixActionException"
-        			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-				
 			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareEnrollmentChooseStudent"/>
 			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
+			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
 			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
 			
 		</action>

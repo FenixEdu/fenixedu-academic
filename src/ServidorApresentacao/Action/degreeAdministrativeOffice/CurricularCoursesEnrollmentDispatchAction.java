@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.validator.Field;
+import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -16,12 +18,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.apache.struts.validator.FieldChecks;
 
 import DataBeans.InfoEnrolment;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -77,28 +81,28 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		catch (FenixServiceException e)
 		{
 			e.printStackTrace();
-			throw new FenixActionException(e.getMessage());
+			throw new FenixActionException();
 		}
 
 		Integer[] enrolledInArray = buildArrayOfEnrolled(infoStudentEnrolmentContext);
 		enrollmentForm.set("enrolledCurricularCoursesBefore", enrolledInArray);
 		enrollmentForm.set("enrolledCurricularCoursesAfter", enrolledInArray);
 
-//		if (infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoBranch(). != null)
-//		{
-//			enrollmentForm.set(
-//				"specializationArea",
-//				infoStudentEnrolmentContext
-//					.getInfoStudentCurricularPlan()
-//					.getInfoBranch()
-//					.getIdInternal());
-//			enrollmentForm.set(
-//				"secondaryArea",
-//				infoStudentEnrolmentContext
-//					.getInfoStudentCurricularPlan()
-//					.getInfoSecundaryBranch()
-//					.getIdInternal());
-//		}
+		//		if (infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoBranch(). != null)
+		//		{
+		//			enrollmentForm.set(
+		//				"specializationArea",
+		//				infoStudentEnrolmentContext
+		//					.getInfoStudentCurricularPlan()
+		//					.getInfoBranch()
+		//					.getIdInternal());
+		//			enrollmentForm.set(
+		//				"secondaryArea",
+		//				infoStudentEnrolmentContext
+		//					.getInfoStudentCurricularPlan()
+		//					.getInfoSecundaryBranch()
+		//					.getIdInternal());
+		//		}
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
 		return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
@@ -140,19 +144,13 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		ActionErrors errors = new ActionErrors();
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 
-		Integer studentNumber = Integer.valueOf((String) request.getParameter("studentNumber"));
+		Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
+		enrollmentForm.set("studentNumber", studentNumber.toString());
 
 		String specialization = request.getParameter("specializationArea");
 		String secondary = request.getParameter("secondaryArea");
-		String executionPeriod = request.getParameter("executionPeriod");
-		String executionYear = request.getParameter("executionYear");
-		String studentName = request.getParameter("studentName");
-		String studentCurricularPlanId = request.getParameter("stCurPlan");
 
-		request.setAttribute("executionPeriod", executionPeriod);
-		request.setAttribute("executionYear", executionYear);
-		request.setAttribute("studentName", studentName);
-		request.setAttribute("studentCurricularPlanId", studentCurricularPlanId);
+		maintainEnrollmentState(request, studentNumber);
 
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 
@@ -175,13 +173,33 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		catch (FenixServiceException e)
 		{
 			e.printStackTrace();
-			throw new FenixActionException(e.getMessage());
+			throw new FenixActionException();
 		}
-		enrollmentForm.set("specializationArea", Integer.valueOf(specialization));
-		enrollmentForm.set("secondaryArea", Integer.valueOf(secondary));
+		if (specialization != null
+			&& specialization.length() > 0
+			&& secondary != null
+			&& secondary.length() > 0)
+		{
+			enrollmentForm.set("specializationArea", Integer.valueOf(specialization));
+			enrollmentForm.set("secondaryArea", Integer.valueOf(secondary));
+		}
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
 		return mapping.findForward("prepareEnrollmentChooseAreas");
+	}
+
+	private void maintainEnrollmentState(HttpServletRequest request, Integer studentNumber)
+	{
+		String executionPeriod = request.getParameter("executionPeriod");
+		String executionYear = request.getParameter("executionYear");
+		String studentName = request.getParameter("studentName");
+		String studentCurricularPlanId = request.getParameter("studentCurricularPlanId");
+
+		request.setAttribute("executionPeriod", executionPeriod);
+		request.setAttribute("executionYear", executionYear);
+		request.setAttribute("studentName", studentName);
+		request.setAttribute("studentNumber", studentNumber.toString());
+		request.setAttribute("studentCurricularPlanId", studentCurricularPlanId);
 	}
 
 	public ActionForward prepareEnrollmentChooseAreas(
@@ -198,6 +216,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		Integer secondaryArea = (Integer) enrollmentForm.get("secondaryArea");
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
+		Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
+		
+		System.out.println(enrollmentForm.getValidatorResults().getResultValueMap().toString());
 
 		Object[] args = { studentCurricularPlanId, specializationArea, secondaryArea };
 		try
@@ -207,18 +228,30 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		}
 		catch (BothAreasAreTheSameServiceException e)
 		{
-			errors.add("bothAreas", new ActionError(e.getMessage()));
+			errors.add("bothAreas", new ActionError("error.student.enrollment.AreasNotEqual"));
+			maintainEnrollmentState(request, studentNumber);
 			saveErrors(request, errors);
+			return mapping.findForward("prepareChooseAreas");
 		}
 		catch (ExistingServiceException e)
 		{
-			errors.add("studentCurricularPlan", new ActionError(e.getMessage()));
+			errors.add(
+				"studentCurricularPlan",
+				new ActionError("error.student.curricularPlan.nonExistent"));
+			maintainEnrollmentState(request, studentNumber);
 			saveErrors(request, errors);
+			return mapping.findForward("prepareChooseAreas");
+		}
+		catch (InvalidArgumentsServiceException e)
+		{
+			errors.add("areas", new ActionError("error.areas.choose"));
+			maintainEnrollmentState(request, studentNumber);
+			saveErrors(request, errors);
+			return mapping.findForward("prepareChooseAreas");
 		}
 		catch (FenixServiceException e)
 		{
-			e.printStackTrace();
-			throw new FenixActionException(e.getMessage());
+			throw new FenixActionException();
 		}
 
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
@@ -249,7 +282,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		}
 		catch (FenixServiceException e)
 		{
-			throw new FenixActionException(e.getMessage());
+			e.printStackTrace();
+			throw new FenixActionException();
 		}
 
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
@@ -279,11 +313,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		try
 		{
 			ServiceManagerServiceFactory.executeService(userView, "DeleteEnrolment", args);
-
 		}
 		catch (FenixServiceException e)
 		{
-
+			e.printStackTrace();
+			throw new FenixActionException();
 		}
 
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);

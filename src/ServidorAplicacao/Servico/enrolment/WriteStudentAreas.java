@@ -1,5 +1,7 @@
 package ServidorAplicacao.Servico.enrolment;
 
+import org.apache.commons.lang.IncompleteArgumentException;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Branch;
 import Dominio.Frequenta;
@@ -15,6 +17,7 @@ import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentBranch;
@@ -24,45 +27,59 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author David Santos
- * Jan 26, 2004
+ * @author David Santos Jan 26, 2004
  */
 public class WriteStudentAreas implements IService
 {
-	public WriteStudentAreas(){}
+	public WriteStudentAreas()
+	{
+	}
 
-	public void run(Integer studentCurricularPlanID, Integer specializationAreaID, Integer secundaryAreaID)
+	public void run(
+		Integer studentCurricularPlanID,
+		Integer specializationAreaID,
+		Integer secundaryAreaID)
 		throws FenixServiceException
 	{
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-			IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
+			IStudentCurricularPlanPersistente studentCurricularPlanDAO =
+				persistentSuport.getIStudentCurricularPlanPersistente();
 
 			IStudentCurricularPlan studentCurricularPlan =
-				(IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-			
-			IBranch specializationArea = (IBranch) branchDAO.readByOID(Branch.class, specializationAreaID);
+				(IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(
+					StudentCurricularPlan.class,
+					studentCurricularPlanID);
+
+			IBranch specializationArea =
+				(IBranch) branchDAO.readByOID(Branch.class, specializationAreaID);
 
 			IBranch secundaryArea = (IBranch) branchDAO.readByOID(Branch.class, secundaryAreaID);
-			
-			if (studentCurricularPlan != null && specializationArea != null && secundaryArea != null)
+
+			if (studentCurricularPlan == null)
 			{
-				if (!specializationArea.equals(secundaryArea))
-				{
-					studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
-					studentCurricularPlan.setBranch(specializationArea);
-					studentCurricularPlan.setSecundaryBranch(secundaryArea);
-				} else
-				{
-					throw new BothAreasAreTheSameServiceException();
-				}
-			} else
-			{
-				throw new ExistingServiceException("studentCurricularPlan or specializationArea or secundaryArea or all are invalid");
+				throw new ExistingServiceException();
 			}
-		} catch (ExcepcaoPersistencia e)
+			if (specializationArea != null
+				&& secundaryArea != null
+				&& specializationArea.equals(secundaryArea))
+			{
+				throw new BothAreasAreTheSameServiceException();
+			}
+
+			if ((specializationArea == null && secundaryArea == null)
+				|| (specializationArea != null && secundaryArea != null))
+			{
+				studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
+				studentCurricularPlan.setBranch(specializationArea);
+				studentCurricularPlan.setSecundaryBranch(secundaryArea);
+			} else {
+				throw new InvalidArgumentsServiceException();
+			}
+		}
+		catch (ExcepcaoPersistencia e)
 		{
 			e.printStackTrace();
 			throw new FenixServiceException(e);
@@ -86,9 +103,11 @@ public class WriteStudentAreas implements IService
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
 		IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();
-		
+
 		IExecutionCourse executionCourse =
-			executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+			executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(
+				curricularCourse,
+				executionPeriod);
 		if (executionCourse != null)
 		{
 			IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
@@ -97,7 +116,8 @@ public class WriteStudentAreas implements IService
 			{
 				attendDAO.simpleLockWrite(attend);
 				attend.setEnrolment(enrolmentToWrite);
-			} else
+			}
+			else
 			{
 				IFrequenta attendToWrite = new Frequenta();
 				attendDAO.simpleLockWrite(attendToWrite);

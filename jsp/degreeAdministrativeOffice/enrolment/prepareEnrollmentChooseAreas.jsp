@@ -8,6 +8,9 @@
 	<html:hidden property="method" value="prepareEnrollmentChooseAreas" />
 	<html:hidden property="page" value="2" />
 	<html:hidden property="studentNumber" />
+	<html:hidden property="studentName" value="<%=pageContext.findAttribute("studentName").toString()%>"/>
+	<html:hidden property="executionPeriod" value="<%=pageContext.findAttribute("executionPeriod").toString()%>"/>
+	<html:hidden property="executionYear" value="<%=pageContext.findAttribute("executionYear").toString()%>"/>
 	<html:hidden property="studentCurricularPlanId" value="<%=pageContext.findAttribute("studentCurricularPlanId").toString()%>"/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
@@ -42,8 +45,8 @@
 			<td>
 				<br />
 				<html:select property="specializationArea">
-					<html:option value="" key="label.student.enrollment.select">
-						<bean:message key="label.student.enrollment.select"/>
+					<html:option value="" key="label.student.enrollment.no.area">
+						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
 					<html:options collection="branches" property="idInternal" labelProperty="name"/>
 				</html:select>
@@ -55,8 +58,8 @@
 			</td>
 			<td>
 				<html:select property="secondaryArea">
-					<html:option value="" key="label.student.enrollment.select">
-						<bean:message key="label.student.enrollment.select"/>
+					<html:option value="" key="label.student.enrollment.no.area">
+						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
 					<html:options collection="branches" property="idInternal" labelProperty="name"/>
 				</html:select>
