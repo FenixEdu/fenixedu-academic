@@ -421,6 +421,13 @@
 			<form-property name="teacherId" type="java.lang.String"	/>
 		</form-bean>
 		
+		<!-- READ CAREERS FORM -->
+		<form-bean name="readCareersForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="careerType" type="java.lang.String" />
+		</form-bean>
+		
 		<!-- EXTERNAL ACTIVITY FORM -->
 		<form-bean name="externalActivityForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
@@ -1351,7 +1358,7 @@
       		parameter="method"
       		scope="request"
       		input="/professionalCareer.do?page=0&amp;method=prepareEdit"
-      		className="ServidorApresentacao.framework.actions.mappings.CRUDMapping">
+      		className="ServidorApresentacao.mapping.framework.CRUDMapping">
       	<set-property property="editService" value="EditCareer" />
       	<set-property property="deleteService" value="DeleteCareer" />
       	<set-property property="readService" value="ReadCareer" />
@@ -1360,6 +1367,7 @@
 		<forward name="successfull-edit" path="..."/> 
 		<forward name="successfull-read" path="..."/>
 		<forward name="successfull-delete" path="..."/>
+		
 	  </action>
 
       <!-- Teacher Career -->
@@ -1369,7 +1377,7 @@
       		parameter="method"
       		scope="request"
       		input="/teachingCareer.do?page=0&amp;method=prepareEdit"
-      		className="ServidorApresentacao.framework.actions.mappings.CRUDMapping">
+      		className="ServidorApresentacao.mapping.framework.CRUDMapping">
       	<set-property property="editService" value="EditCareer" />
       	<set-property property="deleteService" value="DeleteCareer" />
       	<set-property property="readService" value="ReadCareer" />
@@ -1379,6 +1387,14 @@
 		<forward name="successfull-read" path="..."/>
 		<forward name="successfull-delete" path="..."/>
 	  </action>
+	  
+	  <!-- Read Careers -->
+	  <action type="ServidorApresentacao.Action.teacher.ReadCareersAction"
+	  		path="/readCareers"
+	  		name="readCareersForm"
+	  		scope="request">
+	  	<forward name="show-form" path="..."/>
+	  </action>
 		
 	  <!-- External Activity -->
 	  <action type="ServidorApresentacao.Action.teacher.ExternalActivityAction"
@@ -1387,7 +1403,7 @@
 	  		parameter="method"
 	  		scope="request"
 	  		input="/externalActivity.do?page=0&amp;method=prepareEdit"
-	  		className="ServidorApresentacao.framework.actions.mappings.CRUDMapping">
+	  		className="ServidorApresentacao.mapping.framework.CRUDMapping">
 	  	<set-property property="editService" value="EditExternalActivity" />
 	  	<set-property property="deleteService" value="DeleteExternalActivity" />
 	  	<set-property property="readService" value="ReadExternalActivity" />
@@ -1397,6 +1413,13 @@
 		<forward name="successfull-read" path="..."/>
 		<forward name="successfull-delete" path="..."/>
 	  </action>
+	  
+	  <!-- Read External Activities -->
+	  <action type="ServidorApresentacao.Action.teacher.ReadExternalActivitiesAction"
+	  		path="/readExternalActivities"
+	  		scope="request">
+	  	<forward name="show-form" path="..."/>
+	  </action>	  	
 	  
 	  <!-- Teacher Information -->
 	  <action type="ServidorApresentacao.Action.teacher.TeacherInformationAction"
