@@ -57,6 +57,7 @@ import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.AttendacyStateSelectionType;
 import Util.EnrolmentEvaluationType;
 import Util.TipoAula;
 
@@ -84,7 +85,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
     }
     
 
-    public Object run(Integer executionCourseCode, List curricularPlansIds, Integer seleccao, Integer shiftId) throws ExcepcaoInexistente,
+    public Object run(Integer executionCourseCode, List curricularPlansIds, AttendacyStateSelectionType seleccao, List shiftIds) throws ExcepcaoInexistente,
             FenixServiceException{
         ISite site = null;
         try {
@@ -139,7 +140,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 attends=(List)CollectionUtils.select(attends,pCourses);
             }
             
-            if (seleccao != null) // filter by Enrollment (only enrolled students)
+            // filter by Enrollment (only enrolled students)
+            if (!seleccao.equals(AttendacyStateSelectionType.ALL)) 
             {
                 Predicate pInscritos = new Predicate()
                 {
@@ -154,37 +156,46 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                     }
                 };
                 
-                attends = (List) CollectionUtils.select(attends,pInscritos);
+                if (seleccao.equals(AttendacyStateSelectionType.ENROLLED))
+                    attends = (List) CollectionUtils.select(attends,pInscritos);
+                else if (seleccao.equals(AttendacyStateSelectionType.NOT_ENROLLED))
+                    attends = (List) CollectionUtils.selectRejected(attends,pInscritos);
+                
             }
             
             
             // filter by Shift
-            if (shiftId != null){ 
-                final ITurno turno = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,shiftId);
-                                
-                Iterator attendsIterator = attends.iterator();
+            if (shiftIds != null){ 
+                Iterator shiftIterator = shiftIds.iterator();
                 List collectedAttends = new ArrayList();
                 
-                while(attendsIterator.hasNext()){
-                    IFrequenta attendance = (IFrequenta)attendsIterator.next();
-                
-                    //	if an attendance is related to a Shift
-                    IStudent student = attendance.getAluno();
-                
-                    try {
-                        ITurnoAluno ta = (ITurnoAluno)sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno, student);
-                        
-                        if (ta != null)
-                            collectedAttends.add(attendance);
-                    }
-                
-                    catch(ExcepcaoPersistencia ep) {
-                        FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-                        newEx.fillInStackTrace();
-                        throw newEx;
-                    }
+                while(shiftIterator.hasNext()) {
+                 
+                    Integer shiftId = (Integer)shiftIterator.next();
+	                final ITurno turno = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,shiftId);
+	                                
+	                Iterator attendsIterator = attends.iterator();
+	                
+	                while(attendsIterator.hasNext()){
+	                    IFrequenta attendance = (IFrequenta)attendsIterator.next();
+	                
+	                    //	if an attendance is related to a Shift
+	                    IStudent student = attendance.getAluno();
+	                
+	                    try {
+	                        ITurnoAluno ta = (ITurnoAluno)sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno, student);
+	                        
+	                        if (ta != null)
+	                            collectedAttends.add(attendance);
+	                    }
+	                
+	                    catch(ExcepcaoPersistencia ep) {
+	                        FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+	                        newEx.fillInStackTrace();
+	                        throw newEx;
+	                    }
+	                }
                 }
-                
                 attends = collectedAttends;
             }
 

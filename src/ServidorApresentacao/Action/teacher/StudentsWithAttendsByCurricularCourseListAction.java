@@ -20,11 +20,13 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoForReadStudentsWithAttendsByExecutionCourse;
+import DataBeans.InfoShift;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.AttendacyStateSelectionType;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -39,17 +41,19 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         HttpSession session = request.getSession(false);
         Integer executionCourseID = null;
         List coursesIDs = null;
-        Boolean hasEnrollment = null;
-        Integer shiftID = null;
+        String hasEnrollment = null;
+        List shiftIDs = null;
         try {
             executionCourseID = new Integer(request.getParameter("objectCode"));
-            shiftID = new Integer(request.getParameter("shiftCode"));
         } catch (NumberFormatException ex) {
             //ok, we don't want to view a shift's student list
         }
         
         Integer checkedCoursesIds[] = (Integer[]) formBean.get("coursesIDs");
-        hasEnrollment = (Boolean) formBean.get("hasEnrollment");
+        hasEnrollment = (String) formBean.get("hasEnrollment");
+        Integer checkedShiftIds[] = (Integer[]) formBean.get("shiftIDs");
+        
+        AttendacyStateSelectionType attendacyState = new AttendacyStateSelectionType(hasEnrollment);
         
         coursesIDs = new ArrayList();
         for(int i = 0; i < checkedCoursesIds.length; i++){
@@ -61,13 +65,21 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
                 coursesIDs.add(checkedCoursesIds[i]);
             }
         }
+        
+        shiftIDs = new ArrayList();
+        for(int i = 0; i < checkedShiftIds.length; i++){
+            if(checkedShiftIds[i].equals(new Integer(0))){
+                shiftIDs=null;
+                break;
+            }
+            else{
+                shiftIDs.add(checkedShiftIds[i]);
+            }
+        }
 
-        Integer hasEnrollmentInteger = null;
-        if(hasEnrollment.booleanValue()) hasEnrollmentInteger=new Integer (1);
-        
-        
+       
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { executionCourseID, coursesIDs, hasEnrollmentInteger, shiftID };
+        Object args[] = { executionCourseID, coursesIDs, attendacyState, shiftIDs };
         TeacherAdministrationSiteView siteView = null;
 
         try {
@@ -108,8 +120,10 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         DynaActionForm formBean = (DynaActionForm)form;
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         
+        AttendacyStateSelectionType attendacyState = AttendacyStateSelectionType.ALL;
+        
         // all the information, no filtering applied
-        Object args[] = { executionCourseID, null, null, null };
+        Object args[] = { executionCourseID, null, attendacyState, null };
         TeacherAdministrationSiteView siteView = null;
 
         try {
@@ -127,14 +141,26 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         request.setAttribute("objectCode", executionCourseID);
         request.setAttribute("viewPhoto", Boolean.FALSE);
         
+        //filling the courses checkboxes in the form-bean
         List infoDCPs = ((InfoForReadStudentsWithAttendsByExecutionCourse)siteView.getComponent()).getInfoDegreeCurricularPlans();
-        Integer checkboxes[] = new Integer[infoDCPs.size() + 1];
-        checkboxes[0] = new Integer(0);
-        for (int i = 1; i < checkboxes.length; i++){
-            checkboxes[i] = ((InfoDegreeCurricularPlan)infoDCPs.get(i-1)).getIdInternal();
+        Integer cbCourses[] = new Integer[infoDCPs.size() + 1];
+        cbCourses[0] = new Integer(0);
+        for (int i = 1; i < cbCourses.length; i++){
+            cbCourses[i] = ((InfoDegreeCurricularPlan)infoDCPs.get(i-1)).getIdInternal();
         }
-        formBean.set("coursesIDs",checkboxes);
-        formBean.set("hasEnrollment",Boolean.FALSE);
+
+        //filling the shifts checkboxes in the form-bean
+        List infoShifts = ((InfoForReadStudentsWithAttendsByExecutionCourse)siteView.getComponent()).getInfoShifts();
+        Integer cbShifts[] = new Integer[infoShifts.size() + 1];
+        cbShifts[0] = new Integer(0);
+        for (int i = 1; i < cbShifts.length; i++){
+            cbShifts[i] = ((InfoShift)infoShifts.get(i-1)).getIdInternal();
+        }
+        
+        
+        formBean.set("coursesIDs",cbCourses);
+        formBean.set("shiftIDs",cbShifts);
+        formBean.set("hasEnrollment",AttendacyStateSelectionType.ALL.toString());
 
         return mapping.findForward("success");
     }

@@ -1,8 +1,6 @@
 /*
  * Created on Oct 20, 2004
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package Util;
 
@@ -14,8 +12,6 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author Andre Fernandes / Joao Brito
  * 
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
  */
 
 public class EnrollmentStateSelectionType extends FenixUtil {
@@ -52,14 +48,7 @@ public class EnrollmentStateSelectionType extends FenixUtil {
         setSelectionType(selType);
     }
 
-/*    public static ArrayList getArrayList()
-    {
-		ArrayList result = new ArrayList();
-		result.add(new LabelValueBean(EnrollmentStateSelectionType.ALL_STRING, EnrollmentStateSelectionType.ALL_STRING));
-		result.add(new LabelValueBean(EnrollmentStateSelectionType.APPROVED_STRING, EnrollmentStateSelectionType.APPROVED_STRING));
-		return result;	
-    }
-*/
+
 	public static List getLabelValueBeanList()
 	{
 		ArrayList result = new ArrayList();

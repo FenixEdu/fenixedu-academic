@@ -13,9 +13,9 @@
 
 	   <form-bean name="studentsByCurricularCourseForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="shiftCode" type="java.lang.Integer" />
+            <form-property name="shiftIDs" type="java.lang.Integer[]" />
 			<form-property name="coursesIDs" type="java.lang.Integer[]" />
-			<form-property name="hasEnrollment" type="java.lang.Boolean" />
+			<form-property name="hasEnrollment" type="java.lang.String" />
             <form-property name="objectCode" type="java.lang.Integer" />
             <form-property name="method" type="java.lang.String" />
 			<form-property name="viewPhoto" type="java.lang.String" />
