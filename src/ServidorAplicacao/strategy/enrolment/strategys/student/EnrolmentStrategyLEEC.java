@@ -152,10 +152,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 
-		List enrollments =
-			enrolmentDAO.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-				studentEnrolmentContext.getStudentCurricularPlan(),
-				EnrolmentState.ENROLED);
+		List enrollments = enrolmentDAO.readAllByStudentCurricularPlan(studentEnrolmentContext.getStudentCurricularPlan());
 		
 		List studentEverEnrolledCurricularCourses = new ArrayList();
 		
@@ -593,8 +590,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 					creditsInSpecializationGroup.intValue()
 						+ creditsInSecundaryGroup.intValue()
 						+ creditsInScientificArea.intValue();
-//				int sumOfMaximumGroupsCredits =
-//					specializationGroup.getMaximumCredits().intValue() + secundaryGroup.getMaximumCredits().intValue();
+
 				int sumOfMinimumGroupsCredits =
 					specializationGroup.getMinimumCredits().intValue() + secundaryGroup.getMinimumCredits().intValue();
 
@@ -622,32 +618,6 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 						specializationGroup.getMaximumCredits(),
 						secundaryGroup.getMaximumCredits());
 				}
-				
-//				if (isSpecializationGroupDone(studentCurricularPlan, specializationGroup, creditsInSpecializationAreaGroups))
-//				{
-//					sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), creditsInScientificArea);
-//					creditsInScientificAreas.remove(scientificAreaID);
-//				} else if (
-//					isSecundaryGroupDone(
-//						studentCurricularPlan,
-//						secundaryGroup,
-//						creditsInSecundaryAreaGroups,
-//						creditsInAnySecundaryArea))
-//				{
-//					sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), creditsInScientificArea);
-//					creditsInScientificAreas.remove(scientificAreaID);
-//				} else if (
-//					(creditsInSpecializationGroup.intValue()
-//						+ creditsInSecundaryGroup.intValue()
-//						+ creditsInScientificArea.intValue())
-//						>= (specializationGroup.getMaximumCredits().intValue() + secundaryGroup.getMaximumCredits().intValue()))
-//				{
-//					int tmp = secundaryGroup.getMaximumCredits().intValue() - creditsInSecundaryGroup.intValue();
-//					creditsInSecundaryAreaGroups.put(secundaryGroup.getIdInternal(), secundaryGroup.getMaximumCredits());
-//					int result = creditsInScientificArea.intValue() - tmp;
-//					sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), new Integer(result));
-//					creditsInScientificAreas.remove(scientificAreaID);
-//				}
 			}
 		}
 	}
@@ -690,90 +660,44 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			cux = new Integer(0);
 		}
 		
-		long creditsInSpecializationGroup = aux.longValue();
-		long creditsInSecundaryGroup = bux.longValue();
-		long creditsInScientificArea = cux.longValue();
+		int creditsInSpecializationGroup = aux.intValue();
+		int creditsInSecundaryGroup = bux.intValue();
+		int creditsInScientificArea = cux.intValue();
 
-		long distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider =
-			maximumLevelToConsiderForSpecializationGroup.longValue() - creditsInSpecializationGroup;
-		if (distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider < 0)
+		int factor = 0;
+		if ((creditsInScientificArea % 2) == 0)
 		{
-			distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider = 0;
+			factor = 2;
+		} else
+		{
+			factor = 1;
+		}
+		int x = creditsInScientificArea / factor;
+		int alreadyGivenCredits = 0;
+		for (int i = 0; i < x && alreadyGivenCredits < creditsInScientificArea; i++)
+		{
+			if (creditsInSpecializationGroup < maximumLevelToConsiderForSpecializationGroup.longValue())
+			{
+				creditsInSpecializationGroup += factor;
+				alreadyGivenCredits += factor;
+			}
+
+			if (creditsInSecundaryGroup < maximumLevelToConsiderForSecundaryGroup.longValue())
+			{
+				creditsInSecundaryGroup += factor;
+				alreadyGivenCredits += factor;
+			}
 		}
 
-		long distanceFromCreditsInSecundaryGroupToMaximumLevelToConsider =
-			maximumLevelToConsiderForSecundaryGroup.longValue() - creditsInSecundaryGroup;
-		if (distanceFromCreditsInSecundaryGroupToMaximumLevelToConsider < 0)
-		{
-			distanceFromCreditsInSecundaryGroupToMaximumLevelToConsider = 0;
-		}
-
-		long creditsForSecundaryGroup = Math.round(Math.floor(creditsInScientificArea * 0.5));
-		long creditsForSpecializationGroup = creditsInScientificArea - creditsForSecundaryGroup;
-
-		long aux1 = Math.max((creditsForSpecializationGroup - distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider), 0);
-		long aux2 = Math.max((creditsForSecundaryGroup - distanceFromCreditsInSecundaryGroupToMaximumLevelToConsider), 0);
-		long creditsForDistribution = aux1 + aux2;
-		
 		sumInHashMap(
 			creditsInSpecializationAreaGroups,
 			specializationGroup.getIdInternal(),
-			new Integer(String.valueOf(creditsForSpecializationGroup - aux1)));
+			new Integer(String.valueOf(creditsInSpecializationGroup)));
 		
 		sumInHashMap(
 			creditsInSecundaryAreaGroups,
 			secundaryGroup.getIdInternal(),
-			new Integer(String.valueOf(creditsForSecundaryGroup - aux2)));
-		
-		if ((creditsInSpecializationGroup + creditsForDistribution) < maximumLevelToConsiderForSpecializationGroup.longValue())
-		{
-			sumInHashMap(
-				creditsInSpecializationAreaGroups,
-				specializationGroup.getIdInternal(),
-				new Integer(String.valueOf(creditsForDistribution)));
-		} else if ((creditsInSecundaryGroup + creditsForDistribution) < maximumLevelToConsiderForSecundaryGroup.longValue())
-		{
-			sumInHashMap(
-				creditsInSecundaryAreaGroups,
-				secundaryGroup.getIdInternal(),
-				new Integer(String.valueOf(creditsForDistribution)));
-		}
-
-//		int diferenceBetweenDistances =
-//			Math.max(
-//				distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider,
-//				distanceFromCreditsInSecundaryGroupToMaximumLevelToConsider)
-//				- Math.min(
-//					distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider,
-//					distanceFromCreditsInSecundaryGroupToMaximumLevelToConsider);
-//
-//		if (distanceFromCreditsInSpecializationGroupToMaximumLevelToConsider
-//			>= distanceFromCreditsInSecundaryGroupToMaximumLevelToConsider)
-//		{
-//			sumInHashMap(
-//				creditsInSpecializationAreaGroups,
-//				specializationGroup.getIdInternal(),
-//				new Integer(diferenceBetweenDistances));
-//		} else
-//		{
-//			sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), new Integer(diferenceBetweenDistances));
-//		}
-//
-//		double valueToAddToBothGroups =
-//			(creditsInScientificArea - Math.min(creditsInScientificArea, diferenceBetweenDistances)) * 0.5;
-//
-//		long valueToAddToSpecializationGroup = Math.round(Math.ceil(valueToAddToBothGroups));
-//		long valueToAddToSecundaryGroup = Math.round(Math.floor(valueToAddToBothGroups));
-//
-//		sumInHashMap(
-//			creditsInSpecializationAreaGroups,
-//			specializationGroup.getIdInternal(),
-//			new Integer(String.valueOf(valueToAddToSpecializationGroup)));
-//
-//		sumInHashMap(
-//			creditsInSecundaryAreaGroups,
-//			secundaryGroup.getIdInternal(),
-//			new Integer(String.valueOf(valueToAddToSecundaryGroup)));
+			new Integer(String.valueOf(creditsInSecundaryGroup)));
 	}
 
 	/**
