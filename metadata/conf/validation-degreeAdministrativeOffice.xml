@@ -17,7 +17,7 @@
 				<arg0 key="error.no.degree.selected" resource="true"/>
 			</field>
 			<field property="curricularYears" depends="validateMultiBox" page="1">
-				<arg0 key="error.no.year.selected" resource="true"/>
+				<arg0 key="ano" resource="true"/>
 					<var>
 						<var-name>arrayProperty</var-name>
 						<var-value>curricularYears</var-value>
@@ -28,7 +28,7 @@
 					</var>
 			</field>
 			<field property="curricularSemesters" depends="validateMultiBox" page="1">
-				<arg0 key="error.no.year.selected" resource="true"/>
+				<arg0 key="semestre" resource="true"/>
 					<var>
 						<var-name>arrayProperty</var-name>
 						<var-value>curricularSemesters</var-value>

@@ -39,26 +39,26 @@
 
 <logic:notEqual name="sizeAprovedAndEnroled" value="0">
 	<br/>
-	<b><bean:message key="message.curricular.courses.from.this.degree" arg0="<%= degreeName.toString() %>" arg1="<%= studentNumber.toString() %>"/></b>
+	<b><bean:message key="message.optional.curricular.courses.from.this.degree" arg0="<%= studentNumber.toString() %>"/></b>
 	<br/>
 	<br/>
 	<table border="1" cellpadding="2" cellspacing="0">
 		<tr>
 			<td align="center"><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
-			<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
+			<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.enrolment.state"/></u></td>
 		</tr>
 		<logic:iterate id="infoEnrolment" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent" indexId="index">
 			<tr>
 				<td>
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
-				</td>
-				<td align="center">
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
+					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>&nbsp;-&nbsp;<bean:write name="infoEnrolment" property="infoCurricularCourseForOption.name"/>
 				</td>
 				<td align="center">
 					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
+				</td>
+				<td align="center">
+					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
 				</td>
 				<td align="center">
 					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
@@ -77,7 +77,7 @@
 	<logic:equal name="sizeToBeEnroled" value="0">
 		<br/>
 		<br/>
-		<b><bean:message key="message.no.curricular.course.for.enrolment" arg0="<%= studentNumber.toString() %>" arg1="<%= degreeName.toString() %>"/></b>
+		<b><bean:message key="message.no.optional.curricular.course.for.enrolment" arg0="<%= studentNumber.toString() %>"/></b>
 	</logic:equal>
 	<logic:notEqual name="sizeToBeEnroled" value="0">
 		<br/>
@@ -92,7 +92,6 @@
 	<html:form action="/optionalCurricularCourseEnrolmentWithoutRulesManager.do">
 		<html:hidden property="method" value="verifyEnrolment"/>
 		<html:hidden property="optionalCourseIndex" value=""/>
-		<br/>
 		<b><bean:message key="label.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b>
 		<br/>
 		<bean:message key="label.enrolment.note"/>

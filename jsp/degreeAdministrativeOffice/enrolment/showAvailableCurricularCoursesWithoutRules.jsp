@@ -18,8 +18,8 @@
 	<table border="1" cellpadding="2" cellspacing="0">
 		<tr>
 			<td align="center"><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
-			<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
+			<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.enrolment.state"/></u></td>
 		</tr>
 		<logic:iterate id="infoEnrolment" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent" indexId="index">
@@ -28,10 +28,10 @@
 					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
 				</td>
 				<td align="center">
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
+					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
 				</td>
 				<td align="center">
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
+					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
 				</td>
 				<td align="center">
 					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
@@ -60,7 +60,6 @@
 <logic:notEqual name="sizeToBeEnroled" value="0">
 	<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
 		<html:hidden property="method" value="verifyEnrolment"/>
-		<br/>
 		<b><bean:message key="label.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b>
 		<br/>
 		<bean:message key="label.enrolment.note"/>
@@ -70,8 +69,8 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td align="left"><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
-				<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 				<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
+				<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<tr>
@@ -85,10 +84,10 @@
 						<bean:write name="curricularScope" property="infoCurricularCourse.name"/>
 					</td>
 					<td align="center">
-						<bean:write name="curricularScope" property="infoCurricularSemester.semester"/>
+						<bean:write name="curricularScope" property="infoCurricularSemester.infoCurricularYear.year"/>
 					</td>
 					<td align="center">
-						<bean:write name="curricularScope" property="infoCurricularSemester.infoCurricularYear.year"/>
+						<bean:write name="curricularScope" property="infoCurricularSemester.semester"/>
 					</td>
 				</tr>
 			</logic:iterate>

@@ -21,6 +21,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorApresentacao.Action.commons.GeneralCurricularCourseEnrolmentManagerDispatchAction;
+import ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -49,6 +50,7 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 		Object args[] = { infoStudent };
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableOptionalCurricularCoursesWithoutRules", args);
+		ManualEquivalenceManagerDispatchAction.sort(infoEnrolmentContext.getInfoEnrolmentsAprovedByStudent(), infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled());
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 

@@ -67,17 +67,7 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 
 		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "GetListsOfCurricularCoursesForEquivalence", args);
 
-
-		ComparatorChain comparatorChain1 = new ComparatorChain();
-		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"));
-		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester"));
-		Collections.sort(infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence(), comparatorChain1);
-
-		ComparatorChain comparatorChain2 = new ComparatorChain();
-		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-		Collections.sort(infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence(), comparatorChain2);
-
+		ManualEquivalenceManagerDispatchAction.sort(infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence(), infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence());
 
 		session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
 		this.initializeForm(infoEquivalenceContext, (DynaActionForm) form);
@@ -320,18 +310,21 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 		saveErrors(request, actionErrors);
 	}
 
-//	private void createToken(HttpServletRequest request) {
-//		generateToken(request);
-//		saveToken(request);
-//	}
-//
-//	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
-//
-//		if (!isTokenValid(request)) {
-//			form.reset(mapping, request);
-//			throw new FenixTransactionException("error.transaction.equivalence");
-//		} else {
-//			createToken(request);
-//		}
-//	}
+	public static void sort(List listOfEnrolments, List listOfCurricularCourseScopes) {
+
+		ComparatorChain comparatorChain1 = new ComparatorChain();
+		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"));
+		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester"));
+		if(listOfEnrolments != null) {
+			Collections.sort(listOfEnrolments, comparatorChain1);
+		}
+
+		ComparatorChain comparatorChain2 = new ComparatorChain();
+		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+		if(listOfCurricularCourseScopes != null) {
+			Collections.sort(listOfCurricularCourseScopes, comparatorChain2);
+		}
+	}
+
 }

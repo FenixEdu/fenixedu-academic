@@ -21,6 +21,7 @@ import org.odmg.QueryException;
 
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEnrolment;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -144,4 +145,26 @@ public class FrequentaOJB
 			return new Integer(pb.getCount(queryCriteria));
 	}
 
+	public IFrequenta readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia {
+		try {
+			IFrequenta attend = null;
+			String oqlQuery = "select all from " + Frequenta.class.getName();
+			oqlQuery += " where enrolment.idInternal = $1";
+
+			query.create(oqlQuery);
+
+			query.bind(enrolment.getIdInternal());
+
+			List result = (List) query.execute();
+
+			lockRead(result);
+			if(result.size() != 0) {
+				attend = (IFrequenta) result.get(0);
+			}
+			return attend;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 }

@@ -153,7 +153,7 @@
 				input="/prepareEnrolmentContext.do?method=error&amp;page=0"
 				parameter="method"
 				scope="request"
-				validate="false">
+				validate="true">
 			<forward name="showAvailableCurricularCourses" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
 			<forward name="error" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=1"/>
 			<forward name="home" path="df.page.main"/>

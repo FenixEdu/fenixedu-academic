@@ -132,26 +132,20 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 			List aux1 = new ArrayList();
 			while(iterator1.hasNext()) {
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-//				List scopes = curricularCourse.getScopes();
-//				Iterator iterator2 = scopes.iterator();
-//				while(iterator2.hasNext()) {
-//					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
-					if	(
-							(curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch()) ||
-							(curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))) &&
-							(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope)) &&
-							(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope)) &&
-							(!otherIrrelevanteCurricularCourses.contains(curricularCourseScope.getCurricularCourse()))
-						) {
-						// TODO DAVID-RICARDO: Perguntar se são estas mesmo as disciplinas a remover (opções, TFC, estágios, etc...)
-						// In this manner, for this list, we are excluding curricular courses from other branches that not the student's;
-						// curricular courses already aproved, enroled and temporarily enroled;
-						// TFC and training curricular courses.
-//						curricularCourseScopesFromActiveDegreeCurricularPlanForStudent.add(curricularCourseScope);
-						aux1.add(curricularCourseScope);
-					}
-//				}
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
+				if	(
+						(curricularCourseScope.getBranch().equals(studentActiveCurricularPlan.getBranch()) ||
+						(curricularCourseScope.getBranch().getName().equals("") && curricularCourseScope.getBranch().getCode().equals(""))) &&
+						(!curricularCoursesScopesFromStudentAprovedEnrolments.contains(curricularCourseScope)) &&
+						(!curricularCoursesScopesFromStudentEnroledEnrolments.contains(curricularCourseScope)) &&
+						(!otherIrrelevanteCurricularCourses.contains(curricularCourseScope.getCurricularCourse()))
+					) {
+					// TODO DAVID-RICARDO: Perguntar se são estas mesmo as disciplinas a remover (TFC, estágios, etc...)
+					// In this manner, for this list, we are excluding curricular courses from other branches that not the student's;
+					// curricular courses already aproved, enroled and temporarily enroled;
+					// TFC and training curricular courses.
+					aux1.add(curricularCourseScope);
+				}
 			}
 			
 			List aux2 = (List) CollectionUtils.union(curricularCoursesScopesFromStudentAprovedEnrolments, curricularCoursesScopesFromStudentEnroledEnrolments);

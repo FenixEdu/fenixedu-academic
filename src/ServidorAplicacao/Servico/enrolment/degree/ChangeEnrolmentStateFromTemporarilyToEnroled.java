@@ -127,7 +127,9 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 
 	}
 
-	private void createAttend(IEnrolment enrolment) throws ExcepcaoPersistencia, ExistingPersistentException {
+	public static void createAttend(IEnrolment enrolment) throws ExcepcaoPersistencia, ExistingPersistentException {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+		frequentaPersistente = persistentSupport.getIFrequentaPersistente();
 		try {
 			IFrequenta frequenta = new Frequenta();
 			frequenta.setAluno(enrolment.getStudentCurricularPlan().getStudent());
@@ -142,8 +144,9 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 		}
 	}
 
-	private void createEnrolmentEvaluation(IEnrolment enrolment) throws ExcepcaoPersistencia {
-
+	public static void createEnrolmentEvaluation(IEnrolment enrolment) throws ExcepcaoPersistencia {
+		persistentSupport = SuportePersistenteOJB.getInstance();
+		persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
 		try {
 			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 			enrolmentEvaluation.setEnrolment(enrolment);

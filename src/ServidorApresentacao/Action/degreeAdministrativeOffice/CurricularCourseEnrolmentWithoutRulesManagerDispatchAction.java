@@ -18,6 +18,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorApresentacao.Action.commons.GeneralCurricularCourseEnrolmentManagerDispatchAction;
+import ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -59,6 +60,7 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		try {
 			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "PrepareEnrolmentContext", args);
+			ManualEquivalenceManagerDispatchAction.sort(infoEnrolmentContext.getInfoEnrolmentsAprovedByStudent(), infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled());
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

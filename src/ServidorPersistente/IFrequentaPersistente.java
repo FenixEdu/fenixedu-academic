@@ -13,6 +13,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEnrolment;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -28,4 +29,6 @@ public interface IFrequentaPersistente extends IPersistentObject {
 	// FIXME: Must read by Username, not by Student Number
 	public List readByStudentId(Integer id) throws ExcepcaoPersistencia;
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+
+	public IFrequenta readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia;
 }

@@ -11,6 +11,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.enrolment.degree.ChangeEnrolmentStateFromTemporarilyToEnroled;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
@@ -81,6 +82,7 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico {
 			Iterator iterator = enrolmentsToDelete.iterator();
 			while(iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
+				ConfirmActualEnrolmentWithoutRules.deleteAttendAndEnrolmentEvaluations(enrolment);
 				persistentEnrolment.delete(enrolment);
 			}
 
@@ -112,6 +114,8 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IServico {
 					enrolmentInOptionalCurricularCourse.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentInOptionalCurricularCourse.setEnrolmentState(EnrolmentState.ENROLED);
 					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
+					ChangeEnrolmentStateFromTemporarilyToEnroled.createAttend(enrolmentInOptionalCurricularCourse);
+					ChangeEnrolmentStateFromTemporarilyToEnroled.createEnrolmentEvaluation(enrolmentInOptionalCurricularCourse);
 				} else {
 					persistentEnrolment.lockWrite(enrolment);
 					enrolment.setCurricularCourseForOption(chosenCurricularCourseForOption);

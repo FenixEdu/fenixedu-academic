@@ -10,15 +10,20 @@ import org.apache.commons.collections.Predicate;
 import Dominio.Enrolment;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEvaluation;
+import Dominio.IFrequenta;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.enrolment.degree.ChangeEnrolmentStateFromTemporarilyToEnroled;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -87,6 +92,7 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			Iterator iterator = enrolmentsToDelete.iterator();
 			while(iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
+				ConfirmActualEnrolmentWithoutRules.deleteAttendAndEnrolmentEvaluations(enrolment);
 				persistentEnrolment.delete(enrolment);
 			}
 
@@ -116,6 +122,8 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 					enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolment.setEnrolmentState(EnrolmentState.ENROLED);
 					persistentEnrolment.lockWrite(enrolment);
+					ChangeEnrolmentStateFromTemporarilyToEnroled.createAttend(enrolment);
+					ChangeEnrolmentStateFromTemporarilyToEnroled.createEnrolmentEvaluation(enrolment);
 				} else {
 					persistentEnrolment.lockWrite(enrolment);
 					enrolment.setEnrolmentState(EnrolmentState.ENROLED);
@@ -145,105 +153,25 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 		return result;
 	}
 
+	public static void deleteAttendAndEnrolmentEvaluations(IEnrolment enrolment) throws ExcepcaoPersistencia {
+		ISuportePersistente persistentSupport = null;
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = null;
+		IFrequentaPersistente persistentAttend = null;
 
-//	private void writeTemporaryEnrolment(EnrolmentContext enrolmentContext, Integer semester, Integer year) throws ExcepcaoPersistencia {
-//		ISuportePersistente sp = null;
-//		IPersistentEnrolment persistentEnrolment = null;
-//		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
-//		IPersistentExecutionPeriod persistentExecutionPeriod = null;
-//		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
-//
-//		try {
-//			sp = SuportePersistenteOJB.getInstance();
-//			persistentEnrolment = sp.getIPersistentEnrolment();
-//			persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
-//			persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-//			persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
-//
-//			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
-//			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
-//
-//			ICurso degreeCriteria = new Curso();
-//			degreeCriteria.setNome(enrolmentContext.getChosenOptionalDegree().getNome());
-//			degreeCriteria.setSigla(enrolmentContext.getChosenOptionalDegree().getSigla());
-//			degreeCriteria.setTipoCurso(enrolmentContext.getChosenOptionalDegree().getTipoCurso());
-//			IDegreeCurricularPlan degreeCurricularPlanCriteria = new DegreeCurricularPlan();
-//			degreeCurricularPlanCriteria.setDegree(degreeCriteria);
-//			final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
-//
-//			// list of all enrolments that may have been deleted.
-//			List enrolmentsWithStateTemporarilyEnroled = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.TEMPORARILY_ENROLED);
-//			List enrolmentsWithStateEnroled = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.ENROLED);
-//			List enrolmentsRead = new ArrayList();
-//			enrolmentsRead.addAll(enrolmentsWithStateTemporarilyEnroled);
-//			enrolmentsRead.addAll(enrolmentsWithStateEnroled);
-//
-//			final Integer semester2 = semester;
-//			final Integer year2 = year;
-//			List validEnrolmentsRead = (List) CollectionUtils.select(enrolmentsRead, new Predicate() {
-//				public boolean evaluate(Object obj) {
-//					IEnrolment enrolment = (IEnrolment) obj;
-//					return	enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan) &&
-//					enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().equals(semester2) &&
-//					enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().equals(year2);
-//				}
-//			});
-//
-//			List curricularCoursesScopesFromEnrolmentsRead = (List) CollectionUtils.collect(validEnrolmentsRead, new Transformer() {
-//				public Object transform(Object obj) {
-//					IEnrolment enrolment = (IEnrolment) obj;
-//					return enrolment.getCurricularCourseScope();
-//				}
-//			});
-//			
-//			List curricularCoursesScopesFromEnrolmentsToRemove = (List) CollectionUtils.subtract(curricularCoursesScopesFromEnrolmentsRead, enrolmentContext.getActualEnrolments());
-//
-//			// list of all enrolments to be writen.
-//			List enrolmentsToWrite = new ArrayList();
-//			Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
-//			IEnrolment enrolmentToWrite = null;
-//			while (iterator.hasNext()) {
-//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-//				if(!curricularCoursesScopesFromEnrolmentsRead.contains(curricularCourseScope)) {
-//					enrolmentToWrite = new Enrolment();
-//					enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
-//					enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-//					enrolmentToWrite.setExecutionPeriod(executionPeriod);
-//					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED);
-//					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
-//					enrolmentsToWrite.add(enrolmentToWrite);
-//				}
-//			}
-//
-//			// list of all enrolments to be deleted.
-//			List enrolmentsToDelete = new ArrayList();
-//			Iterator iterator2 = validEnrolmentsRead.iterator();
-//			while (iterator2.hasNext()) {
-//				IEnrolment enrolment = (IEnrolment) iterator2.next();
-//				if(curricularCoursesScopesFromEnrolmentsToRemove.contains(enrolment.getCurricularCourseScope())) {
-//					enrolmentsToDelete.add(enrolment);
-//				}
-//			}
-//
-//			// delete from data base the enrolments that don't mather.
-//			iterator = enrolmentsToDelete.iterator();
-//			while (iterator.hasNext()) {
-//				IEnrolment enrolment = (IEnrolment) iterator.next();
-//				persistentEnrolment.delete(enrolment);
-//			}
-//			
-//			// add to data base the new enrolments.
-//			iterator = enrolmentsToWrite.iterator();
-//			while (iterator.hasNext()) {
-//				IEnrolment enrolment = (IEnrolment) iterator.next();
-//				persistentEnrolment.lockWrite(enrolment);
-//			}
-//		} catch (ExistingPersistentException e1) {
-//			e1.printStackTrace();
-////			throw e1;
-//		} catch (ExcepcaoPersistencia e) {
-//			e.printStackTrace();
-//			throw e;
-//		}
-//	}
+		persistentSupport = SuportePersistenteOJB.getInstance();
+		persistentAttend = persistentSupport.getIFrequentaPersistente();
+		persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
+
+		IFrequenta attend = persistentAttend.readByEnrolment(enrolment);
+		List enrolmentEvaluationsList = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
+
+		persistentAttend.delete(attend);
+		
+		Iterator iterator = enrolmentEvaluationsList.iterator();
+		while(iterator.hasNext()) {
+			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+			persistentEnrolmentEvaluation.delete(enrolmentEvaluation);
+		}
+	}
+
 }

@@ -23,6 +23,7 @@ import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorApresentacao.Action.commons.GeneralCurricularCourseEnrolmentManagerDispatchAction;
+import ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchAction;
 import ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -54,6 +55,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Gen
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		try {
 			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args);
+			ManualEquivalenceManagerDispatchAction.sort(infoEnrolmentContext.getInfoEnrolmentsAprovedByStudent(), infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled());
 		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
 			throw new OutOfCurricularEnrolmentPeriodActionException(e.getMessageKey(), e.getStartDate(), e.getEndDate(), mapping.findForward("globalOutOfPeriod"));
 		}

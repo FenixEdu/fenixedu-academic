@@ -33,13 +33,14 @@ public class ValidateMultiBox {
 
 			DynaActionForm form = (DynaActionForm) bean;
 
-			String sProperty = field.getVarValue("arrayProperty");
-			String[] multiBox = (String[]) form.get(sProperty);
+			String sProperty = field.getProperty();
+			Object[] multiBox = (Object[]) form.get(sProperty);
+
 			String feminin = field.getVarValue("femininProperty");
 			if ((multiBox != null) && (multiBox.length > 0)) {
 				return true;
 			} else {
-				if (feminin != null && feminin.equals("true")) {
+				if (feminin != null && feminin.equalsIgnoreCase("true")) {
 					errors.add(
 						field.getKey(),
 						new ActionError(
@@ -65,5 +66,4 @@ public class ValidateMultiBox {
 		}
 
 	}
-
 }
