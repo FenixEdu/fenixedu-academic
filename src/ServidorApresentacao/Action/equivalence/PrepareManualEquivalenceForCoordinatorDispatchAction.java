@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -31,10 +32,11 @@ public class PrepareManualEquivalenceForCoordinatorDispatchAction extends Dispat
 
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
 		List enrolmentsList = null;
 		try {
-			Object args[] = { userView };
+			Object args[] = { userView, infoExecutionDegree };
 			enrolmentsList = (List) ServiceUtils.executeService(userView, "GetAllAvailableCurricularCoursesForCoordinatorEquivalence", args);
 		} catch(FenixServiceException e) {
 			throw new FenixActionException(e);

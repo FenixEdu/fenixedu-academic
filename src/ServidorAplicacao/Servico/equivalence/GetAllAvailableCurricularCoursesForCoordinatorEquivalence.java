@@ -7,19 +7,17 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import Dominio.ICursoExecucao;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.util.Cloner;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
-import Dominio.ITeacher;
-import DataBeans.util.Cloner;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -46,25 +44,29 @@ public class GetAllAvailableCurricularCoursesForCoordinatorEquivalence implement
 		return "GetAllAvailableCurricularCoursesForCoordinatorEquivalence";
 	}
 
-	public List run(IUserView userView) throws FenixServiceException {
+	public List run(IUserView userView, InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
 
 		List midResult = new ArrayList();
 		List finalResult = new ArrayList();
 
 		try {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-			ICursoExecucaoPersistente persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
+//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+//			ICursoExecucaoPersistente persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-			ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
-			List executionDegreesList = persistentExecutionDegree.readByTeacher(teacher);
+//			ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+//			List executionDegreesList = persistentExecutionDegree.readByTeacher(teacher);
+//
+//			Iterator iterator1 = executionDegreesList.iterator();
+//			while(iterator1.hasNext()) {
+//				ICursoExecucao executionDegree = (ICursoExecucao) iterator1.next();
+//				IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
 
-			Iterator iterator1 = executionDegreesList.iterator();
-			while(iterator1.hasNext()) {
-				ICursoExecucao executionDegree = (ICursoExecucao) iterator1.next();
-				IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
+				InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+				IDegreeCurricularPlan degreeCurricularPlan = Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoDegreeCurricularPlan);
+
 				List studentCurricularPlansList = persistentStudentCurricularPlan.readByDegreeCurricularPlan(degreeCurricularPlan);
 				
 				Iterator iterator2 = studentCurricularPlansList.iterator();
@@ -90,7 +92,7 @@ public class GetAllAvailableCurricularCoursesForCoordinatorEquivalence implement
 						midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan);
 					}
 				}
-			}
+//			}
 
 			Iterator iterator3 = midResult.iterator();
 			while(iterator3.hasNext()) {

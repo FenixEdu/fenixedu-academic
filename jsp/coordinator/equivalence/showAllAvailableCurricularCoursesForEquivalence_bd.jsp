@@ -5,40 +5,48 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <bean:define id="enrolmentsList" name="<%= SessionConstants.ENROLMENT_LIST %>" scope="request"/>
+<bean:size id="sizeenrolmentsList" name="enrolmentsList"/>
 
 <center>
 	<h2><bean:message key="title.coordinator.equivalence"/></h2>
+
+<logic:equal name="sizeenrolmentsList" value="0">
+	</center>
+	<b><bean:message key="label.no.curricular.courses.to.give.equivalence"/></b>
+</logic:equal>
+
+<logic:notEqual name="sizeenrolmentsList" value="0">
 	<b><bean:message key="label.first.step.coordinator.equivalence"/></b>
 	<br/>
 	<br/>
-</center>
-
-<table border="1" width="100%">
-	<tr>
-		<th align="center"><bean:message key="label.curricular.course.name"/></th>
-		<th align="center"><bean:message key="label.degree.name"/></th>
-		<th align="center"><bean:message key="label.student.number"/></th>
-	</tr>
-	<logic:iterate id="infoEnrolment" name="enrolmentsList" indexId="index">
-		<bean:define id="link">
-			/equivalence.do?method=show&studentOID=<bean:write name="infoEnrolment" property="infoStudentCurricularPlan.infoStudent.idInternal"/>
-		</bean:define>
+	</center>
+	<table border="1" width="100%">
 		<tr>
-			<td align="center">
-				<html:link page="<%= pageContext.findAttribute("link").toString() %>">
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
-				</html:link>
-			</td>
-			<td align="center">
-				<html:link page="<%= pageContext.findAttribute("link").toString() %>">
-					<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>
-				</html:link>
-			</td>
-			<td align="center">
-				<html:link page="<%= pageContext.findAttribute("link").toString() %>">
-					<bean:write name="infoEnrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
-				</html:link>
-			</td>
+			<th align="center"><bean:message key="label.curricular.course.name"/></th>
+			<th align="center"><bean:message key="label.degree.name"/></th>
+			<th align="center"><bean:message key="label.student.number"/></th>
 		</tr>
-	</logic:iterate>
-</table>
+		<logic:iterate id="infoEnrolment" name="enrolmentsList" indexId="index">
+			<bean:define id="link">
+				/equivalence.do?method=show&studentOID=<bean:write name="infoEnrolment" property="infoStudentCurricularPlan.infoStudent.idInternal"/>
+			</bean:define>
+			<tr>
+				<td align="center">
+					<html:link page="<%= pageContext.findAttribute("link").toString() %>">
+						<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+					</html:link>
+				</td>
+				<td align="center">
+					<html:link page="<%= pageContext.findAttribute("link").toString() %>">
+						<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>
+					</html:link>
+				</td>
+				<td align="center">
+					<html:link page="<%= pageContext.findAttribute("link").toString() %>">
+						<bean:write name="infoEnrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+</logic:notEqual>
