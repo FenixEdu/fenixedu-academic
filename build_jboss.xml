@@ -307,6 +307,8 @@
     		description="Compile application server"
     		depends="prepare-app-server">
 		<javac destdir="${build.app-server}"
+		source="1.4"
+		compiler="javac1.4"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
@@ -497,6 +499,8 @@
     		description="Compile web client"
     		depends="prepare-web-client">
 		<javac destdir="${build.web-client.webinf.classes}"
+		source="1.4"
+		compiler="javac1.4"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
