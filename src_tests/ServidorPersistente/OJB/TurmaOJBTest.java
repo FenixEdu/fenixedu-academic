@@ -285,7 +285,6 @@ public class TurmaOJBTest extends TestCaseOJB {
 		OQLQuery query = null;
 		String oqlQuery = null;;
 		List result = null;
-		TurmaTurnoOJB turmaTurnoOJB = null;
 		try {
 			persistentSupport.iniciarTransaccao();
 			
@@ -329,7 +328,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			query = odmg.newOQLQuery();
 
 			try {			
-				turmaTurnoOJB = new TurmaTurnoOJB();
+				
 				oqlQuery = "select all from " + TurmaTurno.class.getName();
 				oqlQuery += " where turma.nome = $1 ";
 				oqlQuery += " and turma.executionPeriod.name = $2 ";
@@ -346,6 +345,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getName());
 				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getDegree().getSigla());			
 				result = (List) query.execute();
+				assertNotNull(result);
 			} catch (QueryException ex) {
 				  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
@@ -364,7 +364,6 @@ public class TurmaOJBTest extends TestCaseOJB {
 			
 			// Checks Shifts			
 			try {		
-				turmaTurnoOJB = new TurmaTurnoOJB();
 				oqlQuery = "select all from " + TurmaTurno.class.getName();
 				oqlQuery += " where turma.nome = $1 ";
 				oqlQuery += " and turma.executionPeriod.name = $2 ";
@@ -381,6 +380,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getName());
 				query.bind(classTemp.getExecutionDegree().getCurricularPlan().getDegree().getSigla());			
 				result = (List) query.execute();
+				assertNotNull(result);
 			} catch (QueryException ex) {
 				  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
@@ -495,7 +495,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			fail("testReadByNome:fail read existing turma");
 		}
 	}
-//TODO: test readbynameandexecutionyearandexecutionperiod
+	//TODO: test readbynameandexecutionyearandexecutionperiod
 	public void testReadByExecutionPeriod() {
 		List classesList = null;
 		IExecutionPeriod executionPeriod = null;
