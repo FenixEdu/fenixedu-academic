@@ -7,6 +7,7 @@ package Dominio;
 import java.util.List;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import Util.PrecedenceScopeToApply;
 
 /**
  * @author jpvl
@@ -15,6 +16,7 @@ public class Precedence extends DomainObject implements IPrecedence {
 	private Integer keyCurricularCourse;
 	private ICurricularCourse curricularCourse;
 	private List restrictions;
+	private PrecedenceScopeToApply precedenceScopeToApply;
 	/**
 	 * 
 	 */
@@ -115,4 +117,18 @@ public class Precedence extends DomainObject implements IPrecedence {
 		stringBuffer.append("---------\n");
 		return stringBuffer.toString();
 	}
+	/**
+	 * @return
+	 */
+	public PrecedenceScopeToApply getPrecedenceScopeToApply() {
+		return precedenceScopeToApply;
+	}
+
+	/**
+	 * @param apply
+	 */
+	public void setPrecedenceScopeToApply(PrecedenceScopeToApply apply) {
+		precedenceScopeToApply = apply;
+	}
+
 }
