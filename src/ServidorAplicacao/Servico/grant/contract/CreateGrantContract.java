@@ -165,7 +165,7 @@ public class CreateGrantContract extends ServidorAplicacao.Servico.framework.Edi
                     .getTeacherNumber(),
                 pTeacher);
 
-            result = super.run(infoGrantContract);
+            result = super.run(new Integer(0),infoGrantContract);
         } catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
