@@ -22,6 +22,5 @@ public interface IPersistentMiddlewareSupport {
 	
 	public IPersistentMWStudentClass getIPersistentMWStudentClass();
 	public IPersistentMWDegreeTranslation getIPersistentMWDegreeTranslation();
+	public IPersistentMWCurricularCourseOutsideStudentDegree getIPersistentMWCurricularCourseOutsideStudentDegree();
 }
-
-

@@ -3,6 +3,7 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
+import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseScope;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
@@ -76,6 +77,11 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	public IPersistentMWDegreeTranslation getIPersistentMWDegreeTranslation()
 	{
 		return new MWDegreeTranslationOJB();
+	}
+
+	public IPersistentMWCurricularCourseOutsideStudentDegree getIPersistentMWCurricularCourseOutsideStudentDegree()
+	{
+		return new MWCurricularCourseOutsideStudentDegreeOJB();
 	}
 
 }

@@ -8,10 +8,12 @@ import java.util.List;
 
 import middleware.middlewareDomain.MWAluno;
 import middleware.middlewareDomain.MWBranch;
+import middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree;
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MwEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
+import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
@@ -338,46 +340,64 @@ public class UpdateStudentEnrolments
 	 * @throws ExcepcaoPersistencia
 	 */
 	private static ICurricularCourse getCurricularCourseFromAnotherDegree(final MwEnrolment mwEnrolment, SuportePersistenteOJB sp)
-		throws ExcepcaoPersistencia
+		throws ExcepcaoPersistencia, PersistentMiddlewareSupportException
 	{
-		IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
 		ICurricularCourse curricularCourse = null;
-		List attendList = attendDAO.readByStudentNumberInCurrentExecutionPeriod(mwEnrolment.getNumber());
-		List attendsWithCurricularCourseCode = (List) CollectionUtils.select(attendList, new Predicate()
-		{
-			public boolean evaluate(Object input)
+
+		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+		IPersistentMWCurricularCourseOutsideStudentDegree persistentMWCurricularCourseOutsideStudentDegree = mws.getIPersistentMWCurricularCourseOutsideStudentDegree();
+
+		MWCurricularCourseOutsideStudentDegree mwCurricularCourseOutsideStudentDegree = persistentMWCurricularCourseOutsideStudentDegree.readByCourseCodeAndDegreeCode(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode());
+		if(mwCurricularCourseOutsideStudentDegree != null) {
+			curricularCourse = mwCurricularCourseOutsideStudentDegree.getCurricularCourse();
+		} else {
+
+			IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
+			List attendList = attendDAO.readByStudentNumberInCurrentExecutionPeriod(mwEnrolment.getNumber());
+			List attendsWithCurricularCourseCode = (List) CollectionUtils.select(attendList, new Predicate()
 			{
-				IFrequenta attend = (IFrequenta) input;
-
-				String courseCode = mwEnrolment.getCoursecode();
-				
-				List associatedCurricularCourses = attend.getDisciplinaExecucao().getAssociatedCurricularCourses();
-				Iterator iterator = associatedCurricularCourses.iterator();
-				while (iterator.hasNext())
+				public boolean evaluate(Object input)
 				{
-					ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-					if (curricularCourse.getCode().equals(courseCode))
+					IFrequenta attend = (IFrequenta) input;
+
+					String courseCode = mwEnrolment.getCoursecode();
+				
+					List associatedCurricularCourses = attend.getDisciplinaExecucao().getAssociatedCurricularCourses();
+					Iterator iterator = associatedCurricularCourses.iterator();
+					while (iterator.hasNext())
 					{
-						return true;
+						ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+						if (curricularCourse.getCode().equals(courseCode))
+						{
+							return true;
+						}
 					}
+					return false;
 				}
-				return false;
+			});
+
+			if (attendsWithCurricularCourseCode.size() > 0)
+			{
+				List associatedCurricularCourses =
+					((IFrequenta) attendsWithCurricularCourseCode.get(0)).getDisciplinaExecucao().getAssociatedCurricularCourses();
+
+				curricularCourse = (ICurricularCourse) associatedCurricularCourses.get(0);
+
+				MWCurricularCourseOutsideStudentDegree mwCurricularCourseOutsideStudentDegreeToWrite = new MWCurricularCourseOutsideStudentDegree();
+				persistentMWCurricularCourseOutsideStudentDegree.simpleLockWrite(mwCurricularCourseOutsideStudentDegreeToWrite);
+				mwCurricularCourseOutsideStudentDegreeToWrite.setCourseCode(mwEnrolment.getCoursecode());
+				mwCurricularCourseOutsideStudentDegreeToWrite.setDegreeCode(mwEnrolment.getDegreecode());
+				mwCurricularCourseOutsideStudentDegreeToWrite.setCurricularCourse(curricularCourse);
+
+			} else
+			{
+				ReportEnrolment.addFoundCurricularCourseInOtherDegrees(
+					mwEnrolment.getCoursecode(),
+					mwEnrolment.getDegreecode().toString(),
+					mwEnrolment.getNumber().toString());
 			}
-		});
-
-		if (attendsWithCurricularCourseCode.size() > 0)
-		{
-			List associatedCurricularCourses =
-				((IFrequenta) attendsWithCurricularCourseCode.get(0)).getDisciplinaExecucao().getAssociatedCurricularCourses();
-
-			curricularCourse = (ICurricularCourse) associatedCurricularCourses.get(0);
-		} else
-		{
-			ReportEnrolment.addFoundCurricularCourseInOtherDegrees(
-				mwEnrolment.getCoursecode(),
-				mwEnrolment.getDegreecode().toString(),
-				mwEnrolment.getNumber().toString());
 		}
+
 		return curricularCourse;
 	}
 
@@ -416,6 +436,12 @@ public class UpdateStudentEnrolments
 				Collections.sort(curricularCourseScopes, comparatorChain);
 				return (ICurricularCourseScope) curricularCourseScopes.get(0);
 			} else {
+				ReportEnrolment.addCurricularCourseScopeNotFound(mwEnrolment.getCoursecode(),
+					mwEnrolment.getDegreecode().toString(),
+					mwEnrolment.getNumber().toString(),
+					mwEnrolment.getCurricularcourseyear().toString(),
+					mwEnrolment.getCurricularcoursesemester().toString(),
+					mwEnrolment.getBranchcode().toString());
 				return null;
 			}
 		}
