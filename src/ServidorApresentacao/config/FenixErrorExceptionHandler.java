@@ -10,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.Globals;
+import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -47,7 +49,32 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 		throws ServletException {
 		ActionForward forward = null;
 
-		super.execute(ex, ae, mapping, formInstance, request, response);
+		ActionError error = null;
+	 	String property = null;
+
+	  // Build the forward from the exception mapping if it exists
+	  // or from the form input
+	  if (ae.getPath() != null) {
+		  forward = new ActionForward(ae.getPath());
+		  forward.setContextRelative(true);
+	  } else {
+	  forward = mapping.getInputForward();
+	  }
+
+	  // Figure out the error
+	  if (ex instanceof FenixActionException) {
+		  error = ((FenixActionException) ex).getError();
+		  property = ((FenixActionException) ex).getProperty();
+	  } else {
+		  error = new ActionError(ae.getKey(), ex.getMessage());
+		  property = error.getKey();
+	  }
+
+	  // Store the exception
+	  request.setAttribute(Globals.EXCEPTION_KEY, ex);
+	  super.storeException(request, property, error, forward, ae.getScope());
+
+	
 	
 		return mapping.getInputForward();
 	}
