@@ -92,7 +92,7 @@ public interface ISuportePersistente {
 	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
 	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
 	
-	public IPersistentStudentGroupInfo getIPersistentStudentGroupInfo();
+	
 	
 	public IPersistentStudentKind getIPersistentStudentKind();
 	
