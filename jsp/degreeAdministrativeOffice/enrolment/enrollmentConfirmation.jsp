@@ -38,12 +38,16 @@
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
 			<td>
+			<%--
 				<logic:notEmpty name="creditsInSpecializationArea">
+			--%>
 					<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
+			<%--
 				</logic:notEmpty>
 				<logic:empty name="creditsInSpecializationArea">
 					0
 				</logic:empty>
+			--%>
 				&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.specializationCredits" />
 			</td>
@@ -60,12 +64,16 @@
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
 			<td>
+			<%--
 				<logic:notEmpty name="creditsInSecundaryArea">
+			--%>
 					<bean:write name="infoStudentEnrolmentContext" property="creditsInSecundaryArea" />
+			<%--
 				</logic:notEmpty>
 				<logic:empty name="creditsInSecundaryArea">
 					0
 				</logic:empty>
+			--%>
 				&nbsp;<bean:message key="label.student.enrollment.from"/>&nbsp;
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.secondaryCredits" />
 			</td>

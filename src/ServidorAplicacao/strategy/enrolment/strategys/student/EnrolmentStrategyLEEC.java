@@ -54,8 +54,6 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	private IStudentCurricularPlan studentCurricularPlan = null;
 	private boolean studentHasSpecializationArea = false;
 	private boolean studentHasSecundaryArea = false;
-	private Integer creditsInSecundaryArea = null;
-	private Integer creditsInSpecializationArea = null;
 
 	public EnrolmentStrategyLEEC(IStudentCurricularPlan studentCurricularPlan)
 	{
@@ -93,9 +91,6 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 			studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(
 					finalCurricularCoursesWhereStudentCanBeEnrolled);
-			
-			studentEnrolmentContext.setCreditsInSecundaryArea(this.creditsInSecundaryArea);
-			studentEnrolmentContext.setCreditsInSpecializationArea(this.creditsInSpecializationArea);
 		}
 
 		IEnrolmentRule enrolmentRule = new EnrolmentApplyPrecedencesRule();
@@ -274,6 +269,13 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			creditsInSpecializationAreaGroups,
 			creditsInSecundaryAreaGroups);
 
+		Integer creditsInSecundaryArea = calculateCreditsInSecundaryArea(studentCurricularPlan, creditsInSecundaryAreaGroups);
+		Integer creditsInSpecializationArea =
+			calculateCreditsInSpecializationArea(studentCurricularPlan, creditsInSpecializationAreaGroups);
+		
+		this.studentEnrolmentContext.setCreditsInSecundaryArea(creditsInSecundaryArea);
+		this.studentEnrolmentContext.setCreditsInSpecializationArea(creditsInSpecializationArea);
+		
 		return selectCurricularCourses(
 			studentCurricularPlan,
 			creditsInSpecializationAreaGroups,
@@ -884,11 +886,9 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 			if (areaCredits >= studentCurricularPlan.getBranch().getSpecializationCredits().intValue())
 			{
-				this.creditsInSpecializationArea = studentCurricularPlan.getBranch().getSpecializationCredits();
 				return true;
 			} else
 			{
-				this.creditsInSpecializationArea = new Integer(areaCredits);
 				return false;
 			}
 		}
@@ -937,13 +937,11 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 			areaCredits += creditsInAnySecundaryArea;
 
-			if (areaCredits >= studentCurricularPlan.getBranch().getSecondaryCredits().intValue())
+			if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
 			{
-				this.creditsInSecundaryArea = studentCurricularPlan.getBranch().getSecondaryCredits();
 				return true;
 			} else
 			{
-				this.creditsInSecundaryArea = new Integer(areaCredits);
 				return false;
 			}
 		}
@@ -1004,20 +1002,14 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 					groups.add(1, secundaryGroup);
 					groups.add(2, scientificArea);
 					clashingGroups.put(scientificArea.getIdInternal(), groups);
-				} else
+				} else if (specializationGroup != null)
 				{
-					if (specializationGroup != null)
-					{
-						sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), credits);
-						entriesInHashMapToRemove.add(scientificAreaID);
-					} else
-					{
-						if (secundaryGroup != null)
-						{
-							sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), credits);
-							entriesInHashMapToRemove.add(scientificAreaID);
-						}
-					}
+					sumInHashMap(creditsInSpecializationAreaGroups, specializationGroup.getIdInternal(), credits);
+					entriesInHashMapToRemove.add(scientificAreaID);
+				} else if (secundaryGroup != null)
+				{
+					sumInHashMap(creditsInSecundaryAreaGroups, secundaryGroup.getIdInternal(), credits);
+					entriesInHashMapToRemove.add(scientificAreaID);
 				}
 			}
 			
@@ -1437,6 +1429,68 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param creditsInSpecializationAreaGroups
+	 * @return Integer
+	 */
+	private Integer calculateCreditsInSpecializationArea(
+		IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSpecializationAreaGroups)
+	{
+		int areaCredits = 0;
+
+		if (!creditsInSpecializationAreaGroups.entrySet().isEmpty())
+		{
+			Iterator iterator = creditsInSpecializationAreaGroups.entrySet().iterator();
+			while (iterator.hasNext())
+			{
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				Integer credits = (Integer) mapEntry.getValue();
+
+				areaCredits += credits.intValue();
+			}
+
+			if (areaCredits >= studentCurricularPlan.getBranch().getSpecializationCredits().intValue())
+			{
+				areaCredits = studentCurricularPlan.getBranch().getSpecializationCredits().intValue();
+			}
+		}
+
+		return new Integer(areaCredits);
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param creditsInSecundaryAreaGroups
+	 * @return Integer
+	 */
+	private Integer calculateCreditsInSecundaryArea(
+		IStudentCurricularPlan studentCurricularPlan,
+		HashMap creditsInSecundaryAreaGroups)
+	{
+		int areaCredits = 0;
+
+		if (!creditsInSecundaryAreaGroups.entrySet().isEmpty())
+		{
+			Iterator iterator = creditsInSecundaryAreaGroups.entrySet().iterator();
+			while (iterator.hasNext())
+			{
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				Integer credits = (Integer) mapEntry.getValue();
+
+				areaCredits += credits.intValue();
+			}
+
+			if (areaCredits >= studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue())
+			{
+				areaCredits = studentCurricularPlan.getSecundaryBranch().getSecondaryCredits().intValue();
+			}
+		}
+
+		return new Integer(areaCredits);
 	}
 
 }
