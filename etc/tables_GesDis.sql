@@ -13,12 +13,12 @@ drop table if exists ANNOUNCEMENT;
 create table ANNOUNCEMENT (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    TITLE varchar(100),
-   CREATION_DATE timestamp,
-   LAST_MODIFICATION_DATE timestamp,
+   CREATION_DATE timestamp(8),
+   LAST_MODIFICATION_DATE timestamp(8),
    INFORMATION text,
    KEY_SITE int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),
-   UNIQUE KEY U1( KEY_SITE, CREATION_DATE))
+   UNIQUE KEY U1( KEY_SITE,TITLE,CREATION_DATE))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
@@ -52,7 +52,7 @@ create table ITEM (
    URGENT int(11) unsigned,
    KEY_SECTION int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),
-   unique ID_INTERNAL (ID_INTERNAL))
+   unique ID_INTERNAL (NAME,KEY_SECTION))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------

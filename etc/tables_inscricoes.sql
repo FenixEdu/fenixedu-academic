@@ -119,6 +119,7 @@ create table STUDENT_CURRICULAR_PLAN (
    COMPLETED_COURSES int(11) default 0,
    ENROLLED_COURSES int(11) default 0,
    CLASSIFICATION float(10,2),
+   OBSERVATIONS text,
    KEY_EMPLOYEE int(11),
    WHEN_ALTER timestamp(14),  
    primary key (ID_INTERNAL),
