@@ -10,6 +10,7 @@ import java.util.Map;
 
 import Dominio.ICurso;
 import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
 
 /**
  * @author jpvl
@@ -20,6 +21,8 @@ public final class EnrolmentContext {
 	private List curricularCoursesDoneByStudent;
 	private Map acumulatedEnrolments;
 	private Integer semester;
+	
+	private IStudentCurricularPlan studentActiveCurricularPlan;
 	
 	private List actualEnrolment;
 	
@@ -133,6 +136,34 @@ public final class EnrolmentContext {
 	 */
 	public void setAcumulatedEnrolments(Map map) {
 		acumulatedEnrolments = map;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getActualEnrolment() {
+		return actualEnrolment;
+	}
+
+	/**
+	 * @return
+	 */
+	public IStudentCurricularPlan getStudentActiveCurricularPlan() {
+		return studentActiveCurricularPlan;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setActualEnrolment(List list) {
+		actualEnrolment = list;
+	}
+
+	/**
+	 * @param plan
+	 */
+	public void setStudentActiveCurricularPlan(IStudentCurricularPlan plan) {
+		studentActiveCurricularPlan = plan;
 	}
 
 }
