@@ -322,8 +322,12 @@ public class Enrolment extends DomainObject implements IEnrollment,
 
     private void createNewEnrolmentLog(EnrolmentAction action, PersistenceBroker arg0)
             throws PersistenceBrokerException {
-        IPersistentEnrolmentLog persistentEnrolmentLog = SuportePersistenteOJB
-                .getInstance().getIPersistentEnrolmentLog();
+        try {
+            IPersistentEnrolmentLog persistentEnrolmentLog = SuportePersistenteOJB
+                    .getInstance().getIPersistentEnrolmentLog();
+        } catch (ExcepcaoPersistencia e) {
+            throw new PersistenceBrokerException(e);
+        }
         IEnrolmentLog enrolmentLog = new EnrolmentLog();
         //persistentEnrolmentLog.simpleLockWrite(enrolmentLog);
         enrolmentLog.setDate(new Date());
