@@ -1,0 +1,52 @@
+
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for Dominio.InquiryAnswer -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="Dominio.inquiry.InquiryAnswer" table="INQUIRY_ANSWER">
+  <field-descriptor
+    name="idInternal"
+    column="ID_INTERNAL"
+    jdbc-type="INTEGER"
+	primarykey="true"
+	autoincrement="true"
+  />
+  <field-descriptor
+    name="key_student"
+    column="KEY_STUDENT"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="answer1"
+    column="ANSWER1"
+    jdbc-type="TINYINT"
+  />
+  <field-descriptor
+    name="answer2"
+    column="ANSWER2"
+    jdbc-type="TINYINT"
+  />
+  <field-descriptor
+    name="answer3"
+    column="ANSWER3"
+    jdbc-type="TINYINT"
+  />
+  <field-descriptor
+    name="answer4"
+    column="ANSWER4"
+    jdbc-type="TINYINT"
+  />
+  <field-descriptor
+    name="answer5"
+    column="ANSWER5"
+    jdbc-type="TINYINT"
+  />
+  <field-descriptor
+    name="ackOptLock"
+    column="ACK_OPT_LOCK"
+    jdbc-type="INTEGER"
+  />
+</class-descriptor>
+
+
+
