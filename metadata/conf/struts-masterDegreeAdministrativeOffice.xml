@@ -283,6 +283,20 @@
 			<form-property name="day" type="java.lang.String" />				        
       </form-bean>
 
+	  <!-- Bean to Choose the Situation for the Candidate  -->
+      <form-bean name="chooseCandidateSituationForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="situations" type="java.lang.String[]"/>
+	        <form-property name="candidatesID" type="java.lang.String[]"/>
+        	<form-property name="remarks" type="java.lang.String[]" />
+        	<form-property name="executionYear" type="java.lang.String" />
+            <form-property name="degree" type="java.lang.String" />
+   	        <form-property name="substitutes" type="java.lang.String[]"/>
+       </form-bean>
+      
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -816,7 +830,63 @@
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="ChooseSuccess" path="/editCandidates.do?method=prepareChoose&amp;action=edit&amp;page=0"/> 
       </action>
+      
+<!-- XXXXXXXXXXXXXXXXXXXX -->
+	  
+	  <!-- Choose Execution Year to Select Candidates -->
+      <action path="/chooseExecutionYearToSelectCandidates"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&amp;page=0"/>  
+      </action>
 
+      <!-- Choose Master Degree To Select Candidates -->
+      <action path="/chooseMasterDegreeToSelectCandidates"
+	          input="/candidate/chooseMasterDegreeToSelectCandidates.jsp"
+		      attribute="chooseMasterDegreeForm"
+		      name="chooseMasterDegreeForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/candidate/chooseMasterDegreeToSelectCandidates.jsp"/>  
+			 <forward name="ChooseSuccess" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates&amp;page=0"/>
+      </action>
+
+      <!-- Display List To Select Candidates -->
+      <action path="/displayListToSelectCandidates"
+	          input="/candidate/displayCandidateListBySituation.jsp"
+		      attribute="chooseCandidateSituationForm"
+		      name="chooseCandidateSituationForm"
+		      parameter="method"
+		      scope="session"
+              type="ServidorApresentacao.Action.masterDegree.commons.candidate.SelectCandidatesDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListBySituation.jsp"/>  
+	         <forward name="CancelConfirmation" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates"/>  
+	         <forward name="RequestConfirmation" path="/candidate/warning.jsp"/> 
+	         <forward name="FinalPresentation" path="/candidate/displayCandidatesFinalList.jsp"/>
+	         <forward name="ChooseSuccess" path="/displayListToSelectCandidates.do?method=preparePresentation&amp;page=0"/>
+	         <forward name="OrderCandidates" path="/displayListToSelectCandidates.do?method=getSubstituteCandidates&amp;page=0"/> 
+	         <forward name="Cancel" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates&amp;page=0"/> 
+	         <forward name="OrderCandidatesReady" path="/candidate/displayChosenSelection.jsp"/> 
+	         <forward name="NumerusClaususNotDefined" path="/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&amp;page=0"/>  	         
+			 <forward name="BackError" path="/backErrorCandidateApprovalPage.do" redirect="true"/>  
+		</action>
+
+      <action path="/backErrorCandidateApprovalPage"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/candidate/backErrorPage.jsp"/> 
+      </action>
+
+	     
       <!-- Choose Execution Year To Create a Guide -->
       <action path="/chooseExecutionYearToCreateGuide"
       		  input="chooseExecutionYear.jsp"
@@ -829,8 +899,6 @@
 	         <forward name="PrepareSuccess" path="/guide/chooseExecutionYearToCreateGuide.jsp"/>  
 	         <forward name="ChooseSuccess" path="/createGuideDispatchAction.do?method=prepare&amp;page=0"/> 
       </action>
-
-
 
       <!-- Print Guide -->
       <action path="/printGuide"
