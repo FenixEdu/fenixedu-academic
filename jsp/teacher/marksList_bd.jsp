@@ -6,6 +6,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="Util.Data" %>
+<%@ page import="Util.EvaluationType" %> 
 
 <span class="error"><html:errors/></span>
  
@@ -28,12 +29,20 @@
 			<td colspan="3">
 			 <h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>
 			
-			<logic:present name="marksListComponent" property="infoEvaluation">  		
-				<h2>
-				&nbsp;-&nbsp;				
-				<bean:write name="marksListComponent" property="infoEvaluation.season"/>&nbsp;
-				<bean:write name="marksListComponent" property="infoEvaluation.date"/> <i>às</i> <bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/><br />
-				</h2>
+			<logic:present name="marksListComponent" property="infoEvaluation">  
+				<bean:define id="evaluation" name="marksListComponent" property="infoEvaluation" />		
+				<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
+					<h2>
+					&nbsp;-&nbsp;				
+					<bean:write name="evaluationt" property="season"/>&nbsp;
+					<bean:write name="evaluation" property="date"/> <i>às</i> <bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/><br />
+					</h2>
+				</logic:equal>
+				<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">
+					<h2>				
+					<bean:message key="label.finalEvaluation"/><br />
+					</h2>
+				</logic:equal>
 		   </logic:present>
 		   </td>
 		</tr> 

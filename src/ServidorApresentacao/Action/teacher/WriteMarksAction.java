@@ -161,7 +161,7 @@ public class WriteMarksAction extends DispatchAction {
 		TeacherAdministrationSiteView siteView = null;
 
 		try {
-			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertExamMarks", args);
+			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertEvaluationMarks", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -259,7 +259,7 @@ public class WriteMarksAction extends DispatchAction {
 		TeacherAdministrationSiteView siteView = null;
 
 		try {
-			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertExamMarks", args);
+			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertEvaluationMarks", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
