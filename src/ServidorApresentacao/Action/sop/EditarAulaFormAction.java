@@ -50,8 +50,8 @@ public class EditarAulaFormAction extends FenixAction {
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
-
 			IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+		
 			GestorServicos gestor = GestorServicos.manager();
 			InfoLesson iAulaAntiga =
 				(InfoLesson) sessao.getAttribute("infoAula");
@@ -78,13 +78,14 @@ public class EditarAulaFormAction extends FenixAction {
 			
 			RoomKey kSalaAntiga =
 				new RoomKey(iAulaAntiga.getInfoSala().getNome());
-			
+		
 			KeyLesson kAulaAntiga =
 				new KeyLesson(
 					iAulaAntiga.getDiaSemana(),
 					iAulaAntiga.getInicio(),
 					iAulaAntiga.getFim(),
 					kSalaAntiga);
+				
 			InfoLesson iAula =
 				new InfoLesson(
 					new DiaSemana(new Integer((String) editarAulaForm.get("diaSemana"))),
@@ -93,10 +94,9 @@ public class EditarAulaFormAction extends FenixAction {
 					new TipoAula(new Integer((String) editarAulaForm.get("tipoAula"))),
 					infoSala,
 					iAulaAntiga.getInfoDisciplinaExecucao());
-			
+		
 			Object argsEditarAula[] = { kAulaAntiga, iAula };
 			
-
 			InfoLessonServiceResult result = null;				
 			try {
 				result =

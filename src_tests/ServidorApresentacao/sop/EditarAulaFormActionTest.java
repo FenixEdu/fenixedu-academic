@@ -1,6 +1,7 @@
 package ServidorApresentacao.sop;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -9,15 +10,13 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.TestCasePresentation;
+import ServidorApresentacao.TestCaseActionExecution;
 import Util.DiaSemana;
 import Util.TipoAula;
 /**
 @author tfc130
 */
-public class EditarAulaFormActionTest extends TestCasePresentation {
+public class EditarAulaFormActionTest extends TestCaseActionExecution {
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
 	}
@@ -29,8 +28,6 @@ public class EditarAulaFormActionTest extends TestCasePresentation {
 	}
 	public void setUp() {
 		super.setUp();
-		// define ficheiro de configuracao Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
 
 	}
 
@@ -38,122 +35,40 @@ public class EditarAulaFormActionTest extends TestCasePresentation {
 		super(testName);
 	}
 
-	public void testSuccessfulEditarAula() {
-		// define mapping de origem
-		setRequestPathInfo("", "/editarAulaForm");
-		
+
+	private void prepareSuccessfulRequest() {
 		// Preenche campos do formulario
-		addRequestParameter(
-			"diaSemana",
-			new Integer(DiaSemana.SEGUNDA_FEIRA).toString());
-		addRequestParameter("horaInicio",(new Integer(8)).toString());
-		addRequestParameter("minutosInicio",(new Integer(0)).toString());
-		addRequestParameter(
-			"horaFim",
-			new Integer(9).toString());
-		addRequestParameter(
-			"minutosFim",
-			new Integer(30).toString());
-		addRequestParameter(
-			"tipoAula",
-			(new Integer(TipoAula.TEORICA)).toString());
-		addRequestParameter(
-			"courseInitials",
-			"TFCI");
-			
-		addRequestParameter("nomeSala", "Ga3");
-
-		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("EditarAula");
-		privilegios.add("LerAulasDeDisciplinaExecucao");
-		privilegios.add(
-			"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-		try {
-			GestorServicos gestor = GestorServicos.manager();
-			InfoExecutionCourse iDE = new InfoExecutionCourse(
-			"Trabalho Final de Curso I",
-			"TFCI",
-			"programa1",
-			new Double(0),
-			new Double(0),
-			new Double(0),
-			new Double(0),
-			new InfoExecutionPeriod(
-				"2º Semestre",
-				new InfoExecutionYear("2002/2003")));
-				
-			getSession().setAttribute("infoDisciplinaExecucao",iDE);
-
-			
-			Object argsLerAulas[] = new Object[1];
-			argsLerAulas[0] = iDE;
-			ArrayList infoAulas =
-				(ArrayList) gestor.executar(
-					userView,
-					"LerAulasDeDisciplinaExecucao",
-					argsLerAulas);
-			getSession().setAttribute("listaAulas", infoAulas);
-			InfoLesson infoAula = (InfoLesson) infoAulas.get(0);
-			getSession().setAttribute("infoAula", infoAula);
-
-		} catch (Exception ex) {
-			System.out.println("Erro na invocacao do servico " + ex);
-		}
-
-		// invoca acção
-		actionPerform();
-
-		//verifica ausencia de erros
-		verifyNoActionErrors();
-
-		// verifica reencaminhamento
-		verifyForward("Sucesso");
-	}
-	public void testUnsuccessfulEditarAula() {
-		setRequestPathInfo("", "/editarAulaForm");
-		addRequestParameter(
-			"diaSemana",
-			new Integer(DiaSemana.SEGUNDA_FEIRA).toString());
-		addRequestParameter("horaInicio",(new Integer(8)).toString());
-		addRequestParameter("minutosInicio",(new Integer(0)).toString());
-		addRequestParameter(
-			"horaFim",
-			new Integer(9).toString());
-		addRequestParameter(
-			"minutosFim",
-			new Integer(30).toString());
+		addRequestParameter("diaSemana",new Integer(DiaSemana.SEGUNDA_FEIRA).toString());
+		addRequestParameter("horaInicio","20");
+		addRequestParameter("minutosInicio","0");
+		addRequestParameter("horaFim","21");
+		addRequestParameter("minutosFim","30");
 		addRequestParameter("tipoAula",	(new Integer(TipoAula.TEORICA)).toString());
 		addRequestParameter("courseInitials","TFCI");
-		addRequestParameter("nomeSala", "Ga2");
-		// coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		privilegios.add("EditarAula");
-		privilegios.add("LerAulasDeDisciplinaExecucao");
-		privilegios.add(
-			"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular");
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute("UserView", userView);
-		
+		addRequestParameter("nomeSala", "GA1");
+	}
+
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+	
+		Map items = new HashMap();
+			
 		try {
 			GestorServicos gestor = GestorServicos.manager();
-			InfoExecutionCourse iDE = new InfoExecutionCourse(
-			"Trabalho Final de Curso I",
-			"TFCI",
-			"programa1",
-			new Double(0),
-			new Double(0),
-			new Double(0),
-			new Double(0),
-			new InfoExecutionPeriod(
-				"2º Semestre",
-				new InfoExecutionYear("2002/2003")));
+			InfoExecutionCourse iDE =
+				new InfoExecutionCourse(
+					"Trabalho Final de Curso I",
+					"TFCI",
+					"programa1",
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					new InfoExecutionPeriod(
+						"2º Semestre",
+						new InfoExecutionYear("2002/2003")));
+			items.put("infoDisciplinaExecucao", iDE);
 				
-			getSession().setAttribute("infoDisciplinaExecucao",iDE);
 
-			
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
@@ -161,18 +76,122 @@ public class EditarAulaFormActionTest extends TestCasePresentation {
 					userView,
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
-			getSession().setAttribute("listaAulas", infoAulas);
+			items.put("listaAulas", infoAulas);
 			InfoLesson infoAula = (InfoLesson) infoAulas.get(0);
-			getSession().setAttribute("infoAula", infoAula);
-
+			items.put("infoAula", infoAula);
+	
 		} catch (Exception ex) {
 			System.out.println("Erro na invocacao do servico " + ex);
 		}
-		actionPerform();
-		verifyForwardPath("/naoExecutado.do");
-
-		verifyActionErrors(
-			new String[] { "ServidorAplicacao.FenixServiceException" });
+			
+		return items;		
 	}
 
+	public void testSuccessfulExecutionOfAction() {
+		prepareSuccessfulRequest();		
+		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), getSuccessfulForward(), null, null, null, null);
+	}
+
+
+	private void prepareUnsuccessfulRequest_ExistingLesson() {
+		// Preenche campos do formulario
+		addRequestParameter("diaSemana",new Integer(DiaSemana.SEGUNDA_FEIRA).toString());
+		addRequestParameter("horaInicio","8");
+		addRequestParameter("minutosInicio","00");
+		addRequestParameter("horaFim","9");
+		addRequestParameter("minutosFim","30");
+		addRequestParameter("tipoAula",	(new Integer(TipoAula.TEORICA)).toString());
+		addRequestParameter("courseInitials","TFCI");
+		addRequestParameter("nomeSala", "GA1");
+	}
+
+	private void prepareUnsuccessfulRequest_InterceptingLesson() {
+		// Preenche campos do formulario
+		addRequestParameter("diaSemana",new Integer(DiaSemana.SEGUNDA_FEIRA).toString());
+		addRequestParameter("horaInicio","8");
+		addRequestParameter("minutosInicio","30");
+		addRequestParameter("horaFim","9");
+		addRequestParameter("minutosFim","0");
+		addRequestParameter("tipoAula",	(new Integer(TipoAula.TEORICA)).toString());
+		addRequestParameter("courseInitials","TFCI");
+		addRequestParameter("nomeSala", "GA1");
+	}
+
+	private void prepareUnsuccessfulRequest_InvalidTimeInterval() {
+		// Preenche campos do formulario
+		addRequestParameter("diaSemana",new Integer(DiaSemana.SEGUNDA_FEIRA).toString());
+		addRequestParameter("horaInicio","21");
+		addRequestParameter("minutosInicio","0");
+		addRequestParameter("horaFim","20");
+		addRequestParameter("minutosFim","0");
+		addRequestParameter("tipoAula",	(new Integer(TipoAula.TEORICA)).toString());
+		addRequestParameter("courseInitials","TFCI");
+		addRequestParameter("nomeSala", "GA1");
+	}
+
+	public void testUnsuccessfulExecutionOfAction() {
+		prepareUnsuccessfulRequest_ExistingLesson();
+		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), null, getUnsuccessfulForwardPath(), null, null, getActionErrors_ExistingLesson());
+		prepareUnsuccessfulRequest_InterceptingLesson();
+		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), null, getUnsuccessfulForwardPath(), null, null, getActionErrors_InterceptingLesson());				
+		prepareUnsuccessfulRequest_InvalidTimeInterval();
+		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), null, getUnsuccessfulForwardPath(), null, null, getActionErrors_InvalidTimeInterval());				
+	}
+
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
+	 */
+	protected String getServletConfigFile() {
+		return "/WEB-INF/tests/web-sop.xml";
+	}
+
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
+	 */
+	protected String getRequestPathInfoPathAction() {
+		return "/sop";
+	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
+	 */
+	protected String getRequestPathInfoNameAction() {
+		return "/editarAulaForm";
+	}
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
+	 */
+	protected String getSuccessfulForward() {
+		return "Sucesso";
+	}
+
+
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getUnsuccessfulForwardPath()
+	 */
+	protected String getUnsuccessfulForwardPath() {
+		return "/editarAula.jsp";
+	}
+
+	
+	/**
+	 * @see ServidorApresentacao.TestCaseActionExecution#getActionErrors()
+	 * 
+	 */
+	protected String[] getActionErrors_ExistingLesson() {
+		return new String[] {"error.exception.existing"};
+	}
+	
+	protected String[] getActionErrors_InterceptingLesson() {
+		return new String[] {"error.exception.intercepting.lesson"};
+	}
+
+	protected String[] getActionErrors_InvalidTimeInterval() {
+		return new String[] {"errors.lesson.invalid.time.interval"};
+	}
+
+	
 }

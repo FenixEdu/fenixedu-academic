@@ -108,7 +108,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		fim.set(Calendar.HOUR_OF_DAY, 9);
 		fim.set(Calendar.MINUTE, 30);
 		fim.set(Calendar.SECOND, 0);
-		
+
 		Calendar inicio1 = Calendar.getInstance();
 		Calendar fim1 = Calendar.getInstance();
 		inicio1.set(Calendar.HOUR_OF_DAY, 20);
@@ -144,7 +144,86 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		}
 
 	}
-	
+
+	// edit new existing aula with invalid time interval
+	public void testEditExistingAulaInvalidTimeInterval() {
+		InfoRoom infoSala =
+			new InfoRoom(
+				"Ga1",
+				"Pavilhao Central",
+				new Integer(0),
+				new TipoSala(1),
+				new Integer(100),
+				new Integer(50));
+		InfoDegree infoLicenciatura =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		InfoDegreeCurricularPlan curricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+
+		InfoExecutionDegree infoLicenciaturaExecucao =
+			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+		InfoExecutionCourse iDE =
+			new InfoExecutionCourse(
+				"Trabalho Final de Curso I",
+				"TFCI",
+				"programa1",
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				infoExecutionPeriod);
+
+		RoomKey keySala = new RoomKey("GA1");
+		Calendar inicio = Calendar.getInstance();
+		Calendar fim = Calendar.getInstance();
+		inicio.set(Calendar.HOUR_OF_DAY, 8);
+		inicio.set(Calendar.MINUTE, 0);
+		inicio.set(Calendar.SECOND, 0);
+		fim.set(Calendar.HOUR_OF_DAY, 9);
+		fim.set(Calendar.MINUTE, 30);
+		fim.set(Calendar.SECOND, 0);
+
+		Calendar inicio1 = Calendar.getInstance();
+		Calendar fim1 = Calendar.getInstance();
+		inicio1.set(Calendar.HOUR_OF_DAY, 22);
+		inicio1.set(Calendar.MINUTE, 0);
+		inicio1.set(Calendar.SECOND, 0);
+		fim1.set(Calendar.HOUR_OF_DAY, 21);
+		fim1.set(Calendar.MINUTE, 0);
+		fim1.set(Calendar.SECOND, 0);
+		Object argsEditarAula[] = new Object[2];
+		argsEditarAula[0] =
+			new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
+		argsEditarAula[1] =
+			new InfoLesson(
+				new DiaSemana(2),
+				inicio1,
+				fim1,
+				new TipoAula(TipoAula.TEORICA),
+				infoSala,
+				iDE);
+
+		Object result = null;
+
+		try {
+			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			assertTrue(
+				"testEditExistingAulaWithInvalidTimeInterval",
+				((InfoLessonServiceResult) result).getMessageType() == InfoLessonServiceResult.INVALID_TIME_INTERVAL);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("testEditExistingAulaWithInvalidTimeInterval: " + e);
+		}
+
+	}
+
 	// edit new existing lesson with complete match
 	public void testEditExistingLessonCompleteMatch() {
 
@@ -189,7 +268,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		fim.set(Calendar.HOUR_OF_DAY, 9);
 		fim.set(Calendar.MINUTE, 30);
 		fim.set(Calendar.SECOND, 0);
-		
+
 		Object argsEditarAula[] = new Object[2];
 		argsEditarAula[0] =
 			new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
@@ -204,7 +283,6 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
 		Object result = null;
 
-
 		try {
 			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
 			fail("testEditExistingLessonCompleteMatch");
@@ -215,9 +293,8 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		}
 	}
 
-
-//	edit new existing lesson with intercepting match
-	 public void testEditExistingLessonInterceptingMatch() {
+	//	edit new existing lesson with intercepting match
+	public void testEditExistingLessonInterceptingMatch() {
 
 		InfoRoom infoSala =
 			new InfoRoom(
@@ -269,7 +346,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		fim1.set(Calendar.HOUR_OF_DAY, 9);
 		fim1.set(Calendar.MINUTE, 00);
 		fim1.set(Calendar.SECOND, 0);
-		
+
 		Object argsEditarAula[] = new Object[2];
 		argsEditarAula[0] =
 			new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
@@ -284,82 +361,81 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
 		Object result = null;
 
-
-		 try {
+		try {
 			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
 			fail("testEditExistingLessonInterceptingMatch: Expected Exception");
-		 } catch (InterceptingServiceException ex) {
-			assertNotNull("testEditExistingLessonInterceptingMatch: "+ ex);
-		 } catch (Exception ex) {
+		} catch (InterceptingServiceException ex) {
+			assertNotNull("testEditExistingLessonInterceptingMatch: " + ex);
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			fail("testEditExistingLessonInterceptingMatch: Unexpected Exception: "+ex);
-		 }
-	 }
-	
-	
+			fail(
+				"testEditExistingLessonInterceptingMatch: Unexpected Exception: "
+					+ ex);
+		}
+	}
 
 	// edit new non-existing aula
-		public void testEditarNonExistingAula() {
-			InfoRoom infoSala =
-				new InfoRoom(
-					"Ga1",
-					"Pavilhao Central",
-					new Integer(0),
-					new TipoSala(1),
-					new Integer(100),
-					new Integer(50));
-			InfoDegree infoLicenciatura =
-				new InfoDegree(
-					"LEIC",
-					"Licenciatura de Engenharia Informatica e de Computadores");
-			InfoExecutionYear infoExecutionYear =
-				new InfoExecutionYear("2002/2003");
-			InfoExecutionPeriod infoExecutionPeriod =
-				new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-			InfoDegreeCurricularPlan curricularPlan =
-				new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
-	
-			InfoExecutionDegree infoLicenciaturaExecucao =
-				new InfoExecutionDegree(curricularPlan, infoExecutionYear);
-			InfoExecutionCourse iDE =
-				new InfoExecutionCourse(
-					"Trabalho Final de Curso I",
-					"TFCI",
-					"programa1",
-					new Double(0),
-					new Double(0),
-					new Double(0),
-					new Double(0),
-					infoExecutionPeriod);
-			RoomKey keySala = new RoomKey("GA1");
-			Calendar inicio = Calendar.getInstance();
-			Calendar fim = Calendar.getInstance();
-			inicio.set(Calendar.HOUR_OF_DAY, 18);
-			inicio.set(Calendar.MINUTE, 0);
-			inicio.set(Calendar.SECOND, 0);
-			fim.set(Calendar.HOUR_OF_DAY, 19);
-			fim.set(Calendar.MINUTE, 30);
-			fim.set(Calendar.SECOND, 0);
-			Object argsEditarAula[] = new Object[2];
-			argsEditarAula[0] =
-				new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
-			argsEditarAula[1] =
-				new InfoLesson(
-					new DiaSemana(2),
-					inicio,
-					fim,
-					new TipoAula(TipoAula.PRATICA),
-					infoSala,
-					iDE);
-	
-			Object result = null;
-			
-			try {
-				result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
-				assertNull("testEditNonExistingAula", result);
-			} catch (Exception ex) {
-				fail("testEditNonExistingAula");
-			}
+	public void testEditarNonExistingAula() {
+		InfoRoom infoSala =
+			new InfoRoom(
+				"Ga1",
+				"Pavilhao Central",
+				new Integer(0),
+				new TipoSala(1),
+				new Integer(100),
+				new Integer(50));
+		InfoDegree infoLicenciatura =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		InfoDegreeCurricularPlan curricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+
+		InfoExecutionDegree infoLicenciaturaExecucao =
+			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+		InfoExecutionCourse iDE =
+			new InfoExecutionCourse(
+				"Trabalho Final de Curso I",
+				"TFCI",
+				"programa1",
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				infoExecutionPeriod);
+		RoomKey keySala = new RoomKey("GA1");
+		Calendar inicio = Calendar.getInstance();
+		Calendar fim = Calendar.getInstance();
+		inicio.set(Calendar.HOUR_OF_DAY, 18);
+		inicio.set(Calendar.MINUTE, 0);
+		inicio.set(Calendar.SECOND, 0);
+		fim.set(Calendar.HOUR_OF_DAY, 19);
+		fim.set(Calendar.MINUTE, 30);
+		fim.set(Calendar.SECOND, 0);
+		Object argsEditarAula[] = new Object[2];
+		argsEditarAula[0] =
+			new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
+		argsEditarAula[1] =
+			new InfoLesson(
+				new DiaSemana(2),
+				inicio,
+				fim,
+				new TipoAula(TipoAula.PRATICA),
+				infoSala,
+				iDE);
+
+		Object result = null;
+
+		try {
+			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			assertNull("testEditNonExistingAula", result);
+		} catch (Exception ex) {
+			fail("testEditNonExistingAula");
 		}
+	}
 
 }

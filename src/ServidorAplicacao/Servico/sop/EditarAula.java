@@ -98,9 +98,7 @@ public class EditarAula implements IServico {
 					} catch (ExistingPersistentException ex) {
 						throw new ExistingServiceException(ex);
 					}
-				} else {
-					result.setMessageType(2);
-				}
+				} 
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
