@@ -10,7 +10,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 import Dominio.credits.IOtherTypeCreditLine;
 import Dominio.credits.OtherTypeCreditLine;
-import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import ServidorAplicacao.Servico.credits.calcutation.CreditsCalculator;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.DeleteDomainObjectService;

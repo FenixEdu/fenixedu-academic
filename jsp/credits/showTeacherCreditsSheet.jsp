@@ -331,7 +331,7 @@
 
 <bean:define id="otherCreditLines" name="teacherCreditsSheet" property="infoTeacherOtherTypeCreditLineList"/>
 
-<table width="100%" cellspacing="1" cellpadding="1" style="margin-bottom:0;margin-top:0">
+<table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
 	<tr>
 		<td colspan="2" class="listClasses-subheader">
 				<bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -347,14 +347,14 @@
 	<logic:notEmpty name="otherCreditLines">
 		<tr>
 			<td class="listClasses-header" width="10%"><bean:message key="label.otherTypeCreditLine.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
-			<td class="listClasses-header"> <bean:message key="label.otherTypeCreditLine.reason" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+			<td class="listClasses-header" style="text-align:left"><bean:message key="label.otherTypeCreditLine.reason" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
 		</tr>
 		<logic:iterate id="creditLine" name="otherCreditLines" >
 			<tr>
 				<td class="listClasses">
 					<bean:write name="creditLine" property="credits"/>
 				</td>
-				<td class="listClasses">
+				<td class="listClasses" style="text-align:left">
 					<pre><bean:write name="creditLine" property="reason"/></pre>
 				</td>
 			</tr>

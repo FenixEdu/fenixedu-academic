@@ -521,6 +521,13 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization</name>
+        <expression>CreditsServiceWithOtherCreditLineIdFirstArgumentFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorization</name>
         <expression>CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorization</expression>
         <description/>

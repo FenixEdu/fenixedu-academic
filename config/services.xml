@@ -6006,6 +6006,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
+        	<chain name="CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization"/>
         </filterChains>
     </service>  
  	<service>
@@ -6015,6 +6016,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
+        	<chain name="CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization"/>
         </filterChains>
     </service>  
  	<service>
@@ -6023,6 +6025,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
+            <chain name="CreditsServiceWithTeacherIdArgumentAuthorization"/>
         </filterChains>
     </service>  
  	<service>
@@ -6031,6 +6034,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
+        	<chain name="CreditsServiceWithOtherCreditLineIdFirstArgumentAuthorization"/>
         </filterChains>
     </service>
     <service>

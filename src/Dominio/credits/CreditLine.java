@@ -13,6 +13,23 @@ public abstract class CreditLine extends DomainObject implements ICreditLine
 {
     private ITeacher teacher;
     private Double credits;
+    
+    
+    /**
+     * @param idInternal
+     */
+    public CreditLine(Integer idInternal)
+    {
+        super(idInternal);
+    }
+
+    /**
+     * 
+     */
+    public CreditLine()
+    {
+    }
+
     /**
      * @return Returns the credits.
      */

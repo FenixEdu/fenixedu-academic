@@ -508,6 +508,13 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
+        <name>CreditsServiceWithOtherCreditLineIdFirstArgumentFilter</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.credits.otherTypeCreditLine.CreditsServiceWithOtherCreditLineIdFirstArgumentFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>
+    <filter>
         <name>CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorization</name>
         <implementationClass> 
             ServidorAplicacao.Filtro.CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizationFilter</implementationClass>

@@ -13,6 +13,19 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     private IExecutionPeriod executionPeriod;
     private String reason;
 
+    public OtherTypeCreditLine()
+    {
+        super();
+    }
+    
+    /**
+     * @param id
+     */
+    public OtherTypeCreditLine(Integer idInternal)
+    {
+        super(idInternal);
+    }
+
     /**
      * @return Returns the executionPeriod.
      */
@@ -22,7 +35,8 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     }
 
     /**
-     * @param executionPeriod The executionPeriod to set.
+     * @param executionPeriod
+     *            The executionPeriod to set.
      */
     public void setExecutionPeriod(IExecutionPeriod executionPeriod)
     {
@@ -38,7 +52,8 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     }
 
     /**
-     * @param reason The reason to set.
+     * @param reason
+     *            The reason to set.
      */
     public void setReason(String reason)
     {
