@@ -98,14 +98,13 @@ public class CurricularCourse2Enroll implements Serializable {
         return optionalCurricularCourse.booleanValue();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(CurricularCourse2Enroll obj) {
-
-        return this.getCurricularCourse().getIdInternal().equals(
-                obj.getCurricularCourse().getIdInternal());
+    public boolean equals(Object obj) {
+        if (obj instanceof CurricularCourse2Enroll) {
+            CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
+            return this.getCurricularCourse().getIdInternal().equals(
+                    curricularCourse2Enroll.getCurricularCourse().getIdInternal());
+        }
+        return false;
     }
+
 }
