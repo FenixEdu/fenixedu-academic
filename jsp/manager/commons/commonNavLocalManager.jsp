@@ -32,6 +32,12 @@
 	</html:link>
 </strong></p>
 
+<p><strong>&raquo; 
+	<html:link page="/studentsManagement.do?method=show">
+		<bean:message key="link.manager.studentsManagement" />
+	</html:link>
+</strong></p>
+
 <p><strong>&raquo;
 	<html:link page="/personManagement.do?method=firstPage">
 		<bean:message key="label.manager.personManagement" />

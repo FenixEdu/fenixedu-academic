@@ -8287,4 +8287,37 @@
 		<filterChains>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadStudentCurricularInformation</name>
+		<implementationClass> 
+			ServidorAplicacao.Servico.manager.ReadStudentCurricularInformation
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteStudentCurricularPlan</name>
+		<implementationClass> 
+			ServidorAplicacao.Servico.manager.DeleteStudentCurricularPlan
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>DeleteEnrollment</name>
+		<implementationClass> 
+			ServidorAplicacao.Servico.manager.DeleteEnrollment
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>

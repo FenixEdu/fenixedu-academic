@@ -440,6 +440,14 @@
 			<form-property name="newDegreeCurricularPlanID" type="java.lang.Integer"/>								
 			<form-property name="guideSituationID" type="java.lang.Integer"/>						
 		</form-bean>
+
+		<form-bean name="studentCurricularPlanForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="number" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+		</form-bean>
 		
     </form-beans>
     
@@ -1539,7 +1547,17 @@
 		<forward name="chooseGuide" path="chooseGuide"/>         
 		<forward name="editGuide" path="editGuide"/> 
      </action>
-        
+
+		<action path="/studentsManagement"
+				parameter="method"
+				validate="true"
+				input="/studentsManagement.do?method=show&amp;page=0"
+				name="studentCurricularPlanForm"
+				type="ServidorApresentacao.Action.manager.ManageStudentCurricularPlanDA"
+				scope="request">
+			<forward name="show" path="show-student-curricular-plan"/>
+		</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

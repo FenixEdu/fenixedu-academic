@@ -149,6 +149,9 @@ public class StudentCurricularPlanState extends FenixUtil {
         case INACTIVE:
             valueS = "Inactivo";
             break;
+        case PAST:
+            valueS = "Passado";
+            break;
         default:
             break;
         }

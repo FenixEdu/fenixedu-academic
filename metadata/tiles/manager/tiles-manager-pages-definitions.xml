@@ -375,5 +375,9 @@
 		<put name="body" value="/manager/guideManagement/editGuide.jsp" />
         <put name="navLocal" value="/manager/guideManagement/mainMenu.jsp" />
 	</definition>
-		
+
+	<definition name="show-student-curricular-plan" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/studentCurricularPlan.jsp" />
+	</definition>
+
 </tiles-definitions>
