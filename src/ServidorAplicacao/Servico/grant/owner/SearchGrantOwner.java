@@ -88,7 +88,7 @@ public class SearchGrantOwner implements IService
 				//Get all the grantOwners associated with each person in list
 				for (int i = 0; i < personList.size(); i++)
 				{
-					InfoGrantOwner infoGrantOwner = new InfoGrantOwner();;
+					InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 					IPessoa newPerson = (IPessoa) personList.get(i);
 					grantOwner = persistentGrantOwner.readGrantOwnerByPerson(newPerson.getIdInternal());
 					if (grantOwner != null)

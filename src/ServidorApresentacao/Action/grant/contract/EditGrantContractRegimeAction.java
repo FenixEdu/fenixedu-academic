@@ -122,8 +122,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			DynaValidatorForm editGrantContractRegimeForm = (DynaValidatorForm) form;
-			InfoGrantContractRegime infoGrantContractRegime = 
-				(InfoGrantContractRegime)populateInfoFromForm(editGrantContractRegimeForm);
+			InfoGrantContractRegime infoGrantContractRegime = populateInfoFromForm(editGrantContractRegimeForm);
 			
 			/*
 			 * Verify the teacher
@@ -206,8 +205,6 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction
 			form.set("dateSendDispatchCD", sdf.format(infoGrantContractRegime.getDateSendDispatchCD()));
 		if (infoGrantContractRegime.getDateDispatchCD() != null)
 			form.set("dateDispatchCD", sdf.format(infoGrantContractRegime.getDateDispatchCD()));
-		if (infoGrantContractRegime.getDateAcceptTerm() != null)
-			form.set("dateAcceptTerm", sdf.format(infoGrantContractRegime.getDateAcceptTerm()));
 		if (infoGrantContractRegime.getInfoTeacher() != null)
 			form.set("grantContractRegimeTeacherNumber",infoGrantContractRegime.getInfoTeacher().getTeacherNumber().toString());
 		if (infoGrantContractRegime.getState() != null)
@@ -242,8 +239,6 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction
 	    	infoGrantContractRegime.setDateSendDispatchCD(sdf.parse((String) editGrantContractRegimeForm.get("dateSendDispatchCD")));
 	    if(verifyStringParameterInForm(editGrantContractRegimeForm,"dateDispatchCD"))
 			infoGrantContractRegime.setDateDispatchCD(sdf.parse((String) editGrantContractRegimeForm.get("dateDispatchCD")));
-	    if(verifyStringParameterInForm(editGrantContractRegimeForm,"dateAcceptTerm"))
-			infoGrantContractRegime.setDateAcceptTerm(sdf.parse((String) editGrantContractRegimeForm.get("dateAcceptTerm")));
 
 	    InfoGrantContract infoGrantContract = new InfoGrantContract();
 	    infoGrantContract.setIdInternal((Integer) editGrantContractRegimeForm.get("idContract"));

@@ -887,5 +887,73 @@
 		</java>
        
     </target>
+
+	<target name="compile-service-grant-owner-tests"
+			depends="compile-app-server"
+            description="Compiles application server.">
+		<mkdir dir="${build.tests.services}"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.tests.services}"
+               extdirs="${lib};${env.JBOSS_HOME}/client"
+               srcdir="${src.tests}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes">
+            <include name="Tools/*.java"/>
+            <include name="ServidorAplicacao/Servicos/*.java"/>
+            <include name="ServidorAplicacao/Servicos/grant/owner/*Test.java"/>
+			<include name="ServidorAplicacao/Servicos/grant/contract/*Test.java"/>
+		</javac>		
+	</target>	
 	
+	<target name="run-service-grant-owner-tests"
+		   depends="compile-service-grant-owner-tests"
+	 	   >	
+		<junit haltonfailure="false" printsummary="yes" dir="${basedir}">
+            <formatter type="plain" usefile="false"/>
+            <batchtest fork="yes">
+                <fileset dir="${src.tests}">
+                	
+                	
+                	
+                	
+                	<!-- Test in doubt
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantTypeTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantPaymentEntityTest.java"/>
+	   				<include name="ServidorAplicacao/Servicos/grant/owner/EditGrantOwnerTest.java"/>
+                	-->
+
+                	<!-- Tests Sucessfull 
+                	<include name="ServidorAplicacao/Servicos/grant/owner/SearchGrantOwnerTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/owner/ReadGrantOwnerByPersonTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/owner/ReadGrantOwnerTest.java"/>
+
+					<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantTypeTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantTypesTest.java"/>
+	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantPaymentEntityTest.java"/>
+	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantPaymentEntitiesByClassNameTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/ReadPaymentEntityByNumberAndClassTest.java"/>				
+	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantPartTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/DeleteGrantPartTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantPartsByGrantSubsidyTest.java"/>
+					-->
+                	
+                    </fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.app-server}"/>
+                <pathelement path="${build.tests.services}"/>
+                <pathelement path="${sql}"/>
+            	<fileset dir="${env.JBOSS_HOME}/client">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </junit>
+	</target>
+		
 </project>

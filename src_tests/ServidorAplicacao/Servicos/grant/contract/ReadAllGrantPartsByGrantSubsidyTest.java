@@ -1,47 +1,47 @@
 /*
- * Created on 03/Dec/2003
+ * Created on Jun 4, 2004
  *
  */
+package ServidorAplicacao.Servicos.grant.contract;
 
-package ServidorAplicacao.Servicos.grant.owner;
+import java.util.List;
 
-import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author Barbosa
  * @author Pica
- *  
+ * @author Barbosa
  */
-
-public class ReadGrantOwnerByPersonTest extends
-        ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase {
+public class ReadAllGrantPartsByGrantSubsidyTest extends
+        ServiceNeedsAuthenticationTestCase {
 
     /**
-     * @param testName
+     * @param name
      */
-    public ReadGrantOwnerByPersonTest(java.lang.String testName) {
-        super(testName);
+    public ReadAllGrantPartsByGrantSubsidyTest(String name) {
+        super(name);
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServiceNeedsAuthenticationTestCase#getApplication()
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
      */
-    protected String getApplication() {
-        return Autenticacao.INTRANET;
-    }
-
     protected String getNameOfServiceToBeTested() {
-        return "ReadGrantOwnerByPerson";
+        return "ReadAllGrantPartsByGrantSubsidy";
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+     */
     protected String getDataSetFilePath() {
-        return "etc/datasets_templates/servicos/grant/owner/testReadGrantOwnerDataSet.xml";
+        return "etc/datasets_templates/servicos/grant/contract/testReadGrantPartDataSet.xml";
     }
 
     /*
@@ -77,76 +77,92 @@ public class ReadGrantOwnerByPersonTest extends
     /*
      * (non-Javadoc)
      * 
-     * @see ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
      */
     protected Object[] getAuthorizeArguments() {
-        Integer idInternal = new Integer(15);
+
+        Integer idInternal = new Integer(1);
         Object[] args = { idInternal };
         return args;
     }
 
     protected Object[] getUnauthorizeArguments() {
-        Integer idInternal = new Integer(69);
+
+        Integer idInternal = new Integer(666);
         Object[] args = { idInternal };
         return args;
     }
 
-    /** ********** Inicio dos testes ao serviço************* */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected String getApplication() {
+        return Autenticacao.INTRANET;
+    }
+
+    /***************************************************************************
+     * 
+     * Begining of the tests
+     * 
+     *  
+     */
 
     /*
-     * Read a GrantOwner Successfull
+     * Read a GrantPart Successfull
      */
-    public void testReadGrantOwnerByPersonSuccessfull() {
+    public void testReadAllGrantPartsBySubsidySuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            List result = (List) ServiceManagerServiceFactory.executeService(
+                    id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
-            Integer grantOwnerId = new Integer(2);
-            if (!result.getIdInternal().equals(grantOwnerId))
-                    fail("Reading a GrantOwnerByPerson Successfull: invalid grant owner read!");
+            if (!(result != null && result.size() == 3))
+                fail("Reading all GrantPart by subsidy Successfull: invalid grant part read!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testReadGrantOwnerByPersonSuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadAllGrantPartBySubsidySuccessfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Reading a GrantOwnerByPerson Successfull " + e);
+            fail("Reading all GrantPart by subsidy " + e);
         } catch (Exception e) {
-            fail("Reading a GrantOwnerByPerson Successfull " + e);
+            fail("Reading all GrantPart by subsidy" + e);
         }
     }
 
     /*
-     * Read a GrantOwner Unsuccessfull
+     * Read a GrantPart Unsuccessfull
      */
-    public void testReadGrantOwnerByPersonUnsuccessfull() {
+    public void testReadAllGrantPartsBySubsidyUnsuccessfull() {
         try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments();
 
-            InfoGrantOwner result = (InfoGrantOwner) ServiceManagerServiceFactory
+            List result = (List)ServiceManagerServiceFactory
                     .executeService(id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
-            if (result != null)
-                    fail("Reading a GrantOwnerByPerson Unsuccessfull: grant owner should not exist!");
+            if (result != null && result.size() != 0)
+                    fail("Reading all GrantPart by subsidy Unsuccessfull: grant Part should not exist!");
 
             //Verify unchanged database
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out
-                    .println("testReadGrantOwnerByPersonUnsuccessfull was SUCCESSFULY runned by: "
+                    .println("testReadAllGrantPartsBySubsidyUnsuccessfull was SUCCESSFULY runned by: "
                             + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
-            fail("Reading a GrantOwnerByPerson Unsuccessfull " + e);
+            fail("Reading All GrantParts By Subsidy Unsuccessfull " + e);
         } catch (Exception e) {
-            fail("Reading a GrantOwnerByPerson Unsuccessfull " + e);
+            fail("Reading All GrantParts By Subsidy Unsuccessfull " + e);
         }
     }
+
 }

@@ -223,7 +223,6 @@
 				<form-property name="dateDispatchCC" type="java.lang.String"/>
 				<form-property name="dateSendDispatchCD" type="java.lang.String"/>
 				<form-property name="dateDispatchCD" type="java.lang.String"/>
-				<form-property name="dateAcceptTerm" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 				

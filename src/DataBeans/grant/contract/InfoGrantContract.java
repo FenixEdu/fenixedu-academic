@@ -4,6 +4,8 @@
  */
 package DataBeans.grant.contract;
 
+import java.util.Date;
+
 import DataBeans.InfoObject;
 import DataBeans.grant.owner.InfoGrantOwner;
 
@@ -19,6 +21,7 @@ public class InfoGrantContract extends InfoObject
 	private InfoGrantOwner grantOwnerInfo;
 	private InfoGrantOrientationTeacher grantOrientationTeacherInfo;
 	private InfoGrantType grantTypeInfo;
+	private Date dateAcceptTerm; 
 	
     public InfoGrantContract()
     {
@@ -107,4 +110,16 @@ public class InfoGrantContract extends InfoObject
 	{
 		this.grantTypeInfo = grantTypeInfo;
 	}
+    /**
+     * @return Returns the dateAcceptTerm.
+     */
+    public Date getDateAcceptTerm() {
+        return dateAcceptTerm;
+    }
+    /**
+     * @param dateAcceptTerm The dateAcceptTerm to set.
+     */
+    public void setDateAcceptTerm(Date dateAcceptTerm) {
+        this.dateAcceptTerm = dateAcceptTerm;
+    }
 }

@@ -142,8 +142,11 @@ public class EditGrantContractAction extends FenixDispatchAction
 			Object[] args = { infoGrantContract };
 			ServiceUtils.executeService(userView, "EditGrantContract", args);
 			
-			Object[] argcontract = {infoGrantContract.getGrantOwnerInfo().getIdInternal() };
-			infoGrantContract = (InfoGrantContract)ServiceUtils.executeService(userView, "ReadLastGrantContractCreatedByGrantOwner", argcontract);
+			if(infoGrantContract.getIdInternal() == null || infoGrantContract.getIdInternal().equals(new Integer(0))) //In case of a new contract
+			{
+				Object[] argcontract = {infoGrantContract.getGrantOwnerInfo().getIdInternal() };
+				infoGrantContract = (InfoGrantContract)ServiceUtils.executeService(userView, "ReadLastGrantContractCreatedByGrantOwner", argcontract);
+			}
 			
 			//Edit Grant Contract Regime
 			InfoGrantContractRegime infoGrantContractRegime = populateInfoGrantContractRegimeFromForm(editGrantContractForm, infoGrantContract);
@@ -193,6 +196,10 @@ public class EditGrantContractAction extends FenixDispatchAction
 		if (infoGrantContract.getEndContractMotive() != null)
 			form.set("endContractMotive", infoGrantContract.getEndContractMotive());
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		if (infoGrantContract.getDateAcceptTerm() != null)
+			form.set("dateAcceptTerm", sdf.format(infoGrantContract.getDateAcceptTerm()));
+		
 		//Grant Contract Orientation teacher
 		form.set("grantContractOrientationTeacherNumber",infoGrantContract.getGrantOrientationTeacherInfo().getOrientationTeacherInfo().getTeacherNumber().toString());
 		form.set("grantContractOrientationTeacherId",infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
@@ -200,7 +207,6 @@ public class EditGrantContractAction extends FenixDispatchAction
 		form.set("grantType", infoGrantContract.getGrantTypeInfo().getSigla());		
 		
 		//Grant Contract Regime
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		form.set("grantContractRegimeId", infoGrantContractRegime.getIdInternal());
 		if (infoGrantContractRegime.getDateBeginContract() != null)
 			form.set("dateBeginContract", sdf.format(infoGrantContractRegime.getDateBeginContract()));
@@ -214,8 +220,6 @@ public class EditGrantContractAction extends FenixDispatchAction
 			form.set("dateSendDispatchCD", sdf.format(infoGrantContractRegime.getDateSendDispatchCD()));
 		if (infoGrantContractRegime.getDateDispatchCD() != null)
 			form.set("dateDispatchCD", sdf.format(infoGrantContractRegime.getDateDispatchCD()));
-		if (infoGrantContractRegime.getDateAcceptTerm() != null)
-			form.set("dateAcceptTerm", sdf.format(infoGrantContractRegime.getDateAcceptTerm()));
 	}
 
 	/*
@@ -235,6 +239,10 @@ public class EditGrantContractAction extends FenixDispatchAction
         if(verifyStringParameterInForm(editGrantContractForm,"contractNumber"))
 			infoGrantContract.setContractNumber(new Integer((String) editGrantContractForm.get("contractNumber")));
         infoGrantContract.setEndContractMotive((String) editGrantContractForm.get("endContractMotive"));
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        if(verifyStringParameterInForm(editGrantContractForm,"dateAcceptTerm"))
+			infoGrantContract.setDateAcceptTerm(sdf.parse((String) editGrantContractForm.get("dateAcceptTerm")));
 		
         //Setting InfoGrantOwner
         infoGrantOwner.setIdInternal((Integer) editGrantContractForm.get("idInternal"));
@@ -245,7 +253,6 @@ public class EditGrantContractAction extends FenixDispatchAction
 		infoGrantContract.setGrantTypeInfo(infoGrantType);
 
 		//Setting Grant Orientation Teacher
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         if(verifyStringParameterInForm(editGrantContractForm,"dateBeginContract"))
 		{
 			orientationTeacher.setBeginDate(sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
@@ -287,9 +294,7 @@ public class EditGrantContractAction extends FenixDispatchAction
 	    	infoGrantContractRegime.setDateSendDispatchCD(sdf.parse((String) editGrantContractForm.get("dateSendDispatchCD")));
 	    if(verifyStringParameterInForm(editGrantContractForm,"dateDispatchCD"))
 			infoGrantContractRegime.setDateDispatchCD(sdf.parse((String) editGrantContractForm.get("dateDispatchCD")));
-	    if(verifyStringParameterInForm(editGrantContractForm,"dateAcceptTerm"))
-			infoGrantContractRegime.setDateAcceptTerm(sdf.parse((String) editGrantContractForm.get("dateAcceptTerm")));
-
+	    
 	    infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
 	    	    
 		return infoGrantContractRegime;

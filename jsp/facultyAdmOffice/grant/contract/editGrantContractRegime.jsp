@@ -96,16 +96,6 @@
 				<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.grant.contract.regime.dateAcceptTerm"/>:&nbsp;
-			</td>
-			<td>
-				<html:text property="dateAcceptTerm" size="10"/>
-				&nbsp;
-				<bean:message key="label.dateformat"/>
-			</td>
-		</tr>
 	</table>
 
 	<br/>
