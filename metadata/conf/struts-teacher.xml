@@ -340,6 +340,14 @@
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>
 	
+	<!-- Exams viewer -->
+	<action		
+		path="/viewExams"
+        type="ServidorApresentacao.Action.teacher.ViewExamsAction"
+        scope="request">    
+     <forward name="Sucess" path="/viewExams.jsp"/>         
+	</action>
+
 	<!-- Delete Section -->
 	<action path="/deleteSection"
  			 input="/viewSection.jsp"
