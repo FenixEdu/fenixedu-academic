@@ -1,6 +1,10 @@
+import java.util.Iterator;
+import java.util.Set;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
+import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -14,111 +18,182 @@ import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 
 public class InscTeste {
 
+	private static GestorServicos gestor = GestorServicos.manager();
+	private static IUserView userView = new UserView("user", null);
+
 	public static void main(String[] args) {
 
-		GestorServicos gestor = null;
-		IUserView userView = new UserView("user", null);
+		InfoEnrolmentContext infoEnrolmentContext = null;
+		
+		autentication();
 
-		gestor = GestorServicos.manager();
-		String argsAutenticacao[] = {"user", "pass"};
-		Object result = null;
+		Object serviceArgs1[] = { userView, new Integer(2)};
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
+		showFinalSpan(infoEnrolmentContext);
 
+		Object serviceArgs2[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
+		showAvailableDegreesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+
+		Object serviceArgs3[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
+		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
+
+		Object serviceArgs4[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(0) };
+		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
+		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
+
+		Object serviceArgs5[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs5);
+		showAvailableDegreesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+
+		Object serviceArgs6[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs6);
+		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
+
+		Object serviceArgs7[] = { infoEnrolmentContext, (InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(1) };
+		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs7);
+		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
+
+		Object serviceArgs8[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs8);
+		showAvailableDegreesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
+
+		Object serviceArgs9[] = { infoEnrolmentContext };
+		infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs9);
+		showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+
+		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
+
+		for(int i = 0; i < infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().size()-1; i++) {
+			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
+			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+		}
+
+//		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
+//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(1);
+//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(2);
+//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(3);
+//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
+//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+//		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
+//		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
+
+		showActualEnrolments(infoEnrolmentContext);
+
+		Object serviceArgs10[] = {infoEnrolmentContext};
+		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
+		showEnrolmentValidationResultMesages(infoEnrolmentContext);
+//		System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
+
+	}
+
+	private static void autentication() {
+		String argsAutenticacao[] = { "user", "pass" };
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
-
-			Object serviceArgs1[] = {userView, new Integer(2)};
-			result = gestor.executar(userView, "ShowAvailableCurricularCourses", serviceArgs1);
-			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("TO CHOOSE (FINAL SPAN):");
-			System.out.println(infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled());
-			System.out.println("AUTOMATIC CHOOSEN (ANUALS + ALTERNATIVES):");
-			System.out.println(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
-
-			Object serviceArgs2[] = {infoEnrolmentContext};
-			result = gestor.executar(userView, "ShowAvailableDegreesForOption", serviceArgs2);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nAVAILABLE DEGREES FOR OPTION1:");
-			System.out.println(infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses());
-			
-			infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-			Object serviceArgs3[] = {infoEnrolmentContext};
-			result = gestor.executar(userView, "ShowAvailableCurricularCoursesForOption", serviceArgs3);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nAVAILABLE COURSES FOR OPTION1:");
-			System.out.println(infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree());
-			
-			infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope( ((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
-			Object serviceArgs4[] = {infoEnrolmentContext,(InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(0) };
-			result = gestor.executar(userView, "SelectOptionalCurricularCourse", serviceArgs4);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nCHOSEN COURSE AND EQUIVALENCE:");
-			System.out.println(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments());
-
-			Object serviceArgs5[] = {infoEnrolmentContext};
-			result = gestor.executar(userView, "ShowAvailableDegreesForOption", serviceArgs5);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nAVAILABLE DEGREES FOR OPTION2:");
-			System.out.println(infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses());
-			
-			infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-			Object serviceArgs6[] = {infoEnrolmentContext};
-			result = gestor.executar(userView, "ShowAvailableCurricularCoursesForOption", serviceArgs6);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nAVAILABLE COURSES FOR OPTION2:");
-			System.out.println(infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree());
-
-			infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope( ((InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(5)));
-			Object serviceArgs7[] = {infoEnrolmentContext,(InfoCurricularCourse) infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().get(1)};
-			result = gestor.executar(userView, "SelectOptionalCurricularCourse", serviceArgs7);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nCHOSEN COURSE AND EQUIVALENCE:");
-			System.out.println(infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments());
-
-			Object serviceArgs8[] = {infoEnrolmentContext};
-			result = gestor.executar(userView, "ShowAvailableDegreesForOption", serviceArgs8);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nAVAILABLE DEGREES FOR OPTION3:");
-			System.out.println(infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses());
-			
-			infoEnrolmentContext.setChosenOptionalInfoDegree((InfoDegree) infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().get(0));
-			Object serviceArgs9[] = {infoEnrolmentContext};
-			result = gestor.executar(userView, "ShowAvailableCurricularCoursesForOption", serviceArgs9);
-			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println("\nAVAILABLE COURSES FOR OPTION3:");
-			System.out.println(infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree());
-
-//			for(int i = 0; i < 8; i++) {
-//				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
-//				infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//			}
-
-//			infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
-//
-//
-//			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
-//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(1);
-//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(2);
-//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(3);
-//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(4);
-//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-//			infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
-//			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
-
-
-			System.out.println("\nACTUAL ENROLMENTS:");
-			System.out.println(infoEnrolmentContext.getActualEnrolment());
-
-//			Object serviceArgs100[] = {infoEnrolmentContext};
-//			result = gestor.executar(userView, "ValidateActualEnrolment", serviceArgs100);
-//			infoEnrolmentContext = (InfoEnrolmentContext) result;
-//			System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	private static InfoEnrolmentContext executeService(String serviceName, Object[] serviceArgs) {
+		try {
+			Object result = null;
+			result = gestor.executar(userView, serviceName, serviceArgs);
+			return (InfoEnrolmentContext) result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	private static void showFinalSpan(InfoEnrolmentContext infoEnrolmentContext) {
+		System.out.println();
+
+		System.out.println("TO CHOOSE (FINAL SPAN):");
+		Iterator iterator = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
+		while (iterator.hasNext()) {
+			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
+			System.out.println("YEAR: " + infoCurricularCourseScope.getInfoCurricularSemester().getInfoCurricularYear().getYear() + "; SEMESTER: " + infoCurricularCourseScope.getInfoCurricularSemester().getSemester() + "; CURRICULAR COURSE: " + infoCurricularCourseScope.getInfoCurricularCourse().getName());
+		}
+
+		System.out.println();
+
+		System.out.println("AUTOMATIC CHOOSEN (ANUALS + ALTERNATIVES):");
+		Iterator iterator2 = infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent().iterator();
+		while (iterator2.hasNext()) {
+			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator2.next();
+			System.out.println("YEAR: " + infoCurricularCourseScope.getInfoCurricularSemester().getInfoCurricularYear().getYear() + "; SEMESTER: " + infoCurricularCourseScope.getInfoCurricularSemester().getSemester() + "; CURRICULAR COURSE: " + infoCurricularCourseScope.getInfoCurricularCourse().getName());
+		}
+	}
+
+	private static void showAvailableDegreesForOption(InfoEnrolmentContext infoEnrolmentContext) {
+		System.out.println();
+		System.out.println("AVAILABLE DEGREES FOR OPTION:");
+		Iterator iterator = infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses().iterator();
+		while (iterator.hasNext()) {
+			InfoDegree infoDegree = (InfoDegree) iterator.next();
+			System.out.println("NAME: " + infoDegree.getNome() + "; CODE: " + infoDegree.getSigla());
+		}
+	}
+
+	private static void showAvailableCurricularCoursesForOption(InfoEnrolmentContext infoEnrolmentContext) {
+		System.out.println();
+		System.out.println("AVAILABLE COURSES FOR OPTION:");
+		Iterator iterator = infoEnrolmentContext.getOptionalInfoCurricularCoursesToChooseFromDegree().iterator();
+		while (iterator.hasNext()) {
+			InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iterator.next();
+			System.out.println("NAME: " + infoCurricularCourse.getName() + "; CODE: " + infoCurricularCourse.getCode());
+		}
+	}
+
+	private static void showCosenCurricularCoursesForOptionalCurricularCourse(InfoEnrolmentContext infoEnrolmentContext) {
+		System.out.println();
+		System.out.println("CHOSEN COURSE AND OPTIONAL COURSE:");
+		Iterator iterator = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().iterator();
+		while (iterator.hasNext()) {
+			InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) iterator.next();
+			System.out.println("OPTIONAL CURRICULAR COURSE NAME: " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourse().getName() + "; CHOSEN CURRICULAR COURSE : " + infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseForOption().getName());
+		}
+	}
+
+	private static void showActualEnrolments(InfoEnrolmentContext infoEnrolmentContext) {
+		System.out.println();
+		System.out.println("ACTUAL ENROLMENTS:");
+		Iterator iterator = infoEnrolmentContext.getActualEnrolment().iterator();
+		while (iterator.hasNext()) {
+			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
+			System.out.println("YEAR: " + infoCurricularCourseScope.getInfoCurricularSemester().getInfoCurricularYear().getYear() + "; SEMESTER: " + infoCurricularCourseScope.getInfoCurricularSemester().getSemester() + "; CURRICULAR COURSE: " + infoCurricularCourseScope.getInfoCurricularCourse().getName());
+		}
+	}
+
+
+	private static void showEnrolmentValidationResultMesages(InfoEnrolmentContext infoEnrolmentContext) {
+		System.out.println();
+		System.out.println("ENROLMENT VALIDATION MESSAGES:");
+		Set keySet = infoEnrolmentContext.getEnrolmentValidationResult().getMessage().keySet();
+
+		Iterator iterator = keySet.iterator();
+		int i = 1;
+		while (iterator.hasNext()) {
+			String msg = (String) iterator.next();
+			System.out.println("NUMBER: " + i + "; MESSAGE: " + msg);
+			i++;
 		}
 	}
 }
