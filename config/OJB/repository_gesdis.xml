@@ -461,34 +461,38 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="Dominio.Professorship" table="PROFESSORSHIPS">
 	<field-descriptor
-		id="1"
 		name="idInternal"
 		column="INTERNAL_CODE"
 		jdbc-type="INTEGER"
 		primarykey="true"
         autoincrement="true"
 		/>
-	<field-descriptor id="2"
+	<field-descriptor 
         name="keyTeacher"
         column="KEY_TEACHER"
         jdbc-type="INTEGER"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
         name="keyExecutionCourse"
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+        name="credits"
+        column="CREDITS"
+        jdbc-type="FLOAT"/>
+	
 	<reference-descriptor
          name="teacher"
          class-ref="Dominio.Teacher"
          >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyTeacher"/>
     </reference-descriptor>
 	<reference-descriptor
          name="executionCourse"
          class-ref="Dominio.DisciplinaExecucao"
          >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
 	<collection-descriptor
          name="associatedTeacherShiftPercentage"
