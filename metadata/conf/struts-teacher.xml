@@ -641,7 +641,7 @@
        <forward name="marksList" path="/marksList.jsp" />    
        <forward name="loadMarks" path="/loadMarks.jsp" />            
        <forward name="preparePublishMarks" path="/preparePublishMarks.jsp" />       
-       <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>
+       <forward name="viewMarksOptions" path="/showMarksListOptions.do"/>
 	</action>
 	<action 
 		path="/writeMarks"
@@ -652,7 +652,7 @@
 		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
 		>
        <forward name="marksList" path="/marksList.jsp" />
-       <forward name="viewExams" path="/viewEvaluation.do?method=viewEvaluation"/>    
+       <forward name="viewMarksOptions" path="/showMarksListOptions.do"/>    
        <forward name="loadMarks" path="/loadMarks.jsp" />   
 	</action>
 	

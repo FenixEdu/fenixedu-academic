@@ -24,7 +24,7 @@ public interface IPersistentMark extends IPersistentObject {
     public void deleteAll() throws ExcepcaoPersistencia;
 	public IMark readBy(IEvaluation evaluation , IFrequenta attend) throws ExcepcaoPersistencia;
 	public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia;
-	public List readBy(IExam exam, boolean published)
+	public List readBy(IEvaluation evaluation, boolean published)
 		throws ExcepcaoPersistencia;
 	public void delete(IMark mark)throws ExcepcaoPersistencia;
 }

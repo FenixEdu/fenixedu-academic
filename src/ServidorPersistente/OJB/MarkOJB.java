@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.IEvaluation;
@@ -134,11 +135,11 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		}
 	}
 
-	public List readBy(IExam exam, boolean published)
+	public List readBy(IEvaluation evaluation, boolean published)
 		throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyExam", exam.getIdInternal());
+		criteria.addEqualTo("keyExam", evaluation.getIdInternal());
 		if (published) {
 			criteria.addNotNull("publishedMark");
 		} 

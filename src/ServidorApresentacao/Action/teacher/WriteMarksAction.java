@@ -61,7 +61,7 @@ public class WriteMarksAction extends DispatchAction {
 		
 		FormFile formFile = (FormFile) marksForm.get("theFile");
         if (!(formFile.getContentType().equals("text/plain"))){
-			prepareInputForward(request, session, objectCode, examCode);
+			prepareInputForward(request, session, objectCode, evaluationCode);
 			actionErrors.add(
 					"FileNotExist",
 					new ActionError(
@@ -93,7 +93,7 @@ public class WriteMarksAction extends DispatchAction {
 			}
 		}while ((lineReader != null) );
 		if (n == 0){
-			prepareInputForward(request, session, objectCode, examCode);
+			prepareInputForward(request, session, objectCode, evaluationCode);
 			actionErrors.add(
 					"BadFormatFile",
 					new ActionError(
