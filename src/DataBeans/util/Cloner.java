@@ -234,14 +234,8 @@ public abstract class Cloner
         {
             return null;
         }
-        //String key = InfoObjectCache.getKey(domainObject);
-        InfoObject infoObject = null; // = InfoObjectCache.lookup(key);
-        //if (infoObject == null
-        //  || infoObject.getAckOptLock().intValue() <
-        // domainObject.getAckOptLock().intValue())
-        //{
-
-        //Class[] parameters = { domainObject.getClass() };
+       
+        InfoObject infoObject = null; 
         Class[] parameters = getParameters(domainObject);
         Object[] args = { domainObject };
         try
@@ -627,15 +621,11 @@ public abstract class Cloner
 
         IExecutionYear executionYear =
             Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
-        //        ITeacher coordinator = null;
-        //        if (infoExecutionDegree.getInfoCoordinator() != null)
-        //            coordinator =
-        // Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
+    
 
         copyObjectProperties(executionDegree, infoExecutionDegree);
 
-        //it is better no cloner coordinator's list
-        //executionDegree.setCoordinator(coordinator);
+      
         executionDegree.setExecutionYear(executionYear);
         executionDegree.setCurricularPlan(degreeCurricularPlan);
 
@@ -702,7 +692,7 @@ public abstract class Cloner
         }
         catch (Exception e)
         {
-            e.printStackTrace(System.out);
+           
             throw new RuntimeException(e);
         }
         return executionYear;

@@ -5,6 +5,7 @@ import Dominio.IEnrollment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
+import Util.enrollment.EnrollmentCondition;
 /**
  * @author dcs-rjao
  * 
@@ -21,6 +22,7 @@ public class InfoEnrolment extends InfoObject {
 	private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
 	private List infoEvaluations;
 	private Integer accumulatedWeight;
+	private EnrollmentCondition condition;
 	
     /**
      * @return Returns the accumulatedWeight.
@@ -167,6 +169,7 @@ public class InfoEnrolment extends InfoObject {
 			setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
 			setEnrolmentState(enrollment.getEnrolmentState());
 			setAccumulatedWeight(enrollment.getAccumulatedWeight());
+			setCondition(enrollment.getCondition());
 		}
 	}
 	public static InfoEnrolment newInfoFromDomain(IEnrollment enrollment) {
@@ -182,4 +185,16 @@ public class InfoEnrolment extends InfoObject {
 		}
 		return infoEnrolment;
 	}
+    /**
+     * @return Returns the condition.
+     */
+    public EnrollmentCondition getCondition() {
+        return condition;
+    }
+    /**
+     * @param condition The condition to set.
+     */
+    public void setCondition(EnrollmentCondition condition) {
+        this.condition = condition;
+    }
 }

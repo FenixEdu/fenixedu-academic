@@ -122,9 +122,10 @@
 		</tr>
 		<tr>
 		<td class="listClasses-header">Disciplina</td>
-		<td class="listClasses-header">Tipo</td>
-		<td class="listClasses-header">Créditos</td>
+		<td class="listClasses-header">Tipo</td>		
 		<td class="listClasses-header">Peso para Inscrição</td>
+		<td class="listClasses-header">Peso para o número de Disciplinas Acumuladas</td>
+		<td class="listClasses-header">Estado da Inscrição</td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
 		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
@@ -150,12 +151,15 @@
 				</td>
 				<td  class="listClasses">
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.type.keyName"/>
-				</td>
-				<td class="listClasses">
-					<bean:write name="enrollmentElem" property="infoCurricularCourse.credits"/>
-				</td>
+				</td>				
 				<td class="listClasses">
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.enrollmentWeigth"/>
+				</td>
+				<td class="listClasses">
+					<bean:write name="enrollmentElem" property="accumulatedWeight"/>
+				</td>
+				<td class="listClasses">
+					<bean:write name="enrollmentElem" property="condition"/>
 				</td>
 				<td class="listClasses">
 					<bean:define id="enrollmentIndex" name="enrollmentElem" property="idInternal"/>
@@ -174,8 +178,9 @@
 		<tr>
 		<td class="listClasses-header">Disciplina</td>
 		<td class="listClasses-header">Tipo</td>
-		<td class="listClasses-header">Créditos</td>
 		<td class="listClasses-header">Peso para Inscrição</td>
+		<td class="listClasses-header">Peso para o número de Disciplinas Acumuladas</td>
+		<td class="listClasses-header">Tipo de Inscrição</td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll">
@@ -191,10 +196,13 @@
 					<bean:write name="curricularCourse" property="infoCurricularCourse.type.keyName"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="curricularCourse" property="infoCurricularCourse.credits"/>
+					<bean:write name="curricularCourse" property="infoCurricularCourse.enrollmentWeigth"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="curricularCourse" property="infoCurricularCourse.enrollmentWeigth"/>
+					<bean:write name="curricularCourse" property="accumulatedWeight"/>
+				</td>
+				<td class="listClasses">
+					<bean:write name="curricularCourse" property="enrollmentType"/>
 				</td>
 				
 				<td class="listClasses">

@@ -16,7 +16,7 @@ public class ExecutionYear extends DomainObject implements IExecutionYear
 {
 
     private PeriodState state;
-    protected String year;
+    private String year;
     private Date beginDate;
     private Date endDate;
 
