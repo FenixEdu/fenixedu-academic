@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoSiteProgram;
+import DataBeans.InfoCurriculum;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
@@ -34,36 +34,34 @@ public class EditProgram implements IServico {
 	public boolean run(
 		Integer infoExecutionCourseCode,
 		Integer infoCurricularCourseCode,
-		InfoSiteProgram infoSiteProgramNew)
+		InfoCurriculum infoCurriculumNew)
 		throws FenixServiceException {
 
 		try {
+			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurriculum persistentCurriculum =
-				sp.getIPersistentCurriculum();
 			IPersistentCurricularCourse persistentCurricularCourse =
 				sp.getIPersistentCurricularCourse();
+
 			ICurricularCourse curricularCourse =
-				(ICurricularCourse) persistentCurricularCourse.readByOId(
-					new CurricularCourse(infoCurricularCourseCode),
-					false);
+				(ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseCode),false);
+				
+			IPersistentCurriculum persistentCurriculum =
+				sp.getIPersistentCurriculum();
 
-			ICurriculum curriculum = null;
-			curriculum =
-				persistentCurriculum.readCurriculumByCurricularCourse(
-					curricularCourse);
-
+			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+			
 			if (curriculum != null) {
-				persistentCurriculum.lockWrite(curriculum);
 				curriculum.setCurricularCourse(curricularCourse);
-				curriculum.setProgram(infoSiteProgramNew.getProgram());
-				curriculum.setProgramEn(infoSiteProgramNew.getProgramEn());
+				curriculum.setProgram(infoCurriculumNew.getProgram());
+				curriculum.setProgramEn(infoCurriculumNew.getProgramEn());
+				persistentCurriculum.lockWrite(curriculum);
+				
 			} else {
-				curriculum =
-					new Curriculum(
-						curricularCourse,
-						infoSiteProgramNew.getProgram(),
-						infoSiteProgramNew.getProgramEn());
+				curriculum = new Curriculum();
+				curriculum.setCurricularCourse(curricularCourse);
+				curriculum.setProgram(infoCurriculumNew.getProgram());
+				curriculum.setProgramEn(infoCurriculumNew.getProgramEn());
 				persistentCurriculum.lockWrite(curriculum);
 			}
 

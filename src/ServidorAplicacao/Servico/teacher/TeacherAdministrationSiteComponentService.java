@@ -71,6 +71,8 @@ public class TeacherAdministrationSiteComponentService implements IServico {
 			bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, obj1, obj2);
 
 			siteView = new TeacherAdministrationSiteView(commonComponent, bodyComponent);
+			
+			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

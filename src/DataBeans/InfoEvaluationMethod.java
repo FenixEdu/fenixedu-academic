@@ -12,7 +12,6 @@ package DataBeans;
  */
 public class InfoEvaluationMethod implements ISiteComponent{
 
-	
 	private InfoCurricularCourse infoCurricularCourse;
 	private String evaluationElements;
 	private String evaluationElementsEn;

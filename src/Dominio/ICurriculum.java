@@ -22,11 +22,7 @@ public interface ICurriculum extends IDomainObject {
 	public String getEvaluationElements();
 	public ICurricularCourse getCurricularCourse();
 
-	
 
-	
-
-	
 	public void setEvaluationElementsEn(String evaluationElementsEn);
 	public void setEvaluationElements(String evaluationElements);
 	public void setGeneralObjectives(String generalObjectives);
@@ -36,5 +32,5 @@ public interface ICurriculum extends IDomainObject {
 	public void setOperacionalObjectivesEn(String operacionalObjectivesEn);
 	public void setProgramEn(String programEn);
 	public void setCurricularCourse(ICurricularCourse CurricularCourse);
-
+	
 }

@@ -19,8 +19,6 @@ public class InfoSiteEvaluationMethods implements ISiteComponent {
 	private List infoEvaluations;
 	private List infoCurricularCourses;
 
-
-
 	public int getSize() {
 		return infoEvaluations.size();
 	}
@@ -53,12 +51,5 @@ public class InfoSiteEvaluationMethods implements ISiteComponent {
 		this.infoEvaluations = infoEvaluations;
 	}
 
-	/**
-	 * 
-	 */
-	public InfoSiteEvaluationMethods() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 }

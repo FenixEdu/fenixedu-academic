@@ -530,7 +530,7 @@
 		input="/editProgram.jsp"
 		path="/programManagerDA"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true"	
+        validate="false"	
         className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
 			<set-property property="componentClassName" value="DataBeans.InfoSiteProgram"/>
 			<set-property property="inputForwardName" value="editProgram"/>
@@ -735,7 +735,7 @@
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-		validate="true"
+		validate="false"
         className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
 			<set-property property="componentClassName" value="DataBeans.InfoEvaluationMethod"/>
 			<set-property property="inputForwardName" value="editEvaluationMethod"/>

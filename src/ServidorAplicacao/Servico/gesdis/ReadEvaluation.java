@@ -5,11 +5,12 @@
  */
 package ServidorAplicacao.Servico.gesdis;
 
-import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoCurriculum;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
+import Dominio.ICurricularCourse;
+import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluationMethod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -45,17 +46,20 @@ public class ReadEvaluation implements IServico {
 		return "ReadEvaluation";
 	}
 
-	public InfoEvaluationMethod run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+	public InfoCurriculum run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 		try {
-			InfoEvaluationMethod infoEvaluation = null;
+			
+			InfoCurriculum infoCurriculum = null;
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-			IEvaluationMethod  evaluation = sp.getIPersistentEvaluationMethod().readByExecutionCourse(executionCourse);
-			if (evaluation != null) {
-				infoEvaluation=Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluation);
+			
+			ICurriculum curriculum = sp.getIPersistentCurriculum().readCurriculumByCurricularCourse((ICurricularCourse) executionCourse);			
+			
+			if(curriculum != null){
+				infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 			}
-		
-			return infoEvaluation;
+			return infoCurriculum;
+
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

@@ -57,15 +57,17 @@ public class ReadProfessorships implements IServico {
 			
 			List professorships =
 				persistentProfessorship.readByTeacher(teacher);
+			
 			Iterator iter = professorships.iterator();
 			
 			while (iter.hasNext()) {
-				IProfessorship professorship = (IProfessorship) iter.next();
+				
+				IProfessorship professorship = (IProfessorship) iter.next();			
 				InfoProfessorShip infoProfessorShip = Cloner.copyIProfessorShip2InfoProfessorShip(professorship);
 				infoProfessorShip.getInfoExecutionCourse().getNome();
 				infoProfessorshipsList.add(infoProfessorShip);
 			}
-
+			
 			return infoProfessorshipsList;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

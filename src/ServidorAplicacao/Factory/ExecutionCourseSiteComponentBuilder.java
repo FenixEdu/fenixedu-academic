@@ -48,7 +48,6 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEvaluation;
-import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IItem;
 import Dominio.IProfessorship;
@@ -222,6 +221,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			IEvaluation evaluation = (IEvaluation) iter.next();
 			infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
 		}
+		
 		System.out.println("avaliacoes: " + infoEvaluations.size());
 		component.setInfoEvaluations(infoEvaluations);
 		return component;
@@ -488,17 +488,20 @@ public class ExecutionCourseSiteComponentBuilder {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 			List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-			System.out.println("curricularCourses" + curricularCourses.size());
+			
 			Iterator iter = curricularCourses.iterator();
 			List infoEvaluationMethods = new ArrayList();
+			
 			while (iter.hasNext()) {
 				ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-				IEvaluationMethod evaluation = sp.getIPersistentEvaluationMethod().readByCurricularCourse(curricularCourse);
-				if (evaluation != null) {
-					infoEvaluationMethods.add(Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluation));
-				}
+				ICurriculum curriculum = sp.getIPersistentCurriculum().readCurriculumByCurricularCourse(curricularCourse);
+				
+				
+				if(curriculum != null){
+					infoEvaluationMethods.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
+				}	
 			}
-			System.out.println("infoEvaluationMethods" + infoEvaluationMethods.size());
+			
 			component.setInfoEvaluations(infoEvaluationMethods);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

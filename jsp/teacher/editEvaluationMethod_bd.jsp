@@ -3,22 +3,21 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <span class="error"><html:errors /></span> 
-<logic:present name="siteView">
+
+	<logic:present name="siteView">
+		<h2><bean:message key="label.evaluation"/></h2> 
+		<html:form action="/editEvaluationMethod">
+		
+		<logic:present name="siteView" property="component">
+			<bean:define id="curriculum" name="siteView" property="component"/>
+			<bean:define id="curricularCourseCode" name="curriculum" property="infoCurricularCourse.idInternal"/>
+			<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
+		</logic:present>
 	
-	<h2><bean:message key="label.evaluation"/></h2> 
-	<html:form action="/editEvaluationMethod">
-	<logic:present name="siteView" property="component">
-	<bean:define id="evaluation" name="siteView" property="component"/>
-	<bean:define id="curricularCourseCode" name="evaluation" property="infoCurricularCourse.idInternal"/>
-		<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
-	
-	</logic:present>
-	
-	<logic:notPresent name="siteView" property="component">
-	
-	<bean:define id="curricularCourseCode" name="curricularCourseCode"/>
-	<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
-	</logic:notPresent> 
+		<logic:notPresent name="siteView" property="component">
+			<bean:define id="curricularCourseCode" name="curricularCourseCode"/>
+			<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
+		</logic:notPresent> 
 	
 	
 		<html:hidden property="page" value="1"/>

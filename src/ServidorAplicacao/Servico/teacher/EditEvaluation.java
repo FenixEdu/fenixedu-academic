@@ -1,15 +1,15 @@
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoCurriculum;
 import Dominio.CurricularCourse;
-import Dominio.EvaluationMethod;
+import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
-import Dominio.IEvaluationMethod;
+import Dominio.ICurriculum;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentEvaluationMethod;
+import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -34,43 +34,37 @@ public class EditEvaluation implements IServico {
 	public boolean run(
 		Integer infoExecutionCourseCode,
 		Integer infoCurricularCourseCode,
-		InfoEvaluationMethod infoEvaluationNew)
-		throws FenixServiceException {
+		InfoCurriculum infoCurriculumNew)
+		throws FenixServiceException{
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse persistentCurricularCourse =
 				sp.getIPersistentCurricularCourse();
-			IPersistentEvaluationMethod persistentEvaluation =
-				sp.getIPersistentEvaluationMethod();
 
 			ICurricularCourse curricularCourse =
-				(ICurricularCourse) persistentCurricularCourse.readByOId(
-						new CurricularCourse(infoCurricularCourseCode),
-						false);
+				(ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseCode),false);
 
-			IEvaluationMethod evaluation = null;
-			evaluation =
-				persistentEvaluation.readByCurricularCourse(curricularCourse);
+			IPersistentCurriculum persistentCurriculum =
+				sp.getIPersistentCurriculum();
 
+			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
 		
-
-			if (evaluation != null) {
-				persistentEvaluation.lockWrite(evaluation);
-				evaluation.setCurricularCourse(curricularCourse);
-				evaluation.setEvaluationElements(
-					infoEvaluationNew.getEvaluationElements());
-				evaluation.setEvaluationElementsEn(
-					infoEvaluationNew.getEvaluationElementsEn());
+			if (curriculum != null) {		
+					
+				curriculum.setCurricularCourse(curricularCourse);
+				curriculum.setEvaluationElements(infoCurriculumNew.getEvaluationElements());
+				curriculum.setEvaluationElementsEn(infoCurriculumNew.getEvaluationElementsEn());
+				persistentCurriculum.lockWrite(curriculum);
+					
 			} else {
-				evaluation =
-					new EvaluationMethod(
-						curricularCourse,
-						infoEvaluationNew.getEvaluationElements(),
-						infoEvaluationNew.getEvaluationElementsEn());
-				persistentEvaluation.lockWrite(evaluation);
+				curriculum = new Curriculum();
+				curriculum.setCurricularCourse(curricularCourse);
+				curriculum.setEvaluationElements(infoCurriculumNew.getEvaluationElements());
+				curriculum.setEvaluationElementsEn(infoCurriculumNew.getEvaluationElementsEn());
+				persistentCurriculum.lockWrite(curriculum);
 			}
-
+			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
