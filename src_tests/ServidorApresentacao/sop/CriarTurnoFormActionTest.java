@@ -49,7 +49,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 		setRequestPathInfo("sop", "/criarTurnoForm");
 
 		// Preenche campos do formulario
-		addRequestParameter("nome", "turnoNovo");
+		addRequestParameter("nome", "turnoNovoxpto");
 		addRequestParameter(
 			"tipoAula",
 			(new Integer(TipoAula.TEORICA)).toString());
