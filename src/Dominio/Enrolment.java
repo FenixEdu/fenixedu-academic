@@ -18,7 +18,6 @@ public class Enrolment implements IEnrolment {
 	private IExecutionPeriod executionPeriod;
 	private EnrolmentState enrolmentState;
 	private EnrolmentEvaluationType enrolmentEvaluationType;
-	private String universityCode;
 
 	private Integer internalID;
 	private Integer studentCurricularPlanKey;
@@ -53,14 +52,13 @@ public class Enrolment implements IEnrolment {
 	}
 
 	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, 
-	EnrolmentState state, IExecutionPeriod executionPeriod, EnrolmentEvaluationType enrolmentEvaluationType, String universityCode) {
+	EnrolmentState state, IExecutionPeriod executionPeriod, EnrolmentEvaluationType enrolmentEvaluationType) {
 		this();
 		setCurricularCourse(curricularCourse);
 		setStudentCurricularPlan(studentCurricularPlan);
 		setEnrolmentState(state);
 		setExecutionPeriod(executionPeriod);
 		setEnrolmentEvaluationType(enrolmentEvaluationType);
-		setUniversityCode(universityCode);
 	}
 
 	public boolean equals(Object obj) {
@@ -234,16 +232,8 @@ public class Enrolment implements IEnrolment {
 		return this.enrolmentEvaluationType;
 	}
 
-	public String getUniversityCode() {
-		return this.universityCode;
-	}
-
 	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
 		this.enrolmentEvaluationType = type;
-	}
-
-	public void setUniversityCode(String universityCode) {
-		this.universityCode = universityCode;
 	}
 
 	public List getEvaluations() {

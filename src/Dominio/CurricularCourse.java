@@ -29,6 +29,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
+	private String universityCode;
 
 	private List associatedExecutionCourses;
 	private List scopes;
@@ -389,6 +390,14 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
 	public void setMandatory(Boolean boolean1) {
 		mandatory = boolean1;
+	}
+
+	public String getUniversityCode() {
+		return this.universityCode;
+	}
+
+	public void setUniversityCode(String universityCode) {
+		this.universityCode = universityCode;
 	}
 
 	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester) {

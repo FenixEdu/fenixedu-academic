@@ -15,6 +15,10 @@ public interface ICurricularCourseScope {
 	public Integer getMaxIncrementNac();
 	public Integer getMinIncrementNac();
 	public Integer getWeigth();
+	public Double getLabHours();
+	public Double getPraticalHours();
+	public Double getTheoPratHours();
+	public Double getTheoreticalHours();
 
 	public void setMaxIncrementNac(Integer integer);
 	public void setMinIncrementNac(Integer integer);
@@ -22,4 +26,8 @@ public interface ICurricularCourseScope {
 	public void setBranch(IBranch branch);
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
 	public void setCurricularSemester(ICurricularSemester curricularSemester);
+	public void setLabHours(Double double1);
+	public void setPraticalHours(Double double1);
+	public void setTheoPratHours(Double double1);
+	public void setTheoreticalHours(Double double1);
 }

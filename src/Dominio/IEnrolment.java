@@ -18,7 +18,6 @@ public interface IEnrolment {
 	public EnrolmentState getEnrolmentState();
 	IExecutionPeriod getExecutionPeriod();
 	public EnrolmentEvaluationType getEnrolmentEvaluationType();
-	public String getUniversityCode();
 	public List getEvaluations();
 		
 	public void setEnrolmentState(EnrolmentState state);
@@ -26,7 +25,6 @@ public interface IEnrolment {
 	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
 	void setExecutionPeriod(IExecutionPeriod executionPeriod);
 	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
-	public void setUniversityCode(String universityCode);	
 	public void setEvaluations(List list);
 
 	public ICurricularCourse getRealCurricularCourse();

@@ -20,9 +20,8 @@ public class EnrolmentInExtraCurricularCourse extends Enrolment implements IEnro
 		ICurricularCourse curricularCourse,
 		EnrolmentState state,
 		IExecutionPeriod executionPeriod,
-		EnrolmentEvaluationType enrolmentEvaluationType,
-		String universityCode) {
-		super(studentCurricularPlan, curricularCourse, state, executionPeriod, enrolmentEvaluationType, universityCode);
+		EnrolmentEvaluationType enrolmentEvaluationType) {
+		super(studentCurricularPlan, curricularCourse, state, executionPeriod, enrolmentEvaluationType);
 	}
 
 	public String toString() {

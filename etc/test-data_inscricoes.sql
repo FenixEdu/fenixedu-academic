@@ -6,7 +6,7 @@ DELETE FROM BRANCH;
 # O BRANCH COM O CODIGO INTERNO = 1 SERVE PARA REFERENCIAR UMA DISCIPLINA CURRICULAR QUE NAO PERTENCE A NENHUM RAMO, 
 # 									NA TABELA 'CURRICULAR_COURSE_SCOPE'
 #-------------------------------
-
+;
 INSERT INTO BRANCH values (1, '', '', 1);
 INSERT INTO BRANCH values (2, 'IA', 'Inteligencia Artificial', 1);
 INSERT INTO BRANCH values (3, 'II', 'Informatica Industrial', 1);
@@ -70,23 +70,23 @@ INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (6, 8, 2, 1, '2002-10-21',1, 2);
 #-----------------------------
 ;
 DELETE FROM ENROLMENT;
-INSERT INTO ENROLMENT VALUES (1, 3, 14, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1, "IST");
-INSERT INTO ENROLMENT VALUES (2, 2, 14, 1, 1, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (3, 1, 1, 2, 2, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1, "IST");
-INSERT INTO ENROLMENT VALUES (4, 1, 2, 2, 2, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (5, 1, 2, 3, 2, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (6, 1, 14, 1, 2, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (1, 3, 14, 1, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1);
+INSERT INTO ENROLMENT VALUES (2, 2, 14, 1, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (3, 1, 1, 2, 2, 'Dominio.EnrolmentInOptionalCurricularCourse', 15, 1);
+INSERT INTO ENROLMENT VALUES (4, 1, 2, 2, 2, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (5, 1, 2, 3, 2, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (6, 1, 14, 1, 2, 'Dominio.Enrolment', null, 1);
 
 #-----------------------------
 #Angela
 #-----------------------------
-INSERT INTO ENROLMENT VALUES (7, 4, 2, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (8, 4, 1, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (9, 4, 14, 1, 3, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (10, 5, 1, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (11, 5, 2, 3, 3, 'Dominio.Enrolment', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (12, 5, 14, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1, "IST");
-INSERT INTO ENROLMENT VALUES (13, 6, 1, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (7, 4, 2, 2, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (8, 4, 1, 3, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (9, 4, 14, 1, 3, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (10, 5, 1, 2, 1, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (11, 5, 2, 3, 3, 'Dominio.Enrolment', null, 1);
+INSERT INTO ENROLMENT VALUES (12, 5, 14, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
+INSERT INTO ENROLMENT VALUES (13, 6, 1, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1);
 #-----------------------------
 #Angela
 #-----------------------------
@@ -152,21 +152,21 @@ INSERT INTO ENROLMENT_PERIOD VALUES (1,1,1,SYSDATE(),SYSDATE()+500000000);
 #-----------------------------
 ;
 DELETE FROM CURRICULAR_COURSE;
-INSERT INTO CURRICULAR_COURSE VALUES (14,1,1,0,0,0,0,0,'Trabalho Final de Curso I','TFCI', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (18,1,1,0,0,0,0,0,'Redes de Computadores I','RCI', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (16,2,1,0,0,0,0,0,'Introducao a Programacao','IP', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (20,2,1,1,0,0,0,0,'Arquitecturas de Computadores','AC', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (23,2,1,0,0,0,0,0,'Aprendizagem','APR', 1, 1, 0);
+INSERT INTO CURRICULAR_COURSE VALUES (14,1,1,0,0,0,0,0,'Trabalho Final de Curso I','TFCI', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (18,1,1,0,0,0,0,0,'Redes de Computadores I','RCI', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (16,2,1,0,0,0,0,0,'Introducao a Programacao','IP', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (20,2,1,1,0,0,0,0,'Arquitecturas de Computadores','AC', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (23,2,1,0,0,0,0,0,'Aprendizagem','APR', 1, 1, 0, "IST");
 
-INSERT INTO CURRICULAR_COURSE VALUES (1,1,1,4,3,2,0,0,'Analise Matematica I','AMI', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (2,1,1,4,3,2,0,0,'Analise Matematica II','AMII', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (3,1,1,4,3,2,0,0,'Analise Matematica III','AMIII', 1, 1, 0);
+INSERT INTO CURRICULAR_COURSE VALUES (1,1,1,4,3,2,0,0,'Analise Matematica I','AMI', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (2,1,1,4,3,2,0,0,'Analise Matematica II','AMII', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (3,1,1,4,3,2,0,0,'Analise Matematica III','AMIII', 1, 1, 0, "IST");
 
-INSERT INTO CURRICULAR_COURSE VALUES (15,1,2,0,0,0,0,0,'Trabalho Final de Curso II','TFCII', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (17,2,2,0,0,0,0,0,'Programacao com Objectos','PO', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (19,1,2,0,0,0,0,0,'Engenharia da Programacao','EP', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (21,2,2,0,0,0,0,0,'Compiladores','COMP', 1, 1, 0);
-INSERT INTO CURRICULAR_COURSE VALUES (22,1,2,0,0,0,0,0,'Redes de Computadores II','RCII', 1, 1, 0);
+INSERT INTO CURRICULAR_COURSE VALUES (15,1,2,0,0,0,0,0,'Trabalho Final de Curso II','TFCII', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (17,2,2,0,0,0,0,0,'Programacao com Objectos','PO', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (19,1,2,0,0,0,0,0,'Engenharia da Programacao','EP', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (21,2,2,0,0,0,0,0,'Compiladores','COMP', 1, 1, 0, "IST");
+INSERT INTO CURRICULAR_COURSE VALUES (22,1,2,0,0,0,0,0,'Redes de Computadores II','RCII', 1, 1, 0, "IST");
 
 #-----------------------------
 # Data for table 'CURRICULAR_COURSE_SCOPE'

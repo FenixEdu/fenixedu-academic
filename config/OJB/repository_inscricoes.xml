@@ -287,6 +287,11 @@
 		column="MANDATORY"
 		jdbc-type="BIT"
 	/>
+	<field-descriptor
+		name="universityCode"
+		column="UNIVERSITY_CODE"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="departmentCourse"
 			class-ref="Dominio.DisciplinaDepartamento"
@@ -417,11 +422,6 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
-	<field-descriptor
-		name="universityCode"
-		column="UNIVERSITY_CODE"
-		jdbc-type="VARCHAR"
-	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -483,11 +483,6 @@
 		column="EVALUATION_TYPE"
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="universityCode"
-		column="UNIVERSITY_CODE"
-		jdbc-type="VARCHAR"
 	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
@@ -558,11 +553,6 @@
 		column="EVALUATION_TYPE"
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="universityCode"
-		column="UNIVERSITY_CODE"
-		jdbc-type="VARCHAR"
 	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
@@ -803,6 +793,26 @@
 		name="weigth"
 		column="WEIGTH"
 		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="theoreticalHours"
+		column="THEORETICAL_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="praticalHours"
+		column="PRATICAL_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="theoPratHours"
+		column="THEO_PRAT_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="labHours"
+		column="LAB_HOURS"
+		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor
 			name="curricularCourse"

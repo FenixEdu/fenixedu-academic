@@ -2,9 +2,9 @@ package middleware.almeida.dcsrjao;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.StringTokenizer;
+import java.util.Iterator;
+import java.util.List;
 
-import middleware.almeida.LoadDataFile;
 import Dominio.CurricularCourseScope;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
@@ -68,15 +68,10 @@ import Util.UniversityCode;
 //16	       	CURSO DE QUÍMICA                                        
 //16	1      	PERFIL DE QUÍMICA                                       
 //16	2      	PERFIL DE BIOQUÍMICA
-                                    
-public class LoadLEQEnrolments extends LoadDataFile {
-	
-	private static final String ONE_SPACE = " ";
-	private static final String TWO_SPACES = "  ";
-	private static final String FOUR_SPACES = "    ";
-	private static final String TEN_SPACES = "          ";
 
-	private static LoadLEQEnrolments loader = null;
+public class LoadLEQEnrolmentsToFenix extends LoadDataToFenix {
+
+	private static LoadLEQEnrolmentsToFenix loader = null;
 	private static String logString = "";
 
 	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
@@ -87,7 +82,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	private IExecutionPeriod executionPeriod = null;
 	private ICurricularCourseScope curricularCourseScope = null;
 
-	public LoadLEQEnrolments() {
+	public LoadLEQEnrolmentsToFenix() {
 		super.setupDAO();
 		this.oldDegreeCurricularPlan = this.processOldDegreeCurricularPlan();
 		super.shutdownDAO();
@@ -95,73 +90,23 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 	public static void main(String[] args) {
 		if (loader == null) {
-			loader = new LoadLEQEnrolments();
+			loader = new LoadLEQEnrolmentsToFenix();
 		}
-		loader.run();
-	}
 
-	public void run() {
-		if (loader == null) {
-			loader = new LoadLEQEnrolments();
-		}
-		loader.load();
+		loader.migrationStart("LoadLEQEnrolmentsToFenix");
+		
+		loader.processAllEnrolments();
 		loader.writeToFile(logString);
+
+		loader.migrationEnd("LoadLEQEnrolmentsToFenix", logString);
 	}
 
-	protected void processLine(String line) {
-
-//		System.out.println(loader.numberLinesProcessed + 1);
-
-		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
-
-		String studentNumber = stringTokenizer.nextToken();
-		String enrolmentYear = stringTokenizer.nextToken();
-		String curricularYear = stringTokenizer.nextToken();
-		String curricularSemester = stringTokenizer.nextToken();
-		String epoca = stringTokenizer.nextToken();
-		String curricularCourseCode = stringTokenizer.nextToken();
-		String degreeCode = stringTokenizer.nextToken();
-		String branchCode = stringTokenizer.nextToken();
-		String grade = stringTokenizer.nextToken();
-		String teacherNumber = stringTokenizer.nextToken();
-		String evaluationDate = stringTokenizer.nextToken();
-		String universityCode = stringTokenizer.nextToken();
-		String observation = stringTokenizer.nextToken();
-
-		Almeida_enrolment almeida_enrolment = new Almeida_enrolment();
-		almeida_enrolment.setId_internal(loader.numberElementsWritten + 1);
-		almeida_enrolment.setNumalu(studentNumber);
-
-		if (epoca.equals(LoadLEQEnrolments.ONE_SPACE)) {
-			epoca = "5"; // corresponde ao valor de uma inscrição noutra universidade	
-		}
-
-		if ((branchCode.equals(LoadLEQEnrolments.ONE_SPACE)) || (branchCode.equals("4"))) {
-			branchCode = "0";
-		}
-
-		try {
-			almeida_enrolment.setAnoins((new Integer(enrolmentYear)).longValue());
-			almeida_enrolment.setAnodis((new Integer(curricularYear)).longValue());
-			almeida_enrolment.setSemdis((new Integer(curricularSemester)).longValue());
-			almeida_enrolment.setEpoca((new Integer(epoca)).longValue());
-			almeida_enrolment.setRamo((new Integer(branchCode)).longValue());
-		} catch (NumberFormatException e) {
-			logString += "ERRO: Os valores lidos do ficheiro são invalidos para a criação de Integers!\n";
-		}
-
-		almeida_enrolment.setCoddis(curricularCourseCode);
-		almeida_enrolment.setCurso(degreeCode);
-		almeida_enrolment.setResult(grade);
-		almeida_enrolment.setNumdoc(teacherNumber);
-		almeida_enrolment.setDatexa(evaluationDate);
-		almeida_enrolment.setCoduniv(universityCode);
-		almeida_enrolment.setObserv(observation);
-
-		if(almeida_enrolment.getCurso().equals("05")) {
+	private void processAllEnrolments() {
+		List almeida_enrolments = persistentObjectOJB.readAllAlmeidaEnrolemts();
+		Iterator iterator = almeida_enrolments.iterator();
+		while (iterator.hasNext()) {
+			Almeida_enrolment almeida_enrolment = (Almeida_enrolment) iterator.next();
 			processEnrolment(almeida_enrolment);
-		} else {
-			logString += "INFO: Na linha [" + (loader.numberLinesProcessed + 1) + "] existe uma inscrição no curso [" + almeida_enrolment.getCurso() + "]!\n";
 		}
 	}
 
@@ -188,22 +133,18 @@ public class LoadLEQEnrolments extends LoadDataFile {
 				enrolment.setStudentCurricularPlan(this.studentCurricularPlan);
 				enrolment.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));
 				enrolment.setEnrolmentState(processGrade(almeida_enrolment));
-				// FIXME DAVID-RICARDO: Por os university codes numa tabela
+				// TODO DAVID-RICARDO: Por os university codes numa tabela
 				// enrolment.setUniversityCode(processUniversityCode(almeida_enrolment.getCoduniv()));
-				enrolment.setUniversityCode(UniversityCode.IST);
+
+				// TODO David-Ricardo: Falta tratar as inscrições noutra universidade
 				writeElement(enrolment);
 			}
 
-			if(almeida_enrolment.getEpoca() != 0) { // Caso em que não foi lançada uma nota e por isso não se cria uma avaliação.
+			if (almeida_enrolment.getEpoca() != 0) { // Caso em que não foi lançada uma nota e por isso não se cria uma avaliação.
 				IEnrolmentEvaluation enrolmentEvaluation = processEvaluation(enrolment, almeida_enrolment);
 				writeElement(enrolmentEvaluation);
 			} else {
-				logString 	+= "INFO: O enrolment para o aluno: " + almeida_enrolment.getNumalu() 
-							+ " na cadeira " + curricularCourse.getName()
-							+ " no periodo " + executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear()
-							+ " no plano curricular " + studentCurricularPlan.getDegreeCurricularPlan().getName()
-							+ " não tem nota e por isso não foi adicionada uma avaliação! "
-							+ "Linha: [" + (loader.numberLinesProcessed + 1) + "]\n";
+				logString += "INFO: O enrolment para o aluno: " + almeida_enrolment.getNumalu() + " na cadeira " + curricularCourse.getName() + " no periodo " + executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear() + " no plano curricular " + studentCurricularPlan.getDegreeCurricularPlan().getName() + " não tem nota e por isso não foi adicionada uma avaliação!\n";
 			}
 		}
 	}
@@ -213,7 +154,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 		EnrolmentState enrolmentState = null;
 		if (grade.equals("RE")) {
 			enrolmentState = EnrolmentState.NOT_APROVED_OBJ;
-		} else if (grade.equals(LoadLEQEnrolments.TWO_SPACES)) {
+		} else if (grade == null) {
 			enrolmentState = EnrolmentState.WITHOUT_GRADE_OBJ;
 		} else if (almeida_enrolment.getObserv().equals("ANULADO")) {
 			enrolmentState = EnrolmentState.ANNULED_OBJ;
@@ -239,7 +180,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 		enrolmentEvaluation.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));
 
-		if (!almeida_enrolment.getDatexa().equals(LoadLEQEnrolments.TEN_SPACES)) {
+		if (almeida_enrolment.getDatexa() != null) {
 			Calendar newCalendar = Calendar.getInstance();
 			int year = new Integer(almeida_enrolment.getDatexa().substring(0, 3)).intValue();
 			int month = new Integer(almeida_enrolment.getDatexa().substring(5, 6)).intValue();
@@ -251,7 +192,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 			enrolmentEvaluation.setExamDate(null);
 		}
 
-		if (!almeida_enrolment.getResult().equals(LoadLEQEnrolments.TWO_SPACES)) {
+		if (almeida_enrolment.getResult() != null) {
 			enrolmentEvaluation.setGrade(almeida_enrolment.getResult());
 		} else {
 			enrolmentEvaluation.setGrade(null);
@@ -259,7 +200,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 		enrolmentEvaluation.setGradeAvailableDate(null);
 
-		if (!almeida_enrolment.getNumdoc().equals(LoadLEQEnrolments.FOUR_SPACES)) {
+		if (almeida_enrolment.getNumdoc() != null) {
 			enrolmentEvaluation.setPersonResponsibleForGrade(persistentObjectOJB.readPersonByEmployeeNumber(new Integer(almeida_enrolment.getNumdoc())));
 		} else {
 			enrolmentEvaluation.setPersonResponsibleForGrade(null);
@@ -299,14 +240,9 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	}
 
 	private ICurricularCourse processCurricularCourse(Almeida_enrolment almeida_enrolment) {
-		String code = almeida_enrolment.getCoddis();
-//		Delete blank space in the beggining of code
-		if (code.startsWith(LoadLEQEnrolments.ONE_SPACE)) {
-			code = code.substring(1);
-		}
-		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndDegreeCurricularPlan(code, this.oldDegreeCurricularPlan);
+		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndDegreeCurricularPlan(almeida_enrolment.getCoddis(), this.oldDegreeCurricularPlan);
 		if (curricularCourse == null) {
-			logString += "ERRO: A CurricularCourse com o code: " + code + " não existe!\n";
+			logString += "ERRO: A CurricularCourse com o code: " + almeida_enrolment.getCoddis() + " não existe!\n";
 		}
 		return curricularCourse;
 	}
@@ -439,7 +375,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	}
 
 	private IDegreeCurricularPlan processOldDegreeCurricularPlan() {
-		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName("LEQ");
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName(LoadLEQEnrolmentsToFenix.OLD_DEGREE_CURRICULAR_PLAN_NAME);
 		if (degreeCurricularPlan == null) {
 			logString += "ERRO: O plano curricular: " + degreeCurricularPlan.getName() + " não existe!\n";
 		}
@@ -447,7 +383,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	}
 
 	protected String getFilename() {
-		return "etc/migration/dcs-rjao/almeidaLEQData/curriculo_05.txt";
+		return "";
 	}
 
 	protected String getFieldSeparator() {
@@ -455,6 +391,9 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	}
 
 	protected String getFilenameOutput() {
-		return "etc/migration/dcs-rjao/logs/enrolmentMigrationLog.txt";
+		return "etc/migration/dcs-rjao/logs/LoadLEQEnrolmentsToFenix.txt";
+	}
+
+	protected void processLine(String line) {		
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import Util.DegreeCurricularPlanState;
+
 import Dominio.Branch;
 import Dominio.IBranch;
 import Dominio.IDegreeCurricularPlan;
@@ -75,7 +77,7 @@ public class LoadCurram extends LoadDataFile {
 		Iterator iterator = almeidaCurramsList.iterator();
 		while(iterator.hasNext()) {
 			Almeida_curram almeida_curram = (Almeida_curram) iterator.next();
-			IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlan(new Integer("" + almeida_curram.getCodcur()));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByDegreeKeyAndState(new Integer("" + almeida_curram.getCodcur()), DegreeCurricularPlanState.CONCLUDED_OBJ);
 
 //			if(almeida_curram.getCodorien() == 0) {
 			IBranch branch = new Branch();

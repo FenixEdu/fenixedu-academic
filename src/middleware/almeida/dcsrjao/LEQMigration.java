@@ -1,8 +1,5 @@
 package middleware.almeida.dcsrjao;
 
-import middleware.almeida.LoadCurram;
-
-
 /**
  * @author dcs-rjao
  *
@@ -11,20 +8,18 @@ import middleware.almeida.LoadCurram;
 
 public class LEQMigration {
 
-
 	private LEQMigration() {
 	}
 
 	public static void main(String[] args) {
 
-		LoadAlmeidaLEQCurricularCourses loadAlmeidaLEQCurricularCourses = new LoadAlmeidaLEQCurricularCourses();
-		loadAlmeidaLEQCurricularCourses.run();
-		
-		LoadCurram loadCurram = new LoadCurram();
-		loadCurram.run();
-		
-		LoadLEQEnrolments loadLEQEnrolments = new LoadLEQEnrolments();
-		loadLEQEnrolments.run();
-	}
+		LoadAlmeidaCurricularCoursesCodesFromFileToTable.main(null);
+		LoadAlmeidaCurricularCoursesFromFileToTable.main(null);
+		LoadAlmeidaCurramFromFileToTable.main(null);
+//		LoadAlmeidaLEQEnrolmentsFromFileToTable.main(null);
 
+		LoadCurramToFenix.main(null);
+		LoadCurricularCoursesToFenix.main(null);
+//		LoadLEQEnrolmentsToFenix.main(null);
+	}
 }

@@ -37,7 +37,7 @@ public abstract class LoadDataFile {
 	protected int numberUntreatableElements = 0;
 	protected Calendar startTime = null;
 	protected Calendar endTime = null;
-	String actualLine = null;
+	protected String actualLine = null;
 
 	protected PersistentObjectOJBReader persistentObjectOJB = null;
 
@@ -279,5 +279,4 @@ public abstract class LoadDataFile {
 
 		writeElement(newRole);
 	}
-
 }

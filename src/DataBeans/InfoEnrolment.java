@@ -18,7 +18,6 @@ public class InfoEnrolment implements Serializable {
 	private InfoExecutionPeriod infoExecutionPeriod;
 	private EnrolmentState state;
 	private EnrolmentEvaluationType evaluationType;
-	private String universityCode;
 	private InfoEnrolmentInExtraCurricularCourse infoEnrolmentInExtraCurricularCourse;
 	
 	private List infoEvaluations;
@@ -53,10 +52,9 @@ public class InfoEnrolment implements Serializable {
 		result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
 		result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
 		result += "state = " + this.state + "; ";		
-		result += "infoCurricularCourse = " + this.infoCurricularCourse + "]\n";
-		result += "enrolmentEvaluationType = " + this.evaluationType + "]\n";
-		result += "universityCode = " + this.universityCode + "]\n";
-		result += "infoEvaluations = " + this.infoEvaluations + "]\n";
+		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
+		result += "enrolmentEvaluationType = " + this.evaluationType + "; ";
+		result += "infoEvaluations = " + this.infoEvaluations + "; ";
 		result += "infoEnrolmentInExtraCurricularCourse = " + this.infoEnrolmentInExtraCurricularCourse + "]\n";
 		
 		
@@ -127,16 +125,8 @@ public class InfoEnrolment implements Serializable {
 		return this.evaluationType;
 	}
 
-	public String getUniversityCode() {
-		return this.universityCode;
-	}
-
 	public void setEvaluationType(EnrolmentEvaluationType type) {
 		this.evaluationType = type;
-	}
-
-	public void setUniversityCode(String universityCode) {
-		this.universityCode = universityCode;
 	}
 
 	public List getInfoEvaluations() {
@@ -146,7 +136,5 @@ public class InfoEnrolment implements Serializable {
 	public void setInfoEvaluations(List list) {
 		infoEvaluations = list;
 	}
-
-
 
 }

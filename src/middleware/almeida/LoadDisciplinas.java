@@ -27,8 +27,7 @@ public class LoadDisciplinas extends LoadDataFile {
 	}
 
 	protected void processLine(String line) {
-		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeparator());
+		StringTokenizer stringTokenizer =	new StringTokenizer(line, getFieldSeparator());
 
 		String codigoCurso = stringTokenizer.nextToken();
 		String codigoRamo = stringTokenizer.nextToken();

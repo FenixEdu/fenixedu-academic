@@ -112,7 +112,6 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
 		enrolment.setExecutionPeriod(executionPeriod);
 		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-		enrolment.setUniversityCode(UniversityCode.IST);
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -157,7 +156,6 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
 		enrolment.setExecutionPeriod(executionPeriod);
 		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-		enrolment.setUniversityCode(UniversityCode.IST);
 
 
 		System.out.println("\n- Test 1.2 : Write Non Existing Enrolment\n");

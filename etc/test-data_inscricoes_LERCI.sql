@@ -46,70 +46,70 @@ insert into DEGREE_CURRICULAR_PLAN values (1, 'LERCI-2003', 1, 1, '0000-00-00', 
 
 delete from CURRICULAR_COURSE;
 -- PRIMEIRO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (1, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À PROGRAMAÇÃO", "IK", 1, 1, 0);
-insert into CURRICULAR_COURSE values (2, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1, 1, 1);
-insert into CURRICULAR_COURSE values (3, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1);
-insert into CURRICULAR_COURSE values (4, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DIGITAIS", "TU", 1, 1, 0);
-insert into CURRICULAR_COURSE values (5, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "TEORIA DA COMPUTAÇÃO", "VI", 1, 1, 0);
+insert into CURRICULAR_COURSE values (1, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À PROGRAMAÇÃO", "IK", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (2, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA I", "PY", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (3, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ÁLGEBRA LINEAR", "QN", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (4, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DIGITAIS", "TU", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (5, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "TEORIA DA COMPUTAÇÃO", "VI", 1, 1, 0, "IST");
 -- PRIMEIRO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ALGORITMOS E ESTRUTURA DE DADOS", "01", 1, 1, 0);
-insert into CURRICULAR_COURSE values (7, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ARQUITECTURA DE COMPUTADORES", "02", 1, 1, 0);
-insert into CURRICULAR_COURSE values (8, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA II", "P5", 1, 1, 1);
-insert into CURRICULAR_COURSE values (9, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA I - CURSO INFORMÁTICA", "A37", 1, 1, 0);
-insert into CURRICULAR_COURSE values (10, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MATEMÁTICA COMPUTACIONAL", "AG7", 1, 1, 0);
+insert into CURRICULAR_COURSE values (6, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ALGORITMOS E ESTRUTURA DE DADOS", "01", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (7, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ARQUITECTURA DE COMPUTADORES", "02", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (8, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA II", "P5", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (9, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA I - CURSO INFORMÁTICA", "A37", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (10, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "MATEMÁTICA COMPUTACIONAL", "AG7", 1, 1, 0, "IST");
 -- SEGUNDO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "", 1, 1, 1);
-insert into CURRICULAR_COURSE values (12, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA II", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (13, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS OPERATIVOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (14, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROGRAMAÇÃO COM OBJECTOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (15, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES I", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (11, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA III", "", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (12, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "FÍSICA II", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (13, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS OPERATIVOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (14, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "PROGRAMAÇÃO COM OBJECTOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (15, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES I", "", 1, 1, 0, "IST");
 -- SEGUNDO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA IV", "", 1, 1, 1);
-insert into CURRICULAR_COURSE values (17, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROBABILIDADES E ESTATÍSTICA", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (18, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO GRÁFICA", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (19, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SINAIS E SISTEMAS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (20, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "BASES DE DADOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (16, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ANÁLISE MATEMÁTICA IV", "", 1, 1, 1, "IST");
+insert into CURRICULAR_COURSE values (17, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROBABILIDADES E ESTATÍSTICA", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (18, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "COMPUTAÇÃO GRÁFICA", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (19, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SINAIS E SISTEMAS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (20, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "BASES DE DADOS", "", 1, 1, 0, "IST");
 -- TERCEIRO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (21, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA I", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (22, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "FUNDAMENTOS DAS TELECOMUNICAÇÕES", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (23, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES II", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (25, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "INTERFACES PESSOA-MÁQUINA", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (26, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (21, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA I", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (22, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "FUNDAMENTOS DAS TELECOMUNICAÇÕES", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (23, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (24, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES DE COMPUTADORES II", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (25, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "INTERFACES PESSOA-MÁQUINA", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (26, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0, "IST");
 -- TERCEIRO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (27, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA II", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (28, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS EMBEBIDOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROPAGAÇÃO E ANTENAS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (30, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES COM INTEGRAÇÃO DE SERVIÇOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (31, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTELIGÊNCIA ARTIFICIAL", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES EM REDES DE GRANDE ESCALA", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (33, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "COMPILADORES", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (34, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MODELAÇÃO DE SISTEMAS DE INFORMAÇÃO", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (27, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ELECTRÓNICA II", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (28, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "SISTEMAS EMBEBIDOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (29, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "PROPAGAÇÃO E ANTENAS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (30, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "REDES COM INTEGRAÇÃO DE SERVIÇOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (31, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "INTELIGÊNCIA ARTIFICIAL", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (32, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES EM REDES DE GRANDE ESCALA", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (33, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "COMPILADORES", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (34, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "MODELAÇÃO DE SISTEMAS DE INFORMAÇÃO", "", 1, 1, 0, "IST");
 -- QUARTO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (35, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "SOFTWARE DE TELECOMUNICAÇÕES", "", 1, 1, 0);
--- insert into CURRICULAR_COURSE values (36, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (37, 1, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "SEGURANÇA EM REDES", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (38, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "SISTEMAS DE TELECOMUNICAÇÕES", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES PARA SISTEMAS EMBEBIDOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (40, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DE SOFTWARE", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (41, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "GESTÃO DE PROJECTOS INFORMÁTICOS", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (35, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "SOFTWARE DE TELECOMUNICAÇÕES", "", 1, 1, 0, "IST");
+-- insert into CURRICULAR_COURSE values (36, 1, 1, 4.0, 3.0, 2.0, 0.0, 2.0, "GESTÃO DE REDES E SISTEMAS DISTRIBUÍDOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (37, 1, 1, 4.0, 3.0, 0.0, 2.0, 2.0, "SEGURANÇA EM REDES", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (38, 1, 1, 4.0, 3.0, 1.0, 2.0, 2.0, "SISTEMAS DE TELECOMUNICAÇÕES", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (39, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "APLICAÇÕES PARA SISTEMAS EMBEBIDOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (40, 1, 1, 4.0, 3.0, 0.0, 0.0, 2.0, "ENGENHARIA DE SOFTWARE", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (41, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "GESTÃO DE PROJECTOS INFORMÁTICOS", "", 1, 1, 0, "IST");
 -- QUARTO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (42, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "REDES MÓVEIS E SEM FIOS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (43, 1, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "REDES DE ACESSO", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (44, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PLANEAMENTO DE PROJECTO E REDES", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (46, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "COMPUTAÇÃO MÓVEL", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (47, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PRODUÇÃO DE CONTEÚDOS MULTIMÉDIA", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (48, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PROJECTO DE APLICAÇÕES E SERVIÇOS", "", 1, 1, 0);
--- insert into CURRICULAR_COURSE values (49, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1, 1, 0);
+insert into CURRICULAR_COURSE values (42, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "REDES MÓVEIS E SEM FIOS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (43, 1, 1, 4.0, 3.0, 0.0, 0.0, 0.0, "REDES DE ACESSO", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (44, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (45, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PLANEAMENTO DE PROJECTO E REDES", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (46, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "COMPUTAÇÃO MÓVEL", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (47, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PRODUÇÃO DE CONTEÚDOS MULTIMÉDIA", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (48, 1, 1, 4.0, 3.0, 0.0, 2.0, 0.0, "PROJECTO DE APLICAÇÕES E SERVIÇOS", "", 1, 1, 0, "IST");
+-- insert into CURRICULAR_COURSE values (49, 1, 1, 4.0, 3.0, 0.0, 3.0, 0.0, "COMUNICAÇÃO DE ÁUDIO E VÍDEO", "", 1, 1, 0, "IST");
 insert into CURRICULAR_COURSE values (50, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "CARTEIRA PESSOAL", "", 1, 2, 0);
 -- QUINTO ANO, PRIMEIRO SEMESTRE:
-insert into CURRICULAR_COURSE values (51, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO I", "", 2, 1, 0);
-insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO II", "", 2, 1, 0);
-insert into CURRICULAR_COURSE values (53, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO", "", 4, 1, 0);
+insert into CURRICULAR_COURSE values (51, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO I", "", 2, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (52, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO II", "", 2, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (53, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO", "", 4, 1, 0, "IST");
 -- QUINTO ANO, SEGUNDO SEMESTRE:
-insert into CURRICULAR_COURSE values (54, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ORGANIZAÇÃO E GESTÃO DE EMPRESAS", "", 1, 1, 0);
-insert into CURRICULAR_COURSE values (55, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO III", "", 2, 1, 0);
+insert into CURRICULAR_COURSE values (54, 1, 1, 4.0, 3.0, 2.0, 0.0, 0.0, "ORGANIZAÇÃO E GESTÃO DE EMPRESAS", "", 1, 1, 0, "IST");
+insert into CURRICULAR_COURSE values (55, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "OPÇÃO III", "", 2, 1, 0, "IST");
 -- insert into CURRICULAR_COURSE values (56, 1, 1, 4.0, 0.0, 0.0, 0.0, 0.0, "TRABALHO FINAL DE CURSO II", "", 4, 1, 0, 2);
 
 -- -----------------------------
@@ -304,55 +304,55 @@ insert into RESTRICTION values (52, 'Dominio.RestrictionNumberOfCurricularCourse
 -- (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
 -- -----------------------------
 delete from ENROLMENT;
-insert into ENROLMENT values (1, 1, 1, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (2, 1, 2, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (3, 1, 3, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (4, 1, 4, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (5, 1, 5, 1, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (1, 1, 1, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (2, 1, 2, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (3, 1, 3, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (4, 1, 4, 1, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (5, 1, 5, 1, 1, 'Dominio.Enrolment', null, 1);
 
-insert into ENROLMENT values (6, 1, 6, 2, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (7, 1, 7, 2, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (8, 1, 8, 2, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (9, 1, 9, 2, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (10, 1, 10, 2, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (6, 1, 6, 2, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (7, 1, 7, 2, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (8, 1, 8, 2, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (9, 1, 9, 2, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (10, 1, 10, 2, 1, 'Dominio.Enrolment', null, 1);
 
-insert into ENROLMENT values (11, 1, 11, 3, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (12, 1, 12, 3, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (13, 1, 13, 3, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (14, 1, 14, 3, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (15, 1, 15, 3, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (11, 1, 11, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (12, 1, 12, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (13, 1, 13, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (14, 1, 14, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (15, 1, 15, 3, 1, 'Dominio.Enrolment', null, 1);
 
-insert into ENROLMENT values (16, 1, 16, 4, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (17, 1, 17, 4, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (18, 1, 18, 4, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (19, 1, 19, 4, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (20, 1, 20, 4, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (16, 1, 16, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (17, 1, 17, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (18, 1, 18, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (19, 1, 19, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (20, 1, 20, 4, 1, 'Dominio.Enrolment', null, 1);
 
-insert into ENROLMENT values (21, 1, 21, 5, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (22, 1, 22, 5, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (23, 1, 23, 5, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (24, 1, 24, 5, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (25, 1, 50, 5, 3, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (21, 1, 21, 5, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (22, 1, 22, 5, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (23, 1, 23, 5, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (24, 1, 24, 5, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (25, 1, 50, 5, 3, 'Dominio.Enrolment', null, 1);
 
-insert into ENROLMENT values (26, 1, 27, 6, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (27, 1, 28, 6, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (28, 1, 29, 6, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (29, 1, 30, 6, 1, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (26, 1, 27, 6, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (27, 1, 28, 6, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (28, 1, 29, 6, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (29, 1, 30, 6, 1, 'Dominio.Enrolment', null, 1);
 
-insert into ENROLMENT values (30, 1, 26, 7, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (31, 1, 35, 7, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (32, 1, 37, 7, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (33, 1, 38, 7, 2, 'Dominio.Enrolment', null);
+insert into ENROLMENT values (30, 1, 26, 7, 2, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (31, 1, 35, 7, 2, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (32, 1, 37, 7, 2, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (33, 1, 38, 7, 2, 'Dominio.Enrolment', null, 1);
 
--- insert into ENROLMENT values (34, 1, 42, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (35, 1, 43, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (36, 1, 44, 8, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (37, 1, 45, 8, 1, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (34, 1, 42, 8, 1, 'Dominio.Enrolment', null, 1);
+-- insert into ENROLMENT values (35, 1, 43, 8, 1, 'Dominio.Enrolment', null, 1);
+-- insert into ENROLMENT values (36, 1, 44, 8, 1, 'Dominio.Enrolment', null, 1);
+-- insert into ENROLMENT values (37, 1, 45, 8, 1, 'Dominio.Enrolment', null, 1);
 
--- insert into ENROLMENT values (38, 1, 51, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 25);
--- insert into ENROLMENT values (39, 1, 52, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 26);
--- insert into ENROLMENT values (40, 1, 53, 9, 3, 'Dominio.Enrolment', null);
+-- insert into ENROLMENT values (38, 1, 51, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 25, 1);
+-- insert into ENROLMENT values (39, 1, 52, 9, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 26, 1);
+-- insert into ENROLMENT values (40, 1, 53, 9, 3, 'Dominio.Enrolment', null, 1);
 
--- insert into ENROLMENT values (41, 1, 54, 10, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (42, 1, 55, 10, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 39);
+-- insert into ENROLMENT values (41, 1, 54, 10, 1, 'Dominio.Enrolment', null, 1);
+-- insert into ENROLMENT values (42, 1, 55, 10, 1, 'Dominio.EnrolmentInOptionalCurricularCourse', 39, 1);
 

@@ -50,7 +50,7 @@ public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory {
 
 		String degree = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegree().getSigla();
 		String degreeCurricularPlan = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getName();
-		// FIXME DAVID-RICARDO: O nome do plano curricular e estratégias tem de ser alterados 
+		// FIXME DAVID-RICARDO: O nome do plano curricular e estratégias tem de ser alterados
 		if ( (degree.equals("LERCI")) && degreeCurricularPlan.equals("LERCI-2003")) {
 			strategyInstance = new EnrolmentStrategyLERCI();
 		} else if ( (degree.equals("LARQ")) && degreeCurricularPlan.equals("LARQ-2003")) {

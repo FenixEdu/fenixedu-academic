@@ -30,6 +30,7 @@ public class InfoCurricularCourse  extends InfoObject{
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
+	private String universityCode;
 
 	public InfoCurricularCourse() {
 	}
@@ -280,6 +281,14 @@ public class InfoCurricularCourse  extends InfoObject{
 
 	public boolean infoCurricularCourseIsMandatory() {
 		return mandatory.booleanValue();
+	}
+
+	public String getUniversityCode() {
+		return this.universityCode;
+	}
+
+	public void setUniversityCode(String universityCode) {
+		this.universityCode = universityCode;
 	}
 
 	public InfoCurricularCourseScope getInfoCurricularCourseScope(InfoBranch infoBranch, Integer semester) {

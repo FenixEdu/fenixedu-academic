@@ -318,7 +318,6 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourse, EnrolmentState.APROVED_OBJ);
 				this.enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-				enrolment.setUniversityCode(UniversityCode.IST);
 
 
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
@@ -326,7 +325,6 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourse, EnrolmentState.APROVED_OBJ);
 				this.equivalentEnrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-				enrolment.setUniversityCode(UniversityCode.IST);
 
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {

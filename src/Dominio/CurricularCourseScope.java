@@ -22,6 +22,11 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 	private Integer maxIncrementNac;
 	private Integer minIncrementNac;
 	private Integer weigth;
+	
+	private Double theoreticalHours;
+	private Double praticalHours;
+	private Double theoPratHours;
+	private Double labHours;
 
 	public CurricularCourseScope() {
 		setInternalID(null);
@@ -195,6 +200,38 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 
 	public void setWeigth(Integer integer) {
 		weigth = integer;
+	}
+
+	public Double getLabHours() {
+		return labHours;
+	}
+
+	public Double getPraticalHours() {
+		return praticalHours;
+	}
+
+	public Double getTheoPratHours() {
+		return theoPratHours;
+	}
+
+	public Double getTheoreticalHours() {
+		return theoreticalHours;
+	}
+
+	public void setLabHours(Double double1) {
+		labHours = double1;
+	}
+
+	public void setPraticalHours(Double double1) {
+		praticalHours = double1;
+	}
+
+	public void setTheoPratHours(Double double1) {
+		theoPratHours = double1;
+	}
+
+	public void setTheoreticalHours(Double double1) {
+		theoreticalHours = double1;
 	}
 
 }

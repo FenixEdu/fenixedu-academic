@@ -97,7 +97,6 @@ public class LoadInscricoes extends LoadDataFile {
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
-				enrolment.setUniversityCode(UniversityCode.IST);					
 
 				writeElement(enrolment);
 			} else {

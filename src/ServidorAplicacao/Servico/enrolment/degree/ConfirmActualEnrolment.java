@@ -30,7 +30,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
-import Util.UniversityCode;
 
 /**
  * @author dcs-rjao
@@ -132,7 +131,6 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 					// FIXME DAVID-RICARDO: Nao ha informação sobre o University Code por isso criei esta class temporária
-					enrolmentToWrite.setUniversityCode(UniversityCode.IST);					
 					temporarilyEnrolmentsToWrite.add(enrolmentToWrite);
 				}
 			}
@@ -180,8 +178,6 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentInOptionalCurricularCourse.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentInOptionalCurricularCourse.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 					// FIXME DAVID-RICARDO: Nao ha informação sobre o University Code por isso criei esta class temporária
-					enrolmentInOptionalCurricularCourse.setUniversityCode(UniversityCode.IST);
-
 					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
 				} else {
 					enrolment.setCurricularCourseForOption(curricularCourseForOption);
