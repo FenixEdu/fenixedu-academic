@@ -69,8 +69,8 @@ public class EnrollmentRulesFactory
 	{
 		List result = new ArrayList();
 		
-//		result.add(0, new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
-//		result.add(1, new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
+//		result.add( new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
+//		result.add( new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
 		
 		return result;
 	}
@@ -80,14 +80,14 @@ public class EnrollmentRulesFactory
 	{
 		List result = new ArrayList();
 		
-//		result.add(0, new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
-//		result.add(1, new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
-		result.add(2, new PrecedencesApplyToSpanEnrollmentRule(studentCurricularPlan, executionPeriod));
+//		result.add( new MaximumCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
+//		result.add( new MaxOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
+		result.add(new PrecedencesApplyToSpanEnrollmentRule(studentCurricularPlan, executionPeriod));
 
 		if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)
 			&& degreeCurricularPlan.getName().equals("LEEC2003/2004"))
 		{
-			result.add(4, new SpecificLEECEnrollmentRule(studentCurricularPlan));
+			result.add(new SpecificLEECEnrollmentRule(studentCurricularPlan));
 		}
 		
 		return result;

@@ -1,5 +1,6 @@
 package ServidorAplicacao.strategy.enrolment.context;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +19,7 @@ import Dominio.IEnrollment;
  * Jan 27, 2004
  */
 
-public final class InfoStudentEnrolmentContext extends InfoObject
+public  class InfoStudentEnrollmentContext extends InfoObject implements Serializable
 {
     //deprecated
 	private InfoExecutionPeriod infoExecutionPeriod;
@@ -32,7 +33,7 @@ public final class InfoStudentEnrolmentContext extends InfoObject
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	
 	
-	public InfoStudentEnrolmentContext() {}
+	public InfoStudentEnrollmentContext() {}
 
 	
 	/**
@@ -151,7 +152,7 @@ public final class InfoStudentEnrolmentContext extends InfoObject
 	 * @param infoStudentEnrolmentContext
 	 * @return StudentEnrolmentContext
 	 */
-	public static InfoStudentEnrolmentContext cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(
+	public static InfoStudentEnrollmentContext cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(
 		StudentEnrolmentContext studentEnrolmentContext)
 	{
 		Iterator iterator = studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled().iterator();
@@ -177,7 +178,7 @@ public final class InfoStudentEnrolmentContext extends InfoObject
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(studentEnrolmentContext.getExecutionPeriod());
 
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 		infoStudentEnrolmentContext.setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(
 			finalInfoCurricularCoursesWhereStudentCanBeEnrolled);
 		infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);

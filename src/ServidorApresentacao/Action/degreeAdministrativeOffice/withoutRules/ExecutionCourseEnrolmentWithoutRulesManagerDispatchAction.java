@@ -35,7 +35,7 @@ import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.ExecutionDegreesFormat;
 import Util.TipoCurso;
@@ -160,11 +160,11 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
 
 		Object[] args = { infoStudent, degreeType, executionYear };
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 		try
 		{
 			infoStudentEnrolmentContext =
-				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+				(InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadEnrollmentsWithStateEnrolledByStudent",
 					args);
@@ -346,7 +346,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		enrollForm.set("executionDegree", infoExecutionDegreeSelected.getIdInternal().toString());
 
 		//maintenance of the Context with the student's number and name and execution year
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext =
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext =
 			maintenanceContext(infoStudent, infoExecutionYear);
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
@@ -375,11 +375,11 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 		return result;
 	}
 
-	private InfoStudentEnrolmentContext maintenanceContext(
+	private InfoStudentEnrollmentContext maintenanceContext(
 		InfoStudent infoStudent,
 		InfoExecutionYear infoExecutionYear)
 	{
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 
 		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
 		infoStudentCurricularPlan.setInfoStudent(infoStudent);
@@ -432,11 +432,11 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 				executionDegreeID,
 				curricularYearsList,
 				curricularSemestersList };
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 		try
 		{
 			infoStudentEnrolmentContext =
-				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+				(InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadCurricularCoursesToEnroll",
 					args);

@@ -21,7 +21,7 @@ import Dominio.IEnrollment;
 import Dominio.IExecutionYear;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentEnrolment;
@@ -45,7 +45,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 
 	public Object run(InfoStudent infoStudent, TipoCurso degreeType, String executionYear) throws FenixServiceException
 	{
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -98,7 +98,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 	 * @param enrollments
 	 * @return
 	 */
-	private InfoStudentEnrolmentContext buildResult(
+	private InfoStudentEnrollmentContext buildResult(
 		IStudentCurricularPlan studentCurricularPlan,
 		List enrollments)
 	{
@@ -119,7 +119,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService
 			Collections.sort(infoEnrollments, new BeanComparator(("infoCurricularCourse.name")));
 		}
 
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		infoStudentEnrolmentContext.setStudentInfoEnrollmentsWithStateEnrolled(infoEnrollments);
 

@@ -27,7 +27,7 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentEnrolment;
@@ -54,7 +54,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
             InfoExecutionYear infoExecutionYear, Integer executionDegreeID,
             List curricularYearsList, List curricularSemestersList)
             throws FenixServiceException {
-        InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+        InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -217,7 +217,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
         return result;
     }
 
-    private InfoStudentEnrolmentContext buildResult(
+    private InfoStudentEnrollmentContext buildResult(
             IStudentCurricularPlan studentCurricularPlan,
             List curricularCoursesToChoose) {
         InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
@@ -238,7 +238,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
                     ("name")));
         }
 
-        InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+        InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
         infoStudentEnrolmentContext
                 .setInfoStudentCurricularPlan(infoStudentCurricularPlan);
         infoStudentEnrolmentContext

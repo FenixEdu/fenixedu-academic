@@ -29,7 +29,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -98,7 +98,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
 
 		Integer executionDegreeId = getExecutionDegree(request);
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
 		{
@@ -107,7 +107,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
 			{
 				infoStudentEnrolmentContext =
-					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					(InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ShowAvailableCurricularCoursesNew",
 						args);
@@ -115,7 +115,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			else
 			{
 				infoStudentEnrolmentContext =
-					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					(InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ShowAvailableCurricularCoursesWithoutEnrollmentPeriod",
 						args);
@@ -177,9 +177,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Collections.sort(
 			infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments(),
 			new BeanComparator("infoCurricularCourse.name"));
-		Collections.sort(
-			infoStudentEnrolmentContext.getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(),
-			new BeanComparator("name"));
+		
 
 		Integer[] enrolledInArray =
 			buildArrayForForm(infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments());
@@ -515,7 +513,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
 		Integer executionDegreeId = getExecutionDegree(request);
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
 		{
@@ -524,7 +522,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
 			{
 				infoStudentEnrolmentContext =
-					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					(InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ShowAvailableCurricularCoursesNew",
 						args);
@@ -532,7 +530,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			else
 			{
 				infoStudentEnrolmentContext =
-					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					(InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ShowAvailableCurricularCoursesWithoutEnrollmentPeriod",
 						args);

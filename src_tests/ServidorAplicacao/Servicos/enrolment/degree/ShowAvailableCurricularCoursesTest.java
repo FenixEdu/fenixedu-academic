@@ -26,7 +26,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -266,11 +266,11 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         String[] args = getAuthenticatedAndAuthorizedUser();
         IUserView id = authenticateUser(args);
         Object[] args2 = getArguments();
-        InfoStudentEnrolmentContext infoSEC = null;
+        InfoStudentEnrollmentContext infoSEC = null;
 
         try
         {
-            infoSEC = (InfoStudentEnrolmentContext) ServiceManagerServiceFactory
+            infoSEC = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                     .executeService(id, getNameOfServiceToBeTested(), args2);
         }
         catch (FenixServiceException e)
@@ -304,7 +304,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
      * @return
      */
     private boolean CompareExpectedCCAndCreditsWithDataReturnedFromService(
-            InfoStudentEnrolmentContext infoSEC)
+            InfoStudentEnrollmentContext infoSEC)
     {
 
         //  Integer secondaryCredits = infoSEC.getCreditsInSecundaryArea();

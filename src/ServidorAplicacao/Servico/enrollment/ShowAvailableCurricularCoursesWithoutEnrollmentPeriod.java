@@ -7,10 +7,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import Dominio.ICurricularCourse;
+import Dominio.IEnrollment;
 import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
@@ -19,11 +21,7 @@ import Dominio.enrollment.CurricularCourse2Enroll;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
-import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -45,7 +43,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
     }
 
     // some of these arguments may be null. they are only needed for filter
-    public InfoStudentEnrolmentContext run(Integer executionDegreeId,
+    public InfoStudentEnrollmentContext run(Integer executionDegreeId,
             Integer studentCurricularPlanId, Integer studentNumber)
             throws FenixServiceException {
         try {
@@ -57,8 +55,8 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                 if (studentCurricularPlan != null) {
                     //					
                     try {
-                        getInfoStudentEnrollmentContext(studentCurricularPlan);
-                        return executeServiceLogics(studentCurricularPlan);
+
+                        return getInfoStudentEnrollmentContext(studentCurricularPlan);
                     } catch (IllegalArgumentException e) {
                         throw new FenixServiceException("degree");
                     }
@@ -79,22 +77,28 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @param studentCurricularPlan
      * @throws ExcepcaoPersistencia
      */
-    protected void getInfoStudentEnrollmentContext(
+    protected InfoStudentEnrollmentContext getInfoStudentEnrollmentContext(
             IStudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
+
+        InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
         List curricularCourses2Enroll = (List) CollectionUtils.collect(
                 studentCurricularPlan.getCurricularCoursesToEnroll(null,
                         EnrollmentRuleType.TOTAL), new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                        if (arg0 instanceof ICurricularCourse) {
+                            ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
 
-                        return new CurricularCourse2Enroll(curricularCourse,
-                                CurricularCourseEnrollmentType.TEMPORARY);
+                            return new CurricularCourse2Enroll(
+                                    curricularCourse,
+                                    CurricularCourseEnrollmentType.TEMPORARY);
+                        } else {
+                            return arg0;
+                        }
                     }
                 });
 
-        InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
         infoStudentEnrolmentContext
                 .setCurricularCourses2Enroll((List) CollectionUtils.collect(
                         curricularCourses2Enroll, new Transformer() {
@@ -106,34 +110,25 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                             }
                         }));
         infoStudentEnrolmentContext
-                .setStudentCurrentSemesterInfoEnrollments(studentCurricularPlan
-                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(null));
+                .setStudentCurrentSemesterInfoEnrollments((List) CollectionUtils
+                        .collect(
+                                studentCurricularPlan
+                                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(null),
+                                new Transformer() {
+
+                                    public Object transform(Object arg0) {
+
+                                        return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
+                                                .newInfoFromDomain((IEnrollment) arg0);
+                                    }
+                                }));
         infoStudentEnrolmentContext
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudent
                         .newInfoFromDomain(studentCurricularPlan));
         infoStudentEnrolmentContext
                 .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
                         .newInfoFromDomain(getCurrentExecutionPeriod()));
-    }
-
-    /**
-     * @param studentCurricularPlan
-     * @return InfoStudentEnrolmentContext
-     * @throws ExcepcaoPersistencia
-     */
-    protected InfoStudentEnrolmentContext executeServiceLogics(
-            IStudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
-
-        IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory
-                .getInstance();
-        IEnrolmentStrategy strategy = enrolmentStrategyFactory
-                .getEnrolmentStrategyInstance(studentCurricularPlan);
-        StudentEnrolmentContext studentEnrolmentContext = strategy
-                .getAvailableCurricularCourses();
-
-        return InfoStudentEnrolmentContext
-                .cloneStudentEnrolmentContextToInfoStudentEnrolmentContext(studentEnrolmentContext);
+        return infoStudentEnrolmentContext;
     }
 
     /**
@@ -172,7 +167,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @return IStudent
      * @throws ExcepcaoPersistencia
      */
-    private IStudent getStudent(Integer studentNumber)
+    protected IStudent getStudent(Integer studentNumber)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB
                 .getInstance();
@@ -188,7 +183,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @return IStudentCurricularPlan
      * @throws ExcepcaoPersistencia
      */
-    private IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
+    protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB
                 .getInstance();
@@ -203,7 +198,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @return IExecutionPeriod
      * @throws ExcepcaoPersistencia
      */
-    private IExecutionPeriod getCurrentExecutionPeriod()
+    protected IExecutionPeriod getCurrentExecutionPeriod()
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB
                 .getInstance();

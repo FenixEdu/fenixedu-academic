@@ -4,6 +4,8 @@
  */
 package DataBeans.enrollment;
 
+import java.io.Serializable;
+
 import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
 import Dominio.enrollment.CurricularCourse2Enroll;
@@ -13,7 +15,7 @@ import Util.enrollment.CurricularCourseEnrollmentType;
  * @author João Mota
  *  
  */
-public class InfoCurricularCourse2Enroll extends DataTranferObject {
+public class InfoCurricularCourse2Enroll extends DataTranferObject implements Serializable {
 
     private InfoCurricularCourse infoCurricularCourse;
 

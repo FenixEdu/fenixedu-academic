@@ -4,6 +4,8 @@
  */
 package DataBeans.enrollment;
 
+import java.io.Serializable;
+
 import DataBeans.InfoCurricularCourse;
 import Dominio.enrollment.CurricularCourse2Enroll;
 
@@ -12,7 +14,7 @@ import Dominio.enrollment.CurricularCourse2Enroll;
  *  
  */
 public class InfoCurricularCourse2EnrollWithInfoCurricularCourse extends
-        InfoCurricularCourse2Enroll {
+        InfoCurricularCourse2Enroll implements Serializable {
 
     public void copyFromDomain(CurricularCourse2Enroll curricularCourse2Enroll) {
         super.copyFromDomain(curricularCourse2Enroll);

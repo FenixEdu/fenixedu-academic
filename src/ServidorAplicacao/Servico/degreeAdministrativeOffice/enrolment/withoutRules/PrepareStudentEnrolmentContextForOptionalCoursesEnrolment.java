@@ -20,7 +20,7 @@ import Dominio.IEnrollment;
 import Dominio.IExecutionYear;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -47,7 +47,7 @@ public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment implement
 	public Object run(InfoStudent infoStudent, TipoCurso degreeType, String year)
 		throws FenixServiceException
 	{
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -138,7 +138,7 @@ public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment implement
 	 * @param courses
 	 * @return InfoStudentEnrolmentContext
 	 */
-	private InfoStudentEnrolmentContext buildResult(IStudentCurricularPlan studentCurricularPlan, List enrollments, List courses,
+	private InfoStudentEnrollmentContext buildResult(IStudentCurricularPlan studentCurricularPlan, List enrollments, List courses,
 		IExecutionYear executionYear)
 	{
 		InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
@@ -176,7 +176,7 @@ public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment implement
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
 
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		infoStudentEnrolmentContext.setStudentInfoEnrollmentsWithStateEnrolled(infoEnrollments);
 		infoStudentEnrolmentContext.setFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(infoCurricularCourses);

@@ -34,7 +34,7 @@ import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.ExecutionDegreesFormat;
@@ -196,10 +196,10 @@ public class OptionalCoursesEnrollmentManagerDispatchAction extends DispatchActi
 		List curricularSemestersList = Arrays.asList(curricularSemesters);
 
 		Object args[] = {infoStudent, degreeType, infoExecutionYear, executionDegreeID, curricularYearsList, curricularSemestersList};
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 		try
 		{
-			infoStudentEnrolmentContext = (InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(userView,
+			infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(userView,
 				"ReadCurricularCoursesToEnroll", args);
 
 			InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
@@ -317,7 +317,7 @@ public class OptionalCoursesEnrollmentManagerDispatchAction extends DispatchActi
 			return setAcurateErrorMessage(mapping, request, e, errors, null);
 		}
 
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = (InfoStudentEnrolmentContext) request
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) request
 			.getAttribute("infoStudentEnrolmentContext");
 		
 		Collections.sort(infoStudentEnrolmentContext.getStudentInfoEnrollmentsWithStateEnrolled(), new BeanComparator(
@@ -365,11 +365,11 @@ public class OptionalCoursesEnrollmentManagerDispatchAction extends DispatchActi
 		degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
 
 		Object[] args = {infoStudent, degreeType, executionYear};
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 
 		try
 		{
-			infoStudentEnrolmentContext = (InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(userView,
+			infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(userView,
 				"PrepareStudentEnrolmentContextForOptionalCoursesEnrolment", args);
 		} catch (NotAuthorizedException e)
 		{
@@ -638,7 +638,7 @@ public class OptionalCoursesEnrollmentManagerDispatchAction extends DispatchActi
 	 */
 	private void keepStudentEnrolmentContext(InfoStudent infoStudent, InfoExecutionYear infoExecutionYear, HttpServletRequest request)
 	{
-		InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 
 		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
 		infoStudentCurricularPlan.setInfoStudent(infoStudent);
