@@ -61,6 +61,7 @@ public interface ISuportePersistente {
 
 	public IPersistentExam getIPersistentExam();
 	public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
+	public IPersistentExamEnrollment getIPersistentExamEnrollment();
 
 	public IPersistentBranch getIPersistentBranch();
 
@@ -90,6 +91,8 @@ public interface ISuportePersistente {
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
 	public IPersistentChosenCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+	
+	public IPersistentStudentGroupInfo getIPersistentStudentGroupInfo();
 	
 	public IPersistentStudentKind getIPersistentStudentKind();
 	

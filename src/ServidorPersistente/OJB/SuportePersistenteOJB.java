@@ -47,6 +47,7 @@ import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentExamEnrollment;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -65,6 +66,7 @@ import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentStudentGroupInfo;
 import ServidorPersistente.IPersistentStudentKind;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTeacherShiftPercentage;
@@ -343,6 +345,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new ExamExecutionCourseOJB();
 	}
 
+	public IPersistentExamEnrollment getIPersistentExamEnrollment() {
+			return new ExamEnrollmentOJB();
+		}
+
 	public IPersistentBranch getIPersistentBranch() {
 		return new BranchOJB();
 	}
@@ -429,9 +435,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new ChosenCurricularCourseForOptionalCurricularCourseOJB();
 	}
 
-	public IPersistentStudentKind getIPersistentStudentKind() {
-		return new StudentKindOJB();
+	public IPersistentStudentGroupInfo getIPersistentStudentGroupInfo() {
+		return new StudentGroupInfoOJB();
 	}
+	public IPersistentStudentKind getIPersistentStudentKind() {
+			return new StudentKindOJB();
+		}
 
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherShiftPercentage()
