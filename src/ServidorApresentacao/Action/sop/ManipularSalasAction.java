@@ -198,7 +198,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 
 		DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
 		Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("index");
-		System.out.println("getSelectedSala: "+salaSelecionada);
+		//System.out.println("getSelectedSala: "+salaSelecionada);
 
 		List listaSalasBean = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
 

@@ -55,7 +55,7 @@ public class SelectRoomsFormAction extends FenixAction {
 						"SelectRooms",
 						argsSelectRooms);
 			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
+				throw new FenixActionException("Problemas a seleccionar salas",e);
 			}
 
 			if (infoRooms != null && !infoRooms.isEmpty()) {

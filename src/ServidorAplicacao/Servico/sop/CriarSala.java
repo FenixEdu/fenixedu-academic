@@ -15,7 +15,6 @@ import DataBeans.InfoRoom;
 import Dominio.ISala;
 import Dominio.Sala;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -64,13 +63,55 @@ public class CriarSala implements IServico {
 				sp.getISalaPersistente().lockWrite(sala);
 				result = true;
 			} catch (ExistingPersistentException ex) {
-				throw new ExistingServiceException(ex);
+				throw new ExistingRoomServiceException(ex);
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());
 		}
 
 		return new Boolean(result);
+	}
+
+
+
+	public class ExistingRoomServiceException extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private ExistingRoomServiceException() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private ExistingRoomServiceException(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private ExistingRoomServiceException(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private ExistingRoomServiceException(Throwable cause) {
+			super(cause);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private ExistingRoomServiceException(String message, Throwable cause) {
+			super(message, cause);
+		}
+
 	}
 
 }

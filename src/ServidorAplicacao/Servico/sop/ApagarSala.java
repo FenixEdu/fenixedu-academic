@@ -57,12 +57,48 @@ public class ApagarSala implements IServico {
 				result = true;
 			}
 		} catch (notAuthorizedPersistentDeleteException ex) {
-			throw new notAuthorizedServiceDeleteException();
+			throw new notAuthorizedServiceDeleteRoomException(ex);
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
 
 		return new Boolean(result);
+	}
+
+	public class notAuthorizedServiceDeleteRoomException
+		extends notAuthorizedServiceDeleteException {
+
+		/**
+		 * 
+		 */
+		private notAuthorizedServiceDeleteRoomException() {
+			super();
+		}
+
+		/**
+		 * @param s
+		 */
+		private notAuthorizedServiceDeleteRoomException(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private notAuthorizedServiceDeleteRoomException(Throwable cause) {
+			super(cause);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private notAuthorizedServiceDeleteRoomException(
+			String message,
+			Throwable cause) {
+			super(message, cause);
+		}
+
 	}
 
 }
