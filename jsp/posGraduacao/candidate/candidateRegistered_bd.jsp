@@ -70,11 +70,11 @@
            	<logic:iterate id="enrolment" name="infoCandidateRegistration" property="enrolments" >	
 	           	<tr>
 	           		<td>
-            			<bean:write name="enrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+            			<bean:write name="enrolment" property="infoCurricularCourse.name"/>
             		</td>
-	           		<td>
+	           	<%--	<td>
             			<bean:write name="enrolment" property="infoCurricularCourseScope.infoBranch.name"/>
-            		</td>
+            		</td>--%>
 				</tr>
 	       	</logic:iterate>
 		</table>
