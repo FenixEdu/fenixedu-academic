@@ -10,7 +10,7 @@ import Dominio.ISection;
 import Dominio.ISite;
 public interface IPersistentAnnouncement extends IPersistentObject{
 	
-    public IAnnouncement readAnnouncementByTitleAndDateAndSite(String title, Date date, ISite site) throws ExcepcaoPersistencia;
+    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Date date, ISite site) throws ExcepcaoPersistencia;
     public void lockWrite(ISection announcement) throws ExcepcaoPersistencia;
     public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;

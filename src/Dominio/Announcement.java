@@ -1,6 +1,5 @@
 /*
- * Advertisement.java
- * Mar 10, 2003
+ * Announcement.java
  */
 package Dominio;
 
@@ -13,7 +12,7 @@ public class Announcement implements IAnnouncement {
 
 	private Integer internalCode;
 	private String title;
-	private Date date;
+	private Date creationDate;
 	private Date lastModifiedDate;
 	private String information;
 	private ISite site;
@@ -32,7 +31,7 @@ public class Announcement implements IAnnouncement {
 			
 		this.internalCode = internalCode;
 		this.title = title;
-		this.date = date;
+		this.creationDate = date;
 		this.lastModifiedDate = lastModifiedDate;
 		this.information = information;
 		this.site = site;
@@ -46,7 +45,7 @@ public class Announcement implements IAnnouncement {
 		boolean result = false;
 		if (arg0 instanceof IAnnouncement) {
 			result = (getTitle().equals(((IAnnouncement) arg0).getTitle()))&&
-				(getDate().equals(((IAnnouncement) arg0).getDate()))&&
+				(getCreationDate().equals(((IAnnouncement) arg0).getCreationDate()))&&
 				(getLastModifiedDate().equals(((IAnnouncement) arg0).getLastModifiedDate()))&&
 				(getSite().equals(((IAnnouncement) arg0).getSite()))&&				
 				(getInformation().equals(((IAnnouncement) arg0).getInformation()));
@@ -57,8 +56,8 @@ public class Announcement implements IAnnouncement {
 	/**
 	 * @return Date
 	 */
-	public Date getDate() {
-		return date;
+	public Date getCreationDate() {
+		return creationDate;
 	}
 
 	/**
@@ -107,8 +106,8 @@ public class Announcement implements IAnnouncement {
 	 * Sets the date.
 	 * @param date The date to set
 	 */
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCreationDate(Date date) {
+		this.creationDate = date;
 	}
 
 	/**

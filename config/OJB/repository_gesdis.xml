@@ -52,7 +52,7 @@
       <collection-descriptor
          name="announcements"
          element-class-ref="Dominio.Announcement"
-         orderby="date"
+         orderby="creationDate"
          sort="DESC"
       >
          <inverse-foreignkey field-id-ref="6"/>
@@ -77,7 +77,7 @@
         jdbc-type="VARCHAR"
 	/>
     <field-descriptor id="3"
-        name="date"
+        name="creationDate"
         column="CREATION_DATE"
         jdbc-type="DATE"
 	/>

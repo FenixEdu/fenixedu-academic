@@ -15,19 +15,19 @@ import ServidorPersistente.IPersistentAnnouncement;
  * @author  EP 15
  */
 public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnouncement {
-    public IAnnouncement readAnnouncementByTitleAndDateAndSite(String title, Date date, ISite site) throws ExcepcaoPersistencia {
+    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Date cDate, ISite site) throws ExcepcaoPersistencia {
         try {
             IAnnouncement announcementResult = null;
            
             String oqlQuery1 = "select announcement from " + Announcement.class.getName();
-            oqlQuery1 += " where title = $1 ";
-			oqlQuery1 += " and date = $2 ";
+            oqlQuery1 += " where title = $1";
+			oqlQuery1 += " and creationDate = $2";
 			oqlQuery1 += " and site.executionCourse.nome = $3";
 			oqlQuery1 += " and site.executionCourse.executionPeriod.name = $4";
 			oqlQuery1 += " and site.executionCourse.executionPeriod.executionYear.year = $5";
             query.create(oqlQuery1);
             query.bind(title);
-            query.bind(date);
+            query.bind(cDate);
             query.bind(site.getExecutionCourse().getNome());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());

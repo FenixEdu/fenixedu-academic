@@ -12,13 +12,13 @@ import java.util.Date;
 public interface IAnnouncement {
 
 	String getTitle();
-	Date getDate();
+	Date getCreationDate();
 	Date getLastModifiedDate();
 	String getInformation();
 	ISite getSite();
 
 	void setTitle(String title);
-	void setDate(Date date);
+	void setCreationDate(Date date);
 	void setLastModifiedDate(Date lastModifiedDate);
 	void setInformation(String information);
 	void setSite(ISite site);
