@@ -50,7 +50,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent firstPageComponent = new InfoSiteFirstPage();
 		readSiteView(request, firstPageComponent,null);
-		return mapping.findForward("executionCourseViewer");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward announcements(
@@ -62,7 +62,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
 		readSiteView(request, announcementsComponent,null);
-		return mapping.findForward("announcements");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward objectives(
@@ -74,7 +74,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
 		readSiteView(request, objectivesComponent,null);
-		return mapping.findForward("objectives");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward program(
@@ -86,7 +86,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent programComponent = new InfoSiteProgram();
 		readSiteView(request, programComponent,null);
-		return mapping.findForward("program");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward evaluation(
@@ -98,7 +98,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent evaluationComponent = new InfoEvaluation();
 		readSiteView(request, evaluationComponent,null);
-		return mapping.findForward("evaluation");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward bibliography(
@@ -110,7 +110,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent bibliographyComponent = new InfoSiteBibliography();
 		readSiteView(request, bibliographyComponent,null);
-		return mapping.findForward("bibliography");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward curricularCourses(
@@ -123,7 +123,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		ISiteComponent curricularCoursesComponent =
 			new InfoSiteAssociatedCurricularCourses();
 		readSiteView(request, curricularCoursesComponent,null);
-		return mapping.findForward("curricularCourses");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward timeTable(
@@ -135,7 +135,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent timeTableComponent = new InfoSiteTimetable();
 		readSiteView(request, timeTableComponent,null);
-		return mapping.findForward("timeTable");
+		return mapping.findForward("sucess");
 	}
 
 	public ActionForward shifts(
@@ -147,7 +147,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent shiftsComponent = new InfoSiteShifts();
 		readSiteView(request, shiftsComponent,null);
-		return mapping.findForward("shifts");
+		return mapping.findForward("sucess");
 	}
 	
 	public ActionForward section(
@@ -163,7 +163,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			ISiteComponent sectionComponent = new InfoSiteSection();
 			readSiteView(request, sectionComponent,sectionIndex);
 			
-			return mapping.findForward("section");
+			return mapping.findForward("sucess");
 		}
 
 	private void readSiteView(
