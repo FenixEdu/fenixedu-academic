@@ -232,20 +232,13 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
+			assertNotNull(curricularCourse);
+			persistentCurricularCourse.delete(curricularCourse);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Existing CurricularCourse To Delete");
 		}
-		assertNotNull(curricularCourse);
-
-		try {
-			persistentSupport.iniciarTransaccao();
-			persistentCurricularCourse.delete(curricularCourse);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex3) {
-			fail("Delete Existing CurricularCourse");
-		}
-
+		
 		try {
 			persistentSupport.iniciarTransaccao();
 			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
@@ -258,8 +251,12 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		// CurricularCourse inexistente
 		System.out.println("- Test 4.2 : Delete Non Existing CurricularCourse\n");
 		try {
+			ICurricularCourse curricularCourseNonExisting = new CurricularCourse();
+			curricularCourseNonExisting.setCode("NOE");
+			curricularCourseNonExisting.setName("Non existing curricular course");
 			persistentSupport.iniciarTransaccao();
-			persistentCurricularCourse.delete(new CurricularCourse());
+			
+			persistentCurricularCourse.delete(curricularCourseNonExisting);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Delete Existing CurricularCourse");
@@ -280,7 +277,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All CurricularCourses");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 10);
+		assertEquals(13, list.size());
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------------------------
@@ -299,7 +296,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read Existing CurricularCourse");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 2);
+		assertEquals(4, list.size());
 	}
 
 	public void testReadCurricularCoursesByCurricularSemester() {
@@ -316,26 +313,8 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read Existing CurricularCourse");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 6);
+		assertEquals(8, list.size());
 	}
-
-	/*
-		public void testReadCurricularCoursesByCurricularSemesterAndCurricularYear() {
-	
-			// CurricularCourses existentes
-			System.out.println("- Test 8 : Read Existing CurricularCourses\n");
-	
-			ArrayList list = null;
-			try {
-				persistentSupport.iniciarTransaccao();
-				list = persistentCurricularCourse.readCurricularCoursesByCurricularSemesterAndCurricularYear(new Integer(1), new Integer(1));
-				persistentSupport.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia ex2) {
-				fail("Read Existing CurricularCourse");
-			}
-			assertNotNull(list);
-		}
-	*/
 
 	public void testReadCurricularCoursesByDegreeCurricularPlan() {
 
@@ -362,7 +341,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read Existing CurricularCourse");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 5);
+		assertEquals(8, list.size());
 	}
 
 	public void testReadAllCurricularCoursesByBranch() {
@@ -394,8 +373,6 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 	public void testReadAllCurricularCoursesBySemester() {
 
 		System.out.println("- Test 11 : Read All Curricular Courses Scope By Semester\n");
-		ICurricularSemester curricularSemester = null;
-		
 		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -405,7 +382,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All Curricular Courses Scope By Semester");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 6);
+		assertEquals(6,list.size());
 	}
 
 	public void testReadAllCurricularCoursesBySemesterAndYear() {
