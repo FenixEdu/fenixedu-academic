@@ -11,6 +11,8 @@ import ServidorPersistente.ExcepcaoPersistencia;
 public interface IEnrolmentStrategy {
 
 	public EnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia;
+	
+	public EnrolmentContext validateEnrolment() throws ExcepcaoPersistencia;
 
 	public EnrolmentContext getEnrolmentContext();
 	public void setEnrolmentContext(EnrolmentContext enrolmentContext);

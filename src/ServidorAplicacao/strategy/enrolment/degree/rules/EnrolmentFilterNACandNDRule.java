@@ -16,7 +16,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
  */
 
 // NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser chamada DEPOIS das regras do BRANCH e do SEMESTER
-public class EnrolmentRuleNACandND implements IEnrolmentRule {
+public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 

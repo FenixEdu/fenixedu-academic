@@ -11,7 +11,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
-import ServidorAplicacao.strategy.enrolment.degree.rules.PrecedenceRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Tools.dbaccess;
 import Util.TipoCurso;
@@ -39,7 +39,7 @@ public class PrecedenceRuleTest extends BaseEnrolmentRuleTest {
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();		
 		
-		doApplyRule(new PrecedenceRule(), enrolmentContext);
+		doApplyRule(new EnrolmentFilterPrecedenceRule(), enrolmentContext);
 		
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		
@@ -49,7 +49,7 @@ public class PrecedenceRuleTest extends BaseEnrolmentRuleTest {
 		enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));		
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		
-		doApplyRule(new PrecedenceRule(), enrolmentContext);
+		doApplyRule(new EnrolmentFilterPrecedenceRule(), enrolmentContext);
 		
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 		

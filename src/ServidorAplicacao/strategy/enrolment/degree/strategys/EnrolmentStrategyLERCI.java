@@ -1,9 +1,9 @@
 package ServidorAplicacao.strategy.enrolment.degree.strategys;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleBranch;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleNACandND;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleSemester;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -22,13 +22,13 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 	public EnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia {
 		IEnrolmentRule enrolmentRule = null;
 
-		enrolmentRule = new EnrolmentRuleBranch();
+		enrolmentRule = new EnrolmentFilterBranchRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
-		enrolmentRule = new EnrolmentRuleSemester();
+		enrolmentRule = new EnrolmentFilterSemesterRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
-		enrolmentRule = new EnrolmentRuleNACandND();
+		enrolmentRule = new EnrolmentFilterNACandNDRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		return this.enrolmentContext;
@@ -47,6 +47,14 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 	 */
 	public void setEnrolmentContext(EnrolmentContext enrolmentContext) {
 		this.enrolmentContext = enrolmentContext;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy#validateEnrolment()
+	 */
+	public EnrolmentContext validateEnrolment() throws ExcepcaoPersistencia {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

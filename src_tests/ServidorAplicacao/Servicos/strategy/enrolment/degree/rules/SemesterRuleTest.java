@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleSemester;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Tools.dbaccess;
@@ -41,7 +41,7 @@ public class SemesterRuleTest extends BaseEnrolmentRuleTest {
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(3), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		doApplyRule(new EnrolmentRuleSemester(), enrolmentContext);
+		doApplyRule(new EnrolmentFilterSemesterRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 

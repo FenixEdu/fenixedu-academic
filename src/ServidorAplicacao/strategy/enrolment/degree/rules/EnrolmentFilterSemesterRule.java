@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.IBranch;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -14,23 +13,21 @@ import ServidorPersistente.ExcepcaoPersistencia;
  *
  * 3/Abr/2003
  */
-public class EnrolmentRuleBranch implements IEnrolmentRule {
+public class EnrolmentFilterSemesterRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 
-		List curricularCoursesScopesFromBranch = new ArrayList();
-
-		IBranch studentBranch = enrolmentContext.getStudentActiveCurricularPlan().getBranch();
+		List curricularCoursesFromActualExecutionPeriod = new ArrayList();
 
 		Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			if ((curricularCourseScope.getBranch().equals(studentBranch)) || (curricularCourseScope.getBranch().getName().equals(""))) {
-				curricularCoursesScopesFromBranch.add(curricularCourseScope);
+			if (curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) {
+				curricularCoursesFromActualExecutionPeriod.add(curricularCourseScope);
 			}
 		}
 
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesScopesFromBranch);
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCoursesFromActualExecutionPeriod);
 		return enrolmentContext;
 	}
 }

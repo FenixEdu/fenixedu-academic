@@ -21,7 +21,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * This class filter final curricular courses by precedences rules that are configurated for degreeCurricularPlan...
  * @author jpvl
  */
-public class PrecedenceRule implements IEnrolmentRule {
+public class EnrolmentFilterPrecedenceRule implements IEnrolmentRule {
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule#apply(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
