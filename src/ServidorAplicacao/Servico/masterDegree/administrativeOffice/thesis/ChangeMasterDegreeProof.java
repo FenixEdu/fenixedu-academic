@@ -17,7 +17,6 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.RequiredJuriesServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
 import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
@@ -75,9 +74,6 @@ public class ChangeMasterDegreeProof implements IServico
         try
         {
 
-            if (infoTeacherJuries.size() < 1)
-                throw new RequiredJuriesServiceException("error.exception.masterDegree.noJuriesSelected");
-
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IStudentCurricularPlan studentCurricularPlan =
                 Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
@@ -112,7 +108,6 @@ public class ChangeMasterDegreeProof implements IServico
                 sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
             List teacherJuries = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherJuries);
 
-			
             IMasterDegreeProofVersion masterDegreeProofVersion =
                 new MasterDegreeProofVersion(
                     storedMasterDegreeThesis,

@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -23,7 +22,6 @@ import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servico.exceptions.RequiredJuriesServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -192,10 +190,6 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         }
         finally
         {
-            if (infoTeacherJuries.isEmpty())
-                actionErrors.add(
-                    "error.exception.masterDegree.noJuriesSelected",
-                    new ActionError("error.exception.masterDegree.noJuriesSelected"));
 
             saveErrors(request, actionErrors);
 
@@ -249,10 +243,6 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         try
         {
             ServiceUtils.executeService(userView, "ChangeMasterDegreeProof", args2);
-        }
-        catch (RequiredJuriesServiceException e)
-        {
-            throw new RequiredJuriesActionException(e.getMessage(), mapping.findForward("start"));
         }
         catch (NonExistingServiceException e)
         {
