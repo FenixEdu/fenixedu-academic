@@ -154,6 +154,56 @@
 	</collection-descriptor>
 </class-descriptor>
 
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for Dominio.EnrolmentPeriod -->
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="Dominio.EnrolmentPeriod" table="ENROLMENT_PERIOD">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyDegreeCurricularPlan"
+		column="KEY_DEGREE_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="startDate"
+		column="START_DATE"
+		jdbc-type="DATE"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="DATE"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+
+	<reference-descriptor
+			name="degreeCurricularPlan"
+			class-ref="Dominio.DegreeCurricularPlan"
+			proxy="false">
+		<foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</reference-descriptor>
+
+	<reference-descriptor
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="false">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+</class-descriptor>
+
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourse -->
 <!-- ************************************************************************************************************ -->
