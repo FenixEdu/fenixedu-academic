@@ -42,7 +42,7 @@ public class EnrollStudentGroupShift implements IService {
 
     public Boolean run(Integer executionCourseCode, Integer studentGroupCode,Integer groupPropertiesCode,
             Integer newShiftCode) throws FenixServiceException {
-System.out.println("1");
+
         ITurnoPersistente persistentShift = null;
         IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentGroupProperties persistentGroupProperties = null;
@@ -77,7 +77,7 @@ System.out.println("1");
                 throw new InvalidArgumentsServiceException();
             }
 
-            if(groupProperties.getShiftType() == null || 
+            if(groupProperties.getShiftType() == null || studentGroup.getShift() != null ||
             	   (groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue())){
             	throw new InvalidChangeServiceException();
             }
@@ -88,7 +88,7 @@ System.out.println("1");
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
-        System.out.println("2");
+       
         return new Boolean(true);
     }
 }

@@ -65,7 +65,7 @@ public class UnEnrollStudentGroupShift implements IService {
                 throw new InvalidArgumentsServiceException();
             }
 
-            if(!(studentGroup.getShift() != null && groupProperties.getShiftType() == null)){
+            if(!(studentGroup.getShift() != null && groupProperties.getShiftType() == null) || studentGroup.getShift() == null){
             	throw new InvalidChangeServiceException();
             }
             
