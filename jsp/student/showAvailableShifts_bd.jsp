@@ -131,7 +131,7 @@
 																<bean:write name="lesson" property="fim.time.time"/>
 															</dt:format>
 															na sala
-															<bean:write name="lesson" property="infoRoom.nome"/>
+															<bean:write name="lesson" property="infoSala.nome"/>
 															<br />
 														</logic:iterate>
 										</td>
