@@ -2,7 +2,9 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
+import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
+import middleware.persistentMiddlewareSupport.IPersistentMWStudentClass;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
@@ -48,6 +50,22 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 
 	public IPersistentMWEnrolment getIPersistentMWEnrolment() {
 		return new MWEnrolmentOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport#getIPersistentMWStudentClass()
+	 */
+	public IPersistentMWStudentClass getIPersistentMWStudentClass()
+	{
+		return new MWStudentClassOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport#getIPersistentMWDegreeTranslation()
+	 */
+	public IPersistentMWDegreeTranslation getIPersistentMWDegreeTranslation()
+	{
+		return new MWDegreeTranslationOJB();
 	}
 
 }
