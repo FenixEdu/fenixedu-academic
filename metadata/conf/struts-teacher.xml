@@ -538,8 +538,11 @@
             <!--<form-property name="oldPublicationType" type="java.lang.String" />-->
         </form-bean>
         <!-- PUBLICATION FORM -->
+        <!--
         <form-bean name="publicationManagementForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
+            <form-property name="isDidatic" type="java.lang.Boolean" />
+            <form-property name="isScientific" type="java.lang.Boolean" />
             <form-property name="subtype" type="java.lang.String" />
 			<form-property name="journalName" type="java.lang.String" />
 			<form-property name="title" type="java.lang.String" />
@@ -576,17 +579,21 @@
             <form-property name="page" type="java.lang.Integer" />
             <form-property name="idInternal" type="java.lang.Integer" initial="0"/>
             <form-property name="publicationString" type="java.lang.String" />
-            <!--<form-property name="infoTeacher#idInternal" type="java.lang.Integer"/>-->
             <form-property name="infoPublicationTypeId" type="java.lang.Integer" />
             <form-property name="teacherId" type="java.lang.Integer" />
             <form-property name="typePublication" type="java.lang.String" />
             <form-property name="searchAuthorString" type="java.lang.String" />
             <form-property name="authorName" type="java.lang.String" />
-            <form-property name="authorOrganisation" type="java.lang.String" />
+            <form-property name="authorOrganization" type="java.lang.String" />
             <form-property name="authorsPersonsCodes" type="java.lang.String[]" />
+   			<form-property name="authorsId" type="java.lang.Integer[]" />
             <form-property name="authorsIds" type="java.lang.String[]" /> 
             <form-property name="authorsIdstoDelete" type="java.lang.String[]" />           
+            <form-property name="authors" type="java.util.ArrayList" />
+			<form-property name="authorIdInternal" type="java.lang.Integer" />
+            <form-property name="method" type="java.lang.String" />
         </form-bean>
+        -->
 		<!-- READ PUBLICATION TYPES FORM -->
         <form-bean name="readPublicationTypesForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
@@ -608,12 +615,73 @@
             <form-property name="teacherId" type="java.lang.Integer" />
         </form-bean>
         <!-- TJBF & PFON -->
-		
+
+		<!-- publication form -->
+		<form-bean name="insertPublicationForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+			<!-- main form -->
+			<form-property name="authorsId" type="java.lang.Integer[]" />
+			<form-property name="authorsName" type="java.lang.String[]" />
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="index" type="java.lang.Integer" />
+			
+			<form-property name="searchAuthorString" type="java.lang.String" />
+
+			<form-property name="creatorId" type="java.lang.Integer" />
+			<form-property name="isDidatic" type="java.lang.Integer" initial="1" />
+			<form-property name="isScientific" type="java.lang.Boolean" />
+			<form-property name="title" type="java.lang.String" />
+			<form-property name="description" type="java.lang.String" />
+			<form-property name="infoPublicationTypeId" type="java.lang.Integer" />
+            <form-property name="subtype" type="java.lang.String" />
+   			<form-property name="journalName" type="java.lang.String" />
+			<form-property name="volume" type="java.lang.String" />
+			<form-property name="firstPage" type="java.lang.Integer" />
+			<form-property name="lastPage" type="java.lang.Integer" />
+			<form-property name="language" type="java.lang.String" />
+			<form-property name="format" type="java.lang.String" />
+			<form-property name="observation" type="java.lang.String" />
+			<form-property name="number" type="java.lang.Integer" />
+			<form-property name="month" type="java.lang.String" />
+			<form-property name="year" type="java.lang.String" />
+			<form-property name="month_end" type="java.lang.String" />
+			<form-property name="year_end" type="java.lang.String" />
+			<form-property name="editor" type="java.lang.String" />
+			<form-property name="country" type="java.lang.String" />
+			<form-property name="issn" type="java.lang.Integer" />
+			<form-property name="scope" type="java.lang.String" />
+			<form-property name="url" type="java.lang.String" />
+			<form-property name="editorCity" type="java.lang.String" />
+			<form-property name="numberPages" type="java.lang.Integer" />
+			<form-property name="edition" type="java.lang.String" />
+			<form-property name="fascicle" type="java.lang.String" />
+			<form-property name="serie" type="java.lang.String" />
+			<form-property name="isbn" type="java.lang.Integer" />
+			<form-property name="local" type="java.lang.String" />
+			<form-property name="conference" type="java.lang.String" />
+			<form-property name="instituition" type="java.lang.String" />
+			<form-property name="originalLanguage" type="java.lang.String" />
+			<form-property name="translatedAuthor" type="java.lang.String" />
+			<form-property name="criticizedAuthor" type="java.lang.String" />
+			<form-property name="publicationType" type="java.lang.String" />
+			<form-property name="university" type="java.lang.String" />
+            <form-property name="idInternal" type="java.lang.Integer" />
+
+			<!-- authors search form -->
+			<form-property name="searchedAuthorName" type="java.lang.String" />
+			<form-property name="selectedAuthor" type="java.lang.Integer" />
+			<form-property name="authorName" type="java.lang.String" />
+			<form-property name="authorOrganization" type="java.lang.String" />
+        </form-bean>
+
 		<!-- Carlos Pereira & Francisco Passos -->
         <form-bean name="confirmDeletePublicationForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
+            <form-property name="method" type="java.lang.String" />
 			<form-property name="idInternal" type="java.lang.Integer" />
-        </form-bean>                
+        </form-bean>
+        
+        
         
         <!-- EXTERNAL ACTIVITY FORM -->
         <form-bean name="externalActivityForm" type="org.apache.struts.validator.DynaValidatorForm" 
@@ -779,7 +847,7 @@
         	<form-property name="executionPeriodId" type="java.lang.Integer" />
 		</form-bean>
 		
-		
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1229,8 +1297,7 @@
             type="ServidorApresentacao.Action.teacher.ReadCurricularCourseListAction">
             <forward name="success" path="/viewCurricularCourseListOfStudents.jsp" />
         </action>
-
-		<action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
+        <action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
             name="studentsByCurricularCourseForm" scope="request" parameter="method" 
             type="ServidorApresentacao.Action.teacher.StudentsWithAttendsByCurricularCourseListAction">
             <forward name="success" path="/viewStudents.jsp" />
@@ -1746,8 +1813,8 @@
             <forward name="successfull-read" 
                 path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
         </action>
-        
-        
+
+
         <!-- TJBF & PFON -->
         <!-- publication Management-->
         <action 
@@ -1757,11 +1824,32 @@
 			input="/publicationManagement.do">
 			<forward name="show-publications" path="publications-management"/>
 		</action>
-		
+
 		<!-- Carlos Pereira & Francisco Passos -->
+		<action
+			type="ServidorApresentacao.Action.publication.PrepareInsertPublicationAction" 
+			path="/prepareInsertPublication" name="publicationManagementForm"
+			parameter="method" attribute="publicationManagementForm" scope="request" validate="false">
+			<forward name="insert-publication" path="insert-publication" />
+		</action>
+
+		<action 
+			type="ServidorApresentacao.Action.publication.EditPublicationAuthorsUpAction" 
+			path="/publicationAuthorEditUp" name="publicationManagementForm"
+			parameter="method" scope="request" validate="false">
+			<forward name="insert-publication" path="insert-publication" />
+		</action>
+
+		<action 
+			type="ServidorApresentacao.Action.publication.EditPublicationAuthorsDownAction" 
+			path="/publicationAuthorEditDown" name="publicationManagementForm"
+			parameter="method" scope="request" validate="false">
+			<forward name="insert-publication" path="insert-publication" />
+		</action>
+
         <action 
 			type="ServidorApresentacao.Action.publication.PrepareDeletePublicationAction" 
-			path="/prepareDeletePublication"
+			path="/prepareDeletePublication" name="confirmDeletePublicationForm"
 			parameter="method" scope="request" validate="false">
 			<forward name="prepared" path="confirm-delete-publication"/>
 		</action>
@@ -1772,6 +1860,7 @@
 			path="/deletePublication"
 			parameter="method" scope="request" validate="false">
 			<forward name="deleted" path="/publicationManagement.do"/>
+			<forward name="cancelled" path="/publicationManagement.do"/>
 		</action>
 				
 		<!-- PrepareSearchPerson-->
@@ -1798,8 +1887,8 @@
         
         <!-- SearchAuthor-->
         <action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
-            path="/searchAuthor" name="publicationManagementForm" scope="request"
-            parameter="method" input="searchAuthor" validate="false">
+            path="/searchAuthor" name="insertPublicationForm" scope="request"
+            parameter="method" input="/searchAuthor" validate="false">
             <forward name="show-search-author-form" path="view-authors-form"/>
         </action>
         
@@ -1919,7 +2008,33 @@
             <forward name="show-publicationDidatic-attributes-form" path="view-publicationDidatic-attributes"/>
             <forward name="show-publicationCientific-attributes-form" path="view-publicationCientific-attributes"/>
         </action>
-        <!-- TJBF & PFON -->
+		
+			
+		<!-- Insert New Publication -->
+		<action type="ServidorApresentacao.Action.publication.InsertPublicationDispatchAction" 
+            path="/insertNewPublication" 
+			name="insertPublicationForm" 
+			scope="request" 
+			parameter="method"
+            input="/insertNewPublication.do?method=prepare" 
+			validate="false">
+            <forward name="insert" path="insert-new-publication"/>
+            <forward name="searchAuthors" path="search-authors-for-new-publication"/>
+			<forward name="done" path="/publicationManagement.do"/>
+        </action>
+  
+		<!-- Edit Publication -->
+		<action type="ServidorApresentacao.Action.publication.EditPublicationDispatchAction" 
+            path="/editPublication" 
+			name="insertPublicationForm" 
+			scope="request" 
+			parameter="method"
+            input="/editPublication.do?method=lightPrepare" 
+			validate="false">
+            <forward name="edit" path="edit-publication"/>
+            <forward name="searchAuthors" path="search-authors-for-edit-publication"/>
+			<forward name="done" path="/publicationManagement.do"/>
+        </action>
         
         
         <!-- External Activity -->
@@ -2012,7 +2127,6 @@
 			scope="request"
 			validate="true"
 			input="/viewStudentCurriculum.do?method=prepareViewStudentCurriculumChooseStudent&amp;page=0">
-			
 			<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
 	        <forward name="NotAuthorized" path="df.page.notAuthorized"/>	

@@ -48,25 +48,25 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
-            IPublication publication = (IPublication) persistentPublication.readByOID(
-                    Publication.class, objectId);
+            IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class,
+                    objectId);
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             IAuthor author = persistentAuthor.readAuthorByKeyPerson(teacher.getPerson().getIdInternal());
-            
+
             //check if the teacher is any of the owners of the publication
-            Iterator iterator = publication.getPublicationAuthors().iterator();
+            Iterator iterator = publication.getAuthors().iterator();
             while (iterator.hasNext()) {
                 IAuthor ownerAuthor = (IAuthor) iterator.next();
-                if (ownerAuthor.getKeyPerson().equals(author.getKeyPerson()))
-                        return true;
+                if (ownerAuthor.getPerson() != null
+                        && ownerAuthor.getPerson().getIdInternal().equals(
+                                author.getPerson().getIdInternal()))
+                    return true;
             }
             return false;
-            
-            
+
         } catch (ExcepcaoPersistencia e) {
             return false;
-        } catch (Exception e) {
-            return false;
         }
+
     }
 }

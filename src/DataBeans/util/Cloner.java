@@ -575,7 +575,7 @@ public abstract class Cloner {
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoExecutionDegree.setTemporaryExamMap(executionDegree.getTemporaryExamMap());
 
-        //added by Tânia Pousão
+        //added by T?nia Pous?o
         InfoCampus infoCampus = Cloner.copyICampus2InfoCampus(executionDegree.getCampus());
         infoExecutionDegree.setInfoCampus(infoCampus);
 
@@ -2574,7 +2574,7 @@ public abstract class Cloner {
     }
 
     /**
-     * @author Tânia Pousão Created on 13/Nov/2003
+     * @author T?nia Pous?o Created on 13/Nov/2003
      */
     public static InfoCampus copyICampus2InfoCampus(ICampus campus) {
         InfoCampus infoCampus = new InfoCampus();
@@ -2584,7 +2584,7 @@ public abstract class Cloner {
     }
 
     /**
-     * @author Tânia Pousão Created on 13/Nov/2003
+     * @author T?nia Pous?o Created on 13/Nov/2003
      */
     public static ICampus copyInfoCampus2ICampus(InfoCampus infoCampus) {
         ICampus campus = new Campus();
@@ -3365,9 +3365,9 @@ public abstract class Cloner {
         if (author.getKeyPerson() != null) {
             infoAuthor.setInfoPessoa(infoPerson);
         }
-        if (author.getOrganisation() == null
-                || author.getOrganisation().length() == PublicationConstants.ZERO_VALUE) {
-            infoAuthor.setOrganisation(PublicationConstants.DEFAULT_ORGANIZATION);
+        if (author.getOrganization() == null
+                || author.getOrganization().length() == PublicationConstants.ZERO_VALUE) {
+            infoAuthor.setOrganization(PublicationConstants.DEFAULT_ORGANIZATION);
         }
         return infoAuthor;
     }
@@ -3380,7 +3380,7 @@ public abstract class Cloner {
         infoAuthorPerson.setIdInternal(author.getIdInternal());
         infoAuthorPerson.setKeyFinal(keyIdString);
         infoAuthorPerson.setName(author.getAuthor());
-        infoAuthorPerson.setOrganisation(author.getOrganisation());
+        infoAuthorPerson.setOrganisation(author.getOrganization());
 
         return infoAuthorPerson;
     }

@@ -54,7 +54,7 @@
 				<tr>
 					<td class="listClasses-header"><bean:message key="message.publications.table.name" />
 					</td>
-					<td class="listClasses-header"><bean:message key="message.publications.table.organisation" />
+					<td class="listClasses-header"><bean:message key="message.publications.table.organization" />
 					</td>
 				</tr>
 				<logic:iterate id="infoAuthor" name="infoAuthorsList" type="DataBeans.publication.InfoAuthor">
@@ -69,7 +69,7 @@
 							</logic:empty>
 						</td>
 						<td class="listClasses" style="text-align:center">
-							<bean:write name="infoAuthor" property="organisation"/>
+							<bean:write name="infoAuthor" property="organization"/>
 						</td>
 					</tr>
 				</logic:iterate>
@@ -121,24 +121,12 @@
 			</logic:equal>
 			
 			<logic:equal name="att" property="attributeType" value="title">
-				<bean:size id="size" name="infoRequiredAttributeList"/>
 				<tr>
 					<td>
-						<bean:message key="message.publicationAttribute.required" />
-						<logic:notEqual name="size" value="1">
-							<bean:message key="message.publicationAttribute.title" />
-						</logic:notEqual>
-						<logic:equal name="size" value="1">
-							<bean:message key="message.publications.publication" />
-						</logic:equal>
+						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.title" />
 					</td>
 					<td>
-						<logic:notEqual name="size" value="1">
-							<html:text size="20" property="title"/>
-						</logic:notEqual>	
-						<logic:equal name="size" value="1">
-							<html:textarea cols="50" rows="5" property="title"/>
-						</logic:equal>
+						<html:text size="20" property="title"/>
 					</td>
 				</tr>
 				<tr></tr>

@@ -334,8 +334,6 @@
 	</definition>
 	
 	
-	
-	
 	<!-- TJBF & PFON -->
 	<definition name="df.page.teacher-index" 
 		extends="definition.teacher.two-column">
@@ -400,14 +398,35 @@
 		<put name="body" 
 			value="/publication/ConfirmDeletePublication.jsp"></put>
 	</definition>
-		
+	
 	<definition name="view-authors-form" 
 		extends="teacher-information">
 		<put name="body" 
 			value="/publication/searchAuthor.jsp"></put>
 	</definition>
+
+	<definition name="insert-new-publication" extends="teacher-information">
+		<put name="body" value="/publication/insertNewPublication.jsp" />
+	</definition>
 	
-<!-- TJBF & PFON -->
+	<definition name="edit-publication" extends="teacher-information">
+		<put name="body" value="/publication/editPublication.jsp" />
+	</definition>
+
+	<definition name="search-authors-for-new-publication" extends="teacher-information">
+		<put name="body" value="/publication/searchAuthors.jsp" />
+	</definition>
+	
+	<definition name="search-authors-for-edit-publication" extends="teacher-information">
+		<put name="body" value="/publication/searchAuthorsEdit.jsp" />
+	</definition>
+
+	<definition name="insert-publication"
+		extends="teacher-information">
+		<put name="body"
+			value="/publication/editPublicationAttributes.jsp" />
+	</definition>
+	
 
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 

@@ -1084,6 +1084,12 @@
 		</field>
 	</form>-->
 	
+	<form name="insertPublicationForm" >
+		<field property="searchedAuthorName" depends="required">
+			<arg0 key="message.publication.stringNomeSearch" resource="true"/>
+		</field>
+	</form>
+	
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<form name="executionYearDegreeCurricularPlanForm">
 		<field property="executionYearID" depends="required" page="1">

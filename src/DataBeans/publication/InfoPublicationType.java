@@ -9,25 +9,41 @@ package DataBeans.publication;
 import java.util.List;
 
 import DataBeans.InfoObject;
+import Dominio.publication.IPublicationType;
 
 /**
  * @author TJBF & PFON
+ * @author Carlos Pereira
+ * @author Francisco Passos
  * 
  * To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
 public class InfoPublicationType extends InfoObject {
 
-    private String publicationType;
+    protected String publicationType;
 
-    private List attributes;
+    protected List attributes;
 
-    private List subtypes;
+    protected List subtypes;
 
     public InfoPublicationType() {
         super();
     }
 
+    public void copyFromDomain(IPublicationType pubType) {
+        super.copyFromDomain(pubType);
+        if (pubType != null) {
+	        publicationType = pubType.getPublicationType();
+        }
+    }
+    
+    public static InfoPublicationType newInfoFromDomain(IPublicationType pubtype) {
+        InfoPublicationType iptype = new InfoPublicationType();
+        iptype.copyFromDomain(pubtype);
+        return iptype;
+    }
+    
     /**
      * @return Returns the attributes.
      */

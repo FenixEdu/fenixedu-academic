@@ -144,7 +144,7 @@ import ServidorPersistente.projectsManagement.IPersistentProjectAccess;
 import ServidorPersistente.publication.IPersistentAuthor;
 import ServidorPersistente.publication.IPersistentPublication;
 import ServidorPersistente.publication.IPersistentPublicationAttribute;
-import ServidorPersistente.publication.IPersistentPublicationAuthor;
+import ServidorPersistente.IPersistentPublicationAuthor;
 import ServidorPersistente.publication.IPersistentPublicationFormat;
 import ServidorPersistente.publication.IPersistentPublicationTeacher;
 import ServidorPersistente.publication.IPersistentPublicationType;
@@ -1271,7 +1271,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     	return new PublicationAuthorOJB();
     }
 
-    // Rita Ferreira e João Fialho
+    // Rita Ferreira e Jo?o Fialho
 	public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
 		return new OldInquiriesSummaryOJB();
 	}

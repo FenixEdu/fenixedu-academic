@@ -7,39 +7,92 @@
 package DataBeans.publication;
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
+import Dominio.IPessoa;
+import Dominio.Pessoa;
+import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
+import Dominio.publication.IPublication;
+import Dominio.publication.Publication;
+
 /**
- * @author TJBF & PFON
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
  */
 public class InfoAuthor extends InfoObject {
 
-	private Integer keyPerson;
+	protected Integer keyPerson;
 	public InfoPerson infoPessoa;
 	public String author;
-	public String organisation;
+	public String organization;
 	
-	public List authorPublications;
+	public List infoPublications;
+
 	
     /* (non-Javadoc)
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IAuthor author) {
-        super.copyFromDomain(author);
-        setAuthor(author.getAuthor());
-        setIdInternal(author.getIdInternal());
-        setKeyPerson(author.getKeyPerson());
-        setOrganisation(author.getOrganisation());
+    	super.copyFromDomain(author);
+        if (author != null){
+	        setAuthor(author.getAuthor());
+	        setIdInternal(author.getIdInternal());
+	        setKeyPerson(author.getKeyPerson());
+	        setOrganization(author.getOrganization());
+        }
+    }
+  
+    /*
+     * Copies the infoAuthor to an Author object except the publications List for wich
+     * @param 
+     */
+    public void copyToDomain(InfoAuthor infoAuthor, IAuthor author){
+        if (infoAuthor != null && author != null){
+            super.copyToDomain(infoAuthor, author);
+	        author.setAuthor(infoAuthor.getAuthor());
+	        author.setKeyPerson(infoAuthor.getKeyPerson());
+	        author.setOrganization(infoAuthor.getOrganization());
+	        InfoPerson infoPerson = infoAuthor.getInfoPessoa();
+	        if (keyPerson != null){
+		        IPessoa pessoa = new Pessoa();
+		        infoPerson.copyToDomain(infoPerson, pessoa);
+		        author.setPerson(pessoa);
+	        }
+        }
     }
     
+    public static IAuthor newDomainFromInfo(InfoAuthor infoAuthor){
+        IAuthor author = null;
+        if(infoAuthor != null){
+            author = new Author();
+            infoAuthor.copyToDomain(infoAuthor, author);
+        }
+        return author;
+    }
+       
+    /**
+     * @param infoAuthor is the InfoAuthor from wich the publications will be
+     * retrieved
+     * @return a the list of infoPublications that belong to the author
+     */
+    public static List copyPublicationsFromInfo(InfoAuthor infoAuthor){
+        
+        Iterator it = infoAuthor.getInfoPublications().iterator();
+        List listaInfoPublicacoes = new ArrayList();
+        while(it.hasNext()){
+            InfoPublication infoPublication = (InfoPublication) it.next();
+            IPublication publication = new Publication();
+            infoPublication.copyToDomain(infoPublication, publication);
+            listaInfoPublicacoes.add(publication);
+        }
+        return listaInfoPublicacoes;
+    }
+     
 	public InfoAuthor(){
-		
 		super();
 	}
 	
@@ -59,10 +112,10 @@ public class InfoAuthor extends InfoObject {
 	}
 
 	/**
-	 * @return Returns the organisation.
+	 * @return Returns the organization.
 	 */
-	public String getOrganisation() {
-		return organisation;
+	public String getOrganization() {
+		return organization;
 	}
 
 	/**
@@ -80,24 +133,24 @@ public class InfoAuthor extends InfoObject {
 	}
 
 	/**
-	 * @param organisation The organisation to set.
+	 * @param organization The organization to set.
 	 */
-	public void setOrganisation(String organisation) {
-		this.organisation = organisation;
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 
 	/**
 	 * @return Returns the publicationAuthors.
 	 */
-	public List getAuthorPublications() {
-		return authorPublications;
+	public List getInfoPublications() {
+		return infoPublications;
 	}
 
 	/**
 	 * @param publicationAuthors The publicationAuthors to set.
 	 */
-	public void setAuthorPublications(List authorPublications) {
-		this.authorPublications = authorPublications;
+	public void setInfoPublications(List infoPublications) {
+		this.infoPublications = infoPublications;
 	}
 
 	/**

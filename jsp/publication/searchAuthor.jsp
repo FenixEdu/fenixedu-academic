@@ -9,7 +9,7 @@
 		<span class="error">
 			<html:errors property="nonValidating"/>
 			<html:errors property="nonValidatingName"/>
-			<html:errors property="nonValidatingOrganisation"/>
+			<html:errors property="nonValidatingOrganization"/>
 		</span>
 </logic:messagesPresent>
 <html:form action="/searchAuthor">
@@ -28,6 +28,47 @@
 
 </P>
 	<br />
+	
+	<html:hidden property="authorsId"/>
+	<html:hidden property="authorsName"/>
+	<html:hidden property="index"/>
+
+	<html:hidden property="title" />
+	<html:hidden property="description" />
+	<html:hidden property="infoPublicationTypeId" />
+	<html:hidden property="subtype" />
+	<html:hidden property="journalName" />
+	<html:hidden property="volume" />
+	<html:hidden property="firstPage" />
+	<html:hidden property="lastPage" />
+	<html:hidden property="language" />
+	<html:hidden property="format" />
+	<html:hidden property="observation" />
+	<html:hidden property="number" />
+	<html:hidden property="month" />
+	<html:hidden property="year" />
+	<html:hidden property="month_end" />
+	<html:hidden property="year_end" />
+	<html:hidden property="editor" />
+	<html:hidden property="country" />
+	<html:hidden property="issn" />
+	<html:hidden property="scope" />
+	<html:hidden property="url" />
+	<html:hidden property="editorCity" />
+	<html:hidden property="numberPages" />
+	<html:hidden property="edition" />
+	<html:hidden property="fascicle" />
+	<html:hidden property="serie" />
+	<html:hidden property="isbn" />
+	<html:hidden property="local" />
+	<html:hidden property="conference" />
+	<html:hidden property="instituition" />
+	<html:hidden property="originalLanguage" />
+	<html:hidden property="translatedAuthor" />
+	<html:hidden property="criticizedAuthor" />
+	<html:hidden property="publicationType" />
+	<html:hidden property="university" />
+	
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="teacherId"/>
@@ -91,7 +132,7 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="message.publications.table.name" />
 					</td>
-					<td class="listClasses-header"><bean:message key="message.publications.table.organisation" />
+					<td class="listClasses-header"><bean:message key="message.publications.table.organization" />
 					</td>
 				</tr>
 				<logic:iterate id="authorPersons" name="infoAuthorsPersons" type="DataBeans.publication.InfoAuthorPerson">
@@ -103,7 +144,7 @@
 						</td>
 						<td class="listClasses" style="text-align:left"><bean:write name="authorPersons" property="name"/>
 						</td>
-						<td class="listClasses" style="text-align:left"><bean:write name="authorPersons" property="organisation"/>
+						<td class="listClasses" style="text-align:left"><bean:write name="authorPersons" property="organization"/>
 						</td>
 					</tr>
 				</logic:iterate>
@@ -150,10 +191,10 @@
 				</tr>
 				<tr>
 					<td>
-						<bean:message key="message.publications.organisation" />
+						<bean:message key="message.publications.organization" />
 					</td>
 					<td>
-						<html:text size="50"  property="authorOrganisation"/>
+						<html:text size="50"  property="authorOrganization"/>
 					</td>
 				</tr>
 			</table>
@@ -183,7 +224,7 @@
 				<tr>
 					<td class="listClasses-header"><bean:message key="message.publications.table.name" />
 					</td>
-					<td class="listClasses-header"><bean:message key="message.publications.table.organisation" />
+					<td class="listClasses-header"><bean:message key="message.publications.table.organization" />
 					</td>
 					<td class="listClasses-header"><bean:message key="message.publications.table.select" />
 					</td>
@@ -202,7 +243,7 @@
 							</logic:empty>
 						</td>
 						<td class="listClasses" style="text-align:center">
-							<bean:write name="infoAuthor" property="organisation"/>
+							<bean:write name="infoAuthor" property="organization"/>
 						</td>
 						<td class="listClasses" style="text-align:center">
 							<html:multibox property="authorsIdstoDelete">

@@ -60,7 +60,7 @@ public class ReadAuthorsByPublicationId implements IServico {
             IPublication publication = (IPublication) persitentPublication.readByOID(Publication.class,
                     publicationId);
 
-            authors = publication.getPublicationAuthors();
+            authors = publication.getAuthors();
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

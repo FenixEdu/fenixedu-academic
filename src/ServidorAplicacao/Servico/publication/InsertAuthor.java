@@ -33,7 +33,7 @@ public class InsertAuthor implements IServico {
         return "InsertAuthor";
     }
 
-    public IAuthor run(String name, String organisation) throws FenixServiceException {
+    public IAuthor run(String name, String organization) throws FenixServiceException {
 
         IAuthor author = new Author();
 
@@ -44,7 +44,7 @@ public class InsertAuthor implements IServico {
             IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
             author.setAuthor(name);
-            author.setOrganisation(organisation);
+            author.setOrganization(organization);
 
             persistentAuthor.lockWrite(author);
 

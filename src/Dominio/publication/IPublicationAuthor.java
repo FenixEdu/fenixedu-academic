@@ -13,6 +13,7 @@ public interface IPublicationAuthor extends IDomainObject{
     public IAuthor getAuthor();
     public void setAuthor(IAuthor author);
     public Integer getKeyAuthor();
+    public void setKeyAuthor(Integer keyAuthor);
     
     public Integer getOrder();
     public void setOrder(Integer order);

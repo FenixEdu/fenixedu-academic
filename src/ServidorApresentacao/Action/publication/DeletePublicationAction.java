@@ -15,14 +15,15 @@ import org.apache.struts.action.ActionMapping;
 
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author Carlos Pereira & Francisco Passos
  *
  */
-public class DeletePublicationAction extends FenixAction {
-	public ActionForward execute(
+public class DeletePublicationAction extends FenixDispatchAction {
+	public ActionForward delete(
 			ActionMapping mapping,
 			ActionForm actionForm,
 			HttpServletRequest request,
@@ -40,5 +41,15 @@ public class DeletePublicationAction extends FenixAction {
 		request.setAttribute("msg", "message.publications.managementDeleted");
 
 		return mapping.findForward("deleted");
+	}
+	
+	public ActionForward cancel(
+			ActionMapping mapping,
+			ActionForm actionForm,
+			HttpServletRequest request,
+			HttpServletResponse response)
+	throws Exception
+	{
+		return mapping.findForward("cancelled");
 	}
 }

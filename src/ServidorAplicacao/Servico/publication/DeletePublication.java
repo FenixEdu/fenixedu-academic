@@ -25,8 +25,6 @@ public class DeletePublication implements IService {
 		
 		IPersistentPublication persistentPublication = sp.getIPersistentPublication();
 
-		//IPublication publication = (IPublication)persistentPublication.readByOID(Publication.class,publicationId);
-		
 		persistentPublication.deleteByOID(Publication.class,publicationId);
 		
 	}

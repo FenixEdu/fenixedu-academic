@@ -4,20 +4,19 @@
  */
 package ServidorApresentacao.Action.publication;
 
-import java.text.Collator;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.publication.InfoPublicationType;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -50,12 +49,17 @@ public class ReadPublicationTypesAction extends FenixAction {
             Integer keyTeacher = new Integer(request.getParameter("infoTeacher#idInternal"));
             String typePublication = request.getParameter("typePublication");
             List infoPublicationTypes = (List) ServiceUtils.executeService(userView,
-                    "ReadPublicationTypes", args);            
-            
-            BeanComparator comparator = new BeanComparator("publicationType",Collator.getInstance());
-            Collections.sort(infoPublicationTypes,comparator);
-            Collections.reverse(infoPublicationTypes);
-            
+                    "ReadPublicationTypes", args);
+
+            //TODO remove when database is updated
+            Iterator iterator = infoPublicationTypes.iterator();
+            while (iterator.hasNext()) {
+                InfoPublicationType infoPublicationType = (InfoPublicationType) iterator.next();
+                if (infoPublicationType.getPublicationType().equalsIgnoreCase("Ad-Hoc")) {
+                    infoPublicationTypes.remove(infoPublicationType);
+                    break;
+                }
+            }
             request.setAttribute("publicationTypesList", infoPublicationTypes);
             dynaForm.set("teacherId", keyTeacher);
             dynaForm.set("typePublication", typePublication);

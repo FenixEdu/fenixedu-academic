@@ -6,10 +6,17 @@
  */
 package Dominio.publication;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import Dominio.DomainObject;
+import ServidorAplicacao.Servico.ExcepcaoInexistente;
 
 /**
  * @author TJBF & PFON
@@ -114,6 +121,8 @@ public class Publication extends DomainObject implements IPublication {
 
     public Publication() {
         super();
+        publicationAuthors = new ArrayList();
+        publicationTeachers = new ArrayList();
     }
 
     /**
@@ -669,13 +678,12 @@ public class Publication extends DomainObject implements IPublication {
 
         publication += getTitle();
 
-        if(getType().getPublicationType().equalsIgnoreCase("Unstructured"))
-            return publication;
+        //System.out.println("pub = " + getPublicationType());
 
         String str = "";
-        if (getType().getPublicationType().equalsIgnoreCase("translation"))
+        if (getType()!=null && getType().getPublicationType()!=null && getType().getPublicationType().equalsIgnoreCase("translation"))
             str = " Translation";
-        else if (getType().getPublicationType().equalsIgnoreCase("critique"))
+        else if (getType()!=null && getType().getPublicationType()!=null && getType().getPublicationType().equalsIgnoreCase("critique"))
             str = " Critique";
 
         if (getSubType() != null && getSubType().length() != 0) {
@@ -684,11 +692,15 @@ public class Publication extends DomainObject implements IPublication {
 
         publication += " - ";
 
-        Iterator iteratorAuthors = publicationAuthors.iterator();
+        Iterator iteratorAuthors = this.getAuthors().iterator();
         while (iteratorAuthors.hasNext()) {
             IAuthor author = (IAuthor) iteratorAuthors.next();
+            author.getIdInternal();
             if (author.getKeyPerson() != null && author.getKeyPerson().intValue() != 0) {
-                publication += author.getPerson().getNome();
+            	if (author.getPerson() == null)
+            		publication += "NULL!, ";
+            	else
+            		publication += author.getPerson().getNome()+", ";
             } else {
                 publication += author.getAuthor() + ", ";
             }
@@ -853,20 +865,90 @@ public class Publication extends DomainObject implements IPublication {
     }
 
     /**
-     * @return Returns the publicationAuthors.
+     * @return Returns the publicationAuthors. (NOTE: PublicationAuthors != Authors)
      */
     public List getPublicationAuthors() {
+//    	        Collections.sort(publication.getPublicationAuthors(), new Comparator () {
+//    	            public int compare (Object o1, Object o2){
+//    	                IPublicationAuthor pa1 = (IPublicationAuthor) o1;
+//    	                IPublicationAuthor pa2 = (IPublicationAuthor) o2;
+//    	                if (pa1.getOrder() == null) pa1.setOrder(new Integer(numAuthors+1));
+//    	                if (pa2.getOrder() == null) pa2.setOrder(new Integer(numAuthors+1));
+//    	                return pa1.getOrder().compareTo(pa2.getOrder());
+//    	            }
+//    	        });
+//    	        return publication;
+//            }
+//            else throw new ExcepcaoPersistencia("PublicacaoInexistente");
+//            
+//        }
+
         return publicationAuthors;
     }
 
     /**
      * @param publicationAuthors
-     *            The publicationAuthors to set.
+     *            The publicationAuthors to set. (NOTE: PublicationAuthors != Authors)
      */
     public void setPublicationAuthors(List publicationAuthors) {
         this.publicationAuthors = publicationAuthors;
     }
 
+    /**
+     * @return a list of IAuthors
+     */
+    public List getAuthors(){
+        List result = new ArrayList(publicationAuthors);
+        Collections.sort(result, new BeanComparator("order"));
+
+        List authors = (List) CollectionUtils.collect(result, new Transformer() {
+            public Object transform(Object obj){
+                IPublicationAuthor pa = (PublicationAuthor) obj;
+                return pa.getAuthor();
+            }
+        });
+        return authors;
+    }
+    
+    /**
+     * Sets the PublicationAuthors List 
+     * @param a list of IAuthors
+     */
+    public void setAuthors(List authors){
+       
+        //List pubAuthors = new ArrayList();
+    	publicationAuthors.removeAll(publicationAuthors);
+        Iterator it = authors.iterator();
+        int i = 0;
+        while (it.hasNext()){
+            i++;
+            IAuthor author = (IAuthor) it.next();
+            IPublicationAuthor pa = new PublicationAuthor();
+            pa.setAuthor(author);
+            pa.setPublication(this);
+            pa.setOrder(new Integer(i));
+            //pubAuthors.add(pa);
+            publicationAuthors.add(pa);
+        }
+        //publicationAuthors = pubAuthors;
+    }
+    
+    
+    public Integer getOrderForAuthor(IAuthor author) throws ExcepcaoInexistente{
+        List publicationAuthors = getPublicationAuthors();
+        if (publicationAuthors == null || publicationAuthors.isEmpty())
+            throw new ExcepcaoInexistente ("The author is not an author of this publication");
+        Iterator it = publicationAuthors.iterator();
+        int i = 0;
+        while(it.hasNext()){
+            i++;
+            IPublicationAuthor pa = (IPublicationAuthor) it.next();
+            if(pa.getAuthor().equals(author))
+                return new Integer(i);
+        }
+        throw new ExcepcaoInexistente ("The author is not an author of this publication");
+    }
+    
     //	public boolean equals(Object object) {
     //		if (object == null) {
     //			return false;

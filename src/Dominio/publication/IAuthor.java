@@ -29,9 +29,9 @@ public interface IAuthor extends IDomainObject {
     public abstract Integer getKeyPerson();
 
     /**
-     * @return Returns the organisation.
+     * @return Returns the organization.
      */
-    public abstract String getOrganisation();
+    public abstract String getOrganization();
 
     /**
      * @return Returns the pessoa.
@@ -51,10 +51,10 @@ public interface IAuthor extends IDomainObject {
     public abstract void setKeyPerson(Integer keyPerson);
 
     /**
-     * @param organisation
-     *            The organisation to set.
+     * @param organization
+     *            The organization to set.
      */
-    public abstract void setOrganisation(String organisation);
+    public abstract void setOrganization(String organization);
 
     /**
      * @param pessoa
@@ -63,13 +63,15 @@ public interface IAuthor extends IDomainObject {
     public abstract void setPerson(IPessoa person);
 
     /**
-     * @return Returns the publicationAuthors.
+     * @return the List of Publications from the author
      */
-    public abstract List getAuthorPublications();
+    public List getPublications();
+    
+    public List getAuthorPublications();
 
     /**
-     * @param publicationAuthors
-     *            The publicationAuthors to set.
+     * @param publications the list of publications to be set as being of the author
      */
-    public abstract void setAuthorPublications(List authorPublications);
+   // public void setPublications(List publications);
+    
 }

@@ -20,8 +20,8 @@
 		
 		<table class="listClasses" width="100%">
 			<tr>
-				<td align="left">
-					<b><bean:message key="message.publications.warning" /></b>
+				<td>
+					<p align="left"><b><bean:message key="message.publications.warning" /></b></p>
 				</td>
 			</tr>
 		</table>
@@ -38,31 +38,37 @@
 					&nbsp;<bean:write name="infoSitePublications" property="infoTeacher.infoCategory.shortName" /></td>
 			</tr>
 		</table>
-		<br> </br>
-		<table class="listClasses" width="100%">
-			<tr>
-				<td>
-					<p align="left"><bean:message key="message.publications.management.warning" /></p>
-				</td>
-			</tr>
-		</table>
-
 
 		<br />
-		<bean:message key="message.publications.managementEditPublication"/>
-		<bean:message key="message.publications.managementInsertPublication"/>
 		
-		<br/>
+		<%--
+		<bean:message key="label.publication.orderby"/>
+		<html:link page='<%= "/publicationManagement.do?method=orderByInverseYear"%>'>
+		<bean:message key="label.publication.orderby.year" />
+		</html:link>
+		--%>
+		
 		<table style="text-align:left" width="100%">	
 			<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
+				<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
 				<tr>
 					<td class="listClasses" style="text-align:left">
 						<bean:write name="infoPublication" property="publicationString" />
 					</td>
+					<%--
 					<td class="listClasses" style="text-align:left">
 						<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
-						<%-- Tratar isto como uma qualquer publicação e não como sendo especificamente didatica --%>
-						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;infoPublicationTypeId=" + publicationTypeId %>'
+						< %-- Tratar isto como uma qualquer publicação e não como sendo especificamente didatica --% >
+						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;publicationTypeId=" + publicationTypeId %>'
+							paramId="idInternal"
+							paramName="infoPublication" 
+							paramProperty="idInternal">
+							<bean:message key="label.edit" />
+						</html:link>
+					</td>
+					--%>
+					<td class="listClasses" style="text-align:left">
+						<html:link page="/editPublication.do?method=prepare"
 							paramId="idInternal"
 							paramName="infoPublication" 
 							paramProperty="idInternal">
@@ -70,7 +76,6 @@
 						</html:link>
 					</td>
 					<td class="listClasses" style="text-align:left">
-						<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
 						<html:link page="/prepareDeletePublication.do"
 							paramId="idInternal"
 							paramName="infoPublication" 
@@ -83,12 +88,15 @@
 		</table>
 		<br />
 		<div class="gen-button">
+				<%--
 				<html:link page="/readPublicationTypes.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0"
 					paramId="infoTeacher#idInternal" 
 					paramName="infoSitePublications" 
 					paramProperty="infoTeacher.idInternal">
 					<bean:message key="message.publications.insert" />
 				</html:link>
+				--%>
+				<html:link page="/insertNewPublication.do?method=prepare"><bean:message key="message.publications.insert" /></html:link>
 			</div>
 		<br />
 </logic:present>

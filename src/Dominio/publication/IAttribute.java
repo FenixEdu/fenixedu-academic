@@ -8,13 +8,15 @@ package Dominio.publication;
 
 import java.util.List;
 
+import Dominio.IDomainObject;
+
 /**
  * @author _Sairf_
  * 
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
-public interface IAttribute {
+public interface IAttribute extends IDomainObject {
     /**
      * @return Returns the attributeType.
      */

@@ -107,6 +107,7 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
         Integer publicationId = new Integer(request.getParameter("idPublication"));
 
         ActionForward actionForward = mapping.findForward("show-cientific-Teacher-form");
+        //DynaActionForm dynaForm = (DynaActionForm) form;
 
         if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
             actionForward = mapping.findForward("show-didatic-Teacher-form");

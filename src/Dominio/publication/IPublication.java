@@ -9,6 +9,7 @@ package Dominio.publication;
 import java.util.List;
 
 import Dominio.IDomainObject;
+import ServidorAplicacao.Servico.ExcepcaoInexistente;
 
 /**
  * @author TJBF & PFON
@@ -133,7 +134,7 @@ public interface IPublication extends IDomainObject {
      */
     public abstract List getPublicationTeachers();
 
-    public abstract List getPublicationAuthors();
+
 
     /**
      * @return Returns the title.
@@ -436,7 +437,18 @@ public interface IPublication extends IDomainObject {
 
     public abstract void setPublicationTeachers(List publicationTeachers);
 
-    public abstract void setPublicationAuthors(List publicationAuthors);
+	  /**
+	  * @return a list of PublicationAuthors (Note: Publications Authors != Authors)
+	  */
+	  public abstract List getPublicationAuthors();    
+        
+	  public abstract void setPublicationAuthors(List publicationAuthors);
+    
+    public List getAuthors();
+    
+    public void setAuthors(List authors);
 
-    public abstract boolean equals(Object object);
+    public boolean equals(Object object);
+    
+    public Integer getOrderForAuthor(IAuthor author)throws ExcepcaoInexistente;
 }

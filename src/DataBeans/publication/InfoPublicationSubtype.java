@@ -7,7 +7,7 @@
 package DataBeans.publication;
 
 import DataBeans.InfoObject;
-import Dominio.publication.IPublicationType;
+import Dominio.publication.IPublicationSubtype;
 
 /**
  * @author TJBF & PFON
@@ -17,14 +17,26 @@ import Dominio.publication.IPublicationType;
  */
 public class InfoPublicationSubtype extends InfoObject {
 
-    private Integer keyPublicationType;
+    protected Integer keyPublicationType;
 
-    private String subtype;
+    protected String subtype;
 
-    private IPublicationType publicationType;
+    protected InfoPublicationType publicationType;
 
     public InfoPublicationSubtype() {
         super();
+    }
+    
+    public void copyFromDomain(IPublicationSubtype pubSubtype) {
+        super.copyFromDomain(pubSubtype);
+        keyPublicationType = pubSubtype.getKeyPublicationType();
+        subtype = pubSubtype.getSubtype();
+    }
+    
+    public static InfoPublicationSubtype newInfoFromDomain(IPublicationSubtype pubSubtype) {
+        InfoPublicationSubtype infoSubtype = new InfoPublicationSubtype();
+        infoSubtype.copyFromDomain(pubSubtype);
+        return infoSubtype;
     }
 
     /**
@@ -45,7 +57,7 @@ public class InfoPublicationSubtype extends InfoObject {
     /**
      * @return Returns the publicationType.
      */
-    public IPublicationType getPublicationType() {
+    public InfoPublicationType getPublicationType() {
         return publicationType;
     }
 
@@ -53,7 +65,7 @@ public class InfoPublicationSubtype extends InfoObject {
      * @param publicationType
      *            The publicationType to set.
      */
-    public void setPublicationType(IPublicationType publicationType) {
+    public void setPublicationType(InfoPublicationType publicationType) {
         this.publicationType = publicationType;
     }
 

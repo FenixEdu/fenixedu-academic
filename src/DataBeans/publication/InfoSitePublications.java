@@ -22,6 +22,7 @@ public class InfoSitePublications extends DataTranferObject implements ISiteComp
 	private List infoCientificPublications;
 	//private List infoUndeterminedPublications;
 	private List infoPublications;
+	private List infoOtherPublications;
 	private InfoTeacher infoTeacher;
 
 	public InfoSitePublications() {
@@ -33,7 +34,9 @@ public class InfoSitePublications extends DataTranferObject implements ISiteComp
 	public Integer getNumberDidaticPublications() {
 		return new Integer(infoDidaticPublications.size());
 	}
-
+	public Integer getNumberOtherPublications() {
+		return new Integer(infoOtherPublications.size());
+	}
 	
 
 	/**
@@ -77,6 +80,13 @@ public class InfoSitePublications extends DataTranferObject implements ISiteComp
 	}
 
 	/**
+	 * @return Returns the infoOtherPublications ()
+	 */
+	public List getOtherPublications() {
+	    return infoOtherPublications;
+	}	
+	
+	/**
 	 * @param infoCientificPublications The infoCientificPublications to set.
 	 */
 	public void setInfoCientificPublications(List infoCientificPublications) {
@@ -90,6 +100,14 @@ public class InfoSitePublications extends DataTranferObject implements ISiteComp
 		this.infoDidaticPublications = infoDidaticPublications;
 	}
 
+	/**
+	 * @param infoOtherPublications The infoOtherPublications to set.
+	 */
+	public void setInfoOtherPublications(List infoOtherPublications) {
+		this.infoOtherPublications = infoOtherPublications;
+	}	
+	
+	
 	/**
 	 * @param infoPublications The infoPublications to set.
 	 */

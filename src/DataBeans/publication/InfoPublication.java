@@ -14,7 +14,9 @@ import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import Dominio.Teacher;
 import Dominio.publication.Author;
+import Dominio.publication.IAuthor;
 import Dominio.publication.IPublication;
+import Dominio.publication.Publication;
 
 /**
  * @author TJBF & PFON
@@ -27,48 +29,48 @@ public class InfoPublication extends InfoObject {
 	
 	protected String objConcreteClass;
 	
-	private Integer keyPublicationType;
+	protected Integer keyPublicationType;
 	
-	private String subType;
-	private String journalName;
-	private String title;
-	private String volume;
-	private String editor;
-	private Integer firstPage;
-	private Integer lastPage;
-	private String language;
-	private String country;
-	private Integer issn;
-	private String format;
-	private String scope;
-	private String observation;
-	private Integer edition;
-	private String editorCity;
-	private Integer numberPages;
-	private Integer fascicle;
-	private Integer serie;
-	private String url;
-	private String university;
-	private String local;
-	private String originalLanguage;
-	private String translatedAuthor;
-	private String criticizedAuthor;
-	private String publicationType;
-	private String month;
-	private String year;
-	private String month_end;
-	private String year_end;
-	private String conference;
-	private String instituition;
-	private Integer isbn;
-	private Integer number;
-	private Integer didatic;
+	protected String subType;
+	protected String journalName;
+	protected String title;
+	protected String volume;
+	protected String editor;
+	protected Integer firstPage;
+	protected Integer lastPage;
+	protected String language;
+	protected String country;
+	protected Integer issn;
+	protected String format;
+	protected String scope;
+	protected String observation;
+	protected Integer edition;
+	protected String editorCity;
+	protected Integer numberPages;
+	protected Integer fascicle;
+	protected Integer serie;
+	protected String url;
+	protected String university;
+	protected String local;
+	protected String originalLanguage;
+	protected String translatedAuthor;
+	protected String criticizedAuthor;
+	protected String publicationType;
+	protected String month;
+	protected String year;
+	protected String month_end;
+	protected String year_end;
+	protected String conference;
+	protected String instituition;
+	protected Integer isbn;
+	protected Integer number;
+	protected Integer didatic;
 	
-	private String publicationString;
+	protected String publicationString;
 	
-	private List infoPublicationTeachers;
+	protected List infoPublicationTeachers;
 	
-	private List infoPublicationAuthors;
+	protected List infoPublicationAuthors;
 	
 	public static InfoPublication newInfoFromDomain(IPublication publication) {
         InfoPublication infoPublication = null;
@@ -83,6 +85,10 @@ public class InfoPublication extends InfoObject {
         
         super.copyFromDomain(publication);
         if (publication != null) {
+        	if (getInfoPublicationType() == null) {
+        		setInfoPublicationType(new InfoPublicationType());
+        	}
+        	getInfoPublicationType().setIdInternal(publication.getKeyPublicationType());
             setConference(publication.getConference());
             setCountry(publication.getCountry());
             setCriticizedAuthor(publication.getCriticizedAuthor());
@@ -95,10 +101,10 @@ public class InfoPublication extends InfoObject {
             setFormat(publication.getFormat());
             setIdInternal(publication.getIdInternal());
             //tranform the authors list into an infoAuthors list
-            Iterator it1 = publication.getPublicationAuthors().iterator();
+            Iterator it1 = publication.getAuthors().iterator();
             List infoAuthorsList = new ArrayList();        
             while (it1.hasNext()){
-                Author author = (Author) it1.next();
+                IAuthor author = (IAuthor) it1.next();
                 InfoAuthor infoAuthor = new InfoAuthor();
                 infoAuthor.copyFromDomain(author);
                 infoAuthorsList.add(infoAuthor);
@@ -115,7 +121,7 @@ public class InfoPublication extends InfoObject {
                 infoTeacher.copyFromDomain(teacher);
                 infoTeachersList.add(infoTeacher);
             }
-            setInfoPublicationAuthors(infoAuthorsList);           
+            setInfoPublicationTeachers(infoTeachersList);           
 
             //tranform the publicationType into an infoPublicationType
             InfoPublicationType infoPublicationType = new InfoPublicationType();
@@ -152,6 +158,95 @@ public class InfoPublication extends InfoObject {
             
         }
     }	
+
+    public void copyToDomain(InfoPublication infoPublication, IPublication publication){
+        if (infoPublication != null && publication != null) {
+            super.copyToDomain(infoPublication, publication);
+            publication.setConference(infoPublication.getConference());
+            publication.setCountry(infoPublication.getCountry());
+            publication.setCriticizedAuthor(infoPublication.getCriticizedAuthor());
+            publication.setDidatic(infoPublication.getDidatic());
+            publication.setEdition(infoPublication.getEdition());
+            publication.setEditor(infoPublication.getEditor());
+            publication.setEditorCity(infoPublication.getEditorCity());
+            publication.setFascicle(infoPublication.getFascicle());
+            publication.setFirstPage(infoPublication.getFirstPage());
+            publication.setFormat(infoPublication.getFormat());
+            publication.setInstituition(infoPublication.getInstituition());
+            publication.setIsbn(infoPublication.getIsbn());
+            publication.setIssn(infoPublication.getIssn());
+            publication.setJournalName(infoPublication.getJournalName());
+            //publication.setKeyPublicationType(infoPublication.getKeyPublicationType());
+            publication.setLanguage(infoPublication.getLanguage());
+            publication.setLastPage(infoPublication.getLastPage());
+            publication.setLocal(infoPublication.getLocal());
+            publication.setMonth(infoPublication.getMonth());
+            publication.setMonth_end(infoPublication.getMonth_end());
+            publication.setNumber(infoPublication.getNumber());
+            publication.setNumberPages(infoPublication.getNumberPages());
+            publication.setObservation(infoPublication.getObservation());
+            publication.setOriginalLanguage(infoPublication.getOriginalLanguage());
+            //It is not possible to fill (in this method) the Publication Authors List since each
+            //author also has a list of its own Publications, and therefore it would enter in an
+            //infinite cycle
+            //publication.setPublicationAuthors()
+            publication.setPublicationString(infoPublication.getPublicationString());
+            //DOME Verify this
+            //It is not possible to fill (in this method) the Publication Teachers List since each
+            //teacher also has a list of its own Publications, and therefore it would enter in an
+            //infinite cycle
+            //publication.setPublicationTeachers()
+            
+            publication.setPublicationType(infoPublication.getInfoPublicationType().getPublicationType());
+            if(publication.getPublicationType() == null) {
+            	publication.setPublicationType(infoPublication.getPublicationType());
+            }
+            publication.setScope(infoPublication.getScope());
+            publication.setSerie(infoPublication.getSerie());
+            publication.setSubType(infoPublication.getSubType());
+            publication.setTitle(infoPublication.getTitle());
+            publication.setTranslatedAuthor(infoPublication.getTranslatedAuthor());
+            //publication.setType(infoPublication.getPublicationType());
+            publication.setUniversity(infoPublication.getUniversity());
+            publication.setUrl(infoPublication.getUrl());
+            publication.setVolume(infoPublication.getVolume());
+            try {
+	            if (infoPublication.getYear() != null && !infoPublication.getYear().equals(""))
+	                publication.setYear(Integer.valueOf(infoPublication.getYear()));
+            } catch (NumberFormatException nfe) {
+            	//nothing to be done, therefore empty catch clause
+            }
+            try {
+	            if (infoPublication.getYear_end() != null && !infoPublication.getYear_end().equals(""))
+	                publication.setYear_end(Integer.valueOf(infoPublication.getYear_end()));
+            } catch (NumberFormatException nfe) {
+	        	//nothing to be done, therefore empty catch clause
+	        }
+
+        }
+    }
+
+	public static IPublication newDomainFromInfo(InfoPublication infoPublication) {
+        IPublication publication = null;
+        if (infoPublication != null) {
+            publication = new Publication();
+            infoPublication.copyToDomain(infoPublication, publication);
+        }
+        return publication;
+    }
+
+	public static List copyAuthorsFromInfo(InfoPublication infoPublication){
+        
+        Iterator it = infoPublication.getInfoPublicationAuthors().iterator();
+        List authorsList = new ArrayList();
+        while(it.hasNext()){
+            InfoAuthor infoAuthor = (InfoAuthor) it.next();
+            IAuthor author = new Author();
+            infoAuthor.copyToDomain(infoAuthor, author);
+            authorsList.add(author);
+        }
+        return authorsList;
+    }
 	
 	private InfoPublicationType infoPublicationType;
 	

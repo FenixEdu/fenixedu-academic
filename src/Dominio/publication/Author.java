@@ -7,81 +7,91 @@
 package Dominio.publication;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import Dominio.DomainObject;
 import Dominio.IPessoa;
 /**
  * @author TJBF & PFON
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * 
+ * To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Generation - Code and Comments
  */
 public class Author extends DomainObject implements IAuthor{
 
 	private Integer keyPerson;
 	public IPessoa person;
 	public String author;
-	public String organisation;
+	public String organization;
 	
 	public List authorPublications;
 	
 	public Author(){	
+	    super();
+	    authorPublications = new ArrayList();
 	}
 	
 	
 	/**
-	 * @return Returns the author.
-	 */
+     * @return Returns the author.
+     */
 	public String getAuthor() {
 		return author;
 	}
 
 	/**
-	 * @return Returns the keyPerson.
-	 */
+     * @return Returns the keyPerson.
+     */
 	public Integer getKeyPerson() {
 		return keyPerson;
 	}
 
 	/**
-	 * @return Returns the organisation.
-	 */
-	public String getOrganisation() {
-		return organisation;
+     * @return Returns the organization.
+     */
+	public String getOrganization() {
+		return organization;
 	}
 
 	/**
-	 * @return Returns the pessoa.
-	 */
+     * @return Returns the pessoa.
+     */
 	public IPessoa getPerson() {
 		return person;
 	}
 
 	/**
-	 * @param author The author to set.
-	 */
+     * @param author
+     *            The author to set.
+     */
 	public void setAuthor(String author) {
 		this.author = author;
 	}
 
 	/**
-	 * @param keyPerson The keyPerson to set.
-	 */
+     * @param keyPerson
+     *            The keyPerson to set.
+     */
 	public void setKeyPerson(Integer keyPerson) {
 		this.keyPerson = keyPerson;
 	}
 
 	/**
-	 * @param organisation The organisation to set.
-	 */
-	public void setOrganisation(String organisation) {
-		this.organisation = organisation;
+     * @param organization
+     *            The organization to set.
+     */
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 
 	/**
-	 * @param pessoa The pessoa to set.
-	 */
+     * @param pessoa
+     *            The pessoa to set.
+     */
 	public void setPerson(IPessoa person) {
 		this.person = person;
 	}
@@ -100,8 +110,55 @@ public class Author extends DomainObject implements IAuthor{
 		this.authorPublications = authorPublications;
 	}
 	
+	public List getPublications(){
+	    List publications = (List) CollectionUtils.collect(authorPublications, new Transformer() {
+	       public Object transform(Object obj){
+	           IPublicationAuthor pa = (PublicationAuthor) obj;
+	           return pa.getPublication();
+	       }
+	    });
+	    return publications;
+	}
+	
+
+//	public void setPublications(List publications){
+//	    List publicationsList = (List) CollectionUtils.collect(publications, new Transformer(){
+//	        public Object transform(Object obj){
+//	            IPublication publication = (IPublication) obj;
+//	            IPublicationAuthor pa = new PublicationAuthor();
+//	            pa.setAuthor(this);
+//	            pa.setPublication(publication);
+//	            pa.setOrder(publication.getOrderForAuthor(this));
+//	        }
+//	    });
+//	}
+	
 	public String toString() {
-		return "keyPerson: "+keyPerson+", person: "+person+", author: "+author+", organization: "+organisation;
+		return "keyPerson: "+keyPerson+", person: "+person+", author: "+author+", organization: "+organization;
+	}
+	
+	public boolean equals(IAuthor author){
+	    if (author != null) {
+	        if (this.keyPerson != null && author.getKeyPerson() != null){
+	            return this.keyPerson == author.getKeyPerson();
+	        }
+	        else {
+	            if (this.keyPerson == null || author.getKeyPerson() == null){
+	                return false;
+	            }
+	            else {
+		            if (this.getOrganization() == null && author.getOrganization() == null) {
+		                return this.getAuthor().equals(author.getAuthor());
+		            }
+		            else
+		                if (this.getOrganization() == null || author.getOrganization() == null)
+		                    return false;
+		                else return ( this.getAuthor().equals(author.getAuthor()) &&
+		                        	  this.getOrganization().equals(author.getOrganization()));
+	            }
+	        }
+	    }
+	    else return false;
 	}
 
 }

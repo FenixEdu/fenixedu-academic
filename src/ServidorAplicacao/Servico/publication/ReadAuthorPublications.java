@@ -15,7 +15,6 @@ import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
 import DataBeans.publication.InfoPublication;
 import DataBeans.publication.InfoSitePublications;
-import DataBeans.util.Cloner;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.publication.Author;
@@ -51,14 +50,13 @@ public class ReadAuthorPublications implements IServico {
      */
     public SiteView run(String user) throws FenixServiceException {
         try {
-            InfoSitePublications infoSitePublications = new InfoSitePublications();
+            
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-            infoSitePublications.setInfoTeacher(infoTeacher);
+            
+            InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
             List infoPublications = getInfoPublications(sp, teacher);
 
@@ -68,8 +66,9 @@ public class ReadAuthorPublications implements IServico {
             List infoPublicationsCientific = getInfoPublicationsType(infoPublications,
                     PublicationConstants.CIENTIFIC);
 
+            InfoSitePublications infoSitePublications = new InfoSitePublications();
+            infoSitePublications.setInfoTeacher(infoTeacher);
             infoSitePublications.setInfoDidaticPublications(infoPublicationsDidactic);
-
             infoSitePublications.setInfoCientificPublications(infoPublicationsCientific);
 
             return new SiteView(infoSitePublications);
@@ -87,8 +86,8 @@ public class ReadAuthorPublications implements IServico {
         IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
         Author author = persistentAuthor.readAuthorByKeyPerson(keyPerson);
 
-        List authorPublications = new ArrayList();
-        List infoAuthorPublications = new ArrayList();
+        List publications = new ArrayList();
+        List infoPublications = new ArrayList();
 
         if (author == null) {
             Author newAuthor = new Author();
@@ -97,22 +96,23 @@ public class ReadAuthorPublications implements IServico {
             persistentAuthor.lockWrite(newAuthor);
 
         } else {
-            authorPublications = author.getAuthorPublications();
+            publications = author.getPublications();
         }
 
-        if (authorPublications != null || authorPublications.size() != PublicationConstants.ZERO_VALUE) {
-            infoAuthorPublications = (List) CollectionUtils.collect(authorPublications,
-                    new Transformer() {
+        if (publications != null || publications.size() != PublicationConstants.ZERO_VALUE) {
+            infoPublications = (List) CollectionUtils.collect(publications, new Transformer() {
                         public Object transform(Object o) {
                             IPublication publication = (IPublication) o;
                             IPublication publication2 = publication;
                             publication2.setPublicationString(publication.toString());
-                            return Cloner.copyIPublication2InfoPublication(publication2);
+                            InfoPublication infoPublication = new InfoPublication();
+                            infoPublication.copyFromDomain(publication2);
+                            return infoPublication;
                         }
                     });
         }
 
-        return infoAuthorPublications;
+        return infoPublications;
     }
 
     List getInfoPublicationsType(List infoPublications, Integer typePublication) {

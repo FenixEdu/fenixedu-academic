@@ -116,7 +116,7 @@ public class ReadPublicationAttributesAction extends FenixAction {
         return actionForward;
     }
 
-    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException, FenixFilterException {
+    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixFilterException, FenixServiceException {
 
         List newAuthorsIds = new ArrayList();
         Iterator iteratorIds = authorsIds.iterator();

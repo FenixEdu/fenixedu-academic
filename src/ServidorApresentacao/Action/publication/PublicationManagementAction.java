@@ -13,6 +13,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -50,6 +52,14 @@ public class PublicationManagementAction extends FenixAction{
 		SiteView siteView =
 			(SiteView) ServiceUtils.executeService(userView, "ReadAuthorPublications", args);
 		InfoSitePublications infoSitePublications = (InfoSitePublications)siteView.getComponent();
+		
+		List listaOthers = (List) CollectionUtils.select(infoSitePublications.getInfoPublications(), new Predicate() {
+		    public boolean evaluate(Object obj) {
+		        InfoPublication infoPublication = (InfoPublication)obj;
+		        if (Integer.parseInt(infoPublication.getYear()) == 0) return true;
+		        else return false;
+		    }
+		}) ;
 		List listaPub = infoSitePublications.getInfoPublications();
 		
 		/** this class is a mere comparator to sort publications */
@@ -61,21 +71,15 @@ public class PublicationManagementAction extends FenixAction{
 		        
 		        //date sorting rules for publications
 //		        try {
-		        	if(infoPublication1.getYear() != null)
-		        	    year1 = Integer.parseInt(infoPublication1.getYear());
-		        	else
-		        	    year1 = 0;
-		        	if(infoPublication2.getYear() != null)
-		        	    year2 = Integer.parseInt(infoPublication2.getYear());
-		        	else
-		        	    year2 = 0;
+		            year1 = Integer.parseInt(infoPublication1.getYear());
+		            year2 = Integer.parseInt(infoPublication2.getYear());
 		            
 		            if (year1 < year2)
-		                return -1;
+		                return 1;
 		            if (year1 == year2)
 		                return 0;
 		            else
-		                return 1;
+		                return -1;
 /*		        } catch (NumberFormatException nfe) {
 		            throw nfe;
 		        }*/
@@ -91,8 +95,15 @@ public class PublicationManagementAction extends FenixAction{
 		    ActionMessages messages = new ActionMessages();
 			messages.add("message1", new ActionMessage(msg));
 			saveMessages(request,messages);
-		}				
+		}
+		
+
+//		ActionErrors errors = new ActionErrors();
+//		errors.add("error1", new ActionError("message.publications.managementDeleted"));
+//		saveErrors(request,errors);
+		
 		return mapping.findForward("show-publications");
 	}
 
+	
 }

@@ -34,7 +34,6 @@ import constants.publication.PublicationConstants;
  * @author TJBF & PFON
  *  
  */
-//TODO remove cloner
 public class ReadAuthorPublicationsToInsert implements IService {
 
     /**
@@ -100,7 +99,7 @@ public class ReadAuthorPublicationsToInsert implements IService {
             persistentAuthor.lockWrite(newAuthor);
 
         } else {
-            authorPublications = author.getAuthorPublications();
+            authorPublications = author.getPublications();
         }
 
         List publicationsInTeacherSList = teacher.getTeacherPublications();
@@ -117,7 +116,8 @@ public class ReadAuthorPublicationsToInsert implements IService {
                             IPublication publication = (IPublication) o;
                             IPublication publication2 = publication;
                             publication2.setPublicationString(publication.toString());
-                            return Cloner.copyIPublication2InfoPublication(publication2);
+                            return InfoPublication.newInfoFromDomain(publication2);
+                            //return Cloner.copyIPublication2InfoPublication(publication2);
                         }
                     });
         }
@@ -157,11 +157,13 @@ public class ReadAuthorPublicationsToInsert implements IService {
             while (iteratorTeachers.hasNext()) {
                 IPublication publicationTeacher = (IPublication) iteratorTeachers.next();
 
+                
                 if (publicationTeacher.getIdInternal().intValue() == publicationAuthor.getIdInternal()
                         .intValue()) {
                     contains = Boolean.TRUE;
                 }
             }
+            
             if (contains.booleanValue() == Boolean.FALSE.booleanValue()) {
                 newPublicationsAuthor.add(publicationAuthor);
             }

@@ -34,7 +34,7 @@ public class PrepareDeletePublicationAction extends FenixAction {
 		IUserView userView = SessionUtils.getUserView(request);
 		Integer internalId = new Integer(request.getParameter("idInternal"));
 		
-		Object[] args = { internalId };
+		Object[] args = { internalId, userView };
 		
 		InfoPublication infoPublication =
 			(InfoPublication) ServiceUtils.executeService(userView, "ReadPublicationByInternalId", args);

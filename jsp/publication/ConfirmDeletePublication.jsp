@@ -30,9 +30,16 @@
 						<logic:iterate id="infoAuthor" name="infoPublication" property="infoPublicationAuthors">
 							<tr>
 								<td>
-									<bean:write name="infoAuthor" property="author" />
+									<logic:notEmpty name="infoAuthor" property="author">
+										<bean:write name="infoAuthor" property="author" />
+									</logic:notEmpty>
 									<logic:empty name="infoAuthor" property="author">
-										Designacao de autor nao especificada
+										<logic:notEmpty name="infoAuthor" property="infoPessoa.nome">
+											<bean:write name="infoAuthor" property="infoPessoa.nome" />
+										</logic:notEmpty>
+										<logic:empty name="infoAuthor" property="infoPessoa.nome">
+											Designacao de autor nao especificada
+										</logic:empty>
 									</logic:empty>
 								</td>
 							</tr>
@@ -64,20 +71,19 @@
 			
 						<bean:define id="idInternal" name="infoPublication" property="idInternal"/>						
 						<html:hidden property="idInternal" value="<%= idInternal.toString() %>" />
+			
+						<html:hidden property="method" />
 						
-						<html:submit styleClass="inputbutton" property="confirm">
+						<html:submit styleClass="inputbutton" onclick='<%= "this.form.method.value='delete' " %>'>
 							<bean:message key="button.confirm"/>	
 						</html:submit>
-					</html:form>
-				</td>
-				
-				<td>
-					<html:form action="/publicationManagement">
-						<html:submit styleClass="inputbutton" property="confirm">
+
+						<html:submit styleClass="inputbutton" onclick='<%= "this.form.method.value='cancel' " %>'>
 							<bean:message key="button.cancel"/>
 						</html:submit>
+
 					</html:form>
-				</td>	
+				</td>
 			</tr>
 		</table>
 	
