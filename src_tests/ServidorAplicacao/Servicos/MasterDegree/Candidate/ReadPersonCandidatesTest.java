@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRole;
@@ -64,7 +66,7 @@ public class ReadPersonCandidatesTest extends TestCaseServicosCandidato {
 		
 		List result = null;
 	    try {
-	        result = (List) gestor.executar(userView, "ReadPersonCandidates", args);
+	        result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadPersonCandidates", args);
 	    } catch (Exception ex) {
 	        System.out.println("Service not Executed: " + ex);
 	    }   
@@ -78,7 +80,7 @@ public class ReadPersonCandidatesTest extends TestCaseServicosCandidato {
 	
 		result = null;
 		try {
-			result = (List) gestor.executar(userView, "ReadPersonCandidates", args2);
+			result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadPersonCandidates", args2);
 		} catch (Exception ex) {
 			System.out.println("Service not Executed: " + ex);
 		}   
@@ -95,7 +97,7 @@ public class ReadPersonCandidatesTest extends TestCaseServicosCandidato {
 	  Object[] args = { userView }; 
 	
 	  try {
-		 gestor.executar(userView, "ReadPersonCandidates", args);
+		 ServiceManagerServiceFactory.executeService(userView, "ReadPersonCandidates", args);
 	  } catch (FenixServiceException ex) {
 		  // All is OK
 	  } catch (Exception ex) {

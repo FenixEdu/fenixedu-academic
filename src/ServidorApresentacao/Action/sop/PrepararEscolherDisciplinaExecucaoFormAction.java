@@ -12,10 +12,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 
 /**
@@ -31,7 +32,6 @@ public class PrepararEscolherDisciplinaExecucaoFormAction extends Action {
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
         IUserView userView = (IUserView) sessao.getAttribute("UserView");
-        GestorServicos gestor = GestorServicos.manager();
 
 		// Ler Disciplinas em Execucao
         InfoExecutionDegree iLE = (InfoExecutionDegree) request.getAttribute("infoLicenciaturaExecucao");
@@ -39,7 +39,7 @@ public class PrepararEscolherDisciplinaExecucaoFormAction extends Action {
         Integer anoCurricular = (Integer) request.getAttribute("anoCurricular");
 
         Object argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular[] = { new CurricularYearAndSemesterAndInfoExecutionDegree(anoCurricular, semestre, iLE) };
-		ArrayList infoDisciplinasExecucao = (ArrayList) gestor.executar(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
+		ArrayList infoDisciplinasExecucao = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
 
         //Collections.sort(infoDisciplinasExecucao);
 

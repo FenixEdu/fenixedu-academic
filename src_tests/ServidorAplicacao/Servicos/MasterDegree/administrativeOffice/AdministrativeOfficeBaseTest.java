@@ -4,7 +4,7 @@
  */
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice;
 
-import ServidorAplicacao.GestorServicos;
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -21,7 +21,6 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
 {
 
     protected String dataSetFilePath;
-    protected GestorServicos serviceManager = GestorServicos.manager();
     protected IUserView userView = null;
     protected IUserView userViewNotAuthorized = null;
 
@@ -83,7 +82,7 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
 
         try
         {
-            return (IUserView) gestor.executar(null, "Autenticacao", args);
+            return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
         }
         catch (Exception ex)
         {
@@ -96,7 +95,7 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
     {
         try
         {
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 null,
                 getNameOfServiceToBeTested(),
                 getServiceArgumentsForNotAuthenticatedUser());
@@ -120,7 +119,7 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
     {
         try
         {
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 userViewNotAuthorized,
                 getNameOfServiceToBeTested(),
                 getServiceArgumentsForNotAuthorizedUser());

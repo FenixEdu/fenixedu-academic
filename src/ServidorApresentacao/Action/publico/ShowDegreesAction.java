@@ -15,10 +15,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -46,14 +47,13 @@ public class ShowDegreesAction extends FenixContextDispatchAction
             infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
         }
 
-        GestorServicos gestor = GestorServicos.manager();
         Object[] args = { infoExecutionYear };
         List executionDegreesList = null;
         try
         {
             //ReadExecutionDegreesByExecutionYear
             executionDegreesList =
-                (List) gestor.executar(null, "ReadNonMasterExecutionDegreesByExecutionYear", args);
+                (List) ServiceManagerServiceFactory.executeService(null, "ReadNonMasterExecutionDegreesByExecutionYear", args);
         } catch (FenixServiceException e)
         {
             errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
@@ -88,14 +88,13 @@ public class ShowDegreesAction extends FenixContextDispatchAction
             ano = infoExecutionYear.getYear();
         }
 
-        GestorServicos gestor = GestorServicos.manager();
         Object[] args = { ano };
 
         List executionDegreesList = null;
         try
         {
             //ReadExecutionDegreesByExecutionYear
-            executionDegreesList = (List) gestor.executar(null, "ReadMasterDegrees", args);
+            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(null, "ReadMasterDegrees", args);
         } catch (FenixServiceException e)
         {
             errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));

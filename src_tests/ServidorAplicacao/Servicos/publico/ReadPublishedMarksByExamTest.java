@@ -3,6 +3,8 @@ package ServidorAplicacao.Servicos.publico;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteMarks;
@@ -36,7 +38,7 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 		try {
 
 			
-				 gestor.executar(
+				 ServiceManagerServiceFactory.executeService(
 					null,
 					getNameOfServiceToBeTested(),
 					args);
@@ -64,7 +66,7 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 		Object[] args = { new Integer(1000), new Integer(5)};
 		try {
 
-		 gestor.executar(
+		 ServiceManagerServiceFactory.executeService(
 					null,
 					getNameOfServiceToBeTested(),
 					args);
@@ -95,7 +97,7 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 		try {
 
 			result =
-				(ExecutionCourseSiteView) gestor.executar(
+				(ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(
 					null,
 					getNameOfServiceToBeTested(),
 					args);
@@ -129,7 +131,7 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 		try {
 
 			result =
-				(ExecutionCourseSiteView) gestor.executar(
+				(ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(
 					null,
 					getNameOfServiceToBeTested(),
 					args);

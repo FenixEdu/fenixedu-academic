@@ -5,6 +5,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
@@ -89,7 +91,7 @@ public class PrepareCreateGuideTest extends TestCaseServicos {
 		InfoGuide infoGuide = null;
 	 
 		try {
-			 infoGuide = (InfoGuide) _gestor.executar(userView, "PrepareCreateGuide", args);
+			 infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "PrepareCreateGuide", args);
 		} catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		} catch (Exception ex) {

@@ -11,7 +11,7 @@ import Util.NumberUtils;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class InfoShiftGroupStatistics {
+public class InfoShiftGroupStatistics extends InfoObject {
 
 	private List shiftsInGroup;
 	private Integer totalCapacity;

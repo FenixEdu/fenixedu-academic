@@ -22,11 +22,12 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoCountry;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -73,7 +74,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
 											
 		    }
-			GestorServicos serviceManager = GestorServicos.manager();
 			
 			// Get the chosen exectionYear
 			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
@@ -94,7 +94,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			Object args[] = {executionYear};
 			
 			try {
-				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
+				degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadMasterDegrees", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
@@ -128,8 +128,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			DynaActionForm listCandidatesForm = (DynaActionForm) form;
 			
-			GestorServicos serviceManager = GestorServicos.manager();
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
@@ -156,7 +154,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 	  		List result = null;
 
 	  		try {
-				result = (List) serviceManager.executar(userView, "ReadCandidateList", args);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidateList", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
@@ -202,8 +200,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			GestorServicos serviceManager = GestorServicos.manager();
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			Integer personID = Integer.valueOf(request.getParameter("personID"));
 			request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
@@ -215,7 +211,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			Object args[] = { personID };
 			try {
-				result = (List) serviceManager.executar(userView, "GetCandidatesByPerson", args);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByPerson", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
@@ -239,9 +235,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			
-			GestorServicos serviceManager = GestorServicos.manager();
-			
+
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			Integer candidateID = (Integer) request.getAttribute("candidateID");
 			
@@ -255,7 +249,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			Object args[] = { candidateID };
 			try {
-				result = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+				result = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
@@ -281,8 +275,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			DynaActionForm editCandidateForm = (DynaActionForm) form;
 
-			GestorServicos serviceManager = GestorServicos.manager();
-
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			Integer candidateID = (Integer) request.getAttribute("candidateID");
@@ -297,7 +289,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 						
 			Object args[] = { candidateID };
 			try {
-				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
@@ -309,7 +301,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			// Get List of available Countries
 			Object result = null;
-			result = serviceManager.executar(userView, "ReadAllCountries", null);
+			result = ServiceManagerServiceFactory.executeService(userView, "ReadAllCountries", null);
 			ArrayList country = (ArrayList) result;
 
 			// Build List of Countries for the Form
@@ -355,8 +347,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		if (session != null) {
 			
 			DynaActionForm editCandidateForm = (DynaActionForm) form;
-
-			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			 
@@ -491,7 +481,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			
 			try {
-				infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ChangeCandidate", args);
+				infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "ChangeCandidate", args);
 			} catch(ExistingServiceException e){
 				throw new ExistingActionException("Esta Pessoa", e);
 			} catch(FenixServiceException e){
@@ -518,8 +508,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			GestorServicos serviceManager = GestorServicos.manager();
-
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			// Read the Candidate
@@ -530,7 +518,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			try {
 				Object args[] = {candidateID };
-				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException();
 			}
@@ -541,7 +529,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			// Write the Person
 			try {
 				Object args[] = {infoMasterDegreeCandidate.getInfoPerson().getIdInternal(), infoMasterDegreeCandidate.getInfoPerson().getPassword() };
-				serviceManager.executar(userView, "ChangePersonPassword", args);
+				ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException();
 			}

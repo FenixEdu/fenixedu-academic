@@ -12,10 +12,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -31,7 +31,6 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView = SessionUtils.getUserView(request);
 
 			Calendar dateAndTime =
@@ -62,7 +61,7 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 			// Chamar servico que vai ler salas vazias no dia escolhido
 			Object[] args = { date, time };
 			List infoRoomsList =
-				(List) gestor.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadRoomsWithNoExamsInDayAndBeginning",
 					args);

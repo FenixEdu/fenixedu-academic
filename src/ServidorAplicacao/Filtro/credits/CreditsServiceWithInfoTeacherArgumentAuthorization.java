@@ -5,7 +5,6 @@
 package ServidorAplicacao.Filtro.credits;
 
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 
 /**
@@ -27,7 +26,6 @@ public class CreditsServiceWithInfoTeacherArgumentAuthorization extends Abstract
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
     {
 		InfoTeacher infoTeacher = (InfoTeacher) arguments[0];
         

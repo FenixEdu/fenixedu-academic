@@ -44,6 +44,25 @@ public class PrepararAulaFormAction
 			ArrayList minutos = Util.getMinutes();
 			request.setAttribute("minutos", minutos);
 
+			//			// Ler as Salas
+			//			Object argsLerSalas[] = new Object[0];
+			//			ArrayList infoSalas =
+			//				(ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
+			//
+			//			//Collections.sort(infoSalas);
+			//
+			//			ArrayList listaSalas = new ArrayList();
+			//			listaSalas.add(new LabelValueBean("escolher", ""));
+			//			for (int i = 0; i < infoSalas.size(); i++) {
+			//				InfoRoom elem = (InfoRoom) infoSalas.get(i);
+			//				listaSalas.add(
+			//					new LabelValueBean(elem.getNome(), elem.getNome()));
+			//			}
+			//			sessao.setAttribute("listaSalas", listaSalas);
+			//			sessao.setAttribute("listaInfoSalas", infoSalas);
+
+			// Fim ler salas.d
+
 			// Ler Disciplinas em Execucao
 			SessionUtils.getExecutionCourses(request);
 

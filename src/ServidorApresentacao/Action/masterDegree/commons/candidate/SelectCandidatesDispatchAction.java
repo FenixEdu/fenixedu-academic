@@ -19,11 +19,12 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCandidateApproval;
 import DataBeans.InfoCandidateApprovalGroup;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -54,8 +55,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         DynaActionForm approvalForm = (DynaActionForm) form;
 
-        GestorServicos serviceManager = GestorServicos.manager();
-
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
@@ -75,7 +74,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         try
         {
             Object args[] = { executionYear, degree };
-            numerusClausus = (Integer) serviceManager.executar(userView, "ReadNumerusClausus", args);
+            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView, "ReadNumerusClausus", args);
         } catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(e);
@@ -140,7 +139,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         try
         {
             candidateList =
-                (ArrayList) serviceManager.executar(userView, "ReadCandidatesForSelection", args);
+                (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadCandidatesForSelection", args);
 
         } catch (NonExistingServiceException e)
         {
@@ -198,7 +197,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         DynaActionForm approvalForm = (DynaActionForm) form;
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
 
         if (!isTokenValid(request))
         {
@@ -216,7 +214,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         {
             Object args[] = { candidateList, ids };
             candidatesAdmited =
-                (ArrayList) serviceManager.executar(userView, "ReadAdmitedCandidates", args);
+                (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadAdmitedCandidates", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
@@ -233,7 +231,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         try
         {
             Object args[] = { executionYear, degree };
-            numerusClausus = (Integer) serviceManager.executar(userView, "ReadNumerusClausus", args);
+            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView, "ReadNumerusClausus", args);
         } catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(e);
@@ -265,7 +263,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         DynaActionForm approvalForm = (DynaActionForm) form;
-        GestorServicos serviceManager = GestorServicos.manager();
 
         if (!isTokenValid(request))
         {
@@ -291,7 +288,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             List result = null;
             try
             {
-                result = (ArrayList) serviceManager.executar(userView, "ReadSubstituteCandidates", args);
+                result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadSubstituteCandidates", args);
             } catch (ExistingServiceException e)
             {
                 throw new ExistingActionException(e);
@@ -324,7 +321,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         DynaActionForm substituteForm = (DynaActionForm) form;
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
 
         if (!isTokenValid(request))
         {
@@ -349,7 +345,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         Object args[] = { ids };
         try
         {
-            result = (List) serviceManager.executar(userView, "ReadCandidates", args);
+            result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
@@ -372,7 +368,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         DynaActionForm resultForm = (DynaActionForm) form;
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
 
         String[] candidateList = (String[]) resultForm.get("situations");
         String[] ids = (String[]) resultForm.get("candidatesID");
@@ -414,7 +409,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         Object args[] = { ids };
         try
         {
-            candidates = (List) serviceManager.executar(userView, "ReadCandidates", args);
+            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
@@ -471,7 +466,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         DynaActionForm resultForm = (DynaActionForm) form;
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
 
         String[] candidateList = (String[]) resultForm.get("situations");
         String[] ids = (String[]) resultForm.get("candidatesID");
@@ -488,7 +482,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         try
         {
             Object args[] = { ids };
-            candidates = (List) serviceManager.executar(userView, "ReadCandidates", args);
+            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
@@ -522,7 +516,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         {
             Object args[] = { resultForm.get("executionYear"), resultForm.get("degree")};
             infoExecutionDegree =
-                (InfoExecutionDegree) serviceManager.executar(userView, "ReadDegreeByYearAndCode", args);
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadDegreeByYearAndCode", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
@@ -604,7 +598,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         DynaActionForm substituteForm = (DynaActionForm) form;
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
 
         //		if (!isTokenValid(request)){
         //			return mapping.findForward("BackError");
@@ -627,7 +620,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             Object args[] = { candidateList, ids, remarks, substitutes };
             try
             {
-                serviceManager.executar(userView, "ApproveCandidates", args);
+                ServiceManagerServiceFactory.executeService(userView, "ApproveCandidates", args);
             } catch (ExistingServiceException e)
             {
                 throw new ExistingActionException(e);

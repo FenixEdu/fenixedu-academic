@@ -6,8 +6,8 @@
 
 package ServidorAplicacao.Servicos;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.TestCase;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -20,7 +20,6 @@ import Tools.dbaccess;
  **/
 public abstract class TestCaseServices extends TestCase {
 
-	protected GestorServicos gestor = null;
 	protected IUserView userViewAuthorized = null;
 	protected IUserView userViewNotAuthorized = null;
 	private dbaccess dbAcessPoint = null;
@@ -44,7 +43,6 @@ public abstract class TestCaseServices extends TestCase {
 		}
 		// to clear cache
 		SuportePersistenteOJB.resetInstance();
-		gestor = GestorServicos.manager();
 		setUserViewAuthorized();
 		setUserViewNotAuthorized();
 	}
@@ -73,7 +71,7 @@ public abstract class TestCaseServices extends TestCase {
 	protected void callServiceWithAuthorizedUserView()
 		throws FenixServiceException {
 		result =
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 				userViewAuthorized,
 				getNameOfServiceToBeTested(),
 				args);
@@ -82,7 +80,7 @@ public abstract class TestCaseServices extends TestCase {
 	protected void callServiceWithUnauthorizedUserView()
 		throws FenixServiceException {
 		result =
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 				userViewNotAuthorized,
 				getNameOfServiceToBeTested(),
 				args);
@@ -122,7 +120,7 @@ public abstract class TestCaseServices extends TestCase {
 
 		try {
 			userViewAuthorized =
-				(IUserView) gestor.executar(
+				(IUserView) ServiceManagerServiceFactory.executeService(
 					null,
 					"Autenticacao",
 					argsForAuthentication);
@@ -139,7 +137,7 @@ public abstract class TestCaseServices extends TestCase {
 
 		try {
 			userViewNotAuthorized =
-				(IUserView) gestor.executar(
+				(IUserView) ServiceManagerServiceFactory.executeService(
 					null,
 					"Autenticacao",
 					argsForAuthentication);

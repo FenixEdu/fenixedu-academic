@@ -6,11 +6,13 @@
 
 package Util;
 
+import java.io.Serializable;
+
 /**
  *
  * @author  tfc130
  */
-public class TipoAula implements Comparable {
+public class TipoAula implements Comparable, Serializable {
 	public static final int TEORICA = 1;
 	public static final int PRATICA = 2;
 	public static final int TEORICO_PRATICA = 3;

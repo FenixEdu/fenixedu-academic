@@ -14,12 +14,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -56,8 +57,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
             Integer executionDegreeId = getFromRequest("executionDegreeID", request);
             request.setAttribute("executionDegreeID", executionDegreeId);
 
-            GestorServicos gestorServicos = GestorServicos.manager();
-
             //degree information
             Object[] args = { executionDegreeId };
 
@@ -65,7 +64,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
             try
             {
                 infoExecutionDegree =
-                    (InfoExecutionDegree) gestorServicos.executar(
+                    (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                         null,
                         "ReadExecutionDegreeByOID",
                         args);
@@ -102,7 +101,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
             try
             {
                 executionPeriods =
-                    (List) gestorServicos.executar(null, "ReadExecutionPeriodsByExecutionYear", args2);
+                    (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionPeriodsByExecutionYear", args2);
             } catch (FenixServiceException e)
             {
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
@@ -131,8 +130,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
         }
 
-        GestorServicos gestorServicos = GestorServicos.manager();
-
         //degree information
         Object[] args = { executionPeriodOId, degreeId };
 
@@ -140,7 +137,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         try
         {
             infoDegreeInfo =
-                (InfoDegreeInfo) gestorServicos.executar(
+                (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(
                     null,
                     "ReadDegreeInfoByDegreeAndExecutionPeriod",
                     args);
@@ -156,7 +153,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         try
         {
             executionDegreeList =
-                (List) gestorServicos.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                    null,
                     "ReadExecutionDegreesByDegreeAndExecutionPeriod",
                     args);
@@ -194,8 +191,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
 		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
 		request.setAttribute("inEnglish", inEnglish);
-		
-        GestorServicos gestorServicos = GestorServicos.manager();
 
         //degree information
         Object[] args = { executionPeriodOId, degreeId };
@@ -204,7 +199,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         try
         {
             infoDegreeInfo =
-                (InfoDegreeInfo) gestorServicos.executar(
+                (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(
                     null,
                     "ReadDegreeInfoByDegreeAndExecutionPeriod",
                     args);
@@ -235,9 +230,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
     {
         ActionErrors errors = new ActionErrors();
 
-        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
-
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
@@ -247,8 +239,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
 		request.setAttribute("inEnglish", inEnglish);
 		
-        GestorServicos gestorServicos = GestorServicos.manager();
-
         //degree information
         Object[] args = { degreeId };
 
@@ -256,7 +246,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         try
         {
             infoDegreeCurricularPlanList =
-                (List) gestorServicos.executar(null, "ReadDegreeCurricularPlansByDegree", args);
+                (List) ServiceManagerServiceFactory.executeService(null, "ReadDegreeCurricularPlansByDegree", args);
         } catch (FenixServiceException e)
         {
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
@@ -283,7 +273,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
             try
             {
                 infoDegreeCurricularPlan =
-                    (InfoDegreeCurricularPlan) gestorServicos.executar(
+                    (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService(
                         null,
                         "ReadActiveDegreeCurricularPlanByID",
                         args2);

@@ -13,7 +13,7 @@ import java.util.List;
  * @author  Luis Cruz & Sara Ribeiro
  */
 
-public class InfoViewAllExams {
+public class InfoViewAllExams extends InfoObject {
 	protected InfoExecutionDegree infoExecutionDegree;
 	protected Integer curricularYear;
 	protected List infoExecutionCourseAndExamsList;

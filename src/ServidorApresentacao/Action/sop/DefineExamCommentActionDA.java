@@ -10,11 +10,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -146,7 +148,6 @@ public class DefineExamCommentActionDA
 
 	private InfoExamsMap getExamsMap(HttpServletRequest request)
 		throws FenixActionException {
-		GestorServicos gestor = GestorServicos.manager();
 		IUserView userView =
 			(IUserView) request.getSession().getAttribute(
 				SessionConstants.U_VIEW);
@@ -167,7 +168,7 @@ public class DefineExamCommentActionDA
 		InfoExamsMap infoExamsMap;
 		try {
 			infoExamsMap =
-				(InfoExamsMap) gestor.executar(userView, "ReadExamsMap", args);
+				(InfoExamsMap) ServiceManagerServiceFactory.executeService(userView, "ReadExamsMap", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(e);
 		} catch (FenixServiceException e) {

@@ -14,8 +14,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoStudent;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -35,11 +36,10 @@ public class ListAllSeminaries extends FenixAction
         InfoStudent student = null;
 		try
 		{
-            Object[] argsReadStudent= { userView.getUtilizador()};          
-			GestorServicos gestor= GestorServicos.manager();
-            student= (InfoStudent) gestor.executar(userView, "ReadStudentByUsername", argsReadStudent);
+            Object[] argsReadStudent= { userView.getUtilizador()};
+            student= (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByUsername", argsReadStudent);
             Object[] argsReadCandidacies =  {student.getIdInternal()};
-            currentCandidacies= (List) gestor.executar(userView, "Seminaries.GetCandidaciesByStudentID",argsReadCandidacies);
+            currentCandidacies= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetCandidaciesByStudentID",argsReadCandidacies);
 		}
 		catch (Exception e)
 		{
@@ -61,8 +61,7 @@ public class ListAllSeminaries extends FenixAction
 		ActionForward destiny= null;
 		try
 		{
-			GestorServicos gestor= GestorServicos.manager();
-			seminaries= (List) gestor.executar(userView, "Seminaries.GetAllSeminaries", new Object[0]);
+			seminaries= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllSeminaries", new Object[0]);
 		}
 		catch (Exception e)
 		{

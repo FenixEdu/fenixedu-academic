@@ -12,7 +12,7 @@ package DataBeans;
  */
 import Util.TipoAula;
 
-public class ExecutionCourseKeyAndLessonType {
+public class ExecutionCourseKeyAndLessonType extends InfoObject {
   protected TipoAula _tipoAula;
   protected String _sigla;
 

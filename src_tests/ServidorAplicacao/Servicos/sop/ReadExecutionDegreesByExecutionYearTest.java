@@ -2,11 +2,12 @@ package ServidorAplicacao.Servicos.sop;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -19,7 +20,6 @@ import Tools.dbaccess;
 public class ReadExecutionDegreesByExecutionYearTest extends TestCase {
 
 	protected dbaccess dbAcessPoint = null;
-	protected GestorServicos serviceManager = null;
 
 	public ReadExecutionDegreesByExecutionYearTest(String testName) {
 		super(testName);
@@ -57,7 +57,6 @@ public class ReadExecutionDegreesByExecutionYearTest extends TestCase {
 		}
 
 		SuportePersistenteOJB.resetInstance();
-		this.serviceManager = GestorServicos.manager();
 	}
 
 	protected void tearDown() {
@@ -81,7 +80,7 @@ public class ReadExecutionDegreesByExecutionYearTest extends TestCase {
 			InfoExecutionYear executionYear = new InfoExecutionYear("2003/2004"); 
 			Object[] args = { executionYear };
 			
-			degreesList = (List) this.serviceManager.executar(null, "ReadExecutionDegreesByExecutionYear", args);
+			degreesList = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreesByExecutionYear", args);
 		} catch (FenixServiceException ex) {
 			ex.printStackTrace();
 			System.out.println(ex.toString());
@@ -103,7 +102,7 @@ public class ReadExecutionDegreesByExecutionYearTest extends TestCase {
 		try {
 			Object[] args = { null };
 			
-			degreesList = (List) this.serviceManager.executar(null, "ReadExecutionDegreesByExecutionYear", args);
+			degreesList = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreesByExecutionYear", args);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Reading all degrees a FenixServiceException");

@@ -3,7 +3,7 @@
 package DataBeans;
 
 
-public class InfoFinalResult {
+public class InfoFinalResult extends InfoObject {
 
 //	Média ponderada
     private String averageWeighted;

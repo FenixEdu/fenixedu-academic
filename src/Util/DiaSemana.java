@@ -6,11 +6,13 @@
 
 package Util;
 
+import java.io.Serializable;
+
 /**
  *
  * @author  tfc130
  */
-public class DiaSemana {
+public class DiaSemana implements Serializable {
     public static final int DOMINGO = 1;
     public static final int SEGUNDA_FEIRA = 2;
     public static final int TERCA_FEIRA = 3;

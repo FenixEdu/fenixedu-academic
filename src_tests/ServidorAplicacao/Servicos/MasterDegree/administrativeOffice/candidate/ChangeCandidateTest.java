@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCandidateSituation;
@@ -84,7 +86,7 @@ public class ChangeCandidateTest extends TestCaseServicos
         try
         {
             newInfoMasterDegreeCandidate =
-                (InfoMasterDegreeCandidate) _gestor.executar(userView, "ChangeCandidate", args);
+                (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "ChangeCandidate", args);
         } catch (FenixServiceException ex)
         {
             fail("Fenix Service Exception");
@@ -110,7 +112,7 @@ public class ChangeCandidateTest extends TestCaseServicos
 
         try
         {
-            _gestor.executar(userView, "ChangeCandidate", args);
+            ServiceManagerServiceFactory.executeService(userView, "ChangeCandidate", args);
         } catch (FenixServiceException ex)
         {
             // All is OK

@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteCommon;
@@ -84,7 +86,7 @@ public class ReadSiteAnnouncementTest
 			Object[] args2 = getAuthorizeArguments();
 
 			result =
-				(SiteView) gestor.executar(
+				(SiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args2);
@@ -134,7 +136,7 @@ public class ReadSiteAnnouncementTest
 			IUserView userView = authenticateUser(args1);
 
 			result =
-				(SiteView) gestor.executar(
+				(SiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args2);

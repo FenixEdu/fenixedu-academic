@@ -37,10 +37,6 @@ public class OldPublicationTeacherAuthorizationFilter extends DomainObjectTeache
         return instance;
     }
 
-    private OldPublicationTeacherAuthorizationFilter()
-    {
-    }
-
     /*
 	 * (non-Javadoc)
 	 * 

@@ -30,7 +30,6 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -38,6 +37,7 @@ import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão
@@ -188,13 +188,12 @@ public class WriteMarksAction extends DispatchAction
         }
 
         Object[] args = { objectCode, evaluationCode, marksList };
-        GestorServicos manager = GestorServicos.manager();
         TeacherAdministrationSiteView siteView = null;
 
         try
         {
             siteView =
-                (TeacherAdministrationSiteView)manager.executar(userView, "InsertEvaluationMarks", args);
+                (TeacherAdministrationSiteView)ServiceManagerServiceFactory.executeService(userView, "InsertEvaluationMarks", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -319,13 +318,12 @@ public class WriteMarksAction extends DispatchAction
         IUserView userView = (IUserView)session.getAttribute(SessionConstants.U_VIEW);
 
         Object[] args = { objectCode, evaluationCode, marksList };
-        GestorServicos manager = GestorServicos.manager();
         TeacherAdministrationSiteView siteView = null;
 
         try
         {
             siteView =
-                (TeacherAdministrationSiteView)manager.executar(userView, "InsertEvaluationMarks", args);
+                (TeacherAdministrationSiteView)ServiceManagerServiceFactory.executeService(userView, "InsertEvaluationMarks", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);

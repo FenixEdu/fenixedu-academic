@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.coordinator;
 
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegreeCurricularPlan;
@@ -71,10 +73,10 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCodeTest extends Ser
 
 			//Valid user
 			String[] argsUser = getAuthenticatedAndAuthorizedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
 			InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-			infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) gestor.executar(id, getNameOfServiceToBeTested(), args);
+			infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			//read something?
 			if (infoDegreeCurricularPlan == null) {
@@ -126,9 +128,9 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCodeTest extends Ser
 
 			//Invalid user
 			String[] argsUser = getAuthenticatedAndUnauthorizedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
-			gestor.executar(id, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			fail("Reading an active degree curricular plan with invalid user");
 		} catch (NotAuthorizedException e) {
@@ -151,9 +153,9 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCodeTest extends Ser
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Reading an active degree Curricular Plan with non existent execution degree");
 		} catch (NonExistingServiceException e) {
@@ -176,10 +178,10 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCodeTest extends Ser
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
 			InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-				(InfoDegreeCurricularPlan) gestor.executar(id2, getNameOfServiceToBeTested(), args);
+				(InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			if (infoDegreeCurricularPlan == null) {
 				System.out.println(
@@ -201,9 +203,9 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCodeTest extends Ser
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Reading an active degree curricular plan with null execution degree code");
 		} catch (FenixServiceException e) {

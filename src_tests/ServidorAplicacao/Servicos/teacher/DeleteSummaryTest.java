@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -68,7 +69,7 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTest {
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 				userView,
 				getNameOfServiceToBeTested(),
 				getAuthorizeArguments());

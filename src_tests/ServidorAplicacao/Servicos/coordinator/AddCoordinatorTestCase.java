@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
@@ -92,7 +93,7 @@ public class AddCoordinatorTestCase extends CoordinatorIsResponsibleByExecutionD
 	public void testAddCoordinator() {
 		Object serviceArguments[] = getAuthorizeArguments();
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testReadCoordinators was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());

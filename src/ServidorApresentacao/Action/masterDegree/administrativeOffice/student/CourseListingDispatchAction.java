@@ -12,7 +12,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import ServidorAplicacao.GestorServicos;
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -33,7 +34,6 @@ public class CourseListingDispatchAction extends DispatchAction {
 			throws Exception {
 
 			HttpSession session = request.getSession(false);
-			GestorServicos serviceManager = GestorServicos.manager();
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 			//Get the Selected Course
@@ -52,8 +52,7 @@ public class CourseListingDispatchAction extends DispatchAction {
 			Object args[] = { scopeCode, yearString };
 			try {
 
-		//	result = (List)
-			 serviceManager.executar(userView, "ReadStudentsAndMarksByCurricularCourse", args);
+			ServiceManagerServiceFactory.executeService(userView, "ReadStudentsAndMarksByCurricularCourse", args);
 
 			} catch (NonExistingServiceException e) {
 				ActionErrors errors = new ActionErrors();

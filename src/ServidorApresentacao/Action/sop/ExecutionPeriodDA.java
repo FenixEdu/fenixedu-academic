@@ -16,9 +16,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -41,7 +42,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		HttpSession session = request.getSession(false);
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
 
 		InfoExecutionPeriod selectedExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
@@ -50,7 +50,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		Object argsReadExecutionPeriods[] = {
 		};
 		ArrayList executionPeriods =
-			(ArrayList) gestor.executar(
+			(ArrayList) ServiceManagerServiceFactory.executeService(
 				userView,
 				"ReadNotClosedExecutionPeriods",
 				argsReadExecutionPeriods);
@@ -123,7 +123,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		DynaActionForm indexForm = (DynaActionForm) form;
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
 
 		// get selected execution period
 		InfoExecutionPeriod selectedInfoExecutionPeriod = null;
@@ -141,7 +140,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		Object argsReadExecutionPeriods[] = {
 		};
 		ArrayList executionPeriods =
-			(ArrayList) gestor.executar(
+			(ArrayList) ServiceManagerServiceFactory.executeService(
 				userView,
 				"ReadNotClosedExecutionPeriods",
 				argsReadExecutionPeriods);

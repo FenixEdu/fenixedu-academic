@@ -7,9 +7,10 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
@@ -20,8 +21,6 @@ import Util.CurricularCourseType;
  */
 
 public class MakeEnrolment {
-
-	private static GestorServicos gestor = GestorServicos.manager();
 	private static IUserView userView = null;
 
 	public static void main(String[] args) {
@@ -37,7 +36,7 @@ public class MakeEnrolment {
 	private static void autentication() {
 		String argsAutenticacao[] = { "l44406", "1", Autenticacao.EXTRANET };
 		try {
-			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+			userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -46,7 +45,7 @@ public class MakeEnrolment {
 	private static InfoEnrolmentContext executeService(String serviceName, Object[] serviceArgs) {
 		try {
 			Object result = null;
-			result = gestor.executar(userView, serviceName, serviceArgs);
+			result = ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
 			return (InfoEnrolmentContext) result;
 		} catch (Exception ex) {
 			ex.printStackTrace();

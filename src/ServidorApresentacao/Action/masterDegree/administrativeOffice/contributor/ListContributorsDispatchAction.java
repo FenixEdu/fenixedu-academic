@@ -16,8 +16,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoContributor;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -79,8 +80,6 @@ public class ListContributorsDispatchAction extends DispatchAction {
 			
 			DynaActionForm createCandidateForm = (DynaActionForm) form;
 
-			GestorServicos serviceManager = GestorServicos.manager();
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
@@ -95,7 +94,7 @@ public class ListContributorsDispatchAction extends DispatchAction {
 	  		
 	  		Object args[] = { contributorNumber };
 	  		try {
-				contributors = (List) serviceManager.executar(userView, "ReadContributorList", args);
+				contributors = (List) ServiceManagerServiceFactory.executeService(userView, "ReadContributorList", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
@@ -123,8 +122,6 @@ public class ListContributorsDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			
-
 			List contributorList = (List) session.getAttribute(SessionConstants.CONTRIBUTOR_LIST);
 			
 
@@ -180,11 +177,8 @@ public class ListContributorsDispatchAction extends DispatchAction {
 		if (session != null) {
 			DynaActionForm editContributorForm = (DynaActionForm) form;
 
-			GestorServicos serviceManager = GestorServicos.manager();
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR);
- 
 
 			// Get the Information
 			String contributorNumberString = (String) editContributorForm.get("contributorNumber");
@@ -195,7 +189,7 @@ public class ListContributorsDispatchAction extends DispatchAction {
 			Object args[] = { infoContributor, contributorNumber , contributorName, contributorAddress};
 			InfoContributor newInfoContributor = null;
 			try {
-				newInfoContributor = (InfoContributor) serviceManager.executar(userView, "EditContributor", args);
+				newInfoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(userView, "EditContributor", args);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException("O Contribuinte", e);
 			}

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
@@ -24,7 +25,7 @@ public abstract class SummaryBelongsExecutionCourseTest
 		Object serviceArguments[] = getAuthorizeArguments();
 
 		try {
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 				userView,
 				getNameOfServiceToBeTested(),
 				serviceArguments);
@@ -52,7 +53,7 @@ public abstract class SummaryBelongsExecutionCourseTest
 		Object serviceArguments[] = getTestSummaryUnsuccessfullArguments();
 
 		try {
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 				userView3,
 				getNameOfServiceToBeTested(),
 				serviceArguments);

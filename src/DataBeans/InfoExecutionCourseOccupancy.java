@@ -7,7 +7,7 @@ import java.util.List;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class InfoExecutionCourseOccupancy {
+public class InfoExecutionCourseOccupancy extends InfoObject {
 
 	private InfoExecutionCourse infoExecutionCourse;
 	

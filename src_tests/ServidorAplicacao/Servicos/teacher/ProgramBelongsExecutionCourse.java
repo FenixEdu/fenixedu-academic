@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
@@ -29,7 +30,7 @@ public abstract class ProgramBelongsExecutionCourse extends ServiceNeedsAuthenti
 
 		try {
 //			result =
-			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			 ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testProgramBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -47,7 +48,7 @@ public abstract class ProgramBelongsExecutionCourse extends ServiceNeedsAuthenti
 
 		try {
 //			result = 
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testProgramNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

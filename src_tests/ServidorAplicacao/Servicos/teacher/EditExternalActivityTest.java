@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.InfoExternalActivity;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -120,7 +121,7 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
             infoExternalActivity.setInfoTeacher(infoTeacher);
             Object[] args = { null, infoExternalActivity };
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateExternalActivityDataSet.xml");
         } catch (Exception ex)
@@ -144,7 +145,7 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
             infoExternalActivity.setInfoTeacher(infoTeacher);
             Object[] args = { externalActivityId, infoExternalActivity };
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditExternalActivityDataSet.xml");
         } catch (Exception ex)

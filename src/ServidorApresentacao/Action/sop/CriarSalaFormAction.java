@@ -10,8 +10,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRoom;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.sop.CriarSala.ExistingRoomServiceException;
@@ -38,7 +39,6 @@ public class CriarSalaFormAction extends Action {
 		if (sessao != null) {
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 			Object argsCriarSala[] =
 				{
 					 new InfoRoom(
@@ -53,7 +53,7 @@ public class CriarSalaFormAction extends Action {
 							(String) criarSalaForm.get("capacityExame")))};
 
 			try {
-				gestor.executar(userView, "CriarSala", argsCriarSala);
+				ServiceManagerServiceFactory.executeService(userView, "CriarSala", argsCriarSala);
 			} catch (ExistingRoomServiceException e) {
 				throw new ExistingActionException("A Sala", e);
 			} catch (FenixServiceException ex) {

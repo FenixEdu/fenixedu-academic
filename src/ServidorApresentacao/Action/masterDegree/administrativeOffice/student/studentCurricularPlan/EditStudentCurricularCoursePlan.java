@@ -14,9 +14,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -43,12 +44,10 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 
 		Object args[] = { studentCurricularPlanId };
 
-		GestorServicos gestor = GestorServicos.manager();
-
 		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 		try {
 			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) gestor.executar(
+				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadPosGradStudentCurricularPlanById",
 					args);
@@ -127,10 +126,8 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 				extraCurricularCourses,
 				observations };
 
-		GestorServicos gestor = GestorServicos.manager();
-
 		try {
-			gestor.executar(userView, "EditPosGradStudentCurricularPlanStateAndCredits", args);
+			ServiceManagerServiceFactory.executeService(userView, "EditPosGradStudentCurricularPlanStateAndCredits", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

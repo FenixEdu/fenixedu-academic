@@ -22,11 +22,11 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.SiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -42,8 +42,6 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
 		HttpSession session = request.getSession(true);
 
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
-
 			List curricularYears =
 				(List) request.getAttribute("curricularYearList");
 
@@ -76,7 +74,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
 
 			try {
 				siteView =
-					(SiteView) gestor.executar(
+					(SiteView) ServiceManagerServiceFactory.executeService(
 						null,
 						"ExamSiteComponentService",
 						args);

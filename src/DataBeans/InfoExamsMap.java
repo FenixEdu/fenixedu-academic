@@ -15,7 +15,7 @@ import java.util.List;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class InfoExamsMap {
+public class InfoExamsMap extends InfoObject {
 
 	List executionCourses;
 	List curricularYears;

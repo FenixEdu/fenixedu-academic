@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos;
 
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 /**
  * @author dcs-rjao
  *
@@ -30,7 +32,7 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 
 			Object result = null;
 			try {
-				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+				result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 				if(result instanceof Collection) {
 					assertTrue("testUnsuccessfulExecutionOfReadService", ((Collection) result).isEmpty());
 					System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
@@ -59,7 +61,7 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 			Object result = null;
 			try {
 				
-				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+				result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 				if(result instanceof Collection) {
 					assertEquals("testSuccessfulExecutionOfReadService", getNumberOfItemsToRetrieve(), ((Collection) result).size());
 					System.out.println("testSuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());

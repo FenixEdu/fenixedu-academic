@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.publico;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoDegreeInfo;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -45,7 +46,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
             try
             {
                 infoDegreeInfo =
-                    (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
+                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -99,7 +100,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
             try
             {
                 infoDegreeInfo =
-                    (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
+                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -150,7 +151,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 String msg =
@@ -186,7 +187,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 String msg =
@@ -222,7 +223,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 String msg =
@@ -258,7 +259,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -287,7 +288,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 String msg =
@@ -323,7 +324,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 String msg =
@@ -359,7 +360,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 String msg =

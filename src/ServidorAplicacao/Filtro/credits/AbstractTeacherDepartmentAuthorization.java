@@ -10,7 +10,6 @@ import Dominio.IDepartment;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
@@ -31,7 +30,7 @@ import Util.RoleType;
 public abstract class AbstractTeacherDepartmentAuthorization extends Filtro
 {
 
-    public void preFiltragem(IUserView requester, IServico service, Object[] arguments) throws Exception
+    public void preFiltragem(IUserView requester, Object[] arguments) throws Exception
     {
 
         if ((requester == null)

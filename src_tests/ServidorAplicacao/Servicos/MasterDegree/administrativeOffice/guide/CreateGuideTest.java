@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoGuide;
@@ -151,7 +153,7 @@ public class CreateGuideTest extends TestCaseServicos
         InfoGuide result = null;
         try
         {
-            result = (InfoGuide) _gestor.executar(userView, "CreateGuide", args);
+            result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "CreateGuide", args);
         } catch (FenixServiceException ex)
         {
             fail("Fenix Service Exception" + ex);

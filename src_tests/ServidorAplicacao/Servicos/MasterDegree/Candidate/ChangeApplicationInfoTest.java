@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -76,7 +78,7 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
 		Object[] args = { infoMasterDegreeCandidate }; 
 		
         try {
-            gestor.executar(userView, "ChangeApplicationInfo", args);
+            ServiceManagerServiceFactory.executeService(userView, "ChangeApplicationInfo", args);
         } catch (Exception ex) {
             System.out.println("Service not Executed: " + ex);
         }   
@@ -100,7 +102,7 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
 	   InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
 		try {
-			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ChangeApplicationInfo", null);
+			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "ChangeApplicationInfo", null);
 		} catch (FenixServiceException ex) {
 			// All is OK
 		} catch (Exception ex) {

@@ -6,6 +6,8 @@
 
 package ServidorAplicacao.Servicos;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 
 /**
   * @author Luis Cruz & Sara Ribeiro
@@ -20,7 +22,7 @@ public abstract class TestCaseRequeiersAuthorizationServices extends TestCaseSer
 	public void testUnauthorizedExecutionOfService() {
 		result = null;
 		try {
-			result = gestor.executar(userViewNotAuthorized, getNameOfServiceToBeTested(), args);
+			result = ServiceManagerServiceFactory.executeService(userViewNotAuthorized, getNameOfServiceToBeTested(), args);
 			fail("Service was run with unauthorized user view.");
 		} catch (Exception ex) {
 			assertNull("Execution of Service with unauthorized user view returned a result: " + result, result);

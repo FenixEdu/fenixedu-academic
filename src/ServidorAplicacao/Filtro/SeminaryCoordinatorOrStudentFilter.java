@@ -5,7 +5,6 @@
  */
 package ServidorAplicacao.Filtro;
 
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import Util.RoleType;
@@ -32,7 +31,7 @@ public class SeminaryCoordinatorOrStudentFilter extends Filtro
         return instance;
     }
 
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
         if (((id != null
             && id.getRoles() != null
@@ -54,4 +53,5 @@ public class SeminaryCoordinatorOrStudentFilter extends Filtro
     {
         return RoleType.SEMINARIES_COORDINATOR;
     }
+
 }

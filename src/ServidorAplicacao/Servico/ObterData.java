@@ -67,7 +67,6 @@ public class ObterData implements IServico {
 
 	/*Object argumentos[] = {};
 
-	GestorServicos gestor = GestorServicos.manager();
 	DataView data = (DataView) gestor.executar(null, "ObterData", argumentos);
 	request.setAttribute("Data", data);*/
 						

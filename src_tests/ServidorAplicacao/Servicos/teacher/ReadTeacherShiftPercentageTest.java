@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRole;
 import DataBeans.InfoTeacher;
@@ -16,7 +18,6 @@ import DataBeans.teacher.credits.InfoShiftPercentage;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -70,11 +71,9 @@ public class ReadTeacherShiftPercentageTest extends TestCaseServices {
 
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
-			GestorServicos serviceManager = GestorServicos.manager();
-
 			Object[] args = { infoTeacher, infoExecutionCourse };
 
-			List infoShiftPercentageList = (List) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+			List infoShiftPercentageList = (List) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
 			assertNotNull("is null!", infoShiftPercentageList);
 

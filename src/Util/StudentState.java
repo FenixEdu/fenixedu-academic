@@ -1,11 +1,13 @@
 package Util;
 
+import java.io.Serializable;
+
 /**
  * @author dcs-rjao
  *
  * 25/Mar/2003
  */
-public class StudentState {
+public class StudentState implements Serializable {
 
 	public static final int BASE = 1;
 	public static final int INSCRITO = 2;

@@ -3,6 +3,7 @@
  */
 package ServidorAplicacao.Servicos.manager;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 
@@ -27,7 +28,7 @@ public abstract class TestCaseManagerReadServices extends TestCaseReadServices {
 
 //			Object result;  result =
 			try {
-					 _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+					 ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 					
 			} catch (NonExistingServiceException ex) {
 				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());

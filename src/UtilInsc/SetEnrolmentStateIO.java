@@ -6,10 +6,11 @@ import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -177,8 +178,7 @@ public abstract class SetEnrolmentStateIO {
 		}
 
 		try {
-			GestorServicos gestor = GestorServicos.manager();
-			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+			userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 		} catch (FenixServiceException e) {
 			e.printStackTrace(System.out);
 		}

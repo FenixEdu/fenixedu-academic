@@ -10,7 +10,7 @@ import java.util.List;
  * To enable and disable the creation of type comments go to
  * Window>Preferences>Java>Code Generation.
  */
-public class InfoShiftWithAssociatedInfoClassesAndInfoLessons {
+public class InfoShiftWithAssociatedInfoClassesAndInfoLessons extends InfoObject {
 
 	private InfoShift infoShift;
 	private List infoLessons;

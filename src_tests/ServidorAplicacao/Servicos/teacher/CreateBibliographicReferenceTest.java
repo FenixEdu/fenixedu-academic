@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -135,7 +136,7 @@ public class CreateBibliographicReferenceTest extends ServiceNeedsAuthentication
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getRecomendedExpectedDataSetFilePath());
@@ -158,7 +159,7 @@ public class CreateBibliographicReferenceTest extends ServiceNeedsAuthentication
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getTestExistingRecomendedBibliographicReferenceArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestExistingRecomendedBibliographicReferenceArguments());
 
 			// verificar as alteracoes da bd
 			//compareDataSet(getRecomendedExpectedDataSetFilePath());
@@ -187,7 +188,7 @@ public class CreateBibliographicReferenceTest extends ServiceNeedsAuthentication
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getOptionalExpectedDataSetFilePath());
@@ -210,7 +211,7 @@ public class CreateBibliographicReferenceTest extends ServiceNeedsAuthentication
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getTestExistingOptionalBibliographicReferenceArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestExistingOptionalBibliographicReferenceArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getOptionalExpectedDataSetFilePath());

@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author  tfc130
  */
-public class TipoSala implements Serializable{
+public class TipoSala implements Serializable {
     public static final int ANFITEATRO = 1;
     public static final int LABORATORIO = 2;
     public static final int PLANA = 3;

@@ -16,13 +16,13 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author tfc130
@@ -46,7 +46,6 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 		request.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 
 			List infoRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
 			InfoRoom infoRoom =
@@ -86,7 +85,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 			ArrayList executionPeriods;
 			try {
 				executionPeriods =
-					(ArrayList) gestor.executar(
+					(ArrayList) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ReadNotClosedExecutionPeriods",
 						argsReadExecutionPeriods);

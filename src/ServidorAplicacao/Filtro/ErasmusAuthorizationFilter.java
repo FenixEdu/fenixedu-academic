@@ -10,7 +10,6 @@ package ServidorAplicacao.Filtro;
 
 import java.util.Collection;
 
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import Util.RoleType;
@@ -34,7 +33,6 @@ public class ErasmusAuthorizationFilter extends Filtro {
 	
 	public void preFiltragem(
 		IUserView requester,
-		IServico service,
 		Object[] arguments)
 		throws Exception {
 			
@@ -48,8 +46,6 @@ public class ErasmusAuthorizationFilter extends Filtro {
 			throw new NotAuthorizedException(
 				" -----------> User = "
 					+ requester.getUtilizador()
-					+ ": SERVICE "
-					+ service.getNome()
 					+ "ACCESS NOT GRANTED!");
 		}
 	}

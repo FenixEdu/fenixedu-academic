@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRole;
@@ -58,7 +60,7 @@ public class ReadCoordinatedDegreesTest extends TestCaseServicos {
 		Object[] args = { userView };
 		List coordinatedDegreesList = null;
 		try {
-			coordinatedDegreesList = (List) _gestor.executar(userView, "ReadCoordinatedDegrees", args);
+			coordinatedDegreesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCoordinatedDegrees", args);
 		} catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		} catch (Exception ex) {
@@ -75,7 +77,7 @@ public class ReadCoordinatedDegreesTest extends TestCaseServicos {
 		coordinatedDegreesList = null;
 			 
 		try {
-			coordinatedDegreesList = (List) _gestor.executar(userView, "ReadCoordinatedDegrees", args2);
+			coordinatedDegreesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCoordinatedDegrees", args2);
 		} catch (ExcepcaoInexistente ex) {
 			// All is OK
 		} catch (Exception ex) {

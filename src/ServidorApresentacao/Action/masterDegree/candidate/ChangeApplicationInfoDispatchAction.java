@@ -28,11 +28,12 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoCountry;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -58,7 +59,6 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 			DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 
 			if (!isTokenValid(request)){
 				return mapping.findForward("BackError");
@@ -272,7 +272,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
 			try {
 				newMasterDegreeCandidate =
-					(InfoMasterDegreeCandidate) gestor.executar(
+					(InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ChangeApplicationInfo",
 						args);
@@ -307,7 +307,6 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 			InfoCandidateSituation infoCandidateSituation =
 				infoMasterDegreeCandidate.getInfoCandidateSituation();
 
@@ -324,7 +323,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 			InfoPerson infoPerson = null;
 			try {
 				infoPerson =
-					(InfoPerson) gestor.executar(
+					(InfoPerson) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ReadPersonByUsername",
 						args);
@@ -341,7 +340,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
 			try {
 				country =
-					(ArrayList) gestor.executar(
+					(ArrayList) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ReadAllCountries",
 						null);

@@ -3,6 +3,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.thesis;
 import java.util.ArrayList;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExternalPerson;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoStudentCurricularPlan;
@@ -72,7 +74,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
     {
         Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-            (InfoStudentCurricularPlan) serviceManager.executar(
+            (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                 userViewNotAuthorized,
                 "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                 argsReadStudentCurricularPlan);
@@ -110,14 +112,14 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeThesis = { infoStudentCurricularPlan };
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-                (InfoMasterDegreeThesisDataVersion) serviceManager.executar(
+                (InfoMasterDegreeThesisDataVersion) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
                     argsReadMasterDegreeThesis);
@@ -149,7 +151,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsChangeMasterDegreeThesis);
@@ -171,14 +173,14 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeThesis = { infoStudentCurricularPlan };
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-                (InfoMasterDegreeThesisDataVersion) serviceManager.executar(
+                (InfoMasterDegreeThesisDataVersion) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
                     argsReadMasterDegreeThesis);
@@ -208,7 +210,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsChangeMasterDegreeThesis);
@@ -234,7 +236,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(180), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -265,7 +267,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsChangeMasterDegreeThesis);
@@ -290,12 +292,12 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
 	 * public void testChangeMasterDegreeThesisDataWithoutGuiders() { try { Object[]
 	 * argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
 	 * InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan)
-	 * serviceManager.executar( userView,
+	 * ServiceManagerServiceFactory.executeService( userView,
 	 * "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType", argsReadStudentCurricularPlan);
 	 * 
 	 * Object[] argsReadMasterDegreeThesis = { infoStudentCurricularPlan };
 	 * InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-	 * (InfoMasterDegreeThesisDataVersion) serviceManager.executar( userView,
+	 * (InfoMasterDegreeThesisDataVersion) ServiceManagerServiceFactory.executeService( userView,
 	 * "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan", argsReadMasterDegreeThesis);
 	 * 
 	 * InfoTeacher infoTeacherAssistent = new InfoTeacher(); infoTeacherAssistent.setIdInternal(new
@@ -311,7 +313,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
 	 * Object[] argsChangeMasterDegreeThesis = { userView, infoStudentCurricularPlan, "some title",
 	 * guiders, assistentGuiders, infoExternalPersonExternalGuiders, externalAssistentGuiders };
 	 * 
-	 * serviceManager.executar( this.userView, getNameOfServiceToBeTested(),
+	 * ServiceManagerServiceFactory.executeService( this.userView, getNameOfServiceToBeTested(),
 	 * argsChangeMasterDegreeThesis);
 	 * 
 	 * fail("testChangeMasterDegreeThesisDataWithoutGuiders did not throw
@@ -327,14 +329,14 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeThesis = { infoStudentCurricularPlan };
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-                (InfoMasterDegreeThesisDataVersion) serviceManager.executar(
+                (InfoMasterDegreeThesisDataVersion) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
                     argsReadMasterDegreeThesis);
@@ -365,7 +367,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsChangeMasterDegreeThesis);
@@ -394,14 +396,14 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeThesis = { infoStudentCurricularPlan };
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-                (InfoMasterDegreeThesisDataVersion) serviceManager.executar(
+                (InfoMasterDegreeThesisDataVersion) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
                     argsReadMasterDegreeThesis);
@@ -433,7 +435,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsChangeMasterDegreeThesis);

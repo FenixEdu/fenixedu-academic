@@ -6,6 +6,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
@@ -76,7 +78,7 @@ public class ReadSiteSectionsTest extends ServiceNeedsAuthenticationTestCase {
 		TeacherAdministrationSiteView result = null;
 		try {
 			result =
-				(TeacherAdministrationSiteView) gestor.executar(
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					getAuthorizeArguments());

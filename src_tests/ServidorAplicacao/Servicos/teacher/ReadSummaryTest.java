@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSummary;
 import DataBeans.SiteView;
@@ -92,7 +93,7 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTest {
 			sp.confirmarTransaccao();
 
 			result =
-				(SiteView) gestor.executar(
+				(SiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					getAuthorizeArguments());

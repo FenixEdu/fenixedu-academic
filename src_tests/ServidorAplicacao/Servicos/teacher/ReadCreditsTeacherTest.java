@@ -3,13 +3,14 @@ package ServidorAplicacao.Servicos.teacher;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRole;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -63,12 +64,9 @@ public class ReadCreditsTeacherTest extends TestCaseServices {
 
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
-			//Service
-			GestorServicos serviceManager = GestorServicos.manager();
-
 			Object[] args = { infoTeacher };
 
-			InfoCredits credits = (InfoCredits) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+			InfoCredits credits = (InfoCredits) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
 			assertEquals("TfcStudentsnumber", 2, credits.getTfcStudentsNumber().intValue());
 			

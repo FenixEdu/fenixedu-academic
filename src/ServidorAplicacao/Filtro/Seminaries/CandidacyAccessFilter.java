@@ -6,11 +6,11 @@
 package ServidorAplicacao.Filtro.Seminaries;
 import java.util.Collection;
 import java.util.Iterator;
+
 import DataBeans.InfoRole;
 import Dominio.IStudent;
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.ICandidacy;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
@@ -39,13 +39,13 @@ public class CandidacyAccessFilter extends Filtro
 	{
 		return instance;
 	}
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
 	{
-		if ((!this.checkCandidacyOwnership(id, servico, argumentos))
-			&& (!this.checkCoordinatorRole(id, servico, argumentos)))
+		if ((!this.checkCandidacyOwnership(id, argumentos))
+			&& (!this.checkCoordinatorRole(id, argumentos)))
 			throw new NotAuthorizedException();
 	}
-	boolean checkCoordinatorRole(IUserView id, IServico servico, Object[] arguments) throws Exception
+	boolean checkCoordinatorRole(IUserView id, Object[] arguments) throws Exception
 	{
 		boolean result= true;
 		Collection roles= id.getRoles();
@@ -65,7 +65,7 @@ public class CandidacyAccessFilter extends Filtro
 		}
 		return result;
 	}
-	boolean checkCandidacyOwnership(IUserView id, IServico servico, Object[] arguments) throws Exception
+	boolean checkCandidacyOwnership(IUserView id, Object[] arguments) throws Exception
 	{
 		boolean result= true;
 		Integer candidacyID= (Integer) arguments[0];

@@ -15,7 +15,7 @@ import Dominio.IStudentGroup;
  * Created at 15/Set/2003, 15:36:52
  * 
  */
-public class InfoGroupProjectStudents
+public class InfoGroupProjectStudents extends InfoObject
 {
 	private IStudentGroup studentGroup;
 	private List studentList;

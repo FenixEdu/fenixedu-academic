@@ -13,10 +13,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
@@ -48,7 +49,6 @@ public class PrepararEditarAulaFormAction
 			Integer indexAula = (Integer) manipularAulasForm.get("indexAula");
 
 			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
 
 			InfoExecutionCourse iDE =
 				(InfoExecutionCourse) request.getAttribute(
@@ -57,7 +57,7 @@ public class PrepararEditarAulaFormAction
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
-				(ArrayList) gestor.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);

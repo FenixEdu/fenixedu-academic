@@ -46,10 +46,6 @@ public class ReadCourseInformationAuthorizationFilter extends AuthorizationByRol
         return instance;
     }
 
-    private ReadCourseInformationAuthorizationFilter()
-    {
-    }
-
     /*
 	 * (non-Javadoc)
 	 * 

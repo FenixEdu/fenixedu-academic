@@ -14,7 +14,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 
-import ServidorAplicacao.GestorServicos;
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -43,12 +44,11 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction
         // Get Execution Year List
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
         ArrayList executionYearList = null;
         try
         {
             executionYearList =
-                (ArrayList) serviceManager.executar(userView, "ReadExecutionYears", null);
+                (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionYears", null);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
@@ -86,4 +86,5 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction
         } else
             throw new Exception();
     }
+
 }

@@ -1,11 +1,12 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 
-public class CalculateGuideTotal {
+public class CalculateGuideTotal implements Serializable {
 	
 	public CalculateGuideTotal() {}
 

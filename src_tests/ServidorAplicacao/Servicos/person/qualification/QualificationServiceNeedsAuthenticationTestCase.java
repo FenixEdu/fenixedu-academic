@@ -5,6 +5,7 @@
 
 package ServidorAplicacao.Servicos.person.qualification;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -50,7 +51,7 @@ public abstract class QualificationServiceNeedsAuthenticationTestCase
 		Object serviceArguments[] = getAuthorizeArgumentsGrantOwnerManager();
 		try
 		{
-			gestor.executar(userViewGrantOwnerManager, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userViewGrantOwnerManager, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by test testAuthorizedUser_GrantOwnerManager.");
@@ -72,7 +73,7 @@ public abstract class QualificationServiceNeedsAuthenticationTestCase
 		Object serviceArguments[] = getAuthorizeArgumentsTeacher();
 		try
 		{
-			gestor.executar(userViewTeacher, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userViewTeacher, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by test testAuthorizedUser_Teacher.");
@@ -95,7 +96,7 @@ public abstract class QualificationServiceNeedsAuthenticationTestCase
 
 		try
 		{
-			gestor.executar(userViewUnauthorized, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userViewUnauthorized, getNameOfServiceToBeTested(), serviceArguments);
 			fail(
 				getNameOfServiceToBeTested()
 					+ "fail testUnauthorizedUser(with valid arguments teacher).");
@@ -120,7 +121,7 @@ public abstract class QualificationServiceNeedsAuthenticationTestCase
 
 		try
 		{
-			gestor.executar(userViewUnauthorized, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userViewUnauthorized, getNameOfServiceToBeTested(), serviceArguments);
 			fail(
 				getNameOfServiceToBeTested()
 					+ "fail testUnauthorizedUser(with valid arguments Grant Owner Manager).");
@@ -142,7 +143,7 @@ public abstract class QualificationServiceNeedsAuthenticationTestCase
 		String args[] = arguments;
 		try
 		{
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
+			return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
 		} catch (Exception ex)
 		{
 			fail("Authenticating User!" + ex);

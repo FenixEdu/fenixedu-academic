@@ -13,10 +13,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -32,10 +32,6 @@ public class ViewAllRoomsSchedulesDA  extends FenixContextDispatchAction {
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			//GestorServicos gestor = GestorServicos.manager();
-			//IUserView userView =
-			//	(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
 			/* Criar o bean de pavilhoes */				
 			List pavillionsNamesList = new ArrayList();
 			pavillionsNamesList.add("Pavilhão Central");
@@ -75,7 +71,6 @@ public class ViewAllRoomsSchedulesDA  extends FenixContextDispatchAction {
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			DynaActionForm chooseViewAllRoomsSchedulesContextForm =
@@ -120,7 +115,7 @@ public class ViewAllRoomsSchedulesDA  extends FenixContextDispatchAction {
 
 			Object[] args =	{ selectedPavillions, infoExecutionPeriod };
 			List infoViewClassScheduleList =
-				(List) gestor.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					userView,"ReadPavillionsRoomsLessons",	args);
 
 			if (infoViewClassScheduleList != null

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -104,7 +105,7 @@ public class EditBibliographicReferenceTest extends ServiceNeedsAuthenticationTe
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getRecomendedExpectedDataSetFilePath());
@@ -127,7 +128,7 @@ public class EditBibliographicReferenceTest extends ServiceNeedsAuthenticationTe
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getOptionalExpectedDataSetFilePath());
@@ -144,7 +145,7 @@ public class EditBibliographicReferenceTest extends ServiceNeedsAuthenticationTe
 		Object serviceArguments[] = getTestBibliographicReferenceUnsuccessfullArguments();
 
 		try {
-			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			 ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testBibliographicReferenceNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

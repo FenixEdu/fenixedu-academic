@@ -16,13 +16,14 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -98,8 +99,6 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
 		List result = new ArrayList();
 		Integer numberAux = null;
 
-		GestorServicos serviceManager = GestorServicos.manager();
-
 		BeanComparator numberComparator = new BeanComparator("studentCurricularPlan.student.number");
 		Collections.sort(studentCurricularPlans, numberComparator);
 
@@ -113,7 +112,7 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
 				numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 				
 				Object args[] = {enrolment };
-				InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args);
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentGrade", args);
 				if (infoEnrolmentEvaluation != null){	
 					InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
 					infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.student;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.Servicos.ServiceTestCase;
 import Util.TipoCurso;
@@ -35,7 +36,7 @@ public class ReadStudentByNumberAndDegreeTypeTest extends ServiceTestCase {
 			Integer studentNumber = new Integer(142);
 			Object[] argsReadStudent = { studentNumber, TipoCurso.MESTRADO_OBJ };
 			
-			InfoStudent infoStudent = (InfoStudent) gestor.executar(null, getNameOfServiceToBeTested(), argsReadStudent);
+			InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadStudent);
 			assertNotNull(infoStudent);
 			assertEquals(infoStudent.getNumber(), studentNumber);
 			assertEquals(infoStudent.getDegreeType(), TipoCurso.MESTRADO_OBJ);
@@ -52,7 +53,7 @@ public class ReadStudentByNumberAndDegreeTypeTest extends ServiceTestCase {
 			Integer studentNumber = new Integer(2345);
 			Object[] argsReadStudent = { studentNumber, TipoCurso.MESTRADO_OBJ };
 			
-			InfoStudent infoStudent = (InfoStudent) gestor.executar(null, getNameOfServiceToBeTested(), argsReadStudent);
+			InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadStudent);
 			assertNull(infoStudent);
 
 		} catch (Exception ex) {

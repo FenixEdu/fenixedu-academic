@@ -12,7 +12,7 @@ import Dominio.ICountry;
  *
  * @author  tfc130
  */
-public class InfoCountry {
+public class InfoCountry  extends InfoObject {
     private String name;
     private String code;
     private String nationality;

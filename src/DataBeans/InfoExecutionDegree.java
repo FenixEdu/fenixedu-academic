@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author  tfc130
  */
-public class InfoExecutionDegree extends InfoObject implements Serializable {
+public class InfoExecutionDegree extends InfoObject {
 	private InfoExecutionYear infoExecutionYear;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	private InfoTeacher infoCoordinator;

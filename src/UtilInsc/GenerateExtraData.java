@@ -51,8 +51,6 @@ public class GenerateExtraData {
 
 	private static final int MAX = 5;
 
-	//private static GestorServicos gestor = GestorServicos.manager();
-	//private static IUserView userView = null;
 	private static ISuportePersistente persistentSupport =	null;
 
 	public static void main(String[] args) {

@@ -6,6 +6,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoItem;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteItems;
@@ -92,7 +94,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 			sp.confirmarTransaccao();
 
 			result =
-				(TeacherAdministrationSiteView) gestor.executar(
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					getAuthorizeArguments());
@@ -140,7 +142,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 				obj2 };
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			System.out.println(
 				"testReadNonSiteItem was UNSUCCESSFULY runned by class: "
@@ -172,7 +174,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 
 		try {
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			System.out.println(
 				"testReadNonExistingItem was UNSUCCESSFULY runned by class: "

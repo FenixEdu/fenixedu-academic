@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.ISection;
@@ -76,7 +77,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), null, "Seccao1dePO", new Integer(0)};
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testInsertExistingSection was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -101,7 +102,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(0)};
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -146,7 +147,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(1)};
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -191,7 +192,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), null, "novaSeccao", new Integer(2)};
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -241,7 +242,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 				new Integer(0)};
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testInsertExistingSubSection was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -267,7 +268,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 			{ new Integer(27), new Integer(6), "novaSubSeccao", new Integer(0)};
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -331,7 +332,7 @@ public class InsertSectionTest extends SectionBelongsExecutionCourseTest {
 				new Integer(0)};
 
 		try {
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 				userView,
 				getNameOfServiceToBeTested(),
 				serviceArguments);

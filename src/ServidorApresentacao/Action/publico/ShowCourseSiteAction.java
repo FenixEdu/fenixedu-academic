@@ -4,7 +4,6 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -20,12 +19,12 @@ import DataBeans.InfoCurriculum;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteSection;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão Create on 20/Nov/2003
@@ -41,14 +40,11 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
     {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession(true);
-
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", request);
 
         Integer curricularCourseId = getFromRequest("curricularCourseID", request);
@@ -57,14 +53,13 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
 
-        GestorServicos gestorServicos = GestorServicos.manager();
         Object[] args = { curricularCourseId, executionPeriodOId };
 
         InfoCurriculum infoCurriculum = null;
         try
         {
             infoCurriculum =
-                (InfoCurriculum) gestorServicos.executar(
+                (InfoCurriculum) ServiceManagerServiceFactory.executeService(
                     null,
                     "ReadCurriculumByCurricularCourseCode",
                     args);
@@ -132,11 +127,6 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
         HttpServletResponse response)
         throws Exception
     {
-        ActionErrors errors = new ActionErrors();
-
-        HttpSession session = request.getSession(true);
-
-        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
@@ -147,14 +137,13 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
         ISiteComponent firstPageComponent = new InfoSiteFirstPage();
         ISiteComponent commonComponent = new InfoSiteCommon();
 
-        GestorServicos gestorServicos = GestorServicos.manager();
         Object[] args = { commonComponent, firstPageComponent, null, executionCourseId, null, null };
         ExecutionCourseSiteView siteView = null;
 
         try
         {
             siteView =
-                (ExecutionCourseSiteView) gestorServicos.executar(
+                (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(
                     null,
                     "ExecutionCourseSiteComponentService",
                     args);

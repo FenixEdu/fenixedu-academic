@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExam;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
@@ -193,7 +195,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             executionCourses1ano.addAll(executionCourses2ano);
 
-            result = (SiteView) gestor.executar(null, getNameOfServiceToBeTested(), getArguments());
+            result = (SiteView) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), getArguments());
 
             InfoSiteExamMap siteExamMap = (InfoSiteExamMap) result.getComponent();
 

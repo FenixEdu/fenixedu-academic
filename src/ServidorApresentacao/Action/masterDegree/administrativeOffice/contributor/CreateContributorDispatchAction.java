@@ -16,8 +16,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoContributor;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -43,6 +44,7 @@ public class CreateContributorDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			DynaActionForm createContributorForm = (DynaActionForm) form;
+			
 			createContributorForm.set("contributorNumber", null);
 			createContributorForm.set("contributorName", null);
 			createContributorForm.set("contributorAddress", null);
@@ -66,8 +68,6 @@ public class CreateContributorDispatchAction extends DispatchAction {
 			
 			DynaActionForm createContributorForm = (DynaActionForm) form;
 
-			GestorServicos serviceManager = GestorServicos.manager();
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
@@ -91,7 +91,7 @@ public class CreateContributorDispatchAction extends DispatchAction {
 			Object args[] = {infoContributor};
 	  
 	  		try {
-				serviceManager.executar(userView, "CreateContributor", args);
+				ServiceManagerServiceFactory.executeService(userView, "CreateContributor", args);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException("O Contribuinte", e);
 			}

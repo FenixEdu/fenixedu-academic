@@ -13,6 +13,8 @@ package ServidorAplicacao.Servicos.sop;
  */
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -130,7 +132,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		Object result = null;
 
 		try {
-			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			result = ServiceManagerServiceFactory.executeService(_userView, "EditarAula", argsEditarAula);
 
 			assertTrue(
 				"testEditExistingAula",
@@ -208,7 +210,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				iDE);
 
 		try {
-			 _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			 ServiceManagerServiceFactory.executeService(_userView, "EditarAula", argsEditarAula);
 			fail("testEditExistingAulaWithInvalidTimeInterval: ");
 		} catch (InvalidTimeIntervalServiceException e) {
 			
@@ -277,7 +279,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				iDE);
 
 		try {
-			 _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			 ServiceManagerServiceFactory.executeService(_userView, "EditarAula", argsEditarAula);
 			// all is ok
 		} catch (ExistingServiceException ex) {
 			fail("testEditExistingLessonCompleteMatch");
@@ -363,7 +365,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				iDE);
 
 		try {
-			 _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			 ServiceManagerServiceFactory.executeService(_userView, "EditarAula", argsEditarAula);
 			fail("testEditExistingLessonInterceptingMatch: Expected Exception");
 		} catch (InterceptingServiceException ex) {
 			assertNotNull("testEditExistingLessonInterceptingMatch: " + ex);
@@ -432,7 +434,7 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		Object result = null;
 
 		try {
-			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			result = ServiceManagerServiceFactory.executeService(_userView, "EditarAula", argsEditarAula);
 			assertNull("testEditNonExistingAula", result);
 		} catch (Exception ex) {
 			fail("testEditNonExistingAula");

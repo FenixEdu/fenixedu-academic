@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.gesdis;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -95,7 +96,7 @@ public class ReadCourseInformationTest extends ServiceNeedsAuthenticationTestCas
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args);
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
             // TODO: verificar os dados do siteView?????'
             // verifica as alteracoes da base de dados

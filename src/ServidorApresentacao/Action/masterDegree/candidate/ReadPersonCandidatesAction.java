@@ -21,11 +21,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction
 {
@@ -42,14 +42,13 @@ public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base
         if (session != null)
         {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            GestorServicos gestor = GestorServicos.manager();
 
             Object args[] = new Object[1];
             args[0] = userView;
             List candidates = null;
             try
             {
-                candidates = (List) gestor.executar(userView, "ReadPersonCandidates", args);
+                candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadPersonCandidates", args);
             } catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);

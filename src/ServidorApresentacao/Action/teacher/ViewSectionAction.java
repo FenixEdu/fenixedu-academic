@@ -15,9 +15,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoSection;
-import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author asnr and scpo
@@ -49,11 +49,10 @@ public class ViewSectionAction extends FenixAction
 
             session.setAttribute(SessionConstants.INFO_SECTION, infoSection);
 
-            GestorServicos gestor = GestorServicos.manager();
-
             Object argsViewSection[] = { infoSection };
 
-            List infoItems = (List) gestor.executar(null, "ReadItems", argsViewSection);
+			List infoItems =
+				(List) ServiceManagerServiceFactory.executeService(null, "ReadItems", argsViewSection);
 
             session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, infoItems);
 

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
@@ -130,7 +131,7 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { null,  infoCareer };
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateProfessionalCareerDataSet.xml");
         } catch (FenixServiceException ex)
@@ -161,7 +162,7 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { null, infoCareer };
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateTeachingCareerDataSet.xml");
         } catch (Exception ex)
@@ -189,7 +190,7 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { careerId, infoCareer };
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditProfessionalCareerDataSet.xml");
         } catch (Exception ex)
@@ -220,7 +221,7 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoCareer.setInfoTeacher(infoTeacher);
             Object[] args = { careerId, infoCareer };
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditTeachingCareerDataSet.xml");
         } catch (Exception ex)

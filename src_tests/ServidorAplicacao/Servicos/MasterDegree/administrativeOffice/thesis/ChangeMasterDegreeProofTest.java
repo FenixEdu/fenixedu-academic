@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExternalPerson;
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
@@ -67,7 +69,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
     {
         Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-            (InfoStudentCurricularPlan) serviceManager.executar(
+            (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                 userViewNotAuthorized,
                 "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                 argsReadStudentCurricularPlan);
@@ -92,14 +94,14 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
             InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-                (InfoMasterDegreeProofVersion) serviceManager.executar(
+                (InfoMasterDegreeProofVersion) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
                     argsReadMasterDegreeProofVersion);
@@ -115,7 +117,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
                     infoMasterDegreeProofVersion.getInfoJuries(),
                     infoMasterDegreeProofVersion.getInfoExternalJuries()};
 
-            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofDataSet.xml");
             //ok
 
@@ -135,7 +137,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -143,7 +145,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
             /*
 			 * Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 			 * InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-			 * (InfoMasterDegreeProofVersion) serviceManager.executar( userView,
+			 * (InfoMasterDegreeProofVersion) ServiceManagerServiceFactory.executeService( userView,
 			 * "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
 			 * argsReadMasterDegreeProofVersion);
 			 * 
@@ -174,7 +176,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
                     infoTeacherJuries,
                     infoExternalPersonExternalJuries };
 
-            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 
             fail("testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished didn't throw ScholarshipNotFinishedServiceException");
 
@@ -201,7 +203,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(5461), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -228,7 +230,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
                     infoTeacherJuries,
                     infoExternalPersonExternalJuries };
 
-            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 
             fail("testUnsuccessfulChangeMasterDegreeProofWithoutExistingMasterDegreeThesis didn't throw NonExistingServiceException");
 
@@ -255,7 +257,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -281,7 +283,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
                     infoTeacherJuries,
                     infoExternalPersonExternalJuries };
 
-            serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml");
             //ok
 

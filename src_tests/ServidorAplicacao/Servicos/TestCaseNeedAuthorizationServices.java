@@ -1,5 +1,7 @@
 package ServidorAplicacao.Servicos;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 /**
  * @author dcs-rjao at 21/Fev/2003
  * 
@@ -27,7 +29,7 @@ abstract public class TestCaseNeedAuthorizationServices extends TestCaseServicos
 
 		if(needsAuthorization()) {
 			try {
-				result = _gestor.executar(_userView2, getNameOfServiceToBeTested(), serviceArguments);
+				result = ServiceManagerServiceFactory.executeService(_userView2, getNameOfServiceToBeTested(), serviceArguments);
 				System.out.println("testUnauthorizedExecutionOfService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 				fail(this.getClass().getName() + " : testUnauthorizedExecutionOfService - Service Name: " + getNameOfServiceToBeTested());
 			} catch (Exception ex) {

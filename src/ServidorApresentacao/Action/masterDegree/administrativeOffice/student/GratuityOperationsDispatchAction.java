@@ -15,9 +15,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoGratuity;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
@@ -43,7 +44,6 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 			throws Exception {
 
 			HttpSession session = request.getSession(false);
-			GestorServicos serviceManager = GestorServicos.manager();
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			String studentCPIDString = request.getParameter("studentCPID");
@@ -61,7 +61,7 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 			try {
 				Object args[] = { studentCPID };
 
-				result = (InfoGratuity) serviceManager.executar(userView, "ReadActiveGratuityByStudentCurricularPlanID", args);
+				result = (InfoGratuity) ServiceManagerServiceFactory.executeService(userView, "ReadActiveGratuityByStudentCurricularPlanID", args);
 
 			} catch (NonExistingServiceException e) {
 				
@@ -77,7 +77,7 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 
 			try {
 				Object args[] = { studentCPID };
-				gratuityInformationFromGuide = (List) serviceManager.executar(userView, "ReadGratuityInformationByStudentCurricularPlanID", args);
+				gratuityInformationFromGuide = (List) ServiceManagerServiceFactory.executeService(userView, "ReadGratuityInformationByStudentCurricularPlanID", args);
 			} catch (NonExistingServiceException e) {
 
 			} catch (FenixServiceException e) {
@@ -99,7 +99,6 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 			throws Exception {
 
 			HttpSession session = request.getSession(false);
-			GestorServicos serviceManager = GestorServicos.manager();
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			DynaActionForm gratuityForm = (DynaActionForm) form;
 
@@ -116,7 +115,7 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 			InfoStudentCurricularPlan studentCurricularPlan = null;
 			try {
 				Object args[] = { studentCPID };
-				studentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "ReadStudentCurricularPlan", args);
+				studentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlan", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
@@ -134,7 +133,6 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 				throws Exception {
 
 		HttpSession session = request.getSession(false);
-		GestorServicos serviceManager = GestorServicos.manager();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		DynaActionForm gratuityForm = (DynaActionForm) form;
 
@@ -155,7 +153,7 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 
 		try {
 			Object args[] = { studentCPID, gratuityState, remarks };
-			serviceManager.executar(userView, "ChangeGratuityState", args);
+			ServiceManagerServiceFactory.executeService(userView, "ChangeGratuityState", args);
 		} catch (InvalidChangeServiceException e) {
 			throw new InvalidChangeActionException("error.exception.invalid.invalidGratuityChange", e);
 		} catch (FenixServiceException e) {

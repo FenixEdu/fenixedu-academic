@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoGuide;
@@ -55,7 +57,7 @@ public class ChooseGuideTest extends TestCaseServicesIntranet {
 
 		List result = null;
 		 try {
-			 result = (List) _gestor.executar(userView, "ChooseGuide", args);
+			 result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -73,7 +75,7 @@ public class ChooseGuideTest extends TestCaseServicesIntranet {
 
 		result = null;
 		 try {
-			 result = (List) _gestor.executar(userView, "ChooseGuide", args2);
+			 result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args2);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -102,7 +104,7 @@ public class ChooseGuideTest extends TestCaseServicesIntranet {
 
 		InfoGuide infoGuide = null;
 		 try {
-			 infoGuide = (InfoGuide) _gestor.executar(userView, "ChooseGuide", args);
+			 infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -128,7 +130,7 @@ public class ChooseGuideTest extends TestCaseServicesIntranet {
 
 		List result = null;
 		 try {
-			 result = (List) _gestor.executar(userView, "ChooseGuide", args);
+			 result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -144,7 +146,7 @@ public class ChooseGuideTest extends TestCaseServicesIntranet {
 
 		result = null;
 		 try {
-			 result = (List) _gestor.executar(userView, "ChooseGuide", args);
+			 result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {

@@ -31,12 +31,12 @@ import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -177,8 +177,7 @@ public class ShowCandidacies extends FenixAction
 		try
 		{
 			Object[] argsReadCandidacies= getReadCandidaciesArgs(request);
-			GestorServicos gestor= GestorServicos.manager();
-			candidacies= (List) gestor.executar(userView, "Seminaries.ReadCandidacies", argsReadCandidacies);
+			candidacies= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.ReadCandidacies", argsReadCandidacies);
 			for (Iterator iterator= candidacies.iterator(); iterator.hasNext();)
 			{
 				InfoStudent student= null;
@@ -195,20 +194,19 @@ public class ShowCandidacies extends FenixAction
 				Object[] argsReadTheme= { candidacy.getThemeIdInternal()};
 				Object[] argsReadModality= { candidacy.getModalityIdInternal()};
 				Object[] argsReadSeminary= { candidacy.getSeminaryIdInternal()};
-				student= (InfoStudent) gestor.executar(userView, "student.ReadStudentById", argsReadStudent);
+				student= (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "student.ReadStudentById", argsReadStudent);
 				Object[] argsReadCurricularPlan= { student.getNumber(), student.getDegreeType()};
 				studentCurricularPlan=
-					(InfoStudentCurricularPlan) gestor.executar(
+					(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
 						userView,
 						"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 						argsReadCurricularPlan);
 				curricularCourse=
-					(InfoCurricularCourse) ((SiteView) gestor
-						.executar(userView, "ReadCurricularCourseByOIdService", argsReadCurricularCourse))
+					(InfoCurricularCourse) ((SiteView) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCourseByOIdService", argsReadCurricularCourse))
 						.getComponent();
-				theme= (InfoTheme) gestor.executar(userView, "Seminaries.GetThemeById", argsReadTheme);
-				modality= (InfoModality) gestor.executar(userView, "Seminaries.GetModalityById", argsReadModality);
-				seminary= (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
+				theme= (InfoTheme) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetThemeById", argsReadTheme);
+				modality= (InfoModality) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetModalityById", argsReadModality);
+				seminary= (InfoSeminary) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetSeminary", argsReadSeminary);
 			//	motivation= candidacy.getMotivation();
 				casesChoices= candidacy.getCaseStudyChoices();
 				//
@@ -217,7 +215,7 @@ public class ShowCandidacies extends FenixAction
 					InfoCaseStudyChoice choice= (InfoCaseStudyChoice) casesIterator.next();
 					Object[] argsReadCaseStudy= { choice.getCaseStudyIdInternal()};
 					InfoCaseStudy infoCaseStudy=
-						(InfoCaseStudy) gestor.executar(
+						(InfoCaseStudy) ServiceManagerServiceFactory.executeService(
 							userView,
 							"Seminaries.GetCaseStudyById",
 							argsReadCaseStudy);
@@ -285,15 +283,14 @@ public class ShowCandidacies extends FenixAction
 			};
 			Object[] argsReadCurrentExecutionPeriod= {
 			};
-			GestorServicos gestor= GestorServicos.manager();
-			seminaries= (List) gestor.executar(userView, "Seminaries.GetAllSeminaries", argsReadSeminaries);
-			cases= (List) gestor.executar(userView, "Seminaries.GetAllCasesStudy", argsReadCasesStudy);
-			degrees= (List) gestor.executar(userView, "manager.ReadDegreeCurricularPlans", argsReadDegrees);
-			modalities= (List) gestor.executar(userView, "Seminaries.GetAllModalities", argsReadModalities);
-			themes= (List) gestor.executar(userView, "Seminaries.GetAllThemes", argsReadThemes);
+			seminaries= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllSeminaries", argsReadSeminaries);
+			cases= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllCasesStudy", argsReadCasesStudy);
+			degrees= (List) ServiceManagerServiceFactory.executeService(userView, "manager.ReadDegreeCurricularPlans", argsReadDegrees);
+			modalities= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllModalities", argsReadModalities);
+			themes= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllThemes", argsReadThemes);
 			equivalencies=
-				(List) gestor.executar(userView, "Seminaries.GetAllEquivalencies", argsReadEquivalencies);
-			 gestor.executar(
+				(List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetAllEquivalencies", argsReadEquivalencies);
+			ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadCurrentExecutionPeriod",
 					argsReadCurrentExecutionPeriod);
@@ -304,7 +301,7 @@ public class ShowCandidacies extends FenixAction
 				InfoEquivalency equivalency= (InfoEquivalency) iterator.next();
 				Object[] argsReadCurricularCourse= { equivalency.getCurricularCourseIdInternal()};
 				InfoCurricularCourse curricularCourse=
-					(InfoCurricularCourse) gestor.executar(
+					(InfoCurricularCourse) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ReadCurricularCourse",
 						argsReadCurricularCourse);

@@ -6,6 +6,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoSiteExternalActivities;
 import ServidorAplicacao.IUserView;
@@ -77,7 +79,7 @@ public class ReadExternalActivitiesTest extends ServiceNeedsAuthenticationTestCa
 
             Object[] args = { userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             InfoSiteExternalActivities infoSiteActivities =
                 (InfoSiteExternalActivities) result.getComponent();
@@ -103,7 +105,7 @@ public class ReadExternalActivitiesTest extends ServiceNeedsAuthenticationTestCa
 
             Object[] serviceArgs = { userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
 
             InfoSiteExternalActivities infoSiteActivities =
                 (InfoSiteExternalActivities) result.getComponent();

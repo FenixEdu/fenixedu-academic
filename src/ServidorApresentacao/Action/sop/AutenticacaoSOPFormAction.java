@@ -20,10 +20,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class AutenticacaoSOPFormAction extends FenixAction {
 
@@ -36,7 +36,6 @@ public class AutenticacaoSOPFormAction extends FenixAction {
 
 		DynaActionForm autenticacaoForm = (DynaActionForm) form;
 
-		GestorServicos gestor = GestorServicos.manager();
 		Object argsAutenticacao[] =
 			{
 				autenticacaoForm.get("utilizador"),
@@ -45,7 +44,7 @@ public class AutenticacaoSOPFormAction extends FenixAction {
 		IUserView userView = null;
 		try {
 			userView =
-				(IUserView) gestor.executar(
+				(IUserView) ServiceManagerServiceFactory.executeService(
 					null,
 					"Autenticacao",
 					argsAutenticacao);
@@ -61,7 +60,9 @@ public class AutenticacaoSOPFormAction extends FenixAction {
 
 		// Store the UserView into the session and return
 		request.setAttribute(SessionConstants.U_VIEW, userView);
-		request.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
+		request.setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			new Boolean(true));
 		return mapping.findForward("SOP");
 	}
 }

@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.enrolment.degree;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
@@ -67,7 +69,7 @@ public class ShowAvailableDegreesForOptionTest extends TestCaseReadServices {
 		Object args[] = {_userView};
 		InfoEnrolmentContext result = null;
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, "ShowAvailableCurricularCourses", args);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, "ShowAvailableCurricularCourses", args);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");
@@ -75,7 +77,7 @@ public class ShowAvailableDegreesForOptionTest extends TestCaseReadServices {
 
 		Object args2[] = {result};
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args2);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args2);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");

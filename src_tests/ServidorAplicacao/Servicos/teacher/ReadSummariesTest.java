@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoSiteSummaries;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
@@ -77,7 +79,7 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			Object[] args2 = { executionCourseId, summaryType };
 
 			result =
-				(SiteView) gestor.executar(
+				(SiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args2);
@@ -111,7 +113,7 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			Object[] args2 = { executionCourseId, summaryType };
 
 			result =
-				(SiteView) gestor.executar(
+				(SiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args2);

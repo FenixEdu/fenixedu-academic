@@ -24,7 +24,6 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -37,6 +36,7 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.exceptions.NotAuthorizedActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.SituationName;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
@@ -68,8 +68,6 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         HttpSession session = request.getSession(false);
 
         DynaActionForm approvalForm = (DynaActionForm) form;
-
-        GestorServicos serviceManager = GestorServicos.manager();
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String executionYear = (String) request.getAttribute("executionYear");
@@ -114,7 +112,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         try
         {
             candidateList =
-                (ArrayList) serviceManager.executar(userView, "ReadCandidatesForSelection", args);
+                (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadCandidatesForSelection", args);
         } catch (NonExistingServiceException e)
         {
             ActionErrors errors = new ActionErrors();
@@ -173,12 +171,11 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         // Get the Master Degree List			
         Object args[] = { executionYear };
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
         ArrayList masterDegreeList = null;
         try
         {
 
-            masterDegreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
+            masterDegreeList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadMasterDegrees", args);
         } catch (NonExistingServiceException e)
         {
             ActionErrors errors = new ActionErrors();
@@ -277,13 +274,12 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         // Get the Curricular Course List			
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
         List curricularCourseList = null;
         try
         {
             Object args[] = { executionYear, degree };
             curricularCourseList =
-                (List) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCoursesByDegree", args);
         } catch (NonExistingServiceException e)
         {
             ActionErrors errors = new ActionErrors();
@@ -302,7 +298,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { new Integer(candidateID)};
             candidateEnrolments =
-                (List) serviceManager.executar(userView, "ReadCandidateEnrolmentsByCandidateID", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
         } catch (NotAuthorizedException e)
         {
             throw new NotAuthorizedActionException(e);
@@ -331,7 +327,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { new Integer(candidateID)};
             infoMasterDegreeCandidate =
-                (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+                (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -348,7 +344,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
             {
                 Object args[] = { new Integer(candidateID)};
                 infoExecutionDegree =
-                    (InfoExecutionDegree) serviceManager.executar(
+                    (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                         userView,
                         "ReadExecutionDegreeByCandidateID",
                         args);
@@ -369,7 +365,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { executionYear, degree };
             newInfoExecutionDegree =
-                (InfoExecutionDegree) serviceManager.executar(
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadExecutionDegreeByExecutionYearAndDegreeCode",
                     args);
@@ -548,7 +544,6 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
 
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
-        GestorServicos serviceManager = GestorServicos.manager();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer[] selection = (Integer[]) chooseCurricularCoursesForm.get("selection");
 
@@ -575,7 +570,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         try
         {
             Object args[] = { selection, candidateID, attributedCredits, givenCreditsRemarks };
-            serviceManager.executar(userView, "WriteCandidateEnrolments", args);
+            ServiceManagerServiceFactory.executeService(userView, "WriteCandidateEnrolments", args);
         } catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(e);
@@ -587,7 +582,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { candidateID };
             candidateEnrolments =
-                (List) serviceManager.executar(userView, "ReadCandidateEnrolmentsByCandidateID", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -621,7 +616,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { candidateID };
             infoExecutionDegree =
-                (InfoExecutionDegree) serviceManager.executar(
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadExecutionDegreeByCandidateID",
                     args);
@@ -677,7 +672,6 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
     {
 
         HttpSession session = request.getSession(false);
-        GestorServicos serviceManager = GestorServicos.manager();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer candidateID = new Integer(request.getParameter("candidateID"));
@@ -687,7 +681,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { candidateID };
             candidateEnrolments =
-                (List) serviceManager.executar(userView, "ReadCandidateEnrolmentsByCandidateID", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
         } catch (NonExistingServiceException e)
         {
 
@@ -700,7 +694,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { candidateID };
             infoMasterDegreeCandidate =
-                (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+                (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -734,7 +728,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction
         {
             Object args[] = { candidateID };
             infoExecutionDegree =
-                (InfoExecutionDegree) serviceManager.executar(
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadExecutionDegreeByCandidateID",
                     args);

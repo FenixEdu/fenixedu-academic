@@ -8,6 +8,8 @@ import junit.framework.TestSuite;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
@@ -77,7 +79,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 		System.out.println(infoExecutionCourse);
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"ReadCurricularCourseListOfExecutionCourse",
 					argsReadCurricularCourseListOfExecutionCourse);
@@ -94,7 +96,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 		this.prepareTestCase(false);
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"ReadCurricularCourseListOfExecutionCourse",
 					argsReadCurricularCourseListOfExecutionCourse);

@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author  tdi-dev
  */
-public class InfoShiftStudentEnrolment {
+public class InfoShiftStudentEnrolment extends InfoObject {
 	
 	/**
 	 * List with the executionCourses in which the student is enrolled

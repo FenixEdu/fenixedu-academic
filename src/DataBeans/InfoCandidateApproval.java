@@ -1,14 +1,13 @@
 
 package DataBeans;
 
-import java.io.Serializable;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoCandidateApproval extends InfoObject implements Serializable {
+public class InfoCandidateApproval extends InfoObject {
 
 	protected Integer idInternal;
 	protected Integer orderPosition;

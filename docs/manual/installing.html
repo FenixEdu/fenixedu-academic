@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-15"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+<title>Fénix Manual</title>
+</head>
+
+<body>
+<h2><center>Fénix Manual - Installing</center></h2>
+<br/>
+<br/>
+
+2. Intalling the Fénix Application
+<ul>
+	<li>
+		2.1 Configuring the application
+	</li>
+	<li>
+		2.2 Installing as a standalone
+	</li>
+	<li>
+		2.3 Installing as a client/server application
+		<ul>
+			<li>
+				2.3.1 Installing the application server
+			</li>
+			<li>
+				2.3.2 Installing the web client
+			</li>
+		</ul>
+	</li>
+</ul>
+
+<br/>
+
+<strong>2.1 Configuring the application</strong>
+<p>
+	To configure the Fénix application create a file build.properties (if it does not
+	already exist). An example file can be found under the name build.properties.sample.
+</p>
+
+<strong>2.2 Installing as a standalone</strong>
+<p>
+	There are two alternatives to install a standalone Fénix application. The first is
+	to run the "deploy-standalone" task from the build_jboss.xml script (the servlet
+	container must be running). The second alternative is to run the "jar-standalone"
+	or "war-standalone" task from the build_jboss.xml script and deploy it manually to
+	the servlet container.
+</p>
+
+<strong>2.3 Installing as a client/server application</strong>
+<p>
+	<blockquote>
+		<strong>2.3.1 Installing the application server</strong>
+		<p>
+			To install the Fénix application server simply run the "deploy-app-server"
+			task from the build_jboss.xml script.
+		</p>
+	</blockquote>
+	<blockquote>
+		<strong>2.3.2 Installing the web client</strong>
+		<p>
+			There are two alternatives to install the Fénix web-client. The first is
+			to run the "deploy-web-client" task from the build_jboss.xml script (the
+			servlet container must be running). The second alternative is to run the
+			"jar-web-client" or "war-web-client" task from the build_jboss.xml script
+			and deploy it manually to the servlet container.
+		</p>
+	</blockquote>
+</p>
+
+</body>
+</html>

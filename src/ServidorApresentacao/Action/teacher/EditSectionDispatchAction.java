@@ -15,9 +15,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -67,9 +68,8 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		//relative to children sections
 		ArrayList sections;
 		Object args[] = { infoSite, currentSection.getSuperiorInfoSection()};
-		GestorServicos manager = GestorServicos.manager();
 		try {
-			sections = (ArrayList) manager.executar(userView, "ReadSectionsBySiteAndSuperiorSection", args);
+			sections = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadSectionsBySiteAndSuperiorSection", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -111,14 +111,13 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 
 			Object readArgs[] = { infoSite };
-								ArrayList sections;
-			GestorServicos manager = GestorServicos.manager();					
+								ArrayList sections;		
 		if (order.intValue()==-2) {
 			//inserir no fim
 			
 					try {
 						sections =
-							(ArrayList) manager.executar(
+							(ArrayList) ServiceManagerServiceFactory.executeService(
 								userView,
 								"ReadSections",
 								readArgs);
@@ -144,7 +143,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		Object editionArgs[] = { oldSection, newSection };
 		
 		try {
-			manager.executar(userView, "EditSection", editionArgs);
+			ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -152,7 +151,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		//read sections
 		try {
 			sections =
-				(ArrayList) manager.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadSections",
 					readArgs);
@@ -195,15 +194,13 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 		InfoSection newSection = new InfoSection(oldSection.getName(), oldSection.getSectionOrder(), oldSection.getInfoSite(), newParent);
 
-		GestorServicos manager = GestorServicos.manager();
-
 		//the new order should be after the last child section
 		//read child sections for newParent, get the size of the list and use size as section order
 		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 		Object args[] = { infoSite, newParent };
 		List sisters = null;
 		try {
-			sisters = (List) manager.executar(userView, "ReadSectionsBySiteAndSuperiorSection", args);
+			sisters = (List) ServiceManagerServiceFactory.executeService(userView, "ReadSectionsBySiteAndSuperiorSection", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -214,7 +211,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		Object editionArgs[] = { oldSection, newSection };
 		
 		try {
-			manager.executar(userView, "EditSection", editionArgs);
+			ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
 		} catch (ExistingServiceException fenixServiceException) {
 			throw new ExistingActionException("Uma Subsecção com este nome e essa seccção pai ",fenixServiceException);
 		} 
@@ -228,7 +225,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		List sections= null;
 		Object readArgs[] = { newSection.getInfoSite()	};
 		try {
-			sections=(List) manager.executar(userView, "ReadSections", readArgs);
+			sections=(List) ServiceManagerServiceFactory.executeService(userView, "ReadSections", readArgs);
 		} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -243,9 +240,8 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
 		List sections = new ArrayList();
 		Object args[] = { infoSite, infoSection };
-		GestorServicos manager = GestorServicos.manager();
 		try {
-			sections = (List) manager.executar(userView, "ReadSectionsBySiteAndSuperiorSection", args);
+			sections = (List) ServiceManagerServiceFactory.executeService(userView, "ReadSectionsBySiteAndSuperiorSection", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

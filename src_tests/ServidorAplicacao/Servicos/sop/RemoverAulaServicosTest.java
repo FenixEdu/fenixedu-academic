@@ -13,6 +13,8 @@ package ServidorAplicacao.Servicos.sop;
  */
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoLesson;
@@ -81,7 +83,7 @@ public class RemoverAulaServicosTest
 		Object result = null;
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					getNameOfServiceToBeTested(),
 					argsRemoveLesson);
@@ -102,7 +104,7 @@ public class RemoverAulaServicosTest
 		Object result = null;
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					getNameOfServiceToBeTested(),
 					argsRemoveLesson);

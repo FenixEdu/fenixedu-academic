@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.TestSuite;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -94,7 +95,7 @@ public class DeleteBibliographicReferenceTest extends ServiceNeedsAuthentication
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
 			compareDataSet(getExpectedDataSetFilePath());
 
@@ -112,7 +113,7 @@ public class DeleteBibliographicReferenceTest extends ServiceNeedsAuthentication
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getTestBibliographicReferenceUnsuccessfullArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestBibliographicReferenceUnsuccessfullArguments());
 
 			fail("testUnsuccessfullDeleteBibliographicReference deletion of an unexisting bibliography");
 

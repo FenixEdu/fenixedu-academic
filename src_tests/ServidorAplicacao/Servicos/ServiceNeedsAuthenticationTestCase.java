@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.AssertionFailedError;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -41,7 +42,7 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 
         try
         {
-            Object result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+            Object result = ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
             assertAuthorizedResult(result);
         } catch (FenixServiceException ex)
         {
@@ -69,7 +70,7 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
         Object serviceArguments[] = getAuthorizeArguments();
         try
         {
-            gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
+            ServiceManagerServiceFactory.executeService(userView2, getNameOfServiceToBeTested(), serviceArguments);
             fail(
                 this.getClass().getName()
                     + ": Service "
@@ -106,7 +107,7 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 
         try
         {
-            gestor.executar(userView3, getNameOfServiceToBeTested(), serviceArguments);
+            ServiceManagerServiceFactory.executeService(userView3, getNameOfServiceToBeTested(), serviceArguments);
             fail(
                 this.getClass().getName()
                     + ": Service "
@@ -129,7 +130,7 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 
         try
         {
-            return (IUserView) gestor.executar(null, "Autenticacao", args);
+            return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
         } catch (Exception ex)
         {
             ex.printStackTrace();

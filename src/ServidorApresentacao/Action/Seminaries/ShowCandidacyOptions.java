@@ -18,11 +18,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoStudent;
 import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoSeminary;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -64,13 +65,12 @@ public class ShowCandidacyOptions extends FenixAction
         {
             Object[] argsReadSeminary = { seminaryID };
             Object[] argsReadStudent = { userView.getUtilizador()};
-            GestorServicos gestor = GestorServicos.manager();
             seminary =
-                (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
-            student = (InfoStudent) gestor.executar(userView, "ReadStudentByUsername", argsReadStudent);
+                (InfoSeminary) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetSeminary", argsReadSeminary);
+            student = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByUsername", argsReadStudent);
             Object[] ReadCurricularCoursesByUsername = { userView.getUtilizador()};
             disciplines =
-                (List) gestor.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadCurricularCoursesByUsername",
                     ReadCurricularCoursesByUsername);
@@ -95,7 +95,7 @@ public class ShowCandidacyOptions extends FenixAction
             seminary.setEquivalencies(avaliableEquivalencies);
             Object[] argsReadCandidacies = { student.getIdInternal()};
             List candidacies =
-                (List) gestor.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     "Seminaries.GetCandidaciesByStudentID",
                     argsReadCandidacies);

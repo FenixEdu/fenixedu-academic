@@ -10,7 +10,7 @@ import Util.State;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoGuideSituation implements Serializable{
+public class InfoGuideSituation  extends InfoObject {
 	
 	protected String remarks;
 	protected SituationOfGuide situation;

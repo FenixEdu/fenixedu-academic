@@ -37,10 +37,6 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectTeac
         return instance;
     }
 
-    private ExternalActivityTeacherAuthorizationFilter()
-    {
-    }
-
     /*
 	 * (non-Javadoc)
 	 * 

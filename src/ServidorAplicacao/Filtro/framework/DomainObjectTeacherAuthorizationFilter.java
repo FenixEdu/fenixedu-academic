@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Filtro.framework;
 
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
@@ -31,7 +30,7 @@ public abstract class DomainObjectTeacherAuthorizationFilter extends Authorizati
     /**
      * Executes the filtering
      */
-    public void preFiltragem(IUserView id, IServico service, Object[] arguments)
+    public void preFiltragem(IUserView id, Object[] arguments)
         throws NotAuthorizedException
     {
         try

@@ -17,9 +17,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -54,11 +55,10 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 
 		ArrayList sections;
 		Object args[] = { infoSite, parentSection };
-		GestorServicos manager = GestorServicos.manager();
 
 		try {
 			sections =
-				(ArrayList) manager.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadSectionsBySiteAndSuperiorSection",
 					args);
@@ -95,11 +95,10 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 
 		ArrayList sections;
 		Object args[] = { infoSite, null };
-		GestorServicos manager = GestorServicos.manager();
 
 		try {
 			sections =
-				(ArrayList) manager.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadSectionsBySiteAndSuperiorSection",
 					args);

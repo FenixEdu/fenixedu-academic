@@ -9,7 +9,7 @@ import java.util.List;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class InfoCandidateRegistration {
+public class InfoCandidateRegistration extends InfoObject {
     
     private InfoStudentCurricularPlan infoStudentCurricularPlan;
     private InfoMasterDegreeCandidate infoMasterDegreeCandidate;

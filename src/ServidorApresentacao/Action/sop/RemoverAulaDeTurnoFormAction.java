@@ -10,11 +10,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao
 	.Action
@@ -48,7 +49,6 @@ public class RemoverAulaDeTurnoFormAction
 
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 
 			//Integer indexTurno =
 			//	(Integer) manipularTurnosForm.get("indexTurno");
@@ -60,7 +60,7 @@ public class RemoverAulaDeTurnoFormAction
 				new Integer(request.getParameter(SessionConstants.SHIFT_OID));
 			Object args[] = { shiftOID };
 			InfoShift infoTurno =
-				(InfoShift) gestor.executar(userView, "ReadShiftByOID", args);
+				(InfoShift) ServiceManagerServiceFactory.executeService(userView, "ReadShiftByOID", args);
 
 
 			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
@@ -78,7 +78,7 @@ public class RemoverAulaDeTurnoFormAction
 						infoTurno.getNome(),
 						infoExecutionCourse)};
 			ArrayList infoAulas =
-				(ArrayList) gestor.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"LerAulasDeTurno",
 					argsLerAulasDeTurno);
@@ -90,7 +90,7 @@ public class RemoverAulaDeTurnoFormAction
 			Object argsRemoverAula[] = { infoLesson, infoTurno };
 			//Boolean result =
 			//	(Boolean)
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 					userView,
 					"RemoverAula",
 					argsRemoverAula);

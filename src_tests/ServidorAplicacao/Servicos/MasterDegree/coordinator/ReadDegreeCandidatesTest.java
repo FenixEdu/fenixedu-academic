@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
@@ -67,7 +69,7 @@ public class ReadDegreeCandidatesTest extends TestCaseServicos {
 		
 		List degreeCandidatesList = null;
 		try {
-			degreeCandidatesList = (List) _gestor.executar(userView, "ReadDegreeCandidates", args);
+			degreeCandidatesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreeCandidates", args);
 		} catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		} catch (Exception ex) {

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="compile-proj" name="CIAPL">
+
+	<!-- ==================== Using this file ================================== -->
+	<!--
+	  To use this file, call the tasks listed here from another ant file. Calls
+	  to the install task require a "webapp" parameter to be defined.
+	-->
+
+    <property environment="env"/>
+
+	<property file="build.properties"/>
+
+	<property name="encoding" value="ISO-8859-15"/>
+
+    <target name="tomcat-stop"
+            description="Stops tomcat">
+      <parallel>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.sh"
+	  	      os="Linux, Unix">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="stop"/>
+	  	</exec>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
+	  	      vmlauncher="true"
+	  	      failonerror="false"
+	  	      os="Windows, Windows 2000, Windows XP">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="stop"/>
+	  	</exec>
+     </parallel>
+    </target>
+
+<!--    <target name="tomcat-start"
+            description="Starts tomcat">
+     <parallel>
+	  	<exec executable="${env.CATALINA_HOME}/bin/startup.sh"
+	  	      os="Linux, Unix">
+		 <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+	  	</exec>
+	  	<exec executable="${env.CATALINA_HOME}/bin/catalina.bat"
+	  	      vmlauncher="false"
+	  	      failonerror="false"
+	  	      os="Windows, Windows 2000, Windows XP">
+		  <env key="ANTRUN_TITLE" value="Apache Tomcat" />
+		  <arg value="start"/>
+	  	</exec>
+     </parallel>
+    </target>
+
+
+    <target name="stop-deploy-start"
+    		description="Stops tomcat, deploys web application, starts tomcat"
+    		depends="clean-all, compile-proj, tomcat-start, install">
+    </target> -->
+
+
+	<taskdef name="install" classname="org.apache.catalina.ant.InstallTask"/>
+	<taskdef name="list"    classname="org.apache.catalina.ant.ListTask"/>
+	<taskdef name="reload"  classname="org.apache.catalina.ant.ReloadTask"/>
+	<taskdef name="remove"  classname="org.apache.catalina.ant.RemoveTask"/>
+
+
+	<!-- ==================== Install Target ================================== -->
+	<!--
+	  The "install" target tells the specified Tomcat 4 installation to dynamically
+	  install this web application and make it available for execution.  It does
+	  *not* cause the existence of this web application to be remembered across
+	  Tomcat restarts; if you restart the server, you will need to re-install all
+	  this web application.
+	
+	  If you have already installed this application, and simply want Tomcat to
+	  recognize that you have updated Java classes (or the web.xml file), use the
+	  "reload" target instead.
+	
+	  NOTE:  This target will only succeed if it is run from the same server that
+	  Tomcat is running on.
+	
+	  NOTE:  This is the logical opposite of the "remove" target.
+	-->
+	<target name="install"
+			description="Install application to servlet container">
+	
+		<install url="${manager.url}"
+	    		 username="${manager.username}"
+	        	 password="${manager.password}"
+	             path="${app.path}"
+	             war="file://${webapp}"/>
+	</target>
+
+	<!-- ==================== Remove Target =================================== -->
+	<!--
+	  The "remove" target tells the specified Tomcat 4 installation to dynamically
+	  remove this web application from service.
+	  NOTE:  This is the logical opposite of the "install" target.
+	-->
+	  <target name="remove"
+	  		  description="Remove application on servlet container">
+	    <remove url="${manager.url}"
+	    		username="${manager.username}"
+	    		password="${manager.password}"
+	    		path="${app.path}"/>
+	  </target>
+	<!-- ==================== Reload Target =================================== -->
+	<!--
+	  The "reload" target tells the specified Tomcat 4 installation to dynamically
+	  reload this web application, to reflect changes in the underlying classes or
+	  the "web.xml" deployment descriptor.
+	-->
+	<target name="reload"
+			description="Reload application on servlet container">
+		<reload url="${manager.url}"
+	    	    username="${manager.username}"
+	       		password="${manager.password}"
+	            path="${app.path}"/>
+	</target>
+	
+	<!-- ====================== List Target =================================== -->
+	<!--
+	  The "list" target asks the specified Tomcat 4 installation to list the
+	  currently running web applications, either loaded at startup time or
+	  installed dynamically.  It is useful to determine whether or not the
+	  application you are currently developing has been installed.
+	-->
+	<target name="list"
+			description="List installed applications on servlet container">
+		<list url="${manager.url}"
+	    	  username="${manager.username}"
+	          password="${manager.password}"/>
+	</target>
+   	
+</project>

@@ -19,6 +19,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
@@ -27,7 +29,6 @@ import DataBeans.InfoRoom;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
 import DataBeans.comparators.RoomAlphabeticComparator;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
@@ -209,8 +210,6 @@ public class LessonManagerDispatchAction
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
-			GestorServicos gestor = GestorServicos.manager();
-
 			RequestUtils.setLessonTypes(request);
 
 			Integer oldLessonOID =
@@ -220,7 +219,7 @@ public class LessonManagerDispatchAction
 
 			InfoLesson iAulaAntiga = null;
 			iAulaAntiga =
-				(InfoLesson) gestor.executar(userView, "ReadLessonByOID", args);
+				(InfoLesson) ServiceManagerServiceFactory.executeService(userView, "ReadLessonByOID", args);
 
 			//InfoLesson iAulaAntiga =
 			//	(InfoLesson) request.getAttribute("infoAula");
@@ -279,7 +278,7 @@ public class LessonManagerDispatchAction
 			InfoLessonServiceResult result = null;
 			try {
 				result =
-					(InfoLessonServiceResult) gestor.executar(
+					(InfoLessonServiceResult) ServiceManagerServiceFactory.executeService(
 						userView,
 						"EditarAula",
 						argsEditarAula);
@@ -297,7 +296,7 @@ public class LessonManagerDispatchAction
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
-				(ArrayList) gestor.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
@@ -343,8 +342,6 @@ public class LessonManagerDispatchAction
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
-			GestorServicos gestor = GestorServicos.manager();
-
 			RequestUtils.setLessonTypes(request);
 
 			Integer oldLessonOID =
@@ -352,7 +349,7 @@ public class LessonManagerDispatchAction
 			Object argsLesson[] = { oldLessonOID };
 			InfoLesson iAulaAntiga = null;
 			iAulaAntiga =
-				(InfoLesson) gestor.executar(
+				(InfoLesson) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadLessonByOID",
 					argsLesson);
@@ -634,14 +631,13 @@ public class LessonManagerDispatchAction
 		if (sessao != null) {
 
 			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
 
 			Integer oldLessonOID =
 				new Integer(request.getParameter("infoAula_oid"));
 			Object argsLesson[] = { oldLessonOID };
 			InfoLesson infoAula = null;
 			infoAula =
-				(InfoLesson) gestor.executar(
+				(InfoLesson) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadLessonByOID",
 					argsLesson);

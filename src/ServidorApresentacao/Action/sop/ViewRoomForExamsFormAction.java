@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomExamsMap;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -20,6 +19,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -37,8 +37,7 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 		request.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
-			
+
 			String roomId = (String) request.getAttribute("roomId");
 
 			InfoExecutionPeriod infoExecutionPeriod =
@@ -66,7 +65,7 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 			InfoRoomExamsMap infoExamsMap;
 			try {
 				infoExamsMap =
-					(InfoRoomExamsMap) gestor.executar(
+					(InfoRoomExamsMap) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ReadRoomExamsMap",
 						args);

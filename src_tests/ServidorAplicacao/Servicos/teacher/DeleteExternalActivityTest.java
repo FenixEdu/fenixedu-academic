@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
@@ -77,7 +78,7 @@ public class DeleteExternalActivityTest extends ServiceNeedsAuthenticationTestCa
         {
             Object[] args = { new Integer(1)};
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
         } catch (Exception ex)

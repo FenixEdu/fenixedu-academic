@@ -10,7 +10,7 @@ package DataBeans;
  *
  * @author  tfc130
  */
-public class DegreeKey {
+public class DegreeKey extends InfoObject {
   protected String _sigla;
 
   public DegreeKey() { }

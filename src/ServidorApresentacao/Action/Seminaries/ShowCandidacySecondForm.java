@@ -16,11 +16,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.Seminaries.InfoEquivalency;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -61,9 +61,8 @@ public class ShowCandidacySecondForm extends FenixAction
         try
         {
             Object[] argsReadEquivalency = { equivalencyID };
-            GestorServicos gestor = GestorServicos.manager();
             equivalency =
-                (InfoEquivalency) gestor.executar(
+                (InfoEquivalency) ServiceManagerServiceFactory.executeService(
                     userView,
                     "Seminaries.GetEquivalency",
                     argsReadEquivalency);
@@ -73,7 +72,7 @@ public class ShowCandidacySecondForm extends FenixAction
             {
                 Object[] argsReadCases = { themeID };
                 cases =
-                    (List) gestor.executar(
+                    (List) ServiceManagerServiceFactory.executeService(
                         userView,
                         "Seminaries.GetCaseStudiesByThemeID",
                         argsReadCases);
@@ -81,7 +80,7 @@ public class ShowCandidacySecondForm extends FenixAction
                 {
                 Object[] argsReadCases = { equivalencyID };
                 cases =
-                    (List) gestor.executar(
+                    (List) ServiceManagerServiceFactory.executeService(
                         userView,
                         "Seminaries.GetCaseStudiesByEquivalencyID",
                         argsReadCases);

@@ -8,9 +8,9 @@
  */
 package ServidorApresentacao.Action.sop.utils;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author jpvl
@@ -22,11 +22,10 @@ public abstract class ServiceUtils {
 	public static Object executeService(
 		IUserView userView,
 		String serviceName,
-		Object[] args)
+		Object[] serviceArgs)
 		throws FenixServiceException {
-		GestorServicos serviceManager = GestorServicos.manager();
-		return serviceManager.executar(userView, serviceName, args);
-	}
 
+		return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
+	}
 
 }

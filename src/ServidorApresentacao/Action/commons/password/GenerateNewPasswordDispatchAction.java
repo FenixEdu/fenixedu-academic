@@ -10,8 +10,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoPerson;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -38,8 +39,6 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 
 		HttpSession session = request.getSession();
 
-		GestorServicos serviceManager = GestorServicos.manager();
-			
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 
@@ -51,7 +50,7 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 		InfoPerson infoPerson = null;
 		try {
 			Object args[] = { username };
-			infoPerson = (InfoPerson) serviceManager.executar(userView, "ReadPersonByUsername", args);
+			infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", args);
 		} catch (ExcepcaoInexistente e) {
 			throw new NonExistingActionException("A Pessoa", e);
 		}
@@ -67,8 +66,6 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 
 		HttpSession session = request.getSession();
 
-		GestorServicos serviceManager = GestorServicos.manager();
-			
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 
@@ -84,7 +81,7 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 		// Change the Password
 		try {
 			Object args[] = {personID , password};
-			serviceManager.executar(userView, "ChangePersonPassword", args);
+			ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException();
 		}
@@ -94,7 +91,7 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 		InfoPerson infoPerson = null;
 		try {
 			Object args[] = { request.getParameter("username") };
-			infoPerson = (InfoPerson) serviceManager.executar(userView, "ReadPersonByUsername", args);
+			infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", args);
 		} catch (ExcepcaoInexistente e) {
 			throw new NonExistingActionException("A Pessoa", e);
 		}

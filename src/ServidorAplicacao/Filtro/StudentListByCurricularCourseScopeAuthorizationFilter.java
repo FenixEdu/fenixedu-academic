@@ -12,7 +12,6 @@ import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -43,7 +42,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
         return instance;
     }
 
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
 
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))

@@ -13,11 +13,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -38,14 +39,13 @@ public class PrepararVerTurnoFormAction extends FenixShiftAndExecutionCourseAndE
     if (sessao != null) {
 		DynaActionForm manipularTurnosForm = (DynaActionForm) request.getAttribute("manipularTurnosForm");
         IUserView userView = (IUserView) sessao.getAttribute("UserView");
-        GestorServicos gestor = GestorServicos.manager();
         
 		Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
 
         //ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
 		InfoExecutionCourse iDE = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 		Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
-		List infoTurnos= (List) gestor.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
+		List infoTurnos= (List) ServiceManagerServiceFactory.executeService(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
 		Collections.sort(infoTurnos, new InfoShiftComparatorByLessonType());
 
         InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
@@ -54,7 +54,7 @@ public class PrepararVerTurnoFormAction extends FenixShiftAndExecutionCourseAndE
 		request.setAttribute(SessionConstants.SHIFT, infoTurno);
 
 	    Object argsLerAulasDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoTurno.getInfoDisciplinaExecucao())};
-        ArrayList infoAulasDeTurno = (ArrayList) gestor.executar(userView, "LerAulasDeTurno", argsLerAulasDeTurno);
+        ArrayList infoAulasDeTurno = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "LerAulasDeTurno", argsLerAulasDeTurno);
 
 		request.removeAttribute("infoAulasDeTurno");
 		if (!infoAulasDeTurno.isEmpty())

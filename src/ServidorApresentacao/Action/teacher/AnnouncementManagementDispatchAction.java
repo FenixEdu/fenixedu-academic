@@ -13,10 +13,10 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Ivo Brandão
@@ -57,8 +57,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object args[] = { infoSite, title, information };
-        GestorServicos manager = GestorServicos.manager();
-        manager.executar(userView, "InsertAnnouncement", args);
+		ServiceManagerServiceFactory.executeService(userView, "InsertAnnouncement", args);
 
         //return to announcementManagement
         return mapping.findForward("accessAnnouncementManagement");
@@ -104,8 +103,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object args[] = { infoSite, infoAnnouncement, newTitle, newInformation };
-        GestorServicos manager = GestorServicos.manager();
-        manager.executar(userView, "EditAnnouncement", args);
+		ServiceManagerServiceFactory.executeService(userView, "EditAnnouncement", args);
 
         //remove index from session
         session.removeAttribute("index");
@@ -139,8 +137,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object args[] = { infoSite.getInfoExecutionCourse(), infoSite, infoAnnouncement };
-        GestorServicos manager = GestorServicos.manager();
-        manager.executar(userView, "DeleteAnnouncement", args);
+		ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncement", args);
 
         //remove index from session
         session.removeAttribute("index");

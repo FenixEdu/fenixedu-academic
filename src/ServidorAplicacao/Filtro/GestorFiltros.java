@@ -17,7 +17,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidServiceException;
 
@@ -168,12 +167,13 @@ public class GestorFiltros
 	 * @throws FenixServiceException
 	 * @throws NotAuthorizedException
 	 */
-    public void preFiltragem(IUserView id, IServico servico, Object argumentos[]) throws Exception
+    public void preFiltragem(IUserView id, Object argumentos[]) throws Exception
     {
         Iterator iter = _filters.iterator();
 
         while (iter.hasNext())
-             ((Filtro) iter.next()).preFiltragem(id, servico, argumentos);
+             ((Filtro) iter.next()).preFiltragem(id, argumentos);
 
     }
+
 }

@@ -6,7 +6,6 @@ package ServidorAplicacao.Filtro.credits;
 
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 
@@ -30,7 +29,6 @@ public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
     {
         Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
         IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp

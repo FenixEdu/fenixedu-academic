@@ -1,11 +1,12 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class Data {
+public class Data implements Serializable {
 	private int _dia;
 	private int _mes;
 	private int _ano;

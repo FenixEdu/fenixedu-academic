@@ -4,7 +4,7 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Filtro;
-import ServidorAplicacao.IServico;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import Util.RoleType;
@@ -28,7 +28,7 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro
 	{
 		return instance;
 	}
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
 	{
 		if (((id != null
 			&& id.getRoles() != null

@@ -8,6 +8,8 @@ import junit.framework.TestSuite;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
@@ -74,7 +76,7 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 		argsSelectExecutionCourses[2] = curricularYear; 
 		try {
 			result =
-				_gestor.executar(null,"SelectExecutionCourse",argsSelectExecutionCourses);
+				ServiceManagerServiceFactory.executeService(null,"SelectExecutionCourse",argsSelectExecutionCourses);
 			assertNotNull("test reading executionCourses",result);
 			assertTrue("test reading executionCourses",((List)result).size()>0 );
 		} catch (Exception e) {
@@ -92,7 +94,7 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 
 		try {
 			result =
-				_gestor.executar(null,"SelectExecutionCourse",argsSelectExecutionCourses);
+				ServiceManagerServiceFactory.executeService(null,"SelectExecutionCourse",argsSelectExecutionCourses);
 			assertTrue("test reading executionCourses",((List)result).size()==0);
 		} catch (Exception e) {
 			fail("test reading execution courses" + e);

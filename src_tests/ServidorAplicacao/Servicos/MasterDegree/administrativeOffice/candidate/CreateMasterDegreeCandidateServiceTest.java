@@ -15,6 +15,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.candidate;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
@@ -101,7 +103,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 
 		try {
 			newInfoMasterDegreeCandidate =
-				(InfoMasterDegreeCandidate) _gestor.executar(
+				(InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
 					userView,
 					"CreateMasterDegreeCandidate",
 					args);
@@ -164,7 +166,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 
 		try {
 			newInfoMasterDegreeCandidate =
-				(InfoMasterDegreeCandidate) _gestor.executar(
+				(InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
 					userView,
 					"CreateMasterDegreeCandidate",
 					args);
@@ -187,7 +189,7 @@ public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 
 		try {
 			infoMasterDegreeCandidate =
-				(InfoMasterDegreeCandidate) _gestor.executar(
+				(InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
 					userView,
 					"CreateMasterDegreeCandidate",
 					null);

@@ -18,6 +18,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoPerson;
@@ -33,7 +35,6 @@ import DataBeans.Seminaries.InfoCaseStudyChoice;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -58,7 +59,6 @@ public class SendMailToAllStudents extends FenixDispatchAction
     {
         HttpSession session = this.getSession(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos gestor = GestorServicos.manager();
         TeacherAdministrationSiteView siteView = null;
         Integer objectCode = null;
         Integer shiftID = null;
@@ -82,17 +82,17 @@ public class SendMailToAllStudents extends FenixDispatchAction
         try
         {
             siteView =
-                (TeacherAdministrationSiteView) gestor.executar(
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsByCurricularCourse",
                     argsReadSiteView);
             infoExecutionCourse =
-                (InfoExecutionCourse) gestor.executar(
+                (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadExecutionCourseByOID",
                     argsReadExecutionCourse);
             Object argsReadSite[] = { infoExecutionCourse };
-            infoSite = (InfoSite) gestor.executar(userView, "ReadSite", argsReadSite);
+            infoSite = (InfoSite) ServiceManagerServiceFactory.executeService(userView, "ReadSite", argsReadSite);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -113,13 +113,12 @@ public class SendMailToAllStudents extends FenixDispatchAction
     {
         HttpSession session = this.getSession(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos gestor = GestorServicos.manager();
         TeacherAdministrationSiteView siteView = null;
         Object argsReadPerson[] = { userView.getUtilizador()};
         InfoPerson infoPerson = null;
         try
         {
-            infoPerson = (InfoPerson) gestor.executar(userView, "ReadPersonByUsername", argsReadPerson);
+            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", argsReadPerson);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -258,9 +257,8 @@ public class SendMailToAllStudents extends FenixDispatchAction
         try
         {
             Object[] argsReadCandidacies = getReadCandidaciesArgs(request);
-            GestorServicos gestor = GestorServicos.manager();
             candidacies =
-                (List) gestor.executar(userView, "Seminaries.ReadCandidacies", argsReadCandidacies);
+                (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.ReadCandidacies", argsReadCandidacies);
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();)
             {
                 InfoStudent student = null;
@@ -278,22 +276,21 @@ public class SendMailToAllStudents extends FenixDispatchAction
                 Object[] argsReadModality = { candidacy.getModalityIdInternal()};
                 Object[] argsReadSeminary = { candidacy.getSeminaryIdInternal()};
                 student =
-                    (InfoStudent) gestor.executar(userView, "student.ReadStudentById", argsReadStudent);
+                    (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "student.ReadStudentById", argsReadStudent);
                 curricularCourse =
-                    (InfoCurricularCourse) ((SiteView) gestor
-                        .executar(
+                    (InfoCurricularCourse) ((SiteView) ServiceManagerServiceFactory.executeService(
                             userView,
                             "ReadCurricularCourseByOIdService",
                             argsReadCurricularCourse))
                         .getComponent();
-                theme = (InfoTheme) gestor.executar(userView, "Seminaries.GetThemeById", argsReadTheme);
+                theme = (InfoTheme) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetThemeById", argsReadTheme);
                 modality =
-                    (InfoModality) gestor.executar(
+                    (InfoModality) ServiceManagerServiceFactory.executeService(
                         userView,
                         "Seminaries.GetModalityById",
                         argsReadModality);
                 seminary =
-                    (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
+                    (InfoSeminary) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetSeminary", argsReadSeminary);
                 motivation = candidacy.getMotivation();
                 casesChoices = candidacy.getCaseStudyChoices();
                 //
@@ -302,7 +299,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
                     InfoCaseStudyChoice choice = (InfoCaseStudyChoice) casesIterator.next();
                     Object[] argsReadCaseStudy = { choice.getCaseStudyIdInternal()};
                     InfoCaseStudy infoCaseStudy =
-                        (InfoCaseStudy) gestor.executar(
+                        (InfoCaseStudy) ServiceManagerServiceFactory.executeService(
                             userView,
                             "Seminaries.GetCaseStudyById",
                             argsReadCaseStudy);
@@ -333,7 +330,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
                 bccList.add(infoStudent.getInfoPerson().getEmail());
             }
             Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
-            failedEmails = (List) gestor.executar(userView, "commons.SendMail", argsSendMails);
+            failedEmails = (List) ServiceManagerServiceFactory.executeService(userView, "commons.SendMail", argsSendMails);
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -391,7 +388,6 @@ public class SendMailToAllStudents extends FenixDispatchAction
             }
             objectCode = new Integer(objectCodeString);
             Object args[] = { objectCode, null };
-            GestorServicos gestor = GestorServicos.manager();
             TeacherAdministrationSiteView siteView = null;
             InfoSiteStudents infoSiteStudents = null;
             List groupStudents = null;
@@ -400,7 +396,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
             try
             {
                 siteView =
-                    (TeacherAdministrationSiteView) gestor.executar(
+                    (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                         userView,
                         "ReadStudentsByCurricularCourse",
                         args);
@@ -411,7 +407,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
                     //please read http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
                     Object[] argsReadShiftStudents = { objectCode, shiftID };
                     shiftStudents =
-                        (List) gestor.executar(
+                        (List) ServiceManagerServiceFactory.executeService(
                             userView,
                             "teacher.ReadStudentsByShiftID",
                             argsReadShiftStudents);
@@ -421,7 +417,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
                 {
                     Object[] argsReadGroupStudents = { objectCode, groupCode };
                     groupStudents =
-                        (List) gestor.executar(
+                        (List) ServiceManagerServiceFactory.executeService(
                             userView,
                             "teacher.ReadStudentsByStudentGroupID",
                             argsReadGroupStudents);
@@ -441,7 +437,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
                     bccList.add(infoStudent.getInfoPerson().getEmail());
                 }
                 Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
-                failedEmails = (List) gestor.executar(userView, "commons.SendMail", argsSendMails);
+                failedEmails = (List) ServiceManagerServiceFactory.executeService(userView, "commons.SendMail", argsSendMails);
             } catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);

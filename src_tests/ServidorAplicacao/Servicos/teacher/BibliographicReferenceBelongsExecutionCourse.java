@@ -3,6 +3,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
@@ -23,7 +24,7 @@ public abstract class BibliographicReferenceBelongsExecutionCourse
 		Object serviceArguments[] = getTestBibliographicReferenceSuccessfullArguments();
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testBibliographicReferenceBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -40,7 +41,7 @@ public abstract class BibliographicReferenceBelongsExecutionCourse
 		Object serviceArguments[] = getTestBibliographicReferenceUnsuccessfullArguments();
 
 		try {
-			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			 ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testBibliographicReferenceNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

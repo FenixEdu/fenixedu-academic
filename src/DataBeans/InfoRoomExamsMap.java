@@ -15,7 +15,7 @@ import java.util.List;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class InfoRoomExamsMap {
+public class InfoRoomExamsMap extends InfoObject {
 
 	List exams;
 	InfoRoom infoRoom;

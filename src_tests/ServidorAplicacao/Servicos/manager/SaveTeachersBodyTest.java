@@ -6,6 +6,8 @@ package ServidorAplicacao.Servicos.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 
 /**
@@ -30,7 +32,7 @@ public class SaveTeachersBodyTest extends TestCaseNeedAuthorizationServices {
 		if(args != null) {
 			
 			try {
-				_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+				ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 				System.out.println("testUnsuccessfulExecutionOfService was UNSUCCESSFULY run by class: " + this.getClass().getName());
 				fail("testUnsuccessfulExecutionOfService");
 			} catch (Exception ex) {
@@ -53,7 +55,7 @@ public class SaveTeachersBodyTest extends TestCaseNeedAuthorizationServices {
 		if(args != null) {
 			
 			try {
-				_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+				ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 				System.out.println("testSuccessfulExecutionOfService was SUCCESSFULY run by class: " + this.getClass().getName());
 			} catch (Exception ex) {
 				ex.printStackTrace();

@@ -10,9 +10,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -33,13 +34,12 @@ public class PrepararManipularTurnosFormAction extends FenixExecutionCourseAndEx
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
         IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos gestor = GestorServicos.manager();
         
 		// Ler Turnos de Disciplinas em Execucao
         InfoExecutionCourse iDE = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
         Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
 		
-		List infoTurnosDeDisciplinaExecucao = (List) gestor.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
+		List infoTurnosDeDisciplinaExecucao = (List) ServiceManagerServiceFactory.executeService(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
         
 		Collections.sort(infoTurnosDeDisciplinaExecucao, new InfoShiftComparatorByLessonType());
 		

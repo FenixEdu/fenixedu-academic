@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoDegreeInfo;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -77,14 +78,14 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
             try
             {
                 infoDegreeInfo =
-                    (InfoDegreeInfo) gestor.executar(id, getNameOfServiceToBeTested(), args);
+                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -138,14 +139,14 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
             try
             {
                 infoDegreeInfo =
-                    (InfoDegreeInfo) gestor.executar(id, getNameOfServiceToBeTested(), args);
+                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -199,14 +200,14 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
             try
             {
                 infoDegreeInfo =
-                    (InfoDegreeInfo) gestor.executar(id, getNameOfServiceToBeTested(), args);
+                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -256,11 +257,11 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             try
             {
-                gestor.executar(id, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 //this returned a NotAuthorizedException
@@ -292,11 +293,11 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             try
             {
-                gestor.executar(id, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -332,11 +333,11 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             try
             {
-                gestor.executar(id, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 //				this returned a NotAuthorizedException
@@ -373,11 +374,11 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             try
             {
-                gestor.executar(id, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 //				this returned a NotAuthorizedException
@@ -413,14 +414,14 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getThirdAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
             try
             {
                 infoDegreeInfo =
-                    (InfoDegreeInfo) gestor.executar(id, getNameOfServiceToBeTested(), args);
+                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -454,7 +455,7 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             String[] argsUser = getAuthenticatedAndUnauthorizedUser();
 			try
 			{
-            gestor.executar(null, "Autenticacao", argsUser);
+            ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             fail("Reading a degree site with invalid user");
 
@@ -478,7 +479,7 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
         {
             //Valid user
             String[] argsUser = getNotAuthenticatedUser();
-            gestor.executar(null, "Autenticacao", argsUser);
+            ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             fail("Reading a degree site with invalid user");
 

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -159,7 +160,7 @@ public class EditObjectivesTest extends ServiceNeedsAuthenticationTestCase {
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedDataSetFilePath());
@@ -177,7 +178,7 @@ public class EditObjectivesTest extends ServiceNeedsAuthenticationTestCase {
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getTestObjectivesCurricularCourseWithNoCurriculumArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestObjectivesCurricularCourseWithNoCurriculumArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
@@ -194,7 +195,7 @@ public class EditObjectivesTest extends ServiceNeedsAuthenticationTestCase {
 		Object serviceArguments[] = getTestObjectivesUnsuccessfullArguments();
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

@@ -7,7 +7,9 @@
 
 package Util;
 
-public class Mes {
+import java.io.Serializable;
+
+public class Mes implements Serializable {
 
 	public static final int JANEIRO = 1;
 	public static final int FEVEREIRO = 2;

@@ -20,9 +20,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -46,7 +47,6 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 //			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 //		List infoItemsList = null;
 //
-//		GestorServicos manager = GestorServicos.manager();
 //		Object readSectionArgs[] = { infoSection };
 //
 //		try {
@@ -84,7 +84,6 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 			//PUSEMOS EM COMENTARIO
 			
 //		List infoItemsList = null;
-		GestorServicos manager = GestorServicos.manager();
 //		Object readSectionArgs[] = { infoSection };
 //		ArrayList items;
 //		try {
@@ -126,7 +125,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		Object args[] = { infoItem };
 
 		try {
-			manager.executar(userView, "InsertItem", args);
+				ServiceManagerServiceFactory.executeService(userView, "InsertItem", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException("Um item com esse nome", e);
 		} catch (FenixServiceException fenixServiceException) {
@@ -136,7 +135,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		Object args1[] = { infoSection };
 		ArrayList infoItems;
 		try {
-			infoItems = (ArrayList) manager.executar(null, "ReadItems", args1);
+			infoItems = (ArrayList) ServiceManagerServiceFactory.executeService(null, "ReadItems", args1);
 
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());

@@ -17,11 +17,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
@@ -77,8 +78,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 		if (session != null) {
 			String anoLectivo;
 			DynaActionForm chooseDeclaration = (DynaActionForm) form;
-			
-			GestorServicos serviceManager = GestorServicos.manager();	
+
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			//remove sessions variables
@@ -113,7 +113,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			//get informations
 			try {
 				Object args[] = {infoStudent, new Specialization(graduationType)};
-				infoStudentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "CreateDeclaration", args);
+				infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "CreateDeclaration", args);
 
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Declaração", e);
@@ -126,7 +126,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 		    else {	
 				
 				try {
-					infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);
+					infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView, "ReadCurrentExecutionYear", null);
 
 				} catch (RuntimeException e) {
 					throw new RuntimeException("Error", e);
@@ -135,7 +135,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			   Object args[] = {infoStudentCurricularPlan };
 			   try
 			   {
-				   enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+				   enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentList", args);
 
 			   } catch (NonExistingServiceException e)
 			   {

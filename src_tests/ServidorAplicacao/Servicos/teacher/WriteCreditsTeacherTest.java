@@ -14,7 +14,6 @@ import Dominio.ICredits;
 import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -26,6 +25,7 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão
@@ -78,12 +78,11 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
-			GestorServicos serviceManager = GestorServicos.manager();
 			Integer tfcStudentsNumber = new Integer(0);
 
 			Object[] args = { infoTeacher, tfcStudentsNumber };
 
-			Boolean result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+			Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
 			if (!result.booleanValue()) {
 				fail("can't execute service");
@@ -145,12 +144,11 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
 			//Service: insert
-			GestorServicos serviceManager = GestorServicos.manager();
 			Integer tfcStudentsNumber = new Integer(4);
 
 			Object[] args = { infoTeacher, tfcStudentsNumber };
 
-			Boolean result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+			Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
 			if (!result.booleanValue()) {
 				fail("can't execute service");
@@ -159,12 +157,11 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 			testCredits(sp, teacher, tfcStudentsNumber);
 
 			//Service: change
-			serviceManager = GestorServicos.manager();
 			tfcStudentsNumber = new Integer(6);
 
 			Object[] args2 = { infoTeacher, tfcStudentsNumber };
 
-			result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args2);
+			result = (Boolean) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args2);
 
 			if (!result.booleanValue()) {
 				fail("can't execute service");

@@ -10,7 +10,6 @@
 package ServidorAplicacao.Servicos.MasterDegree.Candidate;
 
 import junit.framework.TestCase;
-import ServidorAplicacao.GestorServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDepartment;
@@ -24,8 +23,6 @@ public class TestCaseServicosCandidato extends TestCase {
     protected IPersistentDepartment persistentDepartment = null;
     protected ICursoPersistente persistentDegree = null;
 	protected IPersistentMasterDegreeCandidate persistentMasterDegreeCandidate = null;
-	    
-    protected GestorServicos gestor = null;
     
     protected dbaccess db = null;
 
@@ -56,9 +53,8 @@ public class TestCaseServicosCandidato extends TestCase {
 	  	} catch (Exception ex) {
 	  		System.out.println("Setup failed :o("+ex);
 	  	}
-      
-        gestor = GestorServicos.manager();    
     }
+
     protected void tearDown() {
    	  	try {
 	  		db = new dbaccess();

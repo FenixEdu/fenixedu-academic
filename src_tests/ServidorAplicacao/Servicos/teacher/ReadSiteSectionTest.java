@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoSection;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSection;
@@ -91,7 +92,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 			sp.confirmarTransaccao();
 
 			result =
-				(TeacherAdministrationSiteView) gestor.executar(
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					getAuthorizeArguments());
@@ -138,7 +139,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 
 			//result =
 //				(TeacherAdministrationSiteView) 
-				gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args);
@@ -174,7 +175,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 
 		try {
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			System.out.println(
 				"testReadNonExistingSection was UNSUCCESSFULY runned by class: "

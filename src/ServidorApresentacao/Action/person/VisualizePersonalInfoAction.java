@@ -22,9 +22,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoPerson;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+
+import framework.factory.ServiceManagerServiceFactory;
 
 public class VisualizePersonalInfoAction
 	extends ServidorApresentacao.Action.base.FenixAction {
@@ -36,15 +38,16 @@ public class VisualizePersonalInfoAction
 		HttpServletResponse response)
 		throws Exception {
 		HttpSession session = request.getSession(false);
+
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
+
 		InfoPerson infoPerson = null;
 
 		Object args[] = new Object[1];
 		args[0] = userView;
 
 		infoPerson =
-			(InfoPerson) gestor.executar(
+			(InfoPerson) ServiceManagerServiceFactory.executeService(
 				userView,
 				"ReadPersonByUsername",
 				args);

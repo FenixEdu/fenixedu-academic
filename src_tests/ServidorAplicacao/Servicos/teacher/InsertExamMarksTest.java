@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
@@ -13,7 +15,6 @@ import DataBeans.InfoRole;
 import DataBeans.InfoSiteMarks;
 import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -64,10 +65,9 @@ public class InsertExamMarksTest extends TestCaseServices {
 			List infoMarksList = getInfoMarksList(new Integer(22222), "A");
 
 			Object[] args = { executionCourseCode, examCode, infoMarksList };
-			GestorServicos serviceManager = GestorServicos.manager();
 
 			TeacherAdministrationSiteView siteView =
-				(TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
 			if (siteView == null) {
 				fail("can't execute service");
@@ -82,7 +82,7 @@ public class InsertExamMarksTest extends TestCaseServices {
 			Object[] args2 = { executionCourseCode, examCode, infoMarksList };
 
 			siteView =
-				(TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args2);
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args2);
 
 			if (siteView == null) {
 				fail("can't execute service");
@@ -99,7 +99,7 @@ public class InsertExamMarksTest extends TestCaseServices {
 			Object[] args3 = { executionCourseCode, examCode, infoMarksList };
 
 			siteView =
-				(TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args3);
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args3);
 
 			if (siteView == null) {
 				fail("can't execute service");

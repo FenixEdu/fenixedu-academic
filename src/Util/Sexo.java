@@ -14,11 +14,12 @@
 
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class Sexo {
+public class Sexo implements Serializable {
 
     public static final int MASCULINO = 1;
     public static final int FEMININO = 2;

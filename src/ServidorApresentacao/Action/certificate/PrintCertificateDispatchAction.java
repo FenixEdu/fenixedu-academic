@@ -20,13 +20,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoFinalResult;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -67,7 +68,6 @@ public class PrintCertificateDispatchAction extends DispatchAction
         if (session != null)
         {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            GestorServicos serviceManager = GestorServicos.manager();
 
             session.removeAttribute(SessionConstants.MATRICULA);
             session.removeAttribute(SessionConstants.MATRICULA_ENROLMENT);
@@ -95,7 +95,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
             try
             {
                 infoExecutionYear =
-                    (InfoExecutionYear) serviceManager.executar(
+                    (InfoExecutionYear) ServiceManagerServiceFactory.executeService(
                         userView,
                         "ReadCurrentExecutionYear",
                         null);
@@ -112,7 +112,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                 Object args[] = { infoStudentCurricularPlan };
                 try
                 {
-                    enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+                    enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentList", args);
 
                 } catch (NonExistingServiceException e)
                 {
@@ -175,7 +175,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                     try
                     {
                         enrolmentList =
-                            (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+                            (List) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentList", args);
 
                     } catch (NonExistingServiceException e)
                     {
@@ -244,7 +244,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                     try
                     {
                         enrolmentList =
-                            (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+                            (List) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentList", args);
 
                     } catch (NonExistingServiceException e)
                     {
@@ -352,7 +352,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                         {
                             Object args[] = { infoStudentCurricularPlan };
                             infoFinalResult =
-                                (InfoFinalResult) serviceManager.executar(userView, "FinalResult", args);
+                                (InfoFinalResult) ServiceManagerServiceFactory.executeService(userView, "FinalResult", args);
                         } catch (FenixServiceException e)
                         {
                             throw new FenixServiceException("");
@@ -371,7 +371,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                         try
                         {
                             enrolmentList =
-                                (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+                                (List) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentList", args);
 
                         } catch (NonExistingServiceException e)
                         {
@@ -393,7 +393,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                         {
                             Object argsTemp[] = { infoStudentCurricularPlan };
                             endOfScholarshipDate =
-                                (Date) serviceManager.executar(
+                                (Date) ServiceManagerServiceFactory.executeService(
                                     userView,
                                     "GetEndOfScholarshipDate",
                                     argsTemp);
@@ -467,7 +467,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                         try
                         {
                             date =
-                                (Date) serviceManager.executar(
+                                (Date) ServiceManagerServiceFactory.executeService(
                                     userView,
                                     "GetEndOfScholarshipDate",
                                     argsAux);
@@ -526,7 +526,6 @@ public class PrintCertificateDispatchAction extends DispatchAction
 
         } else
             throw new Exception();
-
     }
 
 }

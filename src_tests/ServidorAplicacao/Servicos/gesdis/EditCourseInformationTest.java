@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.gesdis;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
@@ -92,7 +93,7 @@ public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCas
     {
         try
         {
-            gestor.executar(
+            ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());
@@ -129,7 +130,7 @@ public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCas
 
             Object[] serviceArgs = { null, infoCourseReport };
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
             
             // verifica as alteracoes da base de dados
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/gesdis/testExpectedEditCourseInformationWithoutCourseReportDataSet.xml");

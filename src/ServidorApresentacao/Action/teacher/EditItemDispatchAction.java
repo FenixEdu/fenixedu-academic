@@ -16,9 +16,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -53,7 +54,7 @@ public class EditItemDispatchAction extends FenixDispatchAction
         //		Object readSectionArgs[] = { oldInfoItem.getInfoSection() };
         //		ArrayList items;
         //		try {
-        //			infoItemsList =(ArrayList) manager.executar(null,"ReadItems",readSectionArgs);
+        //			infoItemsList =(ArrayList) ServiceManagerServiceFactory.executeService(null,"ReadItems",readSectionArgs);
         //			} catch (FenixServiceException fenixServiceException) {
         //				throw new FenixActionException(fenixServiceException.getMessage());
         //			}
@@ -85,12 +86,11 @@ public class EditItemDispatchAction extends FenixDispatchAction
         InfoItem oldInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
 
         //InfoItem newInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
-        GestorServicos manager = GestorServicos.manager();
         Object readSectionArgs[] = { infoSection };
         ArrayList items;
         try
         {
-            items = (ArrayList) manager.executar(null, "ReadItems", readSectionArgs);
+            items = (ArrayList) ServiceManagerServiceFactory.executeService(null, "ReadItems", readSectionArgs);
         } catch (FenixServiceException fenixServiceException)
         {
             throw new FenixActionException(fenixServiceException.getMessage());
@@ -125,7 +125,7 @@ public class EditItemDispatchAction extends FenixDispatchAction
 
         try
         {
-            manager.executar(userView, "EditItem", editItemArgs);
+            ServiceManagerServiceFactory.executeService(userView, "EditItem", editItemArgs);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException("Um item com esse nome", e);
@@ -141,7 +141,7 @@ public class EditItemDispatchAction extends FenixDispatchAction
 
         try
         {
-            items = (ArrayList) manager.executar(null, "ReadItems", readSectionArgs);
+            items = (ArrayList) ServiceManagerServiceFactory.executeService(null, "ReadItems", readSectionArgs);
         } catch (FenixServiceException fenixServiceException)
         {
             throw new FenixActionException(fenixServiceException.getMessage());

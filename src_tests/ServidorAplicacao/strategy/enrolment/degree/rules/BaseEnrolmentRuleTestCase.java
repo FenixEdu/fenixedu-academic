@@ -4,10 +4,10 @@
  */
 package ServidorAplicacao.strategy.enrolment.degree.rules;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.TestCase;
 import Dominio.ICurricularCourse;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
@@ -30,7 +30,6 @@ abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 	private dbaccess dbAcessPoint;
 	protected ISuportePersistente sp;
 
-	protected GestorServicos gestor = GestorServicos.manager();
 	protected IUserView userView = new UserView("user", null);
 
 	
@@ -103,7 +102,7 @@ abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 	protected void autentication() {
 		String argsAutenticacao[] = { "user", "pass" , Autenticacao.EXTRANET};
 		try {
-			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+			userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -112,7 +111,7 @@ abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 	protected EnrolmentContext executeService(String serviceName, Object[] serviceArgs) {
 		try {
 			Object result = null;
-			result = gestor.executar(userView, serviceName, serviceArgs);
+			result = ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
 			return EnrolmentContextManager.getEnrolmentContext((InfoEnrolmentContext) result);
 		} catch (Exception ex) {
 			ex.printStackTrace();

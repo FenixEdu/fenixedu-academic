@@ -10,10 +10,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.ExecutionCourseKeyAndLessonType;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao
 	.Action
@@ -41,7 +42,6 @@ public class PrepararAdicionarAulasDeTurnoFormAction
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
 			ArrayList infoAulasDeTurno =
 				(ArrayList) request.getAttribute("infoAulasDeTurno");
 
@@ -61,7 +61,7 @@ public class PrepararAdicionarAulasDeTurnoFormAction
 			Object argsLerAulasDeDisciplinaETipo[] =
 				{ tipoAulaAndKeyDisciplinaExecucao, infoDisciplina };
 			ArrayList infoAulasDeDisciplina =
-				(ArrayList) gestor.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"LerAulasDeDisciplinaExecucaoETipo",
 					argsLerAulasDeDisciplinaETipo);

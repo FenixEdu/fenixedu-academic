@@ -137,7 +137,8 @@ public class InfoTeacher extends InfoObject{
 	public String toString() {
 		String result = "[INFOTEACHER";
 		result += ", number=" + this.teacherNumber;
-		result += ", nome=" + this.infoPerson.getNome();
+		// This throws a null poiter exception when infoPerson is not set!
+		//result += ", nome=" + this.infoPerson.getNome();
 		result += "]";
 		return result;
 	}

@@ -1,10 +1,10 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.studentCurricularPlan;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -20,7 +20,6 @@ public class ReadPosGradStudentCurricularPlanByIdTest extends TestCase {
 
 	protected dbaccess dbAcessPoint = null;
 	protected IUserView userView = null;
-	protected GestorServicos serviceManager = null;
 
 	public ReadPosGradStudentCurricularPlanByIdTest(String testName) {
 		super(testName);
@@ -58,13 +57,12 @@ public class ReadPosGradStudentCurricularPlanByIdTest extends TestCase {
 		}
 
 		SuportePersistenteOJB.resetInstance();
-		this.serviceManager = GestorServicos.manager();
 
 		//Test with user that isn´t master degree administrator	
 		String args1[] = { "alunoGrad", "pass", this.getApplication()};
 
 		try {
-			this.userView = (IUserView) this.serviceManager.executar(null, "Autenticacao", args1);
+			this.userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args1);
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			System.out.println("Don´t Authenticating User, because user isn't masterDegree Administrated!");
@@ -74,7 +72,7 @@ public class ReadPosGradStudentCurricularPlanByIdTest extends TestCase {
 		String args2[] = { "posGrad", "pass", this.getApplication()};
 
 		try {
-			this.userView = (IUserView) this.serviceManager.executar(null, "Autenticacao", args2);
+			this.userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args2);
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			fail("Authenticating User!");
@@ -103,7 +101,7 @@ public class ReadPosGradStudentCurricularPlanByIdTest extends TestCase {
 
 		try {
 			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) this.serviceManager.executar(userView, "ReadPosGradStudentCurricularPlanById", args3);
+				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadPosGradStudentCurricularPlanById", args3);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Reading the Student's Curricular Plans of a PosGrad");
@@ -133,7 +131,7 @@ public class ReadPosGradStudentCurricularPlanByIdTest extends TestCase {
 
 		try {
 			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) this.serviceManager.executar(userView, "ReadPosGradStudentCurricularPlanById", args4);
+				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadPosGradStudentCurricularPlanById", args4);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Reading the Student's Curricular Plans");

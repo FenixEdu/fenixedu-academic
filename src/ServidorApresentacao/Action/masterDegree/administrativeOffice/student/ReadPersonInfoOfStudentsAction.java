@@ -24,10 +24,11 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -62,7 +63,6 @@ public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.
         if (session != null)
         {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            GestorServicos gestor = GestorServicos.manager();
             Integer studentNumber = new Integer(getFromRequest("studentNumber", request));
             //String  graduationType = getFromRequest("graduationType", request);
 
@@ -71,7 +71,7 @@ public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.
             try
             {
                 infoStudent =
-                    (InfoStudent) gestor.executar(userView, "ReadStudentByNumberAndType", args);
+                    (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndType", args);
             } catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);
@@ -94,7 +94,7 @@ public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.
 
             //			Get List of available Countries
             Object result = null;
-            result = gestor.executar(userView, "ReadAllCountries", null);
+            result = ServiceManagerServiceFactory.executeService(userView, "ReadAllCountries", null);
             ArrayList country = (ArrayList) result;
 
             //			Build List of Countries for the Form

@@ -6,14 +6,13 @@
 
 package DataBeans;
 
-import java.io.Serializable;
 
 /**
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
 
-public class InfoClass extends InfoObject implements Serializable {
+public class InfoClass extends InfoObject {
 	protected String _name;
 	
 	protected Integer _anoCurricular;

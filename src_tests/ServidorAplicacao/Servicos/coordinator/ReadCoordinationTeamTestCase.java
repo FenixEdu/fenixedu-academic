@@ -6,6 +6,8 @@ package ServidorAplicacao.Servicos.coordinator;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCoordinator;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -98,7 +100,7 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 		List coordinators;
 		try {
 			coordinators =
-				(List) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+				(List) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			String result =
 				"testReadCoordinators was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested()

@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Filtro.credits;
 
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 
 /**
@@ -27,7 +26,6 @@ public class CreditsServiceWithTeacherIdArgumentAuthorization
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
     {
         Integer teacherId = (Integer) arguments[0];
         return teacherId;

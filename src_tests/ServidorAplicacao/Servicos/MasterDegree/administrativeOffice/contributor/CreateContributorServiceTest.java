@@ -15,6 +15,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.contributor
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoContributor;
@@ -62,7 +64,7 @@ public class CreateContributorServiceTest extends TestCaseServicos {
 	
 	 
 		 try {
-			 _gestor.executar(userView, "CreateContributor", args);
+			 ServiceManagerServiceFactory.executeService(userView, "CreateContributor", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		 } catch (Exception ex) {
@@ -86,7 +88,7 @@ public class CreateContributorServiceTest extends TestCaseServicos {
 	
 		 
 		 try {
-			 _gestor.executar(userView, "CreateContributor", args);
+			 ServiceManagerServiceFactory.executeService(userView, "CreateContributor", args);
 		 } catch (FenixServiceException ex) {
 			// All is OK
 		 } catch (Exception ex) {
@@ -101,7 +103,7 @@ public class CreateContributorServiceTest extends TestCaseServicos {
 
 	
 		 try {
-			 _gestor.executar(userView, "CreateContributor", null);
+			 ServiceManagerServiceFactory.executeService(userView, "CreateContributor", null);
 		 } catch (FenixServiceException ex) {
 			 // All is OK
 		 } catch (Exception ex) {

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -111,7 +112,7 @@ public class DeleteAnnouncementTest extends AnnouncementBelongsToExecutionCourse
 			IUserView arguser = authenticateUser(getAuthenticatedAndAuthorizedUser());
 
 			//Run the service
-			gestor.executar(arguser, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(arguser, getNameOfServiceToBeTested(), argserv);
 			
 			//Verify if the announcement was correctly deleted
 			compareDataSetUsingExceptedDataSetTablesAndColumns(getExpectedDataSetFilePath());
@@ -142,7 +143,7 @@ public class DeleteAnnouncementTest extends AnnouncementBelongsToExecutionCourse
 			IUserView arguser = authenticateUser(getAuthenticatedAndAuthorizedUser());
 
 			//Run the service
-			gestor.executar(arguser, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(arguser, getNameOfServiceToBeTested(), argserv);
 
 		} catch (NotAuthorizedException ex)
 		{

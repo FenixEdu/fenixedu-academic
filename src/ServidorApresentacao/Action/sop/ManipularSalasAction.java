@@ -16,9 +16,10 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.sop.ApagarSala.NotAuthorizedServiceDeleteRoomException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -168,7 +169,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
         Object argsCriarSala[] = { new RoomKey(selectedSala.getNome())};
         try
         {
-            GestorServicos.manager().executar(userView, "ApagarSala", argsCriarSala);
+			ServiceManagerServiceFactory.executeService(userView, "ApagarSala", argsCriarSala);
         } catch (NotAuthorizedServiceDeleteRoomException e)
         {
             Object[] values = { "a sala", "as aulas" };

@@ -10,11 +10,13 @@ import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
+import java.io.Serializable;
+
 /**
  *
  * @author  Nuno Nunes & Joana Mota
  */
-public class StudentCurricularPlanState {
+public class StudentCurricularPlanState implements Serializable {
 
 	public static final int ACTIVE = 1;
 	public static final int CONCLUDED = 2;

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -141,7 +142,7 @@ public class EditProgramTest extends ServiceNeedsAuthenticationTestCase {
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedDataSetFilePath());
@@ -160,7 +161,7 @@ public class EditProgramTest extends ServiceNeedsAuthenticationTestCase {
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			gestor.executar(userView, getNameOfServiceToBeTested(), getTestProgramCurricularCourseWithNoCurriculumArguments());
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestProgramCurricularCourseWithNoCurriculumArguments());
 
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedNewCurriculumDataSetFilePath());

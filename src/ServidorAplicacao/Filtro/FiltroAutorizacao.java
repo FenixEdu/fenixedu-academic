@@ -8,7 +8,6 @@ package ServidorAplicacao.Filtro;
  * @version
  **/
 
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -35,7 +34,7 @@ public class FiltroAutorizacao extends Filtro {
    *
    * @see ServidorAplicacao.Filtro.Filtro#prefilter
    **/
-  public void preFiltragem(IUserView id, IServico servico, Object argumentos[])
+  public void preFiltragem(IUserView id, Object argumentos[])
     throws FenixServiceException, NotAuthorizedException {
    
     

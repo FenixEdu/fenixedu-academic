@@ -13,9 +13,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoGuide;
 import DataBeans.InfoMasterDegreeCandidate;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -44,7 +45,6 @@ public class PrintGuideDispatchAction extends DispatchAction
 
         if (session != null)
         {
-            GestorServicos serviceManager = GestorServicos.manager();
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -67,7 +67,7 @@ public class PrintGuideDispatchAction extends DispatchAction
                     {
                         Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson()};
                         infoMasterDegreeCandidate =
-                            (InfoMasterDegreeCandidate) serviceManager.executar(
+                            (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
                                 userView,
                                 "ReadMasterDegreeCandidate",
                                 args);
@@ -78,7 +78,7 @@ public class PrintGuideDispatchAction extends DispatchAction
                         Object args[] =
                             { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number };
                         infoMasterDegreeCandidate =
-                            (InfoMasterDegreeCandidate) serviceManager.executar(
+                            (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
                                 userView,
                                 "ReadCandidateListByPersonAndExecutionDegree",
                                 args);
@@ -122,7 +122,6 @@ public class PrintGuideDispatchAction extends DispatchAction
 
         if (session != null)
         {
-            GestorServicos serviceManager = GestorServicos.manager();
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -136,7 +135,7 @@ public class PrintGuideDispatchAction extends DispatchAction
             try
             {
                 Object args[] = { number, year, version };
-                infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
             } catch (FenixServiceException e)
             {
                 throw new FenixActionException();
@@ -154,7 +153,6 @@ public class PrintGuideDispatchAction extends DispatchAction
             return mapping.findForward("PrintOneGuide");
         } else
             throw new Exception();
-
     }
 
 }

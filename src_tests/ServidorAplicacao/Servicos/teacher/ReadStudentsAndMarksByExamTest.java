@@ -3,10 +3,11 @@ package ServidorAplicacao.Servicos.teacher;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRole;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -45,9 +46,7 @@ public class ReadStudentsAndMarksByExamTest extends TestCaseServices {
 
 			Object[] args = { new Integer(3), new Integer(1) };
 
-			
-			GestorServicos serviceManager = GestorServicos.manager();
-			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 			
 			assertEquals("Error in Exam !", ((InfoSiteMarks)siteView.getComponent()).getInfoEvaluation().getIdInternal().intValue(), 1);
 			assertEquals("Error in marks list !", ((InfoSiteMarks)siteView.getComponent()).getMarksList().size(), 3);

@@ -12,8 +12,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao
 	.Action
@@ -38,7 +39,6 @@ public class ManageExecutionCourseDA
 
 		IUserView userView =
 			(IUserView) request.getSession(false).getAttribute("UserView");
-		GestorServicos gestor = GestorServicos.manager();
 
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) request.getAttribute(
@@ -46,7 +46,7 @@ public class ManageExecutionCourseDA
 
 		Object args[] = { infoExecutionCourse };
 		List infoClasses =
-			(List) gestor.executar(
+			(List) ServiceManagerServiceFactory.executeService(
 				userView,
 				"ReadClassesByExecutionCourse",
 				args);
@@ -68,7 +68,6 @@ public class ManageExecutionCourseDA
 
 		IUserView userView =
 			(IUserView) request.getSession(false).getAttribute("UserView");
-		GestorServicos gestor = GestorServicos.manager();
 
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) request.getAttribute(
@@ -87,7 +86,7 @@ public class ManageExecutionCourseDA
 
 		Object args[] = { infoExecutionCourse };
 		infoExecutionCourse =
-			(InfoExecutionCourse) gestor.executar(
+			(InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
 				userView,
 				"EditExecutionCourse",
 				args);

@@ -8,7 +8,7 @@ import java.util.List;
  * 19/Mar/2003
  */
 
-public class InfoCurricularSemester extends InfoObject{
+public class InfoCurricularSemester extends InfoObject {
 
 	private Integer semester;
 	private InfoCurricularYear infoCurricularYear;

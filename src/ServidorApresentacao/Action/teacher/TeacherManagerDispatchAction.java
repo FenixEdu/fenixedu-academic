@@ -18,7 +18,6 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoSite;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -30,6 +29,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author João Mota
@@ -55,10 +55,9 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction
             UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
             InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
             Object args[] = { infoSite.getInfoExecutionCourse()};
-            GestorServicos serviceManager = GestorServicos.manager();
             boolean result = false;
             List teachers =
-                (List) serviceManager.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadTeachersByExecutionCourseProfessorship",
                     args);
@@ -68,14 +67,14 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction
             }
 
             List responsibleTeachers =
-                (List) serviceManager.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadTeachersByExecutionCourseResponsibility",
                     args);
 
             Object[] args1 = { userView.getUtilizador()};
             InfoTeacher teacher =
-                (InfoTeacher) serviceManager.executar(userView, "ReadTeacherByUsername", args1);
+                (InfoTeacher) ServiceManagerServiceFactory.executeService(userView, "ReadTeacherByUsername", args1);
             if (responsibleTeachers != null
                 && !responsibleTeachers.isEmpty()
                 && responsibleTeachers.contains(teacher))
@@ -103,7 +102,6 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction
         HttpSession session = getSession(request);
         session.removeAttribute(SessionConstants.INFO_SECTION);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
         String teacherNumberString = request.getParameter("teacherNumber");
 
@@ -111,7 +109,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction
         Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
         try
         {
-            serviceManager.executar(userView, "RemoveTeacher", args);
+            ServiceManagerServiceFactory.executeService(userView, "RemoveTeacher", args);
 
         } catch (notAuthorizedServiceDeleteException e)
         {
@@ -134,7 +132,6 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction
         HttpSession session = getSession(request);
         session.removeAttribute(SessionConstants.INFO_SECTION);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
         DynaActionForm teacherForm = (DynaActionForm) form;
 
@@ -142,7 +139,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction
         Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
         try
         {
-            serviceManager.executar(userView, "AssociateTeacher", args);
+            ServiceManagerServiceFactory.executeService(userView, "AssociateTeacher", args);
 
         } catch (ExistingServiceException e)
         {

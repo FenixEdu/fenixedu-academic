@@ -13,10 +13,10 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Fernanda Quitério
@@ -35,10 +35,9 @@ public class ViewPublishedMarksAction extends FenixContextDispatchAction {
 		Integer examCode = getFromRequest("evaluationCode", request);
 
 		Object[] args = { objectCode, examCode };
-		GestorServicos gestorServicos = GestorServicos.manager();
 		ExecutionCourseSiteView siteView = null;
 		try {
-			siteView = (ExecutionCourseSiteView) gestorServicos.executar(null, "ReadPublishedMarksByExam", args);
+			siteView = (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(null, "ReadPublishedMarksByExam", args);
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			throw new FenixActionException(e.getMessage());

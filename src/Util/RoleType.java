@@ -4,6 +4,7 @@
  */
 package Util;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,7 @@ import org.apache.commons.lang.enum.ValuedEnum;
 /**
  * @author jpvl
  */
-public final class RoleType extends ValuedEnum
-{
+public final class RoleType extends ValuedEnum implements Serializable  {
 	/* must match with field ROLE_TYPE in table ROLE */
 	public static final int PERSON_TYPE = 1;
 	public static final int STUDENT_TYPE = 2;

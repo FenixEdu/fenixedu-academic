@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -95,7 +97,7 @@ public class EditExamEnrollmentServiceTest extends ServiceNeedsAuthenticationTes
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             System.out.println(
                 "testEditNonExistingExamEnrollment was UNSUCCESSFULY runned by class: "
                     + this.getClass().getName());
@@ -138,7 +140,7 @@ public class EditExamEnrollmentServiceTest extends ServiceNeedsAuthenticationTes
 
 		try
 		{
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testUpdateInvalidEnrollmentBeginDate was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -181,7 +183,7 @@ public class EditExamEnrollmentServiceTest extends ServiceNeedsAuthenticationTes
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             System.out.println(
                 "testUpdateInvalidEnrollmentEndDate was UNSUCCESSFULY runned by class: "
                     + this.getClass().getName());
@@ -214,7 +216,7 @@ public class EditExamEnrollmentServiceTest extends ServiceNeedsAuthenticationTes
         try
         {
             result =
-                (Boolean) gestor.executar(
+                (Boolean) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());

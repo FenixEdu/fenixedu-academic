@@ -12,7 +12,7 @@ package DataBeans;
  */
 import java.util.List;
 
-public class InfoCourseExecutionAndListOfTypeLessonAndInfoShift {
+public class InfoCourseExecutionAndListOfTypeLessonAndInfoShift extends InfoObject {
   protected InfoExecutionCourse _infoExecutionCourse;
   protected List _typeLessonsAndInfoShifts;
 

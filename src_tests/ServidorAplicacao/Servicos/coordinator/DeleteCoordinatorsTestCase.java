@@ -7,6 +7,8 @@ package ServidorAplicacao.Servicos.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
@@ -96,7 +98,7 @@ public class DeleteCoordinatorsTestCase extends CoordinatorIsResponsibleByExecut
 	public void testDeleteCoordinator() {
 		Object serviceArguments[] = getAuthorizeArguments();
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testDeleteCoordinator was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());

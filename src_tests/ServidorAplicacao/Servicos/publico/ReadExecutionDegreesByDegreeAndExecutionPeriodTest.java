@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.publico;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -46,7 +48,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
             List infoExecutionDegrees = null;
             try
             {
-                infoExecutionDegrees = (List) gestor.executar(null, getNameOfServiceToBeTested(), args);
+                infoExecutionDegrees = (List) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -90,7 +92,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
             List infoExecutionDegrees = null;
             try
             {
-                infoExecutionDegrees = (List) gestor.executar(null, getNameOfServiceToBeTested(), args);
+                infoExecutionDegrees = (List) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -147,7 +149,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -185,7 +187,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -224,7 +226,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
             //Service
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -263,7 +265,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
             //Service
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -295,7 +297,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
             //Service
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -333,7 +335,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {
@@ -371,7 +373,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriodTest extends ServiceT
 
             try
             {
-                gestor.executar(null, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
             }
             catch (FenixServiceException e)
             {

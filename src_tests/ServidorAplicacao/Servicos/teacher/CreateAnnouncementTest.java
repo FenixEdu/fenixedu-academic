@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -69,7 +70,7 @@ public class CreateAnnouncementTest
 			IUserView id = authenticateUser(args);
 			Object[] args2 = getAuthorizeArguments();
 
-			gestor.executar(id, getNameOfServiceToBeTested(), args2);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 			System.out.println(
@@ -93,7 +94,7 @@ public class CreateAnnouncementTest
 				newAnnouncementTitle,
 				newAnnouncementInformation };
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testCreateExistingAnnouncement was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());

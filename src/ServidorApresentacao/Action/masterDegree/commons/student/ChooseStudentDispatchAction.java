@@ -12,8 +12,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
@@ -37,8 +38,6 @@ public class ChooseStudentDispatchAction extends DispatchAction {
 
 		HttpSession session = request.getSession();
 
-		GestorServicos serviceManager = GestorServicos.manager();
-		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		DynaActionForm studentForm = (DynaActionForm) form;
 
@@ -48,7 +47,7 @@ public class ChooseStudentDispatchAction extends DispatchAction {
 		
 		try {
 			Object args[] = { studentNumber , TipoCurso.MESTRADO_OBJ};
-			result = (List) serviceManager.executar(userView, "ReadStudentCurricularPlansByNumberAndDegreeType", args);
+			result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlansByNumberAndDegreeType", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("O Aluno");
 		}

@@ -18,11 +18,11 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -77,7 +77,6 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
         HttpSession session = request.getSession(false);
         if (session != null)
         {
-            GestorServicos gestor = GestorServicos.manager();
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             DynaActionForm chooseViewAllClassesSchedulesContextForm = (DynaActionForm) form;
 
@@ -113,7 +112,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
 
             Object[] args = { selectedInfoExecutionDegrees, infoExecutionPeriod };
             List infoViewClassScheduleList =
-                (List) gestor.executar(userView, "ReadDegreesClassesLessons", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreesClassesLessons", args);
 
             if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty())
             {

@@ -9,8 +9,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoShift;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -35,7 +36,6 @@ public class EditarTurnoFormAction extends FenixShiftAndExecutionCourseAndExecut
 		if (session != null) {
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 
 //			ArrayList infoTurnos =
 //				(ArrayList) session.getAttribute(
@@ -47,7 +47,7 @@ public class EditarTurnoFormAction extends FenixShiftAndExecutionCourseAndExecut
 			//	(InfoShift) request.getAttribute("infoTurno");
 
 			Object args[] = { shiftOID };
-			InfoShift infoTurnoAntigo = (InfoShift) gestor.executar(
+			InfoShift infoTurnoAntigo = (InfoShift) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadShiftByOID",
 					args);
@@ -64,7 +64,7 @@ public class EditarTurnoFormAction extends FenixShiftAndExecutionCourseAndExecut
 
 			ActionErrors actionErrors = null;
 			try {
-					gestor.executar(
+					ServiceManagerServiceFactory.executeService(
 						userView,
 						"EditarTurno",
 						argsEditarTurno);

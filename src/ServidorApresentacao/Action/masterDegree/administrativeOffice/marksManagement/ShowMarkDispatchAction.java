@@ -13,11 +13,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
@@ -56,12 +56,11 @@ public class ShowMarkDispatchAction extends DispatchAction {
 		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = {userView,curricularCourseCode,executionYear};
-		GestorServicos serviceManager = GestorServicos.manager();
 		List listEnrolmentEvaluation = null;
 		
 		try {
 		 listEnrolmentEvaluation =
-				(List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);
+				(List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentMarksListByCurricularCourse", args);
 		} catch (NotAuthorizedException e){
 			return mapping.findForward("NotAuthorized");
 		} catch (NonExistingServiceException e) {
@@ -87,13 +86,6 @@ public class ShowMarkDispatchAction extends DispatchAction {
 		
 	}
 	
-
-	private void sendErrors(HttpServletRequest request, String arg0, String arg1) {
-		ActionErrors errors = new ActionErrors();
-		errors.add(arg0, new ActionError(arg1));
-		saveErrors(request, errors);
-	}
-
 	private String getFromRequest(String parameter, HttpServletRequest request) {
 		String parameterString = request.getParameter(parameter);
 		if (parameterString == null) {

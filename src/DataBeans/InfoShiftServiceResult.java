@@ -13,7 +13,7 @@ package DataBeans;
  *
  * 
  */
-public final class InfoShiftServiceResult {
+public final class InfoShiftServiceResult extends InfoObject {
 	public static final int SUCESS = 0;
 	public static final int THEORETICAL_HOURS_LIMIT_EXCEEDED = 1;
 	public static final int THEORETICAL_HOURS_LIMIT_REACHED = 2;

@@ -6,7 +6,6 @@ package ServidorAplicacao.Filtro.credits;
 
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 
@@ -30,7 +29,6 @@ public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
     {
         Integer teacherInstitutionWorkingTime = (Integer) arguments[0];
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp

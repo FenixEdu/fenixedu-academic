@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.student;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceTestCase;
@@ -39,7 +40,7 @@ public abstract class ServiceNeedsStudentAuthenticationTestCase
 		Object serviceArguments[] = getAuthorizeArguments();
 		try {
 			
-				gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					serviceArguments);
@@ -69,7 +70,7 @@ public abstract class ServiceNeedsStudentAuthenticationTestCase
 		Object serviceArguments[] = getAuthorizeArguments();
 		try {
 		
-				gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					userView2,
 					getNameOfServiceToBeTested(),
 					serviceArguments);
@@ -101,7 +102,7 @@ public abstract class ServiceNeedsStudentAuthenticationTestCase
 
 		try {
 			
-				gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					userView3,
 					getNameOfServiceToBeTested(),
 					serviceArguments);
@@ -132,7 +133,7 @@ public abstract class ServiceNeedsStudentAuthenticationTestCase
 		String args[] = arguments;
 
 		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
+			return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
 		} catch (Exception ex) {
 			fail("Authenticating User!" + ex);
 			return null;

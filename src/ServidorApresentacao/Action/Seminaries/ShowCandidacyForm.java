@@ -13,8 +13,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.Seminaries.InfoEquivalency;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -54,9 +55,8 @@ public class ShowCandidacyForm extends FenixAction
         try
         {
             Object[] argsReadSeminary = { equivalencyID };
-            GestorServicos gestor = GestorServicos.manager();
             equivalency =
-                (InfoEquivalency) gestor.executar(
+                (InfoEquivalency) ServiceManagerServiceFactory.executeService(
                     userView,
                     "Seminaries.GetEquivalency",
                     argsReadSeminary);

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoItem;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -84,7 +85,7 @@ public class EditItemTest extends ItemBelongsExecutionCourseTest {
 		Object[] args = getTestItemSuccessfullArguments();
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedEditItemDataSet.xml");
 			System.out.println(
@@ -110,7 +111,7 @@ public class EditItemTest extends ItemBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), new Integer(100), infoItem };
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testEditNonExistingItem was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());

@@ -11,12 +11,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -33,7 +33,6 @@ public class ViewAllExamsByDegreeAndCurricularYearAction extends FenixContextAct
 		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -73,7 +72,7 @@ public class ViewAllExamsByDegreeAndCurricularYearAction extends FenixContextAct
 
 			Object[] args =	{ infoExecutionPeriod };
 			List infoViewAllExamsList =
-				(List) gestor.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					userView,"ReadExamsSortedByExecutionDegreeAndCurricularYear",	args);
 
 

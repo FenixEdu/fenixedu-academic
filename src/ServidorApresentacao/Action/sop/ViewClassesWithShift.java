@@ -14,12 +14,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoShift;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author jpvl
@@ -77,10 +77,9 @@ public class ViewClassesWithShift extends FenixShiftAndExecutionCourseAndExecuti
 
 		IUserView userView =
 			(IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
 
 		Object args[] = { shiftOID };
-		InfoShift infoShift = (InfoShift) gestor.executar(
+		InfoShift infoShift = (InfoShift) ServiceManagerServiceFactory.executeService(
 				userView,
 				"ReadShiftByOID",
 				args);

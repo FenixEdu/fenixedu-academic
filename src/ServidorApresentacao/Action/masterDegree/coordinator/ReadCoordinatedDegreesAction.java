@@ -23,8 +23,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -33,65 +34,55 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.base.FenixAction
 {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+  public ActionForward execute(ActionMapping mapping, ActionForm form,
+                                HttpServletRequest request,
+                                HttpServletResponse response)
+      throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null)
-        {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            GestorServicos gestor = GestorServicos.manager();
+	
 
-            Object args[] = new Object[1];
-            args[0] = userView;
-            List degrees = null;
-            List candidates = new ArrayList();
-            try
-            {
-                degrees = (List) gestor.executar(userView, "ReadCoordinatedDegrees", args);
+	HttpSession session = request.getSession(false);
+	if (session != null) {
+      IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	  
+      Object args[] = new Object[1];
+	  args[0] = userView;
+	  List degrees = null;
+	  List candidates = new ArrayList();
+	  try {
+	  	degrees = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCoordinatedDegrees", args);
+	  
+	  } catch (FenixServiceException e) {
+		  throw new FenixActionException(e);
+	  }
 
-            } catch (FenixServiceException e)
-            {
-                throw new FenixActionException(e);
-            }
+	  Iterator iterator = degrees.iterator();
+	  
+	  while(iterator.hasNext()){
+	  	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+		try {
+		  Object argsTemp[] = {infoExecutionDegree };
 
-            Iterator iterator = degrees.iterator();
+		  List result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreeCandidates", argsTemp);
+		  
+		  candidates.add(new Integer(result.size()));
+		  
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+	  }
 
-            while (iterator.hasNext())
-            {
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-                try
-                {
-                    Object argsTemp[] = { infoExecutionDegree };
+	  if (degrees.size() == 1) {
+	  	session.setAttribute(SessionConstants.MASTER_DEGREE, degrees.get(0));
+		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, candidates.get(0));
+		return mapping.findForward("Success");
+	  }
+	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT, candidates);
+      session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
+      return mapping.findForward("ChooseDegree");
 
-                    List result = (List) gestor.executar(userView, "ReadDegreeCandidates", argsTemp);
-
-                    candidates.add(new Integer(result.size()));
-
-                } catch (FenixServiceException e)
-                {
-                    throw new FenixActionException(e);
-                }
-            }
-            if (degrees.size() == 1)
-            {
-                session.setAttribute(SessionConstants.MASTER_DEGREE, degrees.get(0));
-                session.setAttribute(
-                    SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT,
-                    candidates.get(0));
-                return mapping.findForward("Success");
-            }
-            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT, candidates);
-            session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
-            return mapping.findForward("ChooseDegree");
-
-        } else
-            throw new Exception();
-    }
+    } else
+      throw new Exception();   
+  }
 
 }

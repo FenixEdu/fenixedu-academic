@@ -7,6 +7,8 @@ package ServidorAplicacao.Servicos.grant.owner;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -162,7 +164,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getAuthorizeArguments();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() > 1)
@@ -198,7 +200,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByIDAndGetOneResult();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() > 1)
@@ -232,7 +234,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByNameAndIDAndGetOneResult();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() > 1)
@@ -271,7 +273,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByNameGetOneResultGrantOwner();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() > 1)
@@ -307,7 +309,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByIDGetOneResultGrantOwner();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() > 1)
@@ -344,7 +346,7 @@ public class SearchGrantOwnerTest
 				getArgumentsToSearchByNameAndIDGetOneResultGrantOwner();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() > 1)
@@ -384,7 +386,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByNameGetSeveralResults();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() <= 1)
@@ -420,7 +422,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByNameAndIDGetSeveralResults();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns only ONE result
 			if (result.size() <= 1)
@@ -456,7 +458,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByNameUnsuccessfull();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns ZERO results
 			if (result != null)
@@ -485,7 +487,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByIDUnsuccessfull();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns ZERO results
 			if (result != null)
@@ -514,7 +516,7 @@ public class SearchGrantOwnerTest
 			Object[] args2 = getArgumentsToSearchByNameAndIDUnsuccessfull();
 
 			List result =
-				(List) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+				(List) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			//Check that service returns ZERO results
 			if (result != null)

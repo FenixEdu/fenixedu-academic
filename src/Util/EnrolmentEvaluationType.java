@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
@@ -9,8 +10,7 @@ import org.apache.struts.util.LabelValueBean;
  *
  * 2/Abr/2003
  */
-public class EnrolmentEvaluationType
-{
+public class EnrolmentEvaluationType implements Serializable {
 
     public static final int NORMAL = 1; // primeira avaliacao (engloba 1ª e 2ª época)
     public static final int IMPROVEMENT = 2; // avaliacao por melhoria

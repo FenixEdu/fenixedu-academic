@@ -12,11 +12,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -34,7 +35,6 @@ public class PrepararVerAlunosDeTurnoFormAction extends FenixShiftAndExecutionCo
     if (sessao != null) {
 		DynaActionForm manipularTurnosForm = (DynaActionForm) request.getAttribute("manipularTurnosForm");
 	    IUserView userView = (IUserView) sessao.getAttribute("UserView");
-        GestorServicos gestor = GestorServicos.manager();
        
 		Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
         //ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
@@ -43,7 +43,7 @@ public class PrepararVerAlunosDeTurnoFormAction extends FenixShiftAndExecutionCo
 				SessionConstants.EXECUTION_COURSE);
 		Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
 		List infoTurnos =
-			(List) gestor.executar(
+			(List) ServiceManagerServiceFactory.executeService(
 				userView,
 				"LerTurnosDeDisciplinaExecucao",
 				argsLerTurnosDeDisciplinaExecucao);
@@ -57,7 +57,7 @@ public class PrepararVerAlunosDeTurnoFormAction extends FenixShiftAndExecutionCo
         request.setAttribute("infoTurno", infoTurno);
 		request.setAttribute(SessionConstants.SHIFT, infoTurno);
 	    Object argsLerAlunosDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoTurno.getInfoDisciplinaExecucao())};
-        ArrayList infoAlunosDeTurno = (ArrayList) gestor.executar(userView, "LerAlunosDeTurno", argsLerAlunosDeTurno);
+        ArrayList infoAlunosDeTurno = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "LerAlunosDeTurno", argsLerAlunosDeTurno);
 		request.removeAttribute("infoAlunosDeTurno");
 		if (!infoAlunosDeTurno.isEmpty())
 	        request.setAttribute("infoAlunosDeTurno", infoAlunosDeTurno);

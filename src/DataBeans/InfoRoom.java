@@ -10,11 +10,9 @@ package DataBeans;
  *
  * @author  tfc130
  */
-import java.io.Serializable;
-
 import Util.TipoSala;
 
-public class InfoRoom implements Serializable, Comparable {
+public class InfoRoom  extends InfoObject implements Comparable {
 	protected String _nome;
 	protected String _edificio;
 	protected Integer _piso;

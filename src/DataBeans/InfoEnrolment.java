@@ -11,7 +11,7 @@ import Util.EnrolmentState;
  *
  * 22/Abr/2003
  */
-public class InfoEnrolment extends InfoObject implements Serializable {
+public class InfoEnrolment extends InfoObject {
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 //	private InfoCurricularCourse infoCurricularCourse;
 	private InfoExecutionPeriod infoExecutionPeriod;

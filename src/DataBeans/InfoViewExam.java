@@ -12,7 +12,7 @@ package DataBeans;
  */
 import java.util.List;
 
-public class InfoViewExam {
+public class InfoViewExam extends InfoObject {
 	protected List infoViewExamsByDayAndShift;
 	protected Integer availableRoomOccupation;
 	

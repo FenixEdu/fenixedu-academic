@@ -3,6 +3,8 @@ package ServidorAplicacao.Servicos.commons.externalPerson;
 import java.util.Iterator;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExternalPerson;
 import ServidorAplicacao.Servicos.ServiceTestCase;
 
@@ -35,7 +37,7 @@ public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 		SuportePersistenteOJB.resetInstance();
 
 		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
+			return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
 		} catch (Exception ex) {
 			fail("Authenticating User!" + ex);
 			return null;
@@ -64,7 +66,7 @@ public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 			String name = "externo";
 			Object[] argsSearchExternalPersons = { name };
 
-			List infoExternalPersons = (List) gestor.executar(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
+			List infoExternalPersons = (List) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
 			assertNotNull(infoExternalPersons);
 			assertEquals(infoExternalPersons.size(), 1);
 			for (Iterator iter = infoExternalPersons.iterator(); iter.hasNext();) {
@@ -84,7 +86,7 @@ public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 			String name = "Partial name to find";
 			Object[] argsSearchExternalPersons = { name };
 
-			List infoExternalPersons = (List) gestor.executar(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
+			List infoExternalPersons = (List) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
 			assertNotNull(infoExternalPersons);
 			assertTrue(infoExternalPersons.isEmpty());
 

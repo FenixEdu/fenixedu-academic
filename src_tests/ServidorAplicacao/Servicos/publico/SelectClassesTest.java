@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.publico;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoClass;
@@ -67,7 +69,7 @@ public class SelectClassesTest extends TestCaseServicos {
 		
 		try {
 			result =
-				_gestor.executar(_userView, "SelectClasses", argsSelectClasses);
+				ServiceManagerServiceFactory.executeService(_userView, "SelectClasses", argsSelectClasses);
 			assertEquals(
 				"testReadByDegreeAndOtherStuff: 4classes in db",
 				4,
@@ -81,7 +83,7 @@ public class SelectClassesTest extends TestCaseServicos {
 		argsSelectClasses[0] = this.infoClass;
 
 		try {
-			result = _gestor.executar(null, "SelectClasses", argsSelectClasses);
+			result = ServiceManagerServiceFactory.executeService(null, "SelectClasses", argsSelectClasses);
 			assertEquals(
 				"testReadByDegreeAndOtherStuff: no classes to read",
 				0,

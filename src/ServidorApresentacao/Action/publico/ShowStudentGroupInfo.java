@@ -7,20 +7,23 @@ package ServidorApresentacao.Action.publico;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Iterator;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import DataBeans.StudentGroupAttendacyInformation;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.IStudentGroupAttend;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -37,14 +40,13 @@ public class ShowStudentGroupInfo extends Action
             return new String();
         else
         {
-            GestorServicos gestor = GestorServicos.manager();
             try
             {
                 Object argsAutenticacao[] = { username, password, "" };
-                IUserView userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+                IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
                 Object[] argsReadAttendacyInfo = { curricularCourseID, username };
                 StudentGroupAttendacyInformation info =
-                    (StudentGroupAttendacyInformation) gestor.executar(
+                    (StudentGroupAttendacyInformation) ServiceManagerServiceFactory.executeService(
                         userView,
                         "publico.GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername",
                         argsReadAttendacyInfo);

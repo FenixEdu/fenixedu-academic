@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRoom;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servicos.TestCaseServicos;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class SelectRoomsTest extends TestCaseServicos {
 	public SelectRoomsTest(java.lang.String testName) {
@@ -46,10 +46,9 @@ public class SelectRoomsTest extends TestCaseServicos {
 		Object argsSelectRooms[] = new Object[1];
 		argsSelectRooms[0] = new InfoRoom();
 		ArrayList result = null;
-		GestorServicos manager = GestorServicos.manager();
 		try {
 			result =
-				(ArrayList) manager.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					null,
 					"SelectRooms",
 					argsSelectRooms);
@@ -68,10 +67,9 @@ public class SelectRoomsTest extends TestCaseServicos {
 		argsSelectRooms[0] = room;
 		
 		ArrayList result = null;
-		GestorServicos manager = GestorServicos.manager();
 		try {
 			result =
-				(ArrayList) manager.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					null,
 					"SelectRooms",
 					argsSelectRooms);

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
@@ -43,7 +44,7 @@ public abstract class CoordinatorBelongsToExecutionDegree
 	public void testNonCoordinatorUser() {
 		Object serviceArguments[] = getAuthorizeArguments();
 		try {
-			gestor.executar(userView3, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView3, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testNonCoordinatorUser was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -64,7 +65,7 @@ public abstract class CoordinatorBelongsToExecutionDegree
 	public void testUnauthorizedUser() {
 		Object serviceArguments[] = getAuthorizeArguments();
 		try {
-			gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView2, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testUnauthorizedUser was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -85,7 +86,7 @@ public abstract class CoordinatorBelongsToExecutionDegree
 	public void testCoordinatorNotBelongsToExecutionDegree() {
 		Object serviceArguments[] = getNonAuthorizeArguments();
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testCoordinatorNotBelongsToExecutionDegree was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());

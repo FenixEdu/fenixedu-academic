@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoSiteTeacherStudentsEnrolledList;
@@ -109,7 +111,7 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
         {
 
             result =
-                (TeacherAdministrationSiteView) gestor.executar(
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());
@@ -160,7 +162,7 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
         try
         {
 
-            gestor.executar(
+            ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);
@@ -194,7 +196,7 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
         try
         {
 
-            gestor.executar(
+            ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);

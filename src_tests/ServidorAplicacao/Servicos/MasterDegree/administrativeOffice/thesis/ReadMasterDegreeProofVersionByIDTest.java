@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -54,7 +56,7 @@ public class ReadMasterDegreeProofVersionByIDTest extends AdministrativeOfficeBa
         {
             Object[] argsReadMasterDegreeProofVersion = { new Integer(1)};
             InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-                (InfoMasterDegreeProofVersion) serviceManager.executar(
+                (InfoMasterDegreeProofVersion) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeProofVersion);
@@ -96,7 +98,7 @@ public class ReadMasterDegreeProofVersionByIDTest extends AdministrativeOfficeBa
         {
             Object[] argsReadMasterDegreeProofVersion = { new Integer(50)};
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 userView,
                 getNameOfServiceToBeTested(),
                 argsReadMasterDegreeProofVersion);

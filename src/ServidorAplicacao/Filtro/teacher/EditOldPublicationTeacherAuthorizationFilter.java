@@ -40,10 +40,6 @@ public class EditOldPublicationTeacherAuthorizationFilter
         return instance;
     }
 
-    private EditOldPublicationTeacherAuthorizationFilter()
-    {
-    }
-
     /*
 	 * (non-Javadoc)
 	 * 

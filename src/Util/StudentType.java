@@ -1,11 +1,13 @@
 package Util;
 
+import java.io.Serializable;
+
 /**
  * @author dcs-rjao
  *
  * 25/Mar/2003
  */
-public class StudentType {
+public class StudentType implements Serializable {
 
 	public static final int NORMAL = 1;
 	public static final int WORKING_STUDENT = 2;

@@ -15,8 +15,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -46,7 +47,6 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
     {
 
         HttpSession session = request.getSession(false);
-        GestorServicos serviceManager = GestorServicos.manager();
 
         if (session != null)
         {
@@ -62,7 +62,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
             List result = null;
             try
             {
-                result = (List) serviceManager.executar(userView, "ReadAllMasterDegrees", args);
+                result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e)
             {
                 throw new NonExistingActionException("O Curso de Mestrado", e);
@@ -88,8 +88,6 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
         if (session != null)
         {
 
-            GestorServicos serviceManager = GestorServicos.manager();
-
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             //Get the Chosen Master Degree
@@ -106,7 +104,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
             {
 
                 result =
-                    (List) serviceManager.executar(userView, "ReadCPlanFromChosenMasterDegree", args);
+                    (List) ServiceManagerServiceFactory.executeService(userView, "ReadCPlanFromChosenMasterDegree", args);
 
             } catch (NonExistingServiceException e)
             {
@@ -139,8 +137,6 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
 
         HttpSession session = request.getSession(false);
 
-        GestorServicos serviceManager = GestorServicos.manager();
-
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         //Get the Selected Degree Curricular Plan
@@ -152,7 +148,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
         {
             Object args[] = { degreeCurricularPlanID, TipoCurso.MESTRADO_OBJ };
             result =
-                (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsFromDegreeCurricularPlan", args);
         } catch (NotAuthorizedException e)
         {
             return mapping.findForward("NotAuthorized");
@@ -177,7 +173,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
         {
             Object args[] = { degreeCurricularPlanID };
             infoExecutionDegree =
-                (InfoExecutionDegree) serviceManager.executar(
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadExecutionDegreeByDCPID",
                     args);

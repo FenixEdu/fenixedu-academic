@@ -21,7 +21,7 @@ import Util.State;
  */
 
 
-public class InfoCandidateSituation {
+public class InfoCandidateSituation extends InfoObject {
     
     private Date date = null;                // Situation Date
     private String remarks = null; 	 		 // Remarks

@@ -6,6 +6,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoSiteCareers;
 import ServidorAplicacao.IUserView;
@@ -76,7 +78,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             Object[] args = { careerType, userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
             assertEquals(infoSiteCareers.getCareerType(), careerType);
@@ -103,7 +105,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             Object[] serviceArgs = { careerType, userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
@@ -129,7 +131,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             Object[] args = { careerType, userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
             assertEquals(infoSiteCareers.getCareerType(), careerType);
@@ -156,7 +158,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             Object[] serviceArgs = { careerType, userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
@@ -182,7 +184,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             Object[] args = { careerType, userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
             assertEquals(infoSiteCareers.getCareerType(), careerType);
@@ -209,7 +211,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             Object[] serviceArgs = { careerType, userView.getUtilizador()};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();

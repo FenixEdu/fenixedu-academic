@@ -10,7 +10,7 @@ import Util.GraduationType;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class InfoPrice {
+public class InfoPrice extends InfoObject {
 
 	protected GraduationType graduationType;
 	protected Double price;

@@ -5,6 +5,7 @@
 package DataBeans;
 
 import java.io.UnsupportedEncodingException;
+import java.io.Serializable;
 
 /**
  *fenix-head
@@ -13,8 +14,7 @@ import java.io.UnsupportedEncodingException;
  *17/Set/2003
  *
  */
-public class InfoLink {
-	//note: this class does not extends InfoObject because it does not has a counterpart in the Domain. its just a DTO
+public class InfoLink implements Serializable {
 	private String linkName;
 	private String link;
 

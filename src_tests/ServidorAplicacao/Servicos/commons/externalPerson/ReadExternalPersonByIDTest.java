@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.commons.externalPerson;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoExternalPerson;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servicos.ServiceTestCase;
@@ -46,7 +47,7 @@ public class ReadExternalPersonByIDTest extends ServiceTestCase
             Object[] argsReadExternalPerson = { externalPersonID };
 
             InfoExternalPerson infoExternalPerson =
-                (InfoExternalPerson) gestor.executar(
+                (InfoExternalPerson) ServiceManagerServiceFactory.executeService(
                     null,
                     getNameOfServiceToBeTested(),
                     argsReadExternalPerson);
@@ -68,7 +69,7 @@ public class ReadExternalPersonByIDTest extends ServiceTestCase
             Integer externalPersonID = new Integer(145);
             Object[] argsReadExternalPerson = { externalPersonID };
 
-            gestor.executar(null, getNameOfServiceToBeTested(), argsReadExternalPerson);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadExternalPerson);
 
             fail("testReadNonExistingExternalPerson did not throw NonExistingServiceException");
 

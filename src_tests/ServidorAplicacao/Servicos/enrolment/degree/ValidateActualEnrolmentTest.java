@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.enrolment.degree;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCurricularCourseScope;
@@ -64,7 +65,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 		Object args[] = { _userView };
 		InfoEnrolmentContext result = null;
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, "ShowAvailableCurricularCourses", args);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, "ShowAvailableCurricularCourses", args);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");
@@ -79,7 +80,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 
 		Object args2[] = { result };
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args2);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args2);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");
@@ -96,7 +97,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 
 		Object args3[] = { result };
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args3);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args3);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");
@@ -118,7 +119,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 
 		Object args4[] = { result };
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args4);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args4);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");
@@ -140,7 +141,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 
 		Object args5[] = { result };
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args5);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args5);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");
@@ -156,7 +157,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 
 		Object args6[] = { result };
 		try {
-			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args6);
+			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args6);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Execution of service!");

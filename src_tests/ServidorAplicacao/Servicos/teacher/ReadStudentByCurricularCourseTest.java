@@ -3,10 +3,11 @@ package ServidorAplicacao.Servicos.teacher;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRole;
 import DataBeans.InfoSiteStudents;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -45,12 +46,10 @@ public class ReadStudentByCurricularCourseTest extends TestCaseServices {
 			Integer executionCourseCode = new Integer(25);
 			Integer scopeCode = null;
 
-			GestorServicos serviceManager = GestorServicos.manager();
-
 			Object[] args = { executionCourseCode, scopeCode };
 
 			TeacherAdministrationSiteView siteView =
-				(TeacherAdministrationSiteView) serviceManager.executar(
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 					authorizedUserView(),
 					"ReadStudentsByCurricularCourse",
 					args);
@@ -66,10 +65,9 @@ public class ReadStudentByCurricularCourseTest extends TestCaseServices {
 			scopeCode = new Integer(3);
 			siteView = null;
 			infoSiteStudents = null;
-			serviceManager = GestorServicos.manager();
 
 			siteView =
-				(TeacherAdministrationSiteView) serviceManager.executar(
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 					authorizedUserView(),
 					"ReadStudentsByCurricularCourse",
 					args);
@@ -91,12 +89,10 @@ public class ReadStudentByCurricularCourseTest extends TestCaseServices {
 			Integer executionCourseCode = new Integer(25);
 			Integer scopeCode = new Integer(3);
 
-			GestorServicos serviceManager = GestorServicos.manager();
-
 			Object[] args = { executionCourseCode, scopeCode };
 
 			TeacherAdministrationSiteView siteView =
-				(TeacherAdministrationSiteView) serviceManager.executar(
+				(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 					authorizedUserView(),
 					"ReadStudentsByCurricularCourse",
 					args);

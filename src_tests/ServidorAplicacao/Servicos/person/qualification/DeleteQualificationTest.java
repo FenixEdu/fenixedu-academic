@@ -4,6 +4,7 @@
 
 package ServidorAplicacao.Servicos.person.qualification;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -113,7 +114,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsDeleteQualificationGrantOwner();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteGOMQualificationSuccesfullDataSet.xml");
 
@@ -142,7 +143,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsDeleteQualificationTeacher();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteTQualificationSuccesfullDataSet.xml");
 
@@ -171,7 +172,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsDeleteQualificationGrantOwner();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("Delete Qualification Unsuccessfull.");
 
@@ -202,7 +203,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsDeleteQualificationTeacher();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("Delete Qualification Unsuccessfull.");
 
@@ -233,7 +234,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 			IUserView user = authenticateUser(args);
 			Object[] argserv = {new Integer(1220)}; //Invalid qualification
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("Delete Qualification Unsuccessfull.");
 		} catch (NotAuthorizedException e)
@@ -264,7 +265,7 @@ public class DeleteQualificationTest extends QualificationServiceNeedsAuthentica
 			IUserView user = authenticateUser(args);
 			Object[] argserv = { null }; //Invalid qualification
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("Delete Qualification Unsuccessfull.");
 

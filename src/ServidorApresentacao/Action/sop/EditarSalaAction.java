@@ -13,9 +13,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -73,7 +74,7 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
 		Object argsCriarSala[] =
 			{ new RoomKey(roomToEdit.getNome()), editedRoom };
 		try {
-			GestorServicos.manager().executar(
+			ServiceManagerServiceFactory.executeService(
 				userView,
 				"EditarSala",
 				argsCriarSala);

@@ -16,10 +16,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -92,10 +93,9 @@ public class ReadSite extends FenixAction {
 		args[0] = site;
 //TODO: the last announcemnet is to be removed
 		InfoAnnouncement lastAnnouncement = null;
-		GestorServicos manager = GestorServicos.manager();
 		try {
 			lastAnnouncement =
-				(InfoAnnouncement) manager.executar(
+				(InfoAnnouncement) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ReadLastAnnouncement",
 					args);
@@ -109,7 +109,7 @@ public class ReadSite extends FenixAction {
 		// read sections		
 		List sections = null;
 		try {
-			sections = (List) manager.executar(userView, "ReadSections", args);
+			sections = (List) ServiceManagerServiceFactory.executeService(userView, "ReadSections", args);
 			Collections.sort(sections);
 			session.setAttribute(SessionConstants.SECTIONS, sections);
 		} catch (FenixServiceException fenixServiceException) {

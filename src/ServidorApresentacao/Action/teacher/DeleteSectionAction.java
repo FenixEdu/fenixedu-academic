@@ -21,9 +21,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -49,15 +50,14 @@ public class DeleteSectionAction extends FenixAction{
 		
 		try {
 			Object deleteSectionArguments[] = { infoSection };
-			GestorServicos manager = GestorServicos.manager();
-			 manager.executar(userView, "DeleteSection", deleteSectionArguments);
+			ServiceManagerServiceFactory.executeService(userView, "DeleteSection", deleteSectionArguments);
 
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			session.removeAttribute(SessionConstants.SECTIONS);
 			
 			InfoSite infoSite = infoSection.getInfoSite();
 			Object readSectionsArguments[] = { infoSite };
-			List allInfoSections = (List) manager.executar(null, "ReadSections", readSectionsArguments);
+			List allInfoSections = (List) ServiceManagerServiceFactory.executeService(null, "ReadSections", readSectionsArguments);
 			
 			Collections.sort(allInfoSections);
 			session.setAttribute(SessionConstants.SECTIONS, allInfoSections);	

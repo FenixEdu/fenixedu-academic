@@ -58,7 +58,6 @@ import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSiteTeachers;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -82,6 +81,7 @@ import ServidorApresentacao.mapping.SiteManagementActionMapping;
 import Util.EnrolmentGroupPolicyType;
 import Util.TipoAula;
 import fileSuport.FileSuportObject;
+import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Fernanda Quitério
  *  
@@ -144,10 +144,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoSiteNew.setIntroduction(introduction);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, infoSiteNew };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "EditCustomizationOptions", args);
+            ServiceManagerServiceFactory.executeService(userView, "EditCustomizationOptions", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -205,10 +204,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String information = (String) insertAnnouncementForm.get("information");
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, title, information };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "CreateAnnouncement", args);
+            ServiceManagerServiceFactory.executeService(userView, "CreateAnnouncement", args);
         } catch (ExistingServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
@@ -268,10 +266,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String newInformation = (String) insertAnnouncementForm.get("information");
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, announcementCode, newTitle, newInformation };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "EditAnnouncementService", args);
+            ServiceManagerServiceFactory.executeService(userView, "EditAnnouncementService", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -297,10 +294,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, announcementCode };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "DeleteAnnouncementService", args);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -352,12 +348,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 	
 		//Filter if the course is of the AERO degree
-		Object args[] = { curricularCourseCode };        
-		GestorServicos serviceManager = GestorServicos.manager();
+		Object args[] = { curricularCourseCode };
 		Boolean isExpectedDegree = null;
 		try
 		{
-			isExpectedDegree = (Boolean) serviceManager.executar(null, "CourseOfTheExpectedDegree", args);
+			isExpectedDegree = (Boolean) ServiceManagerServiceFactory.executeService(null, "CourseOfTheExpectedDegree", args);
 
 		} catch (FenixServiceException e)
 		{
@@ -423,10 +418,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		
         Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador() };
         
-        GestorServicos serviceManager = GestorServicos.manager();
         try
         {
-            serviceManager.executar(userView, "EditObjectives", args);
+            ServiceManagerServiceFactory.executeService(userView, "EditObjectives", args);
 
         } catch (FenixServiceException e)
         {
@@ -471,12 +465,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         
 		//Filter if the course is of the AERO degree
-		Object args[] = { curricularCourseCode };        
-		GestorServicos serviceManager = GestorServicos.manager();
+		Object args[] = { curricularCourseCode };
 		Boolean isExpectedDegree = null;
 		try
 		{
-			isExpectedDegree = (Boolean) serviceManager.executar(null, "CourseOfTheExpectedDegree", args);
+			isExpectedDegree = (Boolean) ServiceManagerServiceFactory.executeService(null, "CourseOfTheExpectedDegree", args);
 
 		} catch (FenixServiceException e)
 		{
@@ -526,11 +519,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew, userView.getUtilizador() };
-        GestorServicos serviceManager = GestorServicos.manager();
 
         try
         {
-            serviceManager.executar(userView, "EditProgram", args);
+            ServiceManagerServiceFactory.executeService(userView, "EditProgram", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -646,10 +638,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Object args[] = { objectCode, evaluationMethodCode, infoEvaluationMethod };
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
         try
         {
-            serviceManager.executar(userView, "EditEvaluation", args);
+            ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
 
         } catch (FenixServiceException e)
         {
@@ -677,7 +668,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         //		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         //		GestorServicos serviceManager = GestorServicos.manager();
         //		try {
-        //			serviceManager.executar(userView, "EditEvaluation", args);
+        //			ServiceManagerServiceFactory.executeService(userView, "EditEvaluation", args);
         //
         //		} catch (FenixServiceException e) {
         //			throw new FenixActionException(e);
@@ -738,10 +729,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Boolean optional = new Boolean((String) insertBibliographicReferenceForm.get("optional"));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, title, authors, reference, year, optional };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "CreateBibliographicReference", args);
+            ServiceManagerServiceFactory.executeService(userView, "CreateBibliographicReference", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -800,10 +790,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Object args[] =
             { objectCode, bibliographicReferenceCode, title, authors, reference, year, optional };
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "EditBibliographicReference", args);
+            ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -830,10 +819,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, bibliographicReferenceCode };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "DeleteBibliographicReference", args);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -885,10 +873,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, teacherNumber };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "AssociateTeacher", args);
+            ServiceManagerServiceFactory.executeService(userView, "AssociateTeacher", args);
         } catch (InvalidArgumentsServiceException e)
         {
             throw new InvalidArgumentsActionException(teacherNumber.toString(), e);
@@ -918,10 +905,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, teacherCode };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "DeleteTeacher", args);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteTeacher", args);
         } catch (notAuthorizedServiceDeleteException ee)
         {
             throw new notAuthorizedActionDeleteException("error.invalidTeacherRemoval");
@@ -1029,10 +1015,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer order = Integer.valueOf((String) dynaForm.get("sectionOrder"));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, sectionCode, sectionName, order };
-        GestorServicos manager = GestorServicos.manager();
         try
         {
-            manager.executar(userView, "InsertSection", args);
+            ServiceManagerServiceFactory.executeService(userView, "InsertSection", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException("Uma secção com esse nome", e);
@@ -1069,11 +1054,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer order = (Integer) sectionForm.get("sectionOrder");
         order = new Integer(order.intValue() - 1);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos manager = GestorServicos.manager();
         Object editionArgs[] = { objectCode, sectionCode, sectionName, order };
         try
         {
-            manager.executar(userView, "EditSection", editionArgs);
+            ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
         } catch (ExistingServiceException ex)
         {
             throw new ExistingActionException(sectionName, ex);
@@ -1099,10 +1083,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object deleteSectionArguments[] = { objectCode, sectionCode };
-        GestorServicos manager = GestorServicos.manager();
         try
         {
-            manager.executar(userView, "DeleteSection", deleteSectionArguments);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteSection", deleteSectionArguments);
             //			if this section has a parent section
             if (superiorSectionCode != null)
             {
@@ -1317,10 +1300,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setUrgent(new Boolean(urgentString));
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, sectionCode, newInfoItem };
-        GestorServicos manager = GestorServicos.manager();
         try
         {
-            manager.executar(userView, "InsertItem", args);
+            ServiceManagerServiceFactory.executeService(userView, "InsertItem", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException("Um item com esse nome", e);
@@ -1379,10 +1361,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         newInfoItem.setUrgent(urgent);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object editItemArgs[] = { objectCode, itemCode, newInfoItem };
-        GestorServicos manager = GestorServicos.manager();
         try
         {
-            manager.executar(userView, "EditItem", editItemArgs);
+            ServiceManagerServiceFactory.executeService(userView, "EditItem", editItemArgs);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException("Um item com esse nome", e);
@@ -1404,10 +1385,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object deleteItemArguments[] = { objectCode, itemCode };
-        GestorServicos manager = GestorServicos.manager();
         try
         {
-            manager.executar(userView, "DeleteItem", deleteItemArguments);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteItem", deleteItemArguments);
         } catch (notAuthorizedServiceDeleteException e)
         {
             ActionErrors actionErrors = new ActionErrors();
@@ -2037,10 +2017,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
         Integer objectCode = getObjectCode(request);
         Object args[] = { objectCode, infoGroupProperties };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "CreateGroupProperties", args);
+            ServiceManagerServiceFactory.executeService(userView, "CreateGroupProperties", args);
         } catch (ExistingServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
@@ -2230,11 +2209,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));
         Integer objectCode = getObjectCode(request);
         Object args[] = { objectCode, infoGroupProperties };
-        GestorServicos gestor = GestorServicos.manager();
         List errors = new ArrayList();
         try
         {
-            errors = (List) gestor.executar(userView, "EditGroupProperties", args);
+            errors = (List) ServiceManagerServiceFactory.executeService(userView, "EditGroupProperties", args);
         } catch (ExistingServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
@@ -2299,10 +2277,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         Integer studentGroupCode = new Integer(studentGroupCodeString);
         Object[] args = { objectCode, studentGroupCode };
-        GestorServicos gestorServicos = GestorServicos.manager();
         try
         {
-            gestorServicos.executar(userView, "DeleteStudentGroup", args);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteStudentGroup", args);
         } catch (ExistingServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
@@ -2345,11 +2322,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         InfoSiteStudentGroup infoSiteStudentGroup;
         Object args[] = { objectCode, groupPropertiesCode };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
             infoSiteStudentGroup =
-                (InfoSiteStudentGroup) gestor.executar(userView, "PrepareCreateStudentGroup", args);
+                (InfoSiteStudentGroup) ServiceManagerServiceFactory.executeService(userView, "PrepareCreateStudentGroup", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -2385,10 +2361,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer groupNumber = new Integer(groupNumberString);
 
         Object args[] = { objectCode, groupNumber, groupPropertiesCode, shiftCode, studentCodes };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "CreateStudentGroup", args);
+            ServiceManagerServiceFactory.executeService(userView, "CreateStudentGroup", args);
 
         } catch (ExistingServiceException e)
         {
@@ -2508,11 +2483,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
             Integer newShiftCode = new Integer(newShiftString);
             Object args[] = { objectCode, studentGroupCode, newShiftCode };
-            GestorServicos gestor = GestorServicos.manager();
 
             try
             {
-                gestor.executar(userView, "EditStudentGroupShift", args);
+                ServiceManagerServiceFactory.executeService(userView, "EditStudentGroupShift", args);
             } catch (InvalidArgumentsServiceException e)
             {
                 ActionErrors actionErrors = new ActionErrors();
@@ -2569,11 +2543,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         Object args[] = { objectCode, studentGroupCode };
-        GestorServicos gestor = GestorServicos.manager();
         List infoStudentList = null;
         try
         {
-            infoStudentList = (List) gestor.executar(userView, "PrepareEditStudentGroupMembers", args);
+            infoStudentList = (List) ServiceManagerServiceFactory.executeService(userView, "PrepareEditStudentGroupMembers", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -2600,11 +2573,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         List studentCodes = Arrays.asList((Integer[]) insertStudentGroupForm.get("studentCodes"));
 
         Object args[] = { objectCode, studentGroupCode, studentCodes };
-        GestorServicos gestor = GestorServicos.manager();
 
         try
         {
-            gestor.executar(userView, "InsertStudentGroupMembers", args);
+            ServiceManagerServiceFactory.executeService(userView, "InsertStudentGroupMembers", args);
         } catch (ExistingServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
@@ -2646,10 +2618,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         List studentUsernames = Arrays.asList((String[]) deleteStudentGroupForm.get("studentsToRemove"));
 
         Object args[] = { objectCode, studentGroupCode, studentUsernames };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "DeleteStudentGroupMembers", args);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteStudentGroupMembers", args);
         } catch (ExistingServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();

@@ -13,11 +13,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -52,8 +52,7 @@ public class CancelCandidacy extends FenixAction
         try
         {
             Object[] argsReadSeminary = { candidacyID };
-            GestorServicos gestor = GestorServicos.manager();
-            gestor.executar(
+			ServiceManagerServiceFactory.executeService(
                     userView,
                     "Seminaries.DeleteCandidacy",
                     argsReadSeminary);

@@ -1,5 +1,7 @@
 package Util;
 
+import java.io.Serializable;
+
 
 /**
  * @author dcs-rjao
@@ -7,7 +9,7 @@ package Util;
  * 19/Mar/2003
  */
 
-public class CurricularCourseType {
+public class CurricularCourseType implements Serializable {
 
 	public static final int NORMAL_COURSE = 1;
 	public static final int OPTIONAL_COURSE = 2;

@@ -13,7 +13,7 @@ import java.util.List;
  * @author  Luis Cruz & Sara Ribeiro
  */
 
-public class InfoViewExamByDayAndShift {
+public class InfoViewExamByDayAndShift extends InfoObject {
 
 	protected InfoExam infoExam;
 	protected List infoExecutionCourses;

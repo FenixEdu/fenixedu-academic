@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 import Util.DiaSemana;
 
-public class KeyLesson {
+public class KeyLesson extends InfoObject {
   protected DiaSemana _diaSemana;
   protected Calendar _inicio;
   protected Calendar _fim;

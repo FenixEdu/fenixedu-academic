@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import org.apache.commons.lang.enum.ValuedEnum;
  *
  * 2/Abr/2003
  */
-public class EnrolmentState extends ValuedEnum {
+public class EnrolmentState extends ValuedEnum implements Serializable {
 
 	public static final int APROVED_TYPE = 1;
 	public static final int NOT_APROVED_TYPE = 2;

@@ -19,13 +19,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoGroupProjectStudents;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteStudents;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -78,7 +79,6 @@ public class DownloadStudentList extends FenixAction
         Object args[] = { objectCode, scopeCode };
         Object argsProjects[] = { objectCode };
         Object argsInfos[] = { objectCode };
-        GestorServicos gestor = GestorServicos.manager();
         TeacherAdministrationSiteView siteView = null;
         InfoSiteProjects projects = null;
         List infosGroups = null;
@@ -87,19 +87,19 @@ public class DownloadStudentList extends FenixAction
         try
         {
             siteView =
-                (TeacherAdministrationSiteView) gestor.executar(
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsByCurricularCourse",
                     args);
 
             projects =
-                (InfoSiteProjects) gestor.executar(
+                (InfoSiteProjects) ServiceManagerServiceFactory.executeService(
                     userView,
                     "teacher.ReadExecutionCourseProjects",
                     argsProjects);
 
             infosGroups =
-                (List) gestor.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     "teacher.GetProjectsGroupsByExecutionCourseID",
                     argsInfos);
@@ -111,7 +111,7 @@ public class DownloadStudentList extends FenixAction
                 //please read http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
                 Object[] argsReadShiftStudents = { objectCode, shiftID };
                 shiftStudents =
-                    (List) gestor.executar(
+                    (List) ServiceManagerServiceFactory.executeService(
                         userView,
                         "teacher.ReadStudentsByShiftID",
                         argsReadShiftStudents);
@@ -119,7 +119,7 @@ public class DownloadStudentList extends FenixAction
             }
             Object[] argsAttendacies = { objectCode, infoSiteStudents.getStudents()};
             attendacies =
-                (List) gestor.executar(userView, "teacher.GetAttendaciesByStudentList", argsAttendacies);
+                (List) ServiceManagerServiceFactory.executeService(userView, "teacher.GetAttendaciesByStudentList", argsAttendacies);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);

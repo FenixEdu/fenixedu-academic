@@ -12,7 +12,6 @@ import Dominio.IDepartment;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentDepartment;
@@ -46,7 +45,6 @@ public class CreditsAuthorizationFilter extends Filtro {
 	 */
 	public void preFiltragem(
 		IUserView requester,
-		IServico service,
 		Object[] arguments)
 		throws Exception {
 		Collection roles = requester.getRoles();
@@ -92,8 +90,6 @@ public class CreditsAuthorizationFilter extends Filtro {
 			throw new NotAuthorizedException(
 				" -----------> User = "
 					+ requester.getUtilizador()
-					+ ": SERVICE "
-					+ service.getNome()
 					+ "ACCESS NOT GRANTED!");
 		}
 	}

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoSiteCommon;
 import DataBeans.SiteView;
@@ -151,7 +152,7 @@ public class ReadAnnouncementTest extends AnnouncementBelongsToExecutionCourseTe
 
 			//Execução do serviço
 			SiteView siteView = null;
-			siteView = (SiteView) gestor.executar(id, getNameOfServiceToBeTested(), argserv);
+			siteView = (SiteView) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), argserv);
 
 			//Leu alguma coisa?
 			if (siteView == null)
@@ -238,7 +239,7 @@ public class ReadAnnouncementTest extends AnnouncementBelongsToExecutionCourseTe
 			IUserView id = authenticateUser(args);
 
 			//Execução do serviço
-			gestor.executar(id, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), argserv);
 
 			fail("Reading an Announcement for a Site ");
 		} catch (NotAuthorizedException e)

@@ -31,14 +31,11 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public abstract class ServiceTestCase extends TestCase
 {
-
-    protected GestorServicos gestor = null;
 
     public ServiceTestCase(String name)
     {
@@ -89,8 +86,6 @@ public abstract class ServiceTestCase extends TestCase
             DatabaseOperation.INSERT.execute(connection, dataSet);
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.clearCache();
-
-            gestor = GestorServicos.manager();
 
             connection.close();
         } catch (Exception ex)

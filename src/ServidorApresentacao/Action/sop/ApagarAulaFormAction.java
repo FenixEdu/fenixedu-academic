@@ -11,12 +11,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao
 	.Action
@@ -46,7 +47,6 @@ public class ApagarAulaFormAction
 				(DynaActionForm) request.getAttribute("manipularAulasForm");
 
 			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
 			Integer indexAula = (Integer) manipularAulasForm.get("indexAula");
 
 			InfoExecutionCourse iDE =
@@ -56,7 +56,7 @@ public class ApagarAulaFormAction
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
-				(ArrayList) gestor.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
@@ -82,7 +82,7 @@ public class ApagarAulaFormAction
 						new RoomKey(infoAula.getInfoSala().getNome())),
 					infoExecutionPeriod };
 			Boolean result =
-				(Boolean) gestor.executar(
+				(Boolean) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ApagarAula",
 					argsApagarAula);

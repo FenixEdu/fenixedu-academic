@@ -7,7 +7,6 @@ package ServidorAplicacao.Filtro.Seminaries;
 import Dominio.IStudent;
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.ICandidacy;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -34,7 +33,7 @@ public class CandidacyOwnershipFilter extends Filtro
 	{
 		return instance;
 	}
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
 	{
 		Integer candidacyID= (Integer) argumentos[0];
 		ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();

@@ -14,7 +14,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import ServidorAplicacao.GestorServicos;
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -48,10 +49,9 @@ public class StudentListingByDegreeDispatchAction extends DispatchAction {
 			// Get the Students List			
 			Object args[] = { executionDegreeString, executionYearString };
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();
 			ArrayList studentList = null;
 			try {
-				studentList = (ArrayList) serviceManager.executar(userView, "ReadStudentsByExecutionDegreeAndExecutionYear", args);
+				studentList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsByExecutionDegreeAndExecutionYear", args);
 			} catch (NonExistingServiceException e) {
 				ActionErrors errors = new ActionErrors();
 				errors.add("nonExisting", new ActionError("message.public.not.found.studentsByDegree", executionDegreeString));

@@ -4,6 +4,7 @@
 
 package ServidorAplicacao.Servicos.person.qualification;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.person.InfoQualification;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -102,7 +103,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
 
-			InfoQualification infoQualification= (InfoQualification) gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			InfoQualification infoQualification= (InfoQualification) ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			//Verify if the data jas been correctly read
 			assertEquals(infoQualification.getMark(), "mark");
@@ -137,7 +138,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsTeacher();
 
-			InfoQualification infoQualification = (InfoQualification)gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			InfoQualification infoQualification = (InfoQualification)ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			assertEquals(infoQualification.getMark(), "mark");
 			assertEquals(infoQualification.getYear(), new Integer(1999));
@@ -171,7 +172,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("ReadQualificationUnsuccessfull.");
 
@@ -202,7 +203,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsTeacher();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("ReadQualificationUnsuccessfull.");
 
@@ -233,7 +234,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = { new Integer(1220)}; //Invalid qualification
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("ReadQualificationUnsuccessfull.");
 
@@ -264,7 +265,7 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = { null }; //Invalid qualification
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("Read Qualification Unsuccessfull.");
 

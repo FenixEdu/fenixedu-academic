@@ -253,7 +253,6 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addEqualTo("executionYear.year", year.getYear());
         return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
     }
-
     /*
 	 * (non-Javadoc)
 	 * 

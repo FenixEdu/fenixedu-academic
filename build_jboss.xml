@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<project basedir="." default="deploy-all" name="JBoss">
+
+    <property environment="env"/>
+	<property name="encoding" value="ISO-8859-15"/>	
+
+	<property file="build.properties"/>
+
+    <!-- Source code directories -->
+    <property name="src" location="src"/>
+    <property name="config" location="config"/>
+    <property name="config.j2ee" value="${config}/jboss"/>
+    <property name="config.web" location="metadata"/>
+
+	<!-- Directories for compiled code -->
+	<property name="build.home" location="build"/>
+	<property name="build.app-server" value="${build.home}/app-server"/>
+	<property name="build.app-server.metainfo" value="${build.app-server}/META-INF"/>
+	<property name="build.web-client" value="${build.home}/web-client"/>
+	<property name="build.web-client.webinf" value="${build.web-client}/WEB-INF"/>
+	<property name="build.web-client.webinf.classes" value="${build.web-client.webinf}/classes"/>
+	<property name="build.web-client.webinf.libs" value="${build.web-client.webinf}/lib"/>
+	<property name="build.standalone" value="${build.home}/standalone"/>
+	<property name="build.standalone.webinf" value="${build.standalone}/WEB-INF"/>
+	<property name="build.standalone.webinf.classes" value="${build.standalone.webinf}/classes"/>
+	<property name="build.standalone.webinf.libs" value="${build.standalone.webinf}/lib"/>
+
+	<!-- Directories for deploy -->
+	<property name="deploy.home" location="deploy"/>
+    <property name="deploy.jars" value="${deploy.home}/jars"/>
+    <property name="deploy.jar.app-server" value="fenix-application-server.jar"/>
+    <property name="deploy.sar.app-server" value="fenix-application-server.sar"/>
+    <property name="deploy.jar.web-client" value="fenix-web-client.jar"/>
+    <property name="deploy.war.web-client" value="fenix-web-client.war"/>
+    <property name="deploy.jar.standalone" value="fenix-standalone.jar"/>
+    <property name="deploy.war.standalone" value="fenix-standalone.war"/>
+	
+    <!-- Directories with libraries (JARs) -->
+    <property name="lib" location="lib" />
+	<property name="libs.web" location="lib_web"/>
+
+    <!-- Directory with SQL instructions -->
+    <property name="sql" location="etc"/>
+
+    <!-- Directory with web-content -->
+    <property name="web-content" location="jsp"/>
+
+	<!-- Compilation options -->
+	<property name="compile.debug"       value="on"/>
+  	<property name="compile.deprecation" value="on"/>
+  	<property name="compile.optimize"    value="on"/>
+
+
+	<fileset dir="${config}"
+			 casesensitive="yes">
+		<patternset id="config.app-server">
+			<include name="*.*"/>
+			<include name="**/OJB/**/*.*"/>
+			<exclude name="jndi.properties*"/>
+		</patternset>
+	</fileset>
+
+	<fileset dir="${config}"
+			 casesensitive="yes">
+		<patternset id="config.web-client">
+			<include name="**/ServidorApresentacao/**/*.*"/>
+			<include name="jndi.properties*"/>
+		</patternset>
+	</fileset>
+
+	<fileset dir="${src}"
+			 casesensitive="yes">
+		<patternset id="src.app-server">
+       		<include name="constants/**/*.class"/>
+       		<include name="DataBeans/**/*.class"/>
+       		<include name="Dominio/**/*.class"/>
+       		<include name="fileSuport/**/*.class"/>
+       		<include name="ServidorAplicacao/**/*.class"/>
+       		<include name="ServidorPersistente/**/*.class"/>
+       		<include name="ServidorPersistenteFiltroPessoa/**/*.class"/>
+       		<include name="ServidorPersistenteJDBC/**/*.class"/>
+       		<include name="Util/**/*.class"/>
+       		<include name="UtilInsc/**/*.class"/>
+		</patternset>
+	</fileset>
+
+    <target name="clean-all"
+    		description="Removes any generated files">
+		<delete dir="${build.home}"/>
+		<delete dir="${deploy.home}"/>
+    </target>
+
+	<target name="prepare-app-server"
+			description="Copy configuration files to compile dir">
+		<!-- Create build directories as needed -->
+		<mkdir dir="${build.app-server}"/>
+		<mkdir dir="${build.app-server.metainfo}"/>
+
+		<!-- Copy needed configuration files for application server -->
+		<copy todir="${build.app-server}">
+			<fileset dir="${config}" >
+				<patternset refid="config.app-server"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.app-server.metainfo}">
+			<fileset dir="${config.j2ee}" >
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${build.app-server}">
+			<fileset dir="${lib}" >
+				<include name="*.*"/>
+				<exclude name="jta.jar"/>
+			</fileset>
+		</copy>
+
+		<!-- Replace tokens in configuration files with local config -->
+		<antcall target="replace-app-server-property-values"/>
+	</target>
+
+	<target name="replace-app-server-property-values">
+		<replace dir="${build.app-server}"
+				 propertyFile="build.properties">
+			<include name="**/**/*.xml"/>
+	    	<include name="**/**/slide.properties"/>
+			<replacefilter token="&lt;!-- @validation.doctype@ -->"
+						   property="validation.doctype"/>
+
+			<replacefilter token="@db.user@"
+						   property="db.user"/>
+			<replacefilter token="@db.pass@" 
+						   property="db.pass"/>
+			<replacefilter token="@db.name@"
+						   property="db.name"/>
+			<replacefilter token="@db.alias@"
+						   property="db.alias"/>
+
+			<replacefilter token="@db.assiduousness.user@"
+						   property="db.assiduousness.user"/>
+			<replacefilter token="@db.assiduousness.pass@" 
+		    			   property="db.assiduousness.pass"/>
+			<replacefilter token="@db.assiduousness.name@" 
+						   property="db.assiduousness.name"/>
+			<replacefilter token="@db.assiduousness.alias@" 
+		    			   property="db.assiduousness.alias"/>
+			<replacefilter token="@db.assiduousness.platform@" 
+		    			   property="db.assiduousness.platform"/>
+			<replacefilter token="@db.assiduousness.driver@" 
+		    			   property="db.assiduousness.driver"/>
+			<replacefilter token="@db.assiduousness.protocol@" 
+		    			   property="db.assiduousness.protocol"/>
+			<replacefilter token="@db.assiduousness.subprotocol@" 
+		    			   property="db.assiduousness.subprotocol"/>
+			<replacefilter token="@db.assiduousness.validationQuery@" 
+		    			   property="db.assiduousness.validationQuery"/>
+		  		    
+			<replacefilter token="@db.personFilter.user@" 
+		    			   property="db.personFilter.user"/>
+			<replacefilter token="@db.personFilter.pass@" 
+		    			   property="db.personFilter.pass"/>
+			<replacefilter token="@db.personFilter.name@" 
+		    			   property="db.personFilter.name"/>
+			<replacefilter token="@db.personFilter.alias@" 
+		    			   property="db.personFilter.alias"/>
+			<replacefilter token="@db.personFilter.platform@" 
+		    			   property="db.personFilter.platform"/>
+			<replacefilter token="@db.personFilter.driver@" 
+		    			   property="db.personFilter.driver"/>
+			<replacefilter token="@db.personFilter.protocol@" 
+		    			   property="db.personFilter.protocol"/>
+			<replacefilter token="@db.personFilter.subprotocol@" 
+		    			   property="db.personFilter.subprotocol"/>
+			<replacefilter token="@db.personFilter.validationQuery@" 
+		    			   property="db.personFilter.validationQuery"/>
+			<replacefilter token="@db.personFilter.other@" 
+		    			   property="db.personFilter.other"/>
+			<replacefilter token="@db.personFilter.errorFile@" 
+		    			   property="db.personFilter.errorFile"/>
+			<replacefilter token="@db.personFilter.log@" 
+		    			   property="db.personFilter.log"/>
+
+			<replacefilter token="@application@" 
+		    			   property="application"/>
+
+			<replacefilter token="@db.slide.driver@" 
+		    			   property="db.slide.driver"/>
+			<replacefilter token="@db.slide.alias@" 
+		    			   property="db.slide.alias"/>
+		    <replacefilter token="@db.slide.user@" 
+		    			   property="db.slide.user"/>
+		    <replacefilter token="@db.slide.pass@" 
+		    			   property="db.slide.pass"/>
+		    <replacefilter token="@slide.config@" 
+		    			   property="slide.config"/>
+		</replace>
+	</target>
+
+    <target name="compile-app-server"
+    		description="Compile application server"
+    		depends="prepare-app-server">
+		<javac destdir="${build.app-server}"
+               extdirs="${lib}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}">
+			<src path="${src}"/>
+       		<include name="constants/**/*.java"/>
+       		<include name="DataBeans/**/*.java"/>
+       		<include name="Dominio/**/*.java"/>
+       		<include name="fileSuport/**/*.java"/>
+       		<include name="middleware/**/*.java"/>
+       		<include name="ServidorAplicacao/**/*.java"/>
+       		<include name="ServidorPersistente/**/*.java"/>
+       		<include name="ServidorPersistenteFiltroPessoa/**/*.java"/>
+       		<include name="ServidorPersistenteJDBC/**/*.java"/>
+       		<include name="Util/**/*.java"/>
+       		<include name="UtilInsc/**/*.java"/>
+		</javac>
+	</target>
+
+    <target name="jar-app-server"
+    		depends="compile-app-server"
+            description="Creates a jar for the fenix application server">
+      	<mkdir dir="${deploy.jars}"/>
+        <jar destfile="${deploy.jars}/${deploy.jar.app-server}"
+        	 basedir="${build.app-server}"/>
+	</target>
+
+    <target name="sar-app-server"
+    		depends="compile-app-server"
+            description="Creates a sar for the fenix application server">
+      	<mkdir dir="${deploy.jars}"/>
+        <jar destfile="${deploy.jars}/${deploy.sar.app-server}"
+        	 basedir="${build.app-server}"/>
+	</target>
+
+    <target name="deploy-app-server"
+    		depends="jar-app-server"
+            description="Deploys server to jboss">
+		<delete file="${env.JBOSS_HOME}/server/all/deploy/${deploy.jar.app-server}"/>
+		<sleep seconds="5"/>
+		<copy file="${deploy.jars}/${deploy.jar.app-server}"
+			  tofile="${env.JBOSS_HOME}/server/all/deploy/${deploy.jar.app-server}"/>
+	</target>
+
+	<target name="prepare-web-client"
+			description="Copy configuration files to compile dir">
+		<!-- Create build directories as needed -->
+		<mkdir dir="${build.web-client}"/>
+		<mkdir dir="${build.web-client.webinf}"/>
+		<mkdir dir="${build.web-client.webinf.classes}"/>
+		<mkdir dir="${build.web-client.webinf.libs}"/>
+
+		<!-- Copy needed configuration files for application server -->
+		<copy todir="${build.web-client}">
+			<fileset dir="${web-content}" >
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.web-client.webinf.classes}">
+			<fileset dir="${config}" >
+				<patternset refid="config.web-client"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.web-client.webinf}">
+			<fileset dir="${config.web}" >
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.web-client.webinf.libs}">
+			<fileset dir="${libs.web}" >
+				<include name="*.*"/>
+				<exclude name="servlet.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.web-client.webinf.libs}">
+                        <fileset dir="${env.JBOSS_HOME}/client">
+                                <include name="*.jar"/>
+<!--
+			<fileset dir="${env.JBOSS_HOME}/lib">
+				<include name="jboss-common.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.web-client.webinf.libs}">
+			<fileset dir="${env.JBOSS_HOME}/server/default/lib">
+				<include name="jboss-j2ee.jar"/>
+				<include name="jnpserver.jar"/>
+				<include name="jboss.jar"/>
+				<include name="log4j.jar"/>
+-->
+			</fileset>
+		</copy>
+		<!-- Replace tokens in configuration files with local config -->
+		<antcall target="replace-web-client-property-values"/>
+	</target>
+
+	<target name="replace-web-client-property-values">
+		<replace dir="${build.web-client}"
+				 propertyFile="build.properties">
+			<include name="**/**/*.xml"/>
+			<include name="**/**/ApplicationResources.properties"/>
+
+			<replacefilter token="&lt;!-- @validation.doctype@ -->"
+						   property="validation.doctype"/>
+
+			<replacefilter token="@application@" 
+		    			   property="application"/>
+
+		  	<replacefilter token="@login.page@"
+		  				   property="login.page"/>
+
+		</replace>
+	</target>
+
+    <target name="compile-web-client"
+    		description="Compile web client"
+    		depends="prepare-web-client">
+		<javac destdir="${build.web-client.webinf.classes}"
+               extdirs="${lib}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}">
+			<src path="${src}"/>
+       		<include name="constants/**/*.java"/>
+       		<include name="DataBeans/**/*.java"/>
+       		<!--
+       		<include name="$Dominio/**/*.java"/>
+       		-->
+       		<include name="fileSuport/**/*.java"/>
+       		<include name="framework/**/*.java"/>
+       		<!--
+       		<include name="ServidorAplicacao/IServiceManager.java"/>
+       		<include name="ServidorAplicacao/IUserView.java"/>
+       		<include name="ServidorAplicacao/Servico/UserView.java"/>
+       		<include name="ServidorAplicacao/Servico/exceptions/FenixServiceException.java"/>
+       		-->
+       		<include name="ServidorApresentacao/**/*.java"/>
+       		<include name="Util/**/*.java"/>
+       		<include name="UtilInsc/**/*.java"/>
+		</javac>
+	</target>
+
+    <target name="jar-web-client"
+    		depends="compile-web-client"
+            description="Creates a jar for the fenix web client">
+      	<mkdir dir="${deploy.jars}"/>
+        <jar destfile="${deploy.jars}/${deploy.jar.web-client}"
+        	 basedir="${build.web-client}"/>
+	</target>		        
+
+    <target name="war-web-client"
+    		depends="compile-web-client"
+            description="Creates a war for the fenix web client">
+        <mkdir dir="${deploy.jars}"/>
+		<war destfile="${deploy.jars}/${deploy.war.web-client}"
+			 webxml="${config.web}/web.xml">
+			<webinf dir="${config.web}">
+				<include name="**/*.*"/>
+				<exclude name="web.xml"/>
+			</webinf>
+			<fileset dir="${web-content}"/>
+			<lib dir="${libs.web}">
+				<include name="*.*"/>
+			</lib>
+			<classes dir="${build.web-client.webinf.classes}"/>
+		</war>
+	</target>
+
+    <target name="deploy-web-client"
+    		depends="compile-web-client"
+            description="Deploys web client to web server">
+
+		<!-- Run this externally so it doesn't fail when
+			 the web-app is not yet installed. -->
+		<exec executable="ant" failonerror="false">
+			<arg line="-f build_tomcat.xml remove"/>
+		</exec>
+
+		<!-- Install web-app -->
+		<ant antfile="build_tomcat.xml" target="install">
+			<property name="webapp" value="${build.web-client}"/>
+		</ant>
+	</target>
+
+    <target name="deploy-all"
+            description="Deploys everything to the appropriate server">
+		<antcall target="deploy-app-server"/>
+		<antcall target="deploy-web-client"/>
+	</target>
+
+    <target name="compile-standalone"
+    		depends="compile-app-server, compile-web-client"
+            description="Compiles a standalone of the fenix application">
+      	<mkdir dir="${build.standalone}"/>
+		<copy todir="${build.standalone}">
+			<fileset dir="${build.web-client}"/>
+		</copy>
+		<copy todir="${build.standalone.webinf.classes}">
+			<fileset dir="${build.app-server}">
+				<exclude name="**/*.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.standalone.webinf.libs}">
+			<fileset dir="${build.app-server}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+	</target>
+
+    <target name="jar-standalone"
+    		depends="compile-standalone"
+            description="Creates a jar for the standalone fenix application">
+      	<mkdir dir="${deploy.jars}"/>
+        <jar destfile="${deploy.jars}/${deploy.jar.standalone}"
+        	 basedir="${build.standalone}"/>
+	</target>		        
+
+    <target name="war-standalone"
+    		depends="compile-standalone"
+            description="Creates a war for the standalone fenix application">
+        <mkdir dir="${deploy.jars}"/>
+		<war destfile="${deploy.jars}/${deploy.war.standalone}"
+			 webxml="${config.web}/web.xml">
+			<webinf dir="${config.web}">
+				<include name="**/*.*"/>
+				<exclude name="web.xml"/>
+			</webinf>
+			<fileset dir="${web-content}"/>
+			<lib dir="${libs.web}">
+				<include name="*.*"/>
+			</lib>
+			<classes dir="${build.standalone.webinf.classes}"/>
+		</war>
+	</target>
+
+    <target name="deploy-standalone"
+    		depends="compile-standalone"
+            description="Deploys standalone application to web server">
+
+		<!-- Run this externally so it doesn't fail when
+			 the web-app is not yet installed. -->
+		<exec executable="ant" failonerror="false">
+			<arg line="-f build_tomcat.xml remove"/>
+		</exec>
+
+		<!-- Install web-app -->
+		<ant antfile="build_tomcat.xml" target="install">
+			<property name="webapp" value="${build.standalone}"/>
+		</ant>
+	</target>
+
+</project>

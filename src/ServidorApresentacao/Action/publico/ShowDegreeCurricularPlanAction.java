@@ -14,8 +14,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularCourseScope;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 
@@ -34,8 +35,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
     {
         ActionErrors errors = new ActionErrors();
 
-        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
@@ -45,14 +44,13 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
 
-        GestorServicos gestorServicos = GestorServicos.manager();
         Object[] args = { degreeCurricularPlanId };
 
         List activeCurricularCourseScopes = null;
         try
         {
             activeCurricularCourseScopes =
-                (List) gestorServicos.executar(null, "ReadActiveDegreeCurricularPlanByID", args);
+                (List) ServiceManagerServiceFactory.executeService(null, "ReadActiveDegreeCurricularPlanByID", args);
         } catch (FenixServiceException e)
         {
             errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));

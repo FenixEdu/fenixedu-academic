@@ -18,11 +18,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoPrice;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
@@ -49,8 +50,6 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
-		GestorServicos serviceManager = GestorServicos.manager();	
-
 
 		if (session != null) {
 			
@@ -73,7 +72,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			List getCertificateList = null;
 //			certificateList = CertificateList.toArrayList();
 			try {
-				getCertificateList = (List) serviceManager.executar(userView, "ReadCertificateList", args);
+				getCertificateList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCertificateList", args);
 
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A lista de certidões", e);
@@ -109,8 +108,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 		if (session != null) {
 
 			DynaActionForm chooseDeclaration = (DynaActionForm) form;
-			
-			GestorServicos serviceManager = GestorServicos.manager();	
+
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			//remove sessions variables
@@ -144,7 +142,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			
 			//get informations
 			try {
-				infoStudentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "CreateDeclaration", args);
+				infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "CreateDeclaration", args);
 
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Declaração", e);
@@ -156,7 +154,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 				
 			else {
 				try {
-					infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);
+					infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView, "ReadCurrentExecutionYear", null);
 	
 				} catch (RuntimeException e) {
 					throw new RuntimeException("Error", e);

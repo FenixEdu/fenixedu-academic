@@ -14,11 +14,12 @@
 
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class Specialization {
+public class Specialization implements Serializable {
 
     public static final int MESTRADO = 1;
     public static final int INTEGRADO = 2;

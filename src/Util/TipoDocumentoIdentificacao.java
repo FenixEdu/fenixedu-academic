@@ -13,11 +13,12 @@
  */
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class TipoDocumentoIdentificacao {
+public class TipoDocumentoIdentificacao implements Serializable {
 
     public static final int BILHETE_DE_IDENTIDADE = 1;
     public static final int PASSAPORTE = 2;

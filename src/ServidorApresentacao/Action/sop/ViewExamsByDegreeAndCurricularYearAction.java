@@ -12,11 +12,11 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.utils.ContextUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -32,7 +32,6 @@ public class ViewExamsByDegreeAndCurricularYearAction extends FenixExecutionDegr
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -53,7 +52,7 @@ public class ViewExamsByDegreeAndCurricularYearAction extends FenixExecutionDegr
 
 			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
 			List infoExecutionCourseAndExamsList =
-				(List) gestor.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					userView, "ReadExamsByExecutionDegreeAndCurricularYear", args);
 
 

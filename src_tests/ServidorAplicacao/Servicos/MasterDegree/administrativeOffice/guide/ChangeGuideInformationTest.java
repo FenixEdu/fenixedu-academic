@@ -3,6 +3,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoGuide;
@@ -89,7 +91,7 @@ public class ChangeGuideInformationTest extends TestCaseServicos {
 		InfoGuide result = null;
 
 		 try {
-			 result = (InfoGuide) _gestor.executar(userView, "EditGuideInformation", args);
+			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -147,7 +149,7 @@ public class ChangeGuideInformationTest extends TestCaseServicos {
 		assertEquals(infoGuide.getTotal(), new Double(50.02));
 		
 		 try {
-			 result = (InfoGuide) _gestor.executar(userView, "EditGuideInformation", args);
+			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -206,7 +208,7 @@ public class ChangeGuideInformationTest extends TestCaseServicos {
 		assertEquals(infoGuide.getTotal(), new Double(50.02));
 		
 		 try {
-			 result = (InfoGuide) _gestor.executar(userView, "EditGuideInformation", args);
+			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -264,7 +266,7 @@ public class ChangeGuideInformationTest extends TestCaseServicos {
 		assertEquals(infoGuide.getInfoGuideEntries().size(), 3);
 		
 		 try {
-			 result = (InfoGuide) _gestor.executar(userView, "EditGuideInformation", args);
+			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {

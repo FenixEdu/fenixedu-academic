@@ -25,9 +25,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -51,7 +52,6 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
 			DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 
 			/*if (!isTokenValid(request)){
 				System.out.println("form no edit 2 ");
@@ -253,7 +253,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
 			InfoPerson newInfoPerson = new InfoPerson();
 			try {
 				newInfoPerson =
-					(InfoPerson) gestor.executar(
+					(InfoPerson) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ChangePersonalStudentInfo",
 						args);

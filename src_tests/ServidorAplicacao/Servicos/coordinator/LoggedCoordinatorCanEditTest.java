@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -79,10 +80,10 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser = getAuthenticatedAndAuthorizedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
 			Boolean canEdit = null;
-			canEdit = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args);
+			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			if (canEdit == null)
 			{
@@ -121,10 +122,10 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 			//Invalid user
 			String[] argsUser2 = getAuthenticatedAndUnauthorizedUser();
 
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
 			Boolean canEdit = null;
-			canEdit = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args);
+			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			if (canEdit.equals(Boolean.FALSE))
 			{
@@ -155,9 +156,9 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Executing Service LoggedCoordinatorCanEdit with null curricular course code");
 		} catch (FenixServiceException e)
@@ -188,9 +189,9 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Executing Service LoggedCoordinatorCanEdit with null execution degree code");
 		} catch (FenixServiceException e)
@@ -221,9 +222,9 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Executing Service LoggedCoordinatorCanEdit with null username");
 		} catch (FenixServiceException e)
@@ -252,9 +253,9 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Executing Service LoggedCoordinatorCanEdit with non existent curricular course");
 		} catch (NonExistingServiceException e)
@@ -283,10 +284,10 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUserAnother();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
 			Boolean canEdit = null;
-			canEdit = (Boolean) gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			if (canEdit.booleanValue() != Boolean.FALSE.booleanValue())
 			{
@@ -318,10 +319,10 @@ public class LoggedCoordinatorCanEditTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
 			Boolean canEdit = null;
-			canEdit = (Boolean) gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			if (canEdit.booleanValue() != Boolean.FALSE.booleanValue())
 			{

@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.ListIterator;
 
 import Dominio.Pessoa;
@@ -15,7 +16,7 @@ import ServidorAplicacao.Servico.person.ServicoSeguroLerTodasPessoas;
  *
  * @author  Fernanda Quitério & Tania Pousão
  */
-public class EscreverPapelPessoa {
+public class EscreverPapelPessoa implements Serializable {
 
 	public EscreverPapelPessoa() {
 	}

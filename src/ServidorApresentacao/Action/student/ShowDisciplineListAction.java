@@ -13,11 +13,11 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoDegree;
 import DataBeans.InfoStudent;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.DataView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Ricardo Nortadas & Rui Figueiredo
@@ -84,8 +84,7 @@ public class ShowDisciplineListAction extends Action {
 			request.setAttribute("Dia", dia);*/
 			Object argumentos[] = {};
 
-			GestorServicos gestor = GestorServicos.manager();
-			DataView data = (DataView) gestor.executar(null, "ObterData", argumentos);
+			DataView data = (DataView) ServiceManagerServiceFactory.executeService(null, "ObterData", argumentos);
 			//request.setAttribute("Data", data);
 			session.setAttribute("Data", data);
 //			System.out.println("Acabei de fazer request da data");

@@ -22,6 +22,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import ServidorAplicacao.Servico.UserView;
@@ -57,7 +59,7 @@ public class ReadMasterDegreesServiceTest extends TestCaseServicos {
 
 		Object args[] = {"2002/2003"};
         try {
-            masterDegrees = (List) _gestor.executar(this.getUserViewToBeTested(), "ReadMasterDegrees", args);
+            masterDegrees = (List) ServiceManagerServiceFactory.executeService(this.getUserViewToBeTested(), "ReadMasterDegrees", args);
         } catch (Exception ex) {
             System.out.println("Service Not Executed: " + ex);
         }   

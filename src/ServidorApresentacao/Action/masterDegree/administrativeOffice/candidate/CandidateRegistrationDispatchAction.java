@@ -20,10 +20,11 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCandidateRegistration;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -70,9 +71,6 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		if ((degreeCode == null) || (degreeCode.length() == 0)){
 			degreeCode = (String) candidateRegistration.get("degreeCode");
 		}
-
-		
-		GestorServicos serviceManager = GestorServicos.manager();
 		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
@@ -80,7 +78,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		
 		try {
 			Object args[] = { executionYearString, degreeCode };
-			result = (List) serviceManager.executar(userView, "ReadCandidateForRegistration", args);
+			result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidateForRegistration", args);
 		} catch (NonExistingServiceException e) {
 			ActionErrors errors = new ActionErrors();
 			errors.add("nonExisting", new ActionError("error.candidatesNotFound"));
@@ -102,7 +100,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		InfoExecutionDegree infoExecutionDegree = null;
 		try {
 			Object args[] = { executionYearString, degreeCode };
-			infoExecutionDegree = (InfoExecutionDegree) serviceManager.executar(userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
+			infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(e);
 		}
@@ -124,8 +122,6 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 
 		DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-		GestorServicos serviceManager = GestorServicos.manager();
-		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Integer candidateID = new Integer(request.getParameter("candidateID"));
 		
@@ -134,7 +130,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		List branchList = null;
 		try {
 			Object args[] = { candidateID };
-			branchList = (List) serviceManager.executar(userView, "GetBranchListByCandidateID", args);
+			branchList = (List) ServiceManagerServiceFactory.executeService(userView, "GetBranchListByCandidateID", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -144,7 +140,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
 		try {
 			Object args[] = { candidateID };
-			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
 		} catch (NonExistingServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -166,8 +162,6 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 
 		DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-		GestorServicos serviceManager = GestorServicos.manager();
-		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Integer candidateID = (Integer) candidateRegistration.get("candidateID");
 		Integer branchID = (Integer) candidateRegistration.get("branchID");
@@ -190,7 +184,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 			InfoCandidateRegistration infoCandidateRegistration = null;
 			try {
 				Object args[] = { candidateID , branchID,  studentNumber};
-				infoCandidateRegistration = (InfoCandidateRegistration) serviceManager.executar(userView, "RegisterCandidate", args);
+				infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory.executeService(userView, "RegisterCandidate", args);
 			} catch (InvalidStudentNumberServiceException e) {
 				throw new InvalidStudentNumberActionException(e);
 			} catch (ActiveStudentCurricularPlanAlreadyExistsServiceException e) {
@@ -200,7 +194,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 				List branchList = null;
 				try {
 					Object args[] = { candidateID };
-					branchList = (List) serviceManager.executar(userView, "GetBranchListByCandidateID", args);
+					branchList = (List) ServiceManagerServiceFactory.executeService(userView, "GetBranchListByCandidateID", args);
 				} catch (FenixServiceException ex) {
 					throw new FenixActionException(ex);
 				}
@@ -211,7 +205,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
 				try {
 					Object args[] = { candidateID };
-					infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+					infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
 				} catch (NonExistingServiceException ex) {
 					throw new FenixActionException(ex);
 				}
@@ -241,8 +235,6 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		DynaActionForm candidateRegistration = (DynaActionForm) form;
-
-		GestorServicos serviceManager = GestorServicos.manager();
 		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Integer candidateID = (Integer) candidateRegistration.get("candidateID");
@@ -250,7 +242,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		InfoCandidateRegistration infoCandidateRegistration = null;
 		try {
 			Object args[] = { candidateID };
-			infoCandidateRegistration = (InfoCandidateRegistration) serviceManager.executar(userView, "GetCandidateRegistrationInformation", args);
+			infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory.executeService(userView, "GetCandidateRegistrationInformation", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoDegreeCurricularPlan;
 
 import Dominio.DegreeCurricularPlan;
@@ -98,12 +99,12 @@ public class EditDescriptionDegreeCurricularPlanTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             //Service
             try
             {
-                gestor.executar(id, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();

@@ -7,7 +7,6 @@ package ServidorAplicacao.Filtro.credits;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import Dominio.IProfessorship;
 import Dominio.Professorship;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.ISuportePersistente;
 
@@ -30,7 +29,6 @@ public class EditSupportLessonAuthorization extends AbstractTeacherDepartmentAut
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
     {
         InfoSupportLesson supportLesson = (InfoSupportLesson) arguments[1];
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();

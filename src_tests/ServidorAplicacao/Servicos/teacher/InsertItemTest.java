@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoItem;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
@@ -101,7 +102,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), new Integer(6), infoItem };
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testInsertExistingItem was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -131,7 +132,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), new Integer(6), infoItem };
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -184,7 +185,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), new Integer(6), infoItem };
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -238,7 +239,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = { new Integer(27), new Integer(6), infoItem };
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();

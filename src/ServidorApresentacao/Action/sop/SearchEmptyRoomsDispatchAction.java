@@ -18,11 +18,12 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.comparators.RoomAlphabeticComparator;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.sop.ReadEmptyRoomsService.InvalidTimeInterval;
@@ -57,12 +58,11 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 
 		// execution period selection		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
 
 		Object argsReadExecutionPeriods[] = {
 		};
 		ArrayList executionPeriods =
-			(ArrayList) gestor.executar(
+			(ArrayList) ServiceManagerServiceFactory.executeService(
 				userView,
 				"ReadNotClosedExecutionPeriods",
 				argsReadExecutionPeriods);

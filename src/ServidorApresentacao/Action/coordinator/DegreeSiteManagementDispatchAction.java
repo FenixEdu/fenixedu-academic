@@ -16,13 +16,13 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão Created on 31/Out/2003
@@ -66,13 +66,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Object[] args = { infoExecutionDegreeId };
 
-        GestorServicos gestorServicos = GestorServicos.manager();
-
         InfoDegreeInfo infoDegreeInfo = null;
         try
         {
             infoDegreeInfo =
-                (InfoDegreeInfo) gestorServicos.executar(
+                (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadDegreeInfoByExecutionDegree",
                     args);
@@ -141,11 +139,9 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Object[] args = { infoExecutionDegreeId, infoDegreeInfoId, infoDegreeInfo };
 
-        GestorServicos gestorServicos = GestorServicos.manager();
-
         try
         {
-            gestorServicos.executar(userView, "EditDegreeInfoByExecutionDegree", args);
+			ServiceManagerServiceFactory.executeService(userView, "EditDegreeInfoByExecutionDegree", args);
         } catch (NotAuthorizedException e)
         {
             errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
@@ -251,13 +247,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Object[] args = { infoExecutionDegreeId };
 
-        GestorServicos gestorServicos = GestorServicos.manager();
-
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         try
         {
             infoDegreeCurricularPlan =
-                (InfoDegreeCurricularPlan) gestorServicos.executar(
+                (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadActiveDegreeCurricularPlanByExecutionDegreeCode",
                     args);
@@ -334,11 +328,9 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Object[] args = { infoExecutionDegreeId, infoDegreeCurricularPlan };
 
-        GestorServicos gestorServicos = GestorServicos.manager();
-
         try
         {
-            gestorServicos.executar(userView, "EditDescriptionDegreeCurricularPlan", args);
+			ServiceManagerServiceFactory.executeService(userView, "EditDescriptionDegreeCurricularPlan", args);
         } catch (NotAuthorizedException e)
         {
             errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
@@ -381,8 +373,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);
 		request.setAttribute("infoExecutionDegreeID", executionDegreeId);
-		
-        GestorServicos gestorServicos = GestorServicos.manager();
 
         //read execution degree
         Object[] args = { executionDegreeId };
@@ -392,7 +382,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         try
         {
             infoExecutionDegree =
-                (InfoExecutionDegree) gestorServicos.executar(null, "ReadExecutionDegreeByOID", args);
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreeByOID", args);
         } catch (FenixServiceException e)
         {
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
@@ -418,7 +408,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         try
         {
             infoExecutionDegrees =
-                (List) gestorServicos.executar(null, "ReadExecutionDegreesByDegree", args2);
+                (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreesByDegree", args2);
         } catch (FenixServiceException e)
         {
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));

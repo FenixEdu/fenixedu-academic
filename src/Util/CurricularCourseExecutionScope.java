@@ -1,11 +1,13 @@
 package Util;
 
+import java.io.Serializable;
+
 /**
  * @author dcs-rjao
  *
  * 25/Mar/2003
  */
-public class CurricularCourseExecutionScope {
+public class CurricularCourseExecutionScope implements Serializable {
 
 	public static final int SEMESTRIAL = 1;
 	public static final int ANUAL = 2;

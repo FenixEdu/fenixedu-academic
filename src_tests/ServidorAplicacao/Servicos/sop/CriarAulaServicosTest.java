@@ -13,6 +13,8 @@ package ServidorAplicacao.Servicos.sop;
  */
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -21,7 +23,6 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
@@ -137,9 +138,8 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		fim.set(Calendar.SECOND, 0);
 		argsCriarAula[0] = new InfoLesson(new DiaSemana(DiaSemana.SEGUNDA_FEIRA), inicio, fim, new TipoAula(1), infoSala, infoDisciplinaExecucao);
 
-		GestorServicos serviceManager = GestorServicos.manager();
 		try {
-			 serviceManager.executar(_userView, "CriarAula", argsCriarAula);
+			ServiceManagerServiceFactory.executeService(_userView, "CriarAula", argsCriarAula);
 			fail("testCreateExistingLessonCompleteMatch");
 		} catch (ExistingServiceException ex) {
 			// all is ok
@@ -165,9 +165,8 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		 fim.set(Calendar.MINUTE, 0);
 		 fim.set(Calendar.SECOND, 0);
 		 argsCriarAula[0] = new InfoLesson(new DiaSemana(2), inicio, fim, new TipoAula(1), infoSala, infoDisciplinaExecucao);
-		 GestorServicos serviceManager = GestorServicos.manager();
 		 try {
-			serviceManager.executar(_userView, "CriarAula", argsCriarAula);
+			ServiceManagerServiceFactory.executeService(_userView, "CriarAula", argsCriarAula);
 			fail("testCreateExistingLessonInterceptingMatch: Expected an Exception");
 		 } catch (InterceptingServiceException ex) {
 		 	assertNotNull("testCreateExistingLessonInterceptingMatch");
@@ -216,10 +215,9 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				new TipoAula(1),
 				infoSala,
 				infoDisciplinaExecucao);
-		GestorServicos serviceManager = GestorServicos.manager();
 		Object result = null;
 				try {
-			result = serviceManager.executar(_userView, "CriarAula", argsCriarAula);
+			result = ServiceManagerServiceFactory.executeService(_userView, "CriarAula", argsCriarAula);
 			assertTrue(
 				"testCreateNonExistingAula",
 				((InfoLessonServiceResult) result).isSUCESS());

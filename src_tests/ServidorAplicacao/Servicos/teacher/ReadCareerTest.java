@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.teacher.InfoCareer;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
@@ -77,7 +78,7 @@ public class ReadCareerTest extends ServiceNeedsAuthenticationTestCase
             Object[] args = { new Integer(1) };
 
 			result =
-				(InfoCareer) gestor.executar(
+				(InfoCareer) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args);
@@ -99,7 +100,7 @@ public class ReadCareerTest extends ServiceNeedsAuthenticationTestCase
             Object[] args = { new Integer(2) };
 
             result =
-                (InfoCareer) gestor.executar(
+                (InfoCareer) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);

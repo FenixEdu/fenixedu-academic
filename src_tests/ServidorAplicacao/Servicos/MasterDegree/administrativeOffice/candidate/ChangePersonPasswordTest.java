@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -72,7 +74,7 @@ public class ChangePersonPasswordTest extends TestCaseServicos {
 		 InfoMasterDegreeCandidate changedMasterDegreeCandidate = null;
 		 
 		 try {
-			 _gestor.executar(userView, "ChangePersonPassword", args);
+			 ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		 } catch (Exception ex) {

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
@@ -27,7 +28,7 @@ public abstract class EvaluationMethodBelongsExecutionCourse
 		Object serviceArguments[] = getTestEvaluationMethodSuccessfullArguments();
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testEvaluationMethodBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -44,7 +45,7 @@ public abstract class EvaluationMethodBelongsExecutionCourse
 		Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(
 				getNameOfServiceToBeTested()
 					+ "fail testEvaluationMethodNotBelongsExecutionCourse");

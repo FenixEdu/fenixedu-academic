@@ -1,8 +1,9 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class RandomPassword {
+public class RandomPassword implements Serializable {
   private final static String chars = new String("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
 
   /**

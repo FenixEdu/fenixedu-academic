@@ -12,10 +12,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
 import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao
 	.Action
@@ -122,12 +123,11 @@ public class EscolherAulasFormAction
 			request.setAttribute("minutos", minutos);
 
 			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
 
 			// Ler as Salas
 			Object argsLerSalas[] = new Object[0];
 			ArrayList infoSalas =
-				(ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
+				(ArrayList) ServiceManagerServiceFactory.executeService(userView, "LerSalas", argsLerSalas);
 
 			ArrayList listaSalas = new ArrayList();
 			for (int i = 0; i < infoSalas.size(); i++) {
@@ -148,7 +148,7 @@ public class EscolherAulasFormAction
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
 			ArrayList infoAulas =
-				(ArrayList) gestor.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);

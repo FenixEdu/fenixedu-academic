@@ -9,10 +9,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -36,8 +37,6 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 			e1.printStackTrace();
 		}
 
-		GestorServicos gestor = GestorServicos.manager();
-
 		InfoExecutionCourse executionCourse = new InfoExecutionCourse();
 
 		InfoExecutionPeriod infoExecutionPeriod =
@@ -59,7 +58,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 		List infoExecutionCourses;
 		try {
 			infoExecutionCourses =
-				(List) gestor.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					null,
 					"SelectExecutionCourse",
 					argsSelectExecutionCourse);

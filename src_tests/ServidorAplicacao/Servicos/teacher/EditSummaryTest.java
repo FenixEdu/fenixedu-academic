@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import Dominio.ISummary;
 import Dominio.Summary;
 import ServidorAplicacao.IUserView;
@@ -166,7 +168,7 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest
 
             Object[] args2 = getAuthorizeArguments();
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args2);
 
             Integer summaryId = (Integer) args2[1];
             ISummary summary = (ISummary) new Summary(summaryId);

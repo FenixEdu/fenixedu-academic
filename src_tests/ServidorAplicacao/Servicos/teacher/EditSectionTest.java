@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
@@ -67,7 +68,7 @@ public class EditSectionTest extends SectionBelongsExecutionCourseTest {
 		Object[] args = getTestSectionSuccessfullArguments();
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedEditSectionDataSet.xml");
 			System.out.println(
@@ -87,7 +88,7 @@ public class EditSectionTest extends SectionBelongsExecutionCourseTest {
 			{ new Integer(27), new Integer(100), "novoNome", new Integer(0)};
 
 		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testEditNonExistingSection was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());

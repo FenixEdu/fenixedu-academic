@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.publico;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -76,7 +77,7 @@ public class ReadExecutionCourseTest
 
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"ReadExecutionCourse",
 					argsReadExecutionCourse);
@@ -90,7 +91,7 @@ public class ReadExecutionCourseTest
 		this.prepareTestCase(false);
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"ReadExecutionCourse",
 					argsReadExecutionCourse);

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoSiteTeacherInformation;
@@ -77,7 +78,7 @@ public class ReadTeacherInformationTest extends ServiceNeedsAuthenticationTestCa
             SiteView result = null;
             
             result =
-                (SiteView) gestor.executar(
+                (SiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());

@@ -23,6 +23,8 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoExam;
@@ -31,7 +33,6 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -109,13 +110,12 @@ public class MarksListAction extends DispatchAction
 
         Object[] args = { executionCourseCode, evaluationCode };
 
-        GestorServicos gestorServicos = GestorServicos.manager();
         TeacherAdministrationSiteView siteView = null;
 
         try
         {
             siteView =
-                (TeacherAdministrationSiteView) gestorServicos.executar(
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsAndMarksByEvaluation",
                     args);
@@ -213,10 +213,9 @@ public class MarksListAction extends DispatchAction
 
         Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos gestorServicos = GestorServicos.manager();
         try
         {
-            gestorServicos.executar(userView, "PublishMarks", args);
+            ServiceManagerServiceFactory.executeService(userView, "PublishMarks", args);
         } catch (FenixServiceException e)
         {
             e.printStackTrace();
@@ -250,12 +249,11 @@ public class MarksListAction extends DispatchAction
         //valiadate if is possible submit marks
         Object[] args = { evaluationCode, evaluationCode, userView };
 
-        GestorServicos gestorServicos = GestorServicos.manager();
         InfoSiteSubmitMarks infoSiteSubmitMarks = null;
         try
         {
             infoSiteSubmitMarks =
-                (InfoSiteSubmitMarks) gestorServicos.executar(userView, "ValidateSubmitMarks", args);
+                (InfoSiteSubmitMarks) ServiceManagerServiceFactory.executeService(userView, "ValidateSubmitMarks", args);
         } catch (FenixServiceException exception)
         {
             //exception.printStackTrace();
@@ -397,13 +395,11 @@ public class MarksListAction extends DispatchAction
 
         Object[] args = { objectCode, evaluationCode, evaluationDate, userView };
 
-        GestorServicos gestorServicos = GestorServicos.manager();
-
         TeacherAdministrationSiteView administrationSiteView = null;
         try
         {
             administrationSiteView =
-                (TeacherAdministrationSiteView) gestorServicos.executar(userView, "SubmitMarks", args);
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView, "SubmitMarks", args);
         } catch (FenixServiceException exception)
         {
             System.out.println("exception no action");

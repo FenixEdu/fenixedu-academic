@@ -12,8 +12,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRoom;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -39,7 +40,6 @@ public class SelectRoomsFormAction extends FenixAction
         HttpSession sessao = request.getSession(true);
         if (sessao != null)
         {
-            GestorServicos gestor = GestorServicos.manager();
 
             Object argsSelectRooms[] =
                 {
@@ -53,7 +53,7 @@ public class SelectRoomsFormAction extends FenixAction
             List infoRooms;
             try
             {
-                infoRooms = (List) gestor.executar(null, "SelectRooms", argsSelectRooms);
+                infoRooms = (List) ServiceManagerServiceFactory.executeService(null, "SelectRooms", argsSelectRooms);
             } catch (FenixServiceException e)
             {
                 throw new FenixActionException("Problemas a seleccionar salas", e);

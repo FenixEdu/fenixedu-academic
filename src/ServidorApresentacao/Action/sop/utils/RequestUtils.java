@@ -17,13 +17,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -288,14 +289,13 @@ public abstract class RequestUtils {
 		InfoSite infoSite)
 		throws FenixActionException {
 		if (infoSite != null) {
-			GestorServicos gestor = GestorServicos.manager();
 			Object argsReadSections[] = { infoSite };
 
 			List infoSections = null;
 
 			try {
 				infoSections =
-					(List) gestor.executar(
+					(List) ServiceManagerServiceFactory.executeService(
 						null,
 						"ReadSections",
 						argsReadSections);

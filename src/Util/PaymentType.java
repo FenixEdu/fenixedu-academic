@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.apache.struts.util.LabelValueBean;
@@ -10,7 +11,7 @@ import org.apache.struts.util.LabelValueBean;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class PaymentType {
+public class PaymentType implements Serializable {
 
 	public static final int CASH = 1;
 	public static final int ATM = 2;

@@ -16,8 +16,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularCourse;
-import ServidorAplicacao.GestorServicos;
+import DataBeans.InfoSiteEnrolmentEvaluation;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -49,10 +52,9 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		// Get the Curricular Course List			
 		Object args[] = { executionYear, degree };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos serviceManager = GestorServicos.manager();
 		ArrayList curricularCourseList = null;
 		try {
-			curricularCourseList = (ArrayList) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
+			curricularCourseList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCoursesByDegree", args);
 		} catch (NonExistingServiceException e) {
 			ActionErrors errors = new ActionErrors();
 			errors.add("nonExisting", new ActionError("message.public.notfound.curricularCourses"));
@@ -83,10 +85,10 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { userView, courseID, executionYear };
-		GestorServicos serviceManager = GestorServicos.manager();
+
 		List listEnrolmentEvaluation = null;
 		try {
-			listEnrolmentEvaluation = (List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);
+			listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentMarksListByCurricularCourse", args);
 		} catch (NotAuthorizedException e) {
 			return mapping.findForward("NotAuthorized");
 		} catch (NonExistingServiceException e) {
@@ -122,12 +124,11 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 
 		Integer courseID = new Integer(getFromRequest("courseID", request));
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos serviceManager = GestorServicos.manager();
 
 		List studentList = null;
 		try {
 			Object args[] = { userView, courseID, executionYear };
-			studentList = (List) serviceManager.executar(userView, "ReadStudentListByCurricularCourse", args);
+			studentList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentListByCurricularCourse", args);
 		} catch (NotAuthorizedException e) {
 			return mapping.findForward("NotAuthorized");
 		} catch (NonExistingServiceException e) {
@@ -140,7 +141,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		InfoCurricularCourse infoCurricularCourse = null;
 		try {
 			Object args[] = { courseID};
-			infoCurricularCourse = (InfoCurricularCourse) serviceManager.executar(userView, "ReadCurricularCourseByID", args);
+			infoCurricularCourse = (InfoCurricularCourse) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCourseByID", args);
 		} catch (NonExistingServiceException e) {
 			
 		} catch (FenixServiceException e) {

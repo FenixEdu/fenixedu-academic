@@ -18,10 +18,11 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -45,20 +46,16 @@ public class CreateCandidateDispatchAction extends DispatchAction
 
 		HttpSession session = request.getSession(false);
 
-		if (session != null)
-		{
-			GestorServicos serviceManager = GestorServicos.manager();
-
+		if (session != null) {
+			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
+			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			// Get Execution Year List
-
-			ArrayList executionYearList = null;
-			try
-			{
-				executionYearList = (ArrayList) serviceManager.executar(userView, "ReadExecutionYears", null);
-			} catch (ExistingServiceException e)
-			{
+			ArrayList executionYearList = null; 			
+			try {
+				executionYearList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionYears", null);
+			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
 
@@ -78,14 +75,7 @@ public class CreateCandidateDispatchAction extends DispatchAction
 
 		if (session != null)
 		{
-			//			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
-			//			GestorServicos serviceManager = GestorServicos.manager();
-			//			
-			//			IUserView userView = (IUserView)
-			// session.getAttribute(SessionConstants.U_VIEW);
-
 			session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-
 			return mapping.findForward("CreateReady");
 		} else
 			throw new Exception();
@@ -96,9 +86,8 @@ public class CreateCandidateDispatchAction extends DispatchAction
 
 		HttpSession session = request.getSession(false);
 
-		if (session != null)
-		{
-			GestorServicos serviceManager = GestorServicos.manager();
+		if (session != null) {
+			DynaActionForm createCandidateForm = (DynaActionForm) form;
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -110,7 +99,6 @@ public class CreateCandidateDispatchAction extends DispatchAction
 
 			ArrayList degreeList = null;
 
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
 			String executionYearName = (String) createCandidateForm.get("executionYear");
 
 			Object args[] = { executionYearName };
@@ -119,7 +107,7 @@ public class CreateCandidateDispatchAction extends DispatchAction
 
 			try
 			{
-				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
+				degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadMasterDegrees", args);
 			} catch (ExistingServiceException e)
 			{
 				throw new ExistingActionException(e);
@@ -141,8 +129,6 @@ public class CreateCandidateDispatchAction extends DispatchAction
 	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
 		DynaActionForm createCandidateForm = (DynaActionForm) form;
-
-		GestorServicos serviceManager = GestorServicos.manager();
 
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -169,7 +155,7 @@ public class CreateCandidateDispatchAction extends DispatchAction
 		InfoMasterDegreeCandidate createdCandidate = null;
 		try
 		{
-			createdCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "CreateMasterDegreeCandidate", args);
+			createdCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "CreateMasterDegreeCandidate", args);
 		} catch (ExistingServiceException e)
 		{
 			throw new ExistingActionException("O Candidato", e);
@@ -177,4 +163,5 @@ public class CreateCandidateDispatchAction extends DispatchAction
 		request.setAttribute(SessionConstants.NEW_MASTER_DEGREE_CANDIDATE, createdCandidate);
 		return mapping.findForward("CreateSuccess");
 	}
+
 }

@@ -10,9 +10,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoDegree;
 import DataBeans.InfoStudent;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.DataView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -89,8 +90,7 @@ public class GrauMestreAction extends Action {
 
 			Object argumentos[] = {};
 
-			GestorServicos gestor = GestorServicos.manager();
-			DataView data = (DataView) gestor.executar(null, "ObterData", argumentos);
+			DataView data = (DataView) ServiceManagerServiceFactory.executeService(null, "ObterData", argumentos);
 			session.setAttribute("Data", data);
 			
 

@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.thesis;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExternalPerson;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoTeacher;
@@ -51,7 +53,7 @@ public class ReadMasterDegreeThesisDataVersionByIDTest extends AdministrativeOff
         {
             Object[] argsReadMasterDegreeThesisDataVersion = { new Integer(1)};
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-                (InfoMasterDegreeThesisDataVersion) serviceManager.executar(
+                (InfoMasterDegreeThesisDataVersion) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeThesisDataVersion);
@@ -94,7 +96,7 @@ public class ReadMasterDegreeThesisDataVersionByIDTest extends AdministrativeOff
         try
         {
             Object[] argsReadMasterDegreeThesisDataVersion = { new Integer(65456)};
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeThesisDataVersion);

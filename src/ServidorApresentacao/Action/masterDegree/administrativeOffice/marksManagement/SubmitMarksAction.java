@@ -20,12 +20,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -54,11 +55,10 @@ public class SubmitMarksAction extends DispatchAction {
 		// Get students List			
 		Object args[] = { curricularCourseCode, year };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos serviceManager = GestorServicos.manager();
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		try {
 			infoSiteEnrolmentEvaluation =
-				(InfoSiteEnrolmentEvaluation) serviceManager.executar(userView, "ReadStudentsAndMarksByCurricularCourse", args);
+				(InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsAndMarksByCurricularCourse", args);
 		} catch (NonExistingServiceException e) {
 			sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
 			return mapping.findForward("MarksSubmission");
@@ -147,10 +147,9 @@ public class SubmitMarksAction extends DispatchAction {
 		//		Insert final evaluation
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { evaluations, teacherNumber, evaluationDate, userView };
-		GestorServicos serviceManager = GestorServicos.manager();
 		List evaluationsWithError = null;
 		try {
-			evaluationsWithError = (List) serviceManager.executar(userView, "InsertStudentsFinalEvaluation", args);
+			evaluationsWithError = (List) ServiceManagerServiceFactory.executeService(userView, "InsertStudentsFinalEvaluation", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(teacherNumber.toString(), e);
 		} catch (FenixServiceException e) {

@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Calendar;
  *
  * @author  Ivo Brandão
  */
-public class DataIndisponivel extends java.util.Date {
+public class DataIndisponivel extends java.util.Date  implements Serializable {
     
     /** variaveis de construcao de data invalida */
     private static int ano = 0;

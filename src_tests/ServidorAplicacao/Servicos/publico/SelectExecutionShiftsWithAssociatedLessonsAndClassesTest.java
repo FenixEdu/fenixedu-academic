@@ -3,6 +3,8 @@ package ServidorAplicacao.Servicos.publico;
 import java.util.Calendar;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -85,7 +87,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"SelectExecutionShiftsWithAssociatedLessonsAndClasses",
 					argsSelectExecutionShiftsWithAssociatedLessonsAndClasses);
@@ -119,7 +121,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 		this.prepareTestCase(2);
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"SelectExecutionShiftsWithAssociatedLessonsAndClasses",
 					argsSelectExecutionShiftsWithAssociatedLessonsAndClasses);
@@ -153,7 +155,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 		this.prepareTestCase(3);
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"SelectExecutionShiftsWithAssociatedLessonsAndClasses",
 					argsSelectExecutionShiftsWithAssociatedLessonsAndClasses);

@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.coordinator;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoDegreeInfo;
 import Dominio.CursoExecucao;
 import Dominio.DegreeInfo;
@@ -135,12 +137,12 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             //Service
             try
             {
-                gestor.executar(id, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -201,12 +203,12 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getThridAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
             //Service
             try
             {
-                gestor.executar(id, getNameOfServiceToBeTested(), args);
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
             } catch (FenixServiceException e)
             {
                 e.printStackTrace();
@@ -291,12 +293,12 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
 			//Valid user
 			String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
 			//Service
 			try
 			{
-				gestor.executar(id, getNameOfServiceToBeTested(), args);
+				ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e)
 			{
 				e.printStackTrace();

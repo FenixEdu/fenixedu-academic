@@ -1,6 +1,7 @@
 
 package Util; 
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ import org.apache.commons.lang.enum.ValuedEnum;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public final class GratuityState extends ValuedEnum {
+public final class GratuityState extends ValuedEnum implements Serializable {
 
 	public static final int PAYED_TYPE = 1;
 	public static final int NOT_PAYED_TYPE = 2;

@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.thesis;
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExternalPerson;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoStudentCurricularPlan;
@@ -45,7 +47,7 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
     {
         Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-            (InfoStudentCurricularPlan) serviceManager.executar(
+            (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                 userView,
                 "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                 argsReadStudentCurricularPlan);
@@ -62,14 +64,14 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeThesisDataVersion = { infoStudentCurricularPlan };
             List infoMasterDegreeThesisDataVersions =
-                (List) serviceManager.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeThesisDataVersion);
@@ -120,14 +122,14 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(5461), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeThesisDataVersion = { infoStudentCurricularPlan };
             List infoMasterDegreeThesisDataVersions =
-                (List) serviceManager.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     argsReadMasterDegreeThesisDataVersion);

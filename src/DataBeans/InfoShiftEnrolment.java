@@ -13,7 +13,7 @@ import java.util.List;
  * @author  tfc130
  */
 
-public class InfoShiftEnrolment {
+public class InfoShiftEnrolment extends InfoObject {
   protected List _infoEnrolmentWithShift;
   protected List _infoEnrolmentWithOutShift;
 

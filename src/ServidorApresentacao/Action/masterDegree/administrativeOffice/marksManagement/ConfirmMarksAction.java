@@ -14,9 +14,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -50,12 +51,11 @@ public class ConfirmMarksAction extends DispatchAction
         // Get students final evaluation			
         Object args[] = { curricularCourseCode, executionYear };
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos serviceManager = GestorServicos.manager();
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try
         {
             infoSiteEnrolmentEvaluation =
-                (InfoSiteEnrolmentEvaluation) serviceManager.executar(
+                (InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsFinalEvaluationForConfirmation",
                     args);
@@ -143,10 +143,9 @@ public class ConfirmMarksAction extends DispatchAction
         //		set final evaluation to final state
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { curricularCourseCode, executionYear, userView };
-        GestorServicos serviceManager = GestorServicos.manager();
         try
         {
-            serviceManager.executar(userView, "ConfirmStudentsFinalEvaluation", args);
+			ServiceManagerServiceFactory.executeService(userView, "ConfirmStudentsFinalEvaluation", args);
         } catch (NonExistingServiceException e)
         {
         } catch (FenixServiceException e)

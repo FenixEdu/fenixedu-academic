@@ -1,5 +1,7 @@
 package Util;
 
+import java.io.Serializable;
+
 
 /**
  * 
@@ -7,7 +9,7 @@ package Util;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class EvaluationType {
+public class EvaluationType implements Serializable {
 
 	public static final int EXAM = 1;
 	public static final int FINAL = 2;

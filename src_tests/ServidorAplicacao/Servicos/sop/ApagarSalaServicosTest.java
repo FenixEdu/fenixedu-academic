@@ -11,6 +11,7 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.RoomKey;
@@ -69,7 +70,7 @@ public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 
 		try {
 		
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					getNameOfServiceToBeTested(),
 					argsDeleteSala);

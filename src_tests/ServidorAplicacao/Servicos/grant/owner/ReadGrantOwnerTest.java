@@ -5,6 +5,7 @@
 
 package ServidorAplicacao.Servicos.grant.owner;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -107,7 +108,7 @@ public class ReadGrantOwnerTest extends ServidorAplicacao.Servicos.ServiceNeedsA
             Object[] args2 = getAuthorizeArguments();
 
             InfoGrantOwner result =
-                (InfoGrantOwner) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+                (InfoGrantOwner) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             Integer grantOwnerId = new Integer(2);
@@ -140,7 +141,7 @@ public class ReadGrantOwnerTest extends ServidorAplicacao.Servicos.ServiceNeedsA
             Object[] args2 = getUnauthorizeArguments();
 
             InfoGrantOwner result =
-                (InfoGrantOwner) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+                (InfoGrantOwner) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             //Check the read result
             if (result != null)

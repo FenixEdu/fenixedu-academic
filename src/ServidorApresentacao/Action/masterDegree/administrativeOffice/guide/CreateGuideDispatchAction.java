@@ -23,10 +23,13 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoContributor;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
-import ServidorAplicacao.GestorServicos;
+import DataBeans.InfoMasterDegreeCandidate;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -70,7 +73,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			GestorServicos serviceManager = GestorServicos.manager();
 
 			session.removeAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR);
 
@@ -88,7 +90,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			ArrayList degreeList = null;
 			try {
 				degreeList =
-					(ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
+					(ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadMasterDegrees", args);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
@@ -103,7 +105,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
 			List result = null;
 			try {
-				result = (List) serviceManager.executar(userView, "ReadAllContributors", null);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllContributors", null);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
@@ -142,9 +144,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 		if (session != null) {
 
 			DynaActionForm createGuideForm = (DynaActionForm) form;
-
-			GestorServicos serviceManager = GestorServicos.manager();
-
 			session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -187,7 +186,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
 			try {
 				studentGuideList =
-					(List) serviceManager.executar(userView, "ReadCertificateList", argsAux);
+					(List) ServiceManagerServiceFactory.executeService(userView, "ReadCertificateList", argsAux);
 
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A lista de guias para estudantes", e);
@@ -231,7 +230,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 						contributorName,
 						contributorAddress };
 				infoGuide =
-					(InfoGuide) serviceManager.executar(userView, "PrepareCreateGuide", args);
+					(InfoGuide) ServiceManagerServiceFactory.executeService(userView, "PrepareCreateGuide", args);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException("O Contribuinte", e);
 			} catch (NoActiveStudentCurricularPlanServiceException e) {
@@ -303,7 +302,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 		}
 
 		DynaActionForm createGuideForm = (DynaActionForm) form;
-		GestorServicos serviceManager = GestorServicos.manager();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		String password = null;
 		// Get the information
@@ -357,7 +355,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 		try {
 			Object args[] =
 				{ infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide, paymentType };
-			newInfoGuide = (InfoGuide) serviceManager.executar(userView, "CreateGuide", args);
+			newInfoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "CreateGuide", args);
 		} catch (InvalidSituationServiceException e) {
 			Object object = new Object();
 			object = "Anulada";
@@ -381,7 +379,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				try {
 					Object args[] =
 						{ newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
-					serviceManager.executar(userView, "CreateCandidateSituation", args);
+					ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation", args);
 				} catch (FenixServiceException e) {
 					throw new FenixActionException();
 				}
@@ -395,7 +393,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 					// Write the Person
 					try {
 						Object args[] = { newInfoGuide.getInfoPerson().getIdInternal(), password };
-						serviceManager.executar(userView, "ChangePersonPassword", args);
+						ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation", args);
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}

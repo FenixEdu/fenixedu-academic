@@ -9,7 +9,6 @@ import java.util.List;
 import Dominio.IDepartment;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.Filtro;
@@ -58,10 +57,10 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter
 	 * @see ServidorAplicacao.Filtro.Filtro#preFiltragem(ServidorAplicacao.IUserView,
 	 *          ServidorAplicacao.IServico, java.lang.Object[])
 	 */
-	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
 	{
 
-		super.preFiltragem(id, servico, argumentos);
+		super.preFiltragem(id, argumentos);
 		verifyTeacherPermission(id, (Integer) argumentos[0]);
 	}
 	/**

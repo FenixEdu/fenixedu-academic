@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
@@ -40,7 +41,7 @@ public abstract class CoordinatorIsResponsibleByExecutionDegree
 	public void testCoordinatorIsNotResponsibleCoordinatorOfExecutionDegree() {
 		Object serviceArguments[] = getAuthorizeArguments();
 		try {
-			gestor.executar(userView4, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView4, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testCoordinatorIsNotResponsibleCoordinatorOfExecutionDegree was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());

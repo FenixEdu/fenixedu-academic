@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 
 /**
@@ -35,7 +37,7 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 				Object[] args = listArgs.toArray();
 
 				try {
-					_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+					ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 					System.out.println("testUnsuccessfulExecutionsOfService [" + key + "] was UNSUCCESSFULY run by class: " + this.getClass().getName());
 					fail("testUnsuccessfulExecutionsOfService");
 				} catch (Exception ex) {
@@ -55,7 +57,7 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 		if(args != null) {
 			
 			try {
-				_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+				ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 				System.out.println("testUnsuccessfulExecutionOfService was UNSUCCESSFULY run by class: " + this.getClass().getName());
 				fail("testUnsuccessfulExecutionOfService");
 			} catch (Exception ex) {
@@ -72,7 +74,7 @@ public abstract class TestCaseManagerInsertAndEditServices extends TestCaseNeedA
 		if(args != null) {
 			
 			try {
-				_gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+				ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 				System.out.println("testSuccessfulExecutionOfService was SUCCESSFULY run by class: " + this.getClass().getName());
 			} catch (Exception ex) {
 				ex.printStackTrace();

@@ -11,11 +11,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -36,7 +37,6 @@ public class ApagarTurnoFormAction extends FenixExecutionCourseAndExecutionDegre
       DynaActionForm manipularTurnosForm = (DynaActionForm) request.getAttribute("manipularTurnosForm");
     
       IUserView userView = (IUserView) sessao.getAttribute("UserView");
-      GestorServicos gestor = GestorServicos.manager();
       Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
       //ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
 	  InfoExecutionCourse iDE =
@@ -44,7 +44,7 @@ public class ApagarTurnoFormAction extends FenixExecutionCourseAndExecutionDegre
 			  SessionConstants.EXECUTION_COURSE);
 	  Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
 	  List infoTurnos =
-		  (List) gestor.executar(
+		  (List) ServiceManagerServiceFactory.executeService(
 			  userView,
 			  "LerTurnosDeDisciplinaExecucao",
 			  argsLerTurnosDeDisciplinaExecucao);
@@ -59,7 +59,7 @@ public class ApagarTurnoFormAction extends FenixExecutionCourseAndExecutionDegre
 	  
 	  
 	  Object argsApagarTurno[] = { new ShiftKey(infoTurno.getNome(),iDE) };
-      Boolean result = (Boolean) gestor.executar(userView, "ApagarTurno", argsApagarTurno);
+      Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(userView, "ApagarTurno", argsApagarTurno);
 	  
 	  if (result != null && result.booleanValue()) {
 	  	infoTurnos.remove(indexTurno.intValue());

@@ -5,14 +5,14 @@ import junit.framework.TestCase;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
-import ServidorAplicacao.GestorServicos;
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import Tools.dbaccess;
 
 
 public class TestCaseServicos extends TestCase {
-	protected GestorServicos _gestor = null;
 	protected IUserView _userView = null;
 	protected IUserView _userView2 = null;
 	
@@ -57,18 +57,17 @@ public class TestCaseServicos extends TestCase {
 		}
 
 		
-		_gestor = GestorServicos.manager();
 //		String argsAutenticacao1[] = { "user", "pass" , getApplication()};
 //		String argsAutenticacao2[] = { "julia", "pass" , getApplication()};
 		try {
-			_userView = (IUserView) _gestor.executar(null, "Autenticacao", this.argsAutenticacao1);
+			_userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", this.argsAutenticacao1);
 		} catch (Exception ex) {
 			
 			System.out.println("Servico não executado: " + ex);
 			fail("Authenticating userview");
 		}
 		try {
-			_userView2 = (IUserView) _gestor.executar(null, "Autenticacao", this.argsAutenticacao2);
+			_userView2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", this.argsAutenticacao2);
 		} catch (Exception ex) {
 			System.out.println("Servico não executado: " + ex);
 			fail("Authenticating userview2");

@@ -18,13 +18,14 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -72,12 +73,11 @@ public class ChangeMarkDispatchAction extends DispatchAction
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { userView, curricularCourseCode, executionYear };
-        GestorServicos serviceManager = GestorServicos.manager();
         List listEnrolmentEvaluation = null;
         try
         {
             listEnrolmentEvaluation =
-                (List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentMarksListByCurricularCourse", args);
         } catch (NotAuthorizedException e)
         {
             return mapping.findForward("NotAuthorized");
@@ -134,8 +134,6 @@ public class ChangeMarkDispatchAction extends DispatchAction
         // Get mark student List
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        GestorServicos serviceManager = GestorServicos.manager();
-
         List infoSiteEnrolmentEvaluations = null;
 
         request.setAttribute("executionYear", executionYear);
@@ -155,7 +153,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
         {
             Object args[] = { curricularCourseCode, studentNumber, executionYear };
             infoSiteEnrolmentEvaluations =
-                (List) serviceManager.executar(userView, "ReadStudentsAndMarksByCurricularCourse", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsAndMarksByCurricularCourse", args);
         } catch (ExistingServiceException e)
         {
             ActionErrors actionErrors = new ActionErrors();
@@ -228,7 +226,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
         {
             Object args[] = { userView, infoEnrolmentTemp.getIdInternal()};
             newEnrolmentEvaluation =
-                (InfoEnrolmentEvaluation) serviceManager.executar(
+                (InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadInfoEnrolmentEvaluationByEvaluationOID",
                     args);
@@ -289,7 +287,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
         try
         {
             Object args[] = { newEnrolmentEvaluation.getInfoPersonResponsibleForGrade().getUsername()};
-            infoTeacher = (InfoTeacher) serviceManager.executar(userView, "ReadTeacherByUserName", args);
+            infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(userView, "ReadTeacherByUserName", args);
         } catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
@@ -444,7 +442,6 @@ public class ChangeMarkDispatchAction extends DispatchAction
         try
         {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-            GestorServicos serviceManager = GestorServicos.manager();
             Object args[] =
                 {
                     curricularCourseCode,
@@ -453,7 +450,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
                     infoTeacher.getTeacherNumber(),
                     userView };
             evaluationsWithError =
-                (List) serviceManager.executar(userView, "AlterStudentEnrolmentEvaluation", args);
+                (List) ServiceManagerServiceFactory.executeService(userView, "AlterStudentEnrolmentEvaluation", args);
         } catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(teacherNumber.toString(), e);

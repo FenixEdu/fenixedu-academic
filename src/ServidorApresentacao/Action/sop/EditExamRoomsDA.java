@@ -21,11 +21,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
 import DataBeans.InfoViewExamByDayAndShift;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -59,7 +60,6 @@ public class EditExamRoomsDA
     {
 
         IUserView userView = SessionUtils.getUserView(request);
-        GestorServicos gestor = GestorServicos.manager();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
         //InfoExam infoExam =
@@ -115,7 +115,7 @@ public class EditExamRoomsDA
         List availableRooms;
         try
         {
-            availableRooms = (List) gestor.executar(userView, "ReadEmptyRoomsForExam", args);
+            availableRooms = (List) ServiceManagerServiceFactory.executeService(userView, "ReadEmptyRoomsForExam", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -160,7 +160,6 @@ public class EditExamRoomsDA
     {
 
         IUserView userView = SessionUtils.getUserView(request);
-        GestorServicos gestor = GestorServicos.manager();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
         //InfoViewExamByDayAndShift infoViewExamByDayAndShift =
@@ -207,7 +206,7 @@ public class EditExamRoomsDA
         Object[] args = { infoExam, roomsToSet };
         try
         {
-            infoExam = (InfoExam) gestor.executar(userView, "EditExamRooms", args);
+            infoExam = (InfoExam) ServiceManagerServiceFactory.executeService(userView, "EditExamRooms", args);
         } catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(e);

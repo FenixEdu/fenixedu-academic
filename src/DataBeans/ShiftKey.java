@@ -10,7 +10,7 @@ package DataBeans;
  *
  * @author  tfc130
  */
-public class ShiftKey {
+public class ShiftKey extends InfoObject {
 	protected String shiftName;
 	private InfoExecutionCourse infoExecutionCourse;
 

@@ -1,5 +1,7 @@
 package Util;
 
+import java.io.Serializable;
+
 
 /**
  * @author dcs-rjao
@@ -7,7 +9,7 @@ package Util;
  * 19/Mar/2003
  */
 
-public class EnrolmentEquivalenceType {
+public class EnrolmentEquivalenceType implements Serializable {
 
 	public static final int EQUIVALENT_COURSE = 1;
 	

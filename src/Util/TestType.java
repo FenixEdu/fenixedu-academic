@@ -4,6 +4,7 @@
  */
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import org.apache.struts.util.LabelValueBean;
 /**
  * @author Susana Fernandes
  */
-public class TestType {
+public class TestType implements Serializable {
 	public static final int EVALUATION = 1;
 	public static final int STUDY = 2;
 	public static final String EVALUATION_STRING =

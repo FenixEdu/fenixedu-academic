@@ -13,7 +13,7 @@ package DataBeans;
  *
  * 
  */
-public final class InfoEnrolmentServiceResult {
+public final class InfoEnrolmentServiceResult extends InfoObject {
 	public static final int NOT_ENROLED_INTO_EXECUTION_COURSE = 0;
 	public static final int SHIFT_FULL = 1;
 	public static final int ENROLMENT_SUCESS = 2;

@@ -7,13 +7,14 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
@@ -37,7 +38,6 @@ import Util.EnrolmentState;
 
 public class SetEnrolmentState {
 
-	private static GestorServicos gestor = GestorServicos.manager();
 	private static IUserView userView = null;
 	private static ISuportePersistente persistentSupport =	null;
 	private static boolean chooseExecutionPeriodsMode = false;
@@ -71,7 +71,7 @@ public class SetEnrolmentState {
 	private static void autentication() {
 		String argsAutenticacao[] = {"l44406", "1", Autenticacao.EXTRANET};
 		try {
-			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+			userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 		} catch (FenixServiceException e) {
 			e.printStackTrace(System.out);
 		}

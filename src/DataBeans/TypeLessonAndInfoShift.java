@@ -12,7 +12,7 @@ package DataBeans;
  */
 import Util.TipoAula;
 
-public class TypeLessonAndInfoShift {
+public class TypeLessonAndInfoShift extends InfoObject {
   protected TipoAula _typeLesson;
   protected InfoShift _infoShift;
 

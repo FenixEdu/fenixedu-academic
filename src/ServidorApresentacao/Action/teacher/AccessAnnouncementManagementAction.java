@@ -12,10 +12,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author ep15
@@ -35,9 +35,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		Object args[] = new Object[1];
 		args[0] = infoSite;
 		
-		GestorServicos manager = GestorServicos.manager();
-
-		List announcements = (List) manager.executar(userView, "ReadAnnouncements", args);
+		List announcements = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAnnouncements", args);
 		//remove old announcement list
 		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 		//put new announcement list

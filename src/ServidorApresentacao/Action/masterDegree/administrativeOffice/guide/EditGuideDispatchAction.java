@@ -19,9 +19,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoContributor;
 import DataBeans.InfoGuide;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
@@ -62,7 +63,6 @@ public class EditGuideDispatchAction extends DispatchAction
         if (session != null)
         {
             DynaActionForm editGuideForm = (DynaActionForm) form;
-            GestorServicos serviceManager = GestorServicos.manager();
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -76,7 +76,7 @@ public class EditGuideDispatchAction extends DispatchAction
             InfoGuide infoGuide = null;
             try
             {
-                infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
             } catch (NonExistingServiceException e)
             {
                 throw new NonExistingActionException("A Versão da Guia", e);
@@ -109,7 +109,6 @@ public class EditGuideDispatchAction extends DispatchAction
 
         if (session != null)
         {
-            GestorServicos serviceManager = GestorServicos.manager();
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             Integer guideYear = new Integer(request.getParameter("year"));
@@ -190,7 +189,7 @@ public class EditGuideDispatchAction extends DispatchAction
 
             try
             {
-                serviceManager.executar(userView, "ChangeGuideSituation", args);
+                ServiceManagerServiceFactory.executeService(userView, "ChangeGuideSituation", args);
             } catch (NonValidChangeServiceException e)
             {
                 throw new NonValidChangeActionException(e);
@@ -221,9 +220,8 @@ public class EditGuideDispatchAction extends DispatchAction
 
         if (session != null)
         {
-            GestorServicos serviceManager = GestorServicos.manager();
 
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));
             Integer guideVersion = new Integer(request.getParameter("version"));
@@ -236,8 +234,8 @@ public class EditGuideDispatchAction extends DispatchAction
             List contributors = null;
             try
             {
-                infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
-                contributors = (List) serviceManager.executar(userView, "ReadAllContributors", null);
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
+                contributors = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllContributors", null);
             } catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);
@@ -279,7 +277,6 @@ public class EditGuideDispatchAction extends DispatchAction
         if (session != null)
         {
             DynaActionForm editGuideForm = (DynaActionForm) form;
-            GestorServicos serviceManager = GestorServicos.manager();
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -301,7 +298,7 @@ public class EditGuideDispatchAction extends DispatchAction
             try
             {
                 Object args[] = { guideNumber, guideYear, guideVersion };
-                infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
             } catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);
@@ -371,7 +368,7 @@ public class EditGuideDispatchAction extends DispatchAction
                         othersRemarks,
                         othersQuantity,
                         othersPrice };
-                result = (InfoGuide) serviceManager.executar(userView, "EditGuideInformation", args);
+                result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
             } catch (InvalidChangeServiceException e)
             {
                 throw new InvalidChangeActionException(e);
@@ -386,7 +383,7 @@ public class EditGuideDispatchAction extends DispatchAction
             try
             {
                 Object args[] = { guideNumber, guideYear };
-                guideList = (List) serviceManager.executar(userView, "ChooseGuide", args);
+                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
             } catch (NonExistingServiceException e)
             {
                 throw new NonExistingActionException("A Guia", e);

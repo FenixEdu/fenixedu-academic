@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author jpvl
  */
-public class DepartmentTeachersDTO {
+public class DepartmentTeachersDTO extends InfoObject {
 	private List infoTeacherList;
 	private InfoDepartment infoDepartment;
 

@@ -2,13 +2,14 @@ package ServidorAplicacao.Servicos.publico;
 
 import java.util.ArrayList;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoShift;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 
 /**
@@ -57,11 +58,10 @@ public class SelectShiftsTest extends TestCaseServicos {
 		InfoShift infoShift = new InfoShift();
 		infoShift.setInfoDisciplinaExecucao(iDE);	
 		argsSelecthifts[0] = infoShift;		
-		GestorServicos manager = GestorServicos.manager();
 
 		try {
 			result =
-				(ArrayList) manager.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					null,
 					"SelectShifts",
 			argsSelecthifts);

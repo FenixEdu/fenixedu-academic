@@ -10,6 +10,8 @@ package ServidorPersistente.OJB;
  * @author ars
  */
 
+import java.util.List;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.cache.CacheFilterRegistry;
@@ -21,12 +23,13 @@ import org.odmg.ODMGException;
 import org.odmg.ODMGRuntimeException;
 import org.odmg.Transaction;
 
+import pt.utl.ist.berserk.storage.ITransactionBroker;
+import pt.utl.ist.berserk.storage.exceptions.StorageException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentAdvisory;
 import ServidorPersistente.IPersistentAnnouncement;
@@ -62,6 +65,7 @@ import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExamStudentRoom;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentExternalPerson;
@@ -171,15 +175,13 @@ import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 
-public class SuportePersistenteOJB implements ISuportePersistente
-{
-    Implementation _odmg = null;
-    private static SuportePersistenteOJB _instance = null;
+public class SuportePersistenteOJB implements ISuportePersistente, ITransactionBroker {
+	Implementation _odmg = null;
+	private static SuportePersistenteOJB _instance = null;
 
-    protected Implementation getImplementation()
-    {
-        return _odmg;
-    }
+	protected Implementation getImplementation() {
+		return _odmg;
+	}
 
     /*
 	 * (non-Javadoc)
@@ -752,77 +754,6 @@ public class SuportePersistenteOJB implements ISuportePersistente
         return new ModalityOJB();
     }
 
-    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminaryTheme getIPersistentSeminaryTheme()
-    {
-        return new ThemeOJB();
-    }
-
-    //  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminary getIPersistentSeminary()
-    {
-        return new ServidorPersistente.OJB.Seminaries.SeminaryOJB();
-    }
-
-    //  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()
-    {
-        return new CaseStudyOJB();
-    }
-
-    //  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-    public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
-    {
-        return new CandidacyOJB();
-    }
-
-    //  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-    public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice()
-    {
-        return new CaseStudyChoiceOJB();
-    }
-
-    //  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
-    public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency()
-    {
-        return new EquivalencyOJB();
-    }
-
-    public IPersistentMetadata getIPersistentMetadata()
-    {
-        return new MetadataOJB();
-    }
-
-    public IPersistentQuestion getIPersistentQuestion()
-    {
-        return new QuestionOJB();
-    }
-
-    public IPersistentTest getIPersistentTest()
-    {
-        return new TestOJB();
-    }
-
-    public IPersistentTestQuestion getIPersistentTestQuestion()
-    {
-        return new TestQuestionOJB();
-    }
-
-    public IPersistentDistributedTest getIPersistentDistributedTest()
-    {
-        return new DistributedTestOJB();
-    }
-
-    public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion()
-    {
-        return new StudentTestQuestionOJB();
-    }
-
-    public IPersistentStudentTestLog getIPersistentStudentTestLog()
-    {
-        return new StudentTestLogOJB();
-    }
-
     // by Barbosa (October 28th, 2003)
     public IPersistentGrantOwner getIPersistentGrantOwner()
     {
@@ -847,24 +778,6 @@ public class SuportePersistenteOJB implements ISuportePersistente
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher()
     {
         return new GrantOrientationTeacherOJB();
-    }
-
-    public IPersistentAdvisory getIPersistentAdvisory()
-    {
-        return new AdvisoryOJB();
-    }
-
-    public IPersistentWebSite getIPersistentWebSite()
-    {
-        return new WebSiteOJB();
-    }
-    public IPersistentWebSiteSection getIPersistentWebSiteSection()
-    {
-        return new WebSiteSectionOJB();
-    }
-    public IPersistentWebSiteItem getIPersistentWebSiteItem()
-    {
-        return new WebSiteItemOJB();
     }
 
     public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis()
@@ -1040,5 +953,181 @@ public class SuportePersistenteOJB implements ISuportePersistente
     {
         return new CampusOJB();
     }
+
+    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminaryTheme getIPersistentSeminaryTheme()
+     {
+         return new ThemeOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminary getIPersistentSeminary()
+     {
+         return new ServidorPersistente.OJB.Seminaries.SeminaryOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()
+     {
+         return new CaseStudyOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+     public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
+     {
+         return new CandidacyOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+     public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice()
+     {
+         return new CaseStudyChoiceOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003) 
+     public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency()
+     {
+         return new EquivalencyOJB();
+     }
+
+
+	public IPersistentMetadata getIPersistentMetadata() {
+		return new MetadataOJB();
+	}
+
+	public IPersistentQuestion getIPersistentQuestion() {
+		return new QuestionOJB();
+	}
+
+	public IPersistentTest getIPersistentTest() {
+		return new TestOJB();
+	}
+
+	public IPersistentTestQuestion getIPersistentTestQuestion() {
+		return new TestQuestionOJB();
+	}
+	
+	public IPersistentDistributedTest getIPersistentDistributedTest(){
+		return new DistributedTestOJB();
+	}
+	
+	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion(){
+		return new StudentTestQuestionOJB();
+	}
+	
+	public IPersistentStudentTestLog getIPersistentStudentTestLog(){
+		return new StudentTestLogOJB();
+	}
+	
+	public IPersistentAdvisory getIPersistentAdvisory() {
+		return new AdvisoryOJB();
+	}
+
+	public IPersistentWebSite getIPersistentWebSite() {
+		return new WebSiteOJB();
+	}
+	public IPersistentWebSiteSection getIPersistentWebSiteSection() {
+		return new WebSiteSectionOJB();
+	}
+	public IPersistentWebSiteItem getIPersistentWebSiteItem() {
+		return new WebSiteItemOJB();
+	}
+
+	public void beginTransaction() throws StorageException
+	{
+		try
+		{
+			this.iniciarTransaccao();
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			throw new StorageException("error in wrapping method",e);
+		}
+		
+	}
+
+//	by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void commitTransaction() throws StorageException
+	{
+		try
+		{
+			this.confirmarTransaccao();
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			throw new StorageException("error in wrapping method",e);
+		}
+		
+	}
+
+//	by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void abortTransaction() throws StorageException
+	{
+		try
+		{
+			this.cancelarTransaccao();
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			throw new StorageException("error in wrapping method",e);
+		}
+		
+	}
+
+//	by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void lockRead(List list) throws StorageException
+	{
+		try {
+
+			Transaction tx = _odmg.currentTransaction();
+
+			if (tx == null)
+				throw new StorageException("No current transaction!");
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					Object obj = list.get(i);
+					tx.lock(obj, Transaction.READ);
+				}
+			}
+		} catch (ODMGRuntimeException ex) {
+			throw new StorageException(ExcepcaoPersistencia.READ_LOCK, ex);
+		}
+	}
+
+//	by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void lockRead(Object obj) throws StorageException
+	{
+		try {
+			Transaction tx = _odmg.currentTransaction();
+			tx.lock(obj, Transaction.WRITE);
+
+		} catch (ODMGRuntimeException ex) {
+			throw new StorageException(
+				ExcepcaoPersistencia.UPGRADE_LOCK,
+				ex);
+		}		
+	}
+
+//	by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public void lockWrite(Object obj) throws StorageException
+	{
+		try {
+			Transaction tx = _odmg.currentTransaction();
+			tx.lock(obj, Transaction.WRITE);
+
+		} catch (ODMGRuntimeException ex) {
+			throw new StorageException(
+				ExcepcaoPersistencia.UPGRADE_LOCK,
+				ex);
+		}	
+	}
+//	by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Oct/2003
+	public PersistenceBroker currentBroker() throws StorageException
+	{
+		Transaction tx = this._odmg.currentTransaction();
+		if (tx == null)
+			throw new StorageException(StorageException.NO_TRANSACTION_IN_COURSE);
+		return ((HasBroker) tx).getBroker();
+	}
 
 }

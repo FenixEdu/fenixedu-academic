@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
@@ -41,7 +42,7 @@ public abstract class CoordinatorBelongsToCurrentExecutionDegree
 	public void testCoordinatorIsNotCoordinatorOfCurrentExecutionDegree() {
 		Object serviceArguments[] = getNonAuthorizeArgumentsForNotCurrentExecutionDegree();
 		try {
-			gestor.executar(userView4, getNameOfServiceToBeTested(), serviceArguments);
+			ServiceManagerServiceFactory.executeService(userView4, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testCoordinatorIsNotCoordinatorOfCurrentExecutionDegree was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());

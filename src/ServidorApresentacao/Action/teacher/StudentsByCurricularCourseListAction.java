@@ -13,11 +13,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteStudents;
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -68,7 +69,6 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
         Object argsProjects[] = { objectCode };
         Object argsInfos[] = { objectCode };
         Object argsReadShifts[] = { objectCode };
-        GestorServicos gestor = GestorServicos.manager();
         TeacherAdministrationSiteView siteView = null;
         InfoSiteProjects projects = null;
         List infosGroups = null;
@@ -78,24 +78,24 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
         try
         {
             siteView =
-                (TeacherAdministrationSiteView) gestor.executar(
+                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsByCurricularCourse",
                     args);
             projects =
-                (InfoSiteProjects) gestor.executar(
+                (InfoSiteProjects) ServiceManagerServiceFactory.executeService(
                     userView,
                     "teacher.ReadExecutionCourseProjects",
                     argsProjects);
             System.out.println("Tenho estes projectos:" + projects);
             infosGroups =
-                (List) gestor.executar(
+                (List) ServiceManagerServiceFactory.executeService(
                     userView,
                     "teacher.GetProjectsGroupsByExecutionCourseID",
                     argsInfos);
             InfoSiteStudents infoSiteStudents = (InfoSiteStudents) siteView.getComponent();
             shifts =
-                (InfoExecutionCourseOccupancy) gestor.executar(
+                (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadShiftsByExecutionCourseID",
                     argsReadShifts);
@@ -105,7 +105,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
                 //please read http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
                 Object[] argsReadShiftStudents = { objectCode, shiftID };
                 shiftStudents =
-                    (List) gestor.executar(
+                    (List) ServiceManagerServiceFactory.executeService(
                         userView,
                         "teacher.ReadStudentsByShiftID",
                         argsReadShiftStudents);
@@ -114,7 +114,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
             Collections.sort(infoSiteStudents.getStudents(), new BeanComparator("number"));
             Object[] argsAttendacies = { objectCode, infoSiteStudents.getStudents()};
             attendacies =
-                (List) gestor.executar(userView, "teacher.GetAttendaciesByStudentList", argsAttendacies);
+                (List) ServiceManagerServiceFactory.executeService(userView, "teacher.GetAttendaciesByStudentList", argsAttendacies);
 
         } catch (FenixServiceException e)
         {

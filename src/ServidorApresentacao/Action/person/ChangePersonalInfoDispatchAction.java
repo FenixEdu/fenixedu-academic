@@ -28,9 +28,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -53,8 +54,6 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 
 		DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
-
 
 		// Clear the Session
 		session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
@@ -209,7 +208,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		changeArgs[1] = userView;
 
 		userView =
-			(IUserView) gestor.executar(
+			(IUserView) ServiceManagerServiceFactory.executeService(
 				userView,
 				"ChangePersonalInfo",
 				changeArgs);
@@ -233,14 +232,13 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
 
 		Object changeArgs[] = new Object[1];
 		changeArgs[0] = userView;
 
 		Object result = null;
 		try {
-			result = gestor.executar(userView, "ReadPersonByUsername", changeArgs);
+			result = ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", changeArgs);
 		} catch(FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -395,7 +393,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 
 		// Get List of available Countries
 		result = null;
-		result = gestor.executar(userView, "ReadAllCountries", null);
+		result = ServiceManagerServiceFactory.executeService(userView, "ReadAllCountries", null);
 		ArrayList country = (ArrayList) result;
 
 		// Build List of Countries for the Form

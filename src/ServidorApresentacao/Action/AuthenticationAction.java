@@ -17,7 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoRole;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -26,6 +25,8 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.ActionMappingForAuthentication;
 import Util.RoleType;
+
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author jorge
@@ -44,7 +45,6 @@ public class AuthenticationAction extends FenixAction {
 			ActionMappingForAuthentication authenticationMapping =
 				(ActionMappingForAuthentication) mapping;
 
-			GestorServicos gestor = GestorServicos.manager();
 			Object argsAutenticacao[] =
 				{
 					authenticationForm.get("username"),
@@ -52,7 +52,7 @@ public class AuthenticationAction extends FenixAction {
 					authenticationMapping.getApplication()};
 
 			userView =
-				(IUserView) gestor.executar(
+				(IUserView) ServiceManagerServiceFactory.executeService(
 					null,
 					"Autenticacao",
 					argsAutenticacao);
@@ -67,15 +67,15 @@ public class AuthenticationAction extends FenixAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		
+
 		if (userView.getRoles().isEmpty()) {
 			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("errors.noAuthorization",new ActionError("errors.noAuthorization"));
+			actionErrors.add(
+				"errors.noAuthorization",
+				new ActionError("errors.noAuthorization"));
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 		}
-		
 
 		// Invalidate existing session if it exists
 		HttpSession sessao = request.getSession(false);
@@ -139,7 +139,11 @@ public class AuthenticationAction extends FenixAction {
 		ActionForward actionForward = new ActionForward();
 		actionForward.setContextRelative(false);
 		actionForward.setRedirect(false);
-		actionForward.setPath("/dotIstPortal.do?prefix="+infoRole.getPortalSubApplication()+"&page="+infoRole.getPage());
+		actionForward.setPath(
+			"/dotIstPortal.do?prefix="
+				+ infoRole.getPortalSubApplication()
+				+ "&page="
+				+ infoRole.getPage());
 		return actionForward;
 	}
 }

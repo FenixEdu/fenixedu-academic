@@ -17,6 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoStudent;
 import DataBeans.SiteView;
@@ -26,7 +28,6 @@ import DataBeans.Seminaries.InfoCaseStudyChoice;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -77,8 +78,7 @@ public class ShowCandidacyDetails extends FenixAction
              try
              {
                  Object[] argsReadCandidacy= { candidacyID };         
-                 GestorServicos gestor= GestorServicos.manager();
-                 candidacy= (InfoCandidacy) gestor.executar(userView, "Seminaries.GetCandidacyById", argsReadCandidacy);                 
+                 candidacy= (InfoCandidacy) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetCandidacyById", argsReadCandidacy);                 
                  //
                  //
                  Object[] argsReadStudent= { candidacy.getStudentIdInternal() };               
@@ -87,11 +87,11 @@ public class ShowCandidacyDetails extends FenixAction
                  Object[] argsReadModality= { candidacy.getModalityIdInternal() };
                  Object[] argsReadSeminary= { candidacy.getSeminaryIdInternal() };                 
                  
-                 student = (InfoStudent) gestor.executar(userView, "student.ReadStudentById", argsReadStudent);
-                 curricularCourse = (InfoCurricularCourse)((SiteView) gestor.executar(userView, "ReadCurricularCourseByOIdService",argsReadCurricularCourse )).getComponent();
-                 theme = (InfoTheme) gestor.executar(userView, "Seminaries.GetThemeById",argsReadTheme );
-                 modality = (InfoModality) gestor.executar(userView, "Seminaries.GetModalityById",argsReadModality );
-                 seminary = (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary",argsReadSeminary );
+                 student = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "student.ReadStudentById", argsReadStudent);
+                 curricularCourse = (InfoCurricularCourse)((SiteView) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCourseByOIdService",argsReadCurricularCourse )).getComponent();
+                 theme = (InfoTheme) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetThemeById",argsReadTheme );
+                 modality = (InfoModality) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetModalityById",argsReadModality );
+                 seminary = (InfoSeminary) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetSeminary",argsReadSeminary );
                  motivation = candidacy.getMotivation();
                  casesChoices = candidacy.getCaseStudyChoices();
                  
@@ -101,7 +101,7 @@ public class ShowCandidacyDetails extends FenixAction
 				{
 					InfoCaseStudyChoice choice= (InfoCaseStudyChoice) iterator.next();
                     Object[] argsReadCaseStudy= { choice.getCaseStudyIdInternal() };
-                    InfoCaseStudy infoCaseStudy = (InfoCaseStudy) gestor.executar(userView, "Seminaries.GetCaseStudyById", argsReadCaseStudy);
+                    InfoCaseStudy infoCaseStudy = (InfoCaseStudy) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetCaseStudyById", argsReadCaseStudy);
                     cases.add(infoCaseStudy);                    
 				}
                 //              

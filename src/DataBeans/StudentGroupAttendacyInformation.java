@@ -18,7 +18,7 @@ import Dominio.StudentGroupAttend;
  * Created at 10/Set/2003, 21:48:21
  * 
  */
-public class StudentGroupAttendacyInformation
+public class StudentGroupAttendacyInformation extends InfoObject
 {
     private Integer groupNumber;
     private String shiftName;    

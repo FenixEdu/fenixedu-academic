@@ -3,11 +3,12 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.stu
 
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import DataBeans.InfoStudent;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -26,7 +27,6 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 	protected dbaccess dbAcessPoint = null;
 	protected IUserView authorisedUserView = null;
 	protected IUserView notAuthorisedUserView = null;
-	protected GestorServicos serviceManager = null;
 
 	public ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest(String testName) {
 		super(testName);
@@ -68,14 +68,13 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 		}
 
 		SuportePersistenteOJB.resetInstance();
-		this.serviceManager = GestorServicos.manager();
 
 		String args1[] = {"posGrad", "pass" , this.getApplication()};
 		String args2[] = {"alunoGrad", "pass" , this.getApplication()};
 
 		try {
-			this.authorisedUserView = (IUserView) this.serviceManager.executar(null, "Autenticacao", args1);
-			this.notAuthorisedUserView = (IUserView) this.serviceManager.executar(null, "Autenticacao", args2);
+			this.authorisedUserView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args1);
+			this.notAuthorisedUserView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args2);
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			fail("Authenticating User");
@@ -107,7 +106,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 		Object args[] = {studentName, idNumber, idType, studentNumber};
 
 		try {
-			result = (List) this.serviceManager.executar(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
+			result = (List) ServiceManagerServiceFactory.executeService(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Finding One Student");
@@ -137,7 +136,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 		Object args[] = {studentName, null, null, null};
 
 		try {
-			result = (List) this.serviceManager.executar(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
+			result = (List) ServiceManagerServiceFactory.executeService(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Finding One Or More Students");
@@ -167,7 +166,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 		Object args[] = {studentName, idNumber, idType, studentNumber};
 
 		try {
-			result = (List) this.serviceManager.executar(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
+			result = (List) ServiceManagerServiceFactory.executeService(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Finding No Students");
@@ -193,7 +192,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 		Object args[] = {studentName, idNumber, idType, studentNumber};
 
 		try {
-			this.serviceManager.executar(this.notAuthorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
+			ServiceManagerServiceFactory.executeService(this.notAuthorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
 		} catch (NotAuthorizedException ex) {
 			System.out.println("OK!");
 		} catch (FenixServiceException ex) {
@@ -219,7 +218,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumberTest extends TestCa
 		Object args[] = {studentName, idNumber, idType, studentNumber};
 
 		try {
-			result = (List) this.serviceManager.executar(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
+			result = (List) ServiceManagerServiceFactory.executeService(this.authorisedUserView, "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Not Master Degree Student");

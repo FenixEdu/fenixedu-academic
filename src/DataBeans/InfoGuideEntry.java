@@ -15,7 +15,7 @@ import Util.GraduationType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoGuideEntry implements Serializable{
+public class InfoGuideEntry extends InfoObject {
 	
 	protected GraduationType graduationType;
 	protected DocumentType documentType;

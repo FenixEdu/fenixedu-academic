@@ -19,9 +19,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -52,14 +53,13 @@ public class DeleteItemAction extends FenixAction
         try
         {
             Object deleteItemArguments[] = { infoItem };
-            GestorServicos manager = GestorServicos.manager();
 
-            manager.executar(userView, "DeleteItem", deleteItemArguments);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteItem", deleteItemArguments);
 
             session.removeAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST);
             InfoSection infoSection = infoItem.getInfoSection();
             Object readItensArguments[] = { infoSection };
-            List allInfoItens = (List) manager.executar(null, "ReadItems", readItensArguments);
+            List allInfoItens = (List) ServiceManagerServiceFactory.executeService(null, "ReadItems", readItensArguments);
 
             Collections.sort(allInfoItens);
             session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, allInfoItens);

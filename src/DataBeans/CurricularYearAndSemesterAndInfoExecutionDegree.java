@@ -10,7 +10,7 @@ package DataBeans;
  *
  * @author  tfc130
  */
-public class CurricularYearAndSemesterAndInfoExecutionDegree {
+public class CurricularYearAndSemesterAndInfoExecutionDegree extends InfoObject {
   protected Integer _anoCurricular;
   protected Integer _semestre;
   protected InfoExecutionDegree _infoLicenciaturaExecucao;

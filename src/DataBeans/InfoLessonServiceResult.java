@@ -13,7 +13,7 @@ package DataBeans;
  *
  * 
  */
-public final class InfoLessonServiceResult {
+public final class InfoLessonServiceResult extends InfoObject {
 	public static final int SUCESS = 0;
 	public static final int INVALID_TIME_INTERVAL = 1;
 	public static final int CLASSES_EXISTING_IN_TIME_INTERVAL = 2;

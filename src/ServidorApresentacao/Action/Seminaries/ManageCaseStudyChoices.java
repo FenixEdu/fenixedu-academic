@@ -18,6 +18,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoStudent;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCaseStudy;
@@ -25,7 +27,6 @@ import DataBeans.Seminaries.InfoCaseStudyChoice;
 import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -159,8 +160,7 @@ public class ManageCaseStudyChoices extends FenixAction
 		try
 		{
 			Object[] argsReadSeminary= { id };
-			GestorServicos gestor= GestorServicos.manager();
-			seminary= (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
+			seminary= (InfoSeminary) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetSeminary", argsReadSeminary);
 		}
 		catch (Exception e)
 		{
@@ -174,8 +174,7 @@ public class ManageCaseStudyChoices extends FenixAction
 		try
 		{
 			Object[] argsReadStudent= { userView.getUtilizador()};
-			GestorServicos gestor= GestorServicos.manager();
-			student= (InfoStudent) gestor.executar(userView, "ReadStudentByUsername", argsReadStudent);
+			student= (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByUsername", argsReadStudent);
 		}
 		catch (Exception e)
 		{
@@ -223,18 +222,17 @@ public class ManageCaseStudyChoices extends FenixAction
 		try
 		{
 			Object[] argsReadEquivalency= { equivalencyID };
-			GestorServicos gestor= GestorServicos.manager();
 			equivalency=
-				(InfoEquivalency) gestor.executar(userView, "Seminaries.GetEquivalency", argsReadEquivalency);
+				(InfoEquivalency) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetEquivalency", argsReadEquivalency);
 			if (themeID != null) // we want the cases of ONE theme
 			{
 				Object[] argsReadCases= { themeID };
-				cases= (List) gestor.executar(userView, "Seminaries.GetCaseStudiesByThemeID", argsReadCases);
+				cases= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetCaseStudiesByThemeID", argsReadCases);
 			}
 			else // we want ALL the cases of the equivalency (its a "Completa" modality)
 				{
 				Object[] argsReadCases= { equivalencyID };
-				cases= (List) gestor.executar(userView, "Seminaries.GetCaseStudiesByEquivalencyID", argsReadCases);
+				cases= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetCaseStudiesByEquivalencyID", argsReadCases);
 			}
 		}
 		catch (Exception e)
@@ -294,10 +292,9 @@ public class ManageCaseStudyChoices extends FenixAction
 				try
 				{
 					Object[] argsWriteCandidacy= { infoCandidacy };
-					GestorServicos gestor= GestorServicos.manager();
-					gestor.executar(userView, "Seminaries.WriteCandidacy", argsWriteCandidacy);
+					ServiceManagerServiceFactory.executeService(userView, "Seminaries.WriteCandidacy", argsWriteCandidacy);
                     Object[] argsReadTheme= { themeID };
-                    theme = (InfoTheme) gestor.executar(userView, "Seminaries.GetThemeById", argsReadTheme);
+                    theme = (InfoTheme) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetThemeById", argsReadTheme);
 				}
 				catch (Exception e)
 				{

@@ -14,11 +14,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCandidacyDetails;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -62,18 +63,17 @@ public class SelectCandidacies extends FenixDispatchAction
 					wildcard,
 					wildcard,
                     null };
-			GestorServicos gestor= GestorServicos.manager();
-			candidacies= (List) gestor.executar(userView, "Seminaries.ReadCandidacies", argsReadCandidacies);
+			candidacies= (List) ServiceManagerServiceFactory.executeService(userView, "Seminaries.ReadCandidacies", argsReadCandidacies);
 			for (Iterator iterator= candidacies.iterator(); iterator.hasNext();)
 			{
 				InfoStudent student= null;
 				InfoStudentCurricularPlan studentCurricularPlan= null;
 				InfoCandidacy candidacy= (InfoCandidacy) iterator.next();
 				Object[] argsReadStudent= { candidacy.getStudentIdInternal()};
-				student= (InfoStudent) gestor.executar(userView, "student.ReadStudentById", argsReadStudent);
+				student= (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "student.ReadStudentById", argsReadStudent);
 				Object[] argsReadCurricularPlan= { student.getNumber(), student.getDegreeType()};
 				studentCurricularPlan=
-					(InfoStudentCurricularPlan) gestor.executar(
+					(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
 						userView,
 						"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 						argsReadCurricularPlan);
@@ -176,8 +176,7 @@ public class SelectCandidacies extends FenixDispatchAction
             changedStatusCandidaciesIds.addAll(this.getNewSelectedStudents(selectedStudents,previousUnselected));
             changedStatusCandidaciesIds.addAll(this.getNewUnselectedStudents(selectedStudents,previousSelected));
             Object[] argsReadCandidacies= {changedStatusCandidaciesIds};
-                        GestorServicos gestor= GestorServicos.manager();
-            gestor.executar(userView, "Seminaries.ChangeCandidacyApprovanceStatus", argsReadCandidacies);
+            ServiceManagerServiceFactory.executeService(userView, "Seminaries.ChangeCandidacyApprovanceStatus", argsReadCandidacies);
         }
         catch (FenixServiceException ex)
         {

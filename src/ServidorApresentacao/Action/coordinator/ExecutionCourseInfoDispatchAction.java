@@ -20,6 +20,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseOccupancy;
@@ -27,7 +29,6 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftGroupStatistics;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.utils.ContextUtils;
@@ -48,13 +49,11 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 	
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-		
-		GestorServicos gestor = GestorServicos.manager();
 
 		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
 		Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear() };
-		List executionPeriods = (List) gestor.executar(userView, "ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
+		List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
 
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -88,8 +87,6 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 
 			HttpSession session = request.getSession(false);
 
-			GestorServicos serviceManager = GestorServicos.manager();
-		
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
@@ -139,7 +136,7 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 								infoCurricularYear, 
 								executionCourseName };
 
-			List infoExecutionCourses = (List) serviceManager.executar(userView, "SearchExecutionCourses", args);
+			List infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView, "SearchExecutionCourses", args);
 			if (infoExecutionCourses != null) {
 				sortList(request, infoExecutionCourses);
 				request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
@@ -151,12 +148,10 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 	public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-		GestorServicos gestor = GestorServicos.manager();
-
 
 		Object args[] = {new Integer(request.getParameter("executionCourseOID"))};
 
-		InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) gestor.executar(userView, "ReadShiftsByExecutionCourseID", args);
+		InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory.executeService(userView, "ReadShiftsByExecutionCourseID", args);
 
 		arranjeShifts(infoExecutionCourseOccupancy);
 		
@@ -263,14 +258,12 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 	public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-		GestorServicos gestor = GestorServicos.manager();
-
 
 		Object args[] = {new Integer(request.getParameter("executionCourseOID"))};
 
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) gestor.executar(userView, "ReadExecutionCourseByOID", args);
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionCourseByOID", args);
 
-		List scopes = (List) gestor.executar(userView, "ReadCurricularCourseScopesByExecutionCourseID", args);
+		List scopes = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCourseScopesByExecutionCourseID", args);
 
 		request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 		request.setAttribute("curricularCourses", scopes);

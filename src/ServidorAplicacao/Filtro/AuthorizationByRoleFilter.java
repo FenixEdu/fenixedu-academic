@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Filtro;
 
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import Util.RoleType;
@@ -20,7 +19,6 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
 	 */
 	public void preFiltragem(
 		IUserView id,
-		IServico servico,
 		Object[] argumentos)
 		throws Exception {
 	

@@ -8,12 +8,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoWebSiteSection;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Fernanda Quitério
@@ -29,10 +29,9 @@ public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
 
 		System.out.println("nome da seccao: " + sectionName);
 		Object[] args = { sectionName };
-		GestorServicos gestorServicos = GestorServicos.manager();
 		InfoWebSiteSection infoWebSiteSection = null;
 		try {
-			infoWebSiteSection = (InfoWebSiteSection) gestorServicos.executar(null, "ReadLimitedWebSiteSectionByName", args);
+			infoWebSiteSection = (InfoWebSiteSection) ServiceManagerServiceFactory.executeService(null, "ReadLimitedWebSiteSectionByName", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExisting", sectionName);
 		} catch (FenixServiceException e) {
@@ -52,10 +51,9 @@ public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
 
 		System.out.println("section code: " + sectionCode);
 		Object[] args = { sectionCode };
-		GestorServicos gestorServicos = GestorServicos.manager();
 		InfoWebSiteSection infoWebSiteSection = null;
 		try {
-			infoWebSiteSection = (InfoWebSiteSection) gestorServicos.executar(null, "ReadWebSiteSectionByCode", args);
+			infoWebSiteSection = (InfoWebSiteSection) ServiceManagerServiceFactory.executeService(null, "ReadWebSiteSectionByCode", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExisting");
 		} catch (FenixServiceException e) {

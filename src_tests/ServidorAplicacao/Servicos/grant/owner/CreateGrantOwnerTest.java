@@ -7,6 +7,8 @@ package ServidorAplicacao.Servicos.grant.owner;
 
 import java.util.Date;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import DataBeans.grant.owner.InfoGrantOwner;
@@ -230,7 +232,7 @@ public class CreateGrantOwnerTest
 			IUserView id = authenticateUser(args);
 			Object[] args2 = getAuthorizeArguments();
 
-			gestor.executar(id, getNameOfServiceToBeTested(), args2);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			compareDataSetUsingExceptedDataSetTableColumns(
 				getExpectedDataSetFilePath());
@@ -254,7 +256,7 @@ public class CreateGrantOwnerTest
 			IUserView id = authenticateUser(args);
 			Object[] args2 = getAuthorizeArgumentsWithExistingPerson();
 
-			gestor.executar(id, getNameOfServiceToBeTested(), args2);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/owner/testCreateGrantOwnerWithExistingPersonExpectedDataSet.xml");
 			System.out.println(
@@ -278,7 +280,7 @@ public class CreateGrantOwnerTest
 			IUserView id = authenticateUser(args);
 			Object[] args2 = getAuthorizeArgumentsWithExistingGrantOwner();
 
-			gestor.executar(id, getNameOfServiceToBeTested(), args2);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 	
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/owner/testCreateGrantOwnerWithExistingGrantOwnerExpectedDataSet.xml");
 			System.out.println(getNameOfServiceToBeTested()	+ " was UNSUCCESSFULY runned by class: "

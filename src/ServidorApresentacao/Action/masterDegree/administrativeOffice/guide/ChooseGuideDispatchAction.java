@@ -17,8 +17,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoGuide;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
@@ -87,8 +88,6 @@ public class ChooseGuideDispatchAction extends DispatchAction
 
             DynaActionForm chooseGuide = (DynaActionForm) form;
 
-            GestorServicos serviceManager = GestorServicos.manager();
-
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             // Get the Information
@@ -100,7 +99,7 @@ public class ChooseGuideDispatchAction extends DispatchAction
             List result = null;
             try
             {
-                result = (List) serviceManager.executar(userView, "ChooseGuide", args);
+                result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
             }
             catch (NonExistingServiceException e)
             {
@@ -136,8 +135,6 @@ public class ChooseGuideDispatchAction extends DispatchAction
         if (session != null)
         {
 
-            GestorServicos serviceManager = GestorServicos.manager();
-
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             // Get the Information
@@ -150,7 +147,7 @@ public class ChooseGuideDispatchAction extends DispatchAction
             try
             {
                 Object args[] = { guideNumber, guideYear, guideVersion };
-                infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
             }
             catch (NonExistingServiceException e)
             {
@@ -161,7 +158,7 @@ public class ChooseGuideDispatchAction extends DispatchAction
             try
             {
                 Object args[] = { guideNumber, guideYear };
-                guideList = (List) serviceManager.executar(userView, "ChooseGuide", args);
+                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
             }
             catch (NonExistingServiceException e)
             {

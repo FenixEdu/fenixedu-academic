@@ -1,12 +1,12 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student;
 
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import Dominio.IStudent;
 import Dominio.Student;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -23,7 +23,6 @@ public class ReadStudentByNumberAndTypeTest extends TestCase {
 
 	protected dbaccess dbAcessPoint = null;
 	protected IUserView userView = null;
-	protected GestorServicos serviceManager = null;
 
 	public ReadStudentByNumberAndTypeTest(String testName) {
 		super(testName);
@@ -60,12 +59,11 @@ public class ReadStudentByNumberAndTypeTest extends TestCase {
 		}
 
 		SuportePersistenteOJB.resetInstance();
-		this.serviceManager = GestorServicos.manager();
 
 		String args[] = {"user", "pass" , this.getApplication()};
 
 		try {
-			this.userView = (IUserView) this.serviceManager.executar(null, "Autenticacao", args);
+			this.userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			fail("Authenticating User!");
@@ -81,7 +79,7 @@ public class ReadStudentByNumberAndTypeTest extends TestCase {
 		Object args1[] = {studentNumber,tipoCurso};
 		IStudent student = new Student();
 		try {
-			student = (IStudent) this.serviceManager.executar(userView, "ReadStudentByNumberAndType", args1);
+			student = (IStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndType", args1);
 		} catch (FenixServiceException ex) {
 			System.out.println(ex.toString());
 			fail("Reading One Student");

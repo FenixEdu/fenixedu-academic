@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
@@ -22,7 +23,7 @@ public abstract class AnnouncementBelongsToExecutionCourseTest
 		IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
 		
 		try {
-			gestor.executar(
+			ServiceManagerServiceFactory.executeService(
 				userView,
 				getNameOfServiceToBeTested(),
 				serviceArguments);

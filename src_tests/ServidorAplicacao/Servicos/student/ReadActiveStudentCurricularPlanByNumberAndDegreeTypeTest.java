@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.student;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.Servicos.ServiceTestCase;
 import Util.TipoCurso;
@@ -36,7 +37,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeTypeTest extends Se
 			Object[] argsReadActiveStudentCurricularPlan = { studentNumber, TipoCurso.MESTRADO_OBJ };
 
 			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) gestor.executar(null, getNameOfServiceToBeTested(), argsReadActiveStudentCurricularPlan);
+				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadActiveStudentCurricularPlan);
 			assertNotNull(infoStudentCurricularPlan);
 			assertEquals(infoStudentCurricularPlan.getInfoStudent().getNumber(), studentNumber);
 			assertEquals(infoStudentCurricularPlan.getInfoStudent().getDegreeType(), TipoCurso.MESTRADO_OBJ);
@@ -54,7 +55,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeTypeTest extends Se
 			Object[] argsReadActiveStudentCurricularPlan = { studentNumber, TipoCurso.MESTRADO_OBJ };
 
 			InfoStudentCurricularPlan infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) gestor.executar(null, getNameOfServiceToBeTested(), argsReadActiveStudentCurricularPlan);
+				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadActiveStudentCurricularPlan);
 			assertNull(infoStudentCurricularPlan);
 
 		} catch (Exception ex) {

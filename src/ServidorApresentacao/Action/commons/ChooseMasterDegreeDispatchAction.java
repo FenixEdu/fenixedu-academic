@@ -15,7 +15,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import ServidorAplicacao.GestorServicos;
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -47,10 +48,9 @@ public class ChooseMasterDegreeDispatchAction extends DispatchAction {
 		// Get the Degree List			
 		Object args[] = { executionYear };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos serviceManager = GestorServicos.manager();
 		ArrayList degreeList = null;
 		try {
-			degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
+			degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadMasterDegrees", args);
 		} catch (NonExistingServiceException e) {
 			ActionErrors errors = new ActionErrors();
 			errors.add("nonExisting", new ActionError("message.masterDegree.notfound.degrees", executionYear));

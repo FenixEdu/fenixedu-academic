@@ -8,6 +8,8 @@ package ServidorAplicacao.Servicos.grant.contract;
 import java.util.Calendar;
 import java.util.Date;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoTeacher;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
@@ -266,7 +268,7 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
             System.out.println(
@@ -292,7 +294,7 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsEdit();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/contract/testEditGrantContractExpectedDataSet.xml");
             System.out.println(
@@ -318,7 +320,7 @@ public class CreateGrantContractTest
     //            IUserView id = authenticateUser(args);
     //            Object[] args2 = getUnauthorizeArgumentsEdit();
     //
-    //            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+    //            Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
     //
     //            if (!result.booleanValue())
     //            {
@@ -348,7 +350,7 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArgumentsUnknownType();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             fail("Creating a new GrantContract with Unknown Type: test failed!");
         } catch (GrantTypeNotFoundException e)
@@ -374,7 +376,7 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArgumentsUnknownResponsibleTeacher();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             fail("Creating a new GrantContract with Unknown Responsible Teacher: test failed!");
         } catch (GrantResponsibleTeacherNotFoundException e)
@@ -400,7 +402,7 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArgumentsUnknownGrantOrientationTeacher();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             fail("Creating a new GrantContract with Unknown Grant Orientation Teacher: test failed!");
         } catch (GrantOrientationTeacherNotFoundException e)

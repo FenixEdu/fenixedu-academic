@@ -11,10 +11,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao
 	.Action
@@ -58,7 +59,6 @@ public class PrepararEditarTurnoFormAction
 
 				IUserView userView =
 					(IUserView) sessao.getAttribute("UserView");
-				GestorServicos gestor = GestorServicos.manager();
 
 				//ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
 				InfoExecutionCourse iDE =
@@ -66,7 +66,7 @@ public class PrepararEditarTurnoFormAction
 						SessionConstants.EXECUTION_COURSE);
 				Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
 				List infoTurnos =
-					(List) gestor.executar(
+					(List) ServiceManagerServiceFactory.executeService(
 						userView,
 						"LerTurnosDeDisciplinaExecucao",
 						argsLerTurnosDeDisciplinaExecucao);

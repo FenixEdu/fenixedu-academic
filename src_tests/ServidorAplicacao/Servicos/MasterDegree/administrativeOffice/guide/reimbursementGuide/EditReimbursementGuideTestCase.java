@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -117,7 +118,7 @@ public class EditReimbursementGuideTestCase extends ServiceNeedsAuthenticationTe
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
             compareDataSetUsingExceptedDataSetTablesAndColumns(getSuccessfullExpectedDataSetFilePath());
             System.out.println(
                 "testEditReimbursementGuide was SUCCESSFULY runned by service: "
@@ -143,7 +144,7 @@ public class EditReimbursementGuideTestCase extends ServiceNeedsAuthenticationTe
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
             System.out.println(
                 "testEditReimbursementGuideWithUnauthorizedState1 was UNSUCCESSFULY runned by service: "
                     + getNameOfServiceToBeTested());
@@ -170,7 +171,7 @@ public class EditReimbursementGuideTestCase extends ServiceNeedsAuthenticationTe
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
             System.out.println(
                 "testEditReimbursementGuideWithUnauthorizedState2 was UNSUCCESSFULY runned by service: "
                     + getNameOfServiceToBeTested());

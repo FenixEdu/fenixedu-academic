@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionPeriod;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -19,6 +18,7 @@ import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -38,7 +38,6 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
 		if (session != null) {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos gestor = GestorServicos.manager();
 			
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) this
@@ -52,7 +51,7 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 			List infoRoomExamsMaps;
 			try {
 				infoRoomExamsMaps =
-					(List) gestor.executar(
+					(List) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ReadAllRoomsExamsMap",
 						args);

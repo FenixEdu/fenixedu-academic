@@ -36,10 +36,6 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthori
         return instance;
     }
 
-    private CareerTeacherAuthorizationFilter()
-    {
-    }
-
     /*
 	 * (non-Javadoc)
 	 * 

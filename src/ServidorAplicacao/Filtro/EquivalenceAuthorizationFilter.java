@@ -11,7 +11,6 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import Dominio.Student;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -44,7 +43,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 	 * @see ServidorAplicacao.Filtro.Filtro#preFiltragem(IUserView, IServico, Object[])
 	 * @throws ServidorAplicacao.NotAuthorizedException if the user doesn't contains role returned by getRoleType() function
 	 */
-	public void preFiltragem(IUserView requester, IServico service, Object[] arguments) throws Exception {
+	public void preFiltragem(IUserView requester, Object[] arguments) throws Exception {
 
 		Collection roles = requester.getRoles();
 		boolean authorizedRequester = false;
@@ -82,7 +81,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
 		}
 
 		if (!authorizedRequester) {
-			throw new NotAuthorizedException(" -----------> User = " + requester.getUtilizador() + ": SERVICE " + service.getNome() + "ACCESS NOT GRANTED!");
+			throw new NotAuthorizedException(" -----------> User = " + requester.getUtilizador() + "ACCESS NOT GRANTED!");
 		}
 	}
 

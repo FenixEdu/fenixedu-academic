@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.Collection;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class MarkType {
+public class MarkType implements Serializable {
 
 	public static final int TYPE20 = 20;
 	public static final int TYPE5 = 5;

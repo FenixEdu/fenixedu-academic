@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.person.qualification;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoPerson;
 import DataBeans.person.InfoQualification;
 import ServidorAplicacao.IUserView;
@@ -180,7 +181,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsCreateQualificationGrantOwner();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditCreateGOMQualificationSuccesfullDataSet.xml");
 
@@ -209,7 +210,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsEditQualificationGrantOwner();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationGOMSuccesfullDataSet.xml");
 
@@ -238,7 +239,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsCreateQualificationTeacher();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditCreateTQualificationSuccesfullDataSet.xml");
 
@@ -267,7 +268,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsEditQualificationTeacher();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationTSuccesfullDataSet.xml");
 
@@ -297,7 +298,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsCreateQualificationGrantOwner();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("CreateQualificationUnsuccessfull.");
 
@@ -328,7 +329,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsCreateQualificationTeacher();
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("CreateQualificationUnsuccessfull.");
 
@@ -363,7 +364,7 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 			argserv[0] = new Integer(1220);
 			 ((InfoQualification) argserv[1]).setIdInternal(new Integer(1220));
 
-			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("CreateQualificationUnsuccessfull.");
 

@@ -9,8 +9,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.TeacherAdministrationSiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -38,10 +39,9 @@ public class ReadCurricularCourseListAction extends DispatchAction {
 
 		Object args[] = { objectCode };
 
-		GestorServicos gestor = GestorServicos.manager();
 		TeacherAdministrationSiteView siteView = null;
 		try {
-			siteView = (TeacherAdministrationSiteView) gestor.executar(userView, "ReadCurricularCourseListByExecutionCourseCode", args);
+			siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCourseListByExecutionCourseCode", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

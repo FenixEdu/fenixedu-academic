@@ -2,6 +2,8 @@ package ServidorAplicacao.Servicos.coordinator;
 
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -91,10 +93,10 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 			//Valid user
 			String[] argsUser = getAuthenticatedAndAuthorizedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
 			InfoCurriculum infoCurriculum = null;
-			infoCurriculum = (InfoCurriculum) gestor.executar(id, getNameOfServiceToBeTested(), args);
+			infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			//read something?
 			if (infoCurriculum == null)
@@ -156,9 +158,9 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 			//Invalid user
 			String[] argsUser = getAuthenticatedAndUnauthorizedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
-			gestor.executar(id, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			fail("Reading Curriculum with invalid user");
 		} catch (NotAuthorizedException e)
@@ -184,9 +186,9 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Reading Curriculum with non existent curricular course");
 		} catch (NonExistingServiceException e)
@@ -212,9 +214,9 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Reading Curriculum with non existing execution year");
 		} catch (NonExistingServiceException e)
@@ -244,10 +246,10 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
 			InfoCurriculum infoCurriculum = null;
-			infoCurriculum = (InfoCurriculum) gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			if (infoCurriculum == null)
 			{
@@ -279,9 +281,9 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Reading Curriculum with null curricular course code");
 		} catch (FenixServiceException e)
@@ -313,9 +315,9 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest
 
 			//Valid user
 			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) gestor.executar(null, "Autenticacao", argsUser2);
+			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
 
-			gestor.executar(id2, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
 			fail("Reading Curriculum with null execution year name");
 		} catch (FenixServiceException e)

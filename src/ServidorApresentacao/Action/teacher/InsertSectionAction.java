@@ -12,9 +12,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -62,9 +63,8 @@ public class InsertSectionAction extends FenixAction {
 			new InfoSection(sectionName, sectionOrder, infoSite, parentSection);
 
 		Object args[] = { infoSection };
-		GestorServicos manager = GestorServicos.manager();
 		try {
-			manager.executar(userView, "InsertSection", args);
+			ServiceManagerServiceFactory.executeService(userView, "InsertSection", args);
 		} 
 		catch (ExistingServiceException e) {
 						   throw new ExistingActionException("Uma secção com esse nome",e);
@@ -77,7 +77,7 @@ public class InsertSectionAction extends FenixAction {
 		ArrayList sections;
 		try {
 			sections =
-				(ArrayList) manager.executar(userView, "ReadSections", args1);
+				(ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadSections", args1);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

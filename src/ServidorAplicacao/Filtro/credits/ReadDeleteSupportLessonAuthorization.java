@@ -6,7 +6,6 @@ package ServidorAplicacao.Filtro.credits;
 
 import Dominio.ISupportLesson;
 import Dominio.SupportLesson;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 
@@ -28,7 +27,6 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
     {
         Integer supportLessonId = (Integer) arguments[0];
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();

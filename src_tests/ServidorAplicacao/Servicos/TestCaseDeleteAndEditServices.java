@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
@@ -32,7 +33,7 @@ public abstract class TestCaseDeleteAndEditServices
 			Object result = null;
 			try {
 				result =
-					_gestor.executar(
+					ServiceManagerServiceFactory.executeService(
 						_userView,
 						getNameOfServiceToBeTested(),
 						args);
@@ -66,7 +67,7 @@ public abstract class TestCaseDeleteAndEditServices
 			Object result = null;
 			try {
 				result =
-					_gestor.executar(
+					ServiceManagerServiceFactory.executeService(
 						_userView,
 						getNameOfServiceToBeTested(),
 						args);

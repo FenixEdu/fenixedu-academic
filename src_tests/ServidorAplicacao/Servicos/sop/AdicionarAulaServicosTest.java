@@ -13,6 +13,8 @@ package ServidorAplicacao.Servicos.sop;
  */
 import java.util.Calendar;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoLesson;
@@ -95,7 +97,7 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
+			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
 			assertTrue("testCreateNonExistingTurnoAula", ((InfoShiftServiceResult) result).isSUCESS());
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
@@ -134,9 +136,9 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
+			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
 			assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached", ((InfoShiftServiceResult) result).isSUCESS());
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
+			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
 			assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached", ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED).getMessageType());
 		} catch (Exception ex) {
 			fail("testCreateNonExistingTurnoAula_HoursLimitReached: " + ex);
@@ -179,9 +181,9 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 
 	    Object result = null; 
 	      try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
+			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
 			assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded", ((InfoShiftServiceResult) result).isSUCESS());
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
+			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
 			assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded", ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED).getMessageType());
 	      } catch (Exception ex) {
 	      	fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
@@ -209,7 +211,7 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 
 		 Object result = null;
 		 try {
-			 result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
+			 result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
 			 fail("testCreateExistingTurnoAula:");
 		 } catch (Exception ex) {
 			 assertNull("testCreateExistingTurnoAula", result);

@@ -6,7 +6,6 @@ package ServidorAplicacao.Filtro.person;
 
 import Dominio.IPessoa;
 import Dominio.grant.owner.IGrantOwner;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
@@ -57,7 +56,7 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
 	 * @param service
 	 * @param arguments
 	 */
-    public void preFiltragem(IUserView id, IServico service, Object[] arguments)
+    public void preFiltragem(IUserView id, Object[] arguments)
         throws NotAuthorizedException
     {
         try

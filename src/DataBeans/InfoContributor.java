@@ -6,13 +6,12 @@
  */
 package DataBeans;
 
-import java.io.Serializable;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoContributor implements Serializable{
+public class InfoContributor  extends InfoObject {
 	private Integer contributorNumber;
 	private String contributorName;
 	private String contributorAddress;

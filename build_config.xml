@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<project basedir="." default="generate-config-files" name="ConfigUtils">
+
+	<property name="config" location="config"/>
+	<property name="service.properties" value="${config}/servicos.conf"/>
+	<property name="filters.properties" value="${config}/filtros.conf"/>
+	<property name="service.xml" value="${config}/services.xml"/>
+	<property name="filters.xml" value="${config}/filters.xml"/>
+	<property name="filterChains.xml" value="${config}/filterChains.xml"/>
+	<property name="service.package" value="ServidorAplicacao.Servico"/>
+	<property name="filters.package" value="ServidorAplicacao.Filtro"/>
+
+	<property name="build.home" location="build"/>
+	<property name="build.app-server" value="${build.home}/app-server"/>
+
+	<property name="lib" location="lib" />
+	<property name="lib_web" location="lib_web" />
+
+    <target name="compile-app-server">
+    	<ant antfile="build_jboss.xml" target="compile-app-server" />
+    </target>
+
+    <target name="generate-config-files"
+    		description="Generates filter and service xml configuration files from property files."
+    		depends="compile-app-server"
+    		>
+		<java classname="ServidorAplicacao.utils.FilterDiscriptorProperty2XML"
+			  fork="yes">
+			<arg value="${filters.properties}"/>
+			<arg value="${filters.xml}"/>
+			<arg value="${filters.package}"/>
+			<classpath>
+				<pathelement path="${build.app-server}"/>
+	            <fileset dir="${lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	            <fileset dir="${lib_web}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+			</classpath>
+		</java>
+		<java classname="ServidorAplicacao.utils.ServiceDiscriptorProperty2XML"
+			  fork="yes">
+			<arg value="${service.properties}"/>
+			<arg value="${service.xml}"/>
+			<arg value="${service.package}"/>
+			<arg value="${filters.properties}"/>
+			<arg value="${filterChains.xml}"/>
+			<arg value="${filters.package}"/>
+			<classpath>
+				<pathelement path="${build.app-server}"/>
+	            <fileset dir="${lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	            <fileset dir="${lib_web}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+			</classpath>
+		</java>
+    </target>
+
+</project>

@@ -12,6 +12,8 @@ package ServidorAplicacao.Servicos.student;
  */
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
@@ -219,7 +221,7 @@ public class ReadShiftEnrolmentTest extends TestCaseServicos {
 
     Object result = null; 
       try {
-        result = _gestor.executar(_userView2, "ReadShiftEnrolment", argsReadShiftEnrolment);
+        result = ServiceManagerServiceFactory.executeService(_userView2, "ReadShiftEnrolment", argsReadShiftEnrolment);
         fail("testUnauthorizedReadShiftEnrolment");
       } catch (Exception ex) {
         assertNull("testUnauthorizedReadShiftEnrolment", result);
@@ -233,7 +235,7 @@ public class ReadShiftEnrolmentTest extends TestCaseServicos {
     
 	Object result = null; 
 	  try {
-		result = _gestor.executar(_userView, "ReadShiftEnrolment", argsReadShiftEnrolment);
+		result = ServiceManagerServiceFactory.executeService(_userView, "ReadShiftEnrolment", argsReadShiftEnrolment);
 		assertNotNull("testAuthorizedReadShiftEnrolment", result);
 		InfoShiftEnrolment iSE = (InfoShiftEnrolment) result;
 		//assertNotNull("testAuthorizedReadShiftEnrolment", iSE.getInfoEnrolmentWithOutShift());
@@ -273,7 +275,7 @@ public class ReadShiftEnrolmentTest extends TestCaseServicos {
 //
 //  Object result = null; 
 //	try {
-//	  result = _gestor.executar(_userView, "ReadShiftEnrolment", argsReadShiftEnrolment);
+//	  result = ServiceManagerServiceFactory.executeService(_userView, "ReadShiftEnrolment", argsReadShiftEnrolment);
 //	  assertNotNull("testAuthorizedReadShiftEnrolment", result);
 //	  InfoShiftEnrolment iSE = (InfoShiftEnrolment) result;
 //	  assertNotNull("testAuthorizedReadShiftEnrolment", iSE.getInfoEnrolmentWithOutShift());

@@ -10,7 +10,7 @@ package DataBeans;
  *
  * @author  tfc130
  */
-public class RoomKey {
+public class RoomKey extends InfoObject {
 	protected String _nomeSala;
 
 	public RoomKey() {

@@ -23,7 +23,7 @@ public class PrepareCandidateApprovalDispatchAction extends DispatchAction {
 	
 	  HttpSession session = request.getSession(false);
 	
-	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+ 	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
  
 	  request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
 	  request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());

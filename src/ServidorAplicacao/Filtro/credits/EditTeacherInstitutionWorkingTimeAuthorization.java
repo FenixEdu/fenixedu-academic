@@ -7,7 +7,6 @@ package ServidorAplicacao.Filtro.credits;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import Dominio.ITeacher;
 import Dominio.Teacher;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 
@@ -30,7 +29,6 @@ public class EditTeacherInstitutionWorkingTimeAuthorization extends AbstractTeac
 	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
 	 */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
     {
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) arguments[1];
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();

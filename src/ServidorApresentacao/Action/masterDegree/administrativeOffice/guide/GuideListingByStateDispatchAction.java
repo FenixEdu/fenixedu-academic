@@ -15,9 +15,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideList;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -56,8 +57,6 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 
-		GestorServicos serviceManager = GestorServicos.manager();
-		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 
@@ -74,7 +73,7 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
 		List guideList = null;
 		try {
 			Object args[] = { year, situationOfGuide};
-			guideList = (List) serviceManager.executar(userView, "ListGuidesByState", args);
+			guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ListGuidesByState", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

@@ -7,7 +7,7 @@ import java.util.List;
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
-public class InfoGuideList {
+public class InfoGuideList extends InfoObject {
     private String situation;
     private Double total;
     private List guides;

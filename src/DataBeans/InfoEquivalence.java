@@ -9,7 +9,7 @@ import Util.EnrolmentEquivalenceType;
  *
  * 22/Abr/2003
  */
-public class InfoEquivalence implements Serializable {
+public class InfoEquivalence extends InfoObject {
 
 	private InfoEnrolment infoEnrolment;
 	private InfoEnrolment infoEquivalentEnrolment;

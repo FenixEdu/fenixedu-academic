@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.coordinator;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoCurriculum;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
@@ -112,10 +113,10 @@ public class EditCurriculumForCurricularCourseTest extends ServiceTestCase
 					infoCurriculum,
 					argsUser[0] };
 
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
 			//Service
-			gestor.executar(id, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			//Read the change in curriculum
 			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
@@ -178,10 +179,10 @@ public class EditCurriculumForCurricularCourseTest extends ServiceTestCase
 					argsUser[0] };
 
 			//Valid user
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
 
 			//Service
-			gestor.executar(id, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
 			//Read the change in curriculum
 			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();

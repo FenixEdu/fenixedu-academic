@@ -1,11 +1,13 @@
 package Util;
 
+import java.io.Serializable;
+
 /**
  * @author dcs-rjao
  *
  * 2/Abr/2003
  */
-public class EnrolmentEvaluationState {
+public class EnrolmentEvaluationState implements Serializable {
 
 	public static final int FINAL = 1;
 	public static final int TEMPORARY = 2;

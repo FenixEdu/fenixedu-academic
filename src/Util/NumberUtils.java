@@ -1,6 +1,7 @@
 
 package Util;
 
+import java.io.Serializable;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 
@@ -8,7 +9,7 @@ import java.text.NumberFormat;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class NumberUtils {
+public class NumberUtils implements Serializable {
 	
 	/**
 	 * 

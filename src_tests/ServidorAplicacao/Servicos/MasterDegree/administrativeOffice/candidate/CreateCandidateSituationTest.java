@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
@@ -128,7 +130,7 @@ public class CreateCandidateSituationTest extends TestCaseServicos {
 		Object[] args = {infoExecutionDegree, infoPerson };
 	
 		 try {
-			 _gestor.executar(userView, "CreateCandidateSituation", args);
+			 ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		 } catch (Exception ex) {

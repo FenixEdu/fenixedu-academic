@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoRole;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -42,12 +43,11 @@ public class ReadCurricularCourseListByExecutionCourseCodeTest extends TestCaseS
 		//Exectuion Course 24
 
 		Object args[] = { new Integer(24)};
-		GestorServicos gestorServicos = GestorServicos.manager();
 
 		List curricularCourseList = new ArrayList();
 		
 		try {
-			curricularCourseList = (List) gestorServicos.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+			curricularCourseList = (List) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 		} catch (FenixServiceException e) {
 			fail("Executing  Service!");
 			e.printStackTrace();

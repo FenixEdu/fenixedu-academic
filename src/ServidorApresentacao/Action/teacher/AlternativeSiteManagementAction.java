@@ -14,12 +14,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author PTRLV
  *
@@ -76,9 +76,8 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { infoSite, infoSiteNew };
-		GestorServicos gestor = GestorServicos.manager();
 		try {
-			gestor.executar(userView, "EditSite", args);
+			ServiceManagerServiceFactory.executeService(userView, "EditSite", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

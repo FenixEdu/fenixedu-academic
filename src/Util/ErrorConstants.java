@@ -1,6 +1,8 @@
 package Util;
 
-public class ErrorConstants {
+import java.io.Serializable;
+
+public class ErrorConstants implements Serializable {
     public final static String PERSISTENCE_ERROR = new String("error.persistence");
     public final static String AUTHORIZE_ERROR = new String("error.authorization");
     public final static String TURMA_EXIST_ERROR = new String("error.turma.exist");

@@ -19,10 +19,10 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.ShiftKey;
-import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author João Mota
@@ -52,11 +52,9 @@ public class ViewShiftTimeTableAction extends FenixContextAction
         Object[] args = { new ShiftKey(shiftName, infoExecutionCourse)};
         List lessons = (List) ServiceUtils.executeService(null, "LerAulasDeTurno", args);
 
-        GestorServicos manager = GestorServicos.manager();
-
         Object argsReadCurricularCourseListOfExecutionCourse[] = { infoExecutionCourse };
         List infoCurricularCourses =
-            (List) manager.executar(
+            (List) ServiceManagerServiceFactory.executeService(
                 null,
                 "ReadCurricularCourseListOfExecutionCourse",
                 argsReadCurricularCourseListOfExecutionCourse);

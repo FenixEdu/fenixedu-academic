@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 import Util.DiaSemana;
 
-public class ShiftAndLessonKeys {
+public class ShiftAndLessonKeys extends InfoObject {
   protected String _nomeTurno;
   protected DiaSemana _diaSemana;
   protected Calendar _inicio;

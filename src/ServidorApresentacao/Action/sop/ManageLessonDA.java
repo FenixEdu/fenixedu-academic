@@ -17,6 +17,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
@@ -24,7 +26,6 @@ import DataBeans.InfoShift;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
 import DataBeans.comparators.RoomAlphabeticComparator;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
@@ -390,7 +391,6 @@ public class ManageLessonDA
 		HttpSession sessao = request.getSession(false);
 
 		IUserView userView = (IUserView) sessao.getAttribute("UserView");
-		GestorServicos gestor = GestorServicos.manager();
 
 		Object argsReadLessonByOID[] =
 			{ new Integer(request.getParameter(SessionConstants.LESSON_OID))};
@@ -415,7 +415,7 @@ public class ManageLessonDA
 						new RoomKey(lessonToDelete.getInfoSala().getNome())),
 					infoExecutionPeriod };
 			Boolean result =
-				(Boolean) gestor.executar(
+				(Boolean) ServiceManagerServiceFactory.executeService(
 					userView,
 					"ApagarAula",
 					argsApagarAula);

@@ -26,22 +26,18 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoViewExamByDayAndShift;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixExecutionDegreeAndCurricularYearsContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearsContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
 import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.Season;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -69,7 +65,6 @@ public class ViewExamsMapDA
 
 	private InfoExamsMap getExamsMap(HttpServletRequest request)
 		throws FenixActionException {
-		GestorServicos gestor = GestorServicos.manager();
 		IUserView userView =
 			(IUserView) request.getSession().getAttribute(
 				SessionConstants.U_VIEW);
@@ -90,7 +85,7 @@ public class ViewExamsMapDA
 		InfoExamsMap infoExamsMap;
 		try {
 			infoExamsMap =
-				(InfoExamsMap) gestor.executar(userView, "ReadExamsMap", args);
+				(InfoExamsMap) ServiceManagerServiceFactory.executeService(userView, "ReadExamsMap", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(e);
 		} catch (FenixServiceException e) {

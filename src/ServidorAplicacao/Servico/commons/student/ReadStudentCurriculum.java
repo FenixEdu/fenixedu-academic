@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -82,15 +83,12 @@ public class ReadStudentCurriculum implements IServico {
 				
 		Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
 		List result = new ArrayList();
-		
-		GestorServicos serviceManager = GestorServicos.manager();
-		
-		
+
 		while(iterator.hasNext()){
 			IEnrolment enrolmentTemp = (IEnrolment) iterator.next();
 			Object args[] = { enrolmentTemp };
 			 
-			InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args); 
+			InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentGrade", args); 
 			
 			InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentTemp);
 			infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);

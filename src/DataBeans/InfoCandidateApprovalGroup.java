@@ -1,7 +1,6 @@
 
 package DataBeans;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoCandidateApprovalGroup extends InfoObject implements Serializable {
+public class InfoCandidateApprovalGroup extends InfoObject {
 
 	protected String situationName;
 	

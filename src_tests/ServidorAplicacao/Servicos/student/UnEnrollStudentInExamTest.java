@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.student;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
@@ -64,7 +65,7 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
         Object[] args = { "UsernameOfNonExistingStudent", new Integer(2)};
         try
         {
-           gestor.executar(userView, getNameOfServiceToBeTested(), args);
+           ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testUnEnrollNonExistingStudentInExam was UNSUCCESSFULY runned by class: "
@@ -93,7 +94,7 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
         Object[] args = { userView.getUtilizador(), new Integer(7)};
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             
 			System.out.println(
 				"testUnEnrollStudentInNonExistingExam was UNSUCCESSFULY runned by class: "
@@ -125,7 +126,7 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             System.out.println(
                 "testInvalidUnEnrollStudentInExam was UNSUCCESSFULY runned by class: "
                     + this.getClass().getName());
@@ -158,7 +159,7 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             System.out.println(
                 "testNotAuthorizedUnEnrollStudentInExam was UNSUCCESSFULY runned by class: "
                     + this.getClass().getName());
@@ -191,7 +192,7 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
 
         try
         {
-            result = (Boolean)gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            result = (Boolean)ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             assertTrue(result.booleanValue());
             compareDataSetUsingExceptedDataSetTableColumns(
                 "etc/datasets/servicos/student/"
@@ -217,7 +218,7 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
         try
         {
             result =
-                (Boolean)gestor.executar(
+                (Boolean)ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());
@@ -244,7 +245,7 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
 
 		try
 		{
-			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
 				"testEnrollStudentNotAttendsExecutionCourse was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());

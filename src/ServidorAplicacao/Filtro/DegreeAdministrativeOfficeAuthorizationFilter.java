@@ -40,7 +40,7 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
         if (!AuthorizationUtils
             .containsRole(id.getRoles(), RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
         {
-            super.preFiltragem(id, servico, argumentos);
+            super.preFiltragem(id, argumentos);
         }
     }
 

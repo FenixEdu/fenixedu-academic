@@ -15,6 +15,8 @@ package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.cer
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRole;
@@ -64,7 +66,7 @@ public class CreateDeclarationServiceTest extends TestCaseServicos {
 	
 	 
 		 try {
-			 _gestor.executar(userView, "CreateDeclaration", args);
+			 ServiceManagerServiceFactory.executeService(userView, "CreateDeclaration", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		 } catch (Exception ex) {
@@ -87,7 +89,7 @@ public class CreateDeclarationServiceTest extends TestCaseServicos {
 	
 	 
 			 try {
-				 _gestor.executar(userView, "CreateDeclaration", args);
+				 ServiceManagerServiceFactory.executeService(userView, "CreateDeclaration", args);
 			 } catch (FenixServiceException ex) {
 				fail("Fenix Service Exception");
 			 } catch (Exception ex) {

@@ -673,4 +673,5 @@ public abstract class ObjectFenixOJB implements IPersistentObject
 		PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
 		pb.store(domainObject);
 	}
+
 }

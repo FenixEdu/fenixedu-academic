@@ -11,6 +11,8 @@ package ServidorAplicacao.Servicos.student;
  */
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoStudentSiteExams;
@@ -65,7 +67,7 @@ public class ReadExamsByStudentTest
 
 		try {
 			result =
-				(SiteView) gestor.executar(
+				(SiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args);
@@ -96,7 +98,7 @@ public class ReadExamsByStudentTest
 
 		try {
 			result =
-				(SiteView) gestor.executar(
+				(SiteView) ServiceManagerServiceFactory.executeService(
 					userView,
 					getNameOfServiceToBeTested(),
 					args);

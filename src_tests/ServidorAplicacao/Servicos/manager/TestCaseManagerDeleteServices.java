@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 
 /**
@@ -29,7 +31,7 @@ public abstract class TestCaseManagerDeleteServices extends TestCaseNeedAuthoriz
 
         try
         {
-            Object result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+            Object result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
 
             List comparatorArgument = new ArrayList(expectedActionErrorsArguments().size());
             Iterator iter = expectedActionErrorsArguments().iterator();
@@ -59,7 +61,7 @@ public abstract class TestCaseManagerDeleteServices extends TestCaseNeedAuthoriz
 
         try
         {
-            Object result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
+            Object result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
             List comparatorArgument = new ArrayList();
             assertEquals("testSuccessfulExecutionOfDeleteService", comparatorArgument, result);
             System.out.println(

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.commons;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.Servicos.ServiceTestCase;
 
@@ -34,7 +35,7 @@ public class ReadTeacherByNumberTest extends ServiceTestCase {
 			Integer teacherNumber = new Integer(53);
 			Object[] argsReadTeacher = { teacherNumber };
 
-			InfoTeacher infoTeacher = (InfoTeacher) gestor.executar(null, getNameOfServiceToBeTested(), argsReadTeacher);
+			InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadTeacher);
 			assertNotNull(infoTeacher);
 			assertEquals(infoTeacher.getTeacherNumber(), teacherNumber);
 
@@ -50,7 +51,7 @@ public class ReadTeacherByNumberTest extends ServiceTestCase {
 			Integer teacherNumber = new Integer(1225);
 			Object[] argsReadTeacher = { teacherNumber };
 
-			InfoTeacher infoTeacher = (InfoTeacher) gestor.executar(null, getNameOfServiceToBeTested(), argsReadTeacher);
+			InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadTeacher);
 			assertNull(infoTeacher);
 
 		} catch (Exception ex) {

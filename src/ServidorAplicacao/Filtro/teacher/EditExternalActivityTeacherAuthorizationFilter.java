@@ -39,10 +39,6 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
         return instance;
     }
 
-    private EditExternalActivityTeacherAuthorizationFilter()
-    {
-    }
-
     /* (non-Javadoc)
      * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView, DataBeans.InfoObject)
      */

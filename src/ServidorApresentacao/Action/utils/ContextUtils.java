@@ -18,6 +18,8 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.util.LabelValueBean;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoClass;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
@@ -27,7 +29,6 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -316,8 +317,6 @@ public class ContextUtils
 	 */
     public static void setExecutionCourseContext(HttpServletRequest request)
     {
-        System.out.println("Setting execution course context.");
-
         String executionCourseOIDString =
             (String) request.getAttribute(SessionConstants.EXECUTION_COURSE_OID);
         if (executionCourseOIDString == null)
@@ -534,7 +533,6 @@ public class ContextUtils
 
     public static void setSelectedRoomsContext(HttpServletRequest request) throws FenixActionException
     {
-        GestorServicos gestor = GestorServicos.manager();
 
         Object argsSelectRooms[] =
             {
@@ -549,7 +547,7 @@ public class ContextUtils
         List selectedRooms = null;
         try
         {
-            selectedRooms = (List) gestor.executar(null, "SelectRooms", argsSelectRooms);
+            selectedRooms = (List) ServiceManagerServiceFactory.executeService(null, "SelectRooms", argsSelectRooms);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -657,7 +655,6 @@ public class ContextUtils
         //HttpSession session = request.getSession(false);
 
         //IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-        GestorServicos gestor = GestorServicos.manager();
 
         InfoExecutionPeriod selectedExecutionPeriod =
             (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -668,7 +665,7 @@ public class ContextUtils
         try
         {
             executionPeriods =
-                (ArrayList) gestor.executar(userView, "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
+                (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
 
             selectedExecutionPeriod.getInfoExecutionYear().getYear();
             selectedExecutionPeriod.getSemester();

@@ -11,6 +11,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.GuiderAlreadyChosenServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -81,7 +82,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
     {
         Object[] argsReadStudentCurricularPlan = { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-            (InfoStudentCurricularPlan) serviceManager.executar(
+            (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                 userViewNotAuthorized,
                 "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                 argsReadStudentCurricularPlan);
@@ -125,13 +126,13 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsSearch = { "Xxx" };
-            serviceManager.executar(userView, "SearchExternalPersonsByName", argsSearch);
+            ServiceManagerServiceFactory.executeService(userView, "SearchExternalPersonsByName", argsSearch);
 
             InfoTeacher infoTeacherGuider = new InfoTeacher();
             infoTeacherGuider.setIdInternal(new Integer(954));
@@ -162,7 +163,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsCreateMasterDegreeThesis);
@@ -184,7 +185,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -218,7 +219,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsCreateMasterDegreeThesis);
@@ -243,13 +244,13 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
 
             Object[] argsSearch = { "Xxx" };
-            serviceManager.executar(userView, "SearchExternalPersonsByName", argsSearch);
+            ServiceManagerServiceFactory.executeService(userView, "SearchExternalPersonsByName", argsSearch);
 
             InfoTeacher infoTeacherGuider = new InfoTeacher();
             infoTeacherGuider.setIdInternal(new Integer(954));
@@ -276,7 +277,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
                     assistentGuiders,
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsCreateMasterDegreeThesis);
@@ -302,7 +303,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -330,7 +331,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsCreateMasterDegreeThesis);
@@ -357,7 +358,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -392,7 +393,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsCreateMasterDegreeThesis);
@@ -421,7 +422,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
             Object[] argsReadStudentCurricularPlan =
                 { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
             InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) serviceManager.executar(
+                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
                     userView,
                     "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
                     argsReadStudentCurricularPlan);
@@ -454,7 +455,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
                     infoExternalPersonExternalGuiders,
                     externalAssistentGuiders };
 
-            serviceManager.executar(
+            ServiceManagerServiceFactory.executeService(
                 this.userView,
                 getNameOfServiceToBeTested(),
                 argsCreateMasterDegreeThesis);

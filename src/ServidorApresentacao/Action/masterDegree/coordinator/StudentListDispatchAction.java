@@ -14,9 +14,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -42,7 +43,6 @@ public class StudentListDispatchAction extends DispatchAction {
 
 		if (session != null) {
 
-			GestorServicos serviceManager = GestorServicos.manager();
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
@@ -56,7 +56,7 @@ public class StudentListDispatchAction extends DispatchAction {
 	
 			try {
 				Object args[] = { id , TipoCurso.MESTRADO_OBJ };
-				result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsFromDegreeCurricularPlan", args);
 
 			} catch (NotAuthorizedException e) {
 				return mapping.findForward("NotAuthorized");
@@ -72,7 +72,7 @@ public class StudentListDispatchAction extends DispatchAction {
 			InfoExecutionDegree infoExecutionDegreeForRequest = null;
 			try {
 				Object args[] = { id };
-				infoExecutionDegreeForRequest = (InfoExecutionDegree) serviceManager.executar(userView, "ReadExecutionDegreeByDCPID", args);
+				infoExecutionDegreeForRequest = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByDCPID", args);
 			} catch (NonExistingServiceException e) {
 				
 			} catch (FenixServiceException e) {
@@ -95,7 +95,6 @@ public class StudentListDispatchAction extends DispatchAction {
 	  throws Exception {
 
 	  HttpSession session = request.getSession(false);
-	  GestorServicos serviceManager = GestorServicos.manager();
 	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
@@ -105,7 +104,7 @@ public class StudentListDispatchAction extends DispatchAction {
 
 	  try {
 
-	  result = (List) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
+	  result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCoursesByDegree", args);
 
 	  } catch (FenixServiceException e) {
 		  throw new FenixActionException();

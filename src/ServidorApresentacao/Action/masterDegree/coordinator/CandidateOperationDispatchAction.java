@@ -13,12 +13,12 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class CandidateOperationDispatchAction extends DispatchAction {
 
@@ -33,7 +33,6 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 	
 	if (session != null) {
 	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-	  GestorServicos gestor = GestorServicos.manager();
  
  	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
  
@@ -41,7 +40,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
  	  Object args[] = {infoExecutionDegree}; 
  
 	  try {
-		candidates = (List) gestor.executar(userView, "ReadDegreeCandidates", args);
+		candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreeCandidates", args);
 	  } catch (FenixServiceException e) {
 		  throw new FenixActionException(e);
 	  }	  
@@ -67,7 +66,6 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 	  HttpSession session = request.getSession(false);
 
 	  if (session != null) {
-			
 		  List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
 			
 

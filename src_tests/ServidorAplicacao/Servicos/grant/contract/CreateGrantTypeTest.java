@@ -5,6 +5,7 @@
 
 package ServidorAplicacao.Servicos.grant.contract;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.grant.contract.InfoGrantType;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -146,7 +147,7 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
             System.out.println(
                 getNameOfServiceToBeTested()
@@ -171,7 +172,7 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(false);
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
         } catch (NonExistingServiceException e)
         {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
@@ -198,7 +199,7 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArgumentsEdit();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/contract/testEditGrantTypeExpectedDataSet.xml");
             System.out.println(
@@ -224,7 +225,7 @@ public class CreateGrantTypeTest extends ServidorAplicacao.Servicos.ServiceNeeds
             IUserView id = authenticateUser(args);
             Object[] args2 = getUnauthorizeArguments(true);
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
         } catch (NonExistingServiceException e)
         {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());

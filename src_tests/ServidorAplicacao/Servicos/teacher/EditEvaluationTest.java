@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -138,7 +139,7 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args);
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
             // verificar as alteracoes da bd
             compareDataSet(getExpectedDataSetFilePath());
@@ -161,7 +162,7 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args);
 
-            gestor.executar(
+            ServiceManagerServiceFactory.executeService(
                 userView,
                 getNameOfServiceToBeTested(),
                 getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
@@ -186,7 +187,7 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
             fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
         } catch (NotAuthorizedException ex)
         {

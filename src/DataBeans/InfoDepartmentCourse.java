@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author lmac1
  */
 
-public class InfoDepartmentCourse extends InfoObject implements Serializable {
+public class InfoDepartmentCourse extends InfoObject {
 	
     private String name;
 	private String code;

@@ -20,12 +20,12 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author PTRLV
@@ -67,10 +67,9 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, title, authors, reference, year, optional };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "InsertBibliographicReference", args);
+            ServiceManagerServiceFactory.executeService(userView, "InsertBibliographicReference", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -80,7 +79,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         ArrayList references = null;
         try
         {
-            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args1);
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args1);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -132,10 +131,9 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
             { infoExecutionCourse, infoBibliographicReference, infoBibliographicReferenceNew };
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "EditBibliographicReference", args);
+            ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -145,7 +143,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         ArrayList references = null;
         try
         {
-            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args1);
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args1);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -181,10 +179,9 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, infoBibliographicReference };
-        GestorServicos gestor = GestorServicos.manager();
         try
         {
-            gestor.executar(userView, "DeleteBibliographicReference", args);
+            ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -194,7 +191,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         ArrayList references = null;
         try
         {
-            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args1);
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args1);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
@@ -219,11 +216,10 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, null };
-        GestorServicos gestor = GestorServicos.manager();
         List references = null;
         try
         {
-            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args);
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args);
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);

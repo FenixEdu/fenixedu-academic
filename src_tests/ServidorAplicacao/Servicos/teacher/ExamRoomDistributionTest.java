@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import Dominio.Exam;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
@@ -116,7 +118,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
@@ -159,7 +161,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
@@ -200,7 +202,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
         try
         {
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testNonExistingRoom was UNSUCCESSFULY runned by class: " + this.getClass().getName());
@@ -232,7 +234,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
         try
         {
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testNonExistingRoom was UNSUCCESSFULY runned by class: " + this.getClass().getName());
@@ -263,7 +265,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
         try
         {
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testNonExistingRoom was UNSUCCESSFULY runned by class: " + this.getClass().getName());
@@ -296,7 +298,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
         try
         {
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testNonExistingExecutionCourse was UNSUCCESSFULY runned by class: "
@@ -332,7 +334,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testNonExistingExam was UNSUCCESSFULY runned by class: " + this.getClass().getName());
@@ -361,7 +363,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testExamNotBelongsExecutionCourse was UNSUCCESSFULY runned by class: "
@@ -394,7 +396,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
@@ -436,7 +438,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testOutofEnrollmentPeriod was UNSUCCESSFULY runned by class: "
@@ -477,7 +479,7 @@ public class ExamRoomDistributionTest extends ServiceNeedsAuthenticationTestCase
 
 		 try
 		 {
-			 gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			 ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
 			 System.out.println(
 				 "testDistribute2WeeksBeforeExam was UNSUCCESSFULY runned by class: "

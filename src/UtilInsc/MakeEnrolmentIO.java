@@ -10,11 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -269,8 +270,7 @@ public abstract class MakeEnrolmentIO {
 		}
 
 		try {
-			GestorServicos gestor = GestorServicos.manager();
-			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+			userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 		} catch (FenixServiceException e) {
 			e.printStackTrace(System.out);
 		}

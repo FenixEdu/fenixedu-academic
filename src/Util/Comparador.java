@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import Dominio.Horario;
@@ -10,7 +11,7 @@ import Dominio.MarcacaoPonto;
  *
  * @author  Fernanda Quitério & Tania Pousão
  */
-public class Comparador implements Comparator {
+public class Comparador implements Comparator, Serializable {
   private String _objecto = null;
   private String _sentido = null; /* crescente ou decrescente */
   

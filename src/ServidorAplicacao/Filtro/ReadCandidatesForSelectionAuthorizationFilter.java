@@ -12,7 +12,6 @@ import Dominio.ExecutionYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -39,7 +38,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
         return instance;
     }
 
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
 
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))

@@ -8,6 +8,8 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import Dominio.ISummary;
 import Dominio.Summary;
 import ServidorAplicacao.IUserView;
@@ -107,7 +109,7 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase
 
             Object[] args2 = getAuthorizeArguments();
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args2);
 
             PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 

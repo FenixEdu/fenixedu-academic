@@ -9,12 +9,13 @@
 
 package Util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
-public class SituationName {
+public class SituationName implements Serializable {
  
 	public static final int PENDENTE = 1;
 	public static final int ADMITIDO = 2;

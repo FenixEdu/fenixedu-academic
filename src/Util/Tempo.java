@@ -1,6 +1,8 @@
 package Util;
 
-public class Tempo {
+import java.io.Serializable;
+
+public class Tempo implements Serializable {
   private int _hora;
   private int _minutos;
   private int _segundos;

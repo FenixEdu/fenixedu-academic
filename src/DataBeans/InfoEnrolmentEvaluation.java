@@ -12,7 +12,7 @@ import Util.EnrolmentEvaluationType;
  *
  * 22/Abr/2003
  */
-public class InfoEnrolmentEvaluation extends InfoObject implements Serializable {
+public class InfoEnrolmentEvaluation extends InfoObject {
 	private String grade;
 	private EnrolmentEvaluationType enrolmentEvaluationType;
 	private Date examDate;

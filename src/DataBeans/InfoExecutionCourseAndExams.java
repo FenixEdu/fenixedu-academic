@@ -12,7 +12,7 @@ package DataBeans;
  * @author  Luis Cruz & Sara Ribeiro
  */
 
-public class InfoExecutionCourseAndExams {
+public class InfoExecutionCourseAndExams extends InfoObject {
 
 	protected InfoExecutionCourse infoExecutionCourse;
 	protected InfoExam infoExam1;

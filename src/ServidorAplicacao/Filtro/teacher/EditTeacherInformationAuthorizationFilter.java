@@ -40,10 +40,6 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
         return instance;
     }
 
-    private EditTeacherInformationAuthorizationFilter()
-    {
-    }
-
     /*
 	 * (non-Javadoc)
 	 * 
@@ -54,7 +50,7 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
         return RoleType.TEACHER;
     }
 
-    public void preFiltragem(IUserView id, IServico service, Object[] arguments)
+    public void preFiltragem(IUserView id, Object[] arguments)
         throws NotAuthorizedException
     {
         try

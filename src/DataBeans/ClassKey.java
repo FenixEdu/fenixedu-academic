@@ -10,7 +10,7 @@ package DataBeans;
  *
  * @author  tfc130
  */
-public class ClassKey {
+public class ClassKey extends InfoObject {
   protected String _nomeTurma;
 
   public ClassKey() { }

@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRole;
@@ -99,7 +101,7 @@ public class ChangeGuideSituationTest extends TestCaseServicos {
 		Object[] args = {guideNumber, guideYear, guideVersion, date.getTime(), remarks, SituationOfGuide.PAYED_STRING, PaymentType.ATM_STRING };
 
 		 try {
-			 _gestor.executar(userView, "ChangeGuideSituation", args);
+			 ServiceManagerServiceFactory.executeService(userView, "ChangeGuideSituation", args);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {
@@ -142,7 +144,7 @@ public class ChangeGuideSituationTest extends TestCaseServicos {
 		Object args2[] = {guideNumber, guideYear, guideVersion, null, remarks, SituationOfGuide.ANNULLED_STRING, null };
 	
 		 try {
-			 _gestor.executar(userView, "ChangeGuideSituation", args2);
+			 ServiceManagerServiceFactory.executeService(userView, "ChangeGuideSituation", args2);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception" + ex);
 		 } catch (Exception ex) {

@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.publico;
 
+import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
@@ -77,7 +78,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest
 		
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
 					argsReadExecutionDegreesByExecutionYearAndDegreeInitials);
@@ -98,7 +99,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest
 		
 		try {
 			result =
-				_gestor.executar(
+				ServiceManagerServiceFactory.executeService(
 					_userView,
 					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
 					argsReadExecutionDegreesByExecutionYearAndDegreeInitials);

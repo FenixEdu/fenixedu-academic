@@ -15,8 +15,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -41,8 +42,6 @@ public class CurriculumDispatchAction extends DispatchAction {
 
 		HttpSession session = request.getSession();
 
-		GestorServicos serviceManager = GestorServicos.manager();
-		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 
@@ -53,7 +52,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 		
 		try {
 			Object args[] = { userView, studentCurricularPlanID };
-			result = (ArrayList) serviceManager.executar(userView, "ReadStudentCurriculum", args);
+			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurriculum", args);
 		} catch (NotAuthorizedException e) {
 			return mapping.findForward("NotAuthorized");
 		}
@@ -75,7 +74,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 		try {
 			Object args[] = { studentCurricularPlanID };
-			infoStudentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "ReadStudentCurricularPlan", args);
+			infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlan", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e);
 		}
@@ -95,8 +94,6 @@ public class CurriculumDispatchAction extends DispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession();
-
-		GestorServicos serviceManager = GestorServicos.manager();
 		
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
@@ -104,7 +101,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 		List result = null;
 		try {
 			Object args[] = { userView };
-			result = (ArrayList) serviceManager.executar(userView, "ReadStudentCurricularPlans", args);
+			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlans", args);
 		} catch (NonExistingServiceException e) {
 			request.setAttribute("studentCPs", new ArrayList());
 			return mapping.findForward("ShowStudentCurricularPlans");

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoWeeklyOcupation;
@@ -101,7 +102,7 @@ public class EditTeacherInformationTest extends ServiceNeedsAuthenticationTestCa
             IUserView userView = authenticateUser(args);
 
             result =
-                (Boolean) gestor.executar(
+                (Boolean) ServiceManagerServiceFactory.executeService(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());

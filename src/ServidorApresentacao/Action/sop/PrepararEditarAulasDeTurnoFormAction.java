@@ -9,9 +9,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao
 	.Action
@@ -39,7 +40,6 @@ public class PrepararEditarAulasDeTurnoFormAction
 
 			//DynaActionForm manipularTurnosForm = (DynaActionForm) request.getAttribute("manipularTurnosForm");
 			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
 
 			//Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
 			//ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
@@ -53,7 +53,7 @@ public class PrepararEditarAulasDeTurnoFormAction
 
 			Object args[] = { shiftOID };
 			InfoShift infoTurno =
-				(InfoShift) gestor.executar(userView, "ReadShiftByOID", args);
+				(InfoShift) ServiceManagerServiceFactory.executeService(userView, "ReadShiftByOID", args);
 
 			request.setAttribute("infoTurno", infoTurno);
 			request.setAttribute(SessionConstants.SHIFT, infoTurno);
@@ -63,7 +63,7 @@ public class PrepararEditarAulasDeTurnoFormAction
 						infoTurno.getNome(),
 						infoTurno.getInfoDisciplinaExecucao())};
 			ArrayList infoAulasDeTurno =
-				(ArrayList) gestor.executar(
+				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
 					"LerAulasDeTurno",
 					argsLerAulasDeTurno);

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.teacher.InfoExternalActivity;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
@@ -73,7 +74,7 @@ public class ReadExternalActivityTest extends ServiceNeedsAuthenticationTestCase
             InfoExternalActivity result = null;
             Object[] args = { new Integer(1)};
 
-            result = (InfoExternalActivity) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            result = (InfoExternalActivity) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             assertTrue(result.getIdInternal().equals(args[0]));
             // verifica se a base de dados nao foi alterada

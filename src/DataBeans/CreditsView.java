@@ -11,7 +11,7 @@ import DataBeans.teacher.credits.InfoCredits;
 /**
  * @author jpvl
  */
-public class CreditsView {
+public class CreditsView extends InfoObject {
 	private InfoCredits infoCredits;
 	private List infoProfessorshipList;
 	/**

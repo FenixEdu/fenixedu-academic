@@ -20,8 +20,9 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -39,7 +40,6 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 
 	protected dbaccess dbAcessPoint = null;
 	//protected IUserView userView = null;
-	protected GestorServicos serviceManager = null;
 
 	public ReadPosGradStudentCurricularPlansTest(String testName) {
 		super(testName);
@@ -83,12 +83,11 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		String passwd,
 		String application) {
 		SuportePersistenteOJB.resetInstance();
-		this.serviceManager = GestorServicos.manager();
 
 		String args[] = { userName, passwd, application };
 
 		try {
-			return (IUserView) this.serviceManager.executar(
+			return (IUserView) ServiceManagerServiceFactory.executeService(
 				null,
 				"Autenticacao",
 				args);
@@ -169,7 +168,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		System.out.println("user->"+authenticateUser("julia", "pass", this.getApplication()));
 		try {
 			result =
-				(List) this.serviceManager.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					authenticateUser("julia", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args1);
@@ -190,7 +189,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 
 		try {
 			result =
-				(List) this.serviceManager.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					authenticateUser("julia", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args2);
@@ -210,7 +209,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 
 		try {
 			result =
-				(List) this.serviceManager.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					authenticateUser("julia", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args3);
@@ -230,7 +229,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 
 		try {
 			result =
-				(List) this.serviceManager.executar(
+				(List) ServiceManagerServiceFactory.executeService(
 					authenticateUser("3", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args4);

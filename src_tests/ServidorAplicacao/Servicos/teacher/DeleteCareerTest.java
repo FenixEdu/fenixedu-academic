@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
+import framework.factory.ServiceManagerServiceFactory;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
@@ -73,7 +74,7 @@ public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
         {
             Object[] args = { new Integer(1)};
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteProfessionalCareerDataSet.xml");
         } catch (Exception ex)
@@ -89,7 +90,7 @@ public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
         {
             Object[] args = { new Integer(2)};
 
-            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteTeachingCareerDataSet.xml");
         } catch (Exception ex)

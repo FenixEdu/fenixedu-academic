@@ -39,10 +39,6 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectTeache
         return instance;
     }
 
-    private EditCareerTeacherAuthorizationFilter()
-    {
-    }
-
     /*
 	 * (non-Javadoc)
 	 * 

@@ -14,7 +14,7 @@ import java.util.List;
  * @author  Luis Cruz & Sara Ribeiro
  */
 
-public class InfoViewClassSchedule extends InfoObject implements Serializable {
+public class InfoViewClassSchedule extends InfoObject {
 	protected InfoClass infoClass;
 	protected List classLessons;
 	

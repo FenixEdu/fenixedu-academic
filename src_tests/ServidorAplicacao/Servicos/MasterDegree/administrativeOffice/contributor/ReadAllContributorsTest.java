@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.factory.ServiceManagerServiceFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRole;
@@ -57,7 +59,7 @@ public class ReadAllContributorsTest extends TestCaseServicos {
 		List result = null;
 	 
 		 try {
-			 result = (List) _gestor.executar(userView, "ReadAllContributors", null);
+			 result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllContributors", null);
 		 } catch (FenixServiceException ex) {
 			fail("Fenix Service Exception");
 		 } catch (Exception ex) {

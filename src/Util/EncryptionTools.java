@@ -4,6 +4,7 @@
  */
 package Util;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -11,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Nuno Nunes
  * 
  */
-public class EncryptionTools {
+public class EncryptionTools implements Serializable {
 	
 	/**
 	 * This Method encrypts a String 

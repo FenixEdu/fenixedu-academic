@@ -17,7 +17,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import ServidorAplicacao.GestorServicos;
+import framework.factory.ServiceManagerServiceFactory;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
@@ -69,8 +70,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 			
 			DynaActionForm chooseGuideForm = (DynaActionForm) form;
 			
-			GestorServicos serviceManager = GestorServicos.manager();
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
@@ -80,7 +79,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 	  
 			List result = null;
 			try {
-				result = (List) serviceManager.executar(userView, "ChooseGuide", args);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Guia", e);
 			}
@@ -103,8 +102,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			GestorServicos serviceManager = GestorServicos.manager();
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			Integer guideYear = new Integer(request.getParameter("year"));
 			Integer guideNumber = new Integer(request.getParameter("number"));
@@ -113,7 +110,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 	  
 			List result = null;
 			try {
-				result = (List) serviceManager.executar(userView, "ChooseGuide", args);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Guia", e);
 			}
@@ -155,7 +152,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			DynaActionForm choosePersonForm = (DynaActionForm) form;
@@ -168,7 +164,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 	  
 			List result = null;
 			try {
-				result = (List) serviceManager.executar(userView, "ChooseGuide", args);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Pessoa", e);
 			}
@@ -196,7 +192,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -206,7 +201,7 @@ public class GuideListingDispatchAction extends DispatchAction {
 	  
 			List result = null;
 			try {
-				result = (List) serviceManager.executar(userView, "ChooseGuideByPersonID", args);
+				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuideByPersonID", args);
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Pessoa", e);
 			}

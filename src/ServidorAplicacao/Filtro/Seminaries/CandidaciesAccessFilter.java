@@ -4,7 +4,6 @@
  * By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Filtro.Seminaries;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
@@ -26,7 +25,7 @@ public class CandidaciesAccessFilter extends Filtro
         return filter;
     }
     //  the singleton of this class
-    public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
+    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
     {
         if (((id != null
             && id.getRoles() != null
