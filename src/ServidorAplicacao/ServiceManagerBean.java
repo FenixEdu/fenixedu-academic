@@ -145,6 +145,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 return serviceResult;
         } catch (Exception e) {
             System.out.println("###################Exception= " + e.getClass().getName());
+            e.printStackTrace();
             throw (EJBException) new EJBException(e).initCause(e);
         }
 	        catch (Throwable t)
