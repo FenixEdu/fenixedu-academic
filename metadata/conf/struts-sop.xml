@@ -317,6 +317,7 @@
     		>
   		<forward name="showForm" path="/chooseExecutionPeriod.jsp"/>
   		<forward name="choose" path="/prepararEscolherContexto.do"/>
+  		<forward name="viewRoom" path="/sopViewRoom.jsp"/>
 	</action>
 
 	  <!-- Choose Context for Timetables Management-->
@@ -495,6 +496,7 @@
 		<forward name="VerSala" path="/viewRoom.do" />
         <forward name="EditarSala" path="/editarSala.jsp" />
       </action>
+
 
       <action attribute="criarSalaForm"
       		  input="/editarSala.jsp"

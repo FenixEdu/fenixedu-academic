@@ -41,6 +41,20 @@
 		<br/>
 		<br/>
 
+		<html:form action="/chooseExecutionPeriod">
+		<table border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td nowrap="nowrap" class="formTD"><bean:message key="property.executionPeriod"/></td>
+		    <td nowrap="nowrap" class="formTD"><jsp:include page="selectExecutionPeriodList.jsp"/></td>
+		  </tr>
+		</table>
+		<html:hidden property="method" value="chooseForViewRoom"/>
+		<html:hidden property="page" value="1"/>
+		  <html:submit styleClass="inputbutton">
+		   	  <bean:message key="label.choose"/>
+		  </html:submit>
+		</html:form>   
+
 	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/> 
 
 	</logic:present>

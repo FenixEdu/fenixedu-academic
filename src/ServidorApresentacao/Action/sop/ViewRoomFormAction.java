@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +11,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -31,11 +35,13 @@ public class ViewRoomFormAction extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		DynaActionForm indexForm = (DynaActionForm) form;
-
 		HttpSession session = request.getSession();
+		DynaActionForm indexForm = (DynaActionForm) form;
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
+			IUserView userView = (IUserView) session.getAttribute("UserView");
+			GestorServicos gestor = GestorServicos.manager();
+			
 			List infoRooms = (List) session.getAttribute("publico.infoRooms");
 			InfoRoom infoRoom =
 				(InfoRoom) infoRooms.get(
@@ -53,20 +59,73 @@ public class ViewRoomFormAction extends FenixAction {
 			Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
 
 			try {
-			List lessons;
-				lessons = (List) ServiceUtils.executeService(
-					null,
-					"LerAulasDeSalaEmSemestre",
-					argsReadLessons);
+				List lessons;
+				lessons =
+					(List) ServiceUtils.executeService(
+						null,
+						"LerAulasDeSalaEmSemestre",
+						argsReadLessons);
 
-			if (lessons != null) {
-				session.setAttribute(SessionConstants.LESSON_LIST_ATT, lessons);
-			}
+				if (lessons != null) {
+					session.setAttribute(
+						SessionConstants.LESSON_LIST_ATT,
+						lessons);
+				}
 
 			} catch (FenixServiceException e) {
 				throw new FenixActionException();
 			}
 
+			// Escolha de periodo execucao
+			Object argsReadExecutionPeriods[] = {
+			};
+			ArrayList executionPeriods;
+			try {
+				executionPeriods = (ArrayList) gestor.executar(
+					userView,
+					"ReadExecutionPeriods",
+					argsReadExecutionPeriods);
+			} catch (FenixServiceException e1) {
+				throw new FenixActionException();
+			}
+
+//			// if executionPeriod was previously selected,form has that
+//			// value as default
+//			InfoExecutionPeriod selectedExecutionPeriod =
+//				(InfoExecutionPeriod) session.getAttribute(
+//					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+//			DynaActionForm indexFormForExecutionPeriod = new DynaActionForm();
+//			if (selectedExecutionPeriod != null) {
+//				indexFormForExecutionPeriod.set(
+//					"index",
+//					new Integer(
+//						executionPeriods.indexOf(selectedExecutionPeriod)));
+//			}
+//			request.setAttribute("pagedIndexForm", indexFormForExecutionPeriod);
+			//----------------------------------------------
+
+			ArrayList executionPeriodsLabelValueList = new ArrayList();
+			for (int i = 0; i < executionPeriods.size(); i++) {
+				infoExecutionPeriod =
+					(InfoExecutionPeriod) executionPeriods.get(i);
+				executionPeriodsLabelValueList.add(
+					new LabelValueBean(
+						infoExecutionPeriod.getName()
+							+ " - "
+							+ infoExecutionPeriod
+								.getInfoExecutionYear()
+								.getYear(),
+						"" + i));
+			}
+
+			session.setAttribute(
+				SessionConstants.LIST_INFOEXECUTIONPERIOD,
+				executionPeriods);
+
+			request.setAttribute(
+				SessionConstants.LABELLIST_EXECUTIONPERIOD,
+				executionPeriodsLabelValueList);
+			//--------------------
 
 			return mapping.findForward("Sucess");
 		} else {
