@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.student;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -115,10 +116,11 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-
-		request.setAttribute("infoStudents", studentsNotEnroled);
+		if(studentsNotEnroled!=null)
+		{
+			request.setAttribute("infoStudents", studentsNotEnroled);
+		}
 		request.setAttribute("groupPropertiesCode",groupPropertiesCode);
-		System.out.println("INFOSTUDENTS SIZE"+studentsNotEnroled.size());
 		return mapping.findForward("sucess");
 
 		}
@@ -147,9 +149,10 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			}
 					
 			Integer shiftCode = new Integer(shiftCodeString);
-
-			List studentCodes =Arrays.asList((Integer[]) enrolmentForm.get("studentsNotEnroled"));
-
+			
+			List studentCodes = new ArrayList();
+			studentCodes =Arrays.asList((Integer[]) enrolmentForm.get("studentsNotEnroled"));
+			System.out.println("STUDENT CODES-TAM"+studentCodes.size());
 			
 			Object[] args = { groupPropertiesCode,shiftCode, studentCodes,userView.getUtilizador()};
 			Integer result;
@@ -160,7 +163,6 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-			System.out.println("NA ACCAO ENROLMENT DEPOIS DO SERVICO RESULT"+result.toString());
 			
 			switch(result.intValue())
 			{

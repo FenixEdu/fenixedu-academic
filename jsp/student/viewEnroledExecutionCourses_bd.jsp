@@ -3,20 +3,26 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 
-<logic:present name="infoExecutionCourses"> 
-<br>
-<br>
-<br>
- <h2><bean:message key="title.ChooseExecutionCourse"/></h2>
-<br>
 
+<logic:present name="infoExecutionCourses"> 
 <html:form action="/viewExecutionCourseProjects" method="get">
 
-<span class="error"><html:errors/></span>
-<br>
+	<logic:empty name="infoExecutionCourses">
+		<h2><bean:message key="message.executionCourses.not.available"/></h2>
+	</logic:empty>
 
-<table width="50%" cellpadding="0" border="0">	
-	<tr>
+	<logic:notEmpty name="infoExecutionCourses">
+		<br> 
+		<br>
+		<br>
+ 		<h2><bean:message key="title.ChooseExecutionCourse"/></h2>
+		<br>
+
+		<span class="error"><html:errors/></span>
+		<br>
+
+	<table width="50%" cellpadding="0" border="0">	
+		<tr>
 	 	<td><bean:message key="label.executionCourse"/></td>
 		
 		<td>
@@ -24,21 +30,23 @@
     	<html:options collection="infoExecutionCourses" property="value" labelProperty="label"/>
     	</html:select>	
     	</td>
-    </tr>	
+    	</tr>	
 
-</table>
-<br>
-<br>
-<br>
+	</table>
+	<br>
+	<br>
+	<br>
 <html:submit styleClass="inputbutton"><bean:message key="button.choose"/>                    		         	
 </html:submit>
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
 <br>
+</logic:notEmpty>
 
 </html:form>	
 
 </logic:present>
+
 <logic:notPresent name="infoExecutionCourses">
 	<h2><bean:message key="message.executionCourses.not.available"/></h2>
 </logic:notPresent>

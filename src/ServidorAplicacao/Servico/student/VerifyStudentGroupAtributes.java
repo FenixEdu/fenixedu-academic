@@ -5,6 +5,9 @@
  
 package ServidorAplicacao.Servico.student;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.StudentGroup;
@@ -52,7 +55,7 @@ public class VerifyStudentGroupAtributes implements IServico {
 	 * Executes the service.
 	 **/
 
-	public Boolean run(Integer studentGroupCode,String userName) 
+	public Integer run(Integer studentGroupCode,String userName) 
 	throws FenixServiceException{
 		
 		boolean result= false;
@@ -60,19 +63,27 @@ public class VerifyStudentGroupAtributes implements IServico {
 		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 		try{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
+			List username = new ArrayList();
+			username.add(userName);
 			IStudentGroup studentGroup =(IStudentGroup)sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
 			IGroupProperties groupProperties = studentGroup.getGroupProperties();
 			
 			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+			result = strategy.checkAlreadyEnroled(groupProperties,username);
+			
+			if(!result)
+				return new Integer(-1);
+			
 			result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties,studentGroup,studentGroup.getShift());
+			System.out.println("NO SERVICO VERIFY RESULTADO"+result);
+			if(!result)
+				return new Integer(-2);
 		
-		//boolean result = strategy.enrolmentPolicy(groupProperties,numberOfStudentsToEnrole.intValue(),studentGroup,studentGroup.getShift());
 		
 		} catch (ExcepcaoPersistencia ex) {
 		ex.printStackTrace();
 		}
-		return new Boolean(result);
+		return new Integer(1);
 	}
 
 }

@@ -10,7 +10,7 @@
 	<logic:empty name="infoGroupPropertiesList">
 	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
 	</logic:empty>
-	
+	<logic:notEmpty name="infoGroupPropertiesList">
 <table border="0" style="text-align: left;">
         <tbody>
             <logic:iterate id="infoGroupProperties" name="infoGroupPropertiesList">
@@ -30,7 +30,8 @@
             </logic:iterate>
         </tbody>
 </table>
-
+</logic:notEmpty>
+	
 </logic:present>
 
 <logic:notPresent name="infoGroupPropertiesList">

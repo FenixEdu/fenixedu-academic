@@ -67,7 +67,6 @@ public class GroupEnrolment implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
 			IPersistentStudentGroupAttend persistentStudentGroupAttend = sp.getIPersistentStudentGroupAttend();
 			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
@@ -92,11 +91,14 @@ public class GroupEnrolment implements IServico {
 			List allStudentGroup = new ArrayList();
 			allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
 			
-			Collections.sort(allStudentGroup,new BeanComparator("groupNumber"));
+			Integer groupNumber = new Integer(1);
+			if(allStudentGroup.size()!=0)
+			{
+				Collections.sort(allStudentGroup,new BeanComparator("groupNumber"));
+				Integer lastGroupNumber =((IStudentGroup)allStudentGroup.get(allStudentGroup.size()-1)).getGroupNumber();
+				groupNumber = new Integer(lastGroupNumber.intValue()+1);
 			
-			Integer lastGroupNumber =((IStudentGroup)allStudentGroup.get(allStudentGroup.size()-1)).getGroupNumber();
-			
-			Integer groupNumber = new Integer(lastGroupNumber.intValue()+1);
+			}
 			
 			IStudentGroup newStudentGroup =persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties,groupNumber);
 			
@@ -105,7 +107,9 @@ public class GroupEnrolment implements IServico {
 			
 			newStudentGroup = new StudentGroup(groupNumber,groupProperties,shift);
 			persistentStudentGroup.lockWrite(newStudentGroup);
+			
 			IStudentGroupAttend newStudentGroupAttend =null;
+			
 			Iterator iterator = studentCodes.iterator();
 			while (iterator.hasNext()) 
 			{

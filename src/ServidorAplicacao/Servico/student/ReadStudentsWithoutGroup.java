@@ -77,7 +77,10 @@ public class ReadStudentsWithoutGroup implements IServico {
 			System.out.println("POLITICA"+groupProperties.getEnrolmentPolicy().toString());
 			
 			
-			if(groupProperties.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(1)))
+				
+			if(groupProperties.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(2)))
+				return null;
+			else
 			{
 				System.out.println("ENTRA NO IF DO SERVICO READ STUDENTS WITHOUT GROUP");
 				frequentas = persistentAttend.readByExecutionCourse(groupProperties.getExecutionCourse());

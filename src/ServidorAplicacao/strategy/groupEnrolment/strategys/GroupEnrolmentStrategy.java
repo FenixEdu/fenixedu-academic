@@ -207,7 +207,7 @@ public abstract class GroupEnrolmentStrategy
 		throws ExcepcaoPersistencia {
 		boolean result = false;
 
-		if (checkEnrolmentDate(groupProperties, Calendar.getInstance())) {
+		
 			List listStudentGroupAttend = null;
 			try {
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -225,7 +225,7 @@ public abstract class GroupEnrolmentStrategy
 				groupProperties.getMaximumCapacity().intValue();
 			if (nrOfElements < maximumCapacity)
 				return true;
-		}
+		
 		return result;
 
 	}

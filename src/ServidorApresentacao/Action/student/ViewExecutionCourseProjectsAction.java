@@ -15,7 +15,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoGroupProperties;
 import DataBeans.InfoSiteProjects;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -40,7 +39,6 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		System.out.println("ENTRA NA ACCAO PARA VER OS NOMES DOS PROJECTOS");
 		String executionCourseCodeString =
 			request.getParameter("executionCourseCode");
 		Integer executionCourseCode = new Integer(executionCourseCodeString);
@@ -57,9 +55,7 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		System.out.println(
-			"NA ACCAO PARA VER OS NOMES DOS PROJECTOS DP DO SERVICO");
-
+		
 		List infoGroupPropertiesList =
 			((InfoSiteProjects) viewProjectsComponent)
 				.getInfoGroupPropertiesList();

@@ -74,7 +74,6 @@ public class ReadGroupPropertiesShifts implements IServico {
 			usernames.add(username);
 			
 			boolean result = strategy.checkAlreadyEnroled(groupProperties,usernames);
-			System.out.println("Posso inscrever"+result);
 			if(result)
 			{
 				

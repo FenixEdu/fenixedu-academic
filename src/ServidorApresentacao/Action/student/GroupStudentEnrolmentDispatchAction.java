@@ -52,11 +52,11 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		
-		Boolean result = new Boolean(false);
+		Integer result;
 		Object[] args1 = { studentGroupCode,userView.getUtilizador() };
 		try {
 			result =
-				(Boolean) ServiceUtils.executeService(
+				(Integer) ServiceUtils.executeService(
 					userView,
 					"VerifyStudentGroupAtributes",
 					args1);
@@ -65,7 +65,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		if (result.booleanValue()) {
+		if (result.intValue()==1) {
 
 			Object[] args2 = { studentGroupCode };
 			ISiteComponent viewStudentGroup = null;
@@ -92,16 +92,32 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 			return mapping.findForward("sucess");
 		} 
 		else
-		{
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			// Create an ACTION_ERROR 
-			error = new ActionError("errors.invalid.insert.groupStudentEnrolment");
-			actionErrors.add("errors.invalid.insert.groupStudentEnrolment", error);
-			saveErrors(request, actionErrors);
-			request.setAttribute("groupPropertiesCode",groupPropertiesCode);
-			return mapping.findForward("viewProjectStudentGroups");
+		{	
+			System.out.println("NA ACCAO STUDENT ENROLMENT RESULT"+result);
+			switch(result.intValue())
+			{	
+				case -1:	
+				ActionErrors actionErrors1 = new ActionErrors();
+				ActionError error1 = null;	
+				// Create an ACTION_ERROR 
+				error1 = new ActionError("errors.existing.groupStudentEnrolment");
+				actionErrors1.add("errors.existing.groupStudentEnrolment",error1);
+				saveErrors(request, actionErrors1);
+				return mapping.findForward("viewProjectStudentGroups");
+					
+				case -2:
+				ActionErrors actionErrors2 = new ActionErrors();
+				ActionError error2 = null;
+				// Create an ACTION_ERROR 
+				error2 = new ActionError("errors.invalid.insert.groupStudentEnrolment");
+				actionErrors2.add("errors.invalid.insert.groupStudentEnrolment",error2);
+				saveErrors(request, actionErrors2);	
+				return mapping.findForward("viewProjectStudentGroups");	
+					
 			}
+			//request.setAttribute("groupPropertiesCode",groupPropertiesCode);
+			return mapping.findForward("viewProjectStudentGroups");
+		}
 	}
 	
 	

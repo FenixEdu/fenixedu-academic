@@ -64,18 +64,35 @@
 
 <br>
 <br>
-<html:submit styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/>                    		         	
-</html:submit>
-<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>
-</html:cancel>
-<br>
+	<table>
+		<tr>
+			  <td><html:submit styleClass="inputbutton"><bean:message key="button.finalize.enrolment"/>
+				</html:submit>
 
-<html:hidden property="method" value="enrolment"/>
-<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />	
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />	
+				<html:hidden property="method" value="enrolment"/>
+				<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />	
+				<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />	
 
-</html:form>
+				</html:form>
+			  </td>
+				
+			<td>
+			<html:form action="/viewProjectStudentGroups" method="get">
+	
+			<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
+			</html:cancel>
+			<html:hidden property="method" value="execute"/>
+			<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
+			</html:form>
+			</td>
+		</tr>
+	</table>
 </logic:present>
+
+
+
+
+
 
 <logic:notPresent name="infoSiteStudentInformationList">
 <h4>
