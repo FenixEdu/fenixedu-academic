@@ -1,4 +1,4 @@
-<p><img height="36" src="../images/intranetSOP.gif" width="239" /></p>
+<p><img height="36" src="<%= request.getContextPath() %>/images/intranetSOP.gif" width="239" /></p>
 
   A aplica&ccedil;&atilde;o online SOP, exclusivamente dispon&iacute;vel para
   utilizadores credenciados, integra um conjunto de servi&ccedil;os denominado
@@ -10,7 +10,7 @@ dessa forma - para din&acirc;micas de trabalho mais produtivas e eficientes.
 dispon&iacute;veis.</p>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="../images/info.gif" width="15"> 
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
     <td class="infoop"><strong>Gest&atilde;o de Hor&aacute;rios</strong></td>
   </tr>
@@ -22,7 +22,7 @@ e alterar aulas).</p>
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="../images/info.gif" width="15"> 
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
     <td class="infoop"><strong>Gest&atilde;o de Salas</strong></td>
   </tr>

@@ -1,0 +1,30 @@
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
+<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+
+<logic:iterate id="role" name="userView" property="roles">
+<%--	<bean:write name="role" property="page"/><br/>
+	<bean:write name="role" property="portalSubApplication"/><br/>
+	<bean:write name="role" property="pageNameProperty"/><br/> --%>
+	<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
+	<bean:define id="bundleKeyPageDescription"><bean:write name="role" property="pageNameProperty"/>.description</bean:define>
+	<bean:define id="link">/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td nowrap="nowrap" class="infoIcons">
+	    	<img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+	    </td>
+	    <td class="infoop">
+	    	<strong><html:link page='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></strong>
+	    </td>
+	  </tr>
+	</table>
+	<p><bean:message name="bundleKeyPageDescription" bundle="PORTAL_RESOURCES"/></p>	
+	<hr/>
+</logic:iterate>
+	

@@ -4,6 +4,6 @@
     <td><img alt="" height="204" src='<%= request.getContextPath() + "/images/SOP_entradaFoto01.jpg" %>' width="300"></td>
   </tr>
   <tr>
-    <td><img alt="" height="204" src='<%= request.getContextPath() + "/images/SOP_entradaFoto02.jpg" %>' width="300"></td>
+    <td><img alt="" height="100%" src='<%= request.getContextPath() + "/images/SOP_entradaFoto02.jpg" %>' width="300"></td>
   </tr>
 </table>

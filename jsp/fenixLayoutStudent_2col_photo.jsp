@@ -30,9 +30,11 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td width="25%" align="left" valign="top" nowrap="nowrap"><tiles:insert attribute="photos" />
-    </td>
-     <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent"><tiles:insert attribute="body" />
+     <td width="25%" align="left" valign="top" nowrap="nowrap">
+     	<tiles:insert attribute="photos" />
+     </td>
+     <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent">
+     	<tiles:insert attribute="body" />
 	</td>
   </tr>
 </table>
