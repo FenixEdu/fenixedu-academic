@@ -99,10 +99,13 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
 					"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
 					argsMasterDegreeProofVersion);
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistingMasterDegreeThesis", mapping.findForward("error"));
+			throw new NonExistingActionException(
+				"error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
+				mapping.findForward("errorNonExistingProofVersion"));
 
 		} catch (ScholarshipNotFinishedServiceException e) {
-			throw new ScholarshipNotFinishedActionException(e.getMessage(), mapping.findForward("error"));
+			throw new ScholarshipNotFinishedActionException(e.getMessage(), mapping.findForward("errorScholarshipNotFinished"));
+
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

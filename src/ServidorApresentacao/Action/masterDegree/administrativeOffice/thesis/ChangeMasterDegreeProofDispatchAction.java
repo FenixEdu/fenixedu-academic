@@ -128,7 +128,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 			return mapping.findForward("start");
 
 		} catch (ScholarshipNotFinishedServiceException e) {
-			throw new ScholarshipNotFinishedActionException("error.exception.masterDegree.scholarshipNotFinished", mapping.findForward("error"));
+			throw new ScholarshipNotFinishedActionException("error.exception.masterDegree.scholarshipNotFinished", mapping.findForward("errorScholarshipNotFinished"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

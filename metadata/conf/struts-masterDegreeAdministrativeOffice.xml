@@ -1835,6 +1835,7 @@
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/changeMasterDegreeProof.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+			<forward name="errorScholarshipNotFinished" path="/thesis/indexThesis.jsp"/>
 	</action>
 
 	<action		name="changeMasterDegreeProofForm"
@@ -1858,8 +1859,8 @@
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/changeMasterDegreeProof.jsp"/>
 			<forward name="success" path="/thesis/changeProofSuccessScreen.jsp"/>
-			<forward name="cancel" path="/thesis/indexThesis.jsp"/>		
-			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+			<forward name="cancel" path="/thesis/indexThesis.jsp"/>					
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>			
 	</action>
 	
 	<!-- visualize master degree proof -->
@@ -1875,6 +1876,8 @@
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/visualizeMasterDegreeProof.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+			<forward name="errorScholarshipNotFinished" path="/thesis/indexThesis.jsp"/>
+			<forward name="errorNonExistingProofVersion" path="/thesis/indexThesis.jsp"/>
 	</action>	
 
     </action-mappings>
