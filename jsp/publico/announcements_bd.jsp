@@ -18,7 +18,7 @@
                         <h2>
                         <img src="<%= request.getContextPath() %>/images/icon_anuncio.gif" alt="" />&nbsp;
                         <bean:write name="announcement" property="title"/>&nbsp;&nbsp;
-                       <span class="post-date">(<dt:format pattern="dd-MM-yyyy"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format>)</span></h2>
+                       <span class="post-date">(<dt:format pattern="dd-MM-yyyy HH:mm"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format>)</span></h2>
                     </td>
                 </tr>
                 <tr>

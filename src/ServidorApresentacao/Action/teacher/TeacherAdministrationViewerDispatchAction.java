@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -32,6 +33,7 @@ import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoShift;
@@ -160,28 +162,28 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
     //	======================== Announcements Management
 	// ========================
-    public ActionForward showAnnouncements(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
-        readSiteView(request, announcementsComponent, null, null, null);
-        TeacherAdministrationSiteView siteView =
-            (TeacherAdministrationSiteView) request.getAttribute("siteView");
-        if (!((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements().isEmpty())
-        {
-            return mapping.findForward("showAnnouncements");
-        }
-        else
-        {
-            HttpSession session = request.getSession(false);
-            session.removeAttribute("insertAnnouncementForm");
-            return mapping.findForward("insertAnnouncement");
-        }
-    }
+	public ActionForward showAnnouncements(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+	{
+
+		ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
+		readSiteView(request, announcementsComponent, null, null, null);
+		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
+				.getAttribute("siteView");
+
+		List announcementsList = ((InfoSiteAnnouncement) siteView.getComponent()).getAnnouncements();
+		if (!announcementsList.isEmpty())
+		{
+			Collections.sort(announcementsList, new ComparatorChain(new BeanComparator(
+					"lastModifiedDate"), true));
+			return mapping.findForward("showAnnouncements");
+		} else
+		{
+			HttpSession session = request.getSession(false);
+			session.removeAttribute("insertAnnouncementForm");
+			return mapping.findForward("insertAnnouncement");
+		}
+	}
     public ActionForward prepareCreateAnnouncement(
         ActionMapping mapping,
         ActionForm form,
@@ -1711,28 +1713,45 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
         return result;
     }
-    public ActionForward prepareInsertSummary(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        readSiteView(request, null, null, null, null);
-        List lessonTypeValues = new ArrayList();
-        lessonTypeValues.add(new Integer(1));
-        lessonTypeValues.add(new Integer(2));
-        lessonTypeValues.add(new Integer(3));
-        lessonTypeValues.add(new Integer(4));
-        List lessonTypeNames = new ArrayList();
-        lessonTypeNames.add("Teórica");
-        lessonTypeNames.add("Prática");
-        lessonTypeNames.add("Teórico-Prática");
-        lessonTypeNames.add("Laboratorial");
-        request.setAttribute("lessonTypeValues", lessonTypeValues);
-        request.setAttribute("lessonTypeNames", lessonTypeNames);
-        return mapping.findForward("insertSummary");
-    }
+	public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+	{
+
+		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) readSiteView(request,
+				null, null, null, null);
+
+		InfoExecutionCourse infoExecutionCourse = ((InfoSiteCommon) siteView.getCommonComponent())
+				.getExecutionCourse();
+
+		List lessonTypeValues = new ArrayList();
+		List lessonTypeNames = new ArrayList();
+
+		if (infoExecutionCourse.getTheoreticalHours().doubleValue() > 0)
+		{
+			lessonTypeValues.add(new Integer(1));
+			lessonTypeNames.add("Teórica");
+		}
+		if (infoExecutionCourse.getPraticalHours().doubleValue() > 0)
+		{
+			lessonTypeValues.add(new Integer(2));
+			lessonTypeNames.add("Prática");
+		}
+		if (infoExecutionCourse.getTheoPratHours().doubleValue() > 0)
+		{
+			lessonTypeValues.add(new Integer(3));
+			lessonTypeNames.add("Teórico-Prática");
+		}
+		if (infoExecutionCourse.getLabHours().doubleValue() > 0)
+		{
+			lessonTypeValues.add(new Integer(4));
+			lessonTypeNames.add("Laboratorial");
+		}
+
+		request.setAttribute("lessonTypeValues", lessonTypeValues);
+		request.setAttribute("lessonTypeNames", lessonTypeNames);
+
+		return mapping.findForward("insertSummary");
+	}
     public ActionForward insertSummary(
         ActionMapping mapping,
         ActionForm form,
@@ -1800,50 +1819,65 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return showSummaries(mapping, form, request, response);
     }
-    public ActionForward prepareEditSummary(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        String summaryIdString = request.getParameter("summaryCode");
-        Integer summaryId = new Integer(summaryIdString);
-        HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        String executionCourseIdString = request.getParameter("objectCode");
-        Integer executionCourseId = new Integer(executionCourseIdString);
-        Object[] args = { executionCourseId, summaryId };
-        SiteView siteView = null;
-        try
-        {
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
-        List lessonTypeValues = new ArrayList();
-        lessonTypeValues.add(new Integer(1));
-        lessonTypeValues.add(new Integer(2));
-        lessonTypeValues.add(new Integer(3));
-        lessonTypeValues.add(new Integer(4));
-        List lessonTypeNames = new ArrayList();
-        lessonTypeNames.add("Teórica");
-        lessonTypeNames.add("Prática");
-        lessonTypeNames.add("Teórico-Prática");
-        lessonTypeNames.add("Laboratorial");
-        Integer summaryType =
-            ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().getSummaryType().getTipo();
-        lessonTypeValues.remove(summaryType.intValue() - 1);
-        String summaryTypeName = lessonTypeNames.remove(summaryType.intValue() - 1).toString();
-        request.setAttribute("summaryTypeName", summaryTypeName);
-        request.setAttribute("summaryTypeValue", summaryType);
-        request.setAttribute("lessonTypeValues", lessonTypeValues);
-        request.setAttribute("lessonTypeNames", lessonTypeNames);
-        request.setAttribute("siteView", siteView);
-        return mapping.findForward("editSummary");
-    }
+	public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+	{
+
+		String summaryIdString = request.getParameter("summaryCode");
+		Integer summaryId = new Integer(summaryIdString);
+		String executionCourseIdString = request.getParameter("objectCode");
+		Integer executionCourseId = new Integer(executionCourseIdString);
+		
+		HttpSession session = request.getSession(false);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		
+		Object[] args = {executionCourseId, summaryId};
+		SiteView siteView = null;
+		try
+		{
+			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		
+		Integer summaryType = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary()
+		.getSummaryType().getTipo();
+				
+		List lessonTypeValues = new ArrayList();
+		List lessonTypeNames = new ArrayList();
+		
+		String summaryTypeName = null;
+		
+		if (summaryType.intValue() == TipoAula.TEORICA)
+		{
+			lessonTypeValues.add(new Integer(1));
+			lessonTypeNames.add("Teórica");		
+			summaryTypeName = "Teórica";
+		} else if (summaryType.intValue() == TipoAula.PRATICA)
+		{
+			lessonTypeValues.add(new Integer(2));
+			lessonTypeNames.add("Prática");		
+			summaryTypeName = "Prática";
+		} else if (summaryType.intValue() == TipoAula.TEORICO_PRATICA)
+		{
+			lessonTypeValues.add(new Integer(3));
+			lessonTypeNames.add("Teórico-Prática");		
+			summaryTypeName = "Teórico-Prática";
+		} else if (summaryType.intValue() == TipoAula.LABORATORIAL)
+		{
+			lessonTypeValues.add(new Integer(4));
+			lessonTypeNames.add("Laboratorial");		
+			summaryTypeName = "Laboratorial";
+		}
+		
+		request.setAttribute("summaryTypeName", summaryTypeName);
+		request.setAttribute("summaryTypeValue", summaryType);
+		request.setAttribute("lessonTypeValues", lessonTypeValues);
+		request.setAttribute("lessonTypeNames", lessonTypeNames);
+		request.setAttribute("siteView", siteView);
+		return mapping.findForward("editSummary");
+	}
     public ActionForward editSummary(
         ActionMapping mapping,
         ActionForm form,

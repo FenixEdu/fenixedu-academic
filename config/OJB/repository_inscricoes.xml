@@ -345,6 +345,9 @@
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.ExecutionCourse"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
+ 		    collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			auto-retrieve="true"
+			refresh="true"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>

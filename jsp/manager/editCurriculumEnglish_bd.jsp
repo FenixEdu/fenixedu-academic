@@ -5,6 +5,17 @@
 
 <h2><bean:message key="message.editCurriculum.english" /></h2>
 
+<table>
+	<tr>
+		<td>
+			<img alt="" src="<%= request.getContextPath() %>/images/portugal-flag.gif" width="30" height="20"/>
+		</td>
+		<td>
+			<html:link page="<%="/editCurriculum.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId").toString() + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId").toString() + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId").toString() %>"><bean:message key="label.manager.edit.curriculum.portuguese"/></html:link>
+		</td>
+	</tr>
+</table>
+
 <html:form action="/editCurriculum" method="get">
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="edit" />
@@ -18,21 +29,21 @@
 			<b><bean:message key="message.generalObjectivesEn"/></b>
 		</tr>
 		<tr>
-			<html:textarea property="generalObjectivesEn" rows="3" cols="60"/>
+			<html:textarea property="generalObjectivesEn" rows="8" cols="60"/>
 		</tr>
 		<br>
 		<tr>
 			<b><bean:message key="message.operacionalObjectivesEn"/></b>
 		</tr>
 		<tr>
-			<html:textarea property="operacionalObjectivesEn" rows="3" cols="60"/>
+			<html:textarea property="operacionalObjectivesEn" rows="8" cols="60"/>
 		</tr>
 		<br>
 		<tr>
 			<b><bean:message key="message.programEn"/></b>
 		</tr>
 		<tr>
-			<html:textarea property="programEn" rows="3" cols="60"/>
+			<html:textarea property="programEn" rows="8" cols="60"/>
 		</tr>
 <%--		<br>
 		<tr>

@@ -34,10 +34,9 @@
 		<td><bean:message key="label.summaryType"/>
 			</td>
 	</tr>
-<bean:define id="summaryTypeValue" name="summaryTypeValue"/>
+	<bean:define id="summaryTypeValue" name="summaryTypeValue"/>
 	<tr>
 		<td><html:select property="summaryType">
-			<html:option value="<%= summaryTypeValue.toString() %>"><bean:write name="summaryTypeName"/></html:option>
 			<html:options name="lessonTypeValues" labelName="lessonTypeNames"/>
 		</html:select></td>
 	<tr/>

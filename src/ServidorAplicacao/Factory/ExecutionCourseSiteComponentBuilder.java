@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.slide.common.SlideException;
 
 import DataBeans.ISiteComponent;
@@ -577,7 +579,6 @@ public class ExecutionCourseSiteComponentBuilder
     private ISiteComponent getInfoSiteAssociatedCurricularCourses(
         InfoSiteAssociatedCurricularCourses component,
         ISite site)
-        throws FenixServiceException
     {
         List infoCurricularCourseList = new ArrayList();
 
@@ -881,6 +882,7 @@ public class ExecutionCourseSiteComponentBuilder
                 }
             }
 
+            Collections.sort(infoAnnouncementsList, new ComparatorChain(new BeanComparator("lastModifiedDate"), true));
             component.setAnnouncements(infoAnnouncementsList);
             return component;
         }

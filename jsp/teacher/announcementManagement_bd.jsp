@@ -33,7 +33,7 @@
             <logic:iterate id="announcement" name="announcementsList" >
                 <tr>
                     <td>
-                        <strong><bean:write name="announcement" property="title"/></strong>&nbsp;&nbsp;<span class="greytxt">(<dt:format pattern="dd-MM-yyyy"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format>)</span>
+                        <strong><bean:write name="announcement" property="title"/></strong>&nbsp;&nbsp;<span class="greytxt">(<dt:format pattern="dd-MM-yyyy HH:mm:ss"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format>)</span>
                     </td>
                 </tr>
                 <tr>

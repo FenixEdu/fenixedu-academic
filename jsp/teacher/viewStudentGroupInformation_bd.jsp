@@ -204,8 +204,11 @@
 	   </html:link>
 	<br/>
  
-	 <b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
+	<b><bean:message key="label.GroupNumber"/> </b><bean:write name="infoStudentGroup" property="groupNumber" />
+	<br/>	  	
+	<b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
 	<br/>	  
+	
 	<tr>
 		<td class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
 		</td>
@@ -214,8 +217,7 @@
 		<td class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
 		</td>
 	</tr>
-	
-		
+			
 	<logic:iterate id="infoSiteStudentInformation" name="component" property="infoSiteStudentInformationList">			
 		<tr>		
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
@@ -234,9 +236,7 @@
 				</logic:notPresent>
 				
 			</td>
-		</tr>
-		
-				
+		</tr>				
 	 </logic:iterate>
 
 </tbody>

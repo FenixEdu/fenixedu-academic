@@ -16,8 +16,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
-import org.apache.struts.util.MessageResources;
-
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -124,10 +122,10 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction
 	{
 
 	//	HttpSession session = request.getSession(false);
-		MessageResources messages = getResources(request);
 
 		// Get Execution Year List
-	/*	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+	/*  MessageResources messages = getResources(request);	
+	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		ArrayList executionYearList = null;
 		try
 		{

@@ -3,24 +3,31 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+
+<span class="error"><html:errors/></span>
+
 <bean:write name="executionPeriodName"/>
 <logic:notEmpty name="executionDegreeName">
 	> <bean:write name="executionDegreeName"/>
 </logic:notEmpty>
-	> <bean:write name="executionCourseName"/>
+> <bean:write name="executionCourseName"/>
+
 <p><b><bean:message key="link.manager.executionCourseManagement.associate"/></b></p>
+
 <logic:present name="infoCurricularCourses">
 	<html:form action="/editExecutionCourseManageCurricularCourses">
 		<input type="hidden" name="method" value="associateCurricularCourses"/>
-		<html:hidden property="executionPeriodName" value="<%= pageContext.findAttribute("executionPeriodName").toString() %>" />
-		<html:hidden property="executionPeriodId" value="<%= pageContext.findAttribute("executionPeriodId").toString() %>" />
-		<html:hidden property="executionDegreeName" value="<%= pageContext.findAttribute("executionDegreeName").toString() %>" />
 		<html:hidden property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseId").toString() %>" />
+		<html:hidden property="executionCourseName" value="<%= pageContext.findAttribute("executionCourseName").toString() %>" />
+		<html:hidden property="executionPeriod"/>
+		<html:hidden property="executionDegree"/>
+		<html:hidden property="curYear"/>				
+		<html:hidden property="executionCoursesNotLinked"/>
 	
 		<table>
 			<logic:notEmpty name="infoCurricularCourses">
 				<tr>	 			
-					<td colspan="3"><bean:write name="executionDegreeNameForCurricularCourse"/>
+					<td colspan="3"><bean:write name="degreeCurricularPlanName"/>
 					</td>
  				</tr>
 				<tr>

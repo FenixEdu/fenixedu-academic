@@ -67,7 +67,7 @@
                  <tr>		
            		<td class="ultAnuncio-date">	
            			<bean:message key="message.modifiedOn"/>
-           			<dt:format pattern="dd-MM-yyyy">
+           			<dt:format pattern="dd-MM-yyyy HH:mm">
            			    <bean:write name="announcement" property="lastModifiedDate.time"/>
            			  </dt:format>
                 </td>

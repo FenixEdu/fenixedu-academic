@@ -89,11 +89,13 @@ public class EditCurriculumDA extends FenixDispatchAction {
 		Object args[] = { infoCurriculum, request.getParameter("language"), userView.getUtilizador() };
 		
 		try {
-				ServiceUtils.executeService(userView, "EditCurriculum", args);
+				ServiceUtils.executeService(userView, "EditCurriculumByManager", args);
 			
-		} catch (NonExistingServiceException e) {
+		} catch (NonExistingServiceException nonExistingServiceException) {
+			nonExistingServiceException.printStackTrace();
 			throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException fenixServiceException) {
+			fenixServiceException.printStackTrace();
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 		return mapping.findForward("readCurricularCourse");

@@ -64,7 +64,6 @@ public class EditSummary implements IService
             IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
 
             ISummary  summary  = (ISummary) persistentSummary.readByOId(new Summary(summaryId), true);
-            System.out.println("service->"+summary);
             summaryHour.set(Calendar.SECOND, 0);
             summary.setSummaryDate(summaryDate);
             summary.setSummaryHour(summaryHour);
