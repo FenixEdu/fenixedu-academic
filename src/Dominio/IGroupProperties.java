@@ -22,7 +22,7 @@ public interface IGroupProperties extends IDomainObject{
 		public Integer getIdealCapacity();
 		public EnrolmentGroupPolicyType getEnrolmentPolicy();
 		public Integer getGroupMaximumNumber();
-		public String getProjectName();
+		public String getName();
 		public IDisciplinaExecucao getExecutionCourse();
 
 		public void setMaximumCapacity(Integer maximumCapacity);
@@ -30,7 +30,7 @@ public interface IGroupProperties extends IDomainObject{
 		public void setIdealCapacity(Integer idealCapacity);
 		public void setEnrolmentPolicy(EnrolmentGroupPolicyType enrolmentPolicy);
 		public void setGroupMaximumNumber(Integer groupMaximumNumber);
-		public void setProjectName(String projectName);
+		public void setName(String name);
 		public void setExecutionCourse(IDisciplinaExecucao executionCourse);	
 
 }

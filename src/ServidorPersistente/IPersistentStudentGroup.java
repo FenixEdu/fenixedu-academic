@@ -9,6 +9,7 @@ import java.util.List;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
+import Dominio.ITurno;
 
 /**
  * @author asnr and scpo
@@ -21,5 +22,7 @@ public interface IPersistentStudentGroup extends IPersistentObject{
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IStudentGroup studentGroup) throws ExcepcaoPersistencia;
-	public IStudentGroup readBy(IGroupProperties groupProperties,Integer studentGroupNumber) throws ExcepcaoPersistencia;
+	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumberAndShift(IGroupProperties groupProperties,Integer studentGroupNumber,ITurno shift) throws ExcepcaoPersistencia;
+	public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
+	public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,ITurno shift) throws ExcepcaoPersistencia;
 }

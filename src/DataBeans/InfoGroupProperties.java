@@ -21,7 +21,7 @@ public class InfoGroupProperties {
 		private Integer idealCapacity;
 		private EnrolmentGroupPolicyType enrolmentPolicy;
 		private Integer groupMaximumNumber;
-		private String projectName;
+		private String name;
 		private InfoExecutionCourse infoExecutionCourse;
 	
 		/** 
@@ -41,13 +41,14 @@ public class InfoGroupProperties {
 		 */
 		public InfoGroupProperties(Integer maximumCapacity,Integer minimumCapacity,
 								Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
-								Integer groupMaximumNumber,InfoExecutionCourse infoExecutionCourse) {
+								Integer groupMaximumNumber,InfoExecutionCourse infoExecutionCourse,String name) {
 			this.maximumCapacity=maximumCapacity;
 			this.minimumCapacity=minimumCapacity;
 			this.idealCapacity=idealCapacity;
 			this.enrolmentPolicy=enrolmentPolicy;
 			this.groupMaximumNumber=groupMaximumNumber;
 			this.infoExecutionCourse=infoExecutionCourse;
+			this.name = name;
 			}
 	
 		/**
@@ -57,7 +58,7 @@ public class InfoGroupProperties {
 			boolean result = false;
 			if (arg0 instanceof InfoGroupProperties) {
 				result = (getInfoExecutionCourse().equals(((InfoGroupProperties) arg0).getInfoExecutionCourse()))&&
-				(getProjectName().equals(((InfoGroupProperties) arg0).getProjectName()));
+				(getName().equals(((InfoGroupProperties) arg0).getName()));
 			} 
 			return result;		
 		}
@@ -72,7 +73,7 @@ public class InfoGroupProperties {
 			result += ", idealCapacity=" + getIdealCapacity();
 			result += ", enrolmentPolicy=" + getEnrolmentPolicy();
 			result += ", groupMaximumNumber=" + getGroupMaximumNumber();
-			result += ", projectName=" + getProjectName();
+			result += ", name=" + getName();
 			result += ", infoExecutionCourse=" + getInfoExecutionCourse();
 			result += "]";
 			return result;
@@ -119,8 +120,8 @@ public class InfoGroupProperties {
 		/**
 		* @return String
 		*/
-		public String getProjectName() {
-			return projectName;
+		public String getName() {
+			return name;
 		}
 
 
@@ -176,8 +177,8 @@ public class InfoGroupProperties {
 		* Sets the projectName.
 		* @param projectName The projectName to set
 		*/
-		public void setProjectName(String projectName) {
-			this.projectName=projectName;
+		public void setName(String name) {
+			this.name=name;
 		}
 
 		/**

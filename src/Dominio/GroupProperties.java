@@ -21,7 +21,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	private Integer idealCapacity;
 	private EnrolmentGroupPolicyType enrolmentPolicy;
 	private Integer groupMaximumNumber;
-	private String projectName;
+	private String name;
 	private Integer keyExecutionCourse;
 	private IDisciplinaExecucao executionCourse;
 	
@@ -33,9 +33,9 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	/** 
 	 * Construtor
 	 */
-	public GroupProperties(IDisciplinaExecucao executionCourse,String projectName) {
+	public GroupProperties(IDisciplinaExecucao executionCourse,String name) {
 			this.executionCourse=executionCourse;
-			this.projectName = projectName;
+			this.name = name;
 	}
 	
 	/** 
@@ -43,13 +43,13 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	 */
 	public GroupProperties(Integer maximumCapacity,Integer minimumCapacity,
 							Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
-	 						Integer groupMaximumNumber,String projectName,IDisciplinaExecucao executionCourse) {
+	 						Integer groupMaximumNumber,String name,IDisciplinaExecucao executionCourse) {
 		this.maximumCapacity=maximumCapacity;
 		this.minimumCapacity=minimumCapacity;
 		this.idealCapacity=idealCapacity;
 		this.enrolmentPolicy= enrolmentPolicy;
 		this.groupMaximumNumber=groupMaximumNumber;
-		this.projectName = projectName;
+		this.name = name;
 		this.executionCourse=executionCourse;
 		}
 	
@@ -60,7 +60,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		boolean result = false;
 		if (arg0 instanceof IGroupProperties) {
 			result =(getExecutionCourse().equals(((IGroupProperties) arg0).getExecutionCourse()))&&
-					(getProjectName().equals(((IGroupProperties) arg0).getProjectName()));
+					(getName().equals(((IGroupProperties) arg0).getName()));
 		} 
 		return result;		
 	}
@@ -75,7 +75,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		result += ", idealCapacity=" + getIdealCapacity();
 		result += ", enrolmentPolicy=" + getEnrolmentPolicy();
 		result += ", groupMaximumNumber=" + getGroupMaximumNumber();
-		result += ", projectName=" + getProjectName();
+		result += ", name=" + getName();
 		result += ", executionCourse=" + getExecutionCourse();
 		result += "]";
 		return result;
@@ -127,8 +127,8 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	/**
 	* @return String
 	*/
-	public String getProjectName() {
-		return projectName;
+	public String getName() {
+		return name;
 	}
 
 
@@ -189,8 +189,8 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	* Sets the projectName.
 	* @param projectName The projectName to set
 	*/
-		public void setProjectName(String projectName) {
-			this.projectName=projectName;
+		public void setName(String name) {
+			this.name=name;
 		}
 	/**
 	* Sets the executionCourse.

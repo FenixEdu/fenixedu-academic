@@ -36,12 +36,12 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 			return (List) queryList(GroupProperties.class, criteria);
 	}
 	
-	public IGroupProperties readGroupPropertiesByExecutionCourseAndProjectName(IDisciplinaExecucao executionCourse,String projectName) throws ExcepcaoPersistencia {
+	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IDisciplinaExecucao executionCourse,String name) throws ExcepcaoPersistencia {
 
 			Criteria criteria1 = new Criteria(); 
 			Criteria criteria2 = new Criteria(); 
 			criteria1.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
-			criteria2.addEqualTo("projectName", projectName);
+			criteria2.addEqualTo("name", name);
 			criteria1.addAndCriteria(criteria2);	
 			return (IGroupProperties) queryObject(GroupProperties.class, criteria1);
 		}
@@ -79,7 +79,7 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 			return;
 
 		// read studentGroup from DB	
-		groupPropertiesFromDB = readGroupPropertiesByExecutionCourseAndProjectName(groupPropertiesToWrite.getExecutionCourse(),groupPropertiesToWrite.getProjectName());
+		groupPropertiesFromDB = readGroupPropertiesByExecutionCourseAndName(groupPropertiesToWrite.getExecutionCourse(),groupPropertiesToWrite.getName());
 		
 
 		// if (studentGroup not in database) then write it

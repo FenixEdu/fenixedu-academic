@@ -18,6 +18,7 @@ import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
+import Dominio.ITurno;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -30,6 +31,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
 
 /**
  * @author asnr and scpo
@@ -48,10 +50,12 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 		IPersistentStudent persistentStudent=null;
 		IFrequentaPersistente persistentAttend =null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend =null;
+		ITurnoPersistente persistentShift = null;
 		
 		IStudentGroup studentGroup1=null;
 		IStudentGroup studentGroup2=null;
 		IFrequenta attend = null;
+		
 	IGroupProperties groupProperties1=null;
 	
 	  public StudentGroupAttendOJBTest(java.lang.String testName) {
@@ -82,6 +86,7 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 			persistentStudent = persistentSupport.getIPersistentStudent();
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
+			persistentShift = persistentSupport.getITurnoPersistente();
 			persistentSupport.iniciarTransaccao();
 		
 			
@@ -94,12 +99,14 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 		
 		
 					
-			groupProperties1 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectC");
+			groupProperties1 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse1,"nameC");
 			
-			IGroupProperties groupProperties2 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse2,"projectB");
-			
-			studentGroup1 = persistentStudentGroup.readBy(groupProperties1,new Integer(1));
-			studentGroup2 = persistentStudentGroup.readBy(groupProperties2,new Integer(3));
+			IGroupProperties groupProperties2 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse2,"nameB");
+			System.out.println("EXECUTIONCOURSE2"+executionCourse2);
+			ITurno shift = persistentShift.readByNameAndExecutionCourse("turno_po_teorico",executionCourse2);
+			System.out.println("TURNO"+shift);
+			studentGroup1 = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(1),null);
+			studentGroup2 = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties2,new Integer(3),shift);
 			
 			
 			IStudent student = persistentStudent.readByUsername("user");
@@ -228,7 +235,7 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 				
 				}
 			
-				StudentGroup newStudentGroup = new StudentGroup(new Integer(18),groupProperties1);
+				StudentGroup newStudentGroup = new StudentGroup(new Integer(18),groupProperties1,null);
 				StudentGroupAttend newStudentGroupAttend =  new StudentGroupAttend(newStudentGroup,attend);
 			
 				try {

@@ -15,6 +15,7 @@ import org.odmg.QueryException;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
+import Dominio.ITurno;
 import Dominio.StudentGroup;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroup;
@@ -30,18 +31,51 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
 
 
-	public IStudentGroup readBy(IGroupProperties groupProperties,Integer studentGroupNumber) throws ExcepcaoPersistencia {
+	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumberAndShift(IGroupProperties groupProperties,Integer studentGroupNumber,ITurno shift) throws ExcepcaoPersistencia {
 
-		StudentGroup studentGroup = new StudentGroup(studentGroupNumber, groupProperties);
+		
 		Criteria criteria1 = new Criteria();
 		Criteria criteria2 = new Criteria();
 		
+		
 		criteria1.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
 		criteria2.addEqualTo("groupNumber",studentGroupNumber);
-		
 		criteria1.addAndCriteria(criteria2);
+		if(shift!=null)
+		{
+			Criteria criteria3 = new Criteria();
+			criteria3.addEqualTo("keyShift",shift.getIdInternal());
+			criteria1.addAndCriteria(criteria3);
+		}
 		return (IStudentGroup) queryObject(StudentGroup.class, criteria1);
 	}
+	
+	
+	
+	public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		
+		criteria.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
+		
+		
+		return (List) queryList(StudentGroup.class, criteria);
+	}
+	
+	public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,ITurno shift) throws ExcepcaoPersistencia {
+
+			Criteria criteria1 = new Criteria();
+		
+			criteria1.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
+			if(shift!=null)
+			{
+					Criteria criteria2 = new Criteria();
+					criteria2.addEqualTo("keyShift",shift.getIdInternal());
+					criteria1.addAndCriteria(criteria2);
+			}
+		
+			return (List) queryList(StudentGroup.class, criteria1);
+		}
 			
 	public List readAll() throws ExcepcaoPersistencia {
 
@@ -76,9 +110,9 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 			return;
 
 		// read studentGroup from DB	
-		studentGroupFromDB = readBy(studentGroupToWrite.getGroupProperties(),studentGroupToWrite.getGroupNumber());
+		studentGroupFromDB = readStudentGroupByGroupPropertiesAndGroupNumberAndShift(studentGroupToWrite.getGroupProperties(),studentGroupToWrite.getGroupNumber(),studentGroupToWrite.getShift());
 		
-
+		System.out.println("NO OJB-LER DA DB"+studentGroupFromDB);
 		// if (studentGroup not in database) then write it
 		if (studentGroupFromDB == null)
 			super.lockWrite(studentGroupToWrite);

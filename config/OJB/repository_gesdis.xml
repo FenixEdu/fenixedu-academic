@@ -676,8 +676,8 @@
     />
 
 	<field-descriptor id="7"
-		name="projectName"
-        column="PROJECT_NAME"
+		name="name"
+        column="NAME"
     	jdbc-type="VARCHAR"
     />
 	

@@ -165,7 +165,7 @@ create table STUDENT_GROUP (
    KEY_SHIFT int(11),
    KEY_GROUP_PROPERTIES int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),
-   unique ID_INTERNAL (GROUP_NUMBER, KEY_GROUP_PROPERTIES))
+   unique ID_INTERNAL (GROUP_NUMBER, KEY_GROUP_PROPERTIES, KEY_SHIFT))
    type=InnoDB comment="InnoDB free: 372736 kB";
    
 #----------------------------
@@ -192,9 +192,9 @@ create table GROUP_PROPERTIES (
    IDEAL_CAPACITY int(11) unsigned not null default '0',
    ENROLMENT_POLICY int(11),
    GROUP_MAXIMUM_NUMBER int(11) unsigned not null default'0',
-   PROJECT_NAME varchar(50) not null,
+   NAME varchar(50) not null,
    KEY_EXECUTION_COURSE int(11) unsigned not null default'0',
    primary key (ID_INTERNAL),
-   unique ID_INTERNAL (PROJECT_NAME,KEY_EXECUTION_COURSE))
+   unique ID_INTERNAL (NAME,KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
    

@@ -1934,37 +1934,6 @@ public abstract class Cloner {
 				return summary;
 			}
 	
-	/**
-	* @param groupProperties
-	* @return infoGroupProperties
-	*/
-	
-	
-	public static InfoGroupProperties copyIGroupProperties2InfoGroupProperties(IGroupProperties groupProperties) {
-			InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
-			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-			copyObjectProperties(infoGroupProperties, groupProperties);
-			infoExecutionCourse= copyIExecutionCourse2InfoExecutionCourse(groupProperties.getExecutionCourse());
-			infoGroupProperties.setInfoExecutionCourse(infoExecutionCourse);
-			return infoGroupProperties;
-	}
-
-	/**
-	* 
-	* @param infoGroupProperties
-	* @return IGroupProperties
-	*/
-	
-	public static IGroupProperties copyInfoGroupProperties2IGroupProperties(InfoGroupProperties infoGroupProperties) {
-			IGroupProperties groupProperties = new GroupProperties();
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-			copyObjectProperties(groupProperties, infoGroupProperties);
-			executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoGroupProperties.getInfoExecutionCourse());
-			groupProperties.setExecutionCourse(executionCourse);
-			return groupProperties;
-		}
-
-
 	
 	/**
 	 * 
@@ -2024,6 +1993,37 @@ public abstract class Cloner {
 		return infoCandidateEnrolment;
 	}
 
+	/**
+		* @param groupProperties
+		* @return infoGroupProperties
+		*/
+	
+	
+		public static InfoGroupProperties copyIGroupProperties2InfoGroupProperties(IGroupProperties groupProperties) {
+				InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
+				InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+				copyObjectProperties(infoGroupProperties, groupProperties);
+				infoExecutionCourse= copyIExecutionCourse2InfoExecutionCourse(groupProperties.getExecutionCourse());
+				infoGroupProperties.setInfoExecutionCourse(infoExecutionCourse);
+				return infoGroupProperties;
+		}
+
+		/**
+		* 
+		* @param infoGroupProperties
+		* @return IGroupProperties
+		*/
+	
+		public static IGroupProperties copyInfoGroupProperties2IGroupProperties(InfoGroupProperties infoGroupProperties) {
+				IGroupProperties groupProperties = new GroupProperties();
+				IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+				copyObjectProperties(groupProperties, infoGroupProperties);
+				executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoGroupProperties.getInfoExecutionCourse());
+				groupProperties.setExecutionCourse(executionCourse);
+				return groupProperties;
+			}
+
+
 			
 	/**
 	* @param studentGroup
@@ -2034,13 +2034,17 @@ public abstract class Cloner {
 	public static InfoStudentGroup copyIStudentGroup2InfoStudentGroup(IStudentGroup studentGroup) {
 			InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
 			InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
-			InfoShift infoShift = new InfoShift();
 			
 			copyObjectProperties(infoStudentGroup, studentGroup);
 			infoGroupProperties= copyIGroupProperties2InfoGroupProperties(studentGroup.getGroupProperties());
-			infoShift = copyIShift2InfoShift(studentGroup.getShift());
+			if(studentGroup.getShift()!=null)
+			{
+				InfoShift infoShift = new InfoShift();
+				infoShift = copyIShift2InfoShift(studentGroup.getShift());
+				infoStudentGroup.setInfoShift(infoShift);
+			
+			}
 			infoStudentGroup.setInfoGroupProperties(infoGroupProperties);
-			infoStudentGroup.setInfoShift(infoShift);
 			return infoStudentGroup;
 	}
 
@@ -2052,13 +2056,18 @@ public abstract class Cloner {
 	
 		public static IStudentGroup copyInfoStudentGroup2IStudentGroup(InfoStudentGroup infoStudentGroup) {
 				IStudentGroup studentGroup = new StudentGroup();
-				ITurno shift = new Turno();
 				IGroupProperties groupProperties = new GroupProperties();
 				
 				copyObjectProperties(studentGroup, infoStudentGroup);
-				shift = copyInfoShift2IShift(infoStudentGroup.getInfoShift());
+				if(infoStudentGroup.getInfoShift()!=null)
+				{
+					ITurno shift = new Turno();
+					shift = copyInfoShift2IShift(infoStudentGroup.getInfoShift());
+					studentGroup.setShift(shift);
+					
+				}
+
 				groupProperties = copyInfoGroupProperties2IGroupProperties(infoStudentGroup.getInfoGroupProperties());
-				studentGroup.setShift(shift);
 				studentGroup.setGroupProperties(groupProperties);
 				
 				return studentGroup;
@@ -2070,7 +2079,7 @@ public abstract class Cloner {
 	*/
 	
 	
-	public static InfoStudentGroupAttend copyIStudentGroupAttend2IStudentGroupAttend(IStudentGroupAttend studentGroupAttend) {
+	public static InfoStudentGroupAttend copyIStudentGroupAttend2InfoStudentGroupAttend(IStudentGroupAttend studentGroupAttend) {
 			InfoStudentGroupAttend infoStudentGroupAttend = new InfoStudentGroupAttend();
 			InfoFrequenta infoAttend = new InfoFrequenta();
 			InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
