@@ -67,7 +67,7 @@ public class LoadCourseEnrolments extends DataFileLoader {
 			IDisciplinaExecucaoPersistente iDisciplinaExecucaoPersistente =
 				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentEnrolment persistentEnrolment =
-				sp.getIInscricaoPersistente();
+				sp.getIPersistentEnrolment();
 			IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
 				sp.getIStudentCurricularPlanPersistente();
 			IFrequentaPersistente frequentaPersistente =

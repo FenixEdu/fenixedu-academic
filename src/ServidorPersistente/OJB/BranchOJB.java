@@ -23,7 +23,7 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 	public BranchOJB() {
 	}
 
-	public void deleteAllBranches() throws ExcepcaoPersistencia {
+	public void deleteAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + Branch.class.getName();
 			super.deleteAll(oqlQuery);
@@ -32,7 +32,7 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		}
 	}
 
-	public void writeBranch(IBranch branchToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(IBranch branchToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		IBranch branchFromDB = null;
 
@@ -55,7 +55,7 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 			throw new ExistingPersistentException();
 	}
 
-	public void deleteBranch(IBranch branch) throws ExcepcaoPersistencia {
+	public void delete(IBranch branch) throws ExcepcaoPersistencia {
 		try {
 			super.delete(branch);
 		} catch (ExcepcaoPersistencia ex) {
@@ -91,7 +91,7 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		}
 	}
 
-	public ArrayList readAllBranches() throws ExcepcaoPersistencia {
+	public ArrayList readAll() throws ExcepcaoPersistencia {
 
 		try {
 			ArrayList list = new ArrayList();

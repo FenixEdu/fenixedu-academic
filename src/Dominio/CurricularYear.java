@@ -24,8 +24,8 @@ public class CurricularYear implements ICurricularYear {
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof CurricularYear) {
-			CurricularYear CurricularYear = (CurricularYear) obj;
-			resultado = (this.getYear() == CurricularYear.getYear());
+			CurricularYear curricularYear = (CurricularYear) obj;
+			resultado = (this.getYear().equals(curricularYear.getYear()));
 		}
 		return resultado;
 	}

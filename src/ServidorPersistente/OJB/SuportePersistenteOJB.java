@@ -22,7 +22,6 @@ import org.odmg.Transaction;
 
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDepartamentoPersistente;
@@ -36,8 +35,12 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularSemester;
+import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentCurriculum;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -48,7 +51,6 @@ import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -193,7 +195,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IFrequentaPersistente getIFrequentaPersistente() {
 		return new FrequentaOJB();
 	}
-	public IPersistentEnrolment getIInscricaoPersistente() {
+	public IPersistentEnrolment getIPersistentEnrolment() {
 		return new EnrolmentOJB();
 	}
 	public ITurmaTurnoPersistente getITurmaTurnoPersistente() {
@@ -329,11 +331,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new ContributorOJB();
 	}
 
-	/**
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentEnrolment()
-	 */
-	public IPersistentEnrolment getIPersistentEnrolment() {
-		// TODO Auto-generated method stub
-		return null;
+	public IPersistentCurricularSemester getIPersistentCurricularSemester() {
+		return new CurricularSemesterOJB();
 	}
+
+	public IPersistentEquivalence getIPersistentEquivalence() {
+		return new EquivalenceOJB();
+	}
+
 }

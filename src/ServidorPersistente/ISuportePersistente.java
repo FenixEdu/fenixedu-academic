@@ -23,7 +23,7 @@ public interface ISuportePersistente {
 	public ITurnoPersistente getITurnoPersistente();
 
 	public IFrequentaPersistente getIFrequentaPersistente();
-//	public IPersistentEnrolment getIPersistentEnrolment();
+	public IPersistentEnrolment getIPersistentEnrolment();
 	public ITurmaTurnoPersistente getITurmaTurnoPersistente();
 	public ITurnoAlunoPersistente getITurnoAlunoPersistente();
 	public ITurnoAulaPersistente getITurnoAulaPersistente();
@@ -65,5 +65,7 @@ public interface ISuportePersistente {
 	public IPersistentCurricularYear getIPersistentCurricularYear();
 	public IPersistentContributor getIPersistentContributor();
 
-//	public IPersistentCurricularSemester getIPersistentCurricularSemester();
+	public IPersistentCurricularSemester getIPersistentCurricularSemester();
+	
+	public IPersistentEquivalence getIPersistentEquivalence();
 }

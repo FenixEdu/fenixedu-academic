@@ -218,7 +218,7 @@
 	<reference-descriptor
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -237,7 +237,6 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
-<!--
 	<collection-descriptor
 			name="associatedCurricularSemesters"
 			element-class-ref="Dominio.CurricularSemester"
@@ -246,7 +245,6 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_SEMESTER"/>
 	</collection-descriptor>
--->
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -284,7 +282,7 @@
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-ref="studentKey"/>
 	</reference-descriptor>
 	<reference-descriptor
@@ -359,7 +357,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularSemester -->
 <!-- ************************************************************************************************************ -->
-<!--<class-descriptor class="Dominio.CurricularSemester" table="CURRICULAR_SEMESTER">
+<class-descriptor class="Dominio.CurricularSemester" table="CURRICULAR_SEMESTER">
 	<field-descriptor id="1"
 		name="internalID"
 		column="ID_INTERNAL"
@@ -380,7 +378,7 @@
 	<reference-descriptor
 			name="curricularYear"
 			class-ref="Dominio.CurricularYear"
-			proxy="true">
+			proxy="false">
 		<foreignkey field-id-ref="2"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -391,7 +389,7 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_SEMESTER"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-</class-descriptor> -->
+</class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.Branch -->
@@ -435,7 +433,6 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.Equivalence -->
 <!-- ************************************************************************************************************ -->
-<!--
 <class-descriptor class="Dominio.Equivalence" table="EQUIVALENCE">
 	<field-descriptor id="1"
 		name="internalID"
@@ -455,9 +452,10 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor id="4"
-		name="branchName"
+		name="equivalenceType"
 		column="EQUIVALENCE_TYPE"
 		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaEquivalenceType2SqlEquivalenceTypeFieldConversion"
 	/>
 	<reference-descriptor
 			name="equivalentEnrolment"
@@ -472,7 +470,7 @@
 		<foreignkey field-id-ref="3"/>
 	</reference-descriptor>
 </class-descriptor>
--->
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.Precedence -->
 <!-- ************************************************************************************************************ -->

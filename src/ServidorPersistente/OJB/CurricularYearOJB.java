@@ -23,7 +23,7 @@ public class CurricularYearOJB extends ObjectFenixOJB implements IPersistentCurr
 	public CurricularYearOJB() {
 	}
 
-	public void deleteAllCurricularYears() throws ExcepcaoPersistencia {
+	public void deleteAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + CurricularYear.class.getName();
 			super.deleteAll(oqlQuery);
@@ -32,32 +32,32 @@ public class CurricularYearOJB extends ObjectFenixOJB implements IPersistentCurr
 		}
 	}
 
-	public void writeCurricularYear(ICurricularYear CurricularYearToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(ICurricularYear curricularYearToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
-		ICurricularYear CurricularYearFromDB = null;
+		ICurricularYear curricularYearFromDB = null;
 
 		// If there is nothing to write, simply return.
-		if (CurricularYearToWrite == null) {
+		if (curricularYearToWrite == null) {
 			return;
 		}
 
 		// Read CurricularYear from database.
-		CurricularYearFromDB = this.readCurricularYearByYear(CurricularYearToWrite.getYear());
+		curricularYearFromDB = this.readCurricularYearByYear(curricularYearToWrite.getYear());
 
 		// If CurricularYear is not in database, then write it.
-		if (CurricularYearFromDB == null) {
-			super.lockWrite(CurricularYearToWrite);
+		if (curricularYearFromDB == null) {
+			super.lockWrite(curricularYearToWrite);
 		// else If the CurricularYear is mapped to the database, then write any existing changes.
-		} else if ((CurricularYearToWrite instanceof CurricularYear) && ((CurricularYear) CurricularYearFromDB).getInternalID().equals(((CurricularYear) CurricularYearToWrite).getInternalID())) {
-			super.lockWrite(CurricularYearToWrite);
+		} else if ((curricularYearToWrite instanceof CurricularYear) && ((CurricularYear) curricularYearFromDB).getInternalID().equals(((CurricularYear) curricularYearToWrite).getInternalID())) {
+			super.lockWrite(curricularYearToWrite);
 			// else Throw an already existing exception
 		} else
 			throw new ExistingPersistentException();
 	}
 
-	public void deleteCurricularYear(ICurricularYear CurricularYear) throws ExcepcaoPersistencia {
+	public void delete(ICurricularYear curricularYear) throws ExcepcaoPersistencia {
 		try {
-			super.delete(CurricularYear);
+			super.delete(curricularYear);
 		} catch (ExcepcaoPersistencia ex) {
 			throw ex;
 		}
@@ -66,7 +66,7 @@ public class CurricularYearOJB extends ObjectFenixOJB implements IPersistentCurr
 	public ICurricularYear readCurricularYearByYear(Integer year) throws ExcepcaoPersistencia {
 
 		try {
-			ICurricularYear CurricularYear = null;
+			ICurricularYear curricularYear = null;
 			String oqlQuery = "select all from " + CurricularYear.class.getName();
 			oqlQuery += " where year = $1";
 			query.create(oqlQuery);
@@ -80,16 +80,16 @@ public class CurricularYearOJB extends ObjectFenixOJB implements IPersistentCurr
 			}
 
 			if( (result != null) && (result.size() != 0) ) {
-				CurricularYear = (ICurricularYear) result.get(0);
+				curricularYear = (ICurricularYear) result.get(0);
 			}
-			return CurricularYear;
+			return curricularYear;
 
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
 
-	public ArrayList readAllCurricularYears() throws ExcepcaoPersistencia {
+	public ArrayList readAll() throws ExcepcaoPersistencia {
 
 		try {
 			ArrayList list = new ArrayList();

@@ -1,46 +1,54 @@
-/*
- * Inscricao.java
- *
- * Created on 20 de Outubro de 2002, 17:26
- */
-
 package Dominio;
 
-
 /**
+ * @author dcs-rjao
  *
- * @author  tfc130
+ * 24/Mar/2003
  */
+
 public class Enrolment implements IEnrolment {
+
 	private IStudentCurricularPlan studentCurricularPlan;
 	private ICurricularCourse curricularCourse;
 
-	// c�digos internos da base de dados
 	private Integer internalID;
 	private Integer studentCurricularPlanKey;
 	private Integer curricularCourseKey;
 
-	/** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
 	public Enrolment() {
+		setCurricularCourse(null);
+		setStudentCurricularPlan(null);
+
+		setInternalID(null);
+		setStudentCurricularPlanKey(null);
+		setCurricularCourseKey(null);
+	}
+
+	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) {
+		setCurricularCourse(curricularCourse);
+		setStudentCurricularPlan(studentCurricularPlan);
+
+		setInternalID(null);
+		setStudentCurricularPlanKey(null);
+		setCurricularCourseKey(null);
 	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		
-		if (obj instanceof IEnrolment) {			
+
+		if (obj instanceof IEnrolment) {
 			IEnrolment enrolment = (IEnrolment) obj;
-			
-			resultado =	(getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())) &&
-			            (getCurricularCourse().equals(enrolment.getCurricularCourse()));
+
+			resultado = this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan()) &&
+									this.getCurricularCourse().equals(enrolment.getCurricularCourse());
 		}
 		return resultado;
 	}
 
 	public String toString() {
-		String result = "[INSCRICAO\n";
-		result += "chavePlanoCurricularAluno=\n" + studentCurricularPlan+"\n";
-		result += "chaveDisciplinaCurricular=\n" + curricularCourse.getName();
-		result += "]";
+		String result = "[" + this.getClass().getName() + "; ";
+		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
+		result += "curricularCourse = " + this.curricularCourse + "]";
 		return result;
 	}
 

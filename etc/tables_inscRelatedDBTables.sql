@@ -174,7 +174,7 @@ create table CURRICULAR_SEMESTER (
    KEY_CURRICULAR_YEAR int(11) not null,
    SEMESTER int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (SEMESTER)
+   unique U1 (SEMESTER, KEY_CURRICULAR_YEAR)
 )type=InnoDB;
 
 #----------------------------

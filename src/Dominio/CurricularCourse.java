@@ -85,9 +85,9 @@ public class CurricularCourse implements ICurricularCourse {
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof CurricularCourse) {
-			CurricularCourse dc = (CurricularCourse) obj;
-			resultado = (getDegreeCurricularPlanKey().equals(dc.getDegreeCurricularPlanKey()))
+		if (obj instanceof ICurricularCourse) {
+			ICurricularCourse dc = (ICurricularCourse) obj;
+			resultado = (getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan()))
 					&& (getName().equals(dc.getName()))
 					&& (getCode().equals(dc.getCode()))
 

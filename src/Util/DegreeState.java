@@ -9,8 +9,9 @@ package Util;
 
 public class DegreeState {
 
-	public static final int ACTIVO = 1;
-	public static final int INACTIVO = 2;
+	public static final int ACTIVE = 1;
+	public static final int NOT_ACTIVE = 2;
+	public static final int CONCLUDED = 3;
 
 	private Integer state;
 
@@ -48,10 +49,12 @@ public class DegreeState {
 		String valueS = null;
 
 		switch (value) {
-			case ACTIVO :
-				valueS = "ACTIVO";
-			case INACTIVO :
-				valueS = "INACTIVO";
+			case ACTIVE :
+				valueS = "ACTIVE";
+			case NOT_ACTIVE :
+				valueS = "NOT_ACTIVE";
+			case CONCLUDED :
+				valueS = "CONCLUDED";
 		}
 
 		return "[" + this.getClass().getName() + ": " + valueS + "]";

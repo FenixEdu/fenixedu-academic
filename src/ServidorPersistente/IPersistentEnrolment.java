@@ -1,19 +1,23 @@
-/*
- * IPersistentEnrolment.java
- *
- * Created on 20 de Outubro de 2002, 17:45
- */
-
 package ServidorPersistente;
 
-/**
- *
- * @author  tfc130
- */
+import java.util.ArrayList;
+
+import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
-;
+import Dominio.IStudentCurricularPlan;
+import ServidorPersistente.exceptions.ExistingPersistentException;
+
+/**
+ * @author dcs-rjao
+ *
+ * 24/Mar/2003
+ */
 
 public interface IPersistentEnrolment extends IPersistentObject {
-    public void delete(IEnrolment inscricao) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
+
+		public void deleteAll() throws ExcepcaoPersistencia;
+		public void lockWrite(IEnrolment enrolmentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
+		public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
+		public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
+		public ArrayList readAll() throws ExcepcaoPersistencia;
 }

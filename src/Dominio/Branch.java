@@ -46,7 +46,7 @@ public class Branch implements IBranch {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "idInternal = " + this.internalID + "; ";
 		result += "name = " + this.name + "; ";
-		result += "code = " + this.code + "; ";
+		result += "code = " + this.code + "]";
 //		result += "associatedCurricularCourses = " + this.associatedCurricularCourses + "; ";
 //		result += "associatedStudentCurricularPlans = " + this.associatedStudentCurricularPlans + "]";
 		return result;

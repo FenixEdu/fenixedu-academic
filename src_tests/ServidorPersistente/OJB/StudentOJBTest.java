@@ -1,481 +1,258 @@
-/*
- * StudentOJBTest.java
- * JUnit based test
- *
- * Created on 29 de Outubro de 2002, 19:40
- */
-
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.apache.ojb.odmg.OJB;
-import org.odmg.Database;
-import org.odmg.Implementation;
-import org.odmg.ODMGException;
-import org.odmg.OQLQuery;
-import org.odmg.QueryException;
-
-import Dominio.Frequenta;
 import Dominio.IPessoa;
 import Dominio.IStudent;
-import Dominio.Pessoa;
 import Dominio.Student;
-import Dominio.StudentCurricularPlan;
-import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.EstadoCivil;
-import Util.Sexo;
 import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
 
 /**
+ * @author dcs-rjao
  *
- * @author ciapl-nortadas
+ * 20/Mar/2003
  */
 
-
-
 public class StudentOJBTest extends TestCaseOJB {
-	
-	SuportePersistenteOJB persistentSupport = null; 
+
+	SuportePersistenteOJB persistentSupport = null;
 	IPersistentStudent persistentStudent = null;
 	IPessoaPersistente persistentPerson = null;
-	
-    public StudentOJBTest(java.lang.String testName) {
-        super(testName);
-    }
-    
-    public static void main(java.lang.String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite(StudentOJBTest.class);
-        
-        return suite;
-    }
-    
-    protected void setUp() {
-        super.setUp();
+
+	public StudentOJBTest(java.lang.String testName) {
+		super(testName);
+	}
+
+	public static void main(java.lang.String[] args) {
+		System.out.println("Beginning of test from class StudentOJB.\n");
+		junit.textui.TestRunner.run(suite());
+		System.out.println("End of test from class StudentOJB.\n");
+	}
+
+	public static Test suite() {
+		TestSuite suite = new TestSuite(StudentOJBTest.class);
+		return suite;
+	}
+
+	protected void setUp() {
+		super.setUp();
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-			fail("Error");
+			fail("Error in SetUp.");
 		}
 		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentPerson = persistentSupport.getIPessoaPersistente();
-    }
-    
-    protected void tearDown() {
-       super.tearDown();
-    }
-    
-    /** Test of readByNumero method, of class ServidorPersistente.OJB.StudentOJB. */
-   
-    public void testReadByNumero() {
-    IStudent student = null;
-    // read existing aluno
-    try {
-      persistentSupport.iniciarTransaccao();
-      student = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
-	  assertNotNull(student);
-      persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByNumero:fail read existing aluno");
-    }
-    
-    assertEquals("testReadByNumero:read existing aluno",student.getNumber(), new Integer(600));
-        
-    // read unexisting aluno
-    try {
-      persistentSupport.iniciarTransaccao();
-      student = persistentStudent.readByNumero(new Integer(2005), new TipoCurso(TipoCurso.LICENCIATURA));
-      assertNull(student);
-      persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadBySeccaoAndNome:fail read unexisting aluno");
-    }
-  }
-    
+	}
 
-	public void testReadByUsername() {
+	protected void tearDown() {
+		super.tearDown();
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------------
+
+	public void testWriteStudent() {
+
+		IPessoa person = null;
+		// read existing Pessoa
+		try {
+			persistentSupport.iniciarTransaccao();
+			person = persistentPerson.lerPessoaPorUsername("Jorge");
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Reading Pessoa");
+		}
+
+		assertNotNull(person);
+
+		// Student ja existente
+		IStudent student = new Student(new Integer(600), new Integer(567), person, new TipoCurso(1));
+
+		System.out.println("\n- Test 1.1 : Write Existing Student\n");
+		try {
+			persistentSupport.iniciarTransaccao();
+			persistentStudent.lockWrite(student);
+			persistentSupport.confirmarTransaccao();
+			fail("Write Existing Student");
+		} catch (ExistingPersistentException ex) {
+			// All Is OK
+			try {
+				persistentSupport.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia e) {
+				e.printStackTrace();
+				fail("cancelarTransaccao() in Write Existing Student");
+			}
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Unexpected exception in Write Existing Student");
+		}
+
+		// Student inexistente
+		student = new Student(new Integer(123), new Integer(1), person, new TipoCurso(10));
+
+		System.out.println("\n- Test 1.2 : Write Non Existing Student\n");
+		try {
+			persistentSupport.iniciarTransaccao();
+			persistentStudent.lockWrite(student);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Write Non Existing Student");
+		}
+
+		IStudent st = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			st = persistentStudent.readStudentByNumberAndDegreeType(new Integer(123), new TipoCurso(10));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Reading Non Existing Student Just Writen Before");
+		}
+
+		assertNotNull(st);
+
+		assertTrue(st.equals(student));
+
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------------
+
+	public void testDeleteAllStudents() {
+
+		System.out.println("\n- Test 2 : Delete All Students");
+		try {
+			persistentSupport.iniciarTransaccao();
+			persistentStudent.deleteAll();
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Delete All Students");
+		}
+
+		ArrayList result = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentStudent.readAll();
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Reading Result Of Deleting All Students");
+		}
+
+		assertNotNull(result);
+		assertTrue(result.isEmpty());
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------------
+
+	public void testReadStudent() {
+
+		IPessoa person = null;
+		// read existing Pessoa
+		try {
+			persistentSupport.iniciarTransaccao();
+			person = persistentPerson.lerPessoaPorUsername("Jorge");
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Reading Pessoa");
+		}
+
+		assertNotNull(person);
+		
 		IStudent student = null;
+
+		// Student ja existente
+		System.out.println("\n- Test 3.1 : Read Existing Student\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			student = persistentStudent.readByUsername("user");
-			assertNotNull(student);
+			student = persistentStudent.readStudentByDegreeTypeAndPerson(new TipoCurso(1), person);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read Existing Student");
+		}
+		assertNotNull(student);
+		assertTrue(student.getNumber().intValue() == 700);
+
+		// Student inexistente
+		student = null;
+		System.out.println("\n- Test 3.2 : Read Non Existing Student");
+		try {
+			persistentSupport.iniciarTransaccao();
+			student = persistentStudent.readStudentByNumberAndDegreeType(new Integer(123), new TipoCurso(10));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read Non Existing Student");
+		}
+		assertNull(student);
+	}
+
+	// -------------------------------------------------------------------------------------------------------------------------
+
+	public void testDeleteStudent() {
+
+		IStudent student = null;
+
+		// Student ja existente
+		System.out.println("\n- Test 4.1 : Delete Existing Student\n");
+		try {
+			persistentSupport.iniciarTransaccao();
+			student = persistentStudent.readStudentByNumberAndDegreeType(new Integer(600), new TipoCurso(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testReadByUsername:fail read existing aluno");
+			fail("Reading Existing Student To Delete");
 		}
-
-		assertNotNull("testReadByUsername:read existing aluno",student);
-		assertEquals("testReadByUsername:read existing aluno", student.getNumber(), new Integer(600)); 
+		assertNotNull(student);
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			student = persistentStudent.readByUsername("No has this string for a username");
-			assertNull(student);
+			persistentStudent.delete(student);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex3) {
+			fail("Delete Existing Student");
+		}
+
+		IStudent st = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			st = persistentStudent.readStudentByNumberAndDegreeType(new Integer(600), new TipoCurso(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("testReadByUsername:fail read unexisting aluno");
+			fail("Reading Just Deleted Student");
+		}
+		assertNull(st);
+
+		// Student inexistente
+		System.out.println("\n- Test 4.2 : Delete Non Existing Student\n");
+		try {
+			persistentSupport.iniciarTransaccao();
+			persistentStudent.delete(new Student());
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Delete Existing Student");
 		}
 	}
 
+	// -------------------------------------------------------------------------------------------------------------------------
 
-    /** Test of readByNumeroAndEstado method, of class ServidorPersistente.OJB.StudentOJB. */
-   
-    public void testReadByNumeroAndEstado() {
-    IStudent student = null;
-    try {
-      persistentSupport.iniciarTransaccao();
-      student = persistentStudent.readByNumeroAndEstado(new Integer(600),new Integer(567), new TipoCurso(TipoCurso.LICENCIATURA));
-      assertNotNull(student);
-      persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByNumeroAndEstado:fail read existing aluno");
-    }
-    assertEquals("testReadByNumeroAndEstado:read existing aluno",student.getNumber(), new Integer(600));
-    assertEquals("testReadByNumeroAndEstado:read existing aluno",student.getState(), new Integer(567));
-        
-    try {
-      persistentSupport.iniciarTransaccao();
-      student = persistentStudent.readByNumeroAndEstado(new Integer(2005),new Integer(567), new TipoCurso(TipoCurso.LICENCIATURA));
-      assertNull(student);
-      persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByNumeroAndEstado:fail read unexisting aluno");
-    }
-  }
+	public void testReadAllStudents() {
 
-    public void testReadByNumeroAndEstadoAndPessoa() {
-    IStudent student = null;
-    IPessoa person = null;
-    try {
-      persistentSupport.iniciarTransaccao();
-      
-      person = persistentPerson.lerPessoaPorUsername("user");
-      assertNotNull(person);
-      
-      student = persistentStudent.readByNumeroAndEstadoAndPessoa(new Integer(600),new Integer(567), person, new TipoCurso(TipoCurso.LICENCIATURA));
-      assertNotNull(student);
-      persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByNumero:fail read existing aluno");
-    }
-    assertNotNull("testReadByNumero:read existing aluno", student);
-    assertEquals("testReadByNumero:read existing aluno",student.getNumber(), new Integer(600));
-    assertEquals("testReadByNumero:read existing aluno",student.getState(), new Integer(567));
-    
-    assertEquals("testReadByNumero:read existing aluno",student.getPerson().getNumeroDocumentoIdentificacao(), "123456789");
-    
-    
-    try {
-      persistentSupport.iniciarTransaccao();
-      student = persistentStudent.readByNumeroAndEstadoAndPessoa(new Integer(2005),new Integer(567),person, new TipoCurso(TipoCurso.LICENCIATURA));
-      assertNull(student);
-      persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByNumeroAndEstadoAndPessoa:fail read unexisting aluno");
-    }
-  }
+		ArrayList list = null;
 
-    
-    public void testReadAllAlunos() {
-        ArrayList students = null;
-        try {
-            persistentSupport.iniciarTransaccao();
-            students = persistentStudent.readAllAlunos();
-            persistentSupport.confirmarTransaccao();
-        } catch(ExcepcaoPersistencia ex) {
-            fail("testReadAllAlunos: readAllAlunos");
-        }
-        assertNotNull(students);
-        assertEquals(students.size(), 5);
-    }
-    
-    /** Test of lockWrite method, of class ServidorPersistente.OJB.StudentOJB. */
- 
-   public void testCreateExistingAluno() {
-    IPessoa person = new Pessoa("10000679", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "Lisboa", new Date(), new Date(), "Ricardo Nortadas", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.DIVORCIADO), new Date(), "Pai", "Mae", "Portugues", "Portugal", "Portugal", "Portugal", "Rua", "LindaAVelha", "2780", "Oeiras", "LindaAVelha", "Oeiras", "Lisboa", "214192888", "936344277", "rfan@mega.ist.utl.pt", "URL", "123231232132", "estudante", "rfan", PasswordEncryptor.encryptPassword("eu"), null, "123123213123123123");
-    try{
-        persistentSupport.iniciarTransaccao();
-        persistentPerson.escreverPessoa(person);
-        persistentSupport.confirmarTransaccao();
-    }catch (ExcepcaoPersistencia ex) {
-      fail("testCreateNonExistingPessoa");
-    }
-    IStudent student = new Student(new Integer(600),new Integer(67),person, new TipoCurso(TipoCurso.LICENCIATURA));
-    try {
-      persistentSupport.iniciarTransaccao();
-      persistentStudent.lockWrite(student);
-      persistentSupport.confirmarTransaccao();
-      fail("testCreateExistingAluno");
-	} catch (ExistingPersistentException eex) {
-		// all is ok
-		System.out.println("Caught ExistingPersistentException" + eex);
+		System.out.println("\n- Test 5 : Read All Existing Student\n");
 		try {
-			persistentSupport.cancelarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			fail("error aborting transaction");
+			persistentSupport.iniciarTransaccao();
+			list = persistentStudent.readAll();
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex2) {
+			fail("Read All Students");
 		}
-    } catch (ExcepcaoPersistencia ex) {
-		fail("Caught ExcepcaoPersistencia" + ex);
-    }
-  }
- 
-    public void testCreateNonExistingAluno() {      
-        IPessoa person = new Pessoa("10000677", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "Lisboa", new Date(), new Date(), "Ricardo Nortadas", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.DIVORCIADO), new Date(), "Pai", "Mae", "Portugues", "Portugal", "Portugal", "Portugal", "Rua", "LindaAVelha", "2780", "Oeiras", "LindaAVelha", "Oeiras", "Lisboa", "214192888", "936344277", "rfan@mega.ist.utl.pt", "URL", "123231232132", "estudante", "rfan", PasswordEncryptor.encryptPassword("eu"), null, "123123213123123123");
-        try{
-        persistentSupport.iniciarTransaccao();
-        persistentPerson.escreverPessoa(person);
-        persistentSupport.confirmarTransaccao();
-        }catch (ExcepcaoPersistencia ex) {
-            fail("testCreateNonExistingPessoa");
-        }
-        IStudent student = new Student(new Integer(2004),new Integer(345),person, new TipoCurso(TipoCurso.LICENCIATURA));
-        try {
-            persistentSupport.iniciarTransaccao();
-            persistentStudent.lockWrite(student);
-            persistentSupport.confirmarTransaccao();
-          } catch (ExcepcaoPersistencia ex) {
-            fail("testCreateNonExistingaluno");
-        }
-    }
-  
-    public void testWriteExistingUnchangedObject() {
-    try {
-    	persistentSupport.iniciarTransaccao();
-    	IStudent student = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
-    	persistentSupport.confirmarTransaccao();
-
-        persistentSupport.iniciarTransaccao();
-        persistentStudent.lockWrite(student);
-        persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingUnchangedObject");
-    }
-  }
-
-  // Test of write method, of class ServidorPersistente.OJB.alunoOJB. 
-  public void testWriteExistingChangedObject() {
-	IStudent student = null;
-	// read existing aluno
-	try {
-	  persistentSupport.iniciarTransaccao();
-	  student = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
-	  assertNotNull(student);
-	  student.setDegreeType(new TipoCurso(TipoCurso.DOUTORAMENTO));
-	  persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
+		assertNotNull(list);
+		assertEquals(list.size(), 5);
 	}
 
-	// Check Change
-	try {
-	  persistentSupport.iniciarTransaccao();
-	  student = null;
-	  student = persistentStudent.readByNumero(new Integer(600), new TipoCurso(TipoCurso.DOUTORAMENTO));
-	  assertNotNull(student);
-	  assertEquals(student.getDegreeType(), new TipoCurso(TipoCurso.DOUTORAMENTO));
-	  persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
-	}
-  }
-
-
-  // Test of delete method, of class ServidorPersistente.OJB.alunoOJB. 
-  public void testDeleteAluno() {
-	IStudent student = null;
-	// read existing aluno
-	try {
-	  persistentSupport.iniciarTransaccao();
-	  student = persistentStudent.readByNumero(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
-	  assertNotNull(student);
-	  persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
-	}
-
-	// Check Attends
-	// TODO : Verify why test fails when we don't check the attendence.
-	//        Checking the attendance should have nothing to do with deleting a student
-	try {
-		persistentSupport.iniciarTransaccao();
-		try {
-			Implementation odmg = OJB.getInstance();
-			
-			///////////////////////////////////////////////////////////////////
-			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
-			///////////////////////////////////////////////////////////////////
-			Database db = odmg.newDatabase();
-
-			try {
-				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-			} catch (ODMGException e) {
-				e.printStackTrace();
-			}
-			///////////////////////////////////////////////////////////////////
-			// End of Added Code
-			///////////////////////////////////////////////////////////////////
-						
-			OQLQuery query = odmg.newOQLQuery();
-			String oqlQuery = "select all from " + Frequenta.class.getName();
-			oqlQuery += " where aluno.number = $1"
-			+ " and aluno.degreeType = $2";
-			query.create(oqlQuery);
-			query.bind(student.getNumber());
-			query.bind(student.getDegreeType());
-			List result = (List) query.execute();
-			assertEquals(result.size(), 3);
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-		persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
-	}
-	
-
-
-	// Delete Student
-
-	try {
-	  persistentSupport.iniciarTransaccao();
-	  persistentStudent.delete(student);
-	  persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail deleting student");
-	}
-
-	// Check Attends
-	try {
-		persistentSupport.iniciarTransaccao();
-		try {
-			Implementation odmg = OJB.getInstance();
-
-			///////////////////////////////////////////////////////////////////
-			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
-			///////////////////////////////////////////////////////////////////
-			Database db = odmg.newDatabase();
-
-			try {
-				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-			} catch (ODMGException e) {
-				e.printStackTrace();
-			}
-			///////////////////////////////////////////////////////////////////
-			// End of Added Code
-			///////////////////////////////////////////////////////////////////
-
-			OQLQuery query = odmg.newOQLQuery();
-			String oqlQuery = "select all from " + Frequenta.class.getName();
-			oqlQuery += " where aluno.number = $1"
-			+ " and aluno.degreeType = $2";
-			query.create(oqlQuery);
-			query.bind(student.getNumber());
-			query.bind(student.getDegreeType());
-			List result = (List) query.execute();
-			assertEquals(result.size(), 0);
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		} 
-		persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
-	}
-	
-	// Check StudentCurricularPlans
-	try {
-		persistentSupport.iniciarTransaccao();
-		try {
-			Implementation odmg = OJB.getInstance();
-
-			///////////////////////////////////////////////////////////////////
-			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
-			///////////////////////////////////////////////////////////////////
-			Database db = odmg.newDatabase();
-
-			try {
-				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-			} catch (ODMGException e) {
-				e.printStackTrace();
-			}
-			///////////////////////////////////////////////////////////////////
-			// End of Added Code
-			///////////////////////////////////////////////////////////////////
-
-			OQLQuery query = odmg.newOQLQuery();;
-	
-			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-			oqlQuery += " where student.number = $1"
-			+ " and student.degreeType = $2";
-			query.create(oqlQuery);
-			query.bind(student.getNumber());
-			query.bind(student.getDegreeType());
-			List result = (List) query.execute();
-			assertEquals(result.size(), 0);
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		} 
-		persistentSupport.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
-	}
-  }
-
-  // Test of deleteAll method, of class ServidorPersistente.OJB.alunoOJB. 
-  public void testDeleteAll() {
-    try {
-      persistentSupport.iniciarTransaccao();
-      persistentStudent.deleteAll();
-      persistentSupport.confirmarTransaccao();
-      persistentSupport.iniciarTransaccao();
-      List result = null;
-      try {
-        Implementation odmg = OJB.getInstance();
-
-		///////////////////////////////////////////////////////////////////
-		// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
-		///////////////////////////////////////////////////////////////////
-		Database db = odmg.newDatabase();
-
-		try {
-			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-		} catch (ODMGException e) {
-			e.printStackTrace();
-		}
-		///////////////////////////////////////////////////////////////////
-		// End of Added Code
-		///////////////////////////////////////////////////////////////////
-
-        OQLQuery query = odmg.newOQLQuery();
-        String oqlQuery = "select aluno from " + Student.class.getName();
-        query.create(oqlQuery);
-        result = (List) query.execute();
-      } catch (QueryException ex) {
-        throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-      }
-      persistentSupport.confirmarTransaccao();
-      assertNotNull(result);
-      assertTrue(result.isEmpty());
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testDeleteAluno");
-    }
-  }   
- 
 }
-    
- 

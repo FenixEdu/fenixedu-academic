@@ -57,16 +57,18 @@ public class BranchOJBTest extends TestCaseOJB {
 		// branch ja existente
 		IBranch branch = new Branch("Inteligencia Artificial", "IA");
 
-		System.out.println("- Test 1.1 : Write Existing Branch");
+		System.out.println("\n- Test 1.1 : Write Existing Branch\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			persistentBranch.writeBranch(branch);
+			persistentBranch.lockWrite(branch);
 			persistentSupport.confirmarTransaccao();
 			fail("Write Existing Branch");
 		} catch (ExistingPersistentException ex) {
 			// All Is OK
 			try {
+//				FIXME: Porque raios e' que da erro quando cancelamos a transaccao aqui e nao da esse mesmo erro quando a confirmamos.
 				persistentSupport.cancelarTransaccao();
+//				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
 				fail("cancelarTransaccao() in Write Existing Branch");
@@ -78,12 +80,11 @@ public class BranchOJBTest extends TestCaseOJB {
 		// branch inexistente
 		branch = new Branch("Inteligencia Artificial IX", "IA IX");
 
-		System.out.println("- Test 1.2 : Write Non Existing Branch");
+		System.out.println("\n- Test 1.2 : Write Non Existing Branch\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			persistentBranch.writeBranch(branch);
+			persistentBranch.lockWrite(branch);
 			persistentSupport.confirmarTransaccao();
-			assertTrue("Write Non Existing Branch: Unexisting Object", true);
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Write Non Existing Branch");
 		}
@@ -92,7 +93,7 @@ public class BranchOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			b2 = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial IX", "IA IX");
+			b2 = persistentBranch.readBranchByNameAndCode(branch.getName(), branch.getCode());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing Branch Just Writen Before");
@@ -111,12 +112,11 @@ public class BranchOJBTest extends TestCaseOJB {
 
 	public void testDeleteAllBranches() {
 
-		System.out.println("- Test 2 : Delete All Branches");
+		System.out.println("\n- Test 2 : Delete All Branches\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			persistentBranch.deleteAllBranches();
+			persistentBranch.deleteAll();
 			persistentSupport.confirmarTransaccao();
-			assertTrue("Delete All Branches: Deleted Branches", true);
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Delete All Branches");
 		}
@@ -125,7 +125,7 @@ public class BranchOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			result = persistentBranch.readAllBranches();
+			result = persistentBranch.readAll();
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Result Of Deleting All Branches");
@@ -141,7 +141,7 @@ public class BranchOJBTest extends TestCaseOJB {
 		IBranch branch = null;
 
 		// branch ja existente
-		System.out.println("- Test 3.1 : Read Existing Branch");
+		System.out.println("\n- Test 3.1 : Read Existing Branch\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
@@ -152,10 +152,12 @@ public class BranchOJBTest extends TestCaseOJB {
 		assertNotNull(branch);
 		assertTrue(branch.getName().equals("Inteligencia Artificial"));
 		assertTrue(branch.getCode().equals("IA"));
+		assertNotNull(branch.getAssociatedCurricularCourses());
+		assertNotNull(branch.getAssociatedStudentCurricularPlans());
 
 		// branch inexistente
 		branch = null;
-		System.out.println("- Test 3.2 : Read Non Existing Branch");
+		System.out.println("\n- Test 3.2 : Read Non Existing Branch\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			branch = persistentBranch.readBranchByNameAndCode("Unknown", "unk");
@@ -172,7 +174,7 @@ public class BranchOJBTest extends TestCaseOJB {
 		IBranch branch = null;
 
 		// branch ja existente
-		System.out.println("- Test 4.1 : Delete Existing Branch");
+		System.out.println("\n- Test 4.1 : Delete Existing Branch\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
@@ -184,7 +186,7 @@ public class BranchOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			persistentBranch.deleteBranch(branch);
+			persistentBranch.delete(branch);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex3) {
 			fail("Delete Existing Branch");
@@ -201,12 +203,11 @@ public class BranchOJBTest extends TestCaseOJB {
 		assertNull(b);
 
 		// branch inexistente
-		System.out.println("- Test 4.2 : Delete Non Existing Branch");
+		System.out.println("\n- Test 4.2 : Delete Non Existing Branch\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			persistentBranch.deleteBranch(new Branch());
+			persistentBranch.delete(new Branch());
 			persistentSupport.confirmarTransaccao();
-			assertTrue("Delete Non Existing Branch: Branch Deleted", true);
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Delete Existing Branch");
 		}
@@ -217,10 +218,10 @@ public class BranchOJBTest extends TestCaseOJB {
 
 		ArrayList list = null;
 
-		System.out.println("- Test 4 : Read All Existing Branch");
+		System.out.println("\n- Test 5 : Read All Existing Branch\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			list = persistentBranch.readAllBranches();
+			list = persistentBranch.readAll();
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read All Branches");

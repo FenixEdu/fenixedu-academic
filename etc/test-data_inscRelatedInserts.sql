@@ -150,15 +150,6 @@ INSERT INTO PRIVILEGIO VALUES (1, 'ReadAnnouncements', 59);
 INSERT INTO PRIVILEGIO VALUES (1, 'ReadExamsByDayAndBeginning', 60);
 
 #-----------------------------
-# Data for table 'DEGREE'
-#-----------------------------
-DELETE FROM DEGREE;
-INSERT INTO DEGREE VALUES (8,'LEIC','Licenciatura de Engenharia Informatica e de Computadores',1);
-INSERT INTO DEGREE VALUES (9,'LEEC','Licenciatura de Engenharia Electrotecnica e de Computadores',2);
-INSERT INTO DEGREE VALUES (10,'MIC','Mestrado em Informatica e Computadores',2);
-
-
-#-----------------------------
 # Data for table 'EXECUTION_DEGREE'
 #-----------------------------
 DELETE FROM EXECUTION_DEGREE;
@@ -292,22 +283,6 @@ INSERT INTO SHIFT_LESSON VALUES (29, 33, 27);
 
 
 #-----------------------------
-# Data for table 'CURRICULAR_COURSE'
-#-----------------------------
-DELETE FROM CURRICULAR_COURSE;
-INSERT INTO CURRICULAR_COURSE VALUES (14,1,1,0,0,0,0,0,2,1,'Trabalho Final de Curso I','TFCI');
-INSERT INTO CURRICULAR_COURSE VALUES (15,1,2,0,0,0,0,0,5,2,'Trabalho Final de Curso II','TFCII');
-INSERT INTO CURRICULAR_COURSE VALUES (16,2,1,0,0,0,0,0,1,1,'Introducao a Programacao','IP');
-INSERT INTO CURRICULAR_COURSE VALUES (17,2,2,0,0,0,0,0,2,1,'Programacao com Objectos','PO');
-INSERT INTO CURRICULAR_COURSE VALUES (18,1,1,0,0,0,0,0,3,1,'Redes de Computadores I','RCI');
-INSERT INTO CURRICULAR_COURSE VALUES (19,1,2,0,0,0,0,0,4,1,'Engenharia da Programacao','EP');
-INSERT INTO CURRICULAR_COURSE VALUES (20,2,1,1,0,0,0,0,1,2,'Arquitecturas de Computadores','AC');
-INSERT INTO CURRICULAR_COURSE VALUES (21,2,2,0,0,0,0,0,2,2,'Compiladores','COMP');
-INSERT INTO CURRICULAR_COURSE VALUES (22,1,2,0,0,0,0,0,3,2,'Redes de Computadores II','RCII');
-INSERT INTO CURRICULAR_COURSE VALUES (23,2,1,0,0,0,0,0,4,2,'Aprendizagem','APR');
-
-
-#-----------------------------
 # Data for table 'EXECUTION_COURSE'
 #-----------------------------
 DELETE FROM EXECUTION_COURSE;
@@ -381,13 +356,6 @@ INSERT INTO LESSON VALUES (27,6,133000,140000,44,31,4);
 INSERT INTO LESSON VALUES (28,3,080000,093000,45,25,1);
 
 #-----------------------------
-# Data for table 'ENROLMENT'
-#-----------------------------
-DELETE FROM ENROLMENT;
-INSERT INTO ENROLMENT VALUES (1, 0, 14);
-
-
-#-----------------------------
 # Data for table 'STUDENT'
 #-----------------------------
 DELETE FROM STUDENT;
@@ -416,38 +384,6 @@ INSERT INTO SHIFT_STUDENT VALUES (1, 9, 3);
 INSERT INTO SHIFT_STUDENT VALUES (2, 10, 4);
 INSERT INTO SHIFT_STUDENT VALUES (3, 17, 5);
 INSERT INTO SHIFT_STUDENT VALUES (4, 18, 5);
-
-
-#-----------------------------
-# Data for table 'DEPARTMENT'
-#-----------------------------
-DELETE FROM DEPARTMENT;
-INSERT INTO DEPARTMENT VALUES (1, 'dep1', 'd1');
-INSERT INTO DEPARTMENT VALUES (2, 'dep10', 'd10');
-
-#-----------------------------
-# Data for table 'DEPARTMENT_COURSE'
-#-----------------------------
-DELETE FROM DEPARTMENT_COURSE;
-INSERT INTO DEPARTMENT_COURSE VALUES (1, 'Engenharia da Programacao', 'ep', 1);
-INSERT INTO DEPARTMENT_COURSE VALUES (2, 'Nao sei', 'mvt', 1);
-
-#-----------------------------
-# Data for table 'DEGREE_CURRICULAR_PLAN'
-#-----------------------------
-DELETE FROM DEGREE_CURRICULAR_PLAN;
-INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (1, 'plano1', 8, 1, '0000-00-00', '0000-00-00');
-INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (2, 'plano2', 9, 1, '0000-00-00', '0000-00-00');
-
-
-#-----------------------------
-# Data for table 'STUDENT_CURRICULAR_PLAN'
-#-----------------------------
-DELETE FROM STUDENT_CURRICULAR_PLAN;
-INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (1, 1, 1, 1, '2002-12-21');
-INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (2, 1, 1, 2, '2002-10-21');
-INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (3, 5, 1, 1, '2002-10-21');
-
 
 #-----------------------------
 # Data for table 'EXECUTION_PERIOD'
@@ -492,6 +428,12 @@ INSERT INTO EXAM values (4, 29, '2003-03-19', 130000, 150000);
 INSERT INTO EXAM values (5, 28, '2003-03-19', 130000, 150000);
 
 #------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
+# O codigo entre estas duas linhas e' para o David e o Ricardo.
+# Coloquem o vosso codigo depois.
+# Obrigado!
+#
 
 #-----------------------------
 # Data for table 'BRANCH'
@@ -504,13 +446,15 @@ INSERT INTO BRANCH values (2, 'II', 'Informatica Industrial');
 # Data for table 'CURRICULAR_COURSE_BRANCH'
 #-----------------------------
 DELETE FROM CURRICULAR_COURSE_BRANCH;
-INSERT INTO CURRICULAR_COURSE_BRANCH values (1, 2, 14);
+INSERT INTO CURRICULAR_COURSE_BRANCH values (1, 1, 14);
+INSERT INTO CURRICULAR_COURSE_BRANCH values (2, 2, 14);
 
 #-----------------------------
 # Data for table 'STUDENT_CURRICULAR_PLAN_BRANCH'
 #-----------------------------
 DELETE FROM STUDENT_CURRICULAR_PLAN_BRANCH;
-INSERT INTO STUDENT_CURRICULAR_PLAN_BRANCH values (1, 2, 1);
+INSERT INTO STUDENT_CURRICULAR_PLAN_BRANCH values (1, 1, 1);
+INSERT INTO STUDENT_CURRICULAR_PLAN_BRANCH values (2, 2, 1);
 
 #-----------------------------
 # Data for table 'CURRICULAR_YEAR'
@@ -518,3 +462,91 @@ INSERT INTO STUDENT_CURRICULAR_PLAN_BRANCH values (1, 2, 1);
 DELETE FROM CURRICULAR_YEAR;
 INSERT INTO CURRICULAR_YEAR values (1, 2003);
 INSERT INTO CURRICULAR_YEAR values (2, 2004);
+
+#-----------------------------
+# Data for table 'CURRICULAR_SEMESTER'
+#-----------------------------
+DELETE FROM CURRICULAR_SEMESTER;
+INSERT INTO CURRICULAR_SEMESTER values (1, 1, 1);
+INSERT INTO CURRICULAR_SEMESTER values (2, 1, 2);
+
+#-----------------------------
+# Data for table 'CURRICULAR_COURSE_CURRICULAR_SEMESTER'
+#-----------------------------
+DELETE FROM CURRICULAR_COURSE_CURRICULAR_SEMESTER;
+INSERT INTO CURRICULAR_COURSE_CURRICULAR_SEMESTER values (1, 1, 1);
+INSERT INTO CURRICULAR_COURSE_CURRICULAR_SEMESTER values (2, 1, 2);
+
+
+#-----------------------------
+# Data for table 'EQUIVALENCE'
+#-----------------------------
+DELETE FROM EQUIVALENCE;
+INSERT INTO EQUIVALENCE VALUES (1, 2, 1, 1);
+
+#------------------------------------------------------------------------------------------------------------------
+
+#-----------------------------
+# Data for table 'ENROLMENT'
+#-----------------------------
+DELETE FROM ENROLMENT;
+INSERT INTO ENROLMENT VALUES (1, 3, 14);
+INSERT INTO ENROLMENT VALUES (2, 1, 14);
+
+#-----------------------------
+# Data for table 'STUDENT_CURRICULAR_PLAN'
+#-----------------------------
+DELETE FROM STUDENT_CURRICULAR_PLAN;
+INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (1, 1, 1, 1, '2002-12-21');
+INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (2, 1, 1, 2, '2002-10-21');
+INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (3, 5, 1, 1, '2002-10-21');
+
+#-----------------------------
+# Data for table 'DEPARTMENT'
+#-----------------------------
+DELETE FROM DEPARTMENT;
+INSERT INTO DEPARTMENT VALUES (1, 'dep1', 'd1');
+INSERT INTO DEPARTMENT VALUES (2, 'dep10', 'd10');
+
+#-----------------------------
+# Data for table 'DEPARTMENT_COURSE'
+#-----------------------------
+DELETE FROM DEPARTMENT_COURSE;
+INSERT INTO DEPARTMENT_COURSE VALUES (1, 'Engenharia da Programacao', 'ep', 1);
+INSERT INTO DEPARTMENT_COURSE VALUES (2, 'Nao sei', 'mvt', 1);
+
+#-----------------------------
+# Data for table 'DEGREE_CURRICULAR_PLAN'
+#-----------------------------
+DELETE FROM DEGREE_CURRICULAR_PLAN;
+INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (1, 'plano1', 8, 1, '0000-00-00', '0000-00-00');
+INSERT INTO DEGREE_CURRICULAR_PLAN VALUES (2, 'plano2', 9, 1, '0000-00-00', '0000-00-00');
+
+#-----------------------------
+# Data for table 'DEGREE'
+#-----------------------------
+DELETE FROM DEGREE;
+INSERT INTO DEGREE VALUES (8,'LEIC','Licenciatura de Engenharia Informatica e de Computadores',1);
+INSERT INTO DEGREE VALUES (9,'LEEC','Licenciatura de Engenharia Electrotecnica e de Computadores',2);
+INSERT INTO DEGREE VALUES (10,'MIC','Mestrado em Informatica e Computadores',2);
+
+#-----------------------------
+# Data for table 'CURRICULAR_COURSE'
+#-----------------------------
+DELETE FROM CURRICULAR_COURSE;
+INSERT INTO CURRICULAR_COURSE VALUES (14,1,1,0,0,0,0,0,2,1,'Trabalho Final de Curso I','TFCI');
+INSERT INTO CURRICULAR_COURSE VALUES (15,1,2,0,0,0,0,0,5,2,'Trabalho Final de Curso II','TFCII');
+INSERT INTO CURRICULAR_COURSE VALUES (16,2,1,0,0,0,0,0,1,1,'Introducao a Programacao','IP');
+INSERT INTO CURRICULAR_COURSE VALUES (17,2,2,0,0,0,0,0,2,1,'Programacao com Objectos','PO');
+INSERT INTO CURRICULAR_COURSE VALUES (18,1,1,0,0,0,0,0,3,1,'Redes de Computadores I','RCI');
+INSERT INTO CURRICULAR_COURSE VALUES (19,1,2,0,0,0,0,0,4,1,'Engenharia da Programacao','EP');
+INSERT INTO CURRICULAR_COURSE VALUES (20,2,1,1,0,0,0,0,1,2,'Arquitecturas de Computadores','AC');
+INSERT INTO CURRICULAR_COURSE VALUES (21,2,2,0,0,0,0,0,2,2,'Compiladores','COMP');
+INSERT INTO CURRICULAR_COURSE VALUES (22,1,2,0,0,0,0,0,3,2,'Redes de Computadores II','RCII');
+INSERT INTO CURRICULAR_COURSE VALUES (23,2,1,0,0,0,0,0,4,2,'Aprendizagem','APR');
+
+#
+#------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
+
