@@ -20,15 +20,50 @@
 </logic:notPresent>
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
-
-	<center> <font color='#034D7A' size='5'> <b>
-		<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="nome"/>
-	</center> </b> </font>
-
-	</br>
-	</br>
-	</br>
-
+	
+		
+        <table id="anuncios" cellspacing="0">
+          <tr>
+            <td  class="ultAnuncioAviso"><img "<%= request.getContextPath() %>/images/icon_warning.gif"  width="7" height="9" /> 
+            <bean:message key="message.lastWeekAnnouncements"/> 
+             </td>
+             <td  class="ultAnuncioAviso">
+             </td>
+             <td  class="ultAnuncioAviso">
+             </td>
+             <td  class="ultAnuncioAviso">
+             </td>
+           </tr>
+           <logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" scope="session">
+           <tr>
+           	<td >
+           		<img "<%= request.getContextPath() %>/images/icon_warning.gif"  width="7" height="9" /><bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title"/>
+           	</td>
+           	<td>	
+           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="information"/>
+           </td>
+           </tr>
+           <tr>
+           	<td></td>
+           	<td></td>
+           <td>	
+           		<bean:message key="message.createdOn"/>
+           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="creationDate"/>
+           </td>
+             </tr>
+           <tr>
+           	<td></td>
+           	<td></td>      
+           <td>	
+           		<bean:message key="message.modifiedOn"/>
+           		<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="lastModifiedDate"/>
+           </td>
+          
+           </tr>
+           </logic:present>
+        </table>
+    
+			
 	<bean:message key="property.executionCourse.associatedCurricularCourses"/>
 	<logic:present name="publico.infoCurricularCourses" scope="session">
 			<table align="center" border='1' cellpadding='10'>
@@ -54,14 +89,6 @@
 						<td>
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
 						</td>
-<%--
-						<td>
-							<bean:write name="curricularCourse" property="curricularYear"/>
-						</td>
-						<td>
-							<bean:write name="curricularCourse" property="semester"/>
-						</td>
---%>
 						<td>
 							<logic:iterate id="infoCurricularSemester" name="curricularCourse" property="associatedInfoCurricularSemesters">
 								<bean:write name="infoCurricularSemester" property="infoCurricularYear.year"/>&nbsp;
