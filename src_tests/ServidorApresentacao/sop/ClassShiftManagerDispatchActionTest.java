@@ -101,6 +101,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		//verify that there are errors
 		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
 		verifyActionErrors(errors);
+		//TODO verify forward
 
 	}
 
@@ -228,6 +229,8 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		//verify that there are errors
 		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
 		verifyActionErrors(errors);
+		
+		//TODO verify forward
 
 	}
 
@@ -430,6 +433,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		//verify that there are errors
 		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
 		verifyActionErrors(errors);
+		//TODO verify forward
 
 	}
 

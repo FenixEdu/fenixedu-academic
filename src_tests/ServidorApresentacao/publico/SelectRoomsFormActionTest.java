@@ -37,7 +37,7 @@ public class SelectRoomsFormActionTest extends TestCasePresentation {
     setRequestPathInfo("publico", "/chooseRoomsForm");
 
 	// Fill in Form
-	addRequestParameter("name","Fa1");
+	addRequestParameter("name","Ga1");
 	//addRequestParameter("building","Pavilhão Novas Licenciaturas");
 	//addRequestParameter("floor","0");
 	//addRequestParameter("type",(new Integer(TipoSala.ANFITEATRO)).toString());
@@ -65,7 +65,7 @@ public class SelectRoomsFormActionTest extends TestCasePresentation {
 	setRequestPathInfo("publico", "/chooseRoomsForm");
 
 	// Fill in Form
-	addRequestParameter("name","Fa2");
+	addRequestParameter("name","Fa1");
 	//addRequestParameter("building","Pavilhão Novas Licenciaturas");
 	//addRequestParameter("floor","0");
 	//addRequestParameter("type",(new Integer(TipoSala.ANFITEATRO)).toString());
@@ -93,7 +93,7 @@ public class SelectRoomsFormActionTest extends TestCasePresentation {
 	setRequestPathInfo("publico", "/chooseRoomsForm");
 
 	// Fill in Form
-	addRequestParameter("name","Fa1");
+	addRequestParameter("name","Ga1");
 	//addRequestParameter("building","Pavilhão Novas Licenciaturas");
 	addRequestParameter("floor","xpto");
 	//addRequestParameter("type",(new Integer(TipoSala.ANFITEATRO)).toString());
