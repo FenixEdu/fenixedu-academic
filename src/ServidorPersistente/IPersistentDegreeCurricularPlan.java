@@ -12,7 +12,7 @@ public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
 
 	public ArrayList readAll() throws ExcepcaoPersistencia;
 	public void write(IDegreeCurricularPlan planoCurricular) throws ExcepcaoPersistencia, ExistingPersistentException;
-	public void deleteDegreeCurricularPlan(IDegreeCurricularPlan planoCurricular) throws ExcepcaoPersistencia;
+	public Boolean deleteDegreeCurricularPlan(IDegreeCurricularPlan planoCurricular) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree) throws ExcepcaoPersistencia;
 	public List readByDegree(ICurso degree) throws ExcepcaoPersistencia;

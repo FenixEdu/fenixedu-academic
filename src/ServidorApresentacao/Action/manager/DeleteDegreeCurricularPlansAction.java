@@ -1,3 +1,6 @@
+/*
+ * Created on 31/Jul/2003
+ */
 package ServidorApresentacao.Action.manager;
 
 import java.util.ArrayList;
@@ -27,26 +30,26 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author lmac1
  */
 
-public class DeleteDegreesAction extends FenixAction {
+public class DeleteDegreeCurricularPlansAction extends FenixAction {
 
 	public ActionForward execute(ActionMapping mapping, 
-	                             ActionForm form,
-	                             HttpServletRequest request, 
-	                             HttpServletResponse response)
+								 ActionForm form,
+								 HttpServletRequest request, 
+								 HttpServletResponse response)
 		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
-		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
+		DynaActionForm deleteForm = (DynaActionForm) form;
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		List degreesInternalIds = Arrays.asList((Integer[]) deleteDegreesForm.get("internalIds"));
+		List degreeCurricularPlansIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-		Object args[] = { degreesInternalIds };
+		Object args[] = { degreeCurricularPlansIds };
 		GestorServicos manager = GestorServicos.manager();
 		List errorNames = new ArrayList();
 
 		try {
-				errorNames = (List) manager.executar(userView, "DeleteDegreesService", args);
+				errorNames = (List) manager.executar(userView, "DeleteDegreeCurricularPlansService", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -56,13 +59,13 @@ public class DeleteDegreesAction extends FenixAction {
 				Iterator namesIter = errorNames.iterator();
 				ActionError error = null;
 				while (namesIter.hasNext()) {
-						// CRIO UM ACTION ERROR PARA CADA DEGREE
-						error = new ActionError("errors.invalid.delete.not.empty", (String) namesIter.next());
-						actionErrors.add("errors.invalid.delete.not.empty", error);
+						// CRIO UM ACTION ERROR PARA CADA DEGREE_CURRICULAR_PLAN
+						error = new ActionError("errors.invalid.delete.not.empty.degree.curricular.plan", (String) namesIter.next());
+						actionErrors.add("errors.invalid.delete.not.empty.degree.curricular.plan", error);
 				}
 				saveErrors(request, actionErrors);
 		}
-		return mapping.findForward("readDegrees");
+		return mapping.findForward("readDegree");
 	}
 
 }

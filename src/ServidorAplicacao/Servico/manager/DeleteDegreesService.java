@@ -15,6 +15,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
+
 public class DeleteDegreesService implements IServico {
 
 	private static DeleteDegreesService service = new DeleteDegreesService();
