@@ -17,6 +17,7 @@
     <property name="src.tests" location="src_tests" /> 
     <property name="src.jsp" location="jsp" />
     <property name="metadata" location="metadata" />
+    <property name="dtds" location="${metadata}/dtds" />
     <property name="javadoc.source.home" location="javaDocSource" />
     <property name="javadoc.test.home" location="javaDocTests" />
     
@@ -199,19 +200,19 @@
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
-		  <replacefilter 
+		    <replacefilter 
 		    token="@db.slide.driver@" 
 		    property="db.slide.driver"/>
-		  <replacefilter 
+		    <replacefilter 
 		    token="@db.slide.alias@" 
 		    property="db.slide.alias"/>
-		  <replacefilter 
+		    <replacefilter 
 		    token="@db.slide.user@" 
 		    property="db.slide.user"/>
-		  <replacefilter 
+		    <replacefilter 
 		    token="@db.slide.pass@" 
 		    property="db.slide.pass"/>
-		  <replacefilter 
+		    <replacefilter 
 		    token="@slide.config@" 
 		    property="slide.config"/>
 		  <replacefilter 
@@ -224,8 +225,7 @@
 		    token="@ftp.IST.server.address@" 
 		    property="ftp.IST.server.address"/>
 		</replace>
-		
-		<!--<antcall target="validate-xml"/>-->
+		<antcall target="validate-xml"/>
     </target>
     
     <target name="compile-tests"
@@ -934,6 +934,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	<target name="validate-xml">
 	
 		<xmlvalidate warn="false" failonerror="false">
+				<fileset dir="${sql}" includes="testDataSetEnrolmentContextManager.xml"/>
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
@@ -941,8 +942,19 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 					<exclude name="**/Domain.xml"/>			
 					<include name="classes/OJB/repository.xml"/>
 				</fileset>
+				<xmlcatalog>
+				       <dtd publicId="-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+         					   location="${dtds}/validator_1_0.dtd"/>
+				       <dtd publicId="-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+         					   location="${dtds}/tiles-config_1_1.dtd"/>
+				       <dtd publicId="-//Technical Superior Institute//DTD Fenix Database 1.1//EN"
+         					   location="${dtds}/fenix-database.dtd"/>
+				       <dtd publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+         					   location="${dtds}/web-app_2_3.dtd"/>
+				       <dtd publicId="-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+         					   location="${dtds}/struts-config_1_1.dtd"/>
+			  </xmlcatalog>				
 		</xmlvalidate>
-
 	</target> 
 	
 	
@@ -1172,5 +1184,13 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	<!-- Migrate data -->
 	
    	</target>   	
-   	
+
+	<target name="export-database-dtd" description="Creates a dtd from database on file etc/fenix-database.dtd">
+	  <dbunit driver="com.mysql.jdbc.Driver"
+    	      url="jdbc:mysql://localhost/${db.name}"
+        	  userid="${db.user}"
+	          password="${db.pass}">
+    	  <export dest="${metadata}/dtds/fenix-database.dtd" format="dtd"/> 
+	  </dbunit>
+	</target>
 </project>
