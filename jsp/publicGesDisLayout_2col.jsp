@@ -26,18 +26,17 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td  align="left" valign="top" bgcolor="#B5BED6"  class="barraist">
-     <div id="header"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></div>
+     <td id="barraist"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" />
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
-      <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324 height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
+      <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324" height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
 	  <div id="invisible"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
 	  		<div id="invisible"><tiles:insert attribute="degrees" ignore="true" /></div>	
       <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
       <br />
 	  <tiles:insert attribute="body" />      
     </td>	
-    <td id="barranav" bgcolor="#EBEFFA" valign="top">
+    <td id="barranav" width="150" bgcolor="#EBEFFA" valign="top">
       <div class="blue-bckgr">
         <h3>Navega&ccedil;&atilde;o Geral</h3>
       </div>
