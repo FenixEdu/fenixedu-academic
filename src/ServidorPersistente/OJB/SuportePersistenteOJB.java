@@ -46,6 +46,7 @@ import ServidorPersistente.OJB.gesdis.StudentCourseReportOJB;
 import ServidorPersistente.OJB.grant.contract.GrantContractOJB;
 import ServidorPersistente.OJB.grant.contract.GrantContractRegimeOJB;
 import ServidorPersistente.OJB.grant.contract.GrantCostCenterOJB;
+import ServidorPersistente.OJB.grant.contract.GrantInsuranceOJB;
 import ServidorPersistente.OJB.grant.contract.GrantOrientationTeacherOJB;
 import ServidorPersistente.OJB.grant.contract.GrantPartOJB;
 import ServidorPersistente.OJB.grant.contract.GrantPaymentEntityOJB;
@@ -90,6 +91,7 @@ import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
 import ServidorPersistente.grant.IPersistentGrantContractRegime;
 import ServidorPersistente.grant.IPersistentGrantCostCenter;
+import ServidorPersistente.grant.IPersistentGrantInsurance;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 import ServidorPersistente.grant.IPersistentGrantOwner;
 import ServidorPersistente.grant.IPersistentGrantPart;
@@ -1172,6 +1174,14 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new GrantContractRegimeOJB();
 	}    
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantContractRegime()
+	 */
+	public IPersistentGrantInsurance getIPersistentGrantInsurance()
+	{
+		return new GrantInsuranceOJB();
+	}
+	
     /*
 	 * (non-Javadoc)
 	 * 

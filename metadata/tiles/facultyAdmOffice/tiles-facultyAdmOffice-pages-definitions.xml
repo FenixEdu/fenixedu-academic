@@ -40,6 +40,13 @@
 	<definition name="manageGrantSubsidy" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantSubsidy.jsp"></put>
 	</definition>
+	<!-- GRANT INSURANCE-->
+	<definition name="editGrantInsuranceForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantInsurance.jsp"></put>
+	</definition>
+	<definition name="manageGrantInsurance" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantInsurance.jsp"></put>
+	</definition>
 	<!-- GRANT QUALIFICATION -->
 	<definition name="manageGrantQualification" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/qualification/manageGrantQualification.jsp"></put>

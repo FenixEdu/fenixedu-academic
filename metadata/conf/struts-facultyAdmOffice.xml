@@ -226,6 +226,16 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 
+			<form-bean name="editGrantInsuranceForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idGrantOwner" type="java.lang.Integer"/>
+				<form-property name="idContract" type="java.lang.Integer"/>
+				
+				<form-property name="state" type="java.lang.Integer"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+
+
 			<form-bean name="listGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="spanNumber" type="java.lang.Integer"/>
@@ -568,6 +578,28 @@
    			type="ServidorApresentacao.Action.grant.contract.EditGrantContractRegimeAction">
   			<forward name="edit-grant-contract-regime" path="editGrantContractRegime"/>
   			<forward name="manage-grant-contract-regime" path="/manageGrantContractRegime.do?method=prepareManageGrantContractRegime"/>
+    </action>
+
+     <!-- ===================== USE CASE: EDIT GRANT INSURANCE ============================== -->
+	<action path="/editGrantInsurance" 
+			input="/editGrantInsurance.do?page=0&amp;method=prepareEditGrantInsuranceForm" 
+			name="editGrantInsuranceForm" 
+			scope="request"
+   			parameter="method"
+   			validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantInsuranceAction">
+  			<forward name="edit-grant-insurance" path="editGrantInsuranceForm"/>
+  			<forward name="manage-grant-insurance" path="/manageGrantInsurance.do?method=prepareManageGrantInsuranceForm"/>
+    </action>
+
+	<!-- ===================== USE CASE: MANAGE GRANT INSURANCE ============================== -->
+	<action path="/manageGrantInsurance" 
+			input="/manageGrantInsurance.do?page=0&amp;method=prepareManageGrantInsuranceForm" 
+			name="voidForm" 
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantInsuranceAction">
+  			<forward name="manage-grant-insurance" path="manageGrantInsurance"/> 
     </action>
 
     <!-- ===================== USE CASE: SHOW TEACHERS LIST ============================== -->
