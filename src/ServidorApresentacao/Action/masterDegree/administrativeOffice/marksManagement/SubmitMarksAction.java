@@ -73,7 +73,7 @@ public class SubmitMarksAction extends DispatchAction {
 			new BeanComparator("infoEnrolment.infoStudentCurricularPlan.infoStudent.number"));
 
 		setForm(form, infoSiteEnrolmentEvaluation);
-		
+
 		request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluation);
 
 		return mapping.findForward("MarksSubmission");
@@ -86,12 +86,12 @@ public class SubmitMarksAction extends DispatchAction {
 			//		fill in teacher number in case it exists
 			submitMarksForm.set("teacherNumber", infoSiteEnrolmentEvaluation.getInfoTeacher().getTeacherNumber().toString());
 		}
-		if(infoSiteEnrolmentEvaluation.getLastEvaluationDate() != null){
+		if (infoSiteEnrolmentEvaluation.getLastEvaluationDate() != null) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.clear();
 			calendar.setLenient(false);
 			calendar.setTime(infoSiteEnrolmentEvaluation.getLastEvaluationDate());
-			
+
 			submitMarksForm.set("day", String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
 			submitMarksForm.set("month", String.valueOf(calendar.get(Calendar.MONTH) + 1));
 			submitMarksForm.set("year", String.valueOf(calendar.get(Calendar.YEAR)));
@@ -133,20 +133,16 @@ public class SubmitMarksAction extends DispatchAction {
 			evaluations.add(infoEnrolmentEvaluation);
 		}
 
+		Calendar calendar = Calendar.getInstance();
+		calendar.setLenient(false);
 		//		get information from form
 		DynaValidatorForm marksForm = (DynaValidatorForm) form;
 		Integer teacherNumber = new Integer((String) marksForm.get("teacherNumber"));
 		int year = new Integer((String) marksForm.get("year")).intValue();
 		int month = new Integer((String) marksForm.get("month")).intValue();
 		int day = new Integer((String) marksForm.get("day")).intValue();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setLenient(false);
-		Date evaluationDate = null;
-		try {
-			calendar.set(year, month - 1, day);
-			evaluationDate = calendar.getTime();
-		} catch (Exception e) {
-		}
+		calendar.set(year, month - 1, day);
+		Date evaluationDate = calendar.getTime();
 
 		//		Insert final evaluation
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
