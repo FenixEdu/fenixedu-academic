@@ -21,6 +21,7 @@ NOTES:
 CHANGES:
 ========
 - Added the creationDate attribute in Enrolment.
+- Updated OJB library to snapshot from head of cvs (currently on version RC6).
 
 BUG FIXES:
 ==========
