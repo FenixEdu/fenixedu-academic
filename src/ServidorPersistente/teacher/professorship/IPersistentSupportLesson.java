@@ -39,4 +39,11 @@ public interface IPersistentSupportLesson extends IPersistentObject
      */
     List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia;
 
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @return
+     */
+    List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
 }

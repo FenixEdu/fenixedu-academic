@@ -85,4 +85,15 @@ public class SupportLessonOJB extends ObjectFenixOJB implements IPersistentSuppo
 		return queryList(SupportLesson.class, criteria);
     }
 
+    /* (non-Javadoc)
+     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
+     */
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
+		criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod.getIdInternal());
+        return queryList(SupportLesson.class, criteria);
+    }
+
 }
