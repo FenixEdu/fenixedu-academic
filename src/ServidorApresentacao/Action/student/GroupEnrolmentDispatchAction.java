@@ -123,7 +123,8 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			error1 = new ActionError("error.existingGroup");
 			actionErrors1.add("error.existingGroup", error1);
 			saveErrors(request, actionErrors1);
-			return prepareEnrolment(mapping, form, request, response);
+			return mapping.findForward("viewExecutionCourseProjects");
+			//return prepareEnrolment(mapping, form, request, response);
 		}
 
 		List infoStudentList = studentsNotEnroled.getInfoStudentList();
