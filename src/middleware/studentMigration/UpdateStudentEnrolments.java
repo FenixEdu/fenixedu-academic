@@ -80,20 +80,11 @@ public class UpdateStudentEnrolments {
 
 				sp.iniciarTransaccao();
 				sp.clearCache();
-
-
-System.out.println("Gajo " + oldStudent.getNumber());
-
 				// Read The middleware Enrolments
 				oldStudent.setEnrolments(persistentEnrolment.readByStudentNumber(oldStudent.getNumber()));
 
 				UpdateStudentEnrolments.updateStudentEnrolment(oldStudent, sp);
 				sp.confirmarTransaccao();
-
-
-
-break;
-
 			} catch (Exception e) {
 				System.out.println("Error Migrating Student " + oldStudent.getNumber() + " enrolments");
 				e.printStackTrace(System.out);
@@ -141,10 +132,6 @@ break;
 
 			List studentEnrolments = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
 
-
-System.out.println("Enrolments no Fenix " + studentEnrolments.size());
-System.out.println("Enrolments Almeida " + oldStudent.getEnrolments().size());
-
 			// Find the Enrolments That No Longer Exist
 			List enrolments2Annul = getEnrolments2Annul(oldStudent, studentEnrolments, oldStudent.getEnrolments(), sp);
 
@@ -153,16 +140,9 @@ System.out.println("Enrolments Almeida " + oldStudent.getEnrolments().size());
 			List enrolments2Write = getEnrolments2Write(studentEnrolments, oldStudent.getEnrolments(), sp);
 
 
-System.out.println("Enrolments 2 Write " + enrolments2Write.size());
-
-
-
 			// Annul the Enrolments
 
 			annulEnrolments(enrolments2Annul, sp);
-
-System.out.println("Enrolments 2 Annul " + enrolments2Annul.size());
-
 
 			// Create The New Enrolments
 			writeEnrolments(enrolments2Write, studentCurricularPlan, oldStudent, sp);
