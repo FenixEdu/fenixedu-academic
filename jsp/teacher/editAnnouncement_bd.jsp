@@ -13,7 +13,13 @@
 <br />
 <html:textarea rows="2" cols="56" name="announcement" property="title" >
 </html:textarea>
-<span class="error" ><html:errors property="title" /></span>
+
+<span class="error"><html:errors/>
+	<logic:present name="errors">
+		<bean:write name="errors" filter="true" />
+	</logic:present	>
+</span>
+
 <br />
 <br />
 <strong><bean:message key="label.information" /></strong>

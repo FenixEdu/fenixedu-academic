@@ -15,7 +15,11 @@
 <bean:define id="professorships" name="bodyComponent" property="infoProfessorships" />
 <bean:define id="rooms" name="bodyComponent" property="infoRooms" />
 
-<span class="error"><html:errors/></span>
+<span class="error"><html:errors/>
+	<logic:present name="errors">
+		<bean:write name="errors" filter="true" />
+	</logic:present	>
+</span>
 
 <h2><bean:message key="title.summary.insert" /></h2>
 
@@ -25,8 +29,9 @@
 	<html:hidden property="method" value="insertSummary"/>
 	<html:hidden property="objectCode"/>
 	<html:hidden property="save"/>
-	<html:hidden property="anotherDateVisible" />
-	<html:hidden property="dateEmpty" value="" />
+	<html:hidden property="summaryText" />
+	<html:hidden property="summaryDateInput" />
+
 
 <!-- Shifts -->
 <table width="100%">
@@ -38,7 +43,7 @@
 <table border="0">	
 	<tr>
 		<td><bean:message key="property.shift" />:</td>
-		<td><html:select property="shift" onchange="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();" >
+		<td><html:select property="shift" onchange="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();" >
 				<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 			</html:select>
 		</td>
@@ -65,12 +70,12 @@
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
 				<bean:write name="infoLesson" property="infoSala.nome" />
 			:</td>
-			<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+			<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 		</tr>
 	</logic:iterate>
 	<tr>
 		<td><bean:message key="label.extra.lesson" />:</td>
-		<td><html:radio property="lesson" value="0" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.submit();"/></td>
+		<td><html:radio property="lesson" value="0" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 	</tr>
 	<tr>
 		<td colspan='2'>&nbsp;</td>
@@ -84,34 +89,21 @@
 				<tr>
 					<bean:define id="summaryDate" type="java.lang.String"><dt:format pattern="dd/MM/yyyy"><bean:write name="date" property="time"/></dt:format></bean:define>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;<b><bean:write name="summaryDate"/></b></td>
-					<td width="50%"><html:checkbox property="summaryDateInputOption" value="<%= summaryDate %>"
-								onclick="<%= "this.form.summaryDateInput.value='"
-									+ summaryDate 
-									+ "';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();" %>"/>
-									
-					<logic:equal name="summaryForm" property="anotherDateVisible" value="false">			
-						<html:hidden property="summaryDateInput" value="<%= summaryDate %>"/>
-					</logic:equal>
-
+					<td width="50%">
+					
+						<html:checkbox property="summaryDateInputOption"
+							onclick="<%= "this.form.summaryDateInput.value='"
+					   			    + summaryDate 
+									+ "';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();" %>" />																	
 					</td>
 				</tr>
 			</logic:iterate>
-			<logic:equal name="summaryForm" property="anotherDateVisible" value="false">
-				<tr>
-					<td><bean:message key="label.summaryDateOptions"/></td>
-					<td><html:text property="dateEmpty" size="10" maxlength="10"
-							onchange="this.form.summaryDateInputOption.value='0';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
-					<bean:message key="message.dateFormat"/></td>
-				</tr>
-			</logic:equal>	
-			<logic:equal name="summaryForm" property="anotherDateVisible" value="true">
-				<tr>
-					<td><bean:message key="label.summaryDateOptions"/></td>
-					<td><html:text property="summaryDateInput" size="10" maxlength="10"
-							onchange="this.form.summaryDateInputOption.value='0';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
-					<bean:message key="message.dateFormat"/></td>
-				</tr>
-			</logic:equal>			
+			<tr>
+				<td><bean:message key="label.summaryDateOptions"/></td>
+				<td><html:text property="dateEmpty" size="10" maxlength="10"
+						onchange="this.form.summaryDateInputOption.value='null';this.form.summaryDateInput.value=this.form.dateEmpty.value;this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/>
+				<bean:message key="message.dateFormat"/></td>
+			</tr>							
 		</logic:notEqual>
 	</logic:present>		
 	<logic:present name="datesVisible">
@@ -201,23 +193,41 @@
 		<td colspan='2'><strong><bean:message key="label.title"/></strong></td>
 	</tr>
 	<tr>
+		
 		<td colspan='2'><html:text size="66" property="title"/></td>
 	</tr>
 	<tr>
 		<td colspan='2'><strong><bean:message key="label.summaryText"/></strong></td>
 	</tr>
 	<tr>
-		<td colspan='2'><html:textarea rows="7" cols="50" property="summaryText"/></td>
+		<td>
+		
+		<script language="JavaScript" type="text/javascript"> 
+		<!--
+		initEditor();		
+		//-->
+		</script>
+		
+		<noscript>JavaScript must be enable to use this form <br> </noscript>
+		
+		<script language="JavaScript" type="text/javascript"> 
+		<!--
+		writeTextEditor(200, 200, document.forms[0].summaryText.value);		
+		//-->
+		</script>
+		
+		</td>
+		<!-- <td colspan='2'><html:textarea rows="7" cols="50" property="summaryText"/></td> //-->
 	</tr>
 </table>
 
 <br/>
 <br/>
-<html:submit styleClass="inputbutton" titleKey="message.button.save" onclick="this.form.save.value='0'"><bean:message key="button.save"/>                    		         	
+<html:submit styleClass="inputbutton" titleKey="message.button.save" onclick="this.form.save.value='0';this.form.summaryText.value=update()"><bean:message key="button.save"/>                    		         	
 </html:submit> 
-<html:submit styleClass="inputbutton" titleKey="message.button.save.new" onclick="this.form.save.value='1'" ><bean:message key="button.save.new"/>                    		         	
+<html:submit styleClass="inputbutton" titleKey="message.button.save.new" onclick="this.form.save.value='1';this.form.summaryText.value=update()" ><bean:message key="button.save.new"/>                    		         	
 </html:submit> 
-<html:submit styleClass="inputbutton" titleKey="message.button.save.equal" onclick="this.form.save.value='2'"><bean:message key="button.save.equal"/>                    		         	
+<html:submit styleClass="inputbutton" titleKey="message.button.save.equal" onclick="this.form.save.value='2';this.form.summaryText.value=update()"><bean:message key="button.save.equal"/>                    		         	
 </html:submit> 
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  

@@ -4,7 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <br />
 <h2><bean:message key="title.insertAnnouncement"/></h2>
-<span class="error"><html:errors/></span>
+
+<span class="error"><html:errors/>
+	<logic:present name="errors">
+		<bean:write name="errors" filter="true" />
+	</logic:present	>
+</span>
+
 <html:form action="/announcementManagementAction" focus="title" >
 <html:hidden property="page" value="1"/>
 <strong><bean:message key="label.title" /></strong>

@@ -10,12 +10,17 @@
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <bean:define id="infoSummary" name="bodyComponent" property="infoSummary"/>
 <bean:define id="summaryCode" name="infoSummary" property="idInternal"/>
+<bean:define id="summaryText" name="infoSummary" property="summaryText"/>
 <bean:define id="professorships" name="bodyComponent" property="infoProfessorships" />
 <bean:define id="rooms" name="bodyComponent" property="infoRooms" />
 <bean:define id="shifts" name="bodyComponent" property="infoShifts" />
 <bean:define id="shiftSelected" name="bodyComponent" property="infoSummary.infoShift" />
 
-<span class="error"><html:errors/></span>
+<span class="error"><html:errors/>
+	<logic:present name="errors">
+		<bean:write name="errors" filter="true" />
+	</logic:present	>
+</span>
 
 <h2><bean:message key="title.summary.edit" /></h2>
 
@@ -24,7 +29,8 @@
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="editSummary"/>
 	<html:hidden property="objectCode"/>
-	<html:hidden  property="summaryCode" value="<%= summaryCode.toString() %>"/>
+	<html:hidden property="summaryText" value="<%= summaryText.toString() %>"/>
+	<html:hidden property="summaryCode" value="<%= summaryCode.toString() %>"/>
 
 <!-- Shifts -->
 <table width="100%">
@@ -36,7 +42,7 @@
 <table border="0">	
 	<tr>
 		<td><bean:message key="property.shift" />:</td>
-		<td><html:select name="infoSummary" property="shift" onchange="this.form.method.value='prepareEditSummary';this.form.page.value=0;this.form.submit();" >
+		<td><html:select name="infoSummary" property="shift" onchange="this.form.method.value='prepareEditSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();" >
 				<html:option key="label.summary.select" value="null" />
 				<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 			</html:select>
@@ -64,12 +70,12 @@
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
 				<bean:write name="infoLesson" property="infoSala.nome" />
 			:</td>
-			<td><html:radio name="infoSummary" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareEditSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+			<td><html:radio name="infoSummary" property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareEditSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 		</tr>
 	</logic:iterate>
 	<tr>
 		<td><bean:message key="label.extra.lesson" />:</td>
-		<td><html:radio name="infoSummary" property="lesson" value="0" onclick="this.form.method.value='prepareEditSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.submit();"/></td>
+		<td><html:radio name="infoSummary" property="lesson" value="0" onclick="this.form.method.value='prepareEditSummary';this.form.forHidden.value='false';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 	</tr>
 	<tr>
 		<td colspan='2'>&nbsp;</td>
@@ -167,13 +173,31 @@
 		<td colspan='2'><strong><bean:message key="label.summaryText"/></strong></td>
 	</tr>
 	<tr>
-		<td colspan='2'><html:textarea rows="7" cols="50" name="infoSummary" property="summaryText"/></td>
+		<td>
+		
+		<script language="JavaScript" type="text/javascript"> 
+		<!--
+		initEditor();		
+		//-->
+		</script>
+		
+		<noscript>JavaScript must be enable to use this form <br> </noscript>
+		
+		<script language="JavaScript" type="text/javascript"> 
+		<!--
+		writeTextEditor(200, 200, document.forms[0].summaryText.value);		
+		//-->
+		</script>
+		
+		</td>
+		
+		<!--<td colspan='2'><html:textarea rows="7" cols="50" name="infoSummary" property="summaryText"/></td>//-->
 	</tr>
 </table>
 
 <br/>
 <br/>
-<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
+<html:submit styleClass="inputbutton" onclick="this.form.summaryText.value=update()"><bean:message key="button.save"/>                    		         	
 </html:submit> 
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
