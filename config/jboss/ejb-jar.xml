@@ -14,7 +14,9 @@
 		<session>
 			<ejb-name>ServiceManager</ejb-name>
 			<home>ServidorAplicacao.ServiceManagerHome</home>
+			<local-home>ServidorAplicacao.ServiceManagerLocalHome</local-home>
 			<remote>ServidorAplicacao.ServiceManager</remote>
+			<local>ServidorAplicacao.ServiceManagerLocal</local>
 			<ejb-class>ServidorAplicacao.ServiceManagerBean</ejb-class>
 			<session-type>Stateless</session-type>
 			<transaction-type>Container</transaction-type>

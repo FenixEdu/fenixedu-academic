@@ -24,6 +24,7 @@ NEW FEATURES:
 - New correction type. Now the teacher can choose the test correction type, between fénix formulas and the values specified in the xml document.
 - New types of questions: multiple choice, multiple response, numerical (integer and decimal) and strings.
 - Allow showing the feedback specified in xml document.
+- Added local EJB interface.
 
 
 NOTES:
@@ -52,6 +53,7 @@ CHANGES:
 - The algorithm for test question distribution was improved.
 - Change the form for student tests.
 - The response field type in studentTestQuestion is now a xml string (using xmlEncode and XMLDecode) instead of an integer.
+- Changed search order of Service Manager (local EJB -> remote EJB -> direct calls)
 
 BUG FIXES:
 ==========

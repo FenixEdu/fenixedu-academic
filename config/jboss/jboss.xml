@@ -8,8 +8,8 @@
 	<enterprise-beans>
 		<session>
 			<ejb-name>ServiceManager</ejb-name>
-			<jndi-name>ServidorAplicacao.ServiceManager</jndi-name>
-			<clustered>true</clustered>
+			<jndi-name>Fenix/ServidorAplicacao/ServiceManager</jndi-name>
+			<local-jndi-name>Fenix/ServidorAplicacao/ServiceManagerLocal</local-jndi-name>
 		</session>
 	</enterprise-beans>
 

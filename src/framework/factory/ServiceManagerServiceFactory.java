@@ -1,276 +1,404 @@
-/*
- * Created on Oct 17, 2003
- *  
- */
 package framework.factory;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.rmi.RemoteException;
 import java.util.Map;
 
 import ServidorAplicacao.IServiceManagerWrapper;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.ServiceManagerHome;
+import ServidorAplicacao.ServiceManagerLocalHome;
+import ServidorAplicacao.Servico.exceptions.FenixRemoteServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.logging.SystemInfo;
-import framework.delegate.DynamicServiceManagerEJBDelegate;
+import framework.ejb.EJBHomeFactory;
 
 /**
  * @author Luis Cruz
- *  
+ * @author José Pedro Pereira
+ * 
  */
 public class ServiceManagerServiceFactory
 {
 
-	public ServiceManagerServiceFactory()
+	private ServiceManagerServiceFactory()
 	{
 		super();
+		init();
 	}
 
-	public IServiceManagerWrapper createService()
-	{
-		Class[] serviceInterface = new Class[] { IServiceManagerWrapper.class };
-		IServiceManagerWrapper proxy =
-			(IServiceManagerWrapper) Proxy.newProxyInstance(
-				Thread.currentThread().getContextClassLoader(),
-				serviceInterface,
-				new DynamicServiceManagerEJBDelegate());
-		return proxy;
-	}
+	private static ServiceManagerServiceFactory instance = null;
 
-	public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
-		throws FenixServiceException
+	//só para sincronizar o acesso ao constructor desta factory - método
+	// getInstance
+	//criar um int[0] é mais rápido em geral que criar um Object... no entanto
+	//não pode ser um int, porque não podemos sincronizar em primitivos
+	private static int[] objectSynchCreateInstance = new int[0];
+
+	private static ServiceManagerServiceFactory getInstance()
 	{
-		Object[] methodArgs = { userView, serviceName, serviceArgs };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
+		synchronized (objectSynchCreateInstance)
 		{
-			if (methods[i].getName().equals("execute") && (methods[i].getParameterTypes().length == 3))
+			if (instance == null)
 			{
-				method = methods[i];
+				instance = new ServiceManagerServiceFactory();
+			}
+			
+			if (instance.service == null)
+			{
+				instance.init();
 			}
 		}
 
-		return execute(method, methodArgs);
+		return instance;
 	}
 
-	public static Map getServicesLogInfo(IUserView userView) throws FenixServiceException
+	private void init()
 	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
+		if (service != null)
 		{
-			if (methods[i].getName().equals("getMapServicesToWatch")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
+			System.out.println("*********************************************");
+			System.out
+					.println("ServiceManager instance allready resolved... No need to resolv it again");
+			System.out.println("*********************************************");
+			System.out.println("*********************************************");
+			return;
 		}
 
-		return (Map) execute(method, methodArgs);
-	}
-
-	public static Map getUsersLogInfo(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("getMapUsersToWatch")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		return (Map) execute(method, methodArgs);
-	}
-
-	public static Boolean serviceLoggingIsOn(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("serviceLoggingIsOn")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		return (Boolean) execute(method, methodArgs);
-	}
-
-	public static Boolean userLoggingIsOn(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("userLoggingIsOn")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		return (Boolean) execute(method, methodArgs);
-	}
-
-	public static SystemInfo getSystemInfo(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("getSystemInfo")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		return (SystemInfo) execute(method, methodArgs);
-	}
-
-	public static void turnServiceLoggingOn(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("turnServiceLoggingOn")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		execute(method, methodArgs);
-	}
-
-	public static void turnUserLoggingOn(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("turnUserLoggingOn")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		execute(method, methodArgs);
-	}
-
-	public static void turnServiceLoggingOff(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("turnServiceLoggingOff")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		execute(method, methodArgs);
-	}
-
-	public static void turnUserLoggingOff(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("turnUserLoggingOff")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		execute(method, methodArgs);
-	}
-
-	public static void clearServiceLogHistory(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("clearServiceLogHistory")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		execute(method, methodArgs);
-	}
-
-	public static void clearUserLogHistory(IUserView userView) throws FenixServiceException
-	{
-		Object[] methodArgs = { userView };
-		Method method = null;
-		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i++)
-		{
-			if (methods[i].getName().equals("clearUserLogHistory")
-				&& (methods[i].getParameterTypes().length == 1))
-			{
-				method = methods[i];
-			}
-		}
-
-		execute(method, methodArgs);
-	}
-
-	private static Object execute(Method method, Object[] methodArgs)
-	//private static Object execute(IUserView userView, String serviceName, Object[] serviceArgs)
-	throws FenixServiceException
-	{
-		IServiceManagerWrapper serviceManager = new ServiceManagerServiceFactory().createService();
-		DynamicServiceManagerEJBDelegate delegate = new DynamicServiceManagerEJBDelegate();
 		try
 		{
-			return delegate.invoke(serviceManager, method, methodArgs);
+			//get the local reference to the session bean
+			System.out.println("*********************************************");
+			System.out.println("Resolving ServiceManagerLocalHome");
+			System.out.println("*********************************************");
+			System.out.println("*********************************************");
+			ServiceManagerLocalHome serviceManagerLocalHome = (ServiceManagerLocalHome) EJBHomeFactory
+					.getInstance().lookupLocalHome(
+							"Fenix/ServidorAplicacao/ServiceManagerLocal",
+							ServiceManagerLocalHome.class);
+			System.out.println("*********************************************");
+			System.out.println("Using local ejb service manager calls.");
+			System.out.println("*********************************************");
+			System.out.println("*********************************************");
+			service = serviceManagerLocalHome.create();
 		}
-		catch (SecurityException e)
+		catch (Exception e)
 		{
-			//e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-		catch (NoSuchMethodException e)
-		{
-			//e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-		catch (Throwable e)
-		{
-			if (e instanceof FenixServiceException)
+
+			System.out.println("*********************************************");
+			System.out
+					.println("Couldn't find Local EJB... Resolving remote ServiceManagerHome");
+			System.out.println("*********************************************");
+			System.out.println("*********************************************");
+			
+			try
 			{
-				throw (FenixServiceException) e;
+				//get the remote reference to the session bean
+				ServiceManagerHome serviceManagerHome = (ServiceManagerHome) EJBHomeFactory
+						.getInstance().lookupHome(
+								"Fenix/ServidorAplicacao/ServiceManager",
+								ServiceManagerHome.class);
+				System.out
+						.println("*********************************************");
+				System.out.println("Using remote ejb service manager calls.");
+				System.out
+						.println("*********************************************");
+				System.out
+						.println("*********************************************");
+				service = serviceManagerHome.create();
 			}
-			else
+			catch (Exception e2)
 			{
-				throw new FenixServiceException(e);
+				System.out
+						.println("*********************************************");
+				e2.printStackTrace();
+				System.out
+						.println("*********************************************");
+				System.out
+						.println("*********************************************");
 			}
+		}
+
+		if (service == null)
+				try
+				{
+					System.out
+							.println("*********************************************");
+					System.out.println("No ejb's found - trying directly...");
+					System.out
+							.println("*********************************************");
+					System.out
+							.println("*********************************************");
+					Class serviceMagagerBeanClass = Class
+							.forName("ServidorAplicacao.ServiceManagerBean");
+					service = (IServiceManagerWrapper) serviceMagagerBeanClass
+							.getConstructor(null).newInstance(null);
+					System.out
+							.println("*********************************************");
+					System.out.println("Using local service manager calls.");
+					System.out
+							.println("*********************************************");
+					System.out
+							.println("*********************************************");
+				}
+				catch (Exception e1)
+				{
+					service = null;
+				}
+	}
+
+	private IServiceManagerWrapper service = null;
+
+	public static IServiceManagerWrapper createService()
+	{
+		return getInstance().createServiceDelegate();
+	}
+
+	public IServiceManagerWrapper createServiceDelegate()
+	{
+		return service;
+	}
+
+	public static Object executeService(IUserView userView, String serviceName,
+			Object[] serviceArgs) throws FenixServiceException
+	{
+		return getInstance().executeServiceDelegate(userView, serviceName,
+				serviceArgs);
+	}
+
+	private Object executeServiceDelegate(IUserView userView,
+			String serviceName, Object[] serviceArgs)
+			throws FenixServiceException
+	{
+		try
+		{
+			return service.execute(userView, serviceName, serviceArgs);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static Map getServicesLogInfo(IUserView userView)
+			throws FenixServiceException
+	{
+		return getInstance().getServicesLogInfoDelegate(userView);
+	}
+
+	private Map getServicesLogInfoDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			return service.getMapServicesToWatch(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+
+	}
+
+	public static Map getUsersLogInfo(IUserView userView)
+			throws FenixServiceException
+	{
+		return getInstance().getUsersLogInfoDelegate(userView);
+	}
+
+	private Map getUsersLogInfoDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			return service.getMapUsersToWatch(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static Boolean serviceLoggingIsOn(IUserView userView)
+			throws FenixServiceException
+	{
+		return getInstance().serviceLoggingIsOnDelegate(userView);
+	}
+
+	private Boolean serviceLoggingIsOnDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			return service.serviceLoggingIsOn(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static Boolean userLoggingIsOn(IUserView userView)
+			throws FenixServiceException
+	{
+		return getInstance().userLoggingIsOnDelegate(userView);
+	}
+
+	private Boolean userLoggingIsOnDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			return service.userLoggingIsOn(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static SystemInfo getSystemInfo(IUserView userView)
+			throws FenixServiceException
+	{
+		return getInstance().getSystemInfoDelegate(userView);
+	}
+
+	private SystemInfo getSystemInfoDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			return service.getSystemInfo(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+
+	}
+
+	public static void turnServiceLoggingOn(IUserView userView)
+			throws FenixServiceException
+	{
+		getInstance().turnServiceLoggingOnDelegate(userView);
+	}
+
+	private void turnServiceLoggingOnDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			service.turnServiceLoggingOn(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static void turnUserLoggingOn(IUserView userView)
+			throws FenixServiceException
+	{
+		getInstance().turnUserLoggingOnDelegate(userView);
+	}
+
+	private void turnUserLoggingOnDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			service.turnUserLoggingOn(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static void turnServiceLoggingOff(IUserView userView)
+			throws FenixServiceException
+	{
+		getInstance().turnServiceLoggingOffDelegate(userView);
+	}
+
+	private void turnServiceLoggingOffDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			service.turnServiceLoggingOff(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static void turnUserLoggingOff(IUserView userView)
+			throws FenixServiceException
+	{
+		getInstance().turnUserLoggingOffDelegate(userView);
+	}
+
+	private void turnUserLoggingOffDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			service.turnUserLoggingOff(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static void clearServiceLogHistory(IUserView userView)
+			throws FenixServiceException
+	{
+		getInstance().clearServiceLogHistoryDelegate(userView);
+	}
+
+	private void clearServiceLogHistoryDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			service.clearServiceLogHistory(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
+		}
+	}
+
+	public static void clearUserLogHistory(IUserView userView)
+			throws FenixServiceException
+	{
+		getInstance().clearUserLogHistoryDelegate(userView);
+	}
+
+	private void clearUserLogHistoryDelegate(IUserView userView)
+			throws FenixServiceException
+	{
+		try
+		{
+			service.clearUserLogHistory(userView);
+		}
+		catch (RemoteException e)
+		{
+			service = null;
+			throw new FenixRemoteServiceException(e);
 		}
 	}
 
