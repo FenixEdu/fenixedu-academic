@@ -17,7 +17,7 @@ import Util.EnrolmentEvaluationType;
 
 /**
  * @author Ângela
- *
+ *  
  */
 
 public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersistentEnrolmentEvaluation
@@ -57,7 +57,8 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         //		enrolmentEvaluationFromDB =
         //			(IEnrolmentEvaluation) this.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
         //				enrolmentEvaluationToWrite.getEnrolment(),
-        //				new EnrolmentEvaluationType(enrolmentEvaluationToWrite.getEnrolmentEvaluationType().getType()),
+        //				new
+		// EnrolmentEvaluationType(enrolmentEvaluationToWrite.getEnrolmentEvaluationType().getType()),
         //				enrolmentEvaluationToWrite.getGrade());
         // If Enrolment is not in database, then write it.
         if (enrolmentEvaluationFromDB == null)
@@ -196,7 +197,8 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         //		criteria.addEqualTo(
         //			"enrolment.studentCurricularPlan.student.degreeType",
         //			enrolment.getStudentCurricularPlan().getStudent().getDegreeType());
-        //		criteria.addEqualTo("enrolment.studentCurricularPlan.currentState", enrolment.getStudentCurricularPlan().getCurrentState());
+        //		criteria.addEqualTo("enrolment.studentCurricularPlan.currentState",
+		// enrolment.getStudentCurricularPlan().getCurrentState());
         //		criteria.addEqualTo(
         //			"enrolment.curricularCourseScope.curricularCourse.name",
         //			enrolment.getCurricularCourseScope().getCurricularCourse().getName());
@@ -227,7 +229,8 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         //		criteria.addEqualTo(
         //			"enrolment.curricularCourseScope.branch.degreeCurricularPlan.degree.sigla",
         //			enrolment.getCurricularCourseScope().getBranch().getDegreeCurricularPlan().getDegree().getSigla());
-        //		criteria.addEqualTo("enrolment.curricularCourseScope.branch.code", enrolment.getCurricularCourseScope().getBranch().getCode());
+        //		criteria.addEqualTo("enrolment.curricularCourseScope.branch.code",
+		// enrolment.getCurricularCourseScope().getBranch().getCode());
 
         List result = queryList(EnrolmentEvaluation.class, criteria);
         return result;
@@ -264,21 +267,23 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         }
     }
 
-	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
-		IEnrolment enrolment,
-		EnrolmentEvaluationType evaluationType,
-		String grade,
-		Date whenAltered)
-		throws ExcepcaoPersistencia {
+    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
+        IEnrolment enrolment,
+        EnrolmentEvaluationType evaluationType,
+        String grade,
+        Date whenAltered)
+        throws ExcepcaoPersistencia
+    {
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
-		criteria.addEqualTo("enrolmentEvaluationType", evaluationType.getType());
-		criteria.addEqualTo("grade", grade);
-		criteria.addEqualTo("when", whenAltered);
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolmentEvaluationType", evaluationType.getType());
+        criteria.addEqualTo("grade", grade);
+        criteria.addEqualTo("when", whenAltered);
 
-		IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+        IEnrolmentEvaluation evaluationsWithRepetition =
+            (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
 
-		return (IEnrolmentEvaluation) evaluationsWithRepetition;
-	}
+        return evaluationsWithRepetition;
+    }
 }

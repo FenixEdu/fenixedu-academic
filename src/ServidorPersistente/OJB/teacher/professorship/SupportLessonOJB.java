@@ -1,6 +1,6 @@
 /*
  * Created on Nov 23, 2003 by jpvl
- *
+ *  
  */
 package ServidorPersistente.OJB.teacher.professorship;
 
@@ -21,26 +21,30 @@ import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 public class SupportLessonOJB extends ObjectFenixOJB implements IPersistentSupportLesson
 {
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByProfessorship(Dominio.IProfessorship)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByProfessorship(Dominio.IProfessorship)
+	 */
     public List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyProfessorship", professorship.getIdInternal());
-        return (List) queryList(SupportLesson.class, criteria);
+        return queryList(SupportLesson.class, criteria);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByUnique(Dominio.ISupportLesson)
-     */
-    public ISupportLesson readByUnique(ISupportLesson supportLesson)  throws ExcepcaoPersistencia
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByUnique(Dominio.ISupportLesson)
+	 */
+    public ISupportLesson readByUnique(ISupportLesson supportLesson) throws ExcepcaoPersistencia
     {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyProfessorship", supportLesson.getProfessorship().getIdInternal());
-		criteria.addEqualTo("weekDay", supportLesson.getWeekDay());
-		criteria.addEqualTo("startTime", supportLesson.getStartTime());
-		criteria.addEqualTo("endTime", supportLesson.getEndTime());
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyProfessorship", supportLesson.getProfessorship().getIdInternal());
+        criteria.addEqualTo("weekDay", supportLesson.getWeekDay());
+        criteria.addEqualTo("startTime", supportLesson.getStartTime());
+        criteria.addEqualTo("endTime", supportLesson.getEndTime());
         return (ISupportLesson) queryObject(SupportLesson.class, criteria);
     }
 

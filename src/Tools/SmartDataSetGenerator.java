@@ -303,13 +303,11 @@ public class SmartDataSetGenerator
                 TableInfo element = (TableInfo) iter.next();
                 //System.out.println(element.toSql());
             }
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             System.out.println("Tip: Correct table " + tableNameInProcess + " foreign key conventions");
             e.printStackTrace();
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -346,8 +344,7 @@ public class SmartDataSetGenerator
             if (tableFkCorrections.containsKey(columnName))
             {
                 foreignKeyTableMap.put(columnName, tableFkCorrections.get(columnName));
-            }
-            else
+            } else
             {
                 Iterator conventionsIterator = this.conventions.iterator();
                 while (conventionsIterator.hasNext())
@@ -362,8 +359,7 @@ public class SmartDataSetGenerator
                             String tableName =
                                 columnName.substring(convention.length(), columnName.length());
                             foreignKeyTableMap.put(columnName, tableName);
-                        }
-                        else
+                        } else
                         {
                             //suffix convention
                             String tableName =
@@ -382,8 +378,7 @@ public class SmartDataSetGenerator
     {
         this.manyToManyTables = new ArrayList();
         this.manyToManyTablesValidReferences = new HashMap();
-        String manyToManyTablesPropertyValue =
-            (String) this.props.getProperty(MANY_TO_MANY_TABLES_PROPERTY);
+        String manyToManyTablesPropertyValue = this.props.getProperty(MANY_TO_MANY_TABLES_PROPERTY);
         StringTokenizer tokenizer = new StringTokenizer(manyToManyTablesPropertyValue, ",");
         while (tokenizer.hasMoreElements())
         {
@@ -473,23 +468,19 @@ public class SmartDataSetGenerator
             FlatXmlDataSet.write(dataset, fileWriter, "ISO-8859-1");
             fileWriter.close();
 
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
-        }
-        finally
+        } finally
         {
             if (con != null)
                 try
                 {
                     con.close();
-                }
-                catch (SQLException e2)
+                } catch (SQLException e2)
                 {
                     e2.printStackTrace();
                 }

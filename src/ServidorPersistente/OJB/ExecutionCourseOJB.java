@@ -124,8 +124,9 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer, Dominio.IExecutionPeriod, java.lang.String)
-     */
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer,
+	 *      Dominio.IExecutionPeriod, java.lang.String)
+	 */
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(
         Integer curricularYear,
         IExecutionPeriod executionPeriod,
@@ -154,8 +155,8 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
-     */
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
+	 */
     public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriod(
         String courseInitials,
         IExecutionPeriod executionPeriod)
@@ -233,9 +234,12 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         return queryList(ExecutionCourse.class, criteria);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriod(Dominio.IExecutionPeriod, Util.TipoCurso)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriod(Dominio.IExecutionPeriod,
+	 *      Util.TipoCurso)
+	 */
     public List readByExecutionPeriod(IExecutionPeriod executionPeriod, TipoCurso curso)
         throws ExcepcaoPersistencia
     {
@@ -245,9 +249,12 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         return queryList(ExecutionCourse.class, criteria);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(Dominio.IExecutionPeriod, Dominio.ICursoExecucao, Dominio.ICurricularYear, java.lang.String)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(Dominio.IExecutionPeriod,
+	 *      Dominio.ICursoExecucao, Dominio.ICurricularYear, java.lang.String)
+	 */
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
         IExecutionPeriod executionPeriod,
         ICursoExecucao executionDegree,
@@ -355,13 +362,17 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
 
     }
-	public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    public List readListbyCurricularCourseAndExecutionPeriod(
+        ICurricularCourse curricularCourse,
+        IExecutionPeriod executionPeriod)
+        throws ExcepcaoPersistencia
+    {
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
-		criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
-		
-		return (List) queryList(ExecutionCourse.class, criteria);
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
+        criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
 
-	}
+        return queryList(ExecutionCourse.class, criteria);
+
+    }
 }
