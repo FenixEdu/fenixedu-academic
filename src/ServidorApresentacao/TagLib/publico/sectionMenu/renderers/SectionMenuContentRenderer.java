@@ -61,7 +61,7 @@ public class SectionMenuContentRenderer
 			strBuffer.append(
 				"<a href=\""
 					+ path
-					+ "/viewSection.do?index="
+					+ "/viewSite.do?method=section&amp;index="
 					+ i
 					+ "&amp;exeCode="
 					+ getInfoSection()
@@ -96,7 +96,7 @@ public class SectionMenuContentRenderer
 
 			strBuffer.append(renderDepthIdent(getInfoSection()));
 			strBuffer.append(
-				"<a href=\"viewSection.do?index="
+				"<a href=\"viewSite.do?method=section&amp;index="
 					+ i
 					+ "&amp;exeCode="
 					+ getInfoSection()

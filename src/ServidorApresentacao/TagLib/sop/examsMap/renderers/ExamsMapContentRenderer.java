@@ -70,10 +70,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 						strBuffer.append(
 							"<font color='red'>" + courseInitials + "</font>");
 					}
-
+					
 				} else if (typeUser.equals("public")) {
 					strBuffer.append(
-						"<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode="
+						"<a href='viewSite.do?method=firstPage&amp;exeCode="
 							+ infoExecutionCourse.getSigla()
 							+ "&amp;ePName="+infoExecutionCourse.getInfoExecutionPeriod().getName()
 							+ "&amp;eYName="+infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear()

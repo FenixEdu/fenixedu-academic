@@ -18,7 +18,7 @@ public class ClassTimeTableLessonContentRenderer
 		StringBuffer strBuffer = new StringBuffer();
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 		InfoExecutionCourse infoExecutionCourse = lesson.getInfoDisciplinaExecucao();
-		strBuffer.append("<a class='timetable' href='siteViewer.do?method=executionCourseViewer&amp;exeCode=");
+		strBuffer.append("<a class='timetable' href='viewSite.do?method=firstPage&amp;exeCode=");
 		strBuffer.append(infoExecutionCourse.getSigla());
 		strBuffer.append("&amp;ePName=").append(infoExecutionCourse.getInfoExecutionPeriod().getName());
 		strBuffer.append("&amp;eYName=").append(infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
