@@ -1,4 +1,3 @@
-
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -8,13 +7,14 @@
 
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
+	
 	<logic:empty name="component" property="infoSiteStudentsAndGroupsList">
 	<h2><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></h2>
 	</logic:empty> 
 
 	<logic:notEmpty name="component" property="infoSiteStudentsAndGroupsList">
 	
-	<table align="center" width="85%" cellspacing='1' cellpadding='1'>
+	<table class="tab_complex" width="70%" cellspacing="1" cellpadding="2">
 	
 	<logic:equal name="ShiftChosenType" value="1">
 	<h2><bean:message key="title.viewStudentsAndGroupsByShift"/></h2>
@@ -28,9 +28,6 @@
 	<h2><bean:message key="title.viewAllStudentsAndGroups"/></h2>
 	</logic:equal>
 	
-	
-	<br/>	
-	<br>
 	
  	<bean:size id="count" name="component" property="infoSiteStudentsAndGroupsList"/>
  	
@@ -50,11 +47,11 @@
 	<br/>
 	
 	<tr>
-		<td class="listClasses-header" width="10%"><bean:message key="label.studentGroupNumber" />
-		</td>
-		<td class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
-		</td>
-		<td class="listClasses-header" width="53%"><bean:message key="label.nameWord" />
+		<th><bean:message key="label.studentGroupNumber" /></th>
+
+		<th><bean:message key="label.number.abbr" /></th>
+		
+		<th><bean:message key="label.nameWord" /></th>
 		
 	</tr>
 			
@@ -64,34 +61,24 @@
 		<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>
 		
 		<tr>		
-			<td class="listClasses"><bean:write name="infoStudentGroup" property="groupNumber"/>
-			</td>
+			<td><bean:write name="infoStudentGroup" property="groupNumber"/></td>
 			
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
-			</td>	
+			<td><bean:write name="infoSiteStudentInformation" property="number"/></td>	
 			
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
-			</td>		
-			
+			<td><bean:write name="infoSiteStudentInformation" property="name"/></td>		
 			
 		</tr>				
 	 </logic:iterate>
-
 
 </table>
 
 <br/>
 <br/>
 	 
-
-	
-
 </logic:notEmpty> 
 
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">
-<h2>
-<bean:message key="message.infoSiteStudentsAndGroupsList.not.available" />
-</h2>
+<h2><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></h2>
 </logic:notPresent>

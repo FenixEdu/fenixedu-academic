@@ -28,6 +28,7 @@ import DataBeans.InfoSiteStudentsAndGroups;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentGroupAttendWithAllUntilPersons;
+import DataBeans.InfoStudentGroupWithoutShift;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.GroupProperties;
@@ -878,7 +879,7 @@ public class GroupSiteComponentBuilder {
             IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
                     StudentGroup.class, studentGroupCode);
             
-            infoStudentGroup = Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup);
+            infoStudentGroup = InfoStudentGroupWithoutShift.newInfoFromDomain(studentGroup);
             
     		} catch (ExcepcaoPersistencia ex) {
     			ex.printStackTrace();
