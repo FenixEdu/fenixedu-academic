@@ -5,6 +5,7 @@ import java.util.List;
 
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
+import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author dcs-rjao
@@ -44,4 +45,13 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 	public void setDescription(String description);
 	public void setDescriptionEn(String descriptionEn);
 	public void setEnrollmentStrategyClassName(String enrollmentStrategyClassName);
+
+	// -------------------------------------------------------------
+	// BEGIN: Only for enrollment purposes
+	// -------------------------------------------------------------
+	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType);
+	public List getCommonBranchCourses();
+	// -------------------------------------------------------------
+	// END: Only for enrollment purposes
+	// -------------------------------------------------------------
 }

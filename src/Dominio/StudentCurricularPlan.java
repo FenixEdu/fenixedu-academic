@@ -388,8 +388,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
 	{
-		// To be delegated to DegreeCurricularPlan.
-		return null;
+		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(enrollmentRuleType);
 	}
 	
 	public List getStudentApprovedEnrollments()
@@ -428,8 +427,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 	public List getCommonBranchCourses()
 	{
-		// To be delegated to DegreeCurricularPlan.
-		return null;
+		return this.getDegreeCurricularPlan().getCommonBranchCourses();
 	}
 
 	public List getStudentBranchesCourses()

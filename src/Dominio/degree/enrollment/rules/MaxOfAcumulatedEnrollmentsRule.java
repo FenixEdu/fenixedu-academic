@@ -34,8 +34,9 @@ public class MaxOfAcumulatedEnrollmentsRule implements IEnrollmentRule {
 
             public Object transform(Object obj) {
                 ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
-                String key = curricularCourse.getCode() + curricularCourse.getName() + curricularCourse.getDegreeCurricularPlan().getName()
-                        + curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+                String key = curricularCourse.getCode() + curricularCourse.getName()
+					+ curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
+					+ curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
                 return (key);
             }
         });
@@ -95,8 +96,10 @@ public class MaxOfAcumulatedEnrollmentsRule implements IEnrollmentRule {
      * @return Integer
      */
     private Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse) {
-        String key = curricularCourse.getCode() + curricularCourse.getName() + curricularCourse.getDegreeCurricularPlan().getName()
-                + curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+
+        String key = curricularCourse.getCode() + curricularCourse.getName()
+			+ curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
+			+ curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
 
         Integer curricularCourseAcumulatedEnrolments = (Integer) acumulatedEnrollments.get(key);
 

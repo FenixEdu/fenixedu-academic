@@ -3,8 +3,10 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.degree.enrollment.rules.EnrollmentRulesFactory;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
+import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author dcs-rjao
@@ -287,5 +289,23 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	{
 		this.enrollmentStrategyClassName = enrollmentStrategyClassName;
 	}
+
+	// -------------------------------------------------------------
+	// BEGIN: Only for enrollment purposes
+	// -------------------------------------------------------------
+
+	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
+	{
+		return EnrollmentRulesFactory.getInstance().getListOfEnrollmentRules(this, enrollmentRuleType);
+	}
+
+	public List getCommonBranchCourses()
+	{
+		return null;
+	}
+
+	// -------------------------------------------------------------
+	// END: Only for enrollment purposes
+	// -------------------------------------------------------------
 
 }
