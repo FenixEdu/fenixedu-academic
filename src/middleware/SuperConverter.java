@@ -84,15 +84,15 @@ public static void main(String args[]) throws Exception{
 		
 	
 	// Converter Pessoas de Pos Graduacao em Persons
-	superConverter.migratePosgradPessoa2Fenix();
+//	superConverter.migratePosgradPessoa2Fenix();
 	
 	
 	// Converter Alunos de Pos Graduacao em Students 
-	superConverter.migratePosgradAluno2Fenix();
+//	superConverter.migratePosgradAluno2Fenix();
 	
 	
 	// Converte Areas Cientificas
-//	superConverter.migratePosgradAreaCientifica2FenixBrach();
+	superConverter.migratePosgradAreaCientifica2FenixBrach();
 	
 	
 	// Converte Disciplinas
@@ -104,8 +104,70 @@ public static void main(String args[]) throws Exception{
 	// Inscricoes de Alunos em Areas Cientificas
 	
 	
+//	superConverter.updatePasswords();
+//	superConverter.updateGraduationStudentsUsernames();
 	
 	}
+
+
+	public void updatePasswords() throws Exception{
+		List result = null;
+		Query query = null;
+		Criteria criteria = null;
+		QueryByCriteria queryByCriteria = null;
+		IPessoa person = null;
+		try {
+			System.out.print("Reading Persons ...");
+			List persons = getFenixPersons();
+			System.out.println("  Done !");
+			
+			System.out.println("Updating " + persons.size() + " Passwords ...");
+			Iterator iterator = persons.iterator();
+			while(iterator.hasNext()){
+				person = (IPessoa) iterator.next();
+
+				person.setPassword(PasswordEncryptor.encryptPassword(person.getNumeroDocumentoIdentificacao()));
+
+				broker.store(person);
+				
+			}
+			System.out.println("  Done !");
+
+		} catch (Exception e){
+			System.out.println();
+			throw new Exception("Error Updating " + person.getNome() , e);
+		}
+	}
+	
+	
+	public void updateGraduationStudentsUsernames() throws Exception{
+		List result = null;
+		Query query = null;
+		Criteria criteria = null;
+		QueryByCriteria queryByCriteria = null;
+		IStudent student = null;
+		try {
+			System.out.print("Reading Students ...");
+			List students = getFenixStudents();
+			System.out.println("  Done !");
+		
+			System.out.println("Updating " + students.size() + " Usernames ...");
+			Iterator iterator = students.iterator();
+			while(iterator.hasNext()){
+				student = (IStudent) iterator.next();
+
+				student.getPerson().setUsername("L" + student.getNumber());
+				broker.store(student.getPerson());
+			}
+			System.out.println("  Done !");
+
+		} catch (Exception e){
+			System.out.println();
+			throw new Exception("Error Updating " + student.getPerson().getNome() , e);
+		}
+	}
+
+
 
 	public void migratePosgradAreaCientifica2FenixBrach() throws Exception{
 		IBranch branch2Write = null;
@@ -124,19 +186,72 @@ public static void main(String args[]) throws Exception{
 			while(iterator.hasNext()){
 				areaCientifica = (Posgrad_area_cientifica) iterator.next();
 				
+				// Delete unwanted Courses
+				if (areaCientifica.getNome().equals("DISCIPLINAS DE ESCOLHA LIVRE") ||
+					areaCientifica.getNome().equals("DISCIPLINAS PROPEDÊUTICAS") ||
+					(areaCientifica.getCodigocursomestrado() == 15) ||
+					(areaCientifica.getCodigocursomestrado() == 31) ||
+					(areaCientifica.getCodigocursomestrado() == 50)) {
+						continue;
+				}
 				branch2Write = new Branch();
 				branch2Write.setName(areaCientifica.getNome());
 				
+				// Read Corresponding Posgrad Degree
+				criteria = new Criteria();
+				criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(areaCientifica.getCodigocursomestrado())));
+				query = new QueryByCriteria(Posgrad_curso_mestrado.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);
+				
+				if (result.size() != 1) {
+					throw new Exception("Error Reading PosGrad-Curso Mestrado [" + result.size() + "]");
+				}
+				Posgrad_curso_mestrado posgrad_curso_mestrado = (Posgrad_curso_mestrado) result.get(0);
+				
+				
+				// Read Fenix Degree
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("name", posgrad_curso_mestrado.getNomemestrado());
+				criteria.addEqualTo("tipoCurso", new TipoCurso(TipoCurso.MESTRADO));
+				query = new QueryByCriteria(Curso.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);
+
+				if (result.size() != 1) {
+					throw new Exception("Error Reading Fenix Degree [" + result.size() + "]");
+				}
+				
+				Curso degree = (Curso) result.get(0); 
+				
+				// Read Fenix Degree Curricular Plan
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("degreeKey", degree.getIdInternal());
+				query = new QueryByCriteria(DegreeCurricularPlan.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);
+
+				if (result.size() != 1) {
+					throw new Exception("Error Reading Fenix Degree Curricular Plan");
+				}
+				
+				DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0); 
+								
+				branch2Write.setDegreeCurricularPlan(degreeCurricularPlan);					
+
 				int numOfChars = 1;
 				
 				// Check if Branch Exists
 				
 				boolean writableBranch = false;
 				while(writableBranch == false){
+
+					// Check if Branch Exists				
+										
 					criteria = new Criteria();
 					branch2Write.setCode(generateCode(areaCientifica.getNome(), ++numOfChars));
 					criteria.addEqualTo("name", branch2Write.getName());
 					criteria.addEqualTo("code", branch2Write.getCode());
+					criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
 					query = new QueryByCriteria(Branch.class,criteria);
 					result = (List) broker.getCollectionByQuery(query);
 
@@ -144,7 +259,6 @@ public static void main(String args[]) throws Exception{
 						writableBranch = true;
 				}
 				broker.store(branch2Write);
-				
 			}
 			System.out.println("  Done !");
 
@@ -861,8 +975,8 @@ public static void main(String args[]) throws Exception{
 
 	public List getAreasCientificas() throws Exception {
 		Criteria criteria = new Criteria();
+		criteria.addEqualTo("anoLectivo", "2002/2003");
 		QueryByCriteria query = new QueryByCriteria(Posgrad_area_cientifica.class, criteria);
-		query.addGroupBy("nome");
 		return (List) broker.getCollectionByQuery(query);
 	}
 
@@ -921,6 +1035,19 @@ public static void main(String args[]) throws Exception{
 		Query query = new QueryByCriteria(Posgrad_pessoa.class,criteria);
 		return (List) broker.getCollectionByQuery(query);
 	}
+	
+	public List getFenixPersons() throws Exception {
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Pessoa.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
+	}
+
+	public List getFenixStudents() throws Exception {
+		Criteria criteria = new Criteria();
+		Query query = new QueryByCriteria(Student.class,criteria);
+		return (List) broker.getCollectionByQuery(query);
+	}
+
 	
 	public ICountry convertCountry(String countryCode) throws ExcepcaoPersistencia {
 
