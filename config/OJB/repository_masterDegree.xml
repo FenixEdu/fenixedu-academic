@@ -568,12 +568,6 @@
            primarykey="true"
            autoincrement="true"
         />
-
-        <field-descriptor
-           name="year"
-           column="YEAR"
-           jdbc-type="INTEGER"
-         />
  
          <field-descriptor
             name="mark"
@@ -599,18 +593,52 @@
             name="personKey"
             column="KEY_PERSON"
             jdbc-type="INTEGER"
+         />         
+        <field-descriptor 
+            name="date"
+            column="DATE"
+            jdbc-type="DATE"
          />
+		<field-descriptor 
+            name="branch"
+            column="BRANCH"
+            jdbc-type="VARCHAR"
+         />
+		<field-descriptor 
+            name="specializationArea"
+            column="SPECIALIZATION_AREA"
+            jdbc-type="VARCHAR"
+         />
+		<field-descriptor 
+            name="degreeRecognition"
+            column="DEGREE_RECOGNITION"
+            jdbc-type="VARCHAR"
+         />
+		<field-descriptor 
+            name="equivalenceDate"
+            column="EQUIVALENCE_DATE"
+            jdbc-type="DATE"
+         />
+		<field-descriptor 
+            name="equivalenceSchool"
+            column="EQUIVALENCE_SCHOOL"
+            jdbc-type="VARCHAR"
+         />
+		<field-descriptor 
+            name="countryKey"
+            column="KEY_COUNTRY"
+            jdbc-type="INTEGER"
+         /> 
          <field-descriptor name="lastModificationDate" 
     				  column="LAST_MODIFICATION_DATE" 
     				  jdbc-type="TIMESTAMP"
     				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-
+	     <field-descriptor
+			  name="ackOptLock"
+			  column="ACK_OPT_LOCK"
+			  jdbc-type="INTEGER"
+			  locking="true"
+		  />
 	   <reference-descriptor
          	name="person"
          	class-ref="Dominio.Pessoa"
@@ -619,8 +647,14 @@
       	  >
           <foreignkey field-ref="personKey"/>
       </reference-descriptor>
-
- 
+	   <reference-descriptor
+         	name="country"
+         	class-ref="Dominio.Country"
+         	proxy="true"
+			refresh="true"
+      	  >
+          <foreignkey field-ref="countryKey"/>
+      </reference-descriptor> 
   </class-descriptor>
  
  
