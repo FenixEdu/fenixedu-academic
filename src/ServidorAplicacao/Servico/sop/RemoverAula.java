@@ -19,6 +19,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class RemoverAula implements IServico {
 
+// FIXME : O serviço nao devolve False quando a aula nao existe!...
+
   private static RemoverAula _servico = new RemoverAula();
   /**
    * The singleton access method of this class.

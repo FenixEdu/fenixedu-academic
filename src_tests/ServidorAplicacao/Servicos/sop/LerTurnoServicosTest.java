@@ -21,7 +21,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -29,7 +29,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurnoServicosTest extends TestCaseServicosWithAuthorization {
+public class LerTurnoServicosTest extends TestCaseReadServices {
 	private InfoExecutionCourse infoExecutionCourse = null;
 
 
@@ -60,43 +60,35 @@ public class LerTurnoServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 
-	public void testReadExistingTurno() {
-	
-		this.ligarSuportePersistente(true);
-
-		Object argsLerTurno[] = new Object[1];
-		argsLerTurno[0] = new ShiftKey("turno1", this.infoExecutionCourse);
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurno);
-			InfoShift infoShift = (InfoShift) result;
-			assertEquals(infoShift.getNome(), "turno1");
-
-			
-		} catch (Exception ex) {
-			fail("testReadExistingTurno" + ex);
-		}
+	protected int getNumberOfItemsToRetrieve(){
+		return 0;
 	}
+	protected Object getObjectToCompare(){
+		InfoShift infoShift = new InfoShift();
+		infoShift.setNome("turno1");
+		return infoShift;
+	}
+	
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-	public void testReadUnexistingTurno() {
+		this.ligarSuportePersistente(true);
+		
+		Object argsLerTurmas[] = {new ShiftKey("turno1", this.infoExecutionCourse)}; 
+
+		return argsLerTurmas;
+	}
+	
+
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this.ligarSuportePersistente(false);
+		
+		Object argsLerTurmas[] = {new ShiftKey("turno1", this.infoExecutionCourse)}; 
 
-		Object argsLerTurno[] = new Object[1];
-		argsLerTurno[0] = new ShiftKey("shift", this.infoExecutionCourse);
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurno);
-			assertNull("testReadUnexistingTurno", result);
-		} catch (Exception ex) {
-			fail("testReadExistingTurno");
-		}
+		return argsLerTurmas;
 	}
-	
-	
-	
+
+
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

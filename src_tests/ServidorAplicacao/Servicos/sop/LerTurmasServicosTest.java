@@ -11,21 +11,34 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
-import DataBeans.InfoClass;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import DataBeans.util.Cloner;
+import Dominio.CursoExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
+import Dominio.ICurso;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.IPlanoCurricularCurso;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurmasServicosTest extends TestCaseServicos {
+public class LerTurmasServicosTest extends TestCaseReadServices {
+	private InfoExecutionDegree infoExecutionDegree = null;
+	private InfoExecutionPeriod infoExecutionPeriod = null;
+
+
 	public LerTurmasServicosTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -47,111 +60,99 @@ public class LerTurmasServicosTest extends TestCaseServicos {
 	protected void tearDown() {
 		super.tearDown();
 	}
-
-	// read turmas by unauthorized user
-	public void testUnauthorizedReadTurmas() {
-		Object argsLerTurmas[] = new Object[1];
-		InfoDegree iL =
-			new InfoDegree(
-				_turma1.getLicenciatura().getSigla(),
-				_turma1.getLicenciatura().getNome());
-		InfoExecutionYear infoExecutionYear =
-			new InfoExecutionYear("2002/2003");
-		InfoExecutionPeriod infoExecutionPeriod =
-			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			new InfoDegreeCurricularPlan("plano1", iL);
-		InfoExecutionDegree iLE =
-			new InfoExecutionDegree(
-				infoDegreeCurricularPlan,
-				infoExecutionYear);
-		argsLerTurmas[0] =
-			new CurricularYearAndSemesterAndInfoExecutionDegree(
-				new Integer(1),
-				_turma1.getSemestre(),
-				iLE);
-		Object result = null;
-
-		try {
-			result = _gestor.executar(_userView2, "LerTurmas", argsLerTurmas);
-			fail("testUnauthorizedReadTurmas");
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedReadTurmas", result);
-		}
+	
+	protected String getNameOfServiceToBeTested() {
+		return "LerTurmas";
 	}
+	
 
-	public void testReadAll() {
-		Object argsLerTurmas[] = new Object[1];
-		InfoDegree iL =
-			new InfoDegree(
-				_turma1.getLicenciatura().getSigla(),
-				_turma1.getLicenciatura().getNome());
+	protected int getNumberOfItemsToRetrieve(){
+		return 4;
+	}
+	protected Object getObjectToCompare(){
+		return null;
+	}
+	
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		InfoExecutionYear infoExecutionYear =
-			new InfoExecutionYear("2002/2003");
-		InfoExecutionPeriod infoExecutionPeriod =
-			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			new InfoDegreeCurricularPlan("plano1", iL);
-		InfoExecutionDegree iLE =
-			new InfoExecutionDegree(
-				infoDegreeCurricularPlan,
-				infoExecutionYear);
+		this.ligarSuportePersistente(true);
 		
-		argsLerTurmas[0] =
-			new CurricularYearAndSemesterAndInfoExecutionDegree(
-				new Integer(1),
-				_turma1.getSemestre(),
-				iLE);
-		InfoClass infoturma1 =
-			new InfoClass(
-				_turma1.getNome(),
-				_turma1.getAnoCurricular(),
-				iLE,
-				infoExecutionPeriod);
-		Object result = null;
+		Object argsLerTurmas[] = {this.infoExecutionDegree, this.infoExecutionPeriod, new Integer(1)} ;
 
-		// Nao ha turmas na BD
+		return argsLerTurmas;
+	}
+	
+
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this.ligarSuportePersistente(false);
+		
+		Object argsLerTurmas[] = {this.infoExecutionDegree, this.infoExecutionPeriod, new Integer(1)} ;
+
+		return argsLerTurmas;
+	}
+	
+	
+	private void ligarSuportePersistente(boolean existing) {
+
+		ISuportePersistente sp = null;
+
 		try {
-			_suportePersistente.iniciarTransaccao();
-			_turmaPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
+			sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+
+
+
+			ICursoPersistente persistentDegree = sp.getICursoPersistente();
+			ICurso degree = persistentDegree.readBySigla("LEIC");
+			assertNotNull(degree);
+		
+			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+
+			IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = sp.getIPlanoCurricularCursoPersistente();
+			IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			assertNotNull(degreeCurricularPlan);
+
+			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod executionPeriod = null;
+
+			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+			ICursoExecucao executionDegree = null;
+			
+			
+
+			if(existing) {
+				
+				executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+				assertNotNull(executionDegree);
+				
+				executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+				assertNotNull(executionPeriod); 
+
+			} else {
+
+				executionYear = new ExecutionYear("desc");
+				executionDegree = new CursoExecucao(executionYear, degreeCurricularPlan);
+				
+				executionPeriod = new ExecutionPeriod("desc", executionYear);
+			}
+			
+			this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+			this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+
+			sp.confirmarTransaccao();
+
 		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
-		}
-
-		try {
-			result = _gestor.executar(_userView, "LerTurmas", argsLerTurmas);
-			assertEquals(
-				"testReadAll: nao ha turmas para ler",
-				0,
-				((List) result).size());
-		} catch (Exception ex) {
-			fail("testReadAll: nao ha turmas para ler");
-		}
-
-		// Ha 2 turmas na BD
-		try {
-			_suportePersistente.iniciarTransaccao();
-			_turmaPersistente.lockWrite(_turma1);
-			//_turmaPersistente.lockWrite(_turma2);
-			_suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
-		}
-
-		try {
-			result = _gestor.executar(_userView, "LerTurmas", argsLerTurmas);
-			assertEquals(
-				"testReadAll: ha 1 turmas para ler",
-				((List) result).size(),
-				1);
-			assertTrue(
-				"testReadAll: turma lida e _turma1",
-				((List) result).contains(infoturma1));
-		} catch (Exception ex) {
-			fail("testReadAll");
+			try {
+				sp.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("ligarSuportePersistente: cancelarTransaccao");
+			}
+			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
+
 
 }

@@ -26,7 +26,7 @@ import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turma;
 import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -40,7 +40,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class RemoverTurnoServicosTest extends TestCaseNeedAuthorizationServices {
+public class RemoverTurnoServicosTest extends TestCaseDeleteServices {
 	private InfoClass infoClass = null;
 	private InfoShift infoShift = null;
 
@@ -71,33 +71,23 @@ public class RemoverTurnoServicosTest extends TestCaseNeedAuthorizationServices 
 		return "RemoverTurno";
 	}
 
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-	public void testRemoveExistingShift() {
 		this.ligarSuportePersistente(true);
 		
 		Object argsRemoverTurno[] = {this.infoShift, this.infoClass} ;
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoverTurno);
-			assertEquals("testRemoverTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testRemoverTurno");
-		}
+		return argsRemoverTurno;
 	}
+	
 
-	public void testRemoveNonExistingShift() {
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
 		this.ligarSuportePersistente(false);
 		
 		Object argsRemoverTurno[] = {this.infoShift, this.infoClass} ;
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoverTurno);
-			assertEquals("testRemoverTurno", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testRemoverTurno");
-		}
+		return argsRemoverTurno;
 	}
 
 

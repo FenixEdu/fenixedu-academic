@@ -11,9 +11,6 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
@@ -27,7 +24,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -37,7 +34,7 @@ import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurnosDeTurmaServicosTest extends TestCaseServicosWithAuthorization {
+public class LerTurnosDeTurmaServicosTest extends TestCaseReadServices {
 
 	private InfoExecutionDegree infoExecutionDegree = null;
 	private InfoExecutionPeriod infoExecutionPeriod = null;
@@ -69,36 +66,31 @@ public class LerTurnosDeTurmaServicosTest extends TestCaseServicosWithAuthorizat
 		return "LerTurnosDeTurma";
 	}
 
-	// read turmas by unauthorized user
-	public void testReadExistingTurnosDeTurma() {
-		
+	protected int getNumberOfItemsToRetrieve(){
+		return 1;
+	}
+	protected Object getObjectToCompare(){
+		return null;
+	}
+	
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
 		this.ligarSuportePersistente(true);
 		
 		Object argsLerTurnosDeTurma[] = {"10501", this.infoExecutionDegree, this.infoExecutionPeriod};
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurnosDeTurma);
-			assertEquals(((ArrayList) result).size(), 1);
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedReadTurnosDeTurma", result);
-		}
+		return argsLerTurnosDeTurma;
 	}
+	
 
-	public void testReadNonExistingTurnosDeTurma() {
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
 		this.ligarSuportePersistente(false);
 		
-		Object argsLerTurnosDeTurma[] = {"turma1", this.infoExecutionDegree, this.infoExecutionPeriod};
+		Object argsLerTurnosDeTurma[] = {"10501", this.infoExecutionDegree, this.infoExecutionPeriod};
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurnosDeTurma);
-			assertTrue("testReadExistingTurnosDeTurma",	((List) result).isEmpty());
-		} catch (Exception ex) {
-			fail("testReadExistingTurnosDeTurma");
-		}
+		return argsLerTurnosDeTurma;
 	}
-
 
 	private void ligarSuportePersistente(boolean existing) {
 

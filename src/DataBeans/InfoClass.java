@@ -76,9 +76,8 @@ public class InfoClass implements Serializable {
 			InfoClass infoTurma = (InfoClass) obj;
 			resultado =
 				getNome().equals(infoTurma.getNome())
-					&& getInfoLicenciatura().equals(
-						infoTurma.getInfoLicenciatura())
-					&& getSemestre().equals(infoTurma.getSemestre());
+					&& getInfoExecutionPeriod().equals(infoTurma.getInfoExecutionPeriod())
+					&& getInfoExecutionDegree().equals(infoTurma.getInfoExecutionDegree());
 		}
 		return resultado;
 	}

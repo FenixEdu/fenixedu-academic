@@ -11,8 +11,6 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -21,7 +19,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -29,7 +27,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseServicosWithAuthorization {
+public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseReadServices {
 
 	private InfoExecutionCourse infoExecutionCourse = null;
 
@@ -60,38 +58,31 @@ public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseServicosW
 	  return "LerTurnosDeDisciplinaExecucao";
   }
 
-  
-
-  public void testReadExistingTurnos() {
-
-	this.ligarSuportePersistente(true);
-		
-	Object argsLerTurnos[] = {this.infoExecutionCourse} ;
-
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurnos);
-        assertEquals("testLerExistingTurnos", 10, ((List) result).size());
-      } catch (Exception ex) {
-      	fail("testLerExistingTurnos");
-      }
+  protected int getNumberOfItemsToRetrieve(){
+	  return 10;
   }
-
-  // read new non-existing turnos
-  public void testReadNonExistingTurnos() {
-	this.ligarSuportePersistente(false);
-		
-	Object argsLerTurnos[] = {this.infoExecutionCourse} ;
-
-	Object result = null; 
-	  try {
-		result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerTurnos);
-		assertTrue("testLerExistingTurnos", ((List) result).isEmpty());
-	  } catch (Exception ex) {
-		fail("testLerExistingTurnos");
-	  }
+  protected Object getObjectToCompare(){
+	  return null;
   }
+	
+  protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
+	  this.ligarSuportePersistente(true);
+		
+	  Object argsLerTurnos[] = {this.infoExecutionCourse} ;
+
+	  return argsLerTurnos;
+  }
+	
+
+  protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+	  this.ligarSuportePersistente(false);
+		
+	  Object argsLerTurnos[] = {this.infoExecutionCourse} ;
+
+	  return argsLerTurnos;
+  }
 
   private void ligarSuportePersistente(boolean existing) {
 

@@ -20,21 +20,25 @@ import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
+import Dominio.ICurso;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionYear;
 import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
 import Util.TipoAula;
 
-public class RemoverAulaServicosTest extends TestCaseServicosWithAuthorization {
+public class RemoverAulaServicosTest extends TestCaseNeedAuthorizationServices {
 	private InfoLesson infoLesson = null;
 	private InfoShift infoShift = null;
 
@@ -63,6 +67,10 @@ public class RemoverAulaServicosTest extends TestCaseServicosWithAuthorization {
 
 	protected String getNameOfServiceToBeTested() {
 		return "RemoverAula";
+	}
+
+	protected boolean needsAuthorization() {
+		return true;
 	}
 
 
@@ -102,6 +110,16 @@ public class RemoverAulaServicosTest extends TestCaseServicosWithAuthorization {
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
+
+			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+			
+			ICursoPersistente persistentDegree = sp.getICursoPersistente();
+			ICurso degree = persistentDegree.readBySigla("LEIC");
+			assertNotNull(degree);
+			
+
 
 			DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
     
