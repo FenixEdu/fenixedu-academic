@@ -13,6 +13,8 @@ package ServidorPersistente.OJB;
  * @author lmac1
  */
 
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.IDisciplinaExecucao;
@@ -63,10 +65,9 @@ public class SectionOJBTest extends TestCaseOJB {
 	super.tearDown();
   }
   
-  /** Test of readBySiteAndSectionAndName() method, of class ServidorPersistente.OJB.SectionOJB.*/
-
-  
-  
+	/** 
+	 * Test of readBySiteAndSectionAndName() method, of class ServidorPersistente.OJB.SectionOJB.
+	 */
     public void testReadBySiteAndSectionAndName() {
 	
 	ISection section = null;
@@ -196,21 +197,27 @@ public class SectionOJBTest extends TestCaseOJB {
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testreadBySiteAndSectionAndName:fail read unexisting section");
 	}
-	
-
-
-
-
-
-
 }
-
-
-
-}
-
-//Calendar calendar = Calendar.getInstance();
-//calendar.set(Calendar.DAY_OF_MONTH,22);
-//calendar.set(Calendar.MONTH,Calendar.JANUARY);
-//calendar.set(Calendar.YEAR,2003);
 	
+	public void testReadBySite() {
+
+		List result = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+			assertNotNull(executionCourse);
+	    
+			ISite site = persistentSite.readByExecutionCourse(executionCourse);
+			assertNotNull(site);
+			
+			result = persistentSection.readBySite(site);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadBySite: readBySite:" + excepcaoPersistencia);
+		}
+		assertNotNull(result);
+		assertEquals(result.isEmpty(), false);
+	}
+	
+}

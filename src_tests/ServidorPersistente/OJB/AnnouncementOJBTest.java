@@ -121,8 +121,6 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		Date date = calendar.getTime();
 
 		announcement = new Announcement("newTitle", date, date, "newInformation", this.site);
-		System.out.println(announcement);
-		System.out.println(this.site);
 
         try {
         	persistentSupport.iniciarTransaccao();
@@ -273,7 +271,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 			result = persistentAnnouncement.readAnnouncementsBySite(this.site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testLockWrite: readAnnouncementsBySite: " + excepcaoPersistencia);	
+			fail("testReadAnnouncementsBySite: readAnnouncementsBySite: " + excepcaoPersistencia);	
 		}
 		assertNotNull(result);
 		assertEquals(result.isEmpty(), false);        
