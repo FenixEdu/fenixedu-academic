@@ -14,9 +14,9 @@ public class EntryPhase {
 
     public static final int SECOND_PHASE = 2;
 
-    public static final String FIRST_PHASE_STRING = "Licenciatura";
+    public static final String FIRST_PHASE_STRING = "1ª Fase";
 
-    public static final String SECOND_PHASE_STRING = "Mestrado";
+    public static final String SECOND_PHASE_STRING = "2ª Fase";
 
     public static final EntryPhase FIRST_PHASE_OBJ = new EntryPhase(
             EntryPhase.FIRST_PHASE);

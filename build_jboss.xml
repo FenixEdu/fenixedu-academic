@@ -125,7 +125,7 @@
 		<replace dir="${build.app-server}"
 				 propertyFile="build.properties">
 			<include name="**/**/*.xml"/>
-	    	<include name="**/**/slide.properties"/>
+           	<include name="**/**/slide.properties"/>
 			<include name="**/serialization_verifier.properties"/>
 	    	<include name="**/ServidorPersistenteConfig.properties"/>
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
@@ -261,6 +261,8 @@
 		    			   property="sms.delivery.username"/>
 			<replacefilter token="@sms.delivery.password@"
 		    			   property="sms.delivery.password"/>
+                           
+                      
 
 		</replace>
 	</target>
@@ -363,27 +365,7 @@
 				<exclude name="servlet.jar"/>
 			</fileset>
 		</copy>
-<!--
-		<copy todir="${build.web-client.webinf.libs}">
-                        <fileset dir="${env.JBOSS_HOME}/client">
-                                <include name="*.jar"/>
--->
-<!--
-			<fileset dir="${env.JBOSS_HOME}/lib">
-				<include name="jboss-common.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="${build.web-client.webinf.libs}">
-			<fileset dir="${env.JBOSS_HOME}/server/default/lib">
-				<include name="jboss-j2ee.jar"/>
-				<include name="jnpserver.jar"/>
-				<include name="jboss.jar"/>
-				<include name="log4j.jar"/>
--->
-<!--
-			</fileset>
-		</copy>
--->
+
 		<copy todir="${build.web-client.webinf.classes}">
 			<fileset dir="${build.app-server}" >
 				<include name="**/$*"/>
@@ -412,7 +394,7 @@
             <include name="**/**/IstFtpServerConfig.properties"/>
 			<include name="**/**/logAnalyser.properties"/>
 			<include name="index.html"/>
-
+			<include name="**/degreeAdministrativeOffice/enrolment/withRules/*.jsp"/>
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
          <replacefilter 
@@ -436,6 +418,9 @@
 		<replacefilter 
 		    token="@index.html.link@" 
 		    property="index.html.link"/>
+            
+             <replacefilter token="@enrollment.faq.url@"
+		    			   property="enrollment.faq.url"/>    
 			
 		</replace>
 	</target>

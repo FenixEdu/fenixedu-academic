@@ -131,9 +131,9 @@
 		<tr>
 		<td class="listClasses-header"><bean:message key="label.course" bundle="STUDENT_RESOURCES"/></td>
 		<td class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></td>		
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
+		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/></a></td>
+		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/></a></td>
+		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></a></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
 		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
@@ -186,10 +186,10 @@
 		<tr>
 		<td class="listClasses-header"><bean:message key="label.course" bundle="STUDENT_RESOURCES"/></td>
 		<td class="listClasses-header"><bean:message key="label.course.type" bundle="STUDENT_RESOURCES"/></td>		
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.curricularYear" bundle="STUDENT_RESOURCES"/></td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
+		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/></a></td>
+		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/></a></td>
+		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.curricularYear" bundle="STUDENT_RESOURCES"/></a></td>
+		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></a></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll">

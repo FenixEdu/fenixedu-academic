@@ -830,15 +830,15 @@ public class Publication extends DomainObject implements IPublication {
 		}
 		if (!(object instanceof IPublication)) {
 			return false;
-		} else {
+		} 
 			if(this.publicationString != null && this.publicationString.length()!= 0){
 				return this.publicationString.equals(((IPublication)object).getPublicationString());
 			}
-			else{
+			
 				return this.getIdInternal().equals(((IPublication)object).getIdInternal());
-			}
+			
 
-		}
+		
 
 	}
 

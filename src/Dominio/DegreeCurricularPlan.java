@@ -7,6 +7,10 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import Dominio.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
+import Dominio.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
+import Dominio.degree.enrollment.rules.PrecedencesEnrollmentRule;
+import Dominio.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.ISuportePersistente;
@@ -257,10 +261,10 @@ public class DegreeCurricularPlan extends DomainObject implements
         
         List result = new ArrayList();
         
-//        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
-//        result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
-//        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan, executionPeriod));
-//        result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
+        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         
         return result;
     }
