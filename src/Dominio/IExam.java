@@ -9,7 +9,7 @@ import Util.Season;
  *   18/Mar/2003
  *   @author     Luis Cruz & Sara Ribeiro
  */
-public interface IExam {
+public interface IExam extends IDomainObject{
 
 	public Calendar getBeginning();
 	public Calendar getDay();

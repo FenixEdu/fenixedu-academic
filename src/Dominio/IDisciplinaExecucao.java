@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Nuno Nunes & Joana Mota
  */
-public interface IDisciplinaExecucao extends Serializable{
+public interface IDisciplinaExecucao extends Serializable,IDomainObject{
     public String getNome();
     public void setNome(java.lang.String nome);
     public String getSigla();
