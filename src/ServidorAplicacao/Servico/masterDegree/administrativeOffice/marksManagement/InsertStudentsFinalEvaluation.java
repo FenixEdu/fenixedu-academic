@@ -279,6 +279,9 @@ public class InsertStudentsFinalEvaluation implements IServico
             e.printStackTrace();
         }
 
+        if(studentCurricularPlan == null) {
+        	return false;
+        }
         IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
         // test marks by execution course: strategy 

@@ -7,4 +7,5 @@
   <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/posGraduacao/chooseExecutionYear_bd.jsp" />
   <tiles:put name="footer" value="/posGraduacao/copyrightDefault.jsp" />
+  <%-- TODO: this file is not used in marks management --%>
 </tiles:insert>

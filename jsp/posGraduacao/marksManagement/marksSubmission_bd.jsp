@@ -3,22 +3,31 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.marksSubmission" /></h2>
-<br />
-<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
-<br /><br />
-<span class="error"><html:errors/></span>
 <logic:present name="infoSiteEnrolmentEvaluation">
+	<table width="100%">
+		<logic:iterate id="enrollmentEvaluationElem" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" length="1">	
+			<tr>
+				<td class="infoselected">
+					<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome" />
+					<br />
+					<b><bean:message key="label.curricularPlan"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.infoDegreeCurricularPlan.name" />
+					<br />
+					<b><bean:message key="label.curricularCourse"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.name" />
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+	<br />
+	<span class="error"><html:errors/></span>
 	<html:form action="/marksSubmission" >  
 		<html:hidden property="page" value="1"/>	
 		<html:hidden property="method" value="submit" />
-		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
-		<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
-		<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
-		<html:hidden property="courseID" value="<%= pageContext.findAttribute("courseID").toString() %>" />
+		<html:hidden property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
+		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
 	    <table>
 			<tr>
 				<td>

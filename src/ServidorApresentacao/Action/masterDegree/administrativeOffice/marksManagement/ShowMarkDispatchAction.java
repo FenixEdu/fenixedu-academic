@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -16,82 +15,63 @@ import org.apache.struts.actions.DispatchAction;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * 
- * @author Fernanda Quitério
- * 30/06/2003
- * 
+ * @author Fernanda Quitério 30/06/2003
+ *  
  */
 
-public class ShowMarkDispatchAction extends DispatchAction {
+public class ShowMarkDispatchAction extends DispatchAction
+{
 
 	public ActionForward prepareShowMark(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws Exception
+	{
 
-		HttpSession session = request.getSession(false);
+		ActionErrors errors = new ActionErrors();
 		
-		String executionYear = getFromRequest("executionYear", request);
-		String degree = getFromRequest("degree", request);
-		String curricularCourse = getFromRequest("curricularCourse", request);
-		Integer curricularCourseCode = new Integer(getFromRequest("curricularCourseCode", request));
-
+		String curricularCourseId = MarksManagementDispatchAction.getFromRequest("courseId", request);
+		MarksManagementDispatchAction.getFromRequest("objectCode", request);
+		MarksManagementDispatchAction.getFromRequest("degreeId", request);
 		
-		
-		//put request
-		request.setAttribute("executionYear",executionYear);
-		request.setAttribute("curricularCourseCode",curricularCourseCode);
-		request.setAttribute("courseID",curricularCourseCode);
-		request.setAttribute("curricularCourse", curricularCourse);	
-		request.setAttribute("degree", degree);
-		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-
-		// Get students List			
-		
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] = {userView,curricularCourseCode,executionYear};
+		// Get students List
+		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
 		List listEnrolmentEvaluation = null;
-		
-		try {
-		 listEnrolmentEvaluation =
-				(List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentMarksListByCurricularCourse", args);
-		} catch (NotAuthorizedException e){
+		try
+		{
+			listEnrolmentEvaluation =
+				(List) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ReadStudentMarksListByCurricularCourse",
+					args);
+		}
+		catch (NotAuthorizedException e)
+		{
 			return mapping.findForward("NotAuthorized");
-		} catch (NonExistingServiceException e) {
-			ActionErrors errors = new ActionErrors();
+		}
+		catch (NonExistingServiceException e)
+		{
 			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
 			saveErrors(request, errors);
 			return mapping.findForward("NoStudents");
 		}
-		
-		if (listEnrolmentEvaluation.size() == 0){
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(
-					"StudentNotEnroled",
-					new ActionError(
-						"error.students.Mark.NotAvailable"));
-			saveErrors(request, actionErrors);
+
+		if (listEnrolmentEvaluation.size() == 0)
+		{
+			errors.add("StudentNotEnroled", new ActionError("error.students.Mark.NotAvailable"));
+			saveErrors(request, errors);
 			return mapping.findForward("NoStudents");
 		}
 		request.setAttribute("showMarks", "showMarks");
 		request.setAttribute("studentList", listEnrolmentEvaluation);
-		return mapping.findForward("displayStudentList");
-	
 		
+		return mapping.findForward("displayStudentList");
 	}
-	
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null) {
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
-
 }

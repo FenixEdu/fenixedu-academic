@@ -658,10 +658,13 @@
 			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
 		<exception type="ServidorAplicacao.NotAuthorizedException"
 			       key="ServidorAplicacao.NotAuthorizedException"
-			       path="/naoAutorizado.do"
-			       />
+			       path="/naoAutorizado.do" />
 		<exception type="ServidorAplicacao.FenixServiceException"
 		  	       key="ServidorAplicacao.FenixServiceException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.FenixActionException"
+		  	       key="ServidorAplicacao.FenixActionException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
@@ -1526,7 +1529,9 @@
    		 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
       </action>
     
-      <!-- Choose Execution Year To Manage Marks -->
+		<!-- BEGIN OF MARKS MANAGEMENT -->
+    
+      <!-- Choose Execution Year To Manage Marks 
       <action path="/chooseExecutionYearToManageMarks"
       		  input="chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
@@ -1536,8 +1541,8 @@
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToManageMarks.do?method=prepareChooseMasterDegree"/> 
       </action>
-
-      <!-- Choose Master Degree To Manage Marks -->
+		-->
+      <!-- Choose Master Degree To Manage Marks 
       <action path="/chooseMasterDegreeToManageMarks"
       		  input="/marksManagement/chooseMasterDegreeToManageMarks.jsp"
 		      attribute="chooseMasterDegreeForm"
@@ -1548,8 +1553,8 @@
 	         <forward name="ChooseSuccess" 
 				path="/chooseCurricularCourseToManageMarks.do?method=prepareChooseCurricularCourse"/>
       </action>
-
-      <!-- Choose CurricularCourse To Manage Marks -->
+		-->
+      <!-- Choose CurricularCourse To Manage Marks 
       <action path="/chooseCurricularCourseToManageMarks"
       		  input="/marksManagement/chooseCurricularCourseToManageMarks.jsp"
 		      parameter="method"
@@ -1560,6 +1565,20 @@
    	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 
    	         <forward name="NoStudents" path="/chooseCurricularCourseToManageMarks.do?method=prepareChooseCurricularCourse"/> 
       </action>
+      -->
+      <action path="/marksManagement"
+      		  input="/marksManagement/chooseCurricularCourseToManageMarks.jsp"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.MarksManagementDispatchAction"
+			  >
+
+	         <forward name="showMasterDegrees" path="/marksManagement/chooseMasterDegreeToManageMarks.jsp"/>  
+	         <forward name="showDegreeCurricularPlans" path="/marksManagement/chooseDegreeCurricularPlanToManageMarks.jsp"/>  
+	         <forward name="showCurricularCourses" path="/marksManagement/showCurricularCoursesToManageMarks.jsp"/> 
+   	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 
+	         <forward name="showMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 
+   	         
+      </action>
       
       <action path="/changeMarkDispatchAction"
       		  input="/changeMarkDispatchAction.do?method=chooseStudentMarks"
@@ -1568,36 +1587,25 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ChangeMarkDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
-		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+
 	         <forward name="editStudentNumber" path="/marksManagement/editMarkStudent.jsp"/> 
-	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/>
-			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 
-			 <forward name="editStudentMark" path="/marksManagement/editStudentMark.jsp"/> 
-			 <forward name="chooseCurricularCourse" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>
-     		 <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/>
-     		 <forward name="showMarkNotAvailable" path="/showMarkDispatchAction.do?method=prepareShowMark"/>
-     		 <forward name="NoStudents" path="/marksManagement/showMarksManagementMenu.jsp"/> 
-     		 <forward name="chooseStudentMarks" path="/changeMarkDispatchAction.do?method=chooseStudentMarks"/>
-     		 
-     		 
+	         <forward name="NoStudents" path="/marksManagement.do?method=getStudentMarksList"/> 
+	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/>
+			 <forward name="chooseCurricularCourse" path="/showMarkDispatchAction.do?method=prepareShowMark"/>
+			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 	         
+	         <forward name="changeStudentMark" path="/marksManagement.do?method=getStudentMarksList"/>     		 
       </action>
       
       <action path="/showMarkDispatchAction"
-      		  input="/marksManagement/showMarksManagementMenu.jsp"
+      		  input="/marksManagement.do?method=chooseCurricularCourses"
       	      name="studentNumberForm"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ShowMarkDispatchAction"
               validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
-		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="displayStudentList" path="/marksManagement/displayStudentList.jsp"/> 
-	         <forward name="NoStudents" path="/marksManagement/showMarksManagementMenu.jsp"/>  
+	         <forward name="NoStudents" path="/marksManagement.do?method=getStudentMarksList"/>  
       		 <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 
-      		 
       </action>
       
       <action path="/marksSubmission"
@@ -1613,8 +1621,9 @@
                	handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />       
 	         <forward name="MarksSubmission" path="/marksManagement/marksSubmission.jsp"/> 
-	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
+	         <forward name="ShowMarksManagementMenu" path="/marksManagement.do?method=getStudentMarksList"/> 	         
       </action>
+      
       <action path="/marksConfirmation"
       		  input="/marksManagement/marksConfirmationMenu.jsp"
       	      name="marksSubmissionForm"
@@ -1626,9 +1635,9 @@
 	         <forward name="MarksConfirmationMenu" path="/marksManagement/marksConfirmationMenu.jsp"/> 
 	         <forward name="MarksConfirmation" path="/marksManagement/marksConfirmation.jsp"/> 
 	         <forward name="MarksPrint" path="/marksManagement/marksPrint.jsp"/> 
-	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
+	         <forward name="ShowMarksManagementMenu" path="/marksManagement.do?method=getStudentMarksList"/> 	         
       </action>
-      
+		<!-- END OF MARKS MANAGEMENT -->
       
 	  <action path="/studentGratuity"
 		      parameter="method"

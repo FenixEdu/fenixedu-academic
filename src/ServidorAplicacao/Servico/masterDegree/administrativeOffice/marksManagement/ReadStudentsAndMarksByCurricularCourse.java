@@ -18,17 +18,13 @@ import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
-import Dominio.Enrolment;
-import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourse;
-import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IPessoa;
-import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
-import Dominio.Pessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -98,7 +94,17 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico
             curricularCourse =
                 (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
 
-            List enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourse, yearString);
+            List enrolments = null;
+            if (yearString != null)
+            {
+            	enrolments =
+            	persistentEnrolment.readByCurricularCourseAndYear(curricularCourse, yearString);
+            }
+            else
+            {
+            	enrolments =
+            	persistentEnrolment.readByCurricularCourse(curricularCourse);
+            }
             List enrolmentEvaluations = new ArrayList();
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext())
@@ -277,119 +283,4 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico
         }
         return lastEvaluationDate;
     }
-
-    public List run(Integer curricularCourseID, Integer studentNumber, String executionYear)
-        throws FenixServiceException
-    {
-
-        List enrolmentEvaluations = null;
-        InfoTeacher infoTeacher = null;
-        List infoSiteEnrolmentEvaluations = new ArrayList();
-        ICurricularCourse curricularCourse = null;
-        IEnrolment enrolment = new Enrolment();
-        IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation =
-                sp.getIPersistentEnrolmentEvaluation();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-
-            //read curricularCourse by ID
-            ICurricularCourse curricularCourseTemp = new CurricularCourse();
-            curricularCourseTemp.setIdInternal(curricularCourseID);
-            curricularCourse =
-                (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
-                    curricularCourseTemp,
-                    false);
-
-            //			get student curricular Plan
-            IStudentCurricularPlan studentCurricularPlan =
-                sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-                    studentNumber,
-                    new TipoCurso(TipoCurso.MESTRADO));
-            if (studentCurricularPlan == null)
-            {
-                throw new ExistingServiceException();
-            }
-
-            enrolment =
-                sp.getIPersistentEnrolment().readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-                    studentCurricularPlan,
-                    curricularCourse,
-                    executionYear);
-
-            if (enrolment != null)
-            {
-
-                //						ListIterator iter1 = enrolments.listIterator();
-                //						while (iter1.hasNext()) {
-                //							enrolment = (IEnrolment) iter1.next();
-
-                EnrolmentEvaluationState enrolmentEvaluationState =
-                    new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL);
-                enrolmentEvaluations =
-                    persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationState(
-                        enrolment,
-                        enrolmentEvaluationState);
-                //				enrolmentEvaluations = enrolment.getEvaluations();
-
-                List infoTeachers = new ArrayList();
-                if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0)
-                {
-                    IPessoa person =
-                        ((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
-                            .getPersonResponsibleForGrade();
-                    ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
-                    infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-                    infoTeachers.add(infoTeacher);
-                }
-
-                List infoEnrolmentEvaluations = new ArrayList();
-                if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0)
-                {
-                    ListIterator iter = enrolmentEvaluations.listIterator();
-                    while (iter.hasNext())
-                    {
-                        enrolmentEvaluation = (IEnrolmentEvaluation) iter.next();
-                        InfoEnrolmentEvaluation infoEnrolmentEvaluation =
-                            Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
-                        infoEnrolmentEvaluation.setInfoEnrolment(
-                            Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment()));
-
-                        if (enrolmentEvaluation != null)
-                        {
-                            if (enrolmentEvaluation.getEmployee() != null)
-                            {
-                                IPessoa person = new Pessoa();
-                                person.setIdInternal(enrolmentEvaluation.getEmployee().getPerson().getIdInternal());
-                                IPessoa person2 =
-                                    (IPessoa) sp.getIPessoaPersistente().readByOId(person, false);
-                                infoEnrolmentEvaluation.setInfoEmployee(
-                                    Cloner.copyIPerson2InfoPerson(person2));
-                            }
-
-                        }
-                        infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
-                    }
-
-                }
-                InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation =
-                    new InfoSiteEnrolmentEvaluation();
-                infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-                infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-                infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
-
-            }
-        } catch (ExcepcaoPersistencia ex)
-        {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        return infoSiteEnrolmentEvaluations;
-    }
-
 }

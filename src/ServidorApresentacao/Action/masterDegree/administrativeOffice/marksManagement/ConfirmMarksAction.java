@@ -4,7 +4,6 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -14,9 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
-import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -24,7 +20,8 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
@@ -42,15 +39,13 @@ public class ConfirmMarksAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-
-        HttpSession session = request.getSession(false);
-        setAttributesFromRequest(request);
-        Integer curricularCourseCode = new Integer((String) getFromRequest("courseID", request));
-        String executionYear = (String) getFromRequest("executionYear", request);
+        Integer curricularCourseCode = new Integer((String) MarksManagementDispatchAction.getFromRequest("courseId", request));
+        MarksManagementDispatchAction.getFromRequest("objectCode", request);
+        MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         // Get students final evaluation			
-        Object args[] = { curricularCourseCode, executionYear };
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        Object args[] = { curricularCourseCode, null };
+        IUserView userView = (IUserView) SessionUtils.getUserView(request);
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try
         {
@@ -62,7 +57,7 @@ public class ConfirmMarksAction extends DispatchAction
         } catch (NonExistingServiceException e)
         {
             sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
-            return mapping.getInputForward();
+            return mapping.findForward("ShowMarksManagementMenu");
         } catch (ExistingServiceException e)
         {
             sendErrors(request, "existing", "message.masterDegree.evaluation.alreadyConfirmed");
@@ -98,16 +93,6 @@ public class ConfirmMarksAction extends DispatchAction
             forward = "MarksConfirmation";
         } else if (useCase != null && useCase.equals("print"))
         {
-            String degreeName =
-                ((InfoEnrolmentEvaluation) (infoSiteEnrolmentEvaluation
-                    .getEnrolmentEvaluations()
-                    .get(0)))
-                    .getInfoEnrolment()
-                    .getInfoStudentCurricularPlan()
-                    .getInfoDegreeCurricularPlan()
-                    .getInfoDegree()
-                    .getNome();
-            request.setAttribute("degreeName", degreeName);
             forward = "MarksPrint";
         }
         return forward;
@@ -119,14 +104,6 @@ public class ConfirmMarksAction extends DispatchAction
         errors.add(arg0, new ActionError(arg1));
         saveErrors(request, errors);
     }
-    private void setAttributesFromRequest(HttpServletRequest request)
-    {
-        request.setAttribute("executionYear", getFromRequest("executionYear", request));
-        request.setAttribute("degree", getFromRequest("degree", request));
-        request.setAttribute("curricularCourse", getFromRequest("curricularCourse", request));
-        request.setAttribute("courseID", getFromRequest("courseID", request));
-    }
-
     public ActionForward confirm(
         ActionMapping mapping,
         ActionForm form,
@@ -134,20 +111,16 @@ public class ConfirmMarksAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-
-        HttpSession session = request.getSession(false);
-        setAttributesFromRequest(request);
-        Integer curricularCourseCode = new Integer((String) getFromRequest("courseID", request));
-        String executionYear = (String) getFromRequest("executionYear", request);
+    	Integer curricularCourseCode = new Integer((String) MarksManagementDispatchAction.getFromRequest("courseId", request));
+    	MarksManagementDispatchAction.getFromRequest("objectCode", request);
+    	MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         //		set final evaluation to final state
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { curricularCourseCode, executionYear, userView };
+        IUserView userView = (IUserView) SessionUtils.getUserView(request);
+        Object args[] = { curricularCourseCode, null, userView };
         try
         {
 			ServiceManagerServiceFactory.executeService(userView, "ConfirmStudentsFinalEvaluation", args);
-        } catch (NonExistingServiceException e)
-        {
         } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);

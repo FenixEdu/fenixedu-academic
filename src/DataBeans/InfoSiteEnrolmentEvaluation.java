@@ -13,6 +13,7 @@ public class InfoSiteEnrolmentEvaluation extends DataTranferObject implements IS
 	private List enrolmentEvaluations;
 	private InfoTeacher infoTeacher;
 	private Date lastEvaluationDate;
+	private InfoExecutionPeriod infoExecutionPeriod;
 	
 
 	public boolean equals(Object objectToCompare) {
@@ -103,5 +104,21 @@ public class InfoSiteEnrolmentEvaluation extends DataTranferObject implements IS
 	}
 
 	
+
+	/**
+	 * @return Returns the infoExecutionPeriod.
+	 */
+	public InfoExecutionPeriod getInfoExecutionPeriod()
+	{
+		return infoExecutionPeriod;
+	}
+
+	/**
+	 * @param infoExecutionPeriod The infoExecutionPeriod to set.
+	 */
+	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
+	{
+		this.infoExecutionPeriod = infoExecutionPeriod;
+	}
 
 }

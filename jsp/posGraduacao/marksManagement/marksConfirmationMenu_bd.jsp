@@ -3,15 +3,25 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.marksConfirmation" /></h2>
-<br />
-<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
-<br /><br />
-<span class="error"><html:errors /></span>
 <logic:present name="infoSiteEnrolmentEvaluation">
+	<table width="100%">
+		<logic:iterate id="enrollmentEvaluationElem" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" length="1">	
+			<tr>
+				<td class="infoselected">
+					<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome" />
+					<br />
+					<b><bean:message key="label.curricularPlan"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.infoDegreeCurricularPlan.name" />
+					<br />
+					<b><bean:message key="label.curricularCourse"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.name" />
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+	<br />
+	<span class="error"><html:errors/></span>
 	<bean:define id="teacher" name="infoSiteEnrolmentEvaluation" property="infoTeacher"/>
 	<bean:define id="availableEvaluationDate" name="infoSiteEnrolmentEvaluation" property="lastEvaluationDate"/>
     <table>        
@@ -27,7 +37,6 @@
 			</td>
 		</tr>    				
 		<bean:size id="size" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" />	
-				    			    		
     	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation">
     		
     		<tr>
@@ -63,11 +72,11 @@
 		</tr>
     </table>
 	<br />
-	<html:link target="_blank" page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") + "&amp;useCase=print" %>">
+	<html:link target="_blank" page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;useCase=print" %>">
 		<bean:message key="link.masterDegree.administrativeOffice.print" />
 	</html:link>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") + "&amp;useCase=confirm" %>">
+	<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;useCase=confirm" %>">
 		<bean:message key="link.masterDegree.administrativeOffice.marksConfirmation" />
 	</html:link>
 </logic:present>   

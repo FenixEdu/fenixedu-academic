@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -19,8 +18,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import framework.factory.ServiceManagerServiceFactory;
 
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
@@ -33,39 +30,53 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * 
- * @author Fernanda Quitério
- * 01/07/2003
- * 
+ * @author Fernanda Quitério 01/07/2003
+ *  
  */
-public class SubmitMarksAction extends DispatchAction {
+public class SubmitMarksAction extends DispatchAction
+{
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+	public ActionForward prepare(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
 
-		HttpSession session = request.getSession(false);
+		Integer curricularCourseCode =
+			new Integer(MarksManagementDispatchAction.getFromRequest("courseId", request));
+		MarksManagementDispatchAction.getFromRequest("objectCode", request);
+		MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
-		setAttributesFromRequest(request);
-		Integer curricularCourseCode = new Integer(getFromRequest("courseID", request));
-		String year = getFromRequest("executionYear", request);
-
-		// Get students List			
-		Object args[] = { curricularCourseCode, year };
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		// Get students List
+		Object args[] = { curricularCourseCode, null };
+		IUserView userView = (IUserView) SessionUtils.getUserView(request);
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
-		try {
+		try
+		{
 			infoSiteEnrolmentEvaluation =
-				(InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsAndMarksByCurricularCourse", args);
-		} catch (NonExistingServiceException e) {
+				(InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ReadStudentsAndMarksByCurricularCourse",
+					args);
+		}
+		catch (NonExistingServiceException e)
+		{
 			sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
-			return mapping.findForward("MarksSubmission");
-		} catch (ExistingServiceException e) {
+			return mapping.findForward("ShowMarksManagementMenu");
+		}
+		catch (ExistingServiceException e)
+		{
 			sendErrors(request, "existing", "message.masterDegree.evaluation.alreadyConfirmed");
 			return mapping.findForward("ShowMarksManagementMenu");
-		} catch (FenixServiceException e) {
+		}
+		catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
@@ -78,16 +89,20 @@ public class SubmitMarksAction extends DispatchAction {
 		request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluation);
 
 		return mapping.findForward("MarksSubmission");
-
 	}
 
-	private void setForm(ActionForm form, InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation) {
+	private void setForm(ActionForm form, InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation)
+	{
 		DynaValidatorForm submitMarksForm = (DynaValidatorForm) form;
-		if (infoSiteEnrolmentEvaluation.getInfoTeacher().getTeacherNumber() != null) {
+		if (infoSiteEnrolmentEvaluation.getInfoTeacher().getTeacherNumber() != null)
+		{
 			//		fill in teacher number in case it exists
-			submitMarksForm.set("teacherNumber", infoSiteEnrolmentEvaluation.getInfoTeacher().getTeacherNumber().toString());
+			submitMarksForm.set(
+				"teacherNumber",
+				infoSiteEnrolmentEvaluation.getInfoTeacher().getTeacherNumber().toString());
 		}
-		if (infoSiteEnrolmentEvaluation.getLastEvaluationDate() != null) {
+		if (infoSiteEnrolmentEvaluation.getLastEvaluationDate() != null)
+		{
 			Calendar calendar = Calendar.getInstance();
 			calendar.clear();
 			calendar.setLenient(false);
@@ -99,36 +114,32 @@ public class SubmitMarksAction extends DispatchAction {
 		}
 	}
 
-	private void sendErrors(HttpServletRequest request, String arg0, String arg1) {
+	private void sendErrors(HttpServletRequest request, String arg0, String arg1)
+	{
 		ActionErrors errors = new ActionErrors();
 		errors.add(arg0, new ActionError(arg1));
 		saveErrors(request, errors);
 	}
 
-	private void setAttributesFromRequest(HttpServletRequest request) {
-		String executionYear = getFromRequest("executionYear", request);
-		String degree = getFromRequest("degree", request);
-		String curricularCourse = getFromRequest("curricularCourse", request);
-		Integer curricularCourseCode = new Integer(getFromRequest("courseID", request));
+	public ActionForward submit(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
 
-		request.setAttribute("executionYear", executionYear);
-		request.setAttribute("degree", degree);
-		request.setAttribute("curricularCourse", curricularCourse);
-		request.setAttribute("courseID", curricularCourseCode);
-	}
-
-	public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-
-		setAttributesFromRequest(request);
+		MarksManagementDispatchAction.getFromRequest("courseId", request);
+		MarksManagementDispatchAction.getFromRequest("objectCode", request);
+		MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
 		List evaluations = new ArrayList();
-		Integer sizeList = new Integer(getFromRequest("sizeList", request));
+		Integer sizeList =
+			new Integer(MarksManagementDispatchAction.getFromRequest("sizeList", request));
 
 		//transform form into list with student's code and students's grade
-		for (int i = 0; i < sizeList.intValue(); i++) {
+		for (int i = 0; i < sizeList.intValue(); i++)
+		{
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = getFinalEvaluation(request, i);
 			evaluations.add(infoEnrolmentEvaluation);
 		}
@@ -145,21 +156,31 @@ public class SubmitMarksAction extends DispatchAction {
 		Date evaluationDate = calendar.getTime();
 
 		//		Insert final evaluation
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView = (IUserView) SessionUtils.getUserView(request);
 		Object args[] = { evaluations, teacherNumber, evaluationDate, userView };
 		List evaluationsWithError = null;
-		try {
-			evaluationsWithError = (List) ServiceManagerServiceFactory.executeService(userView, "InsertStudentsFinalEvaluation", args);
-		} catch (NonExistingServiceException e) {
+		try
+		{
+			evaluationsWithError =
+				(List) ServiceManagerServiceFactory.executeService(
+					userView,
+					"InsertStudentsFinalEvaluation",
+					args);
+		}
+		catch (NonExistingServiceException e)
+		{
 			throw new NonExistingActionException(teacherNumber.toString(), e);
-		} catch (FenixServiceException e) {
+		}
+		catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
 		//		check for invalid marks
 		ActionErrors actionErrors = null;
 		actionErrors = checkForErrors(evaluationsWithError);
-		if (actionErrors != null) {
+		if (actionErrors != null)
+		{
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 		}
@@ -167,20 +188,16 @@ public class SubmitMarksAction extends DispatchAction {
 		return mapping.findForward("ShowMarksManagementMenu");
 	}
 
-	private String getFromRequest(String parameter, HttpServletRequest request) {
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null) {
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
-
-	private InfoEnrolmentEvaluation getFinalEvaluation(HttpServletRequest request, int index) {
+	private InfoEnrolmentEvaluation getFinalEvaluation(HttpServletRequest request, int index)
+	{
 		String evaluation = request.getParameter("enrolmentEvaluation[" + index + "].grade");
-		Integer studentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].studentCode"));
-		Integer enrolmentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].enrolmentCode"));
+		Integer studentCode =
+			Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].studentCode"));
+		Integer enrolmentCode =
+			Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].enrolmentCode"));
 
-		if (studentCode != null) {
+		if (studentCode != null)
+		{
 			//enrolment evaluation with only student code and mark and enrolment code
 			InfoStudent infoStudent = new InfoStudent();
 			infoStudent.setIdInternal(studentCode);
@@ -202,14 +219,18 @@ public class SubmitMarksAction extends DispatchAction {
 		return null;
 	}
 
-	private ActionErrors checkForErrors(List evaluationsWithError) {
+	private ActionErrors checkForErrors(List evaluationsWithError)
+	{
 		ActionErrors actionErrors = null;
 
-		if (evaluationsWithError != null && evaluationsWithError.size() > 0) {
+		if (evaluationsWithError != null && evaluationsWithError.size() > 0)
+		{
 			actionErrors = new ActionErrors();
 			Iterator iterator = evaluationsWithError.listIterator();
-			while (iterator.hasNext()) {
-				InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) iterator.next();
+			while (iterator.hasNext())
+			{
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation =
+					(InfoEnrolmentEvaluation) iterator.next();
 
 				actionErrors.add(
 					"invalidGrade",

@@ -2,19 +2,30 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<span class="error"><html:errors/></span>
 <h2><bean:message key="label.students.listMarks"/></h2>
+<logic:present name="oneInfoEnrollment">
+	<table width="100%">
+		<tr>
+			<td class="infoselected">
+				<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
+				<bean:write name="oneInfoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome" />
+				<br />
+				<b><bean:message key="label.curricularPlan"/>:</b>
+				<bean:write name="oneInfoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name" />
+				<br />
+				<b><bean:message key="label.curricularCourse"/>:</b>
+				<bean:write name="oneInfoEnrollment" property="infoCurricularCourse.name" />
+			</td>
+		</tr>
+	</table>
+</logic:present>
 <br />
-<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
-<html:form action="/changeMarkDispatchAction?method=chooseStudentMarks">
+<span class="error"><html:errors/></span>
+<html:form action="/changeMarkDispatchAction?method=chooseStudentMarks" focus="studentNumber">
+	<html:hidden property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
+	<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
 	<table>
-    <!-- Degree -->
     	<tr>
         	<td><bean:message key="label.number"/>: </td>
          	<td>
@@ -23,11 +34,8 @@
         </tr>
 	</table>
 	<br />
-	<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
-	<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
-	<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
-	<html:hidden property="curricularCourseCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
-	<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
-	<html:hidden property="jspTitle" value="<%= pageContext.findAttribute("jspTitle").toString() %>" />
-	<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
+	<br /><br />	
+ 	<html:submit styleClass="inputbutton">
+		<bean:message key="label.next"/>
+  	</html:submit>
 </html:form>

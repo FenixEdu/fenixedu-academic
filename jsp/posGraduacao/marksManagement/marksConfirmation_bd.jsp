@@ -3,39 +3,40 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.marksConfirmation" /></h2>
-<br />
-<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
-&nbsp;-&nbsp;
-<bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
-<br /><br />
-<span class="error"><html:errors /></span>
 <logic:present name="infoSiteEnrolmentEvaluation">
+	<table width="100%">
+		<logic:iterate id="enrollmentEvaluationElem" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" length="1">	
+			<tr>
+				<td class="infoselected">
+					<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome" />
+					<br />
+					<b><bean:message key="label.curricularPlan"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.infoDegreeCurricularPlan.name" />
+					<br />
+					<b><bean:message key="label.curricularCourse"/>:</b>
+					<bean:write name="enrollmentEvaluationElem" property="infoEnrolment.infoCurricularCourse.name" />
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+	<br />
+	<span class="error"><html:errors/></span>
 	<bean:define id="teacher" name="infoSiteEnrolmentEvaluation" property="infoTeacher"/>
 	<bean:define id="availableEvaluationDate" name="infoSiteEnrolmentEvaluation" property="lastEvaluationDate"/>
 	<html:form action="/marksConfirmation">
 		<html:hidden property="method" value="confirm" />
-		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
-		<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
-		<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
-		<html:hidden property="courseID" value="<%= pageContext.findAttribute("courseID").toString() %>" />	
+		<html:hidden property="courseId" value="<%= pageContext.findAttribute("courseId").toString() %>" />
+		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden property="degreeId" value="<%= pageContext.findAttribute("degreeId").toString() %>" />
 	    <table>        
 			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.number" /> 
-			   	</td>
-				<td class="listClasses-header">
-					<bean:message key="label.name" />
-			   	</td>
-				<td class="listClasses-header">
-					<bean:message key="label.mark" />
-				</td>
+				<td class="listClasses-header"><bean:message key="label.number" /></td>
+				<td class="listClasses-header"><bean:message key="label.name" /></td>
+				<td class="listClasses-header"><bean:message key="label.mark" /></td>
 			</tr>    				
 			<bean:size id="size" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" />	
-					    			    		
 	    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation">
-	    		
 	    		<tr>
 					<td class="listClasses">
 						<bean:write name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.number"/>&nbsp;
@@ -44,7 +45,12 @@
 						<bean:write name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 					</td>											
 					<td class="listClasses">
-						<bean:write name="enrolmentEvaluation" property="grade" />
+						<logic:notEmpty name="enrolmentEvaluation" property="grade">
+							<bean:write name="enrolmentEvaluation" property="grade" />
+						</logic:notEmpty>
+						<logic:empty name="enrolmentEvaluation" property="grade">
+							&nbsp;
+						</logic:empty>
 					</td>
 				</tr>
 	    	</logic:iterate>
@@ -73,4 +79,4 @@
 			<bean:message key="button.confirm"/>
 	  	</html:submit>
 	</html:form>
-</logic:present>   
+</logic:present>

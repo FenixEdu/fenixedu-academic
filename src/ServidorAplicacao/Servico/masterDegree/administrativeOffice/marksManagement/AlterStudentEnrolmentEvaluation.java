@@ -120,7 +120,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico
             } else
             {
 
-                // read enrolmentEvaluation
+                // read enrolmentEvaluation to change
                 IEnrolmentEvaluation iEnrolmentEvaluation = new EnrolmentEvaluation();
 
                 iEnrolmentEvaluation.setIdInternal(enrolmentEvaluationCode);
@@ -129,6 +129,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico
                         iEnrolmentEvaluation,
                         false);
 
+                // new enrolment evaluation
                 IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
                 enrolmentEvaluation =
                     Cloner.copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(infoEnrolmentEvaluation);
@@ -161,8 +162,6 @@ public class AlterStudentEnrolmentEvaluation implements IServico
                         iEnrolmentEvaluation.getEnrolment().getStudentCurricularPlan());
                     enrolment.setIdInternal(iEnrolmentEvaluation.getEnrolment().getIdInternal());
                     enrolment.setEnrolmentState(iEnrolmentEvaluation.getEnrolment().getEnrolmentState());
-                    System.out.println(
-                        "verificar se há ou nap alteracao---- " + enrolment.getEnrolmentState());
                     persistentEnrolment.lockWrite(enrolment);
                     iEnrolmentEvaluation.setEnrolment(enrolment);
 
@@ -282,6 +281,10 @@ public class AlterStudentEnrolmentEvaluation implements IServico
             e.printStackTrace();
         }
 
+        if(studentCurricularPlan == null) {
+        	return false;
+        }
+        
         IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
         // test marks by execution course: strategy 

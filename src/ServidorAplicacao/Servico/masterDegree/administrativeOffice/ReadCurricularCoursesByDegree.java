@@ -21,68 +21,88 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Fernanda Quitério
- * 01/07/2003
- * 
+ * @author Fernanda Quitério 01/07/2003
+ *  
  */
-public class ReadCurricularCoursesByDegree implements IServico {
+public class ReadCurricularCoursesByDegree implements IServico
+{
 
 	private static ReadCurricularCoursesByDegree servico = new ReadCurricularCoursesByDegree();
 
 	/**
 	 * The singleton access method of this class.
-	 **/
-	public static ReadCurricularCoursesByDegree getService() {
+	 */
+	public static ReadCurricularCoursesByDegree getService()
+	{
 		return servico;
 	}
 
 	/**
 	 * The actor of this class.
-	 **/
-	private ReadCurricularCoursesByDegree() {
+	 */
+	private ReadCurricularCoursesByDegree()
+	{
 	}
 
 	/**
-	 * Returns The Service Name */
+	 * Returns The Service Name
+	 */
 
-	public final String getNome() {
+	public final String getNome()
+	{
 		return "ReadCurricularCoursesByDegree";
 	}
 
-	public List run(String executionYearString, String degreeName) throws FenixServiceException {
+	public List run(String executionYearString, String degreeName) throws FenixServiceException
+	{
 		List infoCurricularCourses = null;
-		try {
+		try
+		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			// Get the Actual Execution Year
-			IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
+			IExecutionYear executionYear =
+				sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 
 			// Read degree
 			ICursoExecucao cursoExecucao =
-				sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(degreeName, executionYear);
+				sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(
+					degreeName,
+					executionYear);
 
 			if (cursoExecucao.getCurricularPlan().getCurricularCourses() == null
-				|| cursoExecucao.getCurricularPlan().getCurricularCourses().size() == 0) {
+				|| cursoExecucao.getCurricularPlan().getCurricularCourses().size() == 0)
+			{
 				throw new NonExistingServiceException();
 			}
 
 			infoCurricularCourses = new ArrayList();
-			ListIterator iterator = cursoExecucao.getCurricularPlan().getCurricularCourses().listIterator();
-			while (iterator.hasNext()) {
+			ListIterator iterator =
+				cursoExecucao.getCurricularPlan().getCurricularCourses().listIterator();
+			while (iterator.hasNext())
+			{
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-				infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
+				InfoCurricularCourse infoCurricularCourse =
+					Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+				infoCurricularCourse
+					.setInfoScopes(
+						(List) CollectionUtils
+						.collect(curricularCourse.getScopes(), new Transformer()
+				{
 
-					public Object transform(Object arg0) {
+					public Object transform(Object arg0)
+					{
 						ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-						return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+						return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+							curricularCourseScope);
 					}
 				}));
-				
+
 				infoCurricularCourses.add(infoCurricularCourse);
 			}
 
-		} catch (ExcepcaoPersistencia ex) {
+		}
+		catch (ExcepcaoPersistencia ex)
+		{
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;

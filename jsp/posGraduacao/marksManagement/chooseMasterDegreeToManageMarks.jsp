@@ -5,6 +5,6 @@
   <tiles:put name="navLocal" value="/posGraduacao/pgMainMenu.jsp" />
   <tiles:put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
   <tiles:put name="body-context" value=""/>  
-  <tiles:put name="body" value="/posGraduacao/chooseMasterDegree_bd.jsp" />
+  <tiles:put name="body" value="/posGraduacao/marksManagement/chooseMasterDegree_bd.jsp" />
   <tiles:put name="footer" value="/posGraduacao/copyrightDefault.jsp" />
 </tiles:insert>

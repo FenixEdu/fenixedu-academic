@@ -1819,6 +1819,14 @@
         <filterChains/>
     </service>
     <service>
+        <name>ReadStudentMarksByCurricularCourse</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagement.ReadStudentMarksByCurricularCourse</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
         <name>AlterStudentEnrolmentEvaluation</name>
         <implementationClass> 
             ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagement.AlterStudentEnrolmentEvaluation</implementationClass>
@@ -5811,6 +5819,22 @@
         <filterChains>
             <chain name="StudentIsUserAndHasStudentRoleFilter"/>
         </filterChains>
+    </service>
+        <service>
+        <name>ReadDegreeCurricularPlans</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.ReadDegreeCurricularPlans</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>ReadCurricularCoursesByDegreeCurricularPlanId</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
     </service>
     <service>
     	<name>PrepareDegreesListByStudentNumber</name>

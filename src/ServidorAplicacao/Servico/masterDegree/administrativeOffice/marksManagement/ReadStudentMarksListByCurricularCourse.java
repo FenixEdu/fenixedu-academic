@@ -1,10 +1,8 @@
 
 /**
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota (jccm@rnl.ist.utl.pt)
+ *  
  */
 
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagement;
@@ -33,96 +31,119 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadStudentMarksListByCurricularCourse implements IServico {
-    
-    private static ReadStudentMarksListByCurricularCourse servico = new ReadStudentMarksListByCurricularCourse();
-    
-    /**
-     * The singleton access method of this class.
-     **/
-    public static ReadStudentMarksListByCurricularCourse getService() {
-        return servico;
-    }
-    
-    /**
-     * The actor of this class.
-     **/
-    private ReadStudentMarksListByCurricularCourse() { 
-    }
-    
-    /**
-     * Returns The Service Name */
-    
-    public final String getNome() {
-        return "ReadStudentMarksListByCurricularCourse";
-    }
-    
-    
-    public List run(IUserView userView, Integer curricularCourseID, String executionYear) throws ExcepcaoInexistente, FenixServiceException {
+public class ReadStudentMarksListByCurricularCourse implements IServico
+{
 
-        ISuportePersistente sp = null;
-        
-        List enrolmentList = null;
-         
-        ICurricularCourse curricularCourse = null;
-        try {
-            sp = SuportePersistenteOJB.getInstance();
-            
-            // Read the Students
-
-            ICurricularCourse curricularCourseTemp = new CurricularCourse();
-            curricularCourseTemp.setIdInternal(curricularCourseID);
- 
-            curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseTemp, false);
-
-			enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(curricularCourse, executionYear);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        } 
-
-
-		if ((enrolmentList == null) || (enrolmentList.size() == 0)){
-			throw new NonExistingServiceException();
-		}
-		
-		return cleanList(enrolmentList, userView);		
-    }
+	private static ReadStudentMarksListByCurricularCourse servico =
+		new ReadStudentMarksListByCurricularCourse();
 
 	/**
-	 * @param studentCurricularPlans
+	 * The singleton access method of this class.
+	 */
+	public static ReadStudentMarksListByCurricularCourse getService()
+	{
+		return servico;
+	}
+
+	/**
+	 * The actor of this class.
+	 */
+	private ReadStudentMarksListByCurricularCourse()
+	{
+	}
+
+	/**
+	 * Returns The Service Name
+	 */
+
+	public final String getNome()
+	{
+		return "ReadStudentMarksListByCurricularCourse";
+	}
+
+	public List run(IUserView userView, Integer curricularCourseID, String executionYear)
+		throws ExcepcaoInexistente, FenixServiceException
+	{
+
+		ISuportePersistente sp = null;
+
+		List enrolmentList = null;
+
+		try
+		{
+			sp = SuportePersistenteOJB.getInstance();
+
+			ICurricularCourse curricularCourse = new CurricularCourse();
+			curricularCourse.setIdInternal(curricularCourseID);
+			curricularCourse =
+				(ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
+					curricularCourse,
+					false);
+
+			if (executionYear != null)
+			{
+				enrolmentList =
+					sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
+						curricularCourse,
+						executionYear);
+			}
+			else
+			{
+				enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(curricularCourse);
+			}
+			if ((enrolmentList == null) || (enrolmentList.size() == 0))
+			{
+				throw new NonExistingServiceException();
+			}
+
+		}
+		catch (ExcepcaoPersistencia ex)
+		{
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		return cleanList(enrolmentList, userView);
+	}
+
+	/**
+	 * @param enrollments
 	 * @return A list of Student curricular Plans without the duplicates
 	 */
-	private List cleanList(List studentCurricularPlans, IUserView userView) throws FenixServiceException {
+	private List cleanList(List enrollments, IUserView userView) throws FenixServiceException
+	{
 		List result = new ArrayList();
 		Integer numberAux = null;
 
 		BeanComparator numberComparator = new BeanComparator("studentCurricularPlan.student.number");
-		Collections.sort(studentCurricularPlans, numberComparator);
+		Collections.sort(enrollments, numberComparator);
 
-
-		Iterator iterator = studentCurricularPlans.iterator();
-		while (iterator.hasNext()) {
+		Iterator iterator = enrollments.iterator();
+		while (iterator.hasNext())
+		{
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 
 			if ((numberAux == null)
-				|| (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent().getNumber().intValue())) {
+				|| (numberAux.intValue()
+					!= enrolment.getStudentCurricularPlan().getStudent().getNumber().intValue()))
+			{
 				numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
-				
-				Object args[] = {enrolment };
-				InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(userView, "GetEnrolmentGrade", args);
-				if (infoEnrolmentEvaluation != null){	
+
+				Object args[] = { enrolment };
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation =
+					(InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
+						userView,
+						"GetEnrolmentGrade",
+						args);
+				if (infoEnrolmentEvaluation != null)
+				{
 					InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
 					infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
 					result.add(infoEnrolment);
 				}
 			}
 		}
-		
 		return result;
 	}
-	
-
 }
