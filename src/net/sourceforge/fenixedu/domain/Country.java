@@ -10,97 +10,39 @@
 
 package net.sourceforge.fenixedu.domain;
 
-public class Country extends DomainObject implements ICountry {
-    private String name;
+public class Country extends Country_Base {
 
-    private String nationality;
-
-    private String code;
-
-    public Country() {
+	public Country() {
+		super();
     }
 
-    public Country(String name, String nationality, String code) {
-        this.code = code;
-        this.nationality = nationality;
-        this.name = name;
+    public Country(final String name, final String nationality, final String code) {
+		super();
+		setCode(code);
+		setNationality(nationality);
+		setName(name);
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof Country) {
-            Country d = (Country) obj;
-            resultado = (getName().equals(d.getName()) && getNationality().equals(d.getNationality()) && getCode()
-                    .equals(d.getCode()));
+    public boolean equals(final Object obj) {
+        if (obj instanceof ICountry) {
+            final ICountry country = (ICountry) obj;
+            return getIdInternal().equals(country.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String toString() {
-        String result = "[COUNTRY";
-        result += ", idInternal =" + getIdInternal();
-        result += ", Name =" + name;
-        result += ", Nationality =" + nationality;
-        result += ", Code =" + code;
-        result += "]";
-        return result;
-    }
-
-    /**
-     * Returns the code.
-     * 
-     * @return String
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Returns the name.
-     * 
-     * @return String
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Returns the nationality.
-     * 
-     * @return String
-     */
-    public String getNationality() {
-        return nationality;
-    }
-
-    /**
-     * Sets the code.
-     * 
-     * @param code
-     *            The code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            The name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Sets the nationality.
-     * 
-     * @param nationality
-     *            The nationality to set
-     */
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[COUNTRY idInternal= ");
+		stringBuilder.append(getIdInternal());
+		stringBuilder.append(", name= ");
+		stringBuilder.append(getName());
+		stringBuilder.append(", nationality= ");
+		stringBuilder.append(getNationality());
+		stringBuilder.append(", code= ");
+		stringBuilder.append(getCode());
+		stringBuilder.append("]");
+		return stringBuilder.toString();
     }
 
 }

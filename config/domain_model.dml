@@ -43,48 +43,10 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 }
 
 
-class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyTeacher;
-	Date lastModificationDate;
-	String publication;
-	
-	interface "
-	public net.sourceforge.fenixedu.util.OldPublicationType getOldPublicationType();
-
-	public void setOldPublicationType(net.sourceforge.fenixedu.util.OldPublicationType oldPublicationType);
-	
-	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-
-	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
-	"
-}
-
-
-class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
-	String report;
-	Date lastModificationDate;
-	Integer keyExecutionCourse;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
-
-	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
-	"
-}
-
-
-class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyCurricularCourse;
-	Date lastModificationDate;
-	String strongPoints;
-	String weakPoints;
-	String studentReport;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
-
-	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-	"
+class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.domain.DomainObject {
+	String code;
+	String nationality;
+	String name;
 }
 
 
@@ -100,6 +62,19 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourcefo
 	public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
 
 	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
+	String report;
+	Date lastModificationDate;
+	Integer keyExecutionCourse;
+	
+	interface "
+	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
+
+	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
 	"
 }
 
@@ -126,6 +101,117 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	public net.sourceforge.fenixedu.util.DelegateYearType getYearType();
 	
 	public void setYearType(net.sourceforge.fenixedu.util.DelegateYearType yearType);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double tolerance2_3;
+	Double deviation2_3;
+	Double tolerance2_2;
+	Integer numAnswers2_4;
+	Integer gepCourseId;
+	Integer numAnswers2_5_number;
+	Double average2_8;
+	Integer numAnswers2_3;
+	String gepCourseName;
+	String average2_7;
+	Double numberEvaluated;
+	Integer numAnswers2_6;
+	Double tolerance2_4;
+	Double deviation2_2;
+	Double average2_6;
+	Integer semester;
+	Integer numAnswers2_7;
+	Double average2_3;
+	Integer numAnswers2_8;
+	Integer keyExecutionPeriod;
+	Double tolerance2_6;
+	Double deviation2_4;
+	Double numberApproved;
+	Integer curricularYear;
+	Double average2_4;
+	Double tolerance2_5;
+	Double deviation2_5;
+	Integer firstEnrollment;
+	Double average2_2;
+	String courseCode;
+	Integer keyDegree;
+	Double average2_5;
+	Integer numAnswers2_2;
+	Double numberEnrollments;
+	Integer gepExecutionYear;
+	Double representationQuota;
+	Double deviation2_8;
+	Double deviation2_6;
+	Double tolerance2_8;
+	Integer numAnswers2_5_text;
+	Integer numberAnswers;
+	Integer inquiryId;
+	
+	interface "
+	public net.sourceforge.fenixedu.domain.IDegree getDegree();
+
+	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
+	
+	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod() ;
+	
+    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double average3_9;
+	Double average3_4_numerical;
+	Integer gepCourseId;
+	Double average2_8;
+	Double roomAverage;
+	String average3_3_interval;
+	String gepCourseName;
+	Integer numberEvaluated;
+	Double averageAppreciationTeachers;
+	Double average3_3_numerical;
+	Double averageAppreciationCourse;
+	Double average2_6;
+	Integer semester;
+	Double average6_2;
+	Double average2_7_numerical;
+	Double average2_3;
+	Double average3_6;
+	Integer keyExecutionPeriod;
+	String average2_7_interval;
+	Integer numberApproved;
+	Integer curricularYear;
+	Double average6_1;
+	Double average2_4;
+	Double average3_11;
+	Double average3_10;
+	String average3_4_interval;
+	String gepDegreeName;
+	Double firstEnrollment;
+	Double average2_2;
+	String courseCode;
+	Integer keyDegree;
+	Double average3_7;
+	Double average2_5;
+	Integer numberEnrollments;
+	Integer gepExecutionYear;
+	Double average3_5;
+	Double representationQuota;
+	Double average6_3;
+	Double average3_8;
+	Integer numberAnswers;
+	Integer inquiryId;
+	
+	interface "
+	public net.sourceforge.fenixedu.domain.IDegree getDegree();
+
+	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
+	
+	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod() ;
+	
+    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
 	"
 }
 
@@ -203,112 +289,33 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes extends 
 }
 
 
-class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double average3_9;
-	Double average3_4_numerical;
-	Integer gepCourseId;
-	Double average2_8;
-	Double roomAverage;
-	String average3_3_interval;
-	String gepCourseName;
-	Integer numberEvaluated;
-	Double averageAppreciationTeachers;
-	Double average3_3_numerical;
-	Double averageAppreciationCourse;
-	Double average2_6;
-	Integer semester;
-	Double average6_2;
-	Double average2_7_numerical;
-	Double average2_3;
-	Double average3_6;
-	Integer keyExecutionPeriod;
-	String average2_7_interval;
-	Integer numberApproved;
-	Integer curricularYear;
-	Double average6_1;
-	Double average2_4;
-	Double average3_11;
-	Double average3_10;
-	String average3_4_interval;
-	String gepDegreeName;
-	Double firstEnrollment;
-	Double average2_2;
-	String courseCode;
-	Integer keyDegree;
-	Double average3_7;
-	Double average2_5;
-	Integer numberEnrollments;
-	Integer gepExecutionYear;
-	Double average3_5;
-	Double representationQuota;
-	Double average6_3;
-	Double average3_8;
-	Integer numberAnswers;
-	Integer inquiryId;
+class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Date lastModificationDate;
+	String publication;
 	
 	interface "
-	public net.sourceforge.fenixedu.domain.IDegree getDegree();
+	public net.sourceforge.fenixedu.util.OldPublicationType getOldPublicationType();
 
-	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
+	public void setOldPublicationType(net.sourceforge.fenixedu.util.OldPublicationType oldPublicationType);
 	
-	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod() ;
-	
-    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
+
+	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
 	"
 }
 
 
-class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double tolerance2_3;
-	Double deviation2_3;
-	Double tolerance2_2;
-	Integer numAnswers2_4;
-	Integer gepCourseId;
-	Integer numAnswers2_5_number;
-	Double average2_8;
-	Integer numAnswers2_3;
-	String gepCourseName;
-	String average2_7;
-	Double numberEvaluated;
-	Integer numAnswers2_6;
-	Double tolerance2_4;
-	Double deviation2_2;
-	Double average2_6;
-	Integer semester;
-	Integer numAnswers2_7;
-	Double average2_3;
-	Integer numAnswers2_8;
-	Integer keyExecutionPeriod;
-	Double tolerance2_6;
-	Double deviation2_4;
-	Double numberApproved;
-	Integer curricularYear;
-	Double average2_4;
-	Double tolerance2_5;
-	Double deviation2_5;
-	Integer firstEnrollment;
-	Double average2_2;
-	String courseCode;
-	Integer keyDegree;
-	Double average2_5;
-	Integer numAnswers2_2;
-	Double numberEnrollments;
-	Integer gepExecutionYear;
-	Double representationQuota;
-	Double deviation2_8;
-	Double deviation2_6;
-	Double tolerance2_8;
-	Integer numAnswers2_5_text;
-	Integer numberAnswers;
-	Integer inquiryId;
+class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCurricularCourse;
+	Date lastModificationDate;
+	String strongPoints;
+	String weakPoints;
+	String studentReport;
 	
 	interface "
-	public net.sourceforge.fenixedu.domain.IDegree getDegree();
+	public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
 
-	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
-	
-	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod() ;
-	
-    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
 	"
 }
