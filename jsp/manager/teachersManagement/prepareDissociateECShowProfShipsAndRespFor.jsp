@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<%@ page import="DataBeans.InfoTeacher" %>
 <h2><bean:message key="link.manager.teachersManagement.removeECAssociation" /></h2>
 <span class="error"><html:errors /></span>
 <html:form action="/teachersManagement">
