@@ -361,7 +361,7 @@
     		scope="request"
     		>
   		<forward name="showForm" path="/chooseExecutionPeriod.jsp"/>
-  		<forward name="choose" path="/beforeSop.do"/>
+  		<forward name="choose" path="/commonNavLocalBeforeSop.jsp"/>
   		<forward name="viewRoom" path="/sopViewRoom.jsp"/>
 	</action>
 

@@ -24,7 +24,7 @@
 	</table>
 </html:form> 
 <br />
-<logic:present name="publico.infoRoom" scope="session">
+<logic:present name="publico.infoRoom" scope="request">
             <table width="100%">
                 <tr>
                     <td class="listClasses-header">
@@ -71,7 +71,7 @@
 	<br />	
 	<div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
 	</logic:present>
-	<logic:notPresent name="publico.infoRoom" scope="session">
+	<logic:notPresent name="publico.infoRoom" scope="request">
 		<table align="center">
 			<tr>
 				<td>
