@@ -32,5 +32,6 @@ public abstract class SessionConstants {
 	public static final String INFO_DEGREE_LIST_KEY = "infoDegree.list";
 	public static final String CURRICULAR_YEAR_LIST_KEY = "curricularYear.list";
 	public static final String SHIFT_VIEW = "shiftview";
-	public static String INFO_SHIFTS_EXECUTION_COURSE_KEY = "infoTurnosDeDisciplinaExecucao";
+	public static final String INFO_SHIFTS_EXECUTION_COURSE_KEY = "infoTurnosDeDisciplinaExecucao";
+	public static final String INFO_EXECUTION_PERIOD_KEY = "info_execution_period_key"; 
 }
