@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.coordinator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -117,12 +118,15 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
             Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
                 executionDegree.getCurricularPlan());
 
-        CollectionUtils.transform(allCurricularCourses, new Transformer()
+        List allInfoCurricularCourses = new ArrayList();
+        
+        CollectionUtils.collect(allCurricularCourses, new Transformer()
         {
             public Object transform(Object arg0)
             {
                 ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                CollectionUtils.transform(curricularCourse.getScopes(), new Transformer()
+                List allInfoCurricularCourseScopes = new ArrayList();
+                CollectionUtils.collect(curricularCourse.getScopes(), new Transformer()
                 {
                     public Object transform(Object arg0)
                     {
@@ -130,16 +134,38 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
                         return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
                             curricularCourseScope);
                     }
-                });
+                }, allInfoCurricularCourseScopes);
 
                 InfoCurricularCourse infoCurricularCourse =
                     Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-                infoCurricularCourse.setInfoScopes(curricularCourse.getScopes());
+                infoCurricularCourse.setInfoScopes(allInfoCurricularCourseScopes);
                 return infoCurricularCourse;
             }
-        });
+        }, allInfoCurricularCourses);
+        
+//        CollectionUtils.transform(allCurricularCourses, new Transformer()
+//        {
+//            public Object transform(Object arg0)
+//            {
+//                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+//                CollectionUtils.transform(curricularCourse.getScopes(), new Transformer()
+//                {
+//                    public Object transform(Object arg0)
+//                    {
+//                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+//                        return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+//                            curricularCourseScope);
+//                    }
+//                });
+//
+//                InfoCurricularCourse infoCurricularCourse =
+//                    Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+//                infoCurricularCourse.setInfoScopes(curricularCourse.getScopes());
+//                return infoCurricularCourse;
+//            }
+//        });
 
-        infoDegreeCurricularPlan.setCurricularCourses(allCurricularCourses);
+        infoDegreeCurricularPlan.setCurricularCourses(allInfoCurricularCourses);
         return infoDegreeCurricularPlan;
     }
 }
