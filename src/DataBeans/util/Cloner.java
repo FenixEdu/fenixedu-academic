@@ -24,6 +24,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
+import DataBeans.InfoGuideSituation;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
