@@ -39,14 +39,16 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 				"testSummaryBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
-		} catch (NotAuthorizedException ex) {
+		}
+		catch (NotAuthorizedException ex) {
 			fail(
 				getNameOfServiceToBeTested()
 					+ "fail testSummaryBelongsExecutionCourse");
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			fail(
-				"Não foi possivel correr o serviço"
-					+ getNameOfServiceToBeTested());
+				getNameOfServiceToBeTested()
+					+ "fail testSummaryBelongsExecutionCourse");
 		}
 	}
 
@@ -64,20 +66,19 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 					serviceArguments);
 			fail(
 				getNameOfServiceToBeTested()
-					+ "fail testItemNotBelongsExecutionCourse");
-
-		} catch (NotAuthorizedException ex) {
+					+ "fail testSummaryNotBelongsExecutionCourse");
+		}
+		catch (NotAuthorizedException ex) {
 
 			System.out.println(
 				"testItemNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
-
-		} catch (Exception ex) {
-			fail(
-				"Não foi possivel correr o serviço"
-					+ getNameOfServiceToBeTested());
 		}
-
+		catch (Exception ex) {
+			fail(
+				getNameOfServiceToBeTested()
+					+ "fail testSummaryNotBelongsExecutionCourse");
+		}
 	}
 
 	protected abstract Object[] getAuthorizeArguments();
