@@ -327,12 +327,12 @@
 		input="/editItem.jsp"
 		path="/editItem"
 		parameter="method"
+		scope="request"
 		type="ServidorApresentacao.Action.teacher.EditItemDispatchAction"
         validate="false" >
        <forward name="editItem" path="/editItem.jsp"/>
        <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
-	
 	
 	</action-mappings>
 
