@@ -123,6 +123,18 @@ public class Data {
 	return result;	
   }
   
+
+  public static ArrayList getExpirationYears() {
+	  ArrayList result = new ArrayList();
+	  Calendar date = Calendar.getInstance();
+	
+	  result.add(new LabelValueBean(Data.OPTION_STRING, Data.OPTION_DEFAULT.toString()));
+
+	  for (int i = date.get(Calendar.YEAR); i<(date.get(Calendar.YEAR) + 20); i++)
+		  result.add(new LabelValueBean(new Integer(i).toString(), new Integer(i).toString()));
+	  return result;	
+	}
+
   
   public static boolean validDate(Integer day, Integer month) {
   	
