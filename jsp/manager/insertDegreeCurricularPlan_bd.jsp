@@ -130,7 +130,7 @@
 </table>
 
 <html:hidden property="method" value="insert"/>
-<html:hidden property="degreeId"/>
+<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 
 <br>
 <html:submit styleClass="inputbutton">

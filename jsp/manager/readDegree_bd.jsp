@@ -3,8 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<bean:define id="degreeId" name="degreeId"/>
-
 <table>
 	
 <tr>
@@ -23,8 +21,8 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="/editDegree.do?method=prepareEdit"  paramId="degreeId" paramName="degreeId"><bean:message key="label.manager.edit.degree"/></html:link></li>
-	<li><html:link page="/insertDegreeCurricularPlan.do?method=prepareInsert" paramId="degreeId" paramName="degreeId"><bean:message key="label.manager.insert.degreeCurricularPlan"/></html:link></li>			
+	<li><html:link page="<%= "/editDegree.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") %>"><bean:message key="label.manager.edit.degree"/></html:link></li>
+	<li><html:link page="<%= "/insertDegreeCurricularPlan.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") %>"><bean:message key="label.manager.insert.degreeCurricularPlan"/></html:link></li>			
 </ul>
 
 <h3><bean:message key="label.manager.degreeCurricularPlans"/></h3>
@@ -42,7 +40,7 @@
 	
 <html:form action="/deleteDegreeCurricularPlans" method="get">
 
-<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
+<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 <table width="70%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header">	
@@ -61,7 +59,7 @@
 		<bean:write name="degreeCurricularPlan" property="idInternal"/>
 		</html:multibox>
 		</td>				
-		<td class="listClasses"><html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
+		<td class="listClasses"><html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getParameter("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
 		</td>
 		<td class="listClasses"><bean:write name="degreeCurricularPlan" property="degreeDuration"/>
 		</td>

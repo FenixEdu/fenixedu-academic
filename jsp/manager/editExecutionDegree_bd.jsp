@@ -9,9 +9,9 @@
 	    
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="edit"/>
-	<html:hidden property="degreeId"/>
-	<html:hidden property="degreeCurricularPlanId"/>
-	<html:hidden property="executionDegreeId"/>
+	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+	<html:hidden property="executionDegreeId" value="<%= request.getParameter("executionDegreeId") %>"/>
 	<bean:define id="executionDegree" name="infoExecutionDegree"/>
 	
 	<table>

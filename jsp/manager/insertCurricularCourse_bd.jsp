@@ -9,8 +9,8 @@
 	    
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insert"/>
-	<html:hidden property="degreeId"/>
-	<html:hidden property="degreeCurricularPlanId"/>
+	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	
 	<table>
 		<tr>

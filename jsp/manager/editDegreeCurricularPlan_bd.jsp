@@ -126,8 +126,8 @@
 			
 </table>
 <html:hidden property="method" value="edit" />
-<html:hidden property="degreeId"/>
-<html:hidden property="degreeCurricularPlanId"/>
+<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
+<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	
 
 <br />

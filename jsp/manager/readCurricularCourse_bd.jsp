@@ -17,28 +17,19 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
-	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId=" + request.getAttribute("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
+	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
+	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
 </ul>
-
-<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
-<bean:define id="curricularCourseId" name="curricularCourseId"/>
-<bean:define id="degreeId" name="degreeId"/>
-
 	
 <html:form action="/readCurricularCourse">
 	<h3><bean:message key="label.manager.executionCourses"/></h3>
 
-<logic:empty name="executionCoursesList">
+	<logic:empty name="executionCoursesList">
 		<i><bean:message key="label.manager.executionCourses.nonExisting"/></i>
 	</logic:empty>
 	
 	<logic:present name="executionCoursesList" scope="request">
 		<logic:notEmpty name="executionCoursesList">
-
-			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
-			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
-			<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
 			
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
@@ -60,7 +51,7 @@
 						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/>
 						</td>
 	 				</tr>
-	 			</logic:iterate>					
+	 			</logic:iterate>						
 			</table>
 			
 			<br>
@@ -78,11 +69,7 @@
 	<logic:present name="curricularCourseScopesList" scope="request">
 		<logic:notEmpty name="curricularCourseScopesList">
 	
-			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
-			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
-			<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
-			
-		<table width="70%" cellpadding="0" border="0">
+			<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
 					</td>
@@ -102,11 +89,10 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
-					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
 					</td>
-					
+					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
+					</td>
 				</tr>
 				<logic:iterate id="curricularCourseScope" name="curricularCourseScopesList">
 				
@@ -143,9 +129,6 @@
 							</ul>
 						</td>
 	 				</tr>
-	 				<!--PASSAR O ID DO SCOPE PA TIRAR O INFO NA ACTION-->
-	 				
-	 				
 	 			</logic:iterate>			
 			</table>
 			
@@ -153,5 +136,5 @@
 		</logic:notEmpty>	 	
 	</logic:present>
 	
-	
+	<span class="error"><html:errors/></span>
 </html:form> 
