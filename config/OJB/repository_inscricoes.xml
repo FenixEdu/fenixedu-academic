@@ -364,6 +364,11 @@
 		column="KEY_BRANCH"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="givenCredits"
+		column="GIVEN_CREDITS"
+		jdbc-type="FLOAT"
+	/>
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"

@@ -10,7 +10,7 @@ insert into STUDENT_KIND values (1, 1, 3, 7, 10);
 -- (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH, SPECIALIZATION)
 -- -----------------------------
 delete from STUDENT_CURRICULAR_PLAN;
-insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 1, 1);
+insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 1, 1, 0);
 
 -- -----------------------------
 -- Data for table 'ENROLMENT_PERIOD'

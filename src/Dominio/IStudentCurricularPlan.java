@@ -24,6 +24,7 @@ public interface IStudentCurricularPlan {
   public StudentCurricularPlanState getCurrentState();
   public Date getStartDate();
   public Specialization getSpecialization();
+  public Double getGivenCredits();
   
   public void setStudent(IStudent student);
   public void setBranch(IBranch branch);
@@ -31,5 +32,5 @@ public interface IStudentCurricularPlan {
   public void setCurrentState(StudentCurricularPlanState state);
   public void setStartDate(Date startDate);
   public void setSpecialization(Specialization specialization);
-  
+  public void setGivenCredits(Double givenCredits);
 }

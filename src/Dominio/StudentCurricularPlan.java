@@ -12,6 +12,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	protected Integer branchKey;
 	protected Integer degreeCurricularPlanKey;
 	protected Specialization specialization;
+	protected Double givenCredits;
 
 	protected IStudent student;
 	protected IBranch branch;
@@ -63,6 +64,8 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 		result += "currentState = " + this.currentState + "]\n";
 		return result;
 	}
+
+	
 
 	/**
 	 * Returns the degreeCurricularPlan.
@@ -218,6 +221,20 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	 */
 	public void setSpecialization(Specialization specialization) {
 		this.specialization = specialization;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getGivenCredits() {
+		return givenCredits;
+	}
+
+	/**
+	 * @param Given Credits
+	 */
+	public void setGivenCredits(Double givenCredits) {
+		this.givenCredits = givenCredits;
 	}
 
 }
