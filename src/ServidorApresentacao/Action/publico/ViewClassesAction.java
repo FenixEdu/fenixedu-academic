@@ -16,6 +16,7 @@ import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author João Mota
@@ -32,6 +33,8 @@ public class ViewClassesAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		SessionUtils.validSessionVerification(request, mapping);
+			
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			GestorServicos gestor = GestorServicos.manager();

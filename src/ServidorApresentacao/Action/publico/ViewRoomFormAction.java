@@ -16,6 +16,7 @@ import DataBeans.InfoRoom;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
@@ -28,7 +29,9 @@ public class ViewRoomFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
+		
+		SessionUtils.validSessionVerification(request, mapping);
+		
 		DynaActionForm indexForm = (DynaActionForm) form;
 
 		HttpSession session = request.getSession(false);

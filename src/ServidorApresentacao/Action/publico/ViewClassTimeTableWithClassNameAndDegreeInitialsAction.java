@@ -19,6 +19,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
@@ -35,27 +36,23 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		System.out.println("#####################################################");
+		
+		SessionUtils.validSessionVerification(request, mapping);
 			
 		HttpSession session = request.getSession(false);
-		
-		System.out.println("1");
 		
 		String degreeInitials = request.getParameter("degreeInitials");
 		String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
 
-		System.out.println("2");
 
 		if (degreeInitials == null)
 			return mapping.getInputForward();
 			
-		System.out.println("3");
 
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) session.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-		System.out.println("4");
 
 		Object[] args = { infoExecutionPeriod.getInfoExecutionYear(),
 						  degreeInitials,
@@ -66,12 +63,7 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 				"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
 				args);
 				
-			System.out.println("5");
-
 		session.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
-
-		System.out.println("Chegou ao Fim da Action nova... :o)");
-		System.out.println("Vai passar para a outra Action");
 
 		return mapping.findForward("Sucess");
 	}

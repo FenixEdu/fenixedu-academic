@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
@@ -24,6 +25,8 @@ public class SelectSemesterAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			
+		SessionUtils.validSessionVerification(request, mapping);			
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {

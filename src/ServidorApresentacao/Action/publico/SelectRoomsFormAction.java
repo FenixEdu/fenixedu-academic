@@ -15,6 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
 /**
@@ -28,6 +29,8 @@ public class SelectRoomsFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+		
+		SessionUtils.validSessionVerification(request, mapping);			
 
 		DynaActionForm roomForm = (DynaActionForm) form;
 

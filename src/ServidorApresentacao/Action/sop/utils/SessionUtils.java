@@ -25,6 +25,7 @@ import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 
 /**
  * @author jpvl
@@ -106,17 +107,19 @@ public final class SessionUtils {
 		HttpServletRequest request,
 		ActionMapping mapping)
 		throws Exception {
+
 		HttpSession session = request.getSession(false);
 
 		if (session == null
 			|| request.getSession(false).getAttribute(
 				SessionConstants.SESSION_IS_VALID)
 				== null) {
+
 			ActionErrors errors = new ActionErrors();
 			ActionError error = new ActionError("error.invalid.session");
 			errors.add("error.invalid.session", error);
 			request.setAttribute(Globals.ERROR_KEY, errors);
-			throw new Exception();
+			throw new InvalidSessionActionException();
 		}
 
 	}

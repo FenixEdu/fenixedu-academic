@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
 /**
@@ -23,6 +24,8 @@ public class PrepareConsultRoomsFormAction extends Action {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
+      	
+	SessionUtils.validSessionVerification(request, mapping);      	
     
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {

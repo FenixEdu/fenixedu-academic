@@ -17,13 +17,14 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorApresentacao.Action.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class SiteViewerDispatchAction extends FenixDispatchAction {
 
@@ -33,6 +34,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession session = request.getSession(false);
 		String roomName = (String) request.getParameter("roomName");
@@ -90,6 +93,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			
+		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
@@ -108,6 +113,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession session = request.getSession(false);
 		ActionErrors errors = new ActionErrors();
@@ -130,7 +137,9 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response,
 		String exeCourseCode)
 		throws Exception {
-
+		
+		SessionUtils.validSessionVerification(request, mapping);
+		
 		HttpSession session = request.getSession(false);
 		ActionErrors errors = new ActionErrors();
 		InfoExecutionPeriod infoExecPeriod = null;

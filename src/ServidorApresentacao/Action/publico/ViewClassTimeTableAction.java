@@ -22,6 +22,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author João Mota
@@ -40,8 +41,8 @@ public class ViewClassTimeTableAction extends Action {
 		HttpServletResponse response)
 		throws Exception {
 			
-		System.out.println("Entrou na antiga Action... :o)");
-
+		SessionUtils.validSessionVerification(request, mapping);
+			
 		HttpSession session = request.getSession(false);
 		
 		String className = request.getParameter("className");

@@ -105,12 +105,18 @@
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
        <forward name="index" path="/index.do" redirect="true"/>
+       <forward name="firstPage" path="/index.do"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
 	    <!-- page fronting actions -->
-    	<action path="/index" forward="/index.jsp"/>
+    	
+    	<action path="/index"
+      	      type="ServidorApresentacao.Action.publico.InitiateSessionAction">
+      	  <forward name="Success" path="/index.jsp"/>
+      </action>
+    	
     	 <action path="/naoExecutado" forward="/error.jsp"/>
     	<action path="/viewExecutionCourseShifts" forward="/viewExecutionCourseShifts.jsp"/>
 

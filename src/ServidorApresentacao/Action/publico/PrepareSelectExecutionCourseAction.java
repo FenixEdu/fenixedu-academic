@@ -16,6 +16,7 @@ import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author João Mota
@@ -28,6 +29,8 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
