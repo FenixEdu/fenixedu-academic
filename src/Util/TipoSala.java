@@ -54,9 +54,9 @@ public class TipoSala implements Serializable{
 	public String toString() {
 		int value = this.tipo.intValue();
 		switch (value) {
-			case ANFITEATRO : return "Anfiteatro";
-			case LABORATORIO : return "Laboratório";
-			case PLANA : return "Plana";
+			case ANFITEATRO : return "A";
+			case LABORATORIO : return "L";
+			case PLANA : return "P";
 		}
 		return "Error: Invalid lesson type";
 	}
