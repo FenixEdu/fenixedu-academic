@@ -71,10 +71,11 @@
 	    	<logic:iterate id="markElem" name="marksListComponent" property="marksList" indexId="markId" type="DataBeans.InfoMark" > 
 	    	
 		    	<bean:define id="studentCode" name="markElem" property="infoFrequenta.aluno.idInternal" />
+		    	<bean:define id="studentNumber" name="markElem" property="infoFrequenta.aluno.number" />
 		    	<bean:define id="infoFrequenta" name="markElem" property="infoFrequenta"/>
 		    	<logic:notEmpty name="infoFrequenta" property="infoEnrolment">
 		      		<bean:define id="infoEnrolment" name="infoFrequenta" property="infoEnrolment"/>					
-			  		<bean:define id="evaluationType" name="infoEnrolment" property="evaluationType"/> 		      		
+			  		<bean:define id="evaluationType" name="infoEnrolment" property="evaluationType"/>
 		  		</logic:notEmpty>
 
 	    		<bean:define id="studentMark" name="markElem" property="mark" />
@@ -100,6 +101,7 @@
 				<td class="listClasses">
 					<html:text name="markElem" property="mark" size="4" indexed="true" />
 					<html:hidden name="markElem" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
+					<html:hidden name="markElem" property="studentNumber" value="<%= studentNumber.toString() %>" indexed="true" />
 				</td>
 				</tr>
 				
