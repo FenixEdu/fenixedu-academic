@@ -429,7 +429,7 @@
             encoding="${encoding}">
 	        <fileset dir="${sql}">
 			 <include name="tables_*.sql" />
-	         <exclude name="tables_inscRelatedDBTables.sql" />
+			 <exclude name="tables_AssiduidadeASSMARCAS.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -517,38 +517,6 @@
             </classpath>
         </sql>
 
-
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            src="${sql}/test-data_inscricoes.sql"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-
-
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            src="${sql}/test-data_masterDegree.sql"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-
        <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -581,6 +549,10 @@
 	  <copy file="${sql}/dbContents.xml" toFile="${sql}/testDataSet.xml"/>
     </target>
     
+	<target name="soft-load-database-for-insc" depends="" description="Apenas carrega as tabelas da base de dados que interessam para as inscrições.">
+		<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/ciapl" userid="root" password="" encoding="${encoding}" src="${sql}/test-data_inscricoes_curso.sql"/>
+	</target>
+
 	<!-- Targets for tomcat -->
     <target name="tomcat-stop"
             description="Stops tomcat">
