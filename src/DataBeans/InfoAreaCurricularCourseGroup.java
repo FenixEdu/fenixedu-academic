@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import Util.AreaType;
 import Dominio.ICurricularCourseGroup;
 
 /**
@@ -34,9 +35,23 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
         super.setMinimumValue(minimumCredits);
     }
 
+    /**
+     * @return
+     */
+    public AreaType getAreaType() {
+        return areaType;
+    }
+
+    /**
+     * @param areaType
+     */
+    public void setAreaType(AreaType areaType) {
+        this.areaType = areaType;
+    }
     public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
         if (curricularCourseGroup != null) {            
+            setAreaType(curricularCourseGroup.getAreaType());
             setMaximumCredits(curricularCourseGroup.getMaximumCredits());
             setMinimumCredits(curricularCourseGroup.getMinimumCredits());
         }
@@ -54,19 +69,10 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
 
 
 
-
-
-
-
-
-
-
-
     /* (non-Javadoc)
      * @see DataBeans.InfoCurricularCourseGroup#getType()
      */
-    public String getType() {
-        
+    public String getType() {        
         return "label.curricularCourseGroup.area";
     }
     

@@ -21,10 +21,26 @@ public abstract class CurricularCourseGroup extends DomainObject {
     protected List curricularCourses;
 
     protected List scientificAreas;
-    
+
     protected String ojbConcreteClass;
-    
+
     protected String name;
+
+    /**
+     *  
+     */
+    public CurricularCourseGroup() {
+        super();
+        this.ojbConcreteClass = this.getClass().getName();
+    }
+
+    /**
+     * @param idInternal
+     */
+    public CurricularCourseGroup(Integer idInternal) {
+        super(idInternal);
+        this.ojbConcreteClass = this.getClass().getName();
+    }
 
     public Integer getKeyBranch() {
         return keyBranch;
@@ -82,15 +98,16 @@ public abstract class CurricularCourseGroup extends DomainObject {
         this.ojbConcreteClass = ojbConcreteClass;
     }
 
-
     /**
      * @return Returns the name.
      */
     public String getName() {
         return name;
     }
+
     /**
-     * @param name The name to set.
+     * @param name
+     *            The name to set.
      */
     public void setName(String name) {
         this.name = name;

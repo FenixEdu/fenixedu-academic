@@ -20,9 +20,9 @@ public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements
         if (source instanceof SibsPaymentType) {
             SibsPaymentType sibsPaymentType = (SibsPaymentType) source;
             return new Integer(sibsPaymentType.getValue());
-        } else {
+        } 
             return source;
-        }
+        
     }
 
     /*

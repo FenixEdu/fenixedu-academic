@@ -20,7 +20,6 @@ import Dominio.Turma;
 import ServidorAplicacao.Factory.PublicSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;

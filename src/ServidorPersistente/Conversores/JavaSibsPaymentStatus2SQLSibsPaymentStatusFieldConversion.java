@@ -20,9 +20,9 @@ public class JavaSibsPaymentStatus2SQLSibsPaymentStatusFieldConversion
         if (source instanceof SibsPaymentStatus) {
             SibsPaymentStatus sibsPaymentStatusType = (SibsPaymentStatus) source;
             return new Integer(sibsPaymentStatusType.getValue());
-        } else {
+        } 
             return source;
-        }
+        
     }
 
     /*

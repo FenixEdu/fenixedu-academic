@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.ReimbursementGuideState;

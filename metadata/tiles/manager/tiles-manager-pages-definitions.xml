@@ -321,4 +321,16 @@
 		<put name="body" value="/manager/curricularCourseGroups/viewCurricularCourseGroups.jsp" />
         <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
 	</definition>
+    <definition name="viewInsertAreaCurricularCourseGroup" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/curricularCourseGroups/viewInsertAreaCurricularCourseGroup.jsp" />
+        <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
+    <definition name="viewInsertOptionalCurricularCourseGroup" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/curricularCourseGroups/viewInsertOptionalCurricularCourseGroup.jsp" />
+        <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
+    <definition name="viewCurricularCourses" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/curricularCourseGroups/viewCurricularCourses.jsp" />
+        <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
 </tiles-definitions>

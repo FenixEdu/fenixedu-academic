@@ -36,26 +36,8 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
     public InfoCurricularCourseGroup() {
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoCurricularCourseGroup) {
-            InfoCurricularCourseGroup infoCurricularCourseGroup = (InfoCurricularCourseGroup) obj;
-            resultado = (((getInfoBranch() == null && infoCurricularCourseGroup.getInfoBranch() == null) || (getInfoBranch() != null
-                    && infoCurricularCourseGroup.getInfoBranch() != null && getInfoBranch().equals(
-                    infoCurricularCourseGroup.getInfoBranch())))
-                    && ((getAreaType() == null && infoCurricularCourseGroup.getAreaType() == null) || (getAreaType() != null
-                            && infoCurricularCourseGroup.getAreaType() != null && getAreaType().equals(
-                            infoCurricularCourseGroup.getAreaType()))) && ((getCurricularCourseScopes() == null && infoCurricularCourseGroup
-                    .getCurricularCourseScopes() == null) || (getCurricularCourseScopes() != null
-                    && infoCurricularCourseGroup.getCurricularCourseScopes() != null && getCurricularCourseScopes()
-                    .equals(infoCurricularCourseGroup.getCurricularCourseScopes()))));
-        }
-
-        return resultado;
-    }
-
     public abstract String getType();
-    
+
     public InfoBranch getInfoBranch() {
         return infoBranch;
     }
@@ -79,20 +61,6 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
      */
     public void setCurricularCourseScopes(List curricularCourseScopes) {
         this.curricularCourseScopes = curricularCourseScopes;
-    }
-
-    /**
-     * @return
-     */
-    public AreaType getAreaType() {
-        return areaType;
-    }
-
-    /**
-     * @param areaType
-     */
-    public void setAreaType(AreaType areaType) {
-        this.areaType = areaType;
     }
 
     protected Integer getMaximumValue() {
@@ -159,7 +127,7 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
     public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
         if (curricularCourseGroup != null) {
-            setAreaType(curricularCourseGroup.getAreaType());
+
             setName(curricularCourseGroup.getName());
         }
     }

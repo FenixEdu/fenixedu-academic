@@ -6869,6 +6869,51 @@
         </filterChains>
         <isTransactional>true</isTransactional>
     </service>
+    <service>
+        <name>InsertCurricularCourseGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.InsertCurricularCourseGroup</implementationClass>
+        <description>Creates ans Stores a curricular course group</description>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>DeleteCurricularCourseGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.DeleteCurricularCourseGroup</implementationClass>
+        <description>deletes a curricular course group</description>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>ReadCoursesByCurricularCourseGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.ReadCoursesByCurricularCourseGroup</implementationClass>
+        <description>reads all curricular courses of a curricular course group, including the ones that can be added to it</description>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>AddCurricularCoursesToGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.AddCurricularCoursesToGroup</implementationClass>
+        <description>adds curricular courses to a Curricular Course Group</description>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>RemoveCurricularCoursesFromGroup</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.RemoveCurricularCoursesFromGroup</implementationClass>
+        <description>Removes Curricular Courses from a Curricular Course Group</description>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+        <isTransactional>true</isTransactional>
+    </service>
 	<service>
         <name>ReadPrecedencesFromDegreeCurricularPlan</name>
         <implementationClass>ServidorAplicacao.Servico.manager.precedences.ReadPrecedencesFromDegreeCurricularPlan</implementationClass>
@@ -6878,6 +6923,7 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
+    
 	<service>
         <name>DeletePrecedenceFromDegreeCurricularPlan</name>
         <implementationClass>ServidorAplicacao.Servico.manager.precedences.DeletePrecedenceFromDegreeCurricularPlan</implementationClass>

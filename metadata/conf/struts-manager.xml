@@ -287,14 +287,34 @@
     		<form-property name="page" type="java.lang.Integer" initial="0"/> 
     		<form-property name="logDirName" type="java.lang.String"/>
 	    </form-bean>
-	    
-	   	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
+        
+       <!--   CURRICULAR COURSE GROUPS FORMS --> 
+        <form-bean name="curricularCourseGroupForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/> 
+    		<form-property name="name" type="java.lang.String"/>
+            <form-property type="java.lang.Integer" name="branchId"/>
+            <form-property type="java.lang.Integer" name="areaType"/>
+            <form-property type="java.lang.Integer" name="minimumValue"/>
+            <form-property type="java.lang.Integer" name="maximumValue"/>
+            <form-property type="java.lang.String" name="type"/>
+            
+	    </form-bean>
+		<form-bean name="curricularCoursesGroupForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/>     
+            <form-property name="courseIds" type="java.lang.Integer[]" />  
+            <form-property name="courseIdsToAdd" type="java.lang.Integer[]" />   			            
+	    </form-bean>
+
+	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
 		<form-bean name="insertRestrictionForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
 			<form-property name="page" type="java.lang.Integer" initial="0"/> 
 		</form-bean>
-
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1274,13 +1294,25 @@
 
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"
-		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCouseGroupManagementDispatchAction"
+		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCourseGroupManagementDispatchAction"
 		parameter="method"
+		name="curricularCourseGroupForm"
 		scope="request"
 	>
 		<forward name="viewGroups" path="viewCurricularCourseGroups"/>
-     </action>
+        <forward path="viewInsertAreaCurricularCourseGroup" name="viewInsertAreaCurricularCourseGroup"/>
+        <forward path="viewInsertOptionalCurricularCourseGroup" name="viewInsertOptionalCurricularCourseGroup"/>
         
+     </action>
+        <action path="/manageCurricularCourseGroup"
+		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCoursesGroupManagementDispatchAction"
+		parameter="method"
+		name="curricularCoursesGroupForm"
+		scope="request"
+	>		
+        <forward path="viewCurricularCourses" name="viewCurricularCourses"/>                      
+        
+     </action>
         
 	</action-mappings>
 

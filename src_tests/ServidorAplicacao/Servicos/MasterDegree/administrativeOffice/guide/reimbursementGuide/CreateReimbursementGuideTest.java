@@ -110,7 +110,7 @@ public class CreateReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             Object createArgs[] = { guideId, "", infoReimbursementGuideEntries,
                     userView};
 
-            Integer reimbursementGuideId = (Integer) ServiceManagerServiceFactory
+             ServiceManagerServiceFactory
                     .executeService(userView, getNameOfServiceToBeTested(),
                             createArgs);
 
@@ -147,7 +147,7 @@ public class CreateReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             Object createArgs[] = { guideId, "", infoReimbursementGuideEntries,
                     userView};
 
-            Integer reimbursementGuideId = (Integer) ServiceManagerServiceFactory
+             ServiceManagerServiceFactory
                     .executeService(userView, getNameOfServiceToBeTested(),
                             createArgs);
 
@@ -187,7 +187,7 @@ public class CreateReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             Object createArgs[] = { guideId, "", infoReimbursementGuideEntries,
                     userView};
 
-            Integer reimbursementGuideId = (Integer) ServiceManagerServiceFactory
+         ServiceManagerServiceFactory
                     .executeService(userView, getNameOfServiceToBeTested(),
                             createArgs);
 

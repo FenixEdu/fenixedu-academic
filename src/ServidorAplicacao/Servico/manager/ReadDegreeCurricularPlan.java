@@ -5,6 +5,7 @@ package ServidorAplicacao.Servico.manager;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoDegreeCurricularPlanWithDegree;
 import Dominio.DegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -42,7 +43,7 @@ public class ReadDegreeCurricularPlan implements IService {
             throw new NonExistingServiceException();
         }
 
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree
                 .newInfoFromDomain(degreeCurricularPlan);
 
         return infoDegreeCurricularPlan;

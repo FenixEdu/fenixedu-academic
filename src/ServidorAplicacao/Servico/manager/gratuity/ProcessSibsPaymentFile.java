@@ -26,7 +26,6 @@ import Dominio.gratuity.masterDegree.ISibsPaymentFileEntry;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
-import ServidorAplicacao.Servico.exceptions.gratuity.masterDegree.InvalidSibsPaymentFileFormatServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.IPersistentGuideEntry;
@@ -373,9 +372,9 @@ public class ProcessSibsPaymentFile implements IService {
                 || sibsPaymentType
                         .equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE)) {
             return Specialization.ESPECIALIZACAO_TYPE;
-        } else {
+        } 
             return Specialization.MESTRADO_TYPE;
-        }
+        
 
         //degree code goes here
 

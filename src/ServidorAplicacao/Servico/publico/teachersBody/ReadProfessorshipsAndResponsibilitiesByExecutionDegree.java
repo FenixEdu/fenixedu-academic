@@ -18,7 +18,6 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoProfessorshipWithAll;
-import DataBeans.InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod;
 import DataBeans.teacher.professorship.DetailedProfessorship;
 import Dominio.CursoExecucao;
 import Dominio.ICurricularCourse;

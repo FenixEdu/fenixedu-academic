@@ -3,6 +3,7 @@
 <!-- *************************************************************************************************************** -->
 <class-descriptor class="Dominio.DegreeCurricularPlan" table="DEGREE_CURRICULAR_PLAN">
 	<extent-class class-ref="Dominio.DegreeCurricularPlanLEEC"/>
+    <extent-class class-ref="Dominio.DegreeCurricularPlanLEIC"/>
 
 	<field-descriptor
 		name="ojbConcreteClass"
@@ -100,19 +101,22 @@
 	<collection-descriptor
 			name="curricularCourses"
 			element-class-ref="Dominio.CurricularCourse"
-			proxy="true">
+			proxy="true"
+             refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
 			element-class-ref="Dominio.Branch"
-			proxy="true">
+			proxy="true"
+             refresh="true">
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
 			element-class-ref="Dominio.CurricularCourseEquivalence"
-			proxy="true">
+			proxy="true"
+             refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 </class-descriptor>
@@ -217,18 +221,21 @@
 	<collection-descriptor
 			name="curricularCourses"
 			element-class-ref="Dominio.CurricularCourse"
+            refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
 			element-class-ref="Dominio.Branch"
+            refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
 			element-class-ref="Dominio.CurricularCourseEquivalence"
+            refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
@@ -334,19 +341,23 @@
 	<collection-descriptor
 			name="curricularCourses"
 			element-class-ref="Dominio.CurricularCourse"
-			proxy="true">
+			proxy="true"
+             refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="areas"
 			element-class-ref="Dominio.Branch"
-			proxy="true">
+			proxy="true"
+            refresh="true"
+            >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="curricularCourseEquivalences"
 			element-class-ref="Dominio.CurricularCourseEquivalence"
-			proxy="true">
+			proxy="true"
+             refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 </class-descriptor>

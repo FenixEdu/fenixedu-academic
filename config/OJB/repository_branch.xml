@@ -54,25 +54,29 @@
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="Dominio.DegreeCurricularPlan"
+        refresh="true"
 		proxy="true">
 	<foreignkey field-ref="keyDegreeCurricularPlan"/>
    </reference-descriptor>
-
 	<collection-descriptor
 			name="scopes"
 			element-class-ref="Dominio.CurricularCourseScope"
+            refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="branchKey"/>
 	</collection-descriptor>    
-	<collection-descriptor
+	<collection-descriptor  
 			name="areaCurricularCourseGroups"
 			element-class-ref="Dominio.AreaCurricularCourseGroup"
-			proxy="true">
+            refresh="true"
+			proxy="true"
+            >
 		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>   
     <collection-descriptor
 			name="optionalCurricularCourseGroups"
 			element-class-ref="Dominio.OptionalCurricularCourseGroup"
+            refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>    
