@@ -72,53 +72,60 @@ public class ChangePersonalInfo implements IServico {
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person !!");	
 
-		// Get new Country
-		ICountry nationality = null;
-		try {
-			if (!newInfoPerson.getInfoPais().getNationality().equals(person.getPais().getNationality())) {
-				nationality = sp.getIPersistentCountry().readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
-				person.setPais(nationality);
-			}
-		} catch (ExcepcaoPersistencia ex) {
-		  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-		  newEx.fillInStackTrace();
-		  throw newEx;
-		}
 
-		if (!newInfoPerson.getUsername().equals(userView.getUtilizador())){
-			userView.setUtilizador(newInfoPerson.getUsername());
-			person.setUsername(newInfoPerson.getUsername());
-		}
+		// FIXME: At this time we only can change the Email, Mobile Phone and the Web Site
+
+
+		// Get new Country
+//		ICountry nationality = null;
+//		if (person.getPais() == null)
+//			person.setPais(null);
+//		else
+//			try {
+//				if (!newInfoPerson.getInfoPais().getNationality().equals(person.getPais().getNationality())) {
+//					nationality = sp.getIPersistentCountry().readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
+//					person.setPais(nationality);
+//				}
+//			} catch (ExcepcaoPersistencia ex) {
+//			  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+//			  newEx.fillInStackTrace();
+//			  throw newEx;
+//			}
+//
+//		if (!newInfoPerson.getUsername().equals(userView.getUtilizador())){
+//			userView.setUtilizador(newInfoPerson.getUsername());
+//			person.setUsername(newInfoPerson.getUsername());
+//		}
 		
 		// Change personal Information
-		person.setNascimento(newInfoPerson.getNascimento());
-		person.setDataEmissaoDocumentoIdentificacao(newInfoPerson.getDataEmissaoDocumentoIdentificacao());		
-		person.setDataValidadeDocumentoIdentificacao(newInfoPerson.getDataValidadeDocumentoIdentificacao());
-		person.setTipoDocumentoIdentificacao(newInfoPerson.getTipoDocumentoIdentificacao());
-		person.setNumeroDocumentoIdentificacao(newInfoPerson.getNumeroDocumentoIdentificacao());			
-		person.setLocalEmissaoDocumentoIdentificacao(newInfoPerson.getLocalEmissaoDocumentoIdentificacao());
-		person.setNome(newInfoPerson.getNome());
-		person.setSexo(newInfoPerson.getSexo());
-		person.setEstadoCivil(newInfoPerson.getEstadoCivil());
-		person.setNomePai(newInfoPerson.getNomePai());
-		person.setNomeMae(newInfoPerson.getNomeMae());
-		person.setFreguesiaNaturalidade(newInfoPerson.getFreguesiaNaturalidade());
-		person.setConcelhoNaturalidade(newInfoPerson.getConcelhoNaturalidade());
-		person.setDistritoNaturalidade(newInfoPerson.getDistritoNaturalidade());
-		person.setLocalidadeCodigoPostal(newInfoPerson.getLocalidadeCodigoPostal());
-		person.setMorada(newInfoPerson.getMorada());						
-		person.setLocalidade(newInfoPerson.getLocalidade());
-		person.setCodigoPostal(newInfoPerson.getCodigoPostal());
-		person.setFreguesiaMorada(newInfoPerson.getFreguesiaMorada());
-		person.setConcelhoMorada(newInfoPerson.getConcelhoMorada());
-		person.setDistritoMorada(newInfoPerson.getDistritoMorada());
-		person.setTelefone(newInfoPerson.getTelefone());
+//		person.setNascimento(newInfoPerson.getNascimento());
+//		person.setDataEmissaoDocumentoIdentificacao(newInfoPerson.getDataEmissaoDocumentoIdentificacao());		
+//		person.setDataValidadeDocumentoIdentificacao(newInfoPerson.getDataValidadeDocumentoIdentificacao());
+//		person.setTipoDocumentoIdentificacao(newInfoPerson.getTipoDocumentoIdentificacao());
+//		person.setNumeroDocumentoIdentificacao(newInfoPerson.getNumeroDocumentoIdentificacao());			
+//		person.setLocalEmissaoDocumentoIdentificacao(newInfoPerson.getLocalEmissaoDocumentoIdentificacao());
+//		person.setNome(newInfoPerson.getNome());
+//		person.setSexo(newInfoPerson.getSexo());
+//		person.setEstadoCivil(newInfoPerson.getEstadoCivil());
+//		person.setNomePai(newInfoPerson.getNomePai());
+//		person.setNomeMae(newInfoPerson.getNomeMae());
+//		person.setFreguesiaNaturalidade(newInfoPerson.getFreguesiaNaturalidade());
+//		person.setConcelhoNaturalidade(newInfoPerson.getConcelhoNaturalidade());
+//		person.setDistritoNaturalidade(newInfoPerson.getDistritoNaturalidade());
+//		person.setLocalidadeCodigoPostal(newInfoPerson.getLocalidadeCodigoPostal());
+//		person.setMorada(newInfoPerson.getMorada());						
+//		person.setLocalidade(newInfoPerson.getLocalidade());
+//		person.setCodigoPostal(newInfoPerson.getCodigoPostal());
+//		person.setFreguesiaMorada(newInfoPerson.getFreguesiaMorada());
+//		person.setConcelhoMorada(newInfoPerson.getConcelhoMorada());
+//		person.setDistritoMorada(newInfoPerson.getDistritoMorada());
+//		person.setTelefone(newInfoPerson.getTelefone());
 		person.setTelemovel(newInfoPerson.getTelemovel());
 		person.setEmail(newInfoPerson.getEmail());
 		person.setEnderecoWeb(newInfoPerson.getEnderecoWeb());
-		person.setNumContribuinte(newInfoPerson.getNumContribuinte());
-		person.setProfissao(newInfoPerson.getProfissao());
-		person.setNacionalidade(newInfoPerson.getNacionalidade());
+//		person.setNumContribuinte(newInfoPerson.getNumContribuinte());
+//		person.setProfissao(newInfoPerson.getProfissao());
+//		person.setNacionalidade(newInfoPerson.getNacionalidade());
 		try {
             sp.getIPessoaPersistente().escreverPessoa(person);
 	    } catch (ExcepcaoPersistencia ex) {

@@ -24,6 +24,17 @@
 
     <!-- validation for the Change Application Info Form-->
     <form name="changePersonalInfoForm">
+
+
+      <field property="mobilePhone" depends="integer" page="1">
+        <arg0 key="label.person.mobilePhone" />
+      </field>
+      
+      <field property="email" depends="email" page="1">
+        <arg0 key="Este" resource="false" />
+      </field>
+
+<!--
       
       <field property="name" depends="required" page="1">
         <arg0 key="label.person.name" />
@@ -157,8 +168,7 @@
       <field property="sex" depends="required" page="1">
         <arg0 key="label.person.sex" />
       </field>
-      
-      
+-->      
     </form>
 
 

@@ -119,10 +119,11 @@
       <!-- Action to Prepare the Change of the Candidate's Application Information -->
       <action path="/changePersonalInfoDispatchAction"
 	     attribute="changePersonalInfoForm"
-          name="changePersonalInfoForm"
-         input="/changePersonalInfo.jsp"
+              name="changePersonalInfoForm"
+             input="/changePersonalInfo.jsp"
 	      validate="true"
 		 parameter="method"
+		     scope="request"
       	      type="ServidorApresentacao.Action.person.ChangePersonalInfoDispatchAction">
       	  <forward name="Success" path="/changeSuccess.jsp"/>
       	  <forward name="prepareReady" path="/changePersonalInfo.jsp"/>
