@@ -1,4 +1,5 @@
 package ServidorApresentacao.Action.sop;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.comparators.InfoShiftComparatorByLessonType;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -38,7 +40,7 @@ public class PrepararManipularTurnosFormAction extends Action {
 		
 		List infoTurnosDeDisciplinaExecucao = (List) gestor.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
         
-        //Collections.sort(infoTurnosDeDisciplinaExecucao);
+		Collections.sort(infoTurnosDeDisciplinaExecucao, new InfoShiftComparatorByLessonType());
 		
 		sessao.removeAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
 		if (infoTurnosDeDisciplinaExecucao.size() > 0)
