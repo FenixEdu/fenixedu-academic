@@ -626,7 +626,7 @@
     	      url="jdbc:mysql://localhost/${db.name}"
         	  userid="${db.user}"
 	          password="${db.pass}">
-    	  <export dest="${sql}/dbContents.xml" encoding="ISO-8859-1"/> 
+    	  <export dest="${sql}/dbContents.xml"/> 
 	  </dbunit>
     </target>
     
@@ -836,7 +836,9 @@
         		 use="true"
         		 author="true"
 	             version="true"
-	             windowtitle="Fenix Class OverView">
+	             windowtitle="Fenix Class OverView"
+	             stylesheetfile="${src.jsp}/CSS/javaDoc.css"
+	             >
 	             
             <packageset dir="${src}" defaultexcludes="yes">
 
@@ -862,7 +864,9 @@
         		 use="true"
         		 author="true"
 	             version="true"
-	             windowtitle="Fenix Class OverView">
+	             windowtitle="Fenix Class OverView"
+	             stylesheetfile="${src.jsp}/CSS/javaDoc.css"
+	             >
 	             
             <packageset dir="${src.tests}" defaultexcludes="yes">
 
