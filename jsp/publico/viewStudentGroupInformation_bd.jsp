@@ -6,16 +6,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 
-
-
- <logic:present name="siteView" property="component">
+<logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 	<logic:empty name="component" property="infoSiteStudentInformationList">
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 	</logic:empty> 
 
-<table width="50%" cellpadding="0" border="0">
-<h2><bean:message key="title.StudentGroupInformation"/></h2>
+	<logic:notEmpty name="component" property="infoSiteStudentInformationList">
+	<table width="50%" cellpadding="0" border="0">
+		<h2><bean:message key="title.StudentGroupInformation"/></h2>
 	
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.numberWord" />
@@ -31,14 +30,12 @@
 		<tr>		
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>	
-			</td>	
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
 			</td>		
-			
 			<td class="listClasses">
 					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
 					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
-				</td>
+			</td>
 		</tr>
 			<bean:define id="aux" name="mailingList"/>
 			<logic:lessThan name="aux" value="1">
@@ -52,8 +49,9 @@
 	 </logic:iterate>
 	 
 
-</table>
+	</table>
 
+	</logic:notEmpty> 
 
 </logic:present>
 
