@@ -37,7 +37,7 @@ public class FiltroAutorizacao extends Filtro {
    **/
   public void preFiltragem(IUserView id, IServico servico, Object argumentos[])
     throws FenixServiceException, NotAuthorizedException {
-    boolean result = false;
+   
     
     System.out.println("FiltroAutorizacao::preFiltragem() invocado");
     if (id == null || !(id instanceof UserView)){

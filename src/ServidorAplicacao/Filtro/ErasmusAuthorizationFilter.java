@@ -10,14 +10,9 @@ package ServidorAplicacao.Filtro;
 
 import java.util.Collection;
 
-import DataBeans.InfoTeacher;
-import Dominio.ITeacher;
-import Dominio.Teacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 
 public class ErasmusAuthorizationFilter extends Filtro {
@@ -45,7 +40,7 @@ public class ErasmusAuthorizationFilter extends Filtro {
 			
 		Collection roles = requester.getRoles();
 		boolean authorizedRequester = false;
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		
 		
 		if (AuthorizationUtils.containsRole(roles, RoleType.ERASUMS)) 
 			authorizedRequester = true;
@@ -59,19 +54,5 @@ public class ErasmusAuthorizationFilter extends Filtro {
 		}
 	}
 
-	/**
-	 * @param object
-	 * @return
-	 */
-	private ITeacher readTeacher(Object object, ISuportePersistente sp) {
-		Integer teacherOID = null;
-		if (object instanceof InfoTeacher) {
-			teacherOID = ((InfoTeacher) object).getIdInternal();
-		} else if (object instanceof Integer) {
-			teacherOID = (Integer) object;
-		}
-		return (ITeacher) sp.getIPersistentTeacher().readByOId(
-			new Teacher(teacherOID),
-			false);
-	}
+	
 }
