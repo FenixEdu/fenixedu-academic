@@ -60,7 +60,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
                                 lesson.getTipo()).append("</a>").append(")&nbsp;");
             }
 
-            strBuffer.append(" <a class='timetable' href='pesquisarSala.do?name=").append(
+            strBuffer.append(" <a href='pesquisarSala.do?name=").append(
                     lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>").append(
                     lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
 

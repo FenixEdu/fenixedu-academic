@@ -28,7 +28,7 @@ public class ShiftTimeTableLessonContentRenderer implements LessonSlotContentRen
 
             strBuffer.append("(");
             strBuffer.append(lesson.getTipo()).append(")");
-            strBuffer.append("<a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
+            strBuffer.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=")
                     .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("'>").append(
                             lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
         } else {

@@ -1,6 +1,8 @@
 package ServidorApresentacao.TagLib.sop.v3;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -49,21 +51,14 @@ public class TimeTableRenderer {
 
         TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
-        strBuffer.append("<table cellspacing='0' cellpadding='0' width='90%'>");
+        strBuffer.append("<table class='timetable' cellspacing='0' cellpadding='0' width='90%'>");
 
         renderHeader(strBuffer);
 
         for (int hourIndex = 0; hourIndex < timeTable.getNumberOfHours().intValue(); hourIndex++) {
 
-            strBuffer.append("<tr class='timeTable_line'>\r\n");
-            strBuffer.append("<td width='15%' class='horariosHoras");
-            if (hourIndex == 0) {
-                strBuffer.append("_first'>");
-            } else if (hourIndex == timeTable.getNumberOfHours().intValue() - 1) {
-                strBuffer.append("_bottom'>");
-            } else {
-                strBuffer.append("'>");
-            }
+            strBuffer.append("<tr>\r\n");
+            strBuffer.append("<td width='15%' class='period-hours'>");
             strBuffer.append(getHourLabelByIndex(hourIndex)).append("</td>\r\n");
 
             /* iterate over days */
@@ -78,8 +73,7 @@ public class TimeTableRenderer {
                     InfoLessonWrapper[] lessonSlotListResolved = resolveColisions(colisionList,
                             timeTable.getDayColumn(dayIndex));
 
-                    for (int slotIndex = 0, colspan = 0; slotIndex < lessonSlotListResolved.length
-                            && colspan < lessonSlotListResolved.length; slotIndex++, colspan++) {
+                    for (int slotIndex = 0; slotIndex < lessonSlotListResolved.length; slotIndex++) {
                         InfoLessonWrapper infoLessonWrapper = lessonSlotListResolved[slotIndex];
 
                         strBuffer.append("<td ");
@@ -89,29 +83,34 @@ public class TimeTableRenderer {
                                     colorPicker.getBackgroundColor(infoLessonWrapper)).append("' ");
                         }
 
-                        if (canExpand(infoLessonWrapper)) {
-                            strBuffer.append(" colspan ='").append(
-                                    dayColumn.getMaxColisionSize().intValue()).append("'");
-                            colspan = lessonSlotListResolved.length;
-                            slotIndex = lessonSlotListResolved.length - 1;
+                        int slotColspan = calculateColspan(infoLessonWrapper, lessonSlotListResolved,
+                                slotIndex, dayColumn);
+
+                        if (slotColspan > 1) {
+                            strBuffer.append(" colspan ='").append(slotColspan).append("'");
+                            slotIndex += slotColspan - 1;
                         }
 
                         strBuffer.append(" class='");
-                        strBuffer.append(getSlotCssClass(infoLessonWrapper, hourIndex, dayColumn, grid,
-                                lessonSlotListResolved, slotIndex));
+                        strBuffer.append(getSlotCssClass(infoLessonWrapper, hourIndex));
                         strBuffer.append("' ");
-
+                        if (infoLessonWrapper != null) {
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("k:mm");
+                            Calendar start = infoLessonWrapper.getLessonSlot().getInfoLessonWrapper()
+                                    .getInfoShowOccupation().getInicio();
+                            Calendar end = infoLessonWrapper.getLessonSlot().getInfoLessonWrapper()
+                                    .getInfoShowOccupation().getFim();
+                            String startLabel = dateFormat.format(start.getTime());
+                            String endLabel = dateFormat.format(end.getTime());
+                            strBuffer.append(" title='").append(startLabel).append("-").append(endLabel)
+                                    .append("'");
+                        }
                         strBuffer.append(">");
 
-                        if (infoLessonWrapper != null) {
-                            if (infoLessonWrapper.getLessonSlot().getStartIndex() == hourIndex) {
-                                strBuffer.append(this.lessonSlotContentRenderer.render(infoLessonWrapper
-                                        .getLessonSlot()));
-
-                            } else {
-                                strBuffer.append("&nbsp;");
-                            }
-
+                        if ((infoLessonWrapper != null)
+                                && (infoLessonWrapper.getLessonSlot().getStartIndex() == hourIndex)) {
+                            strBuffer.append(this.lessonSlotContentRenderer.render(infoLessonWrapper
+                                    .getLessonSlot()));
                         } else {
                             strBuffer.append("&nbsp;");
                         }
@@ -119,11 +118,13 @@ public class TimeTableRenderer {
                     }
                 } else {
                     /** no lessons */
-                    for (int slotIndex = 0; slotIndex < dayColumn.getMaxColisionSize().intValue(); slotIndex++) {
-                        strBuffer.append("<td ").append(" class='").append(
-                                getSlotCssClass(null, hourIndex, dayColumn, grid, null, slotIndex))
-                                .append("'").append(">").append("&nbsp;").append("</td>\r\n");
+                    int colspan = dayColumn.getMaxColisionSize().intValue();
+                    String cssClass = getSlotCssClass(null, hourIndex);
+                    strBuffer.append("<td ").append(" class='").append(cssClass);
+                    if (colspan > 1){
+                        strBuffer.append("' colspan='").append(colspan).append("'");
                     }
+                    strBuffer.append(">").append("&nbsp;").append("</td>\r\n");
                 }
 
             }
@@ -132,6 +133,31 @@ public class TimeTableRenderer {
 
         strBuffer.append("</table>");
         return strBuffer;
+    }
+
+    /**
+     * @param infoLessonWrapper
+     * @param lessonSlotListResolved
+     * @param dayColumn
+     * @param slotIndex
+     * @return
+     */
+    private int calculateColspan(InfoLessonWrapper infoLessonWrapper,
+            InfoLessonWrapper[] lessonSlotListResolved, int currentSlotIndex, DayColumn dayColumn) {
+        int colspan = 1;
+        if (infoLessonWrapper != null && (infoLessonWrapper.getNumberOfCollisions().intValue() == 0)) {
+            colspan = dayColumn.getMaxColisionSize().intValue();
+        } else if (infoLessonWrapper == null) {
+            for (int i = currentSlotIndex + 1; i < lessonSlotListResolved.length; i++) {
+                InfoLessonWrapper next = lessonSlotListResolved[i];
+                if (next == null) {
+                    colspan++;
+                } else {
+                    break;
+                }
+            }
+        }
+        return colspan;
     }
 
     /**
@@ -154,81 +180,20 @@ public class TimeTableRenderer {
      * @param slotIndex
      * @return String
      */
-    private String getSlotCssClass(InfoLessonWrapper infoLessonWrapper, int hourIndex,
-            DayColumn dayColumn, TimeTableSlot[][] timeTableGrid, InfoLessonWrapper[] slotColisions,
-            int slotIndex) {
-        int dayIndex = dayColumn.getIndex();
+    private String getSlotCssClass(InfoLessonWrapper infoLessonWrapper, int hourIndex) {
+        String css = "period-empty-slot";
+        if (infoLessonWrapper != null) {
 
-        StringBuffer strBuffer = new StringBuffer("slot");
-
-        /* get type of slot */
-        if (infoLessonWrapper == null) {
-            strBuffer.append("_empty").toString();
-        } else {
             LessonSlot lessonSlot = infoLessonWrapper.getLessonSlot();
             if (lessonSlot.getStartIndex() == hourIndex) {
-                strBuffer.append("_start");
-            }
-            if (lessonSlot.getEndIndex() == hourIndex) {
-                strBuffer.append("_end");
-            }
-        }
-
-        /* Get column's first slot */
-        if (hourIndex == 0) {
-            strBuffer.append("_top");
-        }
-
-        if (slotIndex == 0 || ((slotColisions != null) && (slotIndex == slotColisions.length - 1))
-                || (infoLessonWrapper != null)) {
-            strBuffer.append("_right");
-        }
-
-        /* find if slot has a lesson slot after */
-        if ((infoLessonWrapper == null) && (hourIndex + 1 < timeTable.getNumberOfHours().intValue())) {
-            TimeTableSlot nextSlot = timeTableGrid[dayIndex][hourIndex + 1];
-            if ((nextSlot != null)
-                    && ((nextSlot.getLessonSlotList() != null) && (!nextSlot.getLessonSlotList()
-                            .isEmpty()))) {
-                List nextLessonSlotList = nextSlot.getLessonSlotList();
-
-                //				if (nextLessonSlotList.size() - 1 >= slotIndex) {
-                Iterator nextLessonSlotListIterator = nextLessonSlotList.iterator();
-                while (nextLessonSlotListIterator.hasNext()) {
-                    LessonSlot lessonSlot = (LessonSlot) nextLessonSlotListIterator.next();
-                    if (((lessonSlot.getStartIndex() == hourIndex + 1)
-                            && (nextLessonSlotList.size() - 1 >= slotIndex) || canExpand(lessonSlot
-                            .getInfoLessonWrapper()))) {
-                        strBuffer.append("_lessonAfter");
-                        break;
-                    }
-                }
-
+                css = "period-first-slot";
+            } else if (lessonSlot.getEndIndex() == hourIndex) {
+                css = "period-last-slot";
+            } else {
+                css = "period-middle-slot";
             }
         }
-
-        /* test if is column last slot */
-        if (hourIndex + 1 == timeTable.getNumberOfHours().intValue()) {
-            strBuffer.append("_bottom");
-        }
-
-        /* get if is the most right slot */
-        if (slotIndex == dayColumn.getMaxColisionSize().intValue() - 1) {
-            strBuffer.append("_last");
-        }
-
-        /*
-         * Get empty slot with lesson slot by right side
-         */
-        if ((slotIndex != dayColumn.getMaxColisionSize().intValue() - 1)
-                && ((slotColisions != null) && (infoLessonWrapper == null)
-                        && (slotColisions[slotIndex + 1] != null) && (slotColisions[slotIndex + 1]
-                        .getInfoShowOccupation() != null))) {
-            strBuffer.append("_lesson");
-        }
-
-        return strBuffer.toString();
-
+        return css;
     }
 
     /**
@@ -238,19 +203,20 @@ public class TimeTableRenderer {
      */
     private void renderHeader(StringBuffer strBuffer) {
 
-        strBuffer.append("<td class='horarioHeader_blank' width='15%'>horas/dias</td>\r\n");
+        //        strBuffer.append("<col />");
+        //        for (int index = 0; index <
+        // this.timeTable.getNumberOfDays().intValue(); index++) {
+        //            strBuffer.append("<col
+        // span='").append(timeTable.getDayColumn(index).getMaxColisionSize())
+        //                    .append("'/>\r\n");
+        //        }
 
+        strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
+        int cellWidth = (100 - 15) / timeTable.getNumberOfDays().intValue();
         for (int index = 0; index < this.timeTable.getNumberOfDays().intValue(); index++) {
-
-            StringBuffer classCSS = new StringBuffer("horarioHeader");
-
-            if (index == 0)
-                classCSS.append("_first");
-
-            strBuffer.append("<td class='").append(classCSS).append("' colspan='").append(
-                    timeTable.getDayColumn(index).getMaxColisionSize()).append("' width='").append(
-                    (100 - 15) / timeTable.getNumberOfDays().intValue()).append("%'>\r\n").append(
-                    timeTable.getDayColumn(index).getLabel()).append("</td>\r\n");
+            strBuffer.append("<th colspan='").append(timeTable.getDayColumn(index).getMaxColisionSize())
+                    .append("' width='").append(cellWidth).append("%'>\r\n").append(
+                            timeTable.getDayColumn(index).getLabel()).append("</th>\r\n");
         }
     }
 

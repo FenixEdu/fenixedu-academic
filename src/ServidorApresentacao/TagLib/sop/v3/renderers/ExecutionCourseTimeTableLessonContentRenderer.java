@@ -26,7 +26,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             strBuffer.append(lesson.getTipo()).append("&nbsp;");
-            strBuffer.append("<a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
+            strBuffer.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=")
                     .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
                             "&amp;objectCode=").append(
                             lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()

@@ -26,14 +26,16 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             InfoLesson lesson = (InfoLesson) showOccupation;
 
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-            strBuffer.append("<a class='timetable' href='viewSite.do?method=firstPage&amp;objectCode=");
+            strBuffer.append("<a href='viewSite.do?method=firstPage&amp;objectCode=");
             strBuffer.append(infoExecutionCourse.getIdInternal()).append("&amp;executionPeriodOID=")
                     .append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
-            strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
+            
+            InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
+            strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>")
                     .append("</a>");
             strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
             strBuffer
-                    .append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
+                    .append(" <a href='siteViewer.do?method=roomViewer&amp;roomName=")
                     .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
                             "&amp;objectCode=").append(
                             infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()).append(

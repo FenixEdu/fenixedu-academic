@@ -1,105 +1,14 @@
 .timetable{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
+	color: #003333;
 	text-decoration: bold;
-}
-.horarioHeader_blank{
-	font-size: 11px;
-	font-weight: bold;
-	color: #333333;
-	text-align: center;	
-	background-color: #999999;
-	height: 20px;
-	border-color: #000000;
-	border-left-width: 2px;
-	border-left-style: solid;
-	border-top-width: 2px;
-	border-top-style: solid;
+	border-collapse:collapse;
+	border-color: #000;
+	border-width: 2px;
+	border-style: solid;
 }
 
-.horarioHeader_first {
-	font-size: 11px;
-	font-weight: bold;
-	color: #333333;
-	background-color: #999999;
-	text-align: center;
-	height: 20px;
-	vertical-align: middle;
-	border-color: #000000;
-	border-left-width: 2px;
-	border-left-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.horarioHeader {
-	font-size: 11px;
-	font-weight: bold;
-	color: #333333;
-	background-color: #999999;
-	text-align: center;
-	height: 20px;
-	vertical-align: middle;
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.horariosHoras {
-	font-size: 11px;
-	color: #333333;
-	background-color: #CCCCCC;
-	text-align: center;
-	vertical-align: middle;
-	height: 20px;
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-left-width: 2px;
-	border-left-style: solid;
-}
-
-.horariosHoras_first {
-	font-size: 11px;
-	color: #333333;
-	background-color: #CCCCCC;
-	text-align: center;
-	vertical-align: middle;
-	height: 20px;
-	border-color: #000000;
-	border-top-width: 2px;
-	border-top-style: solid;
-	border-left-width: 2px;
-	border-left-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;	
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.horariosHoras_bottom {
-	font-size: 11px;
-	color: #333333;
-	background-color: #CCCCCC;
-	text-align: center;
-	vertical-align: middle;
-	height: 20px;
-	border-color: #000000;
-	border-left-width: 2px;
-	border-left-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;	
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
-}
-
-.timeTable_line{
+.timetable tr{
 	font-size: 9px;
 	color: #003333;
 	font-weight:bold;
@@ -107,301 +16,62 @@
 	text-align: left;
 }
 
-.slot_start_top{
-	border-color: #000000;
+.timetable th{
+	font-size: 11px;
+	color: #333333;
+	background-color: #999999;
+	text-align: center;
+	height: 20px;
+	vertical-align: middle;
+	border-style:solid;
 	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.slot_start_top_right{
-	border-color: #000000;
-	border-top-width: 2px;
-	border-top-style: solid;
-	border-right-width: 1px;
-	border-right-style: solid;
-}
-
-.slot_start_top_right_last{
-	border-color: #000000;
-	border-top-width: 2px;
-	border-top-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;
-}
-
-.slot_start_right{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: solid;
-}
-
-.slot_start_right_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-}
-
-.slot_start_end_right_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.slot_start_end_right{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.slot_right{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: solid;
-}
-
-.slot_right_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-}
-
-.slot_end_right{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.slot_end_right_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.slot_empty{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-}
-
-.slot_empty_lessonAfter{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-.slot_empty_lessonAfter_lesson{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.slot_empty_lessonAfter_last{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;
-}
-
-.slot_empty_lesson{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-}
-
-.slot_empty_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-right-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-}
-
-.slot_empty_right{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-}
-
-.slot_empty_right_lessonAfter{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.slot_empty_right_lessonAfter_lesson{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-right-width: 1px;
-	border-right-style: solid;
-}
-
-.slot_empty_right_lesson{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-}
-
-.slot_empty_right_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-}
-
-.slot_empty_top_right{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.slot_empty_top_right_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.slot_empty_top{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.slot_empty_top_lessonAfter_last{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-top-width: 2px;
-	border-top-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;
-}
-
-.slot_empty_top_lessonAfter{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.slot_empty_top_right_lessonAfter_last{
-	border-color: #000000;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-top-width: 2px;
-	border-top-style: solid;
-	border-right-width: 2px;
-	border-right-style: solid;
-}
-
-.slot_empty_top_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: dashed;
-	border-top-width: 2px;
-	border-top-style: solid;
-}
-
-.slot_empty_top_right_bottom{
-	border-color: #000000;
-	border-right-width: 1px;
-	border-right-style: dashed;
-	border-top-width: 1px;
-	border-top-style: solid;
-}
-.slot_empty_top_right_lessonAfter{
-	border-color: #000000;
-	border-top-width: 2px;
-	border-top-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	
-}
-.slot_empty_right_lessonAfter_last{
-	border-color: #000000;
-	border-right-width: 2px;
-	border-right-style: solid;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-.slot_empty_right_bottom{
-	border-color: #000000;
 	border-bottom-width: 2px;
-	border-bottom-style: solid;
+	border-left-width: 1.5px;
+	border-right-width: 1.5px
 }
 
-.slot_empty_right_bottom_last{
-	border-color: #000000;
-	border-right-width: 2px;
+.period-first-slot{
+	border-width: 1.5px;
+	border-style: solid;
+	border-top-style:solid;
+	border-bottom-style:none;
+}
+
+.period-middle-slot{
+	border-width: 1.5px;
 	border-right-style: solid;
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
+	border-left-style: solid;
 }
 
-.slot_empty_bottom{
-	border-color: #000000;
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
+.period-last-slot{
+	border-width: 1.5px;
+	border-style: solid;
+	border-top-style:none;
 }
 
-.slot_empty_bottom_last{
-	border-color: #000000;
-	border-right-width: 2px;
+.period-empty-slot{
+	border-width: 1px;
+	border-top-style: dashed;
+	border-left-style: solid;
 	border-right-style: solid;
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
 }
 
-a.timetable:link{
-	color: #003333;
-	font-weight: bold;
-	font-size: 9px;
+.period-hours {
+	font-size: 11px;
+	color: #333333;
+	background-color: #999999;
+	text-align: center;
+	height: 20px;
+	vertical-align: middle;
+	border-style:solid;
+	border-width: 1px;
+	border-left-width: 1px;
+	border-right-width: 1px
 }
 
-a.timetable:hover{
+.timetable a{
 	color: #003333;
 	font-weight: bold;
 	font-size: 9px;	
-}
-
-a.timetable:visited{
-	color: #003333;
-	font-weight: bold;
-	font-size: 9px;
-}
-
-a.timetable:active{
-	color: #003333;
-	font-weight: bold;
-	font-size: 9px;	
+	border-style:none;
 }
