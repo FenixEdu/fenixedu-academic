@@ -325,11 +325,12 @@
 	<!-- Edit Item -->
 	
 	<action name="itemForm"
+		input="/editItem.jsp"
 		path="/editItem"
 		parameter="method"
 		type="ServidorApresentacao.Action.teacher.EditItemDispatchAction"
         validate="false" >
-         <forward name="editItem" path="/editItem.jsp"/>
+         <forward name="editItem" path="/editItem.do?method=edit"/>
        <forward name="viewSection" path="/viewSection.do"/>
 	</action>
 	
