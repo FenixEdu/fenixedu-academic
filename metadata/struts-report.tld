@@ -6,7 +6,7 @@
 	<tag>
 		<name>sumColumn</name>
 		<tagclass>
-			ServidorApresentacao.TagLib.projectsManagement.SumColumnTag
+			net.sourceforge.fenixedu.presentationTier.TagLib.projectsManagement.SumColumnTag
 		</tagclass>
 		<bodycontent>empty</bodycontent>
 		<attribute>
@@ -23,7 +23,7 @@
 	<tag>
 		<name>formatDoubleValue</name>
 		<tagclass>
-			ServidorApresentacao.TagLib.projectsManagement.FormatDoubleValue
+			net.sourceforge.fenixedu.presentationTier.TagLib.projectsManagement.FormatDoubleValue
 		</tagclass>
 		<bodycontent>empty</bodycontent>
 		<attribute>
@@ -40,7 +40,7 @@
 	<tag>
 		<name>navigation-bar</name>
 		<tagclass>
-			ServidorApresentacao.TagLib.projectsManagement.NavigationBarTag
+			net.sourceforge.fenixedu.presentationTier.TagLib.projectsManagement.NavigationBarTag
 		</tagclass>
 		<bodycontent>empty</bodycontent>
 		<attribute>
@@ -77,7 +77,7 @@
 	<tag>
 		<name>computeDate</name>
 		<tagclass>
-			ServidorApresentacao.TagLib.projectsManagement.ComputeDateTag
+			net.sourceforge.fenixedu.presentationTier.TagLib.projectsManagement.ComputeDateTag
 		</tagclass>
 		<bodycontent>empty</bodycontent>
 		<attribute>
