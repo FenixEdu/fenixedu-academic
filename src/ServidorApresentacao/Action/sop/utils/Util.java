@@ -211,18 +211,18 @@ public class Util {
 	public static ArrayList getMonthsOfYear() {
 		ArrayList monthsOfYearList = new ArrayList();
 
-		monthsOfYearList.add("" + Calendar.JANUARY);
-		monthsOfYearList.add("" + Calendar.FEBRUARY);
-		monthsOfYearList.add("" + Calendar.MARCH);
-		monthsOfYearList.add("" + Calendar.APRIL);
-		monthsOfYearList.add("" + Calendar.MAY);
-		monthsOfYearList.add("" + Calendar.JUNE);
-		monthsOfYearList.add("" + Calendar.JULY);
-		monthsOfYearList.add("" + Calendar.AUGUST);
-		monthsOfYearList.add("" + Calendar.OCTOBER);
-		monthsOfYearList.add("" + Calendar.SEPTEMBER);		
-		monthsOfYearList.add("" + Calendar.NOVEMBER);
-		monthsOfYearList.add("" + Calendar.DECEMBER);
+		monthsOfYearList.add(new LabelValueBean("Janeiro", "" + Calendar.JANUARY));
+		monthsOfYearList.add(new LabelValueBean("Fevereiro", "" + Calendar.FEBRUARY));
+		monthsOfYearList.add(new LabelValueBean("Março", "" + Calendar.MARCH));
+		monthsOfYearList.add(new LabelValueBean("Abril", "" + Calendar.APRIL));
+		monthsOfYearList.add(new LabelValueBean("Maio", "" + Calendar.MAY));
+		monthsOfYearList.add(new LabelValueBean("Junho", "" + Calendar.JUNE));
+		monthsOfYearList.add(new LabelValueBean("Julho", "" + Calendar.JULY));
+		monthsOfYearList.add(new LabelValueBean("Agosto", "" + Calendar.AUGUST));
+		monthsOfYearList.add(new LabelValueBean("Outubro", "" + Calendar.OCTOBER));
+		monthsOfYearList.add(new LabelValueBean("Setembro", "" + Calendar.SEPTEMBER));		
+		monthsOfYearList.add(new LabelValueBean("Novembro", "" + Calendar.NOVEMBER));
+		monthsOfYearList.add(new LabelValueBean("Dezembro", "" + Calendar.DECEMBER));
 
 		return monthsOfYearList;
 	}

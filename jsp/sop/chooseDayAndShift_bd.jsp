@@ -24,7 +24,7 @@
                     <td nowrap class="formTD" align="left">
                         <html:select property="month">
                         	<option value="" selected="selected">[Mês]</option>
-                            <html:options name="monthsOfYear"/>
+                            <html:options collection="monthsOfYear" property="value" labelProperty="label"/>
                         </html:select>
                    </td>
                     <td nowrap class="formTD" align="right">
