@@ -49,6 +49,7 @@ BUG FIXES:
 - Removed the possibility to edit payed guides.
 - [ #308 ] Master Degree's Portal - Candidacy Situation
 - Master Degree's Portal - fixed presentation of branches when viewing student curricular plans
+- [ #299 ] - Send Sms Error
 - [ #277 ] Fenix Error Report in createContributor
 
 KNOWN ISSUES:

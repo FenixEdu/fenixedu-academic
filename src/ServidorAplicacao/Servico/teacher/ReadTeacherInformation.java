@@ -12,6 +12,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriod;
@@ -45,7 +46,6 @@ import Dominio.teacher.IOrientation;
 import Dominio.teacher.IPublicationsNumber;
 import Dominio.teacher.IServiceProviderRegime;
 import Dominio.teacher.IWeeklyOcupation;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -74,18 +74,11 @@ import constants.publication.PublicationConstants;
  * @author Sergio Montelobo
  *  
  */
-public class ReadTeacherInformation implements IServico {
+public class ReadTeacherInformation implements IService {
 	public ReadTeacherInformation() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadTeacherInformation";
-	}
+	
 
 	/**
 	 * Executes the service.
@@ -98,8 +91,7 @@ public class ReadTeacherInformation implements IServico {
 
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-			//CLONER
-			//InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+			
 			InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
 			infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
 
@@ -119,9 +111,7 @@ public class ReadTeacherInformation implements IServico {
 				infoServiceProviderRegime.setInfoTeacher(infoTeacher);
 				infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
 			} else {
-				//CLONER
-				//InfoServiceProviderRegime infoServiceProviderRegime =
-				//Cloner.copyIServiceProviderRegime2InfoServiceProviderRegime(serviceProviderRegime);
+				
 				InfoServiceProviderRegime infoServiceProviderRegime = InfoServiceProviderRegime
 						.newInfoFromDomain(serviceProviderRegime);
 				infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);

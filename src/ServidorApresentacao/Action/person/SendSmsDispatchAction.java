@@ -61,7 +61,7 @@ public class SendSmsDispatchAction extends FenixDispatchAction
 			throw new FenixActionException();
 		}
 
-		if (infoPerson.getTelemovel().length() == 0)
+		if (infoPerson.getTelemovel() == null || infoPerson.getTelemovel().length() == 0)
 		{
 			ActionErrors actionErrors = new ActionErrors();
 			actionErrors.add("noMobileDefined", new ActionError("error.person.noMobileDefined"));
