@@ -72,6 +72,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 restrictionByNumberOfCurricularCourses.setPrecedence(precedence);
 
                 //TODO
+                //IPersistentRestriction persistentRestriction = persistentSuport.
                 
             } else if (className.equals(RestrictionPeriodToApply.class.getName().substring(
                     RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1))) {
