@@ -15,20 +15,11 @@ package fileSuport;
  * 
  */
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 
 import org.apache.slide.authenticate.CredentialsToken;
 import org.apache.slide.authenticate.SecurityToken;
@@ -38,7 +29,6 @@ import org.apache.slide.common.SlideException;
 import org.apache.slide.common.SlideToken;
 import org.apache.slide.common.SlideTokenImpl;
 import org.apache.slide.content.Content;
-import org.apache.slide.content.NodeProperty;
 import org.apache.slide.content.NodeRevisionContent;
 import org.apache.slide.content.NodeRevisionDescriptor;
 import org.apache.slide.content.NodeRevisionDescriptors;
@@ -47,6 +37,7 @@ import org.apache.slide.security.Security;
 import org.apache.slide.structure.ObjectNode;
 import org.apache.slide.structure.Structure;
 import org.apache.slide.structure.SubjectNode;
+
 public class FileSuport implements IFileSuport {
 
 	private static FileSuport instance = null;
@@ -99,11 +90,8 @@ public class FileSuport implements IFileSuport {
 			properties.load(
 				getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
 			location = properties.getProperty("location");
-			System.out.println("location->" + location);
 		} catch (IOException e) {
 			System.out.println("location->NOT FOUND");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return location;
 	}
@@ -113,95 +101,21 @@ public class FileSuport implements IFileSuport {
 	 * @param userid Credentials stored in this token
 	 * @throws Exception
 	 */
-	public void init(String userid) throws Exception {
+	private void init(String userid) throws Exception {
 		CredentialsToken credToken = new CredentialsToken(new String(userid));
 		slideToken = new SlideTokenImpl(credToken);
 	}
 
-	public void addContents(byte[] fileData, String path, String contentType)
-		throws Exception {
-		addContents(fileData, path, "1", contentType);
-	}
-	/**
-		 * The FILE is added to the repository. 
-		 * @param file New File 
-		 * @param path 
-		 * location in the namespace where we the object should be created
-		 * @throws Exception
-		 */
-	public void addContents(String file, String path) throws Exception {
-		FileInputStream is = new FileInputStream(new File(file));
-		addContents(is, path, "1");
+	private void addContents(byte[] fileData, String path)
+		throws SlideException {
+		addContents(fileData, path, "1");
 	}
 
-	/**
-		 * The FILE is added to the repository. 
-		 * @param is New input stream
-		 * @param path 
-		 * location in the namespace where we the object should be created
-		 * @throws Exception
-		 */
-	public void addContents(InputStream is, String path) throws Exception {
-		addContents(is, path, "1");
-	}
-
-	/**
-		 * The FILE is added to the repository. 
-		 * @param file New File
-		 * @param path 
-		 * location in the namespace where we the object should be created
-		 * @param revision value of revision
-		 * @throws Exception
-		 */
-	public void addContents(String file, String path, String revision)
-		throws Exception {
-		FileInputStream is = new FileInputStream(new File(file));
-		addContents(is, path, revision);
-	}
-
-	/**
-	 * The FILE is added to the repository. 
-	 * @param is New input stream
-	 * @param path 
-	 * location in the namespace where we the object should be created
-	 * @param revision value of revision
-	 * @throws Exception
-	 */
-	public void addContents(InputStream is, String path, String revision)
-		throws Exception {
-		try {
-			token.begin();
-			SubjectNode rootuser =
-				(SubjectNode) structure.retrieve(slideToken, "/users/root");
-			structure.create(slideToken, rootuser, path);
-			content.create(slideToken, path, true);
-			// Revision
-
-			NodeRevisionDescriptor currentRevisionDescriptor =
-				new NodeRevisionDescriptor(-1);
-			currentRevisionDescriptor.setProperty("revision", revision);
-			NodeRevisionContent currentRevisionContent =
-				new NodeRevisionContent();
-			currentRevisionContent.setContent(is);
-			// Content create
-			// ** When hsqldb is used, 
-			//  ObjectNotFoundException is output by the Next Row. why? ** 
-			content.create(
-				slideToken,
-				path,
-				currentRevisionDescriptor,
-				currentRevisionContent);
-		} finally {
-			token.commit();
-			is.close();
-		}
-	}
-	public void addContents(
+	private void addContents(
 		byte[] fileData,
 		String path,
-		String revision,
-		String contentType)
-		throws Exception {
+		String contenType)
+		throws SlideException {
 		try {
 
 			token.begin();
@@ -212,19 +126,20 @@ public class FileSuport implements IFileSuport {
 
 			NodeRevisionDescriptor currentRevisionDescriptor =
 				new NodeRevisionDescriptor(-1);
-			currentRevisionDescriptor.setProperty("revision", revision);
-			currentRevisionDescriptor.setProperty("contentType", contentType);
+			currentRevisionDescriptor.setContentType(contenType);
 			NodeRevisionContent currentRevisionContent =
 				new NodeRevisionContent();
 			currentRevisionContent.setContent(fileData);
-
 			content.create(
 				slideToken,
 				path,
 				currentRevisionDescriptor,
 				currentRevisionContent);
-		} finally {
 			token.commit();
+		} catch (SlideException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new SlideException("runtime exception");
 		}
 	}
 	/**
@@ -252,7 +167,7 @@ public class FileSuport implements IFileSuport {
 		* @return Enumeration of ObjectNode objects
 		* @throws SlideException
 		*/
-	public Enumeration getChildrenList(String folder) throws SlideException {
+	private Enumeration getChildrenList(String folder) throws SlideException {
 		return structure.getChildren(
 			slideToken,
 			structure.retrieve(slideToken, folder));
@@ -263,16 +178,15 @@ public class FileSuport implements IFileSuport {
 		 * @param objects　object node
 		 * @return ture is folder. false is Content(file).
 		 */
-	public boolean isDirectory(ObjectNode objects) {
+	private boolean isDirectory(ObjectNode objects) {
 		if (objects instanceof SubjectNode && !isFile(objects)) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
 
-
-	public boolean isFile(ObjectNode objectNode) {
+	private boolean isFile(ObjectNode objectNode) {
 		if (objectNode instanceof SubjectNode
 			&& !objectNode.hasChildren()
 			&& hasRevisionContent(objectNode)) {
@@ -313,6 +227,7 @@ public class FileSuport implements IFileSuport {
 			content.retrieve(slideToken, path);
 		NodeRevisionDescriptor revDescriptor =
 			content.retrieve(slideToken, revDescriptors);
+
 		NodeRevisionContent revContent =
 			content.retrieve(slideToken, revDescriptors, revDescriptor);
 
@@ -322,108 +237,103 @@ public class FileSuport implements IFileSuport {
 	/**
 		* @return Content object
 		*/
-	public Content getContent() {
+	private Content getContent() {
 		return content;
 	}
 
 	/**
 		* @return Lock object
 		*/
-	public Lock getLock() {
+	private Lock getLock() {
 		return lock;
 	}
 
 	/**
 		* @return Security object
 		*/
-	public Security getSecurity() {
+	private Security getSecurity() {
 		return security;
 	}
 
 	/**
 		* @return SlideToken object
 		*/
-	public SlideToken getSlideToken() {
+	private SlideToken getSlideToken() {
 		return slideToken;
 	}
 
 	/**
 		* @return Structure object
 		*/
-	public Structure getStructure() {
+	private Structure getStructure() {
 		return structure;
 	}
 
 	/**
 		* @return NamespaceAccessToken object
 		*/
-	public NamespaceAccessToken getToken() {
+	private NamespaceAccessToken getToken() {
 		return token;
 	}
 
 	/**
 	 * @param content
 	 */
-	public void setContent(Content content) {
+	private void setContent(Content content) {
 		this.content = content;
 	}
 
 	/**
 	 * @param lock
 	 */
-	public void setLock(Lock lock) {
+	private void setLock(Lock lock) {
 		this.lock = lock;
 	}
 
 	/**
 	 * @param security
 	 */
-	public void setSecurity(Security security) {
+	private void setSecurity(Security security) {
 		this.security = security;
 	}
 
 	/**
 	 * @param slideToken
 	 */
-	public void setSlideToken(SlideToken slideToken) {
+	private void setSlideToken(SlideToken slideToken) {
 		this.slideToken = slideToken;
 	}
 
 	/**
 	 * @param structure
 	 */
-	public void setStructure(Structure structure) {
+	private void setStructure(Structure structure) {
 		this.structure = structure;
 	}
 
 	/**
 	 * @param token
 	 */
-	public void setToken(NamespaceAccessToken token) {
+	private void setToken(NamespaceAccessToken token) {
 		this.token = token;
 	}
 
-	public NamespaceAccessToken getSlideNamespace() {
+	private NamespaceAccessToken getSlideNamespace() {
 		return this.token;
 	}
 
 	/* (non-Javadoc)
 	 * @see fileSuport.IFileSuport#storeFile(java.lang.String, byte[])
 	 */
-	public void storeFile(
-		String fileName,
-		byte[] fileData,
-		String contentType) {
-		try {
+	public void storeFile(String fileName, byte[] fileData, String contentType)
+		throws SlideException {
 			addContents(fileData, "/files/" + fileName, contentType);
-		} catch (Exception e) {
-		}
-
 	}
 
-	public void deleteFile(String filepath) {
+	public void deleteFile(String filepath) throws SlideException {
 		Structure structure = getStructure();
 		Content content = getContent();
+
 		try {
 			token.begin();
 			ObjectNode objectNode =
@@ -437,30 +347,11 @@ public class FileSuport implements IFileSuport {
 			structure.remove(getSlideToken(), objectNode);
 			token.commit();
 		} catch (SlideException e) {
-			e.printStackTrace();
-			// TODO Auto-generated catch block
-
-		} catch (NotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicMixedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicRollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
+		} catch (RuntimeException e) {
+			throw new SlideException("runtime exception");
+		} catch (Exception e) {
+			throw new SlideException("runtime exception");
 		}
 
 	}
@@ -488,20 +379,13 @@ public class FileSuport implements IFileSuport {
 	/* (non-Javadoc)
 	 * @see fileSuport.IFileSuport#getContentType(java.lang.String)
 	 */
-	public String getContentType(String path) {
-		try {
-			NodeRevisionDescriptors revDescriptors =
-				content.retrieve(slideToken, path);
-			NodeRevisionDescriptor revDescriptor =
-				content.retrieve(slideToken, revDescriptors);
-			NodeProperty nodeProperty =
-				revDescriptor.getProperty("contentType");
-			return (String) nodeProperty.getValue();
-		} catch (SlideException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "text/plain";
+	public String getContentType(String path) throws SlideException {
+
+		NodeRevisionDescriptors revDescriptors =
+			content.retrieve(slideToken, path);
+		NodeRevisionDescriptor revDescriptor =
+			content.retrieve(slideToken, revDescriptors);
+		return revDescriptor.getContentType();
 	}
 
 	/**
@@ -521,17 +405,45 @@ public class FileSuport implements IFileSuport {
 		}
 		return files;
 	}
-	
+
 	public List getSubDirectories(String path) throws SlideException {
-			List directories = new ArrayList();
-			Enumeration lists = this.getChildrenList(path);
-			while (lists.hasMoreElements()) {
-				ObjectNode list = (ObjectNode) lists.nextElement();
-				if (isDirectory(list)) {
-					directories.add(list.getUri());
-				}
+		List directories = new ArrayList();
+		Enumeration lists = this.getChildrenList(path);
+		while (lists.hasMoreElements()) {
+			ObjectNode list = (ObjectNode) lists.nextElement();
+			if (isDirectory(list)) {
+				directories.add(list.getUri());
 			}
-			return directories;
 		}
+		return directories;
+	}
+
+	public long getDirectorySize(String path) throws SlideException {
+		long size = 0;
+
+		Enumeration lists = this.getChildrenList(path);
+		while (lists.hasMoreElements()) {
+			ObjectNode list = (ObjectNode) lists.nextElement();
+			if (isDirectory(list)) {
+				size = size + getDirectorySize(list.getUri());
+			} else {
+				size = size + getFileSize(list);
+			}
+		}
+
+		return size;
+	}
+
+	/**
+	 * @param list
+	 * @return
+	 */
+	private long getFileSize(ObjectNode file) throws SlideException {
+		NodeRevisionDescriptors revDescriptors =
+			content.retrieve(getSlideToken(), file.getUri());
+		NodeRevisionDescriptor revDescriptor =
+			content.retrieve(slideToken, revDescriptors);
+		return revDescriptor.getContentLength();
+	}
 
 }
