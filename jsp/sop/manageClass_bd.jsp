@@ -101,6 +101,9 @@ Turnos:
 			<td class="listClasses-header">
 			</td>
 		</tr>
+		<bean:define id="deleteConfirm">
+			return confirm('<bean:message key="message.confirm.delete.class"/>')
+		</bean:define>			
 		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
 			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
@@ -170,7 +173,8 @@ Turnos:
   										+ "&amp;"
 			  							+ SessionConstants.EXECUTION_DEGREE_OID
   										+ "="
-  										+ pageContext.findAttribute("executionDegreeOID") %>">
+  										+ pageContext.findAttribute("executionDegreeOID") %>"
+		  								onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 						<bean:message key="link.remove"/>
 					</html:link>
 				</td>
