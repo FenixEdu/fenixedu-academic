@@ -155,14 +155,12 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
 
     public void testNonExistingExecutionCourse()
     {
-        TeacherAdministrationSiteView result = null;
         Object[] args = { new Integer(100), new Integer(1)};
 
         try
         {
 
-            result =
-                (TeacherAdministrationSiteView) gestor.executar(
+            gestor.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);
@@ -191,14 +189,12 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
 
     public void testNonExistingExam()
     {
-        TeacherAdministrationSiteView result = null;
         Object[] args = { new Integer(27), new Integer(100)};
 
         try
         {
 
-            result =
-                (TeacherAdministrationSiteView) gestor.executar(
+            gestor.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);

@@ -12,9 +12,7 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoPerson;
 import DataBeans.InfoShift;
-import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
@@ -23,10 +21,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadShiftLessonsTest extends TestCaseReadServices {
 
-	private InfoPerson infoPerson = null;
-	private InfoStudent infoStudent = null;
-	
-    public ReadShiftLessonsTest(java.lang.String testName) {
+	public ReadShiftLessonsTest(java.lang.String testName) {
     super(testName);
   }
     

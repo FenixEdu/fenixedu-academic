@@ -16,14 +16,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoPerson;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 
 public class ReadShiftEnrolmentTest extends TestCaseServicos {
 
-	private InfoPerson infoPerson = null;
 	private InfoStudent infoStudent = null;
 	
     public ReadShiftEnrolmentTest(java.lang.String testName) {

@@ -195,7 +195,6 @@ public class CreateGrantContractTest
         Object[] args = getAuthorizeArguments();
         InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
         infoGrantContract.getGrantTypeInfo().setSigla("G");
-        Object[] args2 = { infoGrantContract };
         return args;
     }
 
@@ -205,7 +204,6 @@ public class CreateGrantContractTest
         InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
         infoGrantContract.getGrantResponsibleTeacherInfo().getResponsibleTeacherInfo().setTeacherNumber(
             new Integer(69));
-        Object[] args2 = { infoGrantContract };
         return args;
     }
 
@@ -215,7 +213,6 @@ public class CreateGrantContractTest
         InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
         infoGrantContract.getGrantOrientationTeacherInfo().getOrientationTeacherInfo().setTeacherNumber(
             new Integer(69));
-        Object[] args2 = { infoGrantContract };
         return args;
     }
 
@@ -237,7 +234,6 @@ public class CreateGrantContractTest
         infoGrantContract.setIdInternal(new Integer(1));
         infoGrantContract.getGrantResponsibleTeacherInfo().setIdInternal(new Integer(1));
         infoGrantContract.getGrantOrientationTeacherInfo().setIdInternal(new Integer(1));
-        Object[] args2 = { infoGrantContract };
         return args;
     }
 
