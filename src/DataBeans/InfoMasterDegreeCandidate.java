@@ -45,7 +45,6 @@ public class InfoMasterDegreeCandidate {
     private String username = null;
     private String password = null;
     private Integer candidateNumber = null;
-    private Integer applicationYear = null;
     private String majorDegreeSchool = null;
     private Integer majorDegreeYear = null;
     private Double average = null;
@@ -58,6 +57,7 @@ public class InfoMasterDegreeCandidate {
 //    private String degreeCode = null;
     private InfoCountry infoCountry = null;
 	private InfoCountry infoNationality = null;
+	private InfoExecutionYear infoExecutionYear = null;
 
     private String identificationDocumentType = null;
     private String specialization = null;
@@ -97,7 +97,7 @@ public class InfoMasterDegreeCandidate {
         username = null;
         password = null;
         candidateNumber = null;
-        applicationYear = null;
+        infoExecutionYear = null;
         specialization = null;
         majorDegreeSchool = null;
         majorDegreeYear = null;
@@ -118,7 +118,7 @@ public class InfoMasterDegreeCandidate {
     		String addressParish, String addressMunicipality, String addressDistrict, 
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
-			String maritalStatus, InfoCountry country, InfoCountry nationality, String specialization, Integer applicationYear,
+			String maritalStatus, InfoCountry country, InfoCountry nationality, String specialization, InfoExecutionYear infoExecutionYear,
 			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate
     		) {
 	    
@@ -155,7 +155,7 @@ public class InfoMasterDegreeCandidate {
 		setSpecialization(specialization);		
         setAverage(average);
         setInfoCountry(country);
-		setApplicationYear(applicationYear);
+		setInfoExecutionYear(infoExecutionYear);
 		setCandidateNumber(candidateNumber);
         
         
@@ -257,7 +257,7 @@ public class InfoMasterDegreeCandidate {
         result += "\n  - Username : " + username;
         result += "\n  - Password : " + password;
         result += "\n  - Numero de Candidato : " + candidateNumber;
-        result += "\n  - Ano de Candidatura : " + applicationYear;
+        result += "\n  - Ano de Candidatura : " + infoExecutionYear;
         result += "\n  - Especializacao : " + specialization;
         result += "\n  - Escola de Licenciatura : " + majorDegreeSchool;
         result += "\n  - Ano de Licenciatura : " + majorDegreeYear;
@@ -268,7 +268,6 @@ public class InfoMasterDegreeCandidate {
         return result;
     }
     
-
 	/**
 	 * @return String
 	 */
@@ -295,13 +294,6 @@ public class InfoMasterDegreeCandidate {
 	 */
 	public String getAddressParish() {
 		return addressParish;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getApplicationYear() {
-		return applicationYear;
 	}
 
 	/**
@@ -353,13 +345,6 @@ public class InfoMasterDegreeCandidate {
 		return contributorNumber;
 	}
 
-/**
- * @return InfoCountry
- */
-public InfoCountry getInfoCountry() {
-	return infoCountry;
-}
-
 	/**
 	 * @return String
 	 */
@@ -409,11 +394,32 @@ public InfoCountry getInfoCountry() {
 		return infoCandidateSituation;
 	}
 
+/**
+ * @return InfoCountry
+ */
+public InfoCountry getInfoCountry() {
+	return infoCountry;
+}
+
 	/**
 	 * @return InfoDegree
 	 */
 	public InfoDegree getInfoDegree() {
 		return infoDegree;
+	}
+
+	/**
+	 * @return InfoExecutionYear
+	 */
+	public InfoExecutionYear getInfoExecutionYear() {
+		return infoExecutionYear;
+	}
+
+	/**
+	 * @return InfoCountry
+	 */
+	public InfoCountry getInfoNationality() {
+		return infoNationality;
 	}
 
 	/**
@@ -463,13 +469,6 @@ public InfoCountry getInfoCountry() {
 	 */
 	public String getName() {
 		return name;
-	}
-
-	/**
-	 * @return InfoCountry
-	 */
-	public InfoCountry getInfoNationality() {
-		return infoNationality;
 	}
 
 	/**
@@ -568,14 +567,6 @@ public InfoCountry getInfoCountry() {
 	}
 
 	/**
-	 * Sets the applicationYear.
-	 * @param applicationYear The applicationYear to set
-	 */
-	public void setApplicationYear(Integer applicationYear) {
-		this.applicationYear = applicationYear;
-	}
-
-	/**
 	 * Sets the average.
 	 * @param average The average to set
 	 */
@@ -630,14 +621,6 @@ public InfoCountry getInfoCountry() {
 	public void setContributorNumber(String contributorNumber) {
 		this.contributorNumber = contributorNumber;
 	}
-
-/**
- * Sets the infoCountry.
- * @param infoCountry The infoCountry to set
- */
-public void setInfoCountry(InfoCountry country) {
-	this.infoCountry = country;
-}
 
 	/**
 	 * Sets the email.
@@ -696,12 +679,36 @@ public void setInfoCountry(InfoCountry country) {
 		this.infoCandidateSituation = infoCandidateSituation;
 	}
 
+/**
+ * Sets the infoCountry.
+ * @param infoCountry The infoCountry to set
+ */
+public void setInfoCountry(InfoCountry infoCountry) {
+	this.infoCountry = infoCountry;
+}
+
 	/**
 	 * Sets the infoDegree.
 	 * @param infoDegree The infoDegree to set
 	 */
 	public void setInfoDegree(InfoDegree infoDegree) {
 		this.infoDegree = infoDegree;
+	}
+
+	/**
+	 * Sets the infoExecutionYear.
+	 * @param infoExecutionYear The infoExecutionYear to set
+	 */
+	public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
+		this.infoExecutionYear = infoExecutionYear;
+	}
+
+	/**
+	 * Sets the infoNationality.
+	 * @param infoNationality The infoNationality to set
+	 */
+	public void setInfoNationality(InfoCountry infoNationality) {
+		this.infoNationality = infoNationality;
 	}
 
 	/**
@@ -758,14 +765,6 @@ public void setInfoCountry(InfoCountry country) {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * Sets the infoNationality.
-	 * @param infoNationality The infoNationality to set
-	 */
-	public void setInfoNationality(InfoCountry nationality) {
-		this.infoNationality = nationality;
 	}
 
 	/**

@@ -102,7 +102,7 @@ public class ReadMasterDegreeCandidateByUsernameTest extends TestCaseServicosCan
         assertTrue(candidateTemp.getUsername().equals("Cand1"));
         assertTrue(candidateTemp.getPassword().equals("Pass1"));
         assertTrue(candidateTemp.getCandidateNumber().equals(new Integer(1)));
-        assertTrue(candidateTemp.getApplicationYear().equals(new Integer(2002)));
+        assertTrue(candidateTemp.getInfoExecutionYear().getYear().equals("2003/2004"));
         assertTrue(candidateTemp.getSpecialization().equals(Specialization.MESTRADO_STRING));
         assertTrue(candidateTemp.getMajorDegreeSchool().equals("IST"));
         assertTrue(candidateTemp.getMajorDegreeYear().equals(new Integer(2000)));

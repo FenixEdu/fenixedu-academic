@@ -42,7 +42,6 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
             query.bind(username);
             List result = (List) query.execute();
             lockRead(result);
-            
             if (result.size() != 0)
                 candidate = (IMasterDegreeCandidate) result.get(0);
                 
@@ -53,13 +52,13 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     }
     
     
-    public IMasterDegreeCandidate readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(Integer candidateNumber, Integer applicationYear, String degreeCode) throws ExcepcaoPersistencia {
+    public IMasterDegreeCandidate readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(Integer candidateNumber, String applicationYear, String degreeCode) throws ExcepcaoPersistencia {
         try {
             IMasterDegreeCandidate candidate = null;
             
             String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
 		            + " where candidateNumber = $1"
-		            + " and applicationYear = $2"
+		            + " and executionYear.year = $2"
 		            + " and degree.sigla = $3" ;
 
             query.create(oqlQuery);

@@ -172,11 +172,9 @@
 	     column="CANDIDATE_NUMBER"
 	     jdbc-type="INTEGER"
 	  />
-
-	  
 	  <field-descriptor id="32"
-	     name="applicationYear"
-	     column="APPLICATION_YEAR"
+	     name="executionYearKey"
+	     column="EXECUTION_YEAR_KEY"
 	     jdbc-type="INTEGER"
 	  />
 	  <field-descriptor id="33"
@@ -235,6 +233,14 @@
          	proxy="true"
       	  >
           <foreignkey field-id-ref="12"/>
+          </reference-descriptor>
+
+          <reference-descriptor
+         	name="executionYear"
+         	class-ref="Dominio.ExecutionYear"
+         	proxy="true"
+      	  >
+          <foreignkey field-id-ref="32"/>
           </reference-descriptor>
 
          <collection-descriptor

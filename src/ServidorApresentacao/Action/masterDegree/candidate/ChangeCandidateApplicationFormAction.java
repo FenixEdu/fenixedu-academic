@@ -27,6 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoCountry;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -72,6 +73,9 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
  	  InfoCountry nationality = new InfoCountry();
  	  nationality.setNationality((String) changePersonalInformationForm.get("nationality"));
  
+ 	  InfoExecutionYear applicationYear = new InfoExecutionYear();
+	  applicationYear.setYear((String) changePersonalInformationForm.get("applicationYear"));
+ 
       Object changeArgs[] = new Object[1];
       InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate( 
 						   (String) changePersonalInformationForm.get("name"), 
@@ -104,7 +108,7 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 						   country, 
 						   nationality, 
 						   (String) changePersonalInformationForm.get("specialization"),
-						   ((Integer) changePersonalInformationForm.get("applicationYear")), 
+						   applicationYear,
 						   ((Integer) changePersonalInformationForm.get("candidateNumber")),
 						   (new Double(Double.parseDouble((String) changePersonalInformationForm.get("average")))),
 						   birthDate.getTime(),

@@ -56,7 +56,7 @@ public interface IMasterDegreeCandidate {
     void setUsername(String username);
     void setPassword(String password);
     void setCandidateNumber(Integer candidateNumber);
-    void setApplicationYear(Integer applicationYear);
+    void setExecutionYear(IExecutionYear executionYear);
     void setSpecialization(Specialization specialization);
     void setMajorDegreeSchool(String majorDegreeSchool);
     void setMajorDegreeYear(Integer majorDegreeYear);
@@ -96,7 +96,7 @@ public interface IMasterDegreeCandidate {
     String getUsername();
     String getPassword();
     Integer getCandidateNumber();
-    Integer getApplicationYear();
+    IExecutionYear getExecutionYear();
     Specialization getSpecialization();
     String getMajorDegreeSchool();
     Integer getMajorDegreeYear();

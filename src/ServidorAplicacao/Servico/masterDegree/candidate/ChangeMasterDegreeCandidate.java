@@ -71,7 +71,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
 
         try {
             ICurso degreeTemp = sp.getICursoPersistente().readBySigla(newMasterDegreeCandidate.getInfoDegree().getSigla());
-            existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(newMasterDegreeCandidate.getCandidateNumber(), newMasterDegreeCandidate.getApplicationYear(), degreeTemp.getSigla());
+            existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(newMasterDegreeCandidate.getCandidateNumber(), newMasterDegreeCandidate.getInfoExecutionYear().getYear(), degreeTemp.getSigla());
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();

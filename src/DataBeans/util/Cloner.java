@@ -505,15 +505,17 @@ public abstract class Cloner {
 		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 		ICountry country = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoCountry());
 		ICountry nationality = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoNationality());
+		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoMasterDegreeCandidate.getInfoExecutionYear());
 		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
 		masterDegreeCandidate.setCountry(country);
 		masterDegreeCandidate.setNationality(nationality);
+		masterDegreeCandidate.setExecutionYear(executionYear);
 		return masterDegreeCandidate;
 	}
 
 	/**
 	 * Method copyIMasterDegreeCandidate2InfoMasterDegreCandidate
-	 * @param masterDegreeCandidate
+	 * @param masterDegreeCandidate 
 	 * @return InfoMasterDegreeCandidate 
 	 */
 	public static InfoMasterDegreeCandidate copyIMasterDegreeCandidate2InfoMasterDegreCandidate(IMasterDegreeCandidate masterDegreeCandidate) {
@@ -522,10 +524,12 @@ public abstract class Cloner {
 		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(masterDegreeCandidate.getDegree());
 		InfoCountry infoCountry = Cloner.copyICountry2InfoCountry(masterDegreeCandidate.getCountry());
 		InfoCountry infoNationality = Cloner.copyICountry2InfoCountry(masterDegreeCandidate.getNationality());
+		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(masterDegreeCandidate.getExecutionYear());
 		infoMasterDegreeCandidate.setInfoDegree(infoDegree);
 		infoMasterDegreeCandidate.setInfoCountry(infoCountry);
 		infoMasterDegreeCandidate.setInfoNationality(infoNationality);
 		infoMasterDegreeCandidate.setIdentificationDocumentType(masterDegreeCandidate.getIdentificationDocumentType().toString());
+		infoMasterDegreeCandidate.setInfoExecutionYear(infoExecutionYear);
 		return infoMasterDegreeCandidate;
 	}
 	

@@ -32,11 +32,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ICountry;
 import Dominio.ICurso;
+import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentCountry;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EstadoCivil;
@@ -50,6 +52,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 	IPersistentMasterDegreeCandidate persistentMasterDegreeCandidate = null;
 	IPersistentCountry persistentCountry = null;
 	ICursoPersistente persistentDegree = null;
+	IPersistentExecutionYear persistentExecutionYear = null;
     
     public MasterDegreeCandidateOJBTest(java.lang.String testName) {
         super(testName);
@@ -78,6 +81,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		persistentMasterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate();
 		persistentDegree = persistentSupport.getICursoPersistente();
 		persistentCountry = persistentSupport.getIPersistentCountry();
+		persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
     }
     
     protected void tearDown(){
@@ -130,7 +134,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(masterDegreeCandidateTemp.getUsername().equals("Cand1"));
         assertTrue(masterDegreeCandidateTemp.getPassword().equals("Pass1"));
         assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(1)));
-        assertTrue(masterDegreeCandidateTemp.getApplicationYear().equals(new Integer(2002)));
+        assertTrue(masterDegreeCandidateTemp.getExecutionYear().getYear().equals("2003/2004"));
         assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.MESTRADO));
         assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
         assertTrue(masterDegreeCandidateTemp.getMajorDegreeYear().equals(new Integer(2000)));
@@ -164,19 +168,22 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
         ICurso masterDegreeTemp = null;
 		ICountry countryTemp = null;
+        IExecutionYear executionYear = null;
         try {
             persistentSupport.iniciarTransaccao();
 	        masterDegreeTemp = persistentDegree.readBySigla("LEIC");
 	        assertNotNull(masterDegreeTemp);
 	        countryTemp = persistentCountry.readCountryByName("Portugal");
 	        assertNotNull(countryTemp);
+	        executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+	        assertNotNull(executionYear);
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
         }
 
 
-        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("1", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "1", data.getTime(), "Nome", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "1", "1", countryTemp, "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Cand1", "Pass1", new Integer(1), new Integer(2002), new Specialization(Specialization.MESTRADO), "1", new Integer(1), new Double(1.0), masterDegreeTemp, countryTemp);
+        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("1", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "1", data.getTime(), "Nome", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "1", "1", countryTemp, "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Cand1", "Pass1", new Integer(1), executionYear, new Specialization(Specialization.MESTRADO), "1", new Integer(1), new Double(1.0), masterDegreeTemp, countryTemp);
         try {
             persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.writeMasterDegreeCandidate(candidateTemp);
@@ -201,10 +208,16 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
         ICurso masterDegreeTemp = null;
 		ICountry countryTemp = null;
+		IExecutionYear executionYear = null;
         try {
             persistentSupport.iniciarTransaccao();
 	        masterDegreeTemp = persistentDegree.readBySigla("MIC");
+	        assertNotNull(masterDegreeTemp);
 	        countryTemp = persistentCountry.readCountryByName("Inglaterra");
+	        assertNotNull(countryTemp);
+			executionYear = persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear);
+
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -212,7 +225,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertNotNull(masterDegreeTemp);
 		assertNotNull(countryTemp);
 
-        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("3", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", countryTemp, "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand3", "Pass12", new Integer(12), new Integer(2002), new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp, countryTemp);
+        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("3", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", countryTemp, "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand3", "Pass12", new Integer(12), executionYear, new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp, countryTemp);
         
         try {
             persistentSupport.iniciarTransaccao();
@@ -265,7 +278,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(candidateTemp.getUsername().equals("Cand3"));
         assertTrue(candidateTemp.getPassword().equals("Pass12"));
         assertTrue(candidateTemp.getCandidateNumber().equals(new Integer(12)));
-        assertTrue(candidateTemp.getApplicationYear().equals(new Integer(2002)));
+        assertTrue(candidateTemp.getExecutionYear().getYear().equals("2003/2004"));
         assertEquals(candidateTemp.getSpecialization(), new Specialization(Specialization.MESTRADO));
         assertTrue(candidateTemp.getMajorDegreeSchool().equals("12"));
         assertTrue(candidateTemp.getMajorDegreeYear().equals(new Integer(12)));
@@ -364,7 +377,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(1), new Integer(2002), "MIC");
+            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(1), "2003/2004", "MIC");
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -405,7 +418,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(masterDegreeCandidateTemp.getUsername().equals("Cand1"));
         assertTrue(masterDegreeCandidateTemp.getPassword().equals("Pass1"));
         assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(1)));
-        assertTrue(masterDegreeCandidateTemp.getApplicationYear().equals(new Integer(2002)));
+        assertTrue(masterDegreeCandidateTemp.getExecutionYear().getYear().equals("2003/2004"));
         assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.MESTRADO));
         assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
         assertTrue(masterDegreeCandidateTemp.getMajorDegreeYear().equals(new Integer(2000)));
@@ -419,7 +432,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         
         try {
             persistentSupport.iniciarTransaccao();
-            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(999), new Integer(95486), "555");
+            masterDegreeCandidateTemp = persistentMasterDegreeCandidate.readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(new Integer(999), "2000", "555");
             assertNull(masterDegreeCandidateTemp);
             persistentSupport.confirmarTransaccao();
             

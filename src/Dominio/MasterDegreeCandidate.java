@@ -54,7 +54,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     private String username = null;
     private String password = null;
     private Integer candidateNumber = null;
-    private Integer applicationYear = null;
     private Specialization specialization = null;
     private String majorDegreeSchool = null;
     private Integer majorDegreeYear = null;
@@ -67,16 +66,18 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     private ICountry country = null;
 	private ICountry nationality = null;
 
+	private IExecutionYear executionYear = null;
+
 	// List of Situations
     private Set situations;
  
     
     // Internal Codes from Database
-    private Integer internalCode;          // Internal code for Master Degree Candidate
-    private Integer degreeKey;             // Foreign Key from table Degree
-	private Integer countryKey;            // Foreign Key from table Country
-	private Integer nationalityCountryKey; // Foreign Key from table Country
-    
+    private Integer internalCode;            // Internal code for Master Degree Candidate
+    private Integer degreeKey;               // Foreign Key from table Degree
+	private Integer countryKey;              // Foreign Key from table Country
+	private Integer nationalityCountryKey;   // Foreign Key from table Country
+    private Integer executionYearKey; // Foreign Key from table ExecutionYear
     
     public MasterDegreeCandidate() {
         identificationDocumentNumber = null;
@@ -110,7 +111,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         password = null;
         degree = null;
         candidateNumber = null;
-        applicationYear = null;
+        executionYear = null;
         specialization = null;
         majorDegreeSchool = null;
         majorDegreeYear = null;
@@ -128,7 +129,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     String postCode, String addressParish, String addressMunicipality,
     String addressDistrict, String telephone, String mobilePhone, String email,
     String webSite, String contributorNumber, String occupation, String majorDegree,
-    String username, String password, Integer candidateNumber, Integer applicationYear,
+    String username, String password, Integer candidateNumber, IExecutionYear executionYear,
     Specialization specialization, String majorDegreeSchool, Integer majorDegreeYear, 
     Double average, ICurso masterDegree, ICountry country) {
         
@@ -162,7 +163,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         setUsername(username);
         setPassword(password);
         setCandidateNumber(candidateNumber);
-        setApplicationYear(applicationYear);
+        setExecutionYear(executionYear);
         setSpecialization(specialization);
         setMajorDegreeSchool(majorDegreeSchool);
         setMajorDegreeYear(majorDegreeYear);
@@ -179,10 +180,10 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 		(this.username.equals(((MasterDegreeCandidate)o).getUsername())) ||
 		
 		((this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
-		 (this.applicationYear.equals(((MasterDegreeCandidate)o).getApplicationYear())) &&
+		 (this.executionYear.equals(((MasterDegreeCandidate)o).getExecutionYear())) &&
 		 (this.degree.equals(((MasterDegreeCandidate)o).degree))) ||
 		 
-		((this.applicationYear.equals(((MasterDegreeCandidate)o).getApplicationYear())) && 
+		((this.executionYear.equals(((MasterDegreeCandidate)o).getExecutionYear())) && 
 		 (this.degree.equals(((MasterDegreeCandidate)o).degree)) &&
 		 (this.identificationDocumentNumber.equals(((MasterDegreeCandidate)o).getIdentificationDocumentNumber())) &&
 		 (this.identificationDocumentType.equals(((MasterDegreeCandidate)o).getIdentificationDocumentType()))));       
@@ -222,7 +223,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         result += "\n  - Username : " + username;
         result += "\n  - Password : " + password;
         result += "\n  - Candidate Number : " + candidateNumber;
-        result += "\n  - Application Year : " + applicationYear;
+        result += "\n  - Application Year : " + executionYear;
         result += "\n  - Specialization : " + specialization;
         result += "\n  - Major Degree School : " + majorDegreeSchool;
         result += "\n  - Major Degree Year : " + majorDegreeYear;
@@ -283,6 +284,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
  
 
+
 	/**
 	 * @return String
 	 */
@@ -309,13 +311,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 */
 	public String getAddressParish() {
 		return addressParish;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getApplicationYear() {
-		return applicationYear;
 	}
 
 	/**
@@ -400,6 +395,20 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 */
 	public String getEmail() {
 		return email;
+	}
+
+	/**
+	 * @return IExecutionYear
+	 */
+	public IExecutionYear getExecutionYear() {
+		return executionYear;
+	}
+
+	/**
+	 * @return Integer
+	 */
+	public Integer getExecutionYearKey() {
+		return executionYearKey;
 	}
 
 	/**
@@ -610,14 +619,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Sets the applicationYear.
-	 * @param applicationYear The applicationYear to set
-	 */
-	public void setApplicationYear(Integer applicationYear) {
-		this.applicationYear = applicationYear;
-	}
-
-	/**
 	 * Sets the average.
 	 * @param average The average to set
 	 */
@@ -711,6 +712,22 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * Sets the executionYear.
+	 * @param executionYear The executionYear to set
+	 */
+	public void setExecutionYear(IExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
+
+	/**
+	 * Sets the executionYearKey.
+	 * @param executionYearKey The executionYearKey to set
+	 */
+	public void setExecutionYearKey(Integer executionYearKey) {
+		this.executionYearKey = executionYearKey;
 	}
 
 	/**

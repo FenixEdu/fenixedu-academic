@@ -58,7 +58,7 @@
           <!-- Ano de Candidatura -->
           <tr>
             <td><bean:message key="candidate.applicationYear" /></td>
-            <td><bean:write name="applicationInfo" property="applicationYear"/></td>
+            <td><bean:write name="applicationInfo" property="infoExecutionYear.year"/></td>
           </tr>
           <!-- Curso Pretendido -->
           <tr>
