@@ -34,6 +34,10 @@
 
  ######### End of Verify Info #########
 
+<br/>
+
 Hello Crazy World... :0)
 
-<app:generateExamsMap name="<%= SessionConstants.LESSON_LIST_ATT %>"/>
+<br/>
+<br/>
+<app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>"/>

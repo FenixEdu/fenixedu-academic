@@ -30,9 +30,9 @@ public class ExamsMap {
 				 day < makeLastDayOfYear(firstDayOfSeason).get(Calendar.DAY_OF_YEAR);
 				 day++) {
 				 Calendar tempDayToAdd = makeDay(firstDayOfSeason,
-				 	day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR)); 
-				days.add(new DayOfMap(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap.getExecutionCourses())));
-						                        // invoke method to determine list of exams for this day
+				 	day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));
+				if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+					days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap.getExecutionCourses())));
 			}
 			
 			firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason);
@@ -43,37 +43,13 @@ public class ExamsMap {
 			 day++) {
 			Calendar tempDayToAdd = makeDay(firstDayOfSeason,
 				day - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));
-			days.add(new DayOfMap(tempDayToAdd, null));
-											 // invoke method to determine list of exams for this day
+			if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+				days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap.getExecutionCourses())));
 		}
 
 	}
 
-	private class DayOfMap {
-		private Calendar day;
-		private List exams;
-		
-		public DayOfMap(Calendar day, List exams) {
-			setDay(day);
-			setExams(exams);
-		}
 
-		public Calendar getDay() {
-			return day;
-		}
-
-		public List getExams() {
-			return exams;
-		}
-
-		public void setDay(Calendar calendar) {
-			day = calendar;
-		}
-
-		public void setExams(List list) {
-			exams = list;
-		}
-	}
 
 
 	private List findExams(Calendar day, List executionCourses) {
@@ -87,12 +63,17 @@ public class ExamsMap {
 			for (int j = 0; j < infoExams.size(); j++) {
 				InfoExam infoExam = (InfoExam) infoExams.get(j);
 
-				// TODO : if day is the same then add it to the list 				
+				// TODO : if day is the same then add it to the list
+				 				
 			}
 		}
 
 		return result;
 	}
+
+//	private boolean sameDayAsExam(Calendar day, InfoExam infoExam) {
+//		return (day.get(Calendar.YEAR) == infoExam.g);
+//	}
 
 
 // ------------------------------------------------------------------------------------------
@@ -141,8 +122,7 @@ public class ExamsMap {
 			return anyDay;
 
 		int daysToGoForward = Calendar.SATURDAY - anyDay.get(Calendar.DAY_OF_WEEK);
-		// TODO : verify "anyDay.get(Calendar.DAY_OF_YEAR) >= daysInYear - 6"
-		if (anyDay.get(Calendar.DAY_OF_YEAR) >= daysInYear - 6) {
+		if (anyDay.get(Calendar.DAY_OF_YEAR) > daysInYear - 6) {
 			// Monday is parte of Previous year
 			Calendar dayOfPreviousYear = Calendar.getInstance();
 			dayOfPreviousYear.set(Calendar.YEAR, anyDay.get(Calendar.YEAR) + 1);
@@ -213,4 +193,11 @@ public class ExamsMap {
 		return daysInYear;	
 	}
 	
+	/**
+	 * @return
+	 */
+	public List getDays() {
+		return days;
+	}
+
 }

@@ -4,6 +4,8 @@
  */
 package ServidorApresentacao.TagLib.sop.examsMap;
 
+import java.io.IOException;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -11,6 +13,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.struts.util.MessageResources;
 
 import DataBeans.InfoExamsMap;
+import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapContentRenderer;
+import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -21,6 +25,8 @@ public class RenderExamsMapTag extends TagSupport {
 	// Name of atribute containing ExamMap
 	private String name;
 
+	private ExamsMapSlotContentRenderer examsMapSlotContentRenderer =
+		new ExamsMapContentRenderer();
 
 	public int doStartTag() throws JspException {
 		// Obtain InfoExamMap
@@ -39,9 +45,17 @@ public class RenderExamsMapTag extends TagSupport {
 		JspWriter writer = pageContext.getOut();
 		ExamsMap examsMap = new ExamsMap(infoExamsMap);
 
-		// TODO : ExamsMapRenderer ...
-
-		// TODO : write everything ...
+		ExamsMapRenderer renderer =
+			new ExamsMapRenderer(
+				examsMap,
+				this.examsMapSlotContentRenderer);
+		
+		try {
+			writer.print(renderer.render());
+		} catch (IOException e) {
+			throw new JspException(
+				messages.getMessage("generateExamsMap.io", e.toString()));
+		}
 
 		return (SKIP_BODY);
 	}
