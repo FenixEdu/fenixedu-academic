@@ -175,6 +175,7 @@ create table ENROLMENT_EVALUATION (
    KEY_EMPLOYEE int(11),
    OBSERVATION varchar(255),
    primary key (ID_INTERNAL),
+   INDEX key_enrolment_enrolment_evaluation_index(KEY_ENROLMENT),
    unique U1 (KEY_ENROLMENT,WHEN_ALTER,EVALUATION_TYPE,GRADE)
 )type=InnoDB;
 
