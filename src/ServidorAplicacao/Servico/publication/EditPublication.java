@@ -55,8 +55,8 @@ public class EditPublication extends EditDomainObjectService {
 			persistentSuport = SuportePersistenteOJB.getInstance();
 
 			Integer keyPublicationTypeId =
-				(Integer) ((InfoPublication) infoObject)
-					.getKeyPublicationType();
+				((InfoPublication) infoObject)
+            	.getKeyPublicationType();
 			
 			IPersistentPublicationType persistentPublicationType =
 				persistentSuport.getIPersistentPublicationType();

@@ -47,7 +47,7 @@ public class ReadPublicationsByTeacherAsAuthorAction
 		IUserView userView = SessionUtils.getUserView(request);
 
 		String typePublication =
-			(String) request.getParameter("typePublication");
+			request.getParameter("typePublication");
 
 		ActionForward actionForward =
 			mapping.findForward("show-cientific-author-form");
@@ -85,7 +85,7 @@ public class ReadPublicationsByTeacherAsAuthorAction
 		ActionErrors errors = new ActionErrors();
 
 		String typePublication =
-			(String) request.getParameter("typePublication");
+			request.getParameter("typePublication");
 
 		Integer teacherId = new Integer(request.getParameter("teacherId"));
 
@@ -132,7 +132,7 @@ public class ReadPublicationsByTeacherAsAuthorAction
 		IUserView userView = SessionUtils.getUserView(request);
 
 		String typePublication =
-			(String) request.getParameter("typePublication");
+			request.getParameter("typePublication");
 
 		Integer teacherId = new Integer(request.getParameter("teacherId"));
 

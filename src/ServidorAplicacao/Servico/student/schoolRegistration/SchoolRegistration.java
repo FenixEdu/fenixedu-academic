@@ -6,10 +6,8 @@ package ServidorAplicacao.Servico.student.schoolRegistration;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import Dominio.student.ISchoolRegistrationInquiryAnswer;
 import Dominio.student.SchoolRegistrationInquiryAnswer;

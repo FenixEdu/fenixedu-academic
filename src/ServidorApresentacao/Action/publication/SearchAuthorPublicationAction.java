@@ -218,7 +218,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 		authorsIds.addAll(newList);
 
 		String[] idsToDelete = (String[]) dynaForm.get("authorsIdstoDelete");
-		List authorsIdsToDelete = Arrays.asList((String[]) idsToDelete);
+		List authorsIdsToDelete = Arrays.asList(idsToDelete);
 
 		String typePublication = (String) dynaForm.get("typePublication");
 

@@ -116,7 +116,7 @@ public class DeletePublicationInTeacherList implements IServico {
 				newPublications.add(publicationTeacher);
 			}
 			else{
-				publicationToRemove = (IPublication) publicationTeacher;
+				publicationToRemove = publicationTeacher;
 			}
 		}
 

@@ -43,7 +43,7 @@ public class ReadAuthors implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPessoa person = (IPessoa)persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 			IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 			IAuthor author = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
 			List authors = persistentAuthor.readAuthorsBySubName(stringtoSearch);

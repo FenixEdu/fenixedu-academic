@@ -343,7 +343,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
 				(InfoPublication) infoObject);
 
 		Integer keyPublicationTypeId =
-			(Integer) ((InfoPublication) infoObject).getKeyPublicationType();
+			((InfoPublication) infoObject).getKeyPublicationType();
 
 		publication.setKeyPublicationType(keyPublicationTypeId);
 
