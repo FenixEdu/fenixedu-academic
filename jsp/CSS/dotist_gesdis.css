@@ -88,23 +88,18 @@ a:hover {
 	
 .navopgeral a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
+	color: #fff;
 	text-decoration: none;
 	}
 
-.navopgeral a:active {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-	}
-	
 .navopgeral a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
+	color: #fff;
 	text-decoration: none;
 	}
 
 .navopgeral a:hover {
+
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: transparent;
 	color: #B5BDD6;
@@ -162,10 +157,19 @@ a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #CCCCCC;
+	border-right: 1px solid #ccc;
 	padding: 20px;
+	}
+	
+.navlateral ul {
+	margin:0;
+	padding-left: 10px;
+	}
+	
+.navlateral li {
+	list-style-type: square;
+	text-indent: 10px;
+	height: 20px;
 	}
 	
 .bodycontent {
@@ -195,8 +199,7 @@ a:hover {
 	
 .navlateral a:hover {
 	color: #333;
-	text-decoration: underline;
-	background-color:transparent;
+	background-color: #ccc;
 	}
 
 /**********************************************
@@ -292,3 +295,32 @@ a:hover {
 .bckgr-blue {
 	background-color: #EBEFFA;
 	}
+	
+/* logout orange span */
+.logout {color: #f93;}
+
+
+/* edit, add, delete generic css buttons */
+
+.gen-button {
+	display: inline;
+	margin: 0;
+	padding: 0 5px 0;
+	border: 1px solid #ccc;
+	}
+	
+.gen-button a:link {
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	color: #999;
+	text-decoration: none;
+	}
+
+.gen-button a:visited {
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	color: #999;
+	text-decoration: none;
+	}
+
+.gen-button a:hover {
+	color: #666;
+	}	
