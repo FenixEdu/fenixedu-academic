@@ -89,21 +89,29 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
+			HttpSession session = request.getSession();
 		IUserView userView = SessionUtils.getUserView(request);
-
+		
+		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+		
+		InfoShift infoShift = new InfoShift();
+		
 		String shiftName = request.getParameter("shiftName");
+		infoShift.setNome(shiftName);
+		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+		
+
 		InfoClass classView = getInfoTurma(request);
 		ClassAndShiftKeys keysTurmaAndTurno =
 			new ClassAndShiftKeys(classView.getNome(), shiftName);
 
-		Object[] argsRemoverTurno = { keysTurmaAndTurno };
+		Object[] argsRemoverTurno = { infoShift, classView };
 
 		ServiceUtils.executeService(userView, "RemoverTurno", argsRemoverTurno);
 
 		setClassShiftListToRequest(request, userView, classView.getNome());
 
-		HttpSession session = request.getSession();
+		
 		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		return mapping.findForward("viewClassShiftList");

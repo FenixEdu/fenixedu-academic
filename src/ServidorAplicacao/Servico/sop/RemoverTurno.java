@@ -7,7 +7,11 @@ package ServidorAplicacao.Servico.sop;
  * @version
  **/
 
-import DataBeans.ClassAndShiftKeys;
+import DataBeans.InfoClass;
+import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
+import Dominio.ITurma;
+import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -35,13 +39,17 @@ public class RemoverTurno implements IServico {
     return "RemoverTurno";
   }
 
-  public Object run(ClassAndShiftKeys keysTurmaAndTurno) {
+  public Object run(InfoShift infoShift, InfoClass infoClass) {
 
     boolean result = false;
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      sp.getITurmaTurnoPersistente().delete(keysTurmaAndTurno.getNomeTurma(), keysTurmaAndTurno.getNomeTurno());
+      
+      ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+      ITurma classTemp = Cloner.copyInfoClass2Class(infoClass);
+      
+      sp.getITurmaTurnoPersistente().delete(shift, classTemp);
       result = true;
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();

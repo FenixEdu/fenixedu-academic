@@ -33,11 +33,32 @@ public class TurmaTurnoOJB
 		try {
 			ITurmaTurno turmaTurno = null;
 			String oqlQuery =
-				"select turmaturno from " + TurmaTurno.class.getName();
-			oqlQuery += " where turma.nome = $1 and turno.nome = $2";
+				"select turmaturno from " + TurmaTurno.class.getName()
+				// Unique from Class
+				+ " where turma.nome = $1"
+				+ " and turma.executionPeriod.name = $2"
+				+ " and turma.executionPeriod.executionYear.year = $3"
+				+ " and turma.executionDegree.executionYear.year = $4"
+				+ " and turma.executionDegree.curricularPlan.name = $5"
+				+ " and turma.executionDegree.curricularPlan.curso.nome = $6"
+				// Unique from Shift
+				+ " and turno.nome = $7"
+				+ " and turno.disciplinaExecucao.sigla = $8"
+				+ " and turno.disciplinaExecucao.executionPeriod.name = $9"
+				+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $10";
+				
 			query.create(oqlQuery);
 			query.bind(turma.getNome());
+			query.bind(turma.getExecutionPeriod().getName());
+			query.bind(turma.getExecutionPeriod().getExecutionYear().getYear());
+			query.bind(turma.getExecutionDegree().getExecutionYear().getYear());
+			query.bind(turma.getExecutionDegree().getCurricularPlan().getName());
+			query.bind(turma.getExecutionDegree().getCurricularPlan().getCurso().getNome());
+			
 			query.bind(turno.getNome());
+			query.bind(turno.getDisciplinaExecucao().getSigla());
+			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)
@@ -56,19 +77,15 @@ public class TurmaTurnoOJB
 		super.delete(turmaTurno);
 	}
 
-	public void delete(String nomeTurma, String nomeTurno)
+	public void delete(ITurno shift, ITurma classTemp)
 		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + TurmaTurno.class.getName();
-			oqlQuery += " where turma.nome = $1 and turno.nome = $2";
-			query.create(oqlQuery);
-			query.bind(nomeTurma);
-			query.bind(nomeTurno);
-			List result = (List) query.execute();
-			delete(((ITurmaTurno) (result.get(0))));
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		// Read From DataBase			
+		ITurno shiftToDelete = SuportePersistenteOJB.getInstance().getITurnoPersistente().readByNameAndExecutionCourse(shift.getNome(), shift.getDisciplinaExecucao());
+		ITurma classToDelete = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getNome(), classTemp.getExecutionDegree(), classTemp.getExecutionPeriod());
+		ITurmaTurno turmaTurnoToDelete = readByTurmaAndTurno(classToDelete, shiftToDelete);
+		
+		// Delete association
+		delete(turmaTurnoToDelete);
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
@@ -145,8 +162,8 @@ public class TurmaTurnoOJB
 				"select all from "
 					+ TurmaTurno.class.getName()
 					+ " where turno.nome = $1"
-					+ " and  turno.disciplinaExecucao.sigla = $2"
-					+ " and  turno.disciplinaExecucao.executionPeriod.name = $3"
+					+ " and turno.disciplinaExecucao.sigla = $2"
+					+ " and turno.disciplinaExecucao.executionPeriod.name = $3"
 					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
 			query.bind(turno.getNome());
