@@ -13,18 +13,21 @@
 	<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
 	<bean:define id="bundleKeyPageDescription"><bean:write name="role" property="pageNameProperty"/>.description</bean:define>
 	<bean:define id="link">/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
-
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	  <tr>
 	    <td nowrap="nowrap" class="infoIcons">
-	    	<img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+	    	<img alt="" src="<%= request.getContextPath() %>/images/info.gif"> 
 	    </td>
 	    <td class="infoop">
 	    	<strong><html:link page='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link></strong>
 	    </td>
 	  </tr>
+	  <tr>
+	  	<td>
+		  <p>&nbsp;</p>
+	    </td>
+	  	<td><p><bean:message name="bundleKeyPageDescription" bundle="PORTAL_RESOURCES"/></p>
+		</td>
+	  </tr>
 	</table>
-	<p><bean:message name="bundleKeyPageDescription" bundle="PORTAL_RESOURCES"/></p>	
-	<hr/>
-</logic:iterate>
-	
+</logic:iterate>	

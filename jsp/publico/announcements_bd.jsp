@@ -2,7 +2,6 @@
 <%@ page import="DataBeans.gesdis.InfoAnnouncement" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.lang.String" %>
-
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -33,8 +32,7 @@
 </table>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>">
-<h2>
-         <bean:message key="message.announcements.not.available" />
-	</h2>
-	
+<h4>
+<bean:message key="message.announcements.not.available" />
+</h4>
 </logic:notPresent>

@@ -5,10 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<h2><bean:message key="button.editSection" /></h2>
 <span class="error"><html:errors property="error.default"/></span>
 <html:form action="/editSection">
 <html:hidden property="page" value="1"/>
-<table align="center">
+<table>
 	<tr>
 		<td>
 			<bean:message key="message.sectionName"/>
@@ -75,21 +76,13 @@
 	<% index++; %>					
 	</logic:iterate>
 	--%>
-	<tr>
-		<td>
-			<html:submit styleClass="inputbutton">
-				<bean:message key="button.save"/>
-			</html:submit>
-		</td>
-		<td>
-			<html:reset  styleClass="inputbutton">
-				<bean:message key="label.clear"/>
-			</html:reset>			
-		</td>
-		
-	</tr>
 </table>
-
+<br />
+<html:submit styleClass="inputbutton">
+<bean:message key="button.save"/>
+</html:submit>
+<html:reset  styleClass="inputbutton">
+<bean:message key="label.clear"/>
+</html:reset>			
 <html:hidden property="method" value="edit" />
-
 </html:form>

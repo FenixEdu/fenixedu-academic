@@ -80,14 +80,14 @@
 <html:hidden property="page" value="1"/>
 <tr align="center">	
 	<td>
-	<html:reset styleClass="inputbutton">
-		<bean:message key="label.clear"/>
-	</html:reset>
-	</td>
-	<td>
 	<html:submit styleClass="inputbutton" property="confirm">
 		<bean:message key="button.save"/>
 	</html:submit>
+	</td>
+	<td>
+		<html:reset styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset>
 	</td>
 </tr>
 </table></h3>

@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
 <%@ page import="java.util.Calendar" %>
 <logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <table align="center"  cellpadding='0' cellspacing='0'>

@@ -4,7 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors property="error.default" /></span>
-<table align="center">
+<h2><bean:message key="message.insertItem" /></h2>
+<br />
+<table>
 <html:form action="/insertItem">
 <html:hidden property="page" value="1"/>
 	<td>
@@ -14,7 +16,6 @@
 		<html:text property="name" /><span class="error"><html:errors property="name"/></span>
 	</td>
 </tr>
-
 <tr>
 	<td>
 		<bean:message key="message.itemInformation"/>
@@ -42,28 +43,20 @@
 		<bean:message key="message.itemUrgent"/>
 	</td>
 	<td>
-			<html:select property="urgent" size="1" >
-				
-				<html:option value="false">não</html:option>
-				<html:option value="true">sim</html:option>
+		<html:select property="urgent" size="1" >	
+			<html:option value="false">não</html:option>
+			<html:option value="true">sim</html:option>
 		</html:select>
 		<span class="error"><html:errors property="urgent"/></span>
 	</td>
 </tr>
-<tr>
-<td>
-	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
-	</html:submit>
-</td>	
-<td>
-	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
-	</html:reset>			
-</td>
-
-</tr>
-
-<html:hidden property="method" value="insert" />
 </table>
+<br />
+<html:submit styleClass="inputbutton">
+<bean:message key="button.save"/>
+</html:submit>
+<html:reset  styleClass="inputbutton">
+<bean:message key="label.clear"/>
+</html:reset>			
+<html:hidden property="method" value="insert" />
 </html:form>
