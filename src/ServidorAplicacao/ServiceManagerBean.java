@@ -1,23 +1,26 @@
 package ServidorAplicacao;
 
 import java.rmi.RemoteException;
+import java.util.Calendar;
+import java.util.HashMap;
 
 import javax.ejb.CreateException;
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
+import org.apache.commons.collections.FastHashMap;
+
 import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterException;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.logging.ServiceExecutionLog;
 
 /**
  * This class is the entry point of the system to execute a service. It receives the service to execute,
  * its arguments and an identificator of the entity that wants to run the service.
- * 
- * The static method init must be executed before accessing the singleton of this class.
  * 
  * @author Luis Cruz
  * @version
@@ -25,6 +28,15 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 {
+
+	private static boolean loggingIsOn;
+	private static FastHashMap mapServicesToWatch;
+
+	static {
+		loggingIsOn = false;
+		mapServicesToWatch = new FastHashMap();
+		mapServicesToWatch.setFast(true);
+	}
 
 	/**
 	 * Executes a given service.
@@ -57,8 +69,22 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	{
 		try
 		{
+			Calendar serviceStartTime = null;
+			Calendar serviceEndTime = null;
+
 			IServiceManager manager = ServiceManager.getInstance();
-			return manager.execute(id, service, method, args);
+			if (loggingIsOn)
+			{
+				serviceStartTime = Calendar.getInstance();
+			}
+			Object serviceResult = manager.execute(id, service, method, args);
+			if (loggingIsOn)
+			{
+				serviceEndTime = Calendar.getInstance();
+				registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
+			}
+
+			return serviceResult;
 		}
 		catch (ExecutedServiceException ex)
 		{
@@ -132,6 +158,99 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 */
 	public void setSessionContext(SessionContext arg0) throws EJBException, RemoteException
 	{
+	}
+
+	public synchronized void turnLoggingOn(IUserView id)
+	{
+		loggingIsOn = true;
+	}
+
+	public synchronized void turnLoggingOff(IUserView id)
+	{
+		loggingIsOn = false;
+	}
+
+	public synchronized void clearLogHistory(IUserView id)
+	{
+		mapServicesToWatch.clear();
+	}
+
+	/**
+	 * @param service
+	 * @param method
+	 * @param args
+	 * @param serviceStartTime
+	 * @param serviceEndTime
+	 */
+	private void registerServiceExecutionTime(
+		String service,
+		String method,
+		Object[] args,
+		Calendar serviceStartTime,
+		Calendar serviceEndTime)
+	{
+		String hashKey = generateHashKey(service, method, args);
+		long serviceExecutionTime = calculateServiceExecutionTime(serviceStartTime, serviceEndTime);
+		ServiceExecutionLog serviceExecutionLog = (ServiceExecutionLog) mapServicesToWatch.get(hashKey);
+		if (serviceExecutionLog == null)
+		{
+			serviceExecutionLog = new ServiceExecutionLog(hashKey);
+			mapServicesToWatch.put(hashKey, serviceExecutionLog);
+		}
+
+		serviceExecutionLog.addExecutionTime(serviceExecutionTime);
+	}
+
+	/**
+	 * @param serviceStartTime
+	 * @param serviceEndTime
+	 * @return
+	 */
+	private long calculateServiceExecutionTime(Calendar serviceStartTime, Calendar serviceEndTime)
+	{
+		return serviceEndTime.getTimeInMillis() - serviceStartTime.getTimeInMillis();
+	}
+
+	/**
+	 * @param service
+	 * @param method
+	 * @param args
+	 * @return
+	 */
+	private String generateHashKey(String service, String method, Object[] args)
+	{
+		String hashKey = service + "." + method + "(";
+		if (args != null)
+		{
+			for (int i = 0; i < args.length; i++)
+			{
+				hashKey += args[i].getClass().getName();
+				if (i + 1 < args.length)
+				{
+					hashKey += ", ";
+				}
+			}
+		}
+		hashKey += ")";
+		return hashKey;
+	}
+
+	/**
+	 * @return Returns the mapServicesToWatch.
+	 */
+	public HashMap getMapServicesToWatch(IUserView id)
+	{
+		return mapServicesToWatch;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.IServiceManagerWrapper#loggingIsOn()
+	 */
+	public Boolean loggingIsOn(IUserView id)
+	{
+		return new Boolean(loggingIsOn);
 	}
 
 }

@@ -1,6 +1,7 @@
 package ServidorAplicacao;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
@@ -32,5 +33,11 @@ public interface IServiceManagerWrapper {
 
   public Object execute(IUserView id, String service, String methods, Object argumentos[])
 		throws FenixServiceException, RemoteException;
+
+  public HashMap getMapServicesToWatch(IUserView id);
+  public Boolean loggingIsOn(IUserView id);
+  public void turnLoggingOn(IUserView id);
+  public void turnLoggingOff(IUserView id);
+  public void clearLogHistory(IUserView id);
 
 }

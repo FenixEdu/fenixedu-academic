@@ -903,6 +903,14 @@
           <forward name="CacheCleared" path="/manageCache.do?method=prepare"/>
       </action>
 
+	<!-- ========== SERVICE MONITORING MANIPULATION ========== -->
+      <action path="/monitorServices"
+              type="ServidorApresentacao.Action.manager.MonitorServicesDA"
+              parameter="method"
+              >
+          <forward name="Show" path="df.page.monitor-services"/>
+      </action>
+
 	<!-- ========== ADVISORY MANIPULATION ========== -->
       <action path="/manageAdvisories"
       		  name="advisoryForm"
