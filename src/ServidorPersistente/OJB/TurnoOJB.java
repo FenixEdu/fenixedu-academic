@@ -65,7 +65,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
         if (shiftFromDB == null)
             super.lockWrite(shiftToWrite);
         // else If the shift is mapped to the database, then write any existing
-		// changes.
+        // changes.
         else if (
             (shiftToWrite instanceof Turno)
                 && ((Turno) shiftFromDB).getIdInternal().equals(((Turno) shiftToWrite).getIdInternal()))
@@ -181,7 +181,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
                 {
                     oqlQuery = "select all from " + TurmaTurno.class.getName();
                     //oqlQuery += ", " + Turma.class.getName() + ", " +
-					// TurmaTurno.class.getName() + ")";
+                    // TurmaTurno.class.getName() + ")";
                     oqlQuery += " where turno.tipo = $1 and turma.nome = $2";
                     query.create(oqlQuery);
                     query.bind(new Integer(TipoAula.PRATICA));
@@ -308,6 +308,9 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
         criteria.addEqualTo(
             "disciplinaExecucao.associatedCurricularCourses.scopes.curricularSemester.curricularYear.idInternal",
             curricularYear.getIdInternal());
+        criteria.addEqualTo(
+            "disciplinaExecucao.associatedCurricularCourses.scopes.curricularSemester.semester",
+            executionPeriod.getSemester());
         criteria.addEqualTo(
             "disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.idInternal",
             executionDegree.getCurricularPlan().getIdInternal());
