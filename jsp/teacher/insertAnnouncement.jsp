@@ -6,6 +6,7 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/announcementManagementAction" focus="title" >
+	<html:hidden property="page" value="1"/>
 	<table border="0" >
         	<tr>
         		<td>

@@ -30,7 +30,10 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = request.getSession(false);
-
+			
+			if (session.getAttribute("insertAnnouncementForm")==null) System.out.println("session.getAttribute(insertAnnouncementForm)==null");
+			session.removeAttribute("insertAnnouncementForm");
+			
 			return mapping.findForward("insertAnnouncement");
 	}
 
@@ -63,6 +66,7 @@ public class AnnouncementManagementAction extends FenixDispatchAction {
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = request.getSession(false);
 
+			//retrieve announcement
 			List announcements = (List) session.getAttribute("Announcements");
 			String announcementIndex = (String) request.getParameter("index");
 			Integer index = new Integer(announcementIndex);

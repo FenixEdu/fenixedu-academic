@@ -93,6 +93,17 @@
         <arg0 key="message.bibliographicReferenceYear" resource="true"/>
       </field>
     </form>
+
+	<!-- validation for insertAnnouncementForm -->
+    <form name="insertAnnouncementForm">
+      <field property="title" depends="required" page="1">
+        <arg0 key="message.announcementTitle" resource="true"/>
+      </field>
+
+      <field property="information" depends="required" page="1">
+        <arg0 key="message.announcementInformation" resource="true"/>
+      </field>
+    </form>
 	    
   </formset>
 </form-validation>
