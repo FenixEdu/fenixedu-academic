@@ -37,11 +37,11 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			TurmaTurnoOJB turmaTurnoOJB = new TurmaTurnoOJB();
 			String oqlQuery = "select all from " + TurmaTurno.class.getName();
 			oqlQuery += " where turma.nome = $1 ";
-			oqlQuery += " where turma.executionPeriod.name = $2 ";
-			oqlQuery += " where turma.executionPeriod.executionYear.year = $3 ";
-			oqlQuery += " where turma.cursoExecucao.executionYear.year = $4 ";
-			oqlQuery += " where turma.cursoExecucao.degreeCurricularPlan.nome = $5 ";
-			oqlQuery += " where turma.cursoExecucao.degreeCurricularPlan.curso.sigla = $6 ";
+			oqlQuery += " and turma.executionPeriod.name = $2 ";
+			oqlQuery += " and turma.executionPeriod.executionYear.year = $3 ";
+			oqlQuery += " and turma.cursoExecucao.executionYear.year = $4 ";
+			oqlQuery += "  and turma.cursoExecucao.degreeCurricularPlan.nome = $5 ";
+			oqlQuery += " and turma.cursoExecucao.degreeCurricularPlan.curso.sigla = $6 ";
 
 			query.create(oqlQuery);
 			query.bind(turma.getNome());
