@@ -74,10 +74,10 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 		{
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
-	
+
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(executionDegreeID);
-	
+
 			gratuityValues =
 				persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
 		}
@@ -91,7 +91,7 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 		if (gratuityValues != null)
 		{
 			infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
-		
+
 			infoPaymentPhases = new ArrayList();
 			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer()
 			{
@@ -101,23 +101,27 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 					return Cloner.copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
 				}
 			}, infoPaymentPhases);
-			
-			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) CollectionUtils.find(infoPaymentPhases, new Predicate()
+
+			InfoPaymentPhase infoPaymentPhase =
+				(InfoPaymentPhase) CollectionUtils.find(infoPaymentPhases, new Predicate()
 			{
 				public boolean evaluate(Object input)
 				{
-					InfoPaymentPhase aInfoPaymentPhase = (InfoPaymentPhase)input;
-					if(aInfoPaymentPhase.getDescription().equals(SessionConstants.REGISTRATION_PAYMENT)) {
+					InfoPaymentPhase aInfoPaymentPhase = (InfoPaymentPhase) input;
+					if (aInfoPaymentPhase.getDescription() != null
+						&& aInfoPaymentPhase.getDescription().equals(
+							SessionConstants.REGISTRATION_PAYMENT))
+					{
 						return true;
 					}
 					return false;
 				}
 			});
-			
-			if(infoPaymentPhase != null) {
+			if (infoPaymentPhase != null)
+			{
 				infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
 			}
-			
+
 			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
 		}
 
