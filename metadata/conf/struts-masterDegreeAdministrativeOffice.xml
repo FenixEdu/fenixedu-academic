@@ -258,7 +258,7 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
-            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="page" type="java.lang.Integer" initial="0" />
             <form-property name="studentName" type="java.lang.String" />
             <form-property name="studentNumber" type="java.lang.Integer" />
             <form-property name="grade" type="java.lang.String" />
@@ -799,23 +799,6 @@
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" path="/marksManagement/showMarksManagementMenu.jsp"/> 
       </action>
-
-
-<!--      <action path="/marksManagementDispatchAction"
-      		  input="/marksManagement/chooseMasterDegree.jsp"
-      	      name="marksManagementForm"
-		      parameter="method"
-		      scope="request"
-              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.MarksManagementDispatchAction"
-              validate="true">
-     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
-		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-	         <forward name="ChooseMasterDegree" path="/marksManagement/chooseMasterDegree.jsp"/> 
-	         <forward name="ChooseCurricularCourse" path="/marksManagement/chooseCurricularCourse.jsp"/> 
-	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 
-	         
-      </action> -->
       
       <action path="/changeMarkDispatchAction"
       		  input="/marksManagement/showMarksManagementMenu.jsp"

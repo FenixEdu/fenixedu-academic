@@ -52,7 +52,7 @@ public class ChooseMasterDegreeDispatchAction extends DispatchAction {
 			degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
 		} catch (NonExistingServiceException e) {
 			ActionErrors errors = new ActionErrors();
-			errors.add("nonExisting", new ActionError("message.public.notfound.degrees", executionYear));
+			errors.add("nonExisting", new ActionError("message.masterDegree.notfound.degrees", executionYear));
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 

@@ -2,14 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<span class="error"><html:errors/></span>
- 
-<logic:present name="infoSiteEnrolmentEvaluation">
 <bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
+<br /><br />
+<span class="error"><html:errors/></span>
+<logic:present name="infoSiteEnrolmentEvaluation">
 <html:form action="/marksSubmission" >  
     <table>        
 		<tr>
@@ -29,7 +29,7 @@
     	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" indexId="evaluationId" >
     		
     		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
-    		<bean:define id="studentMark" name="enrolmentEvaluation" property="grade" />
+    		<%-- <bean:define id="studentMark" name="enrolmentEvaluation" property="grade" /> --%>
     		
     		<tr>
 				<td class="listClasses">
@@ -50,10 +50,11 @@
 	<html:text property="teacherNumber" size="4"/>
 	<br /><br />
 	
+	<html:hidden property="page" value="1"/>	
 	<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
 	<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
 	<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
-	<html:hidden property="curricularCourseCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
+	<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("scopeCode").toString() %>" />
 	<html:hidden property="method" value="submit" />
 
  	<html:submit styleClass="inputbutton">

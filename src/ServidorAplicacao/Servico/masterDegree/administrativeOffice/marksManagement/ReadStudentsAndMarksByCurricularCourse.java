@@ -18,7 +18,9 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
@@ -27,6 +29,7 @@ import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentEvaluationState;
 
 /**
  * @author Fernanda Quitério
@@ -86,7 +89,11 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			enrolmentEvaluation.setEnrolment(enrolment);
 			enrolmentEvaluations = persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluation);
 			
+//			in case we have evaluations they can be submitted only if they are temporary
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+				if(((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.NORMAL_OBJ)){
+					throw new ExistingServiceException();
+				}
 				IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
 				ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 				infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
@@ -109,7 +116,6 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-		System.out.println("antes de criar a lista ");
 
 		List infoEnrolmentEvaluations = new ArrayList();
 		if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
@@ -121,13 +127,13 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 				infoEnrolmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment()));
 				infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 			}
-			System.out.println("tamanho da lista: " + infoEnrolmentEvaluations.size());
+		} else{
+			throw new NonExistingServiceException();
 		}
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
 		infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
 		infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
 
-		System.out.println("sai do servico");
 		return infoSiteEnrolmentEvaluation;
 	}
 }

@@ -33,6 +33,6 @@
 			</tr>
 		</table>   
 		<html:hidden property="method" value="editEvaluationMethod" />
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 	</html:form>
 </logic:present>
