@@ -7,21 +7,31 @@ package middleware.sigla;
 
 import java.sql.Timestamp;
 
+import Dominio.DomainObject;
+
 /**
  * @author João Mota
  *
  */
-public class Responsavel {
+public class Responsavel extends DomainObject{
 	
 	Integer ano_Lectivo;
 	Integer codigo_Curso;
 	Integer ano_Curricular;
 	Integer semestre;
 	Integer codigo_Ramo;
-	Integer codigo_Disc;
+	String codigo_Disc;
 	Integer no_Mec;
 	Timestamp data_Act;
 	String observacoes;
+
+	/**
+	 * 
+	 */
+	public Responsavel() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @return
@@ -47,7 +57,7 @@ public class Responsavel {
 	/**
 	 * @return
 	 */
-	public Integer getCodigo_Disc() {
+	public String getCodigo_Disc() {
 		return codigo_Disc;
 	}
 
@@ -110,8 +120,8 @@ public class Responsavel {
 	/**
 	 * @param integer
 	 */
-	public void setCodigo_Disc(Integer integer) {
-		codigo_Disc = integer;
+	public void setCodigo_Disc(String string) {
+		codigo_Disc = string;
 	}
 
 	/**

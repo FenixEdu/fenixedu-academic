@@ -11,13 +11,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.BibliographicReference;
+import Dominio.Curriculum;
 import Dominio.DisciplinaExecucao;
+import Dominio.Evaluation;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -30,14 +33,9 @@ import Dominio.ISite;
 import Dominio.ITeacher;
 import Dominio.Professorship;
 import Dominio.ResponsibleFor;
+import Dominio.Site;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentBibliographicReference;
-import ServidorPersistente.IPersistentCurriculum;
-import ServidorPersistente.IPersistentEvaluation;
-import ServidorPersistente.IPersistentSite;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
@@ -45,11 +43,10 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class SiglaDataLoader {
 
-	
-
 	public static void main(String[] args) {
 		SiglaDataLoader loader = new SiglaDataLoader();
-
+		PersistenceBroker broker =
+			PersistenceBrokerFactory.defaultPersistenceBroker();
 		System.out.println("A carregar disciplinas execução do fenix");
 		List fenixExecutionCourses = loader.loadFenixExecutionCourses();
 		System.out.println(
@@ -69,23 +66,28 @@ public class SiglaDataLoader {
 			List siglaCurricularCourses =
 				loader.fenixToSiglaCurricularCourses(
 					fenixCurricularCourses,
-					executionCourse);
+					executionCourse,
+					broker);
 			List siglaCurricularCoursesEng =
 				loader.fenixToSiglaCurricularCoursesEng(
 					fenixCurricularCourses,
-					executionCourse);
+					executionCourse,
+					broker);
 
 			try {
 				loader.updateFenixCourses(
 					executionCourse,
 					siglaCurricularCourses,
-					siglaCurricularCoursesEng);
+					siglaCurricularCoursesEng,
+					broker);
 
 				System.out.println("update efectuado");
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
 			}
+
 		}
+		broker.close();
 
 	}
 
@@ -95,16 +97,16 @@ public class SiglaDataLoader {
 	 */
 	private void updateResponsibleTeachers(
 		IDisciplinaExecucao executionCourse,
-		List siglaCurricularCourses) {
+		List siglaCurricularCourses,
+		PersistenceBroker broker) {
 		List teachers = new ArrayList();
 		Iterator iter = siglaCurricularCourses.iterator();
 		Query query = null;
-		PersistenceBroker broker = null;
+
 		List numsMec = new ArrayList();
-		broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-		
+
 		while (iter.hasNext()) {
-			
+
 			Curr_licenciatura siglaCurricularCourse =
 				(Curr_licenciatura) iter.next();
 			Criteria crit = new Criteria();
@@ -136,26 +138,48 @@ public class SiglaDataLoader {
 			}
 
 		}
+		System.out.println(
+			"número de docentes responsáveis->" + numsMec.size());
 		Iterator iter2 = numsMec.iterator();
 		while (iter2.hasNext()) {
 			Integer numMec = (Integer) iter2.next();
 			Criteria crit = new Criteria();
-			crit.addEqualTo("person.username", numMec);
+
+			crit.addEqualTo("person.username", "F" + numMec);
 			query = new QueryByCriteria(Teacher.class, crit);
 			ITeacher teacher = (ITeacher) broker.getObjectByQuery(query);
 			if (teacher == null) {
-				System.out.println("não encontrei o docente com número mecanográfico:"+numMec);
-			}else {
-				IProfessorship professorship = new Professorship(teacher,executionCourse);
-				IResponsibleFor responsibleFor = new ResponsibleFor(teacher,executionCourse);
-				
-				broker.store(professorship);
-				broker.store(responsibleFor);
-				
+				System.out.println(
+					"não encontrei o docente com número mecanográfico:"
+						+ numMec);
+			} else {
+				IProfessorship professorship =
+					new Professorship(teacher, executionCourse);
+				IResponsibleFor responsibleFor =
+					new ResponsibleFor(teacher, executionCourse);
+				System.out.println(
+					"a escrever professorship"
+						+ professorship.getExecutionCourse().getNome()
+						+ "-"
+						+ professorship.getTeacher().getPerson().getUsername());
+				try {
+					broker.store(professorship);
+
+					broker.store(responsibleFor);
+				} catch (PersistenceBrokerException e1) {
+					System.out.println(
+						"a  professorship já existe: "
+							+ professorship.getExecutionCourse().getNome()
+							+ "-"
+							+ professorship
+								.getTeacher()
+								.getPerson()
+								.getUsername());
+				}
+
 			}
 		}
-		
-		broker.close();
+
 	}
 
 	private String fenixYearToSiglaYear(String fenixYear) {
@@ -165,13 +189,13 @@ public class SiglaDataLoader {
 
 	private List fenixToSiglaCurricularCoursesEng(
 		List fenixCurricularCourses,
-		IDisciplinaExecucao executionCourse) {
+		IDisciplinaExecucao executionCourse,
+		PersistenceBroker broker) {
 		List siglaCurricularCourses = new ArrayList();
-		PersistenceBroker broker = null;
 
 		Query query = null;
 		try {
-			broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+
 			Iterator iter = fenixCurricularCourses.iterator();
 			while (iter.hasNext()) {
 				ICurricularCourse fenixCurricularCourse =
@@ -179,16 +203,16 @@ public class SiglaDataLoader {
 
 				List scopes = fenixCurricularCourse.getScopes();
 				Iterator iter1 = scopes.iterator();
-				while (iter.hasNext()) {
+				while (iter1.hasNext()) {
 					ICurricularCourseScope scope =
-						(ICurricularCourseScope) iter.next();
+						(ICurricularCourseScope) iter1.next();
 					Criteria crit = new Criteria();
-					crit.addEqualTo(
-						"nome_disc",
-						fenixCurricularCourse.getName());
+//					crit.addEqualTo(
+//						"nome_disc",
+//						fenixCurricularCourse.getName());
 					crit.addEqualTo(
 						"codigo_disc",
-						fenixCurricularCourse.getCode());
+					codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
 					crit.addEqualTo(
 						"ano_lectivo",
 						fenixYearToSiglaYear(
@@ -205,12 +229,12 @@ public class SiglaDataLoader {
 							.getDegreeCurricularPlan()
 							.getDegree()
 							.getIdInternal());
-					crit.addEqualTo(
-						"ano_curricular",
-						scope
-							.getCurricularSemester()
-							.getCurricularYear()
-							.getYear());
+//					crit.addEqualTo(
+//						"ano_curricular",
+//						scope
+//							.getCurricularSemester()
+//							.getCurricularYear()
+//							.getYear());
 
 					query = new QueryByCriteria(Curr_lic_ingles.class, crit);
 					Collection curricularCourses =
@@ -220,47 +244,80 @@ public class SiglaDataLoader {
 
 			}
 
-			broker.close();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-
+		System.out.println(
+			"número de curriculares do fenix->"
+				+ fenixCurricularCourses.size());
+		System.out.println(
+			"número de curriculares (em inglês) do sigla->"
+				+ siglaCurricularCourses.size());
 		return siglaCurricularCourses;
 	}
 
 	private void updateFenixCourses(
 		IDisciplinaExecucao executionCourse,
 		List siglaCurricularCourses,
-		List siglaCurricularCoursesEng)
+		List siglaCurricularCoursesEng,
+		PersistenceBroker broker)
 		throws ExcepcaoPersistencia {
 		ISite site = null;
 		ICurriculum curriculum = null;
 		IEvaluation evaluation = null;
 
 		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentSite persistentSite = sp.getIPersistentSite();
-			IPersistentEvaluation persistentEvaluation =
-				sp.getIPersistentEvaluation();
-			IPersistentCurriculum persistentCurriculum =
-				sp.getIPersistentCurriculum();
-			sp.iniciarTransaccao();
-			site = persistentSite.readByExecutionCourse(executionCourse);
-			curriculum =
-				persistentCurriculum.readCurriculumByExecutionCourse(
-					executionCourse);
-			evaluation =
-				persistentEvaluation.readByExecutionCourse(executionCourse);
+
+			Criteria crit = new Criteria();
+			crit.addEqualTo(
+				"executionCourse.idInternal",
+				executionCourse.getIdInternal());
+			Query query = new QueryByCriteria(Site.class, crit);
+			site = (ISite) broker.getObjectByQuery(query);
+			if (site == null) {
+				System.out.println("não encontrei o site");
+			}
+			query = new QueryByCriteria(Curriculum.class, crit);
+			curriculum = (ICurriculum) broker.getObjectByQuery(query);
+			if (curriculum == null) {
+				curriculum = new Curriculum();
+				curriculum.setExecutionCourse(executionCourse);
+			}
+			query = new QueryByCriteria(Evaluation.class, crit);
+
+			evaluation = (IEvaluation) broker.getObjectByQuery(query);
 			site = updateSite(site, siglaCurricularCourses);
-			curriculum = updateCurriculum(curriculum, siglaCurricularCourses);
+
 			curriculum =
-				updateCurriculumEng(curriculum, siglaCurricularCoursesEng);
-			evaluation = updateEvaluation(evaluation, siglaCurricularCourses);
+				updateCurriculum(curriculum, siglaCurricularCourses, broker);
+			curriculum =
+				updateCurriculumEng(
+					curriculum,
+					siglaCurricularCoursesEng,
+					broker);
+			if (evaluation == null) {
+				evaluation = new Evaluation(executionCourse);
+			}
 			evaluation =
-				updateEvaluationEng(evaluation, siglaCurricularCoursesEng);
-			updateBibliography(executionCourse, siglaCurricularCourses);
-			updateResponsibleTeachers(executionCourse, siglaCurricularCourses);
-			sp.confirmarTransaccao();
+				updateEvaluation(evaluation, siglaCurricularCourses, broker);
+
+			evaluation =
+				updateEvaluationEng(
+					evaluation,
+					siglaCurricularCoursesEng,
+					broker);
+			updateBibliography(executionCourse, siglaCurricularCourses, broker);
+			updateResponsibleTeachers(
+				executionCourse,
+				siglaCurricularCourses,
+				broker);
+			System.out.println("a guardar evaluation");
+			broker.store(evaluation);
+			System.out.println("a guardar curriculum");
+			broker.store(curriculum);
+			System.out.println("a guardar site");
+			broker.store(site);
+
 		} catch (ExcepcaoPersistencia e) {
 			throw e;
 		}
@@ -274,7 +331,8 @@ public class SiglaDataLoader {
 	 */
 	private IEvaluation updateEvaluationEng(
 		IEvaluation evaluation,
-		List siglaCurricularCoursesEng) {
+		List siglaCurricularCoursesEng,
+		PersistenceBroker broker) {
 
 		String crit_av = "";
 
@@ -303,7 +361,8 @@ public class SiglaDataLoader {
 	 */
 	private ICurriculum updateCurriculumEng(
 		ICurriculum curriculum,
-		List siglaCurricularCoursesEng) {
+		List siglaCurricularCoursesEng,
+		PersistenceBroker broker) {
 		String objectivosOP = "";
 		String objectivosGerais = "";
 		String programa = "";
@@ -329,15 +388,18 @@ public class SiglaDataLoader {
 			}
 
 		}
-		if (curriculum.getGeneralObjectivesEn().length()
-			< objectivosGerais.length()) {
+		if (curriculum.getGeneralObjectivesEn() == null
+			|| curriculum.getGeneralObjectivesEn().length()
+				< objectivosGerais.length()) {
 			curriculum.setGeneralObjectivesEn(objectivosGerais);
 		}
-		if (curriculum.getOperacionalObjectivesEn().length()
-			< objectivosOP.length()) {
+		if (curriculum.getOperacionalObjectivesEn() == null
+			|| curriculum.getOperacionalObjectivesEn().length()
+				< objectivosOP.length()) {
 			curriculum.setOperacionalObjectivesEn(objectivosOP);
 		}
-		if (curriculum.getProgramEn().length() < programa.length()) {
+		if (curriculum.getProgramEn() == null
+			|| curriculum.getProgramEn().length() < programa.length()) {
 			curriculum.setProgramEn(programa);
 		}
 
@@ -352,7 +414,8 @@ public class SiglaDataLoader {
 	 */
 	private IEvaluation updateEvaluation(
 		IEvaluation evaluation,
-		List siglaCurricularCourses) {
+		List siglaCurricularCourses,
+		PersistenceBroker broker) {
 		String crit_av = "";
 
 		Iterator iter = siglaCurricularCourses.iterator();
@@ -379,7 +442,8 @@ public class SiglaDataLoader {
 	 */
 	private ICurriculum updateCurriculum(
 		ICurriculum curriculum,
-		List siglaCurricularCourses) {
+		List siglaCurricularCourses,
+		PersistenceBroker broker) {
 		String objectivosOP = "";
 		String objectivosGerais = "";
 		String programa = "";
@@ -405,15 +469,18 @@ public class SiglaDataLoader {
 			}
 
 		}
-		if (curriculum.getGeneralObjectives().length()
-			< objectivosGerais.length()) {
+		if (curriculum.getGeneralObjectives() == null
+			|| curriculum.getGeneralObjectives().length()
+				< objectivosGerais.length()) {
 			curriculum.setGeneralObjectives(objectivosGerais);
 		}
-		if (curriculum.getOperacionalObjectives().length()
-			< objectivosOP.length()) {
+		if (curriculum.getOperacionalObjectives() == null
+			|| curriculum.getOperacionalObjectives().length()
+				< objectivosOP.length()) {
 			curriculum.setOperacionalObjectives(objectivosOP);
 		}
-		if (curriculum.getProgram().length() < programa.length()) {
+		if (curriculum.getProgram() == null
+			|| curriculum.getProgram().length() < programa.length()) {
 			curriculum.setProgram(programa);
 		}
 
@@ -448,66 +515,152 @@ public class SiglaDataLoader {
 
 	private List fenixToSiglaCurricularCourses(
 		List fenixCurricularCourses,
-		IDisciplinaExecucao executionCourse) {
+		IDisciplinaExecucao executionCourse,
+		PersistenceBroker broker) {
 		List siglaCurricularCourses = new ArrayList();
-		PersistenceBroker broker = null;
 
 		Query query = null;
-		try {
-			broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			Iterator iter = fenixCurricularCourses.iterator();
-			while (iter.hasNext()) {
-				ICurricularCourse fenixCurricularCourse =
-					(ICurricularCourse) iter.next();
 
-				List scopes = fenixCurricularCourse.getScopes();
-				Iterator iter1 = scopes.iterator();
-				while (iter.hasNext()) {
-					ICurricularCourseScope scope =
-						(ICurricularCourseScope) iter.next();
-					Criteria crit = new Criteria();
-					crit.addEqualTo(
-						"nome_disc",
-						fenixCurricularCourse.getName());
-					crit.addEqualTo(
-						"codigo_disc",
-						fenixCurricularCourse.getCode());
-					crit.addEqualTo(
-						"ano_lectivo",
-						fenixYearToSiglaYear(
-							executionCourse
-								.getExecutionPeriod()
-								.getExecutionYear()
-								.getYear()));
-					crit.addEqualTo(
-						"semestre",
-						executionCourse.getExecutionPeriod().getSemester());
-					crit.addEqualTo(
-						"codigo_lic",
-						fenixCurricularCourse
-							.getDegreeCurricularPlan()
-							.getDegree()
-							.getIdInternal());
-					crit.addEqualTo(
-						"ano_curricular",
-						scope
-							.getCurricularSemester()
-							.getCurricularYear()
-							.getYear());
-					query = new QueryByCriteria(Curr_lic_ingles.class, crit);
-					Collection curricularCourses =
-						(Collection) broker.getCollectionByQuery(query);
-					siglaCurricularCourses.addAll(curricularCourses);
+		Iterator iter = fenixCurricularCourses.iterator();
+		while (iter.hasNext()) {
+			ICurricularCourse fenixCurricularCourse =
+				(ICurricularCourse) iter.next();
+
+			List scopes = fenixCurricularCourse.getScopes();
+			if (scopes.size() == 0) {
+				System.out.println(
+					"scopes vazios! o problema é dos dados do fenix");
+			}
+			Iterator iter1 = scopes.iterator();
+			while (iter1.hasNext()) {
+				ICurricularCourseScope scope =
+					(ICurricularCourseScope) iter1.next();
+				Criteria crit = new Criteria();
+//				crit.addEqualTo(
+//					"nome_disc",
+//					nameFixerFenixToSigla(fenixCurricularCourse.getName()));
+				crit.addEqualTo(
+					"codigo_disc",
+					codeFixerFenixToSigla(fenixCurricularCourse.getCode()));
+				crit.addEqualTo(
+					"ano_lectivo",
+					fenixYearToSiglaYear(
+						executionCourse
+							.getExecutionPeriod()
+							.getExecutionYear()
+							.getYear()));
+				crit.addEqualTo(
+					"semestre",
+					executionCourse.getExecutionPeriod().getSemester());
+				crit.addEqualTo(
+					"codigo_lic",
+					fenixCurricularCourse
+						.getDegreeCurricularPlan()
+						.getDegree()
+						.getIdInternal());
+//				crit.addEqualTo(
+//					"ano_curricular",
+//					scope
+//						.getCurricularSemester()
+//						.getCurricularYear()
+//						.getYear());
+				query = new QueryByCriteria(Curr_licenciatura.class, crit);
+				Collection curricularCourses =
+					(Collection) broker.getCollectionByQuery(query);
+				if (curricularCourses.size() == 0) {
+					System.out.println(
+						"para este scope não encontrei curriculares! a query foi:");
+					System.out.println(
+						"nome_disc=" + fenixCurricularCourse.getName());
+					System.out.println(
+						"codigo_disc=" + fenixCurricularCourse.getCode());
+					System.out.println(
+						"ano_lectivo="
+							+ fenixYearToSiglaYear(
+								executionCourse
+									.getExecutionPeriod()
+									.getExecutionYear()
+									.getYear()));
+					System.out.println(
+						"semestre="
+							+ executionCourse.getExecutionPeriod().getSemester());
+					System.out.println(
+						"codigo_lic="
+							+ fenixCurricularCourse
+								.getDegreeCurricularPlan()
+								.getDegree()
+								.getIdInternal());
+					System.out.println(
+						"ano_curricular="
+							+ scope
+								.getCurricularSemester()
+								.getCurricularYear()
+								.getYear());
 				}
-
+				siglaCurricularCourses.addAll(curricularCourses);
 			}
 
-			broker.close();
-		} catch (Throwable t) {
-			t.printStackTrace();
 		}
 
+		if (siglaCurricularCourses.size() == 0) {
+			System.out.println("#####");
+			System.out.println(
+				"Não encontrei curriculares para: " + executionCourse);
+
+		}
+		System.out.println(
+			"número de curriculares do fenix->"
+				+ fenixCurricularCourses.size());
+		System.out.println(
+			"número de curriculares do sigla->"
+				+ siglaCurricularCourses.size());
 		return siglaCurricularCourses;
+	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	private Object nameFixerFenixToSigla(String string) {
+		String result = null;
+		if (string.equals("ASPECTOS QUÍMICO-BIOLÓGICOS DA POLUIÇÃO")) {
+			result = "ASPECTOS QUÍMICOS-BIOLÓGICOS DA POLUIÇÃO";
+		} else if (
+			string.equals(
+				"ARQUITECTURA ORGANIZACIONAL DE SISTEMAS DE INFORMAÇÃO EMPRESARIAIS")) {
+			result =
+				"ARQUITECTURA ORGANIZACIONAL DE SISTEMAS DE INFORMAÇÃO EMPRES";
+		} else if (string.equals("CONTROLO, AUTOMAÇÃO E ROBÓTICA")) {
+			result = "CONTROLO,AUTOMAÇÃO E ROBÓTICA";
+		} else if (
+			string.equals(
+				"CONSTRUÇÃO E MANUTENÇÃO DE INFRA ESTRUTURAS DE TRANSPORTES")) {
+			result =
+				"CONSTRUÇÃO E MANUTENÇÃO DE INFRAESTRUTURAS DE TRANSPORTES";
+		} else if (
+			string.equals(
+				"ESTUDOS DE CIÊNCIA: ARTE, TECNOLOGIA E SOCIEDADE")) {
+			result = "ESTUDOS DE CIENCIA: ARTE,TECNOLOGIA E SOCIEDADE";
+		} else {
+			result = string;
+		}
+		return result;
+	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	private Object codeFixerFenixToSigla(String string) {
+		String result = null;
+		if (string.equals("2")) {
+			result = "02";
+		} else if (string.equals("1")) {
+			result = "01";
+		} else {
+			result = string;
+		}
+		return result;
 	}
 
 	private List loadFenixExecutionCourses() {
@@ -520,7 +673,6 @@ public class SiglaDataLoader {
 
 			// ask the broker to retrieve the Extent collection
 			fenixExecutionCourses = (List) broker.getCollectionByQuery(query);
-			// now iterate over the result to print each product
 
 			broker.close();
 		} catch (Throwable t) {
@@ -540,7 +692,7 @@ public class SiglaDataLoader {
 
 			// ask the broker to retrieve the Extent collection
 			currLicPtList = (List) broker.getCollectionByQuery(query);
-			// now iterate over the result to print each product
+
 			broker.close();
 		} catch (Throwable t) {
 			t.printStackTrace();
@@ -559,7 +711,7 @@ public class SiglaDataLoader {
 
 			// ask the broker to retrieve the Extent collection
 			currLicEngList = (List) broker.getCollectionByQuery(query);
-			// now iterate over the result to print each product
+
 			broker.close();
 		} catch (Throwable t) {
 			t.printStackTrace();
@@ -574,7 +726,8 @@ public class SiglaDataLoader {
 		 */
 	private void updateBibliography(
 		IDisciplinaExecucao executionCourse,
-		List siglaCurricularCourses)
+		List siglaCurricularCourses,
+		PersistenceBroker broker)
 		throws ExcepcaoPersistencia {
 		List bibliography = new ArrayList();
 
@@ -630,9 +783,9 @@ public class SiglaDataLoader {
 				new BibliographicReference(
 					executionCourse,
 					bib_princ_1,
-					null,
-					null,
-					null,
+					"",
+					"",
+					"",
 					new Boolean(false)));
 		}
 		if (bib_princ_2.length() > 0) {
@@ -640,9 +793,9 @@ public class SiglaDataLoader {
 				new BibliographicReference(
 					executionCourse,
 					bib_princ_2,
-					null,
-					null,
-					null,
+					"",
+					"",
+					"",
 					new Boolean(false)));
 		}
 		if (bib_princ_3.length() > 0) {
@@ -650,9 +803,9 @@ public class SiglaDataLoader {
 				new BibliographicReference(
 					executionCourse,
 					bib_princ_3,
-					null,
-					null,
-					null,
+					"",
+					"",
+					"",
 					new Boolean(false)));
 		}
 		if (bib_sec_1.length() > 0) {
@@ -660,9 +813,9 @@ public class SiglaDataLoader {
 				new BibliographicReference(
 					executionCourse,
 					bib_sec_1,
-					null,
-					null,
-					null,
+					"",
+					"",
+					"",
 					new Boolean(true)));
 		}
 		if (bib_sec_2.length() > 0) {
@@ -670,9 +823,9 @@ public class SiglaDataLoader {
 				new BibliographicReference(
 					executionCourse,
 					bib_sec_2,
-					null,
-					null,
-					null,
+					"",
+					"",
+					"",
 					new Boolean(true)));
 		}
 		if (bib_sec_3.length() > 0) {
@@ -680,20 +833,21 @@ public class SiglaDataLoader {
 				new BibliographicReference(
 					executionCourse,
 					bib_sec_3,
-					null,
-					null,
-					null,
+					"",
+					"",
+					"",
 					new Boolean(true)));
 		}
 
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentBibliographicReference persistentBibliographicReference =
-			sp.getIPersistentBibliographicReference();
 		Iterator iter2 = bibliography.iterator();
 		while (iter2.hasNext()) {
 			IBibliographicReference reference =
-				(IBibliographicReference) iter.next();
-			persistentBibliographicReference.lockWrite(reference);
+				(IBibliographicReference) iter2.next();
+			try {
+				broker.store(reference);
+			} catch (PersistenceBrokerException e) {
+				System.out.println("a referência bibliográfica já existe");
+			}
 		}
 
 	}

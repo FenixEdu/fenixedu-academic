@@ -19,7 +19,7 @@ public class Clob2StringFieldConversion implements FieldConversion {
 	public Object javaToSql(Object source) {
 		String str = (String) source;
 		Clob clob = null;
-		if (str != null) {
+		if (str != null && str.length()>0) {
 
 			clob = new com.mysql.jdbc.Clob(str);
 			try {

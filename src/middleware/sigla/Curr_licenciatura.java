@@ -4,11 +4,13 @@
 
 package middleware.sigla;
 
-public class Curr_licenciatura {
+import Dominio.DomainObject;
 
-	private String ano_curricular;
+public class Curr_licenciatura extends DomainObject{
 
-	private String ano_lectivo;
+	private Integer ano_curricular;
+
+	private Integer ano_lectivo;
 
 	private String bib_princ_1;
 
@@ -24,9 +26,9 @@ public class Curr_licenciatura {
 
 	private String codigo_disc;
 
-	private String codigo_lic;
+	private Integer codigo_lic;
 
-	private String codigo_ramo;
+	private Integer codigo_ramo;
 
 	private String crit_av;
 
@@ -34,7 +36,7 @@ public class Curr_licenciatura {
 
 	private String nome_disc;
 
-	private String no_mec_act;
+	private Integer no_mec_act;
 
 	private String objectivos;
 
@@ -42,19 +44,27 @@ public class Curr_licenciatura {
 
 	private String progr_res;
 
-	private String semestre;
+	private Integer semestre;
 
-	public String getAno_curricular() {
+	/**
+	 * 
+	 */
+	public Curr_licenciatura() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Integer getAno_curricular() {
 		return this.ano_curricular;
 	}
-	public void setAno_curricular(String param) {
+	public void setAno_curricular(Integer param) {
 		this.ano_curricular = param;
 	}
 
-	public String getAno_lectivo() {
+	public Integer getAno_lectivo() {
 		return this.ano_lectivo;
 	}
-	public void setAno_lectivo(String param) {
+	public void setAno_lectivo(Integer param) {
 		this.ano_lectivo = param;
 	}
 
@@ -107,17 +117,17 @@ public class Curr_licenciatura {
 		this.codigo_disc = param;
 	}
 
-	public String getCodigo_lic() {
+	public Integer getCodigo_lic() {
 		return this.codigo_lic;
 	}
-	public void setCodigo_lic(String param) {
+	public void setCodigo_lic(Integer param) {
 		this.codigo_lic = param;
 	}
 
-	public String getCodigo_ramo() {
+	public Integer getCodigo_ramo() {
 		return this.codigo_ramo;
 	}
-	public void setCodigo_ramo(String param) {
+	public void setCodigo_ramo(Integer param) {
 		this.codigo_ramo = param;
 	}
 
@@ -135,10 +145,10 @@ public class Curr_licenciatura {
 		this.nome_disc = param;
 	}
 
-	public String getNo_mec_act() {
+	public Integer getNo_mec_act() {
 		return this.no_mec_act;
 	}
-	public void setNo_mec_act(String param) {
+	public void setNo_mec_act(Integer param) {
 		this.no_mec_act = param;
 	}
 
@@ -165,10 +175,10 @@ public class Curr_licenciatura {
 		this.progr_res = param;
 	}
 
-	public String getSemestre() {
+	public Integer getSemestre() {
 		return this.semestre;
 	}
-	public void setSemestre(String param) {
+	public void setSemestre(Integer param) {
 		this.semestre = param;
 	}
 
