@@ -52,10 +52,10 @@
 				</ul>
 			</td>
 		</tr>
-		<br />
 		<logic:present name="infoShiftEnrollment" property="infoShiftEnrollment">
 			<tr>
 				<td colspan='5'>
+					<br /><br />
 					<bean:define id="numberCourseWithShiftEnrollment" name="infoShiftEnrollment" property="numberCourseWithShiftEnrollment" />
 					<logic:lessEqual name="numberCourseWithShiftEnrollment" value="0">
 						<p><strong><bean:message key="message.student.shiftEnrollment.confirmation" /></strong></p>
