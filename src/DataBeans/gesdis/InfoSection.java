@@ -244,7 +244,12 @@ public class InfoSection implements Comparable {
 			}}
 		else {
 			if (getSectionDepth().intValue()>section.getSectionDepth().intValue()) {
-				return getSuperiorInfoSection().compareTo(section);
+				int aux=getSuperiorInfoSection().compareTo(section);
+				if (aux==0) {return 1;
+				}
+				else {return aux;
+				}
+				
 			}
 			else {
 				return compareTo(section.getSuperiorInfoSection());	
