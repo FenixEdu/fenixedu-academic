@@ -107,7 +107,8 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			
 			for (int span = 0; span < numberOfSpans; span++) {
 				fenixPersistentSuport.iniciarTransaccao();
-				fenixPersistentSuport.clearCache();	
+				fenixPersistentSuport.clearCache();
+				System.gc();
 	
 				System.out.println("[INFO] Reading MWStudents...");
 				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
