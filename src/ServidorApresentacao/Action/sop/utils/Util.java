@@ -2,10 +2,16 @@ package ServidorApresentacao.Action.sop.utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.gesdis.InfoSection;
+import ServidorApresentacao.Action.sop.utils.Predicates.InfoSectionPredicate;
 import Util.DiaSemana;
 import Util.Season;
 import Util.TipoSala;
@@ -296,6 +302,28 @@ public class Util {
 		hoursList.add("17");
 		return hoursList;
 	}
+		
+		
+	public static List sortSections(List sections){
+		List sortedSections= new ArrayList();
+		List tempList = null;
+		Predicate pred=new InfoSectionPredicate(null);
+		tempList= (List) CollectionUtils.select(sections,pred);
+		Collections.sort(tempList);
+		sortedSections.addAll(tempList);
+		Iterator iter= sortedSections.iterator();
+		while (iter.hasNext()){
+			InfoSection section = (InfoSection) iter.next();
+			pred=new InfoSectionPredicate(section);
+			tempList = (List) CollectionUtils.select(sections,pred);
+			Collections.sort(tempList);
+			int position =sortedSections.indexOf(section);
+			sortedSections.addAll(position++,tempList);
+		}
+		
+	 return sortedSections;		
+	}
+
 
 
 }
