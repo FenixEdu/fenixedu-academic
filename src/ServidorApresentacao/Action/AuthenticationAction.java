@@ -1,5 +1,7 @@
 package ServidorApresentacao.Action;
 
+import java.util.Iterator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,6 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoRole;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
@@ -34,7 +37,8 @@ public class AuthenticationAction extends FenixAction {
 		IUserView userView = null;
 		try {
 			DynaActionForm authenticationForm = (DynaActionForm) form;
-			ActionMappingForAuthentication authenticationMapping = (ActionMappingForAuthentication) mapping;
+			ActionMappingForAuthentication authenticationMapping =
+				(ActionMappingForAuthentication) mapping;
 
 			GestorServicos gestor = GestorServicos.manager();
 			Object argsAutenticacao[] =
@@ -74,7 +78,28 @@ public class AuthenticationAction extends FenixAction {
 		sessao.setAttribute(
 			SessionConstants.SESSION_IS_VALID,
 			new Boolean(true));
+		if (userView.getRoles().size() == 1) {
+			Iterator iterator = userView.getRoles().iterator();
+			InfoRole infoRole = null;
+			while (iterator.hasNext()) {
+				infoRole = (InfoRole) iterator.next();
+			}
+			return buildRoleForward(infoRole);
+		} else {
+			return mapping.findForward("sucess");
+		}
 
-		return mapping.findForward("sucess");
+	}
+
+	/**
+	 * @param infoRole
+	 * @return
+	 */
+	private ActionForward buildRoleForward(InfoRole infoRole) {
+		ActionForward actionForward = new ActionForward();
+		actionForward.setContextRelative(false);
+		actionForward.setRedirect(false);
+		actionForward.setPath("/dotIstPortal.do?prefix="+infoRole.getPortalSubApplication()+"&page="+infoRole.getPage());
+		return actionForward;
 	}
 }
