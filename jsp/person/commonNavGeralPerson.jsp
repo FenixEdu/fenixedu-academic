@@ -9,11 +9,10 @@
 <logic:iterate id="role" name="userView" property="roles">
 	<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
 	<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
-	    <td width="20%" nowrap class="navopgeral">
+	    <td width="20%" nowrap class="navopgeral-td">
 	    	<html:link href='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link>
 	    </td>
 </logic:iterate>	
 <td width="20%" nowrap class="centerContent"><html:link forward="logoff"><img alt="" border="0" src="<%= request.getContextPath() %>/images/logout.gif"></html:link></td>
   </tr>
-</table>	
-
+</table>
