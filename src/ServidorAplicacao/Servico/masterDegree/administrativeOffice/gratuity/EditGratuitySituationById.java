@@ -48,7 +48,6 @@ public class EditGratuitySituationById implements IServico
 	/**
 	 * Returns The Service Name
 	 */
-
 	public final String getNome()
 	{
 		return "EditGratuitySituationById";
@@ -75,7 +74,6 @@ public class EditGratuitySituationById implements IServico
 				(IGratuitySituation) persistentGratuitySituation.readByOId(gratuitySituation, true);
 			if (gratuitySituation == null)
 			{
-				System.out.println("A inserir");
 				gratuitySituation = new GratuitySituation();
 
 				IGratuityValues gratuityValues = new GratuityValues();
@@ -102,10 +100,7 @@ public class EditGratuitySituationById implements IServico
 				gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
 
 				persistentGratuitySituation.simpleLockWrite(gratuitySituation);
-			} else {
-				System.out.println("A editar");
 			}
-
 			gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
 			gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
 			gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());

@@ -398,11 +398,6 @@ public class ExemptionGratuityAction extends DispatchAction
 			mapping.getInputForward();
 		}
 
-		System.out.println("vou remover");
-		System.out.println("gratuitySituationID= " + gratuitySituationID);
-		System.out.println("studentCurricularPlanID= " + studentCurricularPlanID);
-		System.out.println("executionYear= " + executionYear);
-
 		Object[] args = { gratuitySituationID };
 		Boolean result = Boolean.FALSE;
 		try
