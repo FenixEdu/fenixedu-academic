@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.Sexo;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
@@ -85,7 +86,7 @@ public class InfoPerson extends InfoObject {
 
     private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
 
-    private Sexo sexo;
+    private Sex sex;
 
     private EstadoCivil estadoCivil;
 
@@ -379,11 +380,8 @@ public class InfoPerson extends InfoObject {
         return profissao;
     }
 
-    /**
-     * @return Sexo
-     */
     public Sexo getSexo() {
-        return sexo;
+        return sex == Sex.MALE ? Sexo.MASCULINO_OBJ : Sexo.FEMININO_OBJ;
     }
 
     /**
@@ -691,7 +689,13 @@ public class InfoPerson extends InfoObject {
      *            The sexo to set
      */
     public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
+		if (sexo == null) {
+			this.sex = null;
+		} else if (sexo.equals(Sexo.MASCULINO_OBJ)) {
+			this.sex = Sex.MALE;
+		} else if (sexo.equals(Sexo.FEMININO_OBJ)) {
+			this.sex = Sex.FEMALE;
+		}
     }
 
     /**
@@ -818,7 +822,7 @@ public class InfoPerson extends InfoObject {
             setDataEmissaoDocumentoIdentificacao(person.getDataEmissaoDocumentoIdentificacao());
             setDataValidadeDocumentoIdentificacao(person.getDataValidadeDocumentoIdentificacao());
 
-            setSexo(person.getSexo());
+            setSex(person.getSex());
             setEstadoCivil(person.getEstadoCivil());
 
             setEmail(person.getEmail());
@@ -885,7 +889,7 @@ public class InfoPerson extends InfoObject {
         person.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
         person.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
 
-        person.setSexo(infoPerson.getSexo());
+        person.setSex(infoPerson.getSex());
         person.setEstadoCivil(infoPerson.getEstadoCivil());
 
         person.setEmail(infoPerson.getEmail());
@@ -933,4 +937,14 @@ public class InfoPerson extends InfoObject {
         }
         return person;
     }
+
+	public Sex getSex() {
+		return sex;
+	}
+	
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
+	
 }

@@ -137,7 +137,7 @@ public class ReadStudentExternalInformation implements IService
         info.setName(person.getNome());
         info.setNationality(person.getNacionalidade());
         info.setPhone(person.getTelefone());
-        info.setSex(person.getSexo().toString());
+        info.setSex(person.getSex().toString());
 
         return info;
     }

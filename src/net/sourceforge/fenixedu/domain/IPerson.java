@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.util.EstadoCivil;
-import net.sourceforge.fenixedu.util.Sexo;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 public interface IPerson extends IDomainObject {
@@ -85,7 +85,7 @@ public interface IPerson extends IDomainObject {
 
     public String getProfissao();
 
-    public Sexo getSexo();
+    public Sex getSex();
 
     public String getTelefone();
 
@@ -157,7 +157,7 @@ public interface IPerson extends IDomainObject {
 
     public void setProfissao(String profissao);
 
-    public void setSexo(Sexo sexo);
+    public void setSex(Sex sex);
 
     public void setTelefone(String telefone);
 

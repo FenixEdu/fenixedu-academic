@@ -32,6 +32,9 @@ public class Sexo extends FenixUtil {
 
     private Integer sexo;
 
+	public static final Sexo MASCULINO_OBJ = new Sexo(MASCULINO);
+	public static final Sexo FEMININO_OBJ = new Sexo(FEMININO);
+
     /** Creates a new instance of Sexo */
     public Sexo() {
     }

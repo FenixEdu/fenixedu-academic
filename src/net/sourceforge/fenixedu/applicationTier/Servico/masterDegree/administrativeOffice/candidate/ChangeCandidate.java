@@ -91,7 +91,7 @@ public class ChangeCandidate implements IService {
             person.setLocalEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson()
                     .getLocalEmissaoDocumentoIdentificacao());
             person.setNome(newCandidate.getInfoPerson().getNome());
-            person.setSexo(newCandidate.getInfoPerson().getSexo());
+            person.setSex(newCandidate.getInfoPerson().getSex());
             person.setEstadoCivil(newCandidate.getInfoPerson().getEstadoCivil());
             person.setNomePai(newCandidate.getInfoPerson().getNomePai());
             person.setNomeMae(newCandidate.getInfoPerson().getNomeMae());

@@ -70,7 +70,7 @@ public class CreatePersonBaseClass {
         personToLock.setNumContribuinte(newPerson.getNumContribuinte());
 
         personToLock.setProfissao(newPerson.getProfissao());
-        personToLock.setSexo(newPerson.getSexo());
+        personToLock.setSex(newPerson.getSex());
         personToLock.setTelefone(newPerson.getTelefone());
         personToLock.setTelemovel(newPerson.getTelemovel());
 

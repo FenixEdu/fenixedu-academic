@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.util.EstadoCivil;
-import net.sourceforge.fenixedu.util.Sexo;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 public class Person extends DomainObject implements IPerson {
@@ -72,7 +72,7 @@ public class Person extends DomainObject implements IPerson {
 
     private String profissao;
 
-    private Sexo sexo;
+    private Sex sex;
 
     private String telefone;
 
@@ -186,7 +186,7 @@ public class Person extends DomainObject implements IPerson {
     public Person(Integer codigoInterno, String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Sexo sexo, EstadoCivil estadoCivil,
+            Date dataValidadeDocumentoIdentificacao, String nome, Sex sex, EstadoCivil estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
             String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
@@ -200,7 +200,7 @@ public class Person extends DomainObject implements IPerson {
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
         setNome(nome);
-        setSexo(sexo);
+        setSex(sex);
         setEstadoCivil(estadoCivil);
         setNascimento(nascimento);
         setNomePai(nomePai);
@@ -242,7 +242,6 @@ public class Person extends DomainObject implements IPerson {
         this.dataEmissaoDocumentoIdentificacao = null;
         this.dataValidadeDocumentoIdentificacao = null;
         setNome(nome);
-        this.sexo = null;
         this.estadoCivil = null;
         this.nascimento = null;
         this.nomePai = "";
@@ -273,7 +272,7 @@ public class Person extends DomainObject implements IPerson {
     public Person(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Sexo sexo, EstadoCivil estadoCivil,
+            Date dataValidadeDocumentoIdentificacao, String nome, Sex sex, EstadoCivil estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
             String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
@@ -286,7 +285,7 @@ public class Person extends DomainObject implements IPerson {
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
         setNome(nome);
-        setSexo(sexo);
+        setSex(sex);
         setEstadoCivil(estadoCivil);
         setNascimento(nascimento);
         setNomePai(nomePai);
@@ -619,8 +618,8 @@ public class Person extends DomainObject implements IPerson {
      * @return Value of property sexo.
      *  
      */
-    public Sexo getSexo() {
-        return sexo;
+    public Sex getSex() {
+        return sex;
     }
 
     /**
@@ -988,8 +987,8 @@ public class Person extends DomainObject implements IPerson {
      *            New value of property sexo.
      *  
      */
-    public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 
     /**
@@ -1046,7 +1045,7 @@ public class Person extends DomainObject implements IPerson {
         result += "\n  - Identification Document Expiration Date : "
                 + dataValidadeDocumentoIdentificacao;
         result += "\n  - Name : " + nome;
-        result += "\n  - Sex : " + sexo;
+        result += "\n  - Sex : " + sex;
         result += "\n  - Marital Status : " + estadoCivil;
         result += "\n  - Birth : " + nascimento;
         result += "\n  - Father Name : " + nomePai;

@@ -8,10 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IPessoaPersistente;
 import net.sourceforge.fenixedu.util.DataIndisponivel;
 import net.sourceforge.fenixedu.util.EstadoCivil;
-import net.sourceforge.fenixedu.util.Sexo;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
@@ -96,7 +96,7 @@ public class PessoaRelacional implements IPessoaPersistente {
             }
             sql.setString(30, pessoa.getCodigoFiscal());
             sql.setInt(31, pessoa.getTipoDocumentoIdentificacao().getTipo().intValue());
-            sql.setInt(32, pessoa.getSexo().getSexo().intValue());
+            sql.setString(32, pessoa.getSex().toString());
             sql.setInt(33, pessoa.getEstadoCivil().getEstadoCivil().intValue());
             sql.setInt(34, pessoa.getIdInternal().intValue());
 
@@ -220,7 +220,7 @@ public class PessoaRelacional implements IPessoaPersistente {
             }
             sql.setString(30, pessoa.getCodigoFiscal());
             sql.setInt(31, pessoa.getTipoDocumentoIdentificacao().getTipo().intValue());
-            sql.setInt(32, pessoa.getSexo().getSexo().intValue());
+            sql.setString(32, pessoa.getSex().toString());
             sql.setInt(33, pessoa.getEstadoCivil().getEstadoCivil().intValue());
 
             sql.executeUpdate();
@@ -490,7 +490,7 @@ public class PessoaRelacional implements IPessoaPersistente {
                     .getString("DOCUMENT_ID_NUMBER"), new TipoDocumentoIdentificacao(resultado
                     .getInt("TYPE_ID_DOCUMENT")), resultado
                     .getString("EMISSION_LOCATION_OF_DOCUMENT_ID"), emissionDate, experationDate,
-                    resultado.getString("NAME"), new Sexo(resultado.getInt("SEX")), new EstadoCivil(
+                    resultado.getString("NAME"), Sex.valueOf(resultado.getString("SEX")), new EstadoCivil(
                             resultado.getInt("MARITAL_STATUS")), birthDate, resultado
                             .getString("NAME_OF_FATHER"), resultado.getString("NAME_OF_MOTHER"),
                     resultado.getString("NATIONALITY"), resultado.getString("PARISH_OF_BIRTH"),
