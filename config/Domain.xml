@@ -228,10 +228,10 @@ logger-level
 
           <!-- Permission group example -->
           
-          <objectnode classname="org.apache.slide.structure.GroupNode" 
-            uri="/users/groupA">
+         <!-- <objectnode classname="org.apache.slide.structure.GroupNode" 
+            uri="/users/groupA"> -->
              <objectnode classname="org.apache.slide.structure.LinkNode" 
-                uri="/users/groupA/john" linkedUri="/users/john" />
+                uri="/users/groupA/fenix" linkedUri="/users/fenix" />
              <objectnode classname="org.apache.slide.structure.LinkNode" 
                 uri="/users/groupA/root" linkedUri="/users/root" />
              <objectnode classname="org.apache.slide.structure.SubjectNode" 
@@ -243,16 +243,16 @@ logger-level
           <objectnode classname="slideroles.basic.RootRoleImpl" 
            uri="/users/root">
             <revision>
-              <property name="password">root</property>
+              <property name="password">Administrador</property>
             </revision>
           </objectnode>
           
-          <!-- /users/john represents an authenticated user -->
+          <!-- /users/fenix represents an authenticated user -->
           
           <objectnode classname="slideroles.basic.UserRoleImpl" 
-           uri="/users/john">
+           uri="/users/fenix">
             <revision>
-              <property name="password">john</property>
+              <property name="password">fenix</property>
             </revision>
           </objectnode>
           
@@ -290,9 +290,9 @@ logger-level
                all actions on /files to guest (unauthenticated users) -->
           <!-- <permission action="/actions" subject="/users/guest"/> -->
 
-          <permission action="/actions/manage" subject="/users/john"/>
-          <permission action="/actions/write" subject="+/users/groupA"/>
-          <permission action="/actions/read" subject="nobody"/>
+          <permission action="/actions/manage" subject="/users/fenix"/>
+          <permission action="/actions/write" subject="/users/fenix"/>
+          <permission action="/actions/read" subject="/users/fenix"/>
           
         </objectnode>
         
