@@ -105,36 +105,6 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 		return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan, criteria, orderBy, true);
 	}
 
-	public Integer countAllByCriteria(Boolean justActiveContracts,
-			Boolean justDesactiveContracts, Date dateBeginContract,
-			Date dateEndContract) throws ExcepcaoPersistencia {
-
-		Criteria criteria = new Criteria();
-
-		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-			criteria.addGreaterOrEqualThan("contractRegimes.dateEndContract",
-					Calendar.getInstance().getTime());
-			criteria.addEqualTo("endContractMotive", "");
-		}
-		if (justDesactiveContracts != null
-				&& justDesactiveContracts.booleanValue()) {
-			criteria.addLessOrEqualThan("contractRegimes.dateEndContract",
-					Calendar.getInstance().getTime());
-			criteria.addNotEqualTo("endContractMotive", "");
-		}
-
-		if (dateBeginContract != null) {
-			criteria.addGreaterOrEqualThan("contractRegimes.dateBeginContract",
-					dateBeginContract);
-		}
-		if (dateEndContract != null) {
-			criteria.addLessOrEqualThan("contractRegimes.dateEndContract",
-					dateEndContract);
-		}
-
-		return new Integer(count(GrantContract.class, criteria));
-	}
-
 	private List readBySpanAndCriteria(Integer spanNumber,
 			Integer numberOfElementsInSpan, Criteria criteria, String orderBy, boolean reverseOrder) {
 
@@ -158,5 +128,45 @@ public class GrantContractOJB extends ServidorPersistente.OJB.ObjectFenixOJB
 		}
 		return result;
 	}
+	
+	
+	public Integer countAllByCriteria(Boolean justActiveContracts,
+			Boolean justDesactiveContracts, Date dateBeginContract,
+			Date dateEndContract, Integer grantTypeId, String groupBy) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+
+		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+			criteria.addGreaterOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
+			criteria.addEqualTo("endContractMotive", "");
+		}
+		if (justDesactiveContracts != null
+				&& justDesactiveContracts.booleanValue()) {
+			criteria.addLessOrEqualThan("contractRegimes.dateEndContract",Calendar.getInstance().getTime());
+			criteria.addNotEqualTo("endContractMotive", "");
+		}
+
+		if (dateBeginContract != null) {
+			criteria.addGreaterOrEqualThan("contractRegimes.dateBeginContract",dateBeginContract);
+		}
+		if (dateEndContract != null) {
+			criteria.addLessOrEqualThan("contractRegimes.dateEndContract",dateEndContract);
+		}
+		
+		if(grantTypeId != null) {
+		    criteria.addEqualTo("grantType.idInternal", grantTypeId);
+		}
+		return countAllByCriteriaGroupByGrantOwner(criteria, groupBy);
+	}
+	    
+    private Integer countAllByCriteriaGroupByGrantOwner(Criteria criteria, String groupBy) {
+        
+        if(groupBy != null) {
+            return new Integer(count(GrantContract.class, criteria, groupBy));
+        }
+        return new Integer(count(GrantContract.class, criteria));
+    }
+            
+
 
 }

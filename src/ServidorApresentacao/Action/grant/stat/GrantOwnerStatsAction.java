@@ -46,6 +46,8 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
 			grantTypeList.add(0, grantType);
 
 			request.setAttribute("grantTypeList", grantTypeList);
+			
+			((DynaValidatorForm) form).set("filterType", new Integer(1));
 		}
 		catch (FenixServiceException e)
 		{
@@ -54,14 +56,34 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
 		return mapping.findForward("grantowner-stats-options");
 	}
     
-    public ActionForward doStats(ActionMapping mapping, ActionForm form,
+    public ActionForward doStat(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		InfoStatGrantOwner infoStatGrantOwner = populateInfoFromForm((DynaValidatorForm) form);
-
 		
-		//TODO... invoke the respective service..
+        InfoStatGrantOwner infoStatGrantOwner = populateInfoFromForm((DynaValidatorForm) form);
+
+        if(infoStatGrantOwner.getDateBeginContract() != null &&
+           infoStatGrantOwner.getDateEndContract() != null &&
+           infoStatGrantOwner.getDateBeginContract().after(infoStatGrantOwner.getDateEndContract())) {
+            return setError(request, mapping, "errors.grant.stat.beginDateBeforeEnd", null, null);
+        }
         
+		IUserView userView = SessionUtils.getUserView(request);
+		Object[] args = { infoStatGrantOwner };
+		Object[] result = (Object[])ServiceUtils.executeService(userView, "CalculateStatGrantOwnerByCriteria", args);
+
+		//Set the request with the variables
+		Integer filterType = new Integer(1);
+		if(infoStatGrantOwner.getJustActiveContracts().booleanValue()) {
+		    filterType = new Integer(2);
+		} else if (infoStatGrantOwner.getJustInactiveContracts().booleanValue()) {
+		    filterType = new Integer(3);
+		}
+        request.setAttribute("filterType", filterType);
+		request.setAttribute("infoStatGrantOwner", result[2]);
+		request.setAttribute("totalNumberGrantOwners", result[0]);
+		request.setAttribute("resultNumberGrantOwners", result[1]);
+		
 		return mapping.findForward("grantowner-stats-results");
 	}
 
@@ -84,7 +106,7 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
 		if (verifyStringParameterInForm(form, "endContract")) {
 			infoStatGrantOwner.setDateEndContract(sdf.parse((String) form.get("endContract")));
 		}
-		
+
 		Integer grantType = (Integer) form.get("grantType");
 		if(grantType != null && !grantType.equals(new Integer(0))) {
 			infoStatGrantOwner.setGrantType(grantType);

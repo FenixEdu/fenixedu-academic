@@ -2279,6 +2279,15 @@
         </filterChains>
     </service>
     <service>
+        <name>CalculateStatGrantOwnerByCriteria</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.stat.CalculateStatGrantOwnerByCriteria</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
     	<name>ShowGrantOwner</name>
     	<implementationClass>ServidorAplicacao.Servico.grant.list.ShowGrantOwner</implementationClass>
     	<description/>

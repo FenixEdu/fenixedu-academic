@@ -17,106 +17,99 @@ import Util.TipoDocumentoIdentificacao;
  * @author Pica
  */
 
-public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB
-		implements IPersistentGrantOwner {
+public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB implements
+        IPersistentGrantOwner {
 
-	public GrantOwnerOJB() {
-	}
+    public GrantOwnerOJB() {
+    }
 
-	public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber)
-			throws ExcepcaoPersistencia {
-		IGrantOwner grantOwner = null;
+    public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia {
+        IGrantOwner grantOwner = null;
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("number", grantOwnerNumber);
-		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
-		return grantOwner;
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("number", grantOwnerNumber);
+        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+        return grantOwner;
+    }
 
-	public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal)
-			throws ExcepcaoPersistencia {
-		IGrantOwner grantOwner = null;
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyPerson", personIdInternal);
-		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
-		return grantOwner;
-	}
+    public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia {
+        IGrantOwner grantOwner = null;
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyPerson", personIdInternal);
+        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+        return grantOwner;
+    }
 
-	public List readGrantOwnerByPersonName(String personName)
-			throws ExcepcaoPersistencia {
-		List grantOwnerList = null;
-		Criteria criteria = new Criteria();
-		criteria.addLike("person.nome", personName);
-		grantOwnerList = queryList(GrantOwner.class, criteria);
-		return grantOwnerList;
-	}
+    public List readGrantOwnerByPersonName(String personName) throws ExcepcaoPersistencia {
+        List grantOwnerList = null;
+        Criteria criteria = new Criteria();
+        criteria.addLike("person.nome", personName);
+        grantOwnerList = queryList(GrantOwner.class, criteria);
+        return grantOwnerList;
+    }
 
-	public IGrantOwner readGrantOwnerByPersonID(String idNumber,
-			TipoDocumentoIdentificacao idType) throws ExcepcaoPersistencia {
-		IGrantOwner grantOwner = null;
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("person.numeroDocumentoIdentificacao", idNumber);
-		criteria.addEqualTo("person.tipoDocumentoIdentificacao", idType);
-		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
-		return grantOwner;
-	}
+    public IGrantOwner readGrantOwnerByPersonID(String idNumber, TipoDocumentoIdentificacao idType)
+            throws ExcepcaoPersistencia {
+        IGrantOwner grantOwner = null;
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("person.numeroDocumentoIdentificacao", idNumber);
+        criteria.addEqualTo("person.tipoDocumentoIdentificacao", idType);
+        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+        return grantOwner;
+    }
 
-	public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia {
-		IGrantOwner grantOwner = null;
-		Integer maxGrantOwnerNumber = null;
-		
-		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, new Criteria(),"number",false);
-		if (grantOwner != null)
-			maxGrantOwnerNumber = grantOwner.getNumber();
-		return maxGrantOwnerNumber;
-	}
+    public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia {
+        IGrantOwner grantOwner = null;
+        Integer maxGrantOwnerNumber = null;
 
-	public List readAll() throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		return queryList(GrantOwner.class, criteria);
-	}
+        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, new Criteria(), "number", false);
+        if (grantOwner != null)
+            maxGrantOwnerNumber = grantOwner.getNumber();
+        return maxGrantOwnerNumber;
+    }
 
-	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)
-			throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		return readSpan(GrantOwner.class, criteria, numberOfElementsInSpan,
-				spanNumber);
-	}
+    public List readAll() throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        return queryList(GrantOwner.class, criteria);
+    }
 
-	public Integer countAll() {
-		return new Integer(count(GrantOwner.class, new Criteria()));
-	}
+    public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        return readSpan(GrantOwner.class, criteria, numberOfElementsInSpan, spanNumber);
+    }
 
-	private List readBySpanAndCriteria(Integer spanNumber,
-			Integer numberOfElementsInSpan, Criteria criteria, String orderBy,
-			boolean reverseOrder) {
+    public Integer countAll() {
+        return new Integer(count(GrantOwner.class, new Criteria()));
+    }
 
-		List result = new ArrayList();
+    private List readBySpanAndCriteria(Integer spanNumber, Integer numberOfElementsInSpan,
+            Criteria criteria, String orderBy, boolean reverseOrder) {
 
-		Iterator iter = readIteratorByCriteria(GrantOwner.class, criteria, orderBy, reverseOrder);
+        List result = new ArrayList();
 
-		int begin = (spanNumber.intValue() - 1)
-				* numberOfElementsInSpan.intValue();
-		int end = begin + numberOfElementsInSpan.intValue();
+        Iterator iter = readIteratorByCriteria(GrantOwner.class, criteria, orderBy, reverseOrder);
 
-		if (begin != 0) {
-			for (int j = 0; j < (begin - 1) && iter.hasNext(); j++) {
-				iter.next();
-			}
-		}
+        int begin = (spanNumber.intValue() - 1) * numberOfElementsInSpan.intValue();
+        int end = begin + numberOfElementsInSpan.intValue();
 
-		for (int i = begin; i < end && iter.hasNext(); i++) {
-			IGrantOwner grantOwner = (IGrantOwner) iter.next();
-			result.add(grantOwner);
-		}
-		return result;
-	}
+        if (begin != 0) {
+            for (int j = 0; j < (begin - 1) && iter.hasNext(); j++) {
+                iter.next();
+            }
+        }
 
-	public List readAllGrantOwnersBySpan(Integer spanNumber,
-			Integer numberOfElementsInSpan, String orderBy)
-			throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,criteria, orderBy, true);
-	}
+        for (int i = begin; i < end && iter.hasNext(); i++) {
+            IGrantOwner grantOwner = (IGrantOwner) iter.next();
+            result.add(grantOwner);
+        }
+        return result;
+    }
+
+    public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
+            String orderBy) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan, criteria, orderBy, true);
+    }
 
 }

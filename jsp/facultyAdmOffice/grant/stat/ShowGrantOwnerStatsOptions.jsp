@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<p><center><b><bean:message key="label.grant.owner.stats"/></b></center></p>
 
 <html:form action="/grantOwnerStats" style="display:inline">
 

@@ -736,6 +736,17 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	}
 
 	/**
+	 * @see ObjectFenixOJB#count(PersistenceBroker, Query, GroupBy)
+	 */
+	public int count(Class classToQuery, Criteria criteria, String groupBy) {
+	    QueryByCriteria query = (QueryByCriteria)getQuery(classToQuery, criteria);
+	    if(groupBy != null) {
+	        query.addGroupBy(groupBy);
+	    }
+		return count(getCurrentPersistenceBroker(), query);
+	}
+	
+	/**
 	 * Do a count(*) with the parameter query
 	 * 
 	 * @param pb

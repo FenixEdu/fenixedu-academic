@@ -19,6 +19,7 @@ public class InfoStatGrantOwner extends InfoObject {
     private Boolean justActiveContracts;
     private Boolean justInactiveContracts;
     private Integer grantType;
+    private String grantTypeSigla;
     
     
     /**
@@ -80,5 +81,17 @@ public class InfoStatGrantOwner extends InfoObject {
      */
     public void setJustInactiveContracts(Boolean justInactiveContracts) {
         this.justInactiveContracts = justInactiveContracts;
+    }
+    /**
+     * @return Returns the grantTypeSigla.
+     */
+    public String getGrantTypeSigla() {
+        return grantTypeSigla;
+    }
+    /**
+     * @param grantTypeSigla The grantTypeSigla to set.
+     */
+    public void setGrantTypeSigla(String grantTypeSigla) {
+        this.grantTypeSigla = grantTypeSigla;
     }
 }

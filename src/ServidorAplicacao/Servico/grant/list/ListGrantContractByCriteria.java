@@ -77,7 +77,7 @@ public class ListGrantContractByCriteria implements IService {
 	            infoSpanByCriteriaListGrantOwner.setTotalElements(persistentGrantContract.countAllByCriteria(infoSpanByCriteriaListGrantOwner.getJustActiveContract(),
 						infoSpanByCriteriaListGrantOwner.getJustDesactiveContract(),
 						infoSpanByCriteriaListGrantOwner.getBeginContract(),
-						infoSpanByCriteriaListGrantOwner.getEndContract()));
+						infoSpanByCriteriaListGrantOwner.getEndContract(), null, null));
 			}
 
 			Object[] result = {listGrantContract , infoSpanByCriteriaListGrantOwner};

@@ -810,6 +810,36 @@
 			</field>	    
     	</form>
 
+        <!-- Stat Grant Owner -->
+    	<form name="grantOwnerStatsForm">
+			<field property="beginContract" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.stat.byCriteria.grant.owner.dateBegin" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+					</var>
+			</field>	    
+			<field property="endContract" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.stat.byCriteria.grant.owner.dateEnd" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+					</var>
+			</field>	    
+    	</form>
+
     </formset>
 </form-validation>
 
