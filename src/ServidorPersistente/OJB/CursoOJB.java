@@ -50,17 +50,19 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 	
 	public ICurso readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia {
 			try {
-				ICurso curso = null;
-				String oqlQuery = "select degree from " + Curso.class.getName();
+				ICurso degree = null;
+				String oqlQuery = "select curso from " + Curso.class.getName();
 				oqlQuery += " where idInternal = $1 ";
 				query.create(oqlQuery);
 				query.bind(idInternal);
-				List result = (List) query.execute();
+				List result = (List) query.execute();	
 				lockRead(result);
+				
 				if (result.size() != 0) {
-					curso = (ICurso) result.get(0);
+					degree = (ICurso) result.get(0);
 				}
-				return curso;
+				
+				return degree;
 			} catch (QueryException ex) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}

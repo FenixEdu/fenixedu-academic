@@ -9,9 +9,9 @@
 	<h2><bean:message key="label.manager.degrees" /></h2>
 	<br>
 	<h3><bean:message key="label.manager.select.degrees" /></h3>
-<html:form action="/deleteDegrees" method="get">
- 
-		<table width="50%"cellpadding="0" border="0">
+
+	<html:form action="/deleteDegrees" method="get">
+ 		<table width="50%"cellpadding="0" border="0">
 			<tr>
 				<td class="listClasses-header">
 				</td>	
@@ -21,11 +21,12 @@
 				</td>
 				
 			</tr>
-				<% int index = 0; %>	 
+				
+					 
 				<logic:iterate name="<%= SessionConstants.INFO_DEGREES_LIST %>" id="degree" >
 			<tr>
 				<td class="listClasses">
-					<html:multibox property="idInternal" >
+					<html:multibox property="internalIds">
 						<bean:write name="degree" property="idInternal"/>
 					</html:multibox>
 				</td>	
@@ -35,8 +36,8 @@
 				</td>
 				
 			</tr>
-	 		
-	 			<% index++; %>	
+				
+	 			
 				</logic:iterate>
 	 	</table>
 	 

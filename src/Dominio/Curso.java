@@ -21,6 +21,19 @@ public class Curso extends DomainObject implements ICurso {
 	protected String nome;
 	protected TipoCurso tipoCurso;
 	private List degreeCurricularPlans;
+//    private Integer idInternal;
+//
+//	public Integer getIdInternal() {
+//			return idInternal;
+//		}
+//
+//		/**
+//		 * Sets the idInternal.
+//		 * @param idInternal The idInternal to set
+//		 */
+//		public void setIdInternal(Integer idInternal) {
+//			this.idInternal = super.getIdInternal();
+//		}
 
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */

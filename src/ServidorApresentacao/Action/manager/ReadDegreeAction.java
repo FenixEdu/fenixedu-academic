@@ -15,9 +15,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegree;
+import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -38,21 +41,27 @@ public class ReadDegreeAction extends FenixAction  {
 			throws FenixActionException {
 				
 				HttpSession session = request.getSession(false);
+				DynaActionForm readDegreeForm = (DynaActionForm) form;
+		
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		        List infoDegrees =
 					(List) session.getAttribute(SessionConstants.INFO_DEGREES_LIST);
 
-	            InfoDegree infoDegree = null;
-				String index = (String) request.getParameter("index");
-				if (index != null) {
-		            	infoDegree = (InfoDegree) infoDegrees.get((new Integer(index)).intValue());
-						} else {
-					infoDegree = (InfoDegree) session.getAttribute(SessionConstants.INFO_DEGREE);
-						}
-						session.setAttribute(SessionConstants.INFO_DEGREE, infoDegree);
+				Integer internalId = (Integer)readDegreeForm.get("idInternal");
+
+				Object args[] = { internalId };
+						GestorServicos manager = GestorServicos.manager();
 		
+						try {
+							InfoDegree degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
+							session.setAttribute(SessionConstants.INFO_DEGREE,degree);
+							} 
+						catch (FenixServiceException e) {
+							throw new FenixActionException(e);
+							 }
+				
 				return mapping.findForward("viewDegree");
 			}
 }

@@ -13,9 +13,17 @@
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">        
             <form-property name="idInternal" type="java.lang.Integer" />
+             <form-property name="internalIds" type="java.lang.Integer[]" />
+           <!--<form-property name="internalIds" type="java.util.List" />-->
             <form-property name="page" type="java.lang.Integer" initial="0"/>
     </form-bean>  
 
+	<form-bean name="readDegreeForm"
+				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">        
+            <form-property name="idInternal" type="java.lang.Integer" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+    </form-bean>  
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -65,18 +73,20 @@
       
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
-             input="readDegreesInput.do"
+      	      name="readDegreeForm"
+              input="readDegreesInput.do"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
       	  <forward name="viewDegree" path="df.page.read-degree"/>      	      
       </action>
          
-	<!-- Action for deleting a degree --> 
+	<!-- Action for deleting degrees --> 
      
       <action 
+      		 path="/deleteDegrees"
       		 name="deleteDegreesForm"
       		 input="readDegreesInput.do"
-      	     path="/deleteDegrees"
-      	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
+      	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction"
+      	     scope="request">
              
 	<exception type="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
          	   key="ServidorApresentacao.Action.exceptions.CantDeleteActionException"
@@ -88,11 +98,13 @@
       
       	<!-- Action for deleting a set of degrees -->
        		
-       <action path="/degreesToDelete"
+      <!-- <action 
+       		 path="/degreesToDelete"
+       		 name="deleteDegreesForm"
       	     input="selectDegreesInput.do"
       	     type="ServidorApresentacao.Action.manager.DegreesToDeleteAction">
       	  <forward name="degreesToDelete" path="df.page.degrees-to-delete"/>      	      
-      </action>
+      </action>-->
       
       <!--Input actions-->
       
@@ -106,10 +118,10 @@
       	  <forward name="Success" path="df.page.main-page"/>      	      
       </action>
       
-      <action path="/selectDegreesInput"
+      <!--<action path="/selectDegreesInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.degrees-to-delete"/>      	      
-      </action>
+      </action>-->
       
 	</action-mappings>
 

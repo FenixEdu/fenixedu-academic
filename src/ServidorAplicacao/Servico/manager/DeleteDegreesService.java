@@ -1,5 +1,8 @@
 package ServidorAplicacao.Servico.manager;
 
+import java.util.Iterator;
+import java.util.List;
+
 import Dominio.ICurso;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
@@ -28,19 +31,28 @@ public class DeleteDegreesService implements IServico{
 		return "DeleteDegreesService";
 	}
 
-	public Boolean run(Integer degreeIdInternal)
+	public Boolean run(List degreesInternalIds)
 		throws FenixServiceException	 {
 
 		try {
 			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-			ICurso degree = persistentDegree.readByIdInternal(degreeIdInternal);
+            
+            Iterator iter=degreesInternalIds.iterator();
+            
+            while(iter.hasNext())
+            {
+            Integer internalId = (Integer)iter.next();
+			ICurso degree = persistentDegree.readByIdInternal(internalId);
 			System.out.println("DEGREE"+degree);
-			if (degree != null)
+				if (degree != null)
 				persistentDegree.delete(degree);
 		
-			return new Boolean(true);	
+		
+            }
+            
+				return new Boolean(true);	
 		   
 		}catch (CantDeletePersistentException e) {
 			throw new CantDeleteServiceException(e);

@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.manager;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,25 +37,15 @@ public class DeleteDegreesAction extends FenixAction{
 		HttpSession session = request.getSession(false);
 		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
 		
-		
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-//		String indexString = (String) request.getParameter("index");
-//		Integer index = new Integer(indexString);
-		
-			
-		List infoDegrees =
-							(List) session.getAttribute(
+		List infoDegrees =(List) session.getAttribute(
 								SessionConstants.INFO_DEGREES_LIST);
-								
 		
-//		InfoDegree infoDegree = (InfoDegree) infoDegrees.get(index.intValue());		
-		
-		Integer degreeIdInternal = (Integer)deleteDegreesForm.get("idInternal");
-	System.out.println("CODIGO INTERNO"+degreeIdInternal);
-		
+		List degreesInternalIds = Arrays.asList((Integer [])deleteDegreesForm.get("internalIds"));
+
 		//ESTE SERVICO PASSA A RECEBER O CODIGO INTERNO EM VEZ DO INFO DEGREE
 		
-		Object args[] = { degreeIdInternal };
+		Object args[] = { degreesInternalIds };
 		GestorServicos manager = GestorServicos.manager();
 		
 		try {
