@@ -18,7 +18,7 @@
 	<ul>
 		<logic:iterate id="infoEnrolment" name="chosenInfoEnrolmentsToGiveEquivalence">
 			<li>
-				<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>&nbsp;&nbsp;&nbsp;
+				<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
 			</li>
 		</logic:iterate>
 	</ul>
@@ -26,7 +26,7 @@
 	<ul>
 		<logic:iterate id="infoCurricularCourseScope" name="chosenInfoCurricularCourseScopesToGetEquivalence" indexId="indexId">
 			<li>
-				<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/>
+				<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/>&nbsp;&nbsp;&nbsp;
 				<%--<input type="text" name="<bean:write name='infoEnrolment' property='idInternal' />_text" size="5" value=""/>--%>
 				<html:text size="5" property='<%= "grades" + "["+ indexId + "]" %>'/>
 			</li>

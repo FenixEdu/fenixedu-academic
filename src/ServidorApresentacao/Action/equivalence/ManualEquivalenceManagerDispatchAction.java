@@ -20,6 +20,7 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
+import DataBeans.equivalence.InfoCurricularCourseScopeGrade;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -107,17 +108,13 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 
 		validateToken(request, form, mapping);
 
-//		DynaActionForm equivalenceForm = (DynaActionForm) form;
-//		String[] grades = (String[]) equivalenceForm.get("grades");
-//		for(int i = 0; i < grades.length; i++) {
-//			System.out.println("\n\n" + grades[i] + " - " + i + "\n");
-//		}
-
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) session.getAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
+		
+		infoEquivalenceContext = this.processEquivalence2(request, ((DynaActionForm) form), session);
 
 		Object args[] = { infoEquivalenceContext };
 
@@ -211,6 +208,29 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 
 		infoEquivalenceContext.setChosenInfoEnrolmentsToGiveEquivalence(chosenInfoEnrolmentsToGiveEquivalence);
 		infoEquivalenceContext.setChosenInfoCurricularCourseScopesToGetEquivalence(chosenInfoCurricularCourseScopesToGetEquivalence);
+
+		return infoEquivalenceContext;
+	}
+
+	private InfoEquivalenceContext processEquivalence2(HttpServletRequest request, DynaActionForm equivalenceForm, HttpSession session) {
+
+		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) session.getAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
+
+		String[] grades = (String[]) equivalenceForm.get("grades");
+		List chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade = new ArrayList();
+		for(int i = 0; i < grades.length; i++) {
+//			System.out.println("\n\n" + grades[i] + " - " + i + "\n");
+			if(grades[i] != null) {
+				List chosenInfoCurricularCourseScopesToGetEquivalence = infoEquivalenceContext.getChosenInfoCurricularCourseScopesToGetEquivalence();
+				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) chosenInfoCurricularCourseScopesToGetEquivalence.get(i);
+				InfoCurricularCourseScopeGrade infoCurricularCourseScopeGrade = new InfoCurricularCourseScopeGrade();
+				infoCurricularCourseScopeGrade.setInfoCurricularCourseScope(infoCurricularCourseScope);
+				infoCurricularCourseScopeGrade.setGrade(grades[i]);
+				chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade.add(infoCurricularCourseScopeGrade);
+			}
+		}
+		
+		infoEquivalenceContext.setChosenInfoCurricularCourseScopesToGetEquivalenceWithGrade(chosenInfoCurricularCourseScopesToGetEquivalenceWithGrade);
 
 		return infoEquivalenceContext;
 	}
