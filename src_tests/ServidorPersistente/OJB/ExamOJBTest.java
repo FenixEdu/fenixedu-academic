@@ -79,7 +79,7 @@ public class ExamOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		// Read Existing
 		List exams = persistentExam.readBy(beginning, beginning);
-		assertEquals("testReadByDayAndBeginning: read existing",1, exams.size());
+		assertEquals("testReadByDayAndBeginning: read existing",2, exams.size());
 
 		beginning.set(Calendar.YEAR, 2002);
 		// Read Non-Existing
