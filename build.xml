@@ -225,7 +225,7 @@
 -->
             <batchtest fork="yes" todir="${reports.tests}">
                 <fileset dir="${src.tests}">
-                    <include name="ServidorApresentacao/**/*Test.java"/>
+                	<include name="**/*Test.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/AllTests.java"/>
                     
