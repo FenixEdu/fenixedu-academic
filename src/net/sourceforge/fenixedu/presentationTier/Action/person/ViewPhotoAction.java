@@ -36,7 +36,7 @@ public class ViewPhotoAction extends FenixAction {
         HttpSession session = request.getSession(false);
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Integer personId = new Integer((String) request.getParameter("personCode"));
+        Integer personId = new Integer(request.getParameter("personCode"));
 
         Object[] args = { personId };
         FileSuportObject file = null;

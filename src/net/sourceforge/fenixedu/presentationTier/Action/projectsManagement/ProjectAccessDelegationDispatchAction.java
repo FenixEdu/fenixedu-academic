@@ -163,8 +163,6 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         final Integer projectCode = (Integer) ((DynaActionForm) form).get("projectCode");
         final Integer personCode = (Integer) ((DynaActionForm) form).get("personCode");
-        final String username = (String) ((DynaActionForm) form).get("username");
-
         final String beginDay = (String) ((DynaActionForm) form).get("beginDay");
         final String beginMonth = (String) ((DynaActionForm) form).get("beginMonth");
         final String beginYear = (String) ((DynaActionForm) form).get("beginYear");

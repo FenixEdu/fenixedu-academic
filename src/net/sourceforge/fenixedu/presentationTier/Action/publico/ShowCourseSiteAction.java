@@ -59,7 +59,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
         Integer curricularYear = (Integer) indexForm.get("curYear");
 
-        indexForm.set("indice", (Integer) indexForm.get("indice"));
+        indexForm.set("indice", indexForm.get("indice"));
         indexForm.set("curYear", curricularYear);
         Object[] args = { curricularCourseId };
 
