@@ -1,5 +1,7 @@
 .timetable{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	text-decoration: bold;
 }
 
 .horarioHeader_first {
@@ -87,7 +89,8 @@
 
 .timeTable_line{
 	font-size: 9px;
-	color: #333333;
+	color: #C9C933;
+	font-weight:bold;
 	background-color: #E1E1E1;
 	text-align: left;
 }
@@ -317,4 +320,28 @@
 	border-right-style: solid;
 	border-bottom-width: 2px;
 	border-bottom-style: solid;
+}
+
+a.timetable:link{
+	color: #C9C933;
+	font-weight: bold;
+	font-size: 9px;
+}
+
+a.timetable:hover{
+	color: #C9C933;
+	font-weight: bold;
+	font-size: 9px;	
+}
+
+a.timetable:visited{
+	color: #C9C933;
+	font-weight: bold;
+	font-size: 9px;
+}
+
+a.timetable:active{
+	color: #C9C933;
+	font-weight: bold;
+	font-size: 9px;	
 }
