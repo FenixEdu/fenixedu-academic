@@ -2,8 +2,6 @@ package ServidorAplicacao.Servicos;
 
 import java.util.Collection;
 
-import ServidorAplicacao.FenixServiceException;
-
 /**
  * @author dcs-rjao
  *
@@ -41,9 +39,7 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 				}
 				
 			} 
-			catch (FenixServiceException e) {
-				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
-			}
+			
 			catch (Exception ex) {
 				ex.printStackTrace();
 				System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());

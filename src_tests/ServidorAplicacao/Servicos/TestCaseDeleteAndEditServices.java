@@ -1,17 +1,20 @@
 package ServidorAplicacao.Servicos;
 
+import ServidorAplicacao.FenixServiceException;
+
 /**
  * @author dcs-rjao
  *
  * Created on 24/Fev/2003
  */
 
-public abstract class TestCaseDeleteAndEditServices extends TestCaseNeedAuthorizationServices {
+public abstract class TestCaseDeleteAndEditServices
+	extends TestCaseNeedAuthorizationServices {
 
 	public TestCaseDeleteAndEditServices(String testName) {
 		super(testName);
 	}
-	
+
 	protected void setUp() {
 		super.setUp();
 	}
@@ -20,39 +23,65 @@ public abstract class TestCaseDeleteAndEditServices extends TestCaseNeedAuthoriz
 		super.tearDown();
 	}
 
-//	delete non-existing object
+	//	delete non-existing object
 	public void testUnsuccessfulExecutionOfDeleteService() {
 
 		Object[] args = getArgumentsOfServiceToBeTestedUnsuccessfuly();
 
-		if(args != null) {
+		if (args != null) {
 			Object result = null;
 			try {
-				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
-				assertEquals("testUnsuccessfulExecutionOfDeleteService", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
-				System.out.println("testUnsuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: " + this.getClass().getName());
+				result =
+					_gestor.executar(
+						_userView,
+						getNameOfServiceToBeTested(),
+						args);
+				assertEquals(
+					"testUnsuccessfulExecutionOfDeleteService",
+					Boolean.FALSE.booleanValue(),
+					((Boolean) result).booleanValue());
+				System.out.println(
+					"testUnsuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: "
+						+ this.getClass().getName());
+			} catch (FenixServiceException e) {
+				System.out.println(
+					"testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: "
+						+ this.getClass().getName());
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				System.out.println("testUnsuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println(
+					"testUnsuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: "
+						+ this.getClass().getName());
 				fail("testUnsuccessfulExecutionOfDeleteService");
 			}
 		}
 	}
-	
-//	delete existing object
+
+	//	delete existing object
 	public void testSuccessfulExecutionOfDeleteService() {
 
 		Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
 
-		if(args != null) {
+		if (args != null) {
 			Object result = null;
 			try {
-				result = _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
-				assertEquals("testSuccessfulExecutionOfDeleteService", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-				System.out.println("testSuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: " + this.getClass().getName());
+				result =
+					_gestor.executar(
+						_userView,
+						getNameOfServiceToBeTested(),
+						args);
+				assertEquals(
+					"testSuccessfulExecutionOfDeleteService",
+					Boolean.TRUE.booleanValue(),
+					((Boolean) result).booleanValue());
+				System.out.println(
+					"testSuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: "
+						+ this.getClass().getName());
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				System.out.println("testSuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println(
+					"testSuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: "
+						+ this.getClass().getName());
 				fail("testSuccessfulExecutionOfDeleteService");
 			}
 		}
