@@ -30,6 +30,13 @@ public class CursoExecucao implements ICursoExecucao {
 	public CursoExecucao() {
 	}
 
+/**
+ * @deprecated
+ * @param anoLectivo
+ * @param curso
+ * @param executionYear
+ * @param curricularPlan
+ */
 	public CursoExecucao(String anoLectivo, ICurso curso,IExecutionYear executionYear,IPlanoCurricularCurso curricularPlan) {
 		setAnoLectivo(anoLectivo);
 		setCurso(curso);
@@ -37,6 +44,11 @@ public class CursoExecucao implements ICursoExecucao {
 		setCurricularPlan(curricularPlan);
 	}
 
+
+	public CursoExecucao(IExecutionYear executionYear,IPlanoCurricularCurso curricularPlan) {
+			setExecutionYear(executionYear);
+			setCurricularPlan(curricularPlan);
+		}
 	public Integer getCodigoInterno() {
 		return codigoInterno;
 	}

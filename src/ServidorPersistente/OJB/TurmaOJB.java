@@ -10,7 +10,6 @@ package ServidorPersistente.OJB;
  *
  * @author  tfc130
  */
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -262,27 +261,28 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ITurmaPersistente#readByExecutionPeriod(Dominio.IExecutionPeriod)
+	 */
+	public List readByExecutionPeriod(IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+				try {
+				String oqlQuery = "select turmas from " + Turma.class.getName();
+				oqlQuery += " where executionPeriod.executionYear.year = $1"
+					+ " and executionPeriod.name = $2";
+						
+				query.create(oqlQuery);
 
-	public ArrayList readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select turmas from " + Turma.class.getName();
-			oqlQuery += " where executionPeriod.name = $1"
-				+ " and executionPeriod.executionYear.year = $2";
+				query.bind(executionPeriod.getExecutionYear().getYear());
+				query.bind(executionPeriod.getName());
 
-			query.create(oqlQuery);
-			query.bind(executionPeriod.getName());
-			query.bind(executionPeriod.getExecutionYear().getYear());
-			
-			ArrayList result = (ArrayList) query.execute();
-			lockRead(result);
+				List result = (List) query.execute();
+				lockRead(result);
 
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+				return result;
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
 	}
-	
-	
-	
 
 }

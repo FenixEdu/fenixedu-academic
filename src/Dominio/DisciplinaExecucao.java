@@ -26,6 +26,18 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
     /* Construtores */
     
     public DisciplinaExecucao() { }
+    /**
+     * @deprecated
+     * @param nome
+     * @param sigla
+     * @param programa
+     * @param licenciaturaExecucao
+     * @param theoreticalHours
+     * @param praticalHours
+     * @param theoPratHours
+     * @param labHours
+     * @param executionPeriod
+     */
     public DisciplinaExecucao(String nome, String sigla, String programa,
                               ICursoExecucao licenciaturaExecucao,Double theoreticalHours, 
                               Double praticalHours, Double theoPratHours, Double labHours,IExecutionPeriod executionPeriod) {
@@ -41,7 +53,19 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 		setExecutionPeriod(executionPeriod);
     }
 
-
+	public DisciplinaExecucao(String nome, String sigla, String programa,
+						Double theoreticalHours, 
+								  Double praticalHours, Double theoPratHours, Double labHours,IExecutionPeriod executionPeriod) {
+			setNome(nome);
+			setSigla(sigla);
+			setPrograma(programa);
+			setChaveResponsavel(new Integer(-1));
+			setTheoreticalHours(theoreticalHours);
+			setPraticalHours(praticalHours);
+			setTheoPratHours(theoPratHours);
+			setLabHours(labHours);
+			setExecutionPeriod(executionPeriod);
+		}
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof IDisciplinaExecucao ) {

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
-
 import Dominio.Aula;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
@@ -15,6 +14,8 @@ import Dominio.CursoExecucao;
 import Dominio.Departamento;
 import Dominio.DisciplinaDepartamento;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
@@ -22,6 +23,8 @@ import Dominio.ICursoExecucao;
 import Dominio.IDepartamento;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ISala;
@@ -52,6 +55,8 @@ import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
@@ -90,6 +95,8 @@ public class TestCaseServicos extends TestCase {
 	protected IStudentCurricularPlanPersistente _persistentStudentCurricularPlan = null;
 	protected IDisciplinaDepartamentoPersistente _persistentDepartmentCourse = null;
 	protected IDepartamentoPersistente _persistentDepartment = null;
+	protected IPersistentExecutionPeriod persistentExecutionPeriod=null;
+	protected IPersistentExecutionYear persistentExecutionYear=null;
 	protected GestorServicos _gestor = null;
 	protected IUserView _userView = null;
 	protected IUserView _userView2 = null;
@@ -129,26 +136,18 @@ public class TestCaseServicos extends TestCase {
 	protected ICursoExecucao _cursoExecucao1 = null;
 	protected ICursoExecucao _cursoExecucao2 = null;
 	protected IStudent _aluno1 = null;
+	
 
 	public TestCaseServicos(String testName) {
 		super(testName);
 	}
-	/*
-	  public static void main(java.lang.String[] args) {
-	  junit.textui.TestRunner.run(suite());
-	  }
 	
-	  public static Test suite() {
-	  TestSuite suite = new TestSuite(TestCaseOJB.class);
-	      
-	  return suite;
-	  }*/
 	protected void setUp() {
 		ligarSuportePersistente();
 		cleanData();
 		try {
 			_suportePersistente.iniciarTransaccao();
-			//_pessoa1 = new Pessoa("nome", "pass", null);
+			
 			_pessoa1 = new Pessoa();
 			_pessoa1.setNumeroDocumentoIdentificacao("0123456789");
 			_pessoa1.setCodigoFiscal("9876543210");
@@ -262,8 +261,14 @@ public class TestCaseServicos extends TestCase {
 			_pessoa2.setUsername("nome2");
 			_pessoa2.setPassword("pass2");
 			_pessoa2.setPrivilegios(null);
-			//_pessoaPersistente.lockWrite(_pessoa2);
+			
 			_pessoaPersistente.escreverPessoa(_pessoa2);
+
+			IExecutionYear executionYear = new ExecutionYear("2002/03");
+			persistentExecutionYear.lockWrite(executionYear);
+			
+			IExecutionPeriod executionPeriod = new ExecutionPeriod("2º Semestre",executionYear);
+			persistentExecutionPeriod.lockWrite(executionPeriod);
 
 			_curso1 =
 				new Curso(
@@ -276,9 +281,13 @@ public class TestCaseServicos extends TestCase {
 					"LEGI",
 					"Gestao",
 					new TipoCurso(TipoCurso.LICENCIATURA));
-			_cursoExecucao1 = new CursoExecucao("2002/03", _curso1);
+					
+			IPlanoCurricularCurso curricularPlan1 = new PlanoCurricularCurso("plano1",_curso1);
+			IPlanoCurricularCurso curricularPlan2 = new PlanoCurricularCurso("plano2",_curso2);
+					
+			_cursoExecucao1 = new CursoExecucao(executionYear, curricularPlan1);
 			_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
-			_cursoExecucao2 = new CursoExecucao("2003/04", _curso2);
+			_cursoExecucao2 = new CursoExecucao(executionYear, curricularPlan2);
 			_suportePersistente.confirmarTransaccao();
 
 			IDisciplinaDepartamento departmentCourse = null;
@@ -333,11 +342,10 @@ public class TestCaseServicos extends TestCase {
 				"Trabalho Final Curso",
 				"TFC",
 				"programa1",
-				_cursoExecucao1,
 				new Double(2.0),
 				new Double(1.0),
 				new Double(1.0),
-				new Double(1.0));
+				new Double(1.0),executionPeriod);
 			List aCC1 = new ArrayList();
 			aCC1.add(_disciplinaCurricular1);
 			_disciplinaExecucao1.setAssociatedCurricularCourses(aCC1);
@@ -346,11 +354,10 @@ public class TestCaseServicos extends TestCase {
 				"Trabalho Final Curso2",
 				"TFC2",
 				"programa10",
-				_cursoExecucao1,
 				new Double(1.0),
 				new Double(1.0),
 				new Double(1.0),
-				new Double(1.0));
+				new Double(1.0),executionPeriod);
 			List aCC2 = new ArrayList();
 			aCC2.add(_disciplinaCurricular1);
 			_disciplinaExecucao1.setAssociatedCurricularCourses(aCC2);
@@ -372,12 +379,12 @@ public class TestCaseServicos extends TestCase {
 					new Integer(50));
 			_salaPersistente.lockWrite(_sala1);
 			_turma1 =
-				new Turma("turma1", new Integer(2), new Integer(1), _curso1);
+				new Turma("turma1",  new Integer(1), _cursoExecucao1,executionPeriod);
 			_turmaPersistente.lockWrite(_turma1);
 			_turma2 =
-				new Turma("turma2", new Integer(2), new Integer(1), _curso1);
+				new Turma("turma2", new Integer(1), _cursoExecucao1,executionPeriod);
 			_turma3 =
-				new Turma("turma3", new Integer(2), new Integer(2), _curso1);
+				new Turma("turma3",  new Integer(2), _cursoExecucao1,executionPeriod);
 
 			_turno1 =
 				new Turno(
@@ -511,6 +518,8 @@ public class TestCaseServicos extends TestCase {
 			_persistentDegreeCurricularPlan = _suportePersistente.getIPlanoCurricularCursoPersistente();
 			_persistentDepartment = _suportePersistente.getIDepartamentoPersistente();
 			_persistentStudentCurricularPlan = _suportePersistente.getIStudentCurricularPlanPersistente();
+			persistentExecutionPeriod = _suportePersistente.getIPersistentExecutionPeriod();
+			persistentExecutionYear = _suportePersistente.getIPersistentExecutionYear();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when opening database");
 		}
@@ -518,7 +527,6 @@ public class TestCaseServicos extends TestCase {
 	protected void cleanData() {
 		try {
 			_suportePersistente.iniciarTransaccao();
-			//_pessoaPersistente.deleteAll();
 			_pessoaPersistente.apagarTodasAsPessoas();
 			_aulaPersistente.deleteAll();
 			_salaPersistente.deleteAll();
@@ -537,6 +545,8 @@ public class TestCaseServicos extends TestCase {
 			_persistentDegreeCurricularPlan.apagarTodosOsPlanosCurriculares();
 			_persistentDepartment.apagarTodosOsDepartamentos();
 			_persistentStudentCurricularPlan.deleteAll();
+			persistentExecutionPeriod.deleteAll();
+			persistentExecutionYear.deleteAll();
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when cleaning data");

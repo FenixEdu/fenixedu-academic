@@ -48,7 +48,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 	 * @return ArrayList
 	 * @throws ExcepcaoPersistencia
 	 */
-	public ArrayList readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 		
 	/**
 	 * Method readByNameAndExecutionDegreeAndExecutionPeriod.
