@@ -84,6 +84,16 @@ db.assiduousness.pass=
 db.assiduousness.alias=//localhost:3306/AssiduidadeOracleTeste
 db.assiduousness.validationQuery=select 1
 
+db.projectManagement.name=AssiduidadeOracleTeste
+db.projectManagement.platform=MySQL
+db.projectManagement.driver=com.mysql.jdbc.Driver
+db.projectManagement.protocol=jdbc
+db.projectManagement.subprotocol=mysql
+db.projectManagement.user=root
+db.projectManagement.pass=
+db.projectManagement.alias=//localhost:3306/AssiduidadeOracleTeste
+db.projectManagement.validationQuery=select 1
+
 db.personFilter.name=personFilter
 db.personFilter.platform=MySQL
 db.personFilter.driver=com.mysql.jdbc.Driver
@@ -101,7 +111,7 @@ db.slide.driver=com.mysql.jdbc.Driver
 db.slide.alias=mysql://localhost:3306/slide
 db.slide.user=root
 db.slide.pass=
-slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-INF\\\\classes\\\\Domain.xml
+slide.config=/home/marvin/workspace/fenix_head/build/standalone/ciapl/WEB-INF/classes/Domain.xml
 #
 #
 #------------------------------------------------------------------------------
