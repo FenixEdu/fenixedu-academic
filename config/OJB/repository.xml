@@ -10,6 +10,7 @@
 <!ENTITY sop SYSTEM "repository_sop.xml">
 <!ENTITY masterDegree SYSTEM "repository_masterDegree.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
+<!ENTITY gesdis SYSTEM "repository_gesdis.xml">
 <!ENTITY internal SYSTEM "repository_internal.xml">
 
 
@@ -38,7 +39,7 @@
     &sop;
     &masterDegree;
     &sopload;
-    
+    &gesdis;
 
     <!-- include ojb internal mappings here -->
     &internal;

@@ -11,11 +11,11 @@ package ServidorPersistente;
  * @author  ars
  */
 import Dominio.IItem;
-import Dominio.ISeccao;
+import Dominio.ISection;
 
-public interface IItemPersistente extends IPersistentObject {
-    public IItem readBySeccaoAndNome(ISeccao seccao, String nome) throws ExcepcaoPersistencia;
-    public void lockWrite(IItem item) throws ExcepcaoPersistencia;
+public interface IPersistentItem {
+    public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia;
+    public void lockWrite(ISection item) throws ExcepcaoPersistencia;
     public void delete(IItem item) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 }

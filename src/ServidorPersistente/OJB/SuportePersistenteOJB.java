@@ -26,7 +26,6 @@ import ServidorPersistente.IDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IItemPersistente;
 import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -38,8 +37,6 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.ISalaPersistente;
-import ServidorPersistente.ISeccaoPersistente;
-import ServidorPersistente.ISitioPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
@@ -137,15 +134,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		}
 	}
 
-	public IItemPersistente getIItemPersistente() {
-		return new ItemOJB();
-	}
-	public ISeccaoPersistente getISeccaoPersistente() {
-		return new SeccaoOJB();
-	}
-	public ISitioPersistente getISitioPersistente() {
-		return new SitioOJB();
-	}
 	//public IPessoaPersistente getIPessoaPersistente() { return new PessoaOJB(); }
 
 	public IAulaPersistente getIAulaPersistente() {

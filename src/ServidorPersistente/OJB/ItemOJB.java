@@ -16,21 +16,21 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.IItem;
-import Dominio.ISeccao;
+import Dominio.ISection;
 import Dominio.Item;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IItemPersistente;
+import ServidorPersistente.IPersistentItem;
 
-public class ItemOJB extends ObjectFenixOJB implements IItemPersistente {
+public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
    
-    public IItem readBySeccaoAndNome(ISeccao seccao, String nome) throws ExcepcaoPersistencia {
+    public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia {
         try {
             IItem item = null;
-            String oqlQuery = "select itemseccao from " + Item.class.getName();
-            oqlQuery += " where seccao.nome = $1 and nome = $2";
+            String oqlQuery = "select sectionItem from " + Item.class.getName();
+            oqlQuery += " where section.name = $1 and name = $2";
             query.create(oqlQuery);
-            query.bind(seccao.getNome());
-            query.bind(nome);
+            query.bind(section.getName());
+            query.bind(name);
             List result = (List) query.execute();
             lockRead(result);
             if (result.size() != 0)
@@ -41,7 +41,7 @@ public class ItemOJB extends ObjectFenixOJB implements IItemPersistente {
         }
     }
         
-    public void lockWrite(IItem item) throws ExcepcaoPersistencia {
+    public void lockWrite(ISection item) throws ExcepcaoPersistencia {
         super.lockWrite(item);
     }
     

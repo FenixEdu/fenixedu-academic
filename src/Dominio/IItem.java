@@ -11,16 +11,16 @@ package Dominio;
  * @author  ars
  */
 public interface IItem {
-  public String getNome();
-  public ISeccao getSeccao();
-  public int getOrdem();
-  public String getInformacao();
-  public boolean getUrgente();
+  public String getName();
+  public ISection getSection();
+  public Integer getOrder();
+  public String getInformation();
+  public Boolean getUrgent();
 
-  public void setNome(String nome);
-  public void setSeccao(ISeccao seccao);
-  public void setOrdem(int ordem);
-  public void setInformacao(String informacao);
-  public void setUrgente(boolean urgente);
+  public void setName(String name);
+  public void setSection(ISection section);
+  public void setOrder(Integer order);
+  public void setInformation(String information);
+  public void setUrgent(Boolean urgent);
   
 }
