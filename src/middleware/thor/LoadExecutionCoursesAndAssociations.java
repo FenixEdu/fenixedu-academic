@@ -6,7 +6,9 @@
  */
 package middleware.thor;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import middleware.LoadDataFile;
@@ -29,8 +31,10 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 	private static LoadExecutionCoursesAndAssociations loader = null;
 
 	protected PersistentObjectOJBReader persistentObjectOJB = null;
-	
-	static String bufferToWrite = new String();	
+
+	static String bufferToWrite = new String();
+
+	HashMap hashMap = new HashMap();
 
 	private LoadExecutionCoursesAndAssociations() {
 		super();
@@ -61,7 +65,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 		IExecutionPeriod executionPeriod =
 			persistentObjectOJB.readExecutionPeriod();
 
-			for (int s = 0; s < allRooms.size(); s++) {
+		for (int s = 0; s < allRooms.size(); s++) {
 			System.out.println("sala= " + allRooms.get(s));
 			for (int hora = 1; hora < 31; hora++) {
 				for (int dia = 1; dia < 7; dia++) {
@@ -107,18 +111,10 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 							disciplinaExecucao.setTheoPratHours(null);
 							disciplinaExecucao.setLabHours(null);
 							disciplinaExecucao.setComment(" ");
-							
-							
 
 							if (curricularCourseToAdd != null) {
 								numberElementsWritten++;
 								writeElement(disciplinaExecucao);
-								bufferToWrite
-									+= "insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, " 
-									+ curricularCourseToAdd.getIdInternal()
-									+ ", "
-									+ disciplinaExecucao.getIdInternal()					
-									+ ");\n";
 							} else {
 							}
 
@@ -126,11 +122,34 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 
 						//Ler Curricular correspondente e se ja existir na BD criar associacao
 						ICurricularCourse curricularCourse =
-							persistentObjectOJB.readCurricularCourse(
-								degreeID,
-								disciplina.getSigla());
+							getAssociated(
+								disciplinaExecucao,
+								aula,
+								disciplina);
+								
 						if (curricularCourse != null) {
+							List associatedCurricularCourses =
+								(List) hashMap.get(
+									disciplinaExecucao.getIdInternal());
+							if (associatedCurricularCourses == null) {
+								associatedCurricularCourses = new ArrayList();
+								hashMap.put(
+									disciplinaExecucao.getIdInternal(),
+									associatedCurricularCourses);
+							}
 
+							if (!associatedCurricularCourses
+								.contains(curricularCourse.getIdInternal())) {
+								bufferToWrite
+									+= "insert into CURRICULAR_COURSE_EXECUTION_COURSE values (null, "
+									+ curricularCourse.getIdInternal()
+									+ ", "
+									+ disciplinaExecucao.getIdInternal()
+									+ ");\n";
+								associatedCurricularCourses.add(curricularCourse.getIdInternal());
+							} else {
+								
+							}
 						} else {
 
 						}
