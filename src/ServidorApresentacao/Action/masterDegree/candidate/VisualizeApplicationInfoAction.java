@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.FenixAction {
 
@@ -32,6 +33,7 @@ public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.
                                 HttpServletResponse response)
       throws Exception {
 
+	SessionUtils.validSessionVerification(request, mapping);
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {

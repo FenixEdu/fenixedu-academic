@@ -94,7 +94,6 @@ public class ChangeMasterDegreeCandidate implements IServico {
         
 	    // Change the Master Degree Candidate Personal Information 
 		existingMasterDegreeCandidate.changePersonalData(newMasterDegreeCandidate.getName(), 
-								newMasterDegreeCandidate.getPassword(),
 								newMasterDegreeCandidate.getMajorDegree(), 
 								newMasterDegreeCandidate.getMajorDegreeSchool(),
 								newMasterDegreeCandidate.getMajorDegreeYear(), 

@@ -240,8 +240,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         return result;
     }  
 
-	public void changePersonalData(String name, String password,
-    		String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
+	public void changePersonalData(String name, String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
     		String fatherName, String motherName, String birthPlaceParish, 
     		String birthPlaceMunicipality, String birthPlaceDistrict,  
     		String identificationDocumentNumber, String identificationDocumentIssuePlace, 

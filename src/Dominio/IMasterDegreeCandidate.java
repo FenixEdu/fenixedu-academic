@@ -107,8 +107,7 @@ public interface IMasterDegreeCandidate {
 	ICountry getCountry();    
 	Set getSituations();
     
-    void changePersonalData(String name, String password,
-    		String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
+    void changePersonalData(String name, String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
     		String fatherName, String motherName, String birthPlaceParish, 
     		String birthPlaceMunicipality, String birthPlaceDistrict, 
     		String identificationDocumentNumber, String identificationDocumentIssuePlace, 

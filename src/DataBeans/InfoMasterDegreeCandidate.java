@@ -111,8 +111,7 @@ public class InfoMasterDegreeCandidate {
     } // Fim do Construtor Sem Argumentos
     
     
-    public InfoMasterDegreeCandidate(String name, String password,
-    		String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
+    public InfoMasterDegreeCandidate(String name, String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, 
     		String fatherName, String motherName, String birthPlaceParish, 
     		String birthPlaceMunicipality, String birthPlaceDistrict, 
     		String identificationDocumentNumber, String identificationDocumentIssuePlace, 
@@ -152,7 +151,6 @@ public class InfoMasterDegreeCandidate {
         setContributorNumber(contributorNumber);
         setOccupation(occupation);
         setMajorDegree(majorDegree);
-        setPassword(password);
         setMajorDegreeSchool(majorDegreeSchool);
         setMajorDegreeYear(majorDegreeYear);
 		setSpecialization(specialization);		

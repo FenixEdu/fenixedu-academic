@@ -31,6 +31,7 @@ import DataBeans.InfoCountry;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
 import Util.EstadoCivil;
 import Util.Sexo;
@@ -46,7 +47,8 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
     throws Exception {
 
 		// FIXME: Verificar o que acontece com campos nao preenchidos na BD
-
+		SessionUtils.validSessionVerification(request, mapping);
+		
 	    DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
 
 	  	HttpSession session = request.getSession(false);
@@ -138,8 +140,6 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		  changePersonalInfoForm.set("majorDegree", masterDegreeCandidate.getMajorDegree());
 		  changePersonalInfoForm.set("majorDegreeSchool", masterDegreeCandidate.getMajorDegreeSchool()); 
 		  changePersonalInfoForm.set("majorDegreeYear", masterDegreeCandidate.getMajorDegreeYear()); 
-		  changePersonalInfoForm.set("password", masterDegreeCandidate.getPassword()); 
-		  changePersonalInfoForm.set("reTypePassword", masterDegreeCandidate.getPassword()); 
 		  changePersonalInfoForm.set("average", String.valueOf(masterDegreeCandidate.getAverage())); 
 		  changePersonalInfoForm.set("country", masterDegreeCandidate.getInfoCountry().getName());
 		  changePersonalInfoForm.set("specialization", masterDegreeCandidate.getSpecialization());

@@ -31,6 +31,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
 
 public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.Action.FenixAction {
@@ -39,6 +40,8 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
+
+	SessionUtils.validSessionVerification(request, mapping);
 
     DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
 
@@ -84,7 +87,6 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
       Object changeArgs[] = new Object[1];
       InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate( 
 						   (String) changePersonalInformationForm.get("name"), 
-						   (String) changePersonalInformationForm.get("password"), 
 						   (String) changePersonalInformationForm.get("majorDegree"), 
 						   (String) changePersonalInformationForm.get("majorDegreeSchool"), 
 						   ((Integer) changePersonalInformationForm.get("majorDegreeYear")), 
@@ -140,15 +142,6 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 
 	ActionErrors actionErrors = new ActionErrors();
 
-	// Validate the new Password
-	String password = (String) form.get("password");
-	String reTypePassword = (String) form.get("reTypePassword");
-	
-	if (!password.equals(reTypePassword)){
-		result = false;
-		actionErrors.add("diferentePasswords", new ActionError("errors.different.passwords"));
-	}
-	
 	Integer year = new Integer(((String) form.get("birthYear")));
 	Integer month = new Integer(((String) form.get("birthMonth")));
 	Integer day = new Integer(((String) form.get("birthDay")));
