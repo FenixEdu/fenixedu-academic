@@ -92,6 +92,14 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>CreditsManagerAuthorization</name>
+        <expression>CreditsManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+	
+    <filterChain>
         <name>ExecutionCourseResponsibleForTeacherAuthorization</name>
         <expression>ExecutionCourseResponsibleForTeacherAuthorization</expression>
         <description/>
