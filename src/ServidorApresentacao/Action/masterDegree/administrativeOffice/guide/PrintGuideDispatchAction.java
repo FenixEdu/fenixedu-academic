@@ -50,6 +50,11 @@ public class PrintGuideDispatchAction extends DispatchAction {
 			Boolean passwordPrint = (Boolean) session.getAttribute(SessionConstants.PRINT_PASSWORD);
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 			
+			String graduationType = (String) request.getAttribute("graduationType");
+			if (graduationType == null)
+				graduationType = (String) request.getParameter("graduationType");
+			request.setAttribute("graduationType",graduationType);
+			
 			if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE_TYPE)){
 				// Read The Candidate
 				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
@@ -119,7 +124,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
 
 			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 			session.setAttribute(SessionConstants.DATE, formatedDate);	
-			
+
 			session.setAttribute(SessionConstants.GUIDE, infoGuide);		
 			
 			return mapping.findForward("PrintOneGuide");

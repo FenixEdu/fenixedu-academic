@@ -14,6 +14,8 @@
    <table>
     <html:form action="/studentGuideDispatchAction?method=createReady">
     <html:hidden property="page" value="1"/>
+    <bean:define id="graduationType" name="graduationType"/>
+    <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
     <bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>" scope="session" />
     
     <logic:iterate id="price" name="certificateList" >

@@ -27,8 +27,10 @@
    
    
    </table>
-   
-   <html:link page="/printGuidePage.do" target="_blank">
+   <bean:define id="link">/printGuidePages.do?graduationType=<bean:write name="graduationType"/></bean:define>
+   <bean:define id="graduationType" name="graduationType"/>
+   <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
+   <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
    		<bean:message key="link.masterDegree.administrativeOffice.printGuide" />
    </html:link>
    

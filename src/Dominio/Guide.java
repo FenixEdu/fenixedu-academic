@@ -342,4 +342,6 @@ public class Guide extends DomainObject implements IGuide  {
 		paymentDate = date;
 	}
 
+
+
 }

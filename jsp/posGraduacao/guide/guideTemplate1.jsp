@@ -74,8 +74,14 @@
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.degree"/> </td>
             <td> <bean:write name="guide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>
-          </tr>         
+          </tr>
+          <logic:present name="graduationType">
           <tr>
+            <td> <bean:message key="label.masterDegree.administrativeOffice.graduationType"/> </td>
+            <td> <bean:write name="graduationType"/> </td>
+          </tr>
+          <tr>
+          </logic:present>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
@@ -128,16 +134,23 @@
 	   </table>
 	 </td>
 	 </tr>
-	 
 	 <tr>
-	 <td>&nbsp;&nbsp;&nbsp;<bean:write name="guide" property="infoGuideSituation.remarks"/>
+	 <td>
+	 <table  width="100%" align="right">
+		 <tr>	
+		 <td><bean:write name="guide" property="infoGuideSituation.remarks"/></td>
+		 </tr>
+	 </table>
 	 </td>
 	 </tr>
 	 <tr>
-	 <td>
+	 <td>&nbsp;
 	 </td>
+	 </tr>
 	 <tr>
-	 
+	 <td>&nbsp;
+	 </td>
+	 </tr>
 	 <tr valign="bottom">
 	 <td>
      <table valign="bottom" width="100%" border="0">

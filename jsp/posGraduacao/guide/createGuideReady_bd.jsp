@@ -11,7 +11,8 @@
 
    <table>
     <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE%>" scope="session" />
-
+    <bean:define id="graduationType" name="graduationType"/>
+    
        <!-- Requester Name -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
@@ -24,7 +25,11 @@
          <td><bean:write name="infoGuide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/></td>
        </tr>
 
-
+	<!-- Requester especialization -->
+       <tr>
+         <td><bean:message key="label.masterDegree.administrativeOffice.graduationType"/> </td>
+         <td><bean:write name="graduationType"/></td>
+       </tr>
 
 
        <!-- Contributor Number -->
@@ -61,6 +66,7 @@
 		</logic:iterate>
 
       <html:form action="/createGuideReadyDispatchAction?method=create">
+       <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
        <html:hidden property="page" value="1"/>
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.others"/> </td>

@@ -89,9 +89,10 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 
 			List result = (List) query.execute();
 			lockRead(result);
-			if (result.size() != 0)
+			if (result.size() != 0) 
 				guideNumber = ((IGuide) result.get(0)).getNumber();
-			return new Integer(guideNumber.intValue() + 1);
+			 return new Integer(guideNumber.intValue() + 1);
+						
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

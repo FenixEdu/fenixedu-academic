@@ -233,7 +233,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
-			
+		
 			session.removeAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR);
 			session.setAttribute(SessionConstants.GUIDE, infoGuide);
 			
@@ -247,6 +247,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
 
 			session.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
+			request.setAttribute("graduationType",graduationType);
 
 			if (requesterType.equals(GuideRequester.CANDIDATE_STRING)){
 				session.removeAttribute(SessionConstants.REQUESTER_TYPE);
@@ -298,6 +299,12 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			String guideSituationString = (String) createGuideForm.get("guideSituation");
 			String paymentType = (String) createGuideForm.get("paymentType");
 			
+			String graduationType = (String) request.getAttribute("graduationType");
+			if (graduationType == null)
+				graduationType = (String) request.getParameter("graduationType");
+			
+			request.setAttribute("graduationType",graduationType);
+
 			Double othersPrice = null;
 			
 			try {

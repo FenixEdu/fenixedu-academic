@@ -1,9 +1,9 @@
+
 /*
  * ObjectFenixOJB.java
  *
  * Created on 22 de Agosto de 2002, 23:51
  */
-
 package ServidorPersistente.OJB;
 
 /**

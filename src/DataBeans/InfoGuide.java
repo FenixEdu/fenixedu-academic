@@ -299,4 +299,6 @@ public class InfoGuide implements Serializable{
 		paymentDate = date;
 	}
 
+	
+
 }

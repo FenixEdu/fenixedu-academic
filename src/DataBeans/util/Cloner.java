@@ -511,6 +511,7 @@ public abstract class Cloner {
 	public static InfoStudent copyIStudent2InfoStudent(IStudent student) {
 		InfoStudent infoStudent = new InfoStudent();
 		copyObjectProperties(infoStudent, student);
+
 		infoStudent.setInfoPerson(Cloner.copyIPerson2InfoPerson(student.getPerson()));
 		infoStudent.setInfoStudentKind(Cloner.copyIStudentKind2InfoStudentKind(student.getStudentKind()));
 

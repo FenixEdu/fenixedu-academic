@@ -62,6 +62,11 @@ public class StudentGuideDispatchAction extends DispatchAction {
 			String specializationGratuityQuantityString = (String) studentGuideForm.get("specializationGratuityQuantity");
 			String specializationGratuityAmountString = (String) studentGuideForm.get("specializationGratuityAmount");
 			
+			String graduationType = (String) request.getAttribute("graduationType");
+			if (graduationType == null)
+				graduationType = (String) request.getParameter("graduationType");
+			request.setAttribute("graduationType",graduationType);
+			
 			String othersGratuityAmountString = (String) studentGuideForm.get("othersGratuityAmount");
 			Integer othersGratuityAmount = null;
 			
