@@ -16,6 +16,9 @@ public class InfoAnnouncement {
 	private String information;
 	private InfoSite site;	
 
+	public InfoAnnouncement() {
+	}
+
 	public InfoAnnouncement(String title, Date creationDate, Date lastModifiedDate, String information, InfoSite site) {
 		this.title = title;
 		this.creationDate = creationDate;
