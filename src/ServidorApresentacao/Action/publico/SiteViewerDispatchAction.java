@@ -13,11 +13,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.ExecutionCourseSiteView;
+import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
+import DataBeans.InfoEvaluation;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoSite;
+import DataBeans.InfoSiteAnnouncement;
+import DataBeans.InfoSiteAssociatedCurricularCourses;
+import DataBeans.InfoSiteBibliography;
+import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteFirstPage;
+import DataBeans.InfoSiteObjectives;
+import DataBeans.InfoSiteProgram;
+import DataBeans.InfoSiteSection;
+import DataBeans.InfoSiteShifts;
+import DataBeans.InfoSiteTimetable;
 import DataBeans.RoomKey;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
@@ -27,6 +40,179 @@ import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
 public class SiteViewerDispatchAction extends FenixDispatchAction {
+
+	public ActionForward firstPage(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent firstPageComponent = new InfoSiteFirstPage();
+		readSiteView(request, firstPageComponent,null);
+		return mapping.findForward("executionCourseViewer");
+	}
+
+	public ActionForward announcements(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
+		readSiteView(request, announcementsComponent,null);
+		return mapping.findForward("announcements");
+	}
+
+	public ActionForward objectives(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent objectivesComponent = new InfoSiteObjectives();
+		readSiteView(request, objectivesComponent,null);
+		return mapping.findForward("objectives");
+	}
+
+	public ActionForward program(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent programComponent = new InfoSiteProgram();
+		readSiteView(request, programComponent,null);
+		return mapping.findForward("program");
+	}
+
+	public ActionForward evaluation(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent evaluationComponent = new InfoEvaluation();
+		readSiteView(request, evaluationComponent,null);
+		return mapping.findForward("evaluation");
+	}
+
+	public ActionForward bibliography(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent bibliographyComponent = new InfoSiteBibliography();
+		readSiteView(request, bibliographyComponent,null);
+		return mapping.findForward("bibliography");
+	}
+
+	public ActionForward curricularCourses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent curricularCoursesComponent =
+			new InfoSiteAssociatedCurricularCourses();
+		readSiteView(request, curricularCoursesComponent,null);
+		return mapping.findForward("curricularCourses");
+	}
+
+	public ActionForward timeTable(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent timeTableComponent = new InfoSiteTimetable();
+		readSiteView(request, timeTableComponent,null);
+		return mapping.findForward("timeTable");
+	}
+
+	public ActionForward shifts(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		ISiteComponent shiftsComponent = new InfoSiteShifts();
+		readSiteView(request, shiftsComponent,null);
+		return mapping.findForward("shifts");
+	}
+	
+	public ActionForward section(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+
+			String indexString = (String) request.getParameter("index");						
+			Integer sectionIndex = new Integer(indexString);
+			
+			ISiteComponent sectionComponent = new InfoSiteSection();
+			readSiteView(request, sectionComponent,sectionIndex);
+			
+			return mapping.findForward("section");
+		}
+
+	private void readSiteView(
+		HttpServletRequest request,
+		ISiteComponent firstPageComponent,
+		Integer sectionIndex
+		)
+		throws FenixActionException {
+		String year = request.getParameter("eYName");
+		String period = request.getParameter("ePName");
+		String executionCourseCode = request.getParameter("exeCode");
+		if (executionCourseCode == null) {
+			executionCourseCode = (String) request.getAttribute("exeCode");
+		}
+		if (period == null) {
+			period = (String) request.getAttribute("ePName");
+		}
+		if (year == null) {
+			year = (String) request.getAttribute("eYName");
+		}
+		ISiteComponent commonComponent = new InfoSiteCommon();
+
+		Object[] args =
+			{
+				commonComponent,
+				firstPageComponent,
+				year,
+				period,
+				executionCourseCode,
+				sectionIndex
+				 };
+
+		try {
+			ExecutionCourseSiteView siteView =
+				(ExecutionCourseSiteView) ServiceUtils.executeService(
+					null,
+					"ExecutionCourseSiteComponentService",
+					args);
+
+			request.setAttribute("siteView", siteView);
+			request.setAttribute("exeCode", executionCourseCode);
+			request.setAttribute("ePName", period);
+			request.setAttribute("eYName", year);
+			if (siteView.getComponent() instanceof InfoSiteSection) {			
+			request.setAttribute("infoSection", ((InfoSiteSection)siteView.getComponent()).getSection());}
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+	}
 
 	public ActionForward roomViewer(
 		ActionMapping mapping,
@@ -284,7 +470,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 				null,
 				"ReadTeachersByExecutionCourseResponsibility",
 				args3);
-		
+
 		//read	lecturing teachers
 		Object[] args4 = { infoExecCourse };
 		List lecturingTeacherList = null;
@@ -293,7 +479,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 				null,
 				"ReadTeachersByExecutionCourseProfessorship",
 				args4);
-		
+
 		setTeachersToRequest(request, teacherList, lecturingTeacherList);
 	}
 
@@ -302,8 +488,8 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		List teacherList,
 		List lecturingTeacherList) {
 		if (teacherList != null) {
-						request.setAttribute("resTeacherList", teacherList);
-					}
+			request.setAttribute("resTeacherList", teacherList);
+		}
 		if (lecturingTeacherList != null) {
 			lecturingTeacherList.removeAll(teacherList);
 			request.setAttribute("lecTeacherList", lecturingTeacherList);
