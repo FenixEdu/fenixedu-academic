@@ -30,7 +30,7 @@ public class EscolherContextoFormActionTest extends TestCasePresentationSopPorta
 	public void setUp() {
 		super.setUp();
 		// define ficheiro de configura��o Struts a utilizar
-		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
+		setServletConfigFile("/WEB-INF/web.xml");
 	}
 
 	public EscolherContextoFormActionTest(String testName) {
@@ -41,7 +41,7 @@ public class EscolherContextoFormActionTest extends TestCasePresentationSopPorta
 		
 		
 		// define mapping de origem
-		setRequestPathInfo("", "/escolherContextoForm");
+		setRequestPathInfo("sop", "/escolherContextoForm");
 
 		// Preenche campos do formul�rio
 		addRequestParameter("sigla", "LEIC");
@@ -92,7 +92,7 @@ setAuthorizedUser();
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-sop.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/* (non-Javadoc)

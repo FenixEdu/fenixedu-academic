@@ -32,7 +32,7 @@ public class PrepararVerAlunosDeTurnoFormActionTest
 	}
 	
 	protected String getServletConfigFile() {
-				return "/WEB-INF/tests/web-sop.xml";
+				return "/WEB-INF/web.xml";
 			}
 	public PrepararVerAlunosDeTurnoFormActionTest(String testName) {
 		super(testName);

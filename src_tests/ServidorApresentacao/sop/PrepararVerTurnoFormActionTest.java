@@ -31,7 +31,7 @@ public class PrepararVerTurnoFormActionTest
 	}
 	
 	protected String getServletConfigFile() {
-					return "/WEB-INF/tests/web-sop.xml";
+					return "/WEB-INF/web.xml";
 				}
 	public PrepararVerTurnoFormActionTest(String testName) {
 		super(testName);
