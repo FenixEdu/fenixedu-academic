@@ -12,4 +12,7 @@
 	<definition name="shift.percentage.form" extends="definition.credits.teacher.management">
 		<put name="body" value="/credits/shiftPercentageForm.jsp" />
 	</definition>	
+	<definition name="department.teacher.list" extends="definition.credits.two-column">
+		<put name="body" value="/credits/listTeachers.jsp" />
+	</definition>	
 </tiles-definitions>
