@@ -35,7 +35,7 @@ public class EnrolmentFilterAllOptionalCoursesRuleTest extends BaseEnrolmentRule
 		EnrolmentContext enrolmentContext = null;
 		
 		autentication();
-		Object serviceArgs1[] = { userView, new Integer(1)};
+		Object serviceArgs1[] = { userView };
 		enrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 
 		infoEnrolmentContext = EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);
@@ -48,7 +48,7 @@ public class EnrolmentFilterAllOptionalCoursesRuleTest extends BaseEnrolmentRule
 
 		optionalSpan = enrolmentContext.getOptionalCurricularCoursesToChooseFromDegree();
 
-		assertEquals("Optional Span size:", optionalSpan.size(), 13);
+		assertEquals("Optional Span size:", 13, optionalSpan.size());
 
 		ICurricularCourse curricularCourse = getCurricularCourse("INTERFACES PESSOA-MÁQUINA", "");
 		assertEquals(true, optionalSpan.contains(curricularCourse));

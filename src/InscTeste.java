@@ -9,6 +9,7 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import Util.CurricularCourseType;
 
@@ -31,7 +32,7 @@ public class InscTeste {
 	}
 
 	private static void autentication() {
-		String argsAutenticacao[] = { "stdnt", "pass" };
+		String argsAutenticacao[] = { "stdnt", "pass", Autenticacao.EXTRANET};
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {

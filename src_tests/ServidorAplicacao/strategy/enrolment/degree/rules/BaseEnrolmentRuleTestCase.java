@@ -9,6 +9,7 @@ import Dominio.ICurricularCourse;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
@@ -96,7 +97,7 @@ abstract public class BaseEnrolmentRuleTestCase extends TestCase {
 
 	
 	protected void autentication() {
-		String argsAutenticacao[] = { "user", "pass" };
+		String argsAutenticacao[] = { "user", "pass" , Autenticacao.EXTRANET};
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
