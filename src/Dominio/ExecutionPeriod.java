@@ -1,14 +1,18 @@
 package Dominio;
 
+import Util.PeriodState;
+
 /**
  * Created on 11/Fev/2003
  * @author João Mota
+ * @author jpvl
  * ciapl 
  * Dominio
  * 
  */
 public class ExecutionPeriod implements IExecutionPeriod {
 
+	private PeriodState state;
 	protected IExecutionYear executionYear;
 	protected String name;
 	private Integer internalCode;
@@ -17,13 +21,13 @@ public class ExecutionPeriod implements IExecutionPeriod {
 	 * Constructor for ExecutionPeriod.
 	 */
 	public ExecutionPeriod() {
-			super();
-		
-		}
-	public ExecutionPeriod(String name,IExecutionYear executionYear) {
+		super();
+	}
+
+	public ExecutionPeriod(String name, IExecutionYear executionYear) {
 		setName(name);
 		setExecutionYear(executionYear);
-		
+
 	}
 
 	/**
@@ -41,7 +45,6 @@ public class ExecutionPeriod implements IExecutionPeriod {
 	public String getName() {
 		return name;
 	}
-
 
 	/**
 	 * Sets the name.
@@ -91,7 +94,6 @@ public class ExecutionPeriod implements IExecutionPeriod {
 		this.executionYear = executionYear;
 	}
 
-
 	public String toString() {
 		String result = "[EXECUTION_PERIOD";
 		result += ", internalCode=" + internalCode;
@@ -100,19 +102,29 @@ public class ExecutionPeriod implements IExecutionPeriod {
 		result += "]";
 		return result;
 	}
-	
-	
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
-		if (obj instanceof IExecutionPeriod){
+		if (obj instanceof IExecutionPeriod) {
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
 			return getName().equals(executionPeriod.getName())
-				&& getExecutionYear().equals(executionPeriod.getExecutionYear());		
+				&& getExecutionYear().equals(executionPeriod.getExecutionYear());
 		}
 		return super.equals(obj);
+	}
+	/* (non-Javadoc)
+	 * @see Dominio.IExecutionPeriod#setState(Util.PeriodState)
+	 */
+	public void setState(PeriodState newState) {
+		this.state = newState;
+	}
+	/* (non-Javadoc)
+	 * @see Dominio.IExecutionPeriod#getState()
+	 */
+	public PeriodState getState() {
+		return this.state;
 	}
 
 }
