@@ -6,6 +6,9 @@
 <html:form action="/viewCurriculum" focus="studentNumber">
 	<html:hidden property="method" value="getStudentCP"/>
 	<html:hidden property="page" value="1"/>
+	<logic:present name="executionDegreeId">
+		<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
+	</logic:present>
 	<table>
 		<tr>
 			<td><bean:message key="label.choose.student"/>&nbsp;</td>

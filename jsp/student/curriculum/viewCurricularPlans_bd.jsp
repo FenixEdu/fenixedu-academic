@@ -37,16 +37,25 @@
         	<bean:define id="studentCPLink">
         		<bean:write name="link"/><bean:write name="studentCP" property="idInternal" />
         	</bean:define>
-            <html:link page='<%= pageContext.findAttribute("studentCPLink").toString() %>'>
-    			<bean:write name="studentCP" property="infoStudent.number" /> - 
+        	<bean:define id="linkDescription">
+        		<bean:write name="studentCP" property="infoStudent.number" /> - 
             	(<bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" />)  
                 <bean:write name="studentCP" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
 				<logic:present name="studentCP" property="specialization" >
         			<bean:write name="studentCP" property="specialization" /> - 
 				</logic:present>
-        		
     			<bean:write name="studentCP" property="startDate" />
-            </html:link>
+        	</bean:define>
+        	<logic:present name="executionDegreeId">
+	            <html:link page='<%= pageContext.findAttribute("studentCPLink").toString() + "&amp;executionDegreeId=" pageContext.findAttribute("executionDegreeId").toString() %>'>
+	    			<bean:write name="linkDescription"/>
+	            </html:link>
+            </logic:present>
+        	<logic:notPresent name="executionDegreeId">
+	            <html:link page='<%= pageContext.findAttribute("studentCPLink").toString() %>'>
+	    			<bean:write name="linkDescription"/>
+	            </html:link>
+            </logic:notPresent>
             <br>
     	</logic:iterate>
 <% } %>

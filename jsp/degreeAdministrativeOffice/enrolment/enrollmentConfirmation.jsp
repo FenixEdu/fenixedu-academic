@@ -112,11 +112,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.student.curriculum.curricularYear" /></td>
-			<td class="listClasses-header"><bean:message key="label.curricular.course.semester" /></td>
-			<td class="listClasses-header"><bean:message key="label.student.curriculum.degree" /></td>
-			<td class="listClasses-header"><bean:message key="label.student.curriculum.course" /></td>
-			<td class="listClasses-header"><bean:message key="label.student.curriculum.finalEvaluation" /></td>
+			<td class="listClasses-header"><bean:message key="label.executionYear" /></td>
+			<td class="listClasses-header"><bean:message key="label.semester" /></td>
+			<td class="listClasses-header"><bean:message key="label.degree.name" /></td>
+			<td class="listClasses-header"><bean:message key="label.curricular.course.name" /></td>
+			<td class="listClasses-header"><bean:message key="label.finalEvaluation" /></td>
 		</tr>
 		<logic:iterate id="curriculumElem" name="curriculum">
 			<tr>

@@ -22,6 +22,17 @@ public class ViewStudentCurriculumDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+		getExecutionDegreeId(request);
 		return mapping.findForward("prepareViewStudentCurriculumChooseStudent");
+	}
+
+	private void getExecutionDegreeId(HttpServletRequest request)
+	{
+		String executionDegreeId = request.getParameter("executionDegreeId");
+		if(executionDegreeId == null)
+		{
+			executionDegreeId = (String) request.getAttribute("executionDegreeId");
+		}
+		request.setAttribute("executionDegreeId",executionDegreeId);
 	}
 }

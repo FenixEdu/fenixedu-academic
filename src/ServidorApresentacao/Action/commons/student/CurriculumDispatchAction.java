@@ -53,9 +53,10 @@ public class CurriculumDispatchAction extends DispatchAction {
 			studentCurricularPlanID = (String) request.getAttribute("studentCPID");
 		}
 		
+		Integer executionDegreeId = getExecutionDegree(request);
 		List result = null;
 		try {
-			Object args[] = { null, Integer.valueOf(studentCurricularPlanID) };
+			Object args[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID) };
 			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurriculum", args);
 		} catch (NotAuthorizedException e) {
 			return mapping.findForward("NotAuthorized");
@@ -121,11 +122,29 @@ public class CurriculumDispatchAction extends DispatchAction {
 			result = new ArrayList();
 		}
 		
+		getExecutionDegree(request);
+		
 		request.setAttribute("studentCPs", result);
 
 		return mapping.findForward("ShowStudentCurricularPlans");
 	}
-
+	
+	private Integer getExecutionDegree(HttpServletRequest request)
+	{
+		Integer executionDegreeId = null;
+		
+		String executionDegreeIdString  = request.getParameter("executionDegreeId");
+		if(executionDegreeIdString == null) {
+			executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
+		}
+		if(executionDegreeIdString != null){
+			executionDegreeId = Integer.valueOf(executionDegreeIdString);
+		}
+		request.setAttribute("executionDegreeId", executionDegreeId);
+		
+		return executionDegreeId;
+	}
+	
 
 
 }
