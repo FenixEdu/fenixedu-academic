@@ -189,7 +189,7 @@ public class PessoaRelacional implements IPessoaPersistente
         try
         {
             PreparedStatement sql =
-                UtilRelacional.prepararComando("INSERT INTO PERSON_ROLE " + "VALUES (?, ?, ?)");
+                UtilRelacional.prepararComando("INSERT INTO PERSON_ROLE " + "VALUES (?, ?, ?, NULL)");
 
             sql.setInt(1, 0);
             sql.setInt(2, chaveRole);
@@ -223,7 +223,7 @@ public class PessoaRelacional implements IPessoaPersistente
                 UtilRelacional.prepararComando(
                     "INSERT INTO PERSON "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
-                        + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, MD5(?), ?, ?, ?, ?, ?)");
+                        + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, MD5(?), ?, ?, ?, ?, ?, NULL)");
 
             sql.setInt(1, pessoa.getIdInternal().intValue());
             sql.setString(2, pessoa.getNumeroDocumentoIdentificacao());

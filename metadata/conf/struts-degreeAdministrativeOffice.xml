@@ -246,7 +246,9 @@
         			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 				
 			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareEnrollmentChooseStudent"/>
+			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
 			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
+			
 		</action>
 		
 	</action-mappings>

@@ -70,7 +70,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente
         try
         {
             PreparedStatement sql =
-                UtilRelacional.prepararComando("INSERT INTO ass_FUNC_NAO_DOCENTE " + "VALUES (?, ?)");
+                UtilRelacional.prepararComando("INSERT INTO ass_FUNC_NAO_DOCENTE " + "VALUES (?, ?, NULL)");
 
             sql.setInt(1, funcionario.getCodigoInterno());
             sql.setInt(2, funcionario.getChaveFuncionario());

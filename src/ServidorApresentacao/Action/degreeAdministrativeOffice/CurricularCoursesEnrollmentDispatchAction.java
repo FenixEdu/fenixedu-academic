@@ -125,6 +125,61 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		return enrolledInArray;
 	}
 
+	public ActionForward prepareEnrollmentPrepareChooseAreas(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		IUserView userView = SessionUtils.getUserView(request);
+		ActionErrors errors = new ActionErrors();
+		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
+
+		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
+
+		String specialization = request.getParameter("specializationArea");
+		String secondary = request.getParameter("secondaryArea");
+		String executionPeriod = request.getParameter("executionPeriod");
+		String executionYear = request.getParameter("executionYear");
+		String studentName = request.getParameter("studentName");
+		String studentCurricularPlanId = request.getParameter("stCurPlan");
+
+		request.setAttribute("executionPeriod", executionPeriod);
+		request.setAttribute("executionYear", executionYear);
+		request.setAttribute("studentName", studentName);
+		request.setAttribute("studentCurricularPlanId", studentCurricularPlanId);
+
+		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+
+		Object[] args = { studentNumber };
+		try
+		{
+			infoStudentEnrolmentContext =
+				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ShowAvailableCurricularCourses",
+					args);
+
+		}
+		catch (ExistingServiceException e)
+		{
+			errors.add("studentCurricularPlan", new ActionError(e.getMessage()));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+		catch (FenixServiceException e)
+		{
+			e.printStackTrace();
+			throw new FenixActionException(e.getMessage());
+		}
+		enrollmentForm.set("specializationArea", Integer.valueOf(specialization));
+		enrollmentForm.set("secondaryArea", Integer.valueOf(secondary));
+		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
+
+		return mapping.findForward("prepareEnrollmentChooseAreas");
+	}
+
 	public ActionForward prepareEnrollmentChooseAreas(
 		ActionMapping mapping,
 		ActionForm form,
@@ -140,7 +195,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
-		// alterar as areas do aluno
 		Object[] args = { studentCurricularPlanId, specializationArea, secondaryArea };
 		try
 		{
@@ -182,6 +236,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
+		System.out.println(studentCurricularPlanId);
 		System.out.println(toEnroll.toString());
 		Object[] args = { studentCurricularPlanId, toEnroll.get(0), null };
 		try

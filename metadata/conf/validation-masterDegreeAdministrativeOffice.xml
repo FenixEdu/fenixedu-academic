@@ -775,9 +775,6 @@
 		</field>
 	</form>
 <form name="insertGratuityDataForm">
-		<!--<field property="specializationArea" depends="required" page="1">
-	        <arg0 key="label.masterDegree.gratuity.specializationArea" />
-		</field>-->
 		<field property="degree" depends="required" page="1">
 	        <arg0 key="label.qualification.degree" />
 		</field>

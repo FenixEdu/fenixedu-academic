@@ -22,8 +22,56 @@
 			</td>
 		</tr>
 	</table>
+	<br />
 	<bean:define id="branches" name="infoStudentEnrolmentContext" property="infoAreas"/>
 	<table>	
+<%--		<tr>
+			<td class="listClasses-header"><bean:message key="label.student.enrollment.specializationArea" /></td>
+			<td class="listClasses-header"><bean:message key="label.student.enrollment.secondaryArea" /></td>
+			<td class="listClasses-header">&nbsp;</td>
+		</tr>
+		<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name">
+			<tr>
+				<td class="listClasses">
+					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />
+				</td>
+				<td class="listClasses">
+					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
+				</td>
+				<td class="listClasses">
+					<bean:define id="specialization" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.idInternal"/>
+					<bean:define id="secondary" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.idInternal"/>
+					<bean:define id="name" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+					<bean:define id="executionPeriod" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name"/>
+					<bean:define id="executionYear" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year"/>
+					
+					<html:link page="<%="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;specializationArea=" + specialization +"&amp;secondaryArea=" + secondary + "&amp;number=" + pageContext.findAttribute("studentNumber") + "&amp;name=" + name + "&amp;stCurPlan="+ studentCurricularPlanId + "&amp;executionPeriod=" + executionPeriod + "&amp;executionYear=" + executionYear%>">
+						<bean:message key="link.student.areas.edit"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:present>
+		<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name">
+			<tr>
+				<td class="listClasses">
+					<bean:message key="label.student.enrollment.no.area" />
+				</td>
+				<td class="listClasses">
+					<bean:message key="label.student.enrollment.no.area" />
+				</td>
+				<td class="listClasses">
+					<bean:define id="name" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+					<bean:define id="executionPeriod" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name"/>
+					<bean:define id="executionYear" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year"/>
+					
+					<html:link page="<%="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;specializationArea=" + null +"&amp;secondaryArea=" + null + "&amp;number=" + pageContext.findAttribute("studentNumber") + "&amp;name=" + name + "&amp;stCurPlan="+ studentCurricularPlanId + "&amp;executionPeriod=" + executionPeriod + "&amp;executionYear=" + executionYear%>">
+						<bean:message key="link.student.areas.edit"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:notPresent>
+	</table>
+	<table>--%>
 		<tr>
 			<td colspan='2' class="infoop">
 				<bean:message key="message.student.enrollment.help" />

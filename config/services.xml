@@ -5575,4 +5575,11 @@
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service>  
+    <service>
+    	<name>WriteEnrolment</name>
+    	<description>Enrolls student in curricular course</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolment</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>  
 </serviceDefinitions>

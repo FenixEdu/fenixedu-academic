@@ -27,36 +27,51 @@ import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
 /**
- * @author David Santos
- * Jan 26, 2004
+ * @author David Santos Jan 26, 2004
  */
 public class WriteEnrolment implements IService
 {
-	public WriteEnrolment(){}
+	public WriteEnrolment()
+	{
+	}
 
-	public void run(Integer studentCurricularPlanID, Integer curricularCourseID, Integer executionPerriodID)
+	public void run(
+		Integer studentCurricularPlanID,
+		Integer curricularCourseID,
+		Integer executionPerriodID)
 		throws FenixServiceException
 	{
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-			IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
-			IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
-			IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
+			IStudentCurricularPlanPersistente studentCurricularPlanDAO =
+				persistentSuport.getIStudentCurricularPlanPersistente();
+			IPersistentExecutionPeriod executionPeriodDAO =
+				persistentSuport.getIPersistentExecutionPeriod();
+			IPersistentCurricularCourse curricularCourseDAO =
+				persistentSuport.getIPersistentCurricularCourse();
 
 			IStudentCurricularPlan studentCurricularPlan =
-				(IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+				(IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(
+					StudentCurricularPlan.class,
+					studentCurricularPlanID);
 			ICurricularCourse curricularCourse =
-				(ICurricularCourse) curricularCourseDAO.readByOID(CurricularCourse.class, curricularCourseID);
-			
+				(ICurricularCourse) curricularCourseDAO.readByOID(
+					CurricularCourse.class,
+					curricularCourseID);
+
 			IExecutionPeriod executionPeriod = null;
-			if (executionPeriodDAO == null)
+			if (executionPerriodID == null)
 			{
 				executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-			} else
+			}
+			else
 			{
-				executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, executionPerriodID);
+				executionPeriod =
+					(IExecutionPeriod) executionPeriodDAO.readByOID(
+						ExecutionPeriod.class,
+						executionPerriodID);
 			}
 
 			IEnrolment enrolment =
@@ -75,10 +90,15 @@ public class WriteEnrolment implements IService
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 
-				createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod, enrolmentToWrite);
+				createAttend(
+					studentCurricularPlan.getStudent(),
+					curricularCourse,
+					executionPeriod,
+					enrolmentToWrite);
 			}
 
-		} catch (ExcepcaoPersistencia e)
+		}
+		catch (ExcepcaoPersistencia e)
 		{
 			e.printStackTrace();
 			throw new FenixServiceException(e);
@@ -102,9 +122,11 @@ public class WriteEnrolment implements IService
 		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 		IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
 		IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();
-		
+
 		IExecutionCourse executionCourse =
-			executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+			executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(
+				curricularCourse,
+				executionPeriod);
 		if (executionCourse != null)
 		{
 			IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);
@@ -113,7 +135,8 @@ public class WriteEnrolment implements IService
 			{
 				attendDAO.simpleLockWrite(attend);
 				attend.setEnrolment(enrolmentToWrite);
-			} else
+			}
+			else
 			{
 				IFrequenta attendToWrite = new Frequenta();
 				attendDAO.simpleLockWrite(attendToWrite);

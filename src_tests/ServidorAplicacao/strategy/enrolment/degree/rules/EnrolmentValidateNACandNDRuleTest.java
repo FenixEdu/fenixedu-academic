@@ -4,7 +4,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.rules.EnrolmentValidateNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 
 /**
