@@ -1,11 +1,7 @@
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -15,7 +11,6 @@ import DataBeans.util.Cloner;
 import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
 import Dominio.IEnrolment;
-import Dominio.IEnrolmentEvaluation;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
@@ -28,7 +23,6 @@ import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentEvaluationState;
 
 /**
  * @author Tânia Pousão

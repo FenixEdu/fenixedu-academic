@@ -49,8 +49,6 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
-import fileSuport.FileSuport;
-import fileSuport.IFileSuport;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 29/Nov/2003

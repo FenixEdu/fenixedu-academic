@@ -253,8 +253,6 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		{
 			aForm.set("gratuityId", infoGratuityValues.getIdInternal().toString());
 		}
-		System.out.println(infoGratuityValues.toString());
-
 		if (infoGratuityValues.getAnualValue() != null
 			&& infoGratuityValues.getAnualValue().toString().length() > 0)
 		{

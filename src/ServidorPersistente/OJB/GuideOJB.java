@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.tools.ant.taskdefs.optional.IContract;
 import org.odmg.QueryException;
 
 import Dominio.Contributor;

@@ -1,0 +1,340 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<dataset>
+  <CAMPUS ID_INTERNAL='1' NAME='Alameda' ACK_OPT_LOCK='1'/>
+  <COUNTRY ID_INTERNAL='1' NAME='PORTUGAL' NATIONALITY='PORTUGUESA' CODE='PT' ACK_OPT_LOCK='1'/>
+  <DEGREE ID_INTERNAL='10' CODE='LEIC' NAME='Engenharia Informática e de Computadores' TYPE_DEGREE='1' ACK_OPT_LOCK='1'/>
+  <DEGREE ID_INTERNAL='28' CODE='MG' NAME='Georrecursos' TYPE_DEGREE='2' ACK_OPT_LOCK='1'/>
+  <DEGREE_CURRICULAR_PLAN ID_INTERNAL='88' NAME='LEIC 2003' KEY_DEGREE='10' STATE='1' INITIAL_DATE='2003-08-01' DEGREE_DURATION='0' MINIMAL_YEAR_FOR_OPTIONAL_COURSES='0' MARK_TYPE='20' NEEDED_CREDITS='0.0' NUMERUS_CLAUSUS='0' DESCRIPTION='      &lt;UL&gt;
+        &lt;LI&gt;&lt;A href=&quot;http://leic.dei.ist.utl.pt/estrutura/index.html&quot;&gt;Elenco de disciplinas da licenciatura&lt;/A&gt; 
+        &lt;/LI&gt;&lt;/UL&gt;&lt;/B&gt;
+      &lt;P&gt;A Licenciatura em Engenharia Informática e Computadores tem uma duração 
+      de cinco anos, com 40 disciplinas semestrais e um trabalho final no 5º ano 
+      do curso. Os alunos frequentam em comum as 28 disciplinas dos primeiros 
+      três anos, após o que optam por uma área de especialização principal e uma 
+      área de especialização complementar. &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;As disciplinas são qualificadas quanto à profundidade, maturidade do 
+      ensino e maturidade da aprendizagem praticado em três tipos de 
+      qualificativos, L, M e A:&lt;/P&gt;
+      &lt;UL&gt;
+        &lt;LI&gt;
+        &lt;P&gt;As disciplinas do tipo L (Licenciatura) são as disciplinas típicas 
+        dos primeiros 3 anos da Licenciatura, correspondendo a 4 unidades de 
+        crédito. &lt;/P&gt;
+        &lt;LI&gt;
+        &lt;P&gt;As disciplinas do tipo M (Mestrado) são disciplinas típicas do final 
+        da licenciatura e do início da pós-graduação, requerendo já maturidade 
+        nos conhecimentos e na abordagem das matérias em estudo. Em certos 
+        casos, os estudantes dos dois últimos anos da Licenciatura podem ter 
+        acesso a frequência de disciplinas de tipo M.&amp;nbsp; &lt;/P&gt;
+        &lt;LI&gt;
+        &lt;P&gt;As disciplinas do tipo A (Avançadas) são disciplinas altamente 
+        especializadas, ao nível terminal do mestrado ou de preparação para o 
+        doutoramento. &lt;/P&gt;&lt;/LI&gt;&lt;/UL&gt;
+      &lt;P&gt;O Trabalho Final de Curso constitui uma componente essencial deste 
+      curso, realizado sob orientação de um dos Professores da Licenciatura, 
+      normalmente no quadro das actividades de investigação e desenvolvimento 
+      tecnológico em que se encontra envolvido. &lt;O:P&gt;
+      &lt;P&gt;A componente do portfolio pessoal permite aos alunos integrar 
+      formalmente no seu currículo um número de valências adicionais, que 
+      complementam a sua formação técnico/científica. A criação do portfolio 
+      pessoal como uma componente curricular vai ao encontro de recomendações 
+      internacionais que indicam que a formação técnica dos alunos deve ser 
+      complementada com uma sólida formação social e humanística. 
+      &lt;P&gt;Entre as actividades que contam com créditos para o currículo pessoal 
+      contam-se a aprendizagem de línguas estrangeiras, cursos de comunicação 
+      oral e escrita, organização de eventos, gestão associativa, etc. 
+      &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;O IST dispõe de um conjunto único em Portugal de infraestruturas de 
+      I&amp;amp;D, quer nos seus &lt;A 
+      href=&quot;http://www.ist.utl.pt/pt/estrutura_interna/estrutura_interna.html#unidades_academicas&quot;&gt;Departamentos&lt;/A&gt; 
+      e Centros de Investigação, quer nas suas instituições associadas, das 
+      quais se destacam no contexto deste curso, o &lt;A 
+      href=&quot;http://www.inesc-id.pt&quot; target=_top&gt;INESC-ID&lt;/A&gt; - Instituto de 
+      Engenharia de Sistemas e Computadores. Investigação e Desenvolvimento em 
+      Lisboa, o &lt;A href=&quot;http://www.isr.ist.utl.pt&quot; target=_top&gt;ISR&lt;/A&gt; - 
+      Instituto de Sistemas e Robótica, o &lt;A href=&quot;http://www.it.pt&quot; 
+      target=_top&gt;IT&lt;/A&gt; - Instituto das Telecomunicações, e o &lt;A 
+      href=&quot;http://lemac18.lemac.ist.utl.pt/IDMEC/P/index.html&quot; 
+      target=_top&gt;IDMEC&lt;/A&gt; - Instituto da Engenharia Mecânica.&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;As áreas científicas obrigatórias do curso são: Arquitectura e Sistemas 
+      Operativos, Computação Gráfica e Multimédia, Decisão e Controlo, Economia 
+      e Gestão, Física, Inteligência Artificial, Matemática, Metodologia e 
+      Tecnologia da Programação, Redes de Computadores, Sistemas de Informação 
+      &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;No quarto ano da licenciatura, o aluno opta por uma área de 
+      especialização principal (AEP), onde deve frequentar 5 disciplinas, e por 
+      uma área de especialização complementar (AEC) onde deverá frequentar 3 
+      disciplinas, das 5 disponíveis. A área de especialização principal deverá 
+      ser escolhida de entre umas das 5 AEPs disponíveis. A área de 
+      especialização complementar deverá ser escolhida de entre 7 áreas de 
+      especialização, 5 principais e 2 complementares.&lt;O:P&gt; &lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;As disciplinas optativas do 5º ano são seleccionadas de entre as 
+      disciplinas de especialidade das áreas que o aluno não tenha frequentado, 
+      ou de entre disciplinas de outras licenciaturas desde que previamente 
+      sancionadas pelo Coordenador da LEIC. &lt;O:P&gt;&lt;/O:P&gt;&lt;/P&gt;
+      &lt;P&gt;A decisão de seguir a via do Mestrado integrado será feira no início do 
+      4º ano, sendo elegíveis os alunos que tenham concluído todas as cadeiras 
+      até ao final do 1º semestre&amp;nbsp; do 3º ano com média igual ou superior a 
+      14 valores. Poderá ser eventualmente considerado um aluno que não tenha 
+      concluído até duas destas cadeiras, desde que a média das cadeiras 
+      realizadas menos o número de cadeiras por realizar seja igual ou superior 
+      a 14 valores. Neste caso, os alunos deverão optar por 4 disciplinas em 
+      regime M no 4º e 5º anos do curso, e o seu trabalho final de curso será 
+      realizado individualmente tendo em vista, para além da normal apresentação 
+      e defesa do trabalho realizado, o seu enquadramento na óptica do futuro 
+      desenvolvimento em tese de mestrado.&lt;O:P&gt; &lt;/O:P&gt;
+      &lt;P&gt;&lt;B&gt;1. AEP: Programação e Sistemas de Informação&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;A área de especialização em Programação e Sistemas de Informação dá aos 
+      alunos uma formação que lhes permite desenvolver efectivamente sistemas de 
+      informação complexos. Este perfil corresponde a uma formação mais avançada 
+      nas áreas de programação, engenharia de software, sistemas de informação e 
+      bases de dados. As designações profissionais que se aplicarão naturalmente 
+      aos licenciados com este perfil são: engenheiro de software; engenheiro de 
+      sistemas; engenheiro de sistemas de informação; e arquitecto de sistemas 
+      de informação. Esta área, sendo uma das áreas de especialização centrais 
+      da LEIC, corresponderá previsivelmente ao perfil de licenciados com mais 
+      procura no mercado nacional e internacional. Todas as empresas que 
+      necessitem de desenvolver, manter e actualizar sistemas de informação 
+      terão interesse em licenciados com esta especialização. Empregadores 
+      típicos serão as empresas de serviços da área da banca e seguros, empresas 
+      fornecedoras de serviços informáticos e empresas de telecomunicações. Esta 
+      área confere aos alunos competências profissionais específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Análise e projecto de sistemas de informação complexos. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Técnicas de gestão de projecto de sistemas de informação. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Modelação e uso de dados em sistemas de informação. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;2. AEP: Arquitectura e Sistemas Distribuídos&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área é formar especialistas em sistemas 
+      computacionais, com domínio das suas componentes de hardware e software. 
+      Este perfil corresponde assim a uma formação mais avançada na área da 
+      arquitectura, dos sistemas operativos e das tecnologias subjacentes à 
+      criação de sistemas computacionais distribuídos de elevada complexidade. 
+      As designações profissionais que se aplicarão com naturalidade aos 
+      licenciados com esta área de especialização serão engenheiro de sistemas 
+      ou arquitecto de sistemas. Existem vários empregadores que requerem os 
+      conhecimentos fornecidos por esta área de especialização, entre os quais 
+      se destacam os das áreas que têm necessidades prementes de sistemas com 
+      arquitecturas complexas: banca, seguradoras, e operadores de 
+      telecomunicações. Esta área confere aos alunos competências profissionais 
+      específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Análise e projecto de sistemas computacionais complexos. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Desenvolvimento de aplicações em sistemas distribuídos &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Gestão, configuração e operação de sistemas de computadores. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;3. AEP: Sistemas Computacionais&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;Esta área de especialização tem como objectivo formar alunos com 
+      sólidos conhecimentos da realidade física que suporta os sistemas 
+      computacionais. Alunos com formação nesta área estarão especialmente 
+      vocacionados para o desenvolvimento de software sobre arquitecturas 
+      específicas e programação de sistemas a baixo nível de abstracção. Entre 
+      as designações profissionais aplicáveis a engenheiros com esta área de 
+      especialização encontram-se as seguintes: projectista de sistemas, 
+      engenheiro de sistemas e arquitecto de sistemas computacionais. As 
+      empresas que são naturais empregadores para engenheiros informáticos com 
+      formação nesta área são da área do desenvolvimento de sistemas 
+      electrónicos e sistemas embarcados, tais como a Siemens, Alcatel, 
+      ChipIdea, Octal, Tape, etc, . São também empregadores naturais todas as 
+      empresas da área de telecomunicações, que desejem contratar engenheiros 
+      com conhecimentos profundos dos sistemas electrónicos que suportam os 
+      complexos sistemas de comunicações actuais. Esta área científica fornece 
+      competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Programação de baixo nível e alto desempenho em plataformas móveis. 
+&lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Projecto de sistemas embarcados. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Co-projecto de sistemas de hardware/software. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;4. AEP: Inteligência Artificial&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área é formar especialistas em sistemas inteligentes. 
+      Assim, a área de especialização centra-se no projecto e análise de 
+      sistemas inteligentes que poderão ser componentes de software ou mesmo 
+      máquinas que actuam num ambiente externo. O objectivo desta especialização 
+      é dotar aos alunos da LEIC da capacidade de determinar soluções para 
+      problemas que são difíceis de resolver utilizando métodos tradicionais. O 
+      uso de heurísticas de procura, de algoritmos específicos de aprendizagem, 
+      de sistemas multi-agentes permitie aos alunos a elaboração de soluções 
+      para problemas cada vez mais complexos no seio da informática. A formação 
+      ministrada por esta área de especialização permite que os seus alunos 
+      tenham a sua actividade profissional na área designada de forma genérica 
+      por engenharia de software. Os empregadores para engenheiros informáticos 
+      com esta área de especialização actuarão, tipicamente, em empresas de 
+      desenvolvimento de software e de consultadoria e serviços nas áreas de 
+      comércio electrónico, sistemas de apoio á decisão, CRM e gestão de 
+      conhecimento. Entre as designações profissionais aplicáveis a engenheiros 
+      com esta área de especialização encontram-se as seguintes: engenheiro de 
+      sistemas e engenheiro do conhecimento. Esta área científica fornece 
+      competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Técnicas avançadas de resolução de problemas. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Projecto de sistemas adaptáveis, para resolução de problemas complexos. 
+      &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Projecto de sistemas que interajam com seres humanos usando interfaces 
+      naturais. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;5. AEP: Robótica e Sistemas&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;A área de especialização em Robótica e Sistemas dá aos alunos uma 
+      formação que os torna capazes de lidar com a crescente complexidade e 
+      diversidade dos problemas e sistemas com que se deparam na vida real. Esta 
+      capacidade é conseguida através do ensino de ferramentas teóricas e 
+      práticas adequadas, de modo a conceber e implementar soluções informáticas 
+      que resolvam os problemas por sistemas complexos. Por outro lado, é cada 
+      vez mais frequente que a visão monolítica de sistema esteja a ser 
+      substituída por uma perspectiva distribuída de sistema, integrando 
+      diversos sub-sistemas inter-actuantes, com funcionalidades próprias e com 
+      variados graus de autonomia. As designações profissionais que se aplicarão 
+      naturalmente aos licenciados com este perfil são: engenheiro de software; 
+      engenheiro de sistemas; engenheiro de sistemas e automação. Esta área, 
+      sendo uma das áreas mais interdicisplinares da LEIC, corresponderá 
+      previsivelmente a um perfil de licenciados com significante procura no 
+      mercado nacional e internacional. Empregadores típicos indústrias, assim 
+      como empresas que desenvolvam a sua actividade em áreas com grande 
+      interdisciplinaridade. Esta área confere aos alunos competências 
+      profissionais específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Controlo e robótica. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Modelação e controlo de sistemas industriais. &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Técnicas genéricas de optimização. &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;6. AEC: Teoria da Computação&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área de especialização complementar é fornecer aos 
+      alunos interessados numa carreira de investigação as bases teóricas da 
+      Engenharia Informática, incluindo competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Teoria da computabilidade e da complexidade &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Teoria das linguagens e seus processadores &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Fundamentos lógicos e algébricos da Engenharia da Programação &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Fundamentos lógicos e algébricos de Inteligência Artificial &lt;/P&gt;
+      &lt;P&gt;&lt;B&gt;7. AEC: Codificação, Comunicação e Optimização&lt;/B&gt;&lt;BR&gt;&lt;/P&gt;
+      &lt;P&gt;O objectivo desta área de especialização é fornecer preparação 
+      complementar em tópicos relevantes para a concepção e gestão de redes e 
+      sistemas, incluindo competências específicas em: &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Combinatória, teoria de códigos e da informação &lt;/P&gt;
+      &lt;LI&gt;
+      &lt;P&gt;Métodos numéricos e de optimização &lt;/P&gt;' ACK_OPT_LOCK='1'/>
+  <DEGREE_CURRICULAR_PLAN ID_INTERNAL='123' NAME='MG03/05' KEY_DEGREE='28' STATE='1' INITIAL_DATE='2003-08-01' END_DATE='2005-07-31' DEGREE_DURATION='2' MINIMAL_YEAR_FOR_OPTIONAL_COURSES='0' MARK_TYPE='5' NEEDED_CREDITS='30.0' NUMERUS_CLAUSUS='35' DESCRIPTION='&lt;p&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;A estrutura curricular do curso
+
+de mestrado foi estabelecida de modo a permitir ao aluno alguma flexibilidade
+
+na escolha do elenco de disciplinas, articulando as diferentes componentes,
+
+tecnol&amp;oacute;gica e metodol&amp;oacute;gica, de acordo com as suas necessidades
+
+e forma&amp;ccedil;&amp;atilde;o de base.&lt;/font&gt;
+
+&lt;p&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Globalmente &amp;eacute; exigido ao aluno
+
+um total de 18 cr&amp;eacute;ditos na parte escolar, correspondente a 9 disciplinas
+
+semestrais, acrescido de 12 cr&amp;eacute;ditos equivalentes &amp;agrave; tese
+
+de Mestrado.&lt;/font&gt;
+
+&lt;p&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Dos 18 cr&amp;eacute;ditos curriculares 6
+
+t&amp;ecirc;m obrigatoriamente de corresponder a 3 disciplinas da &amp;aacute;rea
+
+cient&amp;iacute;fica escolhida pelo aluno. As unidades de cr&amp;eacute;dito complementares
+
+ser&amp;atilde;o obtidas em disciplinas das restantes &amp;aacute;reas
+
+cient&amp;iacute;ficas.&lt;/font&gt;
+
+&lt;p&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;A dura&amp;ccedil;&amp;atilde;o total do curso,
+
+incluindo a defesa da tese, &amp;eacute; de 4 semestres lectivos sendo os 2
+
+primeiros para a frequ&amp;ecirc;ncia da componente curricular.&lt;/font&gt;
+
+&lt;p class=&quot;MsoNormal&quot; style=&quot;text-align:justify&quot;&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;&lt;a NAME=&quot;2.1 Áreas Científicas&quot;&gt;&lt;/a&gt;
+
+&lt;br&gt;
+
+&lt;/font&gt;
+
+&lt;hr WIDTH=&quot;100%&quot;&gt;
+
+&lt;font face=&quot;Comic Sans MS&quot;&gt;
+
+&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;2.1 &amp;Aacute;reas
+
+Cient&amp;iacute;ficas&lt;/font&gt;
+
+&lt;/font&gt;
+
+&lt;p&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;O curso de mestrado em Georrecursos &amp;eacute;
+
+composto pelas seguintes &amp;aacute;reas cient&amp;iacute;ficas: Geossistemas,
+
+Hidrogeologia, Petr&amp;oacute;leos, Planeamento e Processamento de Georrecursos
+
+e Geotecnia.&lt;/font&gt;
+&lt;p class=&quot;MsoNormal&quot; style=&quot;text-align:justify&quot;&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Na &lt;font color=&quot;#000000&quot;&gt;área
+de&lt;/font&gt;&lt;font color=&quot;#FF0000&quot;&gt; Geossistemas&lt;/font&gt;, fornecem-se aos alunos
+especializados num determinado domínio (v.g., Engenharia de Minas, Ambiente,
+Química, Física,
+Geologia, Geofísica,....) os instrumentos de modelização que lhes permitem
+quantificar, numa perspectiva integrada, os fenómenos específicos do seu domínio,
+numa perspectiva económico-ambiental.&lt;font face=&quot;Comic Sans MS&quot; color=&quot;#000000&quot;&gt;O curr&amp;iacute;culo da &amp;aacute;rea de Geossistemas
+
+&amp;eacute; caracterizado pela componente metodol&amp;oacute;gica - modelos matem&amp;aacute;ticos
+
+e geoestat&amp;iacute;sticos, an&amp;aacute;lise de imagens, detec&amp;ccedil;&amp;atilde;o
+remota, SIG, etc.- para a caracterização e avaliação dos georrecursos independentemente
+
+da sua especificidade. Na elabora&amp;ccedil;&amp;atilde;o da tese de mestrado
+
+o aluno ser&amp;aacute; acompanhado na aplica&amp;ccedil;&amp;atilde;o daqueles modelos
+
+&amp;agrave; &amp;aacute;rea do seu interesse: recursos ambientais, florestais,
+
+polui&amp;ccedil;&amp;atilde;o atmosf&amp;eacute;rica, de solos, rios, etc.&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;
+&lt;p class=&quot;MsoNormal&quot; style=&quot;text-align:justify&quot;&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Na área
+de &lt;font color=&quot;#FF0000&quot;&gt;Hidrogeologia&lt;/font&gt; são tratadas as noções básicas
+desta disciplina, complementadas com os modelos físicos e estocásticos que são
+próprios das aplicações mais usuais da avaliação e gestão de aquíferos,
+tanto do ponto de vista da quantidade como da qualidade da água.&lt;/font&gt;&lt;/p&gt;
+&lt;p class=&quot;MsoNormal&quot; style=&quot;text-align:justify&quot;&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Na área
+de &lt;font color=&quot;#FF0000&quot;&gt;Petróleos&lt;/font&gt; são fornecidos os conceitos básicos
+da engenharia de reservatórios petrolíferos, bem como o modo de integrar esses
+conceitos nos modelos de caracterização de reservatórios e de simulação do
+escoamento de fluidos.&lt;/font&gt;&lt;/p&gt;
+&lt;p class=&quot;MsoNormal&quot; style=&quot;text-align:justify&quot;&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Na área
+de &lt;font color=&quot;#FF0000&quot;&gt;Planeamento e Processamento de Georrecursos&lt;/font&gt;,
+focam-se os métodos de avaliação e projecto da exploração de georrecursos,
+articulados com as técnicas laboratoriais e com os modelos que permitem a sua
+beneficiação, fornecendo às indústrias a jusante os inputs requeridos.&lt;/font&gt;&lt;/p&gt;
+&lt;p class=&quot;MsoBodyText&quot;&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Na área de &lt;font color=&quot;#FF0000&quot;&gt;Geotecnia&lt;/font&gt;
+são ministrados os conhecimentos de geomecânica necessários para o projecto
+de obras de engenharia como túneis, barragens e cavidades subterrâneas, de
+modo a garantir a sua estabilidade e minimizar o seu impacte ambiental.&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;/p&gt;' ACK_OPT_LOCK='1'/>
+  <EXECUTION_DEGREE ID_INTERNAL='28' ACADEMIC_YEAR='2' KEY_DEGREE_CURRICULAR_PLAN='123' TEMPORARY_EXAM_MAP='0' KEY_CAMPUS='1' ACK_OPT_LOCK='1'/>
+  <EXECUTION_DEGREE ID_INTERNAL='76' ACADEMIC_YEAR='2' KEY_DEGREE_CURRICULAR_PLAN='88' TEMPORARY_EXAM_MAP='0' KEY_CAMPUS='1' ACK_OPT_LOCK='1'/>
+  <GRATUITY_VALUES ID_INTERNAL='222' ANUAL_VALUE='500.0' SCHOLARSHIP_VALUE='0.0' FINAL_PROOF_VALUE='0.0' CREDIT_VALUE='0.0' START_PAYMENT='2004-01-01' END_PAYMENT='2004-09-09' KEY_EXECUTION_DEGREE='28' KEY_EMPLOYEE='1194' WHEN_ALTER='2004-01-19 10:37:11.0' ACK_OPT_LOCK='4'/>
+  <PAYMENT_PHASE ID_INTERNAL='181' START_DATE='2004-01-01' END_DATE='2004-01-07' VALUE='100.0' DESCRIPTION='No acto da inscricao' ACK_OPT_LOCK='1' KEY_GRATUITY='222'/>
+  <PAYMENT_PHASE ID_INTERNAL='182' START_DATE='2004-01-08' END_DATE='2004-06-06' VALUE='200.0' ACK_OPT_LOCK='1' KEY_GRATUITY='222'/>
+  <PAYMENT_PHASE ID_INTERNAL='183' START_DATE='2004-06-07' END_DATE='2004-08-05' VALUE='100.0' ACK_OPT_LOCK='1' KEY_GRATUITY='222'/>
+  <PAYMENT_PHASE ID_INTERNAL='184' START_DATE='2004-08-06' END_DATE='2004-09-09' VALUE='100.0' ACK_OPT_LOCK='1' KEY_GRATUITY='222'/>
+  <PERSON ID_INTERNAL='2692' DOCUMENT_ID_NUMBER='2692' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2004-01-08' EXPERATION_DATE_OF_DOCUMENT_ID='2004-01-08' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2004-01-08' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21222692' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='2692' PROFESSION='zzzzzzzzzzz' USERNAME='F3667' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='2692' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='2' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='5383' KEY_ROLE='1' KEY_PERSON='2692' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='6671' KEY_ROLE='6' KEY_PERSON='2692' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='24593' KEY_ROLE='9' KEY_PERSON='2692' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='1' ROLE_TYPE='1' PORTAL_SUB_APPLICATION='/person' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.person' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='6' ROLE_TYPE='6' PORTAL_SUB_APPLICATION='/posGraduacao' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.masterDegree' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='9' ROLE_TYPE='9' PORTAL_SUB_APPLICATION='/employee' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.employee' ACK_OPT_LOCK='1'/>
+  <ass_FUNCIONARIO codigoInterno='1194' chavePessoa='2692' numeroMecanografico='3667' chaveHorarioActual='684' antiguidade='1970-01-01' ACTIVE='1' ACK_OPT_LOCK='1'/>
+  <ass_HORARIO codigoInterno='684' chaveHorarioTipo='3' chaveFuncionario='1194' duracaoSemanal='0.0' dataInicio='2000-01-01' numDias='5' posicao='2' quem='0'/>
+  <ass_HORARIO_TIPO codigoInterno='3' sigla='S35GB' modalidade='flexivel' duracaoSemanal='35.0' inicioPF1='1970-01-01 10:00:00.0' fimPF1='1970-01-01 12:00:00.0' inicioPF2='1970-01-01 14:00:00.0' fimPF2='1970-01-01 16:00:00.0' inicioHN1='1970-01-01 09:00:00.0' fimHN1='1970-01-01 12:30:00.0' inicioHN2='1970-01-01 13:30:00.0' fimHN2='1970-01-01 17:00:00.0' inicioRefeicao='1970-01-01 12:00:00.0' fimRefeicao='1970-01-01 14:00:00.0' descontoObrigatorio='01:00:00' descontoMinimo='00:15:00' inicioExpediente='1970-01-01 07:30:00.0' fimExpediente='1970-01-01 23:59:00.0' trabalhoConsecutivo='05:00:00'/>
+</dataset>
