@@ -6,10 +6,10 @@ mysql -f fenix < temp2.sql
 mysql -f fenix < fixDbForDeploy4-31-01-2004.sql
 mysql -f fenix < fixDbForDeploy5-31-01-2004.sql > temp3.sql
 mysql -f fenix < temp3.sql
-mysql -f fenix < updateQualificationBeforeScript.sql
+mysql -f fenix < updateQualificationBeforeScipt.sql
 mysql -f fenix < updateQualificationScript1.sql | mysql fenix
 mysql -f fenix < updateQualificationScript2.sql | mysql fenix
-mysql -f fenix < updateQualification.AfterScript.sql
+mysql -f fenix < updateQualificationAfterScript.sql
 
 
 
