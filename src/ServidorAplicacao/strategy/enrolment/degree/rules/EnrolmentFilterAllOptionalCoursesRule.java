@@ -28,7 +28,7 @@ import Util.DegreeCurricularPlanState;
 public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 
 	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
-	private static final int MIN_YEAR_OF_OPTIONAL_COURSES = 2;
+	private static final int MIN_YEAR_OF_OPTIONAL_COURSES = 3;
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		
@@ -80,7 +80,7 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator3.next();
 				if(
 						(curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) &&
-						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() > MIN_YEAR_OF_OPTIONAL_COURSES) &&
+						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() >= MIN_YEAR_OF_OPTIONAL_COURSES) &&
 						(!finalCurricularCourseList.contains(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) &&
 						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) &&
