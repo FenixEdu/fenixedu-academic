@@ -54,7 +54,11 @@
 		<!-- Upload generated packages -->
         <scp todir="${server.username}:${server.password}@${server.hostname}:/tmp"
         	 file="${deploy.jars}/*.*ar"
-        	 trust="yes"/>
+        	 trust="yes">
+        	<fileset dir="${deploy.jars}">
+				<include name="*.*ar"/>
+			</fileset>
+        </scp>
 
 		<!-- Install uploaded files -->
         <sshexec host="${server.hostname}"
