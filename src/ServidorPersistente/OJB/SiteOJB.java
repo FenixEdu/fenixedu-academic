@@ -15,7 +15,6 @@ package ServidorPersistente.OJB;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISite;
@@ -29,30 +28,7 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
 	public SiteOJB() {
 	}
 
-	//To delete
-
-	//    
-	//    public List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia{
-	//        try {
-	//            String oqlQuery = "select announcement from " + Announcement.class.getName();
-	//			oqlQuery += " where site.executionCourse.sigla = $1";
-	//			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
-	//			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
-	//			
-	//			query.create(oqlQuery);
-	//			query.bind(executionCourse.getSigla());
-	//			query.bind(executionCourse.getExecutionPeriod().getName());
-	//			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-	//			
-	//            List result = (List) query.execute();
-	//            lockRead(result);
-	//            
-	//            return result;
-	//        } catch (QueryException ex) {
-	//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-	//        }
-	//    }
-
+	
 	public ISite readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
 		crit.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
@@ -61,15 +37,8 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select site from " + Site.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria crit = new Criteria();
+		return queryList(Site.class,crit);
 	}
 
 	public void lockWrite(ISite site) throws ExcepcaoPersistencia {
