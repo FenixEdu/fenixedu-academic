@@ -27,7 +27,7 @@ INSERT INTO CONTRIBUTOR values (2, 456, 'Nome2', 'Morada2');
 DELETE FROM GUIDE;
 INSERT INTO GUIDE values (1, 1, 2003, 1, 6, 600.04, 'guia1');
 INSERT INTO GUIDE values (2, 2, 2003, 1, 6, 400.04, 'guia2');
-INSERT INTO GUIDE values (3, 1, 2002, 1, 6, 200.04, 'guia3');
+INSERT INTO GUIDE values (3, 1, 2002, 2, 6, 200.04, 'guia3');
 
 
 #-----------------------------

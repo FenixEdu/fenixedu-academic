@@ -4,6 +4,7 @@ package Dominio;
 
 import java.util.Date;
 
+import Util.SituationOfGuide;
 import Util.State;
 
 /**
@@ -18,7 +19,7 @@ public class GuideSituation implements IGuideSituation {
   
  
   protected String remarks;
-  protected GuideSituation situation;
+  protected SituationOfGuide situation;
   protected Date date;
   protected State state;
   
@@ -27,7 +28,7 @@ public class GuideSituation implements IGuideSituation {
 
   public GuideSituation() { }
     
-  public GuideSituation(GuideSituation situation,String remarks,Date date,IGuide guide, State state) {
+  public GuideSituation(SituationOfGuide situation, String remarks, Date date, IGuide guide, State state) {
 	this.remarks = remarks;
 	this.guide = guide;
 	this.situation = situation;
@@ -62,8 +63,8 @@ public class GuideSituation implements IGuideSituation {
     return result;
   }
 
-    
 	
+		
 	/**
 	 * @return
 	 */
@@ -102,7 +103,7 @@ public class GuideSituation implements IGuideSituation {
 	/**
 	 * @return
 	 */
-	public GuideSituation getSituation() {
+	public SituationOfGuide getSituation() {
 		return situation;
 	}
 	
@@ -149,10 +150,10 @@ public class GuideSituation implements IGuideSituation {
 	}
 	
 	/**
-	 * @param situation
+	 * @param guide
 	 */
-	public void setSituation(GuideSituation situation) {
-		this.situation = situation;
+	public void setSituation(SituationOfGuide guide) {
+		situation = guide;
 	}
 	
 	/**
@@ -161,5 +162,5 @@ public class GuideSituation implements IGuideSituation {
 	public void setState(State state) {
 		this.state = state;
 	}
-
+	
 }

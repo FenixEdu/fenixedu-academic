@@ -56,7 +56,7 @@ public class PriceOJBTest extends TestCaseOJB {
 			assertEquals(result.size(), 3);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex) {
-			fail("testWriteContributor: unexpected exception");
+			fail("testReadAllPrices: unexpected exception");
 		}
 	}
 
@@ -75,7 +75,7 @@ public class PriceOJBTest extends TestCaseOJB {
 
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex) {
-			fail("testWriteContributor: unexpected exception" + ex);
+			fail("testReadAllByGraduationType: unexpected exception" + ex);
 		}
 	}
 

@@ -100,8 +100,8 @@ public class GuideEntryOJB extends ObjectFenixOJB implements IPersistentGuideEnt
 
 			List result = (List) query.execute();
 			lockRead(result);
-			
-			return (IGuideEntry) result.get(0);
+			if (result.size() != 0)	return (IGuideEntry) result.get(0);
+			return null;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

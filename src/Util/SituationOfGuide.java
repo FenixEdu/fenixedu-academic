@@ -11,15 +11,15 @@ import org.apache.struts.util.LabelValueBean;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class GuideSituation {
+public class SituationOfGuide {
 
 	public static final int NON_PAYED = 1;
 	public static final int PAYED = 2;
 	public static final int ANNULLED = 3;
 
-	public static final GuideSituation NON_PAYED_TYPE = new GuideSituation(NON_PAYED);
-	public static final GuideSituation PAYED_TYPE = new GuideSituation(PAYED);
-	public static final GuideSituation ANNULLED_TYPE = new GuideSituation(ANNULLED);
+	public static final SituationOfGuide NON_PAYED_TYPE = new SituationOfGuide(NON_PAYED);
+	public static final SituationOfGuide PAYED_TYPE = new SituationOfGuide(PAYED);
+	public static final SituationOfGuide ANNULLED_TYPE = new SituationOfGuide(ANNULLED);
 
 	public static final String NON_PAYED_STRING = "Não Paga";
 	public static final String PAYED_STRING = "Paga";
@@ -29,21 +29,21 @@ public class GuideSituation {
 
 	private Integer situation;
 
-	public GuideSituation() {
+	public SituationOfGuide() {
 	}
 
-	public GuideSituation(int type) {
+	public SituationOfGuide(int type) {
 		this.situation = new Integer(type);
 	}
 
-	public GuideSituation(Integer type) {
+	public SituationOfGuide(Integer type) {
 		this.situation = type;
 	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof GuideSituation) {
-			GuideSituation ds = (GuideSituation) obj;
+		if (obj instanceof SituationOfGuide) {
+			SituationOfGuide ds = (SituationOfGuide) obj;
 			resultado = this.getSituation().equals(ds.getSituation());
 		}
 		return resultado;
@@ -51,17 +51,17 @@ public class GuideSituation {
 
 	public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
-		result.add(new LabelValueBean(GuideSituation.DEFAULT, null));
-		result.add(new LabelValueBean(GuideSituation.ANNULLED_STRING, GuideSituation.ANNULLED_STRING));
-		result.add(new LabelValueBean(GuideSituation.NON_PAYED_STRING, GuideSituation.NON_PAYED_STRING));
-		result.add(new LabelValueBean(GuideSituation.PAYED_STRING, GuideSituation.PAYED_STRING));
+		result.add(new LabelValueBean(SituationOfGuide.DEFAULT, null));
+		result.add(new LabelValueBean(SituationOfGuide.ANNULLED_STRING, SituationOfGuide.ANNULLED_STRING));
+		result.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING, SituationOfGuide.NON_PAYED_STRING));
+		result.add(new LabelValueBean(SituationOfGuide.PAYED_STRING, SituationOfGuide.PAYED_STRING));
 		return result;	
 	}
     
 	public String toString() {
-		if (situation.intValue()== GuideSituation.ANNULLED) return GuideSituation.ANNULLED_STRING;
-		if (situation.intValue()== GuideSituation.NON_PAYED) return GuideSituation.NON_PAYED_STRING;
-		if (situation.intValue()== GuideSituation.PAYED) return GuideSituation.PAYED_STRING;
+		if (situation.intValue()== SituationOfGuide.ANNULLED) return SituationOfGuide.ANNULLED_STRING;
+		if (situation.intValue()== SituationOfGuide.NON_PAYED) return SituationOfGuide.NON_PAYED_STRING;
+		if (situation.intValue()== SituationOfGuide.PAYED) return SituationOfGuide.PAYED_STRING;
 		return "ERRO!"; // Nunca e atingido
 	}      
 

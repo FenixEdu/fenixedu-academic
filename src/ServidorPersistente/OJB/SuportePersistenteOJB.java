@@ -44,7 +44,9 @@ import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.IPersistentGuideEntry;
+import ServidorPersistente.IPersistentGuideSituation;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPersistentPrice;
@@ -365,4 +367,11 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new GuideEntryOJB(); 
 	}
 
+	public IPersistentGuide getIPersistentGuide() {
+		return new GuideOJB(); 
+	}
+
+	public IPersistentGuideSituation getIPersistentGuideSituation() {
+			return new GuideSituationOJB(); 
+		}
 }

@@ -2,7 +2,7 @@ package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.GuideSituation;
+import Util.SituationOfGuide;
 
 /**
  * 
@@ -13,8 +13,8 @@ import Util.GuideSituation;
 public class JavaGuideSituation2SqlGuideSituationFieldConversion implements FieldConversion {
 
 	public Object javaToSql(Object source) {
-		if (source instanceof GuideSituation) {
-			GuideSituation s = (GuideSituation) source;
+		if (source instanceof SituationOfGuide) {
+			SituationOfGuide s = (SituationOfGuide) source;
 			return s.getSituation();
 		} else {
 			return source;
@@ -24,7 +24,7 @@ public class JavaGuideSituation2SqlGuideSituationFieldConversion implements Fiel
 	public Object sqlToJava(Object source) {
 		if (source instanceof Integer) {
 			Integer src = (Integer) source;
-			return new GuideSituation(src);
+			return new SituationOfGuide(src);
 		} else {
 			return source;
 		}

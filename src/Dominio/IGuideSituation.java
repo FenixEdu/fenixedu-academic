@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.Date;
 
+import Util.SituationOfGuide;
 import Util.State;
 
 /**
@@ -12,13 +13,13 @@ import Util.State;
 
 public interface IGuideSituation {
   
-  public GuideSituation getSituation();
+  public SituationOfGuide getSituation();
   public Date getDate();
   public String getRemarks();
   public IGuide getGuide();
   public State getState();
 
-  public void setSituation(GuideSituation situation);
+  public void setSituation(SituationOfGuide situation);
   public void setDate(Date date);
   public void setRemarks(String remarks);
   public void setGuide(IGuide guide);

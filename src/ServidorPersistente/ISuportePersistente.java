@@ -73,5 +73,6 @@ public interface ISuportePersistente {
 	public IPersistentResponsibleFor getIPersistentResponsibleFor();
 	public IPersistentPrice getIPersistentPrice();
 	public IPersistentGuideEntry getIPersistentGuideEntry();
-	
+	public IPersistentGuide getIPersistentGuide();
+	public IPersistentGuideSituation getIPersistentGuideSituation();
 }
