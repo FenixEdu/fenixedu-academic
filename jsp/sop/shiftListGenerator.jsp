@@ -44,8 +44,12 @@
 			<tr>
 				<td class="listClasses"><jsp:getProperty name="shiftView" property="nome"/></td>
 				<td class="listClasses"><jsp:getProperty name="shiftView" property="tipo"/></td>
-				
+			<logic:empty name="shiftView" property="lessons">
+					<td class="listClasses">&nbsp;</td>
+			</logic:empty>
+			<logic:notEmpty name="shiftView" property="lessons">
 				<td class="listClasses"><jsp:getProperty name="shiftView" property="lessons"/></td>
+			</logic:notEmpty>
 				<td class="listClasses"><jsp:getProperty name="shiftView" property="lotacao"/></td>
 	<logic:present name="available">
 				<td class="listClasses">
