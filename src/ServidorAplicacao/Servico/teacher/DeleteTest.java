@@ -41,7 +41,8 @@ public class DeleteTest implements IServico {
 		return "DeleteTest";
 	}
 
-	public boolean run(Integer testId) throws FenixServiceException {
+	public boolean run(Integer executionCourseId, Integer testId)
+		throws FenixServiceException {
 
 		try {
 			ISuportePersistente persistentSuport =
@@ -67,7 +68,8 @@ public class DeleteTest implements IServico {
 				IDistributedTest distributedTest = (IDistributedTest) it.next();
 				if (compareDates(thisDate,
 					distributedTest.getBeginDate(),
-					distributedTest.getBeginHour())) {
+					distributedTest.getBeginHour())
+					== true) {
 					setVisibility = true;
 					if (!compareDates(thisDate,
 						distributedTest.getEndDate(),
@@ -76,8 +78,11 @@ public class DeleteTest implements IServico {
 						distributedTest.setEndDate(thisDate);
 						distributedTest.setEndHour(thisDate);
 					}
-				} else
+				} else {
+					persistentSuport.getIPersistentStudentTestQuestion().deleteByDistributedTest(distributedTest);
 					persistentDistributedTest.delete(distributedTest);
+				}
+
 			}
 
 			if (setVisibility == false) {
@@ -100,9 +105,14 @@ public class DeleteTest implements IServico {
 		Calendar hour) {
 		CalendarDateComparator dateComparator = new CalendarDateComparator();
 		CalendarHourComparator hourComparator = new CalendarHourComparator();
-		if (dateComparator.compare(calendar, date) >= 0)
-			if (hourComparator.compare(calendar, hour) >= 0)
-				return true;
+		if (dateComparator.compare(calendar, date) >= 0) {
+			if (dateComparator.compare(calendar, date) == 0)
+				if (hourComparator.compare(calendar, hour) >= 0)
+					return true;
+				else
+					return false;
+			return true;
+		}
 		return false;
 	}
 }

@@ -39,6 +39,7 @@ public class EditTestQuestion implements IServico {
 	}
 
 	public boolean run(
+		Integer executionCourseId,
 		Integer testId,
 		Integer testQuestionId,
 		Integer questionOrder,

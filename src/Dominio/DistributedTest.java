@@ -13,6 +13,7 @@ import Util.TestType;
  * @author Susana Fernandes
  */
 public class DistributedTest extends DomainObject implements IDistributedTest {
+	private String testInformation;
 	private Calendar beginDate;
 	private Calendar endDate;
 	private Calendar beginHour;
@@ -101,4 +102,14 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 	public void setTestType(TestType type) {
 		testType = type;
 	}
+
+	public String getTestInformation() {
+		return testInformation;
+	}
+
+
+	public void setTestInformation(String string) {
+		testInformation = string;
+	}
+
 }

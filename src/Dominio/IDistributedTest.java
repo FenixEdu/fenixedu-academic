@@ -13,6 +13,7 @@ import Util.TestType;
  * @author Susana Fernandes
  */
 public interface IDistributedTest extends IDomainObject {
+	public abstract String getTestInformation();
 	public abstract Calendar getBeginDate();
 	public abstract Calendar getBeginHour();
 	public abstract Calendar getEndDate();
@@ -22,6 +23,7 @@ public interface IDistributedTest extends IDomainObject {
 	public abstract Boolean getStudentFeedback();
 	public abstract ITest getTest();
 	public abstract TestType getTestType();
+	public abstract void setTestInformation(String string);
 	public abstract void setBeginDate(Calendar calendar);
 	public abstract void setBeginHour(Calendar calendar);
 	public abstract void setEndDate(Calendar calendar);

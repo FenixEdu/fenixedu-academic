@@ -23,6 +23,11 @@
    </form>
    
    <form name="testDistributionForm">
+   
+   	<field property="selectedShifts" depends="required" page="1">
+    	<arg0 key="title.shifts" resource="true"/>
+    </field>
+   
 	<field property="testBeginDate" depends="required, mask, date" page="1">
 		<msg name="date" key="errors.invalid.date"/>
    		<msg name="mask" key="errors.invalid.date"/>
@@ -77,7 +82,7 @@
 	</field>
    </form>
    <form name="distributedTestForm">
-	<field property="testBeginDate" depends="required, mask, date" page="1">
+	<field property="beginDateFormatted" depends="required, mask, date" page="1">
 		<msg name="date" key="errors.invalid.date"/>
    		<msg name="mask" key="errors.invalid.date"/>
 		<arg0 key="message.testBeginDate" resource="true"/>
@@ -90,7 +95,7 @@
            <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
 	</field>
-	<field property="testEndDate" depends="required, mask, date" page="1">
+	<field property="endDateFormatted" depends="required, mask, date" page="1">
 		<msg name="date" key="errors.invalid.date"/>
    		<msg name="mask" key="errors.invalid.date"/>
 		<arg0 key="message.testEndDate" resource="true"/>
@@ -103,7 +108,7 @@
            <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
 	</field>
-	<field property="testBeginHour" depends="required, mask, date" page="1">
+	<field property="beginHourFormatted" depends="required, mask, date" page="1">
 		<msg name="date" key="error.invalid.hour"/>
    		<msg name="mask" key="error.invalid.hour"/>   		
    		<arg0 key="message.testBeginHour" resource="true"/>
@@ -116,7 +121,7 @@
            <var-value>HH:mm</var-value>
         </var>
 	</field>
-	<field property="testEndHour" depends="required, mask, date" page="1">
+	<field property="endHourFormatted" depends="required, mask, date" page="1">
 		<msg name="date" key="error.invalid.hour"/>
    		<msg name="mask" key="error.invalid.hour"/>   		
    		<arg0 key="message.testEndHour" resource="true"/>
@@ -461,7 +466,8 @@
         </var> 
       </field>
     </form>       
-        
+    
+    
 	<!--GROUPS FORMS-->    
     
     
@@ -535,7 +541,7 @@
 	</field>
    	
    
-  <field property="maximumCapacity" depends="integer" page="1">
+   	<field property="maximumCapacity" depends="integer" page="1">
 		<arg0 key="message.groupPropertiesMaximumCapacity" resource="true"/>
 	</field>
 		   
@@ -550,7 +556,7 @@
 	<field property="groupMaximumNumber" depends="integer" page="1">
 		<arg0 key="message.groupPropertiesGroupMaximumNumber" resource="true"/>
 	</field>
-
+	
 	<field property="enrolmentBeginDayFormatted" depends="mask,date" page="1" >
    		<msg name="date" key="errors.invalid.date"/>
    		<msg name="mask" key="errors.invalid.date"/>

@@ -30,7 +30,11 @@ public class EditTest implements IServico {
 		return "EditTest";
 	}
 
-	public boolean run(Integer testId, String title, String information)
+	public boolean run(
+		Integer executionCourseId,
+		Integer testId,
+		String title,
+		String information)
 		throws FenixServiceException {
 
 		try {

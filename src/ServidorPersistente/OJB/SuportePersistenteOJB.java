@@ -89,6 +89,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.IPersistentStudentKind;
+import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTeacherShiftPercentage;
@@ -658,8 +659,13 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentDistributedTest getIPersistentDistributedTest(){
 		return new DistributedTestOJB();
 	}
-
+	
+	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion(){
+		return new StudentTestQuestionOJB();
+	}
+	
 	public IPersistentAdvisory getIPersistentAdvisory() {
 		return new AdvisoryOJB();
 	}
+
 }

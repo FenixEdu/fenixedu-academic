@@ -40,7 +40,10 @@ public class DeleteTestQuestion implements IServico {
 	public String getNome() {
 		return "DeleteTestQuestion";
 	}
-	public boolean run(Integer testId, Integer questionId)
+	public boolean run(
+		Integer executionCourseId,
+		Integer testId,
+		Integer questionId)
 		throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSuport =
@@ -92,7 +95,8 @@ public class DeleteTestQuestion implements IServico {
 				}
 			}
 			persistentTestQuestion.delete(testQuestion);
-			test.setNumberOfQuestions(new Integer(test.getNumberOfQuestions().intValue()-1));
+			test.setNumberOfQuestions(
+				new Integer(test.getNumberOfQuestions().intValue() - 1));
 			test.setLastModifiedDate(null);
 			return true;
 		} catch (ExcepcaoPersistencia e) {

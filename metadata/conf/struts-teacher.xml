@@ -14,7 +14,7 @@
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="title" type="java.lang.String"/>
 			<form-property name="information" type="java.lang.String"/>
-			<form-property name="option" type="java.lang.String"/>
+			<form-property name="option" type="java.lang.String[]"/>
 			<form-property name="objectCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
@@ -39,6 +39,7 @@
 		</form-bean>
 		<form-bean name="testDistributionForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="testInformation" type="java.lang.String"/>
 			<form-property name="testBeginDate" type="java.lang.String"/>
 			<form-property name="testBeginHour" type="java.lang.String"/>
 			<form-property name="testEndDate" type="java.lang.String"/>
@@ -46,13 +47,14 @@
 			<form-property name="testType" type="java.lang.String" initial="1"/>
 			<form-property name="availableCorrection" type="java.lang.String" initial="1"/>
 			<form-property name="studentFeedback" type="java.lang.String" initial="true"/>
-			<form-property name="selectedShifts" type="java.lang.String" initial="Todos os Alunos"/>
+			<form-property name="selectedShifts" type="java.lang.String"/>
 			<form-property name="objectCode" type="java.lang.String"/>
 			<form-property name="testCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		<form-bean name="distributedTestForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="testInformation" type="java.lang.String"/>
 			<form-property name="beginDateFormatted" type="java.lang.String"/>
 			<form-property name="beginHourFormatted" type="java.lang.String"/>
 			<form-property name="endDateFormatted" type="java.lang.String"/>
@@ -782,6 +784,8 @@
 				<forward name="showAvailableQuestions" path="/showAvailableQuestions.jsp"/>
 				<forward name="showTests" path="/showTests.jsp"/>
 				<forward name="chooseDeleteTestAction" path="/chooseDeleteTestAction.jsp"/>
+				<forward name="showStudentTest" path="/showStudentTest.jsp"/>
+				<forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
 		</action>
 		<action path="/questionsManagement"
 				name="questionForm"
@@ -824,6 +828,7 @@
 				validate="true">
 				<forward name="distributeTest" path="/distributeTest.jsp"/>
 				<forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
+				<forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
 		</action>
 		<action path="/distributedTestEdition"
 				name="distributedTestForm"
@@ -956,7 +961,7 @@
 		path="/viewStudentGroupInformation"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">			
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
        <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
@@ -1032,7 +1037,7 @@
 		scope="request"
 		input="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;page=0" 
 		validate="true"
-     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">  
+     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
@@ -1047,7 +1052,7 @@
 		name="editStudentGroupForm"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
 		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
@@ -1061,7 +1066,7 @@
 		name="editStudentGroupForm"
 		parameter="method"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"> 
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
 		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"

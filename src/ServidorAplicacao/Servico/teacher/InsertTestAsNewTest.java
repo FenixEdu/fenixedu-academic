@@ -38,7 +38,7 @@ public class InsertTestAsNewTest implements IServico {
 		return "InsertTestAsNewTest";
 	}
 
-	public Integer run(Integer oldTestId) throws FenixServiceException {
+	public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentTest persistentTest = persistentSuport.getIPersistentTest();

@@ -34,15 +34,26 @@ public class InfoSiteDistributedTests implements ISiteComponent {
 		if (obj instanceof InfoSiteDistributedTests) {
 			InfoSiteDistributedTests infoSiteDistributedTests =
 				(InfoSiteDistributedTests) obj;
-			result =
-				getExecutionCourse().equals(
-					infoSiteDistributedTests.getExecutionCourse())
-					&& getInfoDistributedTests().containsAll(
+			if (getExecutionCourse() != null) {
+				result =
+					getExecutionCourse().equals(
+						infoSiteDistributedTests.getExecutionCourse())
+						&& getInfoDistributedTests().containsAll(
+							infoSiteDistributedTests.getInfoDistributedTests())
+						&& infoSiteDistributedTests
+							.getInfoDistributedTests()
+							.containsAll(
+							getInfoDistributedTests());
+
+			} else {
+				result =
+					getInfoDistributedTests().containsAll(
 						infoSiteDistributedTests.getInfoDistributedTests())
-					&& infoSiteDistributedTests
-						.getInfoDistributedTests()
-						.containsAll(
-						getInfoDistributedTests());
+						&& infoSiteDistributedTests
+							.getInfoDistributedTests()
+							.containsAll(
+							getInfoDistributedTests());
+			}
 		}
 		return result;
 	}

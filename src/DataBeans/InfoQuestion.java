@@ -15,6 +15,7 @@ public class InfoQuestion extends InfoObject {
 	private InfoMetadata infoMetadata;
 	private List question;
 	private List options;
+	private List correctResponse;
 	private Integer questionValue;
 	private String questionCardinality;
 
@@ -76,7 +77,15 @@ public class InfoQuestion extends InfoObject {
 	public void setQuestionCardinality(String string) {
 		questionCardinality = string;
 	}
+	
+	public List getCorrectResponse() {
+			return correctResponse;
+	}
 
+	public void setCorrectResponse(List list) {
+		correctResponse = list;
+	}
+	
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof InfoQuestion) {
@@ -96,8 +105,11 @@ public class InfoQuestion extends InfoObject {
 						&& (getQuestion().containsAll(infoQuestion.getQuestion()))
 						&& (infoQuestion.getQuestion().containsAll(getQuestion()))
 						&& (getOptions().containsAll(infoQuestion.getOptions()))
-						&& (infoQuestion.getOptions().containsAll(getOptions())));
+						&& (infoQuestion.getOptions().containsAll(getOptions()))
+						&& (getCorrectResponse().containsAll(infoQuestion.getCorrectResponse()))
+						&& (infoQuestion.getCorrectResponse().containsAll(getCorrectResponse())));
 		}
 		return result;
 	}
+
 }

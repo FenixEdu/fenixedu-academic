@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.dbunit.util.Base64;
 
@@ -25,6 +27,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteDistributedTest;
 import DataBeans.InfoSiteTest;
 import DataBeans.InfoSiteTestQuestion;
+import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.IUserView;
@@ -50,7 +53,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		request.setAttribute("siteView", readSiteView(request));
-		//readSiteView(request, null, null, null, null);
 		return mapping.findForward("testsFirstPage");
 	}
 
@@ -61,7 +63,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		Integer executionCourseId = getObjectCode(request);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -87,7 +89,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		Integer executionCourseId = getObjectCode(request);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -115,14 +117,14 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		Integer executionCourseId = getObjectCode(request);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer testCode = new Integer(request.getParameter("testCode"));
+		Integer testCode = getCodeFromRequest(request, "testCode");
 
-		Object[] args = { testCode };
+		Object[] args = { executionCourseId, testCode };
 		Integer newTestCode = null;
 		try {
 			newTestCode =
@@ -143,14 +145,12 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		Integer executionCourseId = getObjectCode(request);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		SiteView siteView = null;
-		Integer testCode = (Integer) request.getAttribute("testCode");
-		if (testCode == null)
-			testCode = new Integer(request.getParameter("testCode"));
+		Integer testCode = getCodeFromRequest(request, "testCode");
 		try {
 			Object[] args = { executionCourseId, testCode };
 			siteView =
@@ -177,19 +177,19 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer executionCourseId = getObjectCode(request);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		Integer metadataCode = getCodeFromRequest(request, "metadataCode");
+
 		String exerciceIdString = request.getParameter("exerciceCode");
-		String testCode = request.getParameter("testCode");
-		String metadataCode = request.getParameter("metadataCode");
-		Integer metadataId = new Integer(metadataCode);
-		Integer exerciceId = null;
+		Integer exerciceCode = null;
 		if (exerciceIdString == null)
-			exerciceId = new Integer(-1);
+			exerciceCode = new Integer(-1);
 		else
-			exerciceId = new Integer(exerciceIdString);
+			exerciceCode = new Integer(exerciceIdString);
 		SiteView siteView = null;
 		try {
-			Object[] args = { executionCourseId, metadataId, exerciceId };
+			Object[] args = { executionCourseId, metadataCode, exerciceCode };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -201,7 +201,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		SiteView siteViewAux = null;
 		try {
-			Object[] args = { executionCourseId, new Integer(testCode)};
+			Object[] args = { executionCourseId, testCode };
 			siteViewAux =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -223,8 +223,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 		}
 		request.setAttribute("testQuestionNames", testQuestionNames);
 		request.setAttribute("testQuestionValues", testQuestionValues);
-		request.setAttribute("testCode", new Integer(testCode));
-		request.setAttribute("exerciceCode", exerciceId);
+		request.setAttribute("testCode", testCode);
+		request.setAttribute("exerciceCode", exerciceCode);
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("insertTestQuestion");
 	}
@@ -239,17 +239,19 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String metadataCode = request.getParameter("metadataCode");
-		String questionOrder = request.getParameter("questionOrder");
-		String testCode = request.getParameter("testCode");
-		String questionValue = request.getParameter("questionValue");
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		Integer metadataCode = getCodeFromRequest(request, "metadataCode");
+		Integer questionOrder = getCodeFromRequest(request, "questionOrder");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		Integer questionValue = getCodeFromRequest(request, "questionValue");
 
 		Object[] arguments =
 			{
-				new Integer(testCode),
-				new Integer(metadataCode),
-				new Integer(questionOrder),
-				new Integer(questionValue)};
+				executionCourseId,
+				testCode,
+				metadataCode,
+				questionOrder,
+				questionValue };
 		try {
 			ServiceUtils.executeService(
 				userView,
@@ -259,7 +261,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		request.setAttribute("testCode", new Integer(testCode));
+		request.setAttribute("testCode", testCode);
 		return showAvailableQuestions(mapping, form, request, response);
 	}
 
@@ -273,17 +275,13 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer executionCourseId = getObjectCode(request);
-		String questionCode = request.getParameter("questionCode");
-		String testCode = request.getParameter("testCode");
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
+		Integer questionCode = getCodeFromRequest(request, "questionCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
 
 		SiteView siteView = null;
 		try {
-			Object[] args =
-				{
-					executionCourseId,
-					new Integer(testCode),
-					new Integer(questionCode)};
+			Object[] args = { executionCourseId, testCode, questionCode };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -295,7 +293,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		SiteView siteViewAux = null;
 		try {
-			Object[] args = { executionCourseId, new Integer(testCode)};
+			Object[] args = { executionCourseId, testCode };
 			siteViewAux =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -325,8 +323,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 		}
 		request.setAttribute("testQuestionNames", testQuestionNames);
 		request.setAttribute("testQuestionValues", testQuestionValues);
-		request.setAttribute("testCode", new Integer(testCode));
-		request.setAttribute("questionCode", new Integer(questionCode));
+		request.setAttribute("testCode", testCode);
+		request.setAttribute("questionCode", questionCode);
 		request.setAttribute("objectCode", executionCourseId);
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("editTestQuestion");
@@ -342,16 +340,22 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String testCode = request.getParameter("testCode");
-		String testQuestionCode = request.getParameter("testQuestionCode");
-		String questionOrder = request.getParameter("testQuestionOrder");
-		String questionValue = request.getParameter("testQuestionValue");
+
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		Integer testQuestionCode =
+			getCodeFromRequest(request, "testQuestionCode");
+		Integer questionOrder =
+			getCodeFromRequest(request, "testQuestionOrder");
+		Integer questionValue =
+			getCodeFromRequest(request, "testQuestionValue");
 		Object[] arguments =
 			{
-				new Integer(testCode),
-				new Integer(testQuestionCode),
-				new Integer(questionOrder),
-				new Integer(questionValue)};
+				executionCourseCode,
+				testCode,
+				testQuestionCode,
+				questionOrder,
+				questionValue };
 		try {
 			ServiceUtils.executeService(
 				userView,
@@ -360,7 +364,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		request.setAttribute("testCode", new Integer(testCode));
+		request.setAttribute("testCode", testCode);
 		return editTest(mapping, form, request, response);
 	}
 
@@ -374,9 +378,11 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String testCode = request.getParameter("testCode");
-		String questionCode = request.getParameter("questionCode");
-		Object[] args = { new Integer(testCode), new Integer(questionCode)};
+
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		Integer questionCode = getCodeFromRequest(request, "questionCode");
+		Object[] args = { executionCourseCode, testCode, questionCode };
 		try {
 			ServiceUtils.executeService(userView, "DeleteTestQuestion", args);
 		} catch (FenixServiceException e) {
@@ -392,7 +398,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		Integer executionCourseId = getObjectCode(request);
+		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -421,8 +427,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String testCodeString = request.getParameter("testCode");
-		Object[] args = { new Integer(testCodeString)};
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		Object[] args = { executionCourseCode, testCode };
 		List result = null;
 		try {
 			result =
@@ -437,8 +444,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 		if (result.size() == 0) {
 			return deleteTest(mapping, form, request, response);
 		}
-		request.setAttribute("testCode", new Integer(testCodeString));
-		request.setAttribute("objectCode", getObjectCode(request));
+		request.setAttribute("testCode", testCode);
+		request.setAttribute("objectCode", executionCourseCode);
 		request.setAttribute("siteView", readSiteView(request));
 		return mapping.findForward("chooseDeleteTestAction");
 	}
@@ -453,14 +460,16 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String testCodeString = request.getParameter("testCode");
-		Object[] args = { new Integer(testCodeString)};
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+
+		Object[] args = { executionCourseCode, testCode };
 		try {
 			ServiceUtils.executeService(userView, "DeleteTest", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		request.setAttribute("objectCode", getObjectCode(request));
+		request.setAttribute("objectCode", executionCourseCode);
 		return showTests(mapping, form, request, response);
 	}
 
@@ -471,10 +480,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String testCodeString = request.getParameter("testCode");
 		String option = request.getParameter("button");
 		if (option.equals("sim"))
 			return deleteTest(mapping, form, request, response);
@@ -496,20 +501,38 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String exerciceIdString = request.getParameter("exerciceCode");
-		String imgCodeString = request.getParameter("imgCode");
+
+		Integer exerciceCode = getCodeFromRequest(request, "exerciceCode");
+		Integer imgCode = getCodeFromRequest(request, "imgCode");
 		String imgTypeString = request.getParameter("imgType");
-		Object[] args =
-			{ new Integer(exerciceIdString), new Integer(imgCodeString)};
+
+		String studentCode = request.getParameter("studentCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+
 		String img = null;
-		try {
-			img =
-				(String) ServiceUtils.executeService(
-					userView,
-					"ReadQuestionImage",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+
+		if (studentCode != null && testCode != null) {
+			Object[] args = { studentCode, testCode, exerciceCode, imgCode };
+			try {
+				img =
+					(String) ServiceUtils.executeService(
+						userView,
+						"ReadStudentTestQuestionImage",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+		} else {
+			Object[] args = { exerciceCode, imgCode };
+			try {
+				img =
+					(String) ServiceUtils.executeService(
+						userView,
+						"ReadQuestionImage",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
 		}
 		byte[] imageData = Base64.decode(img);
 		try {
@@ -535,8 +558,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String testCodeString = request.getParameter("testCode");
-		Object[] args = { new Integer(testCodeString)};
+
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		Object[] args = { executionCourseCode, testCode };
 		List result = null;
 		try {
 			result =
@@ -548,9 +573,11 @@ public class TestsManagementAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		request.setAttribute("distributedTestListSize", new Integer(result.size()));
-		request.setAttribute("testCode", new Integer(testCodeString));
-		request.setAttribute("objectCode", getObjectCode(request));
+		request.setAttribute(
+			"distributedTestListSize",
+			new Integer(result.size()));
+		request.setAttribute("testCode", testCode);
+		request.setAttribute("objectCode", executionCourseCode);
 		request.setAttribute("siteView", readSiteView(request));
 		return mapping.findForward("chooseEditTestAction");
 	}
@@ -565,10 +592,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer testCode = (Integer) request.getAttribute("testCode");
-		if (testCode == null)
-			testCode = new Integer(request.getParameter("testCode"));
-		Integer executionCourseCode = getObjectCode(request);
+
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
 		Object[] args = { executionCourseCode, testCode };
 		SiteView siteView = null;
 		try {
@@ -597,10 +623,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String testCodeString = request.getParameter("testCode");
 
-		Integer executionCourseCode = getObjectCode(request);
-		Object[] args = { executionCourseCode, new Integer(testCodeString)};
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+		Object[] args = { executionCourseCode, testCode };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -611,7 +637,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		request.setAttribute("testCode", new Integer(testCodeString));
+		request.setAttribute("testCode", testCode);
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("editTestHeader");
 	}
@@ -623,14 +649,15 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		Integer executionCourseCode = getObjectCode(request);
-		String testCodeString = request.getParameter("testCode");
+		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
+
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		String title = request.getParameter("title");
 		String information = request.getParameter("information");
-		Object[] args = { new Integer(testCodeString), title, information };
+		Object[] args = { executionCourseCode, testCode, title, information };
 		try {
 			ServiceUtils.executeService(userView, "EditTest", args);
 		} catch (FenixServiceException e) {
@@ -650,8 +677,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer objectCode = getObjectCode(request);
-		String testCodeString = request.getParameter("testCode");
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
 
 		List shifts = null;
 		try {
@@ -679,10 +706,11 @@ public class TestsManagementAction extends FenixDispatchAction {
 		shitfTypes.add(new LabelValueBean("Prática", "P"));
 		shitfTypes.add(new LabelValueBean("Teórico-prática", "TP"));
 		shitfTypes.add(new LabelValueBean("Laboratorial", "L"));
+
 		request.setAttribute("shiftTypes", shitfTypes);
 		request.setAttribute("shifts", shifts);
 		request.setAttribute("siteView", readSiteView(request));
-		request.setAttribute("testCode", testCodeString);
+		request.setAttribute("testCode", testCode);
 		request.setAttribute("objectCode", objectCode);
 		return mapping.findForward("distributeTest");
 	}
@@ -697,9 +725,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = getSession(request);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer objectCode = getObjectCode(request);
-		String testCodeString = request.getParameter("testCode");
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer testCode = getCodeFromRequest(request, "testCode");
 
+		String testInformation = request.getParameter("testInformation");
 		String testBeginDate = request.getParameter("testBeginDate");
 		String testBeginHour = request.getParameter("testBeginHour");
 		String testEndDate = request.getParameter("testEndDate");
@@ -718,14 +747,18 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		Object[] args =
 			{
-				new Integer(testCodeString),
+				objectCode,
+				testCode,
+				testInformation,
 				beginDate,
 				beginHour,
 				endDate,
 				endHour,
 				new TestType(new Integer(testType)),
 				new CorrectionAvailability(new Integer(availableCorrection)),
-				new Boolean(studentFeedback)};
+				new Boolean(studentFeedback),
+				selectedShifts };
+
 		SiteView siteView = null;
 		try {
 			ServiceUtils.executeService(
@@ -770,7 +803,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = getSession(request);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer objectCode = getObjectCode(request);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
 
 		Object[] args = { objectCode };
 		SiteView siteView = null;
@@ -798,10 +831,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = getSession(request);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer objectCode = getObjectCode(request);
-		String distributedTestCodeString =
-			request.getParameter("distributedTestCode");
-		Object[] args = { objectCode, new Integer(distributedTestCodeString)};
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+		Object[] args = { objectCode, distributedTestCode };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -855,7 +888,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 			studentFeedbackList.add(0, new LabelValueBean("Não", "false"));
 		request.setAttribute("studentFeedbackList", studentFeedbackList);
 
-		request.setAttribute("distributedTestCode", distributedTestCodeString);
+		request.setAttribute("distributedTestCode", distributedTestCode);
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("editDistributedTest");
 	}
@@ -869,9 +902,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpSession session = getSession(request);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer objectCode = getObjectCode(request);
-		String distributedTestCodeString =
-			request.getParameter("distributedTestCode");
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+		String testInformation = request.getParameter("testInformation");
 		String testBeginDate = request.getParameter("beginDateFormatted");
 		String testBeginHour = request.getParameter("beginHourFormatted");
 		String testEndDate = request.getParameter("endDateFormatted");
@@ -888,7 +922,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		Object[] args =
 			{
-				new Integer(distributedTestCodeString),
+				objectCode,
+				distributedTestCode,
+				testInformation,
 				beginDate,
 				beginHour,
 				endDate,
@@ -906,6 +942,91 @@ public class TestsManagementAction extends FenixDispatchAction {
 		return showDistributedTests(mapping, form, request, response);
 	}
 
+	public ActionForward showDistributedTestStudents(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+		Object[] args = { objectCode, distributedTestCode };
+		List infoStudentList = null;
+		try {
+			infoStudentList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadStudentsByDistributedTest",
+					args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		request.setAttribute("distributedTestCode", distributedTestCode);
+		request.setAttribute("infoStudentList", infoStudentList);
+		readSiteView(request);
+		return mapping.findForward("showDistributedTestStudents");
+	}
+
+	public ActionForward showStudentTest(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
+		Integer distributedTestCode =
+			getCodeFromRequest(request, "distributedTestCode");
+		Integer studentCode = getCodeFromRequest(request, "studentCode");
+
+		List infoStudentTestQuestionList = null;
+		try {
+			infoStudentTestQuestionList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadStudentDistributedTest",
+					new Object[] {
+						objectCode,
+						distributedTestCode,
+						studentCode });
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		Collections.sort(infoStudentTestQuestionList);
+		request.setAttribute(
+			"infoStudentTestQuestionList",
+			infoStudentTestQuestionList);
+
+		int numQuestions =
+			((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
+				.getDistributedTest()
+				.getInfoTest()
+				.getNumberOfQuestions()
+				.intValue();
+
+		Iterator it = infoStudentTestQuestionList.iterator();
+		String[] option = new String[numQuestions];
+		while (it.hasNext()) {
+			InfoStudentTestQuestion infoStudentTestQuestion =
+				(InfoStudentTestQuestion) it.next();
+			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
+				- 1] =
+				infoStudentTestQuestion.getResponse().toString();
+		}
+		((DynaActionForm) form).set("option", option);
+		readSiteView(request);
+		return mapping.findForward("showStudentTest");
+	}
+
 	private SiteView readSiteView(HttpServletRequest request)
 		throws FenixActionException {
 
@@ -913,7 +1034,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer objectCode = getObjectCode(request);
+		Integer objectCode = getCodeFromRequest(request, "objectCode");
 		ISiteComponent commonComponent = new InfoSiteCommon();
 		Object[] args =
 			{ objectCode, commonComponent, null, objectCode, null, null };
@@ -932,16 +1053,22 @@ public class TestsManagementAction extends FenixDispatchAction {
 		}
 	}
 
-	private Integer getObjectCode(HttpServletRequest request) {
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
+	private Integer getCodeFromRequest(
+		HttpServletRequest request,
+		String codeString) {
+		Integer code = null;
+		String thisCodeString = request.getParameter(codeString);
+		if (thisCodeString == null) {
+			Object o = request.getAttribute(codeString);
+			if (o instanceof String)
+				thisCodeString = (String) o;
+			else if (o instanceof Integer)
+				code = (Integer) o;
+		} else if (thisCodeString != null) {
+			code = new Integer(thisCodeString);
 		}
-		if (objectCodeString != null) {
-			objectCode = new Integer(objectCodeString);
-		}
-		return objectCode;
+
+		return code;
 	}
 
 }

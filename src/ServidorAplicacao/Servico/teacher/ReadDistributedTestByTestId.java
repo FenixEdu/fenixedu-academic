@@ -38,7 +38,8 @@ public class ReadDistributedTestByTestId implements IServico {
 		return "ReadDistributedTestByTestId";
 	}
 
-	public List run(Integer testId) throws FenixServiceException {
+	public List run(Integer executionCourseId, Integer testId)
+		throws FenixServiceException {
 
 		ISuportePersistente persistentSuport;
 		try {

@@ -96,8 +96,9 @@ public class ReadTestQuestion implements IServico {
 				(ITestQuestion) persistentTestQuestion.readByTestAndQuestion(
 					test,
 					question);
-InfoTestQuestion infoTestQuestion = Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
-infoTestQuestion.setQuestion(infoQuestion);
+			InfoTestQuestion infoTestQuestion =
+				Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
+			infoTestQuestion.setQuestion(infoQuestion);
 			InfoSiteTestQuestion bodyComponent = new InfoSiteTestQuestion();
 			bodyComponent.setInfoTestQuestion(infoTestQuestion);
 			bodyComponent.setInfoQuestion(infoQuestion);

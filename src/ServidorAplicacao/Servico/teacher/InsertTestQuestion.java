@@ -45,6 +45,7 @@ public class InsertTestQuestion implements IServico {
 		return "InsertTestQuestion";
 	}
 	public boolean run(
+		Integer executionCourseId,
 		Integer testId,
 		Integer metadataId,
 		Integer questionOrder,

@@ -159,6 +159,7 @@ public interface ISuportePersistente {
 	public IPersistentTest getIPersistentTest();
 	public IPersistentTestQuestion getIPersistentTestQuestion();
 	public IPersistentDistributedTest getIPersistentDistributedTest();
+	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 	
 	public IPersistentAdvisory getIPersistentAdvisory();
 }

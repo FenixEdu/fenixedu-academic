@@ -13,6 +13,7 @@ import Util.TestType;
  * @author Susana Fernandes
  */
 public class InfoDistributedTest extends InfoObject {
+	private String TestInformation;
 	private Calendar beginDate;
 	private Calendar endDate;
 	private Calendar beginHour;
@@ -23,6 +24,10 @@ public class InfoDistributedTest extends InfoObject {
 	private InfoTest infoTest;
 
 	public InfoDistributedTest() {
+	}
+	
+	public String getTestInformation() {
+		return TestInformation;
 	}
 
 	public Calendar getBeginDate() {
@@ -54,6 +59,10 @@ public class InfoDistributedTest extends InfoObject {
 
 	public TestType getTestType() {
 		return testType;
+	}
+
+	public void setTestInformation(String string) {
+		TestInformation = string;
 	}
 
 	public void setBeginDate(Calendar calendar) {
@@ -190,4 +199,5 @@ public class InfoDistributedTest extends InfoObject {
 		}
 		return result;
 	}
+
 }

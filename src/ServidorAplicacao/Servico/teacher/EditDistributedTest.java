@@ -35,7 +35,9 @@ public class EditDistributedTest implements IServico {
 	}
 
 	public boolean run(
+		Integer executionCourseId,
 		Integer distributedTestId,
+		String testInformation,
 		Calendar beginDate,
 		Calendar beginHour,
 		Calendar endDate,
@@ -59,6 +61,7 @@ public class EditDistributedTest implements IServico {
 					distributedTest,
 					true);
 
+			distributedTest.setTestInformation(testInformation);
 			distributedTest.setBeginDate(beginDate);
 			distributedTest.setBeginHour(beginHour);
 			distributedTest.setEndDate(endDate);

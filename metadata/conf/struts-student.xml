@@ -16,17 +16,17 @@
         <form-property name="certidao" type="java.lang.String"/>
       </form-bean> -->
       
-		<form-bean name="studentShiftEnrolmentForm"
-					type="org.apache.struts.validator.DynaValidatorForm"
-					dynamic="true">
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="shifts" type="java.lang.Integer[]"/>
-			<form-property name="class" type="java.lang.String"/>
-			<form-property name="degree" type="java.lang.String"/>
-			<form-property name="course" type="java.lang.String[]"/>
-			<form-property name="wantedCourse" type="java.lang.String[]"/>
+      <form-bean name="studentShiftEnrolmentForm"
+      			type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+      	<form-property name="method" type="java.lang.String"/>
+	    <form-property name="shifts" type="java.lang.Integer[]"/>
+	    <form-property name="class" type="java.lang.String"/>
+		<form-property name="degree" type="java.lang.String"/>
+		<form-property name="course" type="java.lang.String[]"/>
+		<form-property name="wantedCourse" type="java.lang.String[]"/>
 			<form-property name="previousWantedCourse" type="java.lang.String[]"/>
-		</form-bean>
+      </form-bean>
       
 <!--
 	  <form-bean name="curricularCourseEnrolmentForm"
@@ -79,6 +79,17 @@
                  dynamic="true">
         <form-property name="executionCourseCode" type="java.lang.String" />
       </form-bean>
+      
+      <!-- Student tests -->
+ 	
+ 	  <form-bean name="studentTestForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="option" type="java.lang.String[]"/>
+        <form-property name="testCode" type="java.lang.String"/>
+      </form-bean>
+ 
+	 <!-- <form-bean name="studentTestForm" type="ServidorApresentacao.formbeans.student.StudentTestForm" /> -->
       
        <form-bean name="groupEnrolmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -178,11 +189,11 @@
 	  <action path="/studentShiftEnrolmentManager"
 	  				name="studentShiftEnrolmentForm"
 	  				attribute="studentShiftEnrolmentForm"
-					type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
+        type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
 					input="/studentShiftEnrolmentManager.do?method=enrollCourse&amp;firstTime=yes" 
-					parameter="method"
-					scope="session"
-					validate="false">
+        parameter="method"
+        scope="session"
+        validate="false">
         <exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
           handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
@@ -192,7 +203,7 @@
         <forward name="selectCourses" path="show-courses-by-degree"/>
         <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
         <forward name="showAvailableShifts" path="show-available-shifts"/>
-        <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=proceedToShiftEnrolment"/>
+        <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment"/>
         <forward name="classTimeTable" path="/classTimeTable.jsp"/>
       </action>
       
@@ -417,6 +428,32 @@
         <forward name="sucess" path="view-StudentGroup-Information"/>
       </action>
       
+      <!-- TESTS -->
+      <action path="/studentTests"
+		    name="studentTestForm"
+			input="/studentTests.do?method=prepareToDoTest"
+			scope="session"
+			parameter="method"
+			type="ServidorApresentacao.Action.student.StudentTestsAction"
+			validate="true">
+			<forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
+			<forward name="viewTestsToDo" path="/viewTestsToDo.jsp"/>
+			<forward name="viewDoneTests" path="/viewDoneTests.jsp"/>
+			<forward name="doTest" path="do-Test"/>
+			<forward name="studentFeedback" path="/showStudentTestFeedback.jsp"/>
+			<forward name="showTestCorrection" path="show-Test-Correction"/>
+		</action>
+		
+		<!-- STUDENT EXECUTION COURSES -->
+		<action path="/studentExecutionCourse"
+			scope="request"
+			parameter="method"
+			type="ServidorApresentacao.Action.student.StudentExecutionCourseDispatchAction"
+			validate="true">
+			<forward name="viewStudentExecutionCourses" path="view-Student-ExecutionCourses"/>
+			<forward name="studentExecutionCoursePage" path="/studentExecutionCoursePage.jsp"/>
+		</action>
+
 	<action type="ServidorApresentacao.Action.student.UnEnrollStudentInGroupDispatchAction"
             path="/removeGroupEnrolment"
             scope="request"
@@ -450,8 +487,6 @@
         <forward name="viewProjectStudentGroups" path="/viewProjectStudentGroups.do"/>
         
       </action>
-      
-      
      </action-mappings>     
 
     
