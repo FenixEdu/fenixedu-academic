@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <logic:present name="name" scope="request">
-<table>
+	<table>
 		<td>
 			<h2><bean:message key="label.manager.curricularCourse.administrating"/></h2>
 		</td>
@@ -11,74 +11,96 @@
 			<h2><b><bean:define id="curricularCourseName" value="<%= request.getParameter("name") %>"/>
 					<bean:write name="curricularCourseName"/></b></h2>
 		</td>
-</table>
+	</table>
 </logic:present>
 <table>
-		<td>
-			<h3><bean:message key="label.manager.executionPeriod"/></h3>
-		</td>
-		<td>
-			<h2><bean:write name="executionPeriodNameAndYear"/></h2>
-		</td>
+	<td>
+		<h3><bean:message key="label.manager.executionPeriod"/></h3>
+	</td>
+	<td>
+		<h2><bean:write name="executionPeriodNameAndYear"/></h2>
+	</td>
 </table>
 
-
 <logic:notPresent name="name" scope="request">
-					<html:link page="<%= "/insertExecutionCourse.do?method=prepareInsert&executionPeriodId=" + request.getParameter("executionPeriodId") %>"><bean:message key="label.manager.insert.execution.course"/></html:link>
+	<html:link page="<%= "/insertExecutionCourse.do?method=prepareInsert&executionPeriodId=" + request.getParameter("executionPeriodId") %>"><bean:message key="label.manager.insert.execution.course"/></html:link>
+	<br>
+	<br>
 </logic:notPresent>
 
 <span class="error"><html:errors/></span>
-<logic:notEmpty name="infoExecutionCoursesList" scope="request">
 
-<html:form action="/associateExecutionCourseToCurricularCourse" method="get">
-	<html:hidden property="page" value="1"/>
-	<html:hidden property="method" value="associate"/>
+<logic:notEmpty name="infoExecutionCoursesList" scope="request">
+	<logic:present name="name" scope="request">
+		<html:form action="/associateExecutionCourseToCurricularCourse" method="get">
+			<html:hidden property="page" value="1"/>
+			<html:hidden property="method" value="associate"/>
+			<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
+			<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+			<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
+			<html:hidden property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
 	
-    <logic:present name="name" scope="request">
-	<bean:message key="list.title.execution.course.toAssociate"/>
+			<b><bean:message key="list.title.execution.course.toAssociate"/><b>
+			<br>
+			</br>
+			<table>
+				<tr>
+					<td class="listClasses-header">	
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
+					</td>
+				</tr>
+				<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
+					<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>		
+					<tr>
+						<td class="listClasses">
+							<html:radio property="executionCourseId" idName="infoExecutionCourse" value="idInternal" />	
+						</td>			
+						<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoExecutionCourse" property="sigla"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
+						</td>
+					</tr>
+				</logic:iterate>	
+			</table>
+			<html:submit >
+				<bean:message key="label.manager.associate.execution.course"/>
+			</html:submit>
+		</html:form>
 	</logic:present>
+	
 	<logic:notPresent name="name" scope="request">
-	<bean:message key="list.title.execution.courses"/>
-	</logic:notPresent>
-	<br>
-	</br>
-	<table>
-		<tr><logic:present name="name" scope="request">
-			<td class="listClasses-header">	
-			</td>
-			</logic:present>
-			<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
-			</td>
-			<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
-			</td>
-			<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
-			</td>
-		</tr>
-		<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
-		<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>
-							
-			<tr>	<logic:present name="name" scope="request">
-				<td class="listClasses">
-				 
-					<html:radio property="executionCourseId" idName="infoExecutionCourse" value="idInternal" />	
-							
+		<b><bean:message key="list.title.execution.courses"/></b>
+		<br>
+		</br>
+		<table>
+			<tr>
+				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
 				</td>
-				</logic:present>			
-				<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>
+				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.code" />
 				</td>
-				<td class="listClasses"><bean:write name="infoExecutionCourse" property="sigla"/>
-				</td>
-				<td class="listClasses"><bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
+				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
 				</td>
 			</tr>
-		</logic:iterate>	
-	</table>
-	<logic:present name="name" scope="request">
-	<html:submit >
-	<bean:message key="label.manager.associate.execution.course"/>
-	</html:submit>
-	</logic:present>
-</html:form>
+			<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
+				<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>			
+				<tr>			
+					<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>
+					</td>
+					<td class="listClasses"><bean:write name="infoExecutionCourse" property="sigla"/>
+					</td>
+					<td class="listClasses"><bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
+					</td>
+				</tr>
+			</logic:iterate>	
+		</table>
+	</logic:notPresent>
 </logic:notEmpty>
 
 <logic:empty name="infoExecutionCoursesList" scope="request">

@@ -39,7 +39,6 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 		
 		Object args1[] = { curricularCourseId };
 		
-		
 		List executionCoursesList = null; 
 		try {
 				executionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByCurricularCourse", args1);
@@ -75,6 +74,7 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 			throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
 		}
 
+		request.setAttribute("name", "associate");
 		return mapping.findForward("viewExecutionPeriods");
 	}
 }

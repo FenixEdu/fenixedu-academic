@@ -82,7 +82,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 					+ "-"
 					+ infoExecutionPeriod.getInfoExecutionYear().getYear());
 		request.setAttribute("executionPeriodNameAndYear", ExecutionPeriodNameAndYear);
-
+		request.setAttribute("name", "associate");
 		request.setAttribute("infoExecutionCoursesList", infoExecutionCoursesList);
 
 		return mapping.findForward("viewExecutionCoursesToAssociate");

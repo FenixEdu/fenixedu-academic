@@ -17,7 +17,7 @@
 </strong></p>
 
 <p><strong>&raquo; 
-	<html:link page="/readExecutionPeriods.do?method=prepare">
+	<html:link page="/readExecutionPeriods.do">
 		<bean:message key="label.manager.insert.execution.course" />
 	</html:link>
 </strong></p>
