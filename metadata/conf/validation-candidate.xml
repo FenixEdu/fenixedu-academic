@@ -15,6 +15,24 @@
         <arg0 key="candidate.password" />
       </field>
     </form>
+
+
+  <!-- validation for the Password Change form -->
+    <form name="changePasswordForm">
+      <field property="oldPassword" depends="required">
+        <arg0 key="candidate.password" />
+      </field>
+
+        <field property="newPassword"
+               depends="required,twoFields">
+                  <arg0 key="candidate.password"/>
+                  <var>
+                     <var-name>secondProperty</var-name>
+                     <var-value>reTypeNewPassword</var-value>
+                  </var>
+        </field>
+    </form>
+
     
 
     <!-- validation for the Change Application Info Form-->
@@ -22,10 +40,6 @@
       
       <field property="name" depends="required">
         <arg0 key="candidate.name" />
-      </field>
-      
-      <field property="password" depends="required">
-        <arg0 key="candidate.password" />
       </field>
       
        <field property="majorDegree" depends="required">
@@ -292,8 +306,6 @@
         </var>
         
       </field>
-
-
     </form>
 
 
