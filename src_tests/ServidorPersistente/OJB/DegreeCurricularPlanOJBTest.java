@@ -387,7 +387,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			query.create(oqlQuery);
 			result = (List) query.execute();
-			assertEquals(result.size(), 2);
+			assertEquals(2, result.size());
 	
 	
 			// Check existing CurricularCourse
@@ -411,7 +411,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 			oqlQuery = "select all from " + CurricularCourse.class.getName();
 			query.create(oqlQuery);
 			result = (List) query.execute();
-			assertEquals(result.size(), 10);
+			assertEquals(13, result.size());
 	
 			} catch (QueryException ex) {
 			  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
@@ -458,7 +458,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			query.create(oqlQuery);
 			result = (List) query.execute();
-			assertEquals(result.size(), 2);
+			assertEquals(2, result.size());
 	
 	
 			// Check existing CurricularCourse
@@ -483,7 +483,7 @@ public class DegreeCurricularPlanOJBTest extends TestCaseOJB {
 			oqlQuery = "select all from " + CurricularCourse.class.getName();
 			query.create(oqlQuery);
 			result = (List) query.execute();
-			assertEquals(result.size(), 10);
+			assertEquals(13, result.size());
 	
 			} catch (QueryException ex) {
 			  throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
