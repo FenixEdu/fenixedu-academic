@@ -37,8 +37,8 @@
      <td width="25%" align="left" valign="top" nowrap="nowrap"><tiles:insert attribute="photos" />
     </td>
      <td class="bodycontent" width="100%" align="left" valign="top">
-     	<tiles:insert attribute="body-context" />     
-     	<tiles:insert attribute="body" />
+     	<tiles:insert attribute="body-context" ignore="true"/>     
+     	<tiles:insert attribute="body" ignore="true"/>
 	</td>
   </tr>
 </table>
