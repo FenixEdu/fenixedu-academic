@@ -401,7 +401,7 @@
               scope="session"
               type="ServidorApresentacao.Action.sop.ManipularSalasAction">
         <forward name="SalaApagada" path="/manipularSalas.jsp" />
-        <forward name="VerSala" path="/verSala.jsp" />
+		<forward name="VerSala" path="/viewRoom.do" />
         <forward name="EditarSala" path="/editarSala.jsp" />
       </action>
 
@@ -433,18 +433,17 @@
               >
           <forward name="Sucess" path="/chooseSemester.jsp"/>
       </action>
-      
+
       <action attribute="indexForm"
-              input="/chooseSemester.jsp"
+              input="/manipularSalas.jsp"
               name="indexForm"
-      		  path="/viewRoomOcupation"
+      		  path="/viewRoom"
               scope="request"
               validate="true"
-              type="ServidorApresentacao.Action.publico.ViewRoomOcupationAction"
-              >
-          <forward name="Sucess" path="/viewRoomOcupation.jsp"/>
+              type="ServidorApresentacao.Action.publico.ViewRoomFormAction">
+          <forward name="Sucess" path="/sopViewRoom.jsp"/>
       </action>
-      
+
       
 	  <!-- TURNOS -->
       <action path="/prepararCriarTurno"
