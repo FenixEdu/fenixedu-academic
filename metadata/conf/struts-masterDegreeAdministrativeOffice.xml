@@ -33,6 +33,7 @@
          <form-property name="specialization" type="java.lang.String" />
 		 <form-property name="candidateSituation" type="java.lang.String" />
 		 <form-property name="candidateNumber" type="java.lang.String" />
+		 <form-property name="executionYear" type="java.lang.String" />
       </form-bean>
       
       <!-- Bean for The Creation of a Contributor -->
@@ -528,6 +529,34 @@
    	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
       </action>
 
+
+
+      <!-- Choose Execution Year to Visualize Candidates -->
+      <action path="/chooseExecutionYearToVisualizeCandidates"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/visualizeCandidates.do?method=prepareChoose&amp;action=visualize&amp;page=0"/> 
+      </action>
+
+	  
+      <!-- Choose Execution Year to Edit Candidates -->
+      <action path="/chooseExecutionYearToEditCandidates"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/editCandidates.do?method=prepareChoose&amp;action=edit&amp;page=0"/> 
+      </action>
 
 
 

@@ -51,17 +51,19 @@ public class ReadCandidateList implements IServico {
 		return "ReadCandidateList";
 	}
 
-	public List run(String degreeName, Specialization degreeType, SituationName candidateSituation, Integer candidateNumber) throws FenixServiceException {
+	public List run(String degreeName, Specialization degreeType, SituationName candidateSituation, Integer candidateNumber, String executionYearString) throws FenixServiceException {
 
 		ISuportePersistente sp = null;
 		List result = null;
+		
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			
 			// Get the Actual Execution Year
 			IExecutionYear executionYear = null;
 
-			executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();
+
+			executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 			
 			// Read the candidates
 			
@@ -91,6 +93,7 @@ public class ReadCandidateList implements IServico {
 			candidateList.add(infoMasterDegreeCandidate);
 			
 		}
+		
 		return candidateList;
 		
 	}

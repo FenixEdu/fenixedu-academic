@@ -22,7 +22,6 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoCountry;
-import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.FenixServiceException;
@@ -61,11 +60,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			String action = request.getParameter("action");
 			
-			listCandidatesForm.set("degree", null);			
-			listCandidatesForm.set("specialization", null);			
-			listCandidatesForm.set("candidateSituation", null);			
-			listCandidatesForm.set("candidateNumber", null);			
-			
 			if (action.equals("visualize")) {
 				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
@@ -77,6 +71,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		    }
 			GestorServicos serviceManager = GestorServicos.manager();
 			
+			// Get the chosen exectionYear
+			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+			listCandidatesForm.set("executionYear", executionYear);
 			
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -86,20 +83,11 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, Specialization.toArrayList());
 
 
-			// Get the Actual ExecutionYear
-			InfoExecutionYear infoExecutionYear = null;
-			
-			try {
-				infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadActualExecutionYear", null);
-			} catch (Exception e) {
-				throw new Exception(e);
-			}
-			
 			// Get the Degree List
 			
 			ArrayList degreeList = null; 			
 			
-			Object args[] = {infoExecutionYear.getYear()};
+			Object args[] = {executionYear};
 			
 			try {
 				degreeList = (ArrayList) serviceManager.executar(userView, "ReadMasterDegrees", args);
@@ -140,6 +128,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			String degreeName = (String) listCandidatesForm.get("degree");
 			String candidateSituationTemp = (String) listCandidatesForm.get("candidateSituation");
 			String candidateNumberTemp = (String) listCandidatesForm.get("candidateNumber");
+			String executionYear = (String) listCandidatesForm.get("executionYear");
 			
 			Integer candidateNumber = null;
 			Specialization specialization = null;
@@ -154,14 +143,15 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			if (candidateSituationTemp != null && candidateSituationTemp.length() != 0)
 				situationName = new SituationName(candidateSituationTemp);
 
-			Object args[] = { degreeName, specialization, situationName, candidateNumber };
+			Object args[] = { degreeName, specialization, situationName, candidateNumber , executionYear};
 	  		List result = null;
-	  		
+
 	  		try {
 				result = (List) serviceManager.executar(userView, "ReadCandidateList", args);
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
+
 
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 			if (result.size() == 1) {
@@ -174,8 +164,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			}
 		  // Create find query String
 		  String query = new String();
+		  query = "  - Ano Lectivo : " + executionYear + "<br />";
 		  if (degreeName == null && specialization == null && situationName == null && candidateNumber == null)
-		  	query = "  - Todos os criterios";
+		  	query += "  - Todos os criterios";
 		  else {
 		  	if (degreeName != null) query += "  - Curso: " + degreeName + "<br />";
 			if (specialization != null) query += "  - Tipo de Especialização: " + specialization.toString() + "<br />";

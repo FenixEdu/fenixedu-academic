@@ -1,5 +1,5 @@
 
-package ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate;
+package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,16 +12,13 @@ import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
- *
  */
 
-public class ListCandidateDispatchActionGetCandidatesMethodTest
-	extends TestCasePresentationMDAdministrativeOffice{
+public class ChooseExecutionYearDispatchActionPrepareChooseExecutionYearMethodTest extends TestCasePresentationMDAdministrativeOffice{
 	/**
 	 * Main method 
 	 * @param args
@@ -35,14 +32,14 @@ public class ListCandidateDispatchActionGetCandidatesMethodTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ListCandidateDispatchActionGetCandidatesMethodTest.class);
+		TestSuite suite = new TestSuite(ChooseExecutionYearDispatchActionPrepareChooseExecutionYearMethodTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ListCandidateDispatchActionGetCandidatesMethodTest(String testName) {
+	public ChooseExecutionYearDispatchActionPrepareChooseExecutionYearMethodTest(String testName) {
 		super(testName);
 	}
 
@@ -67,14 +64,7 @@ public class ListCandidateDispatchActionGetCandidatesMethodTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		HashMap requestParameters = new HashMap();
-		requestParameters.put("method","getCandidates");
-		requestParameters.put("specialization",null);
-		requestParameters.put("degree",null);
-		requestParameters.put("candidateSituation",null);
-		requestParameters.put("candidateNumber",null);
-		requestParameters.put("executionYear","2002/2003");
-		
-
+		requestParameters.put("method","prepareChooseExecutionYear");
 		return requestParameters;	}
 
 	/* (non-Javadoc)
@@ -90,9 +80,8 @@ public class ListCandidateDispatchActionGetCandidatesMethodTest
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		HashMap attributes = new HashMap();
 		List requestAttributes = new ArrayList();
-		requestAttributes.add(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY);
-		requestAttributes.add(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
+		requestAttributes.add(SessionConstants.EXECUTION_YEAR_LIST);
+		attributes.put(new Integer(ScopeConstants.REQUEST),requestAttributes);
 		return attributes;
 	}
 
@@ -121,14 +110,14 @@ public class ListCandidateDispatchActionGetCandidatesMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/visualizeCandidates";
+		return "/chooseExecutionYearToEditCandidates";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "ChooseCandidate";
+		return "PrepareSuccess";
 	}
 
 }

@@ -2,11 +2,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
 
    <span class="error"><html:errors/></span>
    <table>
-    <html:form action="/chooseExecutionYear.do?method=chooseExecutionYear">
+
+    <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+    <html:form action="<%=path%>">
+ 
+       <input type="hidden" value="chooseExecutionYear" name="method"/>
+       
 	   <html:hidden property="page" value="1"/>
        <bean:define id="executionYearList" name="<%= SessionConstants.EXECUTION_YEAR_LIST %>" scope="request" />
 

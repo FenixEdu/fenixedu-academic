@@ -20,6 +20,7 @@
     
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
+        <html:hidden property="executionYear"/>
         <html:hidden property="page" value="1"/>
         <input type="hidden" value="getCandidates" name="method"/>
         <h2><bean:message name="title"/></h2>
