@@ -52,24 +52,23 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 
 		InfoItem oldInfoItem = (InfoItem) infoItemsList.get(index.intValue());
 		session.setAttribute(SessionConstants.INFO_ITEM, oldInfoItem);
-		GestorServicos manager = GestorServicos.manager();
-		Object readSectionArgs[] = { oldInfoItem.getInfoSection() };
-						ArrayList items;
-						try {
-							infoItemsList =
-								(ArrayList) manager.executar(
-									null,
-									"ReadItems",
-								readSectionArgs);
-						} catch (FenixServiceException fenixServiceException) {
-							throw new FenixActionException(fenixServiceException.getMessage());
-						}
-			infoItemsList.remove(oldInfoItem);
-			
 		
 		
-	 
-	   session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST,infoItemsList);
+//		GestorServicos manager = GestorServicos.manager();
+//		Object readSectionArgs[] = { oldInfoItem.getInfoSection() };
+//		ArrayList items;
+//		try {
+//			infoItemsList =(ArrayList) manager.executar(null,"ReadItems",readSectionArgs);
+//			} catch (FenixServiceException fenixServiceException) {
+//				throw new FenixActionException(fenixServiceException.getMessage());
+//			}
+//			
+//		//infoItemsList.remove(oldInfoItem);
+//			
+//		
+//		
+//	 
+//	   session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST,infoItemsList);
 		return mapping.findForward("editItem");
 	}
 
