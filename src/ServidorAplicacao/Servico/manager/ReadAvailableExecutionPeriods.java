@@ -40,9 +40,7 @@ public class ReadAvailableExecutionPeriods  implements IServico {
 		return service;
 	}
 
-	/**
-	 * Returns info list of all execution periods.
-	 */
+	
 	public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException {
 
 			List infoExecutionPeriods = null;

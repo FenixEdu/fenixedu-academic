@@ -1,6 +1,6 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
-<!-- Tiles definitions --> 
+<!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="df.page.read-degrees" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readDegrees_bd.jsp" />
@@ -70,27 +70,12 @@
 		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
 		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
 	</definition>
-	<definition name="df.page.edit-curriculum" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/editCurriculum_bd.jsp" />
-		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
+	<definition name="df.page.read-execution-course-teachers" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/readTeachers_bd.jsp" />
+		<put name="navLocal" value="/manager/readTeachers.jsp" />
 	</definition>
-	<definition name="df.page.edit-curriculum-english" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/editCurriculumEnglish_bd.jsp" />
-		<put name="navLocal" value="/manager/curricularCourseNavLocalManager.jsp" />
-	</definition>
-	<definition name="df.page.manage-branches" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/manageBranches_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
-	</definition>
-	<definition name="df.page.insert-branch" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/insertBranch_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
-	</definition>
-	<definition name="df.page.edit-branch" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/editBranch_bd.jsp" />
-		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
-	</definition>
-	
+
+
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageExecutionPeriods_bd.jsp" />

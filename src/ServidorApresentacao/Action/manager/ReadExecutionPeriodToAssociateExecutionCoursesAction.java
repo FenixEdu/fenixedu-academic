@@ -54,7 +54,7 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 		Iterator iter = executionCoursesList.iterator();
 		while(iter.hasNext()){
 		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
-System.out.println(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+
 		unavailableExecutionPeriodsIds.add((Integer) infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 		}
 				
