@@ -31,10 +31,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author asnr and scpo
  *  
  */
-//by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Set/2003
-//WARNING: this service only reads the projects with open enrollemnts ! this is
-// not documented anywhere
-//pay attention to the if clause (its designated by me)
 public class ReadExecutionCourseProjects implements IServico {
 
     private static ReadExecutionCourseProjects _servico = new ReadExecutionCourseProjects();
@@ -90,19 +86,10 @@ public class ReadExecutionCourseProjects implements IServico {
                     IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
 					.getGroupEnrolmentStrategyInstance(groupProperties);
                 	
-                    
-                    //by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on
-                    // 29/Set/2003
-                    //there...this if only lets us return the projects with
-                    // opened enrollments
-                    //to get ALL projects use the service with same name on
-                    // teacher package
-                    // ( teacher.ReadExecutionCourseProjects)
+                   
                     if (strategy.checkEnrolmentDate(groupProperties, Calendar.getInstance()) 
                     		&& strategy.checkStudentInAttendsSet(groupProperties,userName)){
-                        //infoGroupPropertiesList
-                                //.add(Cloner
-                                        //.copyIGroupProperties2InfoGroupProperties(groupProperties));
+                   
                     InfoGroupProperties infoGroupProperties = InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted.newInfoFromDomain(groupProperties);
                     infoGroupPropertiesList.add(infoGroupProperties);
                     }

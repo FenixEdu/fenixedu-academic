@@ -28,6 +28,7 @@ import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -68,7 +69,7 @@ public class ReadShiftsAndGroups implements IServico {
     /**
      * Executes the service.
      */
-    public ISiteComponent run(Integer groupPropertiesCode)
+    public ISiteComponent run(Integer groupPropertiesCode, String username)
             throws FenixServiceException {
 
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
@@ -90,6 +91,10 @@ public class ReadShiftsAndGroups implements IServico {
 			.getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
 			.getGroupEnrolmentStrategyInstance(groupProperties);
+            
+            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
+        		throw new NotAuthorizedException();
+        	}
             
             if(strategy.checkHasShift(groupProperties)){
             infoSiteShiftsAndGroupsList = new ArrayList();

@@ -62,9 +62,18 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
 		InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
 		List infoGroupPropertiesList = new ArrayList();
-		if (infoSiteProjects != null) 
+		if (infoSiteProjects != null) {
 			infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();
+		}else{
+			ActionErrors actionErrors1 = new ActionErrors();
+			ActionError error1 = null;
+			error1 = new ActionError("errors.noStudentInAttendsSet");
+			actionErrors1.add("errors.noStudentInAttendsSet", error1);
+			saveErrors(request, actionErrors1);
+			return mapping.findForward("noprojects");
+		}
 
+		
 		
 		request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
 

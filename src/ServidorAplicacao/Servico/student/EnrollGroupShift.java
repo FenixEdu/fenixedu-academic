@@ -22,6 +22,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -94,15 +95,19 @@ public class EnrollGroupShift implements IService {
             IStudent student = persistentSupport.getIPersistentStudent()
             .readByUsername(username);
             
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+			.getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+			.getGroupEnrolmentStrategyInstance(groupProperties);
+    
+            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
+            	throw new NotAuthorizedException();
+            }
+
             if(!checkStudentInStudentGroup(student,studentGroup)){
                 throw new InvalidSituationServiceException();
             }
-            
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                    .getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                    .getGroupEnrolmentStrategyInstance(groupProperties);
-            
+                        
             boolean result = strategy.checkNumberOfGroups(groupProperties,shift);
             if (!result) {
                 throw new InvalidChangeServiceException();

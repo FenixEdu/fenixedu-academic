@@ -461,6 +461,7 @@
               validate="true">    
         <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>      
         <forward name="sucess" path="view-ExecutionCourse-Projects"/>
+		<forward name="noprojects" path="/viewEnroledExecutionCourses.do"/>
       </action>
  	
  	
@@ -471,6 +472,7 @@
               validate="true">
         <forward name="sucess" path="view-Shifts-Groups"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
       </action>
 
 	<action type="ServidorApresentacao.Action.student.ViewStudentsAndGroupsByShiftAction"
@@ -555,6 +557,7 @@
             parameter="method"
             name="groupEnrolmentForm">
         <forward name="sucess" path="edit-studentGroup-shift"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
@@ -566,6 +569,7 @@
             parameter="method"
             name="groupEnrolmentForm">
         <forward name="sucess" path="enroll-studentGroup-shift"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
@@ -576,7 +580,8 @@
             validate="true"
             parameter="method"
             name="groupEnrolmentForm">
-       <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
+       	<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
+		<forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewExecutionCourseProjects" path="/viewExecutionCourseProjects.do"/>   
     </action>

@@ -212,6 +212,10 @@ public class VerifyStudentGroupAtributes implements IServico {
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
 			.getGroupEnrolmentStrategyInstance(groupProperties);
 
+            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
+        		throw new NotAuthorizedException();
+        	}
+            
             result = strategy.checkNotEnroledInGroup(groupProperties,
                     studentGroup, username);
             if (result)
@@ -256,6 +260,10 @@ public class VerifyStudentGroupAtributes implements IServico {
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
 			.getGroupEnrolmentStrategyInstance(groupProperties);
 
+            if(!strategy.checkStudentInAttendsSet(groupProperties,username)){
+        		throw new NotAuthorizedException();
+        	}
+            
             result = strategy.checkNotEnroledInGroup(groupProperties,
                     studentGroup, username);
             if (result)

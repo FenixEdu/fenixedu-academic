@@ -18,6 +18,7 @@ import DataBeans.InfoSiteShiftsAndGroups;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -38,9 +39,11 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        
+        String username = userView.getUtilizador();
 
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
-        Object[] args = { groupPropertiesCode };
+        Object[] args = { groupPropertiesCode, username};
         try {
             infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(userView,
                     "ReadShiftsAndGroups", args);
@@ -53,7 +56,14 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
             actionErrors2.add("error.noProject", error2);
             saveErrors(request, actionErrors2);
             return mapping.findForward("viewExecutionCourseProjects");
-        }catch (FenixServiceException e) {
+        }catch (NotAuthorizedException e) {
+			ActionErrors actionErrors2 = new ActionErrors();
+			ActionError error2 = null;
+			error2 = new ActionError("errors.noStudentInAttendsSet");
+			actionErrors2.add("errors.noStudentInAttendsSet", error2);
+			saveErrors(request, actionErrors2);
+			return mapping.findForward("insucess");
+		}catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 

@@ -21,6 +21,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -55,7 +56,14 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
 		try
 		{
                 ServiceUtils.executeService(userView, "UnEnrollGroupShift", args);
-            }catch (ExistingServiceException e){
+            }catch (NotAuthorizedException e) {
+    			ActionErrors actionErrors2 = new ActionErrors();
+    			ActionError error2 = null;
+    			error2 = new ActionError("errors.noStudentInAttendsSet");
+    			actionErrors2.add("errors.noStudentInAttendsSet", error2);
+    			saveErrors(request, actionErrors2);
+    			return mapping.findForward("insucess");
+    		}catch (ExistingServiceException e){
     			ActionErrors actionErrors = new ActionErrors();
     			ActionError error = null;
     			error = new ActionError("error.noProject");
