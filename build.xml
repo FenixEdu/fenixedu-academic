@@ -18,12 +18,13 @@
 
     <target name="reload"
     		description="Deploys application to web server">
+    	<ant antfile="build_jboss.xml" target="compile-standalone"/>
 		<ant antfile="build_tomcat.xml" target="reload"/>
     </target>
 
     <target name="remove"
     		description="Deploys application to web server">
-		<ant antfile="build_tomcat.xml" target="reload"/>
+		<ant antfile="build_tomcat.xml" target="remove"/>
     </target>
 
     <target name="deploy-webapp"
