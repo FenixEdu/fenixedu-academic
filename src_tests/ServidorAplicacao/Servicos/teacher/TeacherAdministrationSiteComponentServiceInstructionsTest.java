@@ -28,64 +28,59 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  * @author João Mota
  */
-public class TeacherAdministrationSiteComponentServiceInstructionsTest extends TestCaseReadServices
-{
+public class TeacherAdministrationSiteComponentServiceInstructionsTest extends
+        TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public TeacherAdministrationSiteComponentServiceInstructionsTest(String testName)
-    {
+     * @param testName
+     */
+    public TeacherAdministrationSiteComponentServiceInstructionsTest(
+            String testName) {
         super(testName);
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "TeacherAdministrationSiteComponentService";
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args =
-            { new Integer(26), new InfoSiteCommon(), new InfoSiteInstructions(), null, null, null };
+        Object[] args = { new Integer(26), new InfoSiteCommon(),
+                new InfoSiteInstructions(), null, null, null };
         return args;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         InfoExecutionCourse infoExecutionCourse = null;
         List infoSections = null;
         ISite site = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(new Integer(26)),
-                    false);
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, new Integer(26));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                    .get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
@@ -93,15 +88,13 @@ public class TeacherAdministrationSiteComponentServiceInstructionsTest extends T
             infoSections = new ArrayList();
             ListIterator iter = sections.listIterator();
 
-            while (iter.hasNext())
-            {
-                InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
+            while (iter.hasNext()) {
+                InfoSection infoSection = Cloner
+                        .copyISection2InfoSection((ISection) iter.next());
                 infoSections.add(infoSection);
             }
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
             e.printStackTrace();
         }
@@ -115,38 +108,35 @@ public class TeacherAdministrationSiteComponentServiceInstructionsTest extends T
 
         InfoSiteInstructions infoSiteInstructions = new InfoSiteInstructions();
 
-        TeacherAdministrationSiteView siteView =
-            new TeacherAdministrationSiteView(infoSiteCommon, infoSiteInstructions);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
+                infoSiteCommon, infoSiteInstructions);
 
         return siteView;
     }
 
     /**
-	 * This method must return 'true' if the service needs authorization to be
-	 * runned and 'false' otherwise.
-	 */
-    protected boolean needsAuthorization()
-    {
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
         return true;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-    protected int getNumberOfItemsToRetrieve()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
 

@@ -15,56 +15,46 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadExecutionDegreeByCandidateID implements IServico
-{
+public class ReadExecutionDegreeByCandidateID implements IServico {
     private static ReadExecutionDegreeByCandidateID service = new ReadExecutionDegreeByCandidateID();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionDegreeByCandidateID getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionDegreeByCandidateID getService() {
         return service;
     }
 
     /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadExecutionDegreeByCandidateID";
     }
 
-    public InfoExecutionDegree run(Integer candidateID) throws NonExistingServiceException
-    {
+    public InfoExecutionDegree run(Integer candidateID)
+            throws NonExistingServiceException {
 
         ICursoExecucao executionDegree = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-            mdcTemp.setIdInternal(candidateID);
-            IMasterDegreeCandidate masterDegreeCandidate =
-                (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(
-                    mdcTemp,
-                    false);
+            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                    .getIPersistentMasterDegreeCandidate().readByOID(
+                            MasterDegreeCandidate.class, candidateID);
 
-            ICursoExecucao executionDegreeTemp = new CursoExecucao();
-            executionDegreeTemp.setIdInternal(
-                masterDegreeCandidate.getExecutionDegree().getIdInternal());
+            executionDegree = (ICursoExecucao) sp
+                    .getICursoExecucaoPersistente().readByOID(
+                            CursoExecucao.class,
+                            masterDegreeCandidate.getExecutionDegree()
+                                    .getIdInternal());
 
-            executionDegree =
-                (ICursoExecucao) sp.getICursoExecucaoPersistente().readByOId(executionDegreeTemp, false);
-
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new RuntimeException(ex);
         }
 
-        if (executionDegree == null)
-        {
+        if (executionDegree == null) {
             throw new NonExistingServiceException();
         }
 

@@ -20,53 +20,42 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *  
  */
-public class DeleteTutorShip implements IService
-{
+public class DeleteTutorShip implements IService {
 
-	public DeleteTutorShip()
-	{
-	}
+    public DeleteTutorShip() {
+    }
 
-	public Object run(
-		Integer executionDegreeId, Integer tutorNumber, List tutorIds2Delete) throws FenixServiceException
-	{
+    public Object run(Integer executionDegreeId, Integer tutorNumber,
+            List tutorIds2Delete) throws FenixServiceException {
 
-		if (tutorNumber == null)
-		{
-			throw new FenixServiceException("error.tutor.impossibleOperation");
-		}
+        if (tutorNumber == null) {
+            throw new FenixServiceException("error.tutor.impossibleOperation");
+        }
 
-		Boolean result = Boolean.FALSE;
-		if (tutorIds2Delete != null && tutorIds2Delete.size() > 0)
-		{
-			ISuportePersistente sp;
+        Boolean result = Boolean.FALSE;
+        if (tutorIds2Delete != null && tutorIds2Delete.size() > 0) {
+            ISuportePersistente sp;
 
-			try
-			{
-				sp = SuportePersistenteOJB.getInstance();
-				IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+            try {
+                sp = SuportePersistenteOJB.getInstance();
+                IPersistentTutor persistentTutor = sp.getIPersistentTutor();
 
-				ListIterator iterator = tutorIds2Delete.listIterator();
-				while (iterator.hasNext())
-				{
-					Integer tutorId = (Integer) iterator.next();
-					ITutor tutor = new Tutor();
-					tutor.setIdInternal(tutorId);
-					tutor = (ITutor) persistentTutor.readByOId(tutor, false);
-					if (tutor != null)
-					{
-						persistentTutor.deleteByOID(Tutor.class, tutorId);
-					}
-				}
+                ListIterator iterator = tutorIds2Delete.listIterator();
+                while (iterator.hasNext()) {
+                    Integer tutorId = (Integer) iterator.next();
+                    ITutor tutor = (ITutor) persistentTutor.readByOID(
+                            Tutor.class, tutorId);
+                    if (tutor != null) {
+                        persistentTutor.deleteByOID(Tutor.class, tutorId);
+                    }
+                }
 
-				result = Boolean.TRUE;
-			}
-			catch (ExcepcaoPersistencia e)
-			{
-				e.printStackTrace();
-				throw new FenixServiceException("error.tutor.removeTutor");
-			}
-		}
-		return result;
-	}
+                result = Boolean.TRUE;
+            } catch (ExcepcaoPersistencia e) {
+                e.printStackTrace();
+                throw new FenixServiceException("error.tutor.removeTutor");
+            }
+        }
+        return result;
+    }
 }

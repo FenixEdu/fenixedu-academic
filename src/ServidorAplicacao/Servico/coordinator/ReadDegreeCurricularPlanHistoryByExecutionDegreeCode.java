@@ -65,10 +65,8 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
                 throw new FenixServiceException("nullDegree");
             }
 
-            ICursoExecucao executionDegree = new CursoExecucao();
-            executionDegree.setIdInternal(executionDegreeCode);
-            executionDegree =
-                (ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+            ICursoExecucao executionDegree =
+                (ICursoExecucao) persistentExecutionDegree.readByOID(CursoExecucao.class, executionDegreeCode);
 
             if (executionDegree == null)
             {

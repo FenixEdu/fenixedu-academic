@@ -31,52 +31,41 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceSectionsTest extends TestCaseReadServices
-{
+public class TeacherAdministrationSiteComponentServiceSectionsTest extends
+        TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public TeacherAdministrationSiteComponentServiceSectionsTest(String testName)
-    {
+     * @param testName
+     */
+    public TeacherAdministrationSiteComponentServiceSectionsTest(String testName) {
         super(testName);
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "TeacherAdministrationSiteComponentService";
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args =
-            {
-                new Integer(27),
-                new InfoSiteCommon(),
-                new InfoSiteSections(),
-                null,
-                new Integer(4),
-                null };
+        Object[] args = { new Integer(27), new InfoSiteCommon(),
+                new InfoSiteSections(), null, new Integer(4), null };
         return args;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         InfoExecutionCourse infoExecutionCourse = null;
         ISite site = null;
@@ -84,20 +73,19 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends TestC
         List allSectionsList = null;
         ISection iSection = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(new Integer(27)),
-                    false);
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, new Integer(27));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                    .get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
@@ -105,12 +93,11 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends TestC
 
             allSectionsList = persistentSection.readBySite(site);
 
-            iSection = (ISection) persistentSection.readByOId(new Section(new Integer(4)), false);
+            iSection = (ISection) persistentSection.readByOID(Section.class,
+                    new Integer(4));
 
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
             e.printStackTrace();
         }
@@ -118,40 +105,35 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends TestC
         List infoSections = new ArrayList();
         ListIterator iter = sections.listIterator();
 
-        while (iter.hasNext())
-        {
-            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
+        while (iter.hasNext()) {
+            InfoSection infoSection = Cloner
+                    .copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
         List infoSectionsList = new ArrayList();
 
-        if (allSectionsList != null && allSectionsList.isEmpty() == false)
-        {
+        if (allSectionsList != null && allSectionsList.isEmpty() == false) {
             Iterator iterSections = allSectionsList.iterator();
-            if (iSection.getSuperiorSection() == null)
-            {
-                while (iterSections.hasNext())
-                {
+            if (iSection.getSuperiorSection() == null) {
+                while (iterSections.hasNext()) {
                     ISection section = (ISection) iterSections.next();
                     if ((section.getSuperiorSection() == null)
-                        && !section.getName().equals(iSection.getName()))
-                    {
-                        infoSectionsList.add(Cloner.copyISection2InfoSection(section));
+                            && !section.getName().equals(iSection.getName())) {
+                        infoSectionsList.add(Cloner
+                                .copyISection2InfoSection(section));
                     }
                 }
-            }
-            else
-            {
-                while (iterSections.hasNext())
-                {
+            } else {
+                while (iterSections.hasNext()) {
                     ISection section = (ISection) iterSections.next();
-                    if ((section.getSuperiorSection() != null
-                        && section.getSuperiorSection().getIdInternal().equals(
-                            iSection.getSuperiorSection().getIdInternal()))
-                        && !section.getName().equals(iSection.getName()))
-                    {
-                        infoSectionsList.add(Cloner.copyISection2InfoSection(section));
+                    if ((section.getSuperiorSection() != null && section
+                            .getSuperiorSection().getIdInternal().equals(
+                                    iSection.getSuperiorSection()
+                                            .getIdInternal()))
+                            && !section.getName().equals(iSection.getName())) {
+                        infoSectionsList.add(Cloner
+                                .copyISection2InfoSection(section));
                     }
                 }
             }
@@ -171,38 +153,35 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends TestC
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView =
-            new TeacherAdministrationSiteView(infoSiteCommon, infoSiteSections);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
+                infoSiteCommon, infoSiteSections);
 
         return siteView;
     }
 
     /**
-	 * This method must return 'true' if the service needs authorization to be
-	 * runned and 'false' otherwise.
-	 */
-    protected boolean needsAuthorization()
-    {
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
         return true;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-    protected int getNumberOfItemsToRetrieve()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
 

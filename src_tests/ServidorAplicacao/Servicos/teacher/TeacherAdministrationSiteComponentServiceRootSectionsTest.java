@@ -29,66 +29,61 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceRootSectionsTest extends TestCaseReadServices
-{
+public class TeacherAdministrationSiteComponentServiceRootSectionsTest extends
+        TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public TeacherAdministrationSiteComponentServiceRootSectionsTest(String testName)
-    {
+     * @param testName
+     */
+    public TeacherAdministrationSiteComponentServiceRootSectionsTest(
+            String testName) {
         super(testName);
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "TeacherAdministrationSiteComponentService";
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args =
-            { new Integer(26), new InfoSiteCommon(), new InfoSiteRootSections(), null, null, null };
+        Object[] args = { new Integer(26), new InfoSiteCommon(),
+                new InfoSiteRootSections(), null, null, null };
         return args;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         InfoExecutionCourse infoExecutionCourse = null;
         ISite site = null;
         List sections = null;
         List rootSectionsList = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(new Integer(26)),
-                    false);
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, new Integer(26));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                    .get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
@@ -97,9 +92,7 @@ public class TeacherAdministrationSiteComponentServiceRootSectionsTest extends T
             rootSectionsList = sp.getIPersistentSection().readBySite(site);
 
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
             e.printStackTrace();
         }
@@ -107,21 +100,20 @@ public class TeacherAdministrationSiteComponentServiceRootSectionsTest extends T
         List infoSections = new ArrayList();
         ListIterator iter = sections.listIterator();
 
-        while (iter.hasNext())
-        {
-            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
+        while (iter.hasNext()) {
+            InfoSection infoSection = Cloner
+                    .copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
         List infoRootSectionsList = new ArrayList();
 
-        if (rootSectionsList != null && rootSectionsList.isEmpty() == false)
-        {
+        if (rootSectionsList != null && rootSectionsList.isEmpty() == false) {
             Iterator iterSections = rootSectionsList.iterator();
-            while (iterSections.hasNext())
-            {
+            while (iterSections.hasNext()) {
                 ISection section = (ISection) iterSections.next();
-                infoRootSectionsList.add(Cloner.copyISection2InfoSection(section));
+                infoRootSectionsList.add(Cloner
+                        .copyISection2InfoSection(section));
             }
         }
         InfoSiteRootSections infoSiteRootSections = new InfoSiteRootSections();
@@ -135,38 +127,35 @@ public class TeacherAdministrationSiteComponentServiceRootSectionsTest extends T
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView =
-            new TeacherAdministrationSiteView(infoSiteCommon, infoSiteRootSections);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
+                infoSiteCommon, infoSiteRootSections);
 
         return siteView;
     }
 
     /**
-	 * This method must return 'true' if the service needs authorization to be
-	 * runned and 'false' otherwise.
-	 */
-    protected boolean needsAuthorization()
-    {
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
         return true;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-    protected int getNumberOfItemsToRetrieve()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
 

@@ -30,12 +30,10 @@ import Util.RoleType;
  * @author João Mota
  *  
  */
-public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extends
-                                                                         AuthorizationByRoleFilter
-{
+public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
+        extends AuthorizationByRoleFilter {
 
-    public ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter()
-    {
+    public ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter() {
 
     }
 
@@ -44,8 +42,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
@@ -53,18 +50,19 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
-        if ((id == null) || (id.getRoles() == null)
-                        || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                        || !lecturesExecutionCourse(id, arguments)
-                        || !sectionBelongsExecutionCourse(id, arguments))
-        {
+        if ((id == null)
+                || (id.getRoles() == null)
+                || !AuthorizationUtils.containsRole(id.getRoles(),
+                        getRoleType())
+                || !lecturesExecutionCourse(id, arguments)
+                || !sectionBelongsExecutionCourse(id, arguments)) {
             throw new NotAuthorizedFilterException();
         }
 
@@ -75,59 +73,54 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
      * @param argumentos
      * @return
      */
-    private boolean sectionBelongsExecutionCourse(IUserView id, Object[] argumentos)
-    {
+    private boolean sectionBelongsExecutionCourse(IUserView id,
+            Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
         IExecutionCourse executionCourse = null;
         ISuportePersistente sp;
         ISection section = null;
         InfoSection infoSection = null;
 
-        if (argumentos == null)
-        {
+        if (argumentos == null) {
             return false;
         }
-        try
-        {
+        try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            if (argumentos[0] instanceof InfoExecutionCourse)
-            {
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            }
-            else
-            {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                                new ExecutionCourse((Integer) argumentos[0]), false);
+                executionCourse = Cloner
+                        .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+            } else {
+                executionCourse = (IExecutionCourse) persistentExecutionCourse
+                        .readByOID(ExecutionCourse.class,
+                                (Integer) argumentos[0]);
             }
             IPersistentSection persistentSection = sp.getIPersistentSection();
-            if (argumentos[1] == null)
-            {
+            if (argumentos[1] == null) {
                 return true;
             }
-            if (argumentos[1] instanceof InfoSection)
-            {
+            if (argumentos[1] instanceof InfoSection) {
                 infoSection = (InfoSection) argumentos[1];
-                section = Cloner.copyInfoSection2ISection(infoSection);
-                section = (ISection) persistentSection.readByOId(section, false);
-            }
-            else
-            {
-                section = (ISection) persistentSection.readByOId(
-                                new Section((Integer) argumentos[1]), false);
+
+                section = (ISection) persistentSection.readByOID(Section.class,
+                        infoSection.getIdInternal());
+            } else {
+                section = (ISection) persistentSection.readByOID(Section.class,
+                        (Integer) argumentos[1]);
 
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
 
-        if (section == null) return false;
+        if (section == null)
+            return false;
         else
-            return section.getSite().getExecutionCourse().equals(executionCourse);
+            return section.getSite().getExecutionCourse().equals(
+                    executionCourse);
     }
 
     /**
@@ -135,43 +128,40 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
      * @param argumentos
      * @return
      */
-    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos)
-    {
+    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
         IExecutionCourse executionCourse = null;
         ISuportePersistente sp;
         IProfessorship professorship = null;
-        if (argumentos == null)
-        {
+        if (argumentos == null) {
             return false;
         }
-        try
-        {
+        try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            if (argumentos[0] instanceof InfoExecutionCourse)
-            {
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            }
-            else
-            {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                                new ExecutionCourse((Integer) argumentos[0]), false);
+                executionCourse = Cloner
+                        .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+            } else {
+                executionCourse = (IExecutionCourse) persistentExecutionCourse
+                        .readByOID(ExecutionCourse.class,
+                                (Integer) argumentos[0]);
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            if (teacher != null && executionCourse != null)
-            {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(
-                                teacher, executionCourse);
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
+                    .getUtilizador());
+            if (teacher != null && executionCourse != null) {
+                IPersistentProfessorship persistentProfessorship = sp
+                        .getIPersistentProfessorship();
+                professorship = persistentProfessorship
+                        .readByTeacherAndExecutionCoursePB(teacher,
+                                executionCourse);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
         return professorship != null;

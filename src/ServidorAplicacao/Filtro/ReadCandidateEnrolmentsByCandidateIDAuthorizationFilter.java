@@ -24,27 +24,25 @@ import Util.RoleType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Filtro
-{
+public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends
+        Filtro {
 
-    public ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter()
-    {
+    public ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter() {
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                        || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-                        || (id == null) || (id.getRoles() == null))
-        {
+                || (id != null && id.getRoles() != null && !hasPrivilege(id,
+                        argumentos)) || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -53,16 +51,12 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
      * @param collection
      * @return boolean
      */
-    private boolean containsRole(Collection roles)
-    {
+    private boolean containsRole(Collection roles) {
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        if (roles.size() != 0)
-        {
+        if (roles.size() != 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -70,8 +64,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
     /**
      * @return The Needed Roles to Execute The Service
      */
-    private Collection getNeededRoles()
-    {
+    private Collection getNeededRoles() {
         List roles = new ArrayList();
 
         InfoRole infoRole = new InfoRole();
@@ -90,8 +83,8 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia
-    {
+    private boolean hasPrivilege(IUserView id, Object[] arguments)
+            throws ExcepcaoPersistencia {
 
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
@@ -100,62 +93,51 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
 
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        if (CollectionUtils.containsAny(roles, roleTemp))
-        {
+        if (CollectionUtils.containsAny(roles, roleTemp)) {
             return true;
         }
 
         roleTemp = new ArrayList();
         roleTemp.add(RoleType.COORDINATOR);
-        if (CollectionUtils.containsAny(roles, roleTemp))
-        {
+        if (CollectionUtils.containsAny(roles, roleTemp)) {
 
             ITeacher teacher = null;
             // Read The ExecutionDegree
-            try
-            {
+            try {
 
                 Integer candidateID = (Integer) arguments[0];
 
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = sp.getIPersistentTeacher().readTeacherByUsername(
+                        id.getUtilizador());
 
-                IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-                mdcTemp.setIdInternal(candidateID);
                 IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                                .getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
+                        .getIPersistentMasterDegreeCandidate().readByOID(
+                                MasterDegreeCandidate.class, candidateID);
 
-                if (masterDegreeCandidate == null)
-                {
+                if (masterDegreeCandidate == null) {
                     return false;
                 }
 
                 //modified by Tânia Pousão
                 ICoordinator coordinator = sp.getIPersistentCoordinator()
-                                .readCoordinatorByTeacherAndExecutionDegree(teacher,
-                                                masterDegreeCandidate.getExecutionDegree());
-                if (coordinator != null)
-                {
+                        .readCoordinatorByTeacherAndExecutionDegree(teacher,
+                                masterDegreeCandidate.getExecutionDegree());
+                if (coordinator != null) {
                     return true;
-                }
-                else
-                {
+                } else {
                     return false;
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 return false;
             }
         }
         return true;
     }
 
-    private List getRoleList(List roles)
-    {
+    private List getRoleList(List roles) {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             result.add(((InfoRole) iterator.next()).getRoleType());
         }
 

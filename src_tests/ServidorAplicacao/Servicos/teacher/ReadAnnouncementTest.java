@@ -18,246 +18,213 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Barbosa
  * @author Pica
  * 
- * NOTA: TODO... os pré filtros ainda não verificam se um anúncio pertence à disciplina. Devido a isso
- * alguns dos testes seguintes podem falhar.
+ * NOTA: TODO... os pré filtros ainda não verificam se um anúncio pertence à
+ * disciplina. Devido a isso alguns dos testes seguintes podem falhar.
  */
-public class ReadAnnouncementTest extends AnnouncementBelongsToExecutionCourseTest
-{
+public class ReadAnnouncementTest extends
+        AnnouncementBelongsToExecutionCourseTest {
 
-	/**
-	 * @param testName
-	 */
-	public ReadAnnouncementTest(String testName)
-	{
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public ReadAnnouncementTest(String testName) {
+        super(testName);
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "TeacherAdministrationSiteComponentService";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "TeacherAdministrationSiteComponentService";
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testReadAnnouncementDataSet.xml";
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccessfullDataSetFilePath()
-	 */
-	protected String getExpectedUnsuccessfullDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testExpectedReadAnnouncementDataSet.xml";
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
-	 */
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
-	 */
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
-		String[] args = { "nmsn", "pass", getApplication()};
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
-	 */
-	protected String[] getNotAuthenticatedUser()
-	{
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-	 */
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer infoExecutionCourseCode = new Integer(24);
-		Integer infoSiteCode = new Integer(1);
-		InfoSiteCommon commonComponent = new InfoSiteCommon();
-		InfoAnnouncement bodyComponent = new InfoAnnouncement();
-		Integer announcementCode = new Integer(1);
-		Object obj2 = null;
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testReadAnnouncementDataSet.xml";
+    }
 
-		Object[] args =
-			{
-				infoExecutionCourseCode,
-				commonComponent,
-				bodyComponent,
-				infoSiteCode,
-				announcementCode,
-				obj2 };
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getAnnouncementUnsuccessfullArguments()
-	 */
-	protected Object[] getAnnouncementUnsuccessfullArguments()
-	{
-		Integer infoExecutionCourseCode = new Integer(24);
-		Integer infoSiteCode = new Integer(1);
-		InfoSiteCommon commonComponent = new InfoSiteCommon();
-		InfoAnnouncement bodyComponent = new InfoAnnouncement();
-		Integer announcementCode = new Integer(5);
-		//TODO.. erro.. os pré filtros ainda não verificam se o anuncio pertence à disciplina
-		Object obj2 = null;
+    /*
+     * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccessfullDataSetFilePath()
+     */
+    protected String getExpectedUnsuccessfullDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testExpectedReadAnnouncementDataSet.xml";
+    }
 
-		Object[] args =
-			{
-				infoExecutionCourseCode,
-				commonComponent,
-				bodyComponent,
-				infoSiteCode,
-				announcementCode,
-				obj2 };
-		return args;
-	}
+    /*
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
+     */
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-	/*
-	 * Teste de leitura com sucesso de um anúncio.
-	 */
-	public void testReadAnnouncementSuccessfull()
-	{
-		try
-		{
-			//Argumentos do serviço
-			Integer infoExecutionCourseCode = new Integer(24);
-			Integer infoSiteCode = new Integer(1);
-			InfoSiteCommon commonComponent = new InfoSiteCommon();
-			InfoAnnouncement bodyComponent = new InfoAnnouncement();
-			Integer announcementCode = new Integer(1);
-			Object obj2 = null;
-			Object[] argserv =
-				{
-					infoExecutionCourseCode,
-					commonComponent,
-					bodyComponent,
-					infoSiteCode,
-					announcementCode,
-					obj2 };
+    /*
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
+     */
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "nmsn", "pass", getApplication() };
+        return args;
+    }
 
-			//Utilizador Válido
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView id = authenticateUser(args);
+    /*
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
+     */
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-			//Execução do serviço
-			SiteView siteView = null;
-			siteView = (SiteView) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), argserv);
+    /*
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
+    protected Object[] getAuthorizeArguments() {
+        Integer infoExecutionCourseCode = new Integer(24);
+        Integer infoSiteCode = new Integer(1);
+        InfoSiteCommon commonComponent = new InfoSiteCommon();
+        InfoAnnouncement bodyComponent = new InfoAnnouncement();
+        Integer announcementCode = new Integer(1);
+        Object obj2 = null;
 
-			//Leu alguma coisa?
-			if (siteView == null)
-			{
-				fail("Reading an Announcement for a Site.");
-			}
+        Object[] args = { infoExecutionCourseCode, commonComponent,
+                bodyComponent, infoSiteCode, announcementCode, obj2 };
+        return args;
+    }
 
-			//Anuncio lido pelo serviço
-			InfoAnnouncement info = (InfoAnnouncement) siteView.getComponent();
+    /*
+     * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getAnnouncementUnsuccessfullArguments()
+     */
+    protected Object[] getAnnouncementUnsuccessfullArguments() {
+        Integer infoExecutionCourseCode = new Integer(24);
+        Integer infoSiteCode = new Integer(1);
+        InfoSiteCommon commonComponent = new InfoSiteCommon();
+        InfoAnnouncement bodyComponent = new InfoAnnouncement();
+        Integer announcementCode = new Integer(5);
+        //TODO.. erro.. os pré filtros ainda não verificam se o anuncio
+        // pertence à disciplina
+        Object obj2 = null;
 
-			//Verificar se o que foi lido pelo serviço está correcto
-			try
-			{
-				//Anuncio lido
-				Announcement readannouncement = new Announcement(announcementCode);
-				IAnnouncement iAnnouncement = null;
+        Object[] args = { infoExecutionCourseCode, commonComponent,
+                bodyComponent, infoSiteCode, announcementCode, obj2 };
+        return args;
+    }
 
-				//Ler o anúncio da base de dados.
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				sp.iniciarTransaccao();
-				iAnnouncement =
-					(IAnnouncement) sp.getIPersistentAnnouncement().readByOId(readannouncement, false);
-				sp.confirmarTransaccao();
+    /*
+     * Teste de leitura com sucesso de um anúncio.
+     */
+    public void testReadAnnouncementSuccessfull() {
+        try {
+            //Argumentos do serviço
+            Integer infoExecutionCourseCode = new Integer(24);
+            Integer infoSiteCode = new Integer(1);
+            InfoSiteCommon commonComponent = new InfoSiteCommon();
+            InfoAnnouncement bodyComponent = new InfoAnnouncement();
+            Integer announcementCode = new Integer(1);
+            Object obj2 = null;
+            Object[] argserv = { infoExecutionCourseCode, commonComponent,
+                    bodyComponent, infoSiteCode, announcementCode, obj2 };
 
-				//Se o anúncio não existir..?!?!?!
-				if (iAnnouncement == null)
-				{
-					fail("Reading an Announcement for a Site.");
-				}
+            //Utilizador Válido
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
 
-				//Verificar se o anúncio esta correcto
-				assertEquals(iAnnouncement.getTitle(), info.getTitle());
-				assertEquals(iAnnouncement.getInformation(), info.getInformation());
-				assertEquals(info.getLastModifiedDate(), iAnnouncement.getLastModifiedDate());
-				assertEquals(info.getIdInternal(), iAnnouncement.getIdInternal());
-				assertEquals(iAnnouncement.getCreationDate(), info.getCreationDate());
+            //Execução do serviço
+            SiteView siteView = null;
+            siteView = (SiteView) ServiceManagerServiceFactory.executeService(
+                    id, getNameOfServiceToBeTested(), argserv);
 
-			} catch (ExcepcaoPersistencia e)
-			{
-				fail("Reading an Announcement for a Site " + e);
-			}
+            //Leu alguma coisa?
+            if (siteView == null) {
+                fail("Reading an Announcement for a Site.");
+            }
 
-			//Verificar se a base de dados foi alterada
-			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
+            //Anuncio lido pelo serviço
+            InfoAnnouncement info = (InfoAnnouncement) siteView.getComponent();
 
-			System.out.println(
-				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+            //Verificar se o que foi lido pelo serviço está correcto
+            try {
+                //Anuncio lido
 
-		} catch (FenixServiceException e)
-		{
-			fail("Reading an Announcement for a Site " + e);
-		} catch (Exception e)
-		{
-			fail("Reading an Announcement for a Site " + e);
-		}
-	}
+                IAnnouncement iAnnouncement = null;
 
-	/*
-	 * Leitura de um anúncio que não existe
-	 */
-	public void testReadAnnouncementUnsuccessfull()
-	{
-		try
-		{
-			//Argumentos inválidos.. anúncio inexistente
-			Integer infoExecutionCourseCode = new Integer(24);
-			Integer infoSiteCode = new Integer(1);
-			InfoSiteCommon commonComponent = new InfoSiteCommon();
-			InfoAnnouncement bodyComponent = new InfoAnnouncement();
-			Integer announcementCode = new Integer(121312);
-			Object obj2 = null;
-			Object[] argserv =
-				{
-					infoExecutionCourseCode,
-					commonComponent,
-					bodyComponent,
-					infoSiteCode,
-					announcementCode,
-					obj2 };
+                //Ler o anúncio da base de dados.
+                ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+                sp.iniciarTransaccao();
+                iAnnouncement = (IAnnouncement) sp.getIPersistentAnnouncement()
+                        .readByOID(Announcement.class, announcementCode);
+                sp.confirmarTransaccao();
 
-			//Utilizador válido
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView id = authenticateUser(args);
+                //Se o anúncio não existir..?!?!?!
+                if (iAnnouncement == null) {
+                    fail("Reading an Announcement for a Site.");
+                }
 
-			//Execução do serviço
-			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), argserv);
+                //Verificar se o anúncio esta correcto
+                assertEquals(iAnnouncement.getTitle(), info.getTitle());
+                assertEquals(iAnnouncement.getInformation(), info
+                        .getInformation());
+                assertEquals(info.getLastModifiedDate(), iAnnouncement
+                        .getLastModifiedDate());
+                assertEquals(info.getIdInternal(), iAnnouncement
+                        .getIdInternal());
+                assertEquals(iAnnouncement.getCreationDate(), info
+                        .getCreationDate());
 
-			fail("Reading an Announcement for a Site ");
-		} catch (NotAuthorizedException e)
-		{
-			/*
-			 * Levantada a excepção pelos pré-flitros. O serviço não chega a ser chamado.
-			 */
-			//Verificar se a base de dados foi alterada
-			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
-			System.out.println(
-				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Reading an Announcement for a Site " + e);
-		} catch (Exception e)
-		{
-			fail("Reading an Announcement for a Site " + e);
-		}
-	}
+            } catch (ExcepcaoPersistencia e) {
+                fail("Reading an Announcement for a Site " + e);
+            }
+
+            //Verificar se a base de dados foi alterada
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
+
+            System.out
+                    .println("ReadAnnouncementTest was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+
+        } catch (FenixServiceException e) {
+            fail("Reading an Announcement for a Site " + e);
+        } catch (Exception e) {
+            fail("Reading an Announcement for a Site " + e);
+        }
+    }
+
+    /*
+     * Leitura de um anúncio que não existe
+     */
+    public void testReadAnnouncementUnsuccessfull() {
+        try {
+            //Argumentos inválidos.. anúncio inexistente
+            Integer infoExecutionCourseCode = new Integer(24);
+            Integer infoSiteCode = new Integer(1);
+            InfoSiteCommon commonComponent = new InfoSiteCommon();
+            InfoAnnouncement bodyComponent = new InfoAnnouncement();
+            Integer announcementCode = new Integer(121312);
+            Object obj2 = null;
+            Object[] argserv = { infoExecutionCourseCode, commonComponent,
+                    bodyComponent, infoSiteCode, announcementCode, obj2 };
+
+            //Utilizador válido
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+
+            //Execução do serviço
+            ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), argserv);
+
+            fail("Reading an Announcement for a Site ");
+        } catch (NotAuthorizedException e) {
+            /*
+             * Levantada a excepção pelos pré-flitros. O serviço não chega a ser
+             * chamado.
+             */
+            //Verificar se a base de dados foi alterada
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
+            System.out
+                    .println("ReadAnnouncementTest was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading an Announcement for a Site " + e);
+        } catch (Exception e) {
+            fail("Reading an Announcement for a Site " + e);
+        }
+    }
 }

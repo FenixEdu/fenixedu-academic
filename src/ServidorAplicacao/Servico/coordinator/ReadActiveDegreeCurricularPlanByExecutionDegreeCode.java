@@ -15,59 +15,51 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Fernanda Quitério 5/Nov/2003
  */
-public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode
-	extends ReadDegreeCurricularPlanBaseService
-{
+public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode extends
+        ReadDegreeCurricularPlanBaseService {
 
-	private static ReadActiveDegreeCurricularPlanByExecutionDegreeCode service =
-		new ReadActiveDegreeCurricularPlanByExecutionDegreeCode();
+    private static ReadActiveDegreeCurricularPlanByExecutionDegreeCode service = new ReadActiveDegreeCurricularPlanByExecutionDegreeCode();
 
-	public static ReadActiveDegreeCurricularPlanByExecutionDegreeCode getService()
-	{
+    public static ReadActiveDegreeCurricularPlanByExecutionDegreeCode getService() {
 
-		return service;
-	}
+        return service;
+    }
 
-	private ReadActiveDegreeCurricularPlanByExecutionDegreeCode()
-	{
+    private ReadActiveDegreeCurricularPlanByExecutionDegreeCode() {
 
-	}
+    }
 
-	public final String getNome()
-	{
+    public final String getNome() {
 
-		return "ReadActiveDegreeCurricularPlanByExecutionDegreeCode";
-	}
+        return "ReadActiveDegreeCurricularPlanByExecutionDegreeCode";
+    }
 
-	public List run(Integer executionDegreeCode) throws FenixServiceException
-	{
+    public List run(Integer executionDegreeCode) throws FenixServiceException {
 
-		ISuportePersistente sp;
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace(System.out);
-			throw new FenixServiceException("Problems on database!");
-		}
-		ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
-		if (executionDegreeCode == null)
-		{
-			throw new FenixServiceException("nullDegree");
-		}
+        ISuportePersistente sp;
+        ICursoExecucao executionDegree;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-		ICursoExecucao executionDegree = new CursoExecucao();
-		executionDegree.setIdInternal(executionDegreeCode);
-		executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+            ICursoExecucaoPersistente persistentExecutionDegree = sp
+                    .getICursoExecucaoPersistente();
+            if (executionDegreeCode == null) {
+                throw new FenixServiceException("nullDegree");
+            }
 
-		if (executionDegree == null)
-		{
-			throw new NonExistingServiceException();
-		}
+            executionDegree = (ICursoExecucao) persistentExecutionDegree
+                    .readByOID(CursoExecucao.class, executionDegreeCode);
 
-		IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
-		return super.readActiveCurricularCourseScopes(degreeCurricularPlan, sp);
+            if (executionDegree == null) {
+                throw new NonExistingServiceException();
+            }
+        } catch (ExcepcaoPersistencia e) {
 
-	}
+            throw new FenixServiceException("Problems on database!");
+        }
+        IDegreeCurricularPlan degreeCurricularPlan = executionDegree
+                .getCurricularPlan();
+        return super.readActiveCurricularCourseScopes(degreeCurricularPlan, sp);
+
+    }
 }

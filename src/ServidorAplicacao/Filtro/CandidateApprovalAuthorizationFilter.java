@@ -24,28 +24,22 @@ import Util.RoleType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class CandidateApprovalAuthorizationFilter extends Filtro
-{
+public class CandidateApprovalAuthorizationFilter extends Filtro {
 
-    public CandidateApprovalAuthorizationFilter()
-    {
+    public CandidateApprovalAuthorizationFilter() {
     }
 
     /**
      * @param collection
      * @return boolean
      */
-    private boolean containsRole(Collection roles)
-    {
+    private boolean containsRole(Collection roles) {
 
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        if (roles.size() != 0)
-        {
+        if (roles.size() != 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -53,8 +47,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro
     /**
      * @return The Needed Roles to Execute The Service
      */
-    private Collection getNeededRoles()
-    {
+    private Collection getNeededRoles() {
         List roles = new ArrayList();
 
         InfoRole infoRole = new InfoRole();
@@ -73,8 +66,8 @@ public class CandidateApprovalAuthorizationFilter extends Filtro
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia
-    {
+    private boolean hasPrivilege(IUserView id, Object[] arguments)
+            throws ExcepcaoPersistencia {
 
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
@@ -83,61 +76,51 @@ public class CandidateApprovalAuthorizationFilter extends Filtro
 
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        if (CollectionUtils.containsAny(roles, roleTemp))
-        {
+        if (CollectionUtils.containsAny(roles, roleTemp)) {
             return true;
         }
 
         roleTemp = new ArrayList();
         roleTemp.add(RoleType.COORDINATOR);
-        if (CollectionUtils.containsAny(roles, roleTemp))
-        {
+        if (CollectionUtils.containsAny(roles, roleTemp)) {
 
             ITeacher teacher = null;
             // Read The ExecutionDegree
-            try
-            {
+            try {
 
                 String ids[] = (String[]) arguments[1];
 
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = sp.getIPersistentTeacher().readTeacherByUsername(
+                        id.getUtilizador());
 
-                for (int i = 0; i < ids.length; i++)
-                {
-                    IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-                    mdcTemp.setIdInternal(new Integer(ids[i]));
+                for (int i = 0; i < ids.length; i++) {
 
                     IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                                    .getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
+                            .getIPersistentMasterDegreeCandidate().readByOID(
+                                    MasterDegreeCandidate.class,
+                                    new Integer(ids[i]));
 
                     //modified by Tânia Pousão
                     ICoordinator coordinator = sp.getIPersistentCoordinator()
-                                    .readCoordinatorByTeacherAndExecutionDegree(teacher,
-                                                    masterDegreeCandidate.getExecutionDegree());
-                    if (coordinator == null)
-                    {
+                            .readCoordinatorByTeacherAndExecutionDegree(
+                                    teacher,
+                                    masterDegreeCandidate.getExecutionDegree());
+                    if (coordinator == null) {
                         return false;
                     }
-                    //if
-                    // (!masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher))
-                    // {
-                    //return false;
+
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 return false;
             }
         }
         return true;
     }
 
-    private List getRoleList(List roles)
-    {
+    private List getRoleList(List roles) {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             result.add(((InfoRole) iterator.next()).getRoleType());
         }
 
@@ -148,16 +131,16 @@ public class CandidateApprovalAuthorizationFilter extends Filtro
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
         IUserView userView = getRemoteUser(request);
-        if ((userView != null && userView.getRoles() != null && !containsRole(userView.getRoles()))
-                        || (userView != null && userView.getRoles() != null && !hasPrivilege(
-                                        userView, getServiceCallArguments(request)))
-                        || (userView == null) || (userView.getRoles() == null))
-        {
+        if ((userView != null && userView.getRoles() != null && !containsRole(userView
+                .getRoles()))
+                || (userView != null && userView.getRoles() != null && !hasPrivilege(
+                        userView, getServiceCallArguments(request)))
+                || (userView == null) || (userView.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
 

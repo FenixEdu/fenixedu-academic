@@ -30,77 +30,71 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends TestCaseReadServices
-{
+public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends
+        TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public TeacherAdministrationSiteComponentServiceAnnouncementsTest(String testName)
-    {
+     * @param testName
+     */
+    public TeacherAdministrationSiteComponentServiceAnnouncementsTest(
+            String testName) {
         super(testName);
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "TeacherAdministrationSiteComponentService";
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args =
-            { new Integer(26), new InfoSiteCommon(), new InfoSiteAnnouncement(), null, null, null };
+        Object[] args = { new Integer(26), new InfoSiteCommon(),
+                new InfoSiteAnnouncement(), null, null, null };
         return args;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         InfoExecutionCourse infoExecutionCourse = null;
         ISite site = null;
         List sections = null;
         List announcementsList = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(new Integer(26)),
-                    false);
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, new Integer(26));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                    .get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
             sections = persistentSection.readBySite(site);
 
-            announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site);
+            announcementsList = sp.getIPersistentAnnouncement()
+                    .readAnnouncementsBySite(site);
 
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
             e.printStackTrace();
         }
@@ -108,21 +102,21 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends 
         List infoSections = new ArrayList();
         ListIterator iter = sections.listIterator();
 
-        while (iter.hasNext())
-        {
-            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
+        while (iter.hasNext()) {
+            InfoSection infoSection = Cloner
+                    .copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
         List infoAnnouncementsList = new ArrayList();
 
-        if (announcementsList != null && announcementsList.isEmpty() == false)
-        {
+        if (announcementsList != null && announcementsList.isEmpty() == false) {
             Iterator iterAnnouncements = announcementsList.iterator();
-            while (iterAnnouncements.hasNext())
-            {
-                IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
-                infoAnnouncementsList.add(Cloner.copyIAnnouncement2InfoAnnouncement(announcement));
+            while (iterAnnouncements.hasNext()) {
+                IAnnouncement announcement = (IAnnouncement) iterAnnouncements
+                        .next();
+                infoAnnouncementsList.add(Cloner
+                        .copyIAnnouncement2InfoAnnouncement(announcement));
             }
         }
         InfoSiteAnnouncement infoSiteAnnouncement = new InfoSiteAnnouncement();
@@ -136,38 +130,35 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends 
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView =
-            new TeacherAdministrationSiteView(infoSiteCommon, infoSiteAnnouncement);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
+                infoSiteCommon, infoSiteAnnouncement);
 
         return siteView;
     }
 
     /**
-	 * This method must return 'true' if the service needs authorization to be
-	 * runned and 'false' otherwise.
-	 */
-    protected boolean needsAuthorization()
-    {
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
         return true;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-    protected int getNumberOfItemsToRetrieve()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
 

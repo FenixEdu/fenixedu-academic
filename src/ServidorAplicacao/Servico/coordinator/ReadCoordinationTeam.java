@@ -23,62 +23,59 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- *fenix-head
- *ServidorAplicacao.Servico.fileManager
- * @author João Mota
- *17/Set/2003
- *
+ * fenix-head ServidorAplicacao.Servico.fileManager
+ * 
+ * @author João Mota 17/Set/2003
+ *  
  */
 public class ReadCoordinationTeam implements IServico {
 
-	private static ReadCoordinationTeam service = new ReadCoordinationTeam();
+    private static ReadCoordinationTeam service = new ReadCoordinationTeam();
 
-	public static ReadCoordinationTeam getService() {
+    public static ReadCoordinationTeam getService() {
 
-		return service;
-	}
+        return service;
+    }
 
-	private ReadCoordinationTeam() {
+    private ReadCoordinationTeam() {
 
-	}
+    }
 
-	public final String getNome() {
+    public final String getNome() {
 
-		return "ReadCoordinationTeam";
-	}
+        return "ReadCoordinationTeam";
+    }
 
-	public List run(Integer executionDegreeId) throws FenixServiceException {
+    public List run(Integer executionDegreeId) throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCoordinator persistentCoordinator =
-				sp.getIPersistentCoordinator();
-			ICursoExecucaoPersistente persistentExecutionDegree =
-				sp.getICursoExecucaoPersistente();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentCoordinator persistentCoordinator = sp
+                    .getIPersistentCoordinator();
+            ICursoExecucaoPersistente persistentExecutionDegree = sp
+                    .getICursoExecucaoPersistente();
 
-			ICursoExecucao executionDegree =
-				(ICursoExecucao) persistentExecutionDegree.readByOId(
-					new CursoExecucao(executionDegreeId),
-					false);
-			if (executionDegree == null) {
-				throw new InvalidArgumentsServiceException("execution Degree unexisting");
-			}
-			List coordinators =
-				persistentCoordinator.readCoordinatorsByExecutionDegree(
-					executionDegree);
-			Iterator iterator = coordinators.iterator();
-			List infoCoordinators = new ArrayList();
-			while (iterator.hasNext()) {
-				ICoordinator coordinator = (ICoordinator) iterator.next();
-				InfoCoordinator infoCoordinator =
-					Cloner.copyICoordinator2InfoCoordenator(coordinator);
-				infoCoordinators.add(infoCoordinator);
-			}
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
+                    .readByOID(CursoExecucao.class, executionDegreeId);
+            if (executionDegree == null) {
+                throw new InvalidArgumentsServiceException(
+                        "execution Degree unexisting");
+            }
+            List coordinators = persistentCoordinator
+                    .readCoordinatorsByExecutionDegree(executionDegree);
+            Iterator iterator = coordinators.iterator();
+            List infoCoordinators = new ArrayList();
+            while (iterator.hasNext()) {
+                ICoordinator coordinator = (ICoordinator) iterator.next();
+                InfoCoordinator infoCoordinator = Cloner
+                        .copyICoordinator2InfoCoordenator(coordinator);
+                infoCoordinators.add(infoCoordinator);
+            }
 
-			return infoCoordinators;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            return infoCoordinators;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	}
+    }
 }

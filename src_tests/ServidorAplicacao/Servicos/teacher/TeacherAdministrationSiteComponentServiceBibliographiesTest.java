@@ -30,78 +30,72 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceBibliographiesTest extends TestCaseReadServices
-{
+public class TeacherAdministrationSiteComponentServiceBibliographiesTest extends
+        TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public TeacherAdministrationSiteComponentServiceBibliographiesTest(String testName)
-    {
+     * @param testName
+     */
+    public TeacherAdministrationSiteComponentServiceBibliographiesTest(
+            String testName) {
         super(testName);
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "TeacherAdministrationSiteComponentService";
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args =
-            { new Integer(24), new InfoSiteCommon(), new InfoSiteBibliography(), null, null, null };
+        Object[] args = { new Integer(24), new InfoSiteCommon(),
+                new InfoSiteBibliography(), null, null, null };
         return args;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         InfoExecutionCourse infoExecutionCourse = null;
         ISite site = null;
         List sections = null;
         List bibliographicReferenceList = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(new Integer(24)),
-                    false);
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, new Integer(24));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                    .get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
             sections = persistentSection.readBySite(site);
 
-            bibliographicReferenceList =
-                sp.getIPersistentBibliographicReference().readBibliographicReference(executionCourse);
+            bibliographicReferenceList = sp
+                    .getIPersistentBibliographicReference()
+                    .readBibliographicReference(executionCourse);
 
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
             e.printStackTrace();
         }
@@ -109,28 +103,28 @@ public class TeacherAdministrationSiteComponentServiceBibliographiesTest extends
         List infoSections = new ArrayList();
         ListIterator iter = sections.listIterator();
 
-        while (iter.hasNext())
-        {
-            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
+        while (iter.hasNext()) {
+            InfoSection infoSection = Cloner
+                    .copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
         List infobibliographicReferenceList = new ArrayList();
 
-        if (bibliographicReferenceList != null && bibliographicReferenceList.isEmpty() == false)
-        {
+        if (bibliographicReferenceList != null
+                && bibliographicReferenceList.isEmpty() == false) {
             Iterator iterBibliography = bibliographicReferenceList.iterator();
-            while (iterBibliography.hasNext())
-            {
-                IBibliographicReference bibliographicRerefence =
-                    (IBibliographicReference) iterBibliography.next();
-                infobibliographicReferenceList.add(
-                    Cloner.copyIBibliographicReference2InfoBibliographicReference(
-                        bibliographicRerefence));
+            while (iterBibliography.hasNext()) {
+                IBibliographicReference bibliographicRerefence = (IBibliographicReference) iterBibliography
+                        .next();
+                infobibliographicReferenceList
+                        .add(Cloner
+                                .copyIBibliographicReference2InfoBibliographicReference(bibliographicRerefence));
             }
         }
         InfoSiteBibliography infoSiteBibliography = new InfoSiteBibliography();
-        infoSiteBibliography.setBibliographicReferences(infobibliographicReferenceList);
+        infoSiteBibliography
+                .setBibliographicReferences(infobibliographicReferenceList);
 
         InfoSite infoSite = Cloner.copyISite2InfoSite(site);
 
@@ -140,38 +134,35 @@ public class TeacherAdministrationSiteComponentServiceBibliographiesTest extends
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView =
-            new TeacherAdministrationSiteView(infoSiteCommon, infoSiteBibliography);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
+                infoSiteCommon, infoSiteBibliography);
 
         return siteView;
     }
 
     /**
-	 * This method must return 'true' if the service needs authorization to be
-	 * runned and 'false' otherwise.
-	 */
-    protected boolean needsAuthorization()
-    {
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
         return true;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-    protected int getNumberOfItemsToRetrieve()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
 

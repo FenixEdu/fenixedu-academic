@@ -42,19 +42,17 @@ public class ChangePersonalStudentInfo implements IService
         ISuportePersistente sp = null;
         IPessoa person = null;
 
-        IPessoa newPerson = new Pessoa();
-        newPerson.setIdInternal(newInfoPerson.getIdInternal());
+       
 
         try
         {
             sp = SuportePersistenteOJB.getInstance();
-            person = (IPessoa) sp.getIPessoaPersistente().readByOId(newPerson, false);
+            person = (IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class, newInfoPerson.getIdInternal());
         }
         catch (ExcepcaoPersistencia ex)
         {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+                      
+            throw new FenixServiceException("Persistence layer error",ex);
         }
 
         if (person == null) { throw new ExcepcaoInexistente("Unknown Person !!"); }

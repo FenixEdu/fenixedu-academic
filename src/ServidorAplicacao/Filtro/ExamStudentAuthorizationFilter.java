@@ -21,16 +21,13 @@ import Util.RoleType;
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
  *  
  */
-public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public ExamStudentAuthorizationFilter()
-    {
+    public ExamStudentAuthorizationFilter() {
         super();
     }
 
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.STUDENT;
     }
 
@@ -38,60 +35,51 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
-        try
-        {
-            if ((id == null) || (id.getRoles() == null)
-                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                            || !attendsExamExecutionCourse(id, arguments))
-            {
+        try {
+            if ((id == null)
+                    || (id.getRoles() == null)
+                    || !AuthorizationUtils.containsRole(id.getRoles(),
+                            getRoleType())
+                    || !attendsExamExecutionCourse(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }
-        }
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             throw new NotAuthorizedFilterException();
         }
     }
 
-    private boolean attendsExamExecutionCourse(IUserView id, Object[] argumentos)
-    {
+    private boolean attendsExamExecutionCourse(IUserView id, Object[] argumentos) {
         ISuportePersistente sp;
         IExam exam = null;
         InfoExam infoExam = null;
 
-        if (argumentos == null)
-        {
+        if (argumentos == null) {
             return false;
         }
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
 
-            if (argumentos[1] instanceof InfoExam)
-            {
+            if (argumentos[1] instanceof InfoExam) {
                 infoExam = (InfoExam) argumentos[1];
                 exam = Cloner.copyInfoExam2IExam(infoExam);
-            }
-            else
-            {
-                exam = (IExam) persistentExam.readByOId(new Exam((Integer) argumentos[1]), false);
+            } else {
+                exam = (IExam) persistentExam.readByOID(Exam.class,
+                        (Integer) argumentos[1]);
             }
 
             String username = (String) argumentos[0];
-            return persistentExam.isExamOfExecutionCourseTheStudentAttends(exam.getIdInternal(), username);
-        }
-        catch (Exception ex)
-        {
+            return persistentExam.isExamOfExecutionCourseTheStudentAttends(exam
+                    .getIdInternal(), username);
+        } catch (Exception ex) {
             return false;
         }
-        
 
     }
 

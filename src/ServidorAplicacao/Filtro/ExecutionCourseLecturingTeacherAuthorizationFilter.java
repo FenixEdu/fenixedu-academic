@@ -26,11 +26,10 @@ import Util.RoleType;
  * @author João Mota
  *  
  */
-public class ExecutionCourseLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class ExecutionCourseLecturingTeacherAuthorizationFilter extends
+        AuthorizationByRoleFilter {
 
-    public ExecutionCourseLecturingTeacherAuthorizationFilter()
-    {
+    public ExecutionCourseLecturingTeacherAuthorizationFilter() {
 
     }
 
@@ -39,8 +38,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
@@ -48,26 +46,23 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
-        try
-        {
-            if ((id == null) || (id.getRoles() == null)
-                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                            || !lecturesExecutionCourse(id, arguments))
-            {
+        try {
+            if ((id == null)
+                    || (id.getRoles() == null)
+                    || !AuthorizationUtils.containsRole(id.getRoles(),
+                            getRoleType())
+                    || !lecturesExecutionCourse(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }
-        }
-        catch (RuntimeException e)
-        {
-            throw new NotAuthorizedFilterException
-            ();
+        } catch (RuntimeException e) {
+            throw new NotAuthorizedFilterException();
         }
     }
 
@@ -76,43 +71,40 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
      * @param argumentos
      * @return
      */
-    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos)
-    {
+    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
         IExecutionCourse executionCourse = null;
         ISuportePersistente sp;
         IProfessorship professorship = null;
-        if (argumentos == null)
-        {
+        if (argumentos == null) {
             return false;
         }
-        try
-        {
+        try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            if (argumentos[0] instanceof InfoExecutionCourse)
-            {
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            }
-            else
-            {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                                new ExecutionCourse((Integer) argumentos[0]), false);
+                executionCourse = Cloner
+                        .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+            } else {
+                executionCourse = (IExecutionCourse) persistentExecutionCourse
+                        .readByOID(ExecutionCourse.class,
+                                (Integer) argumentos[0]);
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            if (teacher != null && executionCourse != null)
-            {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(
-                                teacher, executionCourse);
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
+                    .getUtilizador());
+            if (teacher != null && executionCourse != null) {
+                IPersistentProfessorship persistentProfessorship = sp
+                        .getIPersistentProfessorship();
+                professorship = persistentProfessorship
+                        .readByTeacherAndExecutionCoursePB(teacher,
+                                executionCourse);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
         return professorship != null;

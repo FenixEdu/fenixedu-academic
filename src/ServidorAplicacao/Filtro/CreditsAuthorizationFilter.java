@@ -16,6 +16,7 @@ import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -25,22 +26,20 @@ import Util.RoleType;
 /**
  * @author jpvl
  */
-public class CreditsAuthorizationFilter extends Filtro
-{
+public class CreditsAuthorizationFilter extends Filtro {
 
     // the singleton of this class
-    public CreditsAuthorizationFilter()
-    {
+    public CreditsAuthorizationFilter() {
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
         IUserView requester = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
@@ -48,60 +47,52 @@ public class CreditsAuthorizationFilter extends Filtro
         boolean authorizedRequester = false;
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         // ATTENTION: ifs order matters...
-        if (AuthorizationUtils.containsRole(roles, RoleType.CREDITS_MANAGER))
-        {
+        if (AuthorizationUtils.containsRole(roles, RoleType.CREDITS_MANAGER)) {
             authorizedRequester = true;
-        }
-        else if (AuthorizationUtils.containsRole(roles, RoleType.DEPARTMENT_CREDITS_MANAGER))
-        {
+        } else if (AuthorizationUtils.containsRole(roles,
+                RoleType.DEPARTMENT_CREDITS_MANAGER)) {
             ITeacher teacherToEdit = readTeacher(arguments[0], sp);
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester
+                    .getUtilizador());
 
-            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
-            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
+            List departmentsWithAccessGranted = requesterPerson
+                    .getManageableDepartmentCredits();
+            IPersistentDepartment departmentDAO = sp
+                    .getIDepartamentoPersistente();
             IDepartment department = departmentDAO.readByTeacher(teacherToEdit);
-            if (department == null)
-            {
-                System.out.println("----------->" + teacherToEdit.getTeacherNumber()
-                                + " doesn't have department!");
-            }
+            authorizedRequester = departmentsWithAccessGranted
+                    .contains(department);
 
-            authorizedRequester = departmentsWithAccessGranted.contains(department);
-
-        }
-        else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER))
-        {
+        } else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER)) {
             ITeacher teacherToEdit = readTeacher(arguments[0], sp);
-            authorizedRequester = teacherToEdit.getPerson().getUsername().equals(
-                            requester.getUtilizador());
+            authorizedRequester = teacherToEdit.getPerson().getUsername()
+                    .equals(requester.getUtilizador());
 
         }
 
-        if (!authorizedRequester)
-        {
-            throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
-                            + "ACCESS NOT GRANTED!");
+        if (!authorizedRequester) {
+            throw new NotAuthorizedFilterException(" -----------> User = "
+                    + requester.getUtilizador() + "ACCESS NOT GRANTED!");
         }
 
     }
 
     /**
      * @param object
-     * @return
+     * @return @throws
+     *         ExcepcaoPersistencia
      */
     private ITeacher readTeacher(Object object, ISuportePersistente sp)
-    {
+            throws ExcepcaoPersistencia {
         Integer teacherOID = null;
-        if (object instanceof InfoTeacher)
-        {
+        if (object instanceof InfoTeacher) {
             teacherOID = ((InfoTeacher) object).getIdInternal();
-        }
-        else if (object instanceof Integer)
-        {
+        } else if (object instanceof Integer) {
             teacherOID = (Integer) object;
         }
-        return (ITeacher) sp.getIPersistentTeacher().readByOId(new Teacher(teacherOID), false);
+        return (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class,
+                teacherOID);
     }
 }

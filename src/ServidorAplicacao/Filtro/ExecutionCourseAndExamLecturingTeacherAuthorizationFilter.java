@@ -62,7 +62,9 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends
                     || !AuthorizationUtils.containsRole(id.getRoles(),
                             getRoleType())
                     || !lecturesExecutionCourse(id, arguments)
-                    || !examBelongsExecutionCourse(id, arguments)) { throw new NotAuthorizedFilterException(); }
+                    || !examBelongsExecutionCourse(id, arguments)) {
+                throw new NotAuthorizedFilterException();
+            }
         } catch (RuntimeException e) {
             throw new NotAuthorizedFilterException();
         }
@@ -79,7 +81,9 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends
         IExecutionCourse executionCourse = null;
         ISuportePersistente sp;
         IProfessorship professorship = null;
-        if (argumentos == null) { return false; }
+        if (argumentos == null) {
+            return false;
+        }
         try {
 
             sp = SuportePersistenteOJB.getInstance();
@@ -91,9 +95,8 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends
                         .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
             } else {
                 executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOId(
-                                new ExecutionCourse((Integer) argumentos[0]),
-                                false);
+                        .readByOID(ExecutionCourse.class,
+                                (Integer) argumentos[0]);
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -120,7 +123,9 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends
         InfoExam infoExam = null;
         IExam exam = null;
 
-        if (argumentos == null) { return false; }
+        if (argumentos == null) {
+            return false;
+        }
         try {
             sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = sp
@@ -133,17 +138,16 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends
                         .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
             } else {
                 executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOId(
-                                new ExecutionCourse((Integer) argumentos[0]),
-                                false);
+                        .readByOID(ExecutionCourse.class,
+                                (Integer) argumentos[0]);
             }
 
             if (argumentos[1] instanceof InfoExam) {
                 infoExam = (InfoExam) argumentos[1];
                 exam = Cloner.copyInfoExam2IExam(infoExam);
             } else {
-                exam = (IExam) persistentExam.readByOId(new Exam(
-                        (Integer) argumentos[1]), false);
+                exam = (IExam) persistentExam.readByOID(Exam.class,
+                        (Integer) argumentos[1]);
             }
 
             if (executionCourse != null && exam != null) {

@@ -27,11 +27,10 @@ import Util.RoleType;
  * @author João Mota
  *  
  */
-public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class CurrentDegreeCoordinatorAuthorizationFilter extends
+        AuthorizationByRoleFilter {
 
-    public CurrentDegreeCoordinatorAuthorizationFilter()
-    {
+    public CurrentDegreeCoordinatorAuthorizationFilter() {
     }
 
     /*
@@ -39,8 +38,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
@@ -48,61 +46,59 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
-        try
-        {
-            if ((id == null) || (id.getRoles() == null)
-                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                            || !isCoordinatorOfCurrentExecutionDegree(id, argumentos))
-            {
+        try {
+            if ((id == null)
+                    || (id.getRoles() == null)
+                    || !AuthorizationUtils.containsRole(id.getRoles(),
+                            getRoleType())
+                    || !isCoordinatorOfCurrentExecutionDegree(id, argumentos)) {
                 throw new NotAuthorizedException();
             }
-        }
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             throw new NotAuthorizedFilterException();
         }
     }
 
-    private boolean isCoordinatorOfCurrentExecutionDegree(IUserView id, Object[] argumentos)
-    {
+    private boolean isCoordinatorOfCurrentExecutionDegree(IUserView id,
+            Object[] argumentos) {
 
         ISuportePersistente sp;
         boolean result = false;
-        if (argumentos == null)
-        {
+        if (argumentos == null) {
             return result;
         }
-        if (argumentos[0] == null)
-        {
+        if (argumentos[0] == null) {
             return result;
         }
-        try
-        {
+        try {
 
             sp = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(
-                            new CursoExecucao((Integer) argumentos[0]), false);
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
+                    .getUtilizador());
+            IPersistentCoordinator persistentCoordinator = sp
+                    .getIPersistentCoordinator();
+            ICursoExecucaoPersistente persistentExecutionDegree = sp
+                    .getICursoExecucaoPersistente();
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
+                    .readByOID(CursoExecucao.class, (Integer) argumentos[0]);
             IExecutionYear executionYear = executionDegree.getExecutionYear();
 
-            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(
-                            teacher, executionDegree);
+            ICoordinator coordinator = persistentCoordinator
+                    .readCoordinatorByTeacherAndExecutionDegree(teacher,
+                            executionDegree);
 
-            result = (coordinator != null) && executionYear.getState().equals(PeriodState.CURRENT);
+            result = (coordinator != null)
+                    && executionYear.getState().equals(PeriodState.CURRENT);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
 

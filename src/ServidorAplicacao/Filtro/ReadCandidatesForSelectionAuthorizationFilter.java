@@ -24,11 +24,9 @@ import Util.TipoCurso;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
-{
+public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
-    public ReadCandidatesForSelectionAuthorizationFilter()
-    {
+    public ReadCandidatesForSelectionAuthorizationFilter() {
 
     }
 
@@ -36,17 +34,16 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
-		
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws Exception {
+
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                        || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-                        || (id == null) || (id.getRoles() == null))
-        {
+                || (id != null && id.getRoles() != null && !hasPrivilege(id,
+                        argumentos)) || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -55,16 +52,12 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
      * @param collection
      * @return boolean
      */
-    private boolean containsRole(Collection roles)
-    {
+    private boolean containsRole(Collection roles) {
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        if (roles.size() != 0)
-        {
+        if (roles.size() != 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -72,8 +65,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
     /**
      * @return The Needed Roles to Execute The Service
      */
-    private Collection getNeededRoles()
-    {
+    private Collection getNeededRoles() {
         List roles = new ArrayList();
 
         InfoRole infoRole = new InfoRole();
@@ -92,84 +84,70 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments)
-    {
-		
+    private boolean hasPrivilege(IUserView id, Object[] arguments) {
+
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        /*String executionYearString = (String) arguments[0];
-        String degreeCode = (String) arguments[1];*/
-		
-		Integer executionDegreeID =(Integer) arguments[0];
-	
+        /*
+         * String executionYearString = (String) arguments[0]; String degreeCode =
+         * (String) arguments[1];
+         */
+
+        Integer executionDegreeID = (Integer) arguments[0];
+
         ICursoExecucao executionDegree = null;
 
         // Read The DegreeCurricularPlan
-        try
-        {
-           /* IExecutionYear executionYear = new ExecutionYear();
-            executionYear.setYear(executionYearString);*/
-			ICursoExecucao cursoExecucao = new CursoExecucao();
-			cursoExecucao.setIdInternal(executionDegreeID);
+        try {
 
-            /*executionDegree = SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente()
-                            .readByDegreeCodeAndExecutionYear(degreeCode, executionYear);*/
-			executionDegree = (CursoExecucao) SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente()
-                            .readByOId(cursoExecucao,false);	
+            executionDegree = (CursoExecucao) SuportePersistenteOJB
+                    .getInstance().getICursoExecucaoPersistente().readByOID(
+                            CursoExecucao.class, executionDegreeID);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
 
-        if (executionDegree == null)
-        {
+        if (executionDegree == null) {
             return false;
         }
 
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-        if (CollectionUtils.containsAny(roles, roleTemp))
-        {
-            if (executionDegree.getCurricularPlan().getDegree().getTipoCurso().equals(
-                            TipoCurso.MESTRADO_OBJ))
-            {
+        if (CollectionUtils.containsAny(roles, roleTemp)) {
+            if (executionDegree.getCurricularPlan().getDegree().getTipoCurso()
+                    .equals(TipoCurso.MESTRADO_OBJ)) {
 
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
 
         roleTemp = new ArrayList();
         roleTemp.add(RoleType.COORDINATOR);
-        if (CollectionUtils.containsAny(roles, roleTemp))
-        {
+        if (CollectionUtils.containsAny(roles, roleTemp)) {
 
             // Read The ExecutionDegree
-            try
-            {
+            try {
                 // IMPORTANT: It's assumed that the coordinator for a Degree is
                 // ALWAYS the same
 
                 //modified by Tânia Pousão
-                List coodinatorsList = SuportePersistenteOJB.getInstance().getIPersistentCoordinator()
-                                .readCoordinatorsByExecutionDegree(executionDegree);
-                if (coodinatorsList == null)
-                {
+                List coodinatorsList = SuportePersistenteOJB.getInstance()
+                        .getIPersistentCoordinator()
+                        .readCoordinatorsByExecutionDegree(executionDegree);
+                if (coodinatorsList == null) {
                     return false;
                 }
                 ListIterator listIterator = coodinatorsList.listIterator();
-                while (listIterator.hasNext())
-                {
-                    ICoordinator coordinator = (ICoordinator) listIterator.next();
+                while (listIterator.hasNext()) {
+                    ICoordinator coordinator = (ICoordinator) listIterator
+                            .next();
 
-                    if (id.getUtilizador().equals(coordinator.getTeacher().getPerson().getUsername()))
-                    {
+                    if (id.getUtilizador().equals(
+                            coordinator.getTeacher().getPerson().getUsername())) {
                         return true;
                     }
                 }
@@ -188,21 +166,17 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
                 //                {
                 //                    return false;
                 //                }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 return false;
             }
         }
         return false;
     }
 
-    private List getRoleList(List roles)
-    {
+    private List getRoleList(List roles) {
         List result = new ArrayList();
         Iterator iterator = roles.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             result.add(((InfoRole) iterator.next()).getRoleType());
         }
 
