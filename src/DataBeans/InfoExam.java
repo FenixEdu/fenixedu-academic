@@ -10,12 +10,13 @@ package DataBeans;
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import Util.Season;
 
-public class InfoExam extends InfoObject implements ISiteComponent{
+public class InfoExam extends InfoObject implements ISiteComponent {
 	protected Calendar day;
 	protected Calendar beginning;
 	protected Calendar end;
@@ -26,8 +27,6 @@ public class InfoExam extends InfoObject implements ISiteComponent{
 	protected Calendar enrollmentEndTime;
 	protected List associatedRooms;
 	protected String publishmentMessage;
-
-	
 
 	/**
 	 * The following variable serves the purpose of indicating the
@@ -50,6 +49,7 @@ public class InfoExam extends InfoObject implements ISiteComponent{
 		this.setBeginning(beginning);
 		this.setEnd(end);
 		this.setSeason(season);
+		this.setAssociatedRooms(new ArrayList());
 	}
 
 	public String toString() {
@@ -279,10 +279,10 @@ public class InfoExam extends InfoObject implements ISiteComponent{
 
 			result += calendar.get(Calendar.HOUR_OF_DAY);
 			result += ":";
-			if (calendar.get(Calendar.MINUTE)<10){
+			if (calendar.get(Calendar.MINUTE) < 10) {
 				result += "0";
 				result += calendar.get(Calendar.MINUTE);
-			}else{
+			} else {
 				result += calendar.get(Calendar.MINUTE);
 			}
 		}
@@ -300,5 +300,30 @@ public class InfoExam extends InfoObject implements ISiteComponent{
 	}
 	public String getEnrollmentEndTimeFormatted() {
 		return timeFormatter(getEnrollmentEndTime());
+	}
+
+	public boolean getEnrollmentAuthorization() {
+		Calendar enrollmentEnd = Calendar.getInstance();
+		enrollmentEnd.set(
+			Calendar.DAY_OF_MONTH,
+			getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
+		enrollmentEnd.set(
+			Calendar.MONTH,
+			getEnrollmentEndDay().get(Calendar.MONTH));
+		enrollmentEnd.set(
+			Calendar.YEAR,
+			getEnrollmentEndDay().get(Calendar.YEAR));
+		enrollmentEnd.set(
+			Calendar.HOUR_OF_DAY,
+			getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
+		enrollmentEnd.set(
+			Calendar.MINUTE,
+			getEnrollmentEndTime().get(Calendar.MINUTE));
+		Calendar now = Calendar.getInstance();
+		if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
