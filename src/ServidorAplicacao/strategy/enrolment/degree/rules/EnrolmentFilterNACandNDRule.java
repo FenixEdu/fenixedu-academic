@@ -7,7 +7,6 @@ import java.util.List;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -18,7 +17,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 // NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser chamada DEPOIS das regras do BRANCH e do SEMESTER
 public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
+	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
 		List possibleScopes = new ArrayList();
 		int possibleNAC = 0;

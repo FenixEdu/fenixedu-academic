@@ -22,6 +22,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -86,11 +87,11 @@ public abstract class EnrolmentContextManager {
 //		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(computeScopesOfCurricularCourses(studentCurricularPlanCurricularCourses));
 		enrolmentContext.setStudent(student);
 		enrolmentContext.setSemester(semester);
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(
-			computeCurricularCoursesScopesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
+		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(computeCurricularCoursesScopesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
 		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
 		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
+		enrolmentContext.setEnrolmentValidationResult(new EnrolmentValidationResult());
 
 		return enrolmentContext;
 	}

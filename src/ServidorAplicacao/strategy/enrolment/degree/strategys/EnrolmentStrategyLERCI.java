@@ -6,7 +6,6 @@ import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandND
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentValidateNACandNDRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -20,7 +19,7 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 	public EnrolmentStrategyLERCI() {
 	}
 
-	public EnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia {
+	public EnrolmentContext getAvailableCurricularCourses() {
 		IEnrolmentRule enrolmentRule = null;
 
 		enrolmentRule = new EnrolmentFilterBranchRule();
@@ -50,11 +49,16 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		this.enrolmentContext = enrolmentContext;
 	}
 
-	public EnrolmentContext validateEnrolment() throws ExcepcaoPersistencia {
+	public EnrolmentContext validateEnrolment() {
 		IEnrolmentRule validateRule = null;
 
 		validateRule = new EnrolmentValidateNACandNDRule();
 		this.enrolmentContext = validateRule.apply(this.enrolmentContext);
+		
+		if (this.enrolmentContext.getEnrolmentValidationResult().isSucess()) {
+			// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
+			this.enrolmentContext.getEnrolmentValidationResult().setSucessMessage("Inscrição realizada com sucesso");
+		}
 		return this.enrolmentContext;
 	}
 

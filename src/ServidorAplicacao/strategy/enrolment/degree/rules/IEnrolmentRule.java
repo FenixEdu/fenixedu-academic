@@ -1,7 +1,6 @@
 package ServidorAplicacao.strategy.enrolment.degree.rules;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -10,5 +9,5 @@ import ServidorPersistente.ExcepcaoPersistencia;
  */
 public interface IEnrolmentRule {
 
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia;
+	public EnrolmentContext apply(EnrolmentContext enrolmentContext);
 }

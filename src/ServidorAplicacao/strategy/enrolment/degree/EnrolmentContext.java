@@ -10,6 +10,7 @@ import java.util.Map;
 
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 
 /**
  * @author jpvl
@@ -19,7 +20,7 @@ public final class EnrolmentContext {
 	private List curricularCoursesDoneByStudent;
 	private Map acumulatedEnrolments;
 	private Integer semester;
-	private List validateMessage;
+	private EnrolmentValidationResult enrolmentValidationResult;
 
 	private IStudentCurricularPlan studentActiveCurricularPlan;
 
@@ -152,29 +153,30 @@ public final class EnrolmentContext {
 	//		this.curricularCoursesFromStudentCurricularPlan = curricularCoursesFromStudentCurricularPlan;
 	//	}
 	//
-	/**
-	 * @return List
-	 */
-	public List getValidateMessage() {
-		return validateMessage;
-	}
-
-	/**
-	 * Sets the validateMessage.
-	 * @param validateMessage The validateMessage to set
-	 */
-	public void setValidateMessage(List validateMessage) {
-		this.validateMessage = validateMessage;
-	}
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "]";
-		result += "\n StudentActiveCurricularPlan = " + this.studentActiveCurricularPlan + "]";
-		result += "\n actualEnrolment = " + this.actualEnrolment + "]";
-		result += "\n finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "]";
-		result += "\n validade message = " + this.validateMessage + "]";
-		result += "\n student = " + this.student + "]";
+		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "\n";
+		result += "StudentActiveCurricularPlan = " + this.studentActiveCurricularPlan + "\n";
+		result += "actualEnrolment = " + this.actualEnrolment + "\n";
+		result += "finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "\n";
+		result += "enrolmentValidationResult = " + this.enrolmentValidationResult + "\n";
+		result += "student = " + this.student + "]";
 		return result;
 	}	
+	/**
+	 * @return EnrolmentValidationResult
+	 */
+	public EnrolmentValidationResult getEnrolmentValidationResult() {
+		return enrolmentValidationResult;
+	}
+
+	/**
+	 * Sets the enrolmentValidationResult.
+	 * @param enrolmentValidationResult The enrolmentValidationResult to set
+	 */
+	public void setEnrolmentValidationResult(EnrolmentValidationResult enrolmentValidationError) {
+		this.enrolmentValidationResult = enrolmentValidationError;
+	}
+
 }

@@ -26,18 +26,23 @@ public class EnrolmentFilterPrecedenceRule implements IEnrolmentRule {
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule#apply(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
 	 */
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext)
-		throws ExcepcaoPersistencia {
+	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		List precedenceList = null;
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+
 		IStudentCurricularPlan studentActiveCurricularPlan =
 			enrolmentContext.getStudentActiveCurricularPlan();
 
-		IPersistentPrecedence precedenceDAO = sp.getIPersistentPrecedence();
-
-		precedenceList =
-			precedenceDAO.readByDegreeCurricularPlan(
-				studentActiveCurricularPlan.getDegreeCurricularPlan());
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentPrecedence precedenceDAO = sp.getIPersistentPrecedence();
+			precedenceList =
+				precedenceDAO.readByDegreeCurricularPlan(
+					studentActiveCurricularPlan.getDegreeCurricularPlan());
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace(System.out);
+			throw new IllegalStateException("Cannot read from data base");
+		}
 
 		List curricularCourseScopesToStay = new ArrayList();
 

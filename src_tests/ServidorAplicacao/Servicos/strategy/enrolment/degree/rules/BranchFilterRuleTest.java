@@ -14,7 +14,6 @@ import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
-import ServidorPersistente.ExcepcaoPersistencia;
 import Tools.dbaccess;
 import Util.TipoCurso;
 
@@ -60,13 +59,6 @@ public class BranchFilterRuleTest extends BaseEnrolmentRuleTest {
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {
-		try {
-			sp.iniciarTransaccao();
 			enrolmentRule.apply(enrolmentContext);
-			sp.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e1) {
-			e1.printStackTrace();
-			fail("Applying rule!");
-		}
 	}
 }

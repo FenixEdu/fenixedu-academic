@@ -1,13 +1,10 @@
 package ServidorAplicacao.strategy.enrolment.degree.rules;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -17,10 +14,8 @@ import ServidorPersistente.ExcepcaoPersistencia;
 
 public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
+	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		
-		List validateMessages = new ArrayList();
-
 		HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
 		int NAC = 0;
 
@@ -36,17 +31,19 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 			}
 		}
 
+		// FIXME: David-Ricardo: Parametrizar possibleND, possibleNAC e year
+		// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
+
+		//		FIXME: David-Ricardo: A regra dos 3 nao se aplica aos trabalhadores estudantes
+		if (enrolmentContext.getActualEnrolment().size() < 3) {
+			enrolmentContext.getEnrolmentValidationResult().setMessage("Deve inscrever-se a pelo menos 3 disciplinas");
+		}
 		if (enrolmentContext.getActualEnrolment().size() > 7) {
-			validateMessages.add("Não se pode inscrever a mais de 7 disciplinas");
+			enrolmentContext.getEnrolmentValidationResult().setMessage("Não se pode inscrever a mais de 7 disciplinas");
 		}
 		if (NAC > 10) {
-			validateMessages.add("Não se pode inscrever a mais de 10 disciplinas acumuladas");
+			enrolmentContext.getEnrolmentValidationResult().setMessage("Não se pode inscrever a mais de 10 disciplinas acumuladas");
 		}
-		if (validateMessages.isEmpty()) {
-			validateMessages.add("Inscrição realizada com sucesso");
-		}
-
-		enrolmentContext.setValidateMessage(validateMessages);
 		return enrolmentContext;
 	}
 }

@@ -10,8 +10,8 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterPrecedenceRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Tools.dbaccess;
 import Util.TipoCurso;
@@ -67,6 +67,4 @@ public class PrecedenceFilterRuleTest extends BaseEnrolmentRuleTest {
 			fail("Applying rule!");
 		}
 	}
-	
-	
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import Dominio.IBranch;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -16,7 +15,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
  */
 public class EnrolmentFilterBranchRule implements IEnrolmentRule {
 
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
+	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 
 		List curricularCoursesScopesFromBranch = new ArrayList();
 

@@ -1,5 +1,3 @@
-import java.util.Iterator;
-
 import DataBeans.InfoCurricularCourseScope;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -32,10 +30,7 @@ public class InscTeste {
 			System.out.println(infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 
 
-			Iterator iterator = infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
-			for(int i = 0; i < 7; i++) {
-//			while (iterator.hasNext()) {
-//				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
+			for(int i = 0; i < 2; i++) {
 				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 				infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 			}
@@ -44,7 +39,7 @@ public class InscTeste {
 			Object serviceArgs2[] = {infoEnrolmentContext};
 			result = gestor.executar(userView, "ValidateActualEnrolment", serviceArgs2);
 			infoEnrolmentContext = (InfoEnrolmentContext) result;
-			System.out.println(infoEnrolmentContext.getValidateMessage());
+			System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

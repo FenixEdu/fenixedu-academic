@@ -5,6 +5,7 @@ import java.util.Map;
 
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
+import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 
 
 /**
@@ -19,16 +20,15 @@ public class InfoEnrolmentContext {
 	private InfoStudentCurricularPlan infoStudentActiveCurricularPlan;
 	private List actualEnrolment;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
-	private List validateMessage;
 	private InfoStudent infoStudent;
 	private Integer semester;
+	private EnrolmentValidationResult enrolmentValidationResult;
 	
 	public InfoEnrolmentContext() {
 		setAcumulatedEnrolments(null);
 		setInfoStudentActiveCurricularPlan(null);
 		setActualEnrolment(null);
 		setFinalCurricularCoursesScopesSpanToBeEnrolled(null);
-		setValidateMessage(null);
 		setInfoStudent(null);
 		setSemester(null);
 	}
@@ -45,13 +45,14 @@ public class InfoEnrolmentContext {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "]";
-		result += "\n StudentActiveCurricularPlan = " + this.infoStudentActiveCurricularPlan + "]";
-		result += "\n actualEnrolment = " + this.actualEnrolment + "]";
-		result += "\n finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "]";
-		result += "\n validade message = " + this.validateMessage + "]";
-		result += "\n student = " + this.infoStudent + "]";
-		result += "\n semester= " + this.semester + "]";
+		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "\n";
+		result += "StudentActiveCurricularPlan = " + this.infoStudentActiveCurricularPlan + "\n";
+		result += "actualEnrolment = " + this.actualEnrolment + "\n";
+		result += "finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "\n";
+		result += "enrolmentValidationResult = " + this.enrolmentValidationResult + "\n";
+		result += "student = " + this.infoStudent + "\n";
+		result += "semester= " + this.semester + "]";
+
 		return result;
 	}
 
@@ -114,20 +115,6 @@ public class InfoEnrolmentContext {
 	public void setInfoStudentActiveCurricularPlan(InfoStudentCurricularPlan infoStudentActiveCurricularPlan) {
 		this.infoStudentActiveCurricularPlan = infoStudentActiveCurricularPlan;
 	}
-	/**
-	 * @return List
-	 */
-	public List getValidateMessage() {
-		return validateMessage;
-	}
-
-	/**
-	 * Sets the validateMessage.
-	 * @param validateMessage The validateMessage to set
-	 */
-	public void setValidateMessage(List validateMessage) {
-		this.validateMessage = validateMessage;
-	}
 
 	/**
 	 * @return InfoStudent
@@ -157,6 +144,21 @@ public class InfoEnrolmentContext {
 	 */
 	public void setSemester(Integer semester) {
 		this.semester = semester;
+	}
+
+	/**
+	 * @return EnrolmentValidationResult
+	 */
+	public EnrolmentValidationResult getEnrolmentValidationResult() {
+		return enrolmentValidationResult;
+	}
+
+	/**
+	 * Sets the enrolmentValidationResult.
+	 * @param enrolmentValidationResult The enrolmentValidationResult to set
+	 */
+	public void setEnrolmentValidationResult(EnrolmentValidationResult enrolmentValidationError) {
+		this.enrolmentValidationResult = enrolmentValidationError;
 	}
 
 }
