@@ -257,9 +257,13 @@ public class SearchCoursesInformationAction extends SearchAction {
                     
                     Object[] args = { infoTeacher };
                     IUserView userView = SessionUtils.getUserView(request);
-                    InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(userView, "ReadDepartmentByTeacher", args);
-                    teacher.setDepartment(infoDepartment.getName());
                     
+                    try {
+                        InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(userView, "ReadDepartmentByTeacher", args);                        
+                        teacher.setDepartment(infoDepartment.getName());
+                    } catch (FenixServiceException fse) {
+                        teacher.setDepartment("Desconhecido");
+                    }
                     teachers.add(teacher);
                 }
                 infoCourse.setTeachers(teachers);
