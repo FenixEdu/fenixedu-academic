@@ -77,7 +77,6 @@ import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Equivalence;
 import Dominio.Evaluation;
 import Dominio.Exam;
-import Dominio.ExamStudentRoom;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Frequenta;
@@ -108,6 +107,7 @@ import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
 import Dominio.IEvaluation;
 import Dominio.IExam;
+import Dominio.IExamStudentRoom;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
@@ -2107,7 +2107,7 @@ public abstract class Cloner {
 	 * @param examStudentRoom
 	 * @return
 	 */
-	public static InfoExamStudentRoom copyIExamStudentRoom2InfoExamStudentRoom(ExamStudentRoom examStudentRoom) {
+	public static InfoExamStudentRoom copyIExamStudentRoom2InfoExamStudentRoom(IExamStudentRoom examStudentRoom) {
 		
 		InfoExam infoExam =
 			Cloner.copyIExam2InfoExam(examStudentRoom.getExam());
