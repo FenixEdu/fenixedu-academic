@@ -10,7 +10,12 @@
 		<logic:iterate id="role" name="userView" property="roles">
 			<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
 			<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
-			<td width="20%" nowrap class="navopgeral-td">
+			<logic:equal name="role" property="portalSubApplication" value="/degreeAdministrativeOffice">
+			    <td width="20%" nowrap class="navopgeralSelected-td">
+			</logic:equal>
+			<logic:notEqual name="role" property="portalSubApplication" value="/degreeAdministrativeOffice">
+			    <td width="20%" nowrap class="navopgeral-td">
+			</logic:notEqual>
 				<html:link href='<%= link %>'><bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/></html:link>
 			</td>
 		</logic:iterate>

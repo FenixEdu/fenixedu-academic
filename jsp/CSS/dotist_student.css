@@ -116,6 +116,18 @@ a:hover {
 	border-right-color: #b5bdd6;
 	}
 
+.navopgeralSelected-td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	background-color: #6699DD;
+	text-align: center;
+	padding: 5px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #b5bdd6;
+	}
+
 .navlateral-td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;

@@ -7,6 +7,7 @@
 	  <put name="serviceName" value="Portal do Estudante" />	
 	  <put name="photos" value="/student/commons/commonEntrPhotosStudent.jsp" />
 <!--	  <put name="context-body" value=" "/> -->
+	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
 	  <put name="body" value=" " />
 	  <put name="footer" value="/student/commons/commonFooterStudent.jsp" />
 	</definition>
