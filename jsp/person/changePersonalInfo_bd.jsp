@@ -77,7 +77,10 @@
                 <!-- Numero do Documento de Identificacao -->
                 <tr>
                  <td><bean:message key="label.person.identificationDocumentNumber" /></td>
-                  <td><html:text property="identificationDocumentNumber"/></td>
+                  <td><bean:write name="personalInfo" property="numeroDocumentoIdentificacao"/></td>
+				  <!-- <html:text property="identificationDocumentNumber"/> -->
+				  <html:hidden property="identificationDocumentNumber" />
+				  
                 </tr>
                 <!-- Local de Emissao do Documento de Identificacao -->
                 <tr>
@@ -116,9 +119,11 @@
                 <tr>
                  <td><bean:message key="label.person.identificationDocumentType" /></td>
                  <td>
-                    <html:select property="identificationDocumentType">
+                    <!-- <html:select property="identificationDocumentType">
                         <html:options collection="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY %>" property="value" labelProperty="label"/>
-                     </html:select>          
+                     </html:select> -->
+                     <bean:write name="personalInfo" property="tipoDocumentoIdentificacao"/>
+                     <html:hidden property="identificationDocumentType" />          
                  </td>
                 </tr>
                 <!-- Morada -->
