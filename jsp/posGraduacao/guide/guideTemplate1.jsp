@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="Util.CalculateGuideTotal" %>
 
 <html>
     <head>
@@ -104,7 +105,7 @@
     			<td>.........................................</td>&nbsp;
                 <bean:define id="price" name="guideEntry" property="price" />
                 <bean:define id="quantity" name="guideEntry" property="quantity" />
-                <td><%= new Double(pageContext.findAttribute("price").toString()).floatValue() *  new Integer(pageContext.findAttribute("quantity").toString()).intValue() %>&nbsp;<bean:message key="label.currencySymbol"/></td>
+                <td><%= CalculateGuideTotal.formatNumber(new Double(new Double(pageContext.findAttribute("price").toString()).floatValue() *  new Integer(pageContext.findAttribute("quantity").toString()).intValue())) %>&nbsp;<bean:message key="label.currencySymbol"/></td>
         	  </tr>
         	</logic:iterate >
         <tr>

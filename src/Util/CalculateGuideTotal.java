@@ -20,6 +20,27 @@ public class CalculateGuideTotal {
 
 		}
 		
+//		NumberFormat numberFormat = NumberFormat.getInstance();
+//		StringBuffer stringBuffer = new StringBuffer();
+//		FieldPosition fieldPosition = new FieldPosition(0);
+//		
+//		numberFormat.setGroupingUsed(false);
+//		numberFormat.setMaximumFractionDigits(2);
+//		
+//		numberFormat.format(total, stringBuffer, fieldPosition);
+//		int commaPosition = stringBuffer.indexOf(",");
+//		
+//		if (commaPosition != -1) {
+//			stringBuffer = stringBuffer.replace(commaPosition, commaPosition + 1, ".");
+//			total = new Double(stringBuffer.toString());
+//		}
+//		return total;
+		
+		return CalculateGuideTotal.formatNumber(total);
+
+	}
+  
+  	public static Double formatNumber(Double numberToFormat){
 		NumberFormat numberFormat = NumberFormat.getInstance();
 		StringBuffer stringBuffer = new StringBuffer();
 		FieldPosition fieldPosition = new FieldPosition(0);
@@ -27,14 +48,15 @@ public class CalculateGuideTotal {
 		numberFormat.setGroupingUsed(false);
 		numberFormat.setMaximumFractionDigits(2);
 		
-		numberFormat.format(total, stringBuffer, fieldPosition);
+		numberFormat.format(numberToFormat, stringBuffer, fieldPosition);
 		int commaPosition = stringBuffer.indexOf(",");
 		
 		if (commaPosition != -1) {
 			stringBuffer = stringBuffer.replace(commaPosition, commaPosition + 1, ".");
-			total = new Double(stringBuffer.toString());
+			numberToFormat = new Double(stringBuffer.toString());
 		}
-		return total;
-	}
+		return numberToFormat;
+  		
+  	}
   
 }

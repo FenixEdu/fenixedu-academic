@@ -288,11 +288,16 @@ public class EditGuideDispatchAction extends DispatchAction {
 						
 						// This is made to verify if the argument is a valid one. If it's not
 						// it will give a NumberFormatException 
-						Integer value = new Integer(request.getParameter(parameter));
-						if (value.intValue() < 0 )
-							throw new InvalidInformationInFormActionException(null);
-						
-						quantityList[new Integer(position).intValue()] = String.valueOf(value);
+						String quantityString = request.getParameter(parameter);
+						if (quantityString.equals(null) || (quantityString.length() == 0)){
+							quantityList[new Integer(position).intValue()] = new Integer(0).toString();
+						} else {
+							Integer value = new Integer(request.getParameter(parameter));
+							if (value.intValue() < 0 )
+								throw new InvalidInformationInFormActionException(null);
+							
+							quantityList[new Integer(position).intValue()] = String.valueOf(value);
+						}
 					}
 				}
 			} catch(NumberFormatException e) {
