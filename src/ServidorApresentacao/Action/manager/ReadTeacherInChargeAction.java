@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -35,6 +36,16 @@ public class ReadTeacherInChargeAction extends FenixAction {
 
 		Object args[] = { executionCourseId };
 		
+		InfoExecutionCourse infoExecutionCourse = null;
+
+				try {
+					infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView, "ReadExecutionCourse", args);
+			
+				} catch (FenixServiceException fenixServiceException) {
+					throw new FenixActionException(fenixServiceException.getMessage());
+				}
+				
+				
 		List infoTeachersList = null;
 
 		try {
@@ -69,6 +80,8 @@ public class ReadTeacherInChargeAction extends FenixAction {
 			Integer[] responsibleTeachersIds = (Integer[]) responsiblesIds.toArray(new Integer[]{});
 			newForm.set("responsibleTeachersIds", responsibleTeachersIds);
 			request.setAttribute("infoTeachersList", infoTeachersList);
+			request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
+
 		}
 		
 		return mapping.findForward("readExecutionCourseTeachers");

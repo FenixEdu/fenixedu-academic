@@ -3,10 +3,24 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<h3><bean:message key="label.manager.teachers.modification"/></h3>
+<table>
+	<tr>
+			<td>
+				<h3><bean:message key="label.manager.execution.course.name"/></h3>
+			</td>
+			<td>
+				
+				<bean:define id="executionCourseName" name="executionCourseName"/>
+				<h2><b><bean:write name="executionCourseName"/></b></h2>
+			</td>	
+	</tr>
+	<tr>
+		<h3><bean:message key="label.manager.teachers.modification"/></h3>
+	</tr>
+</table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="<%="/insertProfessorShipByNumber.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>">
+	<li><html:link page="<%="/insertProfessorShipByNumber.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>" paramId="executionCourseName" paramName="executionCourseName">
 			<bean:message key="label.manager.insert.professorShip.by.number"/>
 		</html:link>
 	</li>

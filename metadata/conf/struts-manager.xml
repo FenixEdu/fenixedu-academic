@@ -727,6 +727,17 @@
          <forward name="readExecutionPeriods" path="/readExecutionPeriods.do"/>    	      
 	</action>
     
+    <action
+		path="/createSite"
+		input="/readCurricularCourse.do"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.CreateSiteInExecutionCourseAction"
+        validate="true">
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="readCurricularCourse" path="readCurricularCourse.do"/>    	      
+	</action>
       <!--Input actions-->  
      <action path="/readDegreesInput"
      		scope="request"

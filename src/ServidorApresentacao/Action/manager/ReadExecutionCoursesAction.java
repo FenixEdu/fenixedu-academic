@@ -46,7 +46,7 @@ public class ReadExecutionCoursesAction extends FenixAction {
 								"ReadExecutionCoursesByExecutionPeriod",
 								args);
 		
-//				if (executionCourses != null)
+//	TODO:			if (executionCourses != null)
 //			Collections.sort(executionCourses, new BeanComparator("nome"));
 			
 			} catch (FenixServiceException e) {

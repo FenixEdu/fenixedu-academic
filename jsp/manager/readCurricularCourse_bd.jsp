@@ -83,7 +83,7 @@
 						 <bean:define id="deleteConfirm">
 			return confirm('<bean:message key="message.confirm.remove.execution.course"/>')
 		  </bean:define>
-							<html:link page="<%="/dissociateExecutionCourse.do?&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal" onclick='<%= deleteConfirm.toString() %>'>
+							<html:link page="<%="/dissociateExecutionCourse.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal" onclick='<%= deleteConfirm.toString() %>'>
 								<bean:message key="label.manager.dissociate.execution.course"/>
 							</html:link> /
 							<html:link page="<%="/readTeacherInCharge.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">

@@ -31,7 +31,6 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 
 	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-
 		return mapping.findForward("insertProfessorShip");
 	}
 
@@ -39,6 +38,7 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 	
 		IUserView userView = SessionUtils.getUserView(request);
 		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+    	
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String number = (String) dynaForm.get("number");
@@ -59,8 +59,7 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
-		}
-
+		}		
 		return mapping.findForward("readTeacherInCharge");
 	}			
 }

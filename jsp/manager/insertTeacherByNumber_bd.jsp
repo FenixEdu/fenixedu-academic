@@ -2,8 +2,20 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h3><bean:message key="message.insert.professorShip" /></h3>
-
+<table>
+	<tr>
+			<td>
+				<h3><bean:message key="label.manager.execution.course.name"/></h3>
+			</td>
+			<td>
+			<bean:parameter id="executionCourseName" name="executionCourseName"/>
+				<h2><b><bean:write name="executionCourseName" /></b></h2>
+			</td>	
+	</tr>
+	<tr>
+      		<h3><bean:message key="message.insert.professorShip" /></h3>
+	</tr>
+</table>
 <span class="error"><html:errors/></span>
 
 <html:form action="/insertProfessorShipByNumber" method="get">
@@ -13,6 +25,7 @@
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 	<html:hidden property="executionCourseId" value="<%= request.getParameter("executionCourseId") %>"/>
+	<html:hidden property="executionCourseName" value="<%= request.getParameter("executionCourseName") %>"/>
 	<table>
 		<tr>
 			<td>
