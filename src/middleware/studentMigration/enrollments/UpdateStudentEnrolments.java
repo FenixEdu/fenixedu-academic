@@ -74,6 +74,7 @@ public class UpdateStudentEnrolments
 		executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
 
 		Integer numberOfStudents = persistentMWAluno.countAll();
+		System.out.println("[INFO] Updating a total of [" + numberOfStudents.intValue() + "] student curriculums.");
 		sp.confirmarTransaccao();
 
 		int numberOfElementsInSpan = 100;

@@ -30,10 +30,6 @@ insert into mw_DEGREE_TRANSLATION (ADM_DEGREE_CODE, KEY_DEGREE) values (01,1),(0
 
 
 ---------- TUDO O QUE ESTÁ DAQUI PARA BAIXO É PARA SAIR TÃO BREVEMENTE QUANTO SE CONSEGUIR ----------
-
-UPDATE ENROLMENT_EVALUATION SET GRADE = 'NA' WHERE GRADE = '0';
-
------------------------------------------------------------------------------------------------------------------------------
 -- Temporary Delete's (Student's that changed degree but the Branch wasn't updated)
 delete from mw_STUDENT_AUXILIARY_TABLE where number = 42980;
 delete from mw_STUDENT_AUXILIARY_TABLE where number = 51335;

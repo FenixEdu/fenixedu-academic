@@ -908,11 +908,11 @@
     </target>
 
 
-	<target name="update-students-enrolments" depends="compile-proj, load-2003-enrolments, clean-persons-with-duplicate-id, load-semester-students, create-MWCurricularCourseOutsideStudentDegree-table">
+	<target name="update-students-enrolments" depends="compile-proj, load-2003-enrolments, clean-persons-with-duplicate-id, load-semester-students">
 		<java classname="middleware.studentMigration.enrollments.UpdateStudentEnrolments"
 			fork="yes"
 			failonerror="false"
-			maxmemory="512m"
+			maxmemory="768m"
 		>
 	    	<classpath>
 	        	<pathelement path="${webapp.classes}"/>

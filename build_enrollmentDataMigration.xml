@@ -235,6 +235,29 @@
 		<exec executable="${sql}/middleware/commands/migrateAllStudenCurricularPlans.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
 		</exec>
 	</target>
+
+	<target name="update-students-enrolments" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.UpdateStudentEnrolments" fork="yes" failonerror="false" maxmemory="896m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="migrate-2003-enrollments" depends="compile-proj, load-data-from-old-system">
+		<exec executable="${sql}/middleware/commands/migrate2003Enrolments.sh" os="Linux, Unix">
+			<arg value="stop"/>
+		</exec>
+		<exec executable="${sql}/middleware/commands/migrate2003Enrolments.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
+		</exec>
+	</target>
+
 	<!-- ************************************************************************** -->
 
 	<!-- ********************** DATABASE CLEANING RELATED ********************** -->
