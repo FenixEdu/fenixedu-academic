@@ -92,11 +92,11 @@ public static void main(String args[]) throws Exception{
 	
 	
 	// Converte Areas Cientificas
-	superConverter.migratePosgradAreaCientifica2FenixBrach();
+//	superConverter.migratePosgradAreaCientifica2FenixBrach();
 	
 	
 	// Converte Disciplinas
-//	superConverter.migratePosGradDisciplina2Fenix();
+	superConverter.migratePosGradDisciplina2Fenix();
 	
 	// Inscricoes do Alunos em Disciplinas
 	
@@ -307,29 +307,17 @@ public static void main(String args[]) throws Exception{
 				result = (List) broker.getCollectionByQuery(query);		
 		
 				if (result.size() == 0){
-					System.out.println("Error Reading OLD Degree (" + curricularCourse2Convert.getNome() + ")");
-					throw new Exception("Cannot Read PosGrad Degree");
+					throw new Exception("Error Reading OLD Degree (" + curricularCourse2Convert.getNome() + ")");
 				}
 
-				Posgrad_curso_mestrado oldDegre = (Posgrad_curso_mestrado) result.get(0);
+				Posgrad_curso_mestrado oldDegree = (Posgrad_curso_mestrado) result.get(0);
 				
-				// Get the new Degree
-
-				criteria = new Criteria();
-				if (oldDegre.getNomemestrado().indexOf("Geotecnia") != -1){
-					oldDegre.setNomemestrado("Geotecnia");
-				} else if (oldDegre.getNomemestrado().indexOf("Ciência e Engenharia das Superfícies") != -1){
-					oldDegre.setNomemestrado("Ciência e Engenharia de Superfícies");
-				}
-
-				
-				criteria.addEqualTo("nome", oldDegre.getNomemestrado());
+				criteria.addEqualTo("nome", oldDegree.getNomemestrado());
 				query = new QueryByCriteria(Curso.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);
 				
 				if (result.size() == 0){
-					System.out.println("Error Reading NEW Degree (" + oldDegre.getNomemestrado() + ")");
-					throw new Exception("Cannot Read Fenix Degree");
+					throw new Exception("Error Reading NEW Degree (" + oldDegree.getNomemestrado() + ")");
 				}
 				
 				Curso degree = (Curso) result.get(0);
@@ -364,32 +352,12 @@ public static void main(String args[]) throws Exception{
 					continue;
 				}
 				
-//				// Get the Curricular Course Enrolment Info
-//				criteria = new Criteria();
-//				
-//				// Values By Default
-//				criteria.addEqualTo("maxIncrementNac", new Integer(2));
-//				criteria.addEqualTo("minIncrementNac", new Integer(1));
-//				criteria.addEqualTo("weigth", new Integer(1));
-//				query = new QueryByCriteria(CurricularCourseEnrolmentInfo.class,criteria);
-//				result = (List) broker.getCollectionByQuery(query);		
-//				
-//				if (result.size() == 0) {
-//					throw new Exception("Cannot Read Curricular Course Enrolment Info");
-//				}
-//				
-//				ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = (ICurricularCourseEnrolmentInfo) result.get(0);
-				
 				curricularCourse2Write = new CurricularCourse();
-				
+
 				
 				// Read The Credits
 
-// TODO
-
-
-
-				curricularCourse2Write.setCredits(new Double(0.0));
+				curricularCourse2Write.setCredits(curricularCourse2Convert.getCreditos());
 				
 				curricularCourse2Write.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
 				curricularCourse2Write.setDegreeCurricularPlan(degreeCurricularPlan);
