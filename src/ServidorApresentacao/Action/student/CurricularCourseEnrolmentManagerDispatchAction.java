@@ -4,12 +4,16 @@
  */
 package ServidorApresentacao.Action.student;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -18,6 +22,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoCurricularCourseScope;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -54,10 +59,167 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 		session.setAttribute(
 			SessionConstants.INFO_ENROLMENT_CONTEXT_KEY,
 			infoEnrolmentContext);
-
+		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
 		return mapping.findForward(forwards[0]);
 	}
 
+
+	public ActionForward verifyEnrolment(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+		validateToken(request, form, mapping);
+		
+		DynaActionForm enrolmentForm = (DynaActionForm) form;
+		HttpSession session = request.getSession();
+
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		InfoEnrolmentContext infoEnrolmentContext =
+			processEnrolment(enrolmentForm, session);
+
+
+		Object args[] = { infoEnrolmentContext };
+
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualEnrolment", args);
+		ActionForward nextForward = null;
+		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
+		if (!infoEnrolmentContext.getEnrolmentValidationResult().isSucess()){
+			saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
+			nextForward = getBeforeForward(request, mapping);
+		}else{
+			nextForward = getNextForward(request, mapping);			
+		}
+		return nextForward;
+	}
+
+	/**
+	 * @param request
+	 * @param infoEnrolmentContext
+	 */
+	private void saveErrorsFromInfoEnrolmentContext(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
+		ActionErrors actionErrors = new ActionErrors();
+		
+		EnrolmentValidationResult enrolmentValidationResult = infoEnrolmentContext.getEnrolmentValidationResult();
+		
+		Map messages = enrolmentValidationResult.getMessage();
+		
+		Iterator messagesIterator = messages.keySet().iterator();
+		ActionError actionError;
+		while (messagesIterator.hasNext()) {
+			String message = (String) messagesIterator.next();
+			List messageArguments = (List) messages.get(message);
+			actionError = new ActionError(message,messageArguments.toArray());
+			actionErrors.add(message, actionError);
+		}
+		saveErrors(request, actionErrors);
+	}
+
+
+	public ActionForward accept(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+		if (isCancelled(request)){
+			return getBeforeForward(request, mapping);
+		}
+		validateToken(request, form, mapping);
+		
+		HttpSession session = request.getSession();
+
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY); 
+
+		Object args[] = { infoEnrolmentContext };
+
+		ServiceUtils.executeService(userView, "ConfirmActualEnrolment", args);
+		System.out.println("===========================================CORRI O SERVIÇO");
+		return getNextForward(request, mapping);
+	}
+
+	/**
+	 * @param request	
+	 */
+	private void validateToken(
+		HttpServletRequest request,
+		ActionForm form,
+		ActionMapping mapping)
+		throws FenixTransactionException {
+	
+		if (!isTokenValid(request)) {
+			form.reset(mapping, request);
+			throw new FenixTransactionException(
+				"error.transaction.enrolment");
+		} else {
+			createToken (request);
+		}
+	}
+
+	/**
+	 * @param request
+	 */
+	private void createToken(HttpServletRequest request) {
+		generateToken(request);
+		saveToken(request);
+	}
+
+	private void initializeForm(InfoEnrolmentContext infoEnrolmentContext, DynaActionForm enrolmentForm){
+		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
+		List infoFinalSpan = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
+		Integer [] curricularCoursesIndexes = new Integer [infoFinalSpan.size()];
+		
+		for (int i= 0; i < infoFinalSpan.size(); i++) {
+			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoFinalSpan.get(i);
+			if (actualEnrolment.contains(infoCurricularCourseScope)){
+				curricularCoursesIndexes[i] = new Integer(i);
+			}else{
+				curricularCoursesIndexes[i] = null;
+			}
+		}
+		enrolmentForm.set("curricularCourses", curricularCoursesIndexes);		
+	}
+	
+	
+	/**
+	 * @param enrolmentForm
+	 * @param session
+	 * @return
+	 */
+	private InfoEnrolmentContext processEnrolment(
+		DynaActionForm enrolmentForm,
+		HttpSession session) {
+
+		InfoEnrolmentContext infoEnrolmentContext =
+			(InfoEnrolmentContext) session.getAttribute(
+				SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+		Integer[] curricularCourses =
+			(Integer[]) enrolmentForm.get("curricularCourses");
+
+		List curricularCourseScopesToBeEnrolled =
+			infoEnrolmentContext
+				.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
+		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
+		actualEnrolment.clear();
+		for (int i = 0; i < curricularCourses.length; i++) {
+			Integer curricularCourseIndex = curricularCourses[i];
+			InfoCurricularCourseScope curricularCourseScope =
+				(
+					InfoCurricularCourseScope) curricularCourseScopesToBeEnrolled
+						.get(
+					curricularCourseIndex.intValue());
+			actualEnrolment.add(curricularCourseScope);
+			
+		}
+		return infoEnrolmentContext;
+	}
+	
 	/**
 	 * @param form
 	 * @param mapping
@@ -94,100 +256,4 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 		return mapping.findForward(forwards[step + 1]);
 	}
 
-	public ActionForward verifyEnrolment(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		validateToken(request, form, mapping);
-		DynaActionForm enrolmentForm = (DynaActionForm) form;
-		HttpSession session = request.getSession();
-
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-		InfoEnrolmentContext infoEnrolmentContext =
-			processEnrolment(enrolmentForm, session);
-
-		Object args[] = { infoEnrolmentContext };
-
-		ServiceUtils.executeService(userView, "ValidateActualEnrolment", args);
-
-		return getNextForward(request, mapping);
-	}
-
-	public ActionForward accept(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		if (isCancelled(request)){
-			return getBeforeForward(request, mapping);
-		}
-		validateToken(request, form, mapping);
-		
-		return getNextForward(request, mapping);
-	}
-
-	/**
-	 * @param request	
-	 */
-	private void validateToken(
-		HttpServletRequest request,
-		ActionForm form,
-		ActionMapping mapping)
-		throws FenixTransactionException {
-	
-		if (!isTokenValid(request)) {
-			form.reset(mapping, request);
-			throw new FenixTransactionException(
-				"error.transaction.enrolment");
-		} else {
-			createToken (request);
-		}
-	}
-
-	/**
-	 * @param request
-	 */
-	private void createToken(HttpServletRequest request) {
-		generateToken(request);
-		saveToken(request);
-	}
-
-	/**
-	 * @param enrolmentForm
-	 * @param session
-	 * @return
-	 */
-	private InfoEnrolmentContext processEnrolment(
-		DynaActionForm enrolmentForm,
-		HttpSession session) {
-
-		InfoEnrolmentContext infoEnrolmentContext =
-			(InfoEnrolmentContext) session.getAttribute(
-				SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
-		Integer[] curricularCourses =
-			(Integer[]) enrolmentForm.get("curricularCourses");
-
-		List curricularCourseScopesToBeEnrolled =
-			infoEnrolmentContext
-				.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
-		for (int i = 0; i < curricularCourses.length; i++) {
-			Integer curricularCourseIndex = curricularCourses[i];
-			InfoCurricularCourseScope curricularCourseScope =
-				(
-					InfoCurricularCourseScope) curricularCourseScopesToBeEnrolled
-						.get(
-					curricularCourseIndex.intValue());
-
-			if (!actualEnrolment.contains(curricularCourseScope)) {
-				actualEnrolment.add(curricularCourseScope);
-			}
-		}
-		return infoEnrolmentContext;
-	}
 }
