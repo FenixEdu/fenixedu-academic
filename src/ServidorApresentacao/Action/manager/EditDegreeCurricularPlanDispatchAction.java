@@ -132,7 +132,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
 		Integer oldDegreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
-		Integer degreeId = new Integer(request.getParameter("degreeId"));
+//		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		
 		InfoDegreeCurricularPlan newInfoDegreeCP = new InfoDegreeCurricularPlan();		
 
@@ -210,7 +210,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			
 //			TIRO DAQUI O DEGREEID E LEIO-O NO SERVICO---PENSAR
 			
-		Object args[] = { oldDegreeCPId, newInfoDegreeCP, degreeId };
+		Object args[] = { oldDegreeCPId, newInfoDegreeCP };
 		GestorServicos manager = GestorServicos.manager();
 //		List serviceResult = null;
 		try {

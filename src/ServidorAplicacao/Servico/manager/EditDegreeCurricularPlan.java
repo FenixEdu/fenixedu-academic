@@ -38,7 +38,7 @@ public class EditDegreeCurricularPlan implements IServico {
 	}
 	
 
-	public void run(Integer oldDegreeCPId, InfoDegreeCurricularPlan newInfoDegreeCP, Integer degreeId) throws FenixServiceException {
+	public void run(Integer oldDegreeCPId, InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException {
 
 		ICurso degree = null;
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
@@ -55,6 +55,7 @@ public class EditDegreeCurricularPlan implements IServico {
 			 	degreeCurricularPlans.remove((IDegreeCurricularPlan)oldDegreeCP);
 				
 				persistentDegree = persistentSuport.getICursoPersistente();
+				Integer degreeId =oldDegreeCP.getDegree().getIdInternal();
 				degree = persistentDegree.readByIdInternal(degreeId);	
 			
 			
