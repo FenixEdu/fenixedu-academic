@@ -7,12 +7,15 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
+import Dominio.CursoExecucao;
 import Dominio.ICurso;
+import Dominio.ICursoExecucao;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
