@@ -53,13 +53,10 @@ public class CurricularCourseScope implements ICurricularCourseScope {
 
 		if (obj instanceof ICurricularCourseScope) {
 			ICurricularCourseScope ccs = (ICurricularCourseScope) obj;
-			ICurricularCourse curricularCourse = getCurricularCourse();
-			ICurricularSemester curricularSemester = getCurricularSemester();
-
+			
 			resultado = getCurricularCourse().equals(ccs.getCurricularCourse()) &&
-									getCurricularSemester().equals(ccs.getCurricularSemester());
-//									 &&
-//									getBranch().equals(ccs.getBranch());
+									getCurricularSemester().equals(ccs.getCurricularSemester()) &&
+									getBranch().equals(ccs.getBranch());
 		}
 
 		return resultado;
