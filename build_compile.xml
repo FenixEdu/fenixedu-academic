@@ -8,6 +8,7 @@
 
     <!-- Source code directories -->
     <property name="src" location="src"/>
+    <property name="src_gen" location="src_gen"/>    
     <property name="config" location="config"/>
 	<property name="config.web" location="metadata"/>
 
@@ -377,6 +378,7 @@
                deprecation="${compile.deprecation}"
                encoding="${encoding}"
 			   nowarn="true">
+			<!-- <src path="${src_gen}"/> -->
 			<src path="${src}"/>
 		</javac>
 	</target>
