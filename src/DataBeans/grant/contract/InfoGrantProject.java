@@ -3,6 +3,7 @@
  */
 package DataBeans.grant.contract;
 
+import Dominio.grant.contract.GrantProject;
 import Dominio.grant.contract.IGrantProject;
 
 /**
@@ -55,6 +56,26 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
     		infoGrantProject.copyFromDomain(grantProject);
     	}
     	return infoGrantProject;
+    }
+    
+    public void copyToDomain(InfoGrantProject infoGrantProject,IGrantProject grantProject)
+    {
+        super.copyToDomain(infoGrantProject,grantProject);
+        
+        grantProject.setDesignation(infoGrantProject.getDesignation());
+        grantProject.setNumber(infoGrantProject.getNumber());
+        grantProject.setOjbConcreteClass(infoGrantProject.getOjbConcreteClass());
+    }
+    
+    public static IGrantProject newDomainFromInfo(InfoGrantProject infoGrantProject)
+    {
+        IGrantProject grantProject = null;
+        if(infoGrantProject != null)
+        {
+            grantProject = new GrantProject();
+            infoGrantProject.copyToDomain(infoGrantProject,grantProject);
+        }
+        return grantProject;
     }
     
 }

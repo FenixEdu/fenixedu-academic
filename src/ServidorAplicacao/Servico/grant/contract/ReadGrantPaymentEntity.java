@@ -5,7 +5,7 @@
 package ServidorAplicacao.Servico.grant.contract;
 
 import DataBeans.InfoObject;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantPaymentEntity;
 import Dominio.grant.contract.IGrantPaymentEntity;
@@ -35,6 +35,6 @@ public class ReadGrantPaymentEntity extends ReadDomainObjectService
 
     protected InfoObject clone2InfoObject(IDomainObject domainObject)
     {
-        return Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity((IGrantPaymentEntity) domainObject);
+        return InfoGrantPaymentEntity.newInfoFromDomain((IGrantPaymentEntity) domainObject);
     }
 }

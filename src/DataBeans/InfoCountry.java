@@ -115,21 +115,24 @@ public class InfoCountry extends InfoObject {
         return infoCountry;
     }
     
-    public ICountry copyToDomain()
-    {
-        ICountry country = new Country(); 
-        super.copyToDomain(country);
+    public void copyToDomain(InfoCountry infoCountry,ICountry country)
+    { 
+        super.copyToDomain(infoCountry,country);
         
-        country.setCode(getCode());
-        country.setName(getName());
-        country.setNationality(getNationality());
-        
-        return country;
+        country.setCode(infoCountry.getCode());
+        country.setName(infoCountry.getName());
+        country.setNationality(infoCountry.getNationality());
     }
     
-    public ICountry newDomainFromInfo()
+    public static ICountry newDomainFromInfo(InfoCountry infoCountry)
     {
-        return this.copyToDomain();
+        ICountry country = null;
+        if(infoCountry != null)
+        {
+            country = new Country();
+            infoCountry.copyToDomain(infoCountry,country);
+        }
+        return country;
     }
 	
 

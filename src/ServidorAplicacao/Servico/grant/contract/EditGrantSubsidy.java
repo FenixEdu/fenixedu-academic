@@ -9,7 +9,7 @@ import java.util.List;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantSubsidy;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantSubsidyWithContract;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantSubsidy;
@@ -36,7 +36,7 @@ public class EditGrantSubsidy extends EditDomainObjectService
 	}
 	protected IDomainObject clone2DomainObject(InfoObject infoObject)
 	{
-		return Cloner.copyInfoGrantSubsidy2IGrantSubsidy((InfoGrantSubsidy) infoObject);
+	    return InfoGrantSubsidyWithContract.newDomainFromInfo((InfoGrantSubsidy) infoObject);
 	}
 	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
 	{

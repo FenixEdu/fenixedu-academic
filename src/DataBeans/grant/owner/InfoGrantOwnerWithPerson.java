@@ -5,6 +5,7 @@
 package DataBeans.grant.owner;
 
 import DataBeans.InfoPersonWithInfoCountry;
+import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 
 
@@ -32,20 +33,23 @@ public class InfoGrantOwnerWithPerson extends InfoGrantOwner
 		return infoGrantOwner;
 	}
 	
-	public IGrantOwner copyToDomain()
+	public void copyToDomain(InfoGrantOwner infoGrantOwner,IGrantOwner grantOwner)
     {
-        IGrantOwner grantOwner = super.copyToDomain();
-        if (grantOwner != null)
-    	{
-            InfoPersonWithInfoCountry infoPersonWithInfoCountry = (InfoPersonWithInfoCountry) super.getPersonInfo();
-    		grantOwner.setPerson(infoPersonWithInfoCountry.newDomainFromInfo());
-    	}
-        return grantOwner;
+        super.copyToDomain(infoGrantOwner,grantOwner);
+        grantOwner.setPerson(InfoPersonWithInfoCountry.newDomainFromInfo(infoGrantOwner.getPersonInfo()));
     }
     
-    public IGrantOwner newDomainFromInfo()
+    public static IGrantOwner newDomainFromInfo(InfoGrantOwner infoGrantOwner)
     {
-        return this.copyToDomain();
+        IGrantOwner grantOwner = null;
+        InfoGrantOwnerWithPerson infoGrantOwnerWithPerson = null;
+        if(infoGrantOwner != null)
+        {
+            grantOwner = new GrantOwner();
+            infoGrantOwnerWithPerson = new InfoGrantOwnerWithPerson();
+            infoGrantOwnerWithPerson.copyToDomain(infoGrantOwner,grantOwner);       
+        }
+        return grantOwner;
     }
 	
 }

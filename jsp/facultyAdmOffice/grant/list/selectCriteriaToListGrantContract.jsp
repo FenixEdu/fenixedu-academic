@@ -18,7 +18,6 @@
 	<html:hidden property="page" value="1"/>
 	
 	<html:hidden property="spanNumber" value="1"/>
-	<html:hidden property="numberOfElementsInSpan" value="100"/>
 	<html:hidden property="orderBy" value="orderByNumber"/>
 	
 	<table>

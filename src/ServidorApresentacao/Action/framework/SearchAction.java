@@ -152,6 +152,7 @@ public class SearchAction extends DispatchAction
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = getSearchServiceArgs(request, form);
         Collection result = (Collection) ServiceUtils.executeService(userView, serviceName, args);
+        result = treateServiceResult(mapping, request, result);
         ActionForward actionForward = null;
         if (result.isEmpty())
         {
@@ -200,6 +201,23 @@ public class SearchAction extends DispatchAction
         Collection result)
         throws Exception
     {}
+    
+    /**
+	 * After the execution of the service, and before setting the mapping, treat
+	 * the result of the service
+	 * 
+	 * @param mapping
+	 * @param request
+	 * @param result
+	 */
+    protected Collection treateServiceResult(
+        SearchActionMapping mapping,
+        HttpServletRequest request,
+        Collection result)
+        throws Exception
+    {
+        return result;
+    }
 
     /**
 	 * If we search an object(s) using some criteria (for instance the idInternal) we may want to use it

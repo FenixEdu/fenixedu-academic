@@ -16,7 +16,7 @@
 <tr>
 	<logic:present name="beforeSpan">
 	<td>
-        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("beforeSpan") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
+        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("beforeSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 		   	<bean:message key="link.grant.owner.list.before.page"/>
 		</html:link>
 	</td>
@@ -30,13 +30,12 @@
 	<%-- span attributes --%>
 	<html:hidden property="orderBy"/>
 	<html:hidden property="totalElements"/>
-	<html:hidden property="numberOfElementsInSpan"/>
 	<html:text property="spanNumber" size="2"/>/<bean:write name="numberOfSpans"/>
 </html:form>
 	&nbsp;</td>
 	<logic:present name="afterSpan">
 	<td>
-        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("afterSpan") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
+        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("afterSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 		   	<bean:message key="link.grant.owner.list.after.page"/>
 		</html:link>
 	</td>
@@ -50,17 +49,17 @@
     <%-- Table with list grant owner description rows --%>
     <tr>
         <td class="listClasses-header">
-	        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=orderByNumber&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
+	        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") +  "&amp;orderBy=orderByNumber&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 	            <bean:message key="label.list.grant.owner.number"/>
 			</html:link>
         </td>
         <td class="listClasses-header">
-	        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
+	        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 	            <bean:message key="label.list.grant.owner.first.name"/>
 			</html:link>
         </td>
         <td class="listClasses-header">
-	        <%-- <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > --%> 
+	        <%-- <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("spanNumber") + "&amp;orderBy=orderByFirstName&amp;totalElements=" + request.getAttribute("totalElements") %>' > --%> 
 	            <bean:message key="label.list.grant.owner.last.name"/>
 			<%-- </html:link> --%>
         </td>
@@ -101,7 +100,7 @@
 <tr>
 	<logic:present name="beforeSpan">
 	<td>
-        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("beforeSpan") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
+        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("beforeSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 		   	<bean:message key="link.grant.owner.list.before.page"/>
 		</html:link>
 	</td>
@@ -115,14 +114,13 @@
 	<%-- span attributes --%>
 	<html:hidden property="orderBy"/>
 	<html:hidden property="totalElements"/>
-	<html:hidden property="numberOfElementsInSpan"/>
 	<html:text property="spanNumber" size="2"/>/<bean:write name="numberOfSpans"/>
 	</html:form>
 	&nbsp;
 	</td>
 	<logic:present name="afterSpan">
 	<td>
-        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("afterSpan") + "&amp;numberOfElementsInSpan=" + request.getAttribute("numberOfElementsInSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
+        <html:link page='<%= "/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=" + request.getAttribute("afterSpan") + "&amp;orderBy=" + request.getAttribute("orderBy") + "&amp;totalElements=" + request.getAttribute("totalElements") %>' > 
 		   	<bean:message key="link.grant.owner.list.after.page"/>
 		</html:link>
 	</td>

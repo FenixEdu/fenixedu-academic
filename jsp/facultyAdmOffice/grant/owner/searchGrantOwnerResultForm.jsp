@@ -4,14 +4,35 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 <%-- Present number of hits of search --%>
-<bean:size id="resultSize" name="infoGrantOwnerList"/>
+<bean:define id="resultSize" name="numberOfTotalElementsInSearch"/>
 <p><bean:message key="label.grant.owner.searchresult" arg0="<%= resultSize.toString() %>"/></p>
 
 <logic:present name="justGrantOwner">
 <br/><strong><bean:message key="label.grant.owner.filter"/></strong>
 </logic:present>
 
-
+<table align="center">
+<tr>
+	<logic:present name="beforeSpan">
+	<td>
+       	<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("beforeSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+		   	<bean:message key="link.grant.owner.list.before.page"/>
+		</html:link>
+	</td>
+	</logic:present>
+	<td>
+		&nbsp;
+	</td>
+	<td>
+	<logic:present name="nextSpan">
+		<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("nextSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+ 		   	<bean:message key="link.grant.owner.list.after.page"/>
+		</html:link>
+	</td>
+	</logic:present>
+</tr>
+</table>
+<br/>
 <table border="0" cellspacing="1" cellpadding="1">
 	<%-- Table description rows --%>
 	<tr>
@@ -87,7 +108,7 @@
 		</tr>
 	</logic:iterate>
 </table>
-
+<br/>
 <br/><br/>
 
 <%-- Create a new person Grant Owner --%>

@@ -9,6 +9,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.grant.contract.GrantContractRegime;
 import Dominio.grant.contract.IGrantContractRegime;
 
 /**
@@ -16,27 +17,18 @@ import Dominio.grant.contract.IGrantContractRegime;
  * @author Barbosa
  */
 public class InfoGrantContractRegime extends InfoObject {
-
-    private static final int activeState = 1;
-
-    private static final int inactiveState = 0;
-
+	
+	private static final int activeState = 1;
+	private static final int inactiveState = 0;
+	
     private Integer state;
-
     private Date dateBeginContract;
-
     private Date dateEndContract;
-
     private Date dateSendDispatchCC;
-
     private Date dateDispatchCC;
-
     private Date dateSendDispatchCD;
-
     private Date dateDispatchCD;
-
     private InfoTeacher infoTeacher;
-
     private InfoGrantContract infoGrantContract;
 
     /**
@@ -173,64 +165,92 @@ public class InfoGrantContractRegime extends InfoObject {
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
         this.infoGrantContract = infoGrantContract;
     }
-
+    
     public boolean getContractRegimeActive() {
-        if (this.dateEndContract.after(Calendar.getInstance().getTime())) {
-            return true;
-        }
-        return false;
-
+    	if(this.dateEndContract.after(Calendar.getInstance().getTime())){
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
-
+    
     public Integer getActiveStateValue() {
-        return new Integer(activeState);
+    	return new Integer(activeState);
     }
-
+    
     public Integer getInactiveStateValue() {
-        return new Integer(inactiveState);
+    	return new Integer(inactiveState);
     }
-
-    /**
-     * @param GrantContractRegime
-     */
-    public void copyFromDomain(IGrantContractRegime grantContractRegime) {
-        super.copyFromDomain(grantContractRegime);
-        if (grantContractRegime != null) {
-            setState(grantContractRegime.getState());
-            setDateBeginContract(grantContractRegime.getDateBeginContract());
-            setDateEndContract(grantContractRegime.getDateEndContract());
-            setDateDispatchCC(grantContractRegime.getDateDispatchCC());
-            setDateDispatchCD(grantContractRegime.getDateDispatchCD());
-            setDateSendDispatchCC(grantContractRegime.getDateSendDispatchCC());
-            setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
-        }
-    }
-
-    /**
-     * @param GrantContractRegime
-     * @return
-     */
-    public static InfoGrantContractRegime newInfoFromDomain(
-            IGrantContractRegime grantContractRegime) {
-        InfoGrantContractRegime infoGrantContractRegime = null;
-        if (grantContractRegime != null) {
-            infoGrantContractRegime = new InfoGrantContractRegime();
-            infoGrantContractRegime.copyFromDomain(grantContractRegime);
-        }
-        return infoGrantContractRegime;
-    }
-
+    
     /**
      * @return Returns the activeState.
      */
     public static Integer getActiveState() {
         return new Integer(activeState);
     }
-
     /**
      * @return Returns the inactiveState.
      */
     public static Integer getInactiveState() {
         return new Integer(inactiveState);
     }
+    
+    
+    /**
+     * @param GrantContractRegime
+     */
+    public void copyFromDomain(IGrantContractRegime grantContractRegime)
+    {
+    	super.copyFromDomain(grantContractRegime);
+    	if (grantContractRegime != null)
+    	{
+    		setState(grantContractRegime.getState());
+    		setDateBeginContract(grantContractRegime.getDateBeginContract());
+			setDateEndContract(grantContractRegime.getDateEndContract());
+			setDateDispatchCC(grantContractRegime.getDateDispatchCC());
+			setDateDispatchCD(grantContractRegime.getDateDispatchCD());
+			setDateSendDispatchCC(grantContractRegime.getDateSendDispatchCC());
+			setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
+    	}
+    }
+    
+    /**
+     * @param GrantContractRegime
+     * @return
+     */
+    public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime)
+    {
+    	InfoGrantContractRegime infoGrantContractRegime = null;
+    	if (grantContractRegime != null)
+    	{
+    		infoGrantContractRegime = new InfoGrantContractRegime();
+    		infoGrantContractRegime.copyFromDomain(grantContractRegime);
+    	}
+    	return infoGrantContractRegime;
+    }
+    
+    public void copyToDomain(InfoGrantContractRegime infoGrantContractRegime,IGrantContractRegime grantContractRegime)
+    {
+        super.copyToDomain(infoGrantContractRegime,grantContractRegime);
+        
+        grantContractRegime.setDateBeginContract(infoGrantContractRegime.getDateBeginContract());
+        grantContractRegime.setDateEndContract(infoGrantContractRegime.getDateEndContract());
+        grantContractRegime.setDateDispatchCC(infoGrantContractRegime.getDateDispatchCC());
+        grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
+        grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
+        grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
+        grantContractRegime.setState(infoGrantContractRegime.getState());
+    }
+    
+    public static IGrantContractRegime newDomainFromInfo(InfoGrantContractRegime infoGrantContractRegime)
+    {
+        IGrantContractRegime grantContractRegime = null;
+        if(infoGrantContractRegime != null)
+        {
+            grantContractRegime = new GrantContractRegime();
+            infoGrantContractRegime.copyToDomain(infoGrantContractRegime,grantContractRegime);       
+        }
+        return grantContractRegime;
+    }
+    
 }

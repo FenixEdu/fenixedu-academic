@@ -860,60 +860,63 @@ public class InfoPerson extends InfoObject {
         return infoPerson;
     }
     
-    public IPessoa copyToDomain()
+    public void copyToDomain(InfoPerson infoPerson,IPessoa person)
     {
-        IPessoa person = new Pessoa();
-        super.copyToDomain(person);
+        super.copyToDomain(infoPerson,person);
         
-        person.setNome(getNome());
-        person.setNumeroDocumentoIdentificacao(getNumeroDocumentoIdentificacao());
-        person.setTipoDocumentoIdentificacao(getTipoDocumentoIdentificacao());
-        person.setLocalEmissaoDocumentoIdentificacao(getLocalEmissaoDocumentoIdentificacao());
-        person.setDataEmissaoDocumentoIdentificacao(getDataEmissaoDocumentoIdentificacao());
-        person.setDataValidadeDocumentoIdentificacao(getDataValidadeDocumentoIdentificacao());
+        person.setNome(infoPerson.getNome());
+        person.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
+        person.setTipoDocumentoIdentificacao(infoPerson.getTipoDocumentoIdentificacao());
+        person.setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
+        person.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
+        person.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
         
-        person.setSexo(getSexo());
-        person.setEstadoCivil(getEstadoCivil());
+        person.setSexo(infoPerson.getSexo());
+        person.setEstadoCivil(infoPerson.getEstadoCivil());
 
-        person.setEmail(getEmail());
-        person.setAvailableEmail(getAvailableEmail());
-        person.setEnderecoWeb(getEnderecoWeb());
-        person.setAvailableWebSite(getAvailableWebSite());
-        person.setTelefone(getTelefone());
-        person.setTelemovel(getTelemovel());
-        person.setWorkPhone(getWorkPhone());
+        person.setEmail(infoPerson.getEmail());
+        person.setAvailableEmail(infoPerson.getAvailableEmail());
+        person.setEnderecoWeb(infoPerson.getEnderecoWeb());
+        person.setAvailableWebSite(infoPerson.getAvailableWebSite());
+        person.setTelefone(infoPerson.getTelefone());
+        person.setTelemovel(infoPerson.getTelemovel());
+        person.setWorkPhone(infoPerson.getWorkPhone());
                     
-        person.setProfissao(getProfissao());
+        person.setProfissao(infoPerson.getProfissao());
         
-        person.setMorada(getMorada());
-        person.setCodigoPostal(getCodigoPostal());
-        person.setLocalidade(getLocalidade());
-        person.setFreguesiaMorada(getFreguesiaMorada());
-        person.setConcelhoMorada(getConcelhoMorada());
-        person.setDistritoMorada(getDistritoMorada());
+        person.setMorada(infoPerson.getMorada());
+        person.setCodigoPostal(infoPerson.getCodigoPostal());
+        person.setLocalidade(infoPerson.getLocalidade());
+        person.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
+        person.setConcelhoMorada(infoPerson.getConcelhoMorada());
+        person.setDistritoMorada(infoPerson.getDistritoMorada());
         
-        person.setConcelhoNaturalidade(getConcelhoNaturalidade());
-        person.setDistritoNaturalidade(getDistritoNaturalidade());
-        person.setFreguesiaNaturalidade(getFreguesiaNaturalidade());
+        person.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
+        person.setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
+        person.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
 
-        person.setLocalidadeCodigoPostal(getLocalidadeCodigoPostal());
-        person.setNacionalidade(getNacionalidade());
+        person.setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
+        person.setNacionalidade(infoPerson.getNacionalidade());
 
-        person.setNascimento(getNascimento());
-        person.setNomeMae(getNomeMae());
-        person.setNomePai(getNomePai());
+        person.setNascimento(infoPerson.getNascimento());
+        person.setNomeMae(infoPerson.getNomeMae());
+        person.setNomePai(infoPerson.getNomePai());
         
-        person.setNumContribuinte(getNumContribuinte());
-        person.setCodigoFiscal(getCodigoFiscal());
+        person.setNumContribuinte(infoPerson.getNumContribuinte());
+        person.setCodigoFiscal(infoPerson.getCodigoFiscal());
 
-        person.setPassword(getPassword());
-        person.setUsername(getUsername());
-        
-        return person;
+        person.setPassword(infoPerson.getPassword());
+        person.setUsername(infoPerson.getUsername());
     }
     
-    public IPessoa newDomainFromInfo()
+    public static IPessoa newDomainFromInfo(InfoPerson infoPerson)
     {
-        return this.copyToDomain();
+        IPessoa person = null;
+        if(infoPerson != null)
+        {
+            person = new Pessoa();
+            infoPerson.copyToDomain(infoPerson,person);
+        }
+        return person;
     }
 }

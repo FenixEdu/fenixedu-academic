@@ -47,6 +47,7 @@
 				<form-property name="idNumber" type="java.lang.String"/>
 				<form-property name="idType" type="java.lang.Integer"/>
 				<form-property name="justGrantOwner" type="java.lang.Boolean"/>
+				<form-property name="startIndex" type="java.lang.Integer"/>
 				<form-property name="page" type="java.lang.Integer"/>
 			</form-bean>
 			
@@ -254,7 +255,6 @@
 			<form-bean name="listGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="spanNumber" type="java.lang.Integer"/>
-				<form-property name="numberOfElementsInSpan" type="java.lang.Integer"/>
 				<form-property name="totalElements" type="java.lang.Integer"/>
 				<form-property name="orderBy" type="java.lang.String"/>
 				<form-property name="ascendingOrder" type="java.lang.Boolean"/>
@@ -264,7 +264,6 @@
 			<form-bean name="listGrantContractByCriteriaForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="spanNumber" type="java.lang.Integer"/>
-				<form-property name="numberOfElementsInSpan" type="java.lang.Integer"/>
 				<form-property name="totalElements" type="java.lang.Integer"/>
 				<form-property name="orderBy" type="java.lang.String"/>
 				<form-property name="ascendingOrder" type="java.lang.Boolean"/>
@@ -272,6 +271,7 @@
 				<form-property name="filterType" type="java.lang.Integer"/>
 				<form-property name="beginContract" type="java.lang.String"/>
 				<form-property name="endContract" type="java.lang.String"/>
+				<form-property name="grantTypeId" type="java.lang.Integer"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 

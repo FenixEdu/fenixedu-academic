@@ -1,5 +1,7 @@
 package DataBeans.util;
 
+import java.beans.XMLDecoder;
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoDepartment;
 import DataBeans.InfoDepartmentCourse;
+import DataBeans.InfoDistributedTest;
 import DataBeans.InfoEmployee;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
@@ -65,6 +68,7 @@ import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoMasterDegreeThesis;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
+import DataBeans.InfoMetadata;
 import DataBeans.InfoObject;
 import DataBeans.InfoOnlineTest;
 import DataBeans.InfoPaymentPhase;
@@ -72,6 +76,7 @@ import DataBeans.InfoPeriod;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
 import DataBeans.InfoProfessorship;
+import DataBeans.InfoQuestion;
 import DataBeans.InfoResponsibleFor;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
@@ -86,8 +91,14 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
+import DataBeans.InfoStudentTestLog;
+import DataBeans.InfoStudentTestQuestion;
+import DataBeans.InfoStudentTestQuestionMark;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
+import DataBeans.InfoTest;
+import DataBeans.InfoTestQuestion;
+import DataBeans.InfoTestScope;
 import DataBeans.InfoTutor;
 import DataBeans.InfoUniversity;
 import DataBeans.InfoWebSite;
@@ -109,18 +120,9 @@ import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.gesdis.InfoCourseHistoric;
 import DataBeans.gesdis.InfoCourseReport;
-import DataBeans.grant.contract.InfoGrantContract;
-import DataBeans.grant.contract.InfoGrantContractMovement;
-import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantCostCenterWithTeacher;
-import DataBeans.grant.contract.InfoGrantOrientationTeacher;
-import DataBeans.grant.contract.InfoGrantPart;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
-import DataBeans.grant.contract.InfoGrantProject;
 import DataBeans.grant.contract.InfoGrantProjectWithTeacherAndCostCenter;
-import DataBeans.grant.contract.InfoGrantSubsidy;
-import DataBeans.grant.contract.InfoGrantType;
-import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
@@ -165,25 +167,9 @@ import Dominio.gesdis.ICourseHistoric;
 import Dominio.gesdis.ICourseReport;
 import Dominio.gesdis.IStudentCourseReport;
 import Dominio.gesdis.StudentCourseReport;
-import Dominio.grant.contract.GrantContract;
-import Dominio.grant.contract.GrantContractMovement;
-import Dominio.grant.contract.GrantCostCenter;
-import Dominio.grant.contract.GrantOrientationTeacher;
-import Dominio.grant.contract.GrantPart;
-import Dominio.grant.contract.GrantProject;
-import Dominio.grant.contract.GrantSubsidy;
-import Dominio.grant.contract.GrantType;
-import Dominio.grant.contract.IGrantContract;
-import Dominio.grant.contract.IGrantContractMovement;
 import Dominio.grant.contract.IGrantCostCenter;
-import Dominio.grant.contract.IGrantOrientationTeacher;
-import Dominio.grant.contract.IGrantPart;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import Dominio.grant.contract.IGrantProject;
-import Dominio.grant.contract.IGrantSubsidy;
-import Dominio.grant.contract.IGrantType;
-import Dominio.grant.owner.GrantOwner;
-import Dominio.grant.owner.IGrantOwner;
 import Dominio.reimbursementGuide.IReimbursementGuide;
 import Dominio.reimbursementGuide.IReimbursementGuideEntry;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
@@ -213,6 +199,7 @@ import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
 import Util.EvaluationType;
 import Util.State;
+import Util.tests.Response;
 
 /**
  * @author jpvl
@@ -938,12 +925,12 @@ public abstract class Cloner
         return infoPerson;
     }
 
-    /**
+  /*  *//**
      * Method copyInfoGrantOwner2IGrantOwner.
      * 
      * @param infoGrantOwner
      * @return IGrantOwner
-     */
+     *//*
     public static IGrantOwner copyInfoGrantOwner2IGrantOwner(InfoGrantOwner infoGrantOwner)
     {
         IGrantOwner grantOwner = null;
@@ -960,7 +947,7 @@ public abstract class Cloner
         }
         return grantOwner;
     }
-
+*/
     /**
      * Method copyIGrantOwner2InfoGrantOwner.
      * 
@@ -992,7 +979,7 @@ public abstract class Cloner
      * @param infoGrantContract
      * @return IGrantContract
      */
-    public static IGrantContract copyInfoGrantContract2IGrantContract(InfoGrantContract infoGrantContract)
+  /*  public static IGrantContract copyInfoGrantContract2IGrantContract(InfoGrantContract infoGrantContract)
     {
         IGrantContract grantContract = null;
 
@@ -1008,7 +995,7 @@ public abstract class Cloner
             grantContract.setGrantType(grantType);
         }
         return grantContract;
-    }
+    }*/
 
     /**
      * Method copyIGrantContract2InfoGrantContract.
@@ -1045,7 +1032,7 @@ public abstract class Cloner
      * @param infoGrantType
      * @return IGrantType
      */
-    public static IGrantType copyInfoGrantType2IGrantType(InfoGrantType infoGrantType)
+   /* public static IGrantType copyInfoGrantType2IGrantType(InfoGrantType infoGrantType)
     {
         IGrantType grantType = null;
 
@@ -1055,7 +1042,7 @@ public abstract class Cloner
             copyObjectProperties(grantType, infoGrantType);
         }
         return grantType;
-    }
+    }*/
 
     /**
      * Method copyIGrantType2InfoGrantType.
@@ -1081,7 +1068,7 @@ public abstract class Cloner
      * @param infoGrantOrientationTeacher
      * @return IGrantOrientationTeacher
      */
-    public static IGrantOrientationTeacher copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(InfoGrantOrientationTeacher infoGrantOrientationTeacher)
+  /*  public static IGrantOrientationTeacher copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(InfoGrantOrientationTeacher infoGrantOrientationTeacher)
     {
         IGrantOrientationTeacher grantOrientationTeacher = null;
 
@@ -1103,7 +1090,7 @@ public abstract class Cloner
             grantOrientationTeacher.setOrientationTeacher(responsibleTeacher);
         }
         return grantOrientationTeacher;
-    }
+    }*/
 
     /**
      * Method copyIGrantOrientationTeacher2InfoGrantOrientationTeacher.
@@ -1169,7 +1156,7 @@ public abstract class Cloner
      * @param infoGrantProject
      * @return IGrantProject
      */
-    public static IGrantProject copyInfoGrantProject2IGrantProject(InfoGrantProject infoGrantProject)
+   /* public static IGrantProject copyInfoGrantProject2IGrantProject(InfoGrantProject infoGrantProject)
     {
         IGrantProject grantProject = null;
 
@@ -1193,7 +1180,7 @@ public abstract class Cloner
             }
         }
         return grantProject;
-    }
+    }*/
 
     /**
      * Method copyIGrantCostCenter2InfoGrantCostCenter.
@@ -1225,7 +1212,7 @@ public abstract class Cloner
      * @param infoGrantCostCenter
      * @return IGrantCostCenter
      */
-    public static IGrantCostCenter copyInfoGrantCostCenter2IGrantCostCenter(InfoGrantCostCenter infoGrantCostCenter)
+   /* public static IGrantCostCenter copyInfoGrantCostCenter2IGrantCostCenter(InfoGrantCostCenter infoGrantCostCenter)
     {
         IGrantCostCenter grantCostCenter = null;
 
@@ -1243,7 +1230,7 @@ public abstract class Cloner
         }
         return grantCostCenter;
     }
-
+*/
     /**
      * Method copyIGrantPaymentEntity2InfoGrantPaymentEntity.
      * 
@@ -1269,7 +1256,7 @@ public abstract class Cloner
      * @param infoGrantPaymentEntity
      * @return IGrantPaymentEntity
      */
-    public static IGrantPaymentEntity copyInfoGrantPaymentEntity2IGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity)
+   /* public static IGrantPaymentEntity copyInfoGrantPaymentEntity2IGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity)
     {
         if (infoGrantPaymentEntity != null)
         {
@@ -1282,7 +1269,7 @@ public abstract class Cloner
         }
         return null;
     }
-
+*/
     /**
      * Method copyIGrantPart2InfoGrantPart.
      * 
@@ -1317,7 +1304,7 @@ public abstract class Cloner
      * @param infoGrantPart
      * @return IGrantPart
      */
-    public static IGrantPart copyInfoGrantPart2IGrantPart(InfoGrantPart infoGrantPart)
+   /* public static IGrantPart copyInfoGrantPart2IGrantPart(InfoGrantPart infoGrantPart)
     {
         IGrantPart grantPart = null;
 
@@ -1340,7 +1327,7 @@ public abstract class Cloner
         }
 
         return grantPart;
-    }
+    }*/
 
     
     /**
@@ -1349,7 +1336,7 @@ public abstract class Cloner
      * @param infoGrantContractMovement
      * @return IGrantContractMovement
      */
-    public static IGrantContractMovement copyInfoGrantContractMovement2IGrantContractMovement(InfoGrantContractMovement infoGrantContractMovement)
+  /*  public static IGrantContractMovement copyInfoGrantContractMovement2IGrantContractMovement(InfoGrantContractMovement infoGrantContractMovement)
     {
         IGrantContractMovement grantContractMovement = null;
 
@@ -1364,7 +1351,7 @@ public abstract class Cloner
 
         return grantContractMovement;
     }
-    
+    */
     
     /**
      * Method copyIGrantSubsidy2InfoGrantSubsidy.
@@ -1394,7 +1381,7 @@ public abstract class Cloner
      * @param infoGrantSubsidy
      * @return IGrantSubsidy
      */
-    public static IGrantSubsidy copyInfoGrantSubsidy2IGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy)
+   /* public static IGrantSubsidy copyInfoGrantSubsidy2IGrantSubsidy(InfoGrantSubsidy infoGrantSubsidy)
     {
         IGrantSubsidy grantSubsidy = null;
 
@@ -1409,7 +1396,7 @@ public abstract class Cloner
         }
         return grantSubsidy;
     }
-
+*/
     /**
      * @param advisory
      * @return
@@ -1934,7 +1921,7 @@ public abstract class Cloner
         InfoExam infoExam = new InfoExam();
 
         copyObjectProperties(infoExam, exam);
-       
+        List infoRooms = new ArrayList();
         List infoCurricularCourseScope = new ArrayList();
         List infoRoomOccupation = new ArrayList();
         List infoExecutionCourse = new ArrayList();
@@ -3037,8 +3024,8 @@ public abstract class Cloner
         }
         else if (evaluation instanceof IOnlineTest)
         {
-            infoEvaluation = InfoOnlineTest.newInfoFromDomain((IOnlineTest) evaluation);
-            //infoEvaluation.setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
+            infoEvaluation = copyIOnlineTest2InfoOnlineTest((IOnlineTest) evaluation);
+            infoEvaluation.setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
         }
         copyObjectProperties(infoEvaluation, evaluation);
 
@@ -3216,7 +3203,8 @@ public abstract class Cloner
         {
             return null;
         }
-        
+        else
+        {
 
             InfoFrequenta infoFrequenta = new InfoFrequenta();
 
@@ -3238,7 +3226,7 @@ public abstract class Cloner
             infoFrequenta.setInfoEnrolment(infoEnrolment);
 
             return infoFrequenta;
-        
+        }
     }
 
     /**
@@ -3806,6 +3794,144 @@ public abstract class Cloner
         departmentCourse.setDepartamento(
             Cloner.copyInfoDepartment2IDepartment(infoDepartmentCourse.getInfoDepartment()));
         return departmentCourse;
+    }
+
+    public static InfoMetadata copyIMetadata2InfoMetadata(IMetadata metadata)
+    {
+
+        InfoMetadata infoMetadata = new InfoMetadata();
+        //		copyObjectProperties(infoMetadata, metadata);
+        infoMetadata.setMetadataFile(metadata.getMetadataFile());
+        infoMetadata.setDescription(metadata.getDescription());
+        infoMetadata.setAuthor(metadata.getAuthor());
+        infoMetadata.setDifficulty(metadata.getDifficulty());
+        infoMetadata.setIdInternal(metadata.getIdInternal());
+        infoMetadata.setLearningTime(metadata.getLearningTime());
+        infoMetadata.setLevel(metadata.getLevel());
+        infoMetadata.setMainSubject(metadata.getMainSubject());
+        infoMetadata.setNumberOfMembers(metadata.getNumberOfMembers());
+        infoMetadata.setSecondarySubject(metadata.getSecondarySubject());
+        infoMetadata.setVisibility(metadata.getVisibility());
+
+        InfoExecutionCourse infoExecutionCourse =
+            (InfoExecutionCourse) get(metadata.getExecutionCourse());
+        infoMetadata.setInfoExecutionCourse(infoExecutionCourse);
+        return infoMetadata;
+    }
+
+    public static InfoQuestion copyIQuestion2InfoQuestion(IQuestion question)
+    {
+        InfoQuestion infoQuestion = new InfoQuestion();
+        copyObjectProperties(infoQuestion, question);
+        InfoMetadata infoMetadata = copyIMetadata2InfoMetadata(question.getMetadata());
+        infoQuestion.setInfoMetadata(infoMetadata);
+        return infoQuestion;
+    }
+    public static InfoTest copyITest2InfoTest(ITest test)
+    {
+        InfoTest infoTest = new InfoTest();
+        copyObjectProperties(infoTest, test);
+        infoTest.setInfoTestScope(copyITestScope2InfoTestScope(test.getTestScope()));
+        return infoTest;
+    }
+
+    public static InfoTestQuestion copyITestQuestion2InfoTestQuestion(ITestQuestion testQuestion)
+    {
+        InfoTestQuestion infoTestQuestion = new InfoTestQuestion();
+        //copyObjectProperties(infoTestQuestion,testQuestion);
+        infoTestQuestion.setIdInternal(testQuestion.getIdInternal());
+        infoTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
+        infoTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+        infoTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
+        InfoTest infoTest = copyITest2InfoTest(testQuestion.getTest());
+        infoTestQuestion.setTest(infoTest);
+        InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(testQuestion.getQuestion());
+        infoTestQuestion.setQuestion(infoQuestion);
+        return infoTestQuestion;
+    }
+
+    public static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
+    {
+        InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
+        copyObjectProperties(infoDistributedTest, distributedTest);
+        infoDistributedTest.setInfoTestScope(
+            copyITestScope2InfoTestScope(distributedTest.getTestScope()));
+        return infoDistributedTest;
+    }
+
+    public static InfoTestScope copyITestScope2InfoTestScope(ITestScope testScope)
+    {
+        InfoTestScope infoTestScope = new InfoTestScope();
+        if (testScope.getDomainObject() instanceof IExecutionCourse)
+            infoTestScope.setInfoObject(get(testScope.getDomainObject()));
+        return infoTestScope;
+    }
+
+    public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(
+            IStudentTestQuestion studentTestQuestion)
+    {
+        InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
+        //copyObjectProperties(infoStudentTestQuestion, studentTestQuestion);
+        infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
+        infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
+        infoStudentTestQuestion.setOldResponse(studentTestQuestion.getOldResponse());
+        infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
+        infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
+        infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
+        infoStudentTestQuestion.setCorrectionFormula(studentTestQuestion.getCorrectionFormula());
+        //  
+        InfoDistributedTest infoDistributedTest = copyIDistributedTest2InfoDistributedTest(studentTestQuestion
+                .getDistributedTest());
+        InfoStudent infoStudent = copyIStudent2InfoStudent(studentTestQuestion.getStudent());
+        InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
+        infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
+        infoStudentTestQuestion.setStudent(infoStudent);
+        infoStudentTestQuestion.setQuestion(infoQuestion);
+        if (studentTestQuestion.getResponse() != null)
+        {
+            XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(studentTestQuestion
+                    .getResponse().getBytes()));
+            infoStudentTestQuestion.setResponse((Response) decoder.readObject());
+            decoder.close();
+        }
+        return infoStudentTestQuestion;
+    }
+
+    public static InfoStudentTestQuestionMark copyIStudentTestQuestion2InfoStudentTestQuestionMark(IStudentTestQuestion studentTestQuestion)
+    {
+        InfoStudentTestQuestionMark infoStudentTestQuestionMark = new InfoStudentTestQuestionMark();
+        infoStudentTestQuestionMark.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
+
+        if (studentTestQuestion.getStudent() != null)
+        {
+            infoStudentTestQuestionMark.setStudentIdInternal(
+                studentTestQuestion.getStudent().getIdInternal());
+            infoStudentTestQuestionMark.setStudentNumber(studentTestQuestion.getStudent().getNumber());
+            if (studentTestQuestion.getStudent().getPerson() != null)
+                infoStudentTestQuestionMark.setStudentName(
+                    studentTestQuestion.getStudent().getPerson().getNome());
+
+        }
+        return infoStudentTestQuestionMark;
+    }
+
+    public static InfoStudentTestLog copyIStudentTestLog2InfoStudentTestLog(IStudentTestLog studentTestLog)
+    {
+        InfoStudentTestLog infoStudentTestLog = new InfoStudentTestLog();
+        copyObjectProperties(infoStudentTestLog, studentTestLog);
+        infoStudentTestLog.setInfoDistributedTest(
+            copyIDistributedTest2InfoDistributedTest(studentTestLog.getDistributedTest()));
+        infoStudentTestLog.setInfoStudent(copyIStudent2InfoStudent(studentTestLog.getStudent()));
+        return infoStudentTestLog;
+    }
+
+    public static InfoOnlineTest copyIOnlineTest2InfoOnlineTest(IOnlineTest onlineTest)
+    {
+        InfoOnlineTest infoOnlineTest = new InfoOnlineTest();
+        copyObjectProperties(infoOnlineTest, onlineTest);
+        infoOnlineTest.setInfoDistributedTest(
+            copyIDistributedTest2InfoDistributedTest(onlineTest.getDistributedTest()));
+        return infoOnlineTest;
     }
 
     public static IWrittenTest copyInfoWrittenTest2IWrittenTest(InfoWrittenTest infoWrittenTest)

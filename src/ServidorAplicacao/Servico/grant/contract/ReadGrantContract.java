@@ -10,7 +10,6 @@ import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
 import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.IGrantContract;
@@ -80,8 +79,9 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 			IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
 
 			InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
-			IGrantContract contract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContract);
-
+			//IGrantContract contract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContract);
+			IGrantContract contract = InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo(infoGrantContract);
+			
 			//get the GrantOrientationTeacher for the contract
 			IGrantOrientationTeacher orientationTeacher =
 				pgot.readActualGrantOrientationTeacherByContract(contract, new Integer(0));

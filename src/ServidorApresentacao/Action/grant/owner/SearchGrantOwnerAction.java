@@ -4,7 +4,10 @@
 
 package ServidorApresentacao.Action.grant.owner;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
@@ -12,6 +15,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import ServidorApresentacao.Action.framework.SearchAction;
+import ServidorApresentacao.Action.grant.utils.SessionConstants;
+import ServidorApresentacao.mapping.framework.SearchActionMapping;
 import Util.TipoDocumentoIdentificacao;
 
 /**
@@ -21,25 +26,77 @@ import Util.TipoDocumentoIdentificacao;
 public class SearchGrantOwnerAction extends SearchAction {
     protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
             throws Exception {
-        
+
         DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
         String name = (String) searchGrantOwnerForm.get("name");
         String idNumber = (String) searchGrantOwnerForm.get("idNumber");
         Integer idType = (Integer) searchGrantOwnerForm.get("idType");
+        Integer startIndex = (Integer) searchGrantOwnerForm.get("startIndex");
 
         Boolean onlyGrantOwner = new Boolean(false);
-        if (searchGrantOwnerForm.get("justGrantOwner") != null) {
+        if (searchGrantOwnerForm.get("justGrantOwner") != null ||
+                (request.getAttribute("justGrantOwner") != null &&
+                        request.getAttribute("justGrantOwner").equals("yes"))
+            ) {
             request.setAttribute("justGrantOwner", "yes");
             onlyGrantOwner = new Boolean(true);
         }
-
-        Object[] args = { name, idNumber, idType, null, onlyGrantOwner };
+        request.setAttribute("name", name);
+        
+        Object[] args = { name, idNumber, idType, null, onlyGrantOwner, startIndex };
         return args;
+    }
+
+    protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request,
+            Collection result) throws Exception {
+
+        if(result != null && result.size() == 3) {
+            Iterator iterator = result.iterator();
+            Object object0 = iterator.next();
+            if(object0 instanceof Integer) {
+	            //Lets set up the span
+	            Integer numberOfElementsOfSearch = (Integer)object0;
+	            Integer startIndex = (Integer) iterator.next();
+	            List infoListGrantOwner = (List) iterator.next();
+
+	            if(hasBeforeSpan(startIndex, numberOfElementsOfSearch)) {
+	                request.setAttribute("beforeSpan", getBeforeSpan(startIndex, numberOfElementsOfSearch));
+	            }
+	            if(hasNextSpan(startIndex, numberOfElementsOfSearch)) {
+	                request.setAttribute("nextSpan", getNextSpan(startIndex, numberOfElementsOfSearch));
+	            }
+	            result = infoListGrantOwner;
+	            request.setAttribute("numberOfTotalElementsInSearch",numberOfElementsOfSearch);
+            }
+        }
+        return result;
     }
 
     protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
             ActionForm form) throws Exception {
         List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
         request.setAttribute("documentTypeList", documentTypeList);
+    }
+    
+    private boolean hasNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
+        
+        if((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1) < numberOfElementsInResult.intValue()) {
+            return true;
+        }            
+        return false;
+    }
+    private boolean hasBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
+        if((startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() + 1) > 0) {
+            return true;
+        }            
+        return false;
+    }
+    
+    private Integer getNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
+        
+        return new Integer(startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
+    }
+    private Integer getBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
+        return new Integer(startIndex.intValue() - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() + 1);
     }
 }

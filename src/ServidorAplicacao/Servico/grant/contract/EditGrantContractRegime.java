@@ -8,6 +8,8 @@ import java.util.List;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContractRegime;
+import DataBeans.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
+import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantInsurance;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
@@ -40,7 +42,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return copyInfoGrantContractRegime2IGrantContractRegime((InfoGrantContractRegime) infoObject);
+        return InfoGrantContractRegimeWithTeacherAndContract.newDomainFromInfo((InfoGrantContractRegime) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
@@ -79,8 +81,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 grantContractRegime.setTeacher(teacher);
             }
             IGrantContract grantContract = null;
-            grantContract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContractRegime
-                    .getInfoGrantContract());
+            //grantContract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContractRegime.getInfoGrantContract());
+            grantContract = InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo(infoGrantContractRegime.getInfoGrantContract());
             grantContractRegime.setGrantContract(grantContract);
         }
         return grantContractRegime;

@@ -49,7 +49,7 @@
 	<strong>&raquo; <bean:message key="link.grant.list"/></strong>	
 	<ul>
 		<li>
-			<html:link page="/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=1&amp;orderBy=orderByNumber&amp;numberOfElementsInSpan=100">
+			<html:link page="/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=1&amp;orderBy=orderByNumber">
 		    	<bean:message key="link.grant.owner.list"/>
 		    </html:link>
 		</li>

@@ -16,17 +16,11 @@ import Dominio.DomainObject;
 public class GrantType extends DomainObject implements IGrantType {
 
     private String name;
-
     private String sigla;
-
     private Integer minPeriodDays;
-
     private Integer maxPeriodDays;
-
     private Double indicativeValue;
-
     private String source;
-
     private Date state;
 
     /**

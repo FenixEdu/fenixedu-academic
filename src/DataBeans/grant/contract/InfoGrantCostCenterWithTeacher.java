@@ -4,6 +4,7 @@
 package DataBeans.grant.contract;
 
 import DataBeans.InfoTeacherWithPerson;
+import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.IGrantCostCenter;
 
 /**
@@ -31,6 +32,27 @@ public class InfoGrantCostCenterWithTeacher extends InfoGrantCostCenter {
             infoGrantCostCenter.copyFromDomain(grantCostCenter);
         }
         return infoGrantCostCenter;
+    }
+    
+    public void copyToDomain(InfoGrantCostCenter infoGrantCostCenter, IGrantCostCenter grantCostCenter) 
+    {
+        super.copyToDomain(infoGrantCostCenter, grantCostCenter);
+
+        grantCostCenter.setResponsibleTeacher(InfoTeacherWithPerson
+                .newDomainFromInfo(infoGrantCostCenter.getInfoResponsibleTeacher()));
+    }
+    
+    public static IGrantCostCenter newDomainFromInfo(InfoGrantCostCenter infoGrantCostCenter)
+    {
+        IGrantCostCenter grantCostCenter = null;
+        InfoGrantCostCenterWithTeacher infoGrantCostCenterWithTeacher = null;
+        if(infoGrantCostCenter != null)
+        {
+            grantCostCenter = new GrantCostCenter();
+            infoGrantCostCenterWithTeacher = new InfoGrantCostCenterWithTeacher();
+            infoGrantCostCenterWithTeacher.copyToDomain(infoGrantCostCenter,grantCostCenter);
+        }
+        return grantCostCenter;
     }
 
 }

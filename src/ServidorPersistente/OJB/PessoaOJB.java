@@ -20,20 +20,13 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
-public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
-{
+public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 
-    public PessoaOJB()
-    {
+    public PessoaOJB() {
     }
 
-    public void escreverPessoa(IPessoa personToWrite)
-        throws
-            ExcepcaoPersistencia,
-            ExistingPersistentException,
-            IllegalAccessException,
-            InvocationTargetException
-    {
+    public void escreverPessoa(IPessoa personToWrite) throws ExcepcaoPersistencia,
+            ExistingPersistentException, IllegalAccessException, InvocationTargetException {
 
         IPessoa personFromDB1 = null;
         IPessoa personFromDB2 = null;
@@ -44,29 +37,21 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
 
         // Read person from database.
         personFromDB1 = this.lerPessoaPorUsername(personToWrite.getUsername());
-        personFromDB2 =
-            this.lerPessoaPorNumDocIdETipoDocId(
-                personToWrite.getNumeroDocumentoIdentificacao(),
-                personToWrite.getTipoDocumentoIdentificacao());
+        personFromDB2 = this.lerPessoaPorNumDocIdETipoDocId(personToWrite
+                .getNumeroDocumentoIdentificacao(), personToWrite.getTipoDocumentoIdentificacao());
 
         // If person is not in database, then write it.
-        if ((personFromDB1 == null) && (personFromDB2 == null))
-        {
+        if ((personFromDB1 == null) && (personFromDB2 == null)) {
 
             super.lockWrite(personToWrite);
             return;
 
-        }
-        else if (
-            (personFromDB1 != null)
+        } else if ((personFromDB1 != null)
                 && (personFromDB2 != null)
-                && (((Pessoa) personFromDB1)
-                    .getIdInternal()
-                    .equals(((Pessoa) personToWrite).getIdInternal()))
-                && (((Pessoa) personFromDB2)
-                    .getIdInternal()
-                    .equals(((Pessoa) personToWrite).getIdInternal())))
-        {
+                && (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite)
+                        .getIdInternal()))
+                && (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite)
+                        .getIdInternal()))) {
 
             super.lockWrite(personFromDB1);
             BeanUtils.copyProperties(personFromDB1, personToWrite);
@@ -74,30 +59,22 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
 
             // else If the person is mapped to the database, then write any
             // existing changes.
-        }
-        else if (
-            (personFromDB1 != null)
+        } else if ((personFromDB1 != null)
                 && (personFromDB2 == null)
                 && (personToWrite instanceof Pessoa)
-                && (((Pessoa) personFromDB1)
-                    .getIdInternal()
-                    .equals(((Pessoa) personToWrite).getIdInternal())))
-        {
+                && (((Pessoa) personFromDB1).getIdInternal().equals(((Pessoa) personToWrite)
+                        .getIdInternal()))) {
 
             super.lockWrite(personFromDB1);
             BeanUtils.copyProperties(personFromDB1, personToWrite);
 
             return;
 
-        }
-        else if (
-            (personFromDB2 != null)
+        } else if ((personFromDB2 != null)
                 && (personFromDB1 == null)
                 && (personToWrite instanceof Pessoa)
-                && (((Pessoa) personFromDB2)
-                    .getIdInternal()
-                    .equals(((Pessoa) personToWrite).getIdInternal())))
-        {
+                && (((Pessoa) personFromDB2).getIdInternal().equals(((Pessoa) personToWrite)
+                        .getIdInternal()))) {
             super.lockWrite(personFromDB1);
             BeanUtils.copyProperties(personFromDB2, personToWrite);
 
@@ -107,23 +84,18 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
         throw new ExistingPersistentException();
     }
 
-    public void apagarPessoaPorNumDocIdETipoDocId(
-        String numeroDocumentoIdentificacao,
-        TipoDocumentoIdentificacao tipoDocumentoIdentificacao)
-        throws ExcepcaoPersistencia
-    {
+    public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
+            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
         crit.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao.getTipo());
 
         List result = queryList(Pessoa.class, crit);
-        if (result != null)
-        {
+        if (result != null) {
 
             ListIterator iterator = result.listIterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
 
                 super.delete(iterator.next());
             }
@@ -131,15 +103,11 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
 
     }
 
-    public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia
-    {
+    public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia {
         super.delete(pessoa);
     }
 
-   
-
-    public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia
-    {
+    public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia {
         IPessoa person = null;
 
         Criteria criteria = new Criteria();
@@ -148,8 +116,7 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
         return person;
     }
 
-    public List findPersonByName(String name) throws ExcepcaoPersistencia
-    {
+    public List findPersonByName(String name) throws ExcepcaoPersistencia {
         List personList = null;
 
         Criteria criteria = new Criteria();
@@ -158,54 +125,63 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
         return personList;
     }
 
-    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber)
-        throws ExcepcaoPersistencia
-    {
+    public List findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia {
+        
+        Criteria criteria = new Criteria();
+        criteria.addLike("name", name);
+        
+        if(startIndex != null && numberOfElementsInSpan != null) {
+            return readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex); 
+        }
+        return queryList(Pessoa.class, criteria);
+        
+    }
+    
+    public Integer countAllPersonByName(String name) {
+        Criteria criteria = new Criteria();
+        criteria.addLike("name", name);
+        return new Integer(count(Pessoa.class, criteria));
+    }
+
+    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email,
+            String username, String documentIdNumber) throws ExcepcaoPersistencia {
         List personList = null;
 
         Criteria criteria = new Criteria();
 
-        if (name != null && name.length() > 0)
-        {
+        if (name != null && name.length() > 0) {
             criteria.addLike("nome", name);
         }
 
-        if (email != null && email.length() > 0)
-        {
+        if (email != null && email.length() > 0) {
             criteria.addLike("email", email);
         }
 
-        if (username != null && username.length() > 0)
-        {
+        if (username != null && username.length() > 0) {
             criteria.addLike("username", username);
         }
-        
-        if (documentIdNumber != null && documentIdNumber.length() > 0)
-        {
-        	criteria.addLike("numeroDocumentoIdentificacao", documentIdNumber);
+
+        if (documentIdNumber != null && documentIdNumber.length() > 0) {
+            criteria.addLike("numeroDocumentoIdentificacao", documentIdNumber);
         }
 
         personList = queryList(Pessoa.class, criteria);
         return personList;
     }
 
-    public IPessoa lerPessoaPorNumDocIdETipoDocId(
-        String numeroDocumentoIdentificacao,
-        TipoDocumentoIdentificacao tipoDocumentoIdentificacao)
-        throws ExcepcaoPersistencia
-    {
+    public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
+            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
         criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao.getTipo());
         return (IPessoa) queryObject(Pessoa.class, criteria);
     }
 
-    public List lerTodasAsPessoas() throws ExcepcaoPersistencia
-    {
-        return queryList(Pessoa.class,new Criteria());
+    public List lerTodasAsPessoas() throws ExcepcaoPersistencia {
+        return queryList(Pessoa.class, new Criteria());
     }
 
-    public void alterarPessoa(String numDocId, TipoDocumentoIdentificacao tipoDocId, IPessoa pessoa)
-    {
+    public void alterarPessoa(String numDocId, TipoDocumentoIdentificacao tipoDocId, IPessoa pessoa) {
     }
 }

@@ -9,8 +9,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantPart;
+import DataBeans.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import DataBeans.grant.contract.InfoGrantProject;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
 import Dominio.Teacher;
@@ -42,8 +42,9 @@ public class EditGrantPart extends EditDomainObjectService {
     public EditGrantPart() {
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return Cloner.copyInfoGrantPart2IGrantPart((InfoGrantPart) infoObject);
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) 
+    {
+        return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newDomainFromInfo((InfoGrantPart) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {

@@ -11,6 +11,7 @@ import DataBeans.InfoCountry;
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
 import Dominio.IQualification;
+import Dominio.Qualification;
 
 /**
  * @author Barbosa
@@ -265,7 +266,8 @@ public class InfoQualification extends InfoObject implements ISiteComponent
     /* (non-Javadoc)
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
-    public void copyFromDomain(IQualification qualification) {
+    public void copyFromDomain(IQualification qualification) 
+    {
         super.copyFromDomain(qualification);
         if(qualification != null) {
             setTitle(qualification.getTitle());
@@ -289,5 +291,32 @@ public class InfoQualification extends InfoObject implements ISiteComponent
             infoQualification.copyFromDomain(qualification);
         }
         return infoQualification;
+    }
+    
+    public void copyToDomain(InfoQualification infoQualification, IQualification qualification) 
+    {
+        super.copyToDomain(infoQualification, qualification);
+
+        qualification.setTitle(infoQualification.getTitle());
+        qualification.setDate(infoQualification.getDate());
+        qualification.setMark(infoQualification.getMark());
+        qualification.setSchool(infoQualification.getSchool());
+        qualification.setSpecializationArea(infoQualification.getSpecializationArea());
+        qualification.setMark(infoQualification.getMark());
+        qualification.setBranch(infoQualification.getBranch());
+        qualification.setDegree(infoQualification.getDegree());
+        qualification.setDegreeRecognition(infoQualification.getDegreeRecognition());
+        qualification.setEquivalenceDate(infoQualification.getEquivalenceDate());
+        qualification.setEquivalenceSchool(infoQualification.getEquivalenceSchool());
+    }
+
+    public static IQualification newDomainFromInfo(InfoQualification infoQualification) 
+    {
+        IQualification qualification = null;
+        if (infoQualification != null) {
+            qualification = new Qualification();
+            infoQualification.copyToDomain(infoQualification, qualification);
+        }
+        return qualification;
     }
 }

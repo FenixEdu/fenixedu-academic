@@ -5,7 +5,7 @@
 package DataBeans.grant.contract;
 
 import DataBeans.InfoTeacherWithPerson;
-import DataBeans.util.Cloner;
+import Dominio.grant.contract.GrantPart;
 import Dominio.grant.contract.IGrantPart;
 
 
@@ -19,7 +19,7 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
 	{
 		super.copyFromDomain(grantPart);
 		if(grantPart != null){
-		    setInfoGrantPaymentEntity(Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPart.getGrantPaymentEntity()));
+		    setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantPart.getGrantPaymentEntity()));
 			setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantPart.getResponsibleTeacher()));
 			setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantPart.getGrantSubsidy()));
 		}
@@ -35,4 +35,25 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
 		return infoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 	}
 	
+	 public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) 
+	 {
+	     super.copyToDomain(infoGrantPart, grantPart);
+
+	     grantPart.setGrantPaymentEntity(InfoGrantPaymentEntity.newDomainFromInfo(infoGrantPart.getInfoGrantPaymentEntity()));
+	     grantPart.setResponsibleTeacher(InfoTeacherWithPerson.newDomainFromInfo(infoGrantPart.getInfoResponsibleTeacher()));
+	     grantPart.setGrantSubsidy(InfoGrantSubsidyWithContract.newDomainFromInfo(infoGrantPart.getInfoGrantSubsidy()));
+    }
+	    
+	 public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) 
+	 {
+        IGrantPart grantPart = null;
+        InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = null;
+        if (infoGrantPart != null) 
+        {
+            grantPart = new GrantPart();
+            infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = new InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity();
+            infoGrantPartWithSubsidyAndTeacherAndPaymentEntity.copyToDomain(infoGrantPart, grantPart);
+        }
+        return grantPart;
+    }
 }

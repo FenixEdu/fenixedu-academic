@@ -5,7 +5,6 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantType;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -28,7 +27,7 @@ public class EditGrantType extends EditDomainObjectService {
     }
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return Cloner.copyInfoGrantType2IGrantType((InfoGrantType) infoObject);
+        return InfoGrantType.newDomainFromInfo((InfoGrantType) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {

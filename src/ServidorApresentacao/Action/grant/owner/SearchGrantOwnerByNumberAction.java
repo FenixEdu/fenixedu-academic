@@ -26,12 +26,13 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
     public ActionForward searchGrantOwner(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         List infoGrantOwnerList = null;
+        Integer grantOwnerNumber = null;
         try {
             //Read attributes from FormBean
             DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
-            Integer grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
+            grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
 
-            Object[] args = { null, null, null, grantOwnerNumber, null };
+            Object[] args = { null, null, null, grantOwnerNumber, null, null };
             IUserView userView = SessionUtils.getUserView(request);
             infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner", args);
             
@@ -39,9 +40,9 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
             return setError(request, mapping, "errors.grant.unrecoverable", "search-unSuccesfull", null);
         }
 
-        if (infoGrantOwnerList.isEmpty()) {
-            return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull",
-                    null);
+        if (infoGrantOwnerList.isEmpty()) 
+        {
+            return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull",grantOwnerNumber);
         }
 
         request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);

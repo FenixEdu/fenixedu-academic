@@ -138,6 +138,13 @@ public class InfoGrantContract extends InfoObject {
         this.active = active;
     }
     
+    public boolean getContractActive() {
+        if(active == null) {
+            return false;
+        }
+        return active.booleanValue();
+    }
+    
     /**
      * @param GrantContract
      */
@@ -166,28 +173,26 @@ public class InfoGrantContract extends InfoObject {
     	return infoGrantContract;
     }
     
-    public boolean getContractActive() {
-        if(active == null) {
-            return false;
+   
+    
+    public void copyToDomain(InfoGrantContract infoGrantContract,IGrantContract grantContract)
+    {
+        super.copyToDomain(infoGrantContract,grantContract);
+        
+        grantContract.setContractNumber(infoGrantContract.getContractNumber());
+        grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
+        grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
+    }
+    
+    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract)
+    {
+        IGrantContract grantContract = null;
+        if(infoGrantContract != null)
+        {
+            grantContract = new GrantContract();
+            infoGrantContract.copyToDomain(infoGrantContract,grantContract);       
         }
-        return active.booleanValue();
-    }
-    
-    public IGrantContract copyToDomain()
-    {
-        IGrantContract grantContract = new GrantContract();
-        super.copyToDomain(grantContract);
-        
-        grantContract.setContractNumber(getContractNumber());
-        grantContract.setEndContractMotive(getEndContractMotive());
-        grantContract.setDateAcceptTerm(getDateAcceptTerm());
-        
         return grantContract;
-    }
-    
-    public IGrantContract newDomainFromInfo()
-    {
-        return this.copyToDomain();
     }
     
 }

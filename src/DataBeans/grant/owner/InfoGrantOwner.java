@@ -125,21 +125,23 @@ public class InfoGrantOwner extends InfoObject
 		return infoGrantOwner;
 	}
 	
-	public IGrantOwner copyToDomain()
-    {
-        IGrantOwner grantOwner = new GrantOwner(); 
-        super.copyToDomain(grantOwner);
-        
-        grantOwner.setCardCopyNumber(getCardCopyNumber());
-        grantOwner.setDateSendCGD(getDateSendCGD());
-        grantOwner.setNumber(getGrantOwnerNumber());
-        
-        return grantOwner;
-    }
-    
-    public IGrantOwner newDomainFromInfo()
-    {
-        return this.copyToDomain();
-    }
-    
+	 public void copyToDomain(InfoGrantOwner infoGrantOwner,IGrantOwner grantOwner)
+	 {
+	     super.copyToDomain(infoGrantOwner,grantOwner);
+	        
+	     grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
+	     grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
+	     grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
+	 }
+	    
+	 public static IGrantOwner newDomainFromInfo(InfoGrantOwner infoGrantOwner)
+	 {
+	     IGrantOwner grantOwner = null;
+	     if(infoGrantOwner != null)
+	     {
+	         grantOwner = new GrantOwner();
+	         infoGrantOwner.copyToDomain(infoGrantOwner,grantOwner);       
+	     }
+	     return grantOwner;
+	 }
 }

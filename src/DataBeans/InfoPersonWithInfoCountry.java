@@ -5,6 +5,7 @@
 package DataBeans;
 
 import Dominio.IPessoa;
+import Dominio.Pessoa;
 
 /**
  * @author João Mota
@@ -28,20 +29,22 @@ public class InfoPersonWithInfoCountry extends InfoPerson {
         return infoPerson;
     }
     
-    public IPessoa copyToDomain()
+    public void copyToDomain(InfoPerson infoPerson,IPessoa person)
     {
-        IPessoa person = super.copyToDomain();
-        if (person != null)
-    	{
-            InfoCountry infoCountry = super.getInfoPais();
-    		person.setPais(infoCountry.newDomainFromInfo());
-    	}
-        return person;
+        super.copyToDomain(infoPerson,person);
+        person.setPais(InfoCountry.newDomainFromInfo(infoPerson.getInfoPais()));
     }
     
-    public IPessoa newDomainFromInfo()
+    public static IPessoa newDomainFromInfo(InfoPerson infoPerson)
     {
-        return this.copyToDomain();
+        IPessoa person = null;
+        InfoPersonWithInfoCountry infoPersonWithInfoCountry = null;
+        if(infoPerson != null)
+        {
+            person = new Pessoa();
+            infoPersonWithInfoCountry = new InfoPersonWithInfoCountry();
+            infoPersonWithInfoCountry.copyToDomain(infoPerson,person);
+        }
+        return person;
     }
-	
 }

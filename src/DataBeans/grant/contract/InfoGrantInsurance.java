@@ -6,6 +6,7 @@ package DataBeans.grant.contract;
 import java.util.Date;
 
 import DataBeans.InfoObject;
+import Dominio.grant.contract.GrantInsurance;
 import Dominio.grant.contract.IGrantInsurance;
 import Util.CalendarUtil;
 
@@ -98,33 +99,6 @@ public class InfoGrantInsurance extends InfoObject {
 		this.infoGrantPaymentEntity = infoGrantPaymentEntity;
 	}
 	
-    /**
-     * @param GrantInsurance
-     */
-    public void copyFromDomain(IGrantInsurance grantInsurance)
-    {
-    	super.copyFromDomain(grantInsurance);
-    	if (grantInsurance != null)
-    	{
-    		setDateBeginInsurance(grantInsurance.getDateBeginInsurance());
-    		setDateEndInsurance(grantInsurance.getDateEndInsurance());
-    		setTotalValue(grantInsurance.getTotalValue());
-    	}
-    }
-    /**
-     * @param GrantInsrance
-     * @return
-     */
-    public static InfoGrantInsurance newInfoFromDomain(IGrantInsurance grantInsurance)
-    {
-    	InfoGrantInsurance infoGrantInsurance = null;
-    	if (grantInsurance != null)
-    	{
-    		infoGrantInsurance = new InfoGrantInsurance();
-    		infoGrantInsurance.copyFromDomain(grantInsurance);
-    	}
-    	return infoGrantInsurance;
-    }
     
     public static Double getDayValueOfInsurance() {
     	return new Double(dayValueOfInsurance);
@@ -150,4 +124,44 @@ public class InfoGrantInsurance extends InfoObject {
 	}
 
 	
+    public void copyFromDomain(IGrantInsurance grantInsurance)
+    {
+    	super.copyFromDomain(grantInsurance);
+    	if (grantInsurance != null)
+    	{
+    		setDateBeginInsurance(grantInsurance.getDateBeginInsurance());
+    		setDateEndInsurance(grantInsurance.getDateEndInsurance());
+    		setTotalValue(grantInsurance.getTotalValue());
+    	}
+    }
+   
+    public static InfoGrantInsurance newInfoFromDomain(IGrantInsurance grantInsurance)
+    {
+    	InfoGrantInsurance infoGrantInsurance = null;
+    	if (grantInsurance != null)
+    	{
+    		infoGrantInsurance = new InfoGrantInsurance();
+    		infoGrantInsurance.copyFromDomain(grantInsurance);
+    	}
+    	return infoGrantInsurance;
+    }
+	
+    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, IGrantInsurance grantInsurance) 
+    {
+        super.copyToDomain(infoGrantInsurance, grantInsurance);
+
+        grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
+        grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
+        grantInsurance.setTotalValue(infoGrantInsurance.getTotalValue());
+    }
+
+    public static IGrantInsurance newDomainFromInfo(InfoGrantInsurance infoGrantInsurance) 
+    {
+        IGrantInsurance grantInsurance = null;
+        if (infoGrantInsurance != null) {
+            grantInsurance = new GrantInsurance();
+            infoGrantInsurance.copyToDomain(infoGrantInsurance, grantInsurance);
+        }
+        return grantInsurance;
+    }
 }

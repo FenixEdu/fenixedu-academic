@@ -10,7 +10,6 @@ import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import DataBeans.grant.contract.InfoGrantProject;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
@@ -46,7 +45,7 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements I
 	 */
 	protected IDomainObject clone2DomainObject(InfoObject infoObject)
 	{
-		return Cloner.copyInfoGrantPaymentEntity2IGrantPaymentEntity((InfoGrantPaymentEntity)infoObject);
+	    return InfoGrantPaymentEntity.newDomainFromInfo((InfoGrantPaymentEntity)infoObject);
 	}
 
 	/* (non-Javadoc)

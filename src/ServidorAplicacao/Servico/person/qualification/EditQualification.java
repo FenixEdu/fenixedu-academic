@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.person.qualification;
 
 import DataBeans.InfoObject;
 import DataBeans.person.InfoQualification;
-import DataBeans.util.Cloner;
+import DataBeans.person.InfoQualificationWithPersonAndCountry;
 import Dominio.IDomainObject;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -44,7 +44,7 @@ public class EditQualification extends EditDomainObjectService
 	 */
     protected IDomainObject clone2DomainObject(InfoObject infoObject)
     {
-        return Cloner.copyInfoQualification2IQualification((InfoQualification) infoObject);
+        return InfoQualificationWithPersonAndCountry.newDomainFromInfo((InfoQualification) infoObject);
     }
 
     /*

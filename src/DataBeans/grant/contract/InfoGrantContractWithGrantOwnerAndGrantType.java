@@ -5,6 +5,7 @@
 package DataBeans.grant.contract;
 
 import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
+import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.IGrantContract;
 
 /**
@@ -13,7 +14,7 @@ import Dominio.grant.contract.IGrantContract;
  */
 public class InfoGrantContractWithGrantOwnerAndGrantType extends
         InfoGrantContract {
-
+    
     public void copyFromDomain(IGrantContract grantContract) {
         super.copyFromDomain(grantContract);
         if (grantContract != null) {
@@ -35,21 +36,24 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends
         return infoGrantContract;
     }
 
-    public IGrantContract copyToDomain()
+    public void copyToDomain(InfoGrantContract infoGrantContract,IGrantContract grantContract)
     {
-        IGrantContract grantContract = super.copyToDomain();
-        if (grantContract != null)
-    	{
-            InfoGrantOwnerWithPerson infoGrantOwnerWithPerson = (InfoGrantOwnerWithPerson) super.getGrantOwnerInfo();
-    		grantContract.setGrantOwner(infoGrantOwnerWithPerson.newDomainFromInfo());
-    		grantContract.setGrantType(super.getGrantTypeInfo().newDomainFromInfo());
-    	}
-        return grantContract;
+        super.copyToDomain(infoGrantContract,grantContract);
+        grantContract.setGrantOwner(InfoGrantOwnerWithPerson.newDomainFromInfo(infoGrantContract.getGrantOwnerInfo()));
+        grantContract.setGrantType(InfoGrantType.newDomainFromInfo(infoGrantContract.getGrantTypeInfo()));
     }
     
-    public IGrantContract newDomainFromInfo()
+    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract)
     {
-        return this.copyToDomain();
+        IGrantContract grantContract = null;
+        InfoGrantContractWithGrantOwnerAndGrantType infoGrantContractWithGrantOwnerAndGrantType = null;
+        if(infoGrantContract != null)
+        {
+            grantContract = new GrantContract();
+            infoGrantContractWithGrantOwnerAndGrantType = new InfoGrantContractWithGrantOwnerAndGrantType();
+            infoGrantContractWithGrantOwnerAndGrantType.copyToDomain(infoGrantContract,grantContract);       
+        }
+        return grantContract;
     }
     
 }

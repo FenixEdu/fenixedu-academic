@@ -4,6 +4,7 @@
  */
 package DataBeans.grant.contract;
 
+import Dominio.grant.contract.GrantContractMovement;
 import Dominio.grant.contract.IGrantContractMovement;
 
 
@@ -34,23 +35,27 @@ public class InfoGrantContractMovementWithContract extends InfoGrantContractMove
 	/**
      * @param grantMovement
      */
-    public IGrantContractMovement copyToDomain()
+    public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement,IGrantContractMovement grantContractMovement)
     {
-    	IGrantContractMovement grantContractMovement = super.copyToDomain();
-    	if (grantContractMovement != null)
-    	{
-    	    InfoGrantContractWithGrantOwnerAndGrantType infoGrantContractWithGrantOwnerAndGrantType = (InfoGrantContractWithGrantOwnerAndGrantType) getInfoGrantContract();
-    		grantContractMovement.setGrantContract(infoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo());
-    	}
-    	return grantContractMovement;
+    	super.copyToDomain(infoGrantContractMovement,grantContractMovement);
+    	
+    	grantContractMovement.setGrantContract(InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo(infoGrantContractMovement.getInfoGrantContract()));
     }
     
     /**
      * @param GrantMovement
      * @return
      */
-    public IGrantContractMovement newDomainFromInfo()
+    public static IGrantContractMovement newDomainFromInfo(InfoGrantContractMovement infoGrantContractMovement)
     {
-    	return this.copyToDomain();
+        IGrantContractMovement grantContractMovement = null;
+        InfoGrantContractMovementWithContract infoGrantContractMovementWithContract = null;
+        if(infoGrantContractMovement != null)
+        {
+            grantContractMovement = new GrantContractMovement();
+            infoGrantContractMovementWithContract = new InfoGrantContractMovementWithContract();
+            infoGrantContractMovementWithContract.copyToDomain(infoGrantContractMovement,grantContractMovement);
+        }
+    	return grantContractMovement;
     }
 }

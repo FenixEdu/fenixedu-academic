@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.person.qualification;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.person.InfoQualification;
-import DataBeans.util.Cloner;
+import DataBeans.person.InfoQualificationWithPersonAndCountry;
 import Dominio.IDomainObject;
 import Dominio.IQualification;
 import Dominio.Qualification;
@@ -57,7 +57,7 @@ public class ReadQualification extends ReadDomainObjectService
 	 */
 	protected InfoObject clone2InfoObject(IDomainObject domainObject)
 	{
-		return Cloner.copyIQualification2InfoQualification((IQualification) domainObject);
+		return InfoQualificationWithPersonAndCountry.newInfoFromDomain((IQualification) domainObject);
 	}
 
 	/* (non-Javadoc)

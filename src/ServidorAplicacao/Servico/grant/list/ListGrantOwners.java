@@ -13,6 +13,7 @@ import DataBeans.grant.list.InfoListGrantOwnerByOrder;
 import DataBeans.grant.list.InfoSpanListGrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.grant.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -45,7 +46,7 @@ public class ListGrantOwners implements IService {
             persistentGrantOwner = sp.getIPersistentGrantOwner();
             grantOwnerBySpan = persistentGrantOwner.readAllGrantOwnersBySpan(
                     infoSpanListGrantOwner.getSpanNumber(),
-                    infoSpanListGrantOwner.getNumberOfElementsInSpan(),
+                    SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
                     propertyOrderBy(infoSpanListGrantOwner.getOrderBy()));
 
             List listGrantOwner = null;

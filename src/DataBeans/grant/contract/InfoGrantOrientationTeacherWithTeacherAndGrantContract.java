@@ -5,6 +5,7 @@
 package DataBeans.grant.contract;
 
 import DataBeans.InfoTeacherWithPerson;
+import Dominio.grant.contract.GrantOrientationTeacher;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 
 /**
@@ -38,4 +39,28 @@ public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends
         return infoGrantOrientationTeacherWithTeacherAndGrantContract;
     }
 
+    public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
+            IGrantOrientationTeacher grantOrientationTeacher) 
+    {
+        super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
+
+        grantOrientationTeacher.setOrientationTeacher(InfoTeacherWithPerson
+                .newDomainFromInfo(infoGrantOrientationTeacher.getOrientationTeacherInfo()));
+        grantOrientationTeacher.setGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
+                .newDomainFromInfo(infoGrantOrientationTeacher.getGrantContractInfo()));
+    }
+
+    public static IGrantOrientationTeacher newDomainFromInfo(
+            InfoGrantOrientationTeacher infoGrantOrientationTeacher)
+    {
+        IGrantOrientationTeacher grantOrientationTeacher = null;
+        InfoGrantOrientationTeacherWithTeacherAndGrantContract infoGrantOrientationTeacherWithTeacherAndGrantContract = null;
+        if (infoGrantOrientationTeacher != null) {
+            grantOrientationTeacher = new GrantOrientationTeacher();
+            infoGrantOrientationTeacherWithTeacherAndGrantContract = new InfoGrantOrientationTeacherWithTeacherAndGrantContract();
+            infoGrantOrientationTeacherWithTeacherAndGrantContract.copyToDomain(
+                    infoGrantOrientationTeacher, grantOrientationTeacher);
+        }
+        return grantOrientationTeacher;
+    }
 }

@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.grant.contract.GrantOrientationTeacher;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 
 /**
@@ -106,4 +107,21 @@ public class InfoGrantOrientationTeacher extends InfoObject {
     	return infoGrantOrientationTeacher;
     }
     
+    public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher, IGrantOrientationTeacher grantOrientationTeacher) 
+    {
+        super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
+
+        grantOrientationTeacher.setBeginDate(infoGrantOrientationTeacher.getBeginDate());
+        grantOrientationTeacher.setEndDate(infoGrantOrientationTeacher.getEndDate());
+    }
+
+    public static IGrantOrientationTeacher newDomainFromInfo(InfoGrantOrientationTeacher infoGrantOrientationTeacher) 
+    {
+        IGrantOrientationTeacher grantOrientationTeacher = null;
+        if (infoGrantOrientationTeacher != null) {
+            grantOrientationTeacher = new GrantOrientationTeacher();
+            infoGrantOrientationTeacher.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
+        }
+        return grantOrientationTeacher;
+    }
 }

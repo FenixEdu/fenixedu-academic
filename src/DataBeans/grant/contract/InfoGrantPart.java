@@ -5,6 +5,7 @@ package DataBeans.grant.contract;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.grant.contract.GrantPart;
 import Dominio.grant.contract.IGrantPart;
 
 /**
@@ -105,5 +106,21 @@ public class InfoGrantPart extends InfoObject {
     	return infoGrantPart;
     }
     
-    
+    public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) 
+	 {
+	     super.copyToDomain(infoGrantPart, grantPart);
+
+	     grantPart.setPercentage(infoGrantPart.getPercentage());
+   }
+	    
+	 public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) 
+	 {
+       IGrantPart grantPart = null;
+       if (infoGrantPart != null) 
+       {
+           grantPart = new GrantPart();
+           infoGrantPart.copyToDomain(infoGrantPart, grantPart);
+       }
+       return grantPart;
+   }
 }

@@ -154,25 +154,28 @@ public class InfoGrantType extends InfoObject {
     	return infoGrantType;
     }
     
-    public IGrantType copyToDomain()
-    {
-        IGrantType grantType = new GrantType(); 
-        super.copyToDomain(grantType);
+    public void copyToDomain(InfoGrantType infoGrantType,GrantType grantType)
+    { 
+        super.copyToDomain(infoGrantType,grantType);
         
-        grantType.setName(getName());
-        grantType.setSigla(getSigla());
-        grantType.setMinPeriodDays(getMinPeriodDays());
-        grantType.setMaxPeriodDays(getMaxPeriodDays());
-        grantType.setIndicativeValue(getIndicativeValue());
-        grantType.setSource(getSource());
-        grantType.setState(getState());
-        
-        return grantType;
+        grantType.setName(infoGrantType.getName());
+        grantType.setSigla(infoGrantType.getSigla());
+        grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
+        grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
+        grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
+        grantType.setSource(infoGrantType.getSource());
+        grantType.setState(infoGrantType.getState());
     }
     
-    public IGrantType newDomainFromInfo()
+    public static IGrantType newDomainFromInfo(InfoGrantType infoGrantType)
     {
-        return this.copyToDomain();
+        IGrantType grantType = null;
+        if(infoGrantType != null)
+        {
+            grantType = new GrantType();
+            infoGrantType.copyToDomain(infoGrantType,grantType);
+        }
+        return grantType;
     }
     
     

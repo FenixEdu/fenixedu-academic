@@ -9,6 +9,7 @@ import java.util.List;
 
 import DataBeans.teacher.InfoCategory;
 import Dominio.ITeacher;
+import Dominio.Teacher;
 
 /**
  * @author João Mota
@@ -176,5 +177,22 @@ public class InfoTeacher extends InfoObject {
             infoTeacher.copyFromDomain(teacher);
         }
         return infoTeacher;
+    }
+    
+    public void copyToDomain(InfoTeacher infoTeacher,ITeacher teacher)
+    {
+        super.copyToDomain(infoTeacher,teacher);
+        teacher.setTeacherNumber(infoTeacher.getTeacherNumber());
+    }
+    
+    public static ITeacher newDomainFromInfo(InfoTeacher infoTeacher)
+    {
+        ITeacher teacher = null;
+        if(infoTeacher != null)
+        {
+            teacher = new Teacher();
+            infoTeacher.copyToDomain(infoTeacher,teacher);
+        }
+        return teacher;
     }
 }

@@ -49,7 +49,6 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IService
         IGrantOwner grantOwner = null;
         try
         {
-            //grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personIdInternal);
         	grantOwner = persistentGrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
         } catch (ExcepcaoPersistencia persistentException)
         {

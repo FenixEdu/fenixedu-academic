@@ -21,7 +21,6 @@ public class InfoGrantContractMovement extends InfoObject
     private Date departureDate;
     private Date arrivalDate;
     private InfoGrantContract infoGrantContract;
-    private Integer keyGrantContract;
     
 
     /**
@@ -59,18 +58,6 @@ public class InfoGrantContractMovement extends InfoObject
      */
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
         this.infoGrantContract = infoGrantContract;
-    }
-    /**
-     * @return Returns the keyGrantContract.
-     */
-    public Integer getKeyGrantContract() {
-        return this.keyGrantContract;
-    }
-    /**
-     * @param keyGrantContract The keyGrantContract to set.
-     */
-    public void setKeyGrantContract(Integer keyGrantContract) {
-        this.keyGrantContract = keyGrantContract;
     }
     /**
      * @return Returns the location.
@@ -117,25 +104,27 @@ public class InfoGrantContractMovement extends InfoObject
     /**
      * @param grantMovement
      */
-    public IGrantContractMovement copyToDomain()
+    public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement,IGrantContractMovement grantContractMovement)
     {
-        IGrantContractMovement grantContractMovement = new GrantContractMovement();
-    	super.copyToDomain(grantContractMovement);
-    	if (grantContractMovement != null)
-    	{
-    		grantContractMovement.setLocation(getLocation());
-    		grantContractMovement.setArrivalDate(getArrivalDate());
-    		grantContractMovement.setDepartureDate(getDepartureDate());
-    	}
-    	return grantContractMovement;
+    	super.copyToDomain(infoGrantContractMovement,grantContractMovement);
+    	
+    	grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
+    	grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
+    	grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
     }
     
     /**
      * @param GrantMovement
      * @return
      */
-    public IGrantContractMovement newDomainFromInfo()
+    public static IGrantContractMovement newDomainFromInfo(InfoGrantContractMovement infoGrantContractMovement)
     {
-    	return copyToDomain();
+        IGrantContractMovement grantContractMovement = null;
+        if(infoGrantContractMovement != null)
+        {
+            grantContractMovement = new GrantContractMovement();
+            infoGrantContractMovement.copyToDomain(infoGrantContractMovement,grantContractMovement);
+        }
+    	return grantContractMovement;
     }
 }

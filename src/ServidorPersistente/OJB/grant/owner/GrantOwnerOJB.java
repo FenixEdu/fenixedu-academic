@@ -48,6 +48,23 @@ public class GrantOwnerOJB extends ServidorPersistente.OJB.ObjectFenixOJB implem
         return grantOwnerList;
     }
 
+    public List readGrantOwnerByPersonName(String personName, Integer startIndex, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
+        
+        Criteria criteria = new Criteria();
+        criteria.addLike("person.nome", personName);
+        if(startIndex != null && numberOfElementsInSpan != null) {
+            return readInterval(GrantOwner.class, criteria, numberOfElementsInSpan, startIndex); 
+        }
+        return queryList(GrantOwner.class, criteria);
+    }
+    
+    public Integer countAllGrantOwnerByName(String personName) {
+        Criteria criteria = new Criteria();
+        criteria.addLike("person.nome", personName);
+        return new Integer(count(GrantOwner.class, criteria));
+    }
+    
+    
     public IGrantOwner readGrantOwnerByPersonID(String idNumber, TipoDocumentoIdentificacao idType)
             throws ExcepcaoPersistencia {
         IGrantOwner grantOwner = null;

@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContractMovement;
+import DataBeans.grant.contract.InfoGrantContractMovementWithContract;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantContractMovement;
@@ -32,7 +33,8 @@ public class EditGrantContractMovement extends EditDomainObjectService {
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         //return Cloner.copyInfoGrantContractMovement2IGrantContractMovement((InfoGrantContractMovement) infoObject);
-        return ((InfoGrantContractMovement) infoObject).newDomainFromInfo();
+        //return ((InfoGrantContractMovement) infoObject).newDomainFromInfo();
+        return InfoGrantContractMovementWithContract.newDomainFromInfo((InfoGrantContractMovement) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {

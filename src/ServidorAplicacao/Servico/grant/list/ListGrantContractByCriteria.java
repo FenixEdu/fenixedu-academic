@@ -14,6 +14,7 @@ import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
 import Dominio.grant.contract.IGrantInsurance;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.grant.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -55,7 +56,7 @@ public class ListGrantContractByCriteria implements IService {
 							infoSpanByCriteriaListGrantOwner.getBeginContract(),
 							infoSpanByCriteriaListGrantOwner.getEndContract(),
 							infoSpanByCriteriaListGrantOwner.getSpanNumber(),
-							infoSpanByCriteriaListGrantOwner.getNumberOfElementsInSpan());
+							SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
 
 			List listGrantContract = null;
 			if (grantContractBySpanAndCriteria != null
@@ -145,33 +146,4 @@ public class ListGrantContractByCriteria implements IService {
 		}
 		return result;
 	}
-
-	//			ArrayList infoGrantOwnerList = (ArrayList)
-	// CollectionUtils.collect(grantOwnerBySpan,
-	//					new Transformer()
-	//					{
-	//
-	//						public Object transform(Object input)
-	//						{
-	//							IGrantOwner grantOwner = (IGrantOwner) input;
-	//							InfoGrantOwner infoGrantOwner = Cloner
-	//									.copyIGrantOwner2InfoGrantOwner(grantOwner);
-	//							return infoGrantOwner;
-	//						}
-	//					});
-	//			Collections.sort(infoGrantOwnerList, new Comparator() {
-	//
-	//				public int compare(Object arg0, Object arg1)
-	//				{
-	//					InfoGrantOwner grantOwner0 = (InfoGrantOwner) arg0;
-	//					InfoGrantOwner grantOwner1 = (InfoGrantOwner) arg1;
-	//					
-	//					return
-	// grantOwner0.getPersonInfo().getPersonLastName().compareTo(grantOwner1.getPersonInfo().getPersonLastName());
-	//				}});
-	//
-	//Read All elements, and insert the result at the end of the list
-	//		Integer countAllGrantOwner = persistentGrantOwner.countAll();
-	//		infoGrantOwnerList.add(countAllGrantOwner);
-
 }

@@ -6,6 +6,7 @@ package DataBeans.grant.contract;
 import java.util.Date;
 
 import DataBeans.InfoObject;
+import Dominio.grant.contract.GrantSubsidy;
 import Dominio.grant.contract.IGrantSubsidy;
 
 /**
@@ -167,6 +168,29 @@ public class InfoGrantSubsidy extends InfoObject {
     		infoGrantSubsidy.copyFromDomain(grantSubsidy);
     	}
     	return infoGrantSubsidy;
+    }
+    
+    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy,IGrantSubsidy grantSubsidy)
+    {
+        super.copyToDomain(infoGrantSubsidy,grantSubsidy);
+        
+        grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
+        grantSubsidy.setDateEndSubsidy(infoGrantSubsidy.getDateEndSubsidy());
+        grantSubsidy.setState(infoGrantSubsidy.getState());
+        grantSubsidy.setTotalCost(infoGrantSubsidy.getTotalCost());
+        grantSubsidy.setValue(infoGrantSubsidy.getValue());
+        grantSubsidy.setValueFullName(infoGrantSubsidy.getValueFullName());
+    }
+    
+    public static IGrantSubsidy newDomainFromInfo(InfoGrantSubsidy infoGrantSubsidy)
+    {
+        IGrantSubsidy grantSubsidy = null;
+        if(infoGrantSubsidy != null)
+        {
+            grantSubsidy = new GrantSubsidy();
+            infoGrantSubsidy.copyToDomain(infoGrantSubsidy,grantSubsidy);       
+        }
+        return grantSubsidy;
     }
     
 }

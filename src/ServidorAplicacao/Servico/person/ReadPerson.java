@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.person;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
-import DataBeans.util.Cloner;
+import DataBeans.InfoPersonWithInfoCountry;
 import Dominio.IDomainObject;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
@@ -41,7 +41,7 @@ public class ReadPerson extends ReadDomainObjectService implements IService
      */
     protected InfoObject clone2InfoObject(IDomainObject domainObject)
     {
-        return Cloner.copyIPerson2InfoPerson((IPessoa) domainObject);
+        return InfoPersonWithInfoCountry.newInfoFromDomain((IPessoa) domainObject);
     }
 
     /* (non-Javadoc)

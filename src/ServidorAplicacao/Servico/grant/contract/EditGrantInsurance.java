@@ -8,14 +8,13 @@ import java.util.List;
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContractRegime;
 import DataBeans.grant.contract.InfoGrantInsurance;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantInsuranceWithContractAndPaymentEntity;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantInsurance;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantContractRegime;
 import Dominio.grant.contract.IGrantInsurance;
-import Dominio.grant.contract.IGrantPaymentEntity;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,7 +33,7 @@ public class EditGrantInsurance extends EditDomainObjectService {
     }
 
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return copyFromInfoToDomain((InfoGrantInsurance) infoObject);
+        return InfoGrantInsuranceWithContractAndPaymentEntity.newDomainFromInfo((InfoGrantInsurance) infoObject);
     }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
@@ -89,24 +88,5 @@ public class EditGrantInsurance extends EditDomainObjectService {
 
     public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException {
         super.run(new Integer(0), infoGrantInsurance);
-    }
-
-    private IGrantInsurance copyFromInfoToDomain(InfoGrantInsurance infoGrantInsurance) {
-        IGrantInsurance grantInsurance = new GrantInsurance();
-        if (infoGrantInsurance != null) {
-            grantInsurance.setIdInternal(infoGrantInsurance.getIdInternal());
-            grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
-            grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
-            grantInsurance.setTotalValue(infoGrantInsurance.getTotalValue());
-
-            IGrantContract grantContract = Cloner
-                    .copyInfoGrantContract2IGrantContract(infoGrantInsurance.getInfoGrantContract());
-            grantInsurance.setGrantContract(grantContract);
-            IGrantPaymentEntity grantPaymentEntity = Cloner
-                    .copyInfoGrantPaymentEntity2IGrantPaymentEntity(infoGrantInsurance
-                            .getInfoGrantPaymentEntity());
-            grantInsurance.setGrantPaymentEntity(grantPaymentEntity);
-        }
-        return grantInsurance;
     }
 }
