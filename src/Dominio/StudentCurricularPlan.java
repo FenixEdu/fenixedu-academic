@@ -448,9 +448,10 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return curricularCourseAcumulatedEnrolments;
     }
 
-//    public List getAllStudentEnrolledEnrollments() {
-//        return initAcumulatedEnrollments(getStudentEnrollmentsWithEnrolledState());
-//    }
+    //    public List getAllStudentEnrolledEnrollments() {
+    //        return
+    // initAcumulatedEnrollments(getStudentEnrollmentsWithEnrolledState());
+    //    }
 
     public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final IExecutionPeriod executionPeriod) {
 
@@ -657,8 +658,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         });
     }
 
-    
-
     protected List getAllEnrollmentsExceptTheOnesWithEnrolledState() {
 
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
@@ -680,11 +679,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod) {
         return getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod);
-    }
-
-    protected List getListOfEnrollmentInOptionalCoursesRules(IExecutionPeriod executionPeriod) {
-        return getDegreeCurricularPlan().getListOfEnrollmentRulesForOptionalCourses(this,
-                executionPeriod);
     }
 
     protected List getStudentNotNeedToEnrollCurricularCourses() {
@@ -721,7 +715,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         }
 
         curricularCourses.addAll(degreeCurricularPlan.getTFCs());
-        
+
         curricularCourses.addAll(degreeCurricularPlan.getSpecialListOfCurricularCourses());
 
         List elementsToRemove = (List) CollectionUtils.select(curricularCourses, new Predicate() {
@@ -788,38 +782,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
      */
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
         //do nothing
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#getOptionalCurricularCoursesToEnroll()
-     */
-    public List getOptionalCurricularCoursesToEnroll(final IExecutionPeriod executionPeriod) {
-
-        List optionalCurricularCourses = getDegreeCurricularPlan().getOptionalCurricularCourses();
-
-        List enrollmentRules = getListOfEnrollmentInOptionalCoursesRules(executionPeriod);
-        List curricularCoursesToEnroll = (List) CollectionUtils.collect(optionalCurricularCourses,
-                new Transformer() {
-
-                    public Object transform(Object arg0) {
-
-                        return transformToCurricularCourse2Enroll((ICurricularCourse) arg0,
-                                executionPeriod);
-                    }
-                });
-        int size = enrollmentRules.size();
-
-        for (int i = 0; i < size; i++) {
-            IEnrollmentRule enrollmentRule = (IEnrollmentRule) enrollmentRules.get(i);
-            curricularCoursesToEnroll = enrollmentRule.apply(curricularCoursesToEnroll);
-            if (curricularCoursesToEnroll.isEmpty()) {
-                break;
-            }
-        }
-
-        return curricularCoursesToEnroll;
     }
 
     // -------------------------------------------------------------

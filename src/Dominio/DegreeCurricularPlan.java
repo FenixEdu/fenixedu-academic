@@ -265,20 +265,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         return result;
     }
 
-    public List getListOfEnrollmentRulesForOptionalCourses(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
-
-        List result = new ArrayList();
-        //        result.add(new
-        // MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan,
-        // executionPeriod));
-        //        result.add(new
-        // MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
-        //                executionPeriod));
-        //        result.add(new PrecedencesEnrollmentRule(studentCurricularPlan,
-        // executionPeriod));
-        return result;
-    }
+   
 
     public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
 
@@ -368,21 +355,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         });
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IDegreeCurricularPlan#getOptionalCurricularCourses()
-     */
-    public List getOptionalCurricularCourses() {
-        List courses = (List) CollectionUtils.select(getCurricularCourses(), new Predicate() {
-
-            public boolean evaluate(Object arg0) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                return curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
-            }
-        });
-        return courses;
-    }
+    
 
     public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, IBranch area) {
 
