@@ -18,7 +18,12 @@
 	</p>
 	<br/>
 --%>
-	<br/>	
+	<br />
+	<strong><font color="#FF0000">Aviso:</font></strong>
+	<br />
+	<strong>Se pretende consultar informação relativa a disciplinas de 4º ou 5º do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong>
+	<br /><br />
+
 	<p class="infoop">
 		<bean:message key="message.public.degree.choose"/>
 	</p>

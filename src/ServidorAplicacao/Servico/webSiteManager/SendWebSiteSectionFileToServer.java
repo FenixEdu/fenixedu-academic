@@ -562,7 +562,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem
                         + "<!--BEGIN SITEWIDE PROFILE NAVIGATION -->\n"
                         + "<div id=\"perfnav\">\n"
                         + "\t  <ul>\n"
-                        + "\t\t    <li><a href=\"http://www.ist.utl.pt/\">Instituto</a></li>\n"
+                        + "\t\t    <li><a href=\"http://www.ist.utl.pt/\">In&iacute;cio</a></li>\n"
                         + "\t\t    <li><a href=\"http://www.ist.utl.pt/html/aluno.shtml\">Aluno</a></li>\n"
                         + "\t\t    <li><a href=\"http://www.ist.utl.pt/html/docente.shtml\">Docente</a></li>\n"
                         + "\t\t    <li><a href=\"http://www.ist.utl.pt/html/funcionario.shtml\">N&atilde;o Docente</a></li>\n"

@@ -4,6 +4,8 @@ Release 2004-05-26
  
 NEW FEATURES:
 =============
+- [on 01-06-2004 by Fernanda Quitério] public portal - added warning about changes in LEIC degree curricular plan
+- [on 01-06-2004 by Fernanda Quitério] public portal - changed label in IST main page from 'Instituto' to 'Início'
 - [feature request #225] - coordinator portal - added extra information on execution courses page
 - Added the general class properties concept. For more information related to this,
   see file docs/txt/general-class-properties-doc.txt.
@@ -50,6 +52,7 @@ CHANGES:
 - Added the creationDate attribute in Enrolment.
 - Updated OJB library to snapshot from head of cvs (currently on version RC6).
 - Updated text on Login Page to be more informative
+- [on 01-06-2004 by Fernanda Quitério] public portal - changed jsp for IST layout, removing duplicated 'div header'
 - The algorithm for test question distribution was improved.
 - Change the form for student tests.
 - The response field type in studentTestQuestion is now a xml string (using xmlEncode and XMLDecode) instead of an integer.

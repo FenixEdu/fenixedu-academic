@@ -6,6 +6,12 @@
 <span class="error">
 	<html:errors/>
 </span>
+<br />
+<strong><font color="#FF0000">Aviso:</font></strong>
+<br />
+<strong>Se pretende consultar informação relativa a disciplinas de 4º ou 5º do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong>
+<br /><br />
+
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:parameter id="nextPage" name="nextPage" />
 <bean:parameter id="inputPage" name="inputPage" />
