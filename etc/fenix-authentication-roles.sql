@@ -29,8 +29,8 @@ create table PERSON (
    WEB_ADRDRESS varchar(200),
    SOCIAL_SECURITY_NUMBER varchar(50),
    PROFESSION varchar(100),
-   USERNAME varchar(50),
-   PASSWD varchar(50),
+   USERNAME varchar(50) not null,
+   PASSWD varchar(40) not null,
    KEY_COUNTRY int(11),
    FISCAL_CODE varchar(50),
    TYPE_ID_DOCUMENT int(11) not null,
@@ -48,8 +48,9 @@ drop table if exists ROLE;
 create table ROLE(
   ID_INTERNAL int(11) not null auto_increment,
   ROLE_TYPE int (11) not null,
-  PORTAL_ACTION varchar(100),
-  PORTAL_ACTION_NAME_PROPERTY varchar(100),
+  PORTAL_SUB_APPLICATION varchar (100),
+  PAGE varchar (100),
+  PAGE_NAME_PROPERTY varchar(100),
   PRIMARY KEY (ID_INTERNAL),
   UNIQUE U1 (ROLE_TYPE)
 )type=InnoDB;
