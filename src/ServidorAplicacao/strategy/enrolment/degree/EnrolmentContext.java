@@ -16,24 +16,21 @@ import Dominio.IStudentCurricularPlan;
  * @author jpvl
  */
 public final class EnrolmentContext {
-	private IStudent student;
-	private List curricularCoursesDoneByStudent;
+
 	/**
 	 * Map like this: key = curricularCourseCode + curricularCourseName
 	 */
 	private Map acumulatedEnrolments;
+
+	private IStudent student;
+	private List curricularCoursesDoneByStudent;
 	private Integer semester;
 	private EnrolmentValidationResult enrolmentValidationResult;
-
 	private IStudentCurricularPlan studentActiveCurricularPlan;
-
 	private List actualEnrolment;
 	private List curricularCoursesFromStudentCurricularPlan;
-
-	/**
-	 * defines the list that student can be enrolled
-	 */
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
+	private List curricularCoursesScopesEnroledByStudent;
 
 	/**
 	 *  
@@ -189,6 +186,21 @@ public final class EnrolmentContext {
 	 */
 	public void setEnrolmentValidationResult(EnrolmentValidationResult enrolmentValidationError) {
 		this.enrolmentValidationResult = enrolmentValidationError;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getCurricularCoursesScopesEnroledByStudent() {
+		return curricularCoursesScopesEnroledByStudent;
+	}
+
+	/**
+	 * Sets the curricularCoursesScopesEnroledByStudent.
+	 * @param curricularCoursesScopesEnroledByStudent The curricularCoursesScopesEnroledByStudent to set
+	 */
+	public void setCurricularCoursesScopesEnroledByStudent(List curricularCoursesEnroledByStudent) {
+		this.curricularCoursesScopesEnroledByStudent = curricularCoursesEnroledByStudent;
 	}
 
 }

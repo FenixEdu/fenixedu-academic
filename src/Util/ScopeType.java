@@ -9,6 +9,7 @@ public class ScopeType {
 
 	public static final int NORMAL = 0;
 	public static final int ANUAL = 1;
+	public static final int MANDATORY = 2;
 	
 	private Integer type;
 
@@ -51,6 +52,9 @@ public class ScopeType {
 				break;
 			case ANUAL :
 				valueS = "ANUAL";
+				break;
+			case MANDATORY:
+				valueS = "MANDATORY";
 				break;
 			default:
 				break;

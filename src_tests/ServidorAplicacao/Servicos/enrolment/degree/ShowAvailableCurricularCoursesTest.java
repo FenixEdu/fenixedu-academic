@@ -77,7 +77,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 			fail("Execution of service!");
 		}
 
-		finalSpan = ((InfoEnrolmentContext) result).getFinalCurricularCoursesScopesSpanToBeEnrolled();
+		finalSpan = ((InfoEnrolmentContext) result).getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
 
 		assertEquals("Final span size:", true, finalSpan.size() == getNumberOfItemsToRetrieve());
 

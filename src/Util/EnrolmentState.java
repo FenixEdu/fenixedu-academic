@@ -9,6 +9,7 @@ public class EnrolmentState {
 
 	public static final int APROVED = 1;
 	public static final int NOT_APROVED = 2;
+	public static final int ENROLED = 3;
 
 	private Integer state;
 
@@ -59,6 +60,9 @@ public class EnrolmentState {
 				break;
 			case APROVED :
 				valueS = "APROVED";
+				break;
+			case ENROLED :
+				valueS = "ENROLED";
 				break;
 			default:
 				break;

@@ -18,16 +18,17 @@ public class InfoEnrolmentContext {
 	private Map acumulatedEnrolments;
 	private InfoStudentCurricularPlan infoStudentActiveCurricularPlan;
 	private List actualEnrolment;
-	private List finalCurricularCoursesScopesSpanToBeEnrolled;
+	private List infoFinalCurricularCoursesScopesSpanToBeEnrolled;
 	private InfoStudent infoStudent;
 	private Integer semester;
 	private EnrolmentValidationResult enrolmentValidationResult;
+	private List infoCurricularCoursesScopesEnroledByStudent;
 	
 	public InfoEnrolmentContext() {
 		setAcumulatedEnrolments(null);
 		setInfoStudentActiveCurricularPlan(null);
 		setActualEnrolment(null);
-		setFinalCurricularCoursesScopesSpanToBeEnrolled(null);
+		setInfoFinalCurricularCoursesScopesSpanToBeEnrolled(null);
 		setInfoStudent(null);
 		setSemester(null);
 	}
@@ -36,7 +37,7 @@ public class InfoEnrolmentContext {
 		boolean resultado = false;
 		if (obj instanceof InfoEnrolmentContext) {
 			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) obj;
-			resultado = this.finalCurricularCoursesScopesSpanToBeEnrolled.equals(infoEnrolmentContext.finalCurricularCoursesScopesSpanToBeEnrolled) &&
+			resultado = this.infoFinalCurricularCoursesScopesSpanToBeEnrolled.equals(infoEnrolmentContext.infoFinalCurricularCoursesScopesSpanToBeEnrolled) &&
 									(this.infoStudentActiveCurricularPlan.equals(infoEnrolmentContext.infoStudentActiveCurricularPlan));
 		}
 		return resultado;
@@ -47,7 +48,7 @@ public class InfoEnrolmentContext {
 		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "\n";
 		result += "StudentActiveCurricularPlan = " + this.infoStudentActiveCurricularPlan + "\n";
 		result += "actualEnrolment = " + this.actualEnrolment + "\n";
-		result += "finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "\n";
+		result += "infoFinalCurricularCoursesScopesSpanToBeEnrolled = " + this.infoFinalCurricularCoursesScopesSpanToBeEnrolled + "\n";
 		result += "enrolmentValidationResult = " + this.enrolmentValidationResult + "\n";
 		result += "student = " + this.infoStudent + "\n";
 		result += "semester= " + this.semester + "]";
@@ -72,8 +73,8 @@ public class InfoEnrolmentContext {
 	/**
 	 * @return List
 	 */
-	public List getFinalCurricularCoursesScopesSpanToBeEnrolled() {
-		return finalCurricularCoursesScopesSpanToBeEnrolled;
+	public List getInfoFinalCurricularCoursesScopesSpanToBeEnrolled() {
+		return infoFinalCurricularCoursesScopesSpanToBeEnrolled;
 	}
 
 	/**
@@ -100,11 +101,11 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
-	 * Sets the finalCurricularCoursesScopesSpanToBeEnrolled.
-	 * @param finalCurricularCoursesScopesSpanToBeEnrolled The finalCurricularCoursesScopesSpanToBeEnrolled to set
+	 * Sets the infoFinalCurricularCoursesScopesSpanToBeEnrolled.
+	 * @param infoFinalCurricularCoursesScopesSpanToBeEnrolled The infoFinalCurricularCoursesScopesSpanToBeEnrolled to set
 	 */
-	public void setFinalCurricularCoursesScopesSpanToBeEnrolled(List finalCurricularCoursesScopesSpanToBeEnrolled) {
-		this.finalCurricularCoursesScopesSpanToBeEnrolled = finalCurricularCoursesScopesSpanToBeEnrolled;
+	public void setInfoFinalCurricularCoursesScopesSpanToBeEnrolled(List finalCurricularCoursesScopesSpanToBeEnrolled) {
+		this.infoFinalCurricularCoursesScopesSpanToBeEnrolled = finalCurricularCoursesScopesSpanToBeEnrolled;
 	}
 
 	/**
@@ -158,6 +159,21 @@ public class InfoEnrolmentContext {
 	 */
 	public void setEnrolmentValidationResult(EnrolmentValidationResult enrolmentValidationError) {
 		this.enrolmentValidationResult = enrolmentValidationError;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getInfoCurricularCoursesScopesEnroledByStudent() {
+		return infoCurricularCoursesScopesEnroledByStudent;
+	}
+
+	/**
+	 * Sets the infoCurricularCoursesScopesEnroledByStudent.
+	 * @param infoCurricularCoursesScopesEnroledByStudent The infoCurricularCoursesScopesEnroledByStudent to set
+	 */
+	public void setInfoCurricularCoursesScopesEnroledByStudent(List infoCurricularCoursesScopesEnroledByStudent) {
+		this.infoCurricularCoursesScopesEnroledByStudent = infoCurricularCoursesScopesEnroledByStudent;
 	}
 
 }

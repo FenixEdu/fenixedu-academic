@@ -184,21 +184,21 @@ delete from CURRICULAR_COURSE_SCOPE;
 #(ID_INTERNAL, KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH)
 ;
 insert into CURRICULAR_COURSE_SCOPE  values (1, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (2, 1, 2, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (3, 1, 3, 1, 0.0, 0.0, 0.0, 0.0, 0);
+insert into CURRICULAR_COURSE_SCOPE  values (2, 1, 2, 1, 0.0, 0.0, 0.0, 0.0, 2);
+insert into CURRICULAR_COURSE_SCOPE  values (3, 1, 3, 1, 0.0, 0.0, 0.0, 0.0, 2);
 insert into CURRICULAR_COURSE_SCOPE  values (4, 1, 4, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (5, 1, 5, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (6, 2, 6, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (7, 2, 7, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (8, 2, 8, 1, 0.0, 0.0, 0.0, 0.0, 0);
+insert into CURRICULAR_COURSE_SCOPE  values (8, 2, 8, 1, 0.0, 0.0, 0.0, 0.0, 2);
 insert into CURRICULAR_COURSE_SCOPE  values (9, 2, 9, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (10, 2, 10, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (11, 3, 11, 1, 0.0, 0.0, 0.0, 0.0, 0);
+insert into CURRICULAR_COURSE_SCOPE  values (11, 3, 11, 1, 0.0, 0.0, 0.0, 0.0, 2);
 insert into CURRICULAR_COURSE_SCOPE  values (12, 3, 12, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (13, 3, 13, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (14, 3, 14, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (15, 3, 15, 1, 0.0, 0.0, 0.0, 0.0, 0);
-insert into CURRICULAR_COURSE_SCOPE  values (16, 4, 16, 1, 0.0, 0.0, 0.0, 0.0, 0);
+insert into CURRICULAR_COURSE_SCOPE  values (16, 4, 16, 1, 0.0, 0.0, 0.0, 0.0, 2);
 insert into CURRICULAR_COURSE_SCOPE  values (17, 4, 17, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (18, 4, 18, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (19, 4, 19, 1, 0.0, 0.0, 0.0, 0.0, 0);
@@ -250,24 +250,14 @@ insert into CURRICULAR_COURSE_SCOPE  values (64, 10, 54, 1, 0.0, 0.0, 0.0, 0.0, 
 insert into CURRICULAR_COURSE_SCOPE  values (65, 10, 55, 1, 0.0, 0.0, 0.0, 0.0, 0);
 insert into CURRICULAR_COURSE_SCOPE  values (66, 10, 56, 1, 0.0, 0.0, 0.0, 0.0, 0);
 
-#insert into CURRICULAR_COURSE_SCOPE  values (67, 2, 2, 1, 0.0, 0.0, 0.0, 0.0, 0);
-#insert into CURRICULAR_COURSE_SCOPE  values (68, 2, 3, 1, 0.0, 0.0, 0.0, 0.0, 0);
-#insert into CURRICULAR_COURSE_SCOPE  values (69, 1, 8, 1, 0.0, 0.0, 0.0, 0.0, 0);
-#insert into CURRICULAR_COURSE_SCOPE  values (70, 4, 11, 1, 0.0, 0.0, 0.0, 0.0, 0);
-#insert into CURRICULAR_COURSE_SCOPE  values (71, 3, 16, 1, 0.0, 0.0, 0.0, 0.0, 0);
+insert into CURRICULAR_COURSE_SCOPE  values (67, 2, 2, 1, 0.0, 0.0, 0.0, 0.0, 2);
+insert into CURRICULAR_COURSE_SCOPE  values (68, 2, 3, 1, 0.0, 0.0, 0.0, 0.0, 2);
+insert into CURRICULAR_COURSE_SCOPE  values (69, 1, 8, 1, 0.0, 0.0, 0.0, 0.0, 2);
+insert into CURRICULAR_COURSE_SCOPE  values (70, 4, 11, 1, 0.0, 0.0, 0.0, 0.0, 2);
+insert into CURRICULAR_COURSE_SCOPE  values (71, 3, 16, 1, 0.0, 0.0, 0.0, 0.0, 2);
 
-#insert into CURRICULAR_COURSE_SCOPE  values (61, 9, 51, 2, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (62, 9, 51, 3, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (63, 9, 52, 2, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (64, 9, 52, 3, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (65, 9, 53, 2, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (66, 9, 53, 3, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (67, 10, 54, 2, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (68, 10, 54, 3, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (69, 10, 55, 2, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (70, 10, 55, 3, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (71, 10, 56, 2, 0.0, 0.0, 0.0, 0.0);
-#insert into CURRICULAR_COURSE_SCOPE  values (72, 10, 56, 3, 0.0, 0.0, 0.0, 0.0);
+insert into CURRICULAR_COURSE_SCOPE  values (72, 9, 50, 1, 0.0, 0.0, 0.0, 0.0, 1);
+insert into CURRICULAR_COURSE_SCOPE  values (73, 10, 50, 1, 0.0, 0.0, 0.0, 0.0, 1);
 
 #-----------------------------
 # Data for table 'ENROLMENT'
@@ -275,29 +265,31 @@ insert into CURRICULAR_COURSE_SCOPE  values (66, 10, 56, 1, 0.0, 0.0, 0.0, 0.0, 
 # (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
 ;
 delete from ENROLMENT;
-insert into ENROLMENT VALUES (1, 1, 1, 1, 1);
-insert into ENROLMENT VALUES (2, 1, 2, 1, 1);
-insert into ENROLMENT VALUES (3, 1, 3, 1, 1);
-insert into ENROLMENT VALUES (4, 1, 4, 1, 1);
-insert into ENROLMENT VALUES (5, 1, 5, 1, 1);
+insert into ENROLMENT VALUES (1, 1, 1, 1, 2);
+insert into ENROLMENT VALUES (2, 1, 2, 1, 2);
+insert into ENROLMENT VALUES (3, 1, 3, 1, 2);
+insert into ENROLMENT VALUES (4, 1, 4, 1, 2);
+insert into ENROLMENT VALUES (5, 1, 5, 1, 2);
 
-insert into ENROLMENT VALUES (6, 1, 6, 1, 1);
-insert into ENROLMENT VALUES (7, 1, 7, 1, 1);
-insert into ENROLMENT VALUES (8, 1, 8, 1, 1);
-insert into ENROLMENT VALUES (9, 1, 9, 1, 1);
-insert into ENROLMENT VALUES (10, 1, 10, 1, 1);
+insert into ENROLMENT VALUES (6, 1, 6, 1, 2);
+insert into ENROLMENT VALUES (7, 1, 7, 1, 2);
+insert into ENROLMENT VALUES (8, 1, 8, 1, 2);
+insert into ENROLMENT VALUES (9, 1, 9, 1, 2);
+insert into ENROLMENT VALUES (10, 1, 10, 1, 2);
 
-insert into ENROLMENT VALUES (11, 1, 11, 1, 1);
-insert into ENROLMENT VALUES (12, 1, 12, 1, 1);
-insert into ENROLMENT VALUES (13, 1, 13, 1, 1);
-insert into ENROLMENT VALUES (14, 1, 14, 1, 1);
-insert into ENROLMENT VALUES (15, 1, 15, 1, 1);
+#insert into ENROLMENT VALUES (11, 1, 11, 1, 1);
+#insert into ENROLMENT VALUES (12, 1, 12, 1, 1);
+#insert into ENROLMENT VALUES (13, 1, 13, 1, 1);
+#insert into ENROLMENT VALUES (14, 1, 14, 1, 1);
+#insert into ENROLMENT VALUES (15, 1, 15, 1, 1);
 
-insert into ENROLMENT VALUES (16, 1, 16, 1, 1);
-insert into ENROLMENT VALUES (17, 1, 17, 1, 1);
-insert into ENROLMENT VALUES (18, 1, 18, 1, 1);
-insert into ENROLMENT VALUES (19, 1, 19, 1, 1);
-insert into ENROLMENT VALUES (20, 1, 20, 1, 1);
+#insert into ENROLMENT VALUES (16, 1, 16, 1, 1);
+#insert into ENROLMENT VALUES (17, 1, 17, 1, 1);
+#insert into ENROLMENT VALUES (18, 1, 18, 1, 1);
+#insert into ENROLMENT VALUES (19, 1, 19, 1, 1);
+#insert into ENROLMENT VALUES (20, 1, 20, 1, 1);
+
+#insert into ENROLMENT VALUES (21, 1, 50, 1, 3);
 
 #insert into ENROLMENT VALUES (21, 1, 21, 1, 1);
 #insert into ENROLMENT VALUES (22, 1, 22, 1, 1);

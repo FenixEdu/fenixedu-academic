@@ -1,6 +1,8 @@
 package ServidorAplicacao.strategy.enrolment.degree.strategys;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAnualCurricularCourseRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAutomaticEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterFinalistRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterNACandNDRule;
@@ -28,6 +30,12 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
 		enrolmentRule = new EnrolmentFilterFinalistRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+		
+		enrolmentRule = new EnrolmentFilterAnualCurricularCourseRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+		
+		enrolmentRule = new EnrolmentFilterAutomaticEnrolmentRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 		
 		enrolmentRule = new EnrolmentFilterSemesterRule();

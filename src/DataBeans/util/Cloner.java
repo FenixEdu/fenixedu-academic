@@ -1258,6 +1258,8 @@ public abstract class Cloner {
 		InfoCurricularSemester infoCurricularSemester = copyCurricularSemester2InfoCurricularSemester(curricularCourseScope.getCurricularSemester());
 		InfoBranch infoBranch = copyIBranch2InfoBranch(curricularCourseScope.getBranch());
 
+		copyObjectProperties(infoCurricularCourseScope, curricularCourseScope);
+
 		infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 		infoCurricularCourseScope.setInfoBranch(infoBranch);
@@ -1278,6 +1280,8 @@ public abstract class Cloner {
 		ICurricularCourse curricularCourse = copyInfoCurricularCourse2CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse());
 		ICurricularSemester curricularSemester = copyInfoCurricularSemester2CurricularSemester(infoCurricularCourseScope.getInfoCurricularSemester());
 		IBranch branch = copyInfoBranch2IBranch(infoCurricularCourseScope.getInfoBranch());
+
+		copyObjectProperties(curricularCourseScope, infoCurricularCourseScope);
 
 		curricularCourseScope.setCurricularCourse(curricularCourse);
 		curricularCourseScope.setCurricularSemester(curricularSemester);
