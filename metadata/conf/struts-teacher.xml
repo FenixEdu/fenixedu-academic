@@ -996,6 +996,24 @@
             <forward name="showSummaries" path="showSummaries" />
             <forward name="insertSummary" path="insertSummary" />
             <forward name="editSummary" path="editSummary" />
+        </action>        
+        <action name="summaryForm" path="/summariesManagerInsertSummary" 
+            input="/summariesManager.do?method=prepareInsertSummary&amp;page=0" parameter="method" 
+            scope="request" 
+            type="ServidorApresentacao.Action.teacher.SummaryManagerAction" 
+            validate="true" >
+            <forward name="showSummaries" path="showSummaries" />
+            <forward name="insertSummary" path="insertSummary" />
+            <forward name="editSummary" path="editSummary" />
+        </action>        
+        <action name="summaryForm" path="/summariesManagerEditSummary" 
+            input="/summariesManager.do?method=prepareEditSummary&amp;page=0" parameter="method" 
+            scope="request" 
+            type="ServidorApresentacao.Action.teacher.SummaryManagerAction" 
+            validate="true" >
+            <forward name="showSummaries" path="showSummaries" />
+            <forward name="insertSummary" path="insertSummary" />
+            <forward name="editSummary" path="editSummary" />
         </action>
         <!-- Actions For Groups -->
         <action path="/viewExecutionCourseProjects" parameter="method" scope="request" 

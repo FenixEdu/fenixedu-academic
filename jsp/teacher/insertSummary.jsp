@@ -19,7 +19,7 @@
 
 <h2><bean:message key="title.summary.insert" /></h2>
 
-<html:form action="/summariesManager">
+<html:form action="/summariesManagerInsertSummary">
 	<html:hidden property="forHidden" value=""/>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insertSummary"/>

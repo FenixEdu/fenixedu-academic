@@ -334,7 +334,6 @@ public class ReadSummaries implements IServico {
                 }
             }
         }
-        System.out.println("Summaries by Shift: " + summariesByShift.size());
         return summariesByShift;
     }
 
