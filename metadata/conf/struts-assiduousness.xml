@@ -115,7 +115,7 @@
             name="ConsultarFuncionarioMostrarForm"
             scope="session"
             validate="false"
-            input="/mainPortalPage.jsp" >
+            input="/switchAction.do?prefix=&amp;page=/employee/index.do" >
     </action>
     
     <action path="/consultarFuncionarioEscolha"
@@ -142,7 +142,7 @@
   </action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
-  <!--<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>-->
+ <!-- <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>-->
 
   <message-resources parameter="ServidorApresentacao.AssiduousnessResources" />
   
