@@ -6,7 +6,7 @@ package Dominio;
  *   29/Mar/2003
  *   @author     Luis Cruz & Sara Ribeiro
  */
-public interface IExamExecutionCourse {
+public interface IExamExecutionCourse extends IEvalutionExecutionCourse{
 
 	public IExam getExam();
 	public IDisciplinaExecucao getExecutionCourse();

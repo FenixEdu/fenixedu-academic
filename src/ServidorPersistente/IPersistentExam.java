@@ -18,9 +18,9 @@ import Dominio.ISala;
  * @author  Luis Cruz & Sara Ribeiro
  */
 public interface IPersistentExam extends IPersistentObject {
-	public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia;	
+	public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
-    public void delete(IExam exam) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
-	public List readBy(ISala room, IExecutionPeriod executionPeriod)  throws ExcepcaoPersistencia;
+	public void delete(IExam exam) throws ExcepcaoPersistencia;
+	public void deleteAll() throws ExcepcaoPersistencia;
+	public List readBy(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 }

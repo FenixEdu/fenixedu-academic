@@ -9,7 +9,7 @@ package Dominio;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ExamExecutionCourse extends DomainObject implements IExamExecutionCourse {
+public class ExamExecutionCourse extends EvaluationExecutionCourse implements IExamExecutionCourse {
 
 	protected IExam exam;
 	protected IDisciplinaExecucao executionCourse;

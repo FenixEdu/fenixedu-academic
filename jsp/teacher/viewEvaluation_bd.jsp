@@ -77,10 +77,34 @@
 					<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" /> 
 				</html:form>
 			</logic:equal>
-		<%-- tests --%>
-		<%-- repeat logic:equal and change evaluation type --%>
-		<%-- finalEvaluation --%>
-		<%-- repeat logic:equal and change evaluation type --%>
+			<%-- tests --%>
+			<%-- repeat logic:equal and change evaluation type --%>
+			
+			<%-- finalEvaluation --%>
+			<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">
+					<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>	
+					<table class="infotable"> 	
+						<tr>
+							<td class="bottomborder" colspan="3">
+								<b><bean:message key="label.finalEvaluation"/></b><br />
+							</td>							
+						</tr>
+						<tr>
+							<td colspan="3">
+								<html:link page="<%= "/showMarksListOptions.do?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;evaluationCode=" +pageContext.findAttribute("evaluationCode") %>" >
+									<b><bean:message key="label.students.listMarks"/></b>
+								</html:link><br />
+							</td>
+						</tr> 
+						<tr>
+							<td colspan="3">
+								<html:link page="<%= "/marksList.do?method=submitMarks&amp;objectCode="+ pageContext.findAttribute("objectCode")+"&amp;evaluationCode=" +pageContext.findAttribute("evaluationCode") %>" >
+									<b><bean:message key="label.submit.listMarks"/></b>
+								</html:link><br />
+							</td>
+						</tr> 
+					</table>					
+			</logic:equal>				
 		</logic:iterate>
 	</logic:notEqual>
 </logic:present>

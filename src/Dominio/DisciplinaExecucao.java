@@ -14,7 +14,8 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 
 	private List associatedCurricularCourses = null;
 	private List associatedExams = null;
-
+	private List associatedEvaluations = null;
+	
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
 
@@ -242,6 +243,20 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	 */
 	public void setComment(String string) {
 		comment = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedEvaluations() {
+		return associatedEvaluations;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedEvaluations(List list) {
+		associatedEvaluations = list;
 	}
 
 }

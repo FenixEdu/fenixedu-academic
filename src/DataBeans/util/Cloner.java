@@ -33,6 +33,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoFinalEvaluation;
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
@@ -81,6 +82,7 @@ import Dominio.EvaluationMethod;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
+import Dominio.FinalEvaluation;
 import Dominio.Frequenta;
 import Dominio.Guide;
 import Dominio.GuideEntry;
@@ -113,6 +115,7 @@ import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IFinalEvaluation;
 import Dominio.IFrequenta;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
@@ -1721,6 +1724,8 @@ public abstract class Cloner {
 
 		if (infoEvaluation instanceof InfoExam) {
 			evaluation = new Exam();
+		} else if(infoEvaluation instanceof InfoFinalEvaluation) {
+			evaluation = new FinalEvaluation();
 		}
 		
 		copyObjectProperties(evaluation, infoEvaluation);
@@ -1734,6 +1739,9 @@ public abstract class Cloner {
 		if (evaluation instanceof IExam) {
 			infoEvaluation = new InfoExam();
 			infoEvaluation.setEvaluationType(EvaluationType.EXAM_TYPE);
+		} else if(evaluation instanceof IFinalEvaluation){
+			infoEvaluation = new InfoFinalEvaluation();
+			infoEvaluation.setEvaluationType(EvaluationType.FINAL_TYPE);
 		}
 		
 		copyObjectProperties(infoEvaluation, evaluation);

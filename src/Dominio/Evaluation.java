@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.List;
+
 /**
  * @author Tânia Pousão
  * 24 de Junho de 2003	
@@ -7,15 +9,16 @@ package Dominio;
 public class Evaluation extends DomainObject implements IEvaluation {
 	private String ojbConcreteClass;
 	private String publishmentMessage;
+	private List associatedExecutionCourses;
 
 	public Evaluation() {
 		super();
 		this.ojbConcreteClass = this.getClass().getName();
 	}
-	public Evaluation(Integer idInternal){
+	public Evaluation(Integer idInternal) {
 		setIdInternal(idInternal);
 	}
-	
+
 	/**
 	 * @return String
 	 */
@@ -44,4 +47,17 @@ public class Evaluation extends DomainObject implements IEvaluation {
 		publishmentMessage = string;
 	}
 
+	/**
+	 * @return
+	 */
+	public List getAssociatedExecutionCourses() {
+		return associatedExecutionCourses;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedExecutionCourses(List list) {
+		associatedExecutionCourses = list;
+	}
 }

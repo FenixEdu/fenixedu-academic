@@ -18,7 +18,7 @@ public class Exam extends Evaluation implements IExam {
 	protected Calendar beginning;
 	protected Calendar end;
 	protected Season season;
-	protected List associatedExecutionCourses;
+//	protected List associatedExecutionCourses;
 	protected List associatedRooms;
 	protected Calendar enrollmentBeginDay;
 	protected Calendar enrollmentBeginTime;
@@ -131,19 +131,19 @@ public class Exam extends Evaluation implements IExam {
 		this.season = season;
 	}
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedExecutionCourses() {
-		return associatedExecutionCourses;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setAssociatedExecutionCourses(List list) {
-		associatedExecutionCourses = list;
-	}
+//	/**
+//	 * @return
+//	 */
+//	public List getAssociatedExecutionCourses() {
+//		return associatedExecutionCourses;
+//	}
+//
+//	/**
+//	 * @param list
+//	 */
+//	public void setAssociatedExecutionCourses(List list) {
+//		associatedExecutionCourses = list;
+//	}
 
 	/**
 	 * @return

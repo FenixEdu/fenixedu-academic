@@ -38,6 +38,8 @@ import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.BibliographicReference;
+import Dominio.EvaluationExecutionCourse;
+import Dominio.FinalEvaluation;
 import Dominio.IAnnouncement;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
@@ -46,7 +48,9 @@ import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
+import Dominio.IEvalutionExecutionCourse;
 import Dominio.IExam;
+import Dominio.IFinalEvaluation;
 import Dominio.IItem;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -58,6 +62,8 @@ import Dominio.Section;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBibliographicReference;
+import ServidorPersistente.IPersistentEvaluation;
+import ServidorPersistente.IPersistentEvaluationExecutionCourse;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
@@ -326,7 +332,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentBibliographicReference = sp.getIPersistentBibliographicReference();
 
-
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
 			references = persistentBibliographicReference.readBibliographicReference(executionCourse);
@@ -424,12 +429,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 					}
 
 					ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
-					IResponsibleFor responsibleFor =
-						persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher, executionCourse);
+					IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher, executionCourse);
 					if (teacher != null) {
-						if (responsibleTeachers != null
-							&& !responsibleTeachers.isEmpty()
-							&& responsibleTeachers.contains(responsibleFor)) {
+						if (responsibleTeachers != null && !responsibleTeachers.isEmpty() && responsibleTeachers.contains(responsibleFor)) {
 							isResponsible = true;
 						}
 					}
@@ -453,20 +455,58 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
 		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
-		List evaluations = executionCourse.getAssociatedExams();
-		
-		List infoEvaluations = new ArrayList();
+
+		List evaluations = executionCourse.getAssociatedEvaluations();
 		Iterator iter = evaluations.iterator();
+
+		boolean hasFinalEvaluation = false;
+		List infoEvaluations = new ArrayList();
+		List infoFinalEvaluations = new ArrayList();
 		while (iter.hasNext()) {
 			IEvaluation evaluation = (IEvaluation) iter.next();
-			infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
+			
+			if (evaluation instanceof IExam) {
+				infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
+			} else if (evaluation instanceof IFinalEvaluation) {
+				hasFinalEvaluation = true;
+				infoFinalEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
+			}
 		}
+
+		if (!hasFinalEvaluation) {
+			ISuportePersistente sp;
+			IFinalEvaluation finalEvaluation = null;
+			try {
+				sp = SuportePersistenteOJB.getInstance();
+				IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+
+				finalEvaluation = new FinalEvaluation();
+				persistentEvaluation.lockWrite(finalEvaluation);
+
+				//associate final evaluation to execution course				
+				IPersistentEvaluationExecutionCourse persistentEvaluationExecutionCourse = sp.getIPersistentEvaluationExecutionCourse();
+				IEvalutionExecutionCourse evalutionExecutionCourse = new EvaluationExecutionCourse();
+				evalutionExecutionCourse.setEvaluation(finalEvaluation);
+				evalutionExecutionCourse.setExecutionCourse(executionCourse);
+				
+				persistentEvaluationExecutionCourse.lockWrite(evalutionExecutionCourse);				
+			} catch (ExcepcaoPersistencia e) {
+				e.printStackTrace();
+			}
+
+			//add final evaluation to evaluation list
+			infoFinalEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(finalEvaluation));
+		}
+
 		ComparatorChain comparatorChain = new ComparatorChain();
 		comparatorChain.addComparator(new BeanComparator("day.time"));
 		comparatorChain.addComparator(new BeanComparator("beginning.time"));
-		
+
 		Collections.sort(infoEvaluations, comparatorChain);
-		
+
+		//merge two list
+		infoEvaluations.addAll(infoFinalEvaluations);
+
 		component.setInfoEvaluations(infoEvaluations);
 		return component;
 	}
@@ -525,8 +565,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteSection(InfoSiteSection component, ISite site, Integer sectionCode)
-		throws FenixServiceException {
+	private ISiteComponent getInfoSiteSection(InfoSiteSection component, ISite site, Integer sectionCode) throws FenixServiceException {
 
 		ISection iSection = null;
 		List itemsList = null;
@@ -702,10 +741,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 			}
 		return infoCurricularCourseList;
 	} /**
-												 * @param page
-												 * @param site
-												 * @return
-												 */
+															 * @param page
+															 * @param site
+															 * @return
+															 */
 	private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();

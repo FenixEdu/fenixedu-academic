@@ -103,4 +103,5 @@ public interface ISuportePersistente {
 	
 	public IPersistentMark getIPersistentMark();
 	public IPersistentEvaluation getIPersistentEvaluation();
+	public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse();
 }

@@ -11,8 +11,6 @@ import Util.EvaluationType;
  */
 
 public class InfoEvaluation  extends InfoObject implements ISiteComponent{
-
-	
 	
 	private String publishmentMessage;
 	private EvaluationType evaluationType;

@@ -24,6 +24,7 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 
 	protected List associatedInfoCurricularCourses;
 	protected List associatedInfoExams;
+	protected List associatedInfoEvaluations;
 
 	protected String comment;
 
@@ -281,6 +282,20 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 	 */
 	public void setComment(String string) {
 		comment = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedInfoEvaluations() {
+		return associatedInfoEvaluations;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedInfoEvaluations(List list) {
+		associatedInfoEvaluations = list;
 	}
 
 }
