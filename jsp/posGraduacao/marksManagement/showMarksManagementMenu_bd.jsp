@@ -15,7 +15,7 @@
 	to actions to maintain jsp state --%>
 <ul>
     <li>
-		<html:link page="<%= "/changeMarkDispatchAction?method=prepareChangeMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("curricularCourseCode") %>">
+		<html:link page="<%= "/showMarkDispatchAction.do?method=prepareShowMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("courseID") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksView" />
 		</html:link>
 	</li>
@@ -29,7 +29,7 @@
 		</html:link>
 	</li>
      <li>
-		<html:link page="<%= "/changeMarkDispatchAction.do?method=prepareChangeMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("scopeCode") %>">
+		<html:link page="<%= "/changeMarkDispatchAction.do?method=prepareChangeMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("courseID") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.changeMark" /> 
 		</html:link>
 	</li>
