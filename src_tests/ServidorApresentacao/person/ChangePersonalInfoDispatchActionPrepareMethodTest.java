@@ -96,8 +96,6 @@ public class ChangePersonalInfoDispatchActionPrepareMethodTest
 		sessionAttributes.add(SessionConstants.MONTH_LIST_KEY);
 		sessionAttributes.add(SessionConstants.YEARS_KEY);
 		sessionAttributes.add(SessionConstants.EXPIRATION_YEARS_KEY);
-		
-		
 		attributes.put(new Integer(ScopeConstants.SESSION),sessionAttributes);
 		return attributes;
 	}
@@ -126,21 +124,19 @@ public class ChangePersonalInfoDispatchActionPrepareMethodTest
 		return null;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
-	 */
-	protected String getRequestPathInfoPathAction() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		// TODO Auto-generated method stub
+		return "/changePersonalInfoDispatchAction";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
+	 */
+	protected String getSuccessfulForward() {
 		return "prepareReady";
 	}
+
 
 }
