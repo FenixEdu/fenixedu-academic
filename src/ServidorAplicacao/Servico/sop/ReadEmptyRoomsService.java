@@ -16,7 +16,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISalaPersistente;
@@ -149,7 +148,7 @@ public class ReadEmptyRoomsService implements IServico {
 	 * To change the template for this generated type comment go to
 	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
 	 */
-	public class InvalidTimeInterval extends InvalidTimeIntervalServiceException {
+	public class InvalidTimeInterval extends FenixServiceException {
 
 		/**
 		 * 

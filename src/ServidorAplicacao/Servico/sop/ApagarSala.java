@@ -15,7 +15,6 @@ import DataBeans.RoomKey;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -66,7 +65,7 @@ public class ApagarSala implements IServico {
 	}
 
 	public class notAuthorizedServiceDeleteRoomException
-		extends notAuthorizedServiceDeleteException {
+		extends FenixServiceException {
 
 		/**
 		 * 
