@@ -12,6 +12,8 @@
     <property name="src.tests" location="src_tests" /> 
     <property name="src.jsp" location="jsp" />
     <property name="metadata" location="metadata" />
+    <property name="javadoc.home" location="javaDoc" />
+    
     
 	<property name="build.home" location="build"/>
 
@@ -714,4 +716,25 @@
 		</xmlvalidate>
 		-->
 	</target>
+	
+	
+   <target name="Generate JavaDoc">
+        <javadoc destdir="${javadoc.home}" 
+        		 access="public"
+        		 use="true"
+        		 author="true"
+	             version="true"
+	             windowtitle="Fenix Class OverView">
+	             
+            <packageset dir="${src}" defaultexcludes="yes">
+              <include name="**" />
+            </packageset>
+<!--            
+			<packageset dir="${src.tests}" defaultexcludes="yes">
+              <include name="**" />
+            </packageset>
+-->            
+         </javadoc>
+    </target>
+	
 </project>
