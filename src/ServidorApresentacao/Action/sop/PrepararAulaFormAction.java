@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -77,29 +76,30 @@ public class PrepararAulaFormAction extends Action {
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
 
-			// Ler as Salas
-			Object argsLerSalas[] = new Object[0];
-			ArrayList infoSalas =
-				(ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
+//			// Ler as Salas
+//			Object argsLerSalas[] = new Object[0];
+//			ArrayList infoSalas =
+//				(ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
+//
+//			//Collections.sort(infoSalas);
+//
+//			ArrayList listaSalas = new ArrayList();
+//			listaSalas.add(new LabelValueBean("escolher", ""));
+//			for (int i = 0; i < infoSalas.size(); i++) {
+//				InfoRoom elem = (InfoRoom) infoSalas.get(i);
+//				listaSalas.add(
+//					new LabelValueBean(elem.getNome(), elem.getNome()));
+//			}
+//			sessao.setAttribute("listaSalas", listaSalas);
+//			sessao.setAttribute("listaInfoSalas", infoSalas);
 
-			//Collections.sort(infoSalas);
-
-			ArrayList listaSalas = new ArrayList();
-			listaSalas.add(new LabelValueBean("escolher", ""));
-			for (int i = 0; i < infoSalas.size(); i++) {
-				InfoRoom elem = (InfoRoom) infoSalas.get(i);
-				listaSalas.add(
-					new LabelValueBean(elem.getNome(), elem.getNome()));
-			}
-			sessao.setAttribute("listaSalas", listaSalas);
-			sessao.setAttribute("listaInfoSalas", infoSalas);
-
-			// Fim ler salas.
+			// Fim ler salas.d
 
 			// Ler Disciplinas em Execucao
 			SessionUtils.getExecutionCourses(
 				request);
 
+			sessao.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 			return mapping.findForward("Sucesso");
 		} else
 			throw new Exception();
