@@ -35,15 +35,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.enrollment.CurricularCourseEnrollmentType;
 
-public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
+public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements IEnrollmentRule {
 
-    private IStudentCurricularPlan studentCurricularPlan;
-
-    private IExecutionPeriod executionPeriod;
-
-    private Integer creditsInSecundaryArea;
-
-    private Integer creditsInSpecializationArea;
 
     public SpecificLEECEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
             IExecutionPeriod executionPeriod) {
@@ -51,35 +44,9 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         this.executionPeriod = executionPeriod;
     }
 
-    public List apply(List curricularCoursesToBeEnrolledIn) {
 
-        if ((this.studentCurricularPlan.getBranch() != null)
-                && (this.studentCurricularPlan.getSecundaryBranch() != null)) {
-            try {
-                List result = specificAlgorithm(this.studentCurricularPlan);
-                studentCurricularPlan.setCreditsInSpecializationArea(this
-                        .getCreditsInSpecializationArea());
-                studentCurricularPlan.setCreditsInSecundaryArea(this.getCreditsInSecundaryArea());
-                return filter(this.studentCurricularPlan, this.executionPeriod,
-                        curricularCoursesToBeEnrolledIn, result);
-            } catch (ExcepcaoPersistencia e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        }
 
-        return curricularCoursesToBeEnrolledIn;
-    }
-
-    public Integer getCreditsInSecundaryArea() {
-        return creditsInSecundaryArea;
-    }
-
-    public Integer getCreditsInSpecializationArea() {
-        return creditsInSpecializationArea;
-    }
-
-    private List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan)
+    protected List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
 
         HashMap creditsInScientificAreas = new HashMap();
@@ -155,36 +122,6 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         }
 
         return creditsInAnySecundaryAreas;
-    }
-
-    private void sumInHashMap(HashMap map, Integer key, Integer value) {
-        if (!map.containsKey(key)) {
-            map.put(key, value);
-        } else {
-            Integer oldValue = (Integer) map.get(key);
-            int result = oldValue.intValue() + value.intValue();
-            map.put(key, new Integer(result));
-        }
-    }
-
-    private void cleanHashMap(HashMap map, List keysOfItemsToRemove) {
-        int size = keysOfItemsToRemove.size();
-        for (int i = 0; i < size; i++) {
-            Integer key = (Integer) keysOfItemsToRemove.get(i);
-            map.remove(key);
-        }
-    }
-
-    private List getSpecializationAndSecundaryAreaCurricularCoursesToCountForCredits(
-            Collection allCurricularCourses) {
-
-        return (List) CollectionUtils.select(allCurricularCourses, new Predicate() {
-            public boolean evaluate(Object obj) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) obj;
-                return (studentCurricularPlan.isCurricularCourseApproved(curricularCourse) || studentCurricularPlan
-                        .isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod));
-            }
-        });
     }
 
     private void calculateGroupsCreditsFromEnrollments(IStudentCurricularPlan studentCurricularPlan,
@@ -710,7 +647,7 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
 
     }
 
-    private List filter(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
+    protected List filter(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
             List curricularCoursesToBeEnrolledIn,
             final List selectedCurricularCoursesFromSpecializationAndSecundaryAreas) {
 
@@ -739,13 +676,13 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         List specializationAreaCurricularCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
         List secundaryAreaCurricularCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
 
-        if (thereIsAnyTemporaryCurricularCourseInSpecializationArea(studentCurricularPlan,
+        if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan,
                 executionPeriod, specializationAreaCurricularCourses)) {
             markCurricularCourses(curricularCoursesFromOtherAreasToMantain,
                     specializationAreaCurricularCourses);
         }
 
-        if (thereIsAnyTemporaryCurricularCourseInSecundaryArea(studentCurricularPlan, executionPeriod,
+        if (thereIsAnyTemporaryCurricularCourse(studentCurricularPlan, executionPeriod,
                 secundaryAreaCurricularCourses)) {
             markCurricularCourses(curricularCoursesFromOtherAreasToMantain,
                     secundaryAreaCurricularCourses);
@@ -754,101 +691,6 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         result.addAll(curricularCoursesFromOtherAreasToMantain);
 
         return result;
-    }
-
-    private List getCommonAreasCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
-
-        IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-
-        List curricularCoursesFromCommonAreas = new ArrayList();
-        List commonAreas = degreeCurricularPlan.getCommonAreas();
-        int commonAreasSize = commonAreas.size();
-        for (int i = 0; i < commonAreasSize; i++) {
-            IBranch area = (IBranch) commonAreas.get(i);
-            curricularCoursesFromCommonAreas.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
-                    area, AreaType.BASE_OBJ));
-        }
-
-        return curricularCoursesFromCommonAreas;
-    }
-
-    private Collection getSpecializationAndSecundaryAreaCurricularCourses(
-            IStudentCurricularPlan studentCurricularPlan) {
-
-        List specializationAreaCurricularCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
-        List secundaryAreaCurricularCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
-
-        Set set = new HashSet();
-        set.addAll(specializationAreaCurricularCourses);
-        set.addAll(secundaryAreaCurricularCourses);
-
-//        List allCurricularCourses = new ArrayList();
-//        allCurricularCourses.addAll(specializationAreaCurricularCourses);   
-//        allCurricularCourses.addAll(secundaryAreaCurricularCourses);
-//        return allCurricularCourses;
-
-        return set;
-    }
-
-    private List getSpecializationAreaCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
-
-        return studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
-                studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
-    }
-
-    private List getSecundaryAreaCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
-
-        return studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
-                studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
-    }
-
-    private boolean thereIsAnyTemporaryCurricularCourseInSpecializationArea(
-            IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
-            final List specializationAreaCurricularCourses) {
-
-        List enrolledEnrollments = studentCurricularPlan
-                .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod
-                        .getPreviousExecutionPeriod());
-
-        List result = (List) CollectionUtils.select(enrolledEnrollments, new Predicate() {
-            public boolean evaluate(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
-                return specializationAreaCurricularCourses.contains(enrollment.getCurricularCourse());
-            }
-        });
-
-        return !result.isEmpty();
-    }
-
-    private boolean thereIsAnyTemporaryCurricularCourseInSecundaryArea(
-            IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
-            final List secundaryAreaCurricularCourses) {
-
-        List enrolledEnrollments = studentCurricularPlan
-                .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod
-                        .getPreviousExecutionPeriod());
-
-        List result = (List) CollectionUtils.select(enrolledEnrollments, new Predicate() {
-            public boolean evaluate(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
-                return secundaryAreaCurricularCourses.contains(enrollment.getCurricularCourse());
-            }
-        });
-
-        return !result.isEmpty();
-    }
-
-    private void markCurricularCourses(List curricularCoursesToBeEnrolledIn,
-            List curricularCoursesFromOneArea) {
-
-        int size = curricularCoursesToBeEnrolledIn.size();
-        for (int i = 0; i < size; i++) {
-            CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) curricularCoursesToBeEnrolledIn
-                    .get(i);
-            if (curricularCoursesFromOneArea.contains(curricularCourse2Enroll.getCurricularCourse())) {
-                curricularCourse2Enroll.setEnrollmentType(CurricularCourseEnrollmentType.TEMPORARY);
-            }
-        }
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -293,6 +294,15 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
             throw new RuntimeException(e);
         }
 
+        return curricularCourses;
+    }
+
+    public List getCurricularCoursesFromAnyArea() {
+        List curricularCourses = new ArrayList();
+        for (Iterator iter = getAreas().iterator(); iter.hasNext();) {
+            IBranch branch = (IBranch) iter.next();
+            getCurricularCoursesFromArea(branch, null);
+        }
         return curricularCourses;
     }
 

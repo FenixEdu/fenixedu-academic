@@ -1,7 +1,10 @@
 package Dominio;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import Dominio.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import Dominio.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
@@ -72,6 +75,27 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
         }
 
         return curricularCourses;
+    }
+    
+    public List getCurricularCoursesFromAnyArea() {
+        Set curricularCourses = new HashSet();
+        
+        List specializationAreas = getSpecializationAreas();
+        List secundaryAreas = getSecundaryAreas();
+        
+        for (Iterator iter = specializationAreas.iterator(); iter.hasNext();) {
+            IBranch branch = (IBranch) iter.next();
+            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SPECIALIZATION_OBJ));
+        }
+        
+        for (Iterator iter = secundaryAreas.iterator(); iter.hasNext();) {
+            IBranch branch = (IBranch) iter.next();
+            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SECONDARY_OBJ));
+        }
+
+        List result = new ArrayList();
+        result.addAll(curricularCourses);
+        return result;
     }
 
     public List getSecundaryAreas() {

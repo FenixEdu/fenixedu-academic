@@ -86,6 +86,8 @@ public interface IDegreeCurricularPlan extends IDomainObject {
             IExecutionPeriod executionPeriod);
 
     public List getCurricularCoursesFromArea(IBranch area, AreaType areaType);
+    
+    public List getCurricularCoursesFromAnyArea();
 
     public List getCommonAreas();
 

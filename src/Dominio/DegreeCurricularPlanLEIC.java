@@ -1,7 +1,10 @@
 package Dominio;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -117,5 +120,26 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlan implements ID
         List sec = super.getSecundaryAreas();
         sec.addAll(getSpecializationAreas());
         return sec;
+    }
+    
+    public List getCurricularCoursesFromAnyArea() {
+        Set curricularCourses = new HashSet();
+        
+        List specializationAreas = getSpecializationAreas();
+        List secundaryAreas = getSecundaryAreas();
+        
+        for (Iterator iter = specializationAreas.iterator(); iter.hasNext();) {
+            IBranch branch = (IBranch) iter.next();
+            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SPECIALIZATION_OBJ));
+        }
+        
+        for (Iterator iter = secundaryAreas.iterator(); iter.hasNext();) {
+            IBranch branch = (IBranch) iter.next();
+            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SECONDARY_OBJ));
+        }
+
+        List result = new ArrayList();
+        result.addAll(curricularCourses);
+        return result;
     }
 }
