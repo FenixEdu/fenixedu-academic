@@ -12,7 +12,8 @@
 		<bean:parameter id="ePName" name="ePName" />
 		<bean:parameter id="eYName" name="eYName" />
 
-<logic:present name="publico.infoShifts" >
+<logic:present name="siteView" property="component" >
+	<bean:define id="component" name="siteView" property="component"/>
 			<table align="center" cellspacing='0' cellpadding='10'>
 					<tr class="timeTable_line" align="center">
 						<td class="degreetablestd" rowspan="2">
@@ -40,7 +41,7 @@
 						</td>
 					</tr>
 			
-				<logic:iterate id="infoShift" name="publico.infoShifts"  indexId="infoShiftIndex">
+				<logic:iterate id="infoShift" name="component" property="shifts"  indexId="infoShiftIndex">
 
 					<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
                        <% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
@@ -109,7 +110,7 @@
 			</table>			
 	</logic:present>
 	
-	<logic:notPresent name="publico.infoShifts" >
+	<logic:notPresent name="siteView" property="component" >
 		<bean:message key="message.public.notfound.infoShifts"/>
 	</logic:notPresent>		
 

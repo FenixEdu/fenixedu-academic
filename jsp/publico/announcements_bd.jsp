@@ -1,13 +1,17 @@
 <%@ page language="java" %>
-<%@ page import="DataBeans.gesdis.InfoAnnouncement" %>
+
 <%@ page import="java.lang.String" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<logic:present name="announcementList">
+<logic:present name="siteView" property="component">
+	<bean:define id="component" name="siteView" property="component" />
+	<logic:empty name="component" property="announcements">
+	<h2><bean:message key="message.announcements.not.available" /></h2>
+	</logic:empty>
 <table border="0" style="text-align: left;">
         <tbody>
-            <logic:iterate id="announcement" name="announcementList" >
+            <logic:iterate id="announcement" name="component" property="announcements" >
                 <tr>
                     <td>
                         <br>
@@ -30,7 +34,7 @@
         </tbody>
 </table>
 </logic:present>
-<logic:notPresent name="announcementList">
+<logic:notPresent name="siteView" property="component">
 <h4>
 <bean:message key="message.announcements.not.available" />
 </h4>

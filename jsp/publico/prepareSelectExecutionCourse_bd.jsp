@@ -6,8 +6,8 @@
         <h2><bean:message key="title.choose.discipline" /></h2>
         <br/>
         <span class="error"><html:errors/></span>        
-        <html:form action="/viewExecutionCourse" method="GET">
-       		<input type="hidden" name="method" value="executionCourseViewerSelectedFromForm">
+        <html:form action="/viewSite" method="GET">
+       		<input type="hidden" name="method" value="firstPage">
        		<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
 			<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
 		
@@ -26,7 +26,7 @@
 	                    <br/>
 	                </td>
 	                <td>    
-     					<html:select property="courseInitials" size="1">
+     					<html:select property="exeCode" size="1">
   	 						<option value=""><bean:message key="label.choose.executionCourse"/></option>
      						<html:options	property="sigla" labelProperty="nome" collection="exeCourseList" />
   	 					</html:select>             

@@ -2,14 +2,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<logic:notPresent name="BibliographicReferences">
+<logic:notPresent name="siteView" property="component">
 	<h2><bean:message key="message.bibliography.not.available"/></h2>
 </logic:notPresent>
-<logic:present name="BibliographicReferences" >
-<logic:empty name="BibliographicReferences">
+
+<logic:present name="siteView" property="component" >
+	<bean:define id="component" name="siteView" property="component" />
+<logic:empty name="component" property="bibliographicReferences">
 	<h2><bean:message key="message.bibliography.not.available"/></h2>
 </logic:empty>	
-<logic:notEmpty name="BibliographicReferences" >
+<logic:notEmpty name="component" property="bibliographicReferences" >
 <table >
 	<tbody>
 		<tr>
@@ -19,7 +21,7 @@
 				</h2>
 			</td>
 		</tr>
-            <logic:iterate id="bibliographicReference" name="BibliographicReferences">
+            <logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
                 <logic:notEqual name="bibliographicReference" property="optional" value="true">
                     <tr>
                     	<td>
@@ -69,7 +71,7 @@
                 </td>
             </tr>           
 
-             <logic:iterate id="bibliographicReference" name="BibliographicReferences">
+             <logic:iterate id="bibliographicReference" name="component" property="bibliographicReferences">
                 <logic:notEqual name="bibliographicReference" property="optional" value="false">
                     <tr>
                     	<td>
