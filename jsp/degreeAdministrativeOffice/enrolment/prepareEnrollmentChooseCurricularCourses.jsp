@@ -21,7 +21,7 @@
 		for (i = 0; i < elements.length ; i++){
 			var element = elements[i];
  			if (element.name && ((element.name == unenrolledElement) || (element.name == enrolledElement && element.checked))){
-				element.disabled = true;
+				element.readonly = true;
 			}
 		}
 	}
@@ -30,7 +30,7 @@
 <h2><bean:message key="title.student.LEEC.enrollment"/></h2>
 <span class="error"><html:errors/></span>
 <html:form action="/curricularCoursesEnrollment">
-	<html:hidden property="method" value="prepareEnrollmentChooseCurricularCourses" />
+	<html:hidden property="method" value="enrollmentConfirmation" />
 	<html:hidden property="studentNumber" />
 	<bean:define id="studentCurricularPlanId" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.idInternal" />
 	<html:hidden property="studentCurricularPlanId" value="<%=studentCurricularPlanId.toString()%>"/>
@@ -113,9 +113,9 @@
 				</td>
 				<td>
 					<bean:define id="enrollmentIndex" name="enrollmentElem" property="idInternal"/>
-					<%--<html:multibox property="enrolledCurricularCoursesAfter" onclick="<%=onclick.toString()%>" >--%>
+					<html:multibox property="enrolledCurricularCoursesAfter" onclick="<%=onclick.toString()%>" >
 					
-					<html:multibox property="enrolledCurricularCoursesAfter" onclick="document.curricularCoursesEnrollmentForm.method.value='unenrollFromCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >
+					<%--<html:multibox property="enrolledCurricularCoursesAfter" onclick="document.curricularCoursesEnrollmentForm.method.value='unenrollFromCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >--%>
 						<bean:write name="enrollmentIndex"/>
 					</html:multibox>
 				</td>
@@ -137,8 +137,8 @@
 					<bean:write name="curricularCourse" property="name"/>
 				</td>
 				<td>
-					<%--<html:multibox property="unenrolledCurricularCourses" onclick="<%=onclick.toString()%>" >--%>
-					<html:multibox property="unenrolledCurricularCourses" onclick="document.curricularCoursesEnrollmentForm.method.value='enrollInCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >
+					<html:multibox property="unenrolledCurricularCourses" onclick="<%=onclick.toString()%>" >
+					<%--<html:multibox property="unenrolledCurricularCourses" onclick="document.curricularCoursesEnrollmentForm.method.value='enrollInCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >--%>
 						<bean:write name="curricularCourseIndex"/>
 					</html:multibox>
 				</td>

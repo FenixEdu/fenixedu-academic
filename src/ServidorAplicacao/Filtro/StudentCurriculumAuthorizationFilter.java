@@ -88,6 +88,10 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 		roles.add(infoRole);
 
 		infoRole = new InfoRole();
+		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+		roles.add(infoRole);
+		
+		infoRole = new InfoRole();
 		infoRole.setRoleType(RoleType.COORDINATOR);
 		roles.add(infoRole);
 
@@ -130,6 +134,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 		{
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 				SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente();
+			
 			IStudentCurricularPlan studentCurricularPlanTemp = new StudentCurricularPlan();
 			studentCurricularPlanTemp.setIdInternal(studentCurricularPlanID);
 
@@ -229,7 +234,29 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 			}
 			return false;
 		}
+		roleTemp = new ArrayList();
+		roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+		if (CollectionUtils.containsAny(roles, roleTemp))
+		{
 
+			try
+			{
+
+				if (studentCurricularPlan.getStudent().getDegreeType().equals(TipoCurso.LICENCIATURA_OBJ))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+		}
+		
 		roleTemp = new ArrayList();
 		roleTemp.add(RoleType.STUDENT);
 		if (CollectionUtils.containsAny(roles, roleTemp))

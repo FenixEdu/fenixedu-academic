@@ -4,7 +4,7 @@
 <h2><bean:message key="title.student.LEEC.enrollment"/></h2>
 <html:errors/>
 <html:form action="/curricularCoursesEnrollment" focus="studentNumber">
-	<html:hidden property="method" value="prepareEnrollmentChooseCurricularCourses"/>
+	<html:hidden property="method" value="start"/>
 	<html:hidden property="page" value="1"/>
 	<table>
 		<tr>

@@ -2,19 +2,21 @@ package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoObject;
@@ -23,8 +25,10 @@ import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import framework.factory.ServiceManagerServiceFactory;
@@ -33,7 +37,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Fernanda Quitério 27/Jan/2004
  *  
  */
-public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
+public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDispatchAction
 {
 
 	public ActionForward prepareEnrollmentChooseStudent(
@@ -46,7 +50,18 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		return mapping.findForward("prepareEnrollmentChooseStudent");
 	}
 
-	public ActionForward prepareEnrollmentChooseCurricularCourses(
+	public ActionForward start(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		super.createToken(request);
+		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
+	}
+
+	private ActionForward prepareEnrollmentChooseCurricularCourses(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -84,7 +99,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 			}
 			saveErrors(request, errors);
 			return mapping.getInputForward();
-		}catch (OutOfCurricularCourseEnrolmentPeriod e)
+		}
+		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
 			errors.add("enrolment", new ActionError(e.getMessage()));
 			saveErrors(request, errors);
@@ -104,17 +120,21 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 				saveErrors(request, errors);
 				return mapping.getInputForward();
 			}
-			
+
 			throw new FenixActionException(e);
 		}
+
+		Collections.sort(
+			infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments(),
+			new BeanComparator("infoCurricularCourse.name"));
+		Collections.sort(
+			infoStudentEnrolmentContext.getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled(),
+			new BeanComparator("name"));
 
 		Integer[] enrolledInArray =
 			buildArrayForForm(infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments());
 		enrollmentForm.set("enrolledCurricularCoursesBefore", enrolledInArray);
 		enrollmentForm.set("enrolledCurricularCoursesAfter", enrolledInArray);
-		//		Integer[] curricularCoursesToEnroll =
-		// buildArrayForForm(infoStudentEnrolmentContext.getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled());
-		//		enrollmentForm.set("unenrolledCurricularCoursesToDisable", curricularCoursesToEnroll);
 
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
@@ -147,6 +167,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+		super.createToken(request);
+
 		IUserView userView = SessionUtils.getUserView(request);
 		ActionErrors errors = new ActionErrors();
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
@@ -197,9 +219,13 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 			enrollmentForm.set("specializationArea", Integer.valueOf(specialization));
 			enrollmentForm.set("secondaryArea", Integer.valueOf(secondary));
 		}
+
+		Collections.sort(infoBranches, new BeanComparator("name"));
+
 		request.setAttribute("infoBranches", infoBranches);
 		return mapping.findForward("prepareEnrollmentChooseAreas");
 	}
+
 
 	private void maintainEnrollmentState(HttpServletRequest request, Integer studentNumber)
 	{
@@ -222,6 +248,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+		super.validateToken(request, form, mapping, "error.transaction.enrollment");
+
 		IUserView userView = SessionUtils.getUserView(request);
 		ActionErrors errors = new ActionErrors();
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
@@ -275,14 +303,16 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+		super.validateToken(request, form, mapping, "error.transaction.enrollment");
+
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer[] curricularCoursesToEnroll =
 			(Integer[]) enrollmentForm.get("unenrolledCurricularCourses");
-
-		List toEnroll = Arrays.asList(curricularCoursesToEnroll);
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
+
+		List toEnroll = Arrays.asList(curricularCoursesToEnroll);
 
 		if (toEnroll.size() == 1)
 		{
@@ -306,6 +336,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+		super.validateToken(request, form, mapping, "error.transaction.enrollment");
+		
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer[] enrolledCurricularCoursesBefore =
@@ -316,9 +348,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		List enrollmentsBefore = Arrays.asList(enrolledCurricularCoursesBefore);
 		List enrollmentsAfter = Arrays.asList(enrolledCurricularCoursesAfter);
 		List toUnenroll = (List) CollectionUtils.subtract(enrollmentsBefore, enrollmentsAfter);
-		System.out.println("valor da lista antes: " + enrollmentsBefore);
-		System.out.println("valor da lista depois: " + enrollmentsAfter);
-		System.out.println("valor da lista resultante: " + toUnenroll);
 		if (toUnenroll.size() == 1)
 		{
 			Object[] args = {(Integer) toUnenroll.get(0)};
@@ -332,5 +361,105 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 			}
 		}
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
+	}
+	public ActionForward enrollmentConfirmation(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+//		super.validateToken(request, form, mapping, "error.transaction.enrollment");
+
+		IUserView userView = SessionUtils.getUserView(request);
+		ActionErrors errors = new ActionErrors();
+		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
+
+		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
+		Integer studentCurricularPlanId =
+			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
+
+		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
+		Object[] args = { studentNumber };
+		try
+		{
+			infoStudentEnrolmentContext =
+				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ShowAvailableCurricularCourses",
+					args);
+
+		}
+		catch (ExistingServiceException e)
+		{
+			if (e.getMessage().equals("student"))
+			{
+				errors.add("student", new ActionError("error.no.student.in.database", studentNumber));
+			}
+			else if (e.getMessage().equals("studentCurricularPlan"))
+			{
+				errors.add(
+					"studentCurricularPlan",
+					new ActionError("error.student.curricularPlan.nonExistent"));
+			}
+			saveErrors(request, errors);
+			return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
+		}
+		catch (OutOfCurricularCourseEnrolmentPeriod e)
+		{
+			errors.add("enrolment", new ActionError(e.getMessage()));
+			saveErrors(request, errors);
+			return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
+		}
+		catch (FenixServiceException e)
+		{
+			if (e.getMessage().equals("degree"))
+			{
+				errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));
+				saveErrors(request, errors);
+				return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
+			}
+			if (e.getMessage().equals("enrolmentPeriod"))
+			{
+				errors.add("enrolmentPeriod", new ActionError("error.student.enrolmentPeriod"));
+				saveErrors(request, errors);
+				return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
+			}
+
+			throw new FenixActionException(e);
+		}
+
+		List curriculum = null;
+		Object args2[] = { userView, studentCurricularPlanId };
+		try
+		{
+			curriculum =
+				(ArrayList) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ReadStudentCurriculum",
+					args2);
+		}
+		catch (NotAuthorizedException e)
+		{
+			errors.add("notAuthorized", new ActionError("error.enrollment.notAuthorized"));
+			saveErrors(request, errors);
+			return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
+		}
+		Collections.sort(
+			infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments(),
+			new BeanComparator("infoCurricularCourse.name"));
+
+		BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
+		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(courseName);
+		chainComparator.addComparator(executionYear);
+
+		Collections.sort(curriculum, chainComparator);
+
+		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
+		request.setAttribute("curriculum", curriculum);
+
+		return mapping.findForward("enrollmentConfirmation");
 	}
 }
