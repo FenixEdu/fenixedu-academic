@@ -58,7 +58,6 @@ public class ReadTeacherShiftPercentageTest extends TestCaseServices {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Execution Course
-
 			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 			infoExecutionCourse.setIdInternal(new Integer(1));
 
