@@ -347,7 +347,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	 * @see ServidorPersistente.IPersistentObject#getDeletedObjects()
 	 */
 	public void removeFromCacheDeletedObjects() {
-		// TODO Auto-generated method stub
+		
 		//		////////////////////////////////////////////////////////////////////////////////////
 		//		 Do this just to get the broker...
 		//		 There must be a simpler way!

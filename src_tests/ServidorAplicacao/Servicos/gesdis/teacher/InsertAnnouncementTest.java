@@ -78,7 +78,7 @@ public class InsertAnnouncementTest extends TestCaseCreateServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		//TODO
+		
 		return null;
 	}
 

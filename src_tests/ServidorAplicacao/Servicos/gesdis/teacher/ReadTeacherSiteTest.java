@@ -49,7 +49,7 @@ public class ReadTeacherSiteTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -96,7 +96,7 @@ public class ReadTeacherSiteTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
 	protected int getNumberOfItemsToRetrieve() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 
 	}

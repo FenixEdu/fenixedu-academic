@@ -28,7 +28,7 @@ public abstract class TestCasePresentationSopPortal extends TestCasePresentation
 	 * @return Object
 	 */
 	protected void setNotAuthorizedUser() {
-		// TODO Auto-generated method stub
+		
 		UserView userView = new UserView("user", null);
 		Collection roles = new ArrayList();
 		userView.setRoles(roles);

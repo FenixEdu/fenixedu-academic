@@ -366,7 +366,7 @@ public class ConversorSOP {
 	 * @return HashMap
 	 */
 	private HashMap createCurricularLoadHashMap() {
-		// TODO Auto-generated method stub
+		
 		HashMap ret = new HashMap();
 		try {
 			sp.iniciarTransaccao();
