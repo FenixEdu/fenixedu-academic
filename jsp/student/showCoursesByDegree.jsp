@@ -36,26 +36,33 @@
 	//doesn't want to know that!
 	//alert("There are no values which can be removed!");
 	} else {
-	var selected = listField.selectedIndex;
-	if (selected == -1) {
-	alert("Por favor, selecione uma disciplina para ser removida antes de pressionar este botao!");
-	} else {  // Build arrays with the text and values to remain
-	var replaceTextArray = new Array(listField.length-1);
-	var replaceValueArray = new Array(listField.length-1);
-	for (var i = 0; i < listField.length; i++) {
-	// Put everything except the selected one into the array
-	if ( i < selected) { replaceTextArray[i] = listField.options[i].text; }
-	if ( i < selected) { replaceValueArray[i] = listField.options[i].value; }
-	if ( i > selected ) { replaceTextArray[i-1] = listField.options[i].text; }           
-	if ( i > selected ) { replaceValueArray[i-1] = listField.options[i].value; }
-	}
-	listField.length = replaceTextArray.length;  // Shorten the input list
-	for (i = 0; i < replaceTextArray.length; i++) { // Put the array back into the list
-	listField.options[i].value = replaceValueArray[i];
-	listField.options[i].text = replaceTextArray[i];
-	}
-	} // Ends the check to make sure something was selected
+		var selected = listField.selectedIndex;
+		if (selected == -1) {
+		alert("Por favor, selecione uma disciplina para ser removida antes de pressionar este botao!");
+		} else {  // Build arrays with the text and values to remain
+			if (listField.length ==1){				
+				listField.options[0] = null;
+				listField.length = 0;
+			} else {
+				var replaceTextArray = new Array(listField.length-1);
+				var replaceValueArray = new Array(listField.length-1);
+				for (var i = 0; i < listField.length; i++) {
+					// Put everything except the selected one into the array
+					if ( i < selected) { replaceTextArray[i] = listField.options[i].text; }
+					if ( i < selected) { replaceValueArray[i] = listField.options[i].value; }
+					if ( i > selected ) { replaceTextArray[i-1] = listField.options[i].text; }           
+					if ( i > selected ) { replaceValueArray[i-1] = listField.options[i].value; }
+				}
+				listField.length = replaceTextArray.length;  // Shorten the input list
+				for (i = 0; i < replaceTextArray.length; i++) { // Put the array back into the list
+					listField.options[i].value = replaceValueArray[i];
+					listField.options[i].text = replaceTextArray[i];
+				}
+			}
+	
+		} // Ends the check to make sure something was selected
 	} // Ends the check for there being none in the list
+	
 	}
 	
 	function selectAll() {

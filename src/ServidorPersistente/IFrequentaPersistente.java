@@ -25,7 +25,8 @@ public interface IFrequentaPersistente extends IPersistentObject {
     public void deleteAll() throws ExcepcaoPersistencia;
 	public Integer countStudentsAttendingExecutionCourse(IDisciplinaExecucao executionCourse)
 			throws ExcepcaoPersistencia;    
-
+	public List readByStudentNumberInCurrentExecutionPeriod(Integer number)
+			throws ExcepcaoPersistencia;
 	// FIXME: Must read by Username, not by Student Number
 	public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia;
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;

@@ -27,6 +27,7 @@ import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.PeriodState;
 
 public class FrequentaOJB
 	extends ObjectFenixOJB
@@ -97,6 +98,16 @@ public class FrequentaOJB
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+	public List readByStudentNumberInCurrentExecutionPeriod(Integer number)
+		throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("aluno.number", number);
+		crit.addEqualTo(
+			"disciplinaExecucao.executionPeriod.state",
+			PeriodState.CURRENT);
+
+		return queryList(Frequenta.class, crit);
 	}
 
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)

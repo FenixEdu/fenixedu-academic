@@ -18,8 +18,7 @@ import Util.TipoCurso;
 
 public class ReadCourseByStudent implements IServico {
 
-	private static ReadCourseByStudent _servico =
-		new ReadCourseByStudent();
+	private static ReadCourseByStudent _servico = new ReadCourseByStudent();
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -42,23 +41,35 @@ public class ReadCourseByStudent implements IServico {
 
 	public Object run(Integer number, TipoCurso degreeType) {
 
-
 		ArrayList disciplines = new ArrayList();
 		InfoDegree infoDegree = null;
 
-
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudent student = sp.getIPersistentStudent().readByNumero(number,degreeType);
+			IStudent student =
+				sp.getIPersistentStudent().readByNumero(number, degreeType);
 			if (student != null) {
-				IStudentCurricularPlan StudentCurricularPlan=sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(number, degreeType);
+				IStudentCurricularPlan StudentCurricularPlan =
+					sp
+						.getIStudentCurricularPlanPersistente()
+						.readActiveStudentCurricularPlan(
+						number,
+						degreeType);
 				if (StudentCurricularPlan != null) {
-					infoDegree = new InfoDegree(StudentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
-										     StudentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
-				}		
-				
-			  }
-			
+					infoDegree =
+						new InfoDegree(
+							StudentCurricularPlan
+								.getDegreeCurricularPlan()
+								.getDegree()
+								.getSigla(),
+							StudentCurricularPlan
+								.getDegreeCurricularPlan()
+								.getDegree()
+								.getNome());
+				}
+
+			}
+
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 		}
@@ -67,4 +78,3 @@ public class ReadCourseByStudent implements IServico {
 	}
 
 }
-
