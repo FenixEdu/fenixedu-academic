@@ -3,6 +3,9 @@ package ServidorAplicacao.Servicos.teacher;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
 import DataBeans.InfoRole;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
@@ -50,6 +53,81 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 		return "etc/testDataSetForTeacherCredits.xml";
 	}
 
+	public static void main(java.lang.String[] args){
+				TestRunner.run(suite());
+	}
+	
+	public static Test suite(){
+		TestSuite testSuite = new TestSuite(WriteCreditsTeacherTest.class);
+		return testSuite;
+	}
+		
+	public void testDelete() {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+			//Teacher		
+			ITeacher teacher = new Teacher();
+			teacher.setIdInternal(new Integer(2));
+
+			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+			sp.iniciarTransaccao();
+			teacher = (ITeacher) teacherDAO.readByOId(teacher);
+
+			sp.confirmarTransaccao();
+
+			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+
+			GestorServicos serviceManager = GestorServicos.manager();
+			Integer tfcStudentsNumber = new Integer(0);
+
+			Object[] args = { infoTeacher, tfcStudentsNumber };
+
+			Boolean result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
+
+			if (!result.booleanValue()) {
+				fail("can't execute service");
+			}
+
+			testDeleted(sp, teacher);
+
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Reading database!");
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			fail("Executing  Service!");
+		}
+	}
+
+	private void testDeleted(ISuportePersistente sp, ITeacher teacher) {
+		IPersistentCreditsTeacher creditsTeacherDAO = sp.getIPersistentCreditsTeacher();
+		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+		ICredits credits = new Credits();
+
+		try {
+			sp.iniciarTransaccao();
+
+			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+			sp.confirmarTransaccao();
+
+			ITeacher teacher2 = new Teacher();
+			teacher2.setIdInternal(teacher.getIdInternal());
+			credits.setTeacher(teacher2);
+			credits.setExecutionPeriod(executionPeriod);
+
+			sp.iniciarTransaccao();
+			credits = (ICredits) creditsTeacherDAO.readDomainObjectByCriteria(credits);
+			sp.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia e1) {
+			e1.printStackTrace();
+			fail("Getting credits from database!!");
+		}
+
+		assertNull("Not deleted!", credits);
+	}
+
 	public void testWrite() {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -61,7 +139,7 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			sp.iniciarTransaccao();
 			teacher = (ITeacher) teacherDAO.readByOId(teacher);
-			
+
 			sp.confirmarTransaccao();
 
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
@@ -72,11 +150,7 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 
 			Object[] args = { infoTeacher, tfcStudentsNumber };
 
-			Boolean result =
-				(Boolean) serviceManager.executar(
-					authorizedUserView(),
-					getNameOfServiceToBeTested(),
-					args);
+			Boolean result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
 			if (!result.booleanValue()) {
 				fail("can't execute service");
@@ -90,11 +164,7 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 
 			Object[] args2 = { infoTeacher, tfcStudentsNumber };
 
-			result =
-				(Boolean) serviceManager.executar(
-					authorizedUserView(),
-					getNameOfServiceToBeTested(),
-					args2);
+			result = (Boolean) serviceManager.executar(authorizedUserView(), getNameOfServiceToBeTested(), args2);
 
 			if (!result.booleanValue()) {
 				fail("can't execute service");
@@ -111,33 +181,25 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 		}
 	}
 
-	public void testCredits(
-		ISuportePersistente sp,
-		ITeacher teacher,
-		Integer tfcStudentsNumber) {
-		IPersistentCreditsTeacher creditsTeacherDAO =
-			sp.getIPersistentCreditsTeacher();
-		IPersistentExecutionPeriod executionPeriodDAO =
-			sp.getIPersistentExecutionPeriod();
+	public void testCredits(ISuportePersistente sp, ITeacher teacher, Integer tfcStudentsNumber) {
+		IPersistentCreditsTeacher creditsTeacherDAO = sp.getIPersistentCreditsTeacher();
+		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
 		ICredits credits = new Credits();
 
 		try {
 			sp.iniciarTransaccao();
 
-			IExecutionPeriod executionPeriod =
-				executionPeriodDAO.readActualExecutionPeriod();
+			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 			sp.confirmarTransaccao();
-			
+
 			ITeacher teacher2 = new Teacher();
 			teacher2.setIdInternal(teacher.getIdInternal());
 			credits.setTeacher(teacher2);
 			credits.setExecutionPeriod(executionPeriod);
 
 			sp.iniciarTransaccao();
-			credits =
-				(ICredits) creditsTeacherDAO.readDomainObjectByCriteria(
-					credits);
+			credits = (ICredits) creditsTeacherDAO.readDomainObjectByCriteria(credits);
 			sp.confirmarTransaccao();
 
 		} catch (ExcepcaoPersistencia e1) {
@@ -145,10 +207,7 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 			fail("Getting credits from database!!");
 		}
 
-		assertEquals(
-			"TfcStudentsnumber",
-			tfcStudentsNumber,
-			credits.getTfcStudentsNumber());
+		assertEquals("TfcStudentsnumber", tfcStudentsNumber, credits.getTfcStudentsNumber());
 	}
 
 	public IUserView authorizedUserView() {

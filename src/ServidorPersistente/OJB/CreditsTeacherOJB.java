@@ -58,15 +58,11 @@ public class CreditsTeacherOJB
 			ICredits creditsTeacherFromBD =
 				this.readByUnique(creditsTeacherToWrite);
 
-			// If department is not in database, then write it.
-			System.out.println("OID"+ creditsTeacherToWrite.getIdInternal());
-			
-			if (creditsTeacherFromBD != null)
-				System.out.println("OID"+ creditsTeacherFromBD.getIdInternal());
+			// If credits is not in database, then write it.
 			
 			if (creditsTeacherFromBD == null) {
 				super.lockWrite(creditsTeacherToWrite);
-				//				else If the department is mapped to the database, then write any existing changes.				
+				//				else If the credits is mapped to the database, then write any existing changes.				
 			} else if (
 				creditsTeacherFromBD.getIdInternal().equals(
 					creditsTeacherToWrite.getIdInternal())) {

@@ -38,31 +38,38 @@ public class WriteCreditsTeacher implements IServico {
 	}
 
 	public Boolean run(InfoTeacher infoTeacher, Integer tfcStudentNumber) throws FenixServiceException {
-		
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			ITeacher teacherParam = Cloner.copyInfoTeacher2Teacher(infoTeacher);
 			ITeacher teacher = (ITeacher) teacherDAO.readByOId(teacherParam);
-			
+
 			IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-			
+
 			ICredits creditsTeacher = new Credits();
 			creditsTeacher.setTeacher(teacher);
 			creditsTeacher.setExecutionPeriod(executionPeriod);
-						
+
 			// mark teacher's credits for write
 			IPersistentCreditsTeacher creditsTeacherDAO = sp.getIPersistentCreditsTeacher();
 
-			try{
-				creditsTeacherDAO.lockWrite(creditsTeacher);
-			}catch (ExistingPersistentException e){
+			try {
+				if (tfcStudentNumber.intValue() == 0) {
+					//delete credits because is zero
+					creditsTeacher = creditsTeacherDAO.readByUnique(creditsTeacher);
+					if (creditsTeacher != null) {
+						creditsTeacherDAO.delete(creditsTeacher);
+					}
+				} else {
+					creditsTeacherDAO.lockWrite(creditsTeacher);
+				}
+			} catch (ExistingPersistentException e) {
 				creditsTeacher = creditsTeacherDAO.readByUnique(creditsTeacher);
 			}
 			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
-			
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException();

@@ -99,28 +99,20 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 				boolean ok = validate(shift, infoTeacherShiftPercentage.getPercentage(), teacher);
 
 				if (ok) {
-					lockPercentages(teacherShiftPercentageDAO, teacherShiftPercentageAdded, shift, teacherShiftPercentage);
+					if (infoTeacherShiftPercentage.getPercentage().floatValue() != 0) {
+						lockPercentages(teacherShiftPercentageDAO, teacherShiftPercentageAdded, shift, teacherShiftPercentage);
+					} else {
+						//delete because is zero
+						teacherShiftPercentage = teacherShiftPercentageDAO.readByUnique(teacherShiftPercentage);
+						if(teacherShiftPercentage == null) {
+							teacherShiftPercentageDAO.delete(teacherShiftPercentage);
+						}
+					}
 				} else {
 					shiftWithErrors.add(Cloner.copyIShift2InfoShift(shift));
 				}
 			}
 
-			//			List toRemoveList =
-			//				(List) CollectionUtils.subtract(professorship.getAssociatedTeacherShiftPercentage(), teacherShiftPercentageAdded);
-			//
-			//			Iterator iterator2 = toRemoveList.iterator();
-			//			while (iterator2.hasNext()) {
-			//				ITeacherShiftPercentage teacherShiftPercentage = (ITeacherShiftPercentage) iterator2.next();
-			//				professorship.getAssociatedTeacherShiftPercentage().remove(teacherShiftPercentage);
-			//
-			//				teacherShiftPercentageDAO.delete(teacherShiftPercentage);
-			//			}
-
-			//			if (!shiftWithErrors.isEmpty()) {
-			//				// this is done this way but we have to have a more general solution when exceptions are thrown by service...
-			//				sp.confirmarTransaccao();
-			//				throw new ShiftPercentageExceededException(shiftWithErrors);
-			//			}
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);
 			throw new FenixServiceException(e);
