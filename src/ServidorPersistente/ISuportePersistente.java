@@ -84,4 +84,6 @@ public interface ISuportePersistente {
 
 	public IPersistentPrecedence getIPersistentPrecedence();
 	public IPersistentRestriction getIPersistentRestriction();
+	
+	public IPersistentEvaluation getIPersistentEvaluation();
 }
