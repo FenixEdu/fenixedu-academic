@@ -5,12 +5,12 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.contributor;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoContributor;
-import DataBeans.util.Cloner;
 import Dominio.Contributor;
 import Dominio.IContributor;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -37,10 +37,18 @@ public class CreateContributor implements IService
         try
         {
             sp = SuportePersistenteOJB.getInstance();
-
-            contributor = Cloner.copyInfoContributor2IContributor(newContributor);
+            IPersistentContributor persistentContributor = sp.getIPersistentContributor();
+            
+            contributor = persistentContributor.readByContributorNumber(newContributor.getContributorNumber());
+            
+            if(contributor != null) {
+                throw new ExistingServiceException();
+            }
+            //CLONER
+            //contributor = Cloner.copyInfoContributor2IContributor(newContributor);
+            contributor = InfoContributor.newDomainFromInfo(newContributor);
+            
             sp.getIPersistentContributor().simpleLockWrite(contributor);
-
         }
         catch (ExistingPersistentException ex)
         {

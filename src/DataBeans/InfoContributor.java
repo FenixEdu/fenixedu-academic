@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import Dominio.Contributor;
 import Dominio.IContributor;
 
 /**
@@ -112,5 +113,23 @@ public class InfoContributor extends InfoObject {
             infoContributor.copyFromDomain(contributor);
         }
         return infoContributor;
+    }
+    
+    public void copyToDomain(InfoContributor infoContributor, IContributor contributor) {
+        super.copyToDomain(infoContributor, contributor);
+        
+        contributor.setContributorAddress(infoContributor.getContributorAddress());
+        contributor.setContributorName(infoContributor.getContributorName());
+        contributor.setContributorNumber(infoContributor.getContributorNumber());
+    }
+    
+    public static IContributor newDomainFromInfo(InfoContributor infoContributor) {
+        IContributor contributor  = null;
+        
+        if(infoContributor != null) {
+            contributor  = new Contributor();
+            infoContributor.copyToDomain(infoContributor, contributor);
+        }
+        return contributor;
     }
 }
