@@ -30,16 +30,17 @@ import Util.TipoCurso;
  *
  */
 
-public class PrepareStudentDataForThesisOperationsDispatchAction extends DispatchAction {
+public class PrepareStudentDataForThesisOperationsDispatchAction extends DispatchAction
+{
 
 	public ActionForward getStudentAndDegreeTypeForThesisOperations(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws Exception
+	{
 
-		
 		DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -47,10 +48,13 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
 		Integer studentNumber = null;
 		String forward = "success";
 
-		try {
+		try
+		{
 			degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
-			studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
-		} catch (Exception e) {
+			studentNumber =
+				new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
+		} catch (Exception e)
+		{
 			//case when the user cancels the current form, and goes back to the intial page of master degree thesis operations (index page)
 			degreeType = (Integer) getStudentByNumberAndDegreeTypeForm.get("degreeType");
 			studentNumber = (Integer) getStudentByNumberAndDegreeTypeForm.get("studentNumber");
@@ -62,15 +66,24 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
 		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
 		/* * * get student * * */
-		Object argsStudent[] = { studentNumber,new TipoCurso(degreeType) };
-		try {
-			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByNumberAndDegreeType", argsStudent);
-		} catch (FenixServiceException e) {
+		Object argsStudent[] = { studentNumber, new TipoCurso(degreeType)};
+		try
+		{
+			infoStudent =
+				(InfoStudent) ServiceUtils.executeService(
+					userView,
+					"ReadStudentByNumberAndDegreeType",
+					argsStudent);
+		} catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
-		if (infoStudent == null) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("error"));
+		if (infoStudent == null)
+		{
+			throw new NonExistingActionException(
+				"error.exception.masterDegree.nonExistentStudent",
+				mapping.findForward("error"));
 
 		}
 
@@ -78,36 +91,44 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
 
 		/* * * get student curricular plan * * */
 		Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType)};
-		try {
+		try
+		{
 			infoStudentCurricularPlan =
 				(InfoStudentCurricularPlan) ServiceUtils.executeService(
 					userView,
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					argsStudentCurricularPlan);
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
-		if (infoStudentCurricularPlan == null) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentActiveStudentCurricularPlan", mapping.findForward("error"));
+		if (infoStudentCurricularPlan == null)
+		{
+			throw new NonExistingActionException(
+				"error.exception.masterDegree.nonExistentActiveStudentCurricularPlan",
+				mapping.findForward("error"));
 
 		}
 
 		/* * * get master degree thesis data * * */
 		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
-		try {
+		try
+		{
 			infoMasterDegreeThesisDataVersion =
 				(InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
 					userView,
 					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
 					argsMasterDegreeThesisDataVersion);
-		} catch (NonExistingServiceException e) {
+		} catch (NonExistingServiceException e)
+		{
 			// no active master degree thesis
 			if (forward.equals("cancel"))
 				return mapping.findForward("createThesisCancel");
 			else
 				return mapping.findForward("createThesis");
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
