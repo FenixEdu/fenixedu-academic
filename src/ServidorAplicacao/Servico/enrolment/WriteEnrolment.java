@@ -209,6 +209,7 @@ public class WriteEnrolment implements IService
 			enrolmentEvaluation.setObservation(null);
 			enrolmentEvaluation.setPersonResponsibleForGrade(null);
 			enrolmentEvaluation.setWhen(null);
+			enrolmentEvaluation.setAckOptLock(new Integer(1));
 		}
 	}
 
