@@ -16,37 +16,23 @@
 	
 	<table width="100%">
 		<tr>
-			<td rowspan="2" class="listClasses-header">Turno</td>
-			<td rowspan="2" class="listClasses-header">Tipo</td>
-			<td colspan="4" class="listClasses-header">Aulas</td>
-			<td rowspan="2" class="listClasses-header">% que lecciona</td>
-			<td rowspan="2" class="listClasses-header">Alterar?</td>			
-			<td colspan="2" class="listClasses-header">Atribuidos</td>			
+			<td rowspan="2" class="listClasses-header"><bean:message key="label.shift"/></td>
+			<td rowspan="2" class="listClasses-header"><bean:message key="label.shift.type"/></td>
+			<td colspan="4" class="listClasses-header"><bean:message key="label.lessons"/></td>
+			<td rowspan="2" class="listClasses-header"><bean:message key="label.professorship.question"/></td>			
+			<td rowspan="2" class="listClasses-header"><bean:message key="label.professorship.percentage"/></td>
+			<td class="listClasses-header"><bean:message key="label.teacher.applied"/></td>			
 		</tr>
 		<tr>
-			<td class="listClasses-header">
-				Dia da Semana
-			</td>
-			<td class="listClasses-header">
-				Inicio
-			</td>
-			<td class="listClasses-header">
-				Fim
-			</td>
-			<td class="listClasses-header">
-				Sala
-			</td>			
-			<td class="listClasses-header">
-				Professor - % que lecciona
-			</td>
+			<td class="listClasses-header"><bean:message key="label.day.of.week"/></td>
+			<td class="listClasses-header"><bean:message key="label.lesson.start"/></td>
+			<td class="listClasses-header"><bean:message key="label.lesson.end"/></td>
+			<td class="listClasses-header"><bean:message key="label.lesson.room"/></td>			
+			<td class="listClasses-header"><bean:message key="label.teacher"/> - <bean:message key="label.professorship.percentage"/></td>
 		</tr> 
-		
 		<logic:iterate id="infoShiftPercentage" name="infoShiftsPercentageList" indexId="index">
 			<bean:define id="availablePercentage" name="infoShiftPercentage" property="availablePercentage" />
-			
 			<bean:size id="lessonsSize" name="infoShiftPercentage" property="infoLessons" />	
-										
-
 				<logic:equal name="lessonsSize" value="0">
 					<tr>
 						<td class="listClasses"><bean:write name="infoShiftPercentage" property="shift.nome"/></td>
@@ -79,18 +65,20 @@
 							</td>
 							
 							<td class="listClasses" rowspan="<%= lessonsSize %>">
-						  		<bean:define id="propertyName">
-									percentage_<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
-								</bean:define>
-								<html:text property='<%= propertyName.toString() %>' size="4"/> %
-							</td>
-							<td class="listClasses" rowspan="<%= lessonsSize %>">
 								<html:multibox property="shiftProfessorships">
 									<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
 								</html:multibox>
 							</td>	
-							
-							<td class="listClasses" rowspan="<%= lessonsSize %>">					
+
+							<td class="listClasses" rowspan="<%= lessonsSize %>">
+						  		<bean:define id="propertyName">
+									percentage_<bean:write name="infoShiftPercentage" property="shift.idInternal"/>
+								</bean:define>
+								<html:text property='<%= propertyName.toString() %>' size="4" value=""/> %
+							</td>
+							<td class="listClasses" rowspan="<%= lessonsSize %>">
+								<bean:size id="shiftPercentageSize" name="infoShiftPercentage" property="teacherShiftPercentageList"/>
+								<logic:equal name="shiftPercentageSize" value="0">&nbsp;</logic:equal>
 								<logic:iterate id="teacherShiftPercentage"	name="infoShiftPercentage" property="teacherShiftPercentageList" indexId="indexPercentage">						
 						    		<bean:write name="teacherShiftPercentage" property="infoProfessorship.infoTeacher.infoPerson.nome" />
 			 						&nbsp;-&nbsp;<bean:write name="teacherShiftPercentage" property="percentage" />
