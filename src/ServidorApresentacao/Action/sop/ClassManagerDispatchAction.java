@@ -28,6 +28,7 @@ import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.NotAuthorizedException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -122,7 +123,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 
 			InfoClass oldClassView =
 				(InfoClass) session.getAttribute(SessionConstants.CLASS_VIEW);
-			System.out.println("**************" + oldClassView);
+			
 
 			if (oldClassView == null) {
 				ActionErrors actionErrors = new ActionErrors();
@@ -145,6 +146,8 @@ public class ClassManagerDispatchAction extends DispatchAction {
 					userView,
 					"EditarTurma",
 					argsEditarTurma);
+			} catch (NotAuthorizedException e){
+				throw e; 
 			} catch (Exception e) {
 				e.printStackTrace(System.out);
 				oldClassView.setNome(newClassView.getNome());
@@ -159,7 +162,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.CLASS_VIEW, newClassView);
 
 		} else { /** starting editing */
-			InfoClass classView = getInfoTurma(userView, className, session);
+			//InfoClass classView = getInfoTurma(userView, className, session);
 			session.setAttribute(
 				SessionConstants.CLASS_VIEW,
 				getInfoTurma(

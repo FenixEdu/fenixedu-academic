@@ -16,64 +16,23 @@ import javax.servlet.http.HttpSession;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import servletunit.struts.MockStrutsTestCase;
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
-import Dominio.ExecutionPeriod;
-import Dominio.ExecutionYear;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import Dominio.IPessoa;
-import Dominio.IPlanoCurricularCurso;
-import Dominio.ITurma;
-import Dominio.Pessoa;
-import Dominio.PlanoCurricularCurso;
-import Dominio.Privilegio;
-import Dominio.Turma;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IPlanoCurricularCursoPersistente;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author João Mota
  *
  */
 public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
-	protected ISuportePersistente _suportePersistente = null;
-	protected ICursoPersistente _cursoPersistente = null;
-	protected ICursoExecucaoPersistente _cursoExecucaoPersistente = null;
-	protected ITurmaPersistente _turmaPersistente = null;
-	protected IPessoaPersistente _pessoaPersistente = null;
-	protected IPersistentExecutionYear persistentExecutionYear = null;
-	protected IPersistentExecutionPeriod persistentExecutionPeriod = null;
-	protected IPlanoCurricularCursoPersistente persistentCurricularPlan = null;
-	protected ICurso curso1 = null;
-	protected ICurso curso2 = null;
-	protected ICursoExecucao _cursoExecucao1 = null;
-	protected ICursoExecucao _cursoExecucao2 = null;
-	protected ITurma _turma1 = null;
-	protected ITurma _turma2 = null;
-	protected IPessoa _pessoa1 = null;
+	
 	/**
 	 * Constructor for ClassesManagerDispatchAction.
 	 * @param arg0
@@ -95,82 +54,7 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		// define ficheiro de configuracao Struts a utilizar
 		setServletConfigFile("/WEB-INF/tests/web-sop.xml");
 
-		startPersistentLayer();
-		cleanData();
-
-		_pessoa1 = new Pessoa();
-		_pessoa1.setNumeroDocumentoIdentificacao("0123456789");
-		_pessoa1.setCodigoFiscal("9876543210");
-		_pessoa1.setTipoDocumentoIdentificacao(
-			new TipoDocumentoIdentificacao(
-				TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-		_pessoa1.setUsername("nome");
-		_pessoa1.setPassword("pass");
-		HashSet privilegios = new HashSet();
-		privilegios.add(new Privilegio(_pessoa1, new String("LerTurmas")));
-		_pessoa1.setPrivilegios(privilegios);
-		_suportePersistente.iniciarTransaccao();
-		_pessoaPersistente.escreverPessoa(_pessoa1);
-		_suportePersistente.confirmarTransaccao();
-
-		curso1 =
-			new Curso(
-				"LEIC",
-				"Curso de Engenharia Informatica e de Computadores",
-				new TipoCurso(TipoCurso.LICENCIATURA));
-		_suportePersistente.iniciarTransaccao();
-		_cursoPersistente.lockWrite(curso1);
-		_suportePersistente.confirmarTransaccao();
-		curso2 =
-			new Curso(
-				"LEEC",
-				"Curso de Engenharia Electrotecnica e de Computadores",
-				new TipoCurso(TipoCurso.LICENCIATURA));
-
-		IExecutionYear executionYear = new ExecutionYear("2002/03");
-		_suportePersistente.iniciarTransaccao();
-		persistentExecutionYear.lockWrite(executionYear);
-		_suportePersistente.confirmarTransaccao();
-		IExecutionPeriod executionPeriod = new ExecutionPeriod("2º semestre",executionYear);
-		_suportePersistente.iniciarTransaccao();
-		persistentExecutionPeriod.lockWrite(executionPeriod);
-		_suportePersistente.confirmarTransaccao();
-		IPlanoCurricularCurso curricularPlan =
-			new PlanoCurricularCurso("plano1", curso1);
-		IPlanoCurricularCurso curricularPlan2 =
-			new PlanoCurricularCurso("plano2", curso2);
-		_suportePersistente.iniciarTransaccao();
-		persistentCurricularPlan.lockWrite(curricularPlan);
-		_suportePersistente.confirmarTransaccao();
-		_suportePersistente.iniciarTransaccao();
-		persistentCurricularPlan.lockWrite(curricularPlan2);
-		_suportePersistente.confirmarTransaccao();
-		_suportePersistente.iniciarTransaccao();
-		_cursoPersistente.lockWrite(curso1);
-		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao1 = new CursoExecucao(executionYear, curricularPlan);
-		_suportePersistente.iniciarTransaccao();
-		_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
-		_suportePersistente.confirmarTransaccao();
-		_cursoExecucao2 = new CursoExecucao(executionYear, curricularPlan2);
-		_suportePersistente.iniciarTransaccao();
-		_cursoExecucaoPersistente.lockWrite(_cursoExecucao2);
-		_suportePersistente.confirmarTransaccao();
-
-		_turma1 =
-			new Turma(
-				"10501",
-				new Integer(1),
-				_cursoExecucao1,
-				executionPeriod);
-		_suportePersistente.iniciarTransaccao();
-		_turmaPersistente.lockWrite(_turma1);
-		_suportePersistente.confirmarTransaccao();
-		_turma2 = new Turma("14501", new Integer(1), _cursoExecucao2,executionPeriod);
-		_suportePersistente.iniciarTransaccao();
-		_turmaPersistente.lockWrite(_turma2);
-		_suportePersistente.confirmarTransaccao();
-
+		
 	}
 
 	public void testUnAuthorizedListClasses() {
@@ -184,19 +68,23 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		IUserView userView = new UserView("user", privilegios);
 		getSession().setAttribute("UserView", userView);
 
-		// Coloca contexto em sessão
-		InfoDegree iL = new InfoDegree("LEIC", "Informatica");
-		InfoDegreeCurricularPlan infoPlan =
-			new InfoDegreeCurricularPlan("plano1", iL);
+		//		Coloca contexto em sessão
+		InfoDegree iL =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
 		InfoExecutionDegree iLE =
-			new InfoExecutionDegree(infoPlan, new InfoExecutionYear("2002/03"));
-		CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
-			new CurricularYearAndSemesterAndInfoExecutionDegree(
-				new Integer(5),
-				new Integer(1),
-				iLE);
-		getSession().setAttribute(SessionConstants.CONTEXT_KEY, aCSiLE);
-
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", iL),
+				new InfoExecutionYear("2002/2003"));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+			iLE);
 		//action perform
 		actionPerform();
 		//verify that there are errors
@@ -218,19 +106,24 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 		IUserView userView = new UserView("user", privilegios);
 		getSession().setAttribute("UserView", userView);
 
-		// Coloca contexto em sessão
-		InfoDegree iL = new InfoDegree("LEIC", "Informatica");
-		InfoDegreeCurricularPlan infoPlan =
-			new InfoDegreeCurricularPlan("plano1", iL);
+		//		Coloca contexto em sessão
+		InfoDegree iL =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
 		InfoExecutionDegree iLE =
-			new InfoExecutionDegree(infoPlan, new InfoExecutionYear("2002/03"));
-		CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
-			new CurricularYearAndSemesterAndInfoExecutionDegree(
-				new Integer(5),
-				new Integer(1),
-				iLE);
-		getSession().setAttribute(SessionConstants.CONTEXT_KEY, aCSiLE);
-
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan("plano1", iL),
+				new InfoExecutionYear("2002/2003"));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+			iLE);
+			
 		//action perform
 		actionPerform();
 		//verify that there are no errors
@@ -295,53 +188,6 @@ public class ClassesManagerDispatchActionTest extends MockStrutsTestCase {
 
 	}
 
-	protected void startPersistentLayer() {
-		try {
-			_suportePersistente = SuportePersistenteOJB.getInstance();
-			_cursoExecucaoPersistente =
-				_suportePersistente.getICursoExecucaoPersistente();
-			_cursoPersistente = _suportePersistente.getICursoPersistente();
-			_pessoaPersistente = _suportePersistente.getIPessoaPersistente();
-			_turmaPersistente = _suportePersistente.getITurmaPersistente();
-			persistentExecutionYear =
-				_suportePersistente.getIPersistentExecutionYear();
-			persistentCurricularPlan =
-				_suportePersistente.getIPlanoCurricularCursoPersistente();
-			persistentExecutionPeriod =
-				_suportePersistente.getIPersistentExecutionPeriod();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when opening database");
-		}
-
-	}
-
-	protected void cleanData() {
-		try {
-
-			_suportePersistente.iniciarTransaccao();
-			_cursoExecucaoPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
-			_suportePersistente.iniciarTransaccao();
-			_cursoPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
-			_suportePersistente.iniciarTransaccao();
-			_pessoaPersistente.apagarTodasAsPessoas();
-			_suportePersistente.confirmarTransaccao();
-			_suportePersistente.iniciarTransaccao();
-			_turmaPersistente.deleteAll();
-			_suportePersistente.confirmarTransaccao();
-			_suportePersistente.iniciarTransaccao();
-			persistentCurricularPlan.apagarTodosOsPlanosCurriculares();
-			_suportePersistente.confirmarTransaccao();
-			_suportePersistente.iniciarTransaccao();
-			persistentExecutionYear.deleteAll();
-			_suportePersistente.confirmarTransaccao();
-			_suportePersistente.iniciarTransaccao();
-			persistentExecutionPeriod.deleteAll();
-			_suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when cleaning data");
-		}
-	}
+	
 
 }
