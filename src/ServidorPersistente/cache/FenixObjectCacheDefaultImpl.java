@@ -2,7 +2,7 @@
  * Created on Aug 8, 2003
  *  
  */
-package ServidorPersistente.OJB;
+package ServidorPersistente.cache;
 
 import java.util.Properties;
 
