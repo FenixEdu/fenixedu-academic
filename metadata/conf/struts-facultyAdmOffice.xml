@@ -20,7 +20,7 @@
 				<form-property name="idNumber" type="java.lang.String"/>
 				<form-property name="idType" type="java.lang.Integer"/>
 			</form-bean>
-			
+
 			<form-bean name="editGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<!-- Dados do bolseiro -->
