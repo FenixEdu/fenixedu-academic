@@ -31,6 +31,7 @@ public class Mark extends DomainObject implements IMark {
 		setAttend(attend);
 		setExam(exam);
 		setPublishedMark(publishedMark);
+		setMark(mark);
 	}
 
 	public boolean equals(Object obj) {

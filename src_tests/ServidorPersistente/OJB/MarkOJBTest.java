@@ -22,6 +22,7 @@ import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.ISala;
 import Dominio.IStudent;
+import Dominio.Mark;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -160,322 +161,124 @@ public class MarkOJBTest extends TestCaseOJB {
 			assertNotNull(executionCourse);
 			attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,executionCourse);
 			assertNotNull(attend);
+			mark =  persistentMark.readBy(((IExam) examList.get(0)),attend);
+			assertNotNull(mark);					
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 		  fail("readByExamAttend:fail read non existing mark");
 		}
 	
 	}
-//
-//	// write new existing frequenta
-//	public void testCreateExistingFrequenta() {
-//		IStudent student = null;
-//		IDisciplinaExecucao executionCourse = null;
-//
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			student =
-//				persistentStudent.readByNumero(
-//					new Integer(800),
-//					new TipoCurso(TipoCurso.LICENCIATURA));
-//			assertNotNull(student);
-//
-//			executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCI",
-//					"2002/2003",
-//					"LEIC");
-//			assertNotNull(executionCourse);
-//			persistentSupport.confirmarTransaccao();
-//
-//			IFrequenta attend = new Frequenta(student, executionCourse);
-//
-//			persistentSupport.iniciarTransaccao();
-//			persistentAttend.lockWrite(attend);
-//			persistentSupport.confirmarTransaccao();
-//			fail("testCreateExistingFrequenta: Expected an Exception");
-//		} catch (ExistingPersistentException ex) {
-//			//all is ok
-//			try {
-//				persistentSupport.confirmarTransaccao();
-//			} catch (ExcepcaoPersistencia e) {
-//				fail("testCreateExistingFrequenta: Unable to confirm transaction");
-//			}
-//			assertNotNull("testCreateExistingFrequenta", ex);
-//		} catch (ExcepcaoPersistencia ex) {
-//			fail("testCreateExistingFrequenta: Unexpected Exception");
-//		}
-//	}
-//
-//	//  // write new non-existing frequenta
-//	public void testCreateNonExistingFrequenta() {
-//		IFrequenta attend = new Frequenta();
-//		IStudent student = null;
-//		IDisciplinaExecucao executionCourse = null;
-//
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//
-//			student =
-//				persistentStudent.readByNumero(
-//					new Integer(800),
-//					new TipoCurso(TipoCurso.LICENCIATURA));
-//			assertNotNull(student);
-//
-//			executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCII",
-//					"2002/2003",
-//					"MEEC");
-//			assertNotNull(executionCourse);
-//
-//			persistentSupport.confirmarTransaccao();
-//
-//			attend.setAluno(student);
-//			attend.setDisciplinaExecucao(executionCourse);
-//
-//			persistentSupport.iniciarTransaccao();
-//			persistentAttend.lockWrite(attend);
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia ex) {
-//			fail("testCreateNonExistingFrequenta");
-//		}
-//	}
-//
-//	/** Test of write method, of class ServidorPersistente.OJB.FrequentaOJB. */
-//	public void testWriteExistingChangedObject() {
-//		IFrequenta attend = null;
-//		IStudent student = null;
-//		IDisciplinaExecucao executionCourse = null;
-//
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			student =
-//				persistentStudent.readByNumero(
-//					new Integer(800),
-//					new TipoCurso(TipoCurso.LICENCIATURA));
-//			assertNotNull(student);
-//
-//			executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCI",
-//					"2002/2003",
-//					"LEIC");
-//			assertNotNull(executionCourse);
-//
-//			attend =
-//				persistentAttend.readByAlunoAndDisciplinaExecucao(
-//					student,
-//					executionCourse);
-//			assertNotNull(attend);
-//
-//			persistentSupport.confirmarTransaccao();
-//
-//			assertEquals(attend.getAluno(), student);
-//			assertEquals(attend.getDisciplinaExecucao(), executionCourse);
-//
-//			persistentSupport.iniciarTransaccao();
-//			attend =
-//				persistentAttend.readByAlunoAndDisciplinaExecucao(
-//					student,
-//					executionCourse);
-//			assertNotNull(attend);
-//
-//			IDisciplinaExecucao executionCourse1 = null;
-//			executionCourse1 =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCII",
-//					"2002/2003",
-//					"MEEC");
-//			assertNotNull(executionCourse1);
-//
-//			persistentExecutionCourse.readByOId(attend, true);
-//			attend.setDisciplinaExecucao(executionCourse1);
-//			persistentSupport.confirmarTransaccao();
-//
-//			// Check changes
-//
-//			persistentSupport.iniciarTransaccao();
-//			IFrequenta attendTemp = null;
-//			attendTemp =
-//				persistentAttend.readByAlunoAndDisciplinaExecucao(
-//					student,
-//					executionCourse1);
-//			assertNotNull(attendTemp);
-//			assertEquals(attendTemp.getAluno(), student);
-//			assertEquals(attendTemp.getDisciplinaExecucao(), executionCourse1);
-//
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia ex) {
-//			fail("testReadByAlunoAndDisciplinaExecucao:fail read existing frequenta");
-//		}
-//	}
-//
-//	/** Test of delete method, of class ServidorPersistente.OJB.FrequentaOJB. */
-//	public void testDeleteFrequenta() {
-//
-//		IStudent student = null;
-//
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			student =
-//				persistentStudent.readByNumero(
-//					new Integer(800),
-//					new TipoCurso(TipoCurso.LICENCIATURA));
-//			IDisciplinaExecucao executionCourse = null;
-//
-//			executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCI",
-//					"2002/2003",
-//					"LEIC");
-//			assertNotNull(executionCourse);
-//
-//			IFrequenta attend =
-//				persistentAttend.readByAlunoAndDisciplinaExecucao(
-//					student,
-//					executionCourse);
-//			assertNotNull(attend);
-//
-//			persistentAttend.delete(attend);
-//			persistentSupport.confirmarTransaccao();
-//
-//			persistentSupport.iniciarTransaccao();
-//			IFrequenta attendTemp =
-//				persistentAttend.readByAlunoAndDisciplinaExecucao(
-//					student,
-//					executionCourse);
-//			persistentSupport.confirmarTransaccao();
-//
-//			assertNull(attendTemp);
-//		} catch (ExcepcaoPersistencia ex) {
-//			fail("testDeleteFrequenta");
-//		}
-//	}
-//
-//	/** Test of deleteAll method, of class ServidorPersistente.OJB.FrequentaOJB. */
-//	public void testDeleteAll() {
-//		IStudent student = null;
-//
-//		try {
-//
-//			// Check that something exists
-//			persistentSupport.iniciarTransaccao();
-//			student =
-//				persistentStudent.readByNumero(
-//					new Integer(800),
-//					new TipoCurso(TipoCurso.LICENCIATURA));
-//			IDisciplinaExecucao executionCourse = null;
-//
-//			executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCI",
-//					"2002/2003",
-//					"LEIC");
-//			assertNotNull(executionCourse);
-//
-//			IFrequenta attend =
-//				persistentAttend.readByAlunoAndDisciplinaExecucao(
-//					student,
-//					executionCourse);
-//			assertNotNull(attend);
-//			persistentSupport.confirmarTransaccao();
-//
-//			// Delete All
-//			// TODO : Figure out why test fails.
-//			//        Not critical because this operation should never
-//			//        be performed in any real-life situation
-//			//      persistentSupport.iniciarTransaccao();
-//			//      persistentAttend.deleteAll();
-//			//      persistentSupport.confirmarTransaccao();
-//
-//		} catch (ExcepcaoPersistencia ex) {
-//			fail("testDeleteAllFrequenta");
-//		}
-//
-//	}
-//
-//	public void testReadByExecutionCourse() {
-//
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//
-//			// Check one that exists  
-//			IDisciplinaExecucao executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCI",
-//					"2002/2003",
-//					"LEIC");
-//			assertNotNull(executionCourse);
-//
-//			List attendList =
-//				persistentAttend.readByExecutionCourse(executionCourse);
-//			assertNotNull(attendList);
-//			assertEquals(attendList.size(), 1);
-//
-//			// Check one that doesn't exist  
-//
-//			executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"PO",
-//					"2002/2003",
-//					"MEEC");
-//			assertNotNull(executionCourse);
-//
-//			attendList = null;
-//			attendList =
-//				persistentAttend.readByExecutionCourse(executionCourse);
-//			assertNotNull(attendList);
-//			assertEquals(attendList.size(), 0);
-//
-//			persistentSupport.confirmarTransaccao();
-//
-//		} catch (ExcepcaoPersistencia ex) {
-//			fail("testDeleteFrequenta");
-//		}
-//	}
-//
-//	public void testCountStudentsAttendingExecutionCourse() {
-//
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			// Check one that exists
-//			IDisciplinaExecucao executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"TFCI",
-//					"2002/2003",
-//					"LEIC");
-//			assertNotNull(executionCourse);
-//
-//			Integer result = persistentAttend.countStudentsAttendingExecutionCourse(executionCourse);
-//			assertEquals(new Integer(1), result);
-//
-//			// Check one that doesn't exist  
-//			executionCourse =
-//				persistentExecutionCourse
-//					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-//					"PO",
-//					"2002/2003",
-//					"MEEC");
-//			assertNotNull(executionCourse);
-//
-//			result = persistentAttend.countStudentsAttendingExecutionCourse(executionCourse);
-//			assertEquals(new Integer(0), result);
-//
-//			persistentSupport.confirmarTransaccao();
-//
-//		} catch (ExcepcaoPersistencia ex) {
-//			fail("testDeleteFrequenta");
-//		}
-//	}
+	
+
+	/** Test of delete method, of class ServidorPersistente.OJB.MarkOJB. */
+	public void testDeleteMark() {
+		System.out.println("test-3");
+		IFrequenta attend = null;
+		IStudent student = null;
+		IExam exam = null;
+		IMark mark = null;
+		ISala sala = null;
+		IExecutionPeriod executionPeriod = null;
+		IDisciplinaExecucao executionCourse = null;
+		
+		try {
+		//	read existing Exam
+			persistentSupport.iniciarTransaccao();
+			sala = persistentSala.readByName("Ga3");
+			assertNotNull(persistentSala);
+			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+			assertNotNull(executionPeriod);	
+			List examList = (List) persistentExam.readBy(sala, executionPeriod);
+			assertTrue(examList.size()== 1 );
+			// read an existing Attend
+			student =persistentStudent.readByNumero(
+							new Integer(600),
+							new TipoCurso(TipoCurso.LICENCIATURA));
+			assertNotNull(student);
+			// read execution course
+			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+					"TFCII",
+					"2002/2003",
+					"MEEC");
+			assertNotNull(executionCourse);
+			attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,executionCourse);
+			assertNotNull(attend);
+			mark =  persistentMark.readBy(((IExam) examList.get(0)),attend);
+			assertNotNull(mark);	
+			persistentMark.delete(mark);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testDeleteFrequenta");
+		}
+	}
+
+	/** Test of Write method, of class ServidorPersistente.OJB.MarkOJB. */
+	public void testLockWrite() {
+		System.out.println("test-4");
+		IFrequenta attend = null;
+		IStudent student = null;
+		IExam exam = null;
+		IMark mark = null;
+		ISala sala = null;
+		IExecutionPeriod executionPeriod = null;
+		IDisciplinaExecucao executionCourse = null;
+		List examList = null;
+		try{
+		
+		persistentSupport.iniciarTransaccao();
+		sala = persistentSala.readByName("Ga3");
+		assertNotNull(persistentSala);
+		executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		assertNotNull(executionPeriod);	
+		examList = (List) persistentExam.readBy(sala, executionPeriod);
+		assertTrue(examList.size()== 1 );
+		// read an existing Attend
+		student =persistentStudent.readByNumero(
+					new Integer(600),
+					new TipoCurso(TipoCurso.LICENCIATURA));
+		assertNotNull(student);
+		// read execution course
+		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+				"TFCII",
+				"2002/2003",
+				"MEEC");
+		assertNotNull(executionCourse);
+		attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,executionCourse);
+		assertNotNull(attend);
+		}catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testLockWrite: write non Existing");
+		}
+		mark =  new Mark(new Integer(0));
+		mark.setAttend(attend);
+		mark.setExam((IExam)examList.get(0));
+		mark.setMark("16");
+		mark.setPublishedMark("");
+		try {
+			persistentSupport.iniciarTransaccao();
+			persistentMark.lockWrite(mark);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testLockWrite: write an invalid mark");
+		}
+
+		IMark markRead = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			markRead = persistentMark.readBy((IExam) examList.get(0), attend);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testEscreverNota: unexpected exception reading");
+		}
+		assertNotNull(markRead);
+		assertEquals(markRead.getMark(),mark.getMark());
+		//assertEquals(markRead.getPublishedMark(),mark.getPublishedMark());
+		assertEquals(markRead.getAttend(),mark.getAttend());
+		assertEquals(markRead.getExam(),mark.getExam());
+		
+	
+		}
+
 
 }
