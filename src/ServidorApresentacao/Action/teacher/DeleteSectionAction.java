@@ -10,6 +10,7 @@ package ServidorApresentacao.Action.teacher;
  * @author lmac1
  *
  */
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,7 @@ public class DeleteSectionAction extends FenixAction{
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 		InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		
+		InfoSection infoSuperiorSection = infoSection.getSuperiorInfoSection();
 		
 		
 		try {
@@ -59,14 +60,16 @@ public class DeleteSectionAction extends FenixAction{
 			Boolean result = (Boolean) manager.executar(userView, "DeleteSection", deleteSectionArguments);
 
 			session.removeAttribute(SessionConstants.INFO_SECTION);
-			session.removeAttribute("Sections");
+			session.removeAttribute(SessionConstants.SECTIONS);
 			
 			InfoSite infoSite = infoSection.getInfoSite();
 			Object readSectionsArguments[] = { infoSite };
 			List allInfoSections = (List) manager.executar(null, "ReadSections", readSectionsArguments);
-			session.setAttribute("Sections", allInfoSections);	
+			
+			Collections.sort(allInfoSections);
+			session.setAttribute(SessionConstants.SECTIONS, allInfoSections);	
 		
-		    InfoSection infoSuperiorSection = infoSection.getSuperiorInfoSection();
+		    
         	if(infoSuperiorSection == null) { 
     
 					return mapping.findForward("AccessSiteManagement");		

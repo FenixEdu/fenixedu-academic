@@ -1,5 +1,5 @@
 /*
- * Created on 7/Abr/2003
+ * Created on 8/Abr/2003
  *
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
@@ -25,12 +25,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 
-public class DeleteSectionActionTest extends TestCasePresentationTeacherPortal {
+public class DeleteSectionActionWithSuperiorSectionTest extends TestCasePresentationTeacherPortal {
 
 	/**
 	 * @param testName
 	 */
-	public DeleteSectionActionTest(String testName) {
+	public DeleteSectionActionWithSuperiorSectionTest(String testName) {
 		super(testName);
 	}
 
@@ -59,7 +59,7 @@ public class DeleteSectionActionTest extends TestCasePresentationTeacherPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "AccessSiteManagement";
+		return "AccessSectionManagement";
 	}
 
 
@@ -76,16 +76,18 @@ public class DeleteSectionActionTest extends TestCasePresentationTeacherPortal {
 		
 		IDisciplinaExecucao executionCourse = sp.getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
 		ISite site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
-	    ISection section = sp.getIPersistentSection().readBySiteAndSectionAndName(site, null, "seccao1dePO");
-	    InfoSection infoSection = Cloner.copyISection2InfoSection(section);
+		ISection superiorSection =sp.getIPersistentSection().readBySiteAndSectionAndName(site, null, "seccao1dePO");
+		 
+		ISection section = sp.getIPersistentSection().readBySiteAndSectionAndName(site, superiorSection, "subSeccao1dePO");
+		InfoSection infoSection = Cloner.copyISection2InfoSection(section);
 		sp.confirmarTransaccao(); 
 	    
-	    result.put(SessionConstants.INFO_SECTION, infoSection);
+		result.put(SessionConstants.INFO_SECTION, infoSection);
 	
-      }catch (ExcepcaoPersistencia exception) {
+	  }catch (ExcepcaoPersistencia exception) {
 	  exception.printStackTrace(System.out);
 	  fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
-   	}
+	}
 
 		return result;
 	}
