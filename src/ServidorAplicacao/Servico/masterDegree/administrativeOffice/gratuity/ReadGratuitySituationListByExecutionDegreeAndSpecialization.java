@@ -41,10 +41,6 @@ import Util.Specialization;
  * @author Tânia Pousão
  *  
  */
-/**
- * @author Tânia Pousão
- *  
- */
 public class ReadGratuitySituationListByExecutionDegreeAndSpecialization implements IService
 {
 	/**
@@ -302,7 +298,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					{
 						InfoEnrolment infoEnrolment = (InfoEnrolment) iterCourse.next();
 						totalToPay
-							+= infoEnrolment.getInfoCurricularCourseScope().getCredits().doubleValue()
+							+= infoEnrolment.getInfoCurricularCourse().getCredits().doubleValue()
 							* infoGratuitySituation.getInfoGratuityValues().getCreditValue().doubleValue();
 					}
 					infoGratuitySituation.setRemainingValue(new Double(totalToPay));
