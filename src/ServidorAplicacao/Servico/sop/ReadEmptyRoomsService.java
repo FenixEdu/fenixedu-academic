@@ -90,7 +90,8 @@ public class ReadEmptyRoomsService implements IServico {
 			
 			IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 			
-			List lessonList = lessonDAO.readLessonsInPeriod(lesson);
+			//List lessonList = lessonDAO.readLessonsInPeriod(lesson);
+			List lessonList = lessonDAO.readLessonsInBroadPeriodInAnyRoom(lesson);
 			
 			List infoLessonList = new ArrayList();
 						
@@ -108,7 +109,7 @@ public class ReadEmptyRoomsService implements IServico {
 			throw new FenixServiceException(e);
 		} 
 	}
-	
+
 	private class RoomLessonPredicate implements Predicate{
 		public RoomLessonPredicate(){
 		}
