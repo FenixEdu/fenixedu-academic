@@ -4,6 +4,8 @@
  */
 package Dominio;
 
+import java.util.List;
+
 /**
  * @author Ivo Brandão
  */
@@ -12,18 +14,26 @@ public class Site implements ISite {
 	private Integer internalCode;
 	private IDisciplinaExecucao executionCourse;
 	private Integer keyExecutionCourse;
+	private List sections;
+	private ISection initialSection;
+	private Integer keyInitialSection;
+	private List responsibleTeachers;
+	private List lecturingTeachers;
+	private List announcements;
+	/** 
+	 * Construtor
+	 */
+	public Site() {
+	}
 
 	/** 
 	 * Construtor
 	 */
-	public Site() {}
-
-	/** 
-	 * Construtor
-	 */
-	public Site(Integer internalCode, IDisciplinaExecucao executionCourse, 
+	public Site(
+		Integer internalCode,
+		IDisciplinaExecucao executionCourse,
 		Integer keyExecutionCourse) {
-			
+
 		this.internalCode = internalCode;
 		this.executionCourse = executionCourse;
 		this.keyExecutionCourse = keyExecutionCourse;
@@ -80,9 +90,86 @@ public class Site implements ISite {
 	public boolean equals(Object arg0) {
 		boolean result = false;
 		if (arg0 instanceof ISite) {
-			result = (getExecutionCourse().equals(((ISite) arg0).getExecutionCourse()));
-		} 
+			result =
+				(getExecutionCourse()
+					.equals(((ISite) arg0).getExecutionCourse()));
+		}
 		return result;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getAnnouncements() {
+		return announcements;
+	}
+
+	/**
+	 * @return ISection
+	 */
+	public ISection getInitialSection() {
+		return initialSection;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getLecturingTeachers() {
+		return lecturingTeachers;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getResponsibleTeachers() {
+		return responsibleTeachers;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getSections() {
+		return sections;
+	}
+
+	/**
+	 * Sets the announcements.
+	 * @param announcements The announcements to set
+	 */
+	public void setAnnouncements(List announcements) {
+		this.announcements = announcements;
+	}
+
+	/**
+	 * Sets the initialSection.
+	 * @param initialSection The initialSection to set
+	 */
+	public void setInitialSection(ISection initialSection) {
+		this.initialSection = initialSection;
+	}
+
+	/**
+	 * Sets the lecturingTeachers.
+	 * @param lecturingTeachers The lecturingTeachers to set
+	 */
+	public void setLecturingTeachers(List lecturingTeachers) {
+		this.lecturingTeachers = lecturingTeachers;
+	}
+
+	/**
+	 * Sets the responsibleTeachers.
+	 * @param responsibleTeachers The responsibleTeachers to set
+	 */
+	public void setResponsibleTeachers(List responsibleTeachers) {
+		this.responsibleTeachers = responsibleTeachers;
+	}
+
+	/**
+	 * Sets the sections.
+	 * @param sections The sections to set
+	 */
+	public void setSections(List sections) {
+		this.sections = sections;
 	}
 
 }

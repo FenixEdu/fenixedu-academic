@@ -4,6 +4,8 @@
  */
 package Dominio;
 
+import java.util.List;
+
 /**
  * @author Ivo Brandão
  */
@@ -11,5 +13,10 @@ public interface ISite {
 
 	public IDisciplinaExecucao getExecutionCourse();
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
+	List getSections();
+	ISection getInitialSection();
+	List getResponsibleTeachers();
+	List getLecturingTeachers();
+	List getAnnouncements();
 
 }

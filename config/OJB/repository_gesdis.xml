@@ -19,6 +19,10 @@
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
+	 <field-descriptor id="3"
+         name="keyInitialSection"
+         column="KEY_INITIAL_SECTION"
+         jdbc-type="INTEGER"/>
 	
     <reference-descriptor
          name="executionCourse"
@@ -26,8 +30,33 @@
          proxy="true"
     >
 	<foreignkey field-id-ref="2"/>
+	
+	</reference-descriptor>
+    <reference-descriptor
+         name="initialSection"
+         class-ref="Dominio.Section"
+         proxy="true"
+      >
+    <foreignkey field-id-ref="3"/>
     </reference-descriptor>
     
+    <collection-descriptor
+         name="sections"
+         element-class-ref="Dominio.Section"
+         orderby="order"
+         sort="ASC"
+      >
+         <inverse-foreignkey field-id-ref="4"/>
+      </collection-descriptor>
+      
+      <collection-descriptor
+         name="announcements"
+         element-class-ref="Dominio.Announcement"
+         orderby="date"
+         sort="DESC"
+      >
+         <inverse-foreignkey field-id-ref="6"/>
+      </collection-descriptor>  
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
