@@ -32,7 +32,8 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class SaveTeachersBodyAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException,
+            FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
@@ -42,7 +43,7 @@ public class SaveTeachersBodyAction extends FenixAction {
         Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
         List respTeachersIds = Arrays.asList(responsibleTeachersIds);
         List profTeachersIds = Arrays.asList(professorShipTeachersIds);
-        //TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
+        // TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
         Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
         Boolean result;
 
@@ -52,9 +53,6 @@ public class SaveTeachersBodyAction extends FenixAction {
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping
                     .findForward("readCurricularCourse"));
-
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
         }
 
         if (!result.booleanValue())
