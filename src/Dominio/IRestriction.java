@@ -13,11 +13,11 @@ public interface IRestriction {
 	/**
 	 * @return
 	 */
-	public abstract Precedence getPrecedence();
+	public abstract IPrecedence getPrecedence();
 	/**
 	 * @param precedence
 	 */
-	public abstract void setPrecedence(Precedence precedence);
+	public abstract void setPrecedence(IPrecedence precedence);
 	
 
 	/**

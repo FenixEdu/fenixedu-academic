@@ -11,9 +11,9 @@ public interface ICurricularCourseDoneRestriction extends IRestriction{
 	/**
 	 * @return
 	 */
-	public abstract CurricularCourse getPrecedentCurricularCourse();
+	public abstract ICurricularCourse getPrecedentCurricularCourse();
 	/**
 	 * @param course
 	 */
-	public abstract void setPrecedentCurricularCourse(CurricularCourse course);
+	public abstract void setPrecedentCurricularCourse(ICurricularCourse course);
 }
