@@ -131,8 +131,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         String districtOfBirth = (String) totalForm.get("districtOfBirth");
         String address = (String) totalForm.get("address");
         String area = (String) totalForm.get("area");
-        Integer primaryAreaCode = (Integer) totalForm.get("primaryAreaCode");
-        Integer secondaryAreaCode = (Integer) totalForm.get("secondaryAreaCode");
+        String areaCode = (String) totalForm.get("areaCode");
         String areaOfAreaCode = (String) totalForm.get("areaOfAreaCode");
         String parishOfResidence = (String) totalForm.get("parishOfResidence");
         String districtSubdivisionOfResidence = (String) totalForm.get("districtSubdivisionOfResidence");
@@ -173,7 +172,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         infoPerson.setDistritoNaturalidade(districtOfBirth);
         infoPerson.setMorada(address);
         infoPerson.setLocalidade(area);
-        infoPerson.setCodigoPostal(primaryAreaCode.toString() + "-" + secondaryAreaCode.toString());
+        infoPerson.setCodigoPostal(areaCode);
         infoPerson.setLocalidadeCodigoPostal(areaOfAreaCode);
         infoPerson.setFreguesiaMorada(parishOfResidence);
         infoPerson.setConcelhoMorada(districtSubdivisionOfResidence);
