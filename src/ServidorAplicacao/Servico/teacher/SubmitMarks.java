@@ -157,7 +157,7 @@ public class SubmitMarks implements IServico
             List fileList = submitMarksAndCreateFiles(enrolmentEvaluationTableByDegree);
 
             //Send the files via FPT            
-            Ftp.enviarFicheiros("/IstFtpServerConfig.properties", fileList, "notas/");
+            Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", fileList, "notas/");
 
             return createSiteView(site, evaluation, infoMarksList, notEnrolledList, mestradoList);
         }
