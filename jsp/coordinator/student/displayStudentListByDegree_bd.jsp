@@ -5,18 +5,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
-  <logic:present name="infoExecutionDegree">
-  	<table>
-  		<tr>
-	  		<td width="100px"><strong><bean:message key="label.degree" />:</strong></td>
-	  		<td><bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/></td>
-  		</tr>
-  		<tr>
-	  		<td width="100px"><strong><bean:message key="label.masterDegree.administrativeOffice.executionYear" />:</strong></td>
-	  		<td><bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/></td>
-  		</tr>
-  	</table>
-  </logic:present>
   <bean:define id="studentList" name="<%= SessionConstants.STUDENT_LIST %>" scope="request" />
   <bean:define id="link">/studentCurriculum.do?method=getCurriculum<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
   	<p>

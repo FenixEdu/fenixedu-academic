@@ -2,33 +2,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
  <%@ page import="java.util.List" %>
 <%@ page import="Util.EnrolmentState" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
 </logic:present>
-  <logic:present name="infoCurricularCourse">
-  	<table>
-  		<tr>
-	  		<td>
-				<strong><bean:message key="label.degree" />:</strong>
-	  		</td>
-	  		<td>
-	  			<bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-
-	  		</td>
-  		</tr>
-  		<tr>
-	  		<td>
-	  			<strong><bean:message key="property.aula.disciplina" />:</strong>
-	  		</td>
-	  		<td>
-	  			<bean:write name="infoCurricularCourse" property="name"/>
-	  		</td>
-  		</tr>
-  	</table>
-  </logic:present>
   <span class="error"><html:errors/></span>
   <bean:define id="enrolmentList" name="enrolment_list" scope="request" />
   <bean:define id="link">/studentCurriculum.do?method=getCurriculum<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
@@ -47,7 +27,11 @@
     		</tr>
      	<logic:iterate id="enrolment" name="enrolmentList">
         	<bean:define id="studentLink">
-        		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.idInternal"/>
+        		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.idInternal"/>&amp;
+				<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
+					<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+		    			&amp;executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&amp;
+	    		</logic:present>
         	</bean:define>
         <tr>
         	<td class="listClasses">

@@ -16,13 +16,10 @@
 						<strong><bean:message key="label.masterDegree.coordinator.curricularPlan"/></strong>
 						<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
 					</p>
-					<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
-						<bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT %>" scope="session"/>
-					<p>	
-						<strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>
-						<bean:write name="candidates" />
-					</p>
-					</logic:equal>
+					<logic:present name="infoCurricularCourse">
+						<strong><bean:message key="property.aula.disciplina" />:</strong>
+						<bean:write name="infoCurricularCourse" property="name"/>
+					</logic:present>
 				</logic:present>
 		</td>
 	</tr>

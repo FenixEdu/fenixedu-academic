@@ -122,5 +122,17 @@
 	<definition name="df.page.showStudentCurriculum" extends="definition.coordinator.two-column.extra-menu.student" >
         <put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>	
-	
+
+	<definition name="df.page.displayStudentListByDegree" extends="definition.coordinator.two-column">
+		 <put name="body" value="/coordinator/student/displayStudentListByDegree_bd.jsp" />
+		 <put name="body-context" value="/coordinator/simpleContext.jsp" />
+	</definition>
+	<definition name="df.page.displayStudentListByCourse" extends="definition.coordinator.two-column">
+		 <put name="body" value="/coordinator/student/displayStudentListByCourse_bd.jsp" />
+		 <put name="body-context" value="/coordinator/simpleContext.jsp" />
+	</definition>
+	<definition name="df.page.chooseCurricularCourse" extends="definition.coordinator.two-column">
+		 <put name="body" value="/coordinator/student/chooseCurricularCourse_bd.jsp" />
+		 <put name="body-context" value="/coordinator/simpleContext.jsp" />
+	</definition>
 </tiles-definitions>

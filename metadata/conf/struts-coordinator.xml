@@ -207,7 +207,7 @@
 
       <action path="/index"
       	      type="ServidorApresentacao.Action.masterDegree.coordinator.ReadCoordinatedDegreesAction">
-      	  <forward name="ChooseDegree" path="/chooseDegreePage.jsp"/>      	      
+      	  <forward name="ChooseDegree" path="/chooseDegreePage.jsp"/>
           <forward name="Success" path="/indexCoordinator.jsp"/>      	      
       </action> 
 
@@ -249,7 +249,7 @@
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
       	  <forward name="ViewList" path="/candidate/selectCandidateFromList.jsp"/>
       	  <forward name="ActionReady" path="/candidate/visualizeCandidate.jsp"/>
-      	  <forward name="ShowCourseList" path="/student/chooseCurricularCourse.jsp"/>
+      	  <forward name="ShowCourseList" path="df.page.chooseCurricularCourse"/>
       	  
       </action>
 
@@ -264,7 +264,7 @@
      		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
-	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/> 
+	         <forward name="PrepareSuccess" path="df.page.displayStudentListByDegree"/> 
 	  </action>
 
  	  <!-- Action for the Coordinator to List the Students by CurricularCourse -->
@@ -277,8 +277,8 @@
 		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
 			  
-	         <forward name="ChooseSuccess" path="/student/displayStudentListByCourse.jsp"/>
-	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/> 
+	         <forward name="ChooseSuccess" path="df.page.displayStudentListByCourse"/>
+	         <forward name="PrepareSuccess" path="df.page.displayStudentListByDegree"/> 
 	         <forward name="NoStudents" path="/studentListByDegree.do?method=getCurricularCourses"/> 
    	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 	         
 	  </action>
