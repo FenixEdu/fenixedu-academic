@@ -16,19 +16,25 @@ import org.apache.slide.common.SlideException;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
+import DataBeans.InfoClass;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoCurriculum;
+import DataBeans.InfoCurriculumWithInfoCurricularCourse;
+import DataBeans.InfoCurriculumWithInfoCurricularCourseAndInfoDegree;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExam;
+import DataBeans.InfoExamWithRoomOccupations;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
+import DataBeans.InfoLesson;
 import DataBeans.InfoSection;
 import DataBeans.InfoSectionWithAll;
 import DataBeans.InfoShift;
+import DataBeans.InfoShiftWithInfoLessons;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteBibliography;
@@ -57,9 +63,11 @@ import DataBeans.InfoSiteStudentInformation;
 import DataBeans.InfoSiteTeachers;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
+import DataBeans.InfoStudentGroupAttendWithAllUntilPersons;
+import DataBeans.InfoStudentGroupWithAllUntilLessons;
 import DataBeans.InfoTeacher;
+import DataBeans.InfoTeacherWithPerson;
 import DataBeans.util.CMSUtils;
-import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.BibliographicReference;
 import Dominio.CurricularCourse;
@@ -244,7 +252,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             Iterator iterator = allSections.iterator();
             infoSectionsList = new ArrayList(allSections.size());
             while (iterator.hasNext()) {
-                //CLONER
+                
                 //infoSectionsList.add(Cloner
                         //.copyISection2InfoSection((ISection) iterator.next()));
                 infoSectionsList.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));                
@@ -254,7 +262,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             component.setTitle(site.getExecutionCourse().getNome());
             component.setMail(site.getMail());
             component.setSections(infoSectionsList);
-            //CLONER
+            
             //InfoExecutionCourse executionCourse = (InfoExecutionCourse) Cloner
                     //.get(site.getExecutionCourse());
             InfoExecutionCourse executionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(site.getExecutionCourse());
@@ -270,7 +278,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                     public Object transform(Object input) {
                         ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                        //CLONER
+                        
                         //InfoCurricularCourse infoCurricularCourse = Cloner
                                 //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
@@ -304,7 +312,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         component.setInitialStatement(site.getInitialStatement());
         component.setIntroduction(site.getIntroduction());
         component.setIdInternal(site.getIdInternal());
-        //CLONER
+        
         //component.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(site
                 //.getExecutionCourse()));
         component.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
@@ -330,7 +338,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 while (iterAnnouncements.hasNext()) {
                     IAnnouncement announcement = (IAnnouncement) iterAnnouncements
                             .next();
-                    //CLONER
+                    
                     //infoAnnouncementsList.add(Cloner
                             //.copyIAnnouncement2InfoAnnouncement(announcement));
                     infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(announcement));                    
@@ -358,8 +366,9 @@ public class TeacherAdministrationSiteComponentBuilder {
             IAnnouncement iAnnouncement = (IAnnouncement) sp
                     .getIPersistentAnnouncement().readByOID(Announcement.class,
                             announcementCode);
-            InfoAnnouncement infoAnnouncement = Cloner
-                    .copyIAnnouncement2InfoAnnouncement(iAnnouncement);
+            //InfoAnnouncement infoAnnouncement = Cloner
+                    //.copyIAnnouncement2InfoAnnouncement(iAnnouncement);
+            InfoAnnouncement infoAnnouncement = InfoAnnouncement.newInfoFromDomain(iAnnouncement);
 
             component.setCreationDate(infoAnnouncement.getCreationDate());
             component.setIdInternal(infoAnnouncement.getIdInternal());
@@ -397,10 +406,12 @@ public class TeacherAdministrationSiteComponentBuilder {
                         .next();
                 ICurriculum curriculum = persistentCurriculum
                         .readCurriculumByCurricularCourse(curricularCourse);
-
+                
                 if (curriculum != null) {
-                    infoCurriculums.add(Cloner
-                            .copyICurriculum2InfoCurriculum(curriculum));
+                    
+                    //infoCurriculums.add(Cloner
+                            //.copyICurriculum2InfoCurriculum(curriculum));
+                    infoCurriculums.add(InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum));
                 }
             }
             component.setInfoCurriculums(infoCurriculums);
@@ -438,11 +449,13 @@ public class TeacherAdministrationSiteComponentBuilder {
                         .readCurriculumByCurricularCourse(curricularCourse);
 
                 if (curriculum != null) {
-                    InfoCurriculum infoCurriculum = Cloner
-                            .copyICurriculum2InfoCurriculum(curriculum);
-                    infoCurriculum
-                            .setInfoCurricularCourse(Cloner
-                                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+                    
+                    //InfoCurriculum infoCurriculum = Cloner
+                            //.copyICurriculum2InfoCurriculum(curriculum);
+                    //infoCurriculum
+                    //.setInfoCurricularCourse(Cloner
+                            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+                    InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
                     infoCurriculums.add(infoCurriculum);
                 }
             }
@@ -483,8 +496,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                         .readCurriculumByCurricularCourse(curricularCourse);
 
                 if (curriculum != null) {
-                    infoEvaluationMethods.add(Cloner
-                            .copyICurriculum2InfoCurriculum(curriculum));
+                    //infoEvaluationMethods.add(Cloner
+                            //.copyICurriculum2InfoCurriculum(curriculum));
+                    infoEvaluationMethods.add(InfoCurriculum.newInfoFromDomain(curriculum));
                 }
             }
             component.setInfoEvaluations(infoEvaluationMethods);
@@ -511,8 +525,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                     .readByIdExecutionCourse(executionCourse);
 
             if (evaluationMethod != null) {
-                component = Cloner
-                        .copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod);
+                
+                //component = Cloner
+                        //.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod);
+                component = InfoEvaluationMethod.newInfoFromDomain(evaluationMethod);
             }
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -544,11 +560,12 @@ public class TeacherAdministrationSiteComponentBuilder {
             InfoCurriculum infoCurriculum = null;
 
             if (curriculum != null) {
-                infoCurriculum = Cloner
-                        .copyICurriculum2InfoCurriculum(curriculum);
-                infoCurriculum
-                        .setInfoCurricularCourse(Cloner
-                                .copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+                //infoCurriculum = Cloner
+                        //.copyICurriculum2InfoCurriculum(curriculum);
+                //infoCurriculum
+                        //.setInfoCurricularCourse(Cloner
+                                //.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+                infoCurriculum = InfoCurriculumWithInfoCurricularCourseAndInfoDegree.newInfoFromDomain(curriculum);
             }
 
             return infoCurriculum;
@@ -585,9 +602,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                 while (iterator.hasNext()) {
                     IBibliographicReference bibRef = (IBibliographicReference) iterator
                             .next();
-
-                    InfoBibliographicReference infoBibRef = Cloner
-                            .copyIBibliographicReference2InfoBibliographicReference(bibRef);
+                    
+                    //InfoBibliographicReference infoBibRef = Cloner
+                            //.copyIBibliographicReference2InfoBibliographicReference(bibRef);
+                    InfoBibliographicReference infoBibRef = InfoBibliographicReference.newInfoFromDomain(bibRef);
                     infoBibRefs.add(infoBibRef);
 
                 }
@@ -616,9 +634,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                     .getIPersistentBibliographicReference().readByOID(
                             BibliographicReference.class,
                             bibliographicReferenceCode);
-            InfoBibliographicReference infoBibliographicReference = Cloner
-                    .copyIBibliographicReference2InfoBibliographicReference(iBibliographicReference);
-
+            //InfoBibliographicReference infoBibliographicReference = Cloner
+                    //.copyIBibliographicReference2InfoBibliographicReference(iBibliographicReference);
+            InfoBibliographicReference infoBibliographicReference = InfoBibliographicReference.newInfoFromDomain(iBibliographicReference);
+                
             component.setTitle(infoBibliographicReference.getTitle());
             component.setAuthors(infoBibliographicReference.getAuthors());
             component.setReference(infoBibliographicReference.getReference());
@@ -655,8 +674,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                 while (iter.hasNext()) {
                     IProfessorship professorship = (IProfessorship) iter.next();
                     ITeacher teacher = professorship.getTeacher();
-                    InfoTeacher infoTeacher = Cloner
-                            .copyITeacher2InfoTeacher(teacher);
+                    //InfoTeacher infoTeacher = Cloner
+                            //.copyITeacher2InfoTeacher(teacher);
+                    InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
                     infoTeachers.add(infoTeacher);
                 }
 
@@ -676,8 +696,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                         IResponsibleFor responsibleFor = (IResponsibleFor) iter2
                                 .next();
                         ITeacher teacher = responsibleFor.getTeacher();
-                        InfoTeacher infoTeacher = Cloner
-                                .copyITeacher2InfoTeacher(teacher);
+                        //InfoTeacher infoTeacher = Cloner
+                                //.copyITeacher2InfoTeacher(teacher);
+                        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
                         infoResponsibleTeachers.add(infoTeacher);
                     }
 
@@ -726,15 +747,18 @@ public class TeacherAdministrationSiteComponentBuilder {
             IEvaluation evaluation = (IEvaluation) iter.next();
 
             if (evaluation instanceof IExam) {
-                infoEvaluations.add(Cloner
-                        .copyIEvaluation2InfoEvaluation(evaluation));
+                //infoEvaluations.add(Cloner
+                        //.copyIEvaluation2InfoEvaluation(evaluation));
+                infoEvaluations.add(InfoEvaluation.newInfoFromDomain(evaluation));
             } else if (evaluation instanceof IFinalEvaluation) {
                 //hasFinalEvaluation = true;
-                infoFinalEvaluations.add(Cloner
-                        .copyIEvaluation2InfoEvaluation(evaluation));
+                //infoFinalEvaluations.add(Cloner
+                        //.copyIEvaluation2InfoEvaluation(evaluation));
+                infoFinalEvaluations.add(InfoEvaluation.newInfoFromDomain(evaluation));
             } else if (evaluation instanceof IOnlineTest) {
-                infoOnlineTests.add(Cloner
-                        .copyIEvaluation2InfoEvaluation(evaluation));
+                infoOnlineTests.add(InfoEvaluation.newInfoFromDomain(evaluation));
+                //infoOnlineTests.add(Cloner
+                        //.copyIEvaluation2InfoEvaluation(evaluation));                
             }
         }
 
@@ -763,7 +787,8 @@ public class TeacherAdministrationSiteComponentBuilder {
         Iterator iter = exams.iterator();
         while (iter.hasNext()) {
             IExam exam = (IExam) iter.next();
-            InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+            //InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+            InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
             infoExams.add(infoExam);
         }
         component.setInfoExams(infoExams);
@@ -792,7 +817,8 @@ public class TeacherAdministrationSiteComponentBuilder {
                 IPersistentExamStudentRoom persistentExamStudentRoom = sp
                         .getIPersistentExamStudentRoom();
                 List enrolledStudents = persistentExamStudentRoom.readBy(exam);
-                InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+                //InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+                InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
                 infoExam.setEnrolledStudents(new Integer(enrolledStudents
                         .size()));
                 List executionCourses = exam.getAssociatedExecutionCourses();
@@ -800,9 +826,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                 Iterator iter = executionCourses.iterator();
                 while (iter.hasNext()) {
                     IExecutionCourse element = (IExecutionCourse) iter.next();
-                    List attendingStudents = element.getAttendingStudents();
-                    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                            .get(element);
+                    List attendingStudents = element.getAttendingStudents();                    
+                    //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+                            //.get(element);
+                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(element);
                     infoExecutionCourse
                             .setNumberOfAttendingStudents(new Integer(
                                     attendingStudents.size()));
@@ -838,9 +865,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             IEvaluation evaluation = (IEvaluation) persistentEvaluation
                     .readByOID(Evaluation.class, evaluationCode);
-            InfoEvaluation infoEvaluation = Cloner
-                    .copyIEvaluation2InfoEvaluation(evaluation);
-
+            //InfoEvaluation infoEvaluation = Cloner
+                    //.copyIEvaluation2InfoEvaluation(evaluation);
+            InfoEvaluation infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
+            
             if (infoEvaluation instanceof InfoExam) {
                 InfoExam infoExam = (InfoExam) infoEvaluation;
                 InfoExam examComponent = new InfoExam();
@@ -887,8 +915,9 @@ public class TeacherAdministrationSiteComponentBuilder {
             while (iterator.hasNext()) {
                 ISection section = (ISection) iterator.next();
                 if (section.getSuperiorSection() == null) {
-                    infoSectionsList.add(Cloner
-                            .copyISection2InfoSection(section));
+                    //infoSectionsList.add(Cloner
+                            //.copyISection2InfoSection(section));
+                    infoSectionsList.add(InfoSection.newInfoFromDomain(section));
                 }
             }
             Collections.sort(infoSectionsList);
@@ -930,7 +959,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             fileSuport.beginTransaction();
             while (iter.hasNext()) {
                 IItem item = (IItem) iter.next();
-                //CLONER
+                
                 //InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
                 InfoItem infoItem = InfoItem.newInfoFromDomain(item);
                 try {
@@ -949,7 +978,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 throw new FenixServiceException(e2);
             }
         }
-        //CLONER
+        
         //component.setSection(Cloner.copyISection2InfoSection(iSection));
         component.setSection(InfoSectionWithAll.newInfoFromDomain(iSection));
         Collections.sort(infoItemsList);
@@ -983,9 +1012,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                 if (section.getSuperiorSection() != null
                         && section.getSuperiorSection()
-                                .equals(iSuperiorSection)) {
-                    infoSectionsList.add(Cloner
-                            .copyISection2InfoSection(section));
+                                .equals(iSuperiorSection)) {                    
+                    //infoSectionsList.add(Cloner
+                            //.copyISection2InfoSection(section));
+                    infoSectionsList.add(InfoSection.newInfoFromDomain(section));
                 }
             }
             Collections.sort(infoSectionsList);
@@ -1012,7 +1042,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             ISection iSection = (ISection) persistentSection.readByOID(
                     Section.class, sectionCode);
-            InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
+            //InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
+            InfoSection infoSection = InfoSection.newInfoFromDomain(iSection);
             List allSections = persistentSection.readBySite(site);
 
             // build the result of this service
@@ -1024,8 +1055,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                     ISection section = (ISection) iterator.next();
                     if ((section.getSuperiorSection() == null)
                             && !section.getName().equals(iSection.getName())) {
-                        infoSectionsList.add(Cloner
-                                .copyISection2InfoSection(section));
+                        //infoSectionsList.add(Cloner
+                                //.copyISection2InfoSection(section));
+                        infoSectionsList.add(InfoSection.newInfoFromDomain(section));
                     }
                 }
             } else {
@@ -1036,8 +1068,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                                     iSection.getSuperiorSection()
                                             .getIdInternal()))
                             && !section.getName().equals(iSection.getName())) {
-                        infoSectionsList.add(Cloner
-                                .copyISection2InfoSection(section));
+                        //infoSectionsList.add(Cloner
+                                //.copyISection2InfoSection(section));
+                        infoSectionsList.add(InfoSection.newInfoFromDomain(section));
                     }
                 }
             }
@@ -1067,8 +1100,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             IItem iItem = (IItem) persistentItem
                     .readByOID(Item.class, itemCode);
-            InfoItem infoItem = Cloner.copyIItem2InfoItem(iItem);
-
+            //InfoItem infoItem = Cloner.copyIItem2InfoItem(iItem);
+            InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
+            
             ISection iSection = (ISection) persistentSection.readByOID(
                     Section.class, infoItem.getInfoSection().getIdInternal());
             List allItems = persistentItem.readAllItemsBySection(iSection);
@@ -1080,7 +1114,8 @@ public class TeacherAdministrationSiteComponentBuilder {
             while (iterator.hasNext()) {
                 IItem item = (IItem) iterator.next();
                 if (!item.getIdInternal().equals(iItem.getIdInternal())) {
-                    infoItemsList.add(Cloner.copyIItem2InfoItem(item));
+                    //infoItemsList.add(Cloner.copyIItem2InfoItem(item));
+                    infoItemsList.add(InfoItem.newInfoFromDomain(item));
                 }
             }
 
@@ -1103,8 +1138,9 @@ public class TeacherAdministrationSiteComponentBuilder {
         while (iter.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter
                     .next();
-            InfoCurricularCourse infoCurricularCourse = Cloner
-                    .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            //InfoCurricularCourse infoCurricularCourse = Cloner
+                    //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
             infoCurricularCourses.add(infoCurricularCourse);
         }
         return infoCurricularCourses;
@@ -1143,11 +1179,11 @@ public class TeacherAdministrationSiteComponentBuilder {
             Iterator iterator = executionCourseProjects.iterator();
 
             while (iterator.hasNext()) {
-                projects
-                        .add(Cloner
-                                .copyIGroupProperties2InfoGroupProperties((IGroupProperties) iterator
-                                        .next()));
-
+                //projects
+                        //.add(Cloner
+                                //.copyIGroupProperties2InfoGroupProperties((IGroupProperties) iterator
+                                        //.next()));
+                projects.add(InfoGroupProperties.newInfoFromDomain((IGroupProperties) iterator.next()));
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
@@ -1222,7 +1258,8 @@ public class TeacherAdministrationSiteComponentBuilder {
                                     groupProperties, shift);
 
                     infoSiteShift = new InfoSiteShift();
-                    infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
+                    //infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
+                    infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
 
                     if (groupProperties.getGroupMaximumNumber() != null) {
 
@@ -1245,9 +1282,10 @@ public class TeacherAdministrationSiteComponentBuilder {
                         while (iterGroups.hasNext()) {
                             InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
                             InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
-                            infoStudentGroup = Cloner
-                                    .copyIStudentGroup2InfoStudentGroup((IStudentGroup) iterGroups
-                                            .next());
+                            //infoStudentGroup = Cloner
+                                    //.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iterGroups
+                                            //.next());
+                            infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups.next());
                             infoSiteStudentGroup
                                     .setInfoStudentGroup(infoStudentGroup);
                             infoSiteStudentGroupsList.add(infoSiteStudentGroup);
@@ -1327,10 +1365,11 @@ public class TeacherAdministrationSiteComponentBuilder {
         while (iter.hasNext()) {
             infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-            infoStudentGroupAttend = Cloner
-                    .copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter
-                            .next());
-
+            //infoStudentGroupAttend = Cloner
+                    //.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter
+                            //.next());
+            infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons.newInfoFromDomain((IStudentGroupAttend) iter.next());
+                
             infoSiteStudentInformation.setNumber(infoStudentGroupAttend
                     .getInfoAttend().getAluno().getNumber());
 
@@ -1351,8 +1390,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                 "number"));
         component
                 .setInfoSiteStudentInformationList(studentGroupAttendInformationList);
-        component.setInfoStudentGroup(Cloner
-                .copyIStudentGroup2InfoStudentGroup(studentGroup));
+        //component.setInfoStudentGroup(Cloner
+                //.copyIStudentGroup2InfoStudentGroup(studentGroup));
+        component.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons.newInfoFromDomain(studentGroup));
         IGroupProperties groupProperties = studentGroup.getGroupProperties();
         if (groupProperties.getMaximumCapacity() != null) {
 
@@ -1399,7 +1439,8 @@ public class TeacherAdministrationSiteComponentBuilder {
                     "error.impossibleReadGroupProperties");
         }
 
-        return Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
+        //return Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
+        return InfoGroupProperties.newInfoFromDomain(groupProperties);
     }
 
     /**
@@ -1447,10 +1488,13 @@ public class TeacherAdministrationSiteComponentBuilder {
                     ITurno shift = (ITurno) shifts.get(i);
                     if (strategy.checkShiftType(groupProperties, shift)) {
 
+                        //InfoShift infoShift = new InfoShift(shift.getNome(),
+                                //shift.getTipo(), shift.getLotacao(),
+                                //(InfoExecutionCourse) Cloner
+                                        //.get(executionCourse));
                         InfoShift infoShift = new InfoShift(shift.getNome(),
                                 shift.getTipo(), shift.getLotacao(),
-                                (InfoExecutionCourse) Cloner
-                                        .get(executionCourse));
+                                InfoExecutionCourse.newInfoFromDomain(executionCourse));
 
                         List lessons = sp.getITurnoAulaPersistente()
                                 .readByShift(shift);
@@ -1460,18 +1504,22 @@ public class TeacherAdministrationSiteComponentBuilder {
                         List infoClasses = new ArrayList();
 
                         for (int j = 0; j < lessons.size(); j++)
-                            infoLessons.add(Cloner
-                                    .copyILesson2InfoLesson((IAula) lessons
-                                            .get(j)));
+                            //infoLessons.add(Cloner
+                                    //.copyILesson2InfoLesson((IAula) lessons
+                                            //.get(j)));
+	                        infoLessons.add(InfoLesson.newInfoFromDomain((IAula) lessons
+	                                        .get(j)));
 
                         infoShift.setInfoLessons(infoLessons);
 
                         for (int j = 0; j < classesShifts.size(); j++)
-                            infoClasses
-                                    .add(Cloner
-                                            .copyClass2InfoClass(((ITurmaTurno) classesShifts
-                                                    .get(j)).getTurma()));
-
+                            //infoClasses
+                                    //.add(Cloner
+                                            //.copyClass2InfoClass(((ITurmaTurno) classesShifts
+                                                    //.get(j)).getTurma()));
+                        	infoClasses
+                        	.add(InfoClass.newInfoFromDomain(((ITurmaTurno) classesShifts
+                                        .get(j)).getTurma()));
                         infoShift.setInfoClasses(infoClasses);
                         infoShift.setIdInternal(shift.getIdInternal());
 

@@ -5,7 +5,7 @@
 package DataBeans;
 
 import java.util.Calendar;
-
+import Dominio.IRoomOccupation;
 import Util.DiaSemana;
 
 /**
@@ -91,4 +91,24 @@ public class InfoRoomOccupation extends InfoObject {
 		this.infoRoom = infoRoom;
 	}
 
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IRoomOccupation roomOccupation) {
+        super.copyFromDomain(roomOccupation);
+        if(roomOccupation != null) {
+            setDayOfWeek(roomOccupation.getDayOfWeek());
+            setStartTime(roomOccupation.getStartTime());
+            setEndTime(roomOccupation.getEndTime());
+        }
+    }
+    
+    public static InfoRoomOccupation newInfoFromDomain(IRoomOccupation roomOccupation) {
+        InfoRoomOccupation infoRoomOccupation = null;
+        if(roomOccupation != null) {
+            infoRoomOccupation = new InfoRoomOccupation();
+            infoRoomOccupation.copyFromDomain(roomOccupation);
+        }
+        return infoRoomOccupation;
+    }
 }

@@ -116,6 +116,11 @@ public class InfoRoom extends InfoObject implements Comparable {
         super.copyFromDomain(sala);
         if (sala != null) {
             setNome(sala.getNome());
+            setEdificio(sala.getEdificio());
+            setPiso(sala.getPiso());
+            setTipo(sala.getTipo());
+            setCapacidadeNormal(sala.getCapacidadeNormal());
+            setCapacidadeExame(sala.getCapacidadeExame());
         }
     }
 

@@ -77,9 +77,9 @@ public class DistributeStudentsByRoomDispatchAction extends DispatchAction
                 args);
 
         infoSiteExamExecutionCourses = (InfoSiteExamExecutionCourses)siteView.getComponent();
-        InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();
-        
+        InfoExam infoExam = infoSiteExamExecutionCourses.getInfoExam();        
         List executionCourses = infoSiteExamExecutionCourses.getInfoExecutionCourses();
+        
         Iterator iter = executionCourses.iterator();
         int attendStudents = 0;
         while(iter.hasNext())
