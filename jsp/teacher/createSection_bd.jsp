@@ -3,8 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
-<table align="center">
+<h2><bean:message key="message.createRootSection" /></h2>
+<br />
+<table>
 <html:form action="/createSection">
 <html:hidden property="page" value="1"/>	
 <tr>
@@ -33,18 +34,12 @@
 		<html:hidden property="sectionOrder" value="0"/>
 	</logic:notPresent>
 </tr>
-<tr>
-<td>
-	<html:submit styleClass="inputbutton">
-		<bean:message key="button.save"/>
-	</html:submit>
-</td>	
-<td>
-	<html:reset  styleClass="inputbutton">
-		<bean:message key="label.clear"/>
-	</html:reset>			
-</td>
-
-</tr>
-</html:form>
 </table>
+<br />
+<html:submit styleClass="inputbutton">
+<bean:message key="button.save"/>
+</html:submit>
+<html:reset  styleClass="inputbutton">
+<bean:message key="label.clear"/>
+</html:reset>			
+</html:form>
