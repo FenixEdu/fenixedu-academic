@@ -68,7 +68,6 @@
          column="KEY_DEGREE"
          jdbc-type="INTEGER"
          nullable="false"
-         default-fetch="true"
       />
       <field-descriptor id="4"
          name="semestre"

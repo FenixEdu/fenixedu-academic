@@ -67,4 +67,13 @@ public class ExecutionYear implements IExecutionYear {
 		return false;
 	}
 
+	public String toString() {
+		String result = "[EXECUTION_YEAR";
+		result += ", internalCode=" + internalCode;
+		result += ", year=" + year;
+		result += "]";
+		return result;
+	}
+
+
 }

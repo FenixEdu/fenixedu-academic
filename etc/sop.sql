@@ -14,19 +14,23 @@ create table ROOM (
    unique U1 (NAME))
    type=InnoDB;
 
+
 #----------------------------
 # Table structure for class
 #----------------------------
-drop table if exists CLASS;
-create table CLASS (
-   ID_INTERNAL int(11) not null auto_increment,
-   NAME varchar(50) not null,
-   SEMESTER int(11) not null,
-   CURRICULAR_YEAR int(11) not null,
-   KEY_DEGREE int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (NAME))
-   type=InnoDB;
+
+DROP TABLE IF EXISTS CLASS;
+CREATE TABLE CLASS (
+  ID_INTERNAL int(11) NOT NULL default '0',
+  NAME varchar(50) NOT NULL default '',
+  SEMESTER int(11),
+  CURRICULAR_YEAR int(11) NOT NULL,
+  KEY_EXECUTION_DEGREE int(11) NOT NULL,
+  KEY_DEGREE int(11),
+  KEY_EXECUTION_PERIOD int (11) not null,  
+  PRIMARY KEY  (ID_INTERNAL),
+  UNIQUE KEY U1 (NAME, KEY_EXECUTION_PERIOD, KEY_EXECUTION_DEGREE, CURRICULAR_YEAR)
+) TYPE=InnoDB;
 
 #----------------------------
 # Table structure for shift
@@ -117,3 +121,29 @@ create table ENROLMENT (
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE))
    type=InnoDB;
+
+
+#----------------------------
+# Table structure for EXECUTION_PERIOD
+#----------------------------
+drop table if exists EXECUTION_PERIOD;
+create table EXECUTION_PERIOD (
+   ID_INTERNAL int(11) not null auto_increment,
+   NAME varchar(50) not null,
+   KEY_EXECUTION_YEAR int(11) not null default '0',
+   primary key (ID_INTERNAL),
+   unique U1 (NAME, KEY_EXECUTION_YEAR))
+   type=InnoDB comment="InnoDB free: 373760 kB";
+   
+   
+#----------------------------
+# Table structure for EXECUTION_YEAR
+#----------------------------
+drop table if exists EXECUTION_YEAR;
+create table EXECUTION_YEAR (
+   ID_INTERNAL int(11) not null auto_increment,
+   `YEAR` varchar(9) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (`YEAR`))
+   type=InnoDB comment="InnoDB free: 373760 kB";
+   

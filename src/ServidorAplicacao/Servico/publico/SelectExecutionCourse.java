@@ -51,13 +51,7 @@ public class SelectExecutionCourse implements IServico {
 		InfoExecutionPeriod infoExecutionPeriod,
 		Integer curricularYear) {
 
-		
 		List infoExecutionCourseList = new ArrayList();
-		
-		
-
-			
-		
 
 		try {
 			List executionCourseList = null;

@@ -17,7 +17,7 @@ public class Turma implements ITurma {
 	protected Integer _anoCurricular;
 	protected ICurso _licenciatura;
 
-	// c�digos internos da base de dados
+	// codigos internos da base de dados
 	private Integer _codigoInterno;
 	private Integer _chaveLicenciatura;
 
@@ -27,10 +27,17 @@ public class Turma implements ITurma {
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
 
-	/** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
+	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
 	public Turma() {
 	}
 
+	/**
+	 * @deprecated
+	 * @param nome
+	 * @param semestre
+	 * @param anoCurricular
+	 * @param licenciatura
+	 */
 	public Turma(
 		String nome,
 		Integer semestre,
@@ -41,6 +48,15 @@ public class Turma implements ITurma {
 		setAnoCurricular(anoCurricular);
 		setLicenciatura(licenciatura);
 	}
+	
+	public Turma(String nome, IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, Integer curricularYear){
+			setNome(nome);
+			setExecutionPeriod(executionPeriod);
+			setExecutionDegree(executionDegree);
+			setAnoCurricular(curricularYear);
+		}
+	
+	
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;

@@ -43,6 +43,7 @@ public class SelectShifts implements IServico {
 	}
 
 	public Object run(InfoShift infoShift) {
+
 		List shifts = new ArrayList();
 		List infoShifts = new ArrayList();
 
@@ -52,8 +53,6 @@ public class SelectShifts implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			shifts =
 				sp.getITurnoPersistente().readByExecutionCourse(shift.getDisciplinaExecucao());
-
-			
 			
 			for (int i = 0; i < shifts.size(); i++) {
 				ITurno taux = (ITurno) shifts.get(i);

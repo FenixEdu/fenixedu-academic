@@ -82,22 +82,23 @@ create table CURRICULAR_COURSE (
 #------------------------------------------
 # Table structure for execution_course
 #------------------------------------------
-drop table if exists EXECUTION_COURSE;
-create table EXECUTION_COURSE (
-   ID_INTERNAL int(11) not null auto_increment,
-   NAME varchar(100),
-   CODE varchar(50) not null,
-   KEY_EXECUTION_DEGREE int(11) not null,
-   KEY_TEACHER_IN_CHARGE int(11) not null,
-   PROGRAM text,
-   THEORETICAL_HOURS double,
-   PRATICAL_HOURS double,
-   THEO_PRAT_HOURS double, 
-   LAB_HOURS double,
-   SEMESTER int(11) not null default '2',     
-   primary key (ID_INTERNAL),
-   unique U1 (CODE, KEY_EXECUTION_DEGREE))
-   type=InnoDB;
+DROP TABLE IF EXISTS EXECUTION_COURSE;
+CREATE TABLE EXECUTION_COURSE (
+  ID_INTERNAL int(11) NOT NULL auto_increment,
+  NAME varchar(100) default NULL,
+  CODE varchar(50) NOT NULL default '',
+  KEY_EXECUTION_DEGREE int(11) NOT NULL default '0',
+  KEY_TEACHER_IN_CHARGE int(11) NOT NULL default '0',
+  PROGRAM text,
+  THEORETICAL_HOURS double default NULL,
+  PRATICAL_HOURS double default NULL,
+  THEO_PRAT_HOURS double default NULL,
+  LAB_HOURS double default NULL,
+  SEMESTER int(11) default '2',
+  KEY_EXECUTION_PERIOD int(11) unsigned NOT NULL,
+  PRIMARY KEY  (ID_INTERNAL),
+  UNIQUE KEY U1 (CODE, KEY_EXECUTION_PERIOD)
+) TYPE=InnoDB;
 
 #---------------------------------------------------------------
 # Table structure for curricular_course_execution_course
