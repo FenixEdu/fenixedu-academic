@@ -114,6 +114,20 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		}
 
 	}
+	
+	protected void lockRead(Object obj) throws ExcepcaoPersistencia {
+		try {
+			tx = odmg.currentTransaction();
+			tx.lock(obj, Transaction.READ);
+
+		} catch (ODMGRuntimeException ex) {
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.READ_LOCK,
+				ex);
+		}
+
+	}
+
 
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentObject#simpleLockWrite(Dominio.IDomainObject)
@@ -270,57 +284,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			tx.lock(domainObject, Transaction.READ);
 		}
 		return domainObject;
-	}
-
-	public IDomainObject readByUnique(
-		IDomainObject domainObject,
-		boolean lockWrite)
-		throws IllegalArgumentException {
-		List uniqueProperties = domainObject.getUniqueProperties();
-		Criteria criteria = new Criteria();
-
-		for (int propertyIndex = 0;
-			propertyIndex < uniqueProperties.size();
-			propertyIndex++) {
-			String propertyName = (String) uniqueProperties.get(propertyIndex);
-			Object propertyValue = null;
-			try {
-				propertyValue =
-					PropertyUtils.getNestedProperty(domainObject, propertyName);
-			} catch (IllegalAccessException e) {
-				throw new IllegalArgumentException(e.getMessage());
-			} catch (InvocationTargetException e) {
-				throw new IllegalArgumentException(e.getMessage());
-			} catch (NoSuchMethodException e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-			criteria.addEqualTo(propertyName, propertyValue);
-		}
-
-		PersistenceBroker pb =
-			((HasBroker) odmg.currentTransaction()).getBroker();
-		Query queryCriteria =
-			new QueryByCriteria(domainObject.getClass(), criteria);
-		List list = (List) pb.getCollectionByQuery(queryCriteria);
-
-		if (list.size() > 1) {
-			throw new IllegalArgumentException("Not unique configured!");
-		} else {
-			IDomainObject objectReaded = null;
-			Transaction tx = odmg.currentTransaction();
-			if (!list.isEmpty()) {
-				objectReaded = (IDomainObject) list.get(0);
-				if (lockWrite == true) {
-					tx.lock(objectReaded, Transaction.WRITE);
-				} else {
-					tx.lock(objectReaded, Transaction.READ);
-				}
-			} else if (lockWrite == true) {
-				tx.lock(domainObject, Transaction.WRITE);
-				objectReaded = domainObject;
-			}
-			return objectReaded;
-		}
 	}
 
 	public Object readDomainObjectByCriteria(Object obj)
@@ -572,12 +535,13 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	protected Object queryObject(Class classToQuery, Criteria criteria)
 		throws ExcepcaoPersistencia {
-		List listObj = queryList(classToQuery, criteria);
-		Object obj = null;
-		if (!listObj.isEmpty()) {
-			obj = listObj.get(0);
+		PersistenceBroker pb = getCurrentPersistenceBroker();
+		Query query = getQuery(classToQuery, criteria);
+		Object object = pb.getObjectByQuery(query);
+		if (object != null) {
+			lockRead(object);
 		}
-		return obj;
+		return object;
 	}
 
 	public IDomainObject readByOID(Class classToQuery, Integer oid)
