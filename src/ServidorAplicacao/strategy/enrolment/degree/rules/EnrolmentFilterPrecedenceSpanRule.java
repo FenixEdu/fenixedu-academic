@@ -49,8 +49,6 @@ public class EnrolmentFilterPrecedenceSpanRule extends PrecedenceRule implements
 			.removeAll(
 			curricularCourseScopesNotToStay);
 		curricularCourseToApply.removeAll(curricularCourseScopesNotToStay);
-		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCourseToApply);
-		
 	}
 
 	/**
