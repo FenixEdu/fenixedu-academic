@@ -101,8 +101,6 @@ public class EditItemServiceTest extends TestCaseDeleteAndEditServices {
 			IPersistentItem persistentItem=sp.getIPersistentItem();
 			IItem item=persistentItem.readBySectionAndName(section,"Item1deTFCI");			
 			sp.confirmarTransaccao();
-
-			infoSection = Cloner.copyISection2InfoSection(section);
 			oldInfoItem= Cloner.copyIItem2InfoItem(item);
 			newInfoItem= Cloner.copyIItem2InfoItem(item);
 			newInfoItem.setName("NewItemName");
@@ -111,7 +109,7 @@ public class EditItemServiceTest extends TestCaseDeleteAndEditServices {
 			System.out.println("failed setting up the test data");
 			e.printStackTrace();
 		}
-		Object[] args = {infoSection, oldInfoItem, newInfoItem };
+		Object[] args = {oldInfoItem, newInfoItem };
 		return args;
 	}
 

@@ -11,13 +11,11 @@ import java.util.List;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.ISection;
-import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
-import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -54,33 +52,27 @@ public class ReadItems implements IServico {
 	 *
 	 **/
 	public List run(InfoSection infoSection) throws FenixServiceException {
-		List itemsList=null;
-		ISection fatherSection = null;
+		List itemsList = null;
+		
 		try {
-        
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentSection persistentSection = sp.getIPersistentSection();
-		IPersistentItem persistentItem = sp.getIPersistentItem();
-		
-		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
-		
-		InfoSection superiorInfoSection = infoSection.getSuperiorInfoSection();
-		if (superiorInfoSection!=null)
-			fatherSection = Cloner.copyInfoSection2ISection(infoSection.getSuperiorInfoSection());
-		
-		ISection section = persistentSection.readBySiteAndSectionAndName(site,fatherSection,infoSection.getName());
-		
-		itemsList =persistentItem.readAllItemsBySection(section); 
-		
-		if (itemsList == null || itemsList.isEmpty()) throw new InvalidArgumentsServiceException();
 
-        return itemsList;
-        
-       } catch (ExcepcaoPersistencia e) {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentItem persistentItem = sp.getIPersistentItem();
+
+			ISection section = Cloner.copyInfoSection2ISection(infoSection);
+
+			itemsList = persistentItem.readAllItemsBySection(section);
+
+			if (itemsList == null || itemsList.isEmpty())
+				throw new InvalidArgumentsServiceException();
+
+			return itemsList;
+
+		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 	}
-    
+
 }
 
 

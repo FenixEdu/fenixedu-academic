@@ -15,13 +15,11 @@ import DataBeans.gesdis.InfoItem;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.ISection;
-import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
-import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -90,44 +88,40 @@ public class InsertItem implements IServico {
 	
 	//infoItem with an infoSection
 	
-	public Boolean run (
-		InfoItem infoItem) 
-	 	throws FenixServiceException {
-	 	
+	public Boolean run(InfoItem infoItem) throws FenixServiceException {
+
 		IItem item = null;
 		ISection section = null;
-			
-	 	try{
-	 	
-			
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			
-			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			
-			ISite site = Cloner.copyInfoSite2ISite(infoItem.getInfoSection().getInfoSite());
-	 		
-	 		section = persistentSection.readBySiteAndSectionAndName(site,null,infoItem.getInfoSection().getName());
-			
-			item = Cloner.copyInfoItem2IItem(infoItem);
-						
-			IItem existingItem = persistentItem.readBySectionAndName(section,infoItem.getName());
-			if(existingItem != null)
+
+		try {
+
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+
+			IPersistentItem persistentItem =
+				persistentSuport.getIPersistentItem();
+
+			section =
+				Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
+			IItem existingItem =
+				persistentItem.readBySectionAndName(
+					section,
+					infoItem.getName());
+			if (existingItem != null)
 				throw new ExistingServiceException();
 
+			item = Cloner.copyInfoItem2IItem(infoItem);
 			item.setSection(section);
-			persistentItem.lockWrite(item);			
-			
-			organizeExistingItemsOrder(section, infoItem.getItemOrder().intValue());
-			
-			}
+			organizeExistingItemsOrder(
+				section,
+				infoItem.getItemOrder().intValue());
 
-		
-		catch (ExcepcaoPersistencia excepcaoPersistencia){
-	
+			persistentItem.lockWrite(item);
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
-	 
-			return new Boolean(true);
-		}	
+
+		return new Boolean(true);
+	}
 }

@@ -91,8 +91,8 @@ public class InsertItemTest extends TestCaseCreateServices {
 			
 			}
 			
+			
 			InfoSection infoSection = Cloner.copyISection2InfoSection(section);
-
 			argsInsertItem[0] = new InfoItem("item0 da seccao1dePO","Item0dePO",new Integer(0),infoSection,new Boolean(true));
 	
 			return argsInsertItem;

@@ -8,16 +8,14 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoItem;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.ISection;
-import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
-import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -40,60 +38,55 @@ public class DeleteItem implements IServico {
 
 	}
 
-	public Boolean run(InfoSection infoSection, String itemName)
-		throws FenixServiceException {
-
+	public Boolean run(InfoItem infoItem) throws FenixServiceException {
 		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			
-			
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			
-			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
-		
-			ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
-	 		
-			ISection section = persistentSection.readBySiteAndSectionAndName(site,null,infoSection.getName());
-						
-			
-			IItem deletedItem = persistentItem.readBySectionAndName(section, itemName);
-			
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+
+			IPersistentItem persistentItem =
+				persistentSuport.getIPersistentItem();
+
+			ISection section =
+				Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
+
+			IItem deletedItem =
+				persistentItem.readBySectionAndName(
+					section,
+					infoItem.getName());
+
 			Integer orderOfDeletedItem = deletedItem.getItemOrder();
-			
-			if (deletedItem == null) throw new FenixServiceException("non existing item");
-			//	throw new ItemInexistenteException("Item inexistente");
-			
+
+			if (deletedItem == null)
+				throw new FenixServiceException("non existing item");
+
 			persistentItem.delete(deletedItem);
-			
+
 			List itemsList = null;
-			
+
 			itemsList = persistentItem.readAllItemsBySection(section);
-			
+
 			Iterator iterItems = itemsList.iterator();
-			
+
 			while (iterItems.hasNext()) {
-			
+
 				IItem item = (IItem) iterItems.next();
-			
+
 				Integer itemOrder = item.getItemOrder();
-			
+
 				if (itemOrder.intValue() > orderOfDeletedItem.intValue()) {
-			
+
 					item.setItemOrder(new Integer(itemOrder.intValue() - 1));
-			
+
 					persistentItem.lockWrite(item);
-			
+
 				}
-			
+
 			}
-			
+
 			return new Boolean(true);
-		
-		
+
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-
 	}
-
 }

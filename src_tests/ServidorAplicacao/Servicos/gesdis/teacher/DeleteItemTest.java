@@ -8,7 +8,7 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoItem;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -21,6 +21,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -85,15 +86,16 @@ public class DeleteItemTest extends TestCaseDeleteAndEditServices {
 			IPersistentSection ipSection =sp.getIPersistentSection();
 			section =ipSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
 			
+			IPersistentItem ipItem=sp.getIPersistentItem();
+			item = ipItem.readBySectionAndName(section,"Item1deTFCI");
 			sp.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				System.out.println("failed setting up the test data");
 				e.printStackTrace();
 			}
 
-		InfoSection infoSection = Cloner.copyISection2InfoSection(section);
-		String itemName = "Item1deTFCI";		
-		Object[] argsDeleteItem = {infoSection,itemName};
+		InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+		Object[] argsDeleteItem = {infoItem};
 		
 		return argsDeleteItem;		
 	}

@@ -7,11 +7,9 @@
 package ServidorAplicacao.Servico.gesdis.teacher;
 
 import DataBeans.gesdis.InfoItem;
-import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.ISection;
-import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -54,38 +52,31 @@ public class EditItem implements IServico {
 	 * Executes the service.
 	 *
 	 **/
+public Boolean run(InfoItem oldInfoItem, InfoItem newInfoItem)
+	throws FenixServiceException {
 
-	public Boolean run (InfoSection infoSection, InfoItem oldInfoItem, InfoItem newInfoItem)
+	ISection fatherSection = null;
+	IItem item = null;
+	try {
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		IPersistentSection persistentSection = sp.getIPersistentSection();
+		IPersistentItem persistentItem = sp.getIPersistentItem();
 
-	throws FenixServiceException{
-		
-		ISection fatherSection=null;
-		IItem item=null;
-		try {       		
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentSection persistentSection = sp.getIPersistentSection();
-			IPersistentItem persistentItem = sp.getIPersistentItem();
-		
-			ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
-		
-			InfoSection superiorInfoSection = infoSection.getSuperiorInfoSection();
-			if (superiorInfoSection!=null)
-				fatherSection = Cloner.copyInfoSection2ISection(infoSection.getSuperiorInfoSection());
-		
-			ISection section = persistentSection.readBySiteAndSectionAndName(site,fatherSection,infoSection.getName());
-		
-			item = persistentItem.readBySectionAndName(section,oldInfoItem.getName());
-			
-			item.setInformation(newInfoItem.getInformation());
-			item.setItemOrder(newInfoItem.getItemOrder());
-			item.setName(newInfoItem.getName());
-			item.setUrgent(newInfoItem.getUrgent());						
-			persistentItem.lockWrite(item);					
-			}
-			catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}	
-			return new Boolean(true);
-		}	
+		ISection section =
+			Cloner.copyInfoSection2ISection(oldInfoItem.getInfoSection());
+
+		item =
+			persistentItem.readBySectionAndName(section, oldInfoItem.getName());
+
+		item.setInformation(newInfoItem.getInformation());
+		item.setItemOrder(newInfoItem.getItemOrder());
+		item.setName(newInfoItem.getName());
+		item.setUrgent(newInfoItem.getUrgent());
+		persistentItem.lockWrite(item);
+	} catch (ExcepcaoPersistencia e) {
+		throw new FenixServiceException(e);
 	}
+	return new Boolean(true);
+}
+}
 
