@@ -164,3 +164,23 @@ INSERT INTO CURRICULAR_COURSE_SCOPE values (12, 1, 1, 1,0,0,0,0);
 INSERT INTO CURRICULAR_COURSE_SCOPE values (13, 2, 2, 1,0,0,0,0);
 INSERT INTO CURRICULAR_COURSE_SCOPE values (14, 3, 3, 1,0,0,0,0);
 
+-- -----------------------------
+-- Data for table 'DEGREE_ENROLMENT_INFO'
+-- (ID_INTERNAL, DEGREE_DURATION, MINIMAL_YEAR_FOR_OPTIONAL_COURSES) 
+-- -----------------------------
+delete from DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
+insert into DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO values (1, 5, 3);
+
+-- -----------------------------
+-- Data for table 'STUDENT_GROUP_INFO'
+-- (ID_INTERNAL, STUDENT_TYPE, MIN_COURSES_TO_ENROL, MAX_COURSES_TO_ENROL, MAX_NAC_TO_ENROL) 
+-- -----------------------------
+delete from STUDENT_GROUP_INFO;
+insert into STUDENT_GROUP_INFO values (1, 1, 3, 7, 10);
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_COURSE_ENROLMENT_INFO'
+-- (ID_INTERNAL, MAX_INCREMENT_NAC, MIN_INCREMENT_NAC, WEIGTH)
+-- -----------------------------
+delete from CURRICULAR_COURSE_ENROLMENT_INFO;
+insert into CURRICULAR_COURSE_ENROLMENT_INFO values (1, 2, 1, 1);
