@@ -8,7 +8,7 @@
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <h2><bean:message key="title.view.room"/></h2>
 <br />
-<logic:present name="publico.infoRoom" scope="session">
+<logic:present name="publico.infoRoom" scope="request">
 	<table width="100%">
     	<tr>
       		<td class="listClasses-header"><bean:message key="property.room.name"/></td>
@@ -31,7 +31,7 @@
 <br />	
 <div align="center"><app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="sop"/></div>
 </logic:present>
-	<logic:notPresent name="publico.infoRoom" scope="session">
+	<logic:notPresent name="publico.infoRoom" scope="request">
 		<table align="center">
 			<tr>
 				<td>

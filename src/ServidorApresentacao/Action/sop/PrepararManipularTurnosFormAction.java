@@ -34,18 +34,18 @@ public class PrepararManipularTurnosFormAction extends Action {
         GestorServicos gestor = GestorServicos.manager();
         
 		// Ler Turnos de Disciplinas em Execucao
-        InfoExecutionCourse iDE = (InfoExecutionCourse) sessao.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+        InfoExecutionCourse iDE = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
         Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
 		
 		List infoTurnosDeDisciplinaExecucao = (List) gestor.executar(userView, "LerTurnosDeDisciplinaExecucao", argsLerTurnosDeDisciplinaExecucao);
         
 		Collections.sort(infoTurnosDeDisciplinaExecucao, new InfoShiftComparatorByLessonType());
 		
-		sessao.removeAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
+		request.removeAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
 		if (infoTurnosDeDisciplinaExecucao.size() > 0)
-			sessao.setAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, infoTurnosDeDisciplinaExecucao);
+			request.setAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, infoTurnosDeDisciplinaExecucao);
 			
-		sessao.removeAttribute(SessionConstants.CLASS_VIEW);
+		request.removeAttribute(SessionConstants.CLASS_VIEW);
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

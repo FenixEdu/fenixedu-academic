@@ -35,10 +35,10 @@ public class ApagarTurnoFormAction extends FenixAction {
       IUserView userView = (IUserView) sessao.getAttribute("UserView");
       GestorServicos gestor = GestorServicos.manager();
       Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
-      ArrayList infoTurnos = (ArrayList) sessao.getAttribute("infoTurnosDeDisciplinaExecucao");
+      ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
       InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
 	  manipularTurnosForm.set("indexTurno", null);
-	  InfoExecutionCourse IEC = (InfoExecutionCourse) sessao.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+	  InfoExecutionCourse IEC = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 	  
 	  
 	  Object argsApagarTurno[] = { new ShiftKey(infoTurno.getNome(),IEC) };
@@ -46,9 +46,9 @@ public class ApagarTurnoFormAction extends FenixAction {
 	  
 	  if (result != null && result.booleanValue()) {
 	  	infoTurnos.remove(indexTurno.intValue());
-	  	sessao.removeAttribute("infoTurnosDeDisciplinaExecucao");
+	  	request.removeAttribute("infoTurnosDeDisciplinaExecucao");
 	  	if (!infoTurnos.isEmpty())
-	  		sessao.setAttribute("infoTurnosDeDisciplinaExecucao",infoTurnos);
+	  		request.setAttribute("infoTurnosDeDisciplinaExecucao",infoTurnos);
 	  }
 	
       return mapping.findForward("Sucesso");

@@ -42,7 +42,7 @@ public class DefineExamCommentActionDA extends DispatchAction {
 		DynaValidatorForm defineExamCommentForm = (DynaValidatorForm) form;
 
 		InfoExamsMap infoExamsMap =
-			(InfoExamsMap) session.getAttribute(
+			(InfoExamsMap) request.getAttribute(
 				SessionConstants.INFO_EXAMS_MAP);
 
 		Integer indexExecutionCourse =
@@ -54,11 +54,11 @@ public class DefineExamCommentActionDA extends DispatchAction {
 
 		Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.CURRICULAR_YEAR_KEY,
 			curricularYear);
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.EXECUTION_COURSE_KEY,
 			infoExecutionCourse);
 
@@ -82,7 +82,7 @@ public class DefineExamCommentActionDA extends DispatchAction {
 		String executionCourseCode =
 			request.getParameter("executionCourseCode");
 		String executionPeriodName =
-			((InfoExecutionPeriod) session.getAttribute(
+			((InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getName();
 			//request.getParameter("executionPeriodName");
 		String executionYear = request.getParameter("executionYear");

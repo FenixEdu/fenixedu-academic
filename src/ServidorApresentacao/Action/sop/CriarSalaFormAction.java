@@ -35,7 +35,7 @@ public class CriarSalaFormAction extends Action {
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 			IUserView userView =
-				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+				(IUserView) request.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
 			Object argsCriarSala[] =
 				{

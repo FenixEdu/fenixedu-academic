@@ -31,7 +31,7 @@
    	<bean:message key="property.context.curricular.year"/>:
    	<br />
 	<br />
-	<logic:present name="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>" scope="session">
+	<logic:present name="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>" scope="request">
 		<logic:iterate id="item" name="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>">
 			<html:multibox property="selectedCurricularYears">
 				<bean:write name="item"/>

@@ -15,7 +15,7 @@
             <font color='#034D7A' size='5'>
                 <b>
                     <bean:message key="title.editAulaOfTurnoXPTO"/> 
-                    <bean:write name="turnoFormBean" property="nome" scope="session" filter="true"/>
+                    <bean:write name="turnoFormBean" property="nome" scope="request" filter="true"/>
                 </b>
             </font>
         </center>
@@ -26,7 +26,7 @@
             <html:hidden name="turnoFormBean" property="codigoInterno"/>
             <center> <b> Aulas adicionadas </b> </center>
             <br/>
-            <logic:present name="listaAulasBean" scope="session">
+            <logic:present name="listaAulasBean" scope="request">
                 <table align="center" border=1 cellpadding='5'>
                     <%! int i; %>
                     <% i = 0; %>
@@ -74,7 +74,7 @@
                     </logic:iterate>
                 </table>
             </logic:present>
-            <logic:notPresent name="listaAulasBean" scope="session">
+            <logic:notPresent name="listaAulasBean" scope="request">
                 <table align="center" border='1' cellpadding='5'>
                     <tr align="center">
                         <td width='200'>

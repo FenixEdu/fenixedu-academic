@@ -9,7 +9,10 @@
 <title><tiles:getAsString name="title" ignore="true" /></title>
 </head>
 <body>
-<%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
+<%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
+<!-- Context -->
+<tiles:insert attribute="context" ignore="true"/>
+<!--End Context -->
 <!-- Header -->
 <table id="header" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>

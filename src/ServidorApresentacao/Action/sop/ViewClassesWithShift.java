@@ -74,13 +74,13 @@ public class ViewClassesWithShift extends Action {
 	private InfoShift getInfoShift(String name, HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(false);
 		List infoShiftList =
-			(List) session.getAttribute(
+			(List) request.getAttribute(
 				SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
 		InfoShift infoShift = null;
 		if (infoShiftList == null) {
 			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) session.getAttribute(
+				(InfoExecutionPeriod) request.getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 			infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 			String infoExecutionCourseCode = request.getParameter("ecCode");

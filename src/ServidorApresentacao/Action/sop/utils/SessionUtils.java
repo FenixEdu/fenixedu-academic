@@ -22,6 +22,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
+import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
@@ -51,7 +52,7 @@ public final class SessionUtils {
 	public static List getExecutionCourses(HttpServletRequest request)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 		ArrayList infoCourseList = new ArrayList();
 
 		// Nao verifica se ja existem em sessao porque podem 
@@ -59,17 +60,17 @@ public final class SessionUtils {
 
 		IUserView userView = SessionUtils.getUserView(request);
 		// Ler Disciplinas em Execucao
-		Integer curricularYear =
-			(Integer) session.getAttribute(
-				SessionConstants.CURRICULAR_YEAR_KEY);
+		InfoCurricularYear infoCurricularYear =
+			(InfoCurricularYear) request.getAttribute(
+					SessionConstants.CURRICULAR_YEAR);
 		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+			(InfoExecutionDegree) request.getAttribute(
+				SessionConstants.EXECUTION_DEGREE);
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
 		Object[] args =
-			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
+			{ infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
 		infoCourseList =
 			(ArrayList) ServiceUtils.executeService(
@@ -77,7 +78,7 @@ public final class SessionUtils {
 				"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
 				args);
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.EXECUTION_COURSE_LIST_KEY,
 			infoCourseList);
 

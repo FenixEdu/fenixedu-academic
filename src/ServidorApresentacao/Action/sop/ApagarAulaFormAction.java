@@ -35,20 +35,20 @@ public class ApagarAulaFormAction extends FenixAction {
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 			DynaActionForm manipularAulasForm =
-				(DynaActionForm) sessao.getAttribute("manipularAulasForm");
+				(DynaActionForm) request.getAttribute("manipularAulasForm");
 
 			IUserView userView = (IUserView) sessao.getAttribute("UserView");
 			GestorServicos gestor = GestorServicos.manager();
 			Integer indexAula = (Integer) manipularAulasForm.get("indexAula");
-			ArrayList infoAulas = (ArrayList) sessao.getAttribute("listaAulas");
+			ArrayList infoAulas = (ArrayList) request.getAttribute("listaAulas");
 			InfoLesson infoAula =
 				(InfoLesson) infoAulas.get(indexAula.intValue());
 
 			manipularAulasForm.set("indexAula", null);
-			sessao.removeAttribute("indexAula");
+			//sessao.removeAttribute("indexAula");
 
 			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) sessao.getAttribute(
+				(InfoExecutionPeriod) request.getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
 			Object argsApagarAula[] =
@@ -67,9 +67,9 @@ public class ApagarAulaFormAction extends FenixAction {
 
 			if (result != null && result.booleanValue()) {
 				infoAulas.remove(indexAula.intValue());
-				sessao.removeAttribute("listaAulas");
+				//sessao.removeAttribute("listaAulas");
 				if (!infoAulas.isEmpty())
-					sessao.setAttribute("listaAulas", infoAulas);
+					request.setAttribute("listaAulas", infoAulas);
 			}
 
 			return mapping.findForward("Sucesso");

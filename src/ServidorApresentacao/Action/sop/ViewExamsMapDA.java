@@ -57,14 +57,14 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			List curricularYears =
-				(List) session.getAttribute(
+				(List) request.getAttribute(
 					SessionConstants.CURRICULAR_YEARS_LIST);
 
 			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) session.getAttribute(
+				(InfoExecutionPeriod) request.getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) session.getAttribute(
+				(InfoExecutionDegree) request.getAttribute(
 					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
 			Object[] args =
@@ -82,7 +82,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 				throw new FenixActionException(e);
 			}
 
-			session.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+			request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 		} else {
 			throw new FenixActionException();
 		}
@@ -100,7 +100,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 
 		InfoExamsMap infoExamsMap =
-			(InfoExamsMap) session.getAttribute(
+			(InfoExamsMap) request.getAttribute(
 				SessionConstants.INFO_EXAMS_MAP);
 
 		Integer indexExecutionCourse =
@@ -112,11 +112,11 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 
 		Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.CURRICULAR_YEAR_KEY,
 			curricularYear);
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.EXECUTION_COURSE_KEY,
 			infoExecutionCourse);
 
@@ -137,7 +137,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
 		String executionCourseInitials =
@@ -153,20 +153,20 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 				args);
 
 		ArrayList horas = Util.getExamShifts();
-		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+		request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
 		ArrayList daysOfMonth = Util.getDaysOfMonth();
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.LABLELIST_DAYSOFMONTH,
 			daysOfMonth);
 
 		ArrayList monthsOfYear = Util.getMonthsOfYear();
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.LABLELIST_MONTHSOFYEAR,
 			monthsOfYear);
 
 		ArrayList examSeasons = Util.getExamSeasons();
-		session.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+		request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
 		Calendar date = Calendar.getInstance();
 		date = infoViewExamByDayAndShift.getInfoExam().getDay();
@@ -196,11 +196,11 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 				.getseason()
 				.toString());
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.INFO_EXAMS_KEY,
 			infoViewExamByDayAndShift);
 
-		session.setAttribute("input", "viewExamsMap");
+		request.setAttribute("input", "viewExamsMap");
 
 		return mapping.findForward("editExam");
 	}
@@ -215,7 +215,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 
 		InfoExamsMap infoExamsMap =
-			(InfoExamsMap) session.getAttribute(
+			(InfoExamsMap) request.getAttribute(
 				SessionConstants.INFO_EXAMS_MAP);
 
 		Integer indexExecutionCourse =
@@ -227,11 +227,11 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 
 		Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.CURRICULAR_YEAR_KEY,
 			curricularYear);
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.EXECUTION_COURSE_KEY,
 			infoExecutionCourse);
 

@@ -18,7 +18,7 @@
             <center> <b> Aulas disponíveis </b> </center>
             <br/>
             <!-- Cria a tabela das aulas -->
-            <logic:present name="listaAulasDeDisciplinaETipoBean" scope="session">
+            <logic:present name="listaAulasDeDisciplinaETipoBean" scope="request">
                 <table align="center" border=1 cellpadding='5'>
                     <%! int i; %>
                     <% i = 0; %>
@@ -41,7 +41,7 @@
                             Sala
                         </th>
                     </tr>
-                    <logic:iterate id="elem" name="listaAulasDeDisciplinaETipoBean" scope="session">
+                    <logic:iterate id="elem" name="listaAulasDeDisciplinaETipoBean" scope="request">
                        <tr align="center">
                             <td>
                                 <html:radio name="posicaoAulaFormBean" property="posicao" value="<%= (new Integer(i)).toString() %>"/>
@@ -66,7 +66,7 @@
                     </logic:iterate>
                 </table>
             </logic:present>
-            <logic:notPresent name="listaAulasDeDisciplinaETipoBean" scope="session">
+            <logic:notPresent name="listaAulasDeDisciplinaETipoBean" scope="request">
                 <table align="center" border='1' cellpadding='5'>
                     <tr align="center">
                         <td>

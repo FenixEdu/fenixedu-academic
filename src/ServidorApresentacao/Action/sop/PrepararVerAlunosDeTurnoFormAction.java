@@ -26,22 +26,22 @@ public class PrepararVerAlunosDeTurnoFormAction extends Action {
 		
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
-		DynaActionForm manipularTurnosForm = (DynaActionForm) sessao.getAttribute("manipularTurnosForm");
+		DynaActionForm manipularTurnosForm = (DynaActionForm) request.getAttribute("manipularTurnosForm");
 	    IUserView userView = (IUserView) sessao.getAttribute("UserView");
         GestorServicos gestor = GestorServicos.manager();
        
 		Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
-        ArrayList infoTurnos = (ArrayList) sessao.getAttribute("infoTurnosDeDisciplinaExecucao");
+        ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
        
         InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
        
-        sessao.removeAttribute("infoTurno");
-        sessao.setAttribute("infoTurno", infoTurno);
+        request.removeAttribute("infoTurno");
+        request.setAttribute("infoTurno", infoTurno);
 	    Object argsLerAlunosDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoTurno.getInfoDisciplinaExecucao())};
         ArrayList infoAlunosDeTurno = (ArrayList) gestor.executar(userView, "LerAlunosDeTurno", argsLerAlunosDeTurno);
-		sessao.removeAttribute("infoAlunosDeTurno");
+		request.removeAttribute("infoAlunosDeTurno");
 		if (!infoAlunosDeTurno.isEmpty())
-	        sessao.setAttribute("infoAlunosDeTurno", infoAlunosDeTurno);
+	        request.setAttribute("infoAlunosDeTurno", infoAlunosDeTurno);
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

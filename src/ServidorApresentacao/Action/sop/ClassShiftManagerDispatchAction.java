@@ -68,8 +68,8 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 			setClassShiftListToRequest(request, userView, classView.getNome());
 
-			session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
-			session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
+			request.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
+			request.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
 		} catch (FenixServiceException e) {
 			throw new FenixActionException("Aconteceu um erro",e);
 
@@ -96,10 +96,10 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 		setClassShiftListToRequest(request, userView, classView.getNome());
 
-		session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
-		session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
+		request.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
+		request.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
 		
-		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
+		request.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		return mapping.findForward("viewClassShiftList");
 
@@ -114,7 +114,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 			Integer infoShiftIndex = new Integer(request.getParameter("shiftIndex"));
 			HttpSession session = request.getSession(false);
 			
-			List infoShiftList = (List) session.getAttribute(listAttributeKey);
+			List infoShiftList = (List) request.getAttribute(listAttributeKey);
 			
 			return (InfoShift) infoShiftList.get(infoShiftIndex.intValue());
 		} catch (RuntimeException e) {
@@ -141,10 +141,10 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		setClassShiftListToRequest(request, userView, classView.getNome());
 
 		
-		session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);
-		session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));		
+		request.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);
+		request.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));		
 	
-		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
+		request.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		return mapping.findForward("viewClassShiftList");
 	}
@@ -163,8 +163,8 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 		request.setAttribute(AVAILABLE_LIST, " ");
 
-		session.setAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
-		session.removeAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY);
+		request.setAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
+		request.removeAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY);
 		
 
 		return mapping.findForward("viewAvailableShiftList");
@@ -211,10 +211,10 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) session.getAttribute(
+			(InfoExecutionDegree) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
 		Object argsLerTurnosTurma[] =
@@ -237,10 +237,10 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) session.getAttribute(
+			(InfoExecutionDegree) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
 		Object argsLerTurnosTurma[] =
@@ -266,7 +266,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		InfoClass classView = getInfoTurma(request);
 
 		InfoExecutionCourse courseView =
-			(InfoExecutionCourse) session.getAttribute(
+			(InfoExecutionCourse) request.getAttribute(
 				SessionConstants.EXECUTION_COURSE_KEY);
 
 		Object[] argsLerTurnosDeDisciplinaExecucao = { courseView };
@@ -299,7 +299,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		InfoClass classView =
-			(InfoClass) session.getAttribute(SessionConstants.CLASS_VIEW);
+			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 		if (classView == null)
 			throw new Exception("Class is not in session!");
 		return classView;

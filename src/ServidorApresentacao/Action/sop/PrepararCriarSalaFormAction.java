@@ -30,8 +30,8 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 	  List edificios = Util.readExistingBuldings("*", null);
 	  List tipos = Util.readTypesOfRooms("*", null);
 
-	  sessao.setAttribute("publico.buildings", edificios);
-	  sessao.setAttribute("publico.types", tipos);
+	  request.setAttribute("publico.buildings", edificios);
+	  request.setAttribute("publico.types", tipos);
   
 	  return mapping.findForward("PesquisarSalas");
 	}
@@ -49,8 +49,8 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 	  List edificios = Util.readExistingBuldings("escolher", "");
 	  List tipos = Util.readTypesOfRooms("escolher", "");
 
-	  sessao.setAttribute("publico.buildings", edificios);
-	  sessao.setAttribute("publico.types", tipos);
+	  request.setAttribute("publico.buildings", edificios);
+	  request.setAttribute("publico.types", tipos);
 
 	  return mapping.findForward("CriarSala");
 	}

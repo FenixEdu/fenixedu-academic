@@ -6,7 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DataBeans.InfoLesson" %>
 	
-	<% ArrayList iA = (ArrayList) session.getAttribute("listaAulas"); %>
+	<% ArrayList iA = (ArrayList) request.getAttribute("listaAulas"); %>
 <table width="100%" cellspacing="0">
 	<tr>
 	    <td class="infoselected"><p>O curso seleccionado &eacute;:</p>
@@ -20,7 +20,7 @@
 <span class="error"><html:errors/></span>
 <p><b><bean:message key="listAulas.existing"/></b></p>
 	<html:form action="/manipularAulasForm">
-    <logic:present name="listaAulas" scope="session">
+    <logic:present name="listaAulas" scope="request">
 <table>
 	<tr>
     	<td class="listClasses-header"></td>
@@ -58,7 +58,7 @@
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.edit.Aula"/></html:submit>
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.delete.Aula"/></html:submit>
 	</logic:present>
-    <logic:notPresent name="listaAulas" scope="session">
+    <logic:notPresent name="listaAulas" scope="request">
 <span class="errors"><bean:message key="errors.existAulas"/></span>
 <br />
 <br />          

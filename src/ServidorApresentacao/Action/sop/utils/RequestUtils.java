@@ -8,11 +8,14 @@
  */
 package ServidorApresentacao.Action.sop.utils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -24,6 +27,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import Util.TipoAula;
 
 /**
  * @author jpvl
@@ -40,8 +44,8 @@ public abstract class RequestUtils {
 		HttpSession session = request.getSession(false);
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
 		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
@@ -367,6 +371,35 @@ public abstract class RequestUtils {
 			}
 		}
 		return infoExecutionPeriod;
+	}
+
+	public static final void setLessonTypes(HttpServletRequest request) {
+		ArrayList tiposAula = new ArrayList();
+		tiposAula.add(
+			new LabelValueBean(
+				"Teorica",
+				(new Integer(TipoAula.TEORICA)).toString()));
+		tiposAula.add(
+			new LabelValueBean(
+				"Pratica",
+				(new Integer(TipoAula.PRATICA)).toString()));
+		tiposAula.add(
+			new LabelValueBean(
+				"Teorico-Pratica",
+				(new Integer(TipoAula.TEORICO_PRATICA)).toString()));
+		tiposAula.add(
+			new LabelValueBean(
+				"Laboratorial",
+				(new Integer(TipoAula.LABORATORIAL)).toString()));
+		tiposAula.add(
+			new LabelValueBean(
+				"Dúvidas",
+				(new Integer(TipoAula.DUVIDAS)).toString()));
+		tiposAula.add(
+			new LabelValueBean(
+				"Reserva",
+				(new Integer(TipoAula.RESERVA)).toString()));
+		request.setAttribute("tiposAula", tiposAula);
 	}
 
 }

@@ -19,7 +19,7 @@
 <bean:define id="deleteConfirm">
 	return confirm('<bean:message key="message.confirm.delete.exam"/>')
 </bean:define>
-<logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
+<logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table align="center">
 		<tr>
 			<td>
@@ -28,7 +28,7 @@
 		</tr>
 	</table>
 </logic:notPresent>
-<logic:present name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
+<logic:present name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table width="100%">
 		<tr>
 			<td class="listClasses-header"><bean:message key="property.course"/></td>
@@ -38,7 +38,7 @@
 			<td class="listClasses-header"><bean:message key="property.exam.number.vacancies"/></td>
 			<td class="listClasses-header"><bean:message key="property.exam.manage"/></td>
 		</tr>
-		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
+		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
 			<% int seatsReserved = 0; %>
 			<tr>
 				<td class="listClasses">
@@ -76,6 +76,6 @@
 	</table>
 	<br />
 	<br />
-	- Nº de vagas para exames: <bean:write name="<%= SessionConstants.AVAILABLE_ROOM_OCCUPATION %>" scope="session"/>
+	- Nº de vagas para exames: <bean:write name="<%= SessionConstants.AVAILABLE_ROOM_OCCUPATION %>" scope="request"/>
 <br />
 </logic:present>

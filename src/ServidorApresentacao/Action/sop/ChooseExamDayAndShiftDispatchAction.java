@@ -48,20 +48,20 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 			request.setAttribute("nextPage", nextPage);
 
 		ArrayList horas = Util.getExamShifts();
-		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+		request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
 		ArrayList daysOfMonth = Util.getDaysOfMonth();
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.LABLELIST_DAYSOFMONTH,
 			daysOfMonth);
 
 		ArrayList monthsOfYear = Util.getMonthsOfYear();
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.LABLELIST_MONTHSOFYEAR,
 			monthsOfYear);
 
 		ArrayList years = Util.getYears();
-		session.setAttribute(SessionConstants.LABLELIST_YEARS, years);
+		request.setAttribute(SessionConstants.LABLELIST_YEARS, years);
 
 		return mapping.findForward("Show Choose Form");
 
@@ -98,7 +98,7 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		examDateAndTime.set(Calendar.SECOND, 0);
 		examDateAndTime.set(Calendar.MILLISECOND, 0);
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.EXAM_DATEANDTIME_STR,
 			""
 				+ year
@@ -110,8 +110,8 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 				+ beginning
 				+ " horas");
 
-		session.removeAttribute(SessionConstants.EXAM_DATEANDTIME);
-		session.setAttribute(
+		request.removeAttribute(SessionConstants.EXAM_DATEANDTIME);
+		request.setAttribute(
 			SessionConstants.EXAM_DATEANDTIME,
 			examDateAndTime);
 

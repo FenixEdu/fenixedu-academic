@@ -56,7 +56,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			semestres.add(new LabelValueBean("escolher", ""));
 			semestres.add(new LabelValueBean("1 º", "1"));
 			semestres.add(new LabelValueBean("2 º", "2"));
-			session.setAttribute("semestres", semestres);
+			request.setAttribute("semestres", semestres);
 
 			List curricularYearsList = new ArrayList();
 			curricularYearsList.add("1");
@@ -64,7 +64,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			curricularYearsList.add("3");
 			curricularYearsList.add("4");
 			curricularYearsList.add("5");
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.CURRICULAR_YEAR_LIST_KEY,
 				curricularYearsList);
 
@@ -121,7 +121,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 					new LabelValueBean(name, String.valueOf(index++)));
 			}
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
 				executionDegreeList);
 
@@ -167,7 +167,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			for (int i = 0; i < selectedCurricularYears.length; i++)
 				curricularYears.add(new Integer(selectedCurricularYears[i]));
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.CURRICULAR_YEARS_LIST,
 				curricularYears);
 
@@ -175,14 +175,14 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 				Integer.parseInt((String) chooseExamContextoForm.get("index"));
 
 			List infoExecutionDegreeList =
-				(List) session.getAttribute(
+				(List) request.getAttribute(
 					SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
 
 			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
 
 			if (infoExecutionDegree != null) {
-				session.setAttribute(
+				request.setAttribute(
 					SessionConstants.INFO_EXECUTION_DEGREE_KEY,
 					infoExecutionDegree);
 			} else {
@@ -317,7 +317,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		if (infoExecutionPeriod == null) {
 			IUserView userView = SessionUtils.getUserView(request);
@@ -327,7 +327,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 					"ReadCurrentExecutionPeriod",
 					new Object[0]);
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				infoExecutionPeriod);
 		}

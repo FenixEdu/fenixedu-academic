@@ -13,10 +13,10 @@
    	</tr>
 </table>
 <br />
-   	<% ArrayList iA = (ArrayList) session.getAttribute("infoAulasDeTurno"); %>
-<h2 class="inline"><bean:message key="property.turno"/>: </h2><h3 class="inline"><bean:write name="infoTurno" property="nome" scope="session" filter="true"/></h3>
+   	<% ArrayList iA = (ArrayList) request.getAttribute("infoAulasDeTurno"); %>
+<h2 class="inline"><bean:message key="property.turno"/>: </h2><h3 class="inline"><bean:write name="infoTurno" property="nome" scope="request" filter="true"/></h3>
 <p><b><bean:message key="listAulas.OfTurno"/></b></p>
-    <logic:present name="infoAulasDeTurno" scope="session">
+    <logic:present name="infoAulasDeTurno" scope="request">
 <table>
 	<tr>
     	<td class="listClasses-header"><bean:message key="property.aula.weekDay"/></td>
@@ -42,6 +42,6 @@
     </logic:iterate>           
 </table>
     </logic:present>
-    <logic:notPresent name="infoAulasDeTurno" scope="session">
+    <logic:notPresent name="infoAulasDeTurno" scope="request">
 <span class="error"><bean:message key="errors.existAulas"/></span>
 </logic:notPresent>

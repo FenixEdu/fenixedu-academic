@@ -37,17 +37,17 @@ public class ViewRoomFormAction extends FenixAction {
 
 		HttpSession session = request.getSession();
 		DynaActionForm indexForm = (DynaActionForm) form;
-		session.removeAttribute(SessionConstants.INFO_SECTION);
+		request.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
 			IUserView userView = (IUserView) session.getAttribute("UserView");
 			GestorServicos gestor = GestorServicos.manager();
 			
-			List infoRooms = (List) session.getAttribute("publico.infoRooms");
+			List infoRooms = (List) request.getAttribute("publico.infoRooms");
 			InfoRoom infoRoom =
 				(InfoRoom) infoRooms.get(
 					((Integer) indexForm.get("index")).intValue());
-			session.removeAttribute("publico.infoRoom");
-			session.setAttribute("publico.infoRoom", infoRoom);
+			request.removeAttribute("publico.infoRoom");
+			request.setAttribute("publico.infoRoom", infoRoom);
 
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) this
@@ -67,7 +67,7 @@ public class ViewRoomFormAction extends FenixAction {
 						argsReadLessons);
 
 				if (lessons != null) {
-					session.setAttribute(
+					request.setAttribute(
 						SessionConstants.LESSON_LIST_ATT,
 						lessons);
 				}
@@ -118,7 +118,7 @@ public class ViewRoomFormAction extends FenixAction {
 						"" + i));
 			}
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.LIST_INFOEXECUTIONPERIOD,
 				executionPeriods);
 

@@ -110,7 +110,7 @@ public class ViewAllExamsByDegreeAndCurricularYearAction extends Action {
 					"ReadCurrentExecutionPeriod",
 					new Object[0]);
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				infoExecutionPeriod);
 		}

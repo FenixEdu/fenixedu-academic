@@ -31,14 +31,14 @@ public class PrepararEditarAulaFormAction extends FenixAction {
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
     	
-      DynaActionForm manipularAulasForm = (DynaActionForm) sessao.getAttribute("manipularAulasForm");
+      DynaActionForm manipularAulasForm = (DynaActionForm) request.getAttribute("manipularAulasForm");
     
       Integer indexAula = (Integer) manipularAulasForm.get("indexAula");
-      ArrayList infoAulas = (ArrayList) sessao.getAttribute("listaAulas");
+      ArrayList infoAulas = (ArrayList) request.getAttribute("listaAulas");
       InfoLesson infoAula = (InfoLesson) infoAulas.get(indexAula.intValue());
       
 	  //sessao.removeAttribute("indexAula");
-	  sessao.setAttribute("infoAula", infoAula);
+	  request.setAttribute("infoAula", infoAula);
 	
 	  editarAulaForm.set("diaSemana", String.valueOf(infoAula.getWeekDay()));
 	  editarAulaForm.set("horaInicio", String.valueOf(infoAula.getInicio().get(Calendar.HOUR_OF_DAY)));

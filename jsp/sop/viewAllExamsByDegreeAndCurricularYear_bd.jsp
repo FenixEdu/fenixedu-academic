@@ -19,8 +19,8 @@
 						<br />
 					   	<bean:define id="curricularYear" name="infoViewAllExams" property="curricularYear"/>
 						<bean:message key="label.year" arg0="<%= curricularYear.toString() %>" /> -	
-						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="name" scope="session"/> -
-						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="infoExecutionYear.year" scope="session"/>
+						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="name" scope="request"/> -
+						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="infoExecutionYear.year" scope="request"/>
 				</b>
 				</td>
 			</tr>

@@ -28,34 +28,34 @@ public class RemoverAulaDeTurnoFormAction extends FenixAction {
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
     	
-      DynaActionForm manipularTurnosForm = (DynaActionForm) sessao.getAttribute("manipularTurnosForm");
-      DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) sessao.getAttribute("editarAulasDeTurnoForm");
+      DynaActionForm manipularTurnosForm = (DynaActionForm) request.getAttribute("manipularTurnosForm");
+      DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request.getAttribute("editarAulasDeTurnoForm");
     
-      IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+      IUserView userView = (IUserView) request.getAttribute(SessionConstants.U_VIEW);
       GestorServicos gestor = GestorServicos.manager();
       
       Integer indexTurno = (Integer) manipularTurnosForm.get("indexTurno");
-      ArrayList infoTurnos = (ArrayList) sessao.getAttribute("infoTurnosDeDisciplinaExecucao");
+      ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
       InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
 
       Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
-      ArrayList infoAulas = (ArrayList) sessao.getAttribute("infoAulasDeTurno");
+      ArrayList infoAulas = (ArrayList) request.getAttribute("infoAulasDeTurno");
       
       InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());      
       
-	  sessao.removeAttribute("indexAula");
+	  request.removeAttribute("indexAula");
 
 	  Object argsRemoverAula[] = { infoLesson, infoTurno};
       Boolean result = (Boolean) gestor.executar(userView, "RemoverAula", argsRemoverAula);
 	  
 	  if (result != null && result.booleanValue()) {
 	  	infoAulas.remove(indexAula.intValue());
-	  	sessao.removeAttribute("infoAulasDeTurno");
+	  	request.removeAttribute("infoAulasDeTurno");
 	  	if (!infoAulas.isEmpty())
-	  		sessao.setAttribute("infoAulasDeTurno",infoAulas);
+	  		request.setAttribute("infoAulasDeTurno",infoAulas);
 	  }
 	  
-	  sessao.removeAttribute("editarAulasDeTurnoForm");
+	  request.removeAttribute("editarAulasDeTurnoForm");
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

@@ -22,7 +22,7 @@
         <b><bean:message key="listTurnos.existing"/></b>
         <br />
         <br />
-		<logic:present name="infoTurnosDeDisciplinaExecucao" scope="session">
+		<logic:present name="infoTurnosDeDisciplinaExecucao" scope="request">
         <table>
         	<%! int i; %>
             <% i = 0; %>
@@ -56,7 +56,7 @@
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.delete.Turno"/></html:submit>
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.view.StudentsInroled"/></html:submit>
 		</logic:present>
-        <logic:notPresent name="infoTurnosDeDisciplinaExecucao" scope="session">
+        <logic:notPresent name="infoTurnosDeDisciplinaExecucao" scope="request">
         	<br />
         	<br />
 			<table>

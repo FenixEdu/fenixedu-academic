@@ -6,19 +6,19 @@ package Dominio;
  * 21/Mar/2003
  */
 
-public class CurricularYear implements ICurricularYear {
+public class CurricularYear extends DomainObject implements ICurricularYear {
 
-	private Integer internalID;
+	//private Integer internalID;
 	private Integer year;
 
 	public CurricularYear() {
 		setYear(null);
-		setInternalID(null);
+		//setInternalID(null);
 	}
 
 	public CurricularYear(Integer year) {
 		setYear(year);
-		setInternalID(null);
+		//setInternalID(null);
 	}
 
 	public boolean equals(Object obj) {
@@ -32,18 +32,18 @@ public class CurricularYear implements ICurricularYear {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.internalID + "; ";
+		//result += "idInternal = " + this.internalID + "; ";
 		result += "year = " + this.year + "]\n";
 		return result;
 	}
 
 	
-	/**
-	 * @return Integer
-	 */
-	public Integer getInternalID() {
-		return internalID;
-	}
+//	/**
+//	 * @return Integer
+//	 */
+//	public Integer getInternalID() {
+//		return internalID;
+//	}
 
 	/**
 	 * @return Integer
@@ -52,13 +52,13 @@ public class CurricularYear implements ICurricularYear {
 		return year;
 	}
 
-	/**
-	 * Sets the internalID.
-	 * @param internalID The internalID to set
-	 */
-	public void setInternalID(Integer internalID) {
-		this.internalID = internalID;
-	}
+//	/**
+//	 * Sets the internalID.
+//	 * @param internalID The internalID to set
+//	 */
+//	public void setInternalID(Integer internalID) {
+//		this.internalID = internalID;
+//	}
 
 	/**
 	 * Sets the year.

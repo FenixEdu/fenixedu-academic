@@ -11,15 +11,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -27,7 +26,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ExecutionPeriodDA extends DispatchAction {
+public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,
@@ -40,19 +39,22 @@ public class ExecutionPeriodDA extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
-		InfoExecutionPeriod selectedExecutionPeriod = null;
-		String executionYearName = request.getParameter("executionYearName");
-		String executionPeriodName =
-			request.getParameter("executionPeriodName");
-		request.setAttribute("executionYearName", executionYearName);
-		request.setAttribute("executionPeriodName", executionPeriodName);
+		InfoExecutionPeriod selectedExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
 
-		if (executionYearName != null && executionPeriodName != null) {
-			selectedExecutionPeriod =
-				new InfoExecutionPeriod(
-					executionPeriodName,
-					new InfoExecutionYear(executionYearName));
-		}
+		//		String executionYearName = request.getParameter("executionYearName");
+		//		String executionPeriodName =
+		//			request.getParameter("executionPeriodName");
+		//		request.setAttribute("executionYearName", executionYearName);
+		//		request.setAttribute("executionPeriodName", executionPeriodName);
+
+		//		if (executionYearName != null && executionPeriodName != null) {
+		//			selectedExecutionPeriod =
+		//				new InfoExecutionPeriod(
+		//					executionPeriodName,
+		//					new InfoExecutionYear(executionYearName));
+		//		}
 
 		Object argsReadExecutionPeriods[] = {
 		};
@@ -107,16 +109,17 @@ public class ExecutionPeriodDA extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
-		Object argsReadExecutionPeriods[] = {};
+		Object argsReadExecutionPeriods[] = {
+		};
 		ArrayList infoExecutionPeriodList =
 			(ArrayList) gestor.executar(
 				userView,
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
 
-//		ArrayList infoExecutionPeriodList =
-//			(ArrayList) request.getAttribute(
-//				SessionConstants.LIST_INFOEXECUTIONPERIOD);
+		//		ArrayList infoExecutionPeriodList =
+		//			(ArrayList) request.getAttribute(
+		//				SessionConstants.LIST_INFOEXECUTIONPERIOD);
 		Integer index = (Integer) indexForm.get("index");
 
 		if (infoExecutionPeriodList != null && index != null) {
@@ -124,12 +127,15 @@ public class ExecutionPeriodDA extends DispatchAction {
 				(InfoExecutionPeriod) infoExecutionPeriodList.get(
 					index.intValue());
 			System.out.println("Setting request attributes...");
+			//			request.setAttribute(
+			//				"executionYearName",
+			//				infoExecutionPeriod.getInfoExecutionYear().getYear());
+			//			request.setAttribute(
+			//				"executionPeriodName",
+			//				infoExecutionPeriod.getName());
 			request.setAttribute(
-				"executionYearName",
-				infoExecutionPeriod.getInfoExecutionYear().getYear());
-			request.setAttribute(
-				"executionPeriodName",
-				infoExecutionPeriod.getName());
+				SessionConstants.EXECUTION_PERIOD,
+				infoExecutionPeriod);
 			//			request.setAttribute(
 			//				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 			//				infoExecutionPeriodList.get(index.intValue()));
@@ -158,16 +164,20 @@ public class ExecutionPeriodDA extends DispatchAction {
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) infoExecutionPeriodList.get(
 					index.intValue());
-			request.setAttribute(
-				"executionYearName",
-				infoExecutionPeriod.getInfoExecutionYear().getYear());
-			request.setAttribute(
-				"executionPeriodName",
-				infoExecutionPeriod.getName());
+			//			request.setAttribute(
+			//				"executionYearName",
+			//				infoExecutionPeriod.getInfoExecutionYear().getYear());
+			//			request.setAttribute(
+			//				"executionPeriodName",
+			//				infoExecutionPeriod.getName());
+			//
+			//			request.setAttribute(
+			//				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			//				infoExecutionPeriodList.get(index.intValue()));
 
 			request.setAttribute(
-				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-				infoExecutionPeriodList.get(index.intValue()));
+				SessionConstants.EXECUTION_PERIOD,
+				infoExecutionPeriod);
 		}
 
 		Object argsReadExecutionPeriods[] = {

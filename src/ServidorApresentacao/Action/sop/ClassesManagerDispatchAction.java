@@ -42,11 +42,11 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 			
 		HttpSession session = request.getSession(false);
 		
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		
-		Integer curricularYear = (Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
+		Integer curricularYear = (Integer) request.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
 		
-		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 		
 		
 		Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear};
@@ -56,8 +56,8 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 		if (classesList != null && !classesList.isEmpty())
 			request.setAttribute(CLASS_LIST_KEY, classesList);
 
-		session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-		session.removeAttribute(SessionConstants.CLASS_VIEW);
+		request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+		request.removeAttribute(SessionConstants.CLASS_VIEW);
 		
 		return mapping.findForward("listClasses");
 	}

@@ -34,9 +34,9 @@ public class PrepararEscolherDisciplinaETipoFormAction extends Action {
         GestorServicos gestor = GestorServicos.manager();
         
 		// Ler Disciplinas em Execucao
-        InfoExecutionDegree iLE = (InfoExecutionDegree) sessao.getAttribute("infoLicenciaturaExecucao");
-        Integer semestre = (Integer) sessao.getAttribute("semestre");
-        Integer anoCurricular = (Integer) sessao.getAttribute("anoCurricular");
+        InfoExecutionDegree iLE = (InfoExecutionDegree) request.getAttribute("infoLicenciaturaExecucao");
+        Integer semestre = (Integer) request.getAttribute("semestre");
+        Integer anoCurricular = (Integer) request.getAttribute("anoCurricular");
 
         Object argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular[] = { new CurricularYearAndSemesterAndInfoExecutionDegree(anoCurricular, semestre, iLE) };
 		ArrayList infoDisciplinasExecucao = (ArrayList) gestor.executar(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular);
@@ -51,8 +51,8 @@ public class PrepararEscolherDisciplinaETipoFormAction extends Action {
             disciplinasExecucao.add(new LabelValueBean(elem.getNome(), (new Integer( infoDisciplinasExecucao.indexOf(elem) + 1 )).toString()));
         }
 
-        sessao.setAttribute("disciplinasExecucao", disciplinasExecucao);
-        sessao.setAttribute("infoDisciplinasExecucao", infoDisciplinasExecucao);    
+        request.setAttribute("disciplinasExecucao", disciplinasExecucao);
+        request.setAttribute("infoDisciplinasExecucao", infoDisciplinasExecucao);    
 
 
       return mapping.findForward("Sucesso");

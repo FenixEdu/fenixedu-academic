@@ -3,7 +3,7 @@
 
 <%! String myAction; %>
 <%  
-    myAction = (String)session.getAttribute("lastMainActionPerformed");
+    myAction = (String)request.getAttribute("lastMainActionPerformed");
 %>
 
 <html:html>

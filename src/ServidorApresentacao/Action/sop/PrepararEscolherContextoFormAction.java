@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,6 +19,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -27,7 +27,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author tfc130
  */
-public class PrepararEscolherContextoFormAction extends Action {
+public class PrepararEscolherContextoFormAction extends FenixContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -35,7 +35,9 @@ public class PrepararEscolherContextoFormAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			
+
+		super.execute(mapping, form, request, response);
+
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			IUserView userView = SessionUtils.getUserView(request);
@@ -44,11 +46,11 @@ public class PrepararEscolherContextoFormAction extends Action {
 				setExecutionContext(request);
 
 			/* Criar o bean de semestres */
-			ArrayList semestres = new ArrayList();
-			semestres.add(new LabelValueBean("escolher", ""));
-			semestres.add(new LabelValueBean("1 º", "1"));
-			semestres.add(new LabelValueBean("2 º", "2"));
-			session.setAttribute("semestres", semestres);
+//			ArrayList semestres = new ArrayList();
+//			semestres.add(new LabelValueBean("escolher", ""));
+//			semestres.add(new LabelValueBean("1 º", "1"));
+//			semestres.add(new LabelValueBean("2 º", "2"));
+//			session.setAttribute("semestres", semestres);
 
 			/* Criar o bean de anos curricutares */
 			ArrayList anosCurriculares = new ArrayList();
@@ -58,7 +60,7 @@ public class PrepararEscolherContextoFormAction extends Action {
 			anosCurriculares.add(new LabelValueBean("3 º", "3"));
 			anosCurriculares.add(new LabelValueBean("4 º", "4"));
 			anosCurriculares.add(new LabelValueBean("5 º", "5"));
-			session.setAttribute("anosCurriculares", anosCurriculares);
+			request.setAttribute("anosCurriculares", anosCurriculares);
 
 			/* Cria o form bean com as licenciaturas em execucao.*/
 			Object argsLerLicenciaturas[] =
@@ -113,13 +115,12 @@ public class PrepararEscolherContextoFormAction extends Action {
 					new LabelValueBean(name, String.valueOf(index++)));
 			}
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
 				executionDegreeList);
 
 			request.setAttribute("licenciaturas", licenciaturas);
 
-			session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 			return mapping.findForward("Sucesso");
 		} else
 			throw new Exception();
@@ -160,9 +161,9 @@ public class PrepararEscolherContextoFormAction extends Action {
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		if (infoExecutionPeriod == null) {
 			IUserView userView = SessionUtils.getUserView(request);
@@ -172,7 +173,7 @@ public class PrepararEscolherContextoFormAction extends Action {
 					"ReadCurrentExecutionPeriod",
 					new Object[0]);
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				infoExecutionPeriod);
 		}

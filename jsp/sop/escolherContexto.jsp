@@ -7,4 +7,5 @@
   <tiles:put name="body" value="/sop/escolherContexto_bd.jsp" />
   <tiles:put name="body-context" value="" />  
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+  <tiles:put name="context" value="/commons/context.jsp" />
 </tiles:insert>

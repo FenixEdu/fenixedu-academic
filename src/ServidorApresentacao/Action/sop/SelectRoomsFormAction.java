@@ -62,34 +62,34 @@ public class SelectRoomsFormAction extends FenixAction {
 
 			if (infoRooms != null && !infoRooms.isEmpty()) {
 				Collections.sort(infoRooms);
-				sessao.removeAttribute("publico.infoRooms");
-				sessao.setAttribute("publico.infoRooms", infoRooms);
-				sessao.removeAttribute("name");
-				sessao.setAttribute("name", readFormValue(roomForm, "name"));
-				sessao.removeAttribute("building");
-				sessao.setAttribute(
+				request.removeAttribute("publico.infoRooms");
+				request.setAttribute("publico.infoRooms", infoRooms);
+				request.removeAttribute("name");
+				request.setAttribute("name", readFormValue(roomForm, "name"));
+				request.removeAttribute("building");
+				request.setAttribute(
 					"building",
 					readFormValue(roomForm, "building"));
-				sessao.removeAttribute("floor");
-				sessao.setAttribute("floor", readFormValue(roomForm, "floor"));
-				sessao.removeAttribute("type");
-				sessao.setAttribute("type", readFormValue(roomForm, "type"));
-				sessao.removeAttribute("capacityNormal");
-				sessao.setAttribute(
+				request.removeAttribute("floor");
+				request.setAttribute("floor", readFormValue(roomForm, "floor"));
+				request.removeAttribute("type");
+				request.setAttribute("type", readFormValue(roomForm, "type"));
+				request.removeAttribute("capacityNormal");
+				request.setAttribute(
 					"capacityNormal",
 					readFormValue(roomForm, "capacityNormal"));
-				sessao.removeAttribute("capacityExame");
-				sessao.setAttribute(
+				request.removeAttribute("capacityExame");
+				request.setAttribute(
 					"capacityExame",
 					readFormValue(roomForm, "capacityExame"));
 			} else {
-				sessao.removeAttribute("publico.infoRooms");
-				sessao.removeAttribute("name");
-				sessao.removeAttribute("building");
-				sessao.removeAttribute("floor");
-				sessao.removeAttribute("type");
-				sessao.removeAttribute("capacityNormal");
-				sessao.removeAttribute("capacityExame");
+				request.removeAttribute("publico.infoRooms");
+				request.removeAttribute("name");
+				request.removeAttribute("building");
+				request.removeAttribute("floor");
+				request.removeAttribute("type");
+				request.removeAttribute("capacityNormal");
+				request.removeAttribute("capacityExame");
 			}
 
 			InfoExecutionPeriod executionPeriod;

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 21/Mar/2003
  */
 
-public class InfoCurricularYear implements Serializable {
+public class InfoCurricularYear extends InfoObject implements Serializable {
 
 	private Integer year;
 	

@@ -26,12 +26,12 @@ public class PrepararEditarTurnoFormAction extends Action {
 		DynaActionForm editarTurnoForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
-			DynaActionForm manipularTurnosForm = (DynaActionForm) sessao.getAttribute("manipularTurnosForm");
+			DynaActionForm manipularTurnosForm = (DynaActionForm) request.getAttribute("manipularTurnosForm");
 
 			Integer indexTurno =(Integer) manipularTurnosForm.get("indexTurno");
-			ArrayList infoTurnos = (ArrayList) sessao.getAttribute("infoTurnosDeDisciplinaExecucao");
+			ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
 			InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
-			sessao.setAttribute("infoTurno", infoTurno);
+			request.setAttribute("infoTurno", infoTurno);
 
 			editarTurnoForm.set("nome", infoTurno.getNome());
 			editarTurnoForm.set("lotacao", infoTurno.getLotacao());

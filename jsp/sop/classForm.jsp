@@ -5,10 +5,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <html:form action="/ClassManagerDA" >
 	<span class="error"><html:errors/></span>	
-	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
+	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="request">
 		<input type="hidden" name="method" value="createClass">
 	</logic:notPresent>
-	<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
+	<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="request">
 		<input type="hidden" name="method" value="editClass"/>
 		<input type="hidden" name="change" value= "1"/>
 		<table width="100%" cellspacing="0">

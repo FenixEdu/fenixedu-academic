@@ -17,7 +17,7 @@
         <html:errors/>
         <center> <b> Turmas existentes </b> </center>
         <html:form action="/manipularTurmas">
-            <logic:present name="listaTurmasBean" scope="session">
+            <logic:present name="listaTurmasBean" scope="request">
                 <table align="center" border=1 cellpadding='5'>
                     <%! int i; %>
                     <% i = 0; %>
@@ -41,7 +41,7 @@
                     </logic:iterate>
                 </table>
             </logic:present>
-            <logic:notPresent name="listaTurmasBean" scope="session">
+            <logic:notPresent name="listaTurmasBean" scope="request">
                 <table align="center" border='1' cellpadding='5''>
                     <tr align="center">
                         <td>

@@ -13,7 +13,7 @@
           </tr>
         </table>
         <br/>
-	   	<% ArrayList iA = (ArrayList) session.getAttribute("infoAulasDeTurno"); %>
+	   	<% ArrayList iA = (ArrayList) request.getAttribute("infoAulasDeTurno"); %>
  <center>
  	<b><html:link page="/listClasses.do?method=showClasses" paramName="infoTurno" paramProperty="idInternal" paramId="shiftOID"> <bean:message key="link.add.shift.classes"/></html:link></b>
  </center>
@@ -22,7 +22,7 @@
      <center>
             <span class="error">
                     <bean:message key="title.editAulaOfTurnoXPTO"/>
-                    <bean:write name="infoTurno" property="nome" scope="session" filter="true"/>
+                    <bean:write name="infoTurno" property="nome" scope="request" filter="true"/>
             </span>
         </center>
         <br/>
@@ -30,7 +30,7 @@
         <html:form action="/editarAulasDeTurnoForm">
             <center> <b> <bean:message key="listAulas.added"/> </b> </center>
             <br/>
-            <logic:present name="infoAulasDeTurno" scope="session">
+            <logic:present name="infoAulasDeTurno" scope="request">
                 <table align="center" border=1 cellpadding='5'>
                     <tr align='center'>
                         <th>
@@ -98,7 +98,7 @@
                 </tr>
             	</table>
             	</logic:present>
-            	<logic:notPresent name="infoAulasDeTurno" scope="session">
+            	<logic:notPresent name="infoAulasDeTurno" scope="request">
                 	<table align="center" border='1' cellpadding='5'>
                     	<tr align="center">
                         	<td width='250'>

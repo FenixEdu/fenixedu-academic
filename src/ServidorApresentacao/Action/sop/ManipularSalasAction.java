@@ -34,12 +34,12 @@ public class ManipularSalasAction extends FenixAction {
 	/**
 	 * @returns the name of the selected sala.
 	 **/
-	private InfoRoom getSelectedSala(ActionForm form, HttpSession session) {
+	private InfoRoom getSelectedSala(ActionForm form, HttpServletRequest request) {
 		DynaActionForm posicaoSalaFormBean =
 			(DynaActionForm) form;
 		Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("index");
 		ArrayList listaSalasBean =
-			(ArrayList) session.getAttribute("publico.infoRooms");
+			(ArrayList) request.getAttribute("publico.infoRooms");
 		InfoRoom sala =
 			(InfoRoom) listaSalasBean.get(salaSelecionada.intValue());
 
@@ -90,11 +90,11 @@ public class ManipularSalasAction extends FenixAction {
 		throws Exception {
 
 		HttpSession session = getSession(request);
-		InfoRoom salaBean = getSelectedSala(form, session);
-		session.removeAttribute(mapping.getAttribute());
+		InfoRoom salaBean = getSelectedSala(form, request);
+		request.removeAttribute(mapping.getAttribute());
 
 		request.setAttribute("salaFormBean", salaBean);
-		session.setAttribute("publico.infoRoom", salaBean);
+		request.setAttribute("publico.infoRoom", salaBean);
 		return (mapping.findForward("VerSala"));
 	}
 
@@ -112,14 +112,14 @@ public class ManipularSalasAction extends FenixAction {
 		throws Exception {
 
 		HttpSession session = getSession(request);
-		InfoRoom salaBean = getSelectedSala(form, session);
+		InfoRoom salaBean = getSelectedSala(form, request);
 
 		List edificios = Util.readExistingBuldings(null, null);
 		List tipos = Util.readTypesOfRooms(null, null);
 
-		session.setAttribute("publico.buildings", edificios);
-		session.setAttribute("publico.types", tipos);
-		session.setAttribute("previousNameSala", salaBean.getNome());
+		request.setAttribute("publico.buildings", edificios);
+		request.setAttribute("publico.types", tipos);
+		request.setAttribute("previousNameSala", salaBean.getNome());
 
 		// create the bean that holds the information about the sala to edit
 		DynaActionFormClass cl;
@@ -160,9 +160,9 @@ public class ManipularSalasAction extends FenixAction {
 		throws Exception {
 		HttpSession session = getSession(request);
 		ArrayList listaSalasBean =
-			(ArrayList) session.getAttribute("publico.infoRooms");
+			(ArrayList) request.getAttribute("publico.infoRooms");
 		IUserView userView = (IUserView) session.getAttribute("UserView");
-		InfoRoom selectedSala = getSelectedSala(form,session);
+		InfoRoom selectedSala = getSelectedSala(form,request);
 
 		Object argsCriarSala[] = { new RoomKey(selectedSala.getNome())};
 		try {
@@ -178,10 +178,10 @@ public class ManipularSalasAction extends FenixAction {
 
 		/* Actualiza a lista de salas no "scope" de sessao */
 		listaSalasBean.remove(selectedSala);
-		session.removeAttribute(mapping.getAttribute());
+		request.removeAttribute(mapping.getAttribute());
 
 		if (listaSalasBean.isEmpty())
-			session.removeAttribute("publico.infoRooms");
+			request.removeAttribute("publico.infoRooms");
 
 		return mapping.findForward("SalaApagada");
 	}

@@ -51,7 +51,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Calendar examDateAndTime =
-			(Calendar) session.getAttribute(SessionConstants.EXAM_DATEANDTIME);
+			(Calendar) request.getAttribute(SessionConstants.EXAM_DATEANDTIME);
 
 		Calendar examDate = Calendar.getInstance();
 		Calendar examTime = Calendar.getInstance();
@@ -82,9 +82,9 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		if (infoExams != null && infoExams.size() == 0)
 			infoExams = null;
 
-		session.setAttribute(SessionConstants.AVAILABLE_ROOM_OCCUPATION, infoViewExams.getAvailableRoomOccupation());
-		session.removeAttribute(SessionConstants.LIST_EXAMSANDINFO);
-		session.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoExams);
+		request.setAttribute(SessionConstants.AVAILABLE_ROOM_OCCUPATION, infoViewExams.getAvailableRoomOccupation());
+		request.removeAttribute(SessionConstants.LIST_EXAMSANDINFO);
+		request.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoExams);
 
 		return mapping.findForward("View Exams");
 	}
@@ -99,7 +99,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 	
-		List infoExams = (List) session.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+		List infoExams = (List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
 
 		Integer indexExam = new Integer(request.getParameter("indexExam"));
 
@@ -133,23 +133,23 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		
 		DynaValidatorForm editExamForm = (DynaValidatorForm) form;
 	
-		List infoExams = (List) session.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+		List infoExams = (List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
 
 		Integer indexExam = new Integer(request.getParameter("indexExam"));
 
 		InfoViewExamByDayAndShift infoViewExam = (InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue());
 
 		ArrayList horas = Util.getExamShifts();
-		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+		request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
 		ArrayList daysOfMonth = Util.getDaysOfMonth();
-		session.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
+		request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
 		ArrayList monthsOfYear = Util.getMonthsOfYear();
-		session.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
+		request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
 		ArrayList examSeasons = Util.getExamSeasons();
-		session.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+		request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
 		Calendar date = Calendar.getInstance();
 		date = infoViewExam.getInfoExam().getDay();
@@ -162,9 +162,9 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		}
 		editExamForm.set("season", infoViewExam.getInfoExam().getSeason().getseason().toString());
 
-		session.setAttribute("input", "viewExamsByDayAndShift");
+		request.setAttribute("input", "viewExamsByDayAndShift");
 		
-		session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExam);
+		request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExam);
 
 		return mapping.findForward("Edit Exam");
 	}
@@ -178,16 +178,16 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 	
-		List infoViewExams = (List) session.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+		List infoViewExams = (List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
 
 		Integer indexExam = new Integer(request.getParameter("indexExam"));
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.INFO_VIEW_EXAM,
 			((InfoViewExamByDayAndShift) infoViewExams
 				.get(indexExam.intValue())));
 
-		session.setAttribute("input", "viewExamsByDayAndShift");
+		request.setAttribute("input", "viewExamsByDayAndShift");
 		
 		return mapping.findForward("Add Execution Course");
 	}

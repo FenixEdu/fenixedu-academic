@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author  tfc130
  */
-public class InfoExecutionDegree implements Serializable {
+public class InfoExecutionDegree extends InfoObject implements Serializable {
 	private InfoExecutionYear infoExecutionYear;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	private InfoTeacher infoCoordinator;
@@ -21,16 +21,6 @@ public class InfoExecutionDegree implements Serializable {
 	private Boolean temporaryExamMap;
 
 	public InfoExecutionDegree() {
-	}
-	/**
-	 * 
-	 * @param anoLectivo
-	 * @param infoLicenciatura
-	 * @deprecated
-	 */
-	public InfoExecutionDegree(
-		String anoLectivo,
-		InfoDegree infoLicenciatura) {
 	}
 	/**
 	 * 

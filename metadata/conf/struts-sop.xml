@@ -422,7 +422,7 @@
       </action>
 
       <action attribute="aulaForm"
-              input="/criarAula.jsp"
+              input="/prepararAula.do"
               name="aulaForm"
               path="/criarAulaForm"
               scope="request"

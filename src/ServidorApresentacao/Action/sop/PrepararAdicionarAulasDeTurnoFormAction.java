@@ -31,11 +31,11 @@ public class PrepararAdicionarAulasDeTurnoFormAction extends Action {
     if (sessao != null) {
         IUserView userView = (IUserView) sessao.getAttribute("UserView");
         GestorServicos gestor = GestorServicos.manager();
-        ArrayList infoAulasDeTurno = (ArrayList) sessao.getAttribute("infoAulasDeTurno");
-		InfoShift infoTurno = (InfoShift) sessao.getAttribute("infoTurno");
+        ArrayList infoAulasDeTurno = (ArrayList) request.getAttribute("infoAulasDeTurno");
+		InfoShift infoTurno = (InfoShift) request.getAttribute("infoTurno");
 
 		// Ler Aulas de Disciplina em Execucao e Tipo
-		InfoExecutionCourse infoDisciplina = (InfoExecutionCourse) sessao.getAttribute("infoDisciplinaExecucao");
+		InfoExecutionCourse infoDisciplina = (InfoExecutionCourse) request.getAttribute("infoDisciplinaExecucao");
 		ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao = new ExecutionCourseKeyAndLessonType(infoTurno.getTipo(),infoDisciplina.getSigla());
 		
 	    Object argsLerAulasDeDisciplinaETipo[] = { tipoAulaAndKeyDisciplinaExecucao, infoDisciplina };
@@ -43,9 +43,9 @@ public class PrepararAdicionarAulasDeTurnoFormAction extends Action {
 
 		if (infoAulasDeTurno != null)
 			infoAulasDeDisciplina.removeAll(infoAulasDeTurno);
-		sessao.removeAttribute("infoAulasDeDisciplinaExecucao");
+		request.removeAttribute("infoAulasDeDisciplinaExecucao");
 		if (!infoAulasDeDisciplina.isEmpty())
-	     	sessao.setAttribute("infoAulasDeDisciplinaExecucao", infoAulasDeDisciplina);
+	     	request.setAttribute("infoAulasDeDisciplinaExecucao", infoAulasDeDisciplina);
 
       return mapping.findForward("Sucesso");
     } else

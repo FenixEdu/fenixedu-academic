@@ -17,7 +17,7 @@
         </table>
         <br/><br/>
         <span class="error"><html:errors/></span>
-		<logic:notPresent name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
+		<logic:notPresent name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="request">
 			<table width="100%">
 				<tr>
 					<td>
@@ -26,7 +26,7 @@
 				</tr>
 			</table>
 		</logic:notPresent>	
-<logic:present name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
+<logic:present name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="request">
 	<table width="100%">
 		<tr>
 			<td class="listClasses-header"><bean:message key="property.course"/></td>
@@ -34,7 +34,7 @@
 			<td class="listClasses-header"><bean:message key="property.exam.1stExam"/></td>
 			<td class="listClasses-header"><bean:message key="property.exam.2stExam"/></td>
 		</tr>
-			<logic:iterate id="infoExecutionCourseAndExams" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
+			<logic:iterate id="infoExecutionCourseAndExams" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="request">
 		<tr>
 			<td class="listClasses"><bean:write name="infoExecutionCourseAndExams" property="infoExecutionCourse.nome"/></td>
 			<td class="listClasses"><bean:write name="infoExecutionCourseAndExams" property="numberStudentesAttendingCourse"/></td>

@@ -17,7 +17,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.LookupDispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionCourse;
@@ -35,21 +34,21 @@ import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.InvalidTimeIntervalActionException;
+import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextLookupDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.DiaSemana;
 import Util.TipoAula;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class LessonManagerDispatchAction extends LookupDispatchAction {
+public class LessonManagerDispatchAction
+	extends FenixExecutionDegreeAndCurricularYearContextLookupDispatchAction {
 
 	public static String INVALID_TIME_INTERVAL =
 		"errors.lesson.invalid.time.interval";
@@ -73,6 +72,9 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 
 		DynaActionForm criarAulaForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
+		ContextUtils.setExecutionPeriodContext(request);
+		ContextUtils.setExecutionDegreeContext(request);
+		ContextUtils.setCurricularYearContext(request);
 		if (sessao != null) {
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
@@ -190,13 +192,17 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
+		ContextUtils.setExecutionPeriodContext(request);
+		ContextUtils.setExecutionDegreeContext(request);
+		ContextUtils.setCurricularYearContext(request);
+
 		if (sessao != null) {
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
 			GestorServicos gestor = GestorServicos.manager();
 			InfoLesson iAulaAntiga =
-				(InfoLesson) sessao.getAttribute("infoAula");
+				(InfoLesson) request.getAttribute("infoAula");
 
 			Calendar inicio = Calendar.getInstance();
 			inicio.set(
@@ -263,7 +269,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 			}
 
 			InfoExecutionCourse iDE =
-				(InfoExecutionCourse) sessao.getAttribute(
+				(InfoExecutionCourse) request.getAttribute(
 					"infoDisciplinaExecucao");
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
@@ -273,16 +279,16 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
 
-			sessao.removeAttribute("listaAulas");
+			//sessao.removeAttribute("listaAulas");
 			if (infoAulas != null && !infoAulas.isEmpty())
-				sessao.setAttribute("listaAulas", infoAulas);
+				request.setAttribute("listaAulas", infoAulas);
 
-			sessao.removeAttribute("indexAula");
+			//sessao.removeAttribute("indexAula");
 
 			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
 
 			if (actionErrors.isEmpty()) {
-				sessao.removeAttribute("infoAula");
+				//sessao.removeAttribute("infoAula");
 
 				String parameter =
 					request.getParameter(new String("operation"));
@@ -305,6 +311,10 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
+		ContextUtils.setExecutionPeriodContext(request);
+		ContextUtils.setExecutionDegreeContext(request);
+		ContextUtils.setCurricularYearContext(request);
+
 		if (sessao != null) {
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
@@ -315,7 +325,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				new DiaSemana(
 					new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana"))));
 
-			sessao.setAttribute("weekDayString", weekDay.toString());
+			request.setAttribute("weekDayString", weekDay.toString());
 
 			Calendar inicio = Calendar.getInstance();
 			inicio.set(
@@ -382,10 +392,10 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				}
 				emptyRoomsList.add(0, infoSala);
 
-				sessao.removeAttribute("listaSalas");
-				sessao.removeAttribute("listaInfoSalas");
-				sessao.setAttribute("listaSalas", listaSalas);
-				sessao.setAttribute("listaInfoSalas", emptyRoomsList);
+				//sessao.removeAttribute("listaSalas");
+				//sessao.removeAttribute("listaInfoSalas");
+				request.setAttribute("listaSalas", listaSalas);
+				request.setAttribute("listaInfoSalas", emptyRoomsList);
 
 				String parameter =
 					request.getParameter(new String("operation"));
@@ -405,9 +415,16 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		//super.execute(mapping, form, request, response);
+		ContextUtils.setExecutionPeriodContext(request);
+		ContextUtils.setExecutionDegreeContext(request);
+		ContextUtils.setCurricularYearContext(request);
+
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
+		RequestUtils.setLessonTypes(request);
+		SessionUtils.getExecutionCourses(request);
 		if (sessao != null) {
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
@@ -418,7 +435,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				new DiaSemana(
 					new Integer( formDay2EnumerateDay((String)editarAulaForm.get("diaSemana"))));
 
-			sessao.setAttribute("weekDayString", weekDay.toString());
+			request.setAttribute("weekDayString", weekDay.toString());
 
 			Calendar inicio = Calendar.getInstance();
 			inicio.set(
@@ -450,9 +467,9 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				infoLesson.setFim(fim);
 
 				InfoExecutionPeriod infoExecutionPeriod =
-					(InfoExecutionPeriod) (sessao
+					(InfoExecutionPeriod) request
 						.getAttribute(
-							SessionConstants.INFO_EXECUTION_PERIOD_KEY));
+							SessionConstants.EXECUTION_PERIOD);
 
 				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
@@ -480,10 +497,10 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 						new LabelValueBean(elem.getNome(), elem.getNome()));
 				}
 
-				sessao.removeAttribute("listaSalas");
-				sessao.removeAttribute("listaInfoSalas");
-				sessao.setAttribute("listaSalas", listaSalas);
-				sessao.setAttribute("listaInfoSalas", emptyRoomsList);
+				//sessao.removeAttribute("listaSalas");
+				//sessao.removeAttribute("listaInfoSalas");
+				request.setAttribute("listaSalas", listaSalas);
+				request.setAttribute("listaInfoSalas", emptyRoomsList);
 
 				String parameter =
 					request.getParameter(new String("operation"));

@@ -43,7 +43,7 @@ public class ChooseExecutionCourseAction extends Action {
 
 		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 		
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
 
 		List infoCourseList = SessionUtils.getExecutionCourses(request);
@@ -59,12 +59,12 @@ public class ChooseExecutionCourseAction extends Action {
 			int index = infoCourseList.indexOf(infoCourse);
 			infoCourse = (InfoExecutionCourse) infoCourseList.get(index);
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.EXECUTION_COURSE_KEY,
 				infoCourse);
 			return mapping.findForward("forwardChoose");
 		} else {
-			session.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+			request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 			//session.removeAttribute(SessionConstants.CLASS_VIEW);
 			return mapping.findForward("showForm");
 		}

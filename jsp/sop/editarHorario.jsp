@@ -19,7 +19,7 @@
         <html:form action="/editarHorario">
             <center> <b> Turnos adicionados </b> </center>
             <br/>
-            <logic:present name="listaTurnosBean" scope="session">
+            <logic:present name="listaTurnosBean" scope="request">
                 <table align="center" border=1 cellpadding='5'>
                     <%! int i; %>
                     <% i = 0; %>
@@ -36,7 +36,7 @@
                     </logic:iterate>
                 </table>
             </logic:present>
-            <logic:notPresent name="listaTurnosBean" scope="session">
+            <logic:notPresent name="listaTurnosBean" scope="request">
                 <table align="center" border=1 cellpadding='5'>
                     <tr align="center">
                         <td width='200'>

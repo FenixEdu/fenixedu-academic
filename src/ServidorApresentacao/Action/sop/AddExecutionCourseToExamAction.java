@@ -34,11 +34,11 @@ public class AddExecutionCourseToExamAction extends FenixAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		InfoExecutionCourse executionCourse =
-			(InfoExecutionCourse) session.getAttribute(
+			(InfoExecutionCourse) request.getAttribute(
 				SessionConstants.EXECUTION_COURSE_KEY);
 
 		InfoViewExamByDayAndShift infoViewExams =
-			(InfoViewExamByDayAndShift) session.getAttribute(
+			(InfoViewExamByDayAndShift) request.getAttribute(
 				SessionConstants.INFO_VIEW_EXAM);
 
 		// Create new association between exam and executionCourse

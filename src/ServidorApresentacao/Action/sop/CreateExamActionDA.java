@@ -38,19 +38,19 @@ public class CreateExamActionDA extends DispatchAction {
 			HttpSession session = request.getSession(false);
 			
 			String nextPage = request.getParameter("nextPage");
-			session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+			request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 			
 			ArrayList horas = Util.getExamShifts();
-			session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+			request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
 			ArrayList daysOfMonth = Util.getDaysOfMonth();
-			session.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
+			request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
 			ArrayList monthsOfYear = Util.getMonthsOfYear();
-			session.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
+			request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
 			ArrayList examSeasons = Util.getExamSeasons();
-			session.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+			request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
 			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
 			chooseDayAndShiftForm.set("year", null);
@@ -77,7 +77,7 @@ public class CreateExamActionDA extends DispatchAction {
 			Season season = new Season(new Integer((String) chooseDayAndShiftForm.get("season")));
 			Calendar examDate = Calendar.getInstance();
 			Calendar examTime = Calendar.getInstance();
-			InfoExecutionCourse executionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+			InfoExecutionCourse executionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 
 			Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
 			Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
@@ -104,7 +104,7 @@ public class CreateExamActionDA extends DispatchAction {
 				throw new ExistingActionException("O exame", ex);
 			}
 
-			String nextPage = (String) session.getAttribute(SessionConstants.NEXT_PAGE);
+			String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
 
 			if (nextPage != null) {
 				return mapping.findForward(nextPage);

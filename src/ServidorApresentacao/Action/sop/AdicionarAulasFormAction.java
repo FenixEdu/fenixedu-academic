@@ -57,13 +57,13 @@ public class AdicionarAulasFormAction extends FenixAction {
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 			DynaActionForm manipularTurnosForm =
-				(DynaActionForm) sessao.getAttribute("manipularTurnosForm");
+				(DynaActionForm) request.getAttribute("manipularTurnosForm");
 			IUserView userView =
 				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 			Integer indexTurno =
 				(Integer) manipularTurnosForm.get("indexTurno");
 			ArrayList infoTurnos =
-				(ArrayList) sessao.getAttribute(
+				(ArrayList) request.getAttribute(
 					"infoTurnosDeDisciplinaExecucao");
 			InfoShift infoTurno =
 				(InfoShift) infoTurnos.get(indexTurno.intValue());

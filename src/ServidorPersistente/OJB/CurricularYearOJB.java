@@ -48,7 +48,7 @@ public class CurricularYearOJB extends ObjectFenixOJB implements IPersistentCurr
 		if (curricularYearFromDB == null) {
 			super.lockWrite(curricularYearToWrite);
 		// else If the CurricularYear is mapped to the database, then write any existing changes.
-		} else if ((curricularYearToWrite instanceof CurricularYear) && ((CurricularYear) curricularYearFromDB).getInternalID().equals(((CurricularYear) curricularYearToWrite).getInternalID())) {
+		} else if ((curricularYearToWrite instanceof CurricularYear) && ((CurricularYear) curricularYearFromDB).getIdInternal().equals(((CurricularYear) curricularYearToWrite).getIdInternal())) {
 			super.lockWrite(curricularYearToWrite);
 			// else Throw an already existing exception
 		} else

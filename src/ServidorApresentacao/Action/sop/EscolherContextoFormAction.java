@@ -12,16 +12,19 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
+import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixContextAction;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
  */
-public class EscolherContextoFormAction extends FenixAction {
+public class EscolherContextoFormAction extends FenixContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -30,32 +33,50 @@ public class EscolherContextoFormAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		super.execute(mapping, form, request, response);
+
 		DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
 		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
 
-		SessionUtils.removeAttributtes(
-			session,
-			SessionConstants.CONTEXT_PREFIX);
+//		SessionUtils.removeAttributtes(
+//			session,
+//			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD);
 
-			Integer semestre =
-				((InfoExecutionPeriod) session
-					.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY))
-					.getSemester();
+			Integer semestre = infoExecutionPeriod.getSemester();
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("anoCurricular");
+
+			Object argsReadCurricularYearByOID[] =
+				{ anoCurricular };
+			InfoCurricularYear infoCurricularYear =
+				(InfoCurricularYear) ServiceUtils.executeService(
+						userView,
+						"ReadCurricularYearByOID",
+						argsReadCurricularYearByOID);
+			
 
 			int index =
 				Integer.parseInt((String) escolherContextoForm.get("index"));
 
-			session.setAttribute("anoCurricular", anoCurricular);
-			session.setAttribute("semestre", semestre);
+			request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
+			//request.setAttribute("anoCurricular", anoCurricular);
+			//request.setAttribute("semestre", semestre);
+
+			Object argsLerLicenciaturas[] =
+				{ infoExecutionPeriod.getInfoExecutionYear()};
 
 			List infoExecutionDegreeList =
-				(List) session.getAttribute(
-					SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionDegreesByExecutionYear",
+					argsLerLicenciaturas);
 
 			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
@@ -66,20 +87,22 @@ public class EscolherContextoFormAction extends FenixAction {
 						anoCurricular,
 						semestre,
 						infoExecutionDegree);
-				session.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
+				request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
 
-				session.setAttribute(
-					SessionConstants.CURRICULAR_YEAR_KEY,
-					anoCurricular);
-				session.setAttribute(
-					SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+//				request.setAttribute(
+//					SessionConstants.CURRICULAR_YEAR_KEY,
+//					anoCurricular);
+//				request.setAttribute(
+//					SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+//					infoExecutionDegree);
+				request.setAttribute(
+					SessionConstants.EXECUTION_DEGREE,
 					infoExecutionDegree);
-
 			} else {
-				session.removeAttribute(SessionConstants.CONTEXT_KEY);
-				session.removeAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
-				session.removeAttribute(
-					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+//				request.removeAttribute(SessionConstants.CONTEXT_KEY);
+//				request.removeAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
+//				request.removeAttribute(
+//					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}
 			return mapping.findForward("Sucesso");

@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	
 <logic:present name="<%= SessionConstants.INFO_EXECUTION_DEGREE_KEY %>"  >
-	<bean:define id="infoDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_KEY %>" property="infoDegreeCurricularPlan.infoDegree"scope="session" />
-   	<bean:define id="infoExecutionPeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" scope="session"/>
+	<bean:define id="infoDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_KEY %>" property="infoDegreeCurricularPlan.infoDegree"scope="request" />
+   	<bean:define id="infoExecutionPeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" scope="request"/>
    	<jsp:getProperty name="infoDegree" property="tipoCurso" /> em 
 	<jsp:getProperty name="infoDegree" property="nome" />
 	<br/>

@@ -49,9 +49,9 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-		session.setAttribute("minutes", Util.getMinutes());
-		session.setAttribute("hours", Util.getHours());
-		session.setAttribute("weekDays", Util.getDaysOfWeek());
+		request.setAttribute("minutes", Util.getMinutes());
+		request.setAttribute("hours", Util.getHours());
+		request.setAttribute("weekDays", Util.getDaysOfWeek());
 
 		// execution period selection		
 		IUserView userView = (IUserView) session.getAttribute("UserView");
@@ -68,7 +68,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		// if executionPeriod was previously selected,form has that
 		// value as default
 		InfoExecutionPeriod selectedExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		if (selectedExecutionPeriod != null) {
 			DynaActionForm searchForm = (DynaActionForm) form;
@@ -91,7 +91,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 					"" + i));
 		}
 
-		session.setAttribute(
+		request.setAttribute(
 			SessionConstants.LIST_INFOEXECUTIONPERIOD,
 			executionPeriods);
 
@@ -154,7 +154,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 			HttpSession session = request.getSession(false);
 
 			ArrayList infoExecutionPeriodList =
-				(ArrayList) session.getAttribute(
+				(ArrayList) request.getAttribute(
 					SessionConstants.LIST_INFOEXECUTIONPERIOD);
 			Integer index = (Integer) searchForm.get("executionPeriodIndex");
 
@@ -163,7 +163,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 				infoExecutionPeriod =
 					(InfoExecutionPeriod) infoExecutionPeriodList.get(
 						index.intValue());
-				session.setAttribute(
+				request.setAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 					infoExecutionPeriod);
 			}

@@ -6,7 +6,7 @@
 <h2><bean:message key="manipularSalas.titleSuccess"/></h2>
   <br/>
   <span class="error"><html:errors/></span>
-  <logic:present name="publico.infoRooms" scope="session">
+  <logic:present name="publico.infoRooms" scope="request">
     <table border="0" cellpadding="5">
       <%! int i; %>
       <% i = 0; %>
@@ -24,7 +24,7 @@
     <br/>
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
   </logic:present>
-  <logic:notPresent name="publico.infoRooms" scope="session">
+  <logic:notPresent name="publico.infoRooms" scope="request">
     <table>
       <tr>
         <td>

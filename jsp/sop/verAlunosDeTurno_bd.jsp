@@ -14,11 +14,11 @@
         <!-- Cria a tabela com os alunos -->
         <center>
                 <b>
-	                <h2><bean:message key="listAlunos.OfTurno"/> <bean:write name="infoTurno" property="nome" scope="session" filter="true"/></h2>                
+	                <h2><bean:message key="listAlunos.OfTurno"/> <bean:write name="infoTurno" property="nome" scope="request" filter="true"/></h2>                
                 </b>
 	    </center>
         <br/>
-        <logic:present name="infoAlunosDeTurno" scope="session">
+        <logic:present name="infoAlunosDeTurno" scope="request">
             <table align="center" border=1 cellpadding='5'>
                 <tr align="center">
                     <td>
@@ -52,7 +52,7 @@
                 </logic:iterate>
             </table>
         </logic:present>
-        <logic:notPresent name="infoAlunosDeTurno" scope="session">
+        <logic:notPresent name="infoAlunosDeTurno" scope="request">
             <table align="center" border='1' cellpadding='5'>
                 <tr align="center">
                     <td>

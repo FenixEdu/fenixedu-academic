@@ -5,10 +5,10 @@ package Dominio;
  *
  * 21/Mar/2003
  */
-public interface ICurricularYear {
+public interface ICurricularYear extends IDomainObject {
 
 	public Integer getYear();
-	public Integer getInternalID();
+	//public Integer getInternalID();
 	
 	public void setYear(Integer year);
 }

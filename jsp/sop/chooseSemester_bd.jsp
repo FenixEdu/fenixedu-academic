@@ -9,7 +9,7 @@
 	<center><font color='#034D7A' size='5'> <b> <bean:message key="title.room.occupation"/> </b> </font></center>
 	<br/>
 
-	<logic:present name="publico.semester" scope="session">
+	<logic:present name="publico.semester" scope="request">
 	<html:form action="/viewRoomOcupation.do">
 
 		<table align="center" border="5" cellpadding='20' cellspacing='10'>
@@ -35,7 +35,7 @@
 	</html:form>
 	</logic:present>
 
-	<logic:notPresent name="publico.semester" scope="session">
+	<logic:notPresent name="publico.semester" scope="request">
 		<table align="center" border='1' cellpadding='10'>
 			<tr align="center">
 				<td>

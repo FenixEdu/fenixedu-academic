@@ -13,7 +13,7 @@
     </tr>
 </table>
 <br />
-	<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
+	<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="request">
 <table width="100%" cellspacing="0">
 	<tr>   		
 		<td nowrap="nowrap">
@@ -29,7 +29,7 @@
 <div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/></div>		
 <br />
 	</logic:present>
-	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
+	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="request">
 <h2><bean:message key="label.class.create"/></h2>
 <table cellspacing="0">
 	<tr>   		

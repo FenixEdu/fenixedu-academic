@@ -35,7 +35,7 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 			IUserView userView = SessionUtils.getUserView(request);
 
 			Calendar dateAndTime =
-				(Calendar) session.getAttribute(
+				(Calendar) request.getAttribute(
 					SessionConstants.EXAM_DATEANDTIME);
 
 			Calendar date = Calendar.getInstance();
@@ -75,7 +75,7 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 					infoRoomsList);
 				request.setAttribute(
 					"dateAndTime",
-					session.getAttribute(
+					request.getAttribute(
 						SessionConstants.EXAM_DATEANDTIME_STR));
 			}
 

@@ -18,7 +18,6 @@ import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -41,7 +40,7 @@ public class EscolherAulasFormAction extends FenixAction {
         diasSemana.add(new LabelValueBean("quinta", (new Integer(DiaSemana.QUINTA_FEIRA)).toString() ));
         diasSemana.add(new LabelValueBean("sexta", (new Integer(DiaSemana.SEXTA_FEIRA)).toString() ));
         diasSemana.add(new LabelValueBean("sabado", (new Integer(DiaSemana.SABADO)).toString() ));
-        sessao.setAttribute("diasSemana", diasSemana);
+        request.setAttribute("diasSemana", diasSemana);
 
         ArrayList tiposAula = new ArrayList();
         tiposAula.add(new LabelValueBean("Teórica", (new Integer(TipoAula.TEORICA)).toString() ));
@@ -50,7 +49,7 @@ public class EscolherAulasFormAction extends FenixAction {
         tiposAula.add(new LabelValueBean("Laboratorial", (new Integer(TipoAula.LABORATORIAL)).toString() ));
         tiposAula.add(new LabelValueBean("Dúvidas", (new Integer(TipoAula.DUVIDAS)).toString() ));
         tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString() ));
-        sessao.setAttribute("tiposAula", tiposAula);
+        request.setAttribute("tiposAula", tiposAula);
 
         ArrayList horas = new ArrayList();
         horas.add("8");
@@ -69,12 +68,12 @@ public class EscolherAulasFormAction extends FenixAction {
         horas.add("21");
         horas.add("22");
         horas.add("23");
-        sessao.setAttribute("horas",horas);
+        request.setAttribute("horas",horas);
         
         ArrayList minutos = new ArrayList();        
         minutos.add("00");
         minutos.add("30");
-        sessao.setAttribute("minutos",minutos);
+        request.setAttribute("minutos",minutos);
 
 
         IUserView userView = (IUserView) sessao.getAttribute("UserView");
@@ -89,24 +88,24 @@ public class EscolherAulasFormAction extends FenixAction {
             InfoRoom elem = (InfoRoom)infoSalas.get(i);
             listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));	        	
         }
-        sessao.setAttribute("listaSalas", listaSalas);
-        sessao.setAttribute("listaInfoSalas", infoSalas);    
+        request.setAttribute("listaSalas", listaSalas);
+        request.setAttribute("listaInfoSalas", infoSalas);    
         
         // Fim ler salas.
 
 		// Ler Disciplinas em Execucao
-        InfoExecutionCourse iDE = (InfoExecutionCourse) sessao.getAttribute("infoDisciplinaExecucao");
+        InfoExecutionCourse iDE = (InfoExecutionCourse) request.getAttribute("infoDisciplinaExecucao");
 
         Object argsLerAulas[] = new Object[1];
         argsLerAulas[0] = iDE;
         ArrayList infoAulas = (ArrayList) gestor.executar(userView, "LerAulasDeDisciplinaExecucao", argsLerAulas);
 
-        sessao.removeAttribute("listaAulas");
+        //sessao.removeAttribute("listaAulas");
         if (infoAulas != null && !infoAulas.isEmpty()) {
 			Collections.sort(infoAulas, new InfoLessonComparatorByWeekDayAndTime());        	
-	        sessao.setAttribute("listaAulas", infoAulas);
+	        request.setAttribute("listaAulas", infoAulas);
         }
-		sessao.removeAttribute(SessionConstants.CLASS_VIEW);
+		//sessao.removeAttribute(SessionConstants.CLASS_VIEW);
 		return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

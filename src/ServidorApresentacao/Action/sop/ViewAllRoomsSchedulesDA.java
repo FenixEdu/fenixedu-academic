@@ -155,7 +155,7 @@ public class ViewAllRoomsSchedulesDA  extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) session.getAttribute(
+			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		if (infoExecutionPeriod == null) {
 			IUserView userView = SessionUtils.getUserView(request);
@@ -165,7 +165,7 @@ public class ViewAllRoomsSchedulesDA  extends DispatchAction {
 					"ReadCurrentExecutionPeriod",
 					new Object[0]);
 
-			session.setAttribute(
+			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
 				infoExecutionPeriod);
 		}

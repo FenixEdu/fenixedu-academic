@@ -36,14 +36,14 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) session.getAttribute(
+				(InfoExecutionPeriod) request.getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) session.getAttribute(
+				(InfoExecutionDegree) request.getAttribute(
 					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
 			Integer curricularYear =
-				(Integer) session.getAttribute(
+				(Integer) request.getAttribute(
 					SessionConstants.CURRICULAR_YEAR_KEY);
 
 			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
@@ -54,9 +54,9 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 
 			if (infoExecutionCourseAndExamsList != null
 				&& infoExecutionCourseAndExamsList.isEmpty()) {
-				session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
+				request.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
 			} else {
-				session.setAttribute(
+				request.setAttribute(
 					SessionConstants.INFO_EXAMS_KEY,
 					infoExecutionCourseAndExamsList);
 			}

@@ -73,8 +73,6 @@ public class MigrateInscricoes2FenixEnrolments {
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
-		DegreeCurricularPlan degreeCurricularPlan = null;
 		IBranch branch = null;
 		int inscricoesNotWritten = 0;
 		int enrolmentsWritten = 0;
@@ -207,7 +205,7 @@ public class MigrateInscricoes2FenixEnrolments {
 				
 				criteria = new Criteria();
 				criteria.addEqualTo("semester", new Integer(1));
-				criteria.addEqualTo("curricularYearKey", curricularYear.getInternalID());
+				criteria.addEqualTo("curricularYearKey", curricularYear.getIdInternal());
 				query = new QueryByCriteria(CurricularSemester.class,criteria);
 
 				result = (List) broker.getCollectionByQuery(query);		

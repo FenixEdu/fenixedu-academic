@@ -389,7 +389,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("semester", semester);
-		criteria.addEqualTo("curricularYear.internalID", curricularYear.getInternalID());
+		criteria.addEqualTo("curricularYear.internalID", curricularYear.getIdInternal());
 
 		List result = query(CurricularSemester.class, criteria);
 		if (result.size() == 1) {

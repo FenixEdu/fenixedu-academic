@@ -14,7 +14,7 @@
           </tr>
         </table>
         <br/>
-   	<% ArrayList iA = (ArrayList) session.getAttribute("infoAulasDeDisciplinaExecucao"); %>
+   	<% ArrayList iA = (ArrayList) request.getAttribute("infoAulasDeDisciplinaExecucao"); %>
         <center><font color='#034D7A' size='5'> <b> <bean:message key="title.adicionarAulas"/> </b> </font></center>
         <br/>
         <br/>
@@ -26,7 +26,7 @@
             <br/>
 			
             <!-- Cria a tabela das aulas -->
-            <logic:present name="infoAulasDeDisciplinaExecucao" scope="session">
+            <logic:present name="infoAulasDeDisciplinaExecucao" scope="request">
                 <table align="center"  cellpadding='5'>
                     <tr align='center'>
                         <td class="listClasses-header">
@@ -106,7 +106,7 @@
 
             </table>
             </logic:present>
-            <logic:notPresent name="infoAulasDeDisciplinaExecucao" scope="session">
+            <logic:notPresent name="infoAulasDeDisciplinaExecucao" scope="request">
                 <table align="center" border='1' cellpadding='5'>
                     <tr align="center">
                         <td>
