@@ -1,5 +1,5 @@
 /*
- * Created on 22/Jul/2003
+ * Created on 2/Set/2003
  */
 package ServidorAplicacao.Servicos.manager;
 
@@ -10,32 +10,33 @@ import java.util.List;
  * @author lmac1
  */
 
-public class DeleteDegreesServiceTest extends TestCaseManagerDeleteServices {
+public class DeleteCurricularCoursesOfDegreeCurricularPlanServiceTest extends TestCaseManagerDeleteServices {
 
-	public DeleteDegreesServiceTest(String testName) {
+	public DeleteCurricularCoursesOfDegreeCurricularPlanServiceTest(String testName) {
 		super(testName);
 	}
 		
 	protected String getNameOfServiceToBeTested() {
-		return "DeleteDegrees";
+		return "DeleteCurricularCoursesOfDegreeCurricularPlan";
 	}
 		
 	protected List getArgumentsOfServiceToBeTestedSuccessfuly() {
 		List entry = new ArrayList(2);
-		entry.add(new Integer(12));
+		entry.add(new Integer(28));
 		entry.add(new Integer(100));
 		return entry;
 	}
 	
 	protected List expectedActionErrorsArguments() {
 		List result = new ArrayList();
-		result.add("Licenciatura de Engenharia Informatica e de Computadores");
+		result.add("Analise Matematica I");
+		result.add("AMI");
 		return result;
 	}
 	
 	protected List getArgumentsOfServiceToBeTestedUnSuccessfuly() {
 		List list = new ArrayList(1);
-		list.add(new Integer(8));
+		list.add(new Integer(1));
 		return list;
 	}
 }
