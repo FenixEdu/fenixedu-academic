@@ -1,4 +1,4 @@
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
 	Boolean canBeExecutionCourseResponsible;
@@ -6,21 +6,21 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.teacher.Category 
 }
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Date lastModificationDate;
 	String publication;
 }
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	String report;
 	Date lastModificationDate;
 	Integer keyExecutionCourse;
 }
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
 	Date lastModificationDate;
 	String strongPoints;
@@ -29,7 +29,7 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.StudentCou
 }
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
 	String curricularYear;
 	Integer approved;
@@ -39,7 +39,7 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.CourseHist
 }
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
 	Integer keyDegree;
 	Boolean type;
@@ -48,7 +48,7 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.student.Delegate 
 
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	String classTypeLong;
 	Double average3_9;
 	Double deviation3_4;
@@ -108,7 +108,7 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInqu
 
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double average3_9;
 	Double average3_4_numerical;
 	Integer gepCourseId;
@@ -153,7 +153,7 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInqu
 }
 
 
-class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
 	Double deviation2_3;
 	Double tolerance2_2;
