@@ -47,17 +47,17 @@ public class SelectRooms implements IServico {
 	/**
 	 * The run method of this Service class.
 	 **/
-	public Object run(InfoRoom InfoRoom) {
+	public Object run(InfoRoom infoRoom) {
 	  List salas = null;
 
 	  try {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		Integer tipo = InfoRoom.getTipo() != null ? InfoRoom.getTipo().getTipo() : null;
+		Integer tipo = infoRoom.getTipo() != null ? infoRoom.getTipo().getTipo() : null;
 
-		salas = sp.getISalaPersistente().readSalas(InfoRoom.getNome(), InfoRoom.getEdificio(),
-						   InfoRoom.getPiso(), tipo,
-						   InfoRoom.getCapacidadeNormal(),
-						   InfoRoom.getCapacidadeExame());
+		salas = sp.getISalaPersistente().readSalas(infoRoom.getNome(), infoRoom.getEdificio(),
+						   infoRoom.getPiso(), tipo,
+						   infoRoom.getCapacidadeNormal(),
+						   infoRoom.getCapacidadeExame());
 	  } catch (ExcepcaoPersistencia ex) {
 		ex.printStackTrace();
 		return null;
