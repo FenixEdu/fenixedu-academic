@@ -20,8 +20,8 @@ import Dominio.IEmployee;
 import Dominio.IEmployeeNotTeacher;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
+import Dominio.IRole;
 import Dominio.ITeacher;
-import Dominio.Role;
 import Dominio.Teacher;
 import Dominio.teacher.Category;
 import Dominio.teacher.ICategory;
@@ -43,7 +43,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 	/** Construtor */
 	public ServicoSeguroActualizarFuncsDocentes(String[] args)
 	{
-		ficheiro = "E:/Projectos/_carregamentos/docente.dat"; //args[0];
+		ficheiro = args[0];
 		delimitador = new String("\t");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -67,24 +67,23 @@ public class ServicoSeguroActualizarFuncsDocentes
 	public static void main(String[] args) throws Exception
 	{
 		new ServicoSeguroActualizarFuncsDocentes(args);
+		
 		LeituraFicheiroFuncDocente servicoLeitura = new LeituraFicheiroFuncDocente();
-		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-		broker.clearCache();
-
+		
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
-		/* ciclo para percorrer a Collection de Funcionarios */
-		/* algoritmo */
 		System.out.println("A converter " + lista.size() + " Docentes ... ");
 		int newTeachers = 0;
 		int newRoles = 0;
 
 		List persons = new ArrayList();
-		/* Procurar chaveFuncionario correspondente e criar funcDocente */
+		
 		Iterator iteradorNovo = lista.iterator();
 		Integer numeroMecanografico = null;
 		String categoria = null;
 
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+		broker.clearCache();		
 		broker.beginTransaction();
 		while (iteradorNovo.hasNext())
 		{
@@ -176,21 +175,16 @@ public class ServicoSeguroActualizarFuncsDocentes
 					RoleFunctions.readPersonRole(teacher.getPerson(), RoleType.TEACHER, broker);
 				if (personRole == null)
 				{
-					criteria = new Criteria();
-					criteria.addEqualTo("roleType", RoleType.TEACHER);
-
-					query = new QueryByCriteria(Role.class, criteria);
-					List result = (List) broker.getCollectionByQuery(query);
-
-					if (result.size() == 0)
+					IRole role = RoleFunctions.readRole(RoleType.TEACHER, broker);
+					if (role == null)
 					{
-						throw new Exception("Unknown Role !!!");
+						throw new Exception("Role Desconhecido !!!");
 					}
 					else
 					{
-						teacher.getPerson().getPersonRoles().add(result.get(0));
+						teacher.getPerson().getPersonRoles().add(role);
+						newRoles++;
 					}
-					newRoles++;
 				}
 
 				teacher.getPerson().setUsername("D" + numeroMecanografico);

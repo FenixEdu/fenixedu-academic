@@ -18,8 +18,8 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
+import Dominio.IRole;
 import Dominio.Pessoa;
-import Dominio.Role;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteFiltroPessoa.DB;
 import Util.RoleType;
@@ -38,7 +38,7 @@ public class ServicoSeguroTodasPessoas
 	/** Construtor */
 	public ServicoSeguroTodasPessoas(String[] args)
 	{
-		_ficheiro = "E:/Projectos/_carregamentos/pessoa-todos.dat"; //args[0];
+		_ficheiro = args[0];
 	}
 
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */
@@ -124,14 +124,8 @@ public class ServicoSeguroTodasPessoas
 						RoleFunctions.readPersonRole(person2Write, RoleType.PERSON, broker);
 					if (personRole == null)
 					{
-						criteria = new Criteria();
-						query = null;
-						criteria.addEqualTo("roleType", RoleType.PERSON);
-						query = new QueryByCriteria(Role.class, criteria);
-
-						result = (List) broker.getCollectionByQuery(query);
-
-						if (result.size() == 0)
+						IRole role = RoleFunctions.readRole(RoleType.PERSON, broker);												
+						if (role == null)
 						{
 							throw new Exception("Role Desconhecido !!!");
 						}
@@ -141,7 +135,7 @@ public class ServicoSeguroTodasPessoas
 							{
 								person2Write.setPersonRoles(new ArrayList());
 							}
-							person2Write.getPersonRoles().add(result.get(0));
+							person2Write.getPersonRoles().add(role);
 							newRoles++;
 						}
 					}

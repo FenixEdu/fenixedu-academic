@@ -36,7 +36,7 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 	/** Construtor */
 	public ServicoSeguroInicializarLocalTrabalhoFuncionarios(String[] args)
 	{
-		ficheiroCorreio = "E:/Projectos/_carregamentos/centro-custo-afecto.dat"; //args[0];
+		ficheiroCorreio = args[0];
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -76,14 +76,13 @@ public class ServicoSeguroInicializarLocalTrabalhoFuncionarios
 		System.out.println(
 			"ServicoSeguroInicializarLocalTrabalhoFuncionarios.main:Lista de Resultados..."
 				+ lista.size());
+		
+		int newEmployees = 0;
+		Iterator iteradorNovo = lista.iterator();
 
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		broker.clearCache();
 		broker.beginTransaction();
-		
-		int newEmployees = 0;
-
-		Iterator iteradorNovo = lista.iterator();
 		while (iteradorNovo.hasNext())
 		{
 			try

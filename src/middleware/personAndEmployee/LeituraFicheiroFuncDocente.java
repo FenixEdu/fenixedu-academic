@@ -13,116 +13,134 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
-import Util.TipoDocumentoIdentificacao;
 
 /**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class LeituraFicheiroFuncDocente {
+public class LeituraFicheiroFuncDocente
+{
 
 	private Collection ordem;
 	private ArrayList lista;
 	private BufferedReader leitura;
 
-	/** construtor por defeito */
-	public LeituraFicheiroFuncDocente() {
+	public LeituraFicheiroFuncDocente()
+	{
 	}
 
-	/** retorna uma Collection (ArrayList) */
-	/* a ideia e' ter uma ArrayList com Hashtables representando a estrutura necessaria */
-	/* os valores para cada chave da Hashtable sao Strings */
-	public Collection lerFicheiro(String ficheiroValidas, String delimitador, Hashtable estrutura, Collection ordem) throws NotExecuteException {
+	public Collection lerFicheiro(
+		String ficheiroValidas,
+		String delimitador,
+		Hashtable estrutura,
+		Collection ordem)
+		throws NotExecuteException
+	{
 		this.ordem = ordem;
 		this.lista = new ArrayList();
 		this.leitura = null;
 
+		File file = null;
+		InputStream ficheiro = null;
+
 		String linhaFicheiro = null;
 		Hashtable instancia = null;
 
-		try {
-			/* ficheiro com dados de funcionario validos */
-			File file =  new  File(ficheiroValidas);
-			InputStream ficheiro = new FileInputStream(file);
-			leitura = new BufferedReader(new InputStreamReader(ficheiro,"8859_1"), new Long(file.length()).intValue());
-		} catch (IOException e) {
+		try
+		{
+			file = new File(ficheiroValidas);
+			ficheiro = new FileInputStream(file);
+			leitura =
+				new BufferedReader(
+					new InputStreamReader(ficheiro, "8859_1"),
+					new Long(file.length()).intValue());
+		}
+		catch (IOException e)
+		{
 			throw new NotExecuteException("error.ficheiro.naoEncontrado");
 		}
 
-		/* primeira linha contem os cabecalhos */
-		try {
+		// first line with header
+		try
+		{
 			linhaFicheiro = leitura.readLine();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new NotExecuteException("error.ficheiro.impossivelLer");
 		}
 
-		do {
-			/* leitura do ficheiro com dados de funcionario linha a linha */
-			try {
+		do
+		{
+			//read file line by line
+			try
+			{
 				linhaFicheiro = leitura.readLine();
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				throw new NotExecuteException("error.ficheiro.impossivelLer");
 			}
 
-			if ((linhaFicheiro != null) && (linhaFicheiro.length() > 10)) {
-				/* aqui construir uma instancia de pessoa e adiciona-la a lista*/
+			if ((linhaFicheiro != null) && (linhaFicheiro.length() > 10))
+			{
+				// buil a instance and add it to the list
 				instancia = new Hashtable();
 
 				instancia = recuperarInstancia(linhaFicheiro, delimitador);
 
 				lista.add(instancia);
 			}
-		} while ((linhaFicheiro != null));
+		}
+		while ((linhaFicheiro != null));
+
+		try
+		{
+			leitura.close();
+			ficheiro.close();
+		}
+		catch (Exception e)
+		{
+			throw new NotExecuteException("error.ficheiro.impossivelFechar");
+		}
+
+		try
+		{
+			file.delete();
+		}
+		catch (Exception e)
+		{
+			throw new NotExecuteException("error.ficheiro.impossivelApagar");
+		}
 
 		return lista;
 	}
 
-	/** recuperar os atributos para construir a instancia */
-	private Hashtable recuperarInstancia(String linha, String delimitador) {
+	private Hashtable recuperarInstancia(String linha, String delimitador)
+	{
 		StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador);
 		Hashtable instancia = new Hashtable();
 
-		/* codigo de parsing dos atributos */
 		Iterator iterador = ordem.iterator();
 
 		String campo = null;
-		while (iterador.hasNext()) {
-			/* modificado Fernanda e Tânia */
+		while (iterador.hasNext())
+		{
 			campo = (String) iterador.next();
-			if (campo.equals("tipoDocumentoIdentificacao")) {
-				instancia.put(campo, formataTipoDocumentoIdentificacao(stringTokenizer.nextToken().trim()));
-			} else {
+			if (campo.equals("tipoDocumentoIdentificacao"))
+			{
+				instancia.put(
+					campo,
+						FormatPersonUtils.formataTipoDocumentoIdentificacao(stringTokenizer.nextToken().trim()));
+			}
+			else
+			{
 				instancia.put(campo, stringTokenizer.nextToken().trim());
 			}
-			//instancia.put(iterador.next(), stringTokenizer.nextToken().trim());
 		}
 
 		return instancia;
 	}
 
 
-	private static Integer formataTipoDocumentoIdentificacao(String naoFormatado) {
-		Integer resultado = null;
-
-		//trocar estes valores por constantes
-		if (naoFormatado.equals("00"))
-			resultado = new Integer(TipoDocumentoIdentificacao.OUTRO);
-		else if (naoFormatado.equals("01"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
-		else if (naoFormatado.equals("02"))
-			resultado = new Integer(TipoDocumentoIdentificacao.PASSAPORTE);
-		else if (naoFormatado.equals("03"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA);
-		else if (naoFormatado.equals("04"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO);
-		else if (naoFormatado.equals("05"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM);
-		else if (naoFormatado.equals("06"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
-		else resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
-
-		return resultado;
-	}
 }

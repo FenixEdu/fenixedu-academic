@@ -37,7 +37,7 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 	/** Construtor */
 	public ServicoSeguroInicializarCorreioFuncionarios(String[] args)
 	{
-		ficheiro = "E:/Projectos/_carregamentos/funcionario-correio.dat"; //args[0];
+		ficheiro = args[0];
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -75,13 +75,14 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
 		System.out.println("ServicoSeguroInicializarCorreioFuncionarios.main:Lista de Resultados...");
+		
+		int newEmployees = 0;
+		Iterator iteradorNovo = lista.iterator();
+				
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		broker.clearCache();
 		broker.beginTransaction();
 
-		int newEmployees = 0;
-		
-		Iterator iteradorNovo = lista.iterator();
 		while (iteradorNovo.hasNext())
 		{
 			try

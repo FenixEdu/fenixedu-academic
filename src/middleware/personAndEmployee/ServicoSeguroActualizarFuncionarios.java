@@ -19,7 +19,7 @@ import Dominio.Employee;
 import Dominio.IEmployee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
-import Dominio.Role;
+import Dominio.IRole;
 import Util.RoleType;
 
 /**
@@ -60,7 +60,7 @@ public class ServicoSeguroActualizarFuncionarios
 
 		LeituraFicheiroFuncionario servicoLeitura = new LeituraFicheiroFuncionario();
 
-		String ficheiro = "E:/Projectos/_carregamentos/funcionario.dat"; //args[0];
+		String ficheiro = args[0];
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
 		Integer numeroMecanografico = null;
@@ -72,7 +72,7 @@ public class ServicoSeguroActualizarFuncionarios
 		List unusedPersons = new ArrayList();
 
 		broker.beginTransaction();
-	
+
 		/* Find the correspond person and create the employee */
 		Iterator iteradorNovo = lista.iterator();
 
@@ -86,8 +86,6 @@ public class ServicoSeguroActualizarFuncionarios
 
 				String numeroDocumentoIdentificacao =
 					(String) instanciaTemporaria.get("numeroDocumentoIdentificacao");
-				//Integer tipoDocumentoIdentificacao = (Integer)
-				// instanciaTemporaria.get("tipoDocumentoIdentificacao");
 				numeroMecanografico =
 					new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
 
@@ -137,7 +135,7 @@ public class ServicoSeguroActualizarFuncionarios
 						employee2Write.setWorkingHours(new Integer(0));
 						employee2Write.setAntiquity(new Date());
 						employee2Write.setActive(Boolean.TRUE);
-						
+
 					}
 					else
 					{
@@ -145,7 +143,8 @@ public class ServicoSeguroActualizarFuncionarios
 						// Decision Time ... Keep The Old NumeroMecanografico or Put The new ?
 						employee2Write = (IEmployee) resultEmployee.get(0);
 						// Keep the higher
-						if (employee2Write.getEmployeeNumber().intValue() < numeroMecanografico.intValue())
+						if (employee2Write.getEmployeeNumber().intValue()
+							< numeroMecanografico.intValue())
 						{
 							employee2Write.setEmployeeNumber(numeroMecanografico);
 						}
@@ -153,8 +152,8 @@ public class ServicoSeguroActualizarFuncionarios
 						{
 							numeroMecanografico = employee2Write.getEmployeeNumber();
 						}
-						
-						employee2Write.setActive(Boolean.TRUE);													
+
+						employee2Write.setActive(Boolean.TRUE);
 					}
 					broker.store(employee2Write);
 					usedPersons.add(person);
@@ -167,40 +166,35 @@ public class ServicoSeguroActualizarFuncionarios
 				else if (resultEmployee.size() == 1)
 				{
 					IEmployee employee = (IEmployee) resultEmployee.get(0);
-					employee.setActive(Boolean.TRUE);	
+					employee.setActive(Boolean.TRUE);
 					if (!employee.getPerson().equals(person))
 					{
 						if (!usedPersons.contains(employee.getPerson()))
 						{
 							unusedPersons.add(employee.getPerson());
 						}
-						employee.setPerson(person);						
+						employee.setPerson(person);
 					}
 					broker.store(employee);
 				}
 
 				// Change the person Username
 				person.setUsername("F" + String.valueOf(numeroMecanografico));
-				
+
 				IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
 				if (personRole == null)
 				{
 
-					criteria = new Criteria();
-					criteria.addEqualTo("roleType", RoleType.EMPLOYEE);
-
-					query = new QueryByCriteria(Role.class, criteria);
-					List result = (List) broker.getCollectionByQuery(query);
-
-					Role roleBD = null;
-
-					if (result.size() == 0)
-						throw new Exception("Unknown Role !!!");
+					IRole role = RoleFunctions.readRole(RoleType.EMPLOYEE, broker);
+					if (role == null)
+					{
+						throw new Exception("Role Desconhecido !!!");
+					}
 					else
-						roleBD = (Role) result.get(0);
-
-					person.getPersonRoles().add(roleBD);
-					newRoles++;
+					{
+						person.getPersonRoles().add(role);
+						newRoles++;
+					}					
 				}
 				broker.store(person);
 			}
