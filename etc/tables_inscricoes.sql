@@ -192,30 +192,6 @@ create table CURRICULAR_COURSE_SCOPE (
 )type=InnoDB;
 
 #----------------------------
-# Table structure for CURRICULAR_COURSE_CURRICULAR_SEMESTER
-#----------------------------
-#drop table if exists CURRICULAR_COURSE_CURRICULAR_SEMESTER;
-#create table CURRICULAR_COURSE_CURRICULAR_SEMESTER (
-#   ID_INTERNAL int(11) not null auto_increment,
-#   KEY_CURRICULAR_SEMESTER int(11) not null,
-#   KEY_CURRICULAR_COURSE int(11) not null,
-#   primary key (ID_INTERNAL),
-#   unique U1 (KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE)
-#)type=InnoDB;
-
-#----------------------------
-# Table structure for CURRICULAR_COURSE_BRANCH
-#----------------------------
-#drop table if exists CURRICULAR_COURSE_BRANCH;
-#create table CURRICULAR_COURSE_BRANCH (
-#   ID_INTERNAL int(11) not null auto_increment,
-#   KEY_BRANCH int(11) not null,
-#   KEY_CURRICULAR_COURSE int(11) not null,
-#   primary key (ID_INTERNAL),
-#   unique U1 (KEY_BRANCH, KEY_CURRICULAR_COURSE)
-#)type=InnoDB;
-
-#----------------------------
 # Table structure for STUDENT_CURRICULAR_PLAN_BRANCH
 #----------------------------
 drop table if exists STUDENT_CURRICULAR_PLAN_BRANCH;
