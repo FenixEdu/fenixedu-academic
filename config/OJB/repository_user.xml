@@ -2,52 +2,6 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 
-<!-- Definitions for Dominio.Item -->
-   <class-descriptor
-   	  class="Dominio.Item"
-   	  table="ITEM"
-   >
-      <field-descriptor id="1"
-         name="codigoInterno"
-         column="CODIGO_INTERNO"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="nome"
-         column="NOME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="3"
-         name="ordem"
-         column="ORDEM"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="4"
-         name="informacao"
-         column="INFORMACAO"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor id="5"
-         name="urgente"
-         column="URGENTE"
-         jdbc-type="INTEGER"
-         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
-      />
-      <field-descriptor id="6"
-         name="chaveSeccao"
-         column="CHAVE_SECCAO"
-         jdbc-type="INTEGER"
-      />
-      <reference-descriptor
-         name="seccao"
-         class-ref="Dominio.Seccao"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="6"/>
-      </reference-descriptor>
-   </class-descriptor>
 
 
 <!-- Definitions for Dominio.Seccao -->
