@@ -21,6 +21,10 @@ NEW FEATURES:
 - Grant Contracts are now renewd (using Grant Contract Regimes as regimes of Grant Contract)
 - Adding new Correction forms (temporarily WE HOPE!) to correct key references in erroneus data in database.
 - Search of persons can now be restricted only to grant owners.
+- New correction type. Now the teacher can choose the test correction type, between fénix formulas and the values specified in the xml document.
+- New types of questions: multiple choice, multiple response, numerical (integer and decimal) and strings.
+- Allow showing the feedback specified in xml document.
+
 
 NOTES:
 ======
@@ -36,12 +40,18 @@ NOTES:
 - It is also necessary to run the 2 java scripts in middleware project (after the 2 scripts mentioned before)
 	ant -f build_run.xml migrate-bolseiros
 	ant -f build_run.xml migrate-grant-contract
+- Need to load docs/prepareTestsTable.sql
+- Need to run update-response-field task in migration project:
+	ant -f build_run.xml update-response-field
 
 CHANGES:
 ========
 - Added the creationDate attribute in Enrolment.
 - Updated OJB library to snapshot from head of cvs (currently on version RC6).
 - Updated text on Login Page to be more informative
+- The algorithm for test question distribution was improved.
+- Change the form for student tests.
+- The response field type in studentTestQuestion is now a xml string (using xmlEncode and XMLDecode) instead of an integer.
 
 BUG FIXES:
 ==========
