@@ -178,8 +178,10 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
 					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);
 					enrolmentInOptionalCurricularCourse.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+					enrolmentInOptionalCurricularCourse.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					// FIXME: David-Ricardo: Nao ha informação sobre o University Code por isso criei esta class temporária
 					enrolmentInOptionalCurricularCourse.setUniversityCode(UniversityCode.IST);
-					
+
 					persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
 				} else {
 					enrolment.setCurricularCourseForOption(curricularCourseForOption);

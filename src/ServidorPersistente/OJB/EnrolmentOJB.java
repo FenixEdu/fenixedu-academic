@@ -126,7 +126,7 @@ public class EnrolmentOJB
 			oqlQuery += " where studentCurricularPlan.student.number = $1";
 			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
 			oqlQuery += " and studentCurricularPlan.currentState = $3";
-			oqlQuery += " and state = $4";
+			oqlQuery += " and enrolmentState = $4";
 
 			query.create(oqlQuery);
 

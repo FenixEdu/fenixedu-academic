@@ -98,7 +98,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 			} else {
 				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setState(new EnrolmentState(EnrolmentState.ENROLED));
+				enrolment.setEnrolmentState(new EnrolmentState(EnrolmentState.ENROLED));
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 				writeElement(enrolment);
 			}
