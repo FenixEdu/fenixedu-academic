@@ -29,7 +29,7 @@ public class TestQuestionStudentsChangesType extends FenixUtil {
 
     private Integer type;
 
-    private String typeString;
+//    private String typeString;
 
     public TestQuestionStudentsChangesType() {
     }
