@@ -1,6 +1,6 @@
 /*
  * Created on 23/Out/2003
- *
+ *  
  */
 package ServidorAplicacao.Servicos.publico;
 
@@ -13,6 +13,7 @@ import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.SiteView;
+import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
 import Dominio.ICursoExecucao;
@@ -32,9 +33,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.Season;
 
 /**
- * @author  Luis Egidio, lmre@mega.ist.utl.pt
- * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
- *
+ * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
+ *  
  */
 public class ExamSiteComponentServiceTest extends ServiceTestCase {
 
@@ -117,7 +117,6 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 					new Integer(1),
 					executionPeriod,
 					executionDegree);
-		
 
 			List executionCourses2ano =
 				disciplinaExecucaoPersistente
@@ -138,32 +137,37 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 					new GregorianCalendar(2004, 1, 27, 10, 0),
 					new GregorianCalendar(2004, 1, 27, 11, 30),
 					new Season(1));
-					
+
 			examePersistente.simpleLockWrite(exam1);
 			examePersistente.simpleLockWrite(exam2);
-					
-			IDisciplinaExecucao executionCourse1 =
-				(DisciplinaExecucao) executionCourses1ano.get(0);
-				
-			disciplinaExecucaoPersistente.simpleLockWrite(executionCourse1);
 
-			List list1 = new ArrayList();
-			list1.add(exam1);
-			executionCourse1.setAssociatedExams(list1);
+			sp.confirmarTransaccao();
+
+			sp.iniciarTransaccao();
 
 			IDisciplinaExecucao executionCourse2 =
-				(DisciplinaExecucao) executionCourses1ano.get(1);
-				
+				(DisciplinaExecucao) executionCourses1ano.get(0);
 			disciplinaExecucaoPersistente.simpleLockWrite(executionCourse2);
 
 			List list2 = new ArrayList();
+			list2.clear();
 			list2.add(exam1);
 			list2.add(exam2);
 			executionCourse2.setAssociatedExams(list2);
 
+			IDisciplinaExecucao executionCourse1 =
+				(DisciplinaExecucao) executionCourses1ano.get(1);
+
+			disciplinaExecucaoPersistente.simpleLockWrite(executionCourse1);
+
+			List list1 = new ArrayList();
+			list1.clear();
+			list1.add(exam1);
+			executionCourse1.setAssociatedExams(list1);
+
 			IDisciplinaExecucao executionCourse3 =
 				(DisciplinaExecucao) executionCourses1ano.get(2);
-				
+
 			disciplinaExecucaoPersistente.simpleLockWrite(executionCourse3);
 
 			List list3 = new ArrayList();
@@ -171,9 +175,9 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 			IDisciplinaExecucao executionCourse4 = null;
 
 			for (int i = 3; i < executionCourses1ano.size(); i++) {
-				System.out.println(i);
-				executionCourse4 = (DisciplinaExecucao) executionCourses1ano.get(i);
-					
+				executionCourse4 =
+					(DisciplinaExecucao) executionCourses1ano.get(i);
+
 				disciplinaExecucaoPersistente.simpleLockWrite(executionCourse4);
 
 				List list4 = new ArrayList();
@@ -184,7 +188,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 			for (int i = 0; i < executionCourses2ano.size(); i++) {
 				IDisciplinaExecucao executionCourse5 =
 					(DisciplinaExecucao) executionCourses2ano.get(i);
-					
+
 				disciplinaExecucaoPersistente.simpleLockWrite(executionCourse5);
 
 				List list5 = new ArrayList();
@@ -201,42 +205,42 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 					null,
 					getNameOfServiceToBeTested(),
 					getArguments());
-					
+
 			InfoSiteExamMap siteExamMap =
 				(InfoSiteExamMap) result.getComponent();
-				
+
 			InfoExamsMap examsMap =
 				(InfoExamsMap) siteExamMap.getInfoExamsMap();
-				
+
 			List executionCourses = examsMap.getExecutionCourses();
-			int size = executionCourses.size();
-			InfoExecutionCourse infoex = (InfoExecutionCourse) executionCourses.get(0);
-			System.out.println(infoex.getNome());
-			InfoExam infoexam = (InfoExam) infoex.getAssociatedInfoExams().get(0);
-			
-//			int n_exams = 0;
-//			int exames = 0;
-//			for (int i = 0; i < size; i++) {
-//				InfoExecutionCourse infoExecutionCourse =
-//					(InfoExecutionCourse) executionCourses.get(i);
-//
-//				List examsService =
-//					infoExecutionCourse.getAssociatedInfoExams();
-//					
-//				List exams = ((IDisciplinaExecucao) executionCourses1ano.get(0)).getAssociatedExams();
-//				
-//				assertEquals(exams.size(), examsService.size());
-//				n_exams = exams.size();
-//				System.out.println("dfgdfgdgbdfg " +n_exams);
-//				for (int j = 0; j < n_exams; j++) {
-//					exames++;
-//					InfoExam infoExam = (InfoExam) examsService.get(j);
-//					IExam oldExam = (IExam) exams.get(j);
-//					IExam newExam = Cloner.copyInfoExam2IExam(infoExam);
-//					assertEquals(newExam, oldExam);
-//				}
-//			}
-//			System.out.println(exames);
+			int size = executionCourses1ano.size();
+
+			int n_exams = 0;
+			int exames = 0;
+			for (int i = 0; i < size; i++) {
+				InfoExecutionCourse infoExecutionCourse =
+					(InfoExecutionCourse) executionCourses.get(i);
+				
+				List examsService =
+					infoExecutionCourse.getAssociatedInfoExams();
+
+				List exams =
+					((IDisciplinaExecucao) executionCourses1ano.get(i))
+						.getAssociatedExams();
+
+				assertEquals(exams.size(), examsService.size());
+				n_exams = exams.size();
+				for (int j = 0; j < n_exams; j++) {
+					InfoExam infoExam = (InfoExam) examsService.get(j);
+					IExam oldExam = (IExam) exams.get(j);
+					InfoExam newInfoExam = Cloner.copyIExam2InfoExam(oldExam);
+					assertEquals(infoExam, newInfoExam);
+				}
+			}
+
+			System.out.println(
+				"testReadSiteItems was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
 
 		} catch (FenixServiceException ex) {
 			ex.printStackTrace();
