@@ -1,10 +1,8 @@
-
 /**
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
+ *  
  */
 
 package ServidorAplicacao.Servico.commons.student;
@@ -27,66 +25,69 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
 public class ReadStudentsFromDegreeCurricularPlan implements IServico {
-    
+
     private static ReadStudentsFromDegreeCurricularPlan servico = new ReadStudentsFromDegreeCurricularPlan();
-    
+
     /**
      * The singleton access method of this class.
-     **/
+     */
     public static ReadStudentsFromDegreeCurricularPlan getService() {
         return servico;
     }
-    
+
     /**
      * The actor of this class.
-     **/
-    private ReadStudentsFromDegreeCurricularPlan() { 
+     */
+    private ReadStudentsFromDegreeCurricularPlan() {
     }
-    
+
     /**
-     * Returns The Service Name */
-    
+     * Returns The Service Name
+     */
+
     public final String getNome() {
         return "ReadStudentsFromDegreeCurricularPlan";
     }
-    
-    
+
     public List run(Integer degreeCurricularPlanID, TipoCurso degreeType)
-	    throws ExcepcaoInexistente, FenixServiceException {
+            throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
-        
+
         List students = null;
-         
+
         try {
             sp = SuportePersistenteOJB.getInstance();
-            
+
             // Read the Students
-            
-            IDegreeCurricularPlan degreeCurricularPlanTemp = new DegreeCurricularPlan();
-            degreeCurricularPlanTemp.setIdInternal(degreeCurricularPlanID);
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(degreeCurricularPlanTemp, false);
-            
-			students = sp.getIStudentCurricularPlanPersistente().readByDegreeCurricularPlan(degreeCurricularPlan);
-          
+
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+                    .getIPersistentDegreeCurricularPlan().readByOID(
+                            DegreeCurricularPlan.class, degreeCurricularPlanID);
+
+            students = sp.getIStudentCurricularPlanPersistente()
+                    .readByDegreeCurricularPlan(degreeCurricularPlan);
+
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        } 
 
-		if ((students == null) || (students.size() == 0)){
-			throw new NonExistingServiceException();
-		}
-				
-		Iterator iterator = students.iterator();
-		List result = new ArrayList();
-		while(iterator.hasNext()){
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+            throw new FenixServiceException("Persistence layer error", ex);
+        }
 
-			result.add(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-		}
-		
-		return result;
+        if ((students == null) || (students.size() == 0)) {
+            throw new NonExistingServiceException();
+        }
+
+        Iterator iterator = students.iterator();
+        List result = new ArrayList();
+        while (iterator.hasNext()) {
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
+                    .next();
+
+            result
+                    .add(Cloner
+                            .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+        }
+
+        return result;
     }
 }

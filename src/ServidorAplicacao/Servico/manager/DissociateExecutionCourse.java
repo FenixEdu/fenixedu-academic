@@ -24,50 +24,61 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class DissociateExecutionCourse implements IServico {
 
-	private static DissociateExecutionCourse service = new DissociateExecutionCourse();
+    private static DissociateExecutionCourse service = new DissociateExecutionCourse();
 
-	public static DissociateExecutionCourse getService() {
-		return service;
-	}
+    public static DissociateExecutionCourse getService() {
+        return service;
+    }
 
-	private DissociateExecutionCourse() {
-	}
+    private DissociateExecutionCourse() {
+    }
 
-	public final String getNome() {
-		return "DissociateExecutionCourse";
-	}
-	
-//	dissociate an execution course
-	public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
+    public final String getNome() {
+        return "DissociateExecutionCourse";
+    }
 
-		 try {
+    //	dissociate an execution course
+    public void run(Integer executionCourseId, Integer curricularCourseId)
+            throws FenixServiceException {
 
-			 	ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			 	
-			 	IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
-				
-				if(curricularCourse == null)
-					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-				
-				IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
-				
-				if(executionCourse == null)
-					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
-				
-			 	List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-			 	List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-			 	
-			 	if(!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
-					persistentCurricularCourse.simpleLockWrite(curricularCourse);
-			 		executionCourses.remove(executionCourse);
-			 		curricularCourses.remove(curricularCourse);
-			 		executionCourse.setAssociatedCurricularCourses(curricularCourses);
-			 		curricularCourse.setAssociatedExecutionCourses(executionCourses);
-			 	}
-		 } catch (ExcepcaoPersistencia e) {
-			 throw new FenixServiceException(e);
-		 }
-	}
+        try {
+
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+            IPersistentCurricularCourse persistentCurricularCourse = sp
+                    .getIPersistentCurricularCourse();
+            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+                    .readByOID(CurricularCourse.class, curricularCourseId);
+
+            if (curricularCourse == null)
+                throw new NonExistingServiceException(
+                        "message.nonExistingCurricularCourse", null);
+
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+
+            if (executionCourse == null)
+                throw new NonExistingServiceException(
+                        "message.nonExisting.executionCourse", null);
+
+            List executionCourses = curricularCourse
+                    .getAssociatedExecutionCourses();
+            List curricularCourses = executionCourse
+                    .getAssociatedCurricularCourses();
+
+            if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
+                persistentCurricularCourse.simpleLockWrite(curricularCourse);
+                executionCourses.remove(executionCourse);
+                curricularCourses.remove(curricularCourse);
+                executionCourse
+                        .setAssociatedCurricularCourses(curricularCourses);
+                curricularCourse
+                        .setAssociatedExecutionCourses(executionCourses);
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

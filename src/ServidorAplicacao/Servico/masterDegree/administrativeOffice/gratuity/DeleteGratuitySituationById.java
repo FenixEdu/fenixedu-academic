@@ -64,22 +64,20 @@ public class DeleteGratuitySituationById implements IServico
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 			
-			IGratuitySituation gratuitySituation = new GratuitySituation();
-			gratuitySituation.setIdInternal(gratuitySituationID);
-			gratuitySituation = (IGratuitySituation) persistentGratuitySituation.readByOId(gratuitySituation, true);
+			IGratuitySituation gratuitySituation = (IGratuitySituation) persistentGratuitySituation.readByOID(GratuitySituation.class,gratuitySituationID, true);
 			if(gratuitySituation == null){
 				return Boolean.TRUE;
 			}			
 			
-			//persistentGratuitySituation.deleteByOID(GratuitySituation.class, gratuitySituationID);			
+					
 			gratuitySituation.setExemptionPercentage(null);
 			gratuitySituation.setExemptionType(null);
 			gratuitySituation.setExemptionDescription(null);
 		}
 		catch (ExcepcaoPersistencia e)
 		{
-			e.printStackTrace();
-			throw new FenixServiceException();
+			
+			throw new FenixServiceException(e);
 		}
     		    	
 		return Boolean.TRUE;

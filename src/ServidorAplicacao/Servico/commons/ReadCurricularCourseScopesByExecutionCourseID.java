@@ -23,57 +23,71 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
 
-	private static ReadCurricularCourseScopesByExecutionCourseID service = new ReadCurricularCourseScopesByExecutionCourseID();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadCurricularCourseScopesByExecutionCourseID getService() {
-		return service;
-	}
+    private static ReadCurricularCourseScopesByExecutionCourseID service = new ReadCurricularCourseScopesByExecutionCourseID();
 
-	/**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadCurricularCourseScopesByExecutionCourseID";
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadCurricularCourseScopesByExecutionCourseID getService() {
+        return service;
+    }
 
-	public List run(Integer executionCourseID) throws FenixServiceException {
+    /**
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadCurricularCourseScopesByExecutionCourseID";
+    }
 
-		List infoCurricularCourses = new ArrayList(); 
-		try {
+    public List run(Integer executionCourseID) throws FenixServiceException {
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-			// Read The ExecutionCourse
-			IExecutionCourse executionCourseTemp = new ExecutionCourse();
-			executionCourseTemp.setIdInternal(executionCourseID);
-			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(executionCourseTemp, false); 
+        List infoCurricularCourses = new ArrayList();
+        try {
 
-			// For all associated Curricular Courses read the Scopes
-			
-			infoCurricularCourses = new ArrayList();
-			Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
-			while(iterator.hasNext()) {
-				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				
-				List curricularCourseScopes = sp.getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse, executionCourse.getExecutionPeriod());
-				
-				InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
-				infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-				infoCurricularCourse.setInfoScopes(new ArrayList());
-				
-				Iterator scopeIterator = curricularCourseScopes.iterator();
-				while(scopeIterator.hasNext()) {
-					infoCurricularCourse.getInfoScopes().add(Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(((ICurricularCourseScope) scopeIterator.next())));
-				}
-				infoCurricularCourses.add(infoCurricularCourse);
-			}
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+            // Read The ExecutionCourse
 
-		return infoCurricularCourses;
-	}
+            IExecutionCourse executionCourse = (IExecutionCourse) sp
+                    .getIPersistentExecutionCourse().readByOID(
+                            ExecutionCourse.class, executionCourseID);
+
+            // For all associated Curricular Courses read the Scopes
+
+            infoCurricularCourses = new ArrayList();
+            Iterator iterator = executionCourse
+                    .getAssociatedCurricularCourses().iterator();
+            while (iterator.hasNext()) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) iterator
+                        .next();
+
+                List curricularCourseScopes = sp
+                        .getIPersistentCurricularCourseScope()
+                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
+                                curricularCourse,
+                                executionCourse.getExecutionPeriod());
+
+                InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+                infoCurricularCourse = Cloner
+                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                infoCurricularCourse.setInfoScopes(new ArrayList());
+
+                Iterator scopeIterator = curricularCourseScopes.iterator();
+                while (scopeIterator.hasNext()) {
+                    infoCurricularCourse
+                            .getInfoScopes()
+                            .add(
+                                    Cloner
+                                            .copyICurricularCourseScope2InfoCurricularCourseScope(((ICurricularCourseScope) scopeIterator
+                                                    .next())));
+                }
+                infoCurricularCourses.add(infoCurricularCourse);
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+
+        return infoCurricularCourses;
+    }
 }

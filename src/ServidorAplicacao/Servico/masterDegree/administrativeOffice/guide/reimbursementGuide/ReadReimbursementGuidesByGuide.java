@@ -29,105 +29,94 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
 
-public class ReadReimbursementGuidesByGuide implements IServico
-{
+public class ReadReimbursementGuidesByGuide implements IServico {
 
-	private static ReadReimbursementGuidesByGuide servico = new ReadReimbursementGuidesByGuide();
+    private static ReadReimbursementGuidesByGuide servico = new ReadReimbursementGuidesByGuide();
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ReadReimbursementGuidesByGuide getService()
-	{
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadReimbursementGuidesByGuide getService() {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 */
-	private ReadReimbursementGuidesByGuide()
-	{
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadReimbursementGuidesByGuide() {
+    }
 
-	/**
-	 * Returns The Service Name
-	 */
+    /**
+     * Returns The Service Name
+     */
 
-	public final String getNome()
-	{
-		return "ReadReimbursementGuidesByGuide";
-	}
-	/**
-	 * @throws FenixServiceException
-	 */
+    public final String getNome() {
+        return "ReadReimbursementGuidesByGuide";
+    }
 
-	public List run(Integer guideId) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			List infoReimbursementGuides = new ArrayList();
+    /**
+     * @throws FenixServiceException
+     */
 
-			//guide
-			IPersistentGuide persistentGuide = ps.getIPersistentGuide();
-			IGuide guide = new Guide(guideId);
-			guide = (IGuide) persistentGuide.readByOId(guide, false);
+    public List run(Integer guideId) throws FenixServiceException {
+        try {
+            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            List infoReimbursementGuides = new ArrayList();
 
-			//reimbursement Guides
-			List reimbursementGuides = guide.getReimbursementGuides();
-			Iterator it = reimbursementGuides.iterator();
+            //guide
+            IPersistentGuide persistentGuide = ps.getIPersistentGuide();
+            IGuide guide = (IGuide) persistentGuide.readByOID(Guide.class,
+                    guideId);
 
-			IPersistentReimbursementGuide persistentReimbursementGuide =
-				ps.getIPersistentReimbursementGuide();
-			IReimbursementGuide reimbursementGuide = null;
-			InfoReimbursementGuide infoReimbursementGuide = null;
+            //reimbursement Guides
+            List reimbursementGuides = guide.getReimbursementGuides();
+            Iterator it = reimbursementGuides.iterator();
 
-			while (it.hasNext())
-			{
+            IPersistentReimbursementGuide persistentReimbursementGuide = ps
+                    .getIPersistentReimbursementGuide();
+            IReimbursementGuide reimbursementGuide = null;
+            InfoReimbursementGuide infoReimbursementGuide = null;
 
-				reimbursementGuide =
-					new ReimbursementGuide(((IReimbursementGuide) it.next()).getIdInternal());
-				reimbursementGuide =
-					(IReimbursementGuide) persistentReimbursementGuide.readByOId(
-						reimbursementGuide,
-						false);
+            while (it.hasNext()) {
 
-				if (reimbursementGuide == null)
-					throw new NonExistingServiceException();
+                reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
+                        .readByOID(ReimbursementGuide.class,
+                                ((IReimbursementGuide) it.next())
+                                        .getIdInternal());
 
-				infoReimbursementGuide =
-					Cloner.copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
+                if (reimbursementGuide == null) {
+                    throw new NonExistingServiceException();
+                }
+                infoReimbursementGuide = Cloner
+                        .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
 
-				List guideSituations = reimbursementGuide.getReimbursementGuideSituations();
-				CollectionUtils.transform(guideSituations, new Transformer()
-				{
+                List guideSituations = reimbursementGuide
+                        .getReimbursementGuideSituations();
+                CollectionUtils.transform(guideSituations, new Transformer() {
 
-					public Object transform(Object arg0)
-					{
-						InfoReimbursementGuideSituation infoReimbursementGuideSituation =
-							Cloner.copyIReimbursementGuideSituation2InfoReimbursementGuideSituation(
-								(IReimbursementGuideSituation) arg0);
-						return infoReimbursementGuideSituation;
-					}
+                    public Object transform(Object arg0) {
+                        InfoReimbursementGuideSituation infoReimbursementGuideSituation = Cloner
+                                .copyIReimbursementGuideSituation2InfoReimbursementGuideSituation((IReimbursementGuideSituation) arg0);
+                        return infoReimbursementGuideSituation;
+                    }
 
-				});
-				infoReimbursementGuide.setInfoReimbursementGuideSituations(guideSituations);
+                });
+                infoReimbursementGuide
+                        .setInfoReimbursementGuideSituations(guideSituations);
 
-				infoReimbursementGuides.add(infoReimbursementGuide);
+                infoReimbursementGuides.add(infoReimbursementGuide);
 
-			}
+            }
 
-			return infoReimbursementGuides;
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-	}
+            return infoReimbursementGuides;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

@@ -32,102 +32,101 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *  
  */
-public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements IServico
-{
+public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
+        IServico {
 
-	private static ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear servico =
-		new ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear();
+    private static ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear servico = new ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear();
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear getService()
-	{
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear getService() {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 */
-	private ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear()
-	{
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear() {
+    }
 
-	/**
-	 * Returns The Service Name
-	 */
+    /**
+     * Returns The Service Name
+     */
 
-	public final String getNome()
-	{
-		return "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear";
-	}
+    public final String getNome() {
+        return "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear";
+    }
 
-	public Object run(Integer degreeCurricularPlanID, String executionYearName) throws FenixServiceException
-	{
-		if (degreeCurricularPlanID == null || executionYearName == null)
-		{
-			throw new FenixServiceException("error.impossible.noGratuityValues");
-		}
+    public Object run(Integer degreeCurricularPlanID, String executionYearName)
+            throws FenixServiceException {
+        if (degreeCurricularPlanID == null || executionYearName == null) {
+            throw new FenixServiceException("error.impossible.noGratuityValues");
+        }
 
-		ISuportePersistente sp = null;
-		IGratuityValues gratuityValues = null;
-		List infoPaymentPhases = null;
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-			degreeCurricularPlan.setIdInternal(degreeCurricularPlanID);
-			degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(degreeCurricularPlan, false);
-			
-			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
-						
-			if (degreeCurricularPlan == null || executionYear == null)
-			{
-				throw new FenixServiceException("error.impossible.noGratuityValues");
-			}
-			
-			//read execution degree
-			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
-			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
-			if (executionDegree == null)
-			{
-				throw new FenixServiceException("error.impossible.noGratuityValues");
-			}
-			
-			//read execution degree's gratuity values
-			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
-			gratuityValues =
-				persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
-			
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException("error.impossible.noGratuityValues");
-		}
+        ISuportePersistente sp = null;
+        IGratuityValues gratuityValues = null;
+        List infoPaymentPhases = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-		InfoGratuityValues infoGratuityValues = null;
-		if (gratuityValues != null)
-		{
-			infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
-			
-			infoPaymentPhases = new ArrayList();
-			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer()
-					{
-				public Object transform(Object input)
-				{
-					IPaymentPhase paymentPhase = (IPaymentPhase) input;
-					return Cloner.copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
-				}
-			}, infoPaymentPhases);
-			
-			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+                    .getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                    .readByOID(DegreeCurricularPlan.class,
+                            degreeCurricularPlanID);
 
-		}
+            IPersistentExecutionYear persistentExecutionYear = sp
+                    .getIPersistentExecutionYear();
+            IExecutionYear executionYear = persistentExecutionYear
+                    .readExecutionYearByName(executionYearName);
 
-		return infoGratuityValues;
-	}
+            if (degreeCurricularPlan == null || executionYear == null) {
+                throw new FenixServiceException(
+                        "error.impossible.noGratuityValues");
+            }
+
+            //read execution degree
+            ICursoExecucaoPersistente persistentExecutionDegree = sp
+                    .getICursoExecucaoPersistente();
+            ICursoExecucao executionDegree = persistentExecutionDegree
+                    .readByDegreeCurricularPlanAndExecutionYear(
+                            degreeCurricularPlan, executionYear);
+            if (executionDegree == null) {
+                throw new FenixServiceException(
+                        "error.impossible.noGratuityValues");
+            }
+
+            //read execution degree's gratuity values
+            IPersistentGratuityValues persistentGratuityValues = sp
+                    .getIPersistentGratuityValues();
+            gratuityValues = persistentGratuityValues
+                    .readGratuityValuesByExecutionDegree(executionDegree);
+
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException("error.impossible.noGratuityValues");
+        }
+
+        InfoGratuityValues infoGratuityValues = null;
+        if (gratuityValues != null) {
+            infoGratuityValues = Cloner
+                    .copyIGratuityValues2InfoGratuityValues(gratuityValues);
+
+            infoPaymentPhases = new ArrayList();
+            CollectionUtils.collect(gratuityValues.getPaymentPhaseList(),
+                    new Transformer() {
+                        public Object transform(Object input) {
+                            IPaymentPhase paymentPhase = (IPaymentPhase) input;
+                            return Cloner
+                                    .copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
+                        }
+                    }, infoPaymentPhases);
+
+            infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
+
+        }
+
+        return infoGratuityValues;
+    }
 }

@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
@@ -19,71 +18,84 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class GetCandidateRegistrationInformation implements IServico {
 
-	private static GetCandidateRegistrationInformation servico = new GetCandidateRegistrationInformation();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static GetCandidateRegistrationInformation getService() {
-		return servico;
-	}
+    private static GetCandidateRegistrationInformation servico = new GetCandidateRegistrationInformation();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private GetCandidateRegistrationInformation() { 
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static GetCandidateRegistrationInformation getService() {
+        return servico;
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * The actor of this class.
+     */
+    private GetCandidateRegistrationInformation() {
+    }
 
-	public final String getNome() {
-		return "GetCandidateRegistrationInformation";
-	}
+    /**
+     * Returns The Service Name
+     */
 
-	public InfoCandidateRegistration run(Integer candidateID) throws FenixServiceException {
+    public final String getNome() {
+        return "GetCandidateRegistrationInformation";
+    }
 
-		ISuportePersistente sp = null;
+    public InfoCandidateRegistration run(Integer candidateID)
+            throws FenixServiceException {
 
-		InfoCandidateRegistration infoCandidateRegistration = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-			mdcTemp.setIdInternal(candidateID);
-			
-			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
-			
-			IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(masterDegreeCandidate.getPerson(), TipoCurso.MESTRADO_OBJ);
-			
-			IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(), TipoCurso.MESTRADO_OBJ); 
+        ISuportePersistente sp = null;
 
-			infoCandidateRegistration = new InfoCandidateRegistration();
-			
-			infoCandidateRegistration.setInfoMasterDegreeCandidate(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate));
-			infoCandidateRegistration.setInfoStudentCurricularPlan(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+        InfoCandidateRegistration infoCandidateRegistration = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
+           
 
-			if (studentCurricularPlan.getEnrolments().size() == 0){
-				infoCandidateRegistration.setEnrolments(null);
-			} else {
-				infoCandidateRegistration.setEnrolments(new ArrayList());
-				Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
-				while(iterator.hasNext()){
-					Enrolment enrolment = (Enrolment) iterator.next();
-					infoCandidateRegistration.getEnrolments().add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));
-				}
-			}
-		} catch(ExcepcaoPersistencia e){
-			throw new FenixServiceException(e);
-			
-		}
-		
-		return infoCandidateRegistration;
-	}
+            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                    .getIPersistentMasterDegreeCandidate().readByOID(
+                            MasterDegreeCandidate.class, candidateID);
+
+            IStudent student = sp.getIPersistentStudent()
+                    .readByPersonAndDegreeType(
+                            masterDegreeCandidate.getPerson(),
+                            TipoCurso.MESTRADO_OBJ);
+
+            IStudentCurricularPlan studentCurricularPlan = sp
+                    .getIStudentCurricularPlanPersistente()
+                    .readActiveStudentCurricularPlan(student.getNumber(),
+                            TipoCurso.MESTRADO_OBJ);
+
+            infoCandidateRegistration = new InfoCandidateRegistration();
+
+            infoCandidateRegistration
+                    .setInfoMasterDegreeCandidate(Cloner
+                            .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate));
+            infoCandidateRegistration
+                    .setInfoStudentCurricularPlan(Cloner
+                            .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+
+            if (studentCurricularPlan.getEnrolments().size() == 0) {
+                infoCandidateRegistration.setEnrolments(null);
+            } else {
+                infoCandidateRegistration.setEnrolments(new ArrayList());
+                Iterator iterator = studentCurricularPlan.getEnrolments()
+                        .iterator();
+                while (iterator.hasNext()) {
+                    Enrolment enrolment = (Enrolment) iterator.next();
+                    infoCandidateRegistration.getEnrolments().add(
+                            Cloner.copyIEnrolment2InfoEnrolment(enrolment));
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+
+        }
+
+        return infoCandidateRegistration;
+    }
 }

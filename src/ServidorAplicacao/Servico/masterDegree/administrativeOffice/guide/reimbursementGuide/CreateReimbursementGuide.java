@@ -83,12 +83,14 @@ public class CreateReimbursementGuide implements IService {
             IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = ps
                     .getIPersistentReimbursementGuideEntry();
 
-            IGuide guide = (IGuide) persistentGuide.readByOId(
-                    new Guide(guideId), true);
+            IGuide guide = (IGuide) persistentGuide.readByOID(Guide.class,
+                    guideId, true);
 
             if (!guide.getActiveSituation().getSituation().equals(
-                    SituationOfGuide.PAYED_TYPE)) { throw new InvalidGuideSituationServiceException(
-                    "error.exception.masterDegree.invalidGuideSituation"); }
+                    SituationOfGuide.PAYED_TYPE)) {
+                throw new InvalidGuideSituationServiceException(
+                        "error.exception.masterDegree.invalidGuideSituation");
+            }
 
             List reimbursementGuideEntries = Cloner
                     .copyListInfoReimbursementGuideEntries2ListIReimbursementGuideEntries(infoReimbursementGuideEntries);
@@ -100,13 +102,13 @@ public class CreateReimbursementGuide implements IService {
                 reimbursementGuideEntry = (IReimbursementGuideEntry) it.next();
 
                 if (reimbursementGuideEntry.getJustification().length() == 0)
-                        throw new RequiredJustificationServiceException(
-                                "error.exception.masterDegree.requiredJustification");
+                    throw new RequiredJustificationServiceException(
+                            "error.exception.masterDegree.requiredJustification");
 
                 if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry,
                         ps) == false)
-                        throw new InvalidReimbursementValueServiceException(
-                                "error.exception.masterDegree.invalidReimbursementValue");
+                    throw new InvalidReimbursementValueServiceException(
+                            "error.exception.masterDegree.invalidReimbursementValue");
             }
 
             //reimbursement Guide

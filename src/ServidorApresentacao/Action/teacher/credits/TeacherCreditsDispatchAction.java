@@ -83,45 +83,7 @@ public class TeacherCreditsDispatchAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-        //		IUserView userView = SessionUtils.getUserView(request);
-        //
-        //		DynaActionForm creditsTeacherForm = (DynaActionForm) form;
-        //
-        //		Integer tfcStudentsNumber = null;
-        //		try {
-        //			tfcStudentsNumber =
-        //				new Integer(
-        //					(String) creditsTeacherForm.get("tfcStudentsNumber"));
-        //		} catch (NumberFormatException e) {
-        //		}
-        //
-        //		Double additionalCredits = null;
-        //		String additionalCreditsJustification = null;
-        //		try {
-        //			// if additionalCredits is not a number don't get
-        // additionalCreditsJustification
-        //			additionalCredits =
-        //				new Double(
-        //					(String) creditsTeacherForm.get("additionalCredits"));
-        //			if (additionalCredits.doubleValue() != 0)
-        //				additionalCreditsJustification =
-        //					(String) creditsTeacherForm.get(
-        //						"additionalCreditsJustification");
-        //		} catch (NumberFormatException e1) {
-        //		}
-        //
-        //		InfoCredits infoCredits = new InfoCredits();
-        //		infoCredits.setTfcStudentsNumber(tfcStudentsNumber);
-        //		infoCredits.setAdditionalCredits(additionalCredits);
-        //		infoCredits.setAdditionalCreditsJustification(
-        //			additionalCreditsJustification);
-        //
-        //		Integer teacherOID =
-        //			new Integer((String) creditsTeacherForm.get("teacherOID"));
-        //
-        //		Object[] args = { teacherOID, infoCredits };
-        //
-        //		ServiceUtils.executeService(userView, "WriteCreditsTeacher", args);
+      
 
         return mapping.getInputForward();
     }

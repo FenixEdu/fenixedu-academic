@@ -82,9 +82,11 @@ public class EnrollStudentInShifts implements IService {
             ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
             if (shiftIdsToEnroll != null && !shiftIdsToEnroll.isEmpty()) {
-                IStudent student = (IStudent) persistentStudent.readByOId(
-                        new Student(studentId), false);
-                if (student == null) { throw new StudentNotFoundServiceException(); }
+                IStudent student = (IStudent) persistentStudent.readByOID(
+                        Student.class, studentId);
+                if (student == null) {
+                    throw new StudentNotFoundServiceException();
+                }
 
                 IExecutionPeriod executionPeriod = persistentExecutionPeriod
                         .readActualExecutionPeriod();
@@ -152,8 +154,8 @@ public class EnrollStudentInShifts implements IService {
         Iterator iter = filteredShiftsIdsToEnroll.iterator();
         while (iter.hasNext()) {
             Integer shiftId = (Integer) iter.next();
-            ITurno shift = (ITurno) persistentShift.readByOId(
-                    new Turno(shiftId), false);
+            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
+                    shiftId);
             if (shift == null) {
                 errorReport.getUnExistingShifts().add(shiftId);
             } else {

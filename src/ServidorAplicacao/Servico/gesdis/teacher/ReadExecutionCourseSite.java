@@ -1,8 +1,8 @@
 package ServidorAplicacao.Servico.gesdis.teacher;
 
 /**
- *
- * @author  EP 15
+ * 
+ * @author EP 15
  */
 
 import DataBeans.InfoExecutionCourse;
@@ -20,70 +20,68 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadExecutionCourseSite implements IServico {
 
-	private static ReadExecutionCourseSite service = new ReadExecutionCourseSite();
+    private static ReadExecutionCourseSite service = new ReadExecutionCourseSite();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
+    /**
+     * The singleton access method of this class.
+     */
 
-	public static ReadExecutionCourseSite getService() {
+    public static ReadExecutionCourseSite getService() {
 
-		return service;
+        return service;
 
-	}
+    }
 
-	/**
-	 * The ctor of this class.
-	 **/
+    /**
+     * The ctor of this class.
+     */
 
-	private ReadExecutionCourseSite() {
-	}
+    private ReadExecutionCourseSite() {
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
+    /**
+     * Devolve o nome do servico
+     */
 
-	public final String getNome() {
-		return "ReadExecutionCourseSite";
-	}
+    public final String getNome() {
+        return "ReadExecutionCourseSite";
+    }
 
-	/**
-	 * Executes the service. Returns the current collection of
-	 * sitios names.
-	 *
-	 * @throws ExcepcaoInexistente is there is none sitio.
-	 **/
+    /**
+     * Executes the service. Returns the current collection of sitios names.
+     * 
+     * @throws ExcepcaoInexistente
+     *             is there is none sitio.
+     */
 
-	public InfoSite run(InfoExecutionCourse infoExecutionCourse)
-		throws FenixServiceException {
+    public InfoSite run(InfoExecutionCourse infoExecutionCourse)
+            throws FenixServiceException {
 
-	
+        try {
+            ISite site = null;
 
-		try {
-			ISite site = null;
-			
-			ISuportePersistente sp;
-			
-			sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = new ExecutionCourse();
-			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
-			executionCourse =  (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
-			
-			
-			site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
-			
-			InfoSite  infoSite=null;
-			
-			if (site != null){
-				infoSite = Cloner.copyISite2InfoSite(site);
-			}
-					
-			
-			return infoSite;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		} 
-	}
+            ISuportePersistente sp;
+
+            sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO
+                    .readByOID(ExecutionCourse.class, infoExecutionCourse
+                            .getIdInternal());
+
+            site = sp.getIPersistentSite().readByExecutionCourse(
+                    executionCourse);
+
+            InfoSite infoSite = null;
+
+            if (site != null) {
+                infoSite = Cloner.copyISite2InfoSite(site);
+            }
+
+            return infoSite;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

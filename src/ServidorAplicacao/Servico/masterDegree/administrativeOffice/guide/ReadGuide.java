@@ -16,57 +16,49 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  */
-public class ReadGuide implements IServico
-{
+public class ReadGuide implements IServico {
 
     private static ReadGuide servico = new ReadGuide();
 
     /**
-	 * The singleton access method of this class.
-	 *  
-	 */
-    public static ReadGuide getService()
-    {
+     * The singleton access method of this class.
+     *  
+     */
+    public static ReadGuide getService() {
         return servico;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadGuide()
-    {
+     * The actor of this class.
+     */
+    private ReadGuide() {
     }
 
     /**
-	 * Returns The Service Name
-	 */
+     * Returns The Service Name
+     */
 
-    public final String getNome()
-    {
+    public final String getNome() {
         return "ReadGuide";
     }
 
-    public InfoGuide run(Integer guideId) throws FenixServiceException
-    {
+    public InfoGuide run(Integer guideId) throws FenixServiceException {
 
         ISuportePersistente sp = null;
-        IGuide guide = new Guide(guideId);
+        IGuide guide;
         InfoGuide infoGuide = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
-            guide = (IGuide) sp.getIPersistentGuide().readByOId(guide, false);
-            if (guide == null)
-            {
+            guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class,
+                    guideId);
+            if (guide == null) {
                 throw new InvalidArgumentsServiceException();
             }
             infoGuide = Cloner.copyIGuide2InfoGuide(guide);
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 

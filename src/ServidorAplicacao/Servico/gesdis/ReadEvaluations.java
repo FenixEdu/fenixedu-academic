@@ -18,69 +18,73 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
 public class ReadEvaluations implements IServico {
 
-	private static ReadEvaluations service = new ReadEvaluations();
+    private static ReadEvaluations service = new ReadEvaluations();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
+    /**
+     * The singleton access method of this class.
+     */
 
-	public static ReadEvaluations getService() {
+    public static ReadEvaluations getService() {
 
-		return service;
+        return service;
 
-	}
+    }
 
-	/**
-	 * The ctor of this class.
-	 **/
+    /**
+     * The ctor of this class.
+     */
 
-	private ReadEvaluations() {
-	}
+    private ReadEvaluations() {
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
+    /**
+     * Devolve o nome do servico
+     */
 
-	public final String getNome() {
+    public final String getNome() {
 
-		return "ReadEvaluations";
+        return "ReadEvaluations";
 
-	}
+    }
 
-	/**
-	 * Executes the service. Returns the current collection of
-	 * evaluations(tests, exams, projects and final evaluations)
-	 **/
+    /**
+     * Executes the service. Returns the current collection of
+     * evaluations(tests, exams, projects and final evaluations)
+     */
 
-	public List run(Integer executionCourseCode) throws FenixServiceException {
-		try {
-			ISuportePersistente sp;
-			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
+    public List run(Integer executionCourseCode) throws FenixServiceException {
+        try {
+            ISuportePersistente sp;
+            IExecutionCourse executionCourse;
 
-			sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
 
-			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-			if (executionCourse == null) {
-				throw new NonExistingServiceException();
-			}
+            executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            if (executionCourse == null) {
+                throw new NonExistingServiceException();
+            }
 
-			List evaluations = executionCourse.getAssociatedEvaluations();
-			List infoEvaluations = new ArrayList();			
-			Iterator iterator = evaluations.iterator();
-			while (iterator.hasNext()) {
-				infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation((IEvaluation) iterator.next()));
-			}
+            List evaluations = executionCourse.getAssociatedEvaluations();
+            List infoEvaluations = new ArrayList();
+            Iterator iterator = evaluations.iterator();
+            while (iterator.hasNext()) {
+                infoEvaluations.add(Cloner
+                        .copyIEvaluation2InfoEvaluation((IEvaluation) iterator
+                                .next()));
+            }
 
-			return infoEvaluations;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            return infoEvaluations;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	}
+    }
 
 }

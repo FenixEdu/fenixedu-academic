@@ -22,57 +22,54 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ChangePersonPassword implements IServico {
 
-	private static ChangePersonPassword servico =
-		new ChangePersonPassword();
+    private static ChangePersonPassword servico = new ChangePersonPassword();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ChangePersonPassword getService() {
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ChangePersonPassword getService() {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ChangePersonPassword() {
-	}
+    /**
+     * The actor of this class.
+     */
+    private ChangePersonPassword() {
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * Returns The Service Name
+     */
 
-	public final String getNome() {
-		return "ChangePersonPassword";
-	}
+    public final String getNome() {
+        return "ChangePersonPassword";
+    }
 
-	public void run(Integer personID, String password)
-		throws
-			ExcepcaoInexistente,
-			FenixServiceException,
-			InvalidPasswordServiceException {
+    public void run(Integer personID, String password)
+            throws ExcepcaoInexistente, FenixServiceException,
+            InvalidPasswordServiceException {
 
-		// Check if the old password is equal
+        // Check if the old password is equal
 
-		ISuportePersistente sp = null;
+        ISuportePersistente sp = null;
 
-		IPessoa person = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-			
-			IPessoa personTemp = new Pessoa();
-			personTemp.setIdInternal(personID);			
-			person = (IPessoa) personDAO.readByOId(personTemp, true);
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx =
-				new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+        IPessoa person = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
 
-		if (person == null)
-			throw new ExcepcaoInexistente("Unknown Person!");
-		
-		person.setPassword(PasswordEncryptor.encryptPassword(password));
-	}
+            person = (IPessoa) personDAO
+                    .readByOID(Pessoa.class, personID, true);
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error",ex);
+          
+            throw newEx;
+        }
+
+        if (person == null)
+            throw new ExcepcaoInexistente("Unknown Person!");
+
+        person.setPassword(PasswordEncryptor.encryptPassword(password));
+    }
 }

@@ -32,8 +32,7 @@ public class StoreItemFile implements IService {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentItem persistentItem = sp.getIPersistentItem();
-			IItem item = new Item(itemId);
-			item = (IItem) persistentItem.readByOId(item, false);
+			IItem item = (IItem) persistentItem.readByOID(Item.class,itemId);
 			file.setUri(item.getSlideName());
 			file.setRootUri(item.getSection().getSite().getExecutionCourse()
 					.getSlideName());

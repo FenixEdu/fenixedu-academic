@@ -26,49 +26,48 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthorizationFilter
-{
+public class ReadCourseInformationAuthorizationFilter extends
+        DomainObjectAuthorizationFilter {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#verifyCondition(ServidorAplicacao.IUserView,
-	 *      java.lang.Integer)
-	 */
-    protected boolean verifyCondition(IUserView id, Integer objectId)
-    {
-        try
-        {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#verifyCondition(ServidorAplicacao.IUserView,
+     *      java.lang.Integer)
+     */
+    protected boolean verifyCondition(IUserView id, Integer objectId) {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
+                    .getUtilizador());
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(objectId),
-                    false);
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, objectId);
 
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
-            IResponsibleFor responsibleFor = new ResponsibleFor(teacher, executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp
+                    .getIPersistentResponsibleFor();
+            List responsiblesFor = persistentResponsibleFor
+                    .readByExecutionCourse(executionCourse);
+            IResponsibleFor responsibleFor = new ResponsibleFor(teacher,
+                    executionCourse);
 
             return responsiblesFor.contains(responsibleFor);
-        } catch (ExcepcaoPersistencia e)
-        {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("Filter error(ExcepcaoPersistente): "
+                    + e.getMessage());
             return false;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
         }

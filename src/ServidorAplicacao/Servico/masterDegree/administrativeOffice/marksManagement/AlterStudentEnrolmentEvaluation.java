@@ -41,203 +41,199 @@ import Util.EnrolmentState;
 import Util.TipoCurso;
 
 /**
- * @author Angela
- * 04/07/2003
- * 
+ * @author Angela 04/07/2003
+ *  
  */
-public class AlterStudentEnrolmentEvaluation implements IServico
-{
+public class AlterStudentEnrolmentEvaluation implements IServico {
 
     private static AlterStudentEnrolmentEvaluation servico = new AlterStudentEnrolmentEvaluation();
 
     /**
      * The singleton access method of this class.
-     **/
-    public static AlterStudentEnrolmentEvaluation getService()
-    {
+     */
+    public static AlterStudentEnrolmentEvaluation getService() {
         return servico;
     }
 
     /**
      * The actor of this class.
-     **/
-    private AlterStudentEnrolmentEvaluation()
-    {
+     */
+    private AlterStudentEnrolmentEvaluation() {
     }
 
     /**
-     * Returns The Service Name */
+     * Returns The Service Name
+     */
 
-    public final String getNome()
-    {
+    public final String getNome() {
         return "AlterStudentEnrolmentEvaluation";
     }
-    public List run(
-        Integer curricularCourseCode,
-        Integer enrolmentEvaluationCode,
-        InfoEnrolmentEvaluation infoEnrolmentEvaluation,
-        Integer teacherNumber,
-        IUserView userView)
-        throws FenixServiceException
-    {
+
+    public List run(Integer curricularCourseCode,
+            Integer enrolmentEvaluationCode,
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation,
+            Integer teacherNumber, IUserView userView)
+            throws FenixServiceException {
 
         List infoEvaluationsWithError = null;
-        try
-        {
-			Calendar calendario = Calendar.getInstance();
+        try {
+            Calendar calendario = Calendar.getInstance();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation =
-                sp.getIPersistentEnrolmentEvaluation();
+            IPersistentCurricularCourse persistentCurricularCourse = sp
+                    .getIPersistentCurricularCourse();
+            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+                    .getIPersistentEnrolmentEvaluation();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+            IPersistentEnrolment persistentEnrolment = sp
+                    .getIPersistentEnrolment();
 
-			if ( (infoEnrolmentEvaluation.getGrade().equals("0")) || (infoEnrolmentEvaluation.getGrade().equals("")) || (infoEnrolmentEvaluation.getGrade().length() < -1)){
-//				new enrolment evaluation
+            if ((infoEnrolmentEvaluation.getGrade().equals("0"))
+                    || (infoEnrolmentEvaluation.getGrade().equals(""))
+                    || (infoEnrolmentEvaluation.getGrade().length() < -1)) {
+                //				new enrolment evaluation
 
-				IEnrolmentEvaluation enrolmentEvaluationCopy = new EnrolmentEvaluation();
-				enrolmentEvaluationCopy.setIdInternal(enrolmentEvaluationCode);
-				enrolmentEvaluationCopy =
-								   (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOId(
-								enrolmentEvaluationCopy,
-									   false);
-				IEnrollment enrolment=enrolmentEvaluationCopy.getEnrolment();
-				 
-				persistentEnrolment.simpleLockWrite(enrolment);
-				
-				enrolment.setEnrolmentState(EnrolmentState.ENROLED);
-				enrolment.setCurricularCourse(
-						enrolmentEvaluationCopy.getEnrolment().getCurricularCourse());
-				enrolment.setEnrolmentEvaluationType(
-						enrolmentEvaluationCopy.getEnrolment().getEnrolmentEvaluationType());
-				enrolment.setExecutionPeriod(
-						enrolmentEvaluationCopy.getEnrolment().getExecutionPeriod());
-				enrolment.setStudentCurricularPlan(
-						enrolmentEvaluationCopy.getEnrolment().getStudentCurricularPlan());
-				enrolment.setIdInternal(enrolmentEvaluationCopy.getEnrolment().getIdInternal());
-		
-				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-				enrolmentEvaluation.setEnrolment(enrolment);	
-				enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ );
-				enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationCopy.getEnrolmentEvaluationType());
-				enrolmentEvaluation.setCheckSum(null);
-				//		employee
-			    IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			    IEmployee employee = readEmployee(person);
-				enrolmentEvaluation.setEmployee(employee);
-				enrolmentEvaluation.setExamDate(null);
-				enrolmentEvaluation.setGrade(null);
-				enrolmentEvaluation.setGradeAvailableDate(null);
-				enrolmentEvaluation.setObservation(infoEnrolmentEvaluation.getObservation());
-				enrolmentEvaluation.setPersonResponsibleForGrade(null);
-				enrolmentEvaluation.setWhen(calendario.getTime());
-				enrolmentEvaluation.setAckOptLock(new Integer(1));
-				persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
-				
-				
-				
-			}else{
+                IEnrolmentEvaluation enrolmentEvaluationCopy = (IEnrolmentEvaluation) persistentEnrolmentEvaluation
+                        .readByOID(EnrolmentEvaluation.class,
+                                enrolmentEvaluationCode);
+                IEnrollment enrolment = enrolmentEvaluationCopy.getEnrolment();
 
+                persistentEnrolment.simpleLockWrite(enrolment);
 
-            //	responsible teacher
-            ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-            if (teacher == null)
-            {
-                throw new NonExistingServiceException();
-            }
-            //		employee
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = readEmployee(person);
+                enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+                enrolment.setCurricularCourse(enrolmentEvaluationCopy
+                        .getEnrolment().getCurricularCourse());
+                enrolment.setEnrolmentEvaluationType(enrolmentEvaluationCopy
+                        .getEnrolment().getEnrolmentEvaluationType());
+                enrolment.setExecutionPeriod(enrolmentEvaluationCopy
+                        .getEnrolment().getExecutionPeriod());
+                enrolment.setStudentCurricularPlan(enrolmentEvaluationCopy
+                        .getEnrolment().getStudentCurricularPlan());
+                enrolment.setIdInternal(enrolmentEvaluationCopy.getEnrolment()
+                        .getIdInternal());
 
-            //	curricular Course Scope
-            ICurricularCourse curricularCourse = new CurricularCourse();
-            curricularCourse.setIdInternal(curricularCourseCode);
-            curricularCourse =
-                (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-
-            infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
-
-            infoEvaluationsWithError = new ArrayList();
-           
-
-            if (!isValidEvaluation(infoEnrolmentEvaluation))
-            {
-                infoEvaluationsWithError.add(infoEnrolmentEvaluation);
-            } else
-            {
-
-                // read enrolmentEvaluation to change
-                IEnrolmentEvaluation iEnrolmentEvaluation = new EnrolmentEvaluation();
-
-                iEnrolmentEvaluation.setIdInternal(enrolmentEvaluationCode);
-                iEnrolmentEvaluation =
-                    (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOId(
-                        iEnrolmentEvaluation,
-                        false);
-
-                // new enrolment evaluation
                 IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-                enrolmentEvaluation =
-                    Cloner.copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(infoEnrolmentEvaluation);
-
-                //check for an alteration
-                if (!enrolmentEvaluation.getGrade().equals(iEnrolmentEvaluation.getGrade()))
-                {
-					IEnrollment enrolment = iEnrolmentEvaluation.getEnrolment();
-					persistentEnrolment.simpleLockWrite(enrolment);
-                    try
-                    {
-                    	new Integer(enrolmentEvaluation.getGrade());
-                        enrolment.setEnrolmentState(EnrolmentState.APROVED);
-                    } catch (NumberFormatException e)
-                    {
-                    	String grade = null;
-                    	grade = enrolmentEvaluation.getGrade().toUpperCase();
-                        if (grade.equals("RE") )
- 							enrolment.setEnrolmentState(EnrolmentState.NOT_APROVED);
-                        if (grade.equals("NA"))
-							enrolment.setEnrolmentState(EnrolmentState.NOT_EVALUATED);
-                    }
-                    
-                    iEnrolmentEvaluation.setEnrolment(enrolment);
-
-                }
-
-                enrolmentEvaluation.setEnrolment(iEnrolmentEvaluation.getEnrolment());
-                enrolmentEvaluation.setWhen(calendario.getTime());
-                if (infoEnrolmentEvaluation.getExamDate() != null)
-                {
-                    enrolmentEvaluation.setExamDate(infoEnrolmentEvaluation.getExamDate());
-                } else
-                {
-                    enrolmentEvaluation.setExamDate(calendario.getTime());
-                }
-                if (infoEnrolmentEvaluation.getGradeAvailableDate() != null)
-                {
-                    enrolmentEvaluation.setGradeAvailableDate(
-                        infoEnrolmentEvaluation.getGradeAvailableDate());
-                } else
-                {
-                    enrolmentEvaluation.setGradeAvailableDate(calendario.getTime());
-                }
-                enrolmentEvaluation.setGrade(infoEnrolmentEvaluation.getGrade());
-                EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
-                enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-                enrolmentEvaluation.setEnrolmentEvaluationType(
-                    infoEnrolmentEvaluation.getEnrolmentEvaluationType());
-                enrolmentEvaluation.setEnrolmentEvaluationState(enrolmentEvaluationState);
+                enrolmentEvaluation.setEnrolment(enrolment);
+                enrolmentEvaluation
+                        .setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+                enrolmentEvaluation
+                        .setEnrolmentEvaluationType(enrolmentEvaluationCopy
+                                .getEnrolmentEvaluationType());
+                enrolmentEvaluation.setCheckSum(null);
+                //		employee
+                IPessoa person = persistentPerson.lerPessoaPorUsername(userView
+                        .getUtilizador());
+                IEmployee employee = readEmployee(person);
                 enrolmentEvaluation.setEmployee(employee);
-                enrolmentEvaluation.setObservation(infoEnrolmentEvaluation.getObservation());
-                enrolmentEvaluation.setCheckSum("");
-
+                enrolmentEvaluation.setExamDate(null);
+                enrolmentEvaluation.setGrade(null);
+                enrolmentEvaluation.setGradeAvailableDate(null);
+                enrolmentEvaluation.setObservation(infoEnrolmentEvaluation
+                        .getObservation());
+                enrolmentEvaluation.setPersonResponsibleForGrade(null);
+                enrolmentEvaluation.setWhen(calendario.getTime());
+                enrolmentEvaluation.setAckOptLock(new Integer(1));
                 persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
 
-            }
-		}
+            } else {
 
-        } catch (ExcepcaoPersistencia ex)
-        {
+                //	responsible teacher
+                ITeacher teacher = persistentTeacher
+                        .readByNumber(teacherNumber);
+                if (teacher == null) {
+                    throw new NonExistingServiceException();
+                }
+                //		employee
+                IPessoa person = persistentPerson.lerPessoaPorUsername(userView
+                        .getUtilizador());
+                IEmployee employee = readEmployee(person);
+
+                //	curricular Course Scope
+                ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+                        .readByOID(CurricularCourse.class, curricularCourseCode);
+
+                infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
+
+                infoEvaluationsWithError = new ArrayList();
+
+                if (!isValidEvaluation(infoEnrolmentEvaluation)) {
+                    infoEvaluationsWithError.add(infoEnrolmentEvaluation);
+                } else {
+
+                    // read enrolmentEvaluation to change
+                    IEnrolmentEvaluation iEnrolmentEvaluation = (IEnrolmentEvaluation) persistentEnrolmentEvaluation
+                            .readByOID(EnrolmentEvaluation.class,
+                                    enrolmentEvaluationCode);
+
+                    // new enrolment evaluation
+                    IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+                    enrolmentEvaluation = Cloner
+                            .copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(infoEnrolmentEvaluation);
+
+                    //check for an alteration
+                    if (!enrolmentEvaluation.getGrade().equals(
+                            iEnrolmentEvaluation.getGrade())) {
+                        IEnrollment enrolment = iEnrolmentEvaluation
+                                .getEnrolment();
+                        persistentEnrolment.simpleLockWrite(enrolment);
+                        try {
+                            new Integer(enrolmentEvaluation.getGrade());
+                            enrolment.setEnrolmentState(EnrolmentState.APROVED);
+                        } catch (NumberFormatException e) {
+                            String grade = null;
+                            grade = enrolmentEvaluation.getGrade()
+                                    .toUpperCase();
+                            if (grade.equals("RE"))
+                                enrolment
+                                        .setEnrolmentState(EnrolmentState.NOT_APROVED);
+                            if (grade.equals("NA"))
+                                enrolment
+                                        .setEnrolmentState(EnrolmentState.NOT_EVALUATED);
+                        }
+
+                        iEnrolmentEvaluation.setEnrolment(enrolment);
+
+                    }
+
+                    enrolmentEvaluation.setEnrolment(iEnrolmentEvaluation
+                            .getEnrolment());
+                    enrolmentEvaluation.setWhen(calendario.getTime());
+                    if (infoEnrolmentEvaluation.getExamDate() != null) {
+                        enrolmentEvaluation.setExamDate(infoEnrolmentEvaluation
+                                .getExamDate());
+                    } else {
+                        enrolmentEvaluation.setExamDate(calendario.getTime());
+                    }
+                    if (infoEnrolmentEvaluation.getGradeAvailableDate() != null) {
+                        enrolmentEvaluation
+                                .setGradeAvailableDate(infoEnrolmentEvaluation
+                                        .getGradeAvailableDate());
+                    } else {
+                        enrolmentEvaluation.setGradeAvailableDate(calendario
+                                .getTime());
+                    }
+                    enrolmentEvaluation.setGrade(infoEnrolmentEvaluation
+                            .getGrade());
+                    EnrolmentEvaluationState enrolmentEvaluationState = EnrolmentEvaluationState.FINAL_OBJ;
+                    enrolmentEvaluation.setPersonResponsibleForGrade(teacher
+                            .getPerson());
+                    enrolmentEvaluation
+                            .setEnrolmentEvaluationType(infoEnrolmentEvaluation
+                                    .getEnrolmentEvaluationType());
+                    enrolmentEvaluation
+                            .setEnrolmentEvaluationState(enrolmentEvaluationState);
+                    enrolmentEvaluation.setEmployee(employee);
+                    enrolmentEvaluation.setObservation(infoEnrolmentEvaluation
+                            .getObservation());
+                    enrolmentEvaluation.setCheckSum("");
+
+                    persistentEnrolmentEvaluation
+                            .lockWrite(enrolmentEvaluation);
+
+                }
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
             FenixServiceException newEx = new FenixServiceException("");
             newEx.fillInStackTrace();
@@ -247,95 +243,81 @@ public class AlterStudentEnrolmentEvaluation implements IServico
         return infoEvaluationsWithError;
     }
 
-    private IEmployee readEmployee(IPessoa person)
-    {
+    private IEmployee readEmployee(IPessoa person) {
         IEmployee employee = null;
         IPersistentEmployee persistentEmployee;
-        try
-        {
-            persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
-            employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
-        } catch (ExcepcaoPersistencia e)
-        {
+        try {
+            persistentEmployee = SuportePersistenteOJB.getInstance()
+                    .getIPersistentEmployee();
+            employee = persistentEmployee.readByPerson(person.getIdInternal()
+                    .intValue());
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
         return employee;
     }
 
-    private InfoEnrolmentEvaluation completeEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
-        throws FenixServiceException
-    {
-        try
-        {
+    private InfoEnrolmentEvaluation completeEnrolmentEvaluation(
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation)
+            throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             //			Student
             IStudent student = new Student();
-            student =
-                persistentStudent.readStudentByNumberAndDegreeType(
-                    infoEnrolmentEvaluation
-                        .getInfoEnrolment()
-                        .getInfoStudentCurricularPlan()
-                        .getInfoStudent()
-                        .getNumber(),
-                    new TipoCurso(TipoCurso.MESTRADO));
-            infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().setInfoStudent(
-                Cloner.copyIStudent2InfoStudent(student));
+            student = persistentStudent.readStudentByNumberAndDegreeType(
+                    infoEnrolmentEvaluation.getInfoEnrolment()
+                            .getInfoStudentCurricularPlan().getInfoStudent()
+                            .getNumber(), new TipoCurso(TipoCurso.MESTRADO));
+            infoEnrolmentEvaluation.getInfoEnrolment()
+                    .getInfoStudentCurricularPlan().setInfoStudent(
+                            Cloner.copyIStudent2InfoStudent(student));
 
             return infoEnrolmentEvaluation;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }
 
-    private boolean isValidEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
-    {
+    private boolean isValidEvaluation(
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
         IStudentCurricularPlan studentCurricularPlan = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IStudentCurricularPlanPersistente curricularPlanPersistente =
-                sp.getIStudentCurricularPlanPersistente();
+            IStudentCurricularPlanPersistente curricularPlanPersistente = sp
+                    .getIStudentCurricularPlanPersistente();
 
-            studentCurricularPlan =
-                curricularPlanPersistente.readActiveStudentCurricularPlan(
-                    infoEnrolmentEvaluation
-                        .getInfoEnrolment()
-                        .getInfoStudentCurricularPlan()
-                        .getInfoStudent()
-                        .getNumber(),
-                    infoEnrolmentEvaluation
-                        .getInfoEnrolment()
-                        .getInfoStudentCurricularPlan()
-                        .getInfoStudent()
-                        .getDegreeType());
+            studentCurricularPlan = curricularPlanPersistente
+                    .readActiveStudentCurricularPlan(infoEnrolmentEvaluation
+                            .getInfoEnrolment().getInfoStudentCurricularPlan()
+                            .getInfoStudent().getNumber(),
+                            infoEnrolmentEvaluation.getInfoEnrolment()
+                                    .getInfoStudentCurricularPlan()
+                                    .getInfoStudent().getDegreeType());
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if(studentCurricularPlan == null) {
-        	return false;
-        }
-        
-        IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-
-        // test marks by execution course: strategy 
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
-            DegreeCurricularPlanStrategyFactory.getInstance();
-        IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
-            degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
-        if (infoEnrolmentEvaluation.getGrade() == null
-            || infoEnrolmentEvaluation.getGrade().length() == 0)
-        {
+        if (studentCurricularPlan == null) {
             return false;
-        } else
-        {
-            return degreeCurricularPlanStrategy.checkMark(
-                infoEnrolmentEvaluation.getGrade().toUpperCase());
+        }
+
+        IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
+                .getDegreeCurricularPlan();
+
+        // test marks by execution course: strategy
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+                .getInstance();
+        IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
+                .getDegreeCurricularPlanStrategy(degreeCurricularPlan);
+        if (infoEnrolmentEvaluation.getGrade() == null
+                || infoEnrolmentEvaluation.getGrade().length() == 0) {
+            return false;
+        } else {
+            return degreeCurricularPlanStrategy
+                    .checkMark(infoEnrolmentEvaluation.getGrade().toUpperCase());
         }
     }
 

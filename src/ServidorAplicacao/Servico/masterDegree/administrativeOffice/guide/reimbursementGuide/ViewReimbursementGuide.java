@@ -26,98 +26,91 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * 
- * <br><strong>Description:</strong><br>Standard reading service using the ID to identify the
- * object
+ * <br>
+ * <strong>Description: </strong> <br>
+ * Standard reading service using the ID to identify the object
  * 
  *  
  */
-public class ViewReimbursementGuide implements IServico
-{
+public class ViewReimbursementGuide implements IServico {
 
-	private static ViewReimbursementGuide servico = new ViewReimbursementGuide();
+    private static ViewReimbursementGuide servico = new ViewReimbursementGuide();
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ViewReimbursementGuide getService()
-	{
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ViewReimbursementGuide getService() {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 */
-	private ViewReimbursementGuide()
-	{
-	}
+    /**
+     * The actor of this class.
+     */
+    private ViewReimbursementGuide() {
+    }
 
-	/**
-	 * Returns The Service Name
-	 */
+    /**
+     * Returns The Service Name
+     */
 
-	public final String getNome()
-	{
-		return "ViewReimbursementGuide";
-	}
-	/**
-	 * @throws FenixServiceException
-	 */
+    public final String getNome() {
+        return "ViewReimbursementGuide";
+    }
 
-	public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			IPersistentReimbursementGuide persistentReimbursementGuide =
-				ps.getIPersistentReimbursementGuide();
-			IReimbursementGuide reimbursementGuide = new ReimbursementGuide(reimbursementGuideId);
-			reimbursementGuide =
-				(IReimbursementGuide) persistentReimbursementGuide.readByOId(reimbursementGuide, false);
+    /**
+     * @throws FenixServiceException
+     */
 
-			if (reimbursementGuide == null)
-				throw new NonExistingServiceException();
+    public InfoReimbursementGuide run(Integer reimbursementGuideId)
+            throws FenixServiceException {
+        try {
+            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            IPersistentReimbursementGuide persistentReimbursementGuide = ps
+                    .getIPersistentReimbursementGuide();
+            IReimbursementGuide reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
+                    .readByOID(ReimbursementGuide.class, reimbursementGuideId);
 
-			InfoReimbursementGuide infoReimbursementGuide =
-				Cloner.copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
+            if (reimbursementGuide == null) {
+                throw new NonExistingServiceException();
+            }
+            InfoReimbursementGuide infoReimbursementGuide = Cloner
+                    .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
 
-			List guideSituations = reimbursementGuide.getReimbursementGuideSituations();
-			CollectionUtils.transform(guideSituations, new Transformer()
-			{
+            List guideSituations = reimbursementGuide
+                    .getReimbursementGuideSituations();
+            CollectionUtils.transform(guideSituations, new Transformer() {
 
-				public Object transform(Object arg0)
-				{
-					InfoReimbursementGuideSituation infoReimbursementGuideSituation =
-						Cloner.copyIReimbursementGuideSituation2InfoReimbursementGuideSituation(
-							(IReimbursementGuideSituation) arg0);
-					return infoReimbursementGuideSituation;
-				}
+                public Object transform(Object arg0) {
+                    InfoReimbursementGuideSituation infoReimbursementGuideSituation = Cloner
+                            .copyIReimbursementGuideSituation2InfoReimbursementGuideSituation((IReimbursementGuideSituation) arg0);
+                    return infoReimbursementGuideSituation;
+                }
 
-			});
-			infoReimbursementGuide.setInfoReimbursementGuideSituations(guideSituations);
+            });
+            infoReimbursementGuide
+                    .setInfoReimbursementGuideSituations(guideSituations);
 
-			List reibursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
-			CollectionUtils.transform(reibursementGuideEntries, new Transformer()
-			{
+            List reibursementGuideEntries = reimbursementGuide
+                    .getReimbursementGuideEntries();
+            CollectionUtils.transform(reibursementGuideEntries,
+                    new Transformer() {
 
-				public Object transform(Object arg0)
-				{
-					InfoReimbursementGuideEntry infoReimbursementGuideEntry =
-						Cloner.copyIReimbursementGuideEntry2InfoReimbursementGuideEntry(
-							(IReimbursementGuideEntry) arg0);
-					return infoReimbursementGuideEntry;
-				}
+                        public Object transform(Object arg0) {
+                            InfoReimbursementGuideEntry infoReimbursementGuideEntry = Cloner
+                                    .copyIReimbursementGuideEntry2InfoReimbursementGuideEntry((IReimbursementGuideEntry) arg0);
+                            return infoReimbursementGuideEntry;
+                        }
 
-			});
-			infoReimbursementGuide.setInfoReimbursementGuideEntries(reibursementGuideEntries);
+                    });
+            infoReimbursementGuide
+                    .setInfoReimbursementGuideEntries(reibursementGuideEntries);
 
-			return infoReimbursementGuide;
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-	}
+            return infoReimbursementGuide;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

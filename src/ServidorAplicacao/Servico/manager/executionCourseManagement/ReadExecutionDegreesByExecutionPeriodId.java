@@ -21,68 +21,58 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério 22/Dez/2003
  *  
  */
-public class ReadExecutionDegreesByExecutionPeriodId implements IServico
-{
+public class ReadExecutionDegreesByExecutionPeriodId implements IServico {
 
-    private static ReadExecutionDegreesByExecutionPeriodId service =
-        new ReadExecutionDegreesByExecutionPeriodId();
+    private static ReadExecutionDegreesByExecutionPeriodId service = new ReadExecutionDegreesByExecutionPeriodId();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionDegreesByExecutionPeriodId getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionDegreesByExecutionPeriodId getService() {
         return service;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadExecutionDegreesByExecutionPeriodId()
-    {
+     * The actor of this class.
+     */
+    private ReadExecutionDegreesByExecutionPeriodId() {
     }
 
-    public final String getNome()
-    {
+    public final String getNome() {
         return "ReadExecutionDegreesByExecutionPeriodId";
     }
 
-    public List run(Integer executionPeriodId) throws FenixServiceException
-    {
+    public List run(Integer executionPeriodId) throws FenixServiceException {
 
         ArrayList infoExecutionDegreeList = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            ICursoExecucaoPersistente executionDegreeDAO = sp
+                    .getICursoExecucaoPersistente();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp
+                    .getIPersistentExecutionPeriod();
 
-            if (executionPeriodId == null)
-            {
+            if (executionPeriodId == null) {
                 throw new FenixServiceException("nullId");
             }
 
-            IExecutionPeriod executionPeriod = new ExecutionPeriod();
-            executionPeriod.setIdInternal(executionPeriodId);
-            executionPeriod =
-                (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
+                    .readByOID(ExecutionPeriod.class, executionPeriodId);
 
-            List executionDegrees =
-                executionDegreeDAO.readByExecutionYear(executionPeriod.getExecutionYear());
+            List executionDegrees = executionDegreeDAO
+                    .readByExecutionYear(executionPeriod.getExecutionYear());
 
             Iterator iterator = executionDegrees.iterator();
             infoExecutionDegreeList = new ArrayList();
 
-            while (iterator.hasNext())
-            {
-                ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-                infoExecutionDegreeList.add(
-                    Cloner.get(executionDegree));
+            while (iterator.hasNext()) {
+                ICursoExecucao executionDegree = (ICursoExecucao) iterator
+                        .next();
+                infoExecutionDegreeList.add(Cloner.get(executionDegree));
             }
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
         return infoExecutionDegreeList;

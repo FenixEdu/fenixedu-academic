@@ -19,37 +19,34 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class CreateSiteInExecutionCourse implements IService
-{
+public class CreateSiteInExecutionCourse implements IService {
 
-    public CreateSiteInExecutionCourse()
-    {
+    public CreateSiteInExecutionCourse() {
     }
 
-    public void run(Integer executionCourseId) throws FenixServiceException
-    {
+    public void run(Integer executionCourseId) throws FenixServiceException {
 
-        try
-        {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
 
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-            IExecutionCourse executionCourseToRead = new ExecutionCourse();
-            executionCourseToRead.setIdInternal(executionCourseId);
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    executionCourseToRead, false);
+            IPersistentSite persistentSite = persistentSuport
+                    .getIPersistentSite();
 
-            if (executionCourse == null) { throw new NonExistingServiceException(
-                    "message.non.existing.execution.course", null); }
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+
+            if (executionCourse == null) {
+                throw new NonExistingServiceException(
+                        "message.non.existing.execution.course", null);
+            }
             ISite site = new Site();
             persistentSite.simpleLockWrite(site);
             site.setExecutionCourse(executionCourse);
 
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

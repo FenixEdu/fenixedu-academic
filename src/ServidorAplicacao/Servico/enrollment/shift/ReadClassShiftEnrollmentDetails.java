@@ -99,7 +99,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
             //Class selected
             ITurma klass = null;
             if (klassId != null) {
-                klass = (ITurma) classDAO.readByOId(new Turma(klassId), false);
+                klass = (ITurma) classDAO.readByOID(Turma.class, klassId);
             }
 
             //Shifts correspond to student attends
@@ -293,16 +293,19 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @param studentDAO
      * @return @throws
      *         StudentNotFoundServiceException
+     * @throws ExcepcaoPersistencia
      */
     private IStudent readStudent(InfoStudent infoStudent,
             IPersistentStudent studentDAO)
-            throws StudentNotFoundServiceException {
-        IStudent student = (IStudent) studentDAO.readByOId(new Student(
-                infoStudent.getIdInternal()), false);
-        if (student == null) { throw new StudentNotFoundServiceException(); }
+            throws StudentNotFoundServiceException, ExcepcaoPersistencia {
+        IStudent student = (IStudent) studentDAO.readByOID(Student.class,
+                infoStudent.getIdInternal());
+        if (student == null) {
+            throw new StudentNotFoundServiceException();
+        }
         return student;
     }
-    
+
     /**
      * @param student
      * @return
@@ -316,6 +319,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         }
         return infoStudent;
     }
+
     private InfoShift copyShift2InfoShift(ITurno shift) {
         InfoShift infoShift = null;
         if (shift != null) {

@@ -86,8 +86,9 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                 student = persistentStudent.readStudentByNumberAndDegreeType(
                         studentNumber, TipoCurso.MESTRADO_OBJ);
             }
-            if (student == null) { throw new FenixServiceException(
-                    "errors.impossible.operation"); }
+            if (student == null) {
+                throw new FenixServiceException("errors.impossible.operation");
+            }
             infoShiftEnrollment
                     .setInfoStudent(copyIStudent2InfoStudent(student));
 
@@ -111,13 +112,15 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                     .getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = persistentExecutionPeriod
                     .readActualExecutionPeriod();
-            if (executionPeriod == null) { throw new FenixServiceException(
-                    "errors.impossible.operation"); }
+            if (executionPeriod == null) {
+                throw new FenixServiceException("errors.impossible.operation");
+            }
 
             //read current execution year
             IExecutionYear executionYear = executionPeriod.getExecutionYear();
-            if (executionYear == null) { throw new FenixServiceException(
-                    "errors.impossible.operation"); }
+            if (executionYear == null) {
+                throw new FenixServiceException("errors.impossible.operation");
+            }
 
             //retrieve the list of existing degrees
             List infoExecutionDegreeList = readInfoExecutionDegrees(sp,
@@ -466,8 +469,9 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         List executionDegrees = presistentExecutionDegree
                 .readByExecutionYearAndDegreeType(executionYear,
                         TipoCurso.LICENCIATURA_OBJ);
-        if (executionDegrees == null || executionDegrees.size() <= 0) { throw new FenixServiceException(
-                "errors.impossible.operation"); }
+        if (executionDegrees == null || executionDegrees.size() <= 0) {
+            throw new FenixServiceException("errors.impossible.operation");
+        }
 
         Iterator iterator = executionDegrees.iterator();
         List infoExecutionDegreeList = new ArrayList();
@@ -488,16 +492,16 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                 .getIPersistentExecutionCourse();
         ICursoExecucaoPersistente persistentExecutionDegree = sp
                 .getICursoExecucaoPersistente();
-        ICursoExecucao executionDegree = new CursoExecucao();
-        executionDegree.setIdInternal(infoExecutionDegree.getIdInternal());
-        executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(
-                executionDegree, false);
+        ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
+                .readByOID(CursoExecucao.class, infoExecutionDegree
+                        .getIdInternal());
 
         List executionCourseList = persistentExecutionCourse
                 .readByExecutionPeriodAndExecutionDegree(executionPeriod,
                         executionDegree);
-        if (executionCourseList == null || executionCourseList.size() <= 0) { throw new FenixServiceException(
-                "errors.impossible.operation"); }
+        if (executionCourseList == null || executionCourseList.size() <= 0) {
+            throw new FenixServiceException("errors.impossible.operation");
+        }
 
         ListIterator listIterator = executionCourseList.listIterator();
         List infoExecutionCourseList = new ArrayList();
@@ -525,11 +529,11 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             ICursoExecucaoPersistente persistentExecutionDegree = sp
                     .getICursoExecucaoPersistente();
 
-            executionDegree = new CursoExecucao();
-            executionDegree.setIdInternal(executionDegreeIdChosen);
             executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOId(executionDegree, false);
-            if (executionDegree != null) { return copyIExecutionDegree2InfoExecutionDegree(executionDegree); }
+                    .readByOID(CursoExecucao.class, executionDegreeIdChosen);
+            if (executionDegree != null) {
+                return copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            }
         }
 
         IStudentCurricularPlanPersistente persistentCurricularPlan = sp
@@ -543,7 +547,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                 || studentCurricularPlan.getDegreeCurricularPlan().getDegree()
                         .getNome() == null) {
 
-        return (InfoExecutionDegree) infoExecutionDegreeList.get(0); }
+            return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
+        }
 
         final Integer degreeCode = studentCurricularPlan
                 .getDegreeCurricularPlan().getDegree().getIdInternal();

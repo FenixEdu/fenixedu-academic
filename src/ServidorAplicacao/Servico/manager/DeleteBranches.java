@@ -23,55 +23,57 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class DeleteBranches implements IServico {
 
-	private static DeleteBranches service = new DeleteBranches();
+    private static DeleteBranches service = new DeleteBranches();
 
-	public static DeleteBranches getService() {
-		return service;
-	}
+    public static DeleteBranches getService() {
+        return service;
+    }
 
-	private DeleteBranches() {
-	}
+    private DeleteBranches() {
+    }
 
-	public final String getNome() {
-		return "DeleteBranches";
-	}
-	
-// delete a set of branches
-	public List run(List internalIds) throws FenixServiceException {
+    public final String getNome() {
+        return "DeleteBranches";
+    }
 
-		try {
+    // delete a set of branches
+    public List run(List internalIds) throws FenixServiceException {
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentBranch persistentBranch = sp.getIPersistentBranch();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
+        try {
 
-			Iterator iter = internalIds.iterator();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentBranch persistentBranch = sp.getIPersistentBranch();
+            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+                    .getIStudentCurricularPlanPersistente();
 
-			List undeletedCodes = new ArrayList();
-			List studentCurricularPlans;
-			Integer internalId;
-			IBranch branch;
-			IBranch iterBranch = new Branch();
+            Iterator iter = internalIds.iterator();
 
-			while(iter.hasNext()) {
-				internalId = (Integer) iter.next();
-				iterBranch.setIdInternal(internalId);
-				branch = (IBranch) persistentBranch.readByOId(iterBranch, false);
-				if(branch != null) {
-					studentCurricularPlans = persistentStudentCurricularPlan.readByBranch(branch);
-					if(studentCurricularPlans.isEmpty())
-						persistentBranch.delete(branch);
-					else
-						undeletedCodes.add(branch.getCode());	
-				}	
-			}
-			
-			return undeletedCodes;
+            List undeletedCodes = new ArrayList();
+            List studentCurricularPlans;
+            Integer internalId;
+            IBranch branch;
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            while (iter.hasNext()) {
+                internalId = (Integer) iter.next();
+                branch = (IBranch) persistentBranch.readByOID(Branch.class,
+                        internalId);
+                if (branch != null) {
+                    studentCurricularPlans = persistentStudentCurricularPlan
+                            .readByBranch(branch);
+                    if (studentCurricularPlans.isEmpty()) {
+                        persistentBranch.delete(branch);
+                    } else {
+                        undeletedCodes.add(branch.getCode());
+                    }
+                }
+            }
 
-	}
+            return undeletedCodes;
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

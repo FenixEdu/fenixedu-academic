@@ -28,88 +28,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jpvl
  */
-public class ReadExecutionCoursesByExecutionDegreeService implements IService
-{
+public class ReadExecutionCoursesByExecutionDegreeService implements IService {
 
     /**
-	 * @author jpvl
-	 */
-    public class NonExistingExecutionDegree extends FenixServiceException
-    {
+     * @author jpvl
+     */
+    public class NonExistingExecutionDegree extends FenixServiceException {
 
         /**
-		 *  
-		 */
-        public NonExistingExecutionDegree()
-        {
+         *  
+         */
+        public NonExistingExecutionDegree() {
             super();
         }
     }
 
     /**
-	 *  
-	 */
-    public ReadExecutionCoursesByExecutionDegreeService()
-    {
+     *  
+     */
+    public ReadExecutionCoursesByExecutionDegreeService() {
         super();
     }
 
-    public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException
-    {
+    public List run(Integer executionDegreeId, Integer executionPeriodId)
+            throws FenixServiceException {
         List infoExecutionCourseList = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
+            IPersistentExecutionPeriod executionPeriodDAO = sp
+                    .getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = null;
 
-            if (executionPeriodId == null)
-            {
-                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            }
-            else
-            {
-                executionPeriod =
-                    (IExecutionPeriod) executionCourseDAO.readByOId(
-                        new ExecutionPeriod(executionPeriodId),
-                        false);
+            if (executionPeriodId == null) {
+                executionPeriod = executionPeriodDAO
+                        .readActualExecutionPeriod();
+            } else {
+                executionPeriod = (IExecutionPeriod) executionCourseDAO
+                        .readByOID(ExecutionPeriod.class, executionPeriodId);
             }
 
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            ICursoExecucaoPersistente executionDegreeDAO = sp
+                    .getICursoExecucaoPersistente();
 
-            ICursoExecucao executionDegree =
-                (ICursoExecucao) executionDegreeDAO.readByOId(
-                    new CursoExecucao(executionDegreeId),
-                    false);
+            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO
+                    .readByOID(CursoExecucao.class, executionDegreeId);
 
-            if (executionDegree == null)
-            {
+            if (executionDegree == null) {
                 throw new NonExistingExecutionDegree();
             }
 
-            List executionCourseList =
-                executionCourseDAO.readByExecutionDegreeAndExecutionPeriod(
-                    executionDegree,
-                    executionPeriod);
+            List executionCourseList = executionCourseDAO
+                    .readByExecutionDegreeAndExecutionPeriod(executionDegree,
+                            executionPeriod);
 
-            infoExecutionCourseList =
-                (List) CollectionUtils.collect(executionCourseList, new Transformer()
-            {
+            infoExecutionCourseList = (List) CollectionUtils.collect(
+                    executionCourseList, new Transformer() {
 
-                public Object transform(Object input)
-                {
-                    IExecutionCourse executionCourse = (IExecutionCourse) input;
-                    InfoExecutionCourse infoExecutionCourse;
-                    infoExecutionCourse =
-                        (InfoExecutionCourse) Cloner.get(executionCourse);
-                    return infoExecutionCourse;
-                }
-            });
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+                        public Object transform(Object input) {
+                            IExecutionCourse executionCourse = (IExecutionCourse) input;
+                            InfoExecutionCourse infoExecutionCourse;
+                            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                                    .get(executionCourse);
+                            return infoExecutionCourse;
+                        }
+                    });
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database", e);
         }

@@ -68,13 +68,13 @@ public class ReadExams implements IServico {
 		throws FenixServiceException {
 			try {
 					ISuportePersistente sp;
-				IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
+				IExecutionCourse executionCourse;
 				
 				sp = SuportePersistenteOJB.getInstance();
 				IPersistentExecutionCourse persistentExecutionCourse=sp.getIPersistentExecutionCourse();
 
 				
-				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseCode);
 				if (executionCourse ==null){
 					throw new NonExistingServiceException();
 				}

@@ -21,34 +21,28 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IServico
-{
+public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IServico {
 
-    private static DeleteExecutionDegreesOfDegreeCurricularPlan service =
-        new DeleteExecutionDegreesOfDegreeCurricularPlan();
+    private static DeleteExecutionDegreesOfDegreeCurricularPlan service = new DeleteExecutionDegreesOfDegreeCurricularPlan();
 
-    public static DeleteExecutionDegreesOfDegreeCurricularPlan getService()
-    {
+    public static DeleteExecutionDegreesOfDegreeCurricularPlan getService() {
         return service;
     }
 
-    private DeleteExecutionDegreesOfDegreeCurricularPlan()
-    {
+    private DeleteExecutionDegreesOfDegreeCurricularPlan() {
     }
 
-    public final String getNome()
-    {
+    public final String getNome() {
         return "DeleteExecutionDegreesOfDegreeCurricularPlan";
     }
 
     // delete a set of executionDegrees
-    public List run(List executionDegreesIds) throws FenixServiceException
-    {
+    public List run(List executionDegreesIds) throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            ICursoExecucaoPersistente persistentExecutionDegree = sp
+                    .getICursoExecucaoPersistente();
             ITurmaPersistente persistentClass = sp.getITurmaPersistente();
 
             Iterator iter = executionDegreesIds.iterator();
@@ -58,28 +52,26 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IServico
             Integer executionDegreeId;
             ICursoExecucao executionDegree;
 
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
 
                 executionDegreeId = (Integer) iter.next();
-                CursoExecucao execDegree = new CursoExecucao();
-                execDegree.setIdInternal(executionDegreeId);
-                executionDegree =
-                    (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
-                if (executionDegree != null)
-                {
-                    classes = persistentClass.readByExecutionDegree(executionDegree);
+
+                executionDegree = (ICursoExecucao) persistentExecutionDegree
+                        .readByOID(CursoExecucao.class, executionDegreeId);
+                if (executionDegree != null) {
+                    classes = persistentClass
+                            .readByExecutionDegree(executionDegree);
                     if (classes.isEmpty())
                         persistentExecutionDegree.delete(executionDegree);
                     else
-                        undeletedExecutionDegreesYears.add(executionDegree.getExecutionYear().getYear());
+                        undeletedExecutionDegreesYears.add(executionDegree
+                                .getExecutionYear().getYear());
                 }
             }
 
             return undeletedExecutionDegreesYears;
 
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

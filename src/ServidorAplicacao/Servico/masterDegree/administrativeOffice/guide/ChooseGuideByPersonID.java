@@ -24,116 +24,112 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ChooseGuideByPersonID implements IServico {
 
-	private static ChooseGuideByPersonID servico = new ChooseGuideByPersonID();
-
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ChooseGuideByPersonID getService() {
-		return servico;
-	}
-
-	/**
-	 * The actor of this class.
-	 **/
-	private ChooseGuideByPersonID() {
-	}
-
-	/**
-	 * Returns The Service Name */
-
-	public final String getNome() {
-		return "ChooseGuideByPersonID";
-	}
-
-	public List run(Integer personID) throws Exception {
-
-		ISuportePersistente sp = null;
-		List guides = null;
-		IPessoa person = null;
-
-		// Check if person exists
-
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			IPessoa personTemp = new Pessoa();
-			personTemp.setIdInternal(personID);
-			person =
-				(IPessoa) sp.getIPessoaPersistente().readByOId(
-					personTemp,
-					false);
-
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx =
-				new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-
-		if (person == null) {
-			throw new NonExistingServiceException();
-		}
-
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			guides =
-				sp.getIPersistentGuide().readByPerson(
-					person.getNumeroDocumentoIdentificacao(),
-					person.getTipoDocumentoIdentificacao());
-
-			BeanComparator numberComparator = new BeanComparator("number");
-			BeanComparator versionComparator = new BeanComparator("version");
-			ComparatorChain chainComparator = new ComparatorChain();
-			chainComparator.addComparator(numberComparator);
-			chainComparator.addComparator(versionComparator);
-			Collections.sort(guides, chainComparator);
-
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx =
-				new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-
-		if ((guides == null) || (guides.size() == 0)) {
-			return null;
-		}
-
-		return getLatestVersions(guides);
-	}
-
+    private static ChooseGuideByPersonID servico = new ChooseGuideByPersonID();
 
     /**
-	 * 
-	 * This function expects to receive a list ordered by number (Ascending) and version (Descending)
-	 * 
-	 * @param guides
-	 * @return The latest version for the guides
-	 */
-	private List getLatestVersions(List guides) {
-		List result = new ArrayList();
+     * The singleton access method of this class.
+     */
+    public static ChooseGuideByPersonID getService() {
+        return servico;
+    }
 
-		Collections.reverse(guides);
+    /**
+     * The actor of this class.
+     */
+    private ChooseGuideByPersonID() {
+    }
 
-		Integer numberAux = null;
+    /**
+     * Returns The Service Name
+     */
 
-		Iterator iterator = guides.iterator();
-		while (iterator.hasNext()) {
-			IGuide guide = (IGuide) iterator.next();
+    public final String getNome() {
+        return "ChooseGuideByPersonID";
+    }
 
-			if ((numberAux == null)
-				|| (numberAux.intValue() != guide.getNumber().intValue())) {
-				numberAux = guide.getNumber();
-				result.add(Cloner.copyIGuide2InfoGuide(guide));
-			}
-		}
-		Collections.reverse(result);
-		return result;
-	}
+    public List run(Integer personID) throws Exception {
+
+        ISuportePersistente sp = null;
+        List guides = null;
+        IPessoa person = null;
+
+        // Check if person exists
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+
+            person = (IPessoa) sp.getIPessoaPersistente().readByOID(
+                    Pessoa.class, personID);
+
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error", ex);
+
+            throw newEx;
+        }
+
+        if (person == null) {
+            throw new NonExistingServiceException();
+        }
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            guides = sp.getIPersistentGuide().readByPerson(
+                    person.getNumeroDocumentoIdentificacao(),
+                    person.getTipoDocumentoIdentificacao());
+
+            BeanComparator numberComparator = new BeanComparator("number");
+            BeanComparator versionComparator = new BeanComparator("version");
+            ComparatorChain chainComparator = new ComparatorChain();
+            chainComparator.addComparator(numberComparator);
+            chainComparator.addComparator(versionComparator);
+            Collections.sort(guides, chainComparator);
+
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+
+        if ((guides == null) || (guides.size() == 0)) {
+            return null;
+        }
+
+        return getLatestVersions(guides);
+    }
+
+    /**
+     * 
+     * This function expects to receive a list ordered by number (Ascending) and
+     * version (Descending)
+     * 
+     * @param guides
+     * @return The latest version for the guides
+     */
+    private List getLatestVersions(List guides) {
+        List result = new ArrayList();
+
+        Collections.reverse(guides);
+
+        Integer numberAux = null;
+
+        Iterator iterator = guides.iterator();
+        while (iterator.hasNext()) {
+            IGuide guide = (IGuide) iterator.next();
+
+            if ((numberAux == null)
+                    || (numberAux.intValue() != guide.getNumber().intValue())) {
+                numberAux = guide.getNumber();
+                result.add(Cloner.copyIGuide2InfoGuide(guide));
+            }
+        }
+        Collections.reverse(result);
+        return result;
+    }
 
 }

@@ -40,7 +40,7 @@ public class RetrieveItemFile implements IService {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentItem persistentItem = sp.getIPersistentItem();
 			IItem item = new Item(itemId);
-			item = (IItem) persistentItem.readByOId(item, false);
+			item = (IItem) persistentItem.readByOID(Item.class,itemId);
 			IFileSuport fileSuport = FileSuport.getInstance();
            
 			 file = fileSuport.retrieveFile(item.getSlideName()+"/"+fileName);

@@ -30,50 +30,50 @@ import Util.DelegateYearType;
 import Util.RoleType;
 
 /**
- * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
- * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo</a>
+ * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
+ * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
  *  
  */
-public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthorizationFilter
-{
+public class StudentCourseReportAuthorizationFilter extends
+        DomainObjectAuthorizationFilter {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.DELEGATE;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#verifyCondition(ServidorAplicacao.IUserView,
-	 *      java.lang.Integer)
-	 */
-    protected boolean verifyCondition(IUserView id, Integer objectId)
-    {
-        try
-        {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#verifyCondition(ServidorAplicacao.IUserView,
+     *      java.lang.Integer)
+     */
+    protected boolean verifyCondition(IUserView id, Integer objectId) {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentDelegate persistentDelegate = sp
+                    .getIPersistentDelegate();
+            IPersistentExecutionYear persistentExecutionYear = sp
+                    .getIPersistentExecutionYear();
+            IPersistentCurricularCourse persistentCurricularCourse = sp
+                    .getIPersistentCurricularCourse();
 
-            IStudent student = persistentStudent.readByUsername(id.getUtilizador());
-            ICurricularCourse curricularCourse =
-                (ICurricularCourse) persistentCurricularCourse.readByOId(
-                    new CurricularCourse(objectId),
-                    false);
+            IStudent student = persistentStudent.readByUsername(id
+                    .getUtilizador());
+            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+                    .readByOID(CurricularCourse.class, objectId);
 
-            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-            List degreeDelegates =
-                persistentDelegate.readDegreeDelegateByDegreeAndExecutionYear(
-                    curricularCourse.getDegreeCurricularPlan().getDegree(),
-                    executionYear);
+            IExecutionYear executionYear = persistentExecutionYear
+                    .readCurrentExecutionYear();
+            List degreeDelegates = persistentDelegate
+                    .readDegreeDelegateByDegreeAndExecutionYear(
+                            curricularCourse.getDegreeCurricularPlan()
+                                    .getDegree(), executionYear);
 
             IDelegate delegate = persistentDelegate.readByStudent(student);
             // if it's a degree delegate then it's allowed
@@ -81,50 +81,47 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
                 return true;
 
             List scopes = curricularCourse.getScopes();
-            List years = (List) CollectionUtils.collect(scopes, new Transformer()
-            {
-                public Object transform(Object arg0)
-                {
-                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                    return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
-                }
-            });
+            List years = (List) CollectionUtils.collect(scopes,
+                    new Transformer() {
+                        public Object transform(Object arg0) {
+                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                            return curricularCourseScope
+                                    .getCurricularSemester()
+                                    .getCurricularYear().getYear();
+                        }
+                    });
             years = removeDuplicates(years);
             Iterator iter = years.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
-                List delegates =
-                    persistentDelegate.readByDegreeAndExecutionYearAndYearType(
-                        curricularCourse.getDegreeCurricularPlan().getDegree(),
-                        executionYear,
-                        DelegateYearType.getEnum(year.intValue()));
+                List delegates = persistentDelegate
+                        .readByDegreeAndExecutionYearAndYearType(
+                                curricularCourse.getDegreeCurricularPlan()
+                                        .getDegree(), executionYear,
+                                DelegateYearType.getEnum(year.intValue()));
 
                 if (delegates.contains(delegate))
                     return true;
             }
             return false;
-        } catch (ExcepcaoPersistencia e)
-        {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("Filter error(ExcepcaoPersistente): "
+                    + e.getMessage());
             return false;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
         }
     }
 
     /**
-	 * @param years
-	 * @return
-	 */
-    private List removeDuplicates(List years)
-    {
+     * @param years
+     * @return
+     */
+    private List removeDuplicates(List years) {
         List result = new ArrayList();
         Iterator iter = years.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             Integer year = (Integer) iter.next();
             if (!result.contains(year))
                 result.add(year);

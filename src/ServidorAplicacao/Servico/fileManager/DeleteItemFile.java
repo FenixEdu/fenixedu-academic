@@ -18,45 +18,43 @@ import fileSuport.FileSuport;
 import fileSuport.IFileSuport;
 
 /**
- *fenix-head
- *ServidorAplicacao.Servico.fileManager
- * @author João Mota
- *17/Set/2003
- *
+ * fenix-head ServidorAplicacao.Servico.fileManager
+ * 
+ * @author João Mota 17/Set/2003
+ *  
  */
 public class DeleteItemFile implements IServico {
 
-	private static DeleteItemFile service = new DeleteItemFile();
+    private static DeleteItemFile service = new DeleteItemFile();
 
-	public static DeleteItemFile getService() {
+    public static DeleteItemFile getService() {
 
-		return service;
-	}
+        return service;
+    }
 
-	private DeleteItemFile() {
+    private DeleteItemFile() {
 
-	}
+    }
 
-	public final String getNome() {
+    public final String getNome() {
 
-		return "DeleteItemFile";
-	}
+        return "DeleteItemFile";
+    }
 
-	public void run(Integer itemId, String fileName)
-		throws FenixServiceException {
-			
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentItem persistentItem = sp.getIPersistentItem();
-			IItem item = new Item(itemId);
-			item = (IItem) persistentItem.readByOId(item, false);
-			IFileSuport fileSuport = FileSuport.getInstance();
-             try {
+    public void run(Integer itemId, String fileName)
+            throws FenixServiceException {
+
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentItem persistentItem = sp.getIPersistentItem();
+            IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
+            IFileSuport fileSuport = FileSuport.getInstance();
+            try {
                 fileSuport.beginTransaction();
             } catch (Exception e1) {
                 throw new FenixServiceException(e1);
-            }    
-			fileSuport.deleteFile(item.getSlideName()+"/"+fileName);
+            }
+            fileSuport.deleteFile(item.getSlideName() + "/" + fileName);
             try {
                 fileSuport.commitTransaction();
             } catch (Exception e2) {
@@ -65,14 +63,13 @@ public class DeleteItemFile implements IServico {
                     throw new FenixServiceException(e2);
                 } catch (Exception e3) {
                     throw new FenixServiceException(e3);
-                } 
+                }
             }
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		} catch (SlideException e) {
-			throw new FenixServiceException(e);
-		}
-	
-		
-	}
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        } catch (SlideException e) {
+            throw new FenixServiceException(e);
+        }
+
+    }
 }

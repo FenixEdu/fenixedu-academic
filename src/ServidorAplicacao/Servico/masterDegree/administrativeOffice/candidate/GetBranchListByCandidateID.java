@@ -20,72 +20,74 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class GetBranchListByCandidateID implements IServico {
 
-	private static GetBranchListByCandidateID servico = new GetBranchListByCandidateID();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static GetBranchListByCandidateID getService() {
-		return servico;
-	}
+    private static GetBranchListByCandidateID servico = new GetBranchListByCandidateID();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private GetBranchListByCandidateID() { 
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static GetBranchListByCandidateID getService() {
+        return servico;
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * The actor of this class.
+     */
+    private GetBranchListByCandidateID() {
+    }
 
-	public final String getNome() {
-		return "GetBranchListByCandidateID";
-	}
+    /**
+     * Returns The Service Name
+     */
 
-	public List run(Integer candidateID) throws FenixServiceException {
+    public final String getNome() {
+        return "GetBranchListByCandidateID";
+    }
 
-		ISuportePersistente sp = null;
-		List result = null;
-		
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-			mdcTemp.setIdInternal(candidateID);
-			
-			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
-			result = sp.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error",ex);
-			throw newEx;
-		} 
-		List branchList = new ArrayList();
-		if (result == null){
-			InfoBranch infoBranch = new InfoBranch();
-			infoBranch.setName("Tronco Comum");
-			branchList.add(infoBranch);
-			return branchList;
-		}
-		
-		Iterator iterator = result.iterator();
-		
-		while(iterator.hasNext()){
-			IBranch branch = (IBranch) iterator.next();
-			InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(branch);
-			
-			if ((infoBranch.getName() == null) || (infoBranch.getName().length() == 0)){
-				
-				// FIXME
-				infoBranch.setName("Tronco Comum");
-			}
-			branchList.add(infoBranch);
-		}
+    public List run(Integer candidateID) throws FenixServiceException {
 
-		return branchList;
-	}
+        ISuportePersistente sp = null;
+        List result = null;
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+
+            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                    .getIPersistentMasterDegreeCandidate().readByOID(
+                            MasterDegreeCandidate.class, candidateID);
+            result = sp.getIPersistentBranch().readByExecutionDegree(
+                    masterDegreeCandidate.getExecutionDegree());
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error", ex);
+            throw newEx;
+        }
+        List branchList = new ArrayList();
+        if (result == null) {
+            InfoBranch infoBranch = new InfoBranch();
+            infoBranch.setName("Tronco Comum");
+            branchList.add(infoBranch);
+            return branchList;
+        }
+
+        Iterator iterator = result.iterator();
+
+        while (iterator.hasNext()) {
+            IBranch branch = (IBranch) iterator.next();
+            InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(branch);
+
+            if ((infoBranch.getName() == null)
+                    || (infoBranch.getName().length() == 0)) {
+
+                // FIXME: Common branch
+                infoBranch.setName("Tronco Comum");
+            }
+            branchList.add(infoBranch);
+        }
+
+        return branchList;
+    }
 }
