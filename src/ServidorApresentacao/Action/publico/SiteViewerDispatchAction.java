@@ -256,9 +256,10 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			if(infoGroupPropertiesList.size()==1)
 			{
 				//Vai para a accao ViewProjectStudentGroups
-				request.setAttribute("groupPropertiesCode",((InfoGroupProperties)infoGroupPropertiesList.get(0)).getIdInternal());
-				//viewProjectStudentGroupsAction(mapping,form,request,response);
-				return mapping.findForward("sucess");
+				System.out.println("NA ACCAO ANTERIOR_GROUP_PROPERTIES"+((InfoGroupProperties)infoGroupPropertiesList.get(0)).getIdInternal());
+				request.setAttribute("groupProperties",((InfoGroupProperties)infoGroupPropertiesList.get(0)).getIdInternal());
+				return viewProjectStudentGroupsAction(mapping,form,request,response);
+				
 			}
 			else
 			{
@@ -276,11 +277,16 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			HttpServletResponse response)
 			throws FenixActionException {
 
-			String objectCodeString = (String)request.getParameter("groupProperties");
-			Integer groupPropertiesCode = new Integer(objectCodeString);
+			String objectCodeString =null;
+			Integer groupPropertiesCode =null;
+			objectCodeString =(String)request.getParameter("groupProperties");
+			if(objectCodeString==null)
+				groupPropertiesCode = (Integer)request.getAttribute("groupProperties");
+				
+			else
+				groupPropertiesCode = new Integer(objectCodeString);
 			
 			ISiteComponent viewAllGroups = new InfoSiteAllGroups();
-			System.out.println("objectCodeString"+objectCodeString);
 			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewAllGroups,null,null, null, null,groupPropertiesCode);
 			request.setAttribute("groupProperties",groupPropertiesCode);
 			
