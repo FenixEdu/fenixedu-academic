@@ -18,8 +18,8 @@
     <field-descriptor id="3"
          name="metadataFile"
          column="METADATA_FILE"
-    	 jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    	 jdbc-type="LONGVARCHAR"
+      />
     <field-descriptor id="4"
         name="visibility"
         column="VISIBILITY"
@@ -49,8 +49,8 @@
     <field-descriptor id="2"
          name="xmlFile"
          column="XML_FILE"
-    	 jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    	 jdbc-type="LONGVARCHAR"
+       />
     <field-descriptor id="3"
         name="xmlFileName"
         column="XML_FILE_NAME"
@@ -90,14 +90,12 @@
     <field-descriptor id="2"
          name="title"
          column="TITLE"
-    	 jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	 jdbc-type="LONGVARCHAR"
     />
     <field-descriptor id="3"
          name="information"
          column="INFORMATION"
-    	 jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	 jdbc-type="LONGVARCHAR"
     />
     <field-descriptor id="4"
          name="numberOfQuestions"
@@ -199,14 +197,12 @@
     <field-descriptor id="2"
         name="title"
         column="TITLE"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        jdbc-type="LONGVARCHAR"
 	/>
     <field-descriptor id="3"
         name="testInformation"
         column="TEST_INFORMATION"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        jdbc-type="LONGVARCHAR"
 	/>
      <field-descriptor id="4"
         name="beginDate"
@@ -315,8 +311,7 @@
     <field-descriptor
         name="optionShuffle"
         column="OPTION_SHUFFLE"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+        jdbc-type="LONGVARCHAR"/>
      <reference-descriptor
         name="student"
         class-ref="Dominio.Student">
@@ -368,8 +363,7 @@
 	<field-descriptor id="5"
          name="event"
          column="EVENT"
-    	 jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	 jdbc-type="LONGVARCHAR"
     />
     <reference-descriptor
          name="student"

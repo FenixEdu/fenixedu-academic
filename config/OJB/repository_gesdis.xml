@@ -34,13 +34,13 @@
          name="initialStatement"
          column="INITIAL_STATEMENT"
     	 jdbc-type="VARCHAR"/>
-<!--        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/-->
+
     	 
     <field-descriptor id="6"
          name="introduction"
          column="INTRODUCTION"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    	  jdbc-type="LONGVARCHAR"
+    />
     	 
     <field-descriptor id="7"
          name="style"
@@ -88,8 +88,7 @@
     <field-descriptor id="5"
         name="information"
         column="INFORMATION"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        jdbc-type="LONGVARCHAR"
 	/>
     <field-descriptor id="6"
         name="keySite"
@@ -241,29 +240,25 @@
     <field-descriptor id="2"
         name="title"
         column="TITLE"
-         jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+         jdbc-type="LONGVARCHAR"
 	/>
     
     <field-descriptor id="3"
         name="authors"
         column="AUTHORS"
-          jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+          jdbc-type="LONGVARCHAR"       
 	/>
     
     <field-descriptor id="4"
         name="reference"
         column="REFERENCE"
-          jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+          jdbc-type="LONGVARCHAR"
 	/>
     
     <field-descriptor id="5"
         name="year"
         column="YEAR"
-          jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+          jdbc-type="LONGVARCHAR"
 	/>
 	
 	<field-descriptor id="6"
@@ -383,33 +378,28 @@
 	<field-descriptor id="6"
         name="generalObjectivesEn"
         column="GENERAL_OBJECTIVES_EN"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor id="7"
         name="operacionalObjectivesEn"
         column="OPERACIONAL_OBJECTIVES_EN"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        jdbc-type="LONGVARCHAR"
 	/>
 	<field-descriptor id="8"
         name="programEn"
         column="PROGRAM_EN"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        jdbc-type="LONGVARCHAR"
 	/>
 	 <field-descriptor id="9"
          name="evaluationElements"
          column="EVALUATION_ELEMENTS"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	  jdbc-type="LONGVARCHAR"
         />
     	 
     <field-descriptor id="10"
          name="evaluationElementsEn"
          column="EVALUATION_ELEMENTS_EN"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	  jdbc-type="LONGVARCHAR"      
         />
         
     <field-descriptor id="11"
@@ -448,15 +438,13 @@
     <field-descriptor id="3"
          name="evaluationElements"
          column="EVALUATION_ELEMENTS"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	  jdbc-type="LONGVARCHAR"
         />
     	 
     <field-descriptor id="4"
          name="evaluationElementsEn"
          column="EVALUATION_ELEMENTS_EN"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    	  jdbc-type="LONGVARCHAR"
         />
         
     <reference-descriptor
@@ -587,8 +575,7 @@
     <field-descriptor id="6"
         name="summaryText"
         column="SUMMARY_TEXT"
-        jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        jdbc-type="LONGVARCHAR"
 	/>
     <field-descriptor id="7"
         name="keyExecutionCourse"

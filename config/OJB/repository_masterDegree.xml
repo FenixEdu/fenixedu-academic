@@ -77,8 +77,7 @@
 	 <field-descriptor id="12"
 	     name="givenCreditsRemarks"
 	     column="GIVEN_CREDITS_REMARKS"
-     	 jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+     	 jdbc-type="LONGVARCHAR"/>
 	  />
 
       	  <reference-descriptor
@@ -139,8 +138,7 @@
 	  <field-descriptor
 	     name="remarks"
 	     column="REMARKS"
-	     jdbc-type="CLOB"
-	      conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	     jdbc-type="LONGVARCHAR"	     
 	  />
 	  
 	  <field-descriptor
@@ -261,8 +259,7 @@
 	  <field-descriptor 
 	     name="remarks"
 	     column="REMARKS"
-	     jdbc-type="CLOB"
-	      conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+	     jdbc-type="LONGVARCHAR"
 	  />
 	  <field-descriptor 
 	     name="guideRequester"
@@ -602,8 +599,7 @@
          <field-descriptor 
             name="remarks"
 		    column="REMARKS"
-            jdbc-type="CLOB"
-		    conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+            jdbc-type="LONGVARCHAR"
          />
 
 	   <reference-descriptor

@@ -359,8 +359,8 @@
 	 <field-descriptor 
          name="observations"
          column="OBSERVATIONS"
-    	  jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    	  jdbc-type="LONGVARCHAR"
+      />
     <field-descriptor
 		name="employeeKey"
 		column="KEY_EMPLOYEE"

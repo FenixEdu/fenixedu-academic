@@ -144,14 +144,12 @@
       <field-descriptor
          name="mainEntryText"
          column="MAIN_ENTRY_TEXT"
-         jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+         jdbc-type="LONGVARCHAR"
       />
       <field-descriptor
          name="excerpt"
          column="EXCERPT"
-         jdbc-type="CLOB"
-        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+         jdbc-type="LONGVARCHAR"
       />
       <field-descriptor
          name="published"
@@ -182,8 +180,7 @@
       <field-descriptor
          name="keywords"
          column="KEYWORDS"
-         jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+         jdbc-type="LONGVARCHAR"
       />	   
       <field-descriptor
          name="onlineBeginDay"

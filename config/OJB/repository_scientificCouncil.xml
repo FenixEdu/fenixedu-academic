@@ -19,14 +19,13 @@
       <field-descriptor id="2"
          name="generalObjectives"
          column="GENERAL_OBJECTIVES"
-         jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+         jdbc-type="LONGVARCHAR"/>
       />
       <field-descriptor id="3"
          name="operacionalObjectives"
          column="OPERACIONAL_OBJECTIVES"
-         jdbc-type="CLOB"
-         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+         jdbc-type="LONGVARCHAR"
+        />
       />      
       <field-descriptor id="4"
          name="keyDegree"

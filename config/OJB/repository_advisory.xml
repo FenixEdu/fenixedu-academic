@@ -32,8 +32,8 @@
       <field-descriptor id="5"
          name="message"
          column="MESSAGE"
-    	 jdbc-type="CLOB"
-    	 conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    	 jdbc-type="LONGVARCHAR"
+    	 />
       />
       <field-descriptor id="6"
          name="expires"
