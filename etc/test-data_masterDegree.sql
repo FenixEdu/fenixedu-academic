@@ -93,7 +93,9 @@ INSERT INTO PRICE values (11, 2, 4, 'Especialização', '100');
 INSERT INTO PRICE values (12, 2, 1, 'Fim parte escolar simples', '100');
 INSERT INTO PRICE values (13, 2, 1, 'Fim parte escolar discriminada sem média', '100');
 INSERT INTO PRICE values (14, 2, 1, 'Fim parte escolar discriminada com média', '100');
-
+INSERT INTO PRICE values (15, 2, 5, 'Inscrições', '80');
+INSERT INTO PRICE values (16, 2, 6, 'Multas', '45');
+INSERT INTO PRICE values (17, 2, 7, 'Seguros', '100');
 
 
 
