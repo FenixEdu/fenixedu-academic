@@ -32,7 +32,7 @@
 	<bean:message key="label.curricularPlan"/>
 	&nbsp;<bean:message key="label.the" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
-	&nbsp;<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")) %>
+	&nbsp;<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
 		<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
 		-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
