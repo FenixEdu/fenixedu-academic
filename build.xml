@@ -28,7 +28,7 @@
     <property name="deploy.jars"     value="${deploy.home}/jars"/>
 	
     <!--Directorio com bibliotecas (JAR) a utilizar-->
-    <property location="lib" name="libs"/>
+    <property name="lib" location="lib" />
 	<property location="lib_web" name="libs.web"/>
 
     <!--Directorio com configuracoes-->
@@ -92,7 +92,7 @@
             description="Compila o projecto principal" depends="prepare">
         <tstamp />
         <javac destdir="${webapp.classes}"
-               extdirs="${libs};${libs.web}"
+               extdirs="${lib};${libs.web}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
@@ -125,7 +125,7 @@
             description="Compiles tests classes">
         <javac classpath="${webapp.classes}"
                destdir="${tests.classes}"
-               extdirs="${libs};${libs.web}" 
+               extdirs="${lib};${libs.web}" 
                srcdir="${src.tests}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
@@ -180,7 +180,7 @@
              webxml="${metadata}/web.xml"
              duplicate="preserve">
             <fileset dir="${src.jsp}"/>
-            <lib dir="${libs}"/>
+            <lib dir="${lib}"/>
             <lib dir="${libs.web}" excludes="servlet.jar,strutstest.jar"/>
             <lib dir="${deploy.jars}"/>
             <classes dir="${classes}" includes="**/*.class"/>
@@ -298,7 +298,7 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                  <include name="**/*Test.java"/>
+                 <include name="**/*Test.java"/>
             <!-- start of tests that are failing -->    
              <!--    <exclude name="**/CriarAulaFormActionTest.java" /> 		 -->
                  <exclude name="**/EditarAulaFormActionTest.java" /> 
@@ -328,9 +328,12 @@
                 <pathelement path="${tests.classes}"/>
                 <pathelement path="${webapp}"/>
                 <pathelement path="${sql}"/>
-                <fileset dir="${webapp.lib}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
+                <fileset dir="${webapp.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>                
             </classpath> 
         </junit>
     </target>
@@ -380,7 +383,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/InsertItemTest.java"/>
+                    <include name="**/*Test.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
@@ -427,7 +430,7 @@
 	         <exclude name="tables_inscRelatedDBTables.sql" />
   			</fileset>
             <classpath>
-                <fileset dir="${libs}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -446,11 +449,43 @@
             src="${sql}/test-data_sop.sql"
         >
             <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/ciapl"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_inscricoes.sql"
+        >
+            <classpath>
                 <fileset dir="${libs}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
         </sql>
+
+
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/ciapl"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_masterDegree.sql"
+        >
+            <classpath>
+                <fileset dir="${libs}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+
 
         <sql
             driver="com.mysql.jdbc.Driver"
@@ -492,7 +527,7 @@
             src="${sql}/test-data_GesDis.sql"
         >
             <classpath>
-                <fileset dir="${libs}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -665,6 +700,18 @@
                      includes="**/*~,**/#*#,**/semantic.cache" />
         </delete>
     </target>
+	<target name="replace-all">
+		<replace dir="${src.tests}">
+		  <replacefilter 
+		    token="/WEB-INF/tests/web-sop.xml" value="/WEB-INF/web.xml"/>
+		  <replacefilter 
+		    token="/WEB-INF/tests/web-teacher.xml" value="/WEB-INF/web.xml"/>
+		  <replacefilter 
+		    token="/WEB-INF/tests/web-publico.xml" value="/WEB-INF/web.xml"/>
+		  <replacefilter 
+		    token="/WEB-INF/tests/web-student.xml" value="/WEB-INF/web.xml"/>
+		</replace>
+	</target>
 
 
 </project>
