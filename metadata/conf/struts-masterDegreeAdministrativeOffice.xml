@@ -540,11 +540,16 @@
 
       <action path="/printGuidePage"
 		      parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
+              type="ServidorApresentacao.Action.commons.VoidAction" 
 			  >
 	         <forward name="Success" path="/guide/printGuidePage.jsp"/> 
       </action>
- 
+ 	  <action path="/printGuidePages"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.VoidAction" 
+			  >
+	         <forward name="Success" path="/guide/printGuidePage.jsp"/> 
+      </action>
       <action path="/candidateSection"
 		      parameter="method"
               type="ServidorApresentacao.Action.commons.VoidAction"
@@ -1487,6 +1492,9 @@
 			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
 		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+            <exception type="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
+			            key="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
+			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
 	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
@@ -1514,6 +1522,9 @@
 			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
 		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+            <exception type="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
+			            key="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
+			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
 	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>

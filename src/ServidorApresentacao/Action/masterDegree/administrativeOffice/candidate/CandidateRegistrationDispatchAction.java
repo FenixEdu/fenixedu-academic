@@ -29,12 +29,14 @@ import ServidorAplicacao.Servico.exceptions.ActiveStudentCurricularPlanAlreadyEx
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidChangeActionException;
 import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException;
+import ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -192,6 +194,8 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 			try {
 				Object args[] = { candidateID , branchID,  studentNumber};
 				infoCandidateRegistration = (InfoCandidateRegistration) serviceManager.executar(userView, "RegisterCandidate", args);
+			} catch (InvalidStudentNumberServiceException e) {
+				throw new InvalidStudentNumberActionException(e);
 			} catch (ActiveStudentCurricularPlanAlreadyExistsServiceException e) {
 				throw new ActiveStudentCurricularPlanAlreadyExistsActionException(e);
 			} catch (ExistingServiceException e) {

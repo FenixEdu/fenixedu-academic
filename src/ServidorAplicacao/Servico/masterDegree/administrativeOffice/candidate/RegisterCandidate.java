@@ -40,6 +40,7 @@ import ServidorAplicacao.Servico.exceptions.ActiveStudentCurricularPlanAlreadyEx
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -119,7 +120,12 @@ public class RegisterCandidate implements IServico {
 			role.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
 			IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(masterDegreeCandidate.getPerson(), role);
 			sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
-
+			Integer newStudentNumber = null;
+			newStudentNumber= sp.getIPersistentStudent().generateStudentNumber(TipoCurso.MESTRADO_OBJ);
+			
+			if (studentNumber != null && studentNumber.intValue()  > newStudentNumber.intValue())
+				throw new InvalidStudentNumberServiceException();
+				
 			
 			if (student == null){
 				student = new Student();
@@ -129,7 +135,7 @@ public class RegisterCandidate implements IServico {
 				student.setState(new StudentState(StudentState.INSCRITO));
 				
 				if (studentNumber == null) {
-					student.setNumber(sp.getIPersistentStudent().generateStudentNumber(TipoCurso.MESTRADO_OBJ));
+					student.setNumber(newStudentNumber);
 				} else {
 					student.setNumber(studentNumber);
 				}

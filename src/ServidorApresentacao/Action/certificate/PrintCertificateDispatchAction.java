@@ -24,6 +24,7 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoFinalResult;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
@@ -85,17 +86,42 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 			InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) session.getAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
 			
 			String certificate = (String) session.getAttribute(SessionConstants.CERTIFICATE_TYPE);	
-		    
+			String anoLectivo = new String();
+			InfoExecutionYear infoExecutionYear = null;
+			try {
+				infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);
+
+			} catch (RuntimeException e) {
+				throw new RuntimeException("Error", e);
+			}
 			if ((certificate.equals("Matrícula")) || (certificate.equals("Matrícula e Inscrição")) || (certificate.equals("Duração do Curso"))){
+				List enrolmentList = null;	
+				Object args[] = {infoStudentCurricularPlan};
+				try {
+					enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+
+				} catch (NonExistingServiceException e) {
+					throw new NonExistingActionException("Inscrição", e);
+				}
+
+				if (enrolmentList.size() == 0){
+					ActionErrors errors = new ActionErrors();
+					errors.add("AlunoNãoExiste",
+						new ActionError("error.enrolment.notExist"));
+					saveErrors(request, errors);
+					return new ActionForward(mapping.getInput());
+				}
+				anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+				
 				if (certificate.equals("Matrícula"))
 							session.setAttribute(SessionConstants.MATRICULA, certificate.toUpperCase());
 				if (certificate.equals("Matrícula e Inscrição"))
 							session.setAttribute(SessionConstants.MATRICULA_ENROLMENT, certificate.toUpperCase());
 				if (certificate.equals("Duração do Curso")){
 					
-					if (infoStudentCurricularPlan.getSpecialization().equals(new Specialization(Specialization.MESTRADO))){
-							certificate=new String("Matrícula");
-							session.setAttribute(SessionConstants.DURATION_DEGREE, certificate.toUpperCase());
+					if (infoStudentCurricularPlan.getSpecialization().equals(new Specialization(Specialization.MESTRADO))){											
+						certificate=new String("Matrícula");
+						session.setAttribute(SessionConstants.DURATION_DEGREE, certificate.toUpperCase());
 					}
 					else{
 						ActionErrors errors = new ActionErrors();
@@ -145,20 +171,23 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							}
 							InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
 							infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
-							if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+							if (result instanceof InfoEnrolmentInExtraCurricularCourse)	{
 								extraEnrolment.add(infoEnrolment2);		
-							else
-								normalEnrolment.add(infoEnrolment2);							 
+								anoLectivo =((InfoEnrolment) extraEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+							}else {
+								normalEnrolment.add(infoEnrolment2);	
+								anoLectivo =((InfoEnrolment) normalEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+							}						 
 												
 
 						}
 						
 						
-					if (normalEnrolment.size() != 0)
-							session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
-					if (extraEnrolment.size() != 0)
-							session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);		
-					session.setAttribute(SessionConstants.ENROLMENT, certificate.toUpperCase());			
+						if (normalEnrolment.size() != 0)
+								session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
+						if (extraEnrolment.size() != 0)
+								session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);		
+						session.setAttribute(SessionConstants.ENROLMENT, certificate.toUpperCase());			
 
 				}
 				if ((certificate.equals("Aproveitamento")) || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
@@ -194,11 +223,13 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							}
 							InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
 							infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
-							if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+							if (result instanceof InfoEnrolmentInExtraCurricularCourse)	{
 								extraEnrolment.add(infoEnrolment2);		
-							else
-								normalEnrolment.add(infoEnrolment2);							 
-							
+								anoLectivo =((InfoEnrolment) extraEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+							}else {
+								normalEnrolment.add(infoEnrolment2);	
+								anoLectivo =((InfoEnrolment) normalEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+							}		
 
 						}
 						
@@ -313,15 +344,16 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 								}
 								InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
 								infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
-								if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+								if (result instanceof InfoEnrolmentInExtraCurricularCourse)	{
 									extraEnrolment.add(infoEnrolment2);		
-								else
-									normalEnrolment.add(infoEnrolment2);							 
-	
+									anoLectivo =((InfoEnrolment) extraEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+								}else {
+									normalEnrolment.add(infoEnrolment2);	
+									anoLectivo =((InfoEnrolment) normalEnrolment.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+								}		
 	
 							}
-							
-//							Iterator iterator = enrolmentList.iterator();
+							//Iterator iterator = enrolmentList.iterator();
 //							int i = 0;
 //							while(iterator.hasNext()) {	
 //								result = iterator.next();
@@ -378,9 +410,10 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 			Locale locale = new Locale("pt", "PT");
 			Date date = new Date();
 			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-
+			request.setAttribute("anoLectivo",anoLectivo);	
 			session.setAttribute(SessionConstants.DATE, formatedDate);
 			session.setAttribute(SessionConstants.CERTIFICATE_TYPE, certificate);
+			
 			
 		
 		    

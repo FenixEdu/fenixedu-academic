@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoPrice;
 import DataBeans.InfoStudent;
@@ -166,7 +167,9 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 				}
 				Locale locale = new Locale("pt", "PT");
 				Date date = new Date();
-				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);				
+		
+
 				if (destination.length != 0)
 					session.setAttribute(SessionConstants.DOCUMENT_REASON_LIST,destination);
 					session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
