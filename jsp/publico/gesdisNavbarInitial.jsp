@@ -31,8 +31,8 @@
 			<dd><html:link page="<%= "/viewSite.do?method=curricularCourses&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
 				<bean:message key="link.associatedCurricularCourses"/>
 				</html:link></dd>	
-  </dl>
-  <ul>
+ </dl>
+<ul>
 
 <li><html:link page="<%= "/viewSite.do" + "?method=timeTable&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
 		<bean:message key="link.executionCourse.timeTable"/>

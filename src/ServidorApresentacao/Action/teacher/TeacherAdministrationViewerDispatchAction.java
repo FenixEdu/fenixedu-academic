@@ -103,13 +103,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-
-		}
-		objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		String alternativeSite = (String) alternativeSiteForm.get("siteAddress");
 		String mail = (String) alternativeSiteForm.get("mail");
@@ -187,12 +181,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		HttpSession session = request.getSession(false);
 
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
 		String title = (String) insertAnnouncementForm.get("title");
@@ -236,7 +225,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			announcementCodeString = (String) request.getAttribute("announcementCode");
 		}
 		if (announcementCodeString != null)
-		 announcementCode = new Integer(announcementCodeString);
+			announcementCode = new Integer(announcementCodeString);
 		return announcementCode;
 	}
 
@@ -255,12 +244,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 		Integer announcementCode = new Integer(announcementCodeString);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
 		String newTitle = (String) insertAnnouncementForm.get("title");
@@ -295,12 +279,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 		Integer announcementCode = new Integer(announcementCodeString);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { objectCode, announcementCode };
@@ -368,12 +347,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		throws FenixActionException {
 		HttpSession session = request.getSession(false);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm objectivesForm = (DynaActionForm) form;
 		InfoSiteObjectives infoSiteObjectivesNew = new InfoSiteObjectives();
@@ -425,12 +399,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		throws FenixActionException {
 		HttpSession session = request.getSession(false);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm programForm = (DynaActionForm) form;
 		InfoSiteProgram infoSiteProgramNew = new InfoSiteProgram();
@@ -490,12 +459,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		throws FenixActionException {
 		HttpSession session = request.getSession(false);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm evaluationForm = (DynaActionForm) form;
 		InfoEvaluation infoEvaluationNew = new InfoEvaluation();
@@ -562,12 +526,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		HttpSession session = request.getSession(false);
 
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
 
@@ -575,8 +534,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		String authors = (String) insertBibliographicReferenceForm.get("authors");
 		String reference = (String) insertBibliographicReferenceForm.get("reference");
 		String year = (String) insertBibliographicReferenceForm.get("year");
-		
-		Boolean optional = new Boolean ((String) insertBibliographicReferenceForm.get("optional"));
+
+		Boolean optional = new Boolean((String) insertBibliographicReferenceForm.get("optional"));
 
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { objectCode, title, authors, reference, year, optional };
@@ -628,12 +587,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 		Integer bibliographicReferenceCode = new Integer(bibliographicReferenceCodeString);
 
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;
 		String title = (String) editBibliographicReferenceForm.get("title");
@@ -641,14 +595,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		String reference = (String) editBibliographicReferenceForm.get("reference");
 		String year = (String) editBibliographicReferenceForm.get("year");
 		//String optionalStr = (String) editBibliographicReferenceForm.get("optional");
-		
-		Boolean optional = new Boolean ((String) editBibliographicReferenceForm.get("optional"));
 
-//		if (optionalStr.equals(this.getResources(request).getMessage("message.optional"))) {
-//			optional = new Boolean(true);
-//		} else {
-//			optional = new Boolean(false);
-//		}
+		Boolean optional = new Boolean((String) editBibliographicReferenceForm.get("optional"));
+
+		//		if (optionalStr.equals(this.getResources(request).getMessage("message.optional"))) {
+		//			optional = new Boolean(true);
+		//		} else {
+		//			optional = new Boolean(false);
+		//		}
 
 		Object args[] = { objectCode, bibliographicReferenceCode, title, authors, reference, year, optional };
 
@@ -681,12 +635,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 		Integer bibliographicReferenceCode = new Integer(bibliographicReferenceCodeString);
 
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { objectCode, bibliographicReferenceCode };
@@ -716,8 +665,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		return mapping.findForward("viewTeachers");
 	}
 
-	private String getUsername(HttpServletRequest request)
-		throws InvalidSessionActionException {
+	private String getUsername(HttpServletRequest request) throws InvalidSessionActionException {
 		HttpSession session = getSession(request);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		String username = userView.getUtilizador();
@@ -747,11 +695,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		HttpSession session = getSession(request);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm teacherForm = (DynaActionForm) form;
 		Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
@@ -764,7 +708,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			gestor.executar(userView, "AssociateTeacher", args);
 		} catch (InvalidArgumentsServiceException e) {
 			throw new InvalidArgumentsActionException(teacherNumber.toString(), e);
-		} catch (ExistingServiceException e){
+		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(teacherNumber.toString(), e);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -788,11 +732,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 		Integer teacherCode = new Integer(teacherCodeString);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { objectCode, teacherCode };
@@ -810,12 +750,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	//	========================  Exams Management  ========================
 
-	public ActionForward viewExams(
-					ActionMapping mapping,
-					ActionForm form,
-					HttpServletRequest request,
-					HttpServletResponse response)
-					throws FenixActionException {
+	public ActionForward viewExams(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException {
 
 		ISiteComponent examsComponent = new InfoSiteExam();
 		readSiteView(request, examsComponent, null, null, null);
@@ -840,11 +776,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	public ActionForward viewSection(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
-		String sectionCodeString = request.getParameter("currentSectionCode");
-		if (sectionCodeString == null) {
-			sectionCodeString = (String) request.getAttribute("currentSectionCode");
-		}
-		Integer sectionCode = new Integer(sectionCodeString);
+		Integer sectionCode = getSectionCode(request);
 
 		ISiteComponent sectionComponent = new InfoSiteSection();
 		readSiteView(request, sectionComponent, null, sectionCode, null);
@@ -875,8 +807,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		if (sectionCodeString == null) {
 			sectionCodeString = (String) request.getAttribute("currentSectionCode");
 		}
-		if(sectionCodeString != null){
-		sectionCode = new Integer(sectionCodeString);
+		if (sectionCodeString != null) {
+			sectionCode = new Integer(sectionCodeString);
 		}
 		return sectionCode;
 	}
@@ -905,11 +837,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		Integer sectionCode = getSectionCode(request);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String sectionName = (String) dynaForm.get("name");
@@ -950,11 +878,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		Integer sectionCode = getSectionCode(request);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm sectionForm = (DynaValidatorForm) form;
 		String sectionName = (String) sectionForm.get("name");
@@ -986,34 +910,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		HttpSession session = request.getSession(false);
 
-		Integer sectionCode = null;
-		String sectionCodeString = request.getParameter("superiorSectionCode");
-		if (sectionCodeString == null) {
-			sectionCodeString = (String) request.getAttribute("superiorSectionCode");
-		}
-		if (sectionCodeString != null) {
-			sectionCode = new Integer(sectionCodeString);
-		}
+		Integer superiorSectionCode = getSuperiorSectionCode(request);
 
-		String subSectionCodeString = request.getParameter("currentSectionCode");
-		if (subSectionCodeString == null) {
-			subSectionCodeString = (String) request.getAttribute("currentSectionCode");
-		}
-		Integer subSectionCode = new Integer(subSectionCodeString);
+		Integer sectionCode = getSectionCode(request);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object deleteSectionArguments[] = { objectCode, subSectionCode };
+		Object deleteSectionArguments[] = { objectCode, sectionCode };
 		GestorServicos manager = GestorServicos.manager();
 		try {
 			manager.executar(userView, "DeleteSection", deleteSectionArguments);
 			//			if this section has a parent section
-			if (sectionCode != null) {
+			if (superiorSectionCode != null) {
 				return viewSection(mapping, form, request, response);
 			} else {
 				return sectionsFirstPage(mapping, form, request, response);
@@ -1024,6 +933,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		} catch (Exception e) {
 			throw new FenixActionException(e.getMessage());
 		}
+	}
+
+	private Integer getSuperiorSectionCode(HttpServletRequest request) {
+		Integer sectionCode = null;
+		String sectionCodeString = request.getParameter("superiorSectionCode");
+		if (sectionCodeString == null) {
+			sectionCodeString = (String) request.getAttribute("superiorSectionCode");
+		}
+		if (sectionCodeString != null) {
+			sectionCode = new Integer(sectionCodeString);
+		}
+		return sectionCode;
 	}
 
 	public ActionForward prepareInsertItem(
@@ -1048,11 +969,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		Integer sectionCode = getSectionCode(request);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		Integer order = new Integer((String) dynaForm.get("itemOrder"));
@@ -1096,11 +1013,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	}
 
 	private Integer getItemCode(HttpServletRequest request) {
+		Integer itemCode = null;
 		String itemCodeString = request.getParameter("itemCode");
 		if (itemCodeString == null) {
 			itemCodeString = (String) request.getAttribute("itemCode");
 		}
-		Integer itemCode = new Integer(itemCodeString);
+		if (itemCodeString != null) {
+			itemCode = new Integer(itemCodeString);
+		}
 		return itemCode;
 	}
 
@@ -1109,17 +1029,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		HttpSession session = request.getSession(false);
 
-		String itemCodeString = request.getParameter("itemCode");
-		if (itemCodeString == null) {
-			itemCodeString = (String) request.getAttribute("itemCode");
-		}
-		Integer itemCode = new Integer(itemCodeString);
-
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer itemCode = getItemCode(request);
+		
+		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm itemForm = (DynaActionForm) form;
 		String information = (String) itemForm.get("information");
@@ -1154,17 +1066,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		HttpSession session = request.getSession(false);
 
-		String itemCodeString = request.getParameter("itemCode");
-		if (itemCodeString == null) {
-			itemCodeString = (String) request.getAttribute("itemCode");
-		}
-		Integer itemCode = new Integer(itemCodeString);
+		Integer itemCode = getItemCode(request);
 
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		Integer objectCode = new Integer(objectCodeString);
+		Integer objectCode = getObjectCode(request);
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object deleteItemArguments[] = { objectCode, itemCode };
@@ -1178,34 +1082,37 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		return viewSection(mapping, form, request, response);
 	}
-	
-	public ActionForward validationError(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException {
-		
+
+	public ActionForward validationError(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
 		SiteManagementActionMapping siteManagementActionMapping = (SiteManagementActionMapping) mapping;
-		
-		ISiteComponent siteComponent =
-			getSiteComponentForValidationError(siteManagementActionMapping);
-		
+
+		ISiteComponent siteComponent = getSiteComponentForValidationError(siteManagementActionMapping);
+
 		Integer infoExecutionCourseCode = null;
 		Object obj1 = null;
 		Object obj2 = null;
-		
-		if (siteComponent instanceof InfoSiteItems){
+
+		if (siteComponent instanceof InfoSiteItems) {
 			obj1 = getItemCode(request);
-		}else if (siteComponent instanceof InfoSiteTeachers){
+		} else if (siteComponent instanceof InfoSiteTeachers) {
 			obj2 = getUsername(request);
-		}else if (siteComponent instanceof InfoSiteRegularSections){
+		} else if (siteComponent instanceof InfoSiteRegularSections) {
 			obj1 = getSectionCode(request);
-		} else if (siteComponent instanceof InfoAnnouncement){
+		} else if (siteComponent instanceof InfoAnnouncement) {
 			obj1 = getAnnouncementCode(request);
-		} else if (siteComponent instanceof InfoSiteSections){
+		} else if (siteComponent instanceof InfoSiteSections) {
 			obj1 = getSectionCode(request);
-		} else if (siteComponent instanceof InfoSiteSection){
+		} else if (siteComponent instanceof InfoSiteSection) {
 			obj1 = getSectionCode(request);
 		}
 		readSiteView(request, siteComponent, infoExecutionCourseCode, obj1, obj2);
-		
+
 		return mapping.findForward(siteManagementActionMapping.getInputForwardName());
 	}
 
@@ -1214,33 +1121,47 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		String className = mapping.getComponentClassName();
 		try {
 			Class componentClass = this.getClass().getClassLoader().loadClass(className);
-			Constructor c = componentClass.getConstructor(new Class[] {});
+			Constructor c = componentClass.getConstructor(new Class[] {
+			});
 			c.setAccessible(true);
-			siteComponent = (ISiteComponent) c.newInstance(new Object[] {});
+			siteComponent = (ISiteComponent) c.newInstance(new Object[] {
+			});
 		} catch (SecurityException e) {
-			
+
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			
+
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			
+
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			
+
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			
+
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			
+
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			
+
 			e.printStackTrace();
 		}
 		return siteComponent;
-	}	
+	}
+
+	private Integer getObjectCode(HttpServletRequest request) {
+		Integer objectCode = null;
+		String objectCodeString = request.getParameter("objectCode");
+		if (objectCodeString == null) {
+			objectCodeString = (String) request.getAttribute("objectCode");
+		}
+		if (objectCodeString != null) {
+			objectCode = new Integer(objectCodeString);
+		}
+		return objectCode;
+	}
 
 	private void readSiteView(
 		HttpServletRequest request,
@@ -1255,11 +1176,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		Integer objectCode = null;
 		if (infoExecutionCourseCode == null) {
-			String objectCodeString = request.getParameter("objectCode");
-			if (objectCodeString == null) {
-				objectCodeString = (String) request.getAttribute("objectCode");
-			}
-			objectCode = new Integer(objectCodeString);
+			objectCode = getObjectCode(request);
 			infoExecutionCourseCode = objectCode;
 		}
 

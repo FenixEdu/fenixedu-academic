@@ -160,6 +160,16 @@
 	        <form-property name="marks"  type="java.lang.String[]" />
 		</form-bean>	
 
+		<!-- Form for marks publishment -->
+		<form-bean name="publishMarksForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+        	dynamic="true">
+	        <form-property name="examCode" type="java.lang.Integer" />
+    	    <form-property name="objectCode" type="java.lang.Integer" />
+        	<form-property name="publishmentMessage"  type="java.lang.String" />
+	        <form-property name="sendSMS"  type="java.lang.Boolean" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>	
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -633,11 +643,15 @@
 	</action>
 	<action 
 		path="/marksList"
+		input="/marksList.do?method=preparePublishMarks"
+		name="publishMarksForm"
 		scope="request"
 		parameter="method"
 		type="ServidorApresentacao.Action.teacher.MarksListAction"
 		  >
        <forward name="marksList" path="/marksList.jsp" />       
+       <forward name="preparePublishMarks" path="/preparePublishMarks.jsp" />       
+       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>
 	</action>
 	<action 
 		path="/writeMarks"

@@ -91,7 +91,7 @@
             scope="request"
             input="/person/alterarPassword.jsp">
     </action>
-<!-- Nanda e Tania --> 
+	<!-- Nanda e Tania --> 
 	<action path="/topAdministrativa" forward="/topAdministrativa.jsp" />
 	
     <action path="/index"

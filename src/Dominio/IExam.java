@@ -22,6 +22,7 @@ public interface IExam extends IDomainObject {
 	public Calendar getEnrollmentEndDay();
 	public Calendar getEnrollmentBeginTime() ;
 	public Calendar getEnrollmentEndTime();
+	public String getPublishmentMessage();
 	
 
 	public void setBeginning(Calendar beginning);
@@ -35,5 +36,6 @@ public interface IExam extends IDomainObject {
 	public void setEnrollmentEndDay(Calendar calendar);
 	public void setEnrollmentBeginTime(Calendar calendar);
 	public void setEnrollmentEndTime(Calendar calendar);
+	public void setPublishmentMessage(String revisionInformation);
 
 }

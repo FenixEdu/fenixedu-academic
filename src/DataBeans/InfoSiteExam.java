@@ -16,8 +16,6 @@ import java.util.List;
 public class InfoSiteExam implements ISiteComponent {
 	
 	private List infoExams;
-	
-	
 
 	/**
 	 * @return

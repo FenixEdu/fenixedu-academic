@@ -345,6 +345,13 @@
         <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
         <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
     </action>
+
+    <action path="/viewPublishedMarks"
+            type="ServidorApresentacao.Action.publico.ViewPublishedMarksAction"
+            parameter="method"
+            >
+        <forward name="viewPublishedMarks" path="/viewPublishedMarks.jsp"/>
+    </action>
 	
 <!-- END OF EXAMS -->
 

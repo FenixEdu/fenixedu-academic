@@ -15,7 +15,7 @@ import java.util.List;
 
 import Util.Season;
 
-public class InfoExam extends InfoObject{
+public class InfoExam extends InfoObject implements ISiteComponent{
 	protected Calendar day;
 	protected Calendar beginning;
 	protected Calendar end;
@@ -25,6 +25,7 @@ public class InfoExam extends InfoObject{
 	protected Calendar enrollmentBeginTime;
 	protected Calendar enrollmentEndTime;
 	protected List associatedRooms;
+	protected String publishmentMessage;
 
 	
 
@@ -153,6 +154,20 @@ public class InfoExam extends InfoObject{
 	 */
 	public void setAssociatedRooms(List rooms) {
 		associatedRooms = rooms;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getPublishmentMessage() {
+		return publishmentMessage;
+	}
+
+	/**
+	 * @param publishmentMessage
+	 */
+	public void setPublishmentMessage(String publishmentMessage) {
+		this.publishmentMessage = publishmentMessage;
 	}
 
 	public String getDate() {
