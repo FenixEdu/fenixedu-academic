@@ -99,6 +99,61 @@
       <field property="yearToCreate" depends="required" page="1">
         <arg0 key="property.year.toCreate" resource="true"/>
       </field>
+<!-- angela -->      
+      <field property="beginDateToCreate" depends="mask,date" page="1">
+      	<msg name="date" key="errors.invalid.dateOfExecutionPeriod"/>
+      	<msg name="mask" key="errors.invalid.dateOfExecutionPeriod"/>
+        <arg0 key="message.initialDate" resource="true" />
+        <var>
+           <var-name>datePattern</var-name>
+           <var-value>dd-MM-yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)-(.||..)-....)$</var-value>
+        </var>
+      </field>
+      <field property="endDateToCreate" depends="mask,date" page="1">
+      	<msg name="date" key="errors.invalid.dateOfExecutionPeriod"/>
+      	<msg name="mask" key="errors.invalid.dateOfExecutionPeriod"/>
+        <arg0 key="message.endDate" resource="true" />
+        <var>
+           <var-name>datePattern</var-name>
+           <var-value>dd-MM-yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)-(.||..)-....)$</var-value>
+        </var>
+      </field>
+      
+      <field property="beginDateToExportDataFrom" depends="mask,date" page="1">
+      	<msg name="date" key="errors.invalid.date"/>
+      	<msg name="mask" key="errors.invalid.date"/>
+        <arg0 key="message.initialDate" resource="true" />
+        <var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/....)$</var-value>
+        </var>
+      </field>
+      <field property="endDateToExportDataFrom" depends="mask,date" page="1">
+      	<msg name="date" key="errors.invalid.date"/>
+      	<msg name="mask" key="errors.invalid.date"/>
+        <arg0 key="message.endDate" resource="true" />
+        <var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/....)$</var-value>
+        </var>
+      </field>
+ <!-- fim -->     
       <field property="semesterToExportDataFrom" depends="required" page="1">
         <arg0 key="property.semester.toImport" resource="true"/>
       </field>
