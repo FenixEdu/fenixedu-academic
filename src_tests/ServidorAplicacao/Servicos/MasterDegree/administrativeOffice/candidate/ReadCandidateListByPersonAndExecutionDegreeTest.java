@@ -17,20 +17,20 @@ import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
+import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorAplicacao.Servicos.TestCaseReadServicesIntranet;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import DataBeans.util.*;
 
 
-public class ReadCandidateListByPersonAndExecutionDegreeTest extends TestCaseReadServices {
+public class ReadCandidateListByPersonAndExecutionDegreeTest extends TestCaseReadServicesIntranet {
   
   public ReadCandidateListByPersonAndExecutionDegreeTest(java.lang.String testName) {
 	super(testName);

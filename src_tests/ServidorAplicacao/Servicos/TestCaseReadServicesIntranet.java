@@ -14,12 +14,12 @@ import ServidorAplicacao.Servico.Autenticacao;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public abstract class TestCaseServicesIntranet extends TestCaseServicos {
+public abstract class TestCaseReadServicesIntranet extends TestCaseReadServices {
 
 	/**
 	 * @param testName
 	 */
-	public TestCaseServicesIntranet(String testName) {
+	public TestCaseReadServicesIntranet(String testName) {
 		super(testName);
 	}
 

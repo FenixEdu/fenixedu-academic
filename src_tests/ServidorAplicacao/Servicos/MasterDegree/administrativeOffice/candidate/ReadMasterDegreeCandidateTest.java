@@ -23,13 +23,13 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorAplicacao.Servicos.TestCaseReadServicesIntranet;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.Specialization;
 
-public class ReadMasterDegreeCandidateTest extends TestCaseReadServices {
+public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet {
   
   public ReadMasterDegreeCandidateTest(java.lang.String testName) {
 	super(testName);
