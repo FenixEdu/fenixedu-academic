@@ -107,8 +107,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 			return getInfoBibliographicReference((InfoBibliographicReference) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteTeachers) {
 			return getInfoSiteTeachers((InfoSiteTeachers) component, site, (String) obj2);
-		}else if (component instanceof InfoSiteExam) {
+		} else if (component instanceof InfoSiteEvaluation) {
 			return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
+		} else if (component instanceof InfoSiteExam) {
+			return getInfoSiteExam((InfoSiteExam) component, site);
 		} else if (component instanceof InfoSiteRootSections) {
 			return getInfoSiteRootSections((InfoSiteRootSections) component, site);
 		} else if (component instanceof InfoSiteSection) {
@@ -444,18 +446,18 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return component;
 	}
 
-/**
- * 
- * @param component
- * @param site
- * @return
- */
+	/**
+	 * 
+	 * @param component
+	 * @param site
+	 * @return
+	 */
 	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
 		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 		List evaluations = executionCourse.getAssociatedExams();
 		List infoEvaluations = new ArrayList();
 		Iterator iter = evaluations.iterator();
-		while (iter.hasNext()){
+		while (iter.hasNext()) {
 			IEvaluation evaluation = (IEvaluation) iter.next();
 			infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
 		}
@@ -469,18 +471,18 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-		private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
-			List exams = executionCourse.getAssociatedExams();
-			List infoExams = new ArrayList();
-			Iterator iter = exams.iterator();
-			while (iter.hasNext()){
-				IExam exam = (IExam) iter.next();
-				infoExams.add(Cloner.copyIExam2InfoExam(exam));
-			}
-			component.setInfoExams(infoExams);
-			return component;
+	private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
+		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		List exams = executionCourse.getAssociatedExams();
+		List infoExams = new ArrayList();
+		Iterator iter = exams.iterator();
+		while (iter.hasNext()) {
+			IExam exam = (IExam) iter.next();
+			infoExams.add(Cloner.copyIExam2InfoExam(exam));
 		}
+		component.setInfoExams(infoExams);
+		return component;
+	}
 	/**
 	 * @param sections
 	 * @param site
@@ -694,10 +696,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 			}
 		return infoCurricularCourseList;
 	} /**
-											 * @param page
-											 * @param site
-											 * @return
-											 */
+												 * @param page
+												 * @param site
+												 * @return
+												 */
 	private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
