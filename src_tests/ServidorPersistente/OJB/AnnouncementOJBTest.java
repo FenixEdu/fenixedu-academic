@@ -154,8 +154,6 @@ public class AnnouncementOJBTest extends TestCaseOJB {
     }
 
     public void testDeleteAllAnnouncements() {
-		IAnnouncement announcement = null;
-		
 		try {
 			persistentSupport.iniciarTransaccao();
 			List announcements = persistentAnnouncement.readAll();
@@ -175,8 +173,6 @@ public class AnnouncementOJBTest extends TestCaseOJB {
             fail("testDeleteAllAnnouncements: deleteAll");
         }
 
-		//read something again
-		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
 			List announcements = persistentAnnouncement.readAll();

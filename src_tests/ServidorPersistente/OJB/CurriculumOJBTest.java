@@ -159,8 +159,6 @@ public class CurriculumOJBTest extends TestCaseOJB {
 	public void testDelete(){
 		IDisciplinaExecucao executionCourse=null;
 		ICurriculum curriculum=null;
-		IExecutionYear executionYear= null;
-		IExecutionPeriod executionPeriod = null;
 		
 //		Read Existing Execution Course	
 		 try{
