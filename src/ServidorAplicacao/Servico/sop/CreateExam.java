@@ -92,7 +92,7 @@ public class CreateExam implements IServico {
 			IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
 
 			try {
-				//sp.getIPersistentExam().lockWrite(exam);
+				sp.getIPersistentExam().lockWrite(exam);
 				sp.getIPersistentExamExecutionCourse().lockWrite(examExecutionCourse);
 			} catch (ExistingPersistentException ex) {
 				throw new ExistingServiceException(ex);
