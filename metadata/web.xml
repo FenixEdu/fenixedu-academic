@@ -59,6 +59,10 @@
         <init-param>
             <param-name>config/treasury</param-name>
             <param-value>/WEB-INF/conf/struts-treasury.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/coordinator</param-name>
+            <param-value>/WEB-INF/conf/struts-coordinator.xml</param-value>
         </init-param>        
         <init-param>
             <param-name>config/person</param-name>

@@ -12,6 +12,7 @@
 <!ENTITY sop SYSTEM "repository_sop.xml">
 <!ENTITY masterDegree SYSTEM "repository_masterDegree.xml">
 <!ENTITY treasury SYSTEM "repository_treasury.xml">
+<!ENTITY treasury SYSTEM "repository_coordinator.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY gesdis SYSTEM "repository_gesdis.xml">
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">

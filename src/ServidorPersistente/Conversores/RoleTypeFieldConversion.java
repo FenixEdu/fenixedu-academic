@@ -53,6 +53,9 @@ public class RoleTypeFieldConversion implements FieldConversion {
 					break;
 				case RoleType.TREASURY_TYPE :
 					roleType = RoleType.TREASURY;
+					break;
+				case RoleType.COORDINATOR_TYPE :
+					roleType = RoleType.COORDINATOR;
 
 			}
 		}else{

@@ -16,6 +16,7 @@ public class RoleType {
 	public static final int MASTER_DEGREE_CANDIDATE_TYPE = 5;
 	public static final int MASTER_DEGREE_ADMINISTRATIVE_OFFICE_TYPE = 6;
 	public static final int TREASURY_TYPE = 7;
+	public static final int COORDINATOR_TYPE = 8;
 	
 	public static final RoleType PERSON = new RoleType(RoleType.PERSON_TYPE);
 	public static final RoleType STUDENT = new RoleType(RoleType.STUDENT_TYPE);
@@ -24,6 +25,7 @@ public class RoleType {
 	public static final RoleType MASTER_DEGREE_CANDIDATE = new RoleType(RoleType.MASTER_DEGREE_CANDIDATE_TYPE);
 	public static final RoleType MASTER_DEGREE_ADMINISTRATIVE_OFFICE = new RoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_TYPE);
 	public static final RoleType TREASURY = new RoleType(RoleType.TREASURY_TYPE);
+	public static final RoleType COORDINATOR = new RoleType(RoleType.COORDINATOR_TYPE);
 	
 	private int id;
 
