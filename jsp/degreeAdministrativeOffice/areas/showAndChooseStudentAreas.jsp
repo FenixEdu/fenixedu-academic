@@ -34,7 +34,8 @@
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<html:options collection="infoBranches" property="idInternal" labelProperty="name"/>
+					<bean:define id="specializationAreas" name="infoBranches" property="finalSpecializationAreas"/>
+					<html:options collection="specializationAreas" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>
@@ -47,7 +48,8 @@
 					<html:option value="" key="label.student.enrollment.no.area">
 						<bean:message key="label.student.enrollment.no.area"/>
 					</html:option>
-					<html:options collection="infoBranches" property="idInternal" labelProperty="name"/>
+					<bean:define id="secondaryAreas" name="infoBranches" property="finalSecundaryAreas"/>
+					<html:options collection="secondaryAreas" property="idInternal" labelProperty="name"/>
 				</html:select>
 			</td>
 		</tr>

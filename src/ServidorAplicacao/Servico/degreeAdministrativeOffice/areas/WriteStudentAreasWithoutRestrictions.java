@@ -20,47 +20,44 @@ import Util.TipoCurso;
  * @author David Santos in Apr 14, 2004
  */
 
-public class WriteStudentAreasWithoutRestrictions implements IService
-{
-	public WriteStudentAreasWithoutRestrictions()
-	{
-	}
+public class WriteStudentAreasWithoutRestrictions implements IService {
+    public WriteStudentAreasWithoutRestrictions() {
+    }
 
-	// The first 2 arguments are only used by the filter applyed to this service.
-	public void run(InfoStudent infoStudent, TipoCurso degreeType, Integer studentCurricularPlanID, Integer specializationAreaID,
-		Integer secundaryAreaID) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-			IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
+    // The first 2 arguments are only used by the filter applyed to this
+    // service.
+    public void run(InfoStudent infoStudent, TipoCurso degreeType, Integer studentCurricularPlanID,
+            Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
+            IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
+                    .getIStudentCurricularPlanPersistente();
 
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(
-				StudentCurricularPlan.class, studentCurricularPlanID);
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO
+                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
-			IBranch specializationArea = (IBranch) branchDAO.readByOID(Branch.class, specializationAreaID);
+            IBranch specializationArea = (IBranch) branchDAO.readByOID(Branch.class,
+                    specializationAreaID);
 
-			IBranch secundaryArea = (IBranch) branchDAO.readByOID(Branch.class, secundaryAreaID);
+            IBranch secundaryArea = (IBranch) branchDAO.readByOID(Branch.class, secundaryAreaID);
 
-			if (studentCurricularPlan == null)
-			{
-				throw new NonExistingServiceException();
-			}
+            if (studentCurricularPlan == null) {
+                throw new NonExistingServiceException();
+            }
 
-			if (specializationArea != null && secundaryArea != null && specializationArea.equals(secundaryArea))
-			{
-				throw new BothAreasAreTheSameServiceException();
-			}
+            if (specializationArea != null && secundaryArea != null
+                    && specializationArea.equals(secundaryArea)) {
+                throw new BothAreasAreTheSameServiceException();
+            }
 
-			studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
-			studentCurricularPlan.setBranch(specializationArea);
-			studentCurricularPlan.setSecundaryBranch(secundaryArea);
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-	}
+            studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
+            studentCurricularPlan.setBranch(specializationArea);
+            studentCurricularPlan.setSecundaryBranch(secundaryArea);
+        } catch (ExcepcaoPersistencia e) {
+
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

@@ -11,6 +11,11 @@
 				<bean:write name="studentNumber"/>
 				<br/>
 			</logic:present>
+			<logic:present name="degreeCurricularPlan">
+				<b><bean:message key="label.degreeCurricularPlan"/>:</b>&nbsp;
+				<bean:write name="degreeCurricularPlan" property="name"/>
+				<br/>
+			</logic:present>
 			<logic:present name="specializationAreaName">
 				<b><bean:message key="label.specializationAreaName"/>:</b>&nbsp;
 				<bean:write name="specializationAreaName"/>
