@@ -739,7 +739,6 @@
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
 	</action>
 	
-	<!-- Choose Context for Exams -->
     <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0"
             name="chooseContextForm"
             parameter="method"
@@ -749,7 +748,7 @@
             type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
             >
         <forward name="chooseExamsContext" path="/chooseExamsContext.jsp"/>
-        <forward name="createExam" path="/createExam.do"/>
+        <forward name="createExam" path="/chooseExecutionCourseForm.do"/>
         <forward name="listByDegreeAndAcademicYear" path="/viewExamsByDegreeAndCurricularYear.do"/>
     </action>
 	
@@ -758,6 +757,18 @@
     		>
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
+
+	<!-- Choose Execution Course Form for exam -->
+    <action path="/chooseExecutionCourseForm"
+    		name="chooseExecutionCourseForm"
+			input="/escolherDisciplinaExecucao.jsp"
+            scope="request"
+            type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+            validate="true">
+        <forward name="forwardChoose" path="/createExam.jsp"/>
+        <forward name="showForm" path="/chooseExecutionCourse.jsp"/>        
+    </action>
+
 
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
