@@ -418,7 +418,17 @@
          >
 	<foreignkey field-id-ref="3"/>
     </reference-descriptor>
+	<collection-descriptor
+         name="associatedTeacherShiftPercentage"
+         element-class-ref="Dominio.TeacherShiftPercentage"
+         collection-class="org.apache.ojb.broker.util.collections.ManageableVector"         
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyProfessorShip"/>
+    </collection-descriptor>
 </class-descriptor>
+
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for Dominio.ResponsibleFor -->
 <!-- ******************************************************************************************************************************* -->
