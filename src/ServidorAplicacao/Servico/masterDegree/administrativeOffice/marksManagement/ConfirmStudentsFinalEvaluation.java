@@ -28,7 +28,6 @@ import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentState;
-import Util.MarkType;
 
 /**
  * @author Fernanda Quitério
