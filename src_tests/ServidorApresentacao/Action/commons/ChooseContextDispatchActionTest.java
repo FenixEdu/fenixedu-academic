@@ -23,8 +23,10 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
+import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.PlanoCurricularCurso;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -84,7 +86,10 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 						degreeInitials,
 						degreeName,
 						new TipoCurso(TipoCurso.LICENCIATURA));
-				_executionDegree = new CursoExecucao("2003/2004", _degree);
+				_executionDegree =
+					new CursoExecucao(
+						new ExecutionYear("2003/2004"),
+						new PlanoCurricularCurso("plano1", _degree));
 
 				_degreeDAO.lockWrite(_degree);
 				_executionDegreeDAO.lockWrite(_executionDegree);
@@ -98,42 +103,42 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 	}
 
 	public void testPrepareSearch() {
-		
+
 		setRequestPathInfo(moduleName, "/chooseClassSearchContextDA");
 		addRequestParameter("method", "prepare");
-		
+
 		actionPerform();
-		
+
 		verifyNoActionErrors();
-		
+
 		verifyForward("formPage");
-	
+
 		List attributesList = new ArrayList();
-		
+
 		attributesList.add(SessionConstants.SEMESTER_LIST_KEY);
 		attributesList.add(SessionConstants.CURRICULAR_YEAR_LIST_KEY);
 		attributesList.add(SessionConstants.INFO_DEGREE_LIST_KEY);
 
 		verifySessionAttributes(getSession(), attributesList, null);
-		
+
 		assertTrue(
 			"Semester list must be not empty!",
 			!((List) getSession()
 				.getAttribute(SessionConstants.SEMESTER_LIST_KEY))
 				.isEmpty());
-	
+
 		assertTrue(
 			"Curricular Year list must be not empty!",
 			!((List) getSession()
 				.getAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY))
 				.isEmpty());
-		
+
 		assertTrue(
 			"Info Degree list must be not empty!",
 			!((List) getSession()
 				.getAttribute(SessionConstants.INFO_DEGREE_LIST_KEY))
 				.isEmpty());
-	
+
 	}
 
 	public void testNextPage() {
@@ -185,12 +190,12 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 		assertNotNull("Info Execution Degree is null.", infoExecutionDegree);
 		assertNotNull(
 			"Info Degree is null.",
-			infoExecutionDegree.getInfoLicenciatura());
+			infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
 
 		assertEquals(
 			"Degree Initials value ",
 			"L1",
-			infoExecutionDegree.getInfoLicenciatura().getSigla());
+			infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
 		assertEquals("Semester value ", new Integer(2), ctx.getSemestre());
 		assertEquals(
 			"Curricular Year value ",

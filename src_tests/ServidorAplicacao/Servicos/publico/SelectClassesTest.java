@@ -22,7 +22,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
  */
 public class SelectClassesTest extends TestCaseServicos {
 
-	
 	private InfoDegree infoDegree = null;
 	/**
 	 * Constructor for SelectClassesTest.
@@ -48,7 +47,7 @@ public class SelectClassesTest extends TestCaseServicos {
 	protected void tearDown() {
 		super.tearDown();
 	}
-	
+
 	public void testReadAll() {
 
 		Object argsSelectClasses[] = new Object[1];
@@ -78,18 +77,40 @@ public class SelectClassesTest extends TestCaseServicos {
 			_suportePersistente.iniciarTransaccao();
 			// Insert two new Classes
 
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			IExecutionYear executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			IExecutionPeriod executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
 			assertNotNull(executionPeriod);
-			IPlanoCurricularCurso degreeCurricularPlan = _persistentDegreeCurricularPlan.readByName("plano1");
-			assertNotNull(degreeCurricularPlan);
+
 			ICurso degree = _cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);			
-			ICursoExecucao executionDegree = _cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(degree);
+			IPlanoCurricularCurso degreeCurricularPlan =
+				_persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			ICursoExecucao executionDegree =
+				_cursoExecucaoPersistente
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
 			assertNotNull(executionDegree);
-			ITurma class1 = new Turma("turma1", new Integer(2), executionDegree, executionPeriod );
-			ITurma class2 = new Turma("turma3", new Integer(3), executionDegree, executionPeriod );
+			ITurma class1 =
+				new Turma(
+					"turma1",
+					new Integer(2),
+					executionDegree,
+					executionPeriod);
+			ITurma class2 =
+				new Turma(
+					"turma3",
+					new Integer(3),
+					executionDegree,
+					executionPeriod);
 			_turmaPersistente.lockWrite(class1);
 			_turmaPersistente.lockWrite(class2);
 
@@ -138,18 +159,40 @@ public class SelectClassesTest extends TestCaseServicos {
 		//2 classes in database
 		try {
 			_suportePersistente.iniciarTransaccao();
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			IExecutionYear executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			IExecutionPeriod executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
 			assertNotNull(executionPeriod);
-			IPlanoCurricularCurso degreeCurricularPlan = _persistentDegreeCurricularPlan.readByName("plano1");
-			assertNotNull(degreeCurricularPlan);
+
 			ICurso degree = _cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);			
-			ICursoExecucao executionDegree = _cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(degree);
+			IPlanoCurricularCurso degreeCurricularPlan =
+				_persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			ICursoExecucao executionDegree =
+				_cursoExecucaoPersistente
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
 			assertNotNull(executionDegree);
-			ITurma class1 = new Turma("turma1", new Integer(2), executionDegree, executionPeriod );
-			ITurma class2 = new Turma("turma3", new Integer(3), executionDegree, executionPeriod );
+			ITurma class1 =
+				new Turma(
+					"turma1",
+					new Integer(2),
+					executionDegree,
+					executionPeriod);
+			ITurma class2 =
+				new Turma(
+					"turma3",
+					new Integer(3),
+					executionDegree,
+					executionPeriod);
 			_turmaPersistente.lockWrite(class1);
 			_turmaPersistente.lockWrite(class2);
 			_suportePersistente.confirmarTransaccao();
@@ -171,7 +214,7 @@ public class SelectClassesTest extends TestCaseServicos {
 	public void testReadBySemester() {
 		Object argsSelectClasses[] = new Object[1];
 		InfoClass infoClass = new InfoClass();
-		
+
 		ITurma class1 = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
@@ -180,24 +223,40 @@ public class SelectClassesTest extends TestCaseServicos {
 		ICurso degree = null;
 		try {
 			_suportePersistente.iniciarTransaccao();
-			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
 			assertNotNull(executionPeriod);
-			degreeCurricularPlan = _persistentDegreeCurricularPlan.readByName("plano1");
-			assertNotNull(degreeCurricularPlan);
+
 			degree = _cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);			
-			executionDegree = _cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(degree);
+			degreeCurricularPlan =
+				_persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			executionDegree =
+				_cursoExecucaoPersistente
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
 			assertNotNull(executionDegree);
-			class1 = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriodAndCurricularYear("10501", executionDegree, executionPeriod, new Integer(1));
+			class1 =
+				_turmaPersistente
+					.readByNameAndExecutionDegreeAndExecutionPeriod(
+					"10501",
+					executionDegree,
+					executionPeriod);
 			assertNotNull(class1);
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when setUp");
 		}
-		
-		
+
 		infoClass.setSemestre(class1.getSemestre());
 		argsSelectClasses[0] = infoClass;
 		Object result = null;
@@ -223,12 +282,22 @@ public class SelectClassesTest extends TestCaseServicos {
 
 		//2 classes in database
 		ITurma classTemp1 = null;
-		ITurma classTemp2 =	null;
-		
+		ITurma classTemp2 = null;
+
 		try {
 			_suportePersistente.iniciarTransaccao();
-			classTemp1  = new Turma("turma1", new Integer(2), executionDegree, executionPeriod );
-			classTemp2  = new Turma("turma3", new Integer(3), executionDegree, executionPeriod );
+			classTemp1 =
+				new Turma(
+					"turma1",
+					new Integer(2),
+					executionDegree,
+					executionPeriod);
+			classTemp2 =
+				new Turma(
+					"turma3",
+					new Integer(3),
+					executionDegree,
+					executionPeriod);
 
 			classTemp1.setSemestre(class1.getSemestre());
 			classTemp2.setSemestre(class1.getSemestre());
@@ -254,7 +323,7 @@ public class SelectClassesTest extends TestCaseServicos {
 	public void testReadByCurricularYear() {
 		Object argsSelectClasses[] = new Object[1];
 		InfoClass infoClass = new InfoClass();
-		
+
 		ITurma class1 = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
@@ -263,23 +332,40 @@ public class SelectClassesTest extends TestCaseServicos {
 		ICurso degree = null;
 		try {
 			_suportePersistente.iniciarTransaccao();
-			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
 			assertNotNull(executionPeriod);
-			degreeCurricularPlan = _persistentDegreeCurricularPlan.readByName("plano1");
-			assertNotNull(degreeCurricularPlan);
+
 			degree = _cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);			
-			executionDegree = _cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(degree);
+			degreeCurricularPlan =
+				_persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			executionDegree =
+				_cursoExecucaoPersistente
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
 			assertNotNull(executionDegree);
-			class1 = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriodAndCurricularYear("10501", executionDegree, executionPeriod, new Integer(1));
+			class1 =
+				_turmaPersistente
+					.readByNameAndExecutionDegreeAndExecutionPeriod(
+					"10501",
+					executionDegree,
+					executionPeriod);
 			assertNotNull(class1);
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when setUp");
 		}
-		
+
 		infoClass.setAnoCurricular(class1.getAnoCurricular());
 		argsSelectClasses[0] = infoClass;
 		Object result = null;
@@ -305,12 +391,22 @@ public class SelectClassesTest extends TestCaseServicos {
 
 		//2 classes in database
 		ITurma classTemp1 = null;
-		ITurma classTemp2 =	null;
-		
+		ITurma classTemp2 = null;
+
 		try {
 			_suportePersistente.iniciarTransaccao();
-			classTemp1  = new Turma("turma1", new Integer(2), executionDegree, executionPeriod );
-			classTemp2  = new Turma("turma3", new Integer(3), executionDegree, executionPeriod );
+			classTemp1 =
+				new Turma(
+					"turma1",
+					new Integer(2),
+					executionDegree,
+					executionPeriod);
+			classTemp2 =
+				new Turma(
+					"turma3",
+					new Integer(3),
+					executionDegree,
+					executionPeriod);
 
 			_turmaPersistente.lockWrite(classTemp1);
 			_turmaPersistente.lockWrite(classTemp2);
@@ -333,7 +429,7 @@ public class SelectClassesTest extends TestCaseServicos {
 	public void testReadByDegree() {
 		Object argsSelectClasses[] = new Object[1];
 		InfoDegree infoDegree = new InfoDegree();
-		
+
 		ITurma class1 = null;
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
@@ -342,31 +438,47 @@ public class SelectClassesTest extends TestCaseServicos {
 		ICurso degree = null;
 		try {
 			_suportePersistente.iniciarTransaccao();
-			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionPeriod =
+				persistentExecutionPeriod.readByNameAndExecutionYear(
+					"2º Semestre",
+					executionYear);
 			assertNotNull(executionPeriod);
-			degreeCurricularPlan = _persistentDegreeCurricularPlan.readByName("plano1");
-			assertNotNull(degreeCurricularPlan);
+
 			degree = _cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);			
-			executionDegree = _cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+			assertNotNull(degree);
+			degreeCurricularPlan =
+				_persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			executionDegree =
+				_cursoExecucaoPersistente
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
 			assertNotNull(executionDegree);
-			class1 = _turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriodAndCurricularYear("10501", executionDegree, executionPeriod, new Integer(1));
+			class1 =
+				_turmaPersistente
+					.readByNameAndExecutionDegreeAndExecutionPeriod(
+					"10501",
+					executionDegree,
+					executionPeriod);
 			assertNotNull(class1);
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			fail("Exception when setUp");
 		}
-		
-		infoDegree.setNome(degree.getNome());		
+
+		infoDegree.setNome(degree.getNome());
 		infoDegree.setSigla(degree.getSigla());
-		
+
 		InfoClass infoClass = new InfoClass();
 		infoClass.setInfoLicenciatura(infoDegree);
 		argsSelectClasses[0] = infoClass;
 		Object result = null;
-
 
 		//Empty database	
 		try {
@@ -389,12 +501,22 @@ public class SelectClassesTest extends TestCaseServicos {
 
 		//2 classes in database
 		ITurma classTemp1 = null;
-		ITurma classTemp2 =	null;
-		
+		ITurma classTemp2 = null;
+
 		try {
 			_suportePersistente.iniciarTransaccao();
-			classTemp1  = new Turma("turma1", new Integer(2), executionDegree, executionPeriod );
-			classTemp2  = new Turma("turma3", new Integer(3), executionDegree, executionPeriod );
+			classTemp1 =
+				new Turma(
+					"turma1",
+					new Integer(2),
+					executionDegree,
+					executionPeriod);
+			classTemp2 =
+				new Turma(
+					"turma3",
+					new Integer(3),
+					executionDegree,
+					executionPeriod);
 
 			_turmaPersistente.lockWrite(classTemp1);
 			_turmaPersistente.lockWrite(classTemp2);
