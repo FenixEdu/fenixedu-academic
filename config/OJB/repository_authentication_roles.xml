@@ -243,17 +243,8 @@
          primarykey="true"
          autoincrement="true"
       />
+      
       <field-descriptor id="2"
-         name="username"
-         column="USERNAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="3"
-         name="password"
-         column="PASSWORD"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor id="4"
          name="teacherNumber"
          column="TEACHER_NUMBER"
          jdbc-type="INTEGER"

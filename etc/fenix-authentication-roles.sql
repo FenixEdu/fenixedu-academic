@@ -110,8 +110,6 @@ CREATE TABLE STUDENT (
 drop table if exists TEACHER;
 create table TEACHER (
    ID_INTERNAL int(11) unsigned not null auto_increment,
-   USERNAME varchar(20),
-   `PASSWORD` varchar(16),
    TEACHER_NUMBER int(10) unsigned,
    primary key (ID_INTERNAL),
    UNIQUE KEY U1 (TEACHER_NUMBER))
