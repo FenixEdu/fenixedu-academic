@@ -1484,40 +1484,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 		String shiftCodeString = request.getParameter("shiftCode");
-		request.setAttribute("shiftCode", shiftCodeString);
-
-		Object[] arguments = {objectCode,studentGroupCode,shiftCodeString};
-		try{
-		Boolean result = (Boolean)ServiceManagerServiceFactory.executeService(userView, "CheckIfStudentGroupShiftIsCorrect",arguments);
-		} catch (InvalidSituationServiceException e){
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.StudentGroupShiftIsChanged");
-			actionErrors.add("error.StudentGroupShiftIsChanged", error);
-			saveErrors(request, actionErrors);
-			return viewShiftsAndGroups(mapping, form, request, response);
-		}catch (ExistingServiceException e){
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("error.noGroup");
-			actionErrors.add("error.noGroup", error);
-			saveErrors(request, actionErrors);
-			return viewShiftsAndGroups(mapping, form, request, response);
-		}catch (FenixServiceException e){
-			throw new FenixActionException(e);
-		}
 		
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 		TeacherAdministrationSiteView result = (TeacherAdministrationSiteView) readSiteView(request,
 						viewStudentGroup, null, studentGroupCode, null);
 
-		Object[] args = {objectCode,studentGroupCode,groupPropertiesCode};
+		Object[] args = {objectCode,studentGroupCode,groupPropertiesCode, shiftCodeString};
 		try{
 			
-		Boolean StudentGroupWithoutShift = (Boolean)ServiceManagerServiceFactory.executeService(userView, "VerifyStudentGroupWithoutShift",args);
-		if(StudentGroupWithoutShift.booleanValue()){
-			request.setAttribute("StudentGroupWithoutShift", new Boolean(true));
-		}
+		Integer type = (Integer)ServiceManagerServiceFactory.executeService(userView, "VerifyStudentGroupWithoutShift",args);
+		
+		request.setAttribute("ShiftType",type);
+		
 		} catch (ExistingServiceException e){
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
@@ -1535,6 +1513,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 				 Integer shiftCode = new Integer(shiftCodeString);
 				 request.setAttribute("shiftCode", shiftCode);
 			}
+			return viewShiftsAndGroups(mapping, form, request, response);
+		}catch (InvalidArgumentsServiceException e){
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.StudentGroupShiftIsChanged");
+			actionErrors.add("error.StudentGroupShiftIsChanged", error);
+			saveErrors(request, actionErrors);
 			return viewShiftsAndGroups(mapping, form, request, response);
 		}catch (FenixServiceException e){
 			throw new FenixActionException(e);
@@ -2507,11 +2492,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			
 			Integer newShiftCode = new Integer(newShiftString);
 			Object args[] = {objectCode, studentGroupCode, groupPropertiesCode, newShiftCode};
-	System.out.println("objectCode" + objectCode);
-	System.out.println("studentGroupCode" + studentGroupCode);
-	System.out.println("groupPropertiesCode" + groupPropertiesCode);
-	System.out.println("newShiftCode" + newShiftCode);
-			
+	
 			try
 			{
 				ServiceManagerServiceFactory.executeService(userView, "EnrollStudentGroupShift", args);
@@ -2559,8 +2540,54 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 			}
 //////////////////////
+	public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+	throws FenixActionException
+	{
+		HttpSession session = request.getSession(false);
+		Integer objectCode = getObjectCode(request);
+		DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		String studentGroupCodeString = request.getParameter("studentGroupCode");
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		
+		Object args[] = {objectCode, studentGroupCode, groupPropertiesCode};
 	
-	
+		try
+		{
+			ServiceManagerServiceFactory.executeService(userView, "UnEnrollStudentGroupShift", args);
+		}catch (ExistingServiceException e)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroupProperties");
+			actionErrors.add("error.noGroupProperties", error);
+			saveErrors(request, actionErrors);
+			return prepareViewExecutionCourseProjects(mapping, form, request, response);
+		}catch (InvalidArgumentsServiceException e)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroup");
+			actionErrors.add("error.noGroup", error);
+			saveErrors(request, actionErrors);
+			return viewShiftsAndGroups(mapping, form, request, response);
+		}catch (InvalidChangeServiceException e)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.UnEnrollStudentGroupShift");
+			actionErrors.add("error.UnEnrollStudentGroupShift", error);
+			saveErrors(request, actionErrors);
+			return viewShiftsAndGroups(mapping, form, request, response);
+		}catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		return viewShiftsAndGroups(mapping, form, request, response);
+	}
 	
 	
 	

@@ -11,6 +11,7 @@ import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGroupProperties;
@@ -50,9 +51,8 @@ public class VerifyStudentGroupWithoutShift implements IServico {
      * Executes the service.
      */
 
-    public boolean run(Integer executionCourseCode,Integer studentGroupCode, Integer groupPropertiesCode) throws FenixServiceException {
+    public Integer run(Integer executionCourseCode,Integer studentGroupCode, Integer groupPropertiesCode, String shiftCodeString) throws FenixServiceException {
 
-        boolean result = false;
         IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentGroupProperties persistentGroupProperties = null;
 		   
@@ -80,8 +80,35 @@ public class VerifyStudentGroupWithoutShift implements IServico {
             	throw new InvalidSituationServiceException();
             }
             
-            if(studentGroup.getShift()==null && studentGroup.getAttendsSet().getGroupProperties().getShiftType()!=null){
-            	result = true;
+            
+            Integer shiftCode = null;
+            if(shiftCodeString!=null){
+            	shiftCode = new Integer(shiftCodeString);
+            }
+            
+            if(studentGroup.getShift() == null){
+            	if(shiftCode != null) throw new InvalidArgumentsServiceException();
+            }
+            else{
+            	if(studentGroup.getShift().getIdInternal().intValue() != shiftCode.intValue()){
+            		throw new InvalidArgumentsServiceException();
+            	}
+            }
+        
+            if(studentGroup.getShift() != null && groupProperties.getShiftType() != null){
+            	return new Integer(1);
+            }
+            
+            if(studentGroup.getShift() != null && groupProperties.getShiftType() == null){
+            	return new Integer (2);
+            }
+            
+            if(studentGroup.getShift()==null && groupProperties.getShiftType()!=null){
+            	return new Integer(3);
+            }
+            
+            if(studentGroup.getShift() == null && groupProperties.getShiftType() == null){
+            	return new Integer (4);
             }
             
             
@@ -90,7 +117,7 @@ public class VerifyStudentGroupWithoutShift implements IServico {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
         
-        return result;
+        return new Integer(5);
 
     }
 }

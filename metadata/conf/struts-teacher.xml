@@ -1385,6 +1385,13 @@
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
             <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
+        <action path="/unEnrollStudentGroupShift" parameter="method" 
+            scope="request" 
+            input="/unEnrollStudentGroupShift.do?method=unEnrollStudentGroupShift&amp;page=0" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
         <action path="/editStudentGroupMembers" name="editStudentGroupForm" parameter="method" 
             scope="request" 
             input="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;page=0" 
