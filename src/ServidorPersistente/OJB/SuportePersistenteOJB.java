@@ -122,6 +122,10 @@ import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
 import ServidorPersistente.OJB.degree.finalProject.PersistentDegreeFinalProjectOJB;
 import ServidorPersistente.OJB.gesdis.CourseReportOJB;
+import ServidorPersistente.OJB.grant.contract.GrantContractOJB;
+import ServidorPersistente.OJB.grant.contract.GrantOrientationTeacherOJB;
+import ServidorPersistente.OJB.grant.contract.GrantResponsibleTeacherOJB;
+import ServidorPersistente.OJB.grant.contract.GrantTypeOJB;
 import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideSituationOJB;
@@ -141,7 +145,11 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
+import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
+import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.teacher.IPersistentCareer;
@@ -800,6 +808,26 @@ public class SuportePersistenteOJB implements ISuportePersistente
     {
         return new GrantOwnerOJB();
     }
+    // by Barbosa (November 18th, 2003)
+    public IPersistentGrantContract getIPersistentGrantContract()
+    {
+        return new GrantContractOJB();
+    }
+    //By Barbosa (November 19th, 2003)
+    public IPersistentGrantType getIPersistentGrantType()
+    {
+        return new GrantTypeOJB();
+    }
+	//By Barbosa (November 20th, 2003)
+	  public IPersistentGrantResponsibleTeacher getIPersistentGrantResponsibleTeacher()
+	  {
+		  return new GrantResponsibleTeacherOJB();
+	  }
+	//By Barbosa (November 20th, 2003)
+	  public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher()
+	  {
+		  return new GrantOrientationTeacherOJB();
+	  }
 
     public IPersistentAdvisory getIPersistentAdvisory()
     {

@@ -2,7 +2,9 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 
+<!-- ********************************************** -->
 <!-- Definitions for Dominio.grant.owner.GrantOwner -->
+<!-- ********************************************** -->
    <class-descriptor
    	  class="Dominio.grant.owner.GrantOwner"
    	  table="grant_owner"
@@ -35,10 +37,211 @@
 		jdbc-type="INTEGER"
 	/>
 	<reference-descriptor
-			name="person"
-			class-ref="Dominio.Pessoa"
-			proxy="true">
+		name="person"
+		class-ref="Dominio.Pessoa"
+		proxy="true">
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>   
    </class-descriptor>
-	
+   
+   
+<!-- **************************************************** -->
+<!-- Definitions for Dominio.grant.contract.GrantContract -->
+<!-- **************************************************** -->
+   <class-descriptor
+   	  class="Dominio.grant.contract.GrantContract"
+   	  table="grant_contract"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+	 <field-descriptor
+		name="contractNumber"
+		column="NUMBER"
+		jdbc-type="INTEGER"
+	/>
+	 <field-descriptor
+		name="dateBeginContract"
+		column="DATE_BEGIN_CONTRACT"
+		jdbc-type="DATE"
+	/>
+	<field-descriptor
+		name="dateEndContract"
+		column="DATE_END_CONTRACT"
+		jdbc-type="DATE"
+	/>
+	 <field-descriptor
+		name="endContractMotive"
+		column="END_CONTRACT_MOTIVE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="keyGrantOwner"
+		column="KEY_GRANT_OWNER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyGrantType"
+		column="KEY_GRANT_TYPE"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+		name="grantOwner"
+		class-ref="Dominio.grant.owner.GrantOwner"
+		proxy="true">
+		<foreignkey field-ref="keyGrantOwner"/>
+	</reference-descriptor> 
+	<reference-descriptor
+		name="grantType"
+		class-ref="Dominio.grant.contract.GrantType"
+		proxy="true">
+		<foreignkey field-ref="keyGrantType"/>
+	</reference-descriptor> 
+   </class-descriptor>
+   
+   
+<!-- ************************************************ -->
+<!-- Definitions for Dominio.grant.contract.GrantType -->
+<!-- ************************************************ -->
+   <class-descriptor
+   	  class="Dominio.grant.contract.GrantType"
+   	  table="grant_type"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+       <field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	 <field-descriptor
+		name="sigla"
+		column="SIGLA"
+		jdbc-type="VARCHAR"
+	/>
+	 <field-descriptor
+		name="minPeriodDays"
+		column="MIN_PERIOD_DAYS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="maxPeriodDays"
+		column="MAX_PERIOD_DAYS"
+		jdbc-type="INTEGER"
+	/>
+	 <field-descriptor
+		name="source"
+		column="SOURCE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="state"
+		column="STATE"
+		jdbc-type="DATE"
+	/>   
+   </class-descriptor>
+   
+   
+<!-- ************************************************************** -->
+<!-- Definitions for Dominio.grant.contract.GrantResponsibleTeacher -->
+<!-- ************************************************************** -->
+   <class-descriptor
+   	  class="Dominio.grant.contract.GrantResponsibleTeacher"
+   	  table="grant_responsible_teacher"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+       <field-descriptor
+		name="beginDate"
+		column="BEGIN_DATE"
+		jdbc-type="DATE"
+	/>
+	 <field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="DATE"
+	/>
+	 <field-descriptor
+		name="keyTeacher"
+		column="KEY_GRANT_TEACHER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyContract"
+		column="KEY_GRANT_CONTRACT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+		name="responsibleTeacher"
+		class-ref="Dominio.Teacher"
+		proxy="true">
+		<foreignkey field-ref="keyTeacher"/>
+	<reference-descriptor
+		name="grantContract"
+		class-ref="Dominio.grant.contract.GrantContract"
+		proxy="true">
+		<foreignkey field-ref="keyContract"/>
+	</reference-descriptor> 
+   </class-descriptor>
+   
+   
+<!-- ************************************************************** -->
+<!-- Definitions for Dominio.grant.contract.GrantOrientationTeacher -->
+<!-- ************************************************************** -->
+   <class-descriptor
+   	  class="Dominio.grant.contract.GrantOrientationTeacher"
+   	  table="grant_orientation_teacher"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+       <field-descriptor
+		name="beginDate"
+		column="BEGIN_DATE"
+		jdbc-type="DATE"
+	/>
+	 <field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="DATE"
+	/>
+	 <field-descriptor
+		name="keyTeacher"
+		column="KEY_GRANT_TEACHER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyContract"
+		column="KEY_GRANT_CONTRACT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+		name="orientationTeacher"
+		class-ref="Dominio.Teacher"
+		proxy="true">
+		<foreignkey field-ref="keyTeacher"/>
+	<reference-descriptor
+		name="grantContract"
+		class-ref="Dominio.grant.contract.GrantContract"
+		proxy="true">
+		<foreignkey field-ref="keyContract"/>
+	</reference-descriptor> 
+   </class-descriptor>

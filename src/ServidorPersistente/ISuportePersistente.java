@@ -16,6 +16,10 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.grant.IPersistentGrantContract;
+import ServidorPersistente.grant.IPersistentGrantType;
+import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
+import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.teacher.IPersistentCareer;
@@ -169,6 +173,14 @@ public interface ISuportePersistente
 
     // by Barbosa (October 28th, 2003)
     public IPersistentGrantOwner getIPersistentGrantOwner();
+    //by Barbosa (November 18th, 2003)
+    public IPersistentGrantContract getIPersistentGrantContract();
+    //by Barbosa (November 19th, 2003)
+    public IPersistentGrantType getIPersistentGrantType();
+    //by Barbosa (November 20th, 2003)
+    public IPersistentGrantResponsibleTeacher getIPersistentGrantResponsibleTeacher();
+    //by Barbosa (November 20th, 2003)
+    public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher();
 
     public IPersistentAdvisory getIPersistentAdvisory();
 
