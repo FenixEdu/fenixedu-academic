@@ -48,7 +48,7 @@ public class Enrolment implements IEnrolment {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
-		result += "curricularCourse = " + this.curricularCourse + "]";
+		result += "curricularCourse = " + this.curricularCourse + "]\n";
 		return result;
 	}
 

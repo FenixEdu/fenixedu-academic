@@ -49,7 +49,7 @@ public class CurricularSemester implements ICurricularSemester {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "idInternal = " + this.internalID + "; ";
 		result += "semester = " + this.getSemester() + "; ";
-		result += "curricularYear = " + this.getCurricularYear() + "]";
+		result += "curricularYear = " + this.getCurricularYear() + "]\n";
 //		result += "associatedCurricularCourses = " + this.associatedCurricularCourses + "; ";
 		return result;
 	}

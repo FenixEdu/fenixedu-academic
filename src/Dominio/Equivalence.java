@@ -54,7 +54,7 @@ public class Equivalence implements IEquivalence {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "enrolment = " + this.enrolment + "; ";
 		result += "equivalentEnrolment = " + this.equivalentEnrolment + "; ";
-		result += "equivalenceType" + this.equivalenceType + "]";
+		result += "equivalenceType" + this.equivalenceType + "]\n";
 		return result;
 	}
 

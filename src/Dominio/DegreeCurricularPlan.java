@@ -60,7 +60,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		result += "initialDate = " + this.initialDate + "; ";
 		result += "endDate = " + this.endDate + "; ";
 		result += "state = " + this.state + "; ";
-		result += "degree = " + this.degree + "]";
+		result += "degree = " + this.degree + "]\n";
 		return result;
 	}
 

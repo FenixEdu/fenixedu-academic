@@ -131,7 +131,7 @@ public class CurricularCourse implements ICurricularCourse {
 		return resultado;
 	}
 
-	public String toString() {
+	public String toString2() {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "idInternal = " + this.internalCode + "; ";
 		result += "name = " + this.name + "; ";
@@ -141,7 +141,19 @@ public class CurricularCourse implements ICurricularCourse {
 		result += "praticalHours = " + praticalHours + "; ";
 		result += "theoPratHours = " + theoPratHours + "; ";
 		result += "labHours = " + labHours + "; ";
-		result += "labHours = " + labHours + "]";
+		result += "labHours = " + labHours + "]\n";
+
+//		result += "associatedExecutionCourses = " + associatedExecutionCourses + "; ";
+//		result += "associatedBranches = " + associatedBranches + "; ";
+//		result += "associatedCurricularSemesters = " + associatedCurricularSemesters + "; ";
+
+		return result;
+	}
+
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": ";
+		result += "name = " + this.name + "; ";
+		result += "code = " + this.code + "]\n";
 
 //		result += "associatedExecutionCourses = " + associatedExecutionCourses + "; ";
 //		result += "associatedBranches = " + associatedBranches + "; ";

@@ -33,7 +33,7 @@ public class CurricularYear implements ICurricularYear {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "idInternal = " + this.internalID + "; ";
-		result += "year = " + this.year + "]";
+		result += "year = " + this.year + "]\n";
 		return result;
 	}
 

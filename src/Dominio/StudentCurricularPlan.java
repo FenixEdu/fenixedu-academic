@@ -55,7 +55,7 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 		result += "student = " + this.student + "; ";
 		result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
 		result += "startDate = " + this.startDate + "; ";
-		result += "currentState = " + this.currentState + "]";
+		result += "currentState = " + this.currentState + "]\n";
 		return result;
 	}
 
