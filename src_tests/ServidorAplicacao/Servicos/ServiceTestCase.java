@@ -23,8 +23,11 @@ import junit.framework.TestCase;
 import org.dbunit.Assertion;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.CompositeTable;
 import org.dbunit.dataset.FilteredDataSet;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
@@ -43,11 +46,7 @@ public abstract class ServiceTestCase extends TestCase {
 	protected IDatabaseConnection getConnection() throws Exception {
 
 		Class driverClass = Class.forName("com.mysql.jdbc.Driver");
-		Connection jdbcConnection =
-			DriverManager.getConnection(
-				"jdbc:mysql://localhost/ciapl",
-				"root",
-				"");
+		Connection jdbcConnection = DriverManager.getConnection("jdbc:mysql://localhost/ciapl", "root", "");
 		return new DatabaseConnection(jdbcConnection);
 	}
 
@@ -58,15 +57,13 @@ public abstract class ServiceTestCase extends TestCase {
 	public void backUpDataBaseContents() throws Exception {
 
 		IDataSet fullDataSet = getConnection().createDataSet();
-		FileWriter fileWriter =
-			new FileWriter(new File(getBackUpDataSetFilePath()));
+		FileWriter fileWriter = new FileWriter(new File(getBackUpDataSetFilePath()));
 		FlatXmlDataSet.write(fullDataSet, fileWriter, "ISO-8859-1");
 	}
 
 	public void loadDataBase() throws Exception {
 
-		FileReader fileReader =
-			new FileReader(new File(getBackUpDataSetFilePath()));
+		FileReader fileReader = new FileReader(new File(getBackUpDataSetFilePath()));
 		IDataSet dataSet = new FlatXmlDataSet(fileReader);
 		DatabaseOperation.CLEAN_INSERT.execute(getConnection(), dataSet);
 	}
@@ -119,13 +116,11 @@ public abstract class ServiceTestCase extends TestCase {
 
 			int size = tableNamesToFilter.size();
 			String[] tableNames = new String[size];
-			for (int i = 0; i < size; i++)
-			{
+			for (int i = 0; i < size; i++) {
 				tableNames[i] = (String) tableNamesToFilter.get(i);
 			}
 
-			IDataSet filteredDateSet =
-				new FilteredDataSet(tableNames, currentDataSet);
+			IDataSet filteredDateSet = new FilteredDataSet(tableNames, currentDataSet);
 			Assertion.assertEquals(expectedDataSet, filteredDateSet);
 		} catch (Exception ex) {
 			fail("compareDataSet failed to read data set files" + ex);
@@ -140,31 +135,19 @@ public abstract class ServiceTestCase extends TestCase {
 		String defaultStringTableNamesToFilter = "";
 
 		try {
-			ResourceBundle bundle =
-				new PropertyResourceBundle(
-					new FileInputStream(getTableNamesToFilterFilePath()));
+			ResourceBundle bundle = new PropertyResourceBundle(new FileInputStream(getTableNamesToFilterFilePath()));
 
-			stringTableNamesToFilter =
-				bundle.getString(getNameOfServiceToBeTested());
+			stringTableNamesToFilter = bundle.getString(getNameOfServiceToBeTested());
 
 			defaultStringTableNamesToFilter = bundle.getString("Default");
 		} catch (MissingResourceException ex) {
-			fail(
-				"Resource "
-					+ getNameOfServiceToBeTested()
-					+ " not found in "
-					+ getTableNamesToFilterFilePath());
+			fail("Resource " + getNameOfServiceToBeTested() + " not found in " + getTableNamesToFilterFilePath());
 		} catch (FileNotFoundException ex) {
 			fail("File " + getTableNamesToFilterFilePath() + " not found.");
 		} catch (IOException ex) {
-			fail(
-				"IOException reading file "
-					+ getTableNamesToFilterFilePath()
-					+ " "
-					+ ex);
+			fail("IOException reading file " + getTableNamesToFilterFilePath() + " " + ex);
 		}
 
-		
 		StringTokenizer st = new StringTokenizer(stringTableNamesToFilter, ",");
 		while (st.hasMoreElements())
 			listTableNamesToFilter.add(st.nextElement());
@@ -174,7 +157,6 @@ public abstract class ServiceTestCase extends TestCase {
 			defaultListTableNamesToFilter.add(st.nextElement());
 
 		listTableNamesToFilter.addAll(defaultListTableNamesToFilter);
-		
 
 		return listTableNamesToFilter;
 	}
@@ -185,6 +167,80 @@ public abstract class ServiceTestCase extends TestCase {
 
 	protected String getTableNamesToFilterFilePath() {
 		return "etc/filterTables.properties";
+	}
+
+	/**
+	 * Compares two datasets and uses expected dataset table columns. <br/>
+	 * <b>IMPORTANT: </b> Uses only the tables specified in filterTables.properties 
+	 * 			for the service beeing tested and does not use default. <br/>
+	 * Expected dataset cannot refer to .dtd, otherwise the method will not use expected dataset
+	 * table columns, but the initial dataset columns.
+	 *  
+	 * @param expectedFileName
+	 */
+
+	protected void compareDataSetUsingExceptedDataSetTableColumns(String expectedFileName) {
+
+		try {
+
+			FileReader fileReader = new FileReader(new File(expectedFileName));
+			IDataSet expectedDataSet = new FlatXmlDataSet(fileReader);
+
+			IDataSet currentDataSet = getConnection().createDataSet();
+
+			LinkedList tableNamesToFilter = readServiceTableNamesToFilter();
+
+			int size = tableNamesToFilter.size();
+			String[] tableNames = new String[size];
+			for (int i = 0; i < size; i++) {
+				tableNames[i] = (String) tableNamesToFilter.get(i);
+			}
+
+			IDataSet filteredDateSet = new FilteredDataSet(tableNames, currentDataSet);
+			int totalTables = tableNames.length;
+			
+			for (int i = 0; i < totalTables; i++) {
+				ITable expectedTable = expectedDataSet.getTable(tableNames[i]);
+				ITable actualTable = filteredDateSet.getTable(tableNames[i]);
+				SortedTable sortedExpectedTable = new SortedTable(expectedTable);
+				SortedTable sortedActualTable = new SortedTable(actualTable, expectedTable.getTableMetaData());
+				Assertion.assertEquals(
+					sortedExpectedTable,
+					new CompositeTable(expectedTable.getTableMetaData(), sortedActualTable));
+			}
+
+		} catch (Exception ex) {
+			fail("compareDataSet failed to read data set files" + ex);
+		}
+	}
+
+	/**
+	 * @return list of tables to filter (only for the service beeing tested)
+	 */
+	private LinkedList readServiceTableNamesToFilter() {
+		LinkedList listTableNamesToFilter = new LinkedList();
+		LinkedList defaultListTableNamesToFilter = new LinkedList();
+		String stringTableNamesToFilter = "";
+		String defaultStringTableNamesToFilter = "";
+
+		try {
+			ResourceBundle bundle = new PropertyResourceBundle(new FileInputStream(getTableNamesToFilterFilePath()));
+
+			stringTableNamesToFilter = bundle.getString(getNameOfServiceToBeTested());
+
+		} catch (MissingResourceException ex) {
+			fail("Resource " + getNameOfServiceToBeTested() + " not found in " + getTableNamesToFilterFilePath());
+		} catch (FileNotFoundException ex) {
+			fail("File " + getTableNamesToFilterFilePath() + " not found.");
+		} catch (IOException ex) {
+			fail("IOException reading file " + getTableNamesToFilterFilePath() + " " + ex);
+		}
+
+		StringTokenizer st = new StringTokenizer(stringTableNamesToFilter, ",");
+		while (st.hasMoreElements())
+			listTableNamesToFilter.add(st.nextElement());
+
+		return listTableNamesToFilter;
 	}
 
 	protected abstract String getDataSetFilePath();
