@@ -3,7 +3,12 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import Dominio.degree.enrollment.rules.EnrollmentRulesFactory;
+import Util.AreaType;
+import Util.BranchType;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
 import Util.enrollment.EnrollmentRuleType;
@@ -29,13 +34,15 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	private Integer numerusClausus;
 	private String description;
 	private String descriptionEn;
+	private List curricularCourses;
+	private List areas;
+	
 
     // For enrollment purposes
 	private Integer minimalYearForOptionalCourses;
 	private String enrollmentStrategyClassName;
 	
-	private List curricularCourses;
-	
+
 	public DegreeCurricularPlan() {
 	}
 
@@ -290,6 +297,22 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 		this.enrollmentStrategyClassName = enrollmentStrategyClassName;
 	}
 
+	/**
+	 * @return Returns the areas.
+	 */
+	public List getAreas()
+	{
+		return areas;
+	}
+	
+	/**
+	 * @param areas The areas to set.
+	 */
+	public void setAreas(List areas)
+	{
+		this.areas = areas;
+	}
+
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
@@ -299,16 +322,21 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 		return EnrollmentRulesFactory.getInstance().getListOfEnrollmentRules(this, enrollmentRuleType);
 	}
 
-	public List getCurricularCoursesFromArea(IBranch area)
+	public List getCurricularCoursesFromArea(IBranch area, AreaType areaType)
 	{
-		// TODO [DAVID]: Add code here.
-		return null;
+		return EnrollmentRulesFactory.getInstance().getCurricularCoursesFromArea(this, area, areaType);
 	}
 
 	public List getCommonAreas()
 	{
-		// TODO [DAVID]: Add code here.
-		return null;
+		return (List) CollectionUtils.select(this.areas, new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IBranch branch = (IBranch) obj;
+				return branch.getBranchType().equals(BranchType.COMMON_BRANCH);
+			}
+		});
 	}
 
 	// -------------------------------------------------------------

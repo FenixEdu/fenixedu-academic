@@ -3,6 +3,9 @@ package Dominio;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
@@ -634,6 +637,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
 	{
 		return weigth;
 	}
+
 	/**
 	 * @param weigth The weigth to set.
 	 */
@@ -641,6 +645,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
 	{
 		this.weigth = weigth;
 	}
+	
 	/**
 	 * @return Returns the mandatoryEnrollment.
 	 */
@@ -648,6 +653,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
 	{
 		return mandatoryEnrollment;
 	}
+	
 	/**
 	 * @param mandatoryEnrollment The mandatoryEnrollment to set.
 	 */
@@ -655,4 +661,36 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
 	{
 		this.mandatoryEnrollment = mandatoryEnrollment;
 	}
+
+	// -------------------------------------------------------------
+	// BEGIN: Only for enrollment purposes
+	// -------------------------------------------------------------
+	
+	public String getCurricularCourseUniqueKeyForEnrollment()
+	{
+        return this.getCode() + this.getName()
+			+ this.getDegreeCurricularPlan().getDegree().getNome()
+			+ this.getDegreeCurricularPlan().getDegree().getTipoCurso();
+	}
+
+	public boolean hasActiveScopeInGivenSemester(final Integer semester)
+	{
+		List scopes = this.getScopes();
+
+		List result = (List) CollectionUtils.select(scopes, new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
+				return (curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope
+					.isActive().booleanValue());
+			}
+		});
+		
+		return !result.isEmpty();
+	}
+	
+	// -------------------------------------------------------------
+	// END: Only for enrollment purposes
+	// -------------------------------------------------------------
 }

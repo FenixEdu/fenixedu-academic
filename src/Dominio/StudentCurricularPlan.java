@@ -10,6 +10,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.degree.enrollment.rules.IEnrollmentRule;
+import Util.AreaType;
 import Util.EnrolmentState;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
@@ -42,6 +43,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     protected Integer enrolledCourses;
 	protected String observations;
 	protected Integer employeeKey;
+
+    // For enrollment purposes only
 	protected Map acumulatedEnrollments;
 
 	public StudentCurricularPlan()
@@ -391,7 +394,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, IDegreeCurricularPlan degreeCurricularPlan,
 		EnrollmentRuleType enrollmentRuleType)
 	{
-		List setOfCurricularCoursesToEnroll = this.getCommonBranchAndStudentBranchesCourses();
+		List setOfCurricularCoursesToEnroll = this.getCommonBranchAndStudentBranchesCourses(executionPeriod.getSemester());
 		List enrollmentRules = this.getListOfEnrollmentRules(enrollmentRuleType);
 		
 		for (int i = 0; i < enrollmentRules.size(); i++)
@@ -453,7 +456,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			public Object transform(Object obj)
 			{
 				IEnrolment enrollment = (IEnrolment) obj;
-				String key = getCurricularCourseUniqueKey(enrollment.getCurricularCourse());
+				String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
 				return (key);
 			}
 		});
@@ -463,7 +466,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			public boolean evaluate(Object obj)
 			{
 				IEnrolment enrollment = (IEnrolment) obj;
-				String key = getCurricularCourseUniqueKey(enrollment.getCurricularCourse());
+				String key = enrollment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment();
 				return result.contains(key);
 			}
 		});
@@ -562,23 +565,27 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     public void calculateStudentAcumulatedEnrollments()
     {
-        List enrollments = this.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+    	// FIXME [DAVID]: Perguntar ao Luis se o objecto tiver na cache do OJB o que acontece aos atributos?
+//    	if (this.getAcumulatedEnrollmentsMap() == null)
+//    	{
+            List enrollments = this.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
 
-        List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
+            List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer()
+    		{
+    			public Object transform(Object obj)
+    			{
+    				ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
+    				return curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
+    			}
+    		});
 
-            public Object transform(Object obj)
-            {
-                ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
-                return getCurricularCourseUniqueKey(curricularCourse);
-            }
-        });
-
-        setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
+            setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
+//    	}
     }
 
     public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse)
 	{
-		String key = this.getCurricularCourseUniqueKey(curricularCourse);
+		String key = curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
 
 		Integer curricularCourseAcumulatedEnrolments = (Integer) this.getAcumulatedEnrollmentsMap().get(key);
 
@@ -599,35 +606,28 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	
 	
 	
-    private String getCurricularCourseUniqueKey(ICurricularCourse curricularCourse)
-	{
-        return curricularCourse.getCode() + curricularCourse.getName()
-			+ curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
-			+ curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
-	}
-
-    private Map getAcumulatedEnrollmentsMap()
+    protected Map getAcumulatedEnrollmentsMap()
 	{
 		return acumulatedEnrollments;
 	}
 
-    private void setAcumulatedEnrollmentsMap(Map acumulatedEnrollments)
+    protected void setAcumulatedEnrollmentsMap(Map acumulatedEnrollments)
 	{
 		this.acumulatedEnrollments = acumulatedEnrollments;
 	}
 
-	private List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
+    protected List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
 	{
 		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(enrollmentRuleType);
 	}
 	
-	private List getStudentNotNeedToEnrollCourses()
+    protected List getStudentNotNeedToEnrollCourses()
 	{
 		// TODO [DAVID]: Add code here.
 		return null;
 	}
 
-	private List getCommonBranchAndStudentBranchesCourses()
+    protected List getCommonBranchAndStudentBranchesCourses(final Integer semester)
 	{
 		List curricularCourses = new ArrayList();
 
@@ -636,18 +636,32 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		for (int i = 0; i < commonAreas.size(); i++)
 		{
 			IBranch area = (IBranch) commonAreas.get(i);
-			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(area));
+			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
 		}
 
 		if (this.getBranch() != null)
 		{
-			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(this.getBranch()));
+			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(this.getBranch(),
+				AreaType.SPECIALIZATION_OBJ));
 		}
 
 		if (this.getSecundaryBranch() != null)
 		{
-			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(this.getSecundaryBranch()));
+			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(this.getSecundaryBranch(),
+				AreaType.SECONDARY_OBJ));
 		}
+
+		List curricularCoursesToRemove = (List) CollectionUtils.select(curricularCourses, new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+				return (isCurricularCourseApproved(curricularCourse) || isCurricularCourseEnrolled(curricularCourse)
+						|| !curricularCourse.hasActiveScopeInGivenSemester(semester));
+			}
+		});
+
+		curricularCourses.removeAll(curricularCoursesToRemove);
 
 		return curricularCourses;
 	}

@@ -3,6 +3,7 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import Util.AreaType;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
 import Util.enrollment.EnrollmentRuleType;
@@ -30,6 +31,7 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 	public String getDescription();
 	public String getDescriptionEn();
 	public String getEnrollmentStrategyClassName();
+	public List getAreas();
 	
 	public void setDegreeDuration(Integer integer);
 	public void setMinimalYearForOptionalCourses(Integer integer);
@@ -45,12 +47,13 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 	public void setDescription(String description);
 	public void setDescriptionEn(String descriptionEn);
 	public void setEnrollmentStrategyClassName(String enrollmentStrategyClassName);
+	public void setAreas(List areas);
 
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
 	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType);
-	public List getCurricularCoursesFromArea(IBranch area);
+	public List getCurricularCoursesFromArea(IBranch area, AreaType areaType);
 	public List getCommonAreas();
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes

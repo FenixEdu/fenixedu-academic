@@ -30,7 +30,13 @@ public interface ICurricularCourse extends IDomainObject {
 	public void setUniversity(IUniversity code);
 	public void setBasic(Boolean basic);
 	public void setScientificArea(IScientificArea scientificArea);
-	
+	public void setEctsCredits(Double ectsCredits);
+	public void setEnrollmentWeigth(Integer enrollmentWeigth);
+	public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments);
+	public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments);
+	public void setWeigth(Double weigth);
+	public void setMandatoryEnrollment(Boolean mandatoryEnrollment);
+
 	public Double getCredits();
 	public Double getTheoreticalHours();
 	public Double getPraticalHours();
@@ -49,21 +55,23 @@ public interface ICurricularCourse extends IDomainObject {
 	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester);
 	public Boolean getBasic();
 	public IScientificArea getScientificArea();
-
 	public Double getEctsCredits();
-	public void setEctsCredits(Double ectsCredits);
 	public Integer getEnrollmentWeigth();
-	public void setEnrollmentWeigth(Integer enrollmentWeigth);
 	public Integer getMaximumValueForAcumulatedEnrollments();
-	public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments);
 	public Integer getMinimumValueForAcumulatedEnrollments();
-	public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments);
-	public ICurricularYear getCurricularYearByBranch(IBranch branch);
+	public Double getWeigth();
+	public Boolean getMandatoryEnrollment();
 
+	public ICurricularYear getCurricularYearByBranch(IBranch branch);
 	public boolean curricularCourseIsMandatory();
 
-	public Double getWeigth();
-	public void setWeigth(Double weigth);
-	public Boolean getMandatoryEnrollment();
-	public void setMandatoryEnrollment(Boolean mandatoryEnrollment);
+	// -------------------------------------------------------------
+	// BEGIN: Only for enrollment purposes
+	// -------------------------------------------------------------
+	public String getCurricularCourseUniqueKeyForEnrollment();
+	public boolean hasActiveScopeInGivenSemester(final Integer semester);
+	// -------------------------------------------------------------
+	// END: Only for enrollment purposes
+	// -------------------------------------------------------------
+
 }

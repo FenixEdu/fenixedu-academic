@@ -145,6 +145,13 @@
 			proxy="true">
 			<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
+
+	<collection-descriptor
+			name="areas"
+			element-class-ref="Dominio.Branch"
+			proxy="true">
+			<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
