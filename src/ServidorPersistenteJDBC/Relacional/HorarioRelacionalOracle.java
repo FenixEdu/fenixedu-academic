@@ -483,7 +483,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente
                 {
                     sql =
                         UtilRelacionalOracle.prepararComando(
-                            "SELECT ASS_HISEMP_DHFIM FROM ASS_HISEMPREG "
+                            "SELECT MAX(ASS_HISEMP_DHFIM) FROM ASS_HISEMPREG "
                                 + "WHERE EMP_NUM = ? AND ASS_HISEMP_TIPO = 11");
                     sql.setInt(1, numMecanografico);
                     resultado = sql.executeQuery();
