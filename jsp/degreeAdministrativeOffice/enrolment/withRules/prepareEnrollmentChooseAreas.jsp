@@ -42,7 +42,7 @@
 		<tr>
 			<td>
 				<br />
-				<bean:message key="label.student.enrollment.specializationArea" /> /<bean:message key="label.student.enrollment.branch" />
+				<bean:message key="label.student.enrollment.specializationArea" /> /<bean:message key="label.student.enrollment.branch"  bundle="STUDENT_RESOURCES"/>
 			</td>
 			<td>
 				<br />

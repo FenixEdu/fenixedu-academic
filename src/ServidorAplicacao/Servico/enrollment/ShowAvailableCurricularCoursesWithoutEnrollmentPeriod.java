@@ -134,6 +134,12 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
         infoStudentEnrolmentContext
                 .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
                         .newInfoFromDomain(getCurrentExecutionPeriod()));
+        infoStudentEnrolmentContext
+                .setCreditsInSpecializationArea(studentCurricularPlan
+                        .getCreditsInSpecializationArea());
+        infoStudentEnrolmentContext
+                .setCreditsInSecundaryArea(studentCurricularPlan
+                        .getCreditsInSecundaryArea());
         return infoStudentEnrolmentContext;
     }
 

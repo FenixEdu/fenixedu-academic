@@ -19,6 +19,12 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
 
     protected IBranch secundaryBranch;
 
+    protected Integer creditsInSpecializationArea;
+
+    protected Integer creditsInSecundaryArea;
+
+    
+
     public StudentCurricularPlanLEEC() {
         ojbConcreteClass = getClass().getName();
     }
@@ -134,13 +140,15 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
      * @return CurricularCoursesFromGivenAreas
      * @throws ExcepcaoPersistencia
      */
-    protected List getCurricularCoursesFromGivenAreas(IBranch specializationArea, IBranch secundaryArea)
+    protected List getCurricularCoursesFromGivenAreas(
+            IBranch specializationArea, IBranch secundaryArea)
             throws ExcepcaoPersistencia {
         List curricularCoursesFromNewSpecializationArea = new ArrayList();
         List curricularCoursesFromNewSecundaryArea = new ArrayList();
 
-        List groups = specializationArea.getCurricularCourseGroups(AreaType.SPECIALIZATION_OBJ);
-        
+        List groups = specializationArea
+                .getCurricularCourseGroups(AreaType.SPECIALIZATION_OBJ);
+
         Iterator iterator = groups.iterator();
         while (iterator.hasNext()) {
             ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator
@@ -149,7 +157,8 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
                     .addAll(curricularCourseGroup.getCurricularCourses());
         }
 
-        groups = secundaryArea.getCurricularCourseGroups(AreaType.SECONDARY_OBJ);
+        groups = secundaryArea
+                .getCurricularCourseGroups(AreaType.SECONDARY_OBJ);
         iterator = groups.iterator();
         while (iterator.hasNext()) {
             ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator
@@ -172,5 +181,36 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
      */
     public boolean getCanChangeSpecializationArea() {
         return true;
+    }
+    
+    /**
+     * @return Returns the creditsInSecundaryArea.
+     */
+    public Integer getCreditsInSecundaryArea() {
+        return creditsInSecundaryArea;
+    }
+
+    /**
+     * @param creditsInSecundaryArea
+     *            The creditsInSecundaryArea to set.
+     */
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
+        this.creditsInSecundaryArea = creditsInSecundaryArea;
+    }
+
+    /**
+     * @return Returns the creditsInSpecializationArea.
+     */
+    public Integer getCreditsInSpecializationArea() {
+        return creditsInSpecializationArea;
+    }
+
+    /**
+     * @param creditsInSpecializationArea
+     *            The creditsInSpecializationArea to set.
+     */
+    public void setCreditsInSpecializationArea(
+            Integer creditsInSpecializationArea) {
+        this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
 }

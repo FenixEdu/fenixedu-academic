@@ -37,7 +37,7 @@
 		<tr>
 			<td class="listClasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
-				<br/>(<bean:message key="label.student.enrollment.branch" />)
+				<br/>(<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>)
 			</td>
 			<td class="listClasses">
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />&nbsp;
@@ -62,7 +62,7 @@
 			<td class="listClasses">
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
 			</td> 
-			<td  class="listClasses">&nbsp;&nbsp;&nbsp;</td>
+			
 			<td class="listClasses-header">
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
@@ -83,6 +83,7 @@
 		<tr>
 			<td class="listClasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
+				<br/>(<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES"/>)
 			</td>
 			<td  class="listClasses">
 				<bean:message key="label.student.enrollment.no.area" />
@@ -104,7 +105,7 @@
 		<td class="listClasses-header">
 			<b><bean:message key="message.student.enrolled.curricularCourses" /></b>
 		</td>
-		<td class="listClasses-header"><bean:message key="label.course.enrollment.state"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></td>
 	</tr>
 	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
 		<tr>

@@ -760,6 +760,34 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return executionPeriod2Return;
     }
 
+    /* (non-Javadoc)
+     * @see Dominio.IStudentCurricularPlan#getCreditsInSecundaryArea()
+     */
+    public Integer getCreditsInSecundaryArea() {        
+        return new Integer(0);
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStudentCurricularPlan#setCreditsInSecundaryArea(java.lang.Integer)
+     */
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
+        // do nothing
+     }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStudentCurricularPlan#getCreditsInSpecializationArea()
+     */
+    public Integer getCreditsInSpecializationArea() {       
+        return new Integer(0);
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStudentCurricularPlan#setCreditsInSpecializationArea(java.lang.Integer)
+     */
+    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
+        //do nothing
+    }
+
     // -------------------------------------------------------------
     // END: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------

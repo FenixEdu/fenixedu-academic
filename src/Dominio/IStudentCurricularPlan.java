@@ -71,6 +71,11 @@ public interface IStudentCurricularPlan extends IDomainObject
     public boolean getCanChangeSpecializationArea();
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(ICurricularCourse curricularCourse,
             IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia;
+    public Integer getCreditsInSecundaryArea() ;
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) ;
+    public Integer getCreditsInSpecializationArea() ;
+    public void setCreditsInSpecializationArea(
+            Integer creditsInSpecializationArea) ;
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
