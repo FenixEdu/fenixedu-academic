@@ -46,7 +46,7 @@ public class ReadQualifications implements IServico
 	 */
 	public final String getNome()
 	{
-		return "ReadPersonQualifications";
+		return "ReadQualifications";
 	}
 
 	/**
