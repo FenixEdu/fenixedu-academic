@@ -32,7 +32,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Fernanda Quitério 13/Nov/2003
+ * @author Tânia Pousão 13/Nov/2003
  */
 public class ReadCurriculumByCurricularCourseCode implements IServico
 {
@@ -151,8 +151,8 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
         InfoCurriculum infoCurriculum;
         infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 
-        List scopes = curriculum.getCurricularCourse().getScopes();
-        CollectionUtils.transform(scopes, new Transformer()
+        List scopes = new ArrayList();
+        CollectionUtils.collect(curriculum.getCurricularCourse().getScopes(), new Transformer()
         {
             public Object transform(Object arg0)
             {
@@ -161,7 +161,7 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
                     Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
                 return infoCurricularCourseScope;
             }
-        });
+        }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
         List infoExecutionCourses = new ArrayList();
