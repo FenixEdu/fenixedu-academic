@@ -31,16 +31,14 @@ import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWork
 /**
  * @author jpvl
  */
-public class ReadTeacherInstitutionWorkingTime implements IServico
-{
+public class ReadTeacherInstitutionWorkingTime implements IServico {
 
     private static ReadTeacherInstitutionWorkingTime service = new ReadTeacherInstitutionWorkingTime();
 
     /**
      * The singleton access method of this class.
      */
-    public static ReadTeacherInstitutionWorkingTime getService()
-    {
+    public static ReadTeacherInstitutionWorkingTime getService() {
         return service;
     }
 
@@ -49,68 +47,58 @@ public class ReadTeacherInstitutionWorkingTime implements IServico
      * 
      * @see ServidorAplicacao.IServico#getNome()
      */
-    public String getNome()
-    {
+    public String getNome() {
         return "ReadTeacherInstitutionWorkingTime";
     }
 
-    public TeacherInstitutionWorkingTimeDTO run(InfoTeacher infoTeacher, Integer executionPeriodId)
-        throws FenixServiceException
-    {
-        TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO =
-            new TeacherInstitutionWorkingTimeDTO();
+    public TeacherInstitutionWorkingTimeDTO run(InfoTeacher infoTeacher,
+            Integer executionPeriodId) throws FenixServiceException {
+        TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = new TeacherInstitutionWorkingTimeDTO();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO =
-                sp.getIPersistentTeacherInstitutionWorkingTime();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+            IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
+                    .getIPersistentTeacherInstitutionWorkingTime();
+            IPersistentExecutionPeriod executionPeriodDAO = sp
+                    .getIPersistentExecutionPeriod();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-            ITeacher teacher =
-                (ITeacher) teacherDAO.readByOId(new Teacher(infoTeacher.getIdInternal()), false);
+            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
+                    infoTeacher.getIdInternal());
             InfoTeacher infoTeacher2 = Cloner.copyITeacher2InfoTeacher(teacher);
 
             IExecutionPeriod executionPeriod = null;
-            if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0))
-            {
-                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            } else
-            {
-                executionPeriod =
-                    (IExecutionPeriod) executionPeriodDAO.readByOId(
-                        new ExecutionPeriod(executionPeriodId),
-                        false);
+            if ((executionPeriodId == null)
+                    || (executionPeriodId.intValue() == 0)) {
+                executionPeriod = executionPeriodDAO
+                        .readActualExecutionPeriod();
+            } else {
+                executionPeriod = (IExecutionPeriod) executionPeriodDAO
+                        .readByOID(ExecutionPeriod.class, executionPeriodId);
             }
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner
+                    .get(executionPeriod);
 
-            List teacherInstitutionWorkTimeList =
-                teacherInstitutionWorkingTimeDAO.readByTeacherAndExecutionPeriod(
-                    teacher,
-                    executionPeriod);
+            List teacherInstitutionWorkTimeList = teacherInstitutionWorkingTimeDAO
+                    .readByTeacherAndExecutionPeriod(teacher, executionPeriod);
 
-            List infoTeacherInstitutionWorkTimeList =
-                (List) CollectionUtils.collect(teacherInstitutionWorkTimeList, new Transformer()
-            {
+            List infoTeacherInstitutionWorkTimeList = (List) CollectionUtils
+                    .collect(teacherInstitutionWorkTimeList, new Transformer() {
 
-                public Object transform(Object input)
-                {
-                    ITeacherInstitutionWorkTime teacherInstitutionWorkTime =
-                        (ITeacherInstitutionWorkTime) input;
-                    InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime =
-                        Cloner.copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(
-                            teacherInstitutionWorkTime);
-                    return infoTeacherInstitutionWorkTime;
-                }
-            });
+                        public Object transform(Object input) {
+                            ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) input;
+                            InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = Cloner
+                                    .copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(teacherInstitutionWorkTime);
+                            return infoTeacherInstitutionWorkTime;
+                        }
+                    });
 
-            teacherInstitutionWorkingTimeDTO.setInfoExecutionPeriod(infoExecutionPeriod);
+            teacherInstitutionWorkingTimeDTO
+                    .setInfoExecutionPeriod(infoExecutionPeriod);
             teacherInstitutionWorkingTimeDTO.setInfoTeacher(infoTeacher2);
-            teacherInstitutionWorkingTimeDTO.setInfoTeacherInstitutionWorkTimeList(
-                infoTeacherInstitutionWorkTimeList);
-        } catch (ExcepcaoPersistencia e)
-        {
+            teacherInstitutionWorkingTimeDTO
+                    .setInfoTeacherInstitutionWorkTimeList(infoTeacherInstitutionWorkTimeList);
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }

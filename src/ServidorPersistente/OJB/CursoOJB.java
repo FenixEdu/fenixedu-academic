@@ -21,47 +21,42 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import Util.TipoCurso;
 
-public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente
-{
+public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 
     /** Creates a new instance of CursoOJB */
-    public CursoOJB()
-    {
+    public CursoOJB() {
     }
 
-    public ICurso readBySigla(String sigla) throws ExcepcaoPersistencia
-    {
+    public ICurso readBySigla(String sigla) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("sigla", sigla);
         return (ICurso) queryObject(Curso.class, criteria);
     }
 
-    public ICurso readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia
-    {
-        return (ICurso) readByOId(new Curso(idInternal), false);
+    public ICurso readByIdInternal(Integer idInternal)
+            throws ExcepcaoPersistencia {
+        return (ICurso) readByOID(Curso.class, idInternal);
     }
 
-    public void delete(ICurso degree) throws ExcepcaoPersistencia
-    {
+    public void delete(ICurso degree) throws ExcepcaoPersistencia {
         super.delete(degree);
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         return queryList(Curso.class, criteria);
     }
 
-    public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia
-    {
+    public List readAllByDegreeType(TipoCurso degreeType)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("tipoCurso", degreeType);
         criteria.addOrderBy("nome", true);
         return queryList(Curso.class, criteria);
     }
 
-    public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia
-    {
+    public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("nome", name);
         criteria.addEqualTo("tipoCurso", degreeType);

@@ -58,9 +58,8 @@ public class ReadExecutionCourse implements IServico
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             executionCourse =
-                (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-                    new ExecutionCourse(idInternal),
-                    false);
+                (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
+                    ExecutionCourse.class,idInternal);
 
             if (executionCourse == null)
             {

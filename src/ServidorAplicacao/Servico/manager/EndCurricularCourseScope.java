@@ -16,50 +16,56 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Fernanda Quitério
- * 28/10/2003
- * 
+ * @author Fernanda Quitério 28/10/2003
+ *  
  */
 public class EndCurricularCourseScope implements IServico {
 
-	private static EndCurricularCourseScope service = new EndCurricularCourseScope();
+    private static EndCurricularCourseScope service = new EndCurricularCourseScope();
 
-	public static EndCurricularCourseScope getService() {
-		return service;
-	}
+    public static EndCurricularCourseScope getService() {
+        return service;
+    }
 
-	private EndCurricularCourseScope() {
-	}
+    private EndCurricularCourseScope() {
+    }
 
-	public final String getNome() {
-		return "EndCurricularCourseScope";
-	}
+    public final String getNome() {
+        return "EndCurricularCourseScope";
+    }
 
-	public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
+    public void run(InfoCurricularCourseScope newInfoCurricularCourseScope)
+            throws FenixServiceException {
 
-		ICurricularCourseScope oldCurricularCourseScope = null;
-		try {
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourseScope persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
-			
-			if(!newInfoCurricularCourseScope.getEndDate().after(newInfoCurricularCourseScope.getBeginDate())) {
-				throw new InvalidArgumentsServiceException();
-			}
-			
-			if(newInfoCurricularCourseScope.getEndDate().after(Calendar.getInstance())) {
-				throw new InvalidSituationServiceException();
-			}
-			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-			curricularCourseScope.setIdInternal(newInfoCurricularCourseScope.getIdInternal());
-			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, true);
-			
-			if(oldCurricularCourseScope == null)
-				throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
+        ICurricularCourseScope oldCurricularCourseScope = null;
+        try {
+            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            IPersistentCurricularCourseScope persistentCurricularCourseScope = ps
+                    .getIPersistentCurricularCourseScope();
 
-			oldCurricularCourseScope.setEndDate(newInfoCurricularCourseScope.getEndDate());
+            if (!newInfoCurricularCourseScope.getEndDate().after(
+                    newInfoCurricularCourseScope.getBeginDate())) {
+                throw new InvalidArgumentsServiceException();
+            }
 
-		}  catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            if (newInfoCurricularCourseScope.getEndDate().after(
+                    Calendar.getInstance())) {
+                throw new InvalidSituationServiceException();
+            }
+
+            oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
+                    .readByOID(CurricularCourseScope.class,
+                            newInfoCurricularCourseScope.getIdInternal(), true);
+
+            if (oldCurricularCourseScope == null) {
+                throw new NonExistingServiceException(
+                        "message.non.existing.curricular.course.scope", null);
+            }
+            oldCurricularCourseScope.setEndDate(newInfoCurricularCourseScope
+                    .getEndDate());
+
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }

@@ -66,9 +66,8 @@ public class ReadWebSiteBySectionCode implements IServico {
 			IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
 			IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-			IWebSiteSection webSiteSection = new WebSiteSection();
-			webSiteSection.setIdInternal(webSiteSectionCode);
-			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
+			IWebSiteSection webSiteSection;
+			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class, webSiteSectionCode);
 			
 			if(webSiteSection == null){
 				throw new NonExistingServiceException();

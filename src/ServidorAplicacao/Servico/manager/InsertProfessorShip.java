@@ -27,69 +27,67 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author lmac1
  */
-public class InsertProfessorShip implements IService
-{
-    public InsertProfessorShip()
-    {
+public class InsertProfessorShip implements IService {
+    public InsertProfessorShip() {
     }
 
     public void run(InfoProfessorship infoProfessorShip, Boolean responsibleFor)
-            throws FenixServiceException
-    {
-        try
-        {
+            throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(executionCourseId), false);
+            Integer executionCourseId = infoProfessorShip
+                    .getInfoExecutionCourse().getIdInternal();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
 
-            if (executionCourse == null)
-            {
-                throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+            if (executionCourse == null) {
+                throw new NonExistingServiceException(
+                        "message.nonExisting.executionCourse", null);
             }
 
-            Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();
+            Integer teacherNumber = infoProfessorShip.getInfoTeacher()
+                    .getTeacherNumber();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
 
-            if (teacher == null)
-            {
-                throw new NonExistingServiceException("message.non.existing.teacher", null);
+            if (teacher == null) {
+                throw new NonExistingServiceException(
+                        "message.non.existing.teacher", null);
             }
 
-            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
+            IPersistentProfessorship persistentProfessorShip = sp
+                    .getIPersistentProfessorship();
 
             IProfessorship professorShip = new Professorship();
             persistentProfessorShip.simpleLockWrite(professorShip);
             professorShip.setExecutionCourse(executionCourse);
             professorShip.setTeacher(teacher);
 
-
-            if (responsibleFor.booleanValue())
-            {
-                IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
+            if (responsibleFor.booleanValue()) {
+                IPersistentResponsibleFor responsibleForDAO = sp
+                        .getIPersistentResponsibleFor();
 
                 IResponsibleFor responsibleForTeacher = responsibleForDAO
-                        .readByTeacherAndExecutionCoursePB(teacher, executionCourse);
-                if (responsibleForTeacher == null)
-                {
+                        .readByTeacherAndExecutionCoursePB(teacher,
+                                executionCourse);
+                if (responsibleForTeacher == null) {
                     responsibleForTeacher = new ResponsibleFor();
                     responsibleForDAO.simpleLockWrite(responsibleForTeacher);
                     responsibleForTeacher.setExecutionCourse(executionCourse);
                     responsibleForTeacher.setTeacher(teacher);
-                    ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, responsibleForTeacher, responsibleForDAO);
+                    ResponsibleForValidator.getInstance()
+                            .validateResponsibleForList(teacher,
+                                    executionCourse, responsibleForTeacher,
+                                    responsibleForDAO);
                 }
             }
 
-        }
-        catch (ExistingPersistentException e)
-        {
+        } catch (ExistingPersistentException e) {
             return;
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

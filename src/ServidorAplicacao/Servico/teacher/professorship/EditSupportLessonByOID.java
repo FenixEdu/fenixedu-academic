@@ -36,195 +36,172 @@ import Util.DiaSemana;
 /**
  * @author jpvl
  */
-public class EditSupportLessonByOID extends EditDomainObjectService
-{
-	/**
-	 * @author jpvl
-	 */
-	public class InvalidPeriodException extends FenixServiceException
-	{
+public class EditSupportLessonByOID extends EditDomainObjectService {
+    /**
+     * @author jpvl
+     */
+    public class InvalidPeriodException extends FenixServiceException {
 
-		/**
-		 *  
-		 */
-		public InvalidPeriodException()
-		{
-			super();
-		}
-	}
-	public EditSupportLessonByOID()
-	{
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-	{
-		return sp.getIPersistentSupportLesson();
-	}
+        /**
+         *  
+         */
+        public InvalidPeriodException() {
+            super();
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
-	 */
-	protected IDomainObject clone2DomainObject(InfoObject infoObject)
-	{
-		return Cloner.copyInfoSupportLesson2ISupportLesson((InfoSupportLesson) infoObject);
-	}
+    public EditSupportLessonByOID() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome()
-	{
-		return "EditSupportLessonByOID";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+        return sp.getIPersistentSupportLesson();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(Dominio.IDomainObject,
-	 *      ServidorPersistente.ISuportePersistente)
-	 */
-	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
+     */
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        return Cloner
+                .copyInfoSupportLesson2ISupportLesson((InfoSupportLesson) infoObject);
+    }
 
-		ISupportLesson supportLesson = supportLessonDAO.readByUnique((ISupportLesson) domainObject);
-		return supportLesson;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "EditSupportLessonByOID";
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
-	 *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
-	 */
-	protected void doBeforeLock(
-		IDomainObject domainObjectToLock,
-		InfoObject infoObject,
-		ISuportePersistente sp)
-		throws FenixServiceException
-	{
-		InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(Dominio.IDomainObject,
+     *      ServidorPersistente.ISuportePersistente)
+     */
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
+        IPersistentSupportLesson supportLessonDAO = sp
+                .getIPersistentSupportLesson();
 
-		Calendar begin = Calendar.getInstance();
-		begin.setTime(infoSupportLesson.getStartTime());
-		Calendar end = Calendar.getInstance();
-		end.setTime(infoSupportLesson.getEndTime());
+        ISupportLesson supportLesson = supportLessonDAO
+                .readByUnique((ISupportLesson) domainObject);
+        return supportLesson;
+    }
 
-		if (end.before(begin))
-			throw new InvalidPeriodException();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
+     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+     */
+    protected void doBeforeLock(IDomainObject domainObjectToLock,
+            InfoObject infoObject, ISuportePersistente sp)
+            throws FenixServiceException {
+        InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
 
-		IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        Calendar begin = Calendar.getInstance();
+        begin.setTime(infoSupportLesson.getStartTime());
+        Calendar end = Calendar.getInstance();
+        end.setTime(infoSupportLesson.getEndTime());
 
-		IProfessorship professorship =
-			(IProfessorship) professorshipDAO.readByOId(
-				new Professorship(infoSupportLesson.getInfoProfessorship().getIdInternal()),
-				false);
+        if (end.before(begin)) {
+            throw new InvalidPeriodException();
+        }
+        IPersistentProfessorship professorshipDAO = sp
+                .getIPersistentProfessorship();
 
-		ITeacher teacher = professorship.getTeacher();
-		IExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
-		DiaSemana weekDay = infoSupportLesson.getWeekDay();
-		Date startTime = infoSupportLesson.getStartTime();
-		Date endTime = infoSupportLesson.getEndTime();
+        IProfessorship professorship;
+        try {
+            professorship = (IProfessorship) professorshipDAO.readByOID(
+                    Professorship.class, infoSupportLesson
+                            .getInfoProfessorship().getIdInternal());
+        } catch (ExcepcaoPersistencia e1) {
+            throw new FenixServiceException(e1);
+        }
+        ITeacher teacher = professorship.getTeacher();
+        IExecutionPeriod executionPeriod = professorship.getExecutionCourse()
+                .getExecutionPeriod();
+        DiaSemana weekDay = infoSupportLesson.getWeekDay();
+        Date startTime = infoSupportLesson.getStartTime();
+        Date endTime = infoSupportLesson.getEndTime();
 
-		CreditsValidator.validatePeriod(
-			teacher,
-			executionPeriod,
-			weekDay,
-			startTime,
-			endTime,
-			PeriodType.SUPPORT_LESSON_PERIOD);
+        CreditsValidator.validatePeriod(teacher, executionPeriod, weekDay,
+                startTime, endTime, PeriodType.SUPPORT_LESSON_PERIOD);
 
-		IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
+        IPersistentSupportLesson supportLessonDAO = sp
+                .getIPersistentSupportLesson();
 
-		try
-		{
-			List supportLessonList =
-				supportLessonDAO.readOverlappingPeriod(
-					teacher,
-					executionPeriod,
-					weekDay,
-					startTime,
-					endTime);
-			boolean ok = true;
-			if (!supportLessonList.isEmpty())
-			{
-				if (supportLessonList.size() == 1)
-				{
-					ISupportLesson supportLesson = (ISupportLesson) supportLessonList.get(0);
-					if (!supportLesson.getIdInternal().equals(infoSupportLesson.getIdInternal()))
-					{
-						ok = false;
-					}
+        try {
+            List supportLessonList = supportLessonDAO.readOverlappingPeriod(
+                    teacher, executionPeriod, weekDay, startTime, endTime);
+            boolean ok = true;
+            if (!supportLessonList.isEmpty()) {
+                if (supportLessonList.size() == 1) {
+                    ISupportLesson supportLesson = (ISupportLesson) supportLessonList
+                            .get(0);
+                    if (!supportLesson.getIdInternal().equals(
+                            infoSupportLesson.getIdInternal())) {
+                        ok = false;
+                    }
 
-				} else
-				{
-					ok = false;
-				}
-			}
-			if (!ok)
-			{
-				throw new OverlappingSupportLessonPeriod();
-			}
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace(System.out);
-			throw new FenixServiceException("Problems on database!", e);
-		}
+                } else {
+                    ok = false;
+                }
+            }
+            if (!ok) {
+                throw new OverlappingSupportLessonPeriod();
+            }
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace(System.out);
+            throw new FenixServiceException("Problems on database!", e);
+        }
 
-		super.doBeforeLock(domainObjectToLock, infoObject, sp);
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
-	 *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
-	 */
-	protected void doAfterLock(
-		IDomainObject domainObjectLocked,
-		InfoObject infoObject,
-		ISuportePersistente sp)
-		throws FenixServiceException
-	{
+        super.doBeforeLock(domainObjectToLock, infoObject, sp);
+    }
 
-		ISupportLesson supportLesson = (ISupportLesson) domainObjectLocked;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doAfterLock(Dominio.IDomainObject,
+     *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+     */
+    protected void doAfterLock(IDomainObject domainObjectLocked,
+            InfoObject infoObject, ISuportePersistente sp)
+            throws FenixServiceException {
 
-		CreditsCalculator creditsCalculator = CreditsCalculator.getInstance();
-		try
-		{
-			ITeacher teacher = supportLesson.getProfessorship().getTeacher();
-			IExecutionPeriod executionPeriod =
-				supportLesson.getProfessorship().getExecutionCourse().getExecutionPeriod();
+        ISupportLesson supportLesson = (ISupportLesson) domainObjectLocked;
 
-			Double supportLessonsCredits =
-				creditsCalculator.calculateSupportLessonsAfterInsert(
-					teacher,
-					executionPeriod,
-					supportLesson,
-					sp);
-			IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-			ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-			if (credits == null)
-			{
-				credits = new Credits();
-			}
-			creditsDAO.simpleLockWrite(credits);
-			credits.setExecutionPeriod(executionPeriod);
-			credits.setTeacher(teacher);
-			credits.setSupportLessons(supportLessonsCredits);
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException("Problems on database!", e);
-		}
-	}
+        CreditsCalculator creditsCalculator = CreditsCalculator.getInstance();
+        try {
+            ITeacher teacher = supportLesson.getProfessorship().getTeacher();
+            IExecutionPeriod executionPeriod = supportLesson.getProfessorship()
+                    .getExecutionCourse().getExecutionPeriod();
+
+            Double supportLessonsCredits = creditsCalculator
+                    .calculateSupportLessonsAfterInsert(teacher,
+                            executionPeriod, supportLesson, sp);
+            IPersistentCredits creditsDAO = sp.getIPersistentCredits();
+            ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(
+                    teacher, executionPeriod);
+            if (credits == null) {
+                credits = new Credits();
+            }
+            creditsDAO.simpleLockWrite(credits);
+            credits.setExecutionPeriod(executionPeriod);
+            credits.setTeacher(teacher);
+            credits.setSupportLessons(supportLessonsCredits);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException("Problems on database!", e);
+        }
+    }
 
 }

@@ -17,40 +17,33 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public class TestScopeRowReader extends RowReaderDefaultImpl
-{
+public class TestScopeRowReader extends RowReaderDefaultImpl {
 
-	public TestScopeRowReader(ClassDescriptor arg0)
-	{
-		super(arg0);
-	}
+    public TestScopeRowReader(ClassDescriptor arg0) {
+        super(arg0);
+    }
 
-	public Object readObjectFrom(Map row)
-	{
-		ITestScope testScope = (ITestScope) super.readObjectFrom(row);
-		if (testScope.getClassName().equals(ExecutionCourse.class.getName()))
-		{
-			ISuportePersistente persistentSuport;
-			try
-			{
-				persistentSuport = SuportePersistenteOJB.getInstance();
-			}
-			catch (ExcepcaoPersistencia e)
-			{
-				return testScope;
-			}
-			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
-					new ExecutionCourse(testScope.getKeyClass()),
-					false);
-			testScope.setDomainObject(executionCourse);
+    public Object readObjectFrom(Map row) {
+        ITestScope testScope = (ITestScope) super.readObjectFrom(row);
+        if (testScope.getClassName().equals(ExecutionCourse.class.getName())) {
+            ISuportePersistente persistentSuport;
+            try {
+                persistentSuport = SuportePersistenteOJB.getInstance();
 
-		}
-		return testScope;
-	}
+                IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+                        .getIPersistentExecutionCourse().readByOID(
+                                ExecutionCourse.class, testScope.getKeyClass());
+                testScope.setDomainObject(executionCourse);
+            } catch (ExcepcaoPersistencia e) {
+                return testScope;
+            }
+
+        }
+        return testScope;
+    }
 
 }

@@ -31,100 +31,88 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DegreeCurricularPlanState;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 3/Dez/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
  *  
  */
-public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServico
-{
+public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements
+        IServico {
 
     /**
-	 *  
-	 */
-    public ReadExecutionCoursesByDegreeAndExecutionPeriodId()
-    {
+     *  
+     */
+    public ReadExecutionCoursesByDegreeAndExecutionPeriodId() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadExecutionCoursesByDegreeAndExecutionPeriodId";
     }
 
-    private static ReadExecutionCoursesByDegreeAndExecutionPeriodId _servico =
-        new ReadExecutionCoursesByDegreeAndExecutionPeriodId();
+    private static ReadExecutionCoursesByDegreeAndExecutionPeriodId _servico = new ReadExecutionCoursesByDegreeAndExecutionPeriodId();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionCoursesByDegreeAndExecutionPeriodId getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionCoursesByDegreeAndExecutionPeriodId getService() {
         return _servico;
     }
 
-    public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException
-    {
-        try
-        {
+    public List run(Integer degreeId, Integer executionPeriodId)
+            throws FenixServiceException {
+        try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = ps.getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = ps
+                    .getIPersistentExecutionPeriod();
             ICursoPersistente persistentDegree = ps.getICursoPersistente();
-            IExecutionPeriod executionPeriod = new ExecutionPeriod(executionPeriodId);
-            final IExecutionPeriod executionPeriod2Compare =
-                (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
-            if (executionPeriod2Compare == null)
-            {
+
+            final IExecutionPeriod executionPeriod2Compare = (IExecutionPeriod) persistentExecutionPeriod
+                    .readByOID(ExecutionPeriod.class, executionPeriodId);
+            if (executionPeriod2Compare == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            ICurso degree = new Curso(degreeId);
-            degree = (ICurso) persistentDegree.readByOId(degree, false);
-            if (degree == null)
-            {
+            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class,
+                    degreeId);
+            if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }
             List curricularPlans = degree.getDegreeCurricularPlans();
             Iterator iter = curricularPlans.iterator();
             List curricularCourses = new ArrayList();
-            while (iter.hasNext())
-            {
-                IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter.next();
-                if (degreeCurricularPlan.getState().getDegreeState().intValue()==DegreeCurricularPlanState.ACTIVE)
-                {
-                    curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
+            while (iter.hasNext()) {
+                IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter
+                        .next();
+                if (degreeCurricularPlan.getState().getDegreeState().intValue() == DegreeCurricularPlanState.ACTIVE) {
+                    curricularCourses.addAll(degreeCurricularPlan
+                            .getCurricularCourses());
                 }
             }
             List executionCourses = new ArrayList();
             iter = curricularCourses.iterator();
-            while (iter.hasNext())
-            {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-                executionCourses
-                    .addAll(
-                        CollectionUtils
-                        .select(curricularCourse.getAssociatedExecutionCourses(), new Predicate()
-                {
-                    public boolean evaluate(Object arg0)
-                    {
+            while (iter.hasNext()) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) iter
+                        .next();
+                executionCourses.addAll(CollectionUtils.select(curricularCourse
+                        .getAssociatedExecutionCourses(), new Predicate() {
+                    public boolean evaluate(Object arg0) {
                         IExecutionCourse executionCourse = (IExecutionCourse) arg0;
 
-                        return executionCourse.getExecutionPeriod().equals(executionPeriod2Compare);
+                        return executionCourse.getExecutionPeriod().equals(
+                                executionPeriod2Compare);
                     }
                 }));
             }
-            List infoExecutionCourses =
-                (List) CollectionUtils.collect(executionCourses, new Transformer()
-            {
-                public Object transform(Object arg0)
-                {
-                    return Cloner.get((IExecutionCourse) arg0);
-                }
-            });
+            List infoExecutionCourses = (List) CollectionUtils.collect(
+                    executionCourses, new Transformer() {
+                        public Object transform(Object arg0) {
+                            return Cloner.get((IExecutionCourse) arg0);
+                        }
+                    });
             return infoExecutionCourses;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

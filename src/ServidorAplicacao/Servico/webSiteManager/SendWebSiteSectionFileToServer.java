@@ -60,9 +60,8 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem
                 sections = persistentWebSiteSection.readAll();
             } else 
             {
-                IWebSiteSection webSiteSectionTmp = new WebSiteSection();
-                webSiteSectionTmp.setIdInternal(sectionCode);
-                webSiteSectionTmp = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSectionTmp, false);
+                IWebSiteSection webSiteSectionTmp ;
+                webSiteSectionTmp = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class, sectionCode);
                 sections.add(webSiteSectionTmp);
             }
             Iterator iterSections = sections.iterator();

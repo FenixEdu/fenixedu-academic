@@ -33,76 +33,72 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author jpvl
  */
-public class UpdateTeacherExecutionYearResponsabilities implements IService
-{
+public class UpdateTeacherExecutionYearResponsabilities implements IService {
 
     /**
-	 *  
-	 */
-    public UpdateTeacherExecutionYearResponsabilities()
-    {
+     *  
+     */
+    public UpdateTeacherExecutionYearResponsabilities() {
         super();
     }
 
     public Boolean run(Integer teacherId, Integer executionYearId,
-            final List executionCourseResponsabilities) throws FenixServiceException
-    {
-        try
-        {
+            final List executionCourseResponsabilities)
+            throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-            IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            ITeacher teacher = (ITeacher) teacherDAO.readByOId(new Teacher(teacherId), false);
-            IExecutionYear executionYear = (IExecutionYear) executionYearDAO.readByOId(
-                    new ExecutionYear(executionYearId), false);
+            IPersistentExecutionYear executionYearDAO = sp
+                    .getIPersistentExecutionYear();
+            IPersistentResponsibleFor responsibleForDAO = sp
+                    .getIPersistentResponsibleFor();
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
+            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
+                    teacherId);
+            IExecutionYear executionYear = (IExecutionYear) executionYearDAO
+                    .readByOID(ExecutionYear.class, executionYearId);
 
-            List responsibleFors = responsibleForDAO.readByTeacherAndExecutionYear(teacher,
-                    executionYear);
+            List responsibleFors = responsibleForDAO
+                    .readByTeacherAndExecutionYear(teacher, executionYear);
 
-            final List executionCourseIds = (List) CollectionUtils.collect(responsibleFors,
-                    new Transformer()
-                    {
+            final List executionCourseIds = (List) CollectionUtils.collect(
+                    responsibleFors, new Transformer() {
 
-                        public Object transform(Object input)
-                        {
+                        public Object transform(Object input) {
                             IResponsibleFor responsibleFor = (IResponsibleFor) input;
-                            Integer executionCourseId = responsibleFor.getExecutionCourse()
-                                    .getIdInternal();
+                            Integer executionCourseId = responsibleFor
+                                    .getExecutionCourse().getIdInternal();
                             return executionCourseId;
                         }
                     });
 
-            List responsabilitiesToAdd = (List) CollectionUtils.select(executionCourseResponsabilities,
-                    new Predicate()
-                    {
+            List responsabilitiesToAdd = (List) CollectionUtils.select(
+                    executionCourseResponsabilities, new Predicate() {
 
-                        public boolean evaluate(Object input)
-                        {
+                        public boolean evaluate(Object input) {
                             Integer executionCourseToAdd = (Integer) input;
-                            return !executionCourseIds.contains(executionCourseToAdd);
+                            return !executionCourseIds
+                                    .contains(executionCourseToAdd);
                         }
                     });
 
-            List responsabilitiesToRemove = (List) CollectionUtils.select(executionCourseIds,
-                    new Predicate()
-                    {
+            List responsabilitiesToRemove = (List) CollectionUtils.select(
+                    executionCourseIds, new Predicate() {
 
-                        public boolean evaluate(Object input)
-                        {
+                        public boolean evaluate(Object input) {
                             Integer executionCourseToRemove = (Integer) input;
-                            return !executionCourseResponsabilities.contains(executionCourseToRemove);
+                            return !executionCourseResponsabilities
+                                    .contains(executionCourseToRemove);
                         }
                     });
 
-            addResponsibleFors(teacher, responsabilitiesToAdd, responsibleForDAO, executionCourseDAO);
+            addResponsibleFors(teacher, responsabilitiesToAdd,
+                    responsibleForDAO, executionCourseDAO);
 
-            removeResponsibleFors(teacher, responsabilitiesToRemove, responsibleForDAO,
-                    executionCourseDAO);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+            removeResponsibleFors(teacher, responsabilitiesToRemove,
+                    responsibleForDAO, executionCourseDAO);
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
             throw new FenixServiceException("Problems on database!", e);
         }
@@ -111,45 +107,53 @@ public class UpdateTeacherExecutionYearResponsabilities implements IService
     }
 
     /**
-	 * @param teacher
-	 * @param responsabilitiesToAdd
-	 * @param responsibleForDAO
-	 * @param executionCourseDAO
-	 */
-    private void removeResponsibleFors(ITeacher teacher, List responsabilitiesToRemove,
-            IPersistentResponsibleFor responsibleForDAO, IPersistentExecutionCourse executionCourseDAO) throws ExcepcaoPersistencia
-    {
-        if (!responsabilitiesToRemove.isEmpty())
-        {
-            List responsibleFors = responsibleForDAO.readByTeacherAndExecutionCourseIds(teacher,
-                    responsabilitiesToRemove);
-            for (int i = 0; i < responsibleFors.size(); i++)
-            {
-                IResponsibleFor responsibleFor = (IResponsibleFor) responsibleFors.get(i);
+     * @param teacher
+     * @param responsabilitiesToAdd
+     * @param responsibleForDAO
+     * @param executionCourseDAO
+     */
+    private void removeResponsibleFors(ITeacher teacher,
+            List responsabilitiesToRemove,
+            IPersistentResponsibleFor responsibleForDAO,
+            IPersistentExecutionCourse executionCourseDAO)
+            throws ExcepcaoPersistencia {
+        if (!responsabilitiesToRemove.isEmpty()) {
+            List responsibleFors = responsibleForDAO
+                    .readByTeacherAndExecutionCourseIds(teacher,
+                            responsabilitiesToRemove);
+            for (int i = 0; i < responsibleFors.size(); i++) {
+                IResponsibleFor responsibleFor = (IResponsibleFor) responsibleFors
+                        .get(i);
                 responsibleForDAO.delete(responsibleFor);
             }
         }
     }
+
     /**
-	 * @param teacher
-	 * @param responsabilitiesToAdd
-	 * @param responsibleForDAO
-	 * @param sp
-	 */
-    private void addResponsibleFors(ITeacher teacher, List responsabilitiesToAdd,
-            IPersistentResponsibleFor responsibleForDAO, IPersistentExecutionCourse executionCourseDAO) throws MaxResponsibleForExceed, InvalidCategory, ExcepcaoPersistencia
-    {
-        if (!responsabilitiesToAdd.isEmpty())
-        {
-            List executionCourses = executionCourseDAO.readByExecutionCourseIds(responsabilitiesToAdd);
-            for (int i = 0; i < executionCourses.size(); i++)
-            {
-                IExecutionCourse executionCourse = (IExecutionCourse) executionCourses.get(i);
+     * @param teacher
+     * @param responsabilitiesToAdd
+     * @param responsibleForDAO
+     * @param sp
+     */
+    private void addResponsibleFors(ITeacher teacher,
+            List responsabilitiesToAdd,
+            IPersistentResponsibleFor responsibleForDAO,
+            IPersistentExecutionCourse executionCourseDAO)
+            throws MaxResponsibleForExceed, InvalidCategory,
+            ExcepcaoPersistencia {
+        if (!responsabilitiesToAdd.isEmpty()) {
+            List executionCourses = executionCourseDAO
+                    .readByExecutionCourseIds(responsabilitiesToAdd);
+            for (int i = 0; i < executionCourses.size(); i++) {
+                IExecutionCourse executionCourse = (IExecutionCourse) executionCourses
+                        .get(i);
                 IResponsibleFor responsibleFor = new ResponsibleFor();
                 responsibleForDAO.simpleLockWrite(responsibleFor);
                 responsibleFor.setTeacher(teacher);
                 responsibleFor.setExecutionCourse(executionCourse);
-                ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, responsibleFor, responsibleForDAO);
+                ResponsibleForValidator.getInstance()
+                        .validateResponsibleForList(teacher, executionCourse,
+                                responsibleFor, responsibleForDAO);
             }
         }
     }

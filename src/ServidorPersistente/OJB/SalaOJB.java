@@ -184,7 +184,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
     {
         List availableRooms = null;
 
-        IExam examFromDB = (IExam) readByOId(exam, false);
+        IExam examFromDB = (IExam) readByOID(Exam.class, exam.getIdInternal());
         if (examFromDB != null)
         {
             Criteria crit = new Criteria();

@@ -19,79 +19,68 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices
-{
+public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public ReadExecutionCoursesByStudentTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadExecutionCoursesByStudentTest(String testName) {
         super(testName);
 
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExecutionCoursesByStudent";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
-        Object[] args = { new String("15")};
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] args = { new String("15") };
         return args;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 2;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         List infoExecutionCousesList = new ArrayList();
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IExecutionCourse disciplinaExecucao25 = new ExecutionCourse(new Integer(25));
-            IExecutionCourse disciplinaExecucao26 = new ExecutionCourse(new Integer(26));
+            IExecutionCourse disciplinaExecucao25 = new ExecutionCourse(
+                    new Integer(25));
+            IExecutionCourse disciplinaExecucao26 = new ExecutionCourse(
+                    new Integer(26));
 
-            disciplinaExecucao25 =
-                (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-                    disciplinaExecucao25,
-                    false);
-            disciplinaExecucao26 =
-                (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-                    disciplinaExecucao26,
-                    false);
+            disciplinaExecucao25 = (IExecutionCourse) sp
+                    .getIPersistentExecutionCourse().readByOID(
+                            ExecutionCourse.class, new Integer(25));
+            disciplinaExecucao26 = (IExecutionCourse) sp
+                    .getIPersistentExecutionCourse().readByOID(
+                            ExecutionCourse.class, new Integer(26));
 
             sp.confirmarTransaccao();
 
-            InfoExecutionCourse infoExecutionCourse25 =
-                (InfoExecutionCourse) Cloner.get(disciplinaExecucao25);
-            InfoExecutionCourse infoExecutionCourse26 =
-                (InfoExecutionCourse) Cloner.get(disciplinaExecucao26);
+            InfoExecutionCourse infoExecutionCourse25 = (InfoExecutionCourse) Cloner
+                    .get(disciplinaExecucao25);
+            InfoExecutionCourse infoExecutionCourse26 = (InfoExecutionCourse) Cloner
+                    .get(disciplinaExecucao26);
 
             infoExecutionCousesList.add(infoExecutionCourse25);
             infoExecutionCousesList.add(infoExecutionCourse26);
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             fail("exception: ExcepcaoPersistencia ");
         }
         return infoExecutionCousesList;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 }

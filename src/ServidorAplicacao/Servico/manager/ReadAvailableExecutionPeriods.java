@@ -18,73 +18,63 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+
 /**
  * @author lmac1
  */
-public class ReadAvailableExecutionPeriods implements IServico
-{
+public class ReadAvailableExecutionPeriods implements IServico {
 
-    private ReadAvailableExecutionPeriods()
-    {
+    private ReadAvailableExecutionPeriods() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadAvailableExecutionPeriods";
     }
 
     private static ReadAvailableExecutionPeriods service = new ReadAvailableExecutionPeriods();
 
-    public static ReadAvailableExecutionPeriods getService()
-    {
+    public static ReadAvailableExecutionPeriods getService() {
         return service;
     }
 
-    public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException
-    {
+    public List run(List unavailableExecutionPeriodsIds)
+            throws FenixServiceException {
 
         List infoExecutionPeriods = null;
         IExecutionPeriod executionPeriod = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp
+                    .getIPersistentExecutionPeriod();
+            List executionPeriods = persistentExecutionPeriod
+                    .readAllExecutionPeriod();
 
             Iterator iter = unavailableExecutionPeriodsIds.iterator();
-            while (iter.hasNext())
-            {
-                ExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
-                executionPeriodToRead.setIdInternal((Integer) iter.next());
+            while (iter.hasNext()) {
 
-                executionPeriod =
-                    (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriodToRead, false);
+                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
+                        .readByOID(ExecutionPeriod.class, (Integer) iter.next());
                 executionPeriods.remove(executionPeriod);
             }
 
-            infoExecutionPeriods =
-                (List) CollectionUtils.collect(
+            infoExecutionPeriods = (List) CollectionUtils.collect(
                     executionPeriods,
                     TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 
         return infoExecutionPeriods;
     }
 
-    private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer()
-    {
-        public Object transform(Object executionPeriod)
-        {
+    private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
+        public Object transform(Object executionPeriod) {
             return Cloner.get((IExecutionPeriod) executionPeriod);
         }
     };

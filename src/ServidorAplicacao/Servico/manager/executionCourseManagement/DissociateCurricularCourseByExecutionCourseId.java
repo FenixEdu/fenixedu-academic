@@ -20,68 +20,56 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério 23/Dez/2003
  */
 
-public class DissociateCurricularCourseByExecutionCourseId implements IService
-{
+public class DissociateCurricularCourseByExecutionCourseId implements IService {
 
-    
-
-    public DissociateCurricularCourseByExecutionCourseId()
-    {
+    public DissociateCurricularCourseByExecutionCourseId() {
 
     }
 
-   
-
     public Object run(Integer executionCourseId, Integer curricularCourseId)
-        throws FenixServiceException
-    {
+            throws FenixServiceException {
 
-        try
-        {
+        try {
             //List executionCourseList = null;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp
+                    .getIPersistentCurricularCourse();
 
-            if (executionCourseId == null)
-            {
+            if (executionCourseId == null) {
                 throw new FenixServiceException("nullExecutionCourseId");
             }
-            if (curricularCourseId == null)
-            {
+            if (curricularCourseId == null) {
                 throw new FenixServiceException("nullCurricularCourseId");
             }
 
-            IExecutionCourse executionCourse = new ExecutionCourse();
-            executionCourse.setIdInternal(executionCourseId);
-            executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, true);
-            if (executionCourse == null)
-            {
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO
+                    .readByOID(ExecutionCourse.class, executionCourseId, true);
+            if (executionCourse == null) {
                 throw new NonExistingServiceException("noExecutionCourse");
             }
 
-            ICurricularCourse curricularCourse = new CurricularCourse();
-            curricularCourse.setIdInternal(curricularCourseId);
-            curricularCourse =
-                (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-            if (curricularCourse == null)
-            {
+            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+                    .readByOID(CurricularCourse.class, curricularCourseId);
+            if (curricularCourse == null) {
                 throw new NonExistingServiceException("noCurricularCourse");
             }
 
-            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-            List executionCourses = curricularCourse.getAssociatedExecutionCourses();
+            List curricularCourses = executionCourse
+                    .getAssociatedCurricularCourses();
+            List executionCourses = curricularCourse
+                    .getAssociatedExecutionCourses();
 
-            if (!executionCourses.isEmpty() && !curricularCourses.isEmpty())
-            {
+            if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
                 executionCourses.remove(executionCourse);
                 curricularCourses.remove(curricularCourse);
-                executionCourse.setAssociatedCurricularCourses(curricularCourses);
-                curricularCourse.setAssociatedExecutionCourses(executionCourses);
+                executionCourse
+                        .setAssociatedCurricularCourses(curricularCourses);
+                curricularCourse
+                        .setAssociatedExecutionCourses(executionCourses);
             }
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
 

@@ -23,69 +23,62 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério 22/Dez/2003
  *  
  */
-public class ReadInfoExecutionCourseByOID implements IServico
-{
+public class ReadInfoExecutionCourseByOID implements IServico {
 
     private static ReadInfoExecutionCourseByOID service = new ReadInfoExecutionCourseByOID();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadInfoExecutionCourseByOID getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadInfoExecutionCourseByOID getService() {
         return service;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadInfoExecutionCourseByOID()
-    {
+     * The actor of this class.
+     */
+    private ReadInfoExecutionCourseByOID() {
     }
 
-    public final String getNome()
-    {
+    public final String getNome() {
         return "ReadInfoExecutionCourseByOID";
     }
 
-    public InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException
-    {
+    public InfoExecutionCourse run(Integer executionCourseOID)
+            throws FenixServiceException {
 
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente persistentExecutionCourse = sp.getICursoExecucaoPersistente();
-            if (executionCourseOID == null)
-            {
+            ICursoExecucaoPersistente persistentExecutionCourse = sp
+                    .getICursoExecucaoPersistente();
+            if (executionCourseOID == null) {
                 throw new FenixServiceException("nullId");
             }
 
-            IExecutionCourse executionCourse = new ExecutionCourse();
-            executionCourse.setIdInternal(executionCourseOID);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseOID);
 
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-
-            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+            List curricularCourses = executionCourse
+                    .getAssociatedCurricularCourses();
 
             List infoCurricularCourses = new ArrayList();
 
-            CollectionUtils.collect(curricularCourses, new Transformer()
-            {
-                public Object transform(Object input)
-                {
+            CollectionUtils.collect(curricularCourses, new Transformer() {
+                public Object transform(Object input) {
                     ICurricularCourse curricularCourse = (ICurricularCourse) input;
 
-                    return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                    return Cloner
+                            .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                 }
             }, infoCurricularCourses);
 
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-            infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+            infoExecutionCourse = (InfoExecutionCourse) Cloner
+                    .get(executionCourse);
+            infoExecutionCourse
+                    .setAssociatedInfoCurricularCourses(infoCurricularCourses);
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
         return infoExecutionCourse;

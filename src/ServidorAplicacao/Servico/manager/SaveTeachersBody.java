@@ -29,75 +29,66 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class SaveTeachersBody implements IServico
-{
+public class SaveTeachersBody implements IServico {
 
     private static SaveTeachersBody service = new SaveTeachersBody();
 
     /**
-	 * The singleton access method of this class.
-	 */
-    public static SaveTeachersBody getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static SaveTeachersBody getService() {
         return service;
     }
 
     /**
-	 * The constructor of this class.
-	 */
-    private SaveTeachersBody()
-    {
+     * The constructor of this class.
+     */
+    private SaveTeachersBody() {
     }
 
     /**
-	 * Service name
-	 */
-    public final String getNome()
-    {
+     * Service name
+     */
+    public final String getNome() {
         return "SaveTeachersBody";
     }
 
     /**
-	 * Executes the service.
-	 */
+     * Executes the service.
+     */
 
-    public Boolean run(
-        List responsibleTeachersIds,
-        List professorShipTeachersIds,
-        Integer executionCourseId)
-        throws FenixServiceException
-    {
+    public Boolean run(List responsibleTeachersIds,
+            List professorShipTeachersIds, Integer executionCourseId)
+            throws FenixServiceException {
 
-        try
-        {
+        try {
             boolean result = true;
             Integer id;
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(executionCourseId),
-                    false);
-            if (executionCourse == null)
-            {
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
 
-                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+                throw new NonExistingServiceException(
+                        "message.nonExistingCurricularCourse", null);
             }
 
             // RESPONSIBLES MODIFICATIONS
 
             // get the ids of the teachers that used to be responsible
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List oldResponsibles = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp
+                    .getIPersistentResponsibleFor();
+            List oldResponsibles = persistentResponsibleFor
+                    .readByExecutionCourse(executionCourse);
             List oldResponsibleTeachersIds = new ArrayList();
-            if (oldResponsibles != null)
-            {
+            if (oldResponsibles != null) {
 
                 Iterator iterator = oldResponsibles.iterator();
                 IResponsibleFor responsibleFor;
-                while (iterator.hasNext())
-                {
+                while (iterator.hasNext()) {
                     responsibleFor = (IResponsibleFor) iterator.next();
                     id = responsibleFor.getTeacher().getIdInternal();
                     oldResponsibleTeachersIds.add(id);
@@ -105,15 +96,14 @@ public class SaveTeachersBody implements IServico
 
                 // remove old responsibles
                 Iterator oldRespIterator = oldResponsibleTeachersIds.iterator();
-                while (oldRespIterator.hasNext())
-                {
+                while (oldRespIterator.hasNext()) {
                     id = (Integer) oldRespIterator.next();
                     if (!responsibleTeachersIds.contains(id))
                         persistentResponsibleFor.deleteByOID(
-                            ResponsibleFor.class,
-                            ((IResponsibleFor) oldResponsibles
-                                .get(oldResponsibleTeachersIds.indexOf(id)))
-                                .getIdInternal());
+                                ResponsibleFor.class,
+                                ((IResponsibleFor) oldResponsibles
+                                        .get(oldResponsibleTeachersIds
+                                                .indexOf(id))).getIdInternal());
                 }
             }
 
@@ -121,19 +111,18 @@ public class SaveTeachersBody implements IServico
             Iterator newRespIterator = responsibleTeachersIds.iterator();
             IResponsibleFor responsibleForToWrite;
             ITeacher teacher;
-            while (newRespIterator.hasNext())
-            {
+            while (newRespIterator.hasNext()) {
                 id = (Integer) newRespIterator.next();
-                if (!oldResponsibleTeachersIds.contains(id))
-                {
+                if (!oldResponsibleTeachersIds.contains(id)) {
                     responsibleForToWrite = new ResponsibleFor();
                     responsibleForToWrite.setExecutionCourse(executionCourse);
-                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOId(new Teacher(id), false);
+                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(
+                            Teacher.class, id);
                     if (teacher == null)
                         result = false;
-                    else
-                    {
-                        persistentResponsibleFor.simpleLockWrite(responsibleForToWrite);
+                    else {
+                        persistentResponsibleFor
+                                .simpleLockWrite(responsibleForToWrite);
                         responsibleForToWrite.setTeacher(teacher);
 
                     }
@@ -143,51 +132,51 @@ public class SaveTeachersBody implements IServico
             // PROFESSORSHIPS MODIFICATIONS
 
             // get the ids of the teachers that used to teach the course
-            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
-            List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse);
+            IPersistentProfessorship persistentProfessorShip = sp
+                    .getIPersistentProfessorship();
+            List oldProfessorShips = persistentProfessorShip
+                    .readByExecutionCourse(executionCourse);
             List oldProfessorShipTeachersIds = new ArrayList();
-            if (oldProfessorShips != null && !oldProfessorShips.isEmpty())
-            {
+            if (oldProfessorShips != null && !oldProfessorShips.isEmpty()) {
 
                 Iterator profsIterator = oldProfessorShips.iterator();
                 IProfessorship professorShip;
 
-                while (profsIterator.hasNext())
-                {
+                while (profsIterator.hasNext()) {
                     professorShip = (IProfessorship) profsIterator.next();
                     id = professorShip.getTeacher().getIdInternal();
                     oldProfessorShipTeachersIds.add(id);
                 }
 
                 // remove old professorShips
-                Iterator oldProfIterator = oldProfessorShipTeachersIds.iterator();
-                while (oldProfIterator.hasNext())
-                {
+                Iterator oldProfIterator = oldProfessorShipTeachersIds
+                        .iterator();
+                while (oldProfIterator.hasNext()) {
                     id = (Integer) oldProfIterator.next();
-                    if (!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id))
+                    if (!professorShipTeachersIds.contains(id)
+                            && !responsibleTeachersIds.contains(id))
                         persistentProfessorShip.deleteByOID(
-                            Professorship.class,
-                            ((IProfessorship) oldProfessorShips
-                                .get(oldProfessorShipTeachersIds.indexOf(id)))
-                                .getIdInternal());
+                                Professorship.class,
+                                ((IProfessorship) oldProfessorShips
+                                        .get(oldProfessorShipTeachersIds
+                                                .indexOf(id))).getIdInternal());
                 }
             }
             // add new professorShips
             Iterator newProfIterator = professorShipTeachersIds.iterator();
             IProfessorship professorShipToWrite;
-            while (newProfIterator.hasNext())
-            {
+            while (newProfIterator.hasNext()) {
                 id = (Integer) newProfIterator.next();
-                if (!oldProfessorShipTeachersIds.contains(id))
-                {
+                if (!oldProfessorShipTeachersIds.contains(id)) {
                     professorShipToWrite = new Professorship();
                     professorShipToWrite.setExecutionCourse(executionCourse);
-                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOId(new Teacher(id), false);
+                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(
+                            Teacher.class, id);
                     if (teacher == null)
                         result = false;
-                    else
-                    {
-                        persistentProfessorShip.simpleLockWrite(professorShipToWrite);
+                    else {
+                        persistentProfessorShip
+                                .simpleLockWrite(professorShipToWrite);
                         professorShipToWrite.setTeacher(teacher);
 
                     }
@@ -196,9 +185,7 @@ public class SaveTeachersBody implements IServico
 
             return new Boolean(result);
 
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

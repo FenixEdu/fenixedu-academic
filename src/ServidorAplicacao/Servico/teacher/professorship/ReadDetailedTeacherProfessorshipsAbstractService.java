@@ -102,11 +102,12 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
     /**
 	 * @param teacherId
 	 * @return
+     * @throws ExcepcaoPersistencia
 	 */
     protected ITeacher readTeacher(Integer teacherId, IPersistentTeacher teacherDAO)
-            throws NotFoundTeacher
+            throws NotFoundTeacher, ExcepcaoPersistencia
     {
-        ITeacher teacher = (ITeacher) teacherDAO.readByOId(new Teacher(teacherId), false);
+        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,teacherId);
         if (teacher == null)
         {
             throw new NotFoundTeacher();

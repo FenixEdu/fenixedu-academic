@@ -22,52 +22,63 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadCurricularCourseScopes implements IServico {
 
-	private static ReadCurricularCourseScopes service = new ReadCurricularCourseScopes();
+    private static ReadCurricularCourseScopes service = new ReadCurricularCourseScopes();
 
-  	/**
-   	* The singleton access method of this class.
-   	*/
-  	public static ReadCurricularCourseScopes getService() {
-		return service;
-  	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadCurricularCourseScopes getService() {
+        return service;
+    }
 
-  	/**
-   	* The constructor of this class.
-   	*/
-  	private ReadCurricularCourseScopes() { }
+    /**
+     * The constructor of this class.
+     */
+    private ReadCurricularCourseScopes() {
+    }
 
-  	/**
-   	* Service name
-   	*/
-  	public final String getNome() {
-		return "ReadCurricularCourseScopes";
-  	}
+    /**
+     * Service name
+     */
+    public final String getNome() {
+        return "ReadCurricularCourseScopes";
+    }
 
-  	/**
-   	* Executes the service. Returns the current collection of infoCurricularCourseScopes.
-   	*/
-  	public List run(Integer curricularCourseId) throws FenixServiceException {
-		ISuportePersistente sp;
-		List allCurricularCourseScopes = null;
-		try {
-			
-			sp = SuportePersistenteOJB.getInstance();
-		  	ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(new CurricularCourse(curricularCourseId), false);
-			allCurricularCourseScopes = sp.getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourse(curricularCourse);
-		    
- 		} catch (ExcepcaoPersistencia excepcaoPersistencia){
-	  			throw new FenixServiceException(excepcaoPersistencia);
-  		}
+    /**
+     * Executes the service. Returns the current collection of
+     * infoCurricularCourseScopes.
+     */
+    public List run(Integer curricularCourseId) throws FenixServiceException {
+        ISuportePersistente sp;
+        List allCurricularCourseScopes = null;
+        try {
 
-  		if (allCurricularCourseScopes == null || allCurricularCourseScopes.isEmpty()) 
-	  		return allCurricularCourseScopes;
+            sp = SuportePersistenteOJB.getInstance();
+            ICurricularCourse curricularCourse = (ICurricularCourse) sp
+                    .getIPersistentCurricularCourse().readByOID(
+                            CurricularCourse.class, curricularCourseId);
+            allCurricularCourseScopes = sp
+                    .getIPersistentCurricularCourseScope()
+                    .readCurricularCourseScopesByCurricularCourse(
+                            curricularCourse);
 
-  	 	Iterator iterator = allCurricularCourseScopes.iterator();
- 	 	List result = new ArrayList(allCurricularCourseScopes.size());
-    
- 		while (iterator.hasNext())
-			result.add(Cloner.copyICurricularCourseScope2InfoCurricularCourseScope((ICurricularCourseScope) iterator.next()));
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
 
-  		return result;
-	}
+        if (allCurricularCourseScopes == null
+                || allCurricularCourseScopes.isEmpty())
+            return allCurricularCourseScopes;
+
+        Iterator iterator = allCurricularCourseScopes.iterator();
+        List result = new ArrayList(allCurricularCourseScopes.size());
+
+        while (iterator.hasNext())
+            result
+                    .add(Cloner
+                            .copyICurricularCourseScope2InfoCurricularCourseScope((ICurricularCourseScope) iterator
+                                    .next()));
+
+        return result;
+    }
 }

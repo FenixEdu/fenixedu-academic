@@ -75,16 +75,16 @@ public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
 			IStudent student = null;
 			List infoStudentList = new ArrayList();
 
-			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(6)), false);
+			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(6));
 			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 
-			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(7)), false);
+			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(7));
 			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 
-			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(10)), false);
+			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(10));
 			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 
-			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(11)), false);
+			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(11));
 			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 			
 			infoSiteStudentsWithoutGroup.setGroupNumber(new Integer(5));

@@ -42,11 +42,13 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
             IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
                     .getIPersistentExecutionPeriod();
             executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-                    .readByOId(new ExecutionPeriod(infoExecutionCourse
-                            .getInfoExecutionPeriod().getIdInternal()), false);
+                    .readByOID(ExecutionPeriod.class, infoExecutionCourse
+                            .getInfoExecutionPeriod().getIdInternal());
 
-            if (executionPeriod == null) { throw new NonExistingServiceException(
-                    "message.nonExistingExecutionPeriod", null); }
+            if (executionPeriod == null) {
+                throw new NonExistingServiceException(
+                        "message.nonExistingExecutionPeriod", null);
+            }
 
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
@@ -55,7 +57,9 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
                     .readByExecutionCourseInitialsAndExecutionPeriod(
                             infoExecutionCourse.getSigla(), executionPeriod);
 
-            if (existentExecutionCourse != null) { throw new ExistingPersistentException(); }
+            if (existentExecutionCourse != null) {
+                throw new ExistingPersistentException();
+            }
 
             IPersistentSite persistentSite = persistentSuport
                     .getIPersistentSite();

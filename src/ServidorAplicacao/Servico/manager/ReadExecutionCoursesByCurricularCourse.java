@@ -22,46 +22,39 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class ReadExecutionCoursesByCurricularCourse implements IService
-{
-
-   
+public class ReadExecutionCoursesByCurricularCourse implements IService {
 
     /**
-	 * The constructor of this class.
-	 */
-    public ReadExecutionCoursesByCurricularCourse()
-    {
+     * The constructor of this class.
+     */
+    public ReadExecutionCoursesByCurricularCourse() {
     }
 
-    
     /**
-	 * Executes the service. Returns the current collection of
-	 * infoExecutionCourses.
-	 */
-    public List run(Integer curricularCourseId) throws FenixServiceException
-    {
+     * Executes the service. Returns the current collection of
+     * infoExecutionCourses.
+     */
+    public List run(Integer curricularCourseId) throws FenixServiceException {
         ISuportePersistente sp;
         List allExecutionCourses = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
-            ICurricularCourse curricularCourseToRead = new CurricularCourse();
-            curricularCourseToRead.setIdInternal(curricularCourseId);
-            ICurricularCourse curricularCourse =
-                (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(
-                    curricularCourseToRead,
-                    false);
+
+            ICurricularCourse curricularCourse = (ICurricularCourse) sp
+                    .getIPersistentCurricularCourse().readByOID(
+                            CurricularCourse.class, curricularCourseId);
 
             if (curricularCourse == null) {
-                
-                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+
+                throw new NonExistingServiceException(
+                        "message.nonExistingCurricularCourse", null);
             }
 
-            allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
+            allExecutionCourses = curricularCourse
+                    .getAssociatedExecutionCourses();
 
             if (allExecutionCourses == null || allExecutionCourses.isEmpty()) {
-                return allExecutionCourses;                
+                return allExecutionCourses;
             }
 
             // build the result of this service
@@ -69,26 +62,20 @@ public class ReadExecutionCoursesByCurricularCourse implements IService
             List result = new ArrayList(allExecutionCourses.size());
 
             Boolean hasSite;
-            while (iterator.hasNext())
-            {
-                InfoExecutionCourse infoExecutionCourse =
-                    (InfoExecutionCourse) Cloner.get((IExecutionCourse) iterator.next());
-                try
-                {
-                    hasSite =
-                        sp.getIPersistentExecutionCourse().readSite(infoExecutionCourse.getIdInternal());
-                }
-                catch (ExcepcaoPersistencia ex)
-                {
+            while (iterator.hasNext()) {
+                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+                        .get((IExecutionCourse) iterator.next());
+                try {
+                    hasSite = sp.getIPersistentExecutionCourse().readSite(
+                            infoExecutionCourse.getIdInternal());
+                } catch (ExcepcaoPersistencia ex) {
                     throw new FenixServiceException(ex);
                 }
                 infoExecutionCourse.setHasSite(hasSite);
                 result.add(infoExecutionCourse);
             }
             return result;
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

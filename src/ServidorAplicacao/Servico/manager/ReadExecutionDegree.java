@@ -23,72 +23,65 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadExecutionDegree implements IServico
-{
+public class ReadExecutionDegree implements IServico {
 
     private static ReadExecutionDegree service = new ReadExecutionDegree();
 
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionDegree getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionDegree getService() {
         return service;
     }
 
     /**
-	 * The constructor of this class.
-	 */
-    private ReadExecutionDegree()
-    {
+     * The constructor of this class.
+     */
+    private ReadExecutionDegree() {
     }
 
     /**
-	 * Service name
-	 */
-    public final String getNome()
-    {
+     * Service name
+     */
+    public final String getNome() {
         return "ReadExecutionDegree";
     }
 
     /**
-	 * Executes the service. Returns the current InfoExecutionDegree.
-	 */
-    public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException
-    {
+     * Executes the service. Returns the current InfoExecutionDegree.
+     */
+    public InfoExecutionDegree run(Integer idInternal)
+            throws FenixServiceException {
         ICursoExecucao executionDegree;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            CursoExecucao execDegree = new CursoExecucao();
-            execDegree.setIdInternal(idInternal);
-            executionDegree =
-                (ICursoExecucao) sp.getICursoExecucaoPersistente().readByOId(execDegree, false);
 
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+            executionDegree = (ICursoExecucao) sp
+                    .getICursoExecucaoPersistente().readByOID(
+                            CursoExecucao.class, idInternal);
+
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
 
-        if (executionDegree == null)
-        {
+        if (executionDegree == null) {
             throw new NonExistingServiceException();
         }
 
-        InfoExecutionDegree infoExecutionDegree =
-            (InfoExecutionDegree) Cloner.get(executionDegree);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+                .get(executionDegree);
 
         //added by Tânia Pousão
-        if (executionDegree.getCoordinatorsList() != null)
-        {
+        if (executionDegree.getCoordinatorsList() != null) {
             List infoCoordinatorList = new ArrayList();
-            ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
-            while (iteratorCoordinator.hasNext())
-            {
-                ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+            ListIterator iteratorCoordinator = executionDegree
+                    .getCoordinatorsList().listIterator();
+            while (iteratorCoordinator.hasNext()) {
+                ICoordinator coordinator = (ICoordinator) iteratorCoordinator
+                        .next();
 
-                infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+                infoCoordinatorList.add(Cloner
+                        .copyICoordinator2InfoCoordenator(coordinator));
             }
 
             infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);

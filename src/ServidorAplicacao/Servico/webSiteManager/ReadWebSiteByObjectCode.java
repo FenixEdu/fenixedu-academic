@@ -68,8 +68,8 @@ public class ReadWebSiteByObjectCode implements IServico {
 			IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
 			IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-			webSite = new WebSite(webSiteCode);
-			webSite = (IWebSite) persistentWebSite.readByOId(webSite, false);
+			
+			webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, webSiteCode);
 			
 			if(webSite == null){
 				throw new NonExistingServiceException("message.nonExistingWebSite", null);
