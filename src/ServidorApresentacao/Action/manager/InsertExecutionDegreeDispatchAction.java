@@ -82,7 +82,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction
 
         InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-        infoExecutionDegree.setInfoCoordinator(infoTeacher);
+        //infoExecutionDegree.setInfoCoordinator(infoTeacher);
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         
         InfoCampus infoCampus = new InfoCampus();

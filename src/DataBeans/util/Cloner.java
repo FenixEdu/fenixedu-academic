@@ -431,8 +431,8 @@ public abstract class Cloner
         IExecutionYear executionYear =
             Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
         ITeacher coordinator = null;
-        if (infoExecutionDegree.getInfoCoordinator() != null)
-            coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
+//        if (infoExecutionDegree.getInfoCoordinator() != null)
+//            coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
 
         copyObjectProperties(executionDegree, infoExecutionDegree);
 
@@ -478,7 +478,7 @@ public abstract class Cloner
             throw new RuntimeException(e.getMessage());
         }
 
-        infoExecutionDegree.setInfoCoordinator(infoCoordinator);
+        //infoExecutionDegree.setInfoCoordinator(infoCoordinator);
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoExecutionDegree.setTemporaryExamMap(executionDegree.getTemporaryExamMap());

@@ -98,7 +98,6 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
 				<form-property name="executionYearId" type="java.lang.String" />
-				<form-property name="coordinatorNumber" type="java.lang.String" />
 				<form-property name="campusId" type="java.lang.String" />				
 				<form-property name="tempExamMap" type="java.lang.String" />
 				<form-property name="internalIds" type="java.lang.Integer[]" />

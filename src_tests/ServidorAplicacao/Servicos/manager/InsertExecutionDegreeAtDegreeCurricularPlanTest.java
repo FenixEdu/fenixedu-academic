@@ -36,7 +36,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlanTest extends TestCaseMan
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionDegree.setInfoCoordinator(infoTeacher);
+		//infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		infoExecutionDegree.setTemporaryExamMap(new Boolean(false));
 		
 		Object[] args = { infoExecutionDegree };
@@ -58,7 +58,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlanTest extends TestCaseMan
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionDegree.setInfoCoordinator(infoTeacher);
+//		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		infoExecutionDegree.setTemporaryExamMap(new Boolean(false));
 		
 		Object[] args = { infoExecutionDegree };

@@ -10,7 +10,6 @@ import Dominio.ExecutionYear;
 import Dominio.ICampus;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -18,7 +17,6 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -89,15 +87,14 @@ public class EditExecutionDegree implements IServico
 
             oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
 
-            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-            ITeacher teacher =
-                persistentTeacher.readByNumber(
-                    infoExecutionDegree.getInfoCoordinator().getTeacherNumber());
-
-            if (teacher == null)
-                throw new NonExistingServiceException("message.non.existing.teacher", null);
-
-            //oldExecutionDegree.setCoordinator(teacher);
+//            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+//            ITeacher teacher =
+//                persistentTeacher.readByNumber(
+//                    infoExecutionDegree.getInfoCoordinator().getTeacherNumber());
+//
+//            if (teacher == null)
+//                throw new NonExistingServiceException("message.non.existing.teacher", null);
+//            	oldExecutionDegree.setCoordinator(teacher);
             
             oldExecutionDegree.setCampus(campus);
             persistentExecutionDegree.lockWrite(oldExecutionDegree);

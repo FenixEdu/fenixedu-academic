@@ -81,8 +81,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction
         request.setAttribute("infoCampusList", infoCampusList);
 
         dynaForm.set("tempExamMap", oldInfoExecutionDegree.getTemporaryExamMap().toString());
-        dynaForm.set("coordinatorNumber", oldInfoExecutionDegree.getInfoCoordinator().getTeacherNumber()
-                .toString());
+//        dynaForm.set("coordinatorNumber", oldInfoExecutionDegree.getInfoCoordinator().getTeacherNumber()
+//                .toString());
         dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getIdInternal()
                 .toString());
         dynaForm.set("campusId", oldInfoExecutionDegree.getInfoCampus().getIdInternal().toString());
@@ -112,7 +112,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction
 
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setTeacherNumber(new Integer(coordinatorNumberString));
-        infoExecutionDegree.setInfoCoordinator(infoTeacher);
+        //infoExecutionDegree.setInfoCoordinator(infoTeacher);
 
         infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
 

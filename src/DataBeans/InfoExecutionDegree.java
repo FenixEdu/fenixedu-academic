@@ -19,7 +19,6 @@ public class InfoExecutionDegree extends InfoObject implements Serializable
 
     //added by Tânia Pousão
     private List coordinatorsList;
-    private InfoTeacher infoCoordinator;//to remove
 
     private Boolean temporaryExamMap;
 
@@ -111,22 +110,6 @@ public class InfoExecutionDegree extends InfoObject implements Serializable
     public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan)
     {
         this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
-    }
-
-    /**
-	 * @return
-	 */
-    public InfoTeacher getInfoCoordinator()
-    {
-        return infoCoordinator;
-    }
-
-    /**
-	 * @param teacher
-	 */
-    public void setInfoCoordinator(InfoTeacher teacher)
-    {
-        infoCoordinator = teacher;
     }
 
     /**
