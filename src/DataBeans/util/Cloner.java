@@ -1037,7 +1037,7 @@ public abstract class Cloner {
 	 * @param infoCurriculum
 	 * @return ICurriculum
 	 */
-	public static ICurriculum copyICurriculum2InfoCurriculum(InfoCurriculum infoCurriculum) {
+	public static ICurriculum copyInfoCurriculum2ICurriculum(InfoCurriculum infoCurriculum) {
 		ICurriculum curriculum = new Curriculum();
 
 		IDisciplinaExecucao executionCourse =
