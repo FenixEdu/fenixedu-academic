@@ -58,7 +58,7 @@ public class InfoGroupProjectStudents extends InfoObject
 	{
 		for (Iterator iter= studentList.iterator(); iter.hasNext();)
 		{
-			IStudent element= (IStudent) iter.next();
+			InfoStudent element= (InfoStudent) iter.next();
 			if (element.getNumber().equals(number))
 				return true;
 		}
