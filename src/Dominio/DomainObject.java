@@ -54,30 +54,4 @@ abstract public class DomainObject implements IDomainObject
         this.ackOptLock = ackOptLock;
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-//    public int hashCode()
-//    {
-//        if (idInternal != null)
-//        {
-//            return this.idInternal.intValue();
-//        }
-//        else
-//        {
-//            return super.hashCode();
-//        }
-//    }
-
-    // This method may be deleted along with every equals when we upgrade OJB >= RC7.
-    public int hashCode() {
-        HashCodeBuilder hb = new HashCodeBuilder();
-        hb.append(this.getClass().hashCode());
-
-        hb.append(idInternal);
-
-        return new Integer(hb.toHashCode()).intValue();
-    }
 }
