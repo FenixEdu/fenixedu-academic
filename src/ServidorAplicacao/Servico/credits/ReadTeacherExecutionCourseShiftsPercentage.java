@@ -28,6 +28,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoAula;
 
 /**
  * @author Tânia & Alexandra
@@ -76,14 +77,17 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
 				double availablePercentage = 100;
 				InfoTeacherShiftPercentage infoTeacherShiftPercentage = null;
 
-				Iterator iter = shift.getAssociatedTeacherProfessorShipPercentage().iterator();
-				while (iter.hasNext()) {
-					ITeacherShiftPercentage teacherShiftPercentage = (ITeacherShiftPercentage) iter.next();
+								
+				if (shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL) {
+					Iterator iter = shift.getAssociatedTeacherProfessorShipPercentage().iterator();
+					while (iter.hasNext()) {
+						ITeacherShiftPercentage teacherShiftPercentage = (ITeacherShiftPercentage) iter.next();
 
-					availablePercentage -= teacherShiftPercentage.getPercentage().doubleValue();
+						availablePercentage -= teacherShiftPercentage.getPercentage().doubleValue();
 
-					infoTeacherShiftPercentage = Cloner.copyITeacherShiftPercentage2InfoTeacherShiftPercentage(teacherShiftPercentage);
-					infoShiftPercentage.addInfoTeacherShiftPercentage(infoTeacherShiftPercentage);
+						infoTeacherShiftPercentage = Cloner.copyITeacherShiftPercentage2InfoTeacherShiftPercentage(teacherShiftPercentage);
+						infoShiftPercentage.addInfoTeacherShiftPercentage(infoTeacherShiftPercentage);
+					}
 				}
 
 				List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {

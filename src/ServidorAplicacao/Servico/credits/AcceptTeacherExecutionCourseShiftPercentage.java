@@ -31,6 +31,7 @@ import ServidorPersistente.IPersistentTeacherShiftPercentage;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoAula;
 
 /**
  * @author jpvl
@@ -154,20 +155,19 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 
 	private boolean validate(ITurno shift, Double percentage, ITeacher teacher) {
 		double percentageAvailable = 100;
-
-		List teacherProfessorShipPercentageList = shift.getAssociatedTeacherProfessorShipPercentage();
-		Iterator iterator = teacherProfessorShipPercentageList.iterator();
-		while (iterator.hasNext()) {
-			ITeacherShiftPercentage teacherShiftPercentageBD = (ITeacherShiftPercentage) iterator.next();
-
-			if (!teacherShiftPercentageBD.getProfessorShip().getTeacher().equals(teacher)) {
-				percentageAvailable -= teacherShiftPercentageBD.getPercentage().doubleValue();
+		if (shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL ) {
+			List teacherProfessorShipPercentageList = shift.getAssociatedTeacherProfessorShipPercentage();
+			Iterator iterator = teacherProfessorShipPercentageList.iterator();
+			while (iterator.hasNext()) {
+				ITeacherShiftPercentage teacherShiftPercentageBD = (ITeacherShiftPercentage) iterator.next();
+				if (!teacherShiftPercentageBD.getProfessorShip().getTeacher().equals(teacher)) {
+					percentageAvailable -= teacherShiftPercentageBD.getPercentage().doubleValue();
+				}
 			}
-		}
-
-		if (percentageAvailable < percentage.doubleValue()) {
-			// 100% exceeded
-			return false;
+			if (percentageAvailable < percentage.doubleValue()) {
+				// 100% exceeded
+				return false;
+			}
 		}
 		return true;
 	}
