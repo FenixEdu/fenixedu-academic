@@ -21,12 +21,14 @@ import Dominio.CurricularSemester;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularSemester;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 
 /**
  *
@@ -225,17 +227,18 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	}
 
-	public IDisciplinaExecucao readExecutionCourse() {
-		// ToDo!!// ToDo!!// ToDo!!
+	public IDisciplinaExecucao readExecutionCourse(Disciplinas disciplina) {
 		Criteria criteria = new Criteria();
-		//criteria.addEqualTo("sigla", sigla);
+		criteria.addEqualTo("sigla", disciplina.getSigla());
+		criteria.addEqualTo("keyExecutionPeriod", new Integer(2));
 		List result = query(DisciplinaExecucao.class, criteria);
 		if (result.size() == 1) {
 			return (IDisciplinaExecucao) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println(
+				"ERROR READING EXECUTION_COURSE: " + disciplina.getSigla());
+			return null;
 		} else {
-			System.out.println("ERROR READING EXECUTION_COURSE: "
-			/*+ sigla*/
-			);
 			return null;
 		}
 
@@ -294,7 +297,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		String code) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
-		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo(
+			"degreeCurricularPlanKey",
+			degreeCurricularPlan.getIdInternal());
 		List result = query(CurricularCourse.class, criteria);
 		if (result.size() == 1) {
 			return (CurricularCourse) result.get(0);
@@ -316,6 +321,69 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		if (result.size() == 1) {
 			return (IBranch) result.get(0);
 		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public IExecutionPeriod readExecutionPeriod() {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("idInternal", new Integer(2));
+		List result = query(ExecutionPeriod.class, criteria);
+		if (result.size() == 1) {
+			return (IExecutionPeriod) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	public IDegreeCurricularPlan readDegreeCurricularPlanNextSemester(String idDegree) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("degreeKey", new Integer(idDegree));
+		criteria.addLike("name", "%2003/2004");
+		List result = query(DegreeCurricularPlan.class, criteria);
+		if (result.size() == 1) {
+			return (IDegreeCurricularPlan) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param degreeCurricularPlan
+	 * @param disciplina
+	 * @return
+	 */
+	public ICurricularCourse getCurricularCourse(
+		IDegreeCurricularPlan degreeCurricularPlan,
+		Disciplinas disciplina) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"degreeCurricularPlanKey",
+			((DegreeCurricularPlan) degreeCurricularPlan).getIdInternal());
+		//criteria.addEqualTo("code", disciplina.getSigla());
+		criteria.addEqualTo("name", disciplina.getNome());
+		List result = query(CurricularCourse.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourse) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println(
+				"To many matches for course: " + disciplina.getSigla());
+			return null;
+		} else {
+			System.out.println(
+				"Could not match course: "
+					+ disciplina.getSigla()
+					+ " name: "
+					+ disciplina.getNome()
+					+ " plan: "
+					+ degreeCurricularPlan.getName());
 			return null;
 		}
 	}

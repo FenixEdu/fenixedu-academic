@@ -6,16 +6,16 @@
  */
 package middleware.thor;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import middleware.LoadDataFile;
 import Dominio.DisciplinaExecucao;
-import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
-
-import middleware.LoadDataFile;
 
 /**
  *
@@ -30,6 +30,8 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 	private static LoadExecutionCoursesAndAssociations loader = null;
 
 	protected PersistentObjectOJBReader persistentObjectOJB = null;
+	
+	static String bufferToWrite = new String();	
 
 	private LoadExecutionCoursesAndAssociations() {
 		super();
@@ -41,12 +43,15 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 		loader.startTime = Calendar.getInstance();
 		loader.setupDAO();
 
+		System.out.println("Processing Execution Course Data.");
+
 		loader.processData();
 
 		loader.shutdownDAO();
 		loader.endTime = Calendar.getInstance();
 
 		loader.report();
+		loader.writeToFile(bufferToWrite);
 	}
 
 	protected void processData() {
@@ -54,9 +59,14 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 		List allRooms = persistentObjectOJB.readThorRooms();
 		int numAulas = 0;
 
-		for (int dia = 1; dia < 7; dia++) {
+		IExecutionPeriod executionPeriod =
+			persistentObjectOJB.readExecutionPeriod();
+
+			for (int s = 0; s < allRooms.size(); s++) {
+			System.out.println("sala= " + allRooms.get(s));
 			for (int hora = 1; hora < 31; hora++) {
-				for (int s = 0; s < allRooms.size(); s++) {
+				for (int dia = 1; dia < 7; dia++) {
+
 					String sala = ((String) allRooms.get(s));
 					List aulas =
 						persistentObjectOJB.readThorAulas(dia, hora, sala);
@@ -69,21 +79,37 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 							persistentObjectOJB.readDisciplina(
 								aula.getDisciplina());
 
-
-						IDisciplinaExecucao disciplinaExecucao = persistentObjectOJB.readExecutionCourse();
+						IDisciplinaExecucao disciplinaExecucao =
+							persistentObjectOJB.readExecutionCourse(disciplina);
 						if (disciplinaExecucao == null) {
-								disciplinaExecucao = new DisciplinaExecucao();
-								disciplinaExecucao.setNome(disciplina.getNome());
-								disciplinaExecucao.setSigla(disciplina.getSigla());
-								disciplinaExecucao.setAssociatedExams(null);
-								disciplinaExecucao.setComment(null);
-//								disciplinaExecucao.setAssociatedCurricularCourses(null);
-//								disciplinaExecucao.setExecutionPeriod(null);
-//								disciplinaExecucao.setTheoreticalHours(disciplina.get);
-//								disciplinaExecucao.setPraticalHours(null);
-//								disciplinaExecucao.setTheoPratHours(null);
-//								disciplinaExecucao.setLabHours(null);
-//								writeElement(disciplinaExecucao);                      
+							disciplinaExecucao = new DisciplinaExecucao();
+							disciplinaExecucao.setNome(disciplina.getNome());
+							disciplinaExecucao.setSigla(disciplina.getSigla());
+							disciplinaExecucao.setAssociatedExams(null);
+							disciplinaExecucao.setComment(null);
+							ICurricularCourse curricularCourseToAdd =
+								getAssociated(
+									disciplinaExecucao,
+									aula,
+									disciplina);
+							if (curricularCourseToAdd != null
+								&& disciplinaExecucao
+									.getAssociatedCurricularCourses()
+									!= null) {
+								disciplinaExecucao
+									.getAssociatedCurricularCourses()
+									.add(
+									curricularCourseToAdd);
+							}
+							disciplinaExecucao.setExecutionPeriod(
+								executionPeriod);
+							disciplinaExecucao.setTheoreticalHours(null);
+							disciplinaExecucao.setPraticalHours(null);
+							disciplinaExecucao.setTheoPratHours(null);
+							disciplinaExecucao.setLabHours(null);
+							disciplinaExecucao.setComment(" ");
+							writeElement(disciplinaExecucao);
+							numberElementsWritten++;
 						}
 
 						//Ler Curricular correspondente e se ja existir na BD criar associacao
@@ -92,16 +118,59 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 								degreeID,
 								disciplina.getSigla());
 						if (curricularCourse != null) {
-							
-						}
-						else {
-							
+
+						} else {
+
 						}
 					}
 				}
 			}
 		}
 		System.out.println("Numero de aulas processadas = " + numAulas);
+	}
+
+	/**
+	 * @param disciplinaExecucao
+	 * @param aula
+	 * @param disciplina
+	 * @return
+	 */
+	private ICurricularCourse getAssociated(
+		IDisciplinaExecucao disciplinaExecucao,
+		Aulas aula,
+		Disciplinas disciplina) {
+
+		IDegreeCurricularPlan degreeCurricularPlan =
+			persistentObjectOJB.readDegreeCurricularPlanNextSemester(
+				aula.getTurma().substring(0, 2));
+
+		if (degreeCurricularPlan != null) {
+			ICurricularCourse curricularCourse =
+				persistentObjectOJB.getCurricularCourse(
+					degreeCurricularPlan,
+					disciplina);
+			if (curricularCourse != null) {
+				curricularCourse.getAssociatedExecutionCourses().add(
+					disciplinaExecucao);
+
+				numberElementsWritten++;
+				return curricularCourse;
+			} else {
+				numberUntreatableElements++;
+				bufferToWrite
+					+= "Could not match course:" 
+					+ disciplinaExecucao.getSigla()
+					+ " plan: "
+					+ degreeCurricularPlan.getName()					
+					+ "]";
+			}
+
+		} else {
+			// It's not untreatable, we just don't have the curricular plan 
+			//numberUntreatableElements++;
+		}
+
+		return null;
 	}
 
 	protected void processLine(String line) {
@@ -116,7 +185,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 	}
 
 	protected String getFilenameOutput() {
-		return null;
+		return "UntreatableExecutionCourses.txt";
 	}
 
 	protected void report() {

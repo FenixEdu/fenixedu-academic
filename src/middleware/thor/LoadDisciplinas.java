@@ -141,6 +141,8 @@ public class LoadDisciplinas extends LoadDataFile {
 	 * @return
 	 */
 	private CurricularCourseExecutionScope getCurricularCourseExecutionScope(Almeida_disc almeida_disc) {
+		// TODO : Maybe there is a way to know this.
+		//        Ask around.
 		return new CurricularCourseExecutionScope(
 			CurricularCourseExecutionScope.SEMESTRIAL);
 	}
@@ -190,7 +192,8 @@ public class LoadDisciplinas extends LoadDataFile {
 
 		ICurricularCourseScope curricularCourseScope =
 			new CurricularCourseScope();
-		curricularCourseScope.setBranch(getBranch(almeida_disc));
+		curricularCourseScope.setBranch(
+			getBranch(almeida_disc, curricularCourse));
 		curricularCourseScope.setCurricularCourse(curricularCourse);
 		curricularCourseScope.setCurricularSemester(
 			makeCurricularSemester(
@@ -209,7 +212,9 @@ public class LoadDisciplinas extends LoadDataFile {
 	 * @param almeida_curram
 	 * @return
 	 */
-	private IBranch getBranch(Almeida_disc almeida_disc) {
+	private IBranch getBranch(
+		Almeida_disc almeida_disc,
+		ICurricularCourse curricularCourse) {
 		Almeida_curram almeida_curram =
 			persistentObjectOJB.readAlmeida_Curram(
 				new Integer("" + almeida_disc.getCodcur()),
@@ -232,6 +237,8 @@ public class LoadDisciplinas extends LoadDataFile {
 						+ almeida_curram.getCodram()
 						+ almeida_curram.getCodorien());
 				branch.setName(almeida_curram.getDescri());
+				branch.setDegreeCurricularPlan(
+					curricularCourse.getDegreeCurricularPlan());
 				branch.setScopes(null);
 				writeElement(branch);
 				numberElementsWritten++;
