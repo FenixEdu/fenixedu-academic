@@ -68,7 +68,7 @@ create table DEGREE_CURRICULAR_PLAN (
 drop table if exists CURRICULAR_COURSE;
 create table CURRICULAR_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_DEPARTMENT_COURSE int(11) not null default '0',
+   KEY_DEPARTMENT_COURSE int(11),
    KEY_DEGREE_CURRICULAR_PLAN int(11) not null default '0',
    CREDITS double,
    THEORETICAL_HOURS double,
