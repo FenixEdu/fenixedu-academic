@@ -138,17 +138,18 @@ public class InfoShift extends InfoObject {
         while (itLesson.hasNext()) {
             index = index + 1;
             InfoLesson lesson = (InfoLesson) itLesson.next();
-            result += lesson.getDiaSemana().toString();
+            result += lesson.getDiaSemana().toString();          
             result += " (";
             result += lesson.getInicio().get(Calendar.HOUR_OF_DAY);
             result += ":";
-            result += minutesFormatter(lesson.getInicio().get(Calendar.MINUTE));
+            result += minutesFormatter(lesson.getInicio().get(Calendar.MINUTE));            
             result += "-";
-            result += lesson.getFim().get(Calendar.HOUR_OF_DAY);
+            result += lesson.getFim().get(Calendar.HOUR_OF_DAY);          
             result += ":";
-            result += minutesFormatter(lesson.getFim().get(Calendar.MINUTE));
+            result += minutesFormatter(lesson.getFim().get(Calendar.MINUTE));  
             result += ") ";
-            result += lesson.getInfoRoomOccupation().getInfoRoom().getNome().toString();
+            result += lesson.getInfoSala().getNome().toString();
+                      
             int last = (infoLessonsList.size());
             if (index != last || (index != 1 && index != last)) {
                 result += " , ";

@@ -225,11 +225,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
         List lista = ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts();
         
-//        for (Iterator iter = lista.iterator(); iter.hasNext();) {
-//            InfoShift element = (InfoShift) iter.next();
-//            System.out.println(element.getLessons());
-//        }
-        
         return mapping.findForward("sucess");
 
     }
