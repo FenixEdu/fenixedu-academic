@@ -187,7 +187,9 @@ public abstract class SessionConstants {
 	public static final String ATTACHED_COPIES_NUMBER = "attached_copies_number";
 	public static final String PROOF_DATE = "proof_date";
 	public static final String THESIS_DELIVERY_DATE = "thesis_delivery_date";
-	
+	public static final String DAYS_LIST = "days_list";
+	public static final String MONTHS_LIST = "months_list";
+	public static final String YEARS_LIST = "years_list";
 	
 	
 
