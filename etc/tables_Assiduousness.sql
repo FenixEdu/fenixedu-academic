@@ -111,7 +111,7 @@ CREATE TABLE ass_FERIAS (
 
 DROP TABLE IF EXISTS ass_FUNC_NAO_DOCENTE;
 CREATE TABLE ass_FUNC_NAO_DOCENTE (
-  codigoInterno int(11) NOT NULL default '0',
+  codigoInterno int(11) NOT NULL default '0' auto_increment,
   chaveFuncionario int(11) NOT NULL default '0',
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (chaveFuncionario)
