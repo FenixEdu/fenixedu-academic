@@ -173,7 +173,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 							throw new FenixActionException(e);
 						}
 							
-						conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate);
+						conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "-");
 
 
 						String dataAux = null;					
