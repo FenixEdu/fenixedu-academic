@@ -5,6 +5,7 @@ package DataBeans.grant.contract;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.grant.contract.IGrantPart;
 
 /**
  * @author pica
@@ -78,4 +79,31 @@ public class InfoGrantPart extends InfoObject {
         this.percentage = percentage;
     }
 
+    /**
+     * @param GrantPart
+     */
+    public void copyFromDomain(IGrantPart grantPart)
+    {
+    	super.copyFromDomain(grantPart);
+    	if (grantPart != null)
+    	{
+    		setPercentage(grantPart.getPercentage());
+    	}
+    }
+    /**
+     * @param GrantPart
+     * @return
+     */
+    public static InfoGrantPart newInfoFromDomain(IGrantPart grantPart)
+    {
+    	InfoGrantPart infoGrantPart = null;
+    	if (grantPart != null)
+    	{
+    		infoGrantPart = new InfoGrantPart();
+    		infoGrantPart.copyFromDomain(grantPart);
+    	}
+    	return infoGrantPart;
+    }
+    
+    
 }

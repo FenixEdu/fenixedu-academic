@@ -5,8 +5,10 @@
 package DataBeans.grant.contract;
 
 import java.util.Date;
+
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.grant.contract.IGrantContractRegime;
 
 /**
  * @author Pica
@@ -158,4 +160,37 @@ public class InfoGrantContractRegime extends InfoObject {
     public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
         this.infoGrantContract = infoGrantContract;
     }
+    
+    /**
+     * @param GrantContractRegime
+     */
+    public void copyFromDomain(IGrantContractRegime grantContractRegime)
+    {
+    	super.copyFromDomain(grantContractRegime);
+    	if (grantContractRegime != null)
+    	{
+    		setState(grantContractRegime.getState());
+    		setDateBeginContract(grantContractRegime.getDateBeginContract());
+			setDateEndContract(grantContractRegime.getDateEndContract());
+			setDateDispatchCC(grantContractRegime.getDateDispatchCC());
+			setDateDispatchCD(grantContractRegime.getDateDispatchCD());
+			setDateSendDispatchCC(grantContractRegime.getDateSendDispatchCC());
+			setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
+    	}
+    }
+    /**
+     * @param GrantContractRegime
+     * @return
+     */
+    public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime)
+    {
+    	InfoGrantContractRegime infoGrantContractRegime = null;
+    	if (grantContractRegime != null)
+    	{
+    		infoGrantContractRegime = new InfoGrantContractRegime();
+    		infoGrantContractRegime.copyFromDomain(grantContractRegime);
+    	}
+    	return infoGrantContractRegime;
+    }
+    
 }

@@ -6,6 +6,7 @@ package DataBeans.grant.contract;
 import java.util.Date;
 
 import DataBeans.InfoObject;
+import Dominio.grant.contract.IGrantSubsidy;
 
 /**
  * @author pica
@@ -125,4 +126,36 @@ public class InfoGrantSubsidy extends InfoObject {
     public void setState(Integer state) {
         this.state = state;
     }
+    
+    /**
+     * @param GrantSubsidy
+     */
+    public void copyFromDomain(IGrantSubsidy grantSubsidy)
+    {
+    	super.copyFromDomain(grantSubsidy);
+    	if (grantSubsidy != null)
+    	{
+    		setState(grantSubsidy.getState());
+    		setDateBeginSubsidy(grantSubsidy.getDateBeginSubsidy());
+    		setDateEndSubsidy(grantSubsidy.getDateEndSubsidy());
+    		setValueFullName(grantSubsidy.getValueFullName());
+			setValue(grantSubsidy.getValue());
+			setTotalCost(grantSubsidy.getTotalCost());
+      	}
+    }
+    /**
+     * @param GrantSubsidy
+     * @return
+     */
+    public static InfoGrantSubsidy newInfoFromDomain(IGrantSubsidy grantSubsidy)
+    {
+    	InfoGrantSubsidy infoGrantSubsidy = null;
+    	if (grantSubsidy != null)
+    	{
+    		infoGrantSubsidy = new InfoGrantSubsidy();
+    		infoGrantSubsidy.copyFromDomain(grantSubsidy);
+    	}
+    	return infoGrantSubsidy;
+    }
+    
 }

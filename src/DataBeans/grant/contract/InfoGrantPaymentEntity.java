@@ -76,5 +76,4 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
     public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher) {
         this.infoResponsibleTeacher = infoResponsibleTeacher;
     }
-
 }

@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.owner.InfoGrantOwner;
+import Dominio.grant.contract.IGrantContract;
 
 /**
  * @author Barbosa
@@ -121,4 +122,33 @@ public class InfoGrantContract extends InfoObject {
     public void setDateAcceptTerm(Date dateAcceptTerm) {
         this.dateAcceptTerm = dateAcceptTerm;
     }
+    
+    /**
+     * @param GrantContract
+     */
+    public void copyFromDomain(IGrantContract grantContract)
+    {
+    	super.copyFromDomain(grantContract);
+    	if (grantContract != null)
+    	{
+    		setContractNumber(grantContract.getContractNumber());
+    		setEndContractMotive(grantContract.getEndContractMotive());
+    		setDateAcceptTerm(grantContract.getDateAcceptTerm());
+    	}
+    }
+    /**
+     * @param GrantContract
+     * @return
+     */
+    public static InfoGrantContract newInfoFromDomain(IGrantContract grantContract)
+    {
+    	InfoGrantContract infoGrantContract = null;
+    	if (grantContract != null)
+    	{
+    		infoGrantContract = new InfoGrantContract();
+    		infoGrantContract.copyFromDomain(grantContract);
+    	}
+    	return infoGrantContract;
+    }
+    
 }
