@@ -8,7 +8,6 @@
 package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,9 @@ import DataBeans.gesdis.InfoSection;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -58,7 +59,7 @@ HttpSession session = request.getSession(false);
 										throw new FenixActionException(fenixServiceException.getMessage());
 									}
 						
-						Collections.sort(infoItemsList);
+						
 		
 		
 	 
@@ -94,8 +95,7 @@ HttpSession session = request.getSession(false);
 							throw new FenixActionException(fenixServiceException.getMessage());
 						}
 
-		Collections.sort(items);
-
+		
 
 		InfoItem newInfoItem = new InfoItem();
 		
@@ -127,7 +127,11 @@ HttpSession session = request.getSession(false);
 			
 			try {
 				Boolean result = (Boolean) manager.executar(userView, "InsertItem", args);
-			} catch (FenixServiceException fenixServiceException) {
+			} 
+			catch (ExistingServiceException e) {
+				   throw new ExistingActionException("Um item com esse nome",e);
+			   }
+			catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(
 					fenixServiceException.getMessage());
 			}
@@ -146,7 +150,7 @@ HttpSession session = request.getSession(false);
 					fenixServiceException.getMessage());
 			}
 
-			Collections.sort(infoItems);
+			
 			session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, infoItems);
 			
 			return mapping.findForward("viewSection"); 

@@ -7,7 +7,6 @@
 package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,9 @@ import DataBeans.gesdis.InfoSection;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -64,7 +65,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 							throw new FenixActionException(fenixServiceException.getMessage());
 						}
 			infoItemsList.remove(oldInfoItem);
-			Collections.sort(infoItemsList);
+			
 		
 		
 	 
@@ -110,7 +111,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 					throw new FenixActionException(fenixServiceException.getMessage());
 				}
 
-				Collections.sort(items);
+				
 
 
 		InfoItem newInfoItem = new InfoItem();
@@ -137,10 +138,14 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 		
 		try {
 			manager.executar(userView, "EditItem", editItemArgs);
-		} catch (FenixServiceException fenixServiceException) {
+		} catch (ExistingServiceException e) {
+		throw new ExistingActionException("Um item com esse nome",e);
+	}
+		 catch (FenixServiceException fenixServiceException) {
 
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
+		
 		session.setAttribute(SessionConstants.INFO_ITEM, newInfoItem);
 	
 		//			read section items 
@@ -156,7 +161,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 
-		Collections.sort(items);
+		
 		session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, items);
 
 		return mapping.findForward("viewSection");
