@@ -53,8 +53,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		GestorServicos manager = GestorServicos.manager();
 
 		try {
-				oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
-			
+			oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
+
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 		} catch (FenixServiceException fenixServiceException) {
@@ -101,8 +101,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		if (oldInfoDegreeCP.getNeededCredits() != null)
 			dynaForm.set("neededCredits", (String) oldInfoDegreeCP.getNeededCredits().toString());
 
-		if (oldInfoDegreeCP.getMarkType() != null)
-			dynaForm.set("markType", oldInfoDegreeCP.getMarkType().getType().toString());
+		dynaForm.set("markType", oldInfoDegreeCP.getMarkType().getType().toString());
 
 		if (oldInfoDegreeCP.getNumerusClausus() != null)
 			dynaForm.set("numerusClausus", (String) oldInfoDegreeCP.getNumerusClausus().toString());
@@ -154,8 +153,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			endDate.set(Calendar.YEAR, (new Integer(endDateTokens[2])).intValue());
 			newInfoDegreeCP.setEndDate(endDate.getTime());
 		}
-		
-		if(endDate.before(initialDate))
+
+		if (endDate.before(initialDate))
 			throw new InvalidArgumentsActionException("message.manager.date.restriction");
 
 		if (neededCreditsString.compareTo("") != 0) {
@@ -183,10 +182,10 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
 		Object args[] = { newInfoDegreeCP };
 		GestorServicos manager = GestorServicos.manager();
-		
+
 		try {
-				manager.executar(userView, "EditDegreeCurricularPlan", args);
-			
+			manager.executar(userView, "EditDegreeCurricularPlan", args);
+
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (NonExistingServiceException e) {

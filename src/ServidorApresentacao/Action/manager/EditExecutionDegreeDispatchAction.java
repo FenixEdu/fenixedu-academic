@@ -138,7 +138,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		infoTeacher.setIdInternal(new Integer(coordinatorIdString));
 		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		
-		if(tempExamMapString.compareTo("") != 0)
+//		if(tempExamMapString.compareTo("") != 0)
 			infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
 
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();

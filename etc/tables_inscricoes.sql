@@ -60,7 +60,7 @@ create table DEGREE_CURRICULAR_PLAN (
    END_DATE date,
    DEGREE_DURATION int(11) DEFAULT "5" NOT NULL,
    MINIMAL_YEAR_FOR_OPTIONAL_COURSES int(11) DEFAULT "3" NOT NULL,
-   MARK_TYPE integer (11),
+   MARK_TYPE integer (11) not null,
    NEEDED_CREDITS float (11,2),
    NUMERUS_CLAUSUS INT(11) unsigned default null,
    primary key (ID_INTERNAL),

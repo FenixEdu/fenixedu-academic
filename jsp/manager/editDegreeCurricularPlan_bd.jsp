@@ -37,7 +37,7 @@
 		<bean:message key="message.manager.degree.curricular.plan.initialDate"/>
 	</td>
 	<td>
-		<html:text size="60" property="initialDate" />
+		<html:text size="12" property="initialDate" />
 	</td>
 </tr>
 	
@@ -46,7 +46,7 @@
 		<bean:message key="message.manager.degree.curricular.plan.endDate"/>
 	</td>
 	<td>
-		<html:text size="60" property="endDate" />
+		<html:text size="12" property="endDate" />
 	</td>
 </tr>
 	
@@ -55,7 +55,7 @@
 		<bean:message key="message.manager.degree.curricular.plan.degreeDuration"/>
 	</td>
 	<td>
-		<html:text size="60" property="degreeDuration" />
+		<html:text size="7" property="degreeDuration" />
 	</td>
 </tr>
 	
@@ -64,7 +64,7 @@
 		<bean:message key="message.manager.degree.curricular.plan.minimalYearForOptionalCourses"/>
 	</td>
 	<td>
-		<html:text size="60" property="minimalYearForOptionalCourses" />
+		<html:text size="7" property="minimalYearForOptionalCourses" />
 	</td>
 </tr>
 	
@@ -73,7 +73,7 @@
 		<bean:message key="message.manager.degree.curricular.plan.neededCredits"/>
 	</td>
 	<td>
-		<html:text size="60" property="neededCredits" />
+		<html:text size="7" property="neededCredits" />
 	</td>
 </tr>
 	
@@ -83,7 +83,7 @@
 	</td>
 	<td>
 		<html:select property="markType">
-		<html:option value=""/>	
+	
 		<html:option key="option.editDegreeCP.5" value="5"/>
     	<html:option key="option.editDegreeCP.20" value="20"/>
     	</html:select>
@@ -95,7 +95,7 @@
 		<bean:message key="message.manager.degree.curricular.plan.numerusClausus"/>
 	</td>
 	<td>
-		<html:text size="60" property="numerusClausus" />
+		<html:text size="7" property="numerusClausus" />
 	</td>
 </tr>	
 			

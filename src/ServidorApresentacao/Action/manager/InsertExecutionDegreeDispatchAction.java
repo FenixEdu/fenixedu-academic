@@ -48,8 +48,6 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 				HttpSession session = request.getSession(false);
 				UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
-				Integer degreeId = new Integer(request.getParameter("degreeId"));
-				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 				
 				GestorServicos manager = GestorServicos.manager();
 				String label, value;
@@ -109,7 +107,6 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
@@ -126,13 +123,12 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		String tempExamMap = (String) dynaForm.get("tempExamMap");
-		if(tempExamMap.compareTo("") != 0)
+//		if(tempExamMap.compareTo("") != 0)
 			infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMap));
 		
 		Object args[] = { infoExecutionDegree };
 		
 		GestorServicos manager = GestorServicos.manager();
-		String serviceResult = null;
 		
 		try {
 				 manager.executar(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);

@@ -38,11 +38,7 @@
 				<bean:message key="label.manager.executionDegree.temporaryExamMap"/>
 			</td>
 			<td>
-				<html:select property="tempExamMap">
-					<html:option key="" value=""/>
-					<html:option key="option.manager.true" value="true"/>
-    				<html:option key="option.manager.false" value="false"/>
-    			</html:select>
+				<html:checkbox property="tempExamMap" value="true"/>
 			</td>
 		</tr>
 	</table>

@@ -18,7 +18,7 @@
 				<bean:message key="message.degreeName"/>
 			</td>
 			<td>
-				<html:text size="80" property="name" />
+				<html:text size="60" property="name" />
 			</td>
 		</tr>
 		<tr>
@@ -26,7 +26,7 @@
 				<bean:message key="message.degreeCode"/>
 			</td>
 			<td>
-				<html:text size="80" property="code" />
+				<html:text size="13" property="code" />
 			</td>
 		</tr>			
 		<tr>
