@@ -114,7 +114,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends
                 addAuthorizationErrors(errors, e);
             } else {
                 errors.add("notauthorized", new ActionError(
-                        "error.exception.notAuthorized"));
+                        "error.exception.notAuthorized.student.warningTuition"));
             }
         } catch (ExistingServiceException e) {
             if (e.getMessage().equals("student")) {

@@ -154,15 +154,6 @@ public class EnrollmentAuthorizationFilter extends
     }
 
     /**
-     * @param student
-     * @return
-     */
-    private boolean payedTuition(IStudent student) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /**
      * @param arguments
      * @param sp
      * @return
