@@ -35,9 +35,6 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 		enrolmentRule = new EnrolmentFilterBranchRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
-		enrolmentRule = new EnrolmentFilterPrecedenceSpanRule();
-		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
-
 		enrolmentRule = new EnrolmentFilterCurricularYearPrecedence();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
@@ -48,6 +45,10 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 //		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		enrolmentRule = new EnrolmentFilterAnualCurricularCourseRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser chamada em penultimo
+		enrolmentRule = new EnrolmentFilterPrecedenceSpanRule();
 		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
 
 		//	NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada

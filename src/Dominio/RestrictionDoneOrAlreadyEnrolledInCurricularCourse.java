@@ -9,8 +9,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class RestrictionDoneOrAlreadyEnrolledInCurricularCourse
-	extends RestrictionCurricularCourseDone {
+public class RestrictionDoneOrAlreadyEnrolledInCurricularCourse extends RestrictionCurricularCourseDone {
 
 	/* (non-Javadoc)
 	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
