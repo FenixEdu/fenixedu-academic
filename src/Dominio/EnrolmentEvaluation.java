@@ -5,6 +5,7 @@ import java.util.Date;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
+import Util.TipoCurso;
 
 /**
  * @author dcs-rjao 24/Mar/2003
@@ -240,6 +241,12 @@ public class EnrolmentEvaluation extends DomainObject implements
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
+        
+        if (this.getEnrolment().getStudentCurricularPlan().getStudent().getDegreeType().equals(TipoCurso.MESTRADO_OBJ))
+        {
+        	return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
+        }
+        
         if (this.getObservation() != null
                 && this.getObservation().equals(this.RECTIFICATION)
                 && enrolmentEvaluation.getObservation() != null
