@@ -89,6 +89,8 @@
                  </html:select>          
              </td>
             </tr>
+       </table>
+       <br />
     <!--Filiação -->
     <table width="100%" cellspacing="0">
 		<tr>
