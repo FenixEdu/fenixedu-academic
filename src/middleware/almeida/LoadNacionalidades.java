@@ -26,7 +26,7 @@ public class LoadNacionalidades extends LoadDataFile {
 
 	protected void processLine(String line) {
 		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeperator());
+			new StringTokenizer(line, getFieldSeparator());
 
 		int numberTokens = stringTokenizer.countTokens(); 
 
@@ -44,7 +44,7 @@ public class LoadNacionalidades extends LoadDataFile {
 		return "etc/migration/NACIONALIDADES.TXT";
 	}
 
-	protected String getFieldSeperator() {
+	protected String getFieldSeparator() {
 		return "\t";
 	}
 

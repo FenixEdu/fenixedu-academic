@@ -47,7 +47,7 @@ public class LoadStudents extends LoadDataFile {
 
 	protected void processLine(String line) {
 		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeperator());
+			new StringTokenizer(line, getFieldSeparator());
 
 		// Obter os dados do aluno.
 		String numero = stringTokenizer.nextToken();
@@ -104,7 +104,7 @@ public class LoadStudents extends LoadDataFile {
 		return "etc/migration/ALUNOS.TXT";
 	}
 
-	protected String getFieldSeperator() {
+	protected String getFieldSeparator() {
 		return "\t";
 	}
 

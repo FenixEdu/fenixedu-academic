@@ -28,7 +28,7 @@ public class LoadDisciplinas extends LoadDataFile {
 
 	protected void processLine(String line) {
 		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeperator());
+			new StringTokenizer(line, getFieldSeparator());
 
 		String codigoCurso = stringTokenizer.nextToken();
 		String codigoRamo = stringTokenizer.nextToken();
@@ -84,7 +84,7 @@ public class LoadDisciplinas extends LoadDataFile {
 		return "etc/migration/DISCIPLINAS.TXT";
 	}
 
-	protected String getFieldSeperator() {
+	protected String getFieldSeparator() {
 		return "\t";
 	}
 

@@ -11,16 +11,20 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CurricularCourse;
+import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
+import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -160,10 +164,8 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param executionPeriod
-	 * @return
+	/** 
+	 * @return IExecutionPeriod
 	 */
 	public IExecutionPeriod readActiveExecutionPeriod() {
 		Criteria criteria = new Criteria();
@@ -176,6 +178,37 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
+	/** 
+ 	 * @param IExecutionYear
+	 * @param Integer
+	 * @return IExecutionPeriod
+	 */
+	public IExecutionPeriod readExecutionPeriodByYearAndSemester(IExecutionYear executionYear, Integer semester) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionYear.year", executionYear.getYear());
+		criteria.addEqualTo("semester", semester);
+		List result = query(ExecutionPeriod.class, criteria);
+		if (result.size() == 1) {
+			return (IExecutionPeriod) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/** 
+	 * @param Integer
+	 * @return IExecutionYear
+	 */
+	public IExecutionYear readExecutionYearByYear(Integer year) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("year", year);
+		List result = query(ExecutionYear.class, criteria);
+		if (result.size() == 1) {
+			return (IExecutionYear) result.get(0);
+		} else {
+			return null;
+		}
+	}
 	/**
 	 * @param curricularCourse
 	 * @param executionPeriod
@@ -224,5 +257,54 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 			return null;
 		}
 	}
+
+	public List readAllAlmeidaCurricularCourses() {
+		List result = query(Almeida_curricular_course.class, null);
+		return result;
+	}
+
+	public ICurricularCourse readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(String code, String name, 
+		IDegreeCurricularPlan degreeCurricularPlan) {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("code", code);
+		criteria.addEqualTo("name", name);
+		criteria.addEqualTo("degreeCurricularPlan.idInternal", ((DegreeCurricularPlan) degreeCurricularPlan).getIdInternal());
+
+		List result = query(CurricularCourse.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourse) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("name: " + name + " result.size = " + result.size());
+		}
+		return null;
+	}
+	
+	public IDegreeCurricularPlan readDegreeCurricularPlanByName(String name) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("name", name);
+		List result = query(DegreeCurricularPlan.class, criteria);
+		if (result.size() == 1) {
+			return (IDegreeCurricularPlan) result.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public ICurso readDegreeByCode(String code){
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("sigla", code);
+		List result = query(Curso.class, criteria);
+		if (result.size() == 1) {
+			return (ICurso) result.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public List readAllLEQNewCC(){
+		List result = query(Leq_new_curricular_course.class, null);
+		return result;
+	}	
 
 }

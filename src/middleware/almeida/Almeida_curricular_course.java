@@ -7,17 +7,17 @@ package middleware.almeida;
 
 public class Almeida_curricular_course  
 {
-  private long code;
+  private String code;
 
   private long id_internal;
 
   private String name;
 
-  public long getCode()
+  public String getCode()
   {
      return this.code;
   }
-  public void setCode(long param)
+  public void setCode(String param)
   {
     this.code = param;
   }
@@ -47,5 +47,13 @@ public class Almeida_curricular_course
     return  " [CODE] " + code + " [ID_INTERNAL] " + id_internal + " [NAME] " + name;
 
   }
+  
+  public boolean equals(Object obj) {
+    boolean resultado = false;
+    if (obj instanceof Almeida_curricular_course) {
+      Almeida_curricular_course almeida_curricular_course = (Almeida_curricular_course) obj;
+      resultado = this.code == almeida_curricular_course.getCode();
+    }
+    return resultado;
+  }
 }
-

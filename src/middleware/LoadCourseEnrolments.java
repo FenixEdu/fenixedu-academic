@@ -132,13 +132,8 @@ public class LoadCourseEnrolments extends DataFileLoader {
 				// Ver se a inscricao do aluno na disciplina está na base de dados do CIAPL
 				IEnrolment enrolmentCriteria = new Enrolment();
 				enrolmentCriteria.setCurricularCourse(curricularCourseCriteria);
-				enrolmentCriteria.setStudentCurricularPlan(
-					studentCurricularPlanCriteria);
-				IEnrolment enrolment =
-					(
-						IEnrolment) persistentEnrolment
-							.readDomainObjectByCriteria(
-						enrolmentCriteria);
+				enrolmentCriteria.setStudentCurricularPlan(studentCurricularPlanCriteria);
+				IEnrolment enrolment = (IEnrolment) persistentEnrolment.readDomainObjectByCriteria(enrolmentCriteria);
 				if (enrolment == null) {
 					// A inscricao nao esta na base de dados do CIAPL
 					// Adicionar a inscricao do aluno a base de dados CIAPL
@@ -199,8 +194,7 @@ public class LoadCourseEnrolments extends DataFileLoader {
 
 			// Ler a lista de inscricoes da base de dados CIAPL
 			IEnrolment enrolmentCriteria = new Enrolment();
-			List listEnrolmentsCiapl =
-				(List) persistentEnrolment.readByCriteria(enrolmentCriteria);
+			List listEnrolmentsCiapl = (List) persistentEnrolment.readByCriteria(enrolmentCriteria);
 
 			sp.confirmarTransaccao();
 

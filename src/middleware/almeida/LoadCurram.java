@@ -26,7 +26,7 @@ public class LoadCurram extends LoadDataFile {
 
 	protected void processLine(String line) {
 		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeperator());
+			new StringTokenizer(line, getFieldSeparator());
 
 		int numberTokens = stringTokenizer.countTokens(); 
 
@@ -60,7 +60,7 @@ public class LoadCurram extends LoadDataFile {
 		return "etc/migration/CURRAM.TXT";
 	}
 
-	protected String getFieldSeperator() {
+	protected String getFieldSeparator() {
 		return "\t";
 	}
 

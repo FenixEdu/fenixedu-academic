@@ -179,5 +179,18 @@ public class Almeida_enrolment
     return  " [ANODIS] " + anodis + " [ANOINS] " + anoins + " [CODDIS] " + coddis + " [CODUNIV] " + coduniv + " [CURSO] " + curso + " [DATEXA] " + datexa + " [EPOCA] " + epoca + " [ID_INTERNAL] " + id_internal + " [NUMALU] " + numalu + " [NUMDOC] " + numdoc + " [OBSERV] " + observ + " [RAMO] " + ramo + " [RESULT] " + result + " [SEMDIS] " + semdis;
 
   }
-}
 
+//------------------------------------------------------------------------------------------------------
+
+  public long getNumaluLong() {
+	 return (new Integer(this.numalu)).longValue();
+  }
+
+  public long getCursoInt() {
+	 return (new Integer(this.curso)).longValue();
+  }
+
+  public long getNumdocLong() {
+	 return (new Integer(this.numdoc)).longValue();
+  }
+}

@@ -76,7 +76,7 @@ public abstract class LoadDataFile {
 
 	abstract protected String getFilenameOutput();
 
-	abstract protected String getFieldSeperator();
+	abstract protected String getFieldSeparator();
 
 	protected void writeElement(Object persistentObject) {
 		persistentObjectOJB.lockWrite(persistentObject);
@@ -104,12 +104,12 @@ public abstract class LoadDataFile {
 		}
 	}
 
-	private void setupDAO() {
+	protected void setupDAO() {
 		persistentObjectOJB = new PersistentObjectOJBReader();
 		persistentObjectOJB.beginTransaction();
 	}
 
-	private void shutdownDAO() {
+	protected void shutdownDAO() {
 		persistentObjectOJB.commitTransaction();
 	}
 
