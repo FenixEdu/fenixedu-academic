@@ -16,7 +16,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 /**
  * @author jpvl
- *
+ * @deprecated use @link org.apache.struts.validator.DynaValidatorForm  instead since struts 1.1 final 
  * 
  */
 public class FenixDynaValidatorForm extends DynaValidatorForm {
