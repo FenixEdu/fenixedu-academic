@@ -1,0 +1,529 @@
+class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	String nome;
+	Double theoreticalHours;
+	String sigla;
+	Double labHours;
+	Integer keyExecutionPeriod;
+	Double praticalHours;
+	String comment;
+	Double theoPratHours;
+}
+
+class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.DomainObject {
+	String style;
+	String initialStatement;
+	String mail;
+	Integer keyExecutionCourse;
+	String introduction;
+	String alternativeSite;
+}
+
+class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySite;
+	String information;
+	String title;
+}
+
+class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySuperiorSection;
+	Integer sectionOrder;
+	Integer keySite;
+	String name;
+	Date lastModifiedDate;
+}
+
+class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySection;
+	Boolean urgent;
+	Integer itemOrder;
+	String information;
+	String name;
+}
+
+class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionCourse;
+	Boolean optional;
+	String year;
+	String authors;
+	String title;
+	String reference;
+}
+
+class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
+	String report;
+	Date lastModificationDate;
+	Integer keyExecutionCourse;
+}
+
+class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer studentsNumber;
+	Integer keyProfessorship;
+	String title;
+	Integer keyExecutionCourse;
+	Integer keyTeacher;
+	Integer keyRoom;
+	String teacherName;
+	String summaryText;
+	Date lastModifiedDate;
+	Integer keyShift;
+	Boolean isExtraLesson;
+}
+
+class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double ectsCredits;
+	Boolean basic;
+	Integer universityKey;
+	Boolean mandatoryEnrollment;
+	Integer maximumValueForAcumulatedEnrollments;
+	Double theoPratHours;
+	Double weigth;
+	Integer keyScientificArea;
+	Integer degreeCurricularPlanKey;
+	String code;
+	Boolean enrollmentAllowed;
+	Double theoreticalHours;
+	Integer departmentCourseKey;
+	Double labHours;
+	Double credits;
+	Integer enrollmentWeigth;
+	Double praticalHours;
+	Boolean mandatory;
+	String name;
+	String acronym;
+	Integer minimumValueForAcumulatedEnrollments;
+}
+
+class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPersonWhoAltered;
+	Integer keyCurricularCourse;
+	Date lastModificationDate;
+	String generalObjectives;
+	String operacionalObjectives;
+	String operacionalObjectivesEn;
+	String programEn;
+	String generalObjectivesEn;
+	String program;
+}
+
+class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionYear;
+	Date beginDate;
+	Integer keyPreviousExecutionPeriod;
+	Date endDate;
+	String name;
+	Integer semester;
+}
+
+class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date beginDate;
+	Date endDate;
+	String year;
+}
+
+class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
+	String localidade;
+	String codigoFiscal;
+	String telemovel;
+	String enderecoWeb;
+	Date dataValidadeDocumentoIdentificacao;
+	String distritoMorada;
+	String numeroDocumentoIdentificacao;
+	Integer chavePais;
+	String profissao;
+	String concelhoNaturalidade;
+	Date dataEmissaoDocumentoIdentificacao;
+	String morada;
+	Boolean availableWebSite;
+	String nacionalidade;
+	String numContribuinte;
+	String localidadeCodigoPostal;
+	String username;
+	String telefone;
+	String localEmissaoDocumentoIdentificacao;
+	String distritoNaturalidade;
+	String password;
+	Boolean availableEmail;
+	String workPhone;
+	String nome;
+	String freguesiaNaturalidade;
+	String codigoPostal;
+	String nomePai;
+	String nomeMae;
+	Boolean availablePhoto;
+	String email;
+	String concelhoMorada;
+	Date nascimento;
+	String freguesiaMorada;
+}
+
+class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer teacherNumber;
+	Integer keyPerson;
+	Integer keyCategory;
+}
+
+class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionCourse;
+	Integer keyTeacher;
+}
+
+class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyExecutionCourse;
+	Double hours;
+}
+
+class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyProfessorship;
+	Date startTime;
+	String place;
+	Date endTime;
+}
+
+class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
+	String evaluationElements;
+	String evaluationElementsEn;
+	Integer keyExecutionCourse;
+}
+
+class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	Integer keyGroupProperties;
+}
+
+class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAttendsSet;
+	Integer keyAttend;
+}
+
+class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySenderPerson;
+	Integer keySenderExecutionCourse;
+	Integer keyReceiverPerson;
+	Integer keyExecutionCourse;
+	Integer keyGroupProperties;
+}
+
+class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyBuilding;
+	String nome;
+	Integer capacidadeNormal;
+	Integer capacidadeExame;
+	Integer piso;
+}
+
+class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionPeriod;
+	Integer keyShift;
+	Integer keyRoomOccupation;
+	Integer chaveSala;
+}
+
+class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer availabilityFinal;
+	Integer chaveDisciplinaExecucao;
+	String nome;
+	Integer lotacao;
+}
+
+class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
+	String concreteClassForDegreeCurricularPlans;
+	String nome;
+	String sigla;
+}
+
+class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
+	String concreteClassForStudentCurricularPlans;
+	Integer degreeDuration;
+	Double neededCredits;
+	Date initialDate;
+	String descriptionEn;
+	Integer numerusClausus;
+	Integer minimalYearForOptionalCourses;
+	String description;
+	String ojbConcreteClass;
+	Date endDate;
+	String name;
+	Integer degreeKey;
+}
+
+relation SectionItem {
+	net.sourceforge.fenixedu.domain.Item playsRole associatedItems {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Section playsRole section;
+}
+
+relation SectionSuperiorSection {
+	net.sourceforge.fenixedu.domain.Section playsRole associatedSections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
+}
+
+relation SiteSection {
+	net.sourceforge.fenixedu.domain.Section playsRole associatedSections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Site playsRole site;
+}
+
+relation SiteAnnouncement {
+	net.sourceforge.fenixedu.domain.Announcement playsRole associatedAnnouncements {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Site playsRole site;
+}
+
+relation ExecutionCourseSite {
+	net.sourceforge.fenixedu.domain.Site playsRole site {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExecutionCourseBibliographicReference {
+	net.sourceforge.fenixedu.domain.BibliographicReference playsRole associatedBibliographicReferences {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExecutionCourseCourseReport {
+	net.sourceforge.fenixedu.domain.gesdis.CourseReport playsRole courseReport {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExecutionCourseSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation CurricularCourseExecutionCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+relation CurricularCourseCurriculum {
+	net.sourceforge.fenixedu.domain.Curriculum playsRole associatedCurriculums {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+relation ExecutionPeriodExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ExecutionYearExecutionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole associatedExecutionPeriods {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation ExecutionCourseProfessorship {
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation TeacherProfessorship {
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation ExecutionCourseResponsibleFor {
+	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole responsibleTeachers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation TeacherResponsibleFor {
+	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole associatedResponsibles {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation PersonTeacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole associatedTeachers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation ProfessorshipSupportLesson {
+	net.sourceforge.fenixedu.domain.SupportLesson playsRole supportLessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+}
+
+relation ExecutionCourseEvaluationMethod {
+	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole associatedEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation AttendsSetAttendInAttendsSet {
+	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
+}
+
+relation AttendsSetStudentGroup {
+	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
+		multiplicity *;
+	}
+}
+
+relation AttendSetGroupProperties {
+	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
+}
+
+relation AttendsAttendInAttendsSet {
+	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Attends playsRole attend;
+}
+
+relation GroupPropertiesExecutionCourseGroupProperties {
+	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseGroupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation ReceiverPersonGroupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole ??? {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole receiverPerson;
+}
+
+relation SenderPersonGroupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole ??? {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole senderPerson;
+}
+
+relation SenderExecutionCourseGroupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
+}
+
+relation BuildingRoom {
+	net.sourceforge.fenixedu.domain.Room playsRole rooms {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Building playsRole building;
+}
+
+relation RoomSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole ??? {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+
+relation RoomLesson {
+	net.sourceforge.fenixedu.domain.Lesson playsRole lesson {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+relation LessonShift {
+	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+}
+
+relation LessonExecutionPeriod {
+	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ShiftExecutionCourse {
+	net.sourceforge.fenixedu.domain.Shift playsRole associatedShifts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation ShiftSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+}
+
+relation TeacherSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation ProfessorshipSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+}
+
+relation DegreeCurricularPlanCurricularCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation DegreeDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlans {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
