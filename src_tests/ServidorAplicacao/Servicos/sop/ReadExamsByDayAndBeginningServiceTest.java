@@ -25,13 +25,14 @@ import Dominio.ICurso;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.ISala;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadExamsByDayAndBeginningServiceTest
-	extends TestCaseReadServices {
+	extends TestCaseRequeiersAuthorizationServices {
 
 	Calendar beginning = null;
 
@@ -58,24 +59,11 @@ public class ReadExamsByDayAndBeginningServiceTest
 		super.tearDown();
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ReadExamsByDayAndBeginning";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+	public void testReadValidResult() {
 		beginning = Calendar.getInstance();
 		beginning.set(Calendar.YEAR, 2003);
 		beginning.set(Calendar.MONTH, Calendar.JUNE);
@@ -84,21 +72,16 @@ public class ReadExamsByDayAndBeginningServiceTest
 		beginning.set(Calendar.MINUTE, 0);
 		beginning.set(Calendar.SECOND, 0);
 
-		Object[] result = { beginning, beginning };
-		return result;
-	}
+		args = new Object[2];
+		args[0] = beginning;
+		args[1] = beginning;
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-	protected int getNumberOfItemsToRetrieve() {
-		return 1;
-	}
+		try {
+			callServiceWithAuthorizedUserView();
+		} catch (FenixServiceException e) {
+			fail("Unexpected exception: " + e);
+		}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-	protected Object getObjectToCompare() {
 		InfoViewExam infoViewExam = new InfoViewExam();
 		ArrayList infoViewExams = new ArrayList();
 
@@ -155,7 +138,7 @@ public class ReadExamsByDayAndBeginningServiceTest
 			ex.printStackTrace();
 		}
 			
-		return infoViewExam;
+		assertEquals("Unexpected result!", infoViewExam, result);
 	}
 
 	protected boolean needsAuthorization() {
