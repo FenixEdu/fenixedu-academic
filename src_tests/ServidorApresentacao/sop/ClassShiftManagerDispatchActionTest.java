@@ -118,7 +118,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 
 		//fills the form
-		addRequestParameter("shiftName", "turno3");
+		addRequestParameter("shiftName", "turno5");
 
 		//		Coloca contexto em sessão
 		InfoDegree iL =
