@@ -1,6 +1,5 @@
 /*
  * Created on 10/Nov/2003
- *  
  */
 
 package ServidorAplicacao.Filtro.person;
@@ -27,7 +26,8 @@ import Util.RoleType;
  * @author Barbosa
  * @author Pica
  */
-public class QualificationManagerAuthorizationFilter extends Filtro {
+public class QualificationManagerAuthorizationFilter extends Filtro
+{
 
 	public final static QualificationManagerAuthorizationFilter instance =
 		new QualificationManagerAuthorizationFilter();
@@ -35,182 +35,209 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
 	/**
 	 * The singleton access method of this class.
 	 * 
-	 * @return Returns the instance of this class responsible for the
-	 *               authorization access to services.
+	 * @return Returns the instance of this class responsible for the authorization access to services.
 	 */
-	public static Filtro getInstance() {
+	public static Filtro getInstance()
+	{
 		return instance;
 	}
 
-	protected RoleType getRoleType1() {
+	//Role Type of teacher
+	protected RoleType getRoleTypeTeacher()
+	{
 		return RoleType.TEACHER;
 	}
-	protected RoleType getRoleType2() {
+
+	//Role Type of Grant Owner Manager
+	protected RoleType getRoleTypeGrantOwnerManager()
+	{
 		return RoleType.GRANT_OWNER_MANAGER;
 	}
 
-	public void preFiltragem(
-		IUserView id,
-		IServico service,
-		Object[] arguments)
-		throws NotAuthorizedException {
-
-		try {
+	/**
+	 * Runs the filter
+	 * 
+	 * @param id
+	 * @param service
+	 * @param arguments
+	 */
+	public void preFiltragem(IUserView id, IServico service, Object[] arguments)
+		throws NotAuthorizedException
+	{
+		try
+		{
 			//Verify if needed fields are null
 			if ((id == null)
 				|| (id.getRoles() == null)
 				|| ((arguments[0] instanceof Integer) && (arguments[0] == null))
-				|| ((arguments[1] instanceof InfoQualification)
-					&& (arguments[1] == null))) {
+				|| ((arguments[1] instanceof InfoQualification) && (arguments[1] == null)))
+			{
 				throw new NotAuthorizedException();
 			}
 
 			//Verify if:
-			//The qualification as InternalId (Edit scenario) and does't exist
-			if (InvalidQualificationEdit(arguments))
+			//  The qualification internalId is valid
+			if (invalidQualificationToEdit(arguments))
+			{
 				throw new NotAuthorizedException();
+			}
 
 			//Verify if:
-			// 1: The user ir a Grant Owner Manager and the qualification
-			//belongs to a Grant Owner
+			// 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
 			// 2: The user ir a Teacher and the qualification is his own
 			boolean valido = false;
 
-			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleType2())
-				&& IsGrantOwner(arguments)) {
+			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
+				&& isGrantOwner(arguments))
+			{
 				valido = true;
 			}
 
-			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleType1())
-				&& IsTeacher(arguments)
-				&& IsHisOwnQualification(arguments)) {
+			if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
+				&& isTeacher(arguments)
+				&& isOwnQualification(arguments))
+			{
 				valido = true;
 			}
 
 			if (!valido)
 				throw new NotAuthorizedException();
-		} catch (RuntimeException e) {
+		} catch (RuntimeException e)
+		{
 			throw new NotAuthorizedException();
 		}
 	}
 
 	/**
+	 * Verifies if the qualification user ir a grant owner
+	 * 
 	 * @param arguments
-	 * @return true if the person is a grant owner
+	 * @return true or false
 	 */
-	private boolean IsGrantOwner(Object[] arguments) {
-		ISuportePersistente sp = null;
-		IPersistentGrantOwner spGO = null;
+	private boolean isGrantOwner(Object[] arguments)
+	{
+		ISuportePersistente persistentSuport = null;
+		IPersistentGrantOwner persistentGrantOwner = null;
 
-		try {
-			//Is the person a grant owner?
-			sp = SuportePersistenteOJB.getInstance();
-			spGO = sp.getIPersistentGrantOwner();
+		try
+		{
+			persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
+
+			//Try to read the grant owner from de database
 			IGrantOwner grantowner = null;
-
 			grantowner =
-				spGO.readGrantOwnerByPerson(
-					((InfoQualification) arguments[1])
-						.getPersonInfo()
-						.getIdInternal());
+				persistentGrantOwner.readGrantOwnerByPerson(
+					((InfoQualification) arguments[1]).getPersonInfo().getIdInternal());
 
-			if (grantowner != null) {
+			if (grantowner != null) //The grant owner exists!
+			{
 				return true;
 			}
 
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println(
-				"Filter error(ExcepcaoPersistente): " + e.getMessage());
+		} catch (ExcepcaoPersistencia e)
+		{
 			return false;
-		} catch (Exception e) {
-			System.out.println("Filter error(Unknown): " + e.getMessage());
+		} catch (Exception e)
+		{
 			return false;
 		}
-		return false;
+		return false; //The qualification user is not a grant owner.
 	}
 
 	/**
+	 * Verifies if the qualification user ir a teacher
+	 * 
 	 * @param arguments
-	 * @return true if the person is a teacher
+	 * @return true or false
 	 */
-	private boolean IsTeacher(Object[] arguments) {
-		ISuportePersistente sp = null;
-		IPersistentTeacher spT = null;
+	private boolean isTeacher(Object[] arguments)
+	{
+		ISuportePersistente persistentSuport = null;
+		IPersistentTeacher persistentTeacher = null;
 
-		try {
-			//Is the person a Teacher?
-			sp = SuportePersistenteOJB.getInstance();
-			spT = sp.getIPersistentTeacher();
+		try
+		{
+			persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentTeacher = persistentSuport.getIPersistentTeacher();
+
+			//Try to read the teacher from de database
 			ITeacher teacher = null;
-
 			teacher =
-				spT.readTeacherByUsername(
-					((InfoQualification) arguments[1])
-						.getPersonInfo()
-						.getUsername());
+				persistentTeacher.readTeacherByUsername(
+					((InfoQualification) arguments[1]).getPersonInfo().getUsername());
 
-			if (teacher != null)
-				return true;
-
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println(
-				"Filter error(ExcepcaoPersistente): " + e.getMessage());
-			return false;
-		} catch (Exception e) {
-			System.out.println("Filter error(Unknown): " + e.getMessage());
-			return false;
-		}
-		return false;
-	}
-
-	/**
-	 * @param arguments
-	 * @return
-	 */
-	private boolean IsHisOwnQualification(Object[] arguments) {
-		try {
-			if (arguments[0]
-				.equals(
-					((InfoQualification) arguments[1])
-						.getPersonInfo()
-						.getIdInternal())) {
+			if (teacher != null) //The teacher exists!
+			{
 				return true;
 			}
-		} catch (Exception e) {
+
+		} catch (ExcepcaoPersistencia e)
+		{
+			return false;
+		} catch (Exception e)
+		{
+			return false;
+		}
+		return false; //The qualification user is not a teacher
+	}
+
+	/**
+	 * Verifies if the qualification to be changed is owned by the user that is running the service
+	 * 
+	 * @param arguments
+	 * @return true or false
+	 */
+	private boolean isOwnQualification(Object[] arguments)
+	{
+		try
+		{
+			if (arguments[0].equals(((InfoQualification) arguments[1]).getPersonInfo().getIdInternal()))
+			{
+				return true;
+			}
+		} catch (Exception e)
+		{
 			return false;
 		}
 		return false;
 	}
 
 	/**
+	 * Verifies if the qualification Id is not null in the arguments of the service but doesn't exist in
+	 * the database
+	 * 
 	 * @param arguments
-	 * @return true if the person is a grant owner
+	 * @return true or false
 	 */
-	private boolean InvalidQualificationEdit(Object[] arguments) {
-		ISuportePersistente sp = null;
-		IPersistentQualification spQ = null;
+	private boolean invalidQualificationToEdit(Object[] arguments)
+	{
+		ISuportePersistente persistentSuport = null;
+		IPersistentQualification persistentQualification = null;
 
-		try {
-			if (((InfoQualification) arguments[1]).getIdInternal() != null) {
-				//Verificar se a qualificacao existe
-				sp = SuportePersistenteOJB.getInstance();
-				spQ = sp.getIPersistentQualification();
-				IQualification infoq = null;
-				infoq =
-					(IQualification) spQ.readByOID(
+		try
+		{
+			if (((InfoQualification) arguments[1]).getIdInternal() != null)
+			{
+				//Read Qualification from DataBase
+				persistentSuport = SuportePersistenteOJB.getInstance();
+				persistentQualification = persistentSuport.getIPersistentQualification();
+				IQualification qualification = null;
+				qualification =
+					(IQualification) persistentQualification.readByOID(
 						Qualification.class,
 						((InfoQualification) arguments[1]).getIdInternal());
-				
-				if (infoq == null)
+
+				if (qualification == null) //The qualification doesn't exist in db
 					return true;
 			}
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println(
-				"Filter error(ExcepcaoPersistente): " + e.getMessage());
-			return false;
-		} catch (Exception e) {
-			return false;
+		} catch (ExcepcaoPersistencia e)
+		{
+			return true;
+		} catch (Exception e)
+		{
+			return true;
 		}
-		return false;
+		return false; //The qualification is valid!
 	}
 }
