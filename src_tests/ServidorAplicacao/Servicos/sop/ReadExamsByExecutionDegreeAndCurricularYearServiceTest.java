@@ -21,12 +21,13 @@ import DataBeans.InfoExecutionCourseAndExams;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServices;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 import Util.Season;
 import Util.TipoCurso;
 
 public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
-	extends TestCaseServices {
+	extends TestCaseRequeiersAuthorizationServices {
 
 	public ReadExamsByExecutionDegreeAndCurricularYearServiceTest(java.lang.String testName) {
 		super(testName);
@@ -55,11 +56,7 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 		return "ReadExamsByExecutionDegreeAndCurricularYear";
 	}
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
-
-	protected Object[] getArgumentsForCallToService() {
+	public void testReadValidResult() {
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoDegree infoDegree =
@@ -73,11 +70,17 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre",new InfoExecutionYear("2002/2003"));
 		Integer curricularYear = new Integer(1);
 
-		Object[] result = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-		return result;
-	}
+		args = new Object[3];
+		args[0] = infoExecutionDegree;
+		args[1] = infoExecutionPeriod;
+		args[2] = curricularYear;
 
-	protected boolean verifyServiceResult(Object result) {
+		try {
+			callServiceWithAuthorizedUserView();
+		} catch (FenixServiceException e) {
+			fail("Unexpected exception: " + e);
+		}
+
 		assertNotNull("Result of call to service was null!", result);
 		assertEquals(
 			"Type of result was unexpected!",
@@ -119,8 +122,6 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 					"Execution course was null!",
 					"AC",
 					infoExecutionCourseAndExams.getInfoExecutionCourse().getSigla());
-
-		return true;
 	}
 
 }
