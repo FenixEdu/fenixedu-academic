@@ -165,10 +165,10 @@
 		<p class="infoop"><span class="emphasis-box">7</span>
 		<bean:message key="message.teacherInformation.ownPublications" /></p>
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-				<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
+				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldPublications">
 					<tr>
 						<td class="listClasses">
-							<bean:write name="infoExternalActivity" property="activity" />
+							<bean:write name="infoOldPublication" property="publication" />
 						</td>
 					</tr>
 				</logic:iterate>
