@@ -38,4 +38,12 @@
 		<put name="body" value="/posGraduacao/guide/reimbursementGuide/viewReimbursementGuide.jsp"/>
 	</definition>
 	
+	<definition name="df.page.externalPersonIndex" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/welcomeScreen.jsp"/>
+	</definition>
+	
+	<definition name="df.page.insertExternalPerson" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/insertExternalPerson.jsp"/>
+	</definition>
+	
 </tiles-definitions>

@@ -31,4 +31,9 @@
 		<put name="navLocal" value="/posGraduacao/guide/guideMenu.jsp"/>
 		<put name="body-context" value="/posGraduacao/guide/reimbursementGuide/guideContext.jsp"/>
 	</definition>
+	
+	<definition name="definition.masterDegreeAdministrativeOffice.externalPerson" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="navLocal" value="/posGraduacao/externalPerson/externalPersonMenu.jsp"/>
+	</definition>
+	
 </tiles-definitions>
