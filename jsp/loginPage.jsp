@@ -20,6 +20,12 @@
        que estudam ou trabalham.</p>
        <p>Caso precise de esclarecimentos adicionais ou n&atilde;o consiga
        efectuar o seu login contacte a equipa de suporte utilizando: <a href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</a></p>
+       
+     <p>
+	   <span class="error">Caso seja aluno</span>, deverá usar como Username L seguido do seu número de estudante (ex: L90123). Para password, caso não a tenha modificado ainda, deverá usar o seu número do seu documento de identificação.         
+	 </p>
+	 
+	 
 	<div id="alert">	
 		<p><span class="error"><html:errors property="invalidAuthentication"/></span></p>
 		<p><span class="error"><html:errors property="error.invalid.session"/></span></p>
