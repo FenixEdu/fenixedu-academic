@@ -198,7 +198,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends DispatchAction {
 	InfoExecutionDegree selectedDegree = null, idtemp = null ;
 	
 	// if there is no selected degree
-	if (request.getParameter("degree") != "") {
+	if (selectedDegreeAbbrev== null) {
 	    // retrieve the student's own curricular plan
 	    selectedDegreeAbbrev = ((InfoDegree)ServiceUtils.executeService(userView,"ReadCourseByStudent",new Object[]{infoStudent.getNumber(),infoStudent.getDegreeType()})).getSigla();
 	}
@@ -207,7 +207,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends DispatchAction {
 	// we assume that the Abbrev ( sigla ) is unique amongst the degrees
 	while (i.hasNext()){
 	    idtemp = (InfoExecutionDegree) i.next();
-	    if(idtemp.getInfoDegreeCurricularPlan().getInfoDegree().getSigla() == selectedDegreeAbbrev){
+	    if(idtemp.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals(selectedDegreeAbbrev)){
 		selectedDegree = idtemp;
 		i.remove();
 	    }
@@ -251,12 +251,12 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends DispatchAction {
 	
 	return mapping.findForward("selectCourses");
     }
-
+    
     public ActionForward proceedToShiftEnrolment(
-						  ActionMapping mapping,
-						  ActionForm form,
-						  HttpServletRequest request,
-						  HttpServletResponse response)
+						 ActionMapping mapping,
+						 ActionForm form,
+						 HttpServletRequest request,
+						 HttpServletResponse response)
         throws Exception {
 	// inscrever nas cadeiras 
 	
