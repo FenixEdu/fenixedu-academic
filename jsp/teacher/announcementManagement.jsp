@@ -12,7 +12,9 @@
             <tr>
                 <td>
                     <br>
-                    <html:submit property="option" value="Insert"/>&nbsp;&nbsp;<bean:message key="label.insertAnnouncement" />
+                    <html:submit property="method" value="createAnnouncement" styleClass="inputbutton"/>
+	                <bean:message key="label.insertAnnouncement" />
+                    &nbsp;&nbsp;
                     <br><br><hr>
                 </td>
             </tr>
@@ -41,11 +43,11 @@
             	</tr>
                 <tr>
                     <td>
-                        <html:submit indexed="true" property="method">
-                        	<bean:message key="button.edit"/>                    		     
+                        <html:submit indexed="true" property="method" value="prepareEditAnnouncement" styleClass="inputbutton">
+                        	<bean:message key="button.edit"/>
                         </html:submit>
-                        <html:submit indexed="true" property="method">
-                        	<bean:message key="button.delete"/>                    		     
+                        <html:submit indexed="true" property="method" value="deleteAnnouncement" styleClass="inputbutton">
+                        	<bean:message key="button.delete"/>
                         </html:submit>
                     </td>
                 </tr>
