@@ -201,7 +201,7 @@ public class ReadAnnouncementTest
 			}
 
 			//Verificar se a base de dados foi alterada
-			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
 
 			System.out.println(
 				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
@@ -249,7 +249,7 @@ public class ReadAnnouncementTest
 			 * chega a ser chamado.
 			 */
 			//Verificar se a base de dados foi alterada
-			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
 			System.out.println(
 				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
