@@ -241,7 +241,7 @@
 		path="/objectivesManagerDA"
         type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
 		>    
-    <forward name="viewObjectives" path="/viewObjectives.jsp"/>
+    <forward name="viewObjectives" path="/viewObjectives.jsp"/>    
     <forward name="editObjectives" path="/editObjectives.jsp"/>
      
 	</action>

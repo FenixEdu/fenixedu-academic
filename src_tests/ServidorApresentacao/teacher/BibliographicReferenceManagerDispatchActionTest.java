@@ -7,7 +7,10 @@
 package ServidorApresentacao.teacher;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -231,6 +234,70 @@ public class BibliographicReferenceManagerDispatchActionTest
 			(ArrayList) session.getAttribute("BibliographicReferences");
 		assertEquals(biblioRefs.size(), 1);		 				
 		verifyForward("bibliographyManagement");
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
+	 */
+	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
+	 */
+	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -25,7 +25,7 @@ import DataBeans.gesdis.InfoBibliographicReference;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.FenixLookupDispatchAction;
+import ServidorApresentacao.Action.base.FenixLookupDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -158,7 +158,7 @@ public class BibliographicReferenceManagerDispatchAction
 				
 		Integer index = new Integer(infoBiblioRefIndex);		
 		
-		System.out.println("index",index);
+		System.out.println("index"+index);
 				
 		InfoBibliographicReference infoBibliographicReference =
 			(InfoBibliographicReference) bibliographicReferences.get(
