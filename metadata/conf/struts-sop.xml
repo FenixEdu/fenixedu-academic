@@ -324,7 +324,7 @@
              type="ServidorApresentacao.Action.sop.EditarAulaFormAction"
              name="aulaForm"
              scope="request"
-             input="/editarAula.jsp">
+             input="/editarAula.jsp">             
 		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
@@ -442,7 +442,10 @@
               path="/criarTurnoForm"
               scope="request"
               type="ServidorApresentacao.Action.sop.CriarTurnoFormAction">
-	        <forward name="Sucesso" path="/gestaoHorarios.do"/> 
+		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />              
+        <forward name="Sucesso" path="/gestaoHorarios.do"/> 
       </action>
 
       <action attribute="shiftNameForm"
