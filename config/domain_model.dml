@@ -130,6 +130,12 @@ class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge
 }
 
 
+class net.sourceforge.fenixedu.domain.support.GlossaryEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	String definition;
+	String term;
+}
+
+
 class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
 	Double deviation2_3;
