@@ -55,7 +55,8 @@
 					</html:multibox>
 				</td>
 				<td class="listClasses">
-					<bean:write name="role" property="roleType.name"/>
+					<bean:define id="roleName" name="role" property="roleType.name"/>
+					<bean:message key="<%= pageContext.findAttribute("roleName").toString() %>"/>
 				</td>			
 			</tr>
 		</logic:iterate>
