@@ -3,8 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<span class="error"><html:errors/></span>
+
 <bean:define id="degreeId" name="degreeId"/>
+
 <table>
 	
 <tr>
@@ -38,6 +39,8 @@
 <br>
 	
 <html:form action="/deleteDegreeCurricularPlans" method="get">
+
+<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
 <table width="50%" cellpadding="0" border="0">
 	<tr>
 		<td class="listClasses-header">

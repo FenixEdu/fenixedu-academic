@@ -125,7 +125,7 @@
       <action 
       		 path="/deleteDegrees"
       		 name="deleteForm"
-      		 input="/readDegreeInput.do"
+      		 input="/readDegreesInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
       	  <forward name="readDegrees" path="/readDegrees.do"/>      	      
@@ -156,7 +156,7 @@
       <action 
       		 path="/deleteDegreeCurricularPlans"
       		 name="degreeCurricularPlanForm"
-      		 input="/deleteDegreeCurricularPlansInput.do"
+      		 input="/readDegreeInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreeCurricularPlansAction">
       	  <forward name="readDegree" path="/readDegree.do"/>      	      

@@ -43,8 +43,7 @@ public class DeleteDegreeCurricularPlansAction extends FenixAction {
 
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		List degreeCurricularPlansIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
-		Integer degreeId = (Integer) request.getAttribute("degreeId");
-System.out.println("ACCAO DELETE INICIO, DEGREE ID = " + degreeId);
+		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		Object args[] = { degreeCurricularPlansIds };
 		GestorServicos manager = GestorServicos.manager();
 		List errorNames = new ArrayList();
@@ -60,14 +59,13 @@ System.out.println("ACCAO DELETE INICIO, DEGREE ID = " + degreeId);
 				Iterator namesIter = errorNames.iterator();
 				ActionError error = null;
 				while (namesIter.hasNext()) {
-						// CRIO UM ACTION ERROR PARA CADA DEGREE_CURRICULAR_PLAN
+						// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
 						error = new ActionError("errors.invalid.delete.not.empty.degree.curricular.plan", (String) namesIter.next());
 						actionErrors.add("errors.invalid.delete.not.empty.degree.curricular.plan", error);
 				}
 				saveErrors(request, actionErrors);
 		}
 		request.setAttribute("degreeId", degreeId);
-System.out.println("ACCAO DELETE FIM, DEGREE ID = " + degreeId);
 		return mapping.findForward("readDegree");
 	}
 

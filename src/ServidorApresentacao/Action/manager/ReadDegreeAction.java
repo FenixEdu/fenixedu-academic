@@ -46,9 +46,7 @@ public class ReadDegreeAction extends FenixAction  {
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
 					
-				// Caso em que vimos do readDegrees:
-				Integer degreeId = (Integer) readDegreeForm.get("degreeId");
-System.out.println("ACCAO READ INICIO, DEGREE ID = " + degreeId);				
+				Integer degreeId = (Integer) readDegreeForm.get("degreeId");				
 					
 				Object args[] = { degreeId };
 				
@@ -61,7 +59,7 @@ System.out.println("ACCAO READ INICIO, DEGREE ID = " + degreeId);
 					throw new FenixActionException(e);
 			    }
 			    
-			    //Caso em que se tenta ler 1 curso que não existe na base de dados
+			    // trying to read a degree that doesn´t exist in the database
 				if(degree == null) {
 						ActionErrors actionErrors = new ActionErrors();
 						ActionError error = new ActionError("message.nonExistingDegree");
@@ -70,7 +68,7 @@ System.out.println("ACCAO READ INICIO, DEGREE ID = " + degreeId);
 						return mapping.findForward("readDegrees");
 				}
 				
-				//Caso tudo corra como esperado, i.e., o curso existe mesmo
+				// in case the degree really exists
 				List degreeCurricularPlans = null;
 		
 				try {		
@@ -80,8 +78,7 @@ System.out.println("ACCAO READ INICIO, DEGREE ID = " + degreeId);
 									args);	
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
-				}
-System.out.println("ACCAO READ FIM, DEGREE ID = " + degreeId);				
+				}			
 				Collections.sort(degreeCurricularPlans);
 				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("infoDegree", degree);					
