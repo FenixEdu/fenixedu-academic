@@ -65,7 +65,7 @@ public class ShowAvailableCurricularCoursesForOptionTest extends TestCaseReadSer
 	
 	public void testShowAvailableCurricularCoursesForOptionServiceRun() {
 
-		Object args[] = {_userView, new Integer(1)};
+		Object args[] = {_userView };
 		InfoEnrolmentContext result = null;
 		try {
 			result = (InfoEnrolmentContext) _gestor.executar(_userView, "ShowAvailableCurricularCourses", args);

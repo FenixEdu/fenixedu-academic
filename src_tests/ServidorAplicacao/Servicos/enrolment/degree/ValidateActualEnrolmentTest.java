@@ -61,7 +61,7 @@ public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 
 	public void testValidateActualEnrolmentServiceRun() {
 
-		Object args[] = { _userView, new Integer(1)};
+		Object args[] = { _userView };
 		InfoEnrolmentContext result = null;
 		try {
 			result = (InfoEnrolmentContext) _gestor.executar(_userView, "ShowAvailableCurricularCourses", args);

@@ -65,7 +65,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 	
 	public void testShowAvailableCurricularCoursesServiceRun() {
 
-		Object args[] = {_userView, new Integer(1)};
+		Object args[] = {_userView };
 		InfoEnrolmentContext result = null;
 		try {
 			result = (InfoEnrolmentContext) _gestor.executar(_userView, getNameOfServiceToBeTested(), args);
