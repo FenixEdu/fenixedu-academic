@@ -13,6 +13,7 @@ public interface IPersistentObject {
 	List readByCriteria(Object obj) throws ExcepcaoPersistencia;
 	Object readDomainObjectByCriteria(Object obj) throws ExcepcaoPersistencia;
 	void deleteByCriteria(Object obj) throws ExcepcaoPersistencia;
+	void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
 	void lockWrite(Object obj) throws ExcepcaoPersistencia;
 	/**
 	 * Reads an object from db using his <code>Identity</code>.

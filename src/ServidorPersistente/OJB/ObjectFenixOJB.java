@@ -156,6 +156,17 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		}
 	}
 
+	public final void deleteByOID(Class classToQuery, Integer oid)
+		throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("idInternal", oid);
+		List objectsToDelete = queryList(classToQuery, criteria);
+		for (int i = 0; i < objectsToDelete.size(); i++) {
+			delete(objectsToDelete.get(i));
+		}
+	}
+
 	public void deleteAll(String oqlQuery) throws ExcepcaoPersistencia {
 		try {
 			query.create(oqlQuery);
