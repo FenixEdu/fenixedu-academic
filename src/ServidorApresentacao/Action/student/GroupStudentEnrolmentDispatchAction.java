@@ -45,11 +45,8 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-
-		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-
 		Object[] args1 = { null, null, studentGroupCode, userView.getUtilizador(), new Integer(1)};
+		
 		try {
 			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
 
@@ -113,18 +110,15 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
 
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
 		Object[] args1 = { studentGroupCode, userView.getUtilizador()};
-		Boolean result = new Boolean(false);
+		
 		try {
 
-			result = (Boolean) ServiceUtils.executeService(userView, "GroupStudentEnrolment", args1);
+			ServiceUtils.executeService(userView, "GroupStudentEnrolment", args1);
 
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();

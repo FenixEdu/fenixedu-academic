@@ -56,7 +56,7 @@ public class InfoSiteProjects implements ISiteComponent{
 			
 			InfoGroupProperties groupProperties1 = (InfoGroupProperties) iter1.next();
 			InfoGroupProperties groupProperties2 = (InfoGroupProperties) iter2.next();
-			if (!groupProperties2.equals(groupProperties2)) {
+			if (!groupProperties1.equals(groupProperties2)) {
 			
 				result = false;
 			}

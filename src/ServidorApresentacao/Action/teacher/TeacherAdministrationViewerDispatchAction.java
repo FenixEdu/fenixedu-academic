@@ -75,10 +75,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.notAuthorizedActionDeleteException;
+import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
@@ -1719,17 +1716,13 @@ public class TeacherAdministrationViewerDispatchAction
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 		ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
-		TeacherAdministrationSiteView siteView =
-			(TeacherAdministrationSiteView) readSiteView(request,
+		readSiteView(request,
 				shiftsAndGroupsView,
 				null,
 				groupPropertiesCode,
 				null);
 
-		if (((InfoSiteShiftsAndGroups) shiftsAndGroupsView)
-			.getInfoSiteGroupsByShiftList()
-			== null) {
-
+		if (((InfoSiteShiftsAndGroups) shiftsAndGroupsView).getInfoSiteGroupsByShiftList()== null) {
 			request.setAttribute("noShifts", new Boolean(true));
 		}
 
@@ -2291,9 +2284,7 @@ public class TeacherAdministrationViewerDispatchAction
 		String groupPropertiesString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesString);
-		String shiftString = (String) request.getParameter("shiftCode");
-		Integer shiftCode = new Integer(shiftString);
-
+		
 		InfoSiteStudentGroup infoSiteStudentGroup;
 		Object args[] = { objectCode, groupPropertiesCode };
 		GestorServicos gestor = GestorServicos.manager();
@@ -2391,8 +2382,7 @@ public class TeacherAdministrationViewerDispatchAction
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		Integer shiftCode = new Integer(shiftCodeString);
-		Integer objectCode = getObjectCode(request);
-
+		
 		ISiteComponent viewShifts = new InfoSiteShifts();
 		TeacherAdministrationSiteView shiftsView =
 			(TeacherAdministrationSiteView) readSiteView(request,
@@ -2575,7 +2565,6 @@ public class TeacherAdministrationViewerDispatchAction
 			error = new ActionError("errors.existing.studentInGroup");
 			actionErrors.add("errors.existing.studentInGroup", error);
 			saveErrors(request, actionErrors);
-			System.out.println("---------------------------ENTRA");
 			return prepareEditStudentGroupMembers(
 				mapping,
 				form,

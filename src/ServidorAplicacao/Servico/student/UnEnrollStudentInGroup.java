@@ -1,14 +1,11 @@
 package ServidorAplicacao.Servico.student;
 
-import java.util.List;
-
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
-import Dominio.ITurno;
 import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -57,7 +54,7 @@ public class UnEnrollStudentInGroup implements IServico {
 
 	public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
 		
-		List allStudentGroupShift = null;
+		
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
@@ -67,8 +64,6 @@ public class UnEnrollStudentInGroup implements IServico {
 			IFrequentaPersistente persistentAttend = persistentSuport.getIFrequentaPersistente();
 
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
-			System.out.println("NO SERVICO STUDENT_GROUP CODE"+studentGroupCode);
-			System.out.println("NO SERVICO STUDENT_GROUP "+studentGroup);
 			
 			if(studentGroup == null)
 				throw new InvalidSituationServiceException();
@@ -79,7 +74,7 @@ public class UnEnrollStudentInGroup implements IServico {
 				
 			
 			IGroupProperties groupProperties = studentGroup.getGroupProperties();
-			ITurno shift = studentGroup.getShift();
+			
 			
 			IStudentGroupAttend studentGroupAttendToDelete =
 				(IStudentGroupAttend) persistentStudentGroupAttend.readBy(studentGroup, attend);

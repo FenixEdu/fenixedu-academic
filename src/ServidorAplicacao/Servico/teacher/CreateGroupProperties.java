@@ -55,7 +55,6 @@ public class CreateGroupProperties implements IServico {
 		throws FenixServiceException {
 		
 		IDisciplinaExecucao executionCourse = null;
-		IGroupProperties groupProperties = null;
 		try {
 			
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();

@@ -275,7 +275,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent viewProjectsComponent = new InfoSiteProjects();
-		readGroupView(request, viewProjectsComponent, null, null, null, null, null);
+		readGroupView(request, viewProjectsComponent, null, null, null);
 		return mapping.findForward("sucess");
 
 	}
@@ -297,8 +297,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			groupPropertiesCode = new Integer(objectCodeString);
 
 		ISiteComponent viewShiftsAndGroups = new InfoSiteShiftsAndGroups();
-		ExecutionCourseSiteView siteView =
-			(ExecutionCourseSiteView) readGroupView(request, viewShiftsAndGroups, null, null, null, groupPropertiesCode, null);
+		readGroupView(request, viewShiftsAndGroups, null, groupPropertiesCode, null);
 		request.setAttribute("groupProperties", groupPropertiesCode);
 
 		return mapping.findForward("sucess");
@@ -318,8 +317,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 
-		ExecutionCourseSiteView siteView =
-			(ExecutionCourseSiteView) readGroupView(request, viewStudentGroup, null, null, null, null, studentGroupCode);
+		readGroupView(request, viewStudentGroup, null, null, studentGroupCode);
 
 		return mapping.findForward("sucess");
 
@@ -447,8 +445,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		HttpServletRequest request,
 		ISiteComponent firstPageComponent,
 		Integer infoExecutionCourseCode,
-		Integer sectionIndex,
-		Integer curricularCourseId,
 		Integer groupPropertiesCode,
 		Integer studentGroupCode)
 		throws FenixActionException {
@@ -468,9 +464,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			{	commonComponent,
 				firstPageComponent,
 				objectCode,
-				infoExecutionCourseCode,
-				sectionIndex,
-				curricularCourseId,
 				groupPropertiesCode,
 				studentGroupCode
 				};
@@ -497,7 +490,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 				((InfoSiteCommon) siteView.getCommonComponent())
 					.getExecutionCourse()
 					.getIdInternal());
-			Integer executionCode = (Integer)request.getAttribute("executionCourseCode");
+			
 			request.setAttribute(
 				"executionPeriodCode",
 				((InfoSiteCommon) siteView.getCommonComponent())

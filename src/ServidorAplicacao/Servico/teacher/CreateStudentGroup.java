@@ -8,9 +8,7 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
 import Dominio.GroupProperties;
-import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -25,13 +23,11 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
-import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -95,11 +91,9 @@ public class CreateStudentGroup implements IServico {
 		List studentCodes)
 		throws FenixServiceException {
 
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
-		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+	IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentGroupProperties persistentGroupProperites = null;
 		IPersistentStudent persistentStudent = null;
-		IPessoaPersistente persistentPerson = null;
 		ITurnoPersistente persistentShift = null;
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
@@ -121,10 +115,7 @@ public class CreateStudentGroup implements IServico {
 			IStudentGroup newStudentGroup = new StudentGroup(groupNumber, groupProperties, shift);
 			persistentStudentGroup.lockWrite(newStudentGroup);
 
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
-
+			
 			persistentStudent = persistentSupport.getIPersistentStudent();
 			persistentAttend = persistentSupport.getIFrequentaPersistente();
 			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();

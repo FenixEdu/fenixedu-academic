@@ -53,9 +53,9 @@ public class GroupSiteComponentService implements IServico {
 	ISiteComponent commonComponent,
 	ISiteComponent bodyComponent,
 	Integer infoSiteCode,
-	Integer executionCourseCode,
-	Integer sectionIndex,
-	Integer curricularCourseId,
+	//Integer executionCourseCode,
+	//Integer sectionIndex,
+	//Integer curricularCourseId,
 	Integer groupPropertiesCode,
 	Integer code)
 		throws FenixServiceException {

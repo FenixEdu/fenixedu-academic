@@ -2185,7 +2185,7 @@ public abstract class Cloner {
 		studentGroup.setGroupNumber(infoStudentGroup.getGroupNumber());
 		studentGroup.setIdInternal(infoStudentGroup.getIdInternal());
 		studentGroup.setGroupProperties(groupProperties);
-		//TODO: Sofia E Sara-> o shift não está a ser usado
+		studentGroup.setShift(shift);
 		return studentGroup;
 	}
 

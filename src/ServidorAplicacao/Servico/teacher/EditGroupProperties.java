@@ -55,8 +55,6 @@ public class EditGroupProperties implements IServico {
 	private boolean checkIfAlreadyExists(InfoGroupProperties infoGroupProperties, IGroupProperties groupProperties)
 		throws FenixServiceException {
 
-		IPersistentStudentGroup persistentStudentGroup = null;
-		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IGroupProperties existingGroupProperties = null;
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
@@ -82,12 +80,10 @@ public class EditGroupProperties implements IServico {
 
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-		IGroupProperties existingGroupProperties = null;
 		List errors = new ArrayList();
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
-
+			
 			persistentStudentGroup = ps.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 			List allStudentsGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);

@@ -175,7 +175,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 			IPersistentStudentGroupAttend persistentStudentGroupAttend = sp.getIPersistentStudentGroupAttend();
 
 			IStudent student = persistentStudent.readByUsername(username);

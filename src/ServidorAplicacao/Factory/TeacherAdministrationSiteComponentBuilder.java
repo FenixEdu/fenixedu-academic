@@ -1204,7 +1204,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	public InfoGroupProperties readGroupProperties(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
 
-		List projects = null;
 		IGroupProperties groupProperties = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();

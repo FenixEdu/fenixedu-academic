@@ -7,8 +7,6 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -22,7 +20,6 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
@@ -67,7 +64,6 @@ public class InsertStudentGroupMembers implements IServico {
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudent persistentStudent = null;
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		try {
 
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
@@ -75,7 +71,6 @@ public class InsertStudentGroupMembers implements IServico {
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			persistentStudent = persistentSupport.getIPersistentStudent();
 			persistentAttend = persistentSupport.getIFrequentaPersistente();
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
 
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
@@ -83,9 +78,7 @@ public class InsertStudentGroupMembers implements IServico {
 			if (studentGroup == null)
 				throw new ExistingServiceException();
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
-
+			
 			IGroupProperties groupProperties = studentGroup.getGroupProperties();
 			List allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
 

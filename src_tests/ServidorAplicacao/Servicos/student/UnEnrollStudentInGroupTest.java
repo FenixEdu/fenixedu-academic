@@ -29,7 +29,7 @@ public class UnEnrollStudentInGroupTest extends TestCaseDeleteAndEditServices {
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = {"user",new Integer(11)};
+		
 		return null;
 	}
 
