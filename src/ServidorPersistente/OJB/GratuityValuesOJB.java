@@ -4,6 +4,8 @@
  */
 package ServidorPersistente.OJB;
 
+import org.apache.ojb.broker.query.Criteria;
+
 import Dominio.ICursoExecucao;
 import Dominio.IGratuityValues;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -17,8 +19,10 @@ public class GratuityValuesOJB extends ObjectFenixOJB implements IPersistentGrat
 {
 
 	public IGratuityValues readGratuityValuesByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia{
-		// TODO Auto-generated method stub
-		return null;
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionDegree.idInternal", executionDegree.getIdInternal());
+		
+		return (IGratuityValues) queryObject(IGratuityValues.class, criteria);
 	}
 
 }

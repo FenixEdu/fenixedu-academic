@@ -4,11 +4,13 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import DataBeans.util.Cloner;
 import Dominio.IGratuitySituation;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuitySituation;
 import ServidorPersistente.ISuportePersistente;
@@ -51,7 +53,7 @@ public class ReadGratuitySituationByStudentCurricularPlan implements IServico
     public Object run(Integer studentCurricularPlanID) throws FenixServiceException
     {
     	ISuportePersistente sp = null;
-
+    	IGratuitySituation gratuitySituation = null;
     	try {
 			sp = SuportePersistenteOJB.getInstance();
 			
@@ -59,16 +61,17 @@ public class ReadGratuitySituationByStudentCurricularPlan implements IServico
     	
 			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 			studentCurricularPlan.setIdInternal(studentCurricularPlanID);
-			
-			
-			IGratuitySituation gratuitySituation = persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlan(studentCurricularPlan);
+						
+			gratuitySituation = persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlan(studentCurricularPlan);
 			
     	} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+    		e.printStackTrace();
+			throw new FenixServiceException("error.impossible.insertExemptionGratuity");			
 		}
+    	if(gratuitySituation == null){
+    		throw new NonExistingServiceException("error.impossible.insertExemptionGratuity");
+    	}
     	
-    	
-		return null;
+		return Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
     }
 }

@@ -52,6 +52,7 @@ import DataBeans.InfoExternalPerson;
 import DataBeans.InfoFinalEvaluation;
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoGratuity;
+import DataBeans.InfoGratuitySituation;
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGuide;
@@ -4396,5 +4397,30 @@ public abstract class Cloner
     	
     	paymentPhase.setGratuityValues(gratuityValues);
     	return paymentPhase;
+    }
+    
+    public static InfoGratuitySituation copyIGratuitySituation2InfoGratuitySituation(IGratuitySituation gratuitySituation){
+    	InfoGratuitySituation infoGratuitySituation = new InfoGratuitySituation();
+    	copyObjectProperties(infoGratuitySituation, gratuitySituation);
+    	
+    	InfoGratuityValues infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuitySituation.getGratuityValues());
+    	infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
+    	
+    	InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(gratuitySituation.getStudentCurricularPlan());
+    	infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+    	    	
+    	return infoGratuitySituation;
+    }
+    
+    public static IGratuitySituation copyInfoGratuitySituation2IGratuitySituation(InfoGratuitySituation infoGratuitySituation){
+    	IGratuitySituation gratuitySituation = new GratuitySituation();
+    	
+    	IGratuityValues gratuityValues = Cloner.copyInfoGratuityValues2IGratuityValues(infoGratuitySituation.getInfoGratuityValues());
+    	gratuitySituation.setGratuityValues(gratuityValues);
+    	
+    	IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoGratuitySituation.getInfoStudentCurricularPlan());
+    	gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
+    	
+    	return gratuitySituation;
     }
 }

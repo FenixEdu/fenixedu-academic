@@ -4,8 +4,14 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import Dominio.GratuitySituation;
+import Dominio.IGratuitySituation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentGratuitySituation;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 
 /**
@@ -43,7 +49,29 @@ public class DeleteGratuitySituationById implements IServico
 
     public Boolean run(Integer gratuitySituationID) throws FenixServiceException
     {
-
-		return Boolean.FALSE;
+    	ISuportePersistente sp = null;
+    	
+    	try
+		{
+			sp = SuportePersistenteOJB.getInstance();
+			IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
+			
+			IGratuitySituation gratuitySituation = new GratuitySituation();
+			gratuitySituation.setIdInternal(gratuitySituationID);
+			gratuitySituation = (IGratuitySituation) persistentGratuitySituation.readByOId(gratuitySituation, false);
+			if(gratuitySituation == null){
+				return Boolean.TRUE;
+			}			
+			
+			persistentGratuitySituation.deleteByOID(IGratuitySituation.class, gratuitySituationID);			
+			
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			e.printStackTrace();
+			throw new FenixServiceException();
+		}
+    		    	
+		return Boolean.TRUE;
     }
 }

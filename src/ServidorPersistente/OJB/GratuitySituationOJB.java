@@ -6,6 +6,7 @@ package ServidorPersistente.OJB;
 
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.GratuitySituation;
 import Dominio.IGratuitySituation;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -21,8 +22,7 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 	public IGratuitySituation readGratuitySituatuionByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-		
-		
-		return null;
+				
+		return (IGratuitySituation) queryObject(GratuitySituation.class, criteria);
 	}
 }

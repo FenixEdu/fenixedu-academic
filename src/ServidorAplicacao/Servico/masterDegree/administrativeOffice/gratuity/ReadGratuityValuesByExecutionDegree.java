@@ -4,11 +4,13 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 import Dominio.IGratuityValues;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuityValues;
 import ServidorPersistente.ISuportePersistente;
@@ -51,7 +53,7 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
     public Object run(Integer executionDegreeID) throws FenixServiceException
     {
     	ISuportePersistente sp = null;
-    	   	
+    	IGratuityValues gratuityValues = null;
     	try {
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGrtuityValues();
@@ -59,12 +61,16 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(executionDegreeID);
 			
-			IGratuityValues gratuityValues = persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
+			gratuityValues = persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
 			
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
+			throw new FenixServiceException();
 		}
-    	
-		return null;
+		if(gratuityValues == null){
+			throw new NonExistingServiceException();				
+		} 
+		
+		return Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
     }
 }
