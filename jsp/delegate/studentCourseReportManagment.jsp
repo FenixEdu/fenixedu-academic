@@ -63,7 +63,7 @@
 			<td class="listClasses-header"><bean:message key="message.studentReport.AP/IN"/></td>
 			<td class="listClasses-header"><bean:message key="message.studentReport.AP/AV"/></td>
 		</tr>
-		<logic:iterate id="infoSiteEvaluationStatistics" name="infoSiteStudentCourseReport" property="infoSiteEvaluationHistory" offset="1" length="6">
+		<logic:iterate id="infoSiteEvaluationStatistics" name="infoSiteStudentCourseReport" property="infoSiteEvaluationHistory">
 			<bean:define id="evaluated" name="infoSiteEvaluationStatistics" property="evaluated" type="java.lang.Integer"/>
 			<bean:define id="enrolled" name="infoSiteEvaluationStatistics" property="enrolled" type="java.lang.Integer"/>
 			<bean:define id="approved" name="infoSiteEvaluationStatistics" property="approved" type="java.lang.Integer"/>
