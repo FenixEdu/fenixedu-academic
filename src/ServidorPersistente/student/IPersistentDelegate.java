@@ -26,6 +26,9 @@ public interface IPersistentDelegate extends IPersistentObject {
     public List readByDegreeAndExecutionYearAndYearType(ICurso degree, IExecutionYear executionYear,
             DelegateYearType type) throws ExcepcaoPersistencia;
 
+    /**
+     *@deprecated This method doesn't read a unique student! TODO
+     */
     public IDelegate readByStudent(IStudent student) throws ExcepcaoPersistencia;
 
     public List readDegreeDelegateByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
