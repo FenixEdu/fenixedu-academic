@@ -52,40 +52,39 @@ public final class SessionUtils {
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-		ArrayList infoCourseList =
-			(ArrayList) session.getAttribute(
-				SessionConstants.EXECUTION_COURSE_LIST_KEY);
+		ArrayList infoCourseList = new ArrayList();
 
-		if (infoCourseList == null) {
+		// Nao verifica se ja existem em sessao porque podem 
+		// ser de um periodo execucao diferente 
 
-			IUserView userView = SessionUtils.getUserView(request);
-			// Ler Disciplinas em Execucao
-			Integer curricularYear =
-				(Integer) session.getAttribute(
-					SessionConstants.CURRICULAR_YEAR_KEY);
+		IUserView userView = SessionUtils.getUserView(request);
+		// Ler Disciplinas em Execucao
+		Integer curricularYear =
+			(Integer) session.getAttribute(
+				SessionConstants.CURRICULAR_YEAR_KEY);
+		InfoExecutionDegree infoExecutionDegree =
+			(InfoExecutionDegree) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		Object[] args =
+			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
-			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) session.getAttribute(
-					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) session.getAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		infoCourseList =
+			(ArrayList) ServiceUtils.executeService(
+				userView,
+				"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
+				args);
 
-			Object[] args =
-				{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
+		session.setAttribute(
+			SessionConstants.EXECUTION_COURSE_LIST_KEY,
+			infoCourseList);
 
-			infoCourseList =
-				(ArrayList) ServiceUtils.executeService(
-					userView,
-					"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
-					args);
-			session.setAttribute(
-				SessionConstants.EXECUTION_COURSE_LIST_KEY,
-				infoCourseList);
-		}
 		return infoCourseList;
 
 	}
+
 	/**
 	 * Removes all attributes that start with prefix parameter. 
 	 * It uses case-sensitive search.
@@ -103,13 +102,13 @@ public final class SessionUtils {
 			session.removeAttribute((String) toRemoveAtts.elementAt(i));
 		}
 	}
-/**
- * @deprecated
- * 
- * @param request
- * @param mapping
- * @throws FenixActionException
- */
+	/**
+	 * @deprecated
+	 * 
+	 * @param request
+	 * @param mapping
+	 * @throws FenixActionException
+	 */
 	public static void validSessionVerification(
 		HttpServletRequest request,
 		ActionMapping mapping)

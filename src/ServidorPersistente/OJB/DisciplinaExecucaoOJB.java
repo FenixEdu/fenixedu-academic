@@ -125,16 +125,16 @@ public class DisciplinaExecucaoOJB
 		throws ExcepcaoPersistencia {
 		List resultList = new ArrayList();
 		try {
-			// FIXME : Curricular Semester is HARDCODED!!! Isto NÂO PODE FICAR ASSIM!!!
 			String oqlQuery =
 				"select all from "
 					+ CurricularCourse.class.getName()
 					+ " where scopes.curricularSemester.curricularYear.year = $1"
-					+ " and scopes.curricularSemester.semester = 2"
-					+ " and degreeCurricularPlan.name = $2"
-					+ " and degreeCurricularPlan.degree.sigla = $3";
+					+ " and scopes.curricularSemester.semester = $2"
+					+ " and degreeCurricularPlan.name = $3"
+					+ " and degreeCurricularPlan.degree.sigla = $4";
 			query.create(oqlQuery);
 			query.bind(curricularYear);
+			query.bind(executionPeriod.getSemester());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
 			List result = (List) query.execute();
