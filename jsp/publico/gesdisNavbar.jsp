@@ -7,7 +7,7 @@
 <div id="nav">
 <h3><bean:message key="title.navigation.local"/></h3>	
 <ul>
-<li><html:link page="<%= "/viewSite.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<li><html:link page="<%= "/viewSite.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseCode") %>">
 	<bean:message key="link.inicialPage"/>
 </html:link></li>
 <li>

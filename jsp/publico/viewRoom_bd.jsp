@@ -5,10 +5,10 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
-	<h2><bean:message key="title.info.room"/></h2>
+	<div id="invisible"><h2><bean:message key="title.info.room"/></h2></div>
 	<br/> 
 	<logic:present name="publico.infoRoom" >
-            <table cellspacing="0" cellpadding="0" width="90%">
+           <div id="invisible"><table class="invisible" cellspacing="0" cellpadding="0" width="90%">
                 <tr>
                     <td class="listClasses">
                         <b><bean:message key="property.room.name"/>:</b> <bean:write name="publico.infoRoom" property="nome"/>
@@ -32,10 +32,9 @@
                     </td>
                 </tr>
             </table>
-
+</div>
 		<br/>
-		<br/>
-
+		
 	   	<app:gerarHorario name="lessonList" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
 
 	</logic:present>

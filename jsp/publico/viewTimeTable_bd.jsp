@@ -11,7 +11,7 @@
  	<bean:define id="commonComponent" name="siteView" property="commonComponent" />
  	<bean:define id="exeCourse" name="commonComponent" property="executionCourse"/>
 <h2><bean:message key="property.executionCourse.curricularHours"/></h2>
-<table cellspacing="0" cellpadding="0" width="90%">
+<table class="invisible" cellspacing="0" cellpadding="0" width="90%">
        <tr> <td class="listClasses">
           <logic:notEqual name="exeCourse" property="theoreticalHours"  value="0">
 			
