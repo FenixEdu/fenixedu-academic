@@ -8,24 +8,22 @@
 <p />
 <html:form action="/insertGratuityDataLA.do"> 
 	<html:hidden property="page" value="2"/>
-	<html:hidden property="executionPeriod"/>
-	<html:hidden property="executionPeriodName"/>
+	<html:hidden property="executionYear"/>
 	<html:hidden property="degree"/>
-	<html:hidden property="degreeName"/>
 	<html:hidden property="specializationArea"/>	
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
-				<bean:define id="label" property="executionYearName"/>
-				<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="label"/><br />
-				<bean:define id="labelExecutionDegree" property="degreName"/>
-				<b><bean:message key="label.qualification.degree"/></b>&nbsp;<bean:write name="labelExecutionDegree"/><br />
-				<bean:define id="labelSpecializationArea" property="specializationArea"/>
-				<b><bean:message key="label.masterDegree.gratuity.specializationArea"/></b>&nbsp;<bean:write name="labelSpecializationArea"/><br />
-
+				<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>
+				<bean:define id="degreeLabel"><%=pageContext.findAttribute("degree")%></bean:define>
+				<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
+				<b><bean:message key="label.qualification.degree"/>:</b>&nbsp;<bean:write name="degreeLabel"/>
+<%--				<bean:define id="labelSpecializationArea"><%=pageContext.findAttribute("specializationArea")%></bean:define>
+				<b><bean:message key="label.masterDegree.gratuity.specializationArea"/></b>&nbsp;<bean:write name="labelSpecializationArea"/>--%>
 			</td>
 		</tr>
 	</table>
+	<br />
 	<table>
 		<%-- Gratuity Values --%>
 		<tr>

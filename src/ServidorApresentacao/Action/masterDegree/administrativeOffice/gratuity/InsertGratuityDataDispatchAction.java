@@ -17,11 +17,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGratuityValues;
@@ -30,6 +32,7 @@ import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
@@ -43,15 +46,13 @@ import framework.factory.ServiceManagerServiceFactory;
 public class InsertGratuityDataDispatchAction extends DispatchAction
 {
 
-	public ActionForward prepareInsertChooseExecutionPeriod(
+	public ActionForward prepareInsertChooseExecutionYear(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException
 	{
-		IUserView userView = SessionUtils.getUserView(request);
-
 		//execution years
 		List executionYears = null;
 		Object[] args = {
@@ -59,13 +60,16 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		try
 		{
 			executionYears =
-			(List) ServiceManagerServiceFactory.executeService(null, "ReadNotClosedExecutionYears", args);
+				(List) ServiceManagerServiceFactory.executeService(
+					null,
+					"ReadNotClosedExecutionYears",
+					args);
 		}
 		catch (FenixServiceException e)
 		{
 			throw new FenixActionException();
 		}
-		
+
 		if (executionYears != null && !executionYears.isEmpty())
 		{
 			ComparatorChain comparator = new ComparatorChain();
@@ -89,10 +93,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 				InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
 				LabelValueBean executionYear =
-					new LabelValueBean(infoExecutionYear.getYear(),
-							infoExecutionYear.getYear()
-							+ "#"
-							+ infoExecutionYear.getIdInternal().toString());
+					new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
 				return executionYear;
 			}
 		}, executionYearLabels);
@@ -107,11 +108,14 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		throws FenixActionException
 	{
 		IUserView userView = SessionUtils.getUserView(request);
+		DynaActionForm gratuityForm = (DynaActionForm) form;
 
-		Integer executionYearId =
-			separateLabel(form, request, "executionYear", "executionYearName");
+		String executionYear = (String) gratuityForm.get("executionYear");
 
-		Object args[] = { executionYearId };
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+		infoExecutionYear.setYear(executionYear);
+
+		Object args[] = { infoExecutionYear };
 		List executionDegreeList = null;
 		try
 		{
@@ -133,7 +137,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		request.setAttribute("specializations", Specialization.toArrayList());
 		request.setAttribute("showNextSelects", "true");
 
-		return prepareInsertChooseExecutionPeriod(mapping, form, request, response);
+		return prepareInsertChooseExecutionYear(mapping, form, request, response);
 	}
 
 	private List buildExecutionDegreeLabelValueBean(List executionDegreeList)
@@ -183,12 +187,11 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 	}
 
 	private Integer separateLabel(
-		ActionForm form,
+		DynaValidatorForm aForm,
 		HttpServletRequest request,
 		String property,
 		String name)
 	{
-		DynaValidatorForm aForm = (DynaValidatorForm) form;
 		// the value returned to action is a string name#idInternal
 		String object = (String) aForm.get(property);
 		Integer objectId = Integer.valueOf(StringUtils.substringAfter(object, "#"));
@@ -206,27 +209,54 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 	{
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
-		
-		Integer degreeId =
-		separateLabel(form, request, "degree", "degreeName");
 
-		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
+		String executionYear = (String) gratuityForm.get("executionYear");
+		String degree = (String) gratuityForm.get("degree");
+		System.out.println(degree);
+		Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
+		System.out.println(degreeId);
+		String degreeName = degree.substring(0, degree.indexOf("#"));
+		System.out.println(degreeName);
+//		String degreeCurricularPlan = degree.substring(degree.indexOf("-") + 1, degree.indexOf("#"));
+//		System.out.println(degreeCurricularPlan);
+		request.setAttribute("degree", degreeName);
+		gratuityForm.set("degree",degreeName);
+		request.setAttribute("executionYear", executionYear);
+//		request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+
+
+		InfoGratuityValues infoGratuityValues = null;
 		Object args[] = { degreeId };
 		try
 		{
 			infoGratuityValues =
-				(InfoGratuityValues) ServiceManagerServiceFactory.executeService(
+				(InfoGratuityValues) ServiceUtils.executeService(
 					userView,
 					"ReadGratuityValuesByExecutionDegree",
-					null);
+					args);
 		}
 		catch (FenixServiceException ex)
 		{
 			throw new FenixActionException();
 		}
-		
-		fillForm(gratuityForm, infoGratuityValues);
 
+		if (infoGratuityValues == null)
+		{
+			infoGratuityValues = new InfoGratuityValues();
+/*			InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+			infoExecutionYear.setYear(executionYear);
+			InfoDegree infoDegree = new InfoDegree();
+			infoDegree.setNome(degreeName);
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+			infoDegreeCurricularPlan.setName(degreeCurricularPlan);
+			infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+			InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+			infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+			infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+			infoGratuityValues.setInfoExecutionDegree(infoExecutionDegree);*/
+		}
+		fillForm(gratuityForm, infoGratuityValues);
 		request.setAttribute("infoPaymentPhases", infoGratuityValues.getInfoPaymentPhases());
 		return mapping.findForward("insertGratuityData");
 	}

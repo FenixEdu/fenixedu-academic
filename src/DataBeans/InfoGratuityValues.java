@@ -5,9 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Fernanda Quitério
- * 10/Jan/2004
- *
+ * @author Fernanda Quitério 10/Jan/2004
+ *  
  */
 public class InfoGratuityValues extends InfoObject implements Serializable
 {
@@ -19,16 +18,45 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	private Boolean proofRequestPayment;
 	private Date startPayment;
 	private Date endPayment;
-	
+
 	private Boolean registrationPayment;
-	
+
 	private InfoExecutionDegree infoExecutionDegree;
-	
+
 	private InfoEmployee infoEmployee;
 	private Date when;
-	
+
 	private List infoPaymentPhases;
-	
+
+	public String toString()
+	{
+		StringBuffer result = new StringBuffer();
+		result =
+			result
+				.append("[InfoGratuityValues: \n")
+				.append("idInternal= ")
+				.append(getIdInternal())
+				.append("\nanualValue= ")
+				.append(getAnualValue())
+				.append("\nscholarShipPart= ")
+				.append(getScholarShipValue())
+				.append("\nfinalProofValue= ")
+				.append(getFinalProofValue())
+				.append("\ncourseValue= ")
+				.append(getCourseValue())
+				.append("\ncreditValue= ")
+				.append(getCreditValue())
+				.append("\nproofRequestPayment= ")
+				.append(getProofRequestPayment())
+				.append("\nstartPayment= ")
+				.append(getStartPayment())
+				.append("\nendPayment= ")
+				.append(getEndPayment())
+				.append("\nregistrationPayment= ")
+				.append(getRegistrationPayment())
+				.append("]");
+		return result.toString();
+	}
 	
 	/**
 	 * @return Returns the when.
@@ -39,13 +67,14 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param when The when to set.
+	 * @param when
+	 *            The when to set.
 	 */
 	public void setWhen(Date when)
 	{
 		this.when = when;
 	}
-	
+
 	/**
 	 * @return Returns the registrationPayment.
 	 */
@@ -55,7 +84,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param registrationPayment The registrationPayment to set.
+	 * @param registrationPayment
+	 *            The registrationPayment to set.
 	 */
 	public void setRegistrationPayment(Boolean registrationPayment)
 	{
@@ -71,7 +101,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param anualValue The anualValue to set.
+	 * @param anualValue
+	 *            The anualValue to set.
 	 */
 	public void setAnualValue(Double anualValue)
 	{
@@ -87,7 +118,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param courseValue The courseValue to set.
+	 * @param courseValue
+	 *            The courseValue to set.
 	 */
 	public void setCourseValue(Double courseValue)
 	{
@@ -103,7 +135,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param creditValue The creditValue to set.
+	 * @param creditValue
+	 *            The creditValue to set.
 	 */
 	public void setCreditValue(Double creditValue)
 	{
@@ -119,7 +152,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param endPayment The endPayment to set.
+	 * @param endPayment
+	 *            The endPayment to set.
 	 */
 	public void setEndPayment(Date endPayment)
 	{
@@ -135,7 +169,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param finalProofValue The finalProofValue to set.
+	 * @param finalProofValue
+	 *            The finalProofValue to set.
 	 */
 	public void setFinalProofValue(Double finalProofValue)
 	{
@@ -151,7 +186,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param infoEmployee The infoEmployee to set.
+	 * @param infoEmployee
+	 *            The infoEmployee to set.
 	 */
 	public void setInfoEmployee(InfoEmployee infoEmployee)
 	{
@@ -167,7 +203,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param infoExecutionDegree The infoExecutionDegree to set.
+	 * @param infoExecutionDegree
+	 *            The infoExecutionDegree to set.
 	 */
 	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree)
 	{
@@ -183,7 +220,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param infoPaymentPhases The infoPaymentPhases to set.
+	 * @param infoPaymentPhases
+	 *            The infoPaymentPhases to set.
 	 */
 	public void setInfoPaymentPhases(List infoPaymentPhases)
 	{
@@ -199,7 +237,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param proofRequestPayment The proofRequestPayment to set.
+	 * @param proofRequestPayment
+	 *            The proofRequestPayment to set.
 	 */
 	public void setProofRequestPayment(Boolean proofRequestPayment)
 	{
@@ -215,7 +254,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param scholarShipValue The scholarShipValue to set.
+	 * @param scholarShipValue
+	 *            The scholarShipValue to set.
 	 */
 	public void setScholarShipValue(Double scholarShipValue)
 	{
@@ -231,7 +271,8 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param startPayment The startPayment to set.
+	 * @param startPayment
+	 *            The startPayment to set.
 	 */
 	public void setStartPayment(Date startPayment)
 	{

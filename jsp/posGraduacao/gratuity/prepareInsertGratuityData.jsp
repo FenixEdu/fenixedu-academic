@@ -9,7 +9,6 @@
 	<html:hidden property="method" value="prepareInsertGratuityData" />
 	<logic:present name="showNextSelects">
 		<html:hidden property="executionYear"/>
-		<html:hidden property="executionYearName"/>
 		<html:hidden property="page" value="1"/>
 	</logic:present>
 	<table>
@@ -27,7 +26,7 @@
 			</td>
 		</tr>
 		<logic:present name="showNextSelects">
-			<tr>
+<%--			<tr>
 				<td>
 					<bean:message key="label.masterDegree.gratuity.specializationArea"/>
 				</td>
@@ -39,7 +38,7 @@
 						<html:optionsCollection name="specializations"/>
 					</html:select>
 				</td>
-			</tr>
+			</tr>--%>
 			<tr>
 				<td>
 					<bean:message key="label.qualification.degree"/>
