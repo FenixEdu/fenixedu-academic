@@ -86,10 +86,11 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         if (obj instanceof IStudentCurricularPlan) {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
+            result = getIdInternal().equals(studentCurricularPlan.getIdInternal());
 
-            result = getStudent().equals(studentCurricularPlan.getStudent())
-                    && getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())
-                    && getCurrentState().equals(studentCurricularPlan.getCurrentState());
+//            result = getStudent().equals(studentCurricularPlan.getStudent())
+//                    && getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())
+//                    && getCurrentState().equals(studentCurricularPlan.getCurrentState());
         }
 
         return result;
