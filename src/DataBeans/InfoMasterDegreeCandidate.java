@@ -2,6 +2,8 @@ package DataBeans;
 
 import java.util.List;
 
+import Util.Specialization;
+
 /*
  * InfoMasterDegreeCandidate.java
  *
@@ -26,7 +28,7 @@ public class InfoMasterDegreeCandidate extends InfoObject{
     private Double average = null;
 	private InfoPerson infoPerson = null;
 	private InfoExecutionDegree infoExecutionDegree = null;
-    private String specialization = null;
+    private Specialization specialization = null;
 	private InfoCandidateSituation infoCandidateSituation = null;
 	private List situationList = null;
 	private String specializationArea;
@@ -53,7 +55,7 @@ public class InfoMasterDegreeCandidate extends InfoObject{
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public InfoMasterDegreeCandidate() {} 
     
-	public InfoMasterDegreeCandidate(InfoPerson person, InfoExecutionDegree executionDegree, Integer candidateNumber, String specialization, 
+	public InfoMasterDegreeCandidate(InfoPerson person, InfoExecutionDegree executionDegree, Integer candidateNumber, Specialization specialization, 
 			   String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, Double average){
 				this.infoPerson = person;
 				this.infoExecutionDegree = executionDegree;
@@ -183,7 +185,7 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	/**
 	 * @return
 	 */
-	public String getSpecialization() {
+	public Specialization getSpecialization() {
 		return specialization;
 	}
 
@@ -250,11 +252,11 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 		situationList = list;
 	}
 
-	/**
+/**
 	 * @param string
 	 */
-	public void setSpecialization(String string) {
-		specialization = string;
+	public void setSpecialization(Specialization specialization) {
+		this.specialization = specialization;
 	}
 
 	/**
