@@ -41,6 +41,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.PeriodState;
 import Util.TipoCurso;
 
 /**
@@ -146,7 +147,10 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService
 			{
 				IFrequenta attend = (Frequenta) iterator.next();
 				IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-				infoAttendingCourses.add(Cloner.get(executionCourse));
+				if (executionCourse.getExecutionPeriod().getState().equals(new PeriodState(PeriodState.CURRENT)))
+				{
+					infoAttendingCourses.add(Cloner.get(executionCourse));
+				}
 			}
 		}
 
