@@ -43,12 +43,15 @@
 <html:form action="/deleteDegreeCurricularPlans" method="get">
 
 <html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
-<table width="50%" cellpadding="0" border="0">
+<table width="70%" cellpadding="0" border="0">
 	<tr>
-		<td class="listClasses-header">
-			
+		<td class="listClasses-header">	
 		</td>
 		<td class="listClasses-header"><bean:message key="label.manager.degreeCurricularPlan.name" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.degree.curricular.plan.degreeDuration" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.degree.curricular.plan.numerusClausus" />
 		</td>
 	</tr>
 	<tr>	 
@@ -59,6 +62,10 @@
 		</html:multibox>
 		</td>				
 		<td class="listClasses"><html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
+		</td>
+		<td class="listClasses"><bean:write name="degreeCurricularPlan" property="degreeDuration"/>
+		</td>
+		<td class="listClasses"><bean:write name="degreeCurricularPlan" property="numerusClausus"/>
 		</td>
 	 </tr>
 </logic:iterate>						

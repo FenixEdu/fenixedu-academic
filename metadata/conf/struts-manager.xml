@@ -7,13 +7,7 @@
 		<!-- ========== Data Source Configuration =============================== -->
 	
 		<!-- ========== Form Bean Definitions ================================== -->
-		<form-beans type="org.apache.struts.action.ActionFormBean">
-	 
-		<form-bean name="deleteForm"
-				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-					dynamic="true">  	      
-				<form-property name="internalIds" type="java.lang.Integer[]" />
-		</form-bean>  
+		<form-beans type="org.apache.struts.action.ActionFormBean">  
 	
 		<form-bean name="degreeForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -22,6 +16,7 @@
 				<form-property name="code" type="java.lang.String" />
 				<form-property name="degreeType" type="java.lang.Integer" />
 				<form-property name="degreeId" type="java.lang.Integer" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>  
 		
@@ -40,6 +35,26 @@
 				<form-property name="neededCredits" type="java.lang.String" />
 				<form-property name="markType" type="java.lang.String" />
 				<form-property name="numerusClausus" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="curricularCourseForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+                <form-property name="degreeId" type="java.lang.Integer" />
+                <form-property name="degreeCurricularPlanId" type="java.lang.Integer" />
+				<form-property name="name" type="java.lang.String" />
+				<form-property name="code" type="java.lang.String" />
+				<form-property name="credits" type="java.lang.String" />
+				<form-property name="theoreticalHours" type="java.lang.String" />
+				<form-property name="praticalHours" type="java.lang.String" />
+				<form-property name="theoPratHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />
+				<form-property name="type" type="java.lang.String" />
+				<form-property name="mandatory" type="java.lang.String" />
+				<form-property name="universityId" type="java.lang.String" />
+				<form-property name="basic" type="java.lang.String" />
+				<form-property name="departmentCourseId" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>    
 
@@ -128,7 +143,7 @@
 	<!-- Action for deleting degrees --> 
       <action 
       		 path="/deleteDegrees"
-      		 name="deleteForm"
+      		 name="degreeForm"
       		 input="/readDegreesInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction"
@@ -161,7 +176,7 @@
       
        <!-- Action for reading a degreeCurricularPlan -->
       <action path="/readDegreeCurricularPlan"
-      	      name="degreeCurricularPlanForm"
+      	      name="curricularCourseForm"
               input="/readDegreeInput.do"
               scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
@@ -198,24 +213,37 @@
   
 	
 	<!-- Action for deleting curricularCourses --> 
-      <action 
-      		 path="/deleteCurricularCourses"
-      		 name="degreeCurricularPlanForm"
-      		 input="/readDegreeCurricularPlanInput.do"
-      		 scope="request"
-      	     type="ServidorApresentacao.Action.manager.DeleteCurricularCoursesAction">
-      	  <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
-      </action>	  
+     <action 
+      	path="/deleteCurricularCourses"
+      	name="degreeCurricularPlanForm"
+      	input="/readDegreeCurricularPlanInput.do"
+      	scope="request"
+      	type="ServidorApresentacao.Action.manager.DeleteCurricularCoursesAction">
+      	<forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+     </action>	  
       
       <!-- Action for deleting executionDegrees --> 
       <action 
-      		 path="/deleteExecutionDegrees"
-      		 name="degreeCurricularPlanForm"
-      		 input="/readDegreeCurricularPlanInput.do"
-      		 scope="request"
-      	     type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">
-      	  <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+      	path="/deleteExecutionDegrees"
+      	name="degreeCurricularPlanForm"
+      	input="/readDegreeCurricularPlanInput.do"
+      	scope="request"
+      	type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">
+      	<forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
       </action>	
+      
+      <!-- Action for inserting a curricular course  -->
+	<action
+		path="/insertCurricularCourse"
+		name="curricularCourseForm"
+		input="/insertCurricularCourseInput.do"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.InsertCurricularCourseDispatchAction"
+        validate="true">  
+       <forward name="insertCurricularCourse" path="df.page.insert-curricular-course"/>
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+	</action>
     
       <!--Input actions-->
       <action path="/insertDegreeInput"
@@ -226,6 +254,11 @@
       <action path="/insertDegreeCurricularPlanInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.insert-degree-curricular-plan"/>      	      
+      </action>
+      
+      <action path="/insertCurricularCourseInput"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.insert-curricular-course"/>      	      
       </action>
             
        <action path="/editDegreeInput"

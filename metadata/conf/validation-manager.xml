@@ -74,6 +74,34 @@
       </field>
       
     </form>
+    
+    <!--validation to the form to insert and edit a CurricularCourse-->
+    <form name="curricularCourseForm">
+      <field property="name" depends="required" page="1" >
+        <arg0 key="message.manager.degree.curricular.plan.name" resource="true"/>
+      </field>
+      <field property="code" depends="required" page="1" >
+        <arg0 key="label.manager.curricularCourse.code" resource="true"/>
+      </field>
+      <field property="credits" depends="double" page="1" >
+        <arg0 key="message.manager.credits" resource="true"/>
+      </field>
+      <field property="theoreticalHours" depends="double" page="1" >
+        <arg0 key="message.manager.theoreticalHours" resource="true"/>
+      </field>
+      <field property="praticalHours" depends="double" page="1" >
+        <arg0 key="message.manager.praticalHours" resource="true"/>
+      </field>
+      <field property="theoPratHours" depends="double" page="1" >
+        <arg0 key="message.manager.theoPratHours" resource="true"/>
+      </field>
+      <field property="labHours" depends="double" page="1" >
+        <arg0 key="message.manager.labHours" resource="true"/>
+      </field>
+    </form>
+
+
+
 
     <form name="createExecutionPeriodForm">
       <field property="semesterToCreate" depends="required" page="1">

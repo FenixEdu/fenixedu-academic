@@ -62,10 +62,9 @@
 					</td>
 	 			</tr>
 	 			</logic:iterate>			
-				<span class="error"><html:errors/></span>		
 			</table>
 			
-<br>	
+<br>
 
 		<html:submit><bean:message key="label.manager.delete.selected.curricularCourses"/></html:submit>
 	</html:form> 
@@ -73,7 +72,8 @@
 </logic:present>
 
 <br>
-
+<span class="error"><html:errors/></span>
+<br>
 <h3><bean:message key="label.manager.executionDegrees"/></h3>
 
 <logic:empty name="executionDegreesList">
@@ -111,8 +111,7 @@
 					<td class="listClasses"><html:link page="/readTeacher.do"><bean:write name="person" property="nome"/></html:link>
 					</td>
 	 			</tr>
-	 			</logic:iterate>				
-				<span class="error"><html:errors/></span>		
+	 			</logic:iterate>						
 			</table>
 			
 <br>	

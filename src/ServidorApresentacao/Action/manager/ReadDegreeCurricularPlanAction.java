@@ -41,10 +41,10 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 				HttpSession session = request.getSession(false);
 						
 				UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-					
+				
 				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 				Integer	degreeId = new Integer(request.getParameter("degreeId"));	
-				
+
 				Object args[] = { degreeCurricularPlanId };
 				
 				GestorServicos manager = GestorServicos.manager();
