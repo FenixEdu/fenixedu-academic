@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
@@ -59,13 +60,16 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 		ActionError error = null;
 
-		if(request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
+		HttpSession session = request.getSession(false);
+		
+		if(session == null || request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
 			ActionErrors errors = new ActionErrors();
 			error = new ActionError("error.invalid.session");
 			errors.add("error.invalid.session", error);
 			request.setAttribute(Globals.ERROR_KEY, errors);
 			return mapping.findForward("firstPage");
 		}
+		
 
 		request.getSession(false).setAttribute(
 			SessionConstants.ORIGINAL_MAPPING_KEY,
