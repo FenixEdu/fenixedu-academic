@@ -89,14 +89,13 @@ public class SmsUtil
 
 	/**
 	 * 
-	 *  Send a Sms with delivery report support
-	 *  (The gateway will update da SentSms with Id=smsId)
+	 * Send a Sms with delivery report support (The gateway will update da SentSms with Id=smsId)
 	 * 
 	 * @param destinationPhoneNumber
 	 * @param message
 	 * @param smsId
 	 * @throws FenixUtilException
-	 */	
+	 */
 	public void sendSms(Integer destinationPhoneNumber, String message, Integer smsId)
 		throws FenixUtilException
 	{
@@ -182,10 +181,7 @@ public class SmsUtil
 	 * @param smsId
 	 * @throws FenixUtilException
 	 */
-	public void sendSmsWithoutDeliveryReports(
-		Integer destinationPhoneNumber,
-		String message,
-		Integer smsId)
+	public void sendSmsWithoutDeliveryReports(Integer destinationPhoneNumber, String message)
 		throws FenixUtilException
 	{
 
