@@ -361,10 +361,11 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
     public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, IBranch area) {
 
         List finalCurricularCourses = new ArrayList();
+        List curricularCourses = getCurricularCourses();
         final Integer wantedSemester = semester;
         final IBranch branch = area;
 
-        Collections.sort(getCurricularCourses(), new Comparator() {
+        Collections.sort(curricularCourses, new Comparator() {
 
             public int compare(Object obj1, Object obj2) {
 
@@ -378,12 +379,13 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
                 return curricularYear1.getYear().intValue() - curricularYear2.getYear().intValue();
             }
         });
-
+        
         ICurricularCourse cc = null;
         ICurricularYear curricularYear = null;
         for (int iter = 0; iter < curricularCourses.size(); iter++) {
             cc = (ICurricularCourse) curricularCourses.get(iter);
             curricularYear = cc.getCurricularYearByBranchAndSemester(branch, wantedSemester);
+
             if ((curricularYear.getYear().intValue() == year) && belongsToSemester(cc, semester))
                 finalCurricularCourses.add(cc);
             else if (curricularYear.getYear().intValue() > year)
