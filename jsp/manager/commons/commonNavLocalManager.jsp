@@ -68,6 +68,12 @@
 </strong></p>
 
 <p><strong>&raquo; 
+	<html:link page="/monitorRequestLogs.do?method=listFiles">
+		<bean:message key="manager.monitor.requests.title"/>
+	</html:link>
+</strong></p>
+
+<p><strong>&raquo; 
 	<html:link page="/monitorUsers.do?method=monitor">
 		Monitorização de Utilizadores
 	</html:link>

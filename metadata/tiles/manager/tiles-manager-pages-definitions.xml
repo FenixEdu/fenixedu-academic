@@ -154,6 +154,13 @@
 	<definition name="df.page.monitor-system" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/monitorSystem_bd.jsp" />
 	</definition>
+	<!-- ========== REQUEST MONITORING ========== -->
+	<definition name="df.page.monitor-request" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/monitorRequests_bd.jsp" />
+	</definition>
+	<definition name="df.page.analyseRequestsLog" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/analyseRequestsLog_bd.jsp" />
+	</definition>
 	
 	<!-- ========== TEACHERS MANAGEMENT ========== -->
 	<definition name="df.page.firstPage" extends="definition.manager.masterPage" >

@@ -269,10 +269,17 @@
     </form-bean>
 
 	    <form-bean name="cacheForm"
-    		type="org.apache.struts.validator.DynaValidatorForm"
-	    	dynamic="true">
-    			<form-property name="page" type="java.lang.Integer" initial="0"/> 
-    			<form-property name="responseRefreshTimeout" type="java.lang.Integer"/>
+    			type="org.apache.struts.validator.DynaValidatorForm"
+	    		dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/> 
+    		<form-property name="responseRefreshTimeout" type="java.lang.Integer"/>
+	    </form-bean>
+
+	    <form-bean name="monitorRequestLogsPathForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/> 
+    		<form-property name="logDirName" type="java.lang.String"/>
 	    </form-bean>
 
     </form-beans>
@@ -959,6 +966,17 @@
               parameter="method"
               >
           <forward name="Show" path="df.page.monitor-system"/>
+      </action>
+
+	<!-- ========== REQUEST MONITORING ========== -->
+      <action path="/monitorRequestLogs"
+              type="ServidorApresentacao.Action.manager.MonitorRequestLogsDA"
+              parameter="method"
+			  name="monitorRequestLogsPathForm"
+			  attribute="monitorRequestLogsPathForm"
+              >
+          <forward name="ShowSelectionForm" path="df.page.monitor-request"/>
+		  <forward name="ShowRequestAnalysisLog" path="df.page.analyseRequestsLog"/>
       </action>
 
 	<!-- ========== ADVISORY MANIPULATION ========== -->

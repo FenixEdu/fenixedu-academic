@@ -6439,6 +6439,15 @@
             <chain name="EnrollmentWithoutRulesAuthorization"/>
         </filterChains>
     </service>
+    <service>
+        <name>ConfirmManagerIdentity</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.ConfirmManagerIdentity</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
 
 <!-- =============================================================================================== -->
 <!-- ==================================== Enrollment Equivalence =================================== -->
