@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
@@ -31,27 +30,32 @@ public class AddExecutionCourseToExamAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			HttpSession session = request.getSession(false);
-			IUserView userView = SessionUtils.getUserView(request);
+		HttpSession session = request.getSession(false);
+		IUserView userView = SessionUtils.getUserView(request);
 
-			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
+		InfoExecutionCourse executionCourse =
+			(InfoExecutionCourse) session.getAttribute(
+				SessionConstants.EXECUTION_COURSE_KEY);
 
-			InfoExecutionCourse executionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-			
-			InfoViewExamByDayAndShift infoViewExams = (InfoViewExamByDayAndShift) session.getAttribute(SessionConstants.INFO_VIEW_EXAM);
+		InfoViewExamByDayAndShift infoViewExams =
+			(InfoViewExamByDayAndShift) session.getAttribute(
+				SessionConstants.INFO_VIEW_EXAM);
 
-			// Create new association between exam and executionCourse
-			Object argsCreateExam[] = { infoViewExams, executionCourse };
-			try {
-				ServiceUtils.executeService(userView, "AssociateExecutionCourseToExam", argsCreateExam);
-			} catch (ExistingServiceException ex) {
-				throw new ExistingActionException(
-					"Para a disciplina escolhida, o exame de "
-						+ infoViewExams.getInfoExam().getSeason(),
-					ex);
-			}
+		// Create new association between exam and executionCourse
+		Object argsCreateExam[] = { infoViewExams, executionCourse };
+		try {
+			ServiceUtils.executeService(
+				userView,
+				"AssociateExecutionCourseToExam",
+				argsCreateExam);
+		} catch (ExistingServiceException ex) {
+			throw new ExistingActionException(
+				"Para a disciplina escolhida, o exame de "
+					+ infoViewExams.getInfoExam().getSeason(),
+				ex);
+		}
 
-			return mapping.findForward("Sucess");
+		return mapping.findForward("Sucess");
 	}
 
 }
