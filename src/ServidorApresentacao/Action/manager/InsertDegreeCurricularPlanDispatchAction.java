@@ -3,8 +3,8 @@
  */
 package ServidorApresentacao.Action.manager;
 
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +19,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.util.Cloner;
-import Dominio.Curso;
-import Dominio.ICurso;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -76,8 +72,9 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 //		Integer degreeId =(Integer)request.getAttribute("degreeId");
 		System.out.println("DEGREEIDSSSSSSSSSSSS"+degreeId);
 		
-		ICurso degree = new Curso(degreeId);
-		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree((ICurso) degree);
+		
+//		InfoDegree infoDegree = new InfoDegree();
+//		infoDegree.setIdInternal(degreeId);
 
 		
 		String name = (String) dynaForm.get("name");
@@ -91,21 +88,43 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		Integer numerusClausus = new Integer ((String) dynaForm.get("numerusClausus"));
 			
 		DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
-		String[] initialDateArgs =  initialDateString.split("/",2);
-		System.out.println("SPLITSPLIT11111111111"+initialDateArgs);
-		
-		Date initialDate = new Date("initialDateArgs.");
-		Date endDate = new Date(endDateString);
+		String[] initialDateTokens = initialDateString.split("/");
+
+		Calendar initialDate = Calendar.getInstance();
+				initialDate.set(
+								Calendar.DAY_OF_MONTH,
+								(new Integer(initialDateTokens[0])).intValue());
+				initialDate.set(
+								Calendar.MONTH,
+								(new Integer(initialDateTokens[1])).intValue() - 1);
+				initialDate.set(
+								Calendar.YEAR,
+								(new Integer(initialDateTokens[2])).intValue());
+
+		String[] endDateTokens = endDateString.split("/");
+
+		Calendar endDate = Calendar.getInstance();
+				endDate.set(
+							Calendar.DAY_OF_MONTH,
+							(new Integer(endDateTokens[0])).intValue());
+				endDate.set(
+							Calendar.MONTH,
+							(new Integer(endDateTokens[1])).intValue() - 1);
+				endDate.set(
+							Calendar.YEAR,
+							(new Integer(endDateTokens[2])).intValue());
+
+
 		Double neededCredits = new Double(neededCreditsString);
 		MarkType markType = new MarkType(markTypeString);
 		
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();											
 																						
 		infoDegreeCurricularPlan.setName(name);
-		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+//		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 		infoDegreeCurricularPlan.setState(state);
-		infoDegreeCurricularPlan.setInitialDate(initialDate);
-		infoDegreeCurricularPlan.setEndDate(endDate);											
+		infoDegreeCurricularPlan.setInitialDate(initialDate.getTime());
+		infoDegreeCurricularPlan.setEndDate(endDate.getTime());											
 		infoDegreeCurricularPlan.setDegreeDuration(degreeDuration);
 		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
 		infoDegreeCurricularPlan.setNeededCredits(neededCredits);
@@ -113,22 +132,26 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		infoDegreeCurricularPlan.setNumerusClausus(numerusClausus);
 																						
 			
-		Object args[] = { infoDegreeCurricularPlan };
+		Object args[] = { infoDegreeCurricularPlan, degreeId };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
+		System.out.println("Antes do 1º Serviço");
 		try {
 				serviceResult = (List) manager.executar(userView, "InsertDegreeCurricularPlanService", args);
 		} catch (FenixServiceException e) {
-			throw new FenixActionException(e.getMessage());
+			throw new FenixActionException(e);
 		}
 		System.out.println("RESULTADO DO INSERT"+serviceResult);
 
+		Object args1[] = { degreeId };
 		try {	
 				List degreeCurricularPlans = null;
+			System.out.println("Antes do 2º Serviço");
 				degreeCurricularPlans = (List) manager.executar(
 													userView,
 													"ReadDegreeCurricularPlansService",
-													null);
+													args1);
+			
 				if (serviceResult != null) {
 					ActionErrors actionErrors = new ActionErrors();
 					ActionError error = null;
@@ -141,10 +164,11 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 				Collections.sort(degreeCurricularPlans);
 				request.setAttribute("lista de planos curriculares",degreeCurricularPlans);
 				request.setAttribute("degreeId",degreeId);
-			
+			System.out.println("depois do 2º Serviço FIM DA ACTION");
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		
 		return mapping.findForward("readDegree");
 	}			
 }

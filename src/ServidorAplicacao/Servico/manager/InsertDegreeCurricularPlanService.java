@@ -16,6 +16,7 @@ import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -39,20 +40,24 @@ public class InsertDegreeCurricularPlanService implements IServico {
 	}
 	
 
-	public List run(InfoDegreeCurricularPlan infoDegreeCurricularPlan) throws FenixServiceException {
+	public List run(InfoDegreeCurricularPlan infoDegreeCurricularPlan,Integer degreeId) throws FenixServiceException {
 
 		IDegreeCurricularPlan degreeCurricularPlan = null;
+		ICurso degree = null;
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
-		
+		ICursoPersistente persistentDegree = null;
 
 		
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 				List degreeCurricularPlans = persistentDegreeCurricularPlan.readAll();
+				persistentDegree = persistentSuport.getICursoPersistente();
+				degree = persistentDegree.readByIdInternal(degreeId);	
 
 				String name = infoDegreeCurricularPlan.getName();
-				InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
+				InfoDegree infoDegree = (InfoDegree) Cloner.copyIDegree2InfoDegree(degree);
+			
 			
 				List errors = new ArrayList(2);
 				errors.add(null);
@@ -62,7 +67,8 @@ public class InsertDegreeCurricularPlanService implements IServico {
 				Iterator iter = degreeCurricularPlans.iterator();
 				while(iter.hasNext()) {
 					IDegreeCurricularPlan degreeCurricularPlanIter = (IDegreeCurricularPlan) iter.next();
-					
+					System.out.println("infoDegree QUE QUERO INSERIR"+infoDegree);
+					System.out.println("infoDegree QUE a comparar INSERIR"+Cloner.copyIDegree2InfoDegree(degreeCurricularPlanIter.getDegree()));
 					if(name.compareToIgnoreCase(degreeCurricularPlanIter.getName())==0 && 
 					   infoDegree.equals( (InfoDegree) Cloner.copyIDegree2InfoDegree(degreeCurricularPlanIter.getDegree()) ) ){
 						modified++;
@@ -72,11 +78,12 @@ public class InsertDegreeCurricularPlanService implements IServico {
 				}
 
 				if(modified == 0) {
-					errors = null;
+					errors = null; 
 					
 					degreeCurricularPlan = new DegreeCurricularPlan();
-					ICurso degree = (ICurso) Cloner.copyInfoDegree2IDegree(infoDegree);
-					
+//					ICurso degree = (ICurso) Cloner.copyInfoDegree2IDegree(infoDegree);
+//					degree = (ICurso) persistentSuport.getICursoPersistente().readByOId(degree,false);
+					System.out.println("TA NO SERVICO INSERT DEGREE CURRICULAR PLAN!!!");
 					degreeCurricularPlan.setName(name);
 					degreeCurricularPlan.setDegree(degree);
 					degreeCurricularPlan.setState(infoDegreeCurricularPlan.getState());
@@ -87,9 +94,9 @@ public class InsertDegreeCurricularPlanService implements IServico {
 					degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
 					degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
 					degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
-					
+					System.out.println("TA NO SERVICO INSERT DEGREE CURRICULAR PLAN!!!DEPOIS DOS SETS");
 	
-					persistentDegreeCurricularPlan.lockWrite(degreeCurricularPlan);
+					persistentDegreeCurricularPlan.simpleLockWrite(degreeCurricularPlan);
 				}
 				return errors;
 			
