@@ -111,7 +111,7 @@
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
-    <controller />
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" />
