@@ -97,7 +97,12 @@ public class MigrateGrantOwners
 		{
 			e.printStackTrace(System.out);
 		}
-	} /*
+		
+		//Terminou
+		System.exit(1);
+	} 
+	
+	/*
 	   * 1- Verificar se a pessoa ja existe 1.1.1 Se já existe copiar o id da
 	   * pessoa no fenix para a coluna da tabela mwgrant_migracao_pessoa 1.1.2
 	   * Se não existe inserir essa pessoa no fenix

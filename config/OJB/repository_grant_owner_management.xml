@@ -7,7 +7,7 @@
 <!-- ********************************************** -->
    <class-descriptor
    	  class="Dominio.grant.owner.GrantOwner"
-   	  table="grant_owner"
+   	  table="GRANT_OWNER"
    >
       <field-descriptor 
          name="idInternal"
@@ -57,7 +57,7 @@
 
    <class-descriptor
    	  class="Dominio.grant.contract.GrantContract"
-   	  table="grant_contract"
+   	  table="GRANT_CONTRACT"
    >
       <field-descriptor 
          name="idInternal"
@@ -147,7 +147,7 @@
 <!-- ************************************************ -->
    <class-descriptor
    	  class="Dominio.grant.contract.GrantType"
-   	  table="grant_type"
+   	  table="GRANT_TYPE"
    >
       <field-descriptor 
          name="idInternal"
@@ -205,7 +205,7 @@
 <!-- ************************************************************** -->
    <class-descriptor
    	  class="Dominio.grant.contract.GrantOrientationTeacher"
-   	  table="grant_orientation_teacher"
+   	  table="GRANT_ORIENTATION_TEACHER"
    >
       <field-descriptor 
          name="idInternal"
@@ -260,7 +260,7 @@
 <!-- ************************************************************** -->
    <class-descriptor
    	  class="Dominio.grant.contract.GrantProject"
-   	  table="grant_payment_entity"
+   	  table="GRANT_PAYMENT_ENTITY"
    >
       <field-descriptor 
          name="idInternal"
@@ -320,7 +320,7 @@
 <!-- ************************************************************** -->
    <class-descriptor
    	  class="Dominio.grant.contract.GrantCostCenter"
-   	  table="grant_payment_entity"
+   	  table="GRANT_PAYMENT_ENTITY"
    >
       <field-descriptor 
          name="idInternal"
@@ -370,7 +370,7 @@
 <!-- ************************************************************** -->
    <class-descriptor
    	  class="Dominio.grant.contract.GrantPaymentEntity"
-   	  table="grant_payment_entity"
+   	  table="GRANT_PAYMENT_ENTITY"
    >
     <extent-class class-ref="Dominio.grant.contract.GrantProject" />
     <extent-class class-ref="Dominio.grant.contract.GrantCostCenter" />
@@ -422,7 +422,7 @@
 <!-- ************************************************************** -->
    <class-descriptor
    	  class="Dominio.grant.contract.GrantPart"
-   	  table="grant_part"
+   	  table="GRANT_PART"
    >
       <field-descriptor 
          name="idInternal"
@@ -482,7 +482,7 @@
 <!-- ************************************************************** -->
    <class-descriptor
    	  class="Dominio.grant.contract.GrantSubsidy"
-   	  table="grant_subsidy"
+   	  table="GRANT_SUBSIDY"
    >
       <field-descriptor 
          name="idInternal"
