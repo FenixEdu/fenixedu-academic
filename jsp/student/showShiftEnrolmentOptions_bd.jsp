@@ -3,14 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <table cellpadding="0" cellspacing="0" border="0">
-	<tr>
+	<%--	<tr>
 		<td>
-		    <html:link page="/studentShiftEnrolmentManager.do?method=initializeEnrolment&divideMethod=courses"> Inscrição por Cadeiras</html:link>
+		    <html:link page="/studentShiftEnrolmentManager.do?method=initializeEnrolment&divideMethod=courses"> Inscrição por disciplinas</html:link>
 		</td>
-	</tr>
+	</tr> --%>
 	<tr>
 		<td>
-		    <html:link page="/studentShiftEnrolmentManager.do?method=initializeEnrolment&divideMethod=classes">  Inscrição por Turmas</html:link>
+			<html:link page="/studentShiftEnrolmentManager.do?method=initializeEnrolment&divideMethod=classes">
+				Inscrição por Turmas
+			</html:link>
 		</td>
 	</tr>
 </table>
