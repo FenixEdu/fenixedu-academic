@@ -11,16 +11,32 @@ package ServidorPersistente.OJB;
  *
  * @author tfc130
  */
+import java.util.Calendar;
 import java.util.List;
 
-import junit.framework.*;
-import java.util.List;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.ojb.odmg.OJB;
-import org.odmg.QueryException;
-import org.odmg.OQLQuery;
 import org.odmg.Implementation;
-import ServidorPersistente.*;
-import Dominio.*;
+import org.odmg.OQLQuery;
+import org.odmg.QueryException;
+
+import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
+import Dominio.IAula;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.ISala;
+import Dominio.ITurno;
+import Dominio.ITurnoAula;
+import Dominio.Sala;
+import Dominio.Turno;
+import Dominio.TurnoAula;
+import ServidorPersistente.ExcepcaoPersistencia;
+import Util.DiaSemana;
 
 public class TurnoAulaOJBTest extends TestCaseOJB {
 
@@ -211,17 +227,21 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	public void testReadAulasDeTurno() {
 		try {
 			List aulas = null;
+      
+			_suportePersistente.iniciarTransaccao();
+			IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+			assertNotNull(executionCourse);
 
 			/* Testa metodo qdo ha mais do q uma aula de um turno na BD */
-			_suportePersistente.iniciarTransaccao();
 			aulas =
 				_turnoAulaPersistente.readByShift(
-					new Turno("455", null, null, null));
+					new Turno("turno3", null, null, executionCourse));
 			_suportePersistente.confirmarTransaccao();
+			
 			assertEquals(
 				"testReadAulasDeTurno: qdo ha 2 aulas da turma na BD",
 				aulas.size(),
-				2);
+				1);
 
 			/* Testa metodo qdo nao ha nenhuma aula do turno */
 			_suportePersistente.iniciarTransaccao();
@@ -231,7 +251,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			_suportePersistente.iniciarTransaccao();
 			aulas =
 				_turnoAulaPersistente.readByShift(
-					new Turno("turno1", null, null, null));
+					new Turno("turno1", null, null, executionCourse));
 			_suportePersistente.confirmarTransaccao();
 			assertEquals(
 				"testReadAulasDeTurno: qdo nao nenhuma aula do turno na BD",
@@ -244,27 +264,44 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	}
 
 	/** Test of delete method, of class ServidorPersistente.OJB.TurnoAulaOJB. */
-//	public void testDeleteTurnoAulaByKeys() {
-//		//    try {
-//		//      _suportePersistente.iniciarTransaccao();
-//		//      _turnoAulaPersistente.delete(_turno3.getNome(), _aula1.getDiaSemana(), _aula1.getInicio(),
-//		//                                   _aula1.getFim(), _aula1.getSala());
-//		//      _suportePersistente.confirmarTransaccao();
-//		//
-//		//      _suportePersistente.iniciarTransaccao();
-//		//      IAula aula1 = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
-//		//      ITurno turno3 = _turnoPersistente.readByNome(_turno3.getNome());
-//		//      _suportePersistente.confirmarTransaccao();
-//		// 
-//		//      _suportePersistente.iniciarTransaccao();
-//		//      ITurnoAula turnoAula = _turnoAulaPersistente.readByTurnoAndAula(turno3, aula1);
-//		//      _suportePersistente.confirmarTransaccao();
-//		//
-//		//      assertEquals(turnoAula, null);
-//		//    } catch (ExcepcaoPersistencia ex) {
-//		fail("testDeleteTurnoAula");
-//		//    }
-//	}
+	public void testDeleteTurnoAulaByKeys() {
+		
+		Calendar startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 8);
+		startTime.set(Calendar.MINUTE, 00);
+		startTime.set(Calendar.SECOND, 00);
+		Calendar endTime = Calendar.getInstance();
+		endTime.set(Calendar.HOUR_OF_DAY, 9);
+		endTime.set(Calendar.MINUTE, 30);
+		endTime.set(Calendar.SECOND, 00);
+
+	    try {
+	      _suportePersistente.iniciarTransaccao();
+		  IDisciplinaExecucao executionCourse = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+		  assertNotNull(executionCourse);
+  
+		  ITurno shift = _turnoPersistente.readByNameAndExecutionCourse("turno3", executionCourse);
+		  assertNotNull(shift);
+
+		  ISala room = _salaPersistente.readByName("Ga1");
+		  assertNotNull(room);
+		  DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+		  	      
+	      _turnoAulaPersistente.delete(shift, weekDay, startTime, endTime, room);
+	      _suportePersistente.confirmarTransaccao();
+	
+	
+	      _suportePersistente.iniciarTransaccao();
+	      IAula lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+	      ITurnoAula turnoAula = _turnoAulaPersistente.readByShiftAndLesson(shift, lesson);
+		  assertNull(turnoAula);
+	
+	      _suportePersistente.confirmarTransaccao();
+	
+	    } catch (ExcepcaoPersistencia ex) {
+			fail("testDeleteTurnoAula");
+	    }
+	}
 
 	/** Test of ReadLessonsByStudent method, of class ServidorPersistente.OJB.TurnoAulaOJB. */
 	public void testReadLessonsByStudent() {
@@ -275,28 +312,13 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			lessons = _turnoAulaPersistente.readLessonsByStudent("45498");
 			_suportePersistente.confirmarTransaccao();
 			assertNotNull("testReadLessonsByStudent", lessons);
-			assertEquals("testReadLessonsByStudent", lessons.size(), 2);
+			assertEquals("testReadLessonsByStudent", lessons.size(), 1);
 
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadLessonsByStudent");
 		}
 	}
 
-	/** Test of ReadLessonsByShift method, of class ServidorPersistente.OJB.TurnoAulaOJB. */
-	public void testReadLessonsByShift() {
-		//		  try {
-		//			  List lessons = null;
-		//
-		//			  _suportePersistente.iniciarTransaccao();
-		//			  lessons = _turnoAulaPersistente.readLessonsByShift("turno_apr_teorico1");
-		//			  _suportePersistente.confirmarTransaccao();
-		//			  assertNotNull("testReadLessonsByStudent", lessons);
-		//			  assertEquals("testReadLessonsByStudent", lessons.size(), 1);
-		//
-		//		  } catch (ExcepcaoPersistencia ex) {
-		fail("testReadLessonsByStudent");
-		//		  }
-	}
 	/**
 	 * Method updateWithModifications.
 	 * @param turnoAula

@@ -34,6 +34,8 @@ public interface ITurnoAulaPersistente extends IPersistentObject{
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;
 	public void delete(ITurno shift, DiaSemana diaSemana, Calendar inicio, Calendar fim,
 					   ISala sala) throws ExcepcaoPersistencia;
+					   
+	// FIXME: readByCriteria Legacy : readByShift does almost the same thing
 	public List readLessonsByShift(ITurno shift) throws ExcepcaoPersistencia;					   
 
 }
