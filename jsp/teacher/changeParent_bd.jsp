@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <h2><bean:message key="message.parentSection" /></h2>
-<bean:write name="<%=SessionConstants.INFO_SECTION%>" property="name" />
+<h3><bean:write name="<%=SessionConstants.INFO_SECTION%>" property="name" /></h3>
 <span class="error"><html:errors property="error.default"/></span>
 <html:form action="/editSection">
 <table>
