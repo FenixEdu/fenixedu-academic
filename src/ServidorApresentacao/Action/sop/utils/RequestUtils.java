@@ -54,8 +54,7 @@ public abstract class RequestUtils {
 		try {
 			InfoExecutionPeriod infoExecutionPeriod =
 				getExecutionPeriodFromRequest(request);
-			//TODO: verify which is the parameter for the executionCourse code	
-			String code = request.getParameter("eCCode");
+			String code = request.getParameter("exeCode");
 			Object[] args = {  infoExecutionPeriod,code };
 			infoExecutionCourse = (InfoExecutionCourse)
 				 ServiceUtils.executeService(
@@ -67,7 +66,7 @@ public abstract class RequestUtils {
 			throw new FenixActionException(e);
 		}
 		if (infoExecutionCourse == null) {
-			System.out.println("there is a link missing the eCCode parameter");
+			System.out.println("there is a link missing the exeCode parameter");
 		}
 		return infoExecutionCourse;
 	}

@@ -4,4 +4,4 @@ RequestUtils methods also use the following parameters:
 
 eYName -> executionYear name
 ePName -> executionPeriod year
-eCCode -> executionCourse code
+exeCode -> executionCourse code
