@@ -17,6 +17,67 @@
 <br />
 <br />
 
+
+
+<table>
+  <tr>
+    <td><h2><bean:message key="label.candidate.personalInfo" /><h2></td>
+  </tr>
+  <tr>
+    <td><bean:message key="label.person.name" /></td>
+    <td><bean:write name="candidate" property="infoPerson.nome"/></td>
+  </tr>
+  <!-- Candidate Number -->
+  <tr>
+    <td><bean:message key="label.candidate.candidateNumber" /></td>
+    <td><bean:write name="candidate" property="candidateNumber"/></td>
+  </tr>
+
+  <!-- Specialization -->
+  <tr>
+    <td><bean:message key="label.candidate.specialization" /></td>
+    <td><bean:write name="candidate" property="specialization"/></td>
+  </tr>
+
+  <!-- Specialization Area -->
+  <tr>
+    <td><bean:message key="label.candidate.specializationArea" /></td>
+    <td><bean:write name="candidate" property="specializationArea"/></td>
+  </tr>
+
+</table>
+<br />
+<br />
+
+<table>
+  <tr>
+    <td><h2><bean:message key="label.candidate.majorDegreeInfo" /><h2></td>
+  </tr>
+  <!-- Licenciatura -->
+  <tr>
+    <td><bean:message key="label.candidate.majorDegree" /></td>
+    <td><bean:write name="candidate" property="majorDegree"/></td>
+  </tr>
+  <!-- Ano de Licenciatura -->
+  <tr>
+    <td><bean:message key="label.candidate.majorDegreeYear" /></td>
+    <td><bean:write name="candidate" property="majorDegreeYear"/></td>
+  </tr>
+  <!-- Escola de Licenciatura -->
+  <tr>
+    <td><bean:message key="label.candidate.majorDegreeSchool" /></td>
+    <td><bean:write name="candidate" property="majorDegreeSchool"/></td>
+  </tr>
+  <!-- Media -->
+  <tr>
+    <td><bean:message key="label.candidate.average" /></td>
+    <td><bean:write name="candidate" property="average"/> <bean:message key="label.candidate.values"/></td>
+  </tr>
+</table>
+
+
+
+
 <%--
 <logic:present name="infoExecutionDegree" >
 	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" /><br />
@@ -30,6 +91,7 @@
 	<html:form action="/displayCourseListToStudyPlan?method=chooseCurricularCourses">
    	  	<html:hidden property="page" value="1"/> 
    	  	<html:hidden property="candidateID"/> 
+
 		<!-- CurricularCourse -->
 		<table>
 			<tr>
@@ -75,7 +137,20 @@
 		</table>
 
 
-		<h2><bean:message key="label.masterDegree.chooseNewCourses"/></h2>
+		<br />
+		<br />
+		
+		<div class="infoop">
+			<span class="error"><strong>Nota:</strong></span>
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das Áreas Científicas aparecem por baixo do nome da disciplina e ligeiramente mais à frente.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina não pertença a nenhuma Área Científica, a opção para a sua selecção aparecerá imediatamente antes do seu nome. 
+		</div>
+
+		<br />
+		<br />
+
+
+		<h2><bean:message key="label.masterDegree.newCourses"/> <bean:write name="newDegree" property="infoDegreeCurricularPlan.infoDegree.nome" /></h2>
 		
 		<table>
 			<logic:iterate id="curricularCourseElem" name="curricularCourses"  indexId="index">

@@ -285,6 +285,16 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 		
 		request.setAttribute("curricularCourses", curricularCourseList);
 
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+		try {
+			Object args[] = {  new Integer(candidateID) };
+			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		
+		request.setAttribute("candidate", infoMasterDegreeCandidate);
+
 
 		if (infoExecutionDegree != null){
 			request.setAttribute("infoExecutionDegree", infoExecutionDegree);
@@ -301,6 +311,19 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 			request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 			
 		}
+		
+		InfoExecutionDegree newInfoExecutionDegree = null;
+		try {
+			Object args[] = { executionYear, degree };
+			newInfoExecutionDegree = (InfoExecutionDegree) serviceManager.executar(userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		
+		request.setAttribute("newDegree", newInfoExecutionDegree);
+		
+		
+		
 //
 //		generateToken(request);
 //		saveToken(request);
