@@ -129,11 +129,11 @@
 			</td>
 		</tr>
 		<tr>
-		<td class="listClasses-header">Disciplina</td>
-		<td class="listClasses-header">Tipo</td>		
-		<td class="listClasses-header">Peso para Inscrição</td>
-		<td class="listClasses-header">Peso para o número de Disciplinas Acumuladas</td>
-		<td class="listClasses-header">Estado da Inscrição</td>
+		<td class="listClasses-header"><bean:message key="label.course"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.type"/></td>		
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.weight"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.state"/></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
 		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
@@ -184,11 +184,11 @@
 			</td>
 		</tr>
 		<tr>
-		<td class="listClasses-header">Disciplina</td>
-		<td class="listClasses-header">Tipo</td>
-		<td class="listClasses-header">Peso para Inscrição</td>
-		<td class="listClasses-header">Peso para o número de Disciplinas Acumuladas</td>
-		<td class="listClasses-header">Tipo de Inscrição</td>
+		<td class="listClasses-header"><bean:message key="label.course"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.type"/></td>		
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.weight"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.state"/></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll">

@@ -50,22 +50,19 @@ public class WriteStudentAreas implements IService {
             if (studentCurricularPlan == null) {
                 throw new ExistingServiceException();
             }
-            if (!studentCurricularPlan.getCanChangeSpecializationArea()){
+            if (!studentCurricularPlan.getCanChangeSpecializationArea()) {
                 throw new NotAuthorizedBranchChangeException();
             }
-           
-                if (studentCurricularPlan.areNewAreasCompatible(
-                        specializationArea, secundaryArea)) {
-                    studentCurricularPlanDAO
-                            .simpleLockWrite(studentCurricularPlan);
-                    studentCurricularPlan.setBranch(specializationArea);
-                    studentCurricularPlan.setSecundaryBranch(secundaryArea);
-                } else {
-                    throw new ChosenAreasAreIncompatibleServiceException();
-                }
-            
-               
-            
+
+            if (studentCurricularPlan.areNewAreasCompatible(specializationArea,
+                    secundaryArea)) {
+                studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
+                studentCurricularPlan.setBranch(specializationArea);
+                studentCurricularPlan.setSecundaryBranch(secundaryArea);
+            } else {
+                throw new ChosenAreasAreIncompatibleServiceException();
+            }
+
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

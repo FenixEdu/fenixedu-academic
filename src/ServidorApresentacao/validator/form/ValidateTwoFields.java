@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionErrors;
 public class ValidateTwoFields {
 
 
-	public static boolean validate(
+	public static boolean validate (
 		Object bean,
 		ValidatorAction va, 
 		Field field,

@@ -104,7 +104,7 @@
 		<td class="listClasses-header">
 			<b><bean:message key="message.student.enrolled.curricularCourses" /></b>
 		</td>
-		<td class="listClasses-header">Estado da Inscrição</td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.state"/></td>
 	</tr>
 	<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" type="DataBeans.InfoEnrolment">
 		<tr>

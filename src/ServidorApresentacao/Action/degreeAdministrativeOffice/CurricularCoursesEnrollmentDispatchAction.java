@@ -27,6 +27,7 @@ import ServidorAplicacao.Servico.exceptions.ChosenAreasAreIncompatibleServiceExc
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedBranchChangeException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
@@ -316,6 +317,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends
                     "error.student.curricularPlan.nonExistent"));
         } catch (InvalidArgumentsServiceException e) {
             errors.add("areas", new ActionError("error.areas.choose"));
+        } catch (NotAuthorizedBranchChangeException e) {
+            errors.add("areas", new ActionError("error.areas.notAuthorized"));    
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
