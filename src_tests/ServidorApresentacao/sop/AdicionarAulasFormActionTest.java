@@ -58,7 +58,6 @@ public class AdicionarAulasFormActionTest extends TestCasePresentation {
 
 		// Necessario para colocar form adicionarAulasForm em sessao
 		setRequestPathInfo("/sop", "/adicionarAulasForm");
-		addRequestParameter("indexTurno", "0");
 
 		// coloca credenciais na sessao
 		HashSet privilegios = new HashSet();
