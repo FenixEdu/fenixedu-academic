@@ -10,6 +10,7 @@ import java.util.ListIterator;
 
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
+import Dominio.ISummary;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -659,5 +660,31 @@ public class InfoSummary extends InfoObject implements Comparable
             return dateComparator.compare(getSummaryDate(), infoSummary.getSummaryDate());
         }
 
+    }
+    
+    /**
+     * @param summary
+     * @return
+     */
+    public static InfoSummary copyFromDomain(ISummary summary) {
+
+        InfoSummary infoSummary = null;
+        if (summary != null) {
+
+            infoSummary = new InfoSummary();
+            infoSummary.setIdInternal(summary.getIdInternal());
+            infoSummary.setIsExtraLesson(summary.getIsExtraLesson());
+            infoSummary.setLastModifiedDate(summary.getLastModifiedDate());
+            infoSummary.setStudentsNumber(summary.getStudentsNumber());
+            infoSummary.setSummaryDate(summary.getSummaryDate());
+            infoSummary.setSummaryHour(summary.getSummaryDate());
+            infoSummary.setSummaryText(summary.getSummaryText());
+            infoSummary.setTeacherName(summary.getTeacherName());
+            infoSummary.setTitle(summary.getTitle());
+            infoSummary.setSummaryType(summary.getSummaryType());
+
+
+        }
+        return infoSummary;
     }
 }

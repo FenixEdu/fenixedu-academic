@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import Dominio.IProfessorship;
+
 /**
  * @author jpvl
  */
@@ -92,4 +94,15 @@ public class InfoProfessorship extends InfoObject
 		this.toDelete = toDelete;
 	}
 
+    public static InfoProfessorship copyFromDomain(
+            IProfessorship professorship) {
+        InfoProfessorship infoProfessorship = null;
+        if (professorship != null) {
+            infoProfessorship = new InfoProfessorship();
+            infoProfessorship.setIdInternal(professorship.getIdInternal());
+            infoProfessorship.setCredits(professorship.getCredits());
+        }
+        return infoProfessorship;
+    }
+    
 }

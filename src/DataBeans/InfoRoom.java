@@ -10,6 +10,7 @@ package DataBeans;
  *
  * @author  tfc130
  */
+import Dominio.ISala;
 import Util.TipoSala;
 
 public class InfoRoom  extends InfoObject implements Comparable {
@@ -103,4 +104,18 @@ public class InfoRoom  extends InfoObject implements Comparable {
 	public int compareTo(Object obj) {
 	  return getNome().compareTo(((InfoRoom)obj).getNome());
 	}
+    
+    /**
+     * @param sala
+     * @return
+     */
+    public static InfoRoom copyFromDomain(ISala sala) {
+        InfoRoom infoRoom = null;
+        if (sala != null) {
+            infoRoom = new InfoRoom();
+            infoRoom.setIdInternal(sala.getIdInternal());
+            infoRoom.setNome(sala.getNome());
+        }
+        return infoRoom;
+    }
 }

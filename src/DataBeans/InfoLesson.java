@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import Dominio.IAula;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -218,6 +219,19 @@ public class InfoLesson extends InfoObject
         result += ", disciplinaExecucao=" + _infoDisciplinaExecucao;
         result += "]";
         return result;
+    }
+    
+    public static InfoLesson copyFromDomain(IAula lesson) {
+        InfoLesson infoLesson = null;
+        if (lesson != null) {
+            infoLesson = new InfoLesson();
+            infoLesson.setIdInternal(lesson.getIdInternal());
+            infoLesson.setDiaSemana(lesson.getDiaSemana());
+            infoLesson.setFim(lesson.getFim());
+            infoLesson.setInicio(lesson.getInicio());
+            infoLesson.setTipo(lesson.getTipo());
+           }
+        return infoLesson;
     }
 
 }

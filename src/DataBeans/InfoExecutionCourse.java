@@ -9,6 +9,7 @@ package DataBeans;
 import java.util.List;
 
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
+import Dominio.IExecutionCourse;
 
 
 
@@ -432,4 +433,24 @@ public class InfoExecutionCourse extends InfoObject
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics) {
         this.infoSiteEvaluationStatistics = infoSiteEvaluationStatistics;
     }
+    
+    public static InfoExecutionCourse copyFromDomain(
+            IExecutionCourse executionCourse) {
+        InfoExecutionCourse infoExecutionCourse = null;
+        if (executionCourse != null) {
+            infoExecutionCourse = new InfoExecutionCourse();
+            infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
+            infoExecutionCourse.setNome(executionCourse.getNome());
+            infoExecutionCourse.setSigla(executionCourse.getSigla());
+            infoExecutionCourse.setTheoreticalHours(executionCourse
+                    .getTheoreticalHours());
+            infoExecutionCourse.setTheoPratHours(executionCourse
+                    .getTheoPratHours());
+            infoExecutionCourse.setLabHours(executionCourse.getLabHours());
+            infoExecutionCourse.setPraticalHours(executionCourse
+                    .getPraticalHours());
+        }
+        return infoExecutionCourse;
+    }
+
 }

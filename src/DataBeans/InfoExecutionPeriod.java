@@ -2,36 +2,39 @@ package DataBeans;
 
 import java.util.Date;
 
+import Dominio.IExecutionPeriod;
 import Util.PeriodState;
 
 /**
  * @author Nuno & Joana
  */
-public class InfoExecutionPeriod extends InfoObject
-{
+public class InfoExecutionPeriod extends InfoObject {
 
     private String name;
+
     private InfoExecutionYear infoExecutionYear;
+
     private PeriodState state;
+
     private Integer semester;
+
     private Date beginDate;
+
     private Date endDate;
 
-    public InfoExecutionPeriod()
-    {
+    public InfoExecutionPeriod() {
 
     }
 
-    public InfoExecutionPeriod(String name, InfoExecutionYear infoExecutionYear)
-    {
+    public InfoExecutionPeriod(String name, InfoExecutionYear infoExecutionYear) {
         setName(name);
         setInfoExecutionYear(infoExecutionYear);
     }
+
     /**
      * @param integer
      */
-    public InfoExecutionPeriod(Integer idInternal)
-    {
+    public InfoExecutionPeriod(Integer idInternal) {
         super(idInternal);
     }
 
@@ -40,8 +43,7 @@ public class InfoExecutionPeriod extends InfoObject
      * 
      * @return InfoExecutionYear
      */
-    public InfoExecutionYear getInfoExecutionYear()
-    {
+    public InfoExecutionYear getInfoExecutionYear() {
         return infoExecutionYear;
     }
 
@@ -50,8 +52,7 @@ public class InfoExecutionPeriod extends InfoObject
      * 
      * @return String
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -61,8 +62,7 @@ public class InfoExecutionPeriod extends InfoObject
      * @param infoExecutionYear
      *            The infoExecutionYear to set
      */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear)
-    {
+    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
         this.infoExecutionYear = infoExecutionYear;
     }
 
@@ -72,28 +72,25 @@ public class InfoExecutionPeriod extends InfoObject
      * @param name
      *            The name to set
      */
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof InfoExecutionPeriod)
-        {
+    public boolean equals(Object obj) {
+        if (obj instanceof InfoExecutionPeriod) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) obj;
-            return (
-                getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear())
-                    && getName().equals(infoExecutionPeriod.getName()));
+            return (getInfoExecutionYear().equals(
+                    infoExecutionPeriod.getInfoExecutionYear()) && getName()
+                    .equals(infoExecutionPeriod.getName()));
 
         }
         return false;
     }
-    public String toString()
-    {
+
+    public String toString() {
         String result = "[INFOEXECUTIONPERIOD";
         result += ", id=" + getIdInternal();
         result += ", name=" + name;
@@ -103,11 +100,11 @@ public class InfoExecutionPeriod extends InfoObject
         result += "]\n";
         return result;
     }
+
     /**
      * @return PeriodState
      */
-    public PeriodState getState()
-    {
+    public PeriodState getState() {
         return state;
     }
 
@@ -117,63 +114,57 @@ public class InfoExecutionPeriod extends InfoObject
      * @param periodState
      *            The periodState to set
      */
-    public void setState(PeriodState state)
-    {
+    public void setState(PeriodState state) {
         this.state = state;
     }
 
     /**
      * @return
      */
-    public Integer getSemester()
-    {
+    public Integer getSemester() {
         return semester;
     }
 
     /**
      * @param integer
      */
-    public void setSemester(Integer integer)
-    {
+    public void setSemester(Integer integer) {
         semester = integer;
     }
 
-    public int compareTo(Object arg0)
-    {
+    public int compareTo(Object arg0) {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
-        int yearCmp = this.getInfoExecutionYear().compareTo(infoExecutionPeriod.getInfoExecutionYear());
-        return yearCmp + this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
+        int yearCmp = this.getInfoExecutionYear().compareTo(
+                infoExecutionPeriod.getInfoExecutionYear());
+        return yearCmp + this.getSemester().intValue()
+                - infoExecutionPeriod.getSemester().intValue();
     }
 
     /**
      * @return
      */
-    public Date getBeginDate()
-    {
+    public Date getBeginDate() {
         return beginDate;
     }
 
     /**
      * @param beginDate
      */
-    public void setBeginDate(Date beginDate)
-    {
+    public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
 
     /**
      * @return
      */
-    public Date getEndDate()
-    {
+    public Date getEndDate() {
         return endDate;
     }
 
     /**
      * @param endDate
      */
-    public void setEndDate(Date endDate)
-    {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -181,21 +172,36 @@ public class InfoExecutionPeriod extends InfoObject
      * Method created for presentation matters. Concatenates execution period
      * name with execution year name.
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         StringBuffer buffer = new StringBuffer();
 
-        // these ifs are needed due to cloner converting strategy (it looks to all
+        // these ifs are needed due to cloner converting strategy (it looks to
+        // all
         // properties).
-        if (this.getName() != null)
-        {
+        if (this.getName() != null) {
             buffer.append(this.getName());
         }
-        if (this.getInfoExecutionYear() != null)
-        {
+        if (this.getInfoExecutionYear() != null) {
             buffer.append(" - ").append(this.getInfoExecutionYear().getYear());
         }
         return buffer.toString();
     }
 
+    /**
+     * @param period
+     * @return
+     */
+    public static InfoExecutionPeriod copyFromDomain(IExecutionPeriod period) {
+        InfoExecutionPeriod infoExecutionPeriod = null;
+        if (period != null) {
+            infoExecutionPeriod = new InfoExecutionPeriod();
+            infoExecutionPeriod.setIdInternal(period.getIdInternal());
+            infoExecutionPeriod.setName(period.getName());
+            infoExecutionPeriod.setState(period.getState());
+            infoExecutionPeriod.setBeginDate(period.getBeginDate());
+            infoExecutionPeriod.setEndDate(period.getEndDate());
+            infoExecutionPeriod.setSemester(period.getSemester());
+        }
+        return infoExecutionPeriod;
+    }
 }

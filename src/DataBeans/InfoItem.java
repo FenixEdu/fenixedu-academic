@@ -5,6 +5,8 @@
 package DataBeans;
 
 import java.util.List;
+ 
+import Dominio.IItem;
 
 
 
@@ -166,4 +168,21 @@ public class InfoItem extends InfoObject implements Comparable {
 		this.links = links;
 	}
 
+    
+     /**
+     * @param item
+     * @return
+     */
+    public static InfoItem copyFromDomain(IItem item) {
+        InfoItem infoItem = null;
+        if (item != null) {
+            infoItem = new InfoItem();
+            infoItem.setIdInternal(item.getIdInternal());
+            infoItem.setInformation(item.getInformation());
+            infoItem.setItemOrder(item.getItemOrder());
+            infoItem.setName(item.getName());
+            infoItem.setUrgent(item.getUrgent());
+        }
+        return infoItem;
+    }
 }

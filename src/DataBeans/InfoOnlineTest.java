@@ -1,73 +1,84 @@
 /*
  * Created on 29/Jan/2004
- *
+ *  
  */
 package DataBeans;
 
 import java.util.List;
 
+import Dominio.IOnlineTest;
+
 /**
- *
  * @author Susana Fernandes
- *
+ *  
  */
 
-public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent
-{
-	private InfoDistributedTest infoDistributedTest;
-	private List associatedExecutionCourse;
-	private String publishmentMessage;
+public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
 
-	public InfoOnlineTest()
-	{
-	}
+    private InfoDistributedTest infoDistributedTest;
 
-	public List getAssociatedExecutionCourse()
-	{
-		return associatedExecutionCourse;
-	}
+    private List associatedExecutionCourse;
 
-	public InfoDistributedTest getInfoDistributedTest()
-	{
-		return infoDistributedTest;
-	}
+    private String publishmentMessage;
 
-	public String getPublishmentMessage()
-	{
-		return publishmentMessage;
-	}
+    public InfoOnlineTest() {
+    }
 
-	public void setAssociatedExecutionCourse(List list)
-	{
-		associatedExecutionCourse = list;
-	}
+    public List getAssociatedExecutionCourse() {
+        return associatedExecutionCourse;
+    }
 
-	public void setInfoDistributedTest(InfoDistributedTest test)
-	{
-		infoDistributedTest = test;
-	}
+    public InfoDistributedTest getInfoDistributedTest() {
+        return infoDistributedTest;
+    }
 
-	public void setPublishmentMessage(String string)
-	{
-		publishmentMessage = string;
-	}
+    public String getPublishmentMessage() {
+        return publishmentMessage;
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof InfoExam)
-		{
-			InfoOnlineTest infoOnlineTest = (InfoOnlineTest) obj;
+    public void setAssociatedExecutionCourse(List list) {
+        associatedExecutionCourse = list;
+    }
 
-			result =
-				getIdInternal().equals(infoOnlineTest.getIdInternal())
-					&& getInfoDistributedTest().equals(infoOnlineTest.getInfoDistributedTest())
-					&& getPublishmentMessage().equals(infoOnlineTest.getPublishmentMessage())
-					&& getAssociatedExecutionCourse().containsAll(
-						infoOnlineTest.getAssociatedExecutionCourse())
-					&& infoOnlineTest.getAssociatedExecutionCourse().containsAll(
-						getAssociatedExecutionCourse());
-		}
-		return result;
-	}
+    public void setInfoDistributedTest(InfoDistributedTest test) {
+        infoDistributedTest = test;
+    }
+
+    public void setPublishmentMessage(String string) {
+        publishmentMessage = string;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoExam) {
+            InfoOnlineTest infoOnlineTest = (InfoOnlineTest) obj;
+
+            result = getIdInternal().equals(infoOnlineTest.getIdInternal())
+                    && getInfoDistributedTest().equals(
+                            infoOnlineTest.getInfoDistributedTest())
+                    && getPublishmentMessage().equals(
+                            infoOnlineTest.getPublishmentMessage())
+                    && getAssociatedExecutionCourse().containsAll(
+                            infoOnlineTest.getAssociatedExecutionCourse())
+                    && infoOnlineTest.getAssociatedExecutionCourse()
+                            .containsAll(getAssociatedExecutionCourse());
+        }
+        return result;
+    }
+
+    /**
+     * @param onlineTest
+     * @return
+     */
+    public static InfoOnlineTest copyFromDomain(IOnlineTest onlineTest) {
+        InfoOnlineTest infoOnlineTest = null;
+        if (onlineTest != null) {
+            infoOnlineTest = new InfoOnlineTest();
+            infoOnlineTest.setIdInternal(onlineTest.getIdInternal());
+            infoOnlineTest.setPublishmentMessage(onlineTest
+                    .getPublishmentMessage());
+        }
+        return infoOnlineTest;
+    }
+
 }

@@ -10,14 +10,19 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoClass;
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
+import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoSiteClasses;
 import DataBeans.InfoSiteTimetable;
-import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.ISala;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -32,53 +37,43 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class PublicSiteComponentBuilder
-{
+public class PublicSiteComponentBuilder {
 
     private static PublicSiteComponentBuilder instance = null;
 
-    public PublicSiteComponentBuilder()
-    {
+    public PublicSiteComponentBuilder() {
     }
 
-    public static PublicSiteComponentBuilder getInstance()
-    {
-        if (instance == null)
-        {
+    public static PublicSiteComponentBuilder getInstance() {
+        if (instance == null) {
             instance = new PublicSiteComponentBuilder();
         }
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, ITurma domainClass)
-        throws FenixServiceException
-    {
+    public ISiteComponent getComponent(ISiteComponent component,
+            ITurma domainClass) throws FenixServiceException {
 
-        if (component instanceof InfoSiteTimetable)
-        {
-            return getInfoSiteTimetable((InfoSiteTimetable) component, domainClass);
-        }
-        else if (component instanceof InfoSiteClasses)
-        {
-            return getInfoSiteClasses((InfoSiteClasses) component, domainClass);
-        }
+        if (component instanceof InfoSiteTimetable) {
+            return getInfoSiteTimetable((InfoSiteTimetable) component,
+                    domainClass);
+        } else if (component instanceof InfoSiteClasses) { return getInfoSiteClasses(
+                (InfoSiteClasses) component, domainClass); }
 
         return null;
 
     }
 
     /**
-	 * @param classes
-	 * @return
-	 */
-    private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, ITurma domainClass)
-        throws FenixServiceException
-    {
+     * @param classes
+     * @return
+     */
+    private ISiteComponent getInfoSiteClasses(InfoSiteClasses component,
+            ITurma domainClass) throws FenixServiceException {
         List classes = new ArrayList();
         List infoClasses = new ArrayList();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
@@ -86,21 +81,17 @@ public class PublicSiteComponentBuilder
             IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
             ICursoExecucao executionDegree = domainClass.getExecutionDegree();
 
-            classes =
-                classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
-                    executionPeriod,
-                    domainClass.getAnoCurricular(),
-                    executionDegree);
+            classes = classDAO
+                    .readByExecutionPeriodAndCurricularYearAndExecutionDegree(
+                            executionPeriod, domainClass.getAnoCurricular(),
+                            executionDegree);
 
-            for (int i = 0; i < classes.size(); i++)
-            {
+            for (int i = 0; i < classes.size(); i++) {
                 ITurma taux = (ITurma) classes.get(i);
-                infoClasses.add(Cloner.copyClass2InfoClass(taux));
+                infoClasses.add(copyClass2InfoClass(taux));
             }
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 
@@ -109,44 +100,40 @@ public class PublicSiteComponentBuilder
     }
 
     /**
-	 * @param timetable
-	 * @param site
-	 * @return
-	 */
-    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ITurma domainClass)
-        throws FenixServiceException
-    {
+     * @param timetable
+     * @param site
+     * @return
+     */
+    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component,
+            ITurma domainClass) throws FenixServiceException {
         ArrayList infoLessonList = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
-            List shiftList = sp.getITurmaTurnoPersistente().readByClass(domainClass);
+            ITurnoAulaPersistente shiftLessonDAO = sp
+                    .getITurnoAulaPersistente();
+            List shiftList = sp.getITurmaTurnoPersistente().readByClass(
+                    domainClass);
             Iterator iterator = shiftList.iterator();
             infoLessonList = new ArrayList();
 
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 ITurno shift = (ITurno) iterator.next();
-                InfoShift infoShift = (InfoShift) Cloner.get(shift);
+                InfoShift infoShift = copyIShift2InfoShift(shift);
                 List lessonList = shiftLessonDAO.readByShift(shift);
                 Iterator lessonIterator = lessonList.iterator();
-                while (lessonIterator.hasNext())
-                {
+                while (lessonIterator.hasNext()) {
                     IAula elem = (IAula) lessonIterator.next();
-                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+                    InfoLesson infoLesson = copyILesson2InfoLesson(elem);
 
                     if (infoLesson != null) {
-                    	infoLesson.getInfoShiftList().add(infoShift);
-                    	infoLessonList.add(infoLesson);
+                        infoLesson.getInfoShiftList().add(infoShift);
+                        infoLessonList.add(infoLesson);
                     }
 
                 }
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 
@@ -154,4 +141,105 @@ public class PublicSiteComponentBuilder
         return component;
     }
 
+    private InfoLesson copyILesson2InfoLesson(IAula lesson) {
+        InfoLesson infoLesson = null;
+        if (lesson != null) {
+            infoLesson = new InfoLesson();
+            infoLesson.setIdInternal(lesson.getIdInternal());
+            infoLesson.setDiaSemana(lesson.getDiaSemana());
+            infoLesson.setFim(lesson.getFim());
+            infoLesson.setInicio(lesson.getInicio());
+            infoLesson.setTipo(lesson.getTipo());
+            infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
+            infoLesson
+                    .setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(lesson
+                            .getDisciplinaExecucao()));
+
+        }
+        return infoLesson;
+    }
+
+    /**
+     * @param executionCourse
+     * @return
+     */
+    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(
+            IExecutionCourse executionCourse) {
+        InfoExecutionCourse infoExecutionCourse = null;
+        if (executionCourse != null) {
+            infoExecutionCourse = new InfoExecutionCourse();
+            infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
+            infoExecutionCourse.setNome(executionCourse.getNome());
+            infoExecutionCourse.setSigla(executionCourse.getSigla());
+            infoExecutionCourse
+                    .setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(executionCourse
+                            .getExecutionPeriod()));
+        }
+        return infoExecutionCourse;
+    }
+
+    /**
+     * @param sala
+     * @return
+     */
+    private InfoRoom copyISala2InfoRoom(ISala sala) {
+        InfoRoom infoRoom = null;
+        if (sala != null) {
+            infoRoom = new InfoRoom();
+            infoRoom.setIdInternal(sala.getIdInternal());
+            infoRoom.setNome(sala.getNome());
+        }
+        return infoRoom;
+    }
+
+    /**
+     * @param shift
+     * @return
+     */
+    private InfoShift copyIShift2InfoShift(ITurno shift) {
+        InfoShift infoShift = null;
+        if (shift != null) {
+            infoShift = new InfoShift();
+            infoShift.setIdInternal(shift.getIdInternal());
+            infoShift.setNome(shift.getNome());
+        }
+        return infoShift;
+    }
+
+    /**
+     * @param taux
+     * @return
+     */
+    private InfoClass copyClass2InfoClass(ITurma taux) {
+        InfoClass infoClass = null;
+        if (taux != null) {
+            infoClass = new InfoClass();
+            infoClass.setIdInternal(taux.getIdInternal());
+            infoClass.setNome(taux.getNome());
+            infoClass.setAnoCurricular(taux.getAnoCurricular());
+            infoClass
+                    .setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(taux
+                            .getExecutionPeriod()));
+        }
+        return infoClass;
+    }
+
+    /**
+     * @param period
+     * @return
+     */
+    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(
+            IExecutionPeriod period) {
+        InfoExecutionPeriod infoExecutionPeriod = null;
+        if (period != null) {
+            infoExecutionPeriod = new InfoExecutionPeriod();
+            infoExecutionPeriod.setIdInternal(period.getIdInternal());
+            infoExecutionPeriod.setName(period.getName());
+            infoExecutionPeriod.setState(period.getState());
+            infoExecutionPeriod.setBeginDate(period.getBeginDate());
+            infoExecutionPeriod.setEndDate(period.getEndDate());
+            infoExecutionPeriod.setSemester(period.getSemester());
+        }
+        return infoExecutionPeriod;
+    }
 }

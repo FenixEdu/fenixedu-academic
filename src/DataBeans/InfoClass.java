@@ -6,6 +6,8 @@
 
 package DataBeans;
 
+import Dominio.ITurma;
+
 
 /**
  *
@@ -110,4 +112,13 @@ public class InfoClass extends InfoObject {
 		this.infoExecutionPeriod = infoExecutionPeriod;
 	}
 
+    public static InfoClass copyFromDomain(ITurma turma) {
+        InfoClass infoClass = null;
+        if (turma != null) {
+            infoClass = new InfoClass();
+            infoClass.setIdInternal(turma.getIdInternal());
+            infoClass.setNome(turma.getNome());
+        }
+        return infoClass;
+    }
 }

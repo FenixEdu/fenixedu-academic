@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import Dominio.IExam;
 import Util.Season;
 
 public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
@@ -289,4 +290,26 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         return result;
     }
 
+    /**
+     * @param evaluation
+     * @return
+     */
+    public static InfoExam copyFromDomain(IExam exam) {
+        InfoExam infoExam = null;
+        if (exam != null) {
+            infoExam = new InfoExam();
+            infoExam.setIdInternal(exam.getIdInternal());
+            infoExam.setBeginning(exam.getBeginning());
+            infoExam.setDay(exam.getDay());
+            infoExam.setEnd(exam.getEnd());
+            infoExam.setEnrollmentBeginDay(exam.getEnrollmentBeginDay());
+            infoExam.setEnrollmentBeginTime(exam.getEnrollmentBeginTime());
+            infoExam.setEnrollmentEndDay(exam.getEnrollmentEndDay());
+            infoExam.setEnrollmentEndTime(exam.getEnrollmentEndTime());
+            infoExam.setPublishmentMessage(exam.getPublishmentMessage());
+            infoExam.setSeason(exam.getSeason());
+        }
+        return infoExam;
+    }
+    
 }

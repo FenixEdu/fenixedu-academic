@@ -11,7 +11,7 @@ import org.apache.commons.lang.enum.ValuedEnum;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 20/Fev/2004
  *
  */
-public class FenixValuedEnum extends ValuedEnum implements Serializable
+public abstract class FenixValuedEnum extends ValuedEnum implements Serializable
 {
 
     /**

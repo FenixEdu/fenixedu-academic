@@ -7,7 +7,8 @@ package DataBeans;
 
 import java.util.List;
 
-import DataBeans.teacher.*;
+import DataBeans.teacher.InfoCategory;
+import Dominio.ITeacher;
 
 
 /**
@@ -143,4 +144,18 @@ public class InfoTeacher extends InfoObject{
 		return result;
 	}
     
+    /**
+     * @param teacher
+     * @return
+     */
+    public static InfoTeacher copyFromDomain(ITeacher teacher) {
+        InfoTeacher infoTeacher = null;
+        if (teacher != null) {
+            infoTeacher = new InfoTeacher();
+            infoTeacher.setIdInternal(teacher.getIdInternal());
+            infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
+          
+        }
+        return infoTeacher;
+    }
 }

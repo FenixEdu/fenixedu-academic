@@ -8,6 +8,8 @@ package DataBeans;
 
 import java.util.List;
 
+import Dominio.ICursoExecucao;
+
 /**
  * @author tfc130
  */
@@ -160,4 +162,16 @@ public class InfoExecutionDegree extends InfoObject
         this.coordinatorsList = coordinatorsList;
     }
 
+    /**
+     * @param executionDegree
+     * @return
+     */
+    public static InfoExecutionDegree copyFromDomain(ICursoExecucao executionDegree) {
+        InfoExecutionDegree infoExecutionDegree = null;
+        if (executionDegree != null) {
+            infoExecutionDegree = new InfoExecutionDegree();
+            infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
+            }
+        return infoExecutionDegree;
+    }
 }
