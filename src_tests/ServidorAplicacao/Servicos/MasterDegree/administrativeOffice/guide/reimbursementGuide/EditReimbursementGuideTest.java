@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.ReimbursementGuideState;
@@ -71,7 +72,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
 
     }
 
-  /*  public void testEditNonExistingReimbursementGuide() {
+    public void testEditNonExistingReimbursementGuide() {
         try {
             Integer reimbursementGuideId = new Integer(150);
             Date date = Calendar.getInstance().getTime();
@@ -93,7 +94,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
         }
 
     }
-*/
+
     public void testSucessfullWhenNewStateIsEqualToPayed() {
 
         try {

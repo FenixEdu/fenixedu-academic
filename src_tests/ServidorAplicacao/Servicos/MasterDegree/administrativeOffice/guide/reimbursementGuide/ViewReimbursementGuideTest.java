@@ -1,5 +1,8 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -61,9 +64,11 @@ public class ViewReimbursementGuideTest extends AdministrativeOfficeBaseTest {
     public void testViewNonExistingReimbursementGuide() {
         try {
             Integer guideId = new Integer(5762);
+            Date date = Calendar.getInstance().getTime();
+
             Object args[] = { guideId};
 
-            ServiceManagerServiceFactory
+            InfoReimbursementGuide infoReimbursementGuide = (InfoReimbursementGuide) ServiceManagerServiceFactory
                     .executeService(userView, getNameOfServiceToBeTested(),
                             args);
 
