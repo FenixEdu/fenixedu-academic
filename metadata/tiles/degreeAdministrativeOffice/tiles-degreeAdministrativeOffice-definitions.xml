@@ -26,4 +26,8 @@
 	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentContextWithoutRules.jsp"/>
 	</definition>
+
+	<definition name="definition.degreeAdministrativeOffice.curricular.course.manual.equivalence" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/equivalence/equivalenceContext.jsp"/>
+	</definition>
 </tiles-definitions>

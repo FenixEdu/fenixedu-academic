@@ -716,7 +716,7 @@ public abstract class EnrolmentContextManager {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
 //				return curricularCourseScope.getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
 				return	curricularCourseScope.getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) &&
-						curricularCourseScope.getBranch().equals(studentBranch) &&
+						curricularCourseScope.getBranch().equals(studentBranch) && //FIXME DAVID-RICARDO: Verificar o ramo vazio!?
 						curricularCourseScope.getCurricularSemester().getSemester().equals(currentSemester);
 			}
 		});

@@ -18,6 +18,10 @@
 	<definition name="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
 	</definition>
+	<definition name="df.page.chooseStudentAndDegreeTypeForManualEquivalence" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/equivalence/chooseStudentAndDegreeTypeForManualEquivalence.jsp"/>
+	</definition>
+
 
 	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolmentWithRules.jsp"/>
@@ -46,6 +50,7 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolmentWithoutRules.jsp"/>
 	</definition>
 
+
 	<definition name="df.page.showAvailableOptionalCurricularCoursesWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableOptionalCurricularCoursesWithoutRules.jsp"/>
 	</definition>
@@ -60,5 +65,12 @@
 	</definition>
 	<definition name="df.page.acceptOptionalEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptOptionalEnrolmentWithoutRules.jsp"/>
+	</definition>
+
+
+
+
+	<definition name="df.page.showCurricularCoursesForEquivalence" extends="definition.degreeAdministrativeOffice.curricular.course.manual.equivalence">
+		<put name="body" value="/degreeAdministrativeOffice/equivalence/showCurricularCoursesForEquivalence.jsp"/>
 	</definition>
 </tiles-definitions>

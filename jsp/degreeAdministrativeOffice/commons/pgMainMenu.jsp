@@ -10,4 +10,7 @@
 	<li>
 		<html:link page="/setStartMode.do?method=optionalWithoutRules"><bean:message key="link.student.enrolment.in.optional.curricular.course.without.rules"/></html:link>
 	</li>
+	<li>
+		<html:link page="/setStartMode.do?method=manualEquivalence"><bean:message key="link.manual.equivalence"/></html:link>
+	</li>
 </ul>     

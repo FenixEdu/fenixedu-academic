@@ -6,16 +6,16 @@
 <bean:define id="degreeTypeList" name="<%= SessionConstants.DEGREE_TYPE %>"/>
 
 <center>
-<h2><bean:message key="title.student.enrolment.with.rules"/></h2>
+<h2><bean:message key="tilte.manual.equivalence"/></h2>
 <html:errors/>
 <br/>
 </center>
-<b><bean:message key="label.first.step.enrolment"/></b>
+<b><bean:message key="label.first.step.equivalence"/></b>
 <center>
 <br/>
 <br/>
 <html:form action="/prepareStudentEnrolment.do">
-	<html:hidden property="method" value="withRules"/>
+	<html:hidden property="method" value="manualEquivalence"/>
 	<table border="0">
 		<tr>
 			<td align="left"><bean:message key="label.choose.degree.type"/>&nbsp;</td>

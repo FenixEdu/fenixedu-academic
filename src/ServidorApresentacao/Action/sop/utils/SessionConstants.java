@@ -26,6 +26,8 @@ public abstract class SessionConstants {
 	public static final String ENROLMENT_TO_REMOVE_LIST_KEY = "erolmentsToRemoveList";
 	public static final String ENROLMENT_CAN_BE_REMOVED_KEY = "canRemoveEnrolments";
 
+	public static final String EQUIVALENCE_CONTEXT_KEY = "equivalenceContext";
+
 	//
 	// Constants for Student Enrolment...
 	//

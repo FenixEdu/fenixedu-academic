@@ -44,6 +44,12 @@
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
 			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
 		</form-bean>
+
+		<form-bean name="manualEquivalenceFrom" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="curricularCoursesToGiveEquivalence" type="java.lang.Integer[]"/>
+			<form-property name="curricularCoursesToGetEquivalence" type="java.lang.Integer[]"/>
+		</form-bean>
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================ -->
@@ -98,6 +104,7 @@
 			<forward name="chooseStudentAndDegreeTypeWithRules" path="df.page.chooseStudentAndDegreeTypeWithRules"/>
 			<forward name="chooseStudentAndDegreeTypeWithoutRules" path="df.page.chooseStudentAndDegreeTypeWithoutRules"/>
 			<forward name="chooseStudentAndDegreeTypeOptionalWithoutRules" path="df.page.chooseStudentAndDegreeTypeOptionalWithoutRules"/>
+			<forward name="chooseStudentAndDegreeTypeForManualEquivalence" path="df.page.chooseStudentAndDegreeTypeForManualEquivalence"/>
 		</action>
 
 		<action	name="getStudentByNumberAndDegreeTypeForm"
@@ -110,9 +117,11 @@
 			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
 			<forward name="startCurricularCourseEnrolmentWithoutRules" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
 			<forward name="startCurricularCourseEnrolmentOptionalWithoutRules" path="/optionalCurricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
+			<forward name="startManualEquivalence" path="/manualEquivalenceManager.do?method=show"/>
 			<forward name="errorWithRules" path="/setStartMode.do?method=withRules"/>
 			<forward name="errorWithoutRules" path="/setStartMode.do?method=withoutRules"/>
 			<forward name="errorOptionalWithoutRules" path="/setStartMode.do?method=optionalWithoutRules"/>
+			<forward name="errorManualEquivalence" path="/setStartMode.do?method=manualEquivalence"/>
 		</action>
 
 		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
@@ -181,6 +190,17 @@
 			<forward name="verifyEnrolment" path="df.page.verifyOptionalEnrolmentWithoutRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptOptionalEnrolmentWithoutRules"/>
 			<forward name="cancel" path="/prepareStudentEnrolment.do?method=optionalWithoutRules"/>
+			<forward name="home" path="df.page.main"/>
+		</action>
+
+		<action	name="manualEquivalenceFrom"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.ManualEquivalenceManagerDispatchAction"
+				path="/manualEquivalenceManager"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForEquivalence"/>
+			<forward name="begin" path="/prepareStudentEnrolment.do?method=optionalWithoutRules"/>
 			<forward name="home" path="df.page.main"/>
 		</action>
 	</action-mappings>

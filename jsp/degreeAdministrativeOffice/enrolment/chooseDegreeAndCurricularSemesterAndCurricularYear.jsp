@@ -10,7 +10,7 @@
 <html:errors/>
 <br/>
 </center>
-<b><bean:message key="label.second.step"/></b>
+<b><bean:message key="label.second.step.enrolment"/></b>
 <center>
 <br/>
 <br/>

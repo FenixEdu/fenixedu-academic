@@ -19,7 +19,7 @@ import Util.TipoCurso;
 
 public class SetStartModeDispatchAction extends DispatchAction {
 	
-	private final String[] forwards = { "chooseStudentAndDegreeTypeWithRules", "chooseStudentAndDegreeTypeWithoutRules", "chooseStudentAndDegreeTypeOptionalWithoutRules" };
+	private final String[] forwards = { "chooseStudentAndDegreeTypeWithRules", "chooseStudentAndDegreeTypeWithoutRules", "chooseStudentAndDegreeTypeOptionalWithoutRules", "chooseStudentAndDegreeTypeForManualEquivalence" };
 
 	public ActionForward withRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
@@ -37,5 +37,11 @@ public class SetStartModeDispatchAction extends DispatchAction {
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
 		return mapping.findForward(forwards[2]);
+	}
+
+	public ActionForward manualEquivalence(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List degreeTypeList = TipoCurso.toLabelValueBeanList();
+		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
+		return mapping.findForward(forwards[3]);
 	}
 }
