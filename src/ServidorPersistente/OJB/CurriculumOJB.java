@@ -17,7 +17,6 @@ import Dominio.ICurriculum;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurriculum;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author EP 15
  */
@@ -49,31 +48,7 @@ public class CurriculumOJB extends ObjectFenixOJB implements IPersistentCurricul
         criteria.addOrderBy("lastModificationDate", false);
         return (ICurriculum) queryObject(Curriculum.class, criteria);
     }
-    public void lockWrite(ICurriculum curriculum)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-        ICurriculum curriculumFromDB = null;
-        // If there is nothing to write, simply return.
-        if (curriculum == null)
-            return;
-        // Read curriculum from database.
-        curriculumFromDB = this.readCurriculumByCurricularCourse(curriculum.getCurricularCourse());
-        // If curriculum is not in database, then write it.
-        if (curriculumFromDB == null)
-            super.lockWrite(curriculum);
-        // else If the curriculum is mapped to the database, then write any
-		// existing changes.
-        else if (
-            (curriculum instanceof Curriculum)
-                && ((Curriculum) curriculumFromDB).getIdInternal().equals(
-                    ((Curriculum) curriculum).getIdInternal()))
-        {
-            super.lockWrite(curriculum);
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
-    }
+    
     public List readAll() throws ExcepcaoPersistencia
     {
         return queryList(Curriculum.class, new Criteria());

@@ -3,10 +3,10 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
 import Dominio.Curso;
 import Dominio.ICurso;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -20,40 +20,41 @@ import Util.TipoCurso;
  * @author lmac1
  */
 
-public class InsertDegree implements IServico {
+public class InsertDegree implements IService
+{
 
-	private static InsertDegree service = new InsertDegree();
+   
 
-	public static InsertDegree getService() {
-		return service;
-	}
+    public InsertDegree()
+    {
+    }
 
-	private InsertDegree() {
-	}
+   
 
-	public final String getNome() {
-		return "InsertDegree";
-	}
-	
+    public void run(InfoDegree infoDegree) throws FenixServiceException
+    {
 
-	public void run(InfoDegree infoDegree) throws FenixServiceException {
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
 
-		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-				ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
-			
-				String code = infoDegree.getSigla();
-				String name = infoDegree.getNome();
-				TipoCurso type = infoDegree.getTipoCurso();
+            String code = infoDegree.getSigla();
+            String name = infoDegree.getNome();
+            TipoCurso type = infoDegree.getTipoCurso();
 
-				ICurso degree = new Curso(code, name, type);
-	
-				persistentDegree.lockWrite(degree);
+            ICurso degree = new Curso(code, name, type);
 
-		} catch(ExistingPersistentException existingException) {
-			throw new ExistingServiceException(existingException);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            persistentDegree.simpleLockWrite(degree);
+
+        }
+        catch (ExistingPersistentException existingException)
+        {
+            throw new ExistingServiceException(existingException);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }

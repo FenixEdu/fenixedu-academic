@@ -10,7 +10,6 @@ import Dominio.IEnrolmentEquivalence;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao
@@ -25,37 +24,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
 
    
 
-    public void lockWrite(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestrictionToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        IEquivalentEnrolmentForEnrolmentEquivalence equivalenceFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (enrolmentEquivalenceRestrictionToWrite == null)
-        {
-            return;
-        }
-
-        // Read IEquivalentEnrolmentForEnrolmentEquivalence from database.
-
-        equivalenceFromDB =
-            readByEnrolmentEquivalenceAndEquivalentEnrolment(
-                enrolmentEquivalenceRestrictionToWrite.getEnrolmentEquivalence(),
-                enrolmentEquivalenceRestrictionToWrite.getEquivalentEnrolment());
-
-        // If IEquivalentEnrolmentForEnrolmentEquivalence is not in database, then write it.
-        if (equivalenceFromDB == null)
-        {
-            super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
-            // else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
-        } else if (equivalenceFromDB.getIdInternal().equals(enrolmentEquivalenceRestrictionToWrite.getIdInternal()))
-        {
-            super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
-            // else Throw an already existing exception
-        } else
-            throw new ExistingPersistentException();
-    }
+    
 
     public void delete(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction)
         throws ExcepcaoPersistencia

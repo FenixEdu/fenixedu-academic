@@ -1,67 +1,56 @@
 /*
  * Created on 21/Mar/2003
- *
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.contributor;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoContributor;
 import DataBeans.util.Cloner;
 import Dominio.Contributor;
 import Dominio.IContributor;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class CreateContributor implements IServico {
+public class CreateContributor implements IService
+{
 
+    /**
+     * The actor of this class.
+     */
+    public CreateContributor()
+    {
+    }
 
-	private static CreateContributor servico = new CreateContributor();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static CreateContributor getService() {
-		return servico;
-	}
+    public void run(InfoContributor newContributor) throws Exception
+    {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private CreateContributor() { 
-	}
+        IContributor contributor = new Contributor();
 
-	/**
-	 * Returns The Service Name */
+        ISuportePersistente sp = null;
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
 
-	public final String getNome() {
-		return "CreateContributor";
-	}
+            sp.getIPersistentContributor().simpleLockWrite(contributor);
+            contributor = Cloner.copyInfoContributor2IContributor(newContributor);
 
-	public void run(InfoContributor newContributor) throws Exception{
-
-		IContributor contributor = new Contributor();
-		
-		ISuportePersistente sp = null;
-		
-		contributor = Cloner.copyInfoContributor2IContributor(newContributor);
-
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			sp.getIPersistentContributor().write(contributor);
-		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException(ex);
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-	}
+        }
+        catch (ExistingPersistentException ex)
+        {
+            throw new ExistingServiceException(ex);
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+    }
 }

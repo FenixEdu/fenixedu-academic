@@ -24,7 +24,6 @@ import Dominio.ShiftProfessorship;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.OJB.ObjectFenixOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 import Util.TipoCurso;
 
@@ -73,39 +72,39 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
         return teacherShiftPercentageFromBD;
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentObject#lockWrite(java.lang.Object)
-	 */
-    public void lockWrite(Object obj) throws ExcepcaoPersistencia
-    {
-        if (obj instanceof IShiftProfessorship)
-        {
-
-            IShiftProfessorship teacherShiftPercentageToWrite = (IShiftProfessorship) obj;
-
-            IShiftProfessorship teacherShiftPercentageFromBD = this.readByUnique(
-                    teacherShiftPercentageToWrite);
-            // If department is not in database, then write it.
-            if (teacherShiftPercentageFromBD == null)
-            {
-                super.lockWrite(teacherShiftPercentageToWrite);
-            }
-            else if (// else If the department is mapped to the database, then write any existing
-					   // changes.
-            teacherShiftPercentageFromBD.getIdInternal()
-                    .equals(teacherShiftPercentageToWrite.getIdInternal()))
-            {
-                super.lockWrite(teacherShiftPercentageToWrite);
-
-            }
-            else
-            { // else Throw an already existing exception
-                throw new ExistingPersistentException();
-            }
-        }
-    }
+//    /*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see ServidorPersistente.IPersistentObject#lockWrite(java.lang.Object)
+//	 */
+//    public void lockWrite(Object obj) throws ExcepcaoPersistencia
+//    {
+//        if (obj instanceof IShiftProfessorship)
+//        {
+//
+//            IShiftProfessorship teacherShiftPercentageToWrite = (IShiftProfessorship) obj;
+//
+//            IShiftProfessorship teacherShiftPercentageFromBD = this.readByUnique(
+//                    teacherShiftPercentageToWrite);
+//            // If department is not in database, then write it.
+//            if (teacherShiftPercentageFromBD == null)
+//            {
+//                super.lockWrite(teacherShiftPercentageToWrite);
+//            }
+//            else if (// else If the department is mapped to the database, then write any existing
+//					   // changes.
+//            teacherShiftPercentageFromBD.getIdInternal()
+//                    .equals(teacherShiftPercentageToWrite.getIdInternal()))
+//            {
+//                super.lockWrite(teacherShiftPercentageToWrite);
+//
+//            }
+//            else
+//            { // else Throw an already existing exception
+//                throw new ExistingPersistentException();
+//            }
+//        }
+//    }
 
     /*
 	 * (non-Javadoc)

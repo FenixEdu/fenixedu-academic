@@ -1,0 +1,29 @@
+
+	<class-descriptor class="middleware.mathResponsibles.Math_RESPONSAVEIS" table="math_RESPONSAVEIS">
+		<field-descriptor name="idInternal" primarykey="true" default-fetch="true" column="ID_INTERNAL" jdbc-type="INTEGER"/>
+		<field-descriptor name="codigo_do_Curso" default-fetch="true" column="CODIGO_DO_CURSO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="campus" default-fetch="true" column="CAMPUS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome_do_Curso" default-fetch="true" column="NOME_DO_CURSO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="abreviatura_do_Curso" default-fetch="true" column="ABREVIATURA_DO_CURSO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome_da_disciplina" default-fetch="true" column="NOME_DA_DISCIPLINA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="ano" default-fetch="true" column="ANO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="semestre" default-fetch="true" column="SEMESTRE" jdbc-type="VARCHAR"/>
+		<field-descriptor name="tipo_de_disciplina" default-fetch="true" column="TIPO_DE_DISCIPLINA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome_da_area_cientifica" default-fetch="true" column="NOME_DA_AREA_CIENTIFICA" jdbc-type="VARCHAR"/>
+		<field-descriptor name="departamento" default-fetch="true" column="DEPARTAMENTO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="seccao" default-fetch="true" column="SECCAO" jdbc-type="VARCHAR"/>
+		<field-descriptor name="codigo_da_disciplina_no_IST" default-fetch="true" column="CODIGO_DA_DISCIPLINA_NO_IST" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome_da_disciplina_no_IST" default-fetch="true" column="NOME_DA_DISCIPLINA_NO_IST" jdbc-type="VARCHAR"/>
+		<field-descriptor name="horas_teoricas_semanais" default-fetch="true" column="HORAS_TEORICAS_SEMANAIS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="horas_praticas_semanais" default-fetch="true" column="HORAS_PRATICAS_SEMANAIS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="horas_laboratoriais_semanais" default-fetch="true" column="HORAS_LABORATORIAIS_SEMANAIS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="horas_de_auto_estudo_semanais" default-fetch="true" column="HORAS_DE_AUTO_ESTUDO_SEMANAIS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="creditos_internos" default-fetch="true" column="CREDITOS_INTERNOS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="creditos_ECTS" default-fetch="true" column="CREDITOS_ECTS" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome_do_responsavel" default-fetch="true" column="NOME_DO_RESPONSAVEL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome_abreviado_do_responsavel" default-fetch="true" column="NOME_ABREVIADO_DO_RESPONSAVEL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="telefone_do_responsavel" default-fetch="true" column="TELEFONE_DO_RESPONSAVEL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="nome_da_seccao_do_responsavel" default-fetch="true" column="NOME_DA_SECCAO_DO_RESPONSAVEL" jdbc-type="VARCHAR"/>
+		<field-descriptor name="EC_do_responsavel" default-fetch="true" column="EC_DO_RESPONSAVEL" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+

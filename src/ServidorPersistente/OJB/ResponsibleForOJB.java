@@ -16,11 +16,9 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
-import Dominio.Professorship;
 import Dominio.ResponsibleFor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentResponsibleFor;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author João Mota
@@ -103,37 +101,7 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
         }
     }
 
-    public void lockWrite(IResponsibleFor responsibleFor)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-        IResponsibleFor responsibleForFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (responsibleFor == null)
-            return;
-
-        // Read responsibleFor from database.
-        responsibleForFromDB =
-            this.readByTeacherAndExecutionCourse(
-                responsibleFor.getTeacher(),
-                responsibleFor.getExecutionCourse());
-
-        // If responsibleFor is not in database, then write it.
-        if (responsibleForFromDB == null)
-            super.lockWrite(responsibleFor);
-
-        // else If the responsibleFor is mapped to the database, then write any
-        // existing changes.
-        else if (
-            (responsibleFor instanceof ResponsibleFor)
-                && ((Professorship) responsibleForFromDB).getIdInternal().equals(
-                    ((Professorship) responsibleFor).getIdInternal()))
-        {
-            super.lockWrite(responsibleFor);
-            // else Throw an already existing exception
-        } else
-            throw new ExistingPersistentException();
-    }
+    
 
     /*
 	 * (non-Javadoc)

@@ -17,14 +17,13 @@ import Dominio.IAula;
 import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 
 
 public interface ITurnoAulaPersistente extends IPersistentObject{
     public ITurnoAula readByShiftAndLesson(ITurno shift, IAula lesson)
                throws ExcepcaoPersistencia;
-    public void lockWrite(ITurnoAula turnoAula) throws ExcepcaoPersistencia, ExistingPersistentException;
+    
     public void delete(ITurnoAula turnoAula) throws ExcepcaoPersistencia;
    
 	

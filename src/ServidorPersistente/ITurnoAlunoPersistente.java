@@ -18,7 +18,6 @@ import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 
@@ -28,7 +27,7 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
 	public List readByStudentAndExecutionPeriod(IStudent student,IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
     public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno)
                throws ExcepcaoPersistencia;
-    public void lockWrite(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia, ExistingPersistentException;
+   
     public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia;
    
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;   

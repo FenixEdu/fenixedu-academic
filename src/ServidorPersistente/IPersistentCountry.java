@@ -22,7 +22,7 @@ public interface IPersistentCountry extends IPersistentObject {
 	public ICountry readCountryByCode(String code) throws ExcepcaoPersistencia;
 	
     public List readAllCountrys() throws ExcepcaoPersistencia;
-    public void writeCountry(ICountry country) throws ExcepcaoPersistencia;
+   
     public void deleteCountryByName(String name) throws ExcepcaoPersistencia;
     public void deleteCountry(ICountry country) throws ExcepcaoPersistencia;
     

@@ -10,7 +10,6 @@ import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 
@@ -21,170 +20,133 @@ import Util.EnrolmentEvaluationType;
 public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersistentEnrolmentEvaluation
 {
 
-	public void lockWrite(IEnrolmentEvaluation enrolmentEvaluationToWrite) throws ExcepcaoPersistencia, ExistingPersistentException
-	{
+    public void delete(IEnrolmentEvaluation enrolmentEvaluation) throws ExcepcaoPersistencia
+    {
+        try
+        {
+            super.delete(enrolmentEvaluation);
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
 
-		IEnrolmentEvaluation enrolmentEvaluationFromDB = null;
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        return queryList(EnrolmentEvaluation.class, new Criteria());
+    }
 
-		// If there is nothing to write, simply return.
-		if (enrolmentEvaluationToWrite == null)
-		{
-			return;
-		}
+    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
+            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade)
+            throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
+        if (grade == null)
+        {
+            criteria.addIsNull("grade");
+        }
+        else
+        {
+            criteria.addEqualTo("grade", grade);
+        }
 
-		// Read Enrolment from database.
+        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) queryObject(
+                EnrolmentEvaluation.class, criteria);
 
-		enrolmentEvaluationFromDB =
-			this.readByUnique(enrolmentEvaluationToWrite.getWhen(), enrolmentEvaluationToWrite.getEnrolment());
+        return enrolmentEvaluation;
+    }
 
-		//		enrolmentEvaluationFromDB =
-		//			(IEnrolmentEvaluation)
-		// this.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
-		//				enrolmentEvaluationToWrite.getEnrolment(),
-		//				new
-		// EnrolmentEvaluationType(enrolmentEvaluationToWrite.getEnrolmentEvaluationType().getType()),
-		//				enrolmentEvaluationToWrite.getGrade());
-		// If Enrolment is not in database, then write it.
-		if (enrolmentEvaluationFromDB == null)
-		{
-			super.lockWrite(enrolmentEvaluationToWrite);
-			// else If the Enrolment is mapped to the database, then write any
-			// existing changes.
-		} else if (
-			(enrolmentEvaluationToWrite instanceof EnrolmentEvaluation)
-				&& ((EnrolmentEvaluation) enrolmentEvaluationFromDB).getIdInternal().equals(
-					((EnrolmentEvaluation) enrolmentEvaluationToWrite).getIdInternal()))
-		{
-			super.lockWrite(enrolmentEvaluationToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+    public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        List result = queryList(EnrolmentEvaluation.class, criteria);
+        return result;
+    }
 
-	public void delete(IEnrolmentEvaluation enrolmentEvaluation) throws ExcepcaoPersistencia
-	{
-		try
-		{
-			super.delete(enrolmentEvaluation);
-		} catch (ExcepcaoPersistencia ex)
-		{
-			throw ex;
-		}
-	}
+    public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrolment enrolment,
+            EnrolmentEvaluationState evaluationState) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolmentEvaluationState", evaluationState);
 
-	public List readAll() throws ExcepcaoPersistencia
-	{
-		return queryList(EnrolmentEvaluation.class, new Criteria());
-	}
+        List examsWithRepetition = queryList(EnrolmentEvaluation.class, criteria);
+        return examsWithRepetition;
+    }
 
-	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
-		IEnrolment enrolment,
-		EnrolmentEvaluationType evaluationType,
-		String grade)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-		criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
-		if (grade == null)
-		{
-			criteria.addIsNull("grade");
-		} else
-		{
-			criteria.addEqualTo("grade", grade);
-		}
+    public IEnrolmentEvaluation readByUnique(Date whenAlter, IEnrolment enrolment)
+            throws ExcepcaoPersistencia
+    {
+        try
+        {
+            Criteria criteria = new Criteria();
+            criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+            criteria.addEqualTo("when", whenAlter);
+            IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(
+                    EnrolmentEvaluation.class, criteria);
 
-		IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+            return evaluationsWithRepetition;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw e;
+        }
+    }
 
-		return enrolmentEvaluation;
-	}
+    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
+            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
+            throws ExcepcaoPersistencia
+    {
 
-	public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-		List result = queryList(EnrolmentEvaluation.class, criteria);
-		return result;
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        //		criteria.addEqualTo("enrolmentEvaluationType",
+        // evaluationType.getType());
+        criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
+        criteria.addEqualTo("grade", grade);
+        criteria.addEqualTo("when", whenAltered);
 
-	public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrolment enrolment, EnrolmentEvaluationState evaluationState)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-		criteria.addEqualTo("enrolmentEvaluationState", evaluationState);
+        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) queryObject(
+                EnrolmentEvaluation.class, criteria);
 
-		List examsWithRepetition = queryList(EnrolmentEvaluation.class, criteria);
-		return examsWithRepetition;
-	}
+        return enrolmentEvaluation;
+    }
 
-	public IEnrolmentEvaluation readByUnique(Date whenAlter, IEnrolment enrolment) throws ExcepcaoPersistencia
-	{
-		try
-		{
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-			criteria.addEqualTo("when", whenAlter);
-			IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+    public List readAlreadySubmitedMarks(List enrolmentIds) throws ExcepcaoPersistencia
+    {
+        Criteria finalCriteria = new Criteria();
+        Criteria firstCriteria = new Criteria();
+        Criteria secondCriteria = new Criteria();
 
-			return evaluationsWithRepetition;
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw e;
-		}
-	}
+        Criteria markNotEmptyCriteria = new Criteria();
+        Criteria markNotNullCriteria = new Criteria();
 
-	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
-		IEnrolment enrolment,
-		EnrolmentEvaluationType evaluationType,
-		String grade,
-		Date whenAltered)
-		throws ExcepcaoPersistencia
-	{
+        markNotEmptyCriteria.addNotEqualTo("grade", "");
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-//		criteria.addEqualTo("enrolmentEvaluationType", evaluationType.getType());
-		criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
-		criteria.addEqualTo("grade", grade);
-		criteria.addEqualTo("when", whenAltered);
+        markNotNullCriteria.addNotNull("grade");
 
-		IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+        Criteria markCriteria = new Criteria();
+        markCriteria.addAndCriteria(markNotNullCriteria);
+        markCriteria.addOrCriteria(markNotEmptyCriteria);
 
-		return enrolmentEvaluation;
-	}
+        firstCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.FINAL_OBJ);
 
-	public List readAlreadySubmitedMarks(List enrolmentIds) throws ExcepcaoPersistencia
-	{
-		Criteria finalCriteria = new Criteria();
-		Criteria firstCriteria = new Criteria();
-		Criteria secondCriteria = new Criteria();
+        Criteria anulledCriteria = new Criteria();
+        anulledCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.ANNULED_OBJ);
+        firstCriteria.addOrCriteria(anulledCriteria);
 
-		Criteria markNotEmptyCriteria = new Criteria();
-		Criteria markNotNullCriteria = new Criteria();
+        secondCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.TEMPORARY_OBJ);
+        secondCriteria.addAndCriteria(markCriteria);
 
-		markNotEmptyCriteria.addNotEqualTo("grade", "");
+        firstCriteria.addOrCriteria(secondCriteria);
 
-		markNotNullCriteria.addNotNull("grade");
+        finalCriteria.addIn("enrolment.idInternal", enrolmentIds);
+        finalCriteria.addAndCriteria(firstCriteria);
 
-		Criteria markCriteria = new Criteria();
-		markCriteria.addAndCriteria(markNotNullCriteria);
-		markCriteria.addOrCriteria(markNotEmptyCriteria);
-
-		firstCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.FINAL_OBJ);
-
-		Criteria anulledCriteria = new Criteria();
-		anulledCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.ANNULED_OBJ);
-		firstCriteria.addOrCriteria(anulledCriteria);
-
-		secondCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.TEMPORARY_OBJ);
-		secondCriteria.addAndCriteria(markCriteria);
-
-		firstCriteria.addOrCriteria(secondCriteria);
-
-		finalCriteria.addIn("enrolment.idInternal", enrolmentIds);
-		finalCriteria.addAndCriteria(firstCriteria);
-
-		return queryList(EnrolmentEvaluation.class, finalCriteria);
-	}
+        return queryList(EnrolmentEvaluation.class, finalCriteria);
+    }
 }

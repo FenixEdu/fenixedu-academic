@@ -8,6 +8,7 @@ package ServidorAplicacao.Servico.student;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -15,7 +16,6 @@ import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -32,32 +32,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author asnr and scpo
  *
  */
-public class GroupStudentEnrolment implements IServico
+public class GroupStudentEnrolment implements IService
 {
 
-    private static GroupStudentEnrolment _servico = new GroupStudentEnrolment();
-    /**
-     * The singleton access method of this class.
-     **/
-    public static GroupStudentEnrolment getService()
-    {
-        return _servico;
-    }
+   
 
     /**
      * The actor of this class.
      **/
-    private GroupStudentEnrolment()
+    public GroupStudentEnrolment()
     {
     }
 
-    /**
-     * Devolve o nome do servico
-     **/
-    public final String getNome()
-    {
-        return "GroupStudentEnrolment";
-    }
+   
 
     public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException
     {
@@ -99,9 +86,9 @@ public class GroupStudentEnrolment implements IServico
                     groupProperties,
                     studentGroup,
                     studentGroup.getShift());
-            if (!result)
+            if (!result) {
                 throw new InvalidArgumentsServiceException();
-
+            }
             IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(studentGroup, attend);
             List allStudentGroup =
                 persistentStudentGroup.readAllStudentGroupByGroupProperties(
@@ -113,11 +100,11 @@ public class GroupStudentEnrolment implements IServico
             {
                 group = (IStudentGroup) iter.next();
                 existingStudentAttend = persistentStudentGroupAttend.readBy(group, attend);
-                if (existingStudentAttend != null)
+                if (existingStudentAttend != null) {
                     throw new InvalidSituationServiceException();
-
+                }
             }
-            persistentStudentGroupAttend.lockWrite(newStudentGroupAttend);
+            persistentStudentGroupAttend.simpleLockWrite(newStudentGroupAttend);
 
         } catch (ExcepcaoPersistencia ex)
         {

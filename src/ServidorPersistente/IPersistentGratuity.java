@@ -13,11 +13,7 @@ import Util.State;
 public interface IPersistentGratuity extends IPersistentObject {
 	
 	/**
-	 * 
-	 * @param gratuity
-	 * @throws ExcepcaoPersistencia
-	 */
-	public void write(IGratuity gratuity) throws ExcepcaoPersistencia;
+	
 	
 	/**
 	 * 

@@ -30,10 +30,7 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 
     }
 
-    public void lockWrite(IAnnouncement announcement) throws ExcepcaoPersistencia
-    {
-        super.lockWrite(announcement);
-    }
+    
     public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia
     {
         super.delete(announcement);

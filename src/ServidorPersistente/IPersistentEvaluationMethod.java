@@ -7,8 +7,8 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
+import Dominio.IExecutionCourse;
 
 /**
  * @author João Mota
@@ -25,9 +25,7 @@ public interface IPersistentEvaluationMethod extends IPersistentObject {
 	
 	public void delete(IEvaluationMethod evaluation) throws ExcepcaoPersistencia;
 	
-	
-	
-	public void lockWrite(IEvaluationMethod evaluation) throws ExcepcaoPersistencia;	
+
 	
 	
 

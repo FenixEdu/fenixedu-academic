@@ -24,13 +24,7 @@ public interface IPersistentContributor extends IPersistentObject {
          */
 		public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia;
 		
-		/**
-		 * 
-		 * @param contributor
-		 * @throws ExcepcaoPersistencia
-		 * @throws ExistingPersistentException
-		 */ 
-		public void write(IContributor contributor) throws ExcepcaoPersistencia, ExistingPersistentException;
+		
 		
 		/**
 		 * 

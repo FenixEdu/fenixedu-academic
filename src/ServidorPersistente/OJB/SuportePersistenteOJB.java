@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
-import org.apache.ojb.broker.cache.CacheFilterRegistry;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
@@ -156,7 +155,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	 */
     public Integer getNumberCachedItems()
     {
-        Integer numberCachedObjects = null;
+//        TODO: fix this method so it returns the amount of objects cached
+        Integer numberCachedObjects = new Integer(0);
 
         if (_odmg != null)
         {
@@ -165,16 +165,16 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
             {
                 PersistenceBroker broker = hasBroker.getBroker();
 
-                System.out.println("###########################################33");
-                System.out.println(
-                    "broker.serviceObjectCache().class= " + broker.serviceObjectCache().getClass());
+//                System.out.println("###########################################33");
+//                System.out.println(
+//                    "broker.serviceObjectCache().class= " + broker.serviceObjectCache().getClass());
 
-                CacheFilterRegistry cacheFilter = (CacheFilterRegistry) broker.serviceObjectCache();
+                //CacheFilterRegistry cacheFilter = (CacheFilterRegistry) broker.serviceObjectCache();
 
-                System.out.println("###########################################33");
-                System.out.println(
-                    "broker.serviceObjectCache().class= "
-                        + cacheFilter.getCache(null, null, CacheFilterRegistry.METHOD_LOOKUP));
+//                System.out.println("###########################################33");
+//                System.out.println(
+//                    "broker.serviceObjectCache().class= "
+//                        + cacheFilter.getCache(null, null, CacheFilterRegistry.METHOD_LOOKUP));
 
                 numberCachedObjects = new Integer(-1);
             }
@@ -1246,6 +1246,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	{
 		return new FinalDegreeWorkOJB();
 	}
+
 
 	//	Ana e Ricardo
 	public IPersistentRoomOccupation getIPersistentRoomOccupation()

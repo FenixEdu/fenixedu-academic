@@ -23,6 +23,7 @@ import ServidorPersistente.IPersistentTeacher;
 /**
  * @author EP 15
  * @author Ivo Brandão
+ * 
  */
 public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
 {
@@ -32,15 +33,9 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         criteria.addEqualTo("person.username", user);
         return (ITeacher) queryObject(Teacher.class, criteria);
     }
-    // TODO: remove this method, is similar to readTeacherByUsername
-    public ITeacher readTeacherByUsernamePB(String user) throws ExcepcaoPersistencia
-    {
-        return readTeacherByUsername(user);
-    }
-    public void lockWrite(ITeacher teacher) throws ExcepcaoPersistencia
-    {
-        super.lockWrite(teacher);
-    }
+  
+   
+    
     public void delete(ITeacher teacher) throws ExcepcaoPersistencia
     {
         super.delete(teacher);

@@ -76,37 +76,32 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()),
                     false);
 
-            if (degreeCurricularPlan == null)
+            if (degreeCurricularPlan == null) {
                 throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
-
+            }
             IPersistentExecutionYear persistentExecutionYear =
                 persistentSuport.getIPersistentExecutionYear();
             IExecutionYear execYear = new ExecutionYear();
             execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
             executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
 
-            if (executionYear == null)
+            if (executionYear == null) {
+                
                 throw new NonExistingServiceException("message.non.existing.execution.year", null);
+            }
 
             ICursoExecucaoPersistente persistentExecutionDegree =
                 persistentSuport.getICursoExecucaoPersistente();
 
-//            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-//
-//            ITeacher coordinator =
-//                persistentTeacher.readByNumber(
-//                    infoExecutionDegree.getInfoCoordinator().getTeacherNumber());
-//
-//            if (coordinator == null)
-//                throw new NonExistingServiceException("message.non.existing.teacher", null);
+
 
             ICursoExecucao executionDegree = new CursoExecucao();
-            //executionDegree.setCoordinator(coordinator);
+            persistentExecutionDegree.simpleLockWrite(executionDegree);
             executionDegree.setCurricularPlan(degreeCurricularPlan);
             executionDegree.setExecutionYear(executionYear);
             executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
             executionDegree.setCampus(campus);
-            persistentExecutionDegree.lockWrite(executionDegree);
+            
 
         } catch (ExistingPersistentException existingException)
         {

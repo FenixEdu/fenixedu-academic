@@ -1,87 +1,75 @@
 /*
- * EditarSala.java
- *
- * Created on 27 de Outubro de 2002, 19:43
+ * EditarSala.java Created on 27 de Outubro de 2002, 19:43
  */
 
 package ServidorAplicacao.Servico.sop;
 
 /**
  * Serviço EditarSala
- *
+ * 
  * @author tfc130
- **/
+ */
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import Dominio.ISala;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class EditarSala implements IServico {
+public class EditarSala implements IService
+{
 
-	private static EditarSala _servico = new EditarSala();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static EditarSala getService() {
-		return _servico;
-	}
+    
 
-	/**
-	 * The actor of this class.
-	 **/
-	private EditarSala() {
-	}
+    /**
+     * The actor of this class.
+     */
+    public EditarSala()
+    {
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "EditarSala";
-	}
+   
 
-	public Object run(RoomKey salaAntiga, InfoRoom salaNova)
-		throws ExistingServiceException {
+    public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException
+    {
 
-		ISala sala = null;
-		boolean result = false;
+        ISala sala = null;
+        boolean result = false;
 
-		try {
+        try
+        {
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			sala =
-				sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
+            sala = sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
 
-			if (sala != null) {
+            if (sala != null)
+            {
 
-				if (!sala.getNome().equals(salaNova.getNome())) {
-					ISala roomWithSameName =
-						sp.getISalaPersistente().readByName(salaNova.getNome());
-					if (roomWithSameName != null) {
-						throw new ExistingServiceException();
-					}
-				}
-				// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()				
-				sala = (ISala) sp.getISalaPersistente().readByOId(sala,true);
+                if (!sala.getNome().equals(salaNova.getNome()))
+                {
+                    ISala roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
+                    if (roomWithSameName != null) { throw new ExistingServiceException(); }
+                }
 
-				sala.setNome(salaNova.getNome());
-				sala.setEdificio(salaNova.getEdificio());
-				sala.setPiso(salaNova.getPiso());
-				sala.setCapacidadeNormal(salaNova.getCapacidadeNormal());
-				sala.setCapacidadeExame(salaNova.getCapacidadeExame());
-				sala.setTipo(salaNova.getTipo());
-				sp.getISalaPersistente().lockWrite(sala);
-				result = true;
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
+                sp.getISalaPersistente().simpleLockWrite(sala);
+                sala.setNome(salaNova.getNome());
+                sala.setEdificio(salaNova.getEdificio());
+                sala.setPiso(salaNova.getPiso());
+                sala.setCapacidadeNormal(salaNova.getCapacidadeNormal());
+                sala.setCapacidadeExame(salaNova.getCapacidadeExame());
+                sala.setTipo(salaNova.getTipo());
+                result = true;
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            ex.printStackTrace();
+        }
 
-		return new Boolean(result);
-	}
+        return new Boolean(result);
+    }
 
 }

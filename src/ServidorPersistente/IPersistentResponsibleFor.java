@@ -13,7 +13,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author João Mota
@@ -35,8 +34,7 @@ public interface IPersistentResponsibleFor extends IPersistentObject
     public void delete(IResponsibleFor responsibleFor) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
-    public void lockWrite(IResponsibleFor responsibleFor)
-        throws ExcepcaoPersistencia, ExistingPersistentException;
+    
 
     public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia;

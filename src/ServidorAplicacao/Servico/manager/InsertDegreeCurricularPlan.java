@@ -3,11 +3,11 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlan;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -21,20 +21,14 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author lmac1
  */
-public class InsertDegreeCurricularPlan implements IServico {
+public class InsertDegreeCurricularPlan implements IService {
 
-	private static InsertDegreeCurricularPlan service = new InsertDegreeCurricularPlan();
+	
 
-	public static InsertDegreeCurricularPlan getService() {
-		return service;
+	public InsertDegreeCurricularPlan() {
 	}
 
-	private InsertDegreeCurricularPlan() {
-	}
-
-	public final String getNome() {
-		return "InsertDegreeCurricularPlan";
-	}
+	
 	
 
 	public void run(InfoDegreeCurricularPlan infoDegreeCurricularPlan) throws FenixServiceException {
@@ -49,6 +43,7 @@ public class InsertDegreeCurricularPlan implements IServico {
 					throw new NonExistingServiceException();	
 
 				IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+				persistentDegreeCurricularPlan.simpleLockWrite(degreeCurricularPlan);
 				degreeCurricularPlan.setName(infoDegreeCurricularPlan.getName());
 				degreeCurricularPlan.setDegree(degree);
 				degreeCurricularPlan.setState(infoDegreeCurricularPlan.getState());
@@ -60,7 +55,6 @@ public class InsertDegreeCurricularPlan implements IServico {
 				degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
 				degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
 	
-				persistentDegreeCurricularPlan.write(degreeCurricularPlan);
 				
 		} catch(ExistingPersistentException existingException) {
 			throw new ExistingServiceException("O plano curricular com nome " + infoDegreeCurricularPlan.getName(), existingException); 

@@ -256,7 +256,7 @@ public class GeraXml extends FenixUtil
                         .readActualExecutionPeriod();
 
                 enrolment = new Enrolment();
-                persistentEnrolment.lockWrite(enrolment);
+                persistentEnrolment.simpleLockWrite(enrolment);
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setExecutionPeriod(executionPeriod);

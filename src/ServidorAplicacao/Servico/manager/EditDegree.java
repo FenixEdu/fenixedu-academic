@@ -3,9 +3,9 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
 import Dominio.ICurso;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -18,59 +18,53 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author lmac1
  */
-public class EditDegree implements IServico {
+public class EditDegree implements IService
+{
 
-	private static EditDegree service = new EditDegree();
+    
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static EditDegree getService() {
-		return service;
-	}
+    
 
-	/**
-	 * The constructor of this class.
-	 */
-	private EditDegree() {
-	}
+    /**
+     * The constructor of this class.
+     */
+    public EditDegree()
+    {
+    }
 
-	/**
-	 * Service name
-	 */
-	public final String getNome() {
-		return "EditDegree";
-	}
+    
+    /**
+     * Executes the service.
+     */
 
-	/**
-	 * Executes the service.
-	 */
+    public void run(InfoDegree newInfoDegree) throws FenixServiceException
+    {
 
-	public void run(InfoDegree newInfoDegree) throws FenixServiceException {
+        ISuportePersistente persistentSuport = null;
+        ICursoPersistente persistentDegree = null;
+        ICurso oldDegree = null;
 
-		ISuportePersistente persistentSuport = null;
-		ICursoPersistente persistentDegree = null;
-		ICurso oldDegree = null;
+        try
+        {
 
-		try {
-			
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentDegree = persistentSuport.getICursoPersistente();
-			oldDegree = persistentDegree.readByIdInternal(newInfoDegree.getIdInternal());
-			
-			if(oldDegree == null)
-				throw new NonExistingServiceException();
-			
-			oldDegree.setNome(newInfoDegree.getNome());
-			oldDegree.setSigla(newInfoDegree.getSigla());
-			oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentDegree = persistentSuport.getICursoPersistente();
+            oldDegree = persistentDegree.readByIdInternal(newInfoDegree.getIdInternal());
 
-			persistentDegree.lockWrite(oldDegree);
-						
-		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException(ex);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            if (oldDegree == null) { throw new NonExistingServiceException(); }
+            persistentDegree.simpleLockWrite(oldDegree);
+            oldDegree.setNome(newInfoDegree.getNome());
+            oldDegree.setSigla(newInfoDegree.getSigla());
+            oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
+
+        }
+        catch (ExistingPersistentException ex)
+        {
+            throw new ExistingServiceException(ex);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }

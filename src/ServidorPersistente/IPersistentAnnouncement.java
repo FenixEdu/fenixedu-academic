@@ -16,7 +16,7 @@ public interface IPersistentAnnouncement extends IPersistentObject
         Timestamp date,
         ISite site)
         throws ExcepcaoPersistencia;
-    public void lockWrite(IAnnouncement announcement) throws ExcepcaoPersistencia;
+    
     public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia;
 
     public List readAnnouncementsBySite(ISite site) throws ExcepcaoPersistencia;

@@ -13,7 +13,6 @@ import Dominio.IExecutionYear;
 import Dominio.IScientificArea;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.CurricularCourseType;
 import Util.DegreeCurricularPlanState;
 import Util.TipoCurso;
@@ -57,40 +56,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 
     }
 
-    public void lockWrite(ICurricularCourse curricularCourseToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        ICurricularCourse curricularCourseFromBD = null;
-
-        // If there is nothing to write, simply return.
-        if (curricularCourseToWrite == null)
-        {
-            return;
-        }
-
-        // Read branch from database.
-        curricularCourseFromBD =
-            this.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
-                curricularCourseToWrite.getDegreeCurricularPlan().getIdInternal(),
-                curricularCourseToWrite.getName(),
-                curricularCourseToWrite.getCode());
-        // If branch is not in database, then write it.
-        if (curricularCourseFromBD == null)
-        {
-            super.lockWrite(curricularCourseToWrite);
-            // else If the branch is mapped to the database, then write any
-            // existing changes.
-        } else if (
-            (curricularCourseToWrite instanceof CurricularCourse)
-                && ((CurricularCourse) curricularCourseFromBD).getIdInternal().equals(
-                    ((CurricularCourse) curricularCourseToWrite).getIdInternal()))
-        {
-            super.lockWrite(curricularCourseToWrite);
-            // else Throw an already existing exception
-        } else
-            throw new ExistingPersistentException();
-    }
+    
 
     public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
     {

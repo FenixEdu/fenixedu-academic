@@ -11,9 +11,8 @@ import Dominio.IWebSiteSection;
  * 
  */
 public interface IPersistentWebSiteSection extends IPersistentObject {
-	public void lockWrite(IWebSiteSection section) throws ExcepcaoPersistencia;
-	public void delete(IWebSiteSection section) throws ExcepcaoPersistencia;
 	
+	public void delete(IWebSiteSection section) throws ExcepcaoPersistencia;
 	public IWebSiteSection readByWebSiteAndName(IWebSite webSite, String name) throws ExcepcaoPersistencia;
 	public IWebSiteSection readByName(String name) throws ExcepcaoPersistencia;
 	public List readByWebSite(IWebSite webSite) throws ExcepcaoPersistencia;

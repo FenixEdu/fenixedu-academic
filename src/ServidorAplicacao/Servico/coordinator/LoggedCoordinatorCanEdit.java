@@ -69,7 +69,7 @@ public class LoggedCoordinatorCanEdit implements IServico
 				throw new FenixServiceException("nullUsername");
 			}
 
-			ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(username);
+			ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
 
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(executionDegreeCode);

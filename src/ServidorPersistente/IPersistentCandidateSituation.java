@@ -45,12 +45,7 @@ public interface IPersistentCandidateSituation extends IPersistentObject {
      */
     public List readActiveSituationsBySituationList(ICursoExecucao executionDegree, List situations) throws ExcepcaoPersistencia;
     
-    /**
-     * 
-     * @param candidateSituation
-     * @throws ExcepcaoPersistencia
-     */
-    public void writeCandidateSituation(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia;
+    
     
     /**
      * 

@@ -41,9 +41,7 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
 		return queryList(Site.class,crit);
 	}
 
-	public void lockWrite(ISite site) throws ExcepcaoPersistencia {
-		super.lockWrite(site);
-	}
+	
 
 	public void delete(ISite site) throws ExcepcaoPersistencia {
 		super.delete(site);

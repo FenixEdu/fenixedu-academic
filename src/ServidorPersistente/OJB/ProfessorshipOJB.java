@@ -21,7 +21,6 @@ import Dominio.ITeacher;
 import Dominio.Professorship;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 /**
@@ -123,37 +122,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
         }
     }
 
-    public void lockWrite(IProfessorship professorship)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-        IProfessorship professorshipFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (professorship == null)
-            return;
-
-        // Read professorship from database.
-        professorshipFromDB =
-            this.readByTeacherAndExecutionCourse(
-                professorship.getTeacher(),
-                professorship.getExecutionCourse());
-
-        // If professorship is not in database, then write it.
-        if (professorshipFromDB == null)
-            super.lockWrite(professorship);
-
-        // else If the professorship is mapped to the database, then write any existing changes.
-        else if (
-            (professorship instanceof Professorship)
-                && ((Professorship) professorshipFromDB).getIdInternal().equals(
-                    ((Professorship) professorship).getIdInternal()))
-        {
-            super.lockWrite(professorship);
-            // else Throw an already existing exception
-        } else
-            throw new ExistingPersistentException();
-    }
-
+   
     /*
 	 * (non-Javadoc)
 	 * 

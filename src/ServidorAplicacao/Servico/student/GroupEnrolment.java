@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.GroupProperties;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
@@ -19,7 +20,6 @@ import Dominio.Student;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
 import Dominio.Turno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -41,33 +41,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author asnr and scpo
  *
  */
-public class GroupEnrolment implements IServico
+public class GroupEnrolment implements IService
 {
 
-    private static GroupEnrolment _servico = new GroupEnrolment();
-    /**
-     * The singleton access method of this class.
-     **/
-    public static GroupEnrolment getService()
-    {
-        return _servico;
-    }
+    
 
     /**
      * The actor of this class.
      **/
-    private GroupEnrolment()
+    public GroupEnrolment()
     {
     }
 
-    /**
-     * Devolve o nome do servico
-     **/
-    public final String getNome()
-    {
-        return "GroupEnrolment";
-    }
-
+    
     public boolean run(
         Integer groupPropertiesCode,
         Integer shiftCode,
@@ -100,15 +86,15 @@ public class GroupEnrolment implements IServico
             Integer result =
                 strategy.enrolmentPolicyNewGroup(groupProperties, studentCodes.size() + 1, shift);
 
-            if (result.equals(new Integer(-1)))
+            if (result.equals(new Integer(-1))) {
                 throw new InvalidArgumentsServiceException();
-
-            if (result.equals(new Integer(-2)))
+            }
+            if (result.equals(new Integer(-2))) {
                 throw new NonValidChangeServiceException();
-
-            if (result.equals(new Integer(-3)))
+            }
+            if (result.equals(new Integer(-3))) {
                 throw new NotAuthorizedException();
-
+            }
             List allStudentGroup = new ArrayList();
             allStudentGroup =
                 persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
@@ -118,11 +104,11 @@ public class GroupEnrolment implements IServico
                     groupProperties,
                     groupNumber);
 
-            if (newStudentGroup != null)
+            if (newStudentGroup != null) {
                 throw new FenixServiceException();
-
+            }
             newStudentGroup = new StudentGroup(groupNumber, groupProperties, shift);
-            persistentStudentGroup.lockWrite(newStudentGroup);
+            persistentStudentGroup.simpleLockWrite(newStudentGroup);
 
             IStudent userStudent = sp.getIPersistentStudent().readByUsername(username);
             IFrequenta userAttend =
@@ -152,16 +138,16 @@ public class GroupEnrolment implements IServico
                     newStudentGroupAttend =
                         persistentStudentGroupAttend.readBy(existingStudentGroup, attend);
 
-                    if (newStudentGroupAttend != null)
+                    if (newStudentGroupAttend != null) {
                         throw new ExistingServiceException();
-
+                    }
                 }
                 IStudentGroupAttend userStudentGroupAttend =
                     persistentStudentGroupAttend.readBy(existingStudentGroup, userAttend);
 
-                if (userStudentGroupAttend != null)
+                if (userStudentGroupAttend != null) {
                     throw new InvalidSituationServiceException();
-
+                }
             }
 
             Iterator iter = studentCodes.iterator();
@@ -180,12 +166,12 @@ public class GroupEnrolment implements IServico
                 IStudentGroupAttend notExistingSGAttend =
                     new StudentGroupAttend(newStudentGroup, attend);
 
-                persistentStudentGroupAttend.lockWrite(notExistingSGAttend);
+                persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
             }
             IStudentGroupAttend notExistingUserSGAttend =
                 new StudentGroupAttend(newStudentGroup, userAttend);
 
-            persistentStudentGroupAttend.lockWrite(notExistingUserSGAttend);
+            persistentStudentGroupAttend.simpleLockWrite(notExistingUserSGAttend);
 
         } catch (ExcepcaoPersistencia ex)
         {

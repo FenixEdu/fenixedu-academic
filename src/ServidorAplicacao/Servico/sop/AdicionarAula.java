@@ -7,7 +7,7 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Servi�o AdicionarAula.
+ * Service AdicionarAula.
  *
  * @author tfc130
  **/
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import DataBeans.util.Cloner;
@@ -25,7 +26,6 @@ import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.Turno;
 import Dominio.TurnoAula;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,28 +34,17 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
-public class AdicionarAula implements IServico {
+public class AdicionarAula implements IService {
 
-	private static AdicionarAula _servico = new AdicionarAula();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static AdicionarAula getService() {
-		return _servico;
-	}
+	
 
 	/**
 	 * The actor of this class.
 	 **/
-	private AdicionarAula() {
+	public AdicionarAula() {
 	}
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "AdicionarAula";
-	}
+	
 
 	public List run(InfoShift infoShift, String[] classesList)
 		throws FenixServiceException {
@@ -86,7 +75,7 @@ public class AdicionarAula implements IServico {
 					serviceResult.add(result);
 					if (result.isSUCESS()) {
 						try {
-							sp.getITurnoAulaPersistente().lockWrite(turnoAula);
+							sp.getITurnoAulaPersistente().simpleLockWrite(turnoAula);
 						} catch (ExistingPersistentException ex) {
 							throw new ExistingServiceException(ex);
 						}

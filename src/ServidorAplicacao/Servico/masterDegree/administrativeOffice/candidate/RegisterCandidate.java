@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCandidateRegistration;
 import DataBeans.util.Cloner;
 import Dominio.Branch;
@@ -33,7 +34,6 @@ import Dominio.Qualification;
 import Dominio.Role;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -60,34 +60,19 @@ import Util.TipoCurso;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class RegisterCandidate implements IServico
+public class RegisterCandidate implements IService 
 {
 
-    private static RegisterCandidate servico = new RegisterCandidate();
-
-    /**
-     * The singleton access method of this class.
-     **/
-    public static RegisterCandidate getService()
-    {
-        return servico;
-    }
+    
 
     /**
      * The actor of this class.
      **/
-    private RegisterCandidate()
+    public RegisterCandidate()
     {
     }
 
-    /**
-     * Returns The Service Name */
-
-    public final String getNome()
-    {
-        return "RegisterCandidate";
-    }
-
+    
     public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber)
         throws FenixServiceException
     {
@@ -195,7 +180,7 @@ public class RegisterCandidate implements IServico
                     .getCurrentState()
                     .equals(StudentCurricularPlanState.ACTIVE_OBJ)))
             {
-                sp.getIStudentCurricularPlanPersistente().lockWrite(studentCurricularPlanOld);
+                sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlanOld);
 
                 //				System.out.println("------------- MASTER DEGREE STUDENT WITH ACTIVE CURRICULAR PLAN ----------------");
                 //				System.out.println(" -- STUDENT NUMBER: " + studentCurricularPlanOld.getStudent().getNumber() + "[id: " + studentCurricularPlanOld.getStudent().getIdInternal() + "]");

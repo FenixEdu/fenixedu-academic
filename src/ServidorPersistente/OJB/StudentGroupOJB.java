@@ -14,7 +14,6 @@ import Dominio.ITurno;
 import Dominio.StudentGroup;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroup;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author asnr and scpo
@@ -68,36 +67,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
         return queryList(StudentGroup.class, new Criteria());
     }
 
-    public void lockWrite(IStudentGroup studentGroupToWrite) throws ExcepcaoPersistencia
-    {
-
-        IStudentGroup studentGroupFromDB = null;
-        if (studentGroupToWrite == null)
-            // If there is nothing to write, simply return.
-            return;
-
-        // read studentGroup from DB
-        studentGroupFromDB =
-            readStudentGroupByGroupPropertiesAndGroupNumber(
-                studentGroupToWrite.getGroupProperties(),
-                studentGroupToWrite.getGroupNumber());
-
-        // if (studentGroup not in database) then write it
-        if (studentGroupFromDB == null)
-            super.lockWrite(studentGroupToWrite);
-        // else if (item is mapped to the database then write any existing
-		// changes)
-        else if (
-            (studentGroupToWrite instanceof IStudentGroup)
-                && studentGroupFromDB.getIdInternal().equals(studentGroupToWrite.getIdInternal()))
-        {
-
-            super.lockWrite(studentGroupToWrite);
-            // else throw an AlreadyExists exception.
-        }
-        else
-            throw new ExistingPersistentException();
-    }
+    
 
     public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia
     {

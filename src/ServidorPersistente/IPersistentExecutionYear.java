@@ -3,7 +3,6 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IExecutionYear;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * Created on 11/Fev/2003
@@ -28,12 +27,6 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 	 * @return ArrayList
 	 */
 	public List readNotClosedExecutionYears()throws ExcepcaoPersistencia;	
-	/**
-	 * 
-	 * @param executionYear
-	 * @return boolean
-	 */
-	public void writeExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia, ExistingPersistentException;
 	
 	
 	/**

@@ -1,16 +1,14 @@
 /*
- * Created on 13/Mar/2003
- *
- * To change this generated comment go to 
+ * Created on 13/Mar/2003 To change this generated comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSite;
@@ -19,45 +17,36 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author PTRLV
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class EditSite implements IServico {	   
+public class EditSite implements IService
+{
 
-	private static EditSite service = new EditSite();    
-	public static EditSite getService() {
-		return service;
-	}
-    
-	private EditSite() { }    
-	public final String getNome() {
-		return "EditSite";
-	}    
-	    
-	public Boolean run(InfoSite infoSiteOld,					 
-					InfoSite infoSiteNew
-					)
-	throws FenixServiceException {
-		IPersistentSite persistentSite = null;
-		try {       		
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();		 
-		persistentSite = sp.getIPersistentSite();		
-		ISite siteOld = Cloner.copyInfoSite2ISite(infoSiteOld);
-		IExecutionCourse executionCourse = siteOld.getExecutionCourse();		
-		siteOld = persistentSite.readByExecutionCourse(executionCourse);
-		
-		
-		siteOld.setAlternativeSite(infoSiteNew.getAlternativeSite());
-		siteOld.setMail(infoSiteNew.getMail());	
-		siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
-		siteOld.setIntroduction(infoSiteNew.getIntroduction());																
-		
-		persistentSite.lockWrite(siteOld);					
-		}
-		catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}	
-		return new Boolean(true);
-	}	
+    public EditSite()
+    {
+    }
+
+    public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException
+    {
+        IPersistentSite persistentSite = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            persistentSite = sp.getIPersistentSite();
+            ISite siteOld = Cloner.copyInfoSite2ISite(infoSiteOld);
+            IExecutionCourse executionCourse = siteOld.getExecutionCourse();
+            siteOld = persistentSite.readByExecutionCourse(executionCourse);
+
+            persistentSite.simpleLockWrite(siteOld);
+            siteOld.setAlternativeSite(infoSiteNew.getAlternativeSite());
+            siteOld.setMail(infoSiteNew.getMail());
+            siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
+            siteOld.setIntroduction(infoSiteNew.getIntroduction());
+
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+        return new Boolean(true);
+    }
 }

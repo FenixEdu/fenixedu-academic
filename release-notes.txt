@@ -3,6 +3,8 @@ Release 2004-04-29
 ---------------------------------------------------------------------
 
 NEW FEATURES:
+- added a migration script for math courses responsabilities
+- added a migration script for erasmus/air force/etc students
 - websiteManager: added the possibility to sort information when listing items, but only ascendingly for now
 - websiteManager: added keywords inserted with items to metadata of html files created
 - websiteManager: added filter for websiteManager role
@@ -127,6 +129,221 @@ CHANGES:
 - student test advisories with links
 - show message to students when trying do access any test before/after the test dates or trying to 
    access an invalid test
+- changed getInfoSite Evaluation from TeacherAdmininstrationComponentService, it was writing final evaluation.
+- the upload of files, checks for problem chars in the filename, refusing chars such as &,#,+ 
+- deleted ConfirmActualEnrolmentWithRules, and changed its service definition to call ConfirmActualEnrolment instead
+- DeleteCurricularCourseScope service now deletes a scope even if it is the only scope of the curricular course
+- InsertCurricularCourseScopeAtCurricularCourse was changed to a berserk service
+- DeleteCurricularCourseScope was changed to a berserk service
+- ReadStudentsByExecutionDegreeAndExecutionYear was changed to a berserk service
+- ReadNumerusClausus was changed to a berserk service
+- ReadDegreeByYearAndCode was changed to a berserk service
+- readByDegreeCodeAndExecutionYear from ICursoExecucao is now deprecated
+- ReadCandidateForRegistration was changed to a berserk service
+- ReadExecutionDegreeByExecutionYearAndDegreeCode was changed to a berserk service
+- CreateTemporarilyEnrolmentPeriod was changed to a berserk service
+- ChangeEnrolmentStateFromTemporarilyToEnroled was changed to a berserk service
+- ConfirmActualEnrolment was changed to a berserk service
+- EditDegree was changed to a berserk service
+- EditBranch was changed to a berserk service
+- AddItem  was changed to a berserk service
+- PublishMarks was changed to a berserk service
+- CreateAnnouncement was changed to a berserk service
+- CreateBibliographicReference was changed to a berserk service
+- InsertCurricularCourseAtDegreeCurricularPlan was changed to a berserk service
+- EditCurricularCourse was changed to a berserk service
+- EditContributor was changed to a berserk service
+- CreateContributor was changed to a berserk service
+- ApproveCandidates was changed to a berserk service
+- ChangeApplicationInfo was changed to a berserk service
+- CreateCandidateSituation was changed to a berserk service
+- ChangeCandidate was changed to a berserk service
+- InsertItem was changed to a berserk service
+- InsertDegreeCurricularPlan was changed to a berserk service
+- EditDegreeCurricularPlan was changed to a berserk service
+- EditStudentGroupShift was changed to a berserk service
+- CreateStudentGroup was changed to a berserk service
+- GroupEnrolment was changed to a berserk service
+- EditGroupShift was changed to a berserk service
+- CreateExecutionPeriod was changed to a berserk service
+- InsertStudentGroupMembers was changed to a berserk service
+- GroupStudentEnrolment was changed to a berserk service
+- EditSite was changed to a berserk service
+- EditCustomizationOptions was changed to a berserk service
+- InsertExecutionCourseAtExecutionPeriod was changed to a berserk service
+- CreateSiteInExecutionCourse was changed to a berserk service
+- InsertSection was changed to a berserk service
+- EditSection was changed to a berserk service
+- EditGuideInformation was changed to a berserk service
+- CreateGuide was changed to a berserk service
+- ChangeGuideSituation was changed to a berserk service
+- CriarAula was changed to a berserk service
+- CreateGroupProperties was changed to a berserk service
+- EditGroupProperties was changed to a berserk service
+- EditarTurno was changed to a berserk service
+- CriarTurno was changed to a berserk service
+- AdicionarAula was changed to a berserk service
+- AdicionarTurno was changed to a berserk service
+- CriarTurma was changed to a berserk service
+- EditarTurma was changed to a berserk service
+- RegisterCandidate was changed to a berserk service
+- CriarSala was changed to a berserk service
+- EditarSala was changed to a berserk service
+- AssociateTeacher was changed to a berserk service
+- EditEvaluation was changed to a berserk service
+- CreateExam was changed to a berserk service
+- AssociateExecutionCourseToExam was changed to a berserk service
+- InsertStudentsFinalEvaluation was changed to a berserk service
+- AlterStudentEnrolmentEvaluation was changed to a berserk service
+- InsertBranch was changed to a berserk service
+- InsertDegree was changed to a berserk service
+- ChangeGratuityState was changed to a berserk service
+- ChangeMasterDegreeProof was changed to a berserk service
+- ChangeCandidacyApprovanceStatus was changed to a berserk service
+- WriteCandidacy was changed to a berserk service
+- AlterExecutionPeriodState was changed to a berserk service
+- EditExamRooms was changed to a berserk service
+- InsertStudentTestResponses was changed to a berserk service
+- EditDistributedTest was changed to a berserk service
+- EditExamEnrollment was changed to a berserk service
+- EditTestQuestion was changed to a berserk service
+- InsertDistributedTest was changed to a berserk service
+- ChangePersonalStudentInfo was changed to a berserk service
+- ChangePasswordService was changed to a berserk service
+- ChangePersonalInfo was changed to a berserk service
+- changed use of lockwrite in CreateTemporarilyEnrolmentPeriod
+- changed use of lockwrite in ChangeEnrolmentStateFromTemporarilyToEnroled
+- changed use of lockwrite in ConfirmEquivalence
+- changed use of lockwrite in ConfirmActualEnrolment
+- changed use of lockwrite in EditBranch
+- changed use of lockwrite in EditDegree
+- changed use of lockwrite in AdvisoryOJB
+- changed use of lockwrite in AddItem
+- changed use of lockwrite in PublishMarks
+- changed use of lockwrite in CreateAnnouncement
+- changed use of lockwrite in CreateBibliographicReference
+- changed use of lockwrite in InsertCurricularCourseAtDegreeCurricularPlan
+- changed use of lockwrite in EditCurricularCourse
+- changed use of lockwrite in EditContributor
+- changed use of lockwrite in CreateContributor
+- changed use of lockwrite in ApproveCandidates
+- changed use of lockwrite in ChangeApplicationInfo
+- changed use of lockwrite in CreateCandidateSituation
+- changed use of lockwrite in ChangeCandidate
+- changed use of lockwrite in InsertItem
+- changed use of lockwrite in InsertDegreeCurricularPlan
+- changed use of lockwrite in EditDegreeCurricularPlan
+- changed use of lockwrite in EditStudentGroupShift
+- changed use of lockwrite in CreateStudentGroup
+- changed use of lockwrite in GroupEnrolment
+- changed use of lockwrite in EditGroupShift
+- changed use of lockwrite in CreateExecutionPeriod
+- changed use of lockwrite in InsertStudentGroupMembers
+- changed use of lockwrite in GroupStudentEnrolment
+- changed use of lockwrite in EditSite
+- changed use of lockwrite in EditCustomizationOptions
+- changed use of lockwrite in InsertExecutionCourseAtExecutionPeriod
+- CreateSiteInExecutionCourse
+- changed use of lockwrite in InsertSection
+- changed use of lockwrite in EditSection
+- changed use of lockwrite in EditGuideInformation
+- changed use of lockwrite in ChangeGuideSituation
+- changed use of lockwrite in CreateGuide
+- changed use of lockwrite in CriarAula
+- changed use of lockwrite in CreateGroupProperties
+- changed use of lockwrite in EditGroupProperties
+- changed use of lockwrite in EditarTurno
+- changed use of lockwrite in CriarTurno
+- changed use of lockwrite in AdicionarAula
+- changed use of lockwrite in AdicionarTurno
+- changed use of lockwrite in CriarTurma
+- changed use of lockwrite in EditarTurma
+- changed use of lockwrite in RegisterCandidate
+- changed use of lockwrite in CriarSala
+- changed use of lockwrite in EditarSala
+- changed use of lockwrite in AssociateTeacher
+- changed use of lockwrite in InsertProfessorShip
+- changed use of lockwrite in CreateExecutionPeriod
+- changed use of lockwrite in EditEvaluation
+- changed use of lockwrite in CreateExam
+- changed use of lockwrite in AssociateExecutionCourseToExam
+- changed use of lockwrite in InsertStudentsFinalEvaluation
+- changed use of lockwrite in AlterStudentEnrolmentEvaluation
+- changed use of lockwrite in InsertBranch
+- changed use of lockwrite in InsertDegree
+- changed use of lockwrite in CreateReimbursementGuide
+- changed use of lockwrite in ChangeGratuityState
+- changed use of lockwrite in ChangeMasterDegreeProof
+- changed use of lockwrite in ChangeCandidacyApprovanceStatus
+- changed use of lockwrite in WriteCandidacy
+- changed use of lockwrite in AlterExecutionPeriodState
+- changed use of lockwrite in EditExamRooms
+- changed use of lockwrite in InsertStudentTestResponses
+- changed use of lockwrite in DeleteExercise
+- changed use of lockwrite in EditDistributedTest
+- changed use of lockwrite in EditExamEnrollment
+- changed use of lockwrite in EditTestQuestion
+- changed use of lockwrite in InsertDistributedTest
+- changed use of lockwrite in PublishMarks
+- changed use of lockwrite in ChangePersonalStudentInfo
+- changed use of lockwrite in ChangePasswordService
+- changed use of lockwrite in ChangePersonalInfo
+- deleted method lockwrite from WebSiteSectionOJB
+- deleted method lockwrite from WebSiteOJB
+- deleted method lockwrite from WebSiteItemOJB
+- deleted method lockwrite from AnnouncementOJB
+- deleted method lockWrite from CursoExecucaoOJB
+- deleted method lockWrite from BibliographicReferenceOJB
+- deleted method lockWrite from TeacherOJB
+- deleted method lockWrite from CurricularCourseOJB
+- deleted method lockWrite from CurricularYearOJB
+- deleted method lockWrite from CurricularSemesterOJB
+- deleted method lockWrite from CurriculumOJB
+- deleted method lockWrite from ItemOJB
+- deleted method lockWrite from StudentOJB
+- deleted method lockWrite from StudentGroupOJB
+- deleted method lockWrite from FrequentaOJB
+- deleted method lockWrite from StudentGroupAttendOJB
+- deleted method lockWrite from SiteOJB
+- deleted method lockWrite from SectionOJB
+- deleted method lockWrite from AulaOJB
+- deleted method lockWrite from GroupPropertiesOJB
+- deleted method lockWrite from TurnoOJB
+- deleted method lockWrite from TurnoAulaOJB
+- deleted method lockWrite from TurnoAlunoOJB
+- deleted method lockWrite from TurmaTurnoOJB
+- deleted method lockWrite from TurmaOJB
+- deleted method lockWrite from StudentCurricularPlanOJB
+- deleted method lockWrite from SalaOJB
+- deleted method lockWrite from ResponsibleForOJB
+- deleted method lockWrite from ProfessorshipOJB
+- deleted method lockWrite from MarkOJB
+- deleted method lockWrite from EvaluationMethodOJB
+- deleted method lockWrite from ExecutionCourseOJB
+- deleted method lockWrite from ExamExecutionCourseOJB
+- deleted method lockWrite from CurricularCourseScopeOJB
+- deleted method lockWrite from EnrolmentEquivalenceOJB
+- deleted method lockWrite from EquivalentEnrolmentForEnrolmentEquivalenceOJB
+- deleted method lockWrite from EnrolmentEvaluationOJB
+- deleted method lockWrite from EvaluationExecutionCourseOJB
+- deleted method write from ContributorOJB
+- deleted method writeCountry from CountryOJB
+- deleted method write from CandidateEnrolmentOJB
+- deleted method write from GratuityOJB
+- deleted method write from DegreeCurricularPlanOJB
+- deleted method write from GuideOJB
+- deleted method write from PersonRoleOJB
+- deleted method write from GuideEntryOJB
+- deleted method write from GuideSituationOJB
+- deleted method writeCandidateSituation from CandidateSituationOJB
+- deleted method escreverDisciplinaDepartamento from DisciplinaDepartamentoOJB
+- deleted method writeExecutionYear from ExecutionYearOJB
+- deleted method escreverDepartamento from DepartmentOJB
+- deleted method writeExecutionPeriod from ExecutionPeriodOJB
+- changed criteria on method readAllGroupPropertiesByExecutionCourse of GroupPropertiesOJB, 
+	it was using the database column name instead of the property name of the Class
+- readAllGroupPropertiesByExecutionCourseID
+- readGroupPropertiesByExecutionCourseAndName
 
 BUG FIXES:
 - fixed bug [ #142 ] master degree students cannot enroll in shifts and execution courses

@@ -19,7 +19,6 @@ import Dominio.IStudent;
 import Dominio.Student;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
 
@@ -90,42 +89,7 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
         return (IStudent) queryObject(Student.class, criteria);
     }
 
-    public void lockWrite(IStudent studentToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-        IStudent studentFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (studentToWrite == null)
-        {
-            return;
-        }
-
-        // Read Student from database.
-        studentFromDB =
-            this.readStudentByNumberAndDegreeType(
-                studentToWrite.getNumber(),
-                studentToWrite.getDegreeType());
-
-        // If Student is not in database, then write it.
-        if (studentFromDB == null)
-        {
-            super.lockWrite(studentToWrite);
-            // else If the CurricularYear is mapped to the database, then write
-            // any existing changes.
-        }
-        else if (
-            (studentToWrite instanceof Student)
-                && ((Student) studentFromDB).getIdInternal().equals(
-                    ((Student) studentToWrite).getIdInternal()))
-        {
-            super.lockWrite(studentToWrite);
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
-
-    }
+    
 
     public List readAll() throws ExcepcaoPersistencia
     {

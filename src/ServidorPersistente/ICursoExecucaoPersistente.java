@@ -22,11 +22,7 @@ import Util.TipoCurso;
 
 public interface ICursoExecucaoPersistente extends IPersistentObject
 {
-    /**
-	 * @param cursoExecucao
-	 * @throws ExcepcaoPersistencia
-	 */
-    public void lockWrite(ICursoExecucao cursoExecucao) throws ExcepcaoPersistencia;
+   
 
     /**
 	 * @param cursoExecucao
@@ -82,6 +78,7 @@ public interface ICursoExecucaoPersistente extends IPersistentObject
 	 * @param executionYear
 	 * @return @throws
 	 *         ExcepcaoPersistencia
+     * @deprecated
 	 */
     public ICursoExecucao readByDegreeCodeAndExecutionYear(
         String degreeCode,

@@ -21,7 +21,7 @@ public interface IPersistentSite extends IPersistentObject{
 //	List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 	ISite readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
     List readAll() throws ExcepcaoPersistencia;
-    void lockWrite(ISite site) throws ExcepcaoPersistencia;
+   
     void delete(ISite site) throws ExcepcaoPersistencia;
    
 }

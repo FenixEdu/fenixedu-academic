@@ -80,7 +80,7 @@ public class TeacherResponsibleByExecutionCourse implements IServico
 			
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			teacher =
-			persistentTeacher.readTeacherByUsernamePB(teacherUserName);
+			persistentTeacher.readTeacherByUsername(teacherUserName);
 
 			IPersistentExecutionCourse persistentExecutionCourse =
 			sp.getIPersistentExecutionCourse();

@@ -132,7 +132,7 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IService
                     enrolmentInOptionalCurricularCourse.setEnrolmentEvaluationType(
                         EnrolmentEvaluationType.NORMAL_OBJ);
                     enrolmentInOptionalCurricularCourse.setEnrolmentState(EnrolmentState.ENROLED);
-                    persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
+                    persistentEnrolment.simpleLockWrite(enrolmentInOptionalCurricularCourse);
                     ChangeEnrolmentStateFromTemporarilyToEnroled.createAttend(
                         enrolmentInOptionalCurricularCourse);
                     ChangeEnrolmentStateFromTemporarilyToEnroled.createEnrolmentEvaluation(
@@ -140,7 +140,7 @@ public class ConfirmActualOptionalEnrolmentWithoutRules implements IService
                 }
                 else
                 {
-                    persistentEnrolment.lockWrite(enrolment);
+                    persistentEnrolment.simpleLockWrite(enrolment);
                     enrolment.setCurricularCourseForOption(chosenCurricularCourseForOption);
                     enrolment.setEnrolmentState(EnrolmentState.ENROLED);
                 }

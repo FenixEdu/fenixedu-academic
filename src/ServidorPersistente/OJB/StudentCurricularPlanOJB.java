@@ -1,7 +1,5 @@
 /*
- * StudentCurricularPlanOJB.java
- * 
- * Created on 21 of December of 2002, 17:01
+ * StudentCurricularPlanOJB.java Created on 21 of December of 2002, 17:01
  */
 
 package ServidorPersistente.OJB;
@@ -22,14 +20,12 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
-public class StudentCurricularPlanOJB
-    extends ObjectFenixOJB
-    implements IStudentCurricularPlanPersistente
+public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
+        IStudentCurricularPlanPersistente
 {
 
     /** Creates a new instance of StudentCurricularPlanOJB */
@@ -38,10 +34,8 @@ public class StudentCurricularPlanOJB
     }
 
     // TODO Remove TipoCurso from method interface...
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(
-        Integer studentNumber,
-        TipoCurso degreeType)
-        throws ExcepcaoPersistencia
+    public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
+            TipoCurso degreeType) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
@@ -60,10 +54,8 @@ public class StudentCurricularPlanOJB
 
     }
 
-    public List readAllByDegreeCurricularPlanAndState(
-        IDegreeCurricularPlan degreeCurricularPlan,
-        StudentCurricularPlanState state)
-        throws ExcepcaoPersistencia
+    public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan,
+            StudentCurricularPlanState state) throws ExcepcaoPersistencia
     {
 
         try
@@ -85,51 +77,19 @@ public class StudentCurricularPlanOJB
     // made available to
     //        the aplication layer as well.
     // TODO : Write a test case for this method.
-    public IStudentCurricularPlan readStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlanToRead)
-        throws ExcepcaoPersistencia
+    public IStudentCurricularPlan readStudentCurricularPlan(
+            IStudentCurricularPlan studentCurricularPlanToRead) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentCurricularPlanToRead.getStudent().getNumber());
         crit.addEqualTo("student.degreeType", studentCurricularPlanToRead.getStudent().getDegreeType());
-        crit.addEqualTo(
-            "degreeCurricularPlan.name",
-            studentCurricularPlanToRead.getDegreeCurricularPlan().getName());
-        crit.addEqualTo(
-            "degreeCurricularPlan.degree.sigla",
-            studentCurricularPlanToRead.getDegreeCurricularPlan().getDegree().getSigla());
+        crit.addEqualTo("degreeCurricularPlan.name", studentCurricularPlanToRead
+                .getDegreeCurricularPlan().getName());
+        crit.addEqualTo("degreeCurricularPlan.degree.sigla", studentCurricularPlanToRead
+                .getDegreeCurricularPlan().getDegree().getSigla());
         crit.addEqualTo("currentState", studentCurricularPlanToRead.getCurrentState());
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
 
-    }
-
-    public void lockWrite(IStudentCurricularPlan studentCurricularPlanToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        IStudentCurricularPlan studentCurricularPlanFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (studentCurricularPlanToWrite == null)
-            return;
-
-        // Read studentCurricularPlan from database.
-        studentCurricularPlanFromDB = this.readStudentCurricularPlan(studentCurricularPlanToWrite);
-
-        // If studentCurricularPlan is not in database, then write it.
-        if (studentCurricularPlanFromDB == null)
-            super.lockWrite(studentCurricularPlanToWrite);
-        // else If the studentCurricularPlan is mapped to the database, then
-        // write any existing changes.
-        else if (
-            (studentCurricularPlanToWrite instanceof StudentCurricularPlan)
-                && ((StudentCurricularPlan) studentCurricularPlanFromDB).getIdInternal().equals(
-                    ((StudentCurricularPlan) studentCurricularPlanToWrite).getIdInternal()))
-        {
-            super.lockWrite(studentCurricularPlanToWrite);
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
     }
 
     public void delete(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia
@@ -146,10 +106,8 @@ public class StudentCurricularPlanOJB
     }
 
     public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(
-        Integer studentNumber,
-        TipoCurso degreeType,
-        Specialization specialization)
-        throws ExcepcaoPersistencia
+            Integer studentNumber, TipoCurso degreeType, Specialization specialization)
+            throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
@@ -160,13 +118,13 @@ public class StudentCurricularPlanOJB
     }
 
     public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeCurricularPlan.name", degreeCurricularPlan.getName());
-        crit.addEqualTo(
-            "degreeCurricularPlan.degree.sigla",
-            degreeCurricularPlan.getDegree().getSigla());
+        crit
+                .addEqualTo("degreeCurricularPlan.degree.sigla", degreeCurricularPlan.getDegree()
+                        .getSigla());
         return queryList(StudentCurricularPlan.class, crit);
 
     }
@@ -178,15 +136,18 @@ public class StudentCurricularPlanOJB
         return queryList(StudentCurricularPlan.class, criteria);
     }
 
-    //    public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope)
+    //    public List readByCurricularCourseScope(ICurricularCourseScope
+    // curricularCourseScope)
     //        throws ExcepcaoPersistencia
     //    {
     //        Criteria criteria = new Criteria();
-    //        criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
+    //        criteria.addEqualTo("curricularCourseScopeKey",
+    // curricularCourseScope.getIdInternal());
     //        List enrolments = queryList(Enrolment.class, criteria);
     //        List studentCurricularPlans = new ArrayList();
     //        Integer studentCurricularPlanId;
-    //        IStudentCurricularPlan helpStudentCurricularPlan = new StudentCurricularPlan();
+    //        IStudentCurricularPlan helpStudentCurricularPlan = new
+    // StudentCurricularPlan();
     //        Iterator iter = enrolments.iterator();
     //        while (iter.hasNext())
     //        {
@@ -194,7 +155,8 @@ public class StudentCurricularPlanOJB
     //                ((IEnrolment) iter.next()).getStudentCurricularPlan().getIdInternal();
     //            helpStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
     //            IStudentCurricularPlan studentCurricularPlan =
-    //                (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan, false);
+    //                (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan,
+    // false);
     //            studentCurricularPlans.add(studentCurricularPlan);
     //        }
     //        return studentCurricularPlans;
@@ -209,7 +171,7 @@ public class StudentCurricularPlanOJB
     }
 
     public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", number);
@@ -217,17 +179,15 @@ public class StudentCurricularPlanOJB
         return queryList(StudentCurricularPlan.class, crit);
 
     }
+
     //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 24/Set/2003
     /**
-	 * 
-	 * Service rewritten by Naat & Sana to correct bug that cause the returning of an empty
-	 * StudentCurricular when a student does not have an active version. The new version now uses
-	 * Persistence Broker criteria API
-	 */
-    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(
-        Integer number,
-        TipoCurso degreeType)
-        throws ExcepcaoPersistencia
+     * Service rewritten by Naat & Sana to correct bug that cause the returning
+     * of an empty StudentCurricular when a student does not have an active
+     * version. The new version now uses Persistence Broker criteria API
+     */
+    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
+            TipoCurso degreeType) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         List studentPlanState = new ArrayList();
@@ -235,18 +195,19 @@ public class StudentCurricularPlanOJB
         studentPlanState.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
 
         criteria.addIn("currentState", studentPlanState);
-        //   criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
+        //   criteria.addEqualTo("currentState",
+        // StudentCurricularPlanState.ACTIVE_OBJ);
         criteria.addEqualTo("student.number", number);
         criteria.addEqualTo("student.degreeType", degreeType);
 
-        IStudentCurricularPlan storedStudentCurricularPlan =
-            (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
+        IStudentCurricularPlan storedStudentCurricularPlan = (IStudentCurricularPlan) queryObject(
+                StudentCurricularPlan.class, criteria);
         return storedStudentCurricularPlan;
 
     }
 
     public List readAllByStudentAntState(IStudent student, StudentCurricularPlanState state)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentKey", student.getIdInternal());
@@ -254,11 +215,9 @@ public class StudentCurricularPlanOJB
         return queryList(StudentCurricularPlan.class, criteria);
     }
 
-    public IStudentCurricularPlan readByStudentDegreeCurricularPlanAndState(
-        IStudent student,
-        IDegreeCurricularPlan degreeCurricularPlan,
-        StudentCurricularPlanState state)
-        throws ExcepcaoPersistencia
+    public IStudentCurricularPlan readByStudentDegreeCurricularPlanAndState(IStudent student,
+            IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state)
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
@@ -267,10 +226,8 @@ public class StudentCurricularPlanOJB
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
     }
 
-    public List readAllByStudentAndDegreeCurricularPlan(
-        IStudent student,
-        IDegreeCurricularPlan degreeCurricularPlan)
-        throws ExcepcaoPersistencia
+    public List readAllByStudentAndDegreeCurricularPlan(IStudent student,
+            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());

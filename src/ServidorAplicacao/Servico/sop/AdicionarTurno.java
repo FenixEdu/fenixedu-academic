@@ -1,16 +1,15 @@
 /*
- * AdicionarTurno.java
- *
- * Created on 27 de Outubro de 2002, 12:31
+ * AdicionarTurno.java Created on 27 de Outubro de 2002, 12:31
  */
 
 package ServidorAplicacao.Servico.sop;
 
 /**
  * Serviço AdicionarTurno.
- *
+ * 
  * @author tfc130
- **/
+ */
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
@@ -21,7 +20,6 @@ import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.TurmaTurno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,74 +27,57 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class AdicionarTurno implements IServico {
+public class AdicionarTurno implements IService
+{
 
-	private static AdicionarTurno _servico = new AdicionarTurno();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static AdicionarTurno getService() {
-		return _servico;
-	}
+    /**
+     * The actor of this class.
+     */
+    public AdicionarTurno()
+    {
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private AdicionarTurno() {
-	}
+    public Boolean run(InfoClass infoClass, InfoShift infoShift) throws FenixServiceException
+    {
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "AdicionarTurno";
-	}
+        ITurmaTurno turmaTurno = null;
+        boolean result = false;
 
-	public Boolean run(InfoClass infoClass, InfoShift infoShift)
-		throws FenixServiceException {
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-		ITurmaTurno turmaTurno = null;
-		boolean result = false;
+            IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
+                    .getInfoExecutionPeriod());
+            ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
+                    .getInfoExecutionDegree());
+            IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
+                    .getInfoDisciplinaExecucao());
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ITurma group = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
+                    infoClass.getNome(), executionDegree, executionPeriod);
+            ITurno shift = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
+                    executionCourse);
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoClass.getInfoExecutionPeriod());
-			ICursoExecucao executionDegree =
-				Cloner.copyInfoExecutionDegree2ExecutionDegree(
-					infoClass.getInfoExecutionDegree());
-			IExecutionCourse executionCourse =
-				Cloner.copyInfoExecutionCourse2ExecutionCourse(
-					infoShift.getInfoDisciplinaExecucao());
+            turmaTurno = new TurmaTurno(group, shift);
 
-			ITurma group =
-				sp
-					.getITurmaPersistente()
-					.readByNameAndExecutionDegreeAndExecutionPeriod(
-					infoClass.getNome(),
-					executionDegree,
-					executionPeriod);
-			ITurno shift =
-				sp.getITurnoPersistente().readByNameAndExecutionCourse(
-					infoShift.getNome(),
-					executionCourse);
+            try
+            {
+                sp.getITurmaTurnoPersistente().simpleLockWrite(turmaTurno);
+            }
+            catch (ExistingPersistentException e)
+            {
+                throw new ExistingServiceException(e);
+            }
 
-			turmaTurno = new TurmaTurno(group, shift);
+            result = true;
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex.getMessage());
+        }
 
-			try {
-				sp.getITurmaTurnoPersistente().lockWrite(turmaTurno);
-			} catch (ExistingPersistentException e) {
-				throw new ExistingServiceException(e);
-			}
-
-			result = true;
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex.getMessage());
-		}
-
-		return new Boolean(result);
-	}
+        return new Boolean(result);
+    }
 
 }

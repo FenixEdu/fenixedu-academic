@@ -161,7 +161,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             if (teacher != null && executionCourse != null)
             {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();

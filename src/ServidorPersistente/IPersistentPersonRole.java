@@ -4,7 +4,6 @@ package ServidorPersistente;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IRole;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * 
@@ -23,11 +22,5 @@ public interface IPersistentPersonRole extends IPersistentObject {
 	 */
 	public IPersonRole readByPersonAndRole(IPessoa person, IRole role) throws ExcepcaoPersistencia;
 	
-	/**
-	 * 
-	 * @param personRole
-	 * @throws ExcepcaoPersistencia
-	 * @throws ExistingPersistentException
-	 */
-	public void write(IPersonRole personRole) throws ExcepcaoPersistencia, ExistingPersistentException;     
+	  
 }

@@ -4,13 +4,13 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -25,31 +25,17 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  *  
  */
 
-public class CreateGroupProperties implements IServico
+public class CreateGroupProperties implements IService
 {
 
-    private static CreateGroupProperties service = new CreateGroupProperties();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static CreateGroupProperties getService()
-    {
-        return service;
-    }
+    
     /**
 	 * The constructor of this class.
 	 */
-    private CreateGroupProperties()
+    public CreateGroupProperties()
     {
     }
-    /**
-	 * The name of the service
-	 */
-    public final String getNome()
-    {
-        return "CreateGroupProperties";
-    }
+    
 
     /**
 	 * Executes the service.
@@ -79,7 +65,7 @@ public class CreateGroupProperties implements IServico
             IGroupProperties newGroupProperties =
                 Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
 
-            persistentGroupProperties.lockWrite(newGroupProperties);
+            persistentGroupProperties.simpleLockWrite(newGroupProperties);
 
         }
         catch (ExistingPersistentException excepcaoPersistencia)

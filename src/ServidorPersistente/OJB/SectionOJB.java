@@ -23,7 +23,6 @@ import Dominio.Item;
 import Dominio.Section;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class SectionOJB extends ObjectFenixOJB implements IPersistentSection
 {
@@ -105,42 +104,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection
 
     }
 
-    public void lockWrite(ISection section) throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        // If there is nothing to write, simply return.
-        if (section == null)
-        {
-            return;
-        }
-
-        ISection sectionFromDB =
-            this.readBySiteAndSectionAndName(
-                section.getSite(),
-                section.getSuperiorSection(),
-                section.getName());
-
-        // If section is not in database, then write it.
-        if (sectionFromDB == null)
-        {
-            super.lockWrite(section);
-        }
-        // else If the section is mapped to the database, then write any
-        // existing changes.
-        else if (
-            (section instanceof Section)
-                && ((Section) sectionFromDB).getIdInternal().equals(((Section) section).getIdInternal()))
-        {
-
-            super.lockWrite(section);
-
-            // else Throw an already existing exception
-        }
-        else
-        {
-            throw new ExistingPersistentException();
-        }
-    }
+    
 
     public void delete(ISection section) throws ExcepcaoPersistencia
     {

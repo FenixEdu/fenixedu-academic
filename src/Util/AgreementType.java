@@ -19,8 +19,10 @@ public class AgreementType extends FenixUtil
     public static final int ERASMUS = 4;
     public static final int SOCRATES = 5;
     public static final int SOCRATES_ERASMUS = 6;
-    public static final int ALFA2 = 7;
-    public static final int UNIFOR = 8;
+    public static final int TEMPUS = 7;
+    public static final int BILATERAL_AGREEMENT = 8;
+    public static final int ALFA2 = 9;
+    public static final int UNIFOR = 10;
   
     
     private Integer state;
@@ -102,6 +104,12 @@ public class AgreementType extends FenixUtil
                 break;
             case SOCRATES_ERASMUS:
                 valueS = "SOCRATES_ERASMUS";
+                break;
+            case TEMPUS:
+                valueS = "TEMPUS";
+                break;
+            case BILATERAL_AGREEMENT:
+                valueS = "BILATERAL_AGREEMENT";
                 break;
             case ALFA2:
                 valueS = "ALFA2";

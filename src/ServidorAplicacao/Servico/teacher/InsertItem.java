@@ -3,12 +3,12 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoItem;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.Section;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -20,96 +20,102 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Fernanda Quitério
- * 
  */
-public class InsertItem implements IServico {
+public class InsertItem implements IService
+{
 
-	private static InsertItem service = new InsertItem();
+    public InsertItem()
+    {
 
-	public static InsertItem getService() {
+    }
 
-		return service;
-	}
+    private int organizeExistingItemsOrder(ISection section, int insertItemOrder)
+            throws FenixServiceException
+    {
 
-	private InsertItem() {
+        IPersistentItem persistentItem = null;
+        try
+        {
 
-	}
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-	public final String getNome() {
+            persistentItem = persistentSuport.getIPersistentItem();
 
-		return "InsertItem";
-	}
+            List itemsList = persistentItem.readAllItemsBySection(section);
 
-	private int organizeExistingItemsOrder(ISection section, int insertItemOrder) throws FenixServiceException {
+            if (itemsList != null)
+            {
 
-		IPersistentItem persistentItem = null;
-		try {
+                if (insertItemOrder == -1)
+                {
+                    insertItemOrder = itemsList.size();
+                }
 
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+                Iterator iterItems = itemsList.iterator();
+                while (iterItems.hasNext())
+                {
 
-			persistentItem = persistentSuport.getIPersistentItem();
+                    IItem item = (IItem) iterItems.next();
+                    int itemOrder = item.getItemOrder().intValue();
 
-			List itemsList = persistentItem.readAllItemsBySection(section);
+                    if (itemOrder >= insertItemOrder)
+                    {
+                        persistentItem.simpleLockWrite(item);
+                        item.setItemOrder(new Integer(itemOrder + 1));
+                    }
+                }
+            }
+        }
+        catch (ExistingPersistentException excepcaoPersistencia)
+        {
 
-			if (itemsList != null) {
+            throw new ExistingServiceException(excepcaoPersistencia);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
 
-				if (insertItemOrder == -1) {
-					insertItemOrder = itemsList.size();
-				}
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+        return insertItemOrder;
+    }
 
-				Iterator iterItems = itemsList.iterator();
-				while (iterItems.hasNext()) {
+    //infoItem with an infoSection
 
-					IItem item = (IItem) iterItems.next();
-					int itemOrder = item.getItemOrder().intValue();
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem)
+            throws FenixServiceException
+    {
 
-					if (itemOrder >= insertItemOrder) {
-						persistentItem.simpleLockWrite(item);
-						item.setItemOrder(new Integer(itemOrder + 1));
-					}
-				}
-			}
-		} catch (ExistingPersistentException excepcaoPersistencia) {
+        IItem item = null;
+        ISection section = null;
 
-			throw new ExistingServiceException(excepcaoPersistencia);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+            IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
+            persistentItem.simpleLockWrite(item);
 
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-		return insertItemOrder;
-	}
+            section = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
 
-	//infoItem with an infoSection
+            infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
+            item = Cloner.copyInfoItem2IItem(infoItem);
 
-	public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem) throws FenixServiceException {
+            Integer itemOrder = new Integer(organizeExistingItemsOrder(section, infoItem.getItemOrder()
+                    .intValue()));
+            item.setItemOrder(itemOrder);
 
-		IItem item = null;
-		ISection section = null;
+        }
+        catch (ExistingPersistentException e)
+        {
 
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
+            throw new ExistingServiceException(e);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
 
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
 
-			section = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
-
-			infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
-			item = Cloner.copyInfoItem2IItem(infoItem);
-
-			Integer itemOrder = new Integer(organizeExistingItemsOrder(section, infoItem.getItemOrder().intValue()));
-			item.setItemOrder(itemOrder);
-
-			persistentItem.lockWrite(item);
-
-		} catch (ExistingPersistentException e) {
-
-			throw new ExistingServiceException(e);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-
-		return new Boolean(true);
-	}
+        return new Boolean(true);
+    }
 }

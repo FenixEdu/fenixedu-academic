@@ -57,52 +57,39 @@ public class EditExecutionDegree implements IServico
             CursoExecucao execDegree = new CursoExecucao();
             execDegree.setIdInternal(infoExecutionDegree.getIdInternal());
 
-            ICursoExecucao oldExecutionDegree =
-                (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
+            ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(
+                    execDegree, false);
 
             IPersistentCampus campusDAO = persistentSuport.getIPersistentCampus();
 
-            ICampus campus =
-                (ICampus) campusDAO.readByOId(
-                    new Campus(infoExecutionDegree.getInfoCampus().getIdInternal()),
-                    false);
-            if (campus == null)
-            {
-                throw new NonExistingServiceException("message.nonExistingCampus", null);
-            }
+            ICampus campus = (ICampus) campusDAO.readByOId(new Campus(infoExecutionDegree
+                    .getInfoCampus().getIdInternal()), false);
+            if (campus == null) { throw new NonExistingServiceException("message.nonExistingCampus",
+                    null); }
 
-            if (oldExecutionDegree == null)
-                throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
-
-            IPersistentExecutionYear persistentExecutionYear =
-                persistentSuport.getIPersistentExecutionYear();
+            if (oldExecutionDegree == null) { throw new NonExistingServiceException(
+                    "message.nonExistingExecutionDegree", null); }
+            IPersistentExecutionYear persistentExecutionYear = persistentSuport
+                    .getIPersistentExecutionYear();
             IExecutionYear execYear = new ExecutionYear();
             execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
             executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
 
-            if (executionYear == null)
-                throw new NonExistingServiceException("message.non.existing.execution.year", null);
-
+            if (executionYear == null) { throw new NonExistingServiceException(
+                    "message.non.existing.execution.year", null); }
+            persistentExecutionDegree.simpleLockWrite(oldExecutionDegree);
             oldExecutionDegree.setExecutionYear(executionYear);
 
             oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
 
-//            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-//            ITeacher teacher =
-//                persistentTeacher.readByNumber(
-//                    infoExecutionDegree.getInfoCoordinator().getTeacherNumber());
-//
-//            if (teacher == null)
-//                throw new NonExistingServiceException("message.non.existing.teacher", null);
-//            	oldExecutionDegree.setCoordinator(teacher);
-            
             oldExecutionDegree.setCampus(campus);
-            persistentExecutionDegree.lockWrite(oldExecutionDegree);
 
-        } catch (ExistingPersistentException ex)
+        }
+        catch (ExistingPersistentException ex)
         {
             throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia)
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
             throw new FenixServiceException(excepcaoPersistencia);
         }

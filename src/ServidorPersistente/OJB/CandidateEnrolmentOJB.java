@@ -12,7 +12,6 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IMasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCandidateEnrolment;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /*
  * 
@@ -67,39 +66,7 @@ public class CandidateEnrolmentOJB extends ObjectFenixOJB implements IPersistent
     }
 
 	
-      public void write(ICandidateEnrolment candidateEnrolment2Write) throws ExcepcaoPersistencia
-    {
-        ICandidateEnrolment candidateEnrolmentFromDB = null;
-
-  
-        // If there is nothing to write, simply return.
-        if (candidateEnrolment2Write == null)
-        {
-            return;
-        }
-
-        candidateEnrolmentFromDB =
-			//this.readByMDCandidateAndCurricularCourseScope(
-            this.readByMDCandidateAndCurricularCourse(
-                candidateEnrolment2Write.getMasterDegreeCandidate(),
-                //candidateEnrolment2Write.getCurricularCourseScope());
-				candidateEnrolment2Write.getCurricularCourse());
-
-        if (candidateEnrolmentFromDB == null)
-        {
-
-            super.lockWrite(candidateEnrolment2Write);
-            return;
-        }
-        if ((candidateEnrolment2Write instanceof CandidateEnrolment)
-            && ((CandidateEnrolment) candidateEnrolmentFromDB).getIdInternal().equals(
-                ((CandidateEnrolment) candidateEnrolment2Write).getIdInternal()))
-        {
-            super.lockWrite(candidateEnrolment2Write);
-            return;
-        }
-        throw new ExistingPersistentException();
-    }
+      
 
     public void deleteAllByCandidateID(IMasterDegreeCandidate masterDegreeCandidate)
         throws ExcepcaoPersistencia

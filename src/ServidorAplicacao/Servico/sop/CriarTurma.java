@@ -11,10 +11,10 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
 import Dominio.ITurma;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -24,28 +24,16 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class CriarTurma implements IServico {
+public class CriarTurma implements IService {
 
-	private static CriarTurma _servico = new CriarTurma();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static CriarTurma getService() {
-		return _servico;
-	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private CriarTurma() {
+	public CriarTurma() {
 	}
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "CriarTurma";
-	}
+	
 
 	public Object run(InfoClass infoTurma) throws FenixServiceException {
 
@@ -61,7 +49,8 @@ public class CriarTurma implements IServico {
 				sp.getIPersistentExecutionPeriod();
 			ICursoExecucaoPersistente executionDegreeDAO =
 				sp.getICursoExecucaoPersistente();
-
+            try {
+                sp.getITurmaPersistente().simpleLockWrite(turma);
 			turma.setExecutionDegree(
 				executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
 					turma.getExecutionDegree().getCurricularPlan(),
@@ -72,8 +61,7 @@ public class CriarTurma implements IServico {
 					turma.getExecutionPeriod().getName(),
 					turma.getExecutionPeriod().getExecutionYear()));
 
-			try {
-				sp.getITurmaPersistente().lockWrite(turma);
+			
 				infoClass = Cloner.copyClass2InfoClass(turma);
 			} catch (ExistingPersistentException ex) {
 				throw new ExistingServiceException(ex);

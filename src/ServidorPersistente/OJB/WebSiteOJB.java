@@ -25,9 +25,7 @@ public class WebSiteOJB extends ObjectFenixOJB implements IPersistentWebSite {
 		return queryList(WebSite.class,crit);
 	}
 
-	public void lockWrite(IWebSite site) throws ExcepcaoPersistencia {
-		super.lockWrite(site);
-	}
+	
 
 	public void delete(IWebSite site) throws ExcepcaoPersistencia {
 		super.delete(site);

@@ -29,7 +29,7 @@ public interface IAulaPersistente extends IPersistentObject {
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
-	public void lockWrite(IAula aula) throws ExcepcaoPersistencia;
+	
 	public void delete(IAula aula) throws ExcepcaoPersistencia;
 	
 	public List readByExecutionCourse(IExecutionCourse executionCourse)

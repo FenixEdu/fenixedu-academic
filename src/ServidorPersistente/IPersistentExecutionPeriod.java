@@ -5,7 +5,6 @@ import java.util.List;
 
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * Created on 11/Fev/2003
@@ -25,12 +24,7 @@ public interface IPersistentExecutionPeriod extends IPersistentObject
 	 */
     public List readAllExecutionPeriod() throws ExcepcaoPersistencia;
 
-    /**
-	 * @param executionPeriod
-	 * @return boolean
-	 */
-    public void writeExecutionPeriod(IExecutionPeriod executionPeriod)
-        throws ExcepcaoPersistencia, ExistingPersistentException;
+   
     /**
 	 * @param executionPeriod
 	 * @return boolean

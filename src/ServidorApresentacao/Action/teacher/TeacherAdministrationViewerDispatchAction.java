@@ -1112,10 +1112,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 		ActionErrors actionErrors = new ActionErrors();
 		System.out.println(file.getFileName());
-		if (file.getFileName() == null || file.getFileName().indexOf("&") != -1)
-		{
-			actionErrors.add("fileNameInvalid", new ActionError("errors.fileNameInvalid", file
-							.getFileName()));
+		 if (file.getFileName() == null 
+                || file.getFileName().indexOf("&") != -1
+                || file.getFileName().indexOf("#") != -1
+                || file.getFileName().indexOf("+") != -1) {
+            actionErrors.add("fileNameInvalid", new ActionError(
+                    "errors.fileNameInvalid", file.getFileName()));
 			saveErrors(request, actionErrors);
 			return prepareFileUpload(mapping, form, request, response);
 

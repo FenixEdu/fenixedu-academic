@@ -15,7 +15,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao
@@ -27,37 +26,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 
 	
 
-	public void lockWrite(ICurricularCourseScope curricularCourseScopeToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException {
-
-		ICurricularCourseScope curricularCourseScopeFromDB = null;
-
-		// If there is nothing to write, simply return.
-		if (curricularCourseScopeToWrite == null) {
-			return;
-		}
-
-		// Read CurricularCourseScope from database.
-		curricularCourseScopeFromDB =
-			this.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndBeginDate(
-				curricularCourseScopeToWrite.getCurricularCourse(),
-				curricularCourseScopeToWrite.getCurricularSemester(),
-				curricularCourseScopeToWrite.getBranch(),
-				curricularCourseScopeToWrite.getBeginDate());
-
-		// If CurricularCourseScope is not in database, then write it.
-		if (curricularCourseScopeFromDB == null) {
-			super.lockWrite(curricularCourseScopeToWrite);
-			// else If the CurricularCourseScope is mapped to the database, then write any existing changes.
-		} else if (
-			(curricularCourseScopeToWrite instanceof CurricularCourseScope)
-				&& ((CurricularCourseScope) curricularCourseScopeFromDB).getIdInternal().equals(
-					((CurricularCourseScope) curricularCourseScopeToWrite).getIdInternal())) {
-			super.lockWrite(curricularCourseScopeToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+	
 
 	public void delete(ICurricularCourseScope scope) throws ExcepcaoPersistencia {
 		try {

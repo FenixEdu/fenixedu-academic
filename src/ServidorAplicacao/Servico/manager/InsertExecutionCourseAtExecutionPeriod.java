@@ -3,6 +3,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
@@ -10,7 +11,6 @@ import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISite;
 import Dominio.Site;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -25,55 +25,55 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author lmac1
  */
-public class InsertExecutionCourseAtExecutionPeriod implements IServico {
+public class InsertExecutionCourseAtExecutionPeriod implements IService
+{
 
-	private static InsertExecutionCourseAtExecutionPeriod service = new InsertExecutionCourseAtExecutionPeriod();
+    public InsertExecutionCourseAtExecutionPeriod()
+    {
+    }
 
-	public static InsertExecutionCourseAtExecutionPeriod getService() {
-		return service;
-	}
+    public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException
+    {
+        IExecutionCourse executionCourse = new ExecutionCourse();
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-	private InsertExecutionCourseAtExecutionPeriod() {
-	}
+            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
+                    .getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(
+                    new ExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()),
+                    false);
 
-	public final String getNome() {
-		return "InsertExecutionCourseAtExecutionPeriod";
-	}
-	
+            if (executionPeriod == null) { throw new NonExistingServiceException(
+                    "message.nonExistingExecutionPeriod", null); }
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 
-	public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
-		IExecutionCourse executionCourse = new ExecutionCourse();
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-								
-			IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
-			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()), false);
-				
-			if(executionPeriod == null)
-				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-			
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-				
-			executionCourse.setNome(infoExecutionCourse.getNome());
-			executionCourse.setExecutionPeriod(executionPeriod);
-			executionCourse.setSigla(infoExecutionCourse.getSigla());
-			executionCourse.setLabHours(infoExecutionCourse.getLabHours());
-			executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
-			executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
-			executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
-			executionCourse.setComment(infoExecutionCourse.getComment());
-	
-			ISite site = new Site();
-			site.setExecutionCourse(executionCourse);
-			
-			persistentExecutionCourse.lockWrite(executionCourse);
-			persistentSite.lockWrite(site);
-					
-		} catch (ExistingPersistentException existingException) {
-			throw new ExistingServiceException("A disciplina execução com sigla:"+ executionCourse.getSigla(), existingException); 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            persistentExecutionCourse.simpleLockWrite(executionCourse);
+            executionCourse.setNome(infoExecutionCourse.getNome());
+            executionCourse.setExecutionPeriod(executionPeriod);
+            executionCourse.setSigla(infoExecutionCourse.getSigla());
+            executionCourse.setLabHours(infoExecutionCourse.getLabHours());
+            executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
+            executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
+            executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
+            executionCourse.setComment(infoExecutionCourse.getComment());
+
+            ISite site = new Site();
+            persistentSite.simpleLockWrite(site);
+            site.setExecutionCourse(executionCourse);
+
+        }
+        catch (ExistingPersistentException existingException)
+        {
+            throw new ExistingServiceException("A disciplina execução com sigla:"
+                    + executionCourse.getSigla(), existingException);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }

@@ -5,13 +5,10 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.Contributor;
 import Dominio.Guide;
-import Dominio.IContributor;
 import Dominio.IGuide;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGuide;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.SituationOfGuide;
 import Util.State;
 import Util.TipoDocumentoIdentificacao;
@@ -26,44 +23,6 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
     {
     }
 
-    public void write(IGuide guideToWrite) throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-        IGuide guideBD = new Guide();
-        IContributor contributor = new Contributor();
-        contributor = guideToWrite.getContributor();
-        if (guideToWrite == null)
-            // Should we throw an exception saying nothing to write or
-            // something of the sort?
-            // By default, if OJB received a null object it would complain.
-            return;
-
-        // read Guide
-
-        guideBD = this.readByNumberAndYearAndVersion(guideToWrite.getNumber(), guideToWrite.getYear(),
-                guideToWrite.getVersion());
-
-        // if (guide not in database) then write it
-        if (guideBD == null)
-            super.lockWrite(guideToWrite);
-        // else if (guide is mapped to the database then write any existing
-        // changes)
-        else if ((guideToWrite != null)
-                && ((Guide) guideBD).getIdInternal().equals(((Guide) guideToWrite).getIdInternal()))
-        {
-
-            guideBD.setTotal(guideToWrite.getTotal());
-            guideBD.setRemarks(guideToWrite.getRemarks());
-            guideBD.setContributor(contributor);
-
-            //			guideBD.setCreationDate(guideToWrite.getCreationDate());
-            //			guideBD.setVersion(guideToWrite.getVersion());
-
-            super.lockWrite(guideBD);
-            // else throw an AlreadyExists exception.
-        }
-        else
-            throw new ExistingPersistentException();
-    }
 
     public Integer generateGuideNumber(Integer year) throws ExcepcaoPersistencia
     {

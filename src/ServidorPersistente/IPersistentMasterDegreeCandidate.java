@@ -44,6 +44,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
      * 
      * @param masterDegreeCandidate
      * @throws ExcepcaoPersistencia
+     * @deprecated
      */
     public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia;
     /**

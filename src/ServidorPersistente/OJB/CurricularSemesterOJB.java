@@ -9,7 +9,6 @@ import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularSemester;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao
@@ -24,28 +23,7 @@ public class CurricularSemesterOJB extends ObjectFenixOJB implements IPersistent
 
 	
 
-	public void lockWrite(ICurricularSemester curricularSemesterToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
-
-		ICurricularSemester curricularSemesterFromDB = null;
-
-		// If there is nothing to write, simply return.
-		if (curricularSemesterToWrite == null) {
-			return;
-		}
-
-		// Read CurricularSemester from database.
-		curricularSemesterFromDB = this.readCurricularSemesterBySemesterAndCurricularYear(curricularSemesterToWrite.getSemester(), curricularSemesterToWrite.getCurricularYear());
-
-		// If CurricularSemester is not in database, then write it.
-		if (curricularSemesterFromDB == null) {
-			super.lockWrite(curricularSemesterToWrite);
-		// else If the CurricularSemester is mapped to the database, then write any existing changes.
-		} else if ((curricularSemesterToWrite instanceof CurricularSemester) && ((CurricularSemester) curricularSemesterFromDB).getIdInternal().equals(((CurricularSemester) curricularSemesterToWrite).getIdInternal())) {
-			super.lockWrite(curricularSemesterToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+	
 
 	public void delete(ICurricularSemester curricularSemester) throws ExcepcaoPersistencia {
 		try {

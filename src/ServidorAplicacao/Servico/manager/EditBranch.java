@@ -3,10 +3,10 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoBranch;
 import Dominio.Branch;
 import Dominio.IBranch;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -20,61 +20,56 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * @author lmac1
  */
 
-public class EditBranch implements IServico {
+public class EditBranch implements IService
+{
 
-	private static EditBranch service = new EditBranch();
+   
+    
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static EditBranch getService() {
-		return service;
-	}
+    /**
+     * The constructor of this class.
+     */
+    public EditBranch()
+    {
+    }
 
-	/**
-	 * The constructor of this class.
-	 */
-	private EditBranch() {
-	}
+   
 
-	/**
-	 * Service name
-	 */
-	public final String getNome() {
-		return "EditBranch";
-	}
+    /**
+     * Executes the service.
+     */
 
-	/**
-	 * Executes the service.
-	 */
+    public void run(InfoBranch infoBranch) throws FenixServiceException
+    {
 
-	public void run(InfoBranch infoBranch) throws FenixServiceException {
+        ISuportePersistente persistentSuport = null;
+        IPersistentBranch persistentbranch = null;
+        IBranch branch = null;
+        String code = infoBranch.getCode();
 
-		ISuportePersistente persistentSuport = null;
-		IPersistentBranch persistentbranch = null;
-		IBranch branch = null;
-		String code = infoBranch.getCode();
+        try
+        {
 
-		try {
-			
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentbranch = persistentSuport.getIPersistentBranch();
-			IBranch helpBranch = new Branch();
-			helpBranch.setIdInternal(infoBranch.getIdInternal());
-			branch = (IBranch) persistentbranch.readByOId(helpBranch, false);
-			
-			if(branch == null)
-				throw new NonExistingServiceException();
-			
-			branch.setName(infoBranch.getName());
-			branch.setCode(code);
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentbranch = persistentSuport.getIPersistentBranch();
+            IBranch helpBranch = new Branch();
+            helpBranch.setIdInternal(infoBranch.getIdInternal());
+            branch = (IBranch) persistentbranch.readByOId(helpBranch, false);
 
-			persistentbranch.lockWrite(branch);
-						
-		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException();
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            if (branch == null) { throw new NonExistingServiceException(); }
+            persistentbranch.simpleLockWrite(branch);
+            branch.setName(infoBranch.getName());
+            branch.setCode(code);
+
+
+        }
+        catch (ExistingPersistentException ex)
+        {
+            throw new ExistingServiceException();
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }

@@ -31,7 +31,6 @@ import Dominio.Professorship;
 import Dominio.Site;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExecutionCourse
@@ -41,38 +40,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 	{
 	}
 
-	public void escreverDisciplinaExecucao(IExecutionCourse executionCourseToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException
-	{
-
-		IExecutionCourse executionCourseFromDB = null;
-
-		// If there is nothing to write, simply return.
-		if (executionCourseToWrite == null)
-			return;
-
-		// Read execution course from database.
-		executionCourseFromDB =
-			this.readByExecutionCourseInitialsAndExecutionPeriod(
-				executionCourseToWrite.getSigla(),
-				executionCourseToWrite.getExecutionPeriod());
-
-		// If execution course is not in database, then write it.
-		if (executionCourseFromDB == null)
-			super.lockWrite(executionCourseToWrite);
-		// else If the execution course is mapped to the database, then write
-		// any existing changes.
-		else if (
-			(executionCourseToWrite instanceof ExecutionCourse)
-				&& ((ExecutionCourse) executionCourseFromDB).getIdInternal().equals(
-					((ExecutionCourse) executionCourseToWrite).getIdInternal()))
-		{
-			super.lockWrite(executionCourseToWrite);
-			// else Throw an already existing exception
-		}
-		else
-			throw new ExistingPersistentException();
-	}
+	
 
 	public List readAll() throws ExcepcaoPersistencia
 	{
@@ -264,42 +232,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 		return queryList(Professorship.class, criteria);
 	}
 
-	public void lockWrite(IExecutionCourse executionCourseToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException
-	{
-
-		IExecutionCourse executionCourseFromDB = null;
-
-		// If there is nothing to write, simply return.
-		if (executionCourseToWrite == null)
-		{
-			return;
-		}
-
-		// Read ExecutionCourse from database.
-		executionCourseFromDB =
-			this.readByExecutionCourseInitialsAndExecutionPeriod(
-				executionCourseToWrite.getSigla(),
-				executionCourseToWrite.getExecutionPeriod());
-
-		// If ExecutionCourse is not in database, then write it.
-		if (executionCourseFromDB == null)
-		{
-			super.lockWrite(executionCourseToWrite);
-			// else If the ExecutionCourse is mapped to the database, then
-			// write any existing changes.
-		}
-		else if (
-			(executionCourseToWrite instanceof ExecutionCourse)
-				&& ((ExecutionCourse) executionCourseFromDB).getIdInternal().equals(
-					((ExecutionCourse) executionCourseToWrite).getIdInternal()))
-		{
-			super.lockWrite(executionCourseToWrite);
-			// else Throw an already existing exception
-		}
-		else
-			throw new ExistingPersistentException();
-	}
+	
 
 	public Boolean readSite(Integer executionCourseId) throws ExcepcaoPersistencia
 	{

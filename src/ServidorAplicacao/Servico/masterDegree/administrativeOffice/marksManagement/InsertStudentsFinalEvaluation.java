@@ -9,6 +9,7 @@ import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
@@ -20,7 +21,6 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import Dominio.Student;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -38,95 +38,72 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Fernanda Quitério
- *
  */
-public class InsertStudentsFinalEvaluation implements IServico
+public class InsertStudentsFinalEvaluation implements IService
 {
-    private static InsertStudentsFinalEvaluation _servico = new InsertStudentsFinalEvaluation();
 
-    /**
-    	* The actor of this class.
-    	**/
-    private InsertStudentsFinalEvaluation()
+    public InsertStudentsFinalEvaluation()
     {
 
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome()
-    {
-        return "InsertStudentsFinalEvaluation";
-    }
-
-    /**
-     * Returns the _servico.
-     * @return ReadExecutionCourse
-     */
-    public static InsertStudentsFinalEvaluation getService()
-    {
-        return _servico;
     }
 
     public List run(List evaluations, Integer teacherNumber, Date evaluationDate, IUserView userView)
-        throws FenixServiceException
+            throws FenixServiceException
     {
 
         List infoEvaluationsWithError = null;
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation =
-                sp.getIPersistentEnrolmentEvaluation();
+            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+                    .getIPersistentEnrolmentEvaluation();
             //			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             //			employee
-            //			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            //			IPessoa person =
+            // persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             //			Funcionario employee = readEmployee(person);
 
             infoEvaluationsWithError = new ArrayList();
             ListIterator iterEnrolmentEvaluations = evaluations.listIterator();
             while (iterEnrolmentEvaluations.hasNext())
             {
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation =
-                    (InfoEnrolmentEvaluation) iterEnrolmentEvaluations.next();
+                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) iterEnrolmentEvaluations
+                        .next();
 
                 infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
-                IEnrolmentEvaluation enrolmentEvaluationFromDb =
-                    getEnrolmentEvaluation(persistentEnrolmentEvaluation, infoEnrolmentEvaluation);
+                IEnrolmentEvaluation enrolmentEvaluationFromDb = getEnrolmentEvaluation(
+                        persistentEnrolmentEvaluation, infoEnrolmentEvaluation);
                 if (infoEnrolmentEvaluation.getGrade() == null
-                    || infoEnrolmentEvaluation.getGrade().length() == 0)
+                        || infoEnrolmentEvaluation.getGrade().length() == 0)
                 {
                     if (enrolmentEvaluationFromDb.getGrade() != null
-                        && enrolmentEvaluationFromDb.getGrade().length() > 0)
+                            && enrolmentEvaluationFromDb.getGrade().length() > 0)
                     {
-                        // if there was a grade and now there is not we have to delete written information
-                        cleanEnrolmentEvaluation(
-                            persistentEnrolmentEvaluation,
-                            enrolmentEvaluationFromDb);
+                        // if there was a grade and now there is not we have to
+                        // delete written information
+                        cleanEnrolmentEvaluation(persistentEnrolmentEvaluation,
+                                enrolmentEvaluationFromDb);
                     }
-                } else if (
-                    infoEnrolmentEvaluation.getGrade() != null
+                }
+                else if (infoEnrolmentEvaluation.getGrade() != null
                         && infoEnrolmentEvaluation.getGrade().length() > 0)
                 {
                     if (!isValidEvaluation(infoEnrolmentEvaluation))
                     {
                         infoEvaluationsWithError.add(infoEnrolmentEvaluation);
-                    } else
+                    }
+                    else
                     {
-                        fillEnrolmentEvaluation(
-                            evaluationDate,
-                            persistentEnrolmentEvaluation,
-                            persistentTeacher,
-                            teacherNumber,
-                            infoEnrolmentEvaluation,
-                            enrolmentEvaluationFromDb);
+                        fillEnrolmentEvaluation(evaluationDate, persistentEnrolmentEvaluation,
+                                persistentTeacher, teacherNumber, infoEnrolmentEvaluation,
+                                enrolmentEvaluationFromDb);
                     }
                 }
             }
-        } catch (ExcepcaoPersistencia ex)
+        }
+        catch (ExcepcaoPersistencia ex)
         {
             ex.printStackTrace();
             FenixServiceException newEx = new FenixServiceException("");
@@ -137,30 +114,26 @@ public class InsertStudentsFinalEvaluation implements IServico
         return infoEvaluationsWithError;
     }
 
-    private void fillEnrolmentEvaluation(
-        Date evaluationDate,
-        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
-        IPersistentTeacher persistentTeacher,
-        Integer teacherNumber,
-        InfoEnrolmentEvaluation infoEnrolmentEvaluation,
-        IEnrolmentEvaluation enrolmentEvaluationFromDb)
-        throws ExcepcaoPersistencia, ExistingPersistentException, NonExistingServiceException
+    private void fillEnrolmentEvaluation(Date evaluationDate,
+            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
+            IPersistentTeacher persistentTeacher, Integer teacherNumber,
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation,
+            IEnrolmentEvaluation enrolmentEvaluationFromDb) throws ExcepcaoPersistencia,
+            ExistingPersistentException, NonExistingServiceException
     {
 
         //			responsible teacher
         ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-        if (teacher == null)
-        {
-            throw new NonExistingServiceException();
-        }
+        if (teacher == null) { throw new NonExistingServiceException(); }
         Calendar calendario = Calendar.getInstance();
 
-        persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluationFromDb);
+        persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationFromDb);
 
         if (evaluationDate != null)
         {
             enrolmentEvaluationFromDb.setExamDate(evaluationDate);
-        } else
+        }
+        else
         {
             enrolmentEvaluationFromDb.setExamDate(calendario.getTime());
         }
@@ -169,16 +142,16 @@ public class InsertStudentsFinalEvaluation implements IServico
         enrolmentEvaluationFromDb.setGradeAvailableDate(calendario.getTime());
         //					enrolmentEvaluation.setEmployee(employee);
         //					enrolmentEvaluation.setWhen(calendario.getTime());
-        //					enrolmentEvaluation.setObservation("Lançamento de Notas na Secretaria");
+        //					enrolmentEvaluation.setObservation("Lançamento de Notas na
+        // Secretaria");
         enrolmentEvaluationFromDb.setCheckSum("");
     }
 
-    private void cleanEnrolmentEvaluation(
-        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
-        IEnrolmentEvaluation enrolmentEvaluationFromDb)
-        throws ExcepcaoPersistencia, ExistingPersistentException
+    private void cleanEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
+            IEnrolmentEvaluation enrolmentEvaluationFromDb) throws ExcepcaoPersistencia,
+            ExistingPersistentException
     {
-        persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluationFromDb);
+        persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationFromDb);
         enrolmentEvaluationFromDb.setCheckSum(null);
         enrolmentEvaluationFromDb.setExamDate(null);
         enrolmentEvaluationFromDb.setGrade(null);
@@ -187,28 +160,25 @@ public class InsertStudentsFinalEvaluation implements IServico
     }
 
     private IEnrolmentEvaluation getEnrolmentEvaluation(
-        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
-        InfoEnrolmentEvaluation infoEnrolmentEvaluation)
-        throws ExcepcaoPersistencia, FenixServiceException
+            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws ExcepcaoPersistencia,
+            FenixServiceException
     {
         IEnrolment enrolmentForCriteria = new Enrolment();
         enrolmentForCriteria.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
 
         IEnrolmentEvaluation enrolmentEvaluationForCriteria = new EnrolmentEvaluation();
         enrolmentEvaluationForCriteria.setEnrolment(enrolmentForCriteria);
-        List enrolmentEvaluationsForEnrolment =
-            persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluationForCriteria);
-        if (enrolmentEvaluationsForEnrolment.size() == 0)
-        {
-            //		it will never happen!!
-            throw new FenixServiceException();
-        }
+        List enrolmentEvaluationsForEnrolment = persistentEnrolmentEvaluation
+                .readByCriteria(enrolmentEvaluationForCriteria);
+        if (enrolmentEvaluationsForEnrolment.size() == 0) {
+        //		it will never happen!!
+        throw new FenixServiceException(); }
         Collections.sort(enrolmentEvaluationsForEnrolment, new BeanComparator("enrolment.idInternal"));
 
         //		we want last enrolment evaluation in case of improvement
-        IEnrolmentEvaluation enrolmentEvaluation =
-            (IEnrolmentEvaluation) enrolmentEvaluationsForEnrolment.get(
-                enrolmentEvaluationsForEnrolment.size() - 1);
+        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) enrolmentEvaluationsForEnrolment
+                .get(enrolmentEvaluationsForEnrolment.size() - 1);
         return enrolmentEvaluation;
     }
 
@@ -216,16 +186,18 @@ public class InsertStudentsFinalEvaluation implements IServico
     //		Employee employee = null;
     //		IPersistentEmployee persistentEmployee;
     //		try {
-    //			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
-    //			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+    //			persistentEmployee =
+    // SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+    //			employee =
+    // persistentEmployee.readByPerson(person.getIdInternal().intValue());
     //		} catch (ExcepcaoPersistencia e) {
     //			e.printStackTrace();
     //		}
     //		return employee;
     //	}
 
-    private InfoEnrolmentEvaluation completeEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
-        throws FenixServiceException
+    private InfoEnrolmentEvaluation completeEnrolmentEvaluation(
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws FenixServiceException
     {
         try
         {
@@ -234,19 +206,16 @@ public class InsertStudentsFinalEvaluation implements IServico
 
             //			Student
             IStudent student = new Student();
-            student.setIdInternal(
-                infoEnrolmentEvaluation
-                    .getInfoEnrolment()
-                    .getInfoStudentCurricularPlan()
-                    .getInfoStudent()
-                    .getIdInternal());
+            student.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment()
+                    .getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
             student = (IStudent) persistentStudent.readByOId(student, false);
 
             infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().setInfoStudent(
-                Cloner.copyIStudent2InfoStudent(student));
+                    Cloner.copyIStudent2InfoStudent(student));
 
             return infoEnrolmentEvaluation;
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }
@@ -259,37 +228,29 @@ public class InsertStudentsFinalEvaluation implements IServico
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IStudentCurricularPlanPersistente curricularPlanPersistente =
-                sp.getIStudentCurricularPlanPersistente();
+            IStudentCurricularPlanPersistente curricularPlanPersistente = sp
+                    .getIStudentCurricularPlanPersistente();
 
-            studentCurricularPlan =
-                curricularPlanPersistente.readActiveStudentCurricularPlan(
-                    infoEnrolmentEvaluation
-                        .getInfoEnrolment()
-                        .getInfoStudentCurricularPlan()
-                        .getInfoStudent()
-                        .getNumber(),
-                    infoEnrolmentEvaluation
-                        .getInfoEnrolment()
-                        .getInfoStudentCurricularPlan()
-                        .getInfoStudent()
-                        .getDegreeType());
-        } catch (Exception e)
+            studentCurricularPlan = curricularPlanPersistente.readActiveStudentCurricularPlan(
+                    infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan()
+                            .getInfoStudent().getNumber(), infoEnrolmentEvaluation.getInfoEnrolment()
+                            .getInfoStudentCurricularPlan().getInfoStudent().getDegreeType());
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
 
-        if(studentCurricularPlan == null) {
-        	return false;
-        }
+        if (studentCurricularPlan == null) { return false; }
         IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
-        // test marks by execution course: strategy 
-        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
-            DegreeCurricularPlanStrategyFactory.getInstance();
-        IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
-            degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
-        //		if (infoEnrolmentEvaluation.getGrade() == null || infoEnrolmentEvaluation.getGrade().length() == 0) {
+        // test marks by execution course: strategy
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+                .getInstance();
+        IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
+                .getDegreeCurricularPlanStrategy(degreeCurricularPlan);
+        //		if (infoEnrolmentEvaluation.getGrade() == null ||
+        // infoEnrolmentEvaluation.getGrade().length() == 0) {
         //			return false;
         //		} else {
         return degreeCurricularPlanStrategy.checkMark(infoEnrolmentEvaluation.getGrade());

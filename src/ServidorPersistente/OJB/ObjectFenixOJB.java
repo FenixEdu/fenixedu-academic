@@ -161,13 +161,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject
 		{
 			tx = odmg.currentTransaction();
 			tx.lock(obj, Transaction.WRITE);
-			// TODO - this should be removed when OJB is upgraded to version
-			// 1.0 final.
-			//        OJB 1.0 RC5 has a bug that leaves dirty objects in the cache.
-			//        This solution is just a temporary workaround.
-			//        According to OJB's mailling list the bug is already fixed in CVS
-			// head.
-			// InfoObjectCache.remove(InfoObjectCache.getKey(obj));
+			
 		}
 		catch (ODMGRuntimeException ex)
 		{

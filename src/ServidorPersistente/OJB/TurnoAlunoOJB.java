@@ -22,7 +22,6 @@ import Dominio.ITurnoAluno;
 import Dominio.ShiftStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoAlunoPersistente;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 public class TurnoAlunoOJB extends ObjectFenixOJB implements
@@ -72,41 +71,9 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements
 
     }
 
-    public void lockWrite(ITurnoAluno shiftStudentToWrite)
-            throws ExcepcaoPersistencia, ExistingPersistentException
-    {
+   
 
-        ITurnoAluno shiftStudentFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (shiftStudentToWrite == null) return;
-
-        // Read shiftStudent from database.
-        shiftStudentFromDB = this.readByTurnoAndAluno(shiftStudentToWrite
-                .getShift(), shiftStudentToWrite.getStudent());
-
-        // If shiftStudent is not in database, then write it.
-        if (shiftStudentFromDB == null) super.lockWrite(shiftStudentToWrite);
-        // else If the shiftStudent is mapped to the database, then write any
-        // existing changes.
-        else if ((shiftStudentToWrite instanceof ShiftStudent)
-                && ((ShiftStudent) shiftStudentFromDB).getIdInternal().equals(
-                        ((ShiftStudent) shiftStudentToWrite).getIdInternal()))
-        {
-            super.lockWrite(shiftStudentToWrite);
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
-    }
-
-    //Not sure if it works...
-    public void simpleLockWrite(ITurnoAluno shiftStudentToWrite)
-            throws ExcepcaoPersistencia
-    {
-        super.lockWrite(shiftStudentToWrite);
-    }
-
+    
     public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia
     {
         super.delete(turnoAluno);

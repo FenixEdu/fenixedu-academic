@@ -62,10 +62,10 @@ public class InsertProfessorShip implements IService
             IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
 
             IProfessorship professorShip = new Professorship();
+            persistentProfessorShip.simpleLockWrite(professorShip);
             professorShip.setExecutionCourse(executionCourse);
             professorShip.setTeacher(teacher);
 
-            persistentProfessorShip.lockWrite(professorShip);
 
             if (responsibleFor.booleanValue())
             {

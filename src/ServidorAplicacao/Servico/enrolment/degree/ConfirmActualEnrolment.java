@@ -7,13 +7,13 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
@@ -37,32 +37,19 @@ import Util.TipoCurso;
  * 9/Abr/2003
  */
 
-public class ConfirmActualEnrolment implements IServico
+public class ConfirmActualEnrolment implements IService
 {
 
-    private static ConfirmActualEnrolment _servico = new ConfirmActualEnrolment();
-    /**
-     * The singleton access method of this class.
-     **/
-    public static ConfirmActualEnrolment getService()
-    {
-        return _servico;
-    }
+   
 
     /**
      * The actor of this class.
      **/
-    private ConfirmActualEnrolment()
+    public ConfirmActualEnrolment()
     {
     }
 
-    /**
-     * Devolve o nome do servico
-     **/
-    public final String getNome()
-    {
-        return "ConfirmActualEnrolment";
-    }
+   
 
     /**
      * @param infoStudent
@@ -221,7 +208,7 @@ public class ConfirmActualEnrolment implements IServico
             while (iterator.hasNext())
             {
                 IEnrolment enrolment = (IEnrolment) iterator.next();
-                persistentEnrolment.lockWrite(enrolment);
+                persistentEnrolment.simpleLockWrite(enrolment);
             } // options
             Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 
@@ -258,6 +245,7 @@ public class ConfirmActualEnrolment implements IServico
                     //                                optionalCurricularCourseScopeChosen.getCurricularSemester(),
                     //                                optionalCurricularCourseScopeChosen.getBranch(),
                     //                                null);
+                    persistentEnrolment.simpleLockWrite(enrolmentInOptionalCurricularCourse);
                     enrolmentInOptionalCurricularCourse.setCurricularCourse(
                         optionalCurricularCourse2Write);
                     enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(
@@ -268,12 +256,11 @@ public class ConfirmActualEnrolment implements IServico
                         EnrolmentEvaluationType.NORMAL_OBJ);
                     enrolmentInOptionalCurricularCourse.setEnrolmentState(
                         EnrolmentState.TEMPORARILY_ENROLED);
-                    persistentEnrolment.lockWrite(enrolmentInOptionalCurricularCourse);
                 }
                 else
                 {
+                    persistentEnrolment.simpleLockWrite(enrolment);
                     enrolment.setCurricularCourseForOption(curricularCourseForOption);
-                    persistentEnrolment.lockWrite(enrolment);
                 }
             }
         }

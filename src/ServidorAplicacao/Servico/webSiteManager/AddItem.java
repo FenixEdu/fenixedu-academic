@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
@@ -25,7 +28,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 25/09/2003
  * 
  */
-public class AddItem extends ManageWebSiteItem {
+public class AddItem extends ManageWebSiteItem implements IService{
 
 	public AddItem() {
 

@@ -13,7 +13,6 @@ import Dominio.Contributor;
 import Dominio.IContributor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentContributor;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -33,41 +32,7 @@ public class ContributorOJB extends ObjectFenixOJB implements IPersistentContrib
 
     }
 
-    public void write(IContributor contributor) throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        IContributor contributorBD = null;
-
-        // If there is nothing to write, simply return.
-        if (contributor == null)
-        {
-            return;
-        }
-
-        // Read contributor from database.
-        contributorBD = this.readByContributorNumber(contributor.getContributorNumber());
-
-        // If contributor is not in database, then write it.
-        if (contributorBD == null)
-        {
-            super.lockWrite(contributor);
-            return;
-        }
-
-        // the contributor is mapped to the database, then write any existing
-        // changes.
-        if ((contributor instanceof Contributor)
-            && ((Contributor) contributorBD).getIdInternal().equals(
-                ((Contributor) contributor).getIdInternal()))
-        {
-            super.lockWrite(contributorBD);
-            return;
-
-        }
-
-        throw new ExistingPersistentException();
-
-    }
+   
 
     public List readAll() throws ExcepcaoPersistencia
     {

@@ -14,7 +14,6 @@ import Dominio.IEnrolment;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IFrequentaPersistente extends IPersistentObject
 {
@@ -22,7 +21,7 @@ public interface IFrequentaPersistente extends IPersistentObject
 		throws ExcepcaoPersistencia;
 	public IFrequenta readByAlunoAndDisciplinaExecucao(IStudent aluno, IExecutionCourse disciplinaExecucao)
 		throws ExcepcaoPersistencia;
-	public void lockWrite(IFrequenta frequenta) throws ExcepcaoPersistencia, ExistingPersistentException;
+	
 	public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia;
 	
 	public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)

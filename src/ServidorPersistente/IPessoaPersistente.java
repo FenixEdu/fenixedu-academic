@@ -14,6 +14,15 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
 public interface IPessoaPersistente extends IPersistentObject {
+    /**
+     * 
+     * @param pessoa
+     * @throws ExcepcaoPersistencia
+     * @throws ExistingPersistentException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @deprecated
+     */
     public void escreverPessoa(IPessoa pessoa) throws ExcepcaoPersistencia, ExistingPersistentException, IllegalAccessException, InvocationTargetException;
     public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
     public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia;

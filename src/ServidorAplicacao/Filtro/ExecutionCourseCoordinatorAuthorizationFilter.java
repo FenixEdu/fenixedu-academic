@@ -116,7 +116,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends
                     .getIPersistentCoordinator();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
                     .getUtilizador());
 
             if (teacher != null && executionCourse != null)

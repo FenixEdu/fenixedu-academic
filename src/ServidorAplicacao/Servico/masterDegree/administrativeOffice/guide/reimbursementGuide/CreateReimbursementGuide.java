@@ -114,7 +114,7 @@ public class CreateReimbursementGuide implements IService
 				persistentReimbursementGuide.generateReimbursementGuideNumber();
 
 			IReimbursementGuide reimbursementGuide = new ReimbursementGuide();
-			persistentReimbursementGuide.lockWrite(reimbursementGuide);
+            persistentReimbursementGuide.simpleLockWrite(reimbursementGuide);
 
 			reimbursementGuide.setCreationDate(Calendar.getInstance());
 			reimbursementGuide.setNumber(reimbursementGuideNumber);
@@ -128,7 +128,8 @@ public class CreateReimbursementGuide implements IService
 
 			//reimbursement Guide Situation
 			IReimbursementGuideSituation reimbursementGuideSituation = new ReimbursementGuideSituation();
-			persistentReimbursementGuideSituation.lockWrite(reimbursementGuideSituation);
+			
+            persistentReimbursementGuide.simpleLockWrite(reimbursementGuideSituation);
 
 			reimbursementGuideSituation.setEmployee(employee);
 			reimbursementGuideSituation.setModificationDate(Calendar.getInstance());

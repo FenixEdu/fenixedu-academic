@@ -1,7 +1,5 @@
 /*
  * Created on 21/Mar/2003
- * 
- *  
  */
 package ServidorPersistente.OJB;
 
@@ -13,7 +11,6 @@ import Dominio.Gratuity;
 import Dominio.IGratuity;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGratuity;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.State;
 
 /**
@@ -26,35 +23,8 @@ public class GratuityOJB extends ObjectFenixOJB implements IPersistentGratuity
     {
     }
 
-    public void write(IGratuity gratuity) throws ExcepcaoPersistencia
-    {
-
-        if (gratuity == null)
-        {
-            return;
-        }
-
-        IGratuity gratuityFromBD =
-            this.readByStudentCurricularPlanIDAndState(
-                gratuity.getStudentCurricularPlan().getIdInternal(),
-                gratuity.getState());
-
-        if (gratuityFromBD == null)
-        {
-            super.lockWrite(gratuity);
-            return;
-        }
-        if (((gratuity) instanceof Gratuity)
-            && (((Gratuity) gratuityFromBD).getIdInternal().equals(((Gratuity) gratuity).getIdInternal())))
-        {
-            super.lockWrite(gratuity);
-            return;
-        }
-        throw new ExistingPersistentException();
-    }
-
     public List readByStudentCurricularPlanID(Integer studentCurricularPlanID)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("keyStudentCurricularPlan", studentCurricularPlanID);
@@ -63,13 +33,12 @@ public class GratuityOJB extends ObjectFenixOJB implements IPersistentGratuity
     }
 
     public IGratuity readByStudentCurricularPlanIDAndState(Integer studentCurricularPlanID, State state)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
-        crit.addEqualTo("keyStudentCurricularPlan",studentCurricularPlanID);
-        crit.addEqualTo("state",state);
-        return (IGratuity) queryObject(Gratuity.class,crit);
-       
+        crit.addEqualTo("keyStudentCurricularPlan", studentCurricularPlanID);
+        crit.addEqualTo("state", state);
+        return (IGratuity) queryObject(Gratuity.class, crit);
 
     }
 

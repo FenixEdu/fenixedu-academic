@@ -71,9 +71,9 @@ public class LoadStudents extends DataFileLoader {
 
 			IPessoa tempPerson =
 				(IPessoa) iPessoaPersistente.readDomainObjectByCriteria(pessoa);
-			if (tempPerson != null)
-				iPessoaPersistente.escreverPessoa(pessoa);
-
+			if (tempPerson != null) {
+				iPessoaPersistente.simpleLockWrite(pessoa);
+            }
 			SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		} catch (Exception e) {
 //			System.out.println("ATENCAO: LoadStudents: " + e.toString());
@@ -171,8 +171,8 @@ public class LoadStudents extends DataFileLoader {
 		if (studentCurricularPlan == null) {
 			studentCurricularPlan = studentCurricularPlanTemp;
 		}
-
-		/* FIX : BRONCA TEMOS QUE TER ESTA INFORMAÇÂO*/
+        studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
+		/* FIXME : BRONCA TEMOS QUE TER ESTA INFORMAÇÂO*/
 		studentCurricularPlan.setStartDate(new Date());
 
 		IDegreeCurricularPlan planoCurricularCursoTemp =
@@ -195,10 +195,10 @@ public class LoadStudents extends DataFileLoader {
 			System.out.println("------------- BRONCA --------");
 			planoCurricularCurso = planoCurricularCursoTemp;
 		}
+		
 		studentCurricularPlan.setDegreeCurricularPlan(planoCurricularCurso);
 
 
-		studentCurricularPlanDAO.lockWrite(studentCurricularPlan);
 		sp.confirmarTransaccao();
 	}
 }

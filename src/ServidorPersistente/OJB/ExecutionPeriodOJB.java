@@ -31,7 +31,6 @@ import Dominio.Turno;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PeriodState;
 import Util.TipoCurso;
 
@@ -39,65 +38,33 @@ import Util.TipoCurso;
  * Created on 11/Fev/2003
  * 
  * @author João Mota Package ServidorPersistente.OJB
- *  
  */
 public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExecutionPeriod
 {
 
     /**
-	 * Constructor for ExecutionPeriodOJB.
-	 */
+     * Constructor for ExecutionPeriodOJB.
+     */
     public ExecutionPeriodOJB()
     {
         super();
     }
 
     /**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readAllExecutionPeriod()
-	 */
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readAllExecutionPeriod()
+     */
     public List readAllExecutionPeriod() throws ExcepcaoPersistencia
     {
         return queryList(ExecutionPeriod.class, new Criteria());
     }
 
     /**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#writeExecutionPeriod(Dominio.IExecutionPeriod)
-	 */
-    public void writeExecutionPeriod(IExecutionPeriod executionPeriodToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        IExecutionPeriod executionPeriodFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (executionPeriodToWrite == null)
-            return;
-
-        // Read execution period from database.
-        executionPeriodFromDB =
-            this.readByNameAndExecutionYear(
-                executionPeriodToWrite.getName(),
-                executionPeriodToWrite.getExecutionYear());
-
-        // If execution period is not in database, then write it.
-        if (executionPeriodFromDB == null)
-            super.lockWrite(executionPeriodToWrite);
-        // else If the execution period is mapped to the database, then write
-        // any existing changes.
-        else if (
-            (executionPeriodToWrite instanceof ExecutionPeriod)
-                && ((ExecutionPeriod) executionPeriodFromDB).getIdInternal().equals(
-                    ((ExecutionPeriod) executionPeriodToWrite).getIdInternal()))
-        {
-            super.lockWrite(executionPeriodToWrite);
-            // else Throw an already existing exception
-        } else
-            throw new ExistingPersistentException();
-    }
+     * @see ServidorPersistente.IPersistentExecutionPeriod#writeExecutionPeriod(Dominio.IExecutionPeriod)
+     */
 
     /**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#delete(Dominio.IExecutionPeriod)
-	 */
+     * @see ServidorPersistente.IPersistentExecutionPeriod#delete(Dominio.IExecutionPeriod)
+     */
     public boolean delete(IExecutionPeriod executionPeriod)
     {
         List executionCourses = new ArrayList();
@@ -105,23 +72,20 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         try
         {
 
-            executionCourses =
-                SuportePersistenteOJB
-                    .getInstance()
-                    .getIPersistentExecutionCourse()
-                    .readByExecutionPeriod(
-                    executionPeriod);
-            classes =
-                SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionPeriod(
+            executionCourses = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
+                    .readByExecutionPeriod(executionPeriod);
+            classes = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionPeriod(
                     executionPeriod);
 
             if (classes.isEmpty() && executionCourses.isEmpty())
             {
                 super.delete(executionPeriod);
-            } else
+            }
+            else
                 return false;
 
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             return false;
         }
@@ -130,17 +94,15 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
 
     public boolean deleteWorkingArea(IExecutionPeriod executionPeriod)
     {
-        if (executionPeriod.getSemester().intValue() > 0)
-        {
-            return false;
-        }
+        if (executionPeriod.getSemester().intValue() > 0) { return false; }
 
         try
         {
             deleteAllDataRelatedToExecutionPeriod(executionPeriod);
 
             super.delete(executionPeriod);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             return false;
         }
@@ -148,8 +110,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readActualExecutionPeriod()
-	 */
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readActualExecutionPeriod()
+     */
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
@@ -157,14 +119,13 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
 
     }
+
     /**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readByNameAndExecutionYear(java.lang.String,
-	 *      Dominio.IExecutionYear)
-	 */
-    public IExecutionPeriod readByNameAndExecutionYear(
-        String executionPeriodName,
-        IExecutionYear executionYear)
-        throws ExcepcaoPersistencia
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readByNameAndExecutionYear(java.lang.String,
+     *      Dominio.IExecutionYear)
+     */
+    public IExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
+            IExecutionYear executionYear) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
         crit.addEqualTo("name", executionPeriodName);
@@ -174,29 +135,27 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readBySemesterAndExecutionYear(java.lang.String,
-	 *      Dominio.IExecutionYear)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readBySemesterAndExecutionYear(java.lang.String,
+     *      Dominio.IExecutionYear)
+     */
     public IExecutionPeriod readBySemesterAndExecutionYear(Integer semester, IExecutionYear year)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
-        if (year == null)
-        {
-            return null;
-        }
+        if (year == null) { return null; }
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("semester", semester);
         criteria.addEqualTo("executionYear.year", year.getYear());
         return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
     }
+
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readPublic()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readPublic()
+     */
     public List readPublic() throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
@@ -206,15 +165,13 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#transferData(Dominio.IExecutionPeriod,
-	 *      Dominio.IExecutionPeriod)
-	 */
-    public void transferData(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentExecutionPeriod#transferData(Dominio.IExecutionPeriod,
+     *      Dominio.IExecutionPeriod)
+     */
+    public void transferData(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         // Clear all data from executionPeriodToImportDataTo.
         deleteAllDataRelatedToExecutionPeriod(executionPeriodToImportDataTo);
@@ -321,30 +278,33 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
 
         System.out.println("Finished creating sites.");
         /*
-		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
-		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		 * System.out.println("Clearing cache."); SuportePersistenteOJB.getInstance().clearCache();
-		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
-		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		 * 
-		 * transferProfessorships( executionPeriodToImportDataTo, executionPeriodToExportDataFrom);
-		 * 
-		 * System.out.println("Finished creating professorships.");
-		 * 
-		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
-		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		 * System.out.println("Clearing cache."); SuportePersistenteOJB.getInstance().clearCache();
-		 * System.out.println("Confirming transaction.");
-		 * SuportePersistenteOJB.getInstance().confirmarTransaccao(); System.out.println("Starting
-		 * transaction."); SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		 * 
-		 * transferResponsibleFors( executionPeriodToImportDataTo, executionPeriodToExportDataFrom);
-		 * 
-		 * System.out.println("Finished creating responsiblefor.");
-		 */
+         * System.out.println("Confirming transaction.");
+         * SuportePersistenteOJB.getInstance().confirmarTransaccao();
+         * System.out.println("Starting transaction.");
+         * SuportePersistenteOJB.getInstance().iniciarTransaccao();
+         * System.out.println("Clearing cache.");
+         * SuportePersistenteOJB.getInstance().clearCache();
+         * System.out.println("Confirming transaction.");
+         * SuportePersistenteOJB.getInstance().confirmarTransaccao();
+         * System.out.println("Starting transaction.");
+         * SuportePersistenteOJB.getInstance().iniciarTransaccao();
+         * transferProfessorships( executionPeriodToImportDataTo,
+         * executionPeriodToExportDataFrom); System.out.println("Finished
+         * creating professorships."); System.out.println("Confirming
+         * transaction.");
+         * SuportePersistenteOJB.getInstance().confirmarTransaccao();
+         * System.out.println("Starting transaction.");
+         * SuportePersistenteOJB.getInstance().iniciarTransaccao();
+         * System.out.println("Clearing cache.");
+         * SuportePersistenteOJB.getInstance().clearCache();
+         * System.out.println("Confirming transaction.");
+         * SuportePersistenteOJB.getInstance().confirmarTransaccao();
+         * System.out.println("Starting transaction.");
+         * SuportePersistenteOJB.getInstance().iniciarTransaccao();
+         * transferResponsibleFors( executionPeriodToImportDataTo,
+         * executionPeriodToExportDataFrom); System.out.println("Finished
+         * creating responsiblefor.");
+         */
         System.out.println("Confirming transaction.");
         SuportePersistenteOJB.getInstance().confirmarTransaccao();
         System.out.println("Starting transaction.");
@@ -362,20 +322,19 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 */
+     * @param executionPeriodToImportDataTo
+     */
     private void cleanUpShifts(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriod.getIdInternal());
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriod
+                .getIdInternal());
 
         int numberOfShifts = count(Turno.class, criteria);
         for (int i = 0; i < numberOfShifts; i++)
         {
-            ITurno shift =
-                (ITurno) readSpan(Turno.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
+            ITurno shift = (ITurno) readSpan(Turno.class, criteria, new Integer(1), new Integer(i + 1))
+                    .get(0);
             if (shift.getAssociatedLessons() == null || shift.getAssociatedLessons().isEmpty())
             {
                 delete(shift);
@@ -384,20 +343,19 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 *  
-	 */
+     *  
+     */
     private void cleanUpLessons(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriod.getIdInternal());
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriod
+                .getIdInternal());
 
         int numberOfLessons = count(Aula.class, criteria);
         for (int i = 0; i < numberOfLessons; i++)
         {
-            IAula lesson =
-                (IAula) readSpan(Aula.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
+            IAula lesson = (IAula) readSpan(Aula.class, criteria, new Integer(1), new Integer(i + 1))
+                    .get(0);
             Criteria criteriaShifts = new Criteria();
             criteriaShifts.addEqualTo("associatedLessons.idInternal", lesson.getIdInternal());
             if (count(Turno.class, criteriaShifts) == 0)
@@ -408,197 +366,156 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferClassShiftAssociations(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferClassShiftAssociations(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "turno.disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
+        criteria.addEqualTo("turno.disciplinaExecucao.executionPeriod.idInternal",
+                executionPeriodToExportDataFrom.getIdInternal());
 
         int numberOfClassShiftAssociations = count(TurmaTurno.class, criteria);
 
         for (int i = 0; i < numberOfClassShiftAssociations; i++)
         {
-            ITurmaTurno classShiftAssociationToTransfer =
-                (ITurmaTurno) readSpan(
-                    TurmaTurno.class,
-                    criteria,
-                    new Integer(1),
-                    new Integer(i + 1)).get(
-                    0);
+            ITurmaTurno classShiftAssociationToTransfer = (ITurmaTurno) readSpan(TurmaTurno.class,
+                    criteria, new Integer(1), new Integer(i + 1)).get(0);
 
             createClassShift(classShiftAssociationToTransfer, executionPeriodToImportDataTo);
         }
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferShiftLessonAssociations(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferShiftLessonAssociations(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "turno.disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
+        criteria.addEqualTo("turno.disciplinaExecucao.executionPeriod.idInternal",
+                executionPeriodToExportDataFrom.getIdInternal());
 
         int numberOfShiftLessonAssociations = count(TurnoAula.class, criteria);
 
         for (int i = 0; i < numberOfShiftLessonAssociations; i++)
         {
-            ITurnoAula shiftLessonAssociationToTransfer =
-                (ITurnoAula) readSpan(
-                    TurnoAula.class,
-                    criteria,
-                    new Integer(1),
-                    new Integer(i + 1)).get(
-                    0);
+            ITurnoAula shiftLessonAssociationToTransfer = (ITurnoAula) readSpan(TurnoAula.class,
+                    criteria, new Integer(1), new Integer(i + 1)).get(0);
 
             createShiftLesson(shiftLessonAssociationToTransfer, executionPeriodToImportDataTo);
         }
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferShifts(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferShifts(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal",
+                executionPeriodToExportDataFrom.getIdInternal());
 
         int numberOfShifts = count(Turno.class, criteria);
 
         for (int i = 0; i < numberOfShifts; i++)
         {
-            ITurno shiftToTransfer =
-                (ITurno) readSpan(Turno.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
+            ITurno shiftToTransfer = (ITurno) readSpan(Turno.class, criteria, new Integer(1),
+                    new Integer(i + 1)).get(0);
 
             createShift(shiftToTransfer, executionPeriodToImportDataTo);
         }
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferLessons(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferLessons(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal",
+                executionPeriodToExportDataFrom.getIdInternal());
 
         int numberOfLessons = count(Aula.class, criteria);
 
         for (int i = 0; i < numberOfLessons; i++)
         {
-            IAula lessonToTransfer =
-                (IAula) readSpan(Aula.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
+            IAula lessonToTransfer = (IAula) readSpan(Aula.class, criteria, new Integer(1),
+                    new Integer(i + 1)).get(0);
 
             createLesson(lessonToTransfer, executionPeriodToImportDataTo);
         }
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferClasses(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferClasses(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodToExportDataFrom
+                .getIdInternal());
 
         int numberOfClassesToTransfer = count(Turma.class, criteria);
 
         for (int i = 0; i < numberOfClassesToTransfer; i++)
         {
-            ITurma schoolClassToTransfer =
-                (ITurma) readSpan(Turma.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
+            ITurma schoolClassToTransfer = (ITurma) readSpan(Turma.class, criteria, new Integer(1),
+                    new Integer(i + 1)).get(0);
 
             createClass(schoolClassToTransfer, executionPeriodToImportDataTo);
         }
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferExecutionCourses(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferExecutionCourses(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodToExportDataFrom
+                .getIdInternal());
 
         int numberOfExecutionCoursesToTransfer = count(ExecutionCourse.class, criteria);
 
         for (int i = 0; i < numberOfExecutionCoursesToTransfer; i++)
         {
-            IExecutionCourse executionCourseToTransfer =
-                (IExecutionCourse) readSpan(
-                    ExecutionCourse.class,
-                    criteria,
-                    new Integer(1),
-                    new Integer(i + 1)).get(
-                    0);
+            IExecutionCourse executionCourseToTransfer = (IExecutionCourse) readSpan(
+                    ExecutionCourse.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
 
             createExecutionCourse(executionCourseToTransfer, executionPeriodToImportDataTo);
         }
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferExecutionDegrees(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferExecutionDegrees(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "academicYear",
-            executionPeriodToExportDataFrom.getExecutionYear().getIdInternal());
+        criteria.addEqualTo("academicYear", executionPeriodToExportDataFrom.getExecutionYear()
+                .getIdInternal());
         criteria.addEqualTo("curricularPlan.degree.tipoCurso", new TipoCurso(TipoCurso.LICENCIATURA));
 
         int numberOfExecutionDegreesToTransfer = count(CursoExecucao.class, criteria);
 
         for (int i = 0; i < numberOfExecutionDegreesToTransfer; i++)
         {
-            ICursoExecucao executionDegreeToTransfer =
-                (ICursoExecucao) readSpan(
-                    CursoExecucao.class,
-                    criteria,
-                    new Integer(1),
-                    new Integer(i + 1)).get(
-                    0);
+            ICursoExecucao executionDegreeToTransfer = (ICursoExecucao) readSpan(CursoExecucao.class,
+                    criteria, new Integer(1), new Integer(i + 1)).get(0);
 
             createExecutionDegree(executionDegreeToTransfer, executionPeriodToImportDataTo);
         }
@@ -606,7 +523,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     private void deleteAllDataRelatedToExecutionPeriod(IExecutionPeriod executionPeriod)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
 
@@ -618,38 +535,33 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         {
             ITurmaTurno classeShiftToDelete = (ITurmaTurno) classesShifts.get(i);
             SuportePersistenteOJB.getInstance().getITurmaTurnoPersistente().deleteByOID(
-                TurmaTurno.class,
-                classeShiftToDelete.getIdInternal());
+                    TurmaTurno.class, classeShiftToDelete.getIdInternal());
         }
 
         criteria = new Criteria();
-        criteria.addEqualTo(
-            "turno.disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriod.getIdInternal());
+        criteria.addEqualTo("turno.disciplinaExecucao.executionPeriod.idInternal", executionPeriod
+                .getIdInternal());
 
         // Shifts-Lessons
         List shiftsLessons = queryList(TurnoAula.class, criteria);
         for (int i = 0; i < shiftsLessons.size(); i++)
         {
             ITurnoAula shiftLessonToDelete = (ITurnoAula) shiftsLessons.get(i);
-            SuportePersistenteOJB.getInstance().getITurnoAulaPersistente().deleteByOID(
-                TurnoAula.class,
-                shiftLessonToDelete.getIdInternal());
+            SuportePersistenteOJB.getInstance().getITurnoAulaPersistente().deleteByOID(TurnoAula.class,
+                    shiftLessonToDelete.getIdInternal());
         }
 
         criteria = new Criteria();
-        criteria.addEqualTo(
-            "disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriod.getIdInternal());
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriod
+                .getIdInternal());
 
         // Shifts
         List shifts = queryList(Turno.class, criteria);
         for (int i = 0; i < shifts.size(); i++)
         {
             ITurno shiftToDelete = (ITurno) shifts.get(i);
-            SuportePersistenteOJB.getInstance().getITurnoPersistente().deleteByOID(
-                Turno.class,
-                shiftToDelete.getIdInternal());
+            SuportePersistenteOJB.getInstance().getITurnoPersistente().deleteByOID(Turno.class,
+                    shiftToDelete.getIdInternal());
         }
 
         // Lessons
@@ -657,24 +569,21 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         for (int i = 0; i < lessons.size(); i++)
         {
             IAula lessonToDelete = (IAula) lessons.get(i);
-            SuportePersistenteOJB.getInstance().getIAulaPersistente().deleteByOID(
-                Aula.class,
-                lessonToDelete.getIdInternal());
+            SuportePersistenteOJB.getInstance().getIAulaPersistente().deleteByOID(Aula.class,
+                    lessonToDelete.getIdInternal());
         }
 
         criteria = new Criteria();
-        criteria.addEqualTo(
-            "associatedExecutionCourses.executionPeriod.idInternal",
-            executionPeriod.getIdInternal());
+        criteria.addEqualTo("associatedExecutionCourses.executionPeriod.idInternal", executionPeriod
+                .getIdInternal());
 
         // Exams
         List exams = queryList(Exam.class, criteria);
         for (int i = 0; i < exams.size(); i++)
         {
             IExam examToDelete = (IExam) exams.get(i);
-            SuportePersistenteOJB.getInstance().getIAulaPersistente().deleteByOID(
-                Exam.class,
-                examToDelete.getIdInternal());
+            SuportePersistenteOJB.getInstance().getIAulaPersistente().deleteByOID(Exam.class,
+                    examToDelete.getIdInternal());
         }
 
         // Whatever else needs to be deleted
@@ -688,7 +597,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         {
             IExecutionCourse executionCourse = (IExecutionCourse) executionCourses.get(i);
             SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().deleteExecutionCourse(
-                executionCourse);
+                    executionCourse);
         }
 
         // Classes
@@ -701,30 +610,26 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
 
     }
 
-    private CursoExecucao createExecutionDegree(
-        Object arg0,
-        IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+    private CursoExecucao createExecutionDegree(Object arg0,
+            IExecutionPeriod executionPeriodToImportDataTo) throws ExcepcaoPersistencia
     {
         CursoExecucao executionDegreeToTransfer = (CursoExecucao) arg0;
         CursoExecucao executionDegreeToCreate = new CursoExecucao();
 
         // check if exists
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "academicYear",
-            executionPeriodToImportDataTo.getExecutionYear().getIdInternal());
-        criteria.addEqualTo(
-            "curricularPlan.degree.idInternal",
-            executionDegreeToTransfer.getDegreeCurricularPlan().getDegree().getIdInternal());
+        criteria.addEqualTo("academicYear", executionPeriodToImportDataTo.getExecutionYear()
+                .getIdInternal());
+        criteria.addEqualTo("curricularPlan.degree.idInternal", executionDegreeToTransfer
+                .getDegreeCurricularPlan().getDegree().getIdInternal());
         if (queryObject(CursoExecucao.class, criteria) == null)
         {
 
             //executionDegreeToCreate.setCoordinator(executionDegreeToTransfer.getCoordinator());
             executionDegreeToCreate.setCoordinatorsList(executionDegreeToTransfer.getCoordinatorsList());
             executionDegreeToCreate.setCurricularPlan(executionDegreeToTransfer.getCurricularPlan());
-            executionDegreeToCreate.setDegreeCurricularPlan(
-                executionDegreeToTransfer.getDegreeCurricularPlan());
+            executionDegreeToCreate.setDegreeCurricularPlan(executionDegreeToTransfer
+                    .getDegreeCurricularPlan());
             executionDegreeToCreate.setExecutionYear(executionPeriodToImportDataTo.getExecutionYear());
             executionDegreeToCreate.setIdInternal(null);
             executionDegreeToCreate.setTemporaryExamMap(new Boolean(true));
@@ -732,16 +637,15 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
 
             store(executionDegreeToCreate);
             return executionDegreeToCreate;
-        } else
+        }
+        else
         {
             return (CursoExecucao) queryObject(CursoExecucao.class, criteria);
         }
     }
 
-    private ExecutionCourse createExecutionCourse(
-        Object arg0,
-        IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+    private ExecutionCourse createExecutionCourse(Object arg0,
+            IExecutionPeriod executionPeriodToImportDataTo) throws ExcepcaoPersistencia
     {
         ExecutionCourse executionCourseToTransfer = (ExecutionCourse) arg0;
         ExecutionCourse executionCourseToCreate = new ExecutionCourse();
@@ -749,27 +653,24 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
 
         for (int i = 0; i < executionCourseToTransfer.getAssociatedCurricularCourses().size(); i++)
         {
-            ICurricularCourse curricularCourse =
-                (ICurricularCourse) executionCourseToTransfer.getAssociatedCurricularCourses().get(i);
+            ICurricularCourse curricularCourse = (ICurricularCourse) executionCourseToTransfer
+                    .getAssociatedCurricularCourses().get(i);
             Criteria criteriaExecutionDegree = new Criteria();
-            criteriaExecutionDegree.addEqualTo(
-                "executionYear.idInternal",
-                executionPeriodToImportDataTo.getExecutionYear().getIdInternal());
-            criteriaExecutionDegree.addEqualTo(
-                "curricularPlan.degree.idInternal",
-                curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal());
-            CursoExecucao executionDegree =
-                (CursoExecucao) queryObject(CursoExecucao.class, criteriaExecutionDegree);
+            criteriaExecutionDegree.addEqualTo("executionYear.idInternal", executionPeriodToImportDataTo
+                    .getExecutionYear().getIdInternal());
+            criteriaExecutionDegree.addEqualTo("curricularPlan.degree.idInternal", curricularCourse
+                    .getDegreeCurricularPlan().getDegree().getIdInternal());
+            CursoExecucao executionDegree = (CursoExecucao) queryObject(CursoExecucao.class,
+                    criteriaExecutionDegree);
 
             if (executionDegree != null)
             {
                 Criteria criteriaCurricularCourse = new Criteria();
                 criteriaCurricularCourse.addEqualTo("code", curricularCourse.getCode());
-                criteriaCurricularCourse.addEqualTo(
-                    "degreeCurricularPlan.idInternal",
-                    executionDegree.getDegreeCurricularPlan().getIdInternal());
-                ICurricularCourse curricularCourseInNewExecutionPeriod =
-                    (ICurricularCourse) queryObject(CurricularCourse.class, criteriaCurricularCourse);
+                criteriaCurricularCourse.addEqualTo("degreeCurricularPlan.idInternal", executionDegree
+                        .getDegreeCurricularPlan().getIdInternal());
+                ICurricularCourse curricularCourseInNewExecutionPeriod = (ICurricularCourse) queryObject(
+                        CurricularCourse.class, criteriaCurricularCourse);
                 if (curricularCourseInNewExecutionPeriod != null)
                 {
                     curricularCourses.add(curricularCourseInNewExecutionPeriod);
@@ -800,13 +701,13 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     private Turma createClass(Object arg0, IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Turma classToTransfer = (Turma) arg0;
         Turma classToCreate = new Turma();
 
-        CursoExecucao executionDegree =
-            findCorrespondingExecutionDegree(executionPeriodToImportDataTo, classToTransfer);
+        CursoExecucao executionDegree = findCorrespondingExecutionDegree(executionPeriodToImportDataTo,
+                classToTransfer);
 
         classToCreate.setAnoCurricular(classToTransfer.getAnoCurricular());
         classToCreate.setExecutionDegree(executionDegree);
@@ -817,7 +718,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         try
         {
             store(classToCreate);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -826,35 +728,30 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param classToTransfer
-	 * @return
-	 */
+     * @param executionPeriodToImportDataTo
+     * @param classToTransfer
+     * @return
+     */
     private CursoExecucao findCorrespondingExecutionDegree(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        Turma classToTransfer)
-        throws ExcepcaoPersistencia
+            IExecutionPeriod executionPeriodToImportDataTo, Turma classToTransfer)
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "curricularPlan.degree.idInternal",
-            classToTransfer.getExecutionDegree().getCurricularPlan().getDegree().getIdInternal());
-        criteria.addEqualTo(
-            "executionYear.idInternal",
-            executionPeriodToImportDataTo.getExecutionYear().getIdInternal());
+        criteria.addEqualTo("curricularPlan.degree.idInternal", classToTransfer.getExecutionDegree()
+                .getCurricularPlan().getDegree().getIdInternal());
+        criteria.addEqualTo("executionYear.idInternal", executionPeriodToImportDataTo.getExecutionYear()
+                .getIdInternal());
         return (CursoExecucao) queryObject(CursoExecucao.class, criteria);
     }
 
     private IAula createLesson(Object arg0, IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         IAula lessonToTransfer = (IAula) arg0;
         Aula lessonToCreate = new Aula();
 
-        ExecutionCourse executionCourse =
-            findCorrespondingExecutionCourse(
-                executionPeriodToImportDataTo,
-                lessonToTransfer.getDisciplinaExecucao());
+        ExecutionCourse executionCourse = findCorrespondingExecutionCourse(
+                executionPeriodToImportDataTo, lessonToTransfer.getDisciplinaExecucao());
 
         if (executionCourse != null)
         {
@@ -870,7 +767,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(lessonToCreate);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -880,14 +778,13 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param execucao
-	 * @return
-	 */
+     * @param executionPeriodToImportDataTo
+     * @param execucao
+     * @return
+     */
     private ExecutionCourse findCorrespondingExecutionCourse(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
+            IExecutionPeriod executionPeriodToImportDataTo, IExecutionCourse executionCourse)
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("sigla", executionCourse.getSigla());
@@ -896,15 +793,13 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     private ITurno createShift(Object arg0, IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         ITurno shiftToTransfer = (ITurno) arg0;
         ITurno shiftToCreate = new Turno();
 
-        ExecutionCourse executionCourse =
-            findCorrespondingExecutionCourse(
-                executionPeriodToImportDataTo,
-                shiftToTransfer.getDisciplinaExecucao());
+        ExecutionCourse executionCourse = findCorrespondingExecutionCourse(
+                executionPeriodToImportDataTo, shiftToTransfer.getDisciplinaExecucao());
 
         if (executionCourse != null)
         {
@@ -920,7 +815,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(shiftToCreate);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -930,16 +826,16 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     private ITurnoAula createShiftLesson(Object arg0, IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         ITurnoAula shiftLessonToTransfer = (ITurnoAula) arg0;
         ITurnoAula shiftLessonToCreate = new TurnoAula();
 
-        ITurno shift =
-            findCorrespondingShift(executionPeriodToImportDataTo, shiftLessonToTransfer.getTurno());
+        ITurno shift = findCorrespondingShift(executionPeriodToImportDataTo, shiftLessonToTransfer
+                .getTurno());
 
-        IAula lesson =
-            findCorrespondingLesson(executionPeriodToImportDataTo, shiftLessonToTransfer.getAula());
+        IAula lesson = findCorrespondingLesson(executionPeriodToImportDataTo, shiftLessonToTransfer
+                .getAula());
 
         if (shift != null && lesson != null)
         {
@@ -950,7 +846,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(shiftLessonToCreate);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -960,17 +857,16 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param aula
-	 * @return
-	 */
+     * @param executionPeriodToImportDataTo
+     * @param aula
+     * @return
+     */
     private IAula findCorrespondingLesson(IExecutionPeriod executionPeriodToImportDataTo, IAula lesson)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriodToImportDataTo.getIdInternal());
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal",
+                executionPeriodToImportDataTo.getIdInternal());
         criteria.addEqualTo("disciplinaExecucao.sigla", lesson.getDisciplinaExecucao().getSigla());
         criteria.addEqualTo("diaSemana", lesson.getDiaSemana());
         criteria.addEqualTo("inicio", lesson.getInicio());
@@ -980,33 +876,32 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param shiftLessonToTransfer
-	 * @return
-	 */
+     * @param executionPeriodToImportDataTo
+     * @param shiftLessonToTransfer
+     * @return
+     */
     private ITurno findCorrespondingShift(IExecutionPeriod executionPeriodToImportDataTo, ITurno shift)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "disciplinaExecucao.executionPeriod.idInternal",
-            executionPeriodToImportDataTo.getIdInternal());
+        criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal",
+                executionPeriodToImportDataTo.getIdInternal());
         criteria.addEqualTo("disciplinaExecucao.sigla", shift.getDisciplinaExecucao().getSigla());
         criteria.addEqualTo("nome", shift.getNome());
         return (ITurno) queryObject(Turno.class, criteria);
     }
 
     private ITurmaTurno createClassShift(Object arg0, IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         ITurmaTurno classShiftToTransfer = (ITurmaTurno) arg0;
         ITurmaTurno classShiftToCreate = new TurmaTurno();
 
-        ITurma ourClass =
-            findCorrespondingClass(executionPeriodToImportDataTo, classShiftToTransfer.getTurma());
+        ITurma ourClass = findCorrespondingClass(executionPeriodToImportDataTo, classShiftToTransfer
+                .getTurma());
 
-        ITurno shift =
-            findCorrespondingShift(executionPeriodToImportDataTo, classShiftToTransfer.getTurno());
+        ITurno shift = findCorrespondingShift(executionPeriodToImportDataTo, classShiftToTransfer
+                .getTurno());
 
         if (ourClass != null && shift != null)
         {
@@ -1017,7 +912,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(classShiftToCreate);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -1027,12 +923,12 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param turno
-	 * @return
-	 */
+     * @param executionPeriodToImportDataTo
+     * @param turno
+     * @return
+     */
     private ITurma findCorrespondingClass(IExecutionPeriod executionPeriodToImportDataTo, ITurma turma)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriodToImportDataTo.getIdInternal());
@@ -1048,44 +944,39 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferSites(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
+     * @param executionPeriodToImportDataTo
+     * @param executionPeriodToExportDataFrom
+     */
+    private void transferSites(IExecutionPeriod executionPeriodToImportDataTo,
+            IExecutionPeriod executionPeriodToExportDataFrom) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
+        criteria.addEqualTo("executionCourse.executionPeriod.idInternal",
+                executionPeriodToExportDataFrom.getIdInternal());
 
         int numberOfSites = count(Site.class, criteria);
 
         for (int i = 0; i < numberOfSites; i++)
         {
-            ISite siteToTransfer =
-                (ISite) readSpan(Site.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
+            ISite siteToTransfer = (ISite) readSpan(Site.class, criteria, new Integer(1),
+                    new Integer(i + 1)).get(0);
 
             createSite(siteToTransfer, executionPeriodToImportDataTo);
         }
     }
 
     /**
-	 * @param siteToTransfer
-	 * @param executionPeriodToImportDataTo
-	 */
+     * @param siteToTransfer
+     * @param executionPeriodToImportDataTo
+     */
     private ISite createSite(ISite arg0, IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia
     {
         ISite siteToTransfer = arg0;
         ISite siteToCreate = new Site();
 
-        ExecutionCourse executionCourse =
-            findCorrespondingExecutionCourse(
-                executionPeriodToImportDataTo,
-                siteToTransfer.getExecutionCourse());
+        ExecutionCourse executionCourse = findCorrespondingExecutionCourse(
+                executionPeriodToImportDataTo, siteToTransfer.getExecutionCourse());
 
         if (executionCourse != null)
         {
@@ -1099,7 +990,8 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             try
             {
                 store(siteToCreate);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -1109,10 +1001,10 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readNotClosedExecutionPeriods()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readNotClosedExecutionPeriods()
+     */
     public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
@@ -1129,13 +1021,16 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         return queryList(ExecutionPeriod.class, criteria);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IPersistentExecutionPeriod#readExecutionPeriodsInTimePeriod(java.util.Date, java.util.Date)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readExecutionPeriodsInTimePeriod(java.util.Date,
+     *      java.util.Date)
      */
     public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        
+
         criteria.addLessThan("beginDate", end);
         criteria.addGreaterThan("endDate", start);
         return queryList(ExecutionPeriod.class, criteria);

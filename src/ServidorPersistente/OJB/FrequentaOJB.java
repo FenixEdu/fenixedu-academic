@@ -24,7 +24,6 @@ import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PeriodState;
 
 public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistente
@@ -64,38 +63,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 
     }
 
-    public void lockWrite(IFrequenta attendanceToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        IFrequenta attendanceFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (attendanceToWrite == null)
-            return;
-
-        // Read attendance from database.
-        attendanceFromDB =
-            this.readByAlunoAndDisciplinaExecucao(
-                attendanceToWrite.getAluno(),
-                attendanceToWrite.getDisciplinaExecucao());
-
-        // If attendance is not in database, then write it.
-        if (attendanceFromDB == null)
-            super.lockWrite(attendanceToWrite);
-        // else If the attendance is mapped to the database, then write any
-        // existing changes.
-        else if (
-            (attendanceToWrite instanceof Frequenta)
-                && ((Frequenta) attendanceFromDB).getIdInternal().equals(
-                    ((Frequenta) attendanceToWrite).getIdInternal()))
-        {
-            super.lockWrite(attendanceToWrite);
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
-    }
+    
 
     public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia
     {

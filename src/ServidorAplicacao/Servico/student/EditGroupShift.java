@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.student;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -12,7 +13,6 @@ import Dominio.IStudentGroupAttend;
 import Dominio.ITurno;
 import Dominio.StudentGroup;
 import Dominio.Turno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
@@ -32,19 +32,14 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 
-public class EditGroupShift implements IServico {
+public class EditGroupShift implements IService {
 
 	/**
 	 * The constructor of this class.
 	 */
 	public EditGroupShift() {
 	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome() {
-		return "EditGroupShift";
-	}
+	
 
 	/**
 	 * Executes the service.
@@ -76,19 +71,20 @@ public class EditGroupShift implements IServico {
 			IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup, attend);
 			
 			
-			if (studentGroupAttend == null)
+			if (studentGroupAttend == null) 
+            {
 				throw new InvalidSituationServiceException();
-
+            }
 			IGroupProperties groupProperties = studentGroup.getGroupProperties();
 			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 			
 			boolean result = strategy.checkNumberOfGroups(groupProperties, shift);
-			if(!result)
+			if(!result) {
 				throw new InvalidChangeServiceException();
-			
+            }
+			persistentStudentGroup.simpleLockWrite(studentGroup);
 			studentGroup.setShift(shift);
-			persistentStudentGroup.lockWrite(studentGroup);
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());

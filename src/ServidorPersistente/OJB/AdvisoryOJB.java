@@ -80,13 +80,13 @@ public class AdvisoryOJB extends ObjectFenixOJB implements IPersistentAdvisory
 
 	public void write(IAdvisory advisory, List group) throws ExcepcaoPersistencia
 	{
-		lockWrite(advisory);
+        simpleLockWrite(advisory);
 
 		Iterator it = group.iterator();
 		while (it.hasNext())
 		{
 			IPessoa person = (IPessoa) it.next();
-			lockWrite(person);
+            simpleLockWrite(person);
 			person.getAdvisories().add(advisory);
 		}
 	}

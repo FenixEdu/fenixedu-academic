@@ -22,12 +22,7 @@ public interface IPersistentGuideEntry extends IPersistentObject {
 	 */
 	public List readByGuide(IGuide guide) throws ExcepcaoPersistencia; 
 	
-	/**
-	 * 
-	 * @param guideEntry
-	 * @throws ExcepcaoPersistencia
-	 */
-	public void write(IGuideEntry guideEntry) throws ExcepcaoPersistencia;
+	
 	
 	/**
 	 * 

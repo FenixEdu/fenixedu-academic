@@ -17,7 +17,7 @@ public interface IPersistentGroupProperties extends IPersistentObject{
     public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia;
 	
 	public List readAllGroupPropertiesByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-	public void lockWrite(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
+	
 	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IExecutionCourse executionCourse,String name) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 }

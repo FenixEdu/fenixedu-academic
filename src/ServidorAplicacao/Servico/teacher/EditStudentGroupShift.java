@@ -7,11 +7,11 @@ package ServidorAplicacao.Servico.teacher;
 
 
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudentGroup;
 import Dominio.ITurno;
 import Dominio.StudentGroup;
 import Dominio.Turno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -25,19 +25,14 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 
-public class EditStudentGroupShift implements IServico {
+public class EditStudentGroupShift implements IService {
 
 	/**
 	 * The constructor of this class.
 	 */
 	public EditStudentGroupShift() {
 	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome() {
-		return "EditStudentGroupShift";
-	}
+	
 
 	
 	/**
@@ -61,12 +56,12 @@ public class EditStudentGroupShift implements IServico {
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode),false);
 			
-			if(studentGroup == null)
+			if(studentGroup == null) {
 				throw new InvalidArgumentsServiceException();
-				
+            }
 						
+			persistentStudentGroup.simpleLockWrite(studentGroup);
 			studentGroup.setShift(shift);
-			persistentStudentGroup.lockWrite(studentGroup);
 							
 				
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {

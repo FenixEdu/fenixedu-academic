@@ -4,7 +4,6 @@ import java.util.List;
 
 import Dominio.IPessoa;
 import Dominio.IStudent;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
 
@@ -21,7 +20,7 @@ public interface IPersistentStudent extends IPersistentObject {
 	public IStudent readStudentByNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia;
 	public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPessoa person) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
-	public void lockWrite(IStudent student) throws ExcepcaoPersistencia, ExistingPersistentException;
+	
 	public void delete(IStudent student) throws ExcepcaoPersistencia;
 	
 		

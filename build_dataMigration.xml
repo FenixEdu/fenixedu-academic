@@ -1239,8 +1239,7 @@
 		</java>
 	</target>
 
-	<!-- ********************************************************************* -->
-
+	
 	<!-- ************************************************************************************************************************ -->
 	<target name="credits-initialize" depends="compile-proj" description="inicializa a base de dados ao nível da tabela creditos para o semestre currente">
 		<java classname="middleware.credits.CreditsInitializer" fork="yes" failonerror="false" maxmemory="512m">
@@ -1255,9 +1254,37 @@
 			</classpath>
 		</java>
 	</target>
-	
+
 	<target name="fix-curriculum" depends="compile-proj" description="cixes the curricular course information">
 		<java classname="middleware.degreeCurricularPlan.FixCurriculum" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="erasmus" depends="compile-proj" description="migrates erasmus students">
+		<java classname="middleware.erasmus.CreatePerson" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="math" depends="compile-proj" description="migrates math responsibles">
+		<java classname="middleware.mathResponsibles.UpdateMathResponsibles" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>

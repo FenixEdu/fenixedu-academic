@@ -1,7 +1,6 @@
 
 /*
  * Created on 3/Dez/2003
- *
  */
 
 package middleware.studentMigration.ileecDataMigration;
@@ -50,8 +49,11 @@ public class migrateILeecGroupsData
 {
 
     private static int totalBranchesUpdated = 0;
+
     private static int totalCurricularCourseGroupsCreated = 0;
+
     private static int totalCurricularCourseGroupsScopesCreated = 0;
+
     private static Integer ileecDegreeCode = new Integer(14);
 
     public static void main(String[] args)
@@ -60,14 +62,14 @@ public class migrateILeecGroupsData
         {
             System.out.println("[INFO] Running migrateILeecGroupsData script");
 
-            PersistentMiddlewareSupportOJB persistentMiddlewareSupportOJB =
-                PersistentMiddlewareSupportOJB.getInstance();
-            IPersistentMWGrupoIleec pMWGroups =
-                persistentMiddlewareSupportOJB.getIPersistentMWGruposILeec();
-            IPersistentMWAreaEspecializacaoIleec pMWAreaEspecializacao =
-                persistentMiddlewareSupportOJB.getIPersistentMWAreasEspecializacaoIleec();
-            IPersistentMWAreaSecundariaIleec pMWAreaSecundaria =
-                persistentMiddlewareSupportOJB.getIPersistentMWAreaSecundariaIleec();
+            PersistentMiddlewareSupportOJB persistentMiddlewareSupportOJB = PersistentMiddlewareSupportOJB
+                    .getInstance();
+            IPersistentMWGrupoIleec pMWGroups = persistentMiddlewareSupportOJB
+                    .getIPersistentMWGruposILeec();
+            IPersistentMWAreaEspecializacaoIleec pMWAreaEspecializacao = persistentMiddlewareSupportOJB
+                    .getIPersistentMWAreasEspecializacaoIleec();
+            IPersistentMWAreaSecundariaIleec pMWAreaSecundaria = persistentMiddlewareSupportOJB
+                    .getIPersistentMWAreaSecundariaIleec();
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentBranch pBranch = sp.getIPersistentBranch();
@@ -82,8 +84,8 @@ public class migrateILeecGroupsData
             List groups = pMWGroups.readAll();
             Iterator groupsIterator = groups.iterator();
 
-            System.out.println(
-                "[INFO] Total number of CurricularCourseGroups to create [" + groups.size() + "].");
+            System.out.println("[INFO] Total number of CurricularCourseGroups to create ["
+                    + groups.size() + "].");
             String nomeArea;
             Integer credits;
 
@@ -96,8 +98,8 @@ public class migrateILeecGroupsData
 
                 if (areaId.intValue() != 0)
                 {
-                    MWAreaEspecializacaoIleec mwae =
-                        pMWAreaEspecializacao.readSpecializationAreaById(areaId);
+                    MWAreaEspecializacaoIleec mwae = pMWAreaEspecializacao
+                            .readSpecializationAreaById(areaId);
 
                     nomeArea = mwae.getNome();
 
@@ -118,9 +120,9 @@ public class migrateILeecGroupsData
                 dcp = getDegreeCurricularPlan(ileecDegreeCode, sp);
 
                 IBranch branch = pBranch.readByDegreeCurricularPlanAndBranchName(dcp, nomeArea);
-				setBranchCredits(sp, branch, areaType, credits);
+                setBranchCredits(sp, branch, areaType, credits);
 
-				//ver se existe na BD
+                //ver se existe na BD
                 ICurricularCourseGroup ccgNew = new CurricularCourseGroup();
                 ccgNew.setIdInternal(mwgl.getIdGrupo());
                 ICurricularCourseGroup ccg = (ICurricularCourseGroup) pccg.readByOId(ccgNew, true);
@@ -147,14 +149,10 @@ public class migrateILeecGroupsData
 
             System.out.println("[INFO] DONE!");
             System.out.println("[INFO] Total Branches updated: [" + totalBranchesUpdated + "].");
-            System.out.println(
-                "[INFO] Total CurricularCourseGroups created: ["
-                    + totalCurricularCourseGroupsCreated
-                    + "].");
-            System.out.println(
-                "[INFO] Total relations between CCGroups and CC created: ["
-                    + totalCurricularCourseGroupsScopesCreated
-                    + "].");
+            System.out.println("[INFO] Total CurricularCourseGroups created: ["
+                    + totalCurricularCourseGroupsCreated + "].");
+            System.out.println("[INFO] Total relations between CCGroups and CC created: ["
+                    + totalCurricularCourseGroupsScopesCreated + "].");
 
         }
         catch (ExcepcaoPersistencia ex)
@@ -180,29 +178,30 @@ public class migrateILeecGroupsData
 
             List listIleecGroups = pMWGroups.readAll();
             Iterator iterator = listIleecGroups.iterator();
-            
+
             while (iterator.hasNext())
             {
-                
-                MWGrupoIleec mwg = (MWGrupoIleec) iterator.next();
-                List listCurricularCourses =
-                    getFenixCurricularCoursesWithDegreeCurricularPlan(mwg, sp, pmws);
 
-                //				List listCurricularCourseScopes = getCurricularCourseScopes(listCurricularCourses, sp);
+                MWGrupoIleec mwg = (MWGrupoIleec) iterator.next();
+                List listCurricularCourses = getFenixCurricularCoursesWithDegreeCurricularPlan(mwg, sp,
+                        pmws);
+
+                //				List listCurricularCourseScopes =
+                // getCurricularCourseScopes(listCurricularCourses, sp);
 
                 ICurricularCourseGroup curricularCourseGroup = new CurricularCourseGroup();
                 curricularCourseGroup.setIdInternal(mwg.getIdGrupo());
-                ICurricularCourseGroup fenixGroup =
-                    (ICurricularCourseGroup) pCCGroup.readByOId(curricularCourseGroup, true);
+                ICurricularCourseGroup fenixGroup = (ICurricularCourseGroup) pCCGroup.readByOId(
+                        curricularCourseGroup, true);
                 //fenixGroup.getCurricularCourseScopes().clear();
                 //fenixGroup.getCurricularCourseScopes().addAll(listCurricularCourseScopes);
 
-				List scientificAreas = getScientificAreas(listCurricularCourses);
-				
-                fenixGroup.setCurricularCourses(listCurricularCourses);
-                fenixGroup.setScientificAreas(scientificAreas);              
+                List scientificAreas = getScientificAreas(listCurricularCourses);
 
-                totalCurricularCourseGroupsScopesCreated += listCurricularCourses.size();                
+                fenixGroup.setCurricularCourses(listCurricularCourses);
+                fenixGroup.setScientificAreas(scientificAreas);
+
+                totalCurricularCourseGroupsScopesCreated += listCurricularCourses.size();
             }
 
             sp.confirmarTransaccao();
@@ -210,37 +209,33 @@ public class migrateILeecGroupsData
         }
         catch (Throwable e)
         {
-            System.out.println(
-                "[ERROR] Creating the relations between the curricular course and the curricular course groups");
+            System.out
+                    .println("[ERROR] Creating the relations between the curricular course and the curricular course groups");
             e.printStackTrace();
         }
 
     }
 
     /**
-    * @param degreeCode
-    * @param fenixPersistentSuport
-    * @return
-    * @throws Throwable
-    */
-    private static IDegreeCurricularPlan getDegreeCurricularPlan(
-        Integer degreeCode,
-        ISuportePersistente fenixPersistentSuport)
-        throws Throwable
+     * @param degreeCode
+     * @param fenixPersistentSuport
+     * @return @throws
+     *         Throwable
+     */
+    private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode,
+            ISuportePersistente fenixPersistentSuport) throws Throwable
     {
         IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-        IPersistentMWDegreeTranslation persistentMWDegreeTranslation =
-            mws.getIPersistentMWDegreeTranslation();
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-            fenixPersistentSuport.getIPersistentDegreeCurricularPlan();
-        MWDegreeTranslation mwDegreeTranslation =
-            persistentMWDegreeTranslation.readByDegreeCode(degreeCode);
+        IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws
+                .getIPersistentMWDegreeTranslation();
+        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = fenixPersistentSuport
+                .getIPersistentDegreeCurricularPlan();
+        MWDegreeTranslation mwDegreeTranslation = persistentMWDegreeTranslation
+                .readByDegreeCode(degreeCode);
         if (mwDegreeTranslation != null)
         {
             ICurso degree = mwDegreeTranslation.getDegree();
-            List result =
-                persistentDegreeCurricularPlan.readByDegreeAndState(
-                    degree,
+            List result = persistentDegreeCurricularPlan.readByDegreeAndState(degree,
                     DegreeCurricularPlanState.ACTIVE_OBJ);
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) result.get(0);
             return degreeCurricularPlan;
@@ -250,43 +245,41 @@ public class migrateILeecGroupsData
             return null;
         }
     }
+
     /**
-     * 
      * @param sp
      * @param branch
      * @param areaType
      * @param credits
      * @throws ExcepcaoPersistencia
      */
-    private static void setBranchCredits(
-        ISuportePersistente sp,
-        IBranch branch,
-        AreaType areaType,
-        Integer credits)
-        throws ExcepcaoPersistencia
+    private static void setBranchCredits(ISuportePersistente sp, IBranch branch, AreaType areaType,
+            Integer credits) throws ExcepcaoPersistencia
     {
-        IPersistentBranch pb = sp.getIPersistentBranch();        
+        IPersistentBranch pb = sp.getIPersistentBranch();
+        pb.simpleLockWrite(branch);
         if (areaType.equals(AreaType.SPECIALIZATION_OBJ))
+        {
             branch.setSpecializationCredits(credits);
+        }
         else
+        {
             branch.setSecondaryCredits(credits);
-        pb.lockWrite(branch);
+        }
+       
         totalBranchesUpdated++;
 
     }
 
     /**
-     * 
      * @param groupIleec
      * @param dcp
      * @param sp
      * @param pmwsOJB
      * @return
      */
-    private static List getFenixCurricularCoursesWithDegreeCurricularPlan(
-        MWGrupoIleec groupIleec,
-        ISuportePersistente sp,
-        PersistentMiddlewareSupportOJB pmwsOJB)
+    private static List getFenixCurricularCoursesWithDegreeCurricularPlan(MWGrupoIleec groupIleec,
+            ISuportePersistente sp, PersistentMiddlewareSupportOJB pmwsOJB)
     {
         ArrayList listCurricularCourses = new ArrayList();
 
@@ -315,8 +308,8 @@ public class migrateILeecGroupsData
         }
         catch (PersistentMiddlewareSupportException e1)
         {
-            System.out.println(
-                "[ERROR] An PersistentMiddlewareSupportException occured when obtaining ILEEC groups");
+            System.out
+                    .println("[ERROR] An PersistentMiddlewareSupportException occured when obtaining ILEEC groups");
             e1.printStackTrace();
         }
 
@@ -328,24 +321,19 @@ public class migrateILeecGroupsData
             List listCC = null;
             try
             {
-                listCC =
-                    pCurricularCourse.readbyCourseCodeAndDegreeCurricularPlan(
-                        mwCourseIleec.getCodigoDisciplina(),
-                        dcp);
+                listCC = pCurricularCourse.readbyCourseCodeAndDegreeCurricularPlan(mwCourseIleec
+                        .getCodigoDisciplina(), dcp);
             }
             catch (ExcepcaoPersistencia e2)
             {
-                System.out.println(
-                    "[ERROR] An ExcepcaoPersistencia occured when obtaining curricular course");
+                System.out
+                        .println("[ERROR] An ExcepcaoPersistencia occured when obtaining curricular course");
                 e2.printStackTrace();
             }
             if (listCC.size() > 1)
             {
-                System.out.println(
-                    "[ERROR] Duplicate entry with code "
-                        + mwCourseIleec.getCodigoDisciplina()
-                        + " and DegreeCurricularPlan  "
-                        + dcp);
+                System.out.println("[ERROR] Duplicate entry with code "
+                        + mwCourseIleec.getCodigoDisciplina() + " and DegreeCurricularPlan  " + dcp);
             }
 
             if (!listCC.isEmpty())
@@ -360,7 +348,6 @@ public class migrateILeecGroupsData
     }
 
     /**
-     * 
      * @param listCurricularCourses
      * @param sp
      * @return
@@ -377,15 +364,15 @@ public class migrateILeecGroupsData
             while (iterator.hasNext())
             {
                 CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
-                listCurricularCourseScopes.addAll(
-                    pCCScope.readCurricularCourseScopesByCurricularCourse(curricularCourse));
+                listCurricularCourseScopes.addAll(pCCScope
+                        .readCurricularCourseScopesByCurricularCourse(curricularCourse));
             }
 
         }
         catch (ExcepcaoPersistencia e)
         {
-            System.out.println(
-                "[ERROR] An ExcepcaoPersistencia occured in reading the Curricular Courses Scopes");
+            System.out
+                    .println("[ERROR] An ExcepcaoPersistencia occured in reading the Curricular Courses Scopes");
             e.printStackTrace();
         }
 
@@ -393,7 +380,6 @@ public class migrateILeecGroupsData
     }
 
     /**
-     * 
      * @param CurricularCoursesList
      * @return
      */

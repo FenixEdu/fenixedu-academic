@@ -16,7 +16,6 @@ import Dominio.IBranch;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
@@ -39,14 +38,7 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject
         TipoCurso degreeType)
         throws ExcepcaoPersistencia;
 
-    /**
-	 * @param studentCurricularPlan
-	 * @throws ExcepcaoPersistencia
-	 * @throws ExistingPersistentException
-	 */
-    public void lockWrite(IStudentCurricularPlan studentCurricularPlan)
-        throws ExcepcaoPersistencia, ExistingPersistentException;
-
+   
     /**
 	 * @param studentCurricularPlan
 	 * @throws ExcepcaoPersistencia

@@ -9,7 +9,6 @@ import Dominio.IWebSiteSection;
 import Dominio.WebSiteSection;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentWebSiteSection;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author  Fernanda Quitério
@@ -63,32 +62,7 @@ public class WebSiteSectionOJB extends ObjectFenixOJB implements IPersistentWebS
 		return result;
 	}
 
-	public void lockWrite(IWebSiteSection webSiteSection) throws ExcepcaoPersistencia, ExistingPersistentException {
-
-		// If there is nothing to write, simply return.
-		if (webSiteSection == null) {
-			return;
-		}
-
-		IWebSiteSection webSiteSectionFromDB = this.readByWebSiteAndName(webSiteSection.getWebSite(), webSiteSection.getName());
-
-		// If section is not in database, then write it.
-		if (webSiteSectionFromDB == null) {
-			super.lockWrite(webSiteSection);
-		}
-		// else If the section is mapped to the database, then write any existing changes.
-		else if (
-			(webSiteSection instanceof WebSiteSection)
-				&& ((WebSiteSection) webSiteSectionFromDB).getIdInternal().equals(
-					((WebSiteSection) webSiteSectionFromDB).getIdInternal())) {
-
-			super.lockWrite(webSiteSection);
-
-			// else Throw an already existing exception
-		} else {
-			throw new ExistingPersistentException();
-		}
-	}
+	
 
 	public void delete(IWebSiteSection section) throws ExcepcaoPersistencia {
 

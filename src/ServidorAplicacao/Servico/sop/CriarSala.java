@@ -11,38 +11,27 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoRoom;
 import Dominio.ISala;
 import Dominio.Sala;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class CriarSala implements IServico {
+public class CriarSala implements IService {
 
-	private static CriarSala _servico = new CriarSala();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static CriarSala getService() {
-		return _servico;
-	}
+	
 
 	/**
 	 * The actor of this class.
 	 **/
-	private CriarSala() {
+	public CriarSala() {
 	}
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "CriarSala";
-	}
+	
 
 	public Object run(InfoRoom infoSala) throws FenixServiceException {
 
@@ -60,7 +49,7 @@ public class CriarSala implements IServico {
 					infoSala.getCapacidadeNormal(),
 					infoSala.getCapacidadeExame());
 			try {
-				sp.getISalaPersistente().lockWrite(sala);
+				sp.getISalaPersistente().simpleLockWrite(sala);
 				result = true;
 			} catch (ExistingPersistentException ex) {
 				throw new ExistingRoomServiceException(ex);

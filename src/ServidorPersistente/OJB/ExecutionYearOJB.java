@@ -10,7 +10,6 @@ import Dominio.ExecutionYear;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PeriodState;
 
 /**
@@ -48,37 +47,7 @@ public class ExecutionYearOJB extends ObjectFenixOJB implements IPersistentExecu
         return queryList(ExecutionYear.class, crit);
 
     }
-    /**
-	 * @see ServidorPersistente.IPersistentExecutionYear#writeExecutionYear(Dominio.IExecutionYear)
-	 */
-    public void writeExecutionYear(IExecutionYear executionYearToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        IExecutionYear executionYearFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (executionYearToWrite == null)
-            return;
-
-        // Read execution Year from database.
-        executionYearFromDB = this.readExecutionYearByName(executionYearToWrite.getYear());
-
-        // If execution Year is not in database, then write it.
-        if (executionYearFromDB == null)
-            super.lockWrite(executionYearToWrite);
-        // else If the execution Year is mapped to the database, then write any
-        // existing changes.
-        else if (
-            (executionYearToWrite instanceof ExecutionYear)
-                && executionYearFromDB.getIdInternal().equals(executionYearToWrite.getIdInternal()))
-        {
-            super.lockWrite(executionYearToWrite);
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
-    }
+    
 
     public boolean delete(IExecutionYear executionYear)
     {

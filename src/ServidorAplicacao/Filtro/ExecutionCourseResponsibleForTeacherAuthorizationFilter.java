@@ -97,7 +97,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
             responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCoursePB(

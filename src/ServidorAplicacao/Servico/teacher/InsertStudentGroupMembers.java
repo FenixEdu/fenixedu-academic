@@ -7,6 +7,7 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -15,7 +16,6 @@ import Dominio.IStudentGroupAttend;
 import Dominio.Student;
 import Dominio.StudentGroup;
 import Dominio.StudentGroupAttend;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -32,27 +32,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 
-public class InsertStudentGroupMembers implements IServico {
+public class InsertStudentGroupMembers implements IService {
 
-	private static InsertStudentGroupMembers service = new InsertStudentGroupMembers();
-
-	/**
-		* The singleton access method of this class.
-		*/
-	public static InsertStudentGroupMembers getService() {
-		return service;
-	}
+	
 	/**
 	 * The constructor of this class.
 	 */
-	private InsertStudentGroupMembers() {
+	public InsertStudentGroupMembers() {
 	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome() {
-		return "InsertStudentGroupMembers";
-	}
+	
 
 	/**
 	 * Executes the service.
@@ -113,7 +101,7 @@ public class InsertStudentGroupMembers implements IServico {
 
 				IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(studentGroup, attend);
 
-				persistentStudentGroupAttend.lockWrite(notExistingSGAttend);
+				persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
 			}
 
 			

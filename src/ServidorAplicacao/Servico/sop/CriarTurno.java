@@ -1,7 +1,5 @@
 /*
- * CriarTurno.java
- * 
- * Created on 27 de Outubro de 2002, 18:48
+ * CriarTurno.java Created on 27 de Outubro de 2002, 18:48
  */
 
 package ServidorAplicacao.Servico.sop;
@@ -13,13 +11,13 @@ package ServidorAplicacao.Servico.sop;
  */
 import java.util.ArrayList;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
 import Dominio.Turno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -28,31 +26,14 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class CriarTurno implements IServico
+public class CriarTurno implements IService
 {
 
-    private static CriarTurno _servico = new CriarTurno();
     /**
-	 * The singleton access method of this class.
-	 */
-    public static CriarTurno getService()
+     * The actor of this class.
+     */
+    public CriarTurno()
     {
-        return _servico;
-    }
-
-    /**
-	 * The actor of this class.
-	 */
-    private CriarTurno()
-    {
-    }
-
-    /**
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
-        return "CriarTurno";
     }
 
     public InfoShift run(InfoShift infoTurno) throws FenixServiceException
@@ -67,34 +48,28 @@ public class CriarTurno implements IServico
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionPeriod executionPeriod =
-                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-                    infoTurno.getInfoDisciplinaExecucao().getInfoExecutionPeriod());
+            IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoTurno
+                    .getInfoDisciplinaExecucao().getInfoExecutionPeriod());
 
-            IExecutionCourse executionCourse =
-                executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(
-                    infoTurno.getInfoDisciplinaExecucao().getSigla(),
-                    executionPeriod);
+            IExecutionCourse executionCourse = executionCourseDAO
+                    .readByExecutionCourseInitialsAndExecutionPeriod(infoTurno
+                            .getInfoDisciplinaExecucao().getSigla(), executionPeriod);
 
-            turno =
-                new Turno(
-                    infoTurno.getNome(),
-                    infoTurno.getTipo(),
-                    infoTurno.getLotacao(),
+            turno = new Turno(infoTurno.getNome(), infoTurno.getTipo(), infoTurno.getLotacao(),
                     executionCourse);
-            // TODO : this is requierd to write shifts.
-            //        I'm not sure of the significance, nor do I know if it is to
-            //        be attributed by SOP users. So for now just set it to 0.
-            Integer availabilityFinal =
-                new Integer(new Double(Math.ceil(1.10 * turno.getLotacao().doubleValue())).intValue());
-            turno.setAvailabilityFinal(availabilityFinal);
-            turno.setAssociatedLessons(new ArrayList());
-            turno.setAssociatedClasses(new ArrayList());
-            turno.setAssociatedShiftProfessorship(new ArrayList());
-
             try
             {
-                sp.getITurnoPersistente().lockWrite(turno);
+                sp.getITurnoPersistente().simpleLockWrite(turno);
+                // TODO : this is required to write shifts.
+                //        I'm not sure of the significance, nor do I know if it is to
+                //        be attributed by SOP users. So for now just set it to 0.
+                Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * turno.getLotacao()
+                        .doubleValue())).intValue());
+                turno.setAvailabilityFinal(availabilityFinal);
+                turno.setAssociatedLessons(new ArrayList());
+                turno.setAssociatedClasses(new ArrayList());
+                turno.setAssociatedShiftProfessorship(new ArrayList());
+
             }
             catch (ExistingPersistentException ex)
             {

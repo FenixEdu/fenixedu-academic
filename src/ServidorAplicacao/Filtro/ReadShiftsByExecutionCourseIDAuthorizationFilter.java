@@ -230,7 +230,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             if (teacher != null && executionCourse != null)
             {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();

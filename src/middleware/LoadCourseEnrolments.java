@@ -139,8 +139,8 @@ public class LoadCourseEnrolments extends DataFileLoader
                     // Adicionar a inscricao do aluno a base de dados CIAPL
                     enrolment = new Enrolment();
                     //					enrolment.setCurricularCourse(curricularCourse);
+                    persistentEnrolment.simpleLockWrite(enrolment);
                     enrolment.setStudentCurricularPlan(studentCurricularPlan);
-                    persistentEnrolment.lockWrite(enrolment);
 
                     // Ver se existe o frequenta
                     IFrequenta frequentaCriteria = new Frequenta();
@@ -163,9 +163,9 @@ public class LoadCourseEnrolments extends DataFileLoader
                                 disciplinaExecucaoCriteria);
                         if (disciplinaExecucao != null)
                         {
+                            frequentaPersistente.simpleLockWrite(frequenta);
                             frequenta.setDisciplinaExecucao(disciplinaExecucao);
                             frequenta.setAluno(student);
-                            frequentaPersistente.lockWrite(frequenta);
                         } else
                         {
                             //							System.out.println(

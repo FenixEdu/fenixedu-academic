@@ -14,7 +14,6 @@ import Dominio.IStudentGroupAttend;
 import Dominio.StudentGroupAttend;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroupAttend;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author asnr and scpo
@@ -52,41 +51,7 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 
     }
 
-    public void lockWrite(IStudentGroupAttend studentGroupAttendToWrite) throws ExcepcaoPersistencia
-    {
-
-        IStudentGroupAttend studentGroupAttendFromDB = null;
-        if (studentGroupAttendToWrite == null)
-            // If there is nothing to write, simply return.
-            return;
-
-        // read studentGroupAttend from DB
-        studentGroupAttendFromDB =
-            this.readBy(
-                studentGroupAttendToWrite.getStudentGroup(),
-                studentGroupAttendToWrite.getAttend());
-
-        // if (studentGroupAttend not in database) then write it
-        if (studentGroupAttendFromDB == null)
-        {
-
-            super.lockWrite(studentGroupAttendToWrite);
-            // else if (item is mapped to the database then write any existing
-			// changes)
-        }
-        else if (
-            (studentGroupAttendToWrite instanceof IStudentGroupAttend)
-                && studentGroupAttendFromDB.getIdInternal().equals(
-                    studentGroupAttendToWrite.getIdInternal()))
-        {
-
-            super.lockWrite(studentGroupAttendToWrite);
-            // else throw an AlreadyExists exception.
-        }
-        else
-            throw new ExistingPersistentException();
-    }
-
+    
     public void delete(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia
     {
         try

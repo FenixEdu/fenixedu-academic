@@ -152,7 +152,7 @@ public class ConfirmActualEnrolmentWithoutRules implements IService
                 }
                 else
                 {
-                    persistentEnrolment.lockWrite(enrolment);
+                    persistentEnrolment.simpleLockWrite(enrolment);
                     enrolment.setEnrolmentState(EnrolmentState.ENROLED);
                 }
             }

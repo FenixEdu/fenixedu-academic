@@ -3,7 +3,6 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IGuide;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.SituationOfGuide;
 import Util.TipoDocumentoIdentificacao;
 
@@ -13,13 +12,7 @@ import Util.TipoDocumentoIdentificacao;
 public interface IPersistentGuide extends IPersistentObject
 {
 
-    /**
-     * @param guideToWrite
-     * @throws ExcepcaoPersistencia
-     * @throws ExistingPersistentException
-     */
-    public void write(IGuide guideToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
-
+  
     /**
      * @param number
      * @param year

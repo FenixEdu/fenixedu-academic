@@ -26,7 +26,6 @@ import Dominio.ITurnoAula;
 import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -79,42 +78,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
         }
     }
 
-    public void lockWrite(IAula lessonToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException {
-        IAula lessonFromDB = null;
-        if (lessonToWrite == null)
-            // Should we throw an exception saying nothing to write or
-            // something of the sort?
-            // By default, if OJB received a null object it would complain.
-            return;
-
-        // read lesson      
-        lessonFromDB =
-            this.readByDiaSemanaAndInicioAndFimAndSala(
-                lessonToWrite.getDiaSemana(),
-                lessonToWrite.getInicio(),
-                lessonToWrite.getFim(),
-                lessonToWrite.getSala(),
-                lessonToWrite.getDisciplinaExecucao().getExecutionPeriod());
-
-        // if (lesson not in database) then write it
-        if (lessonFromDB == null)
-            super.lockWrite(lessonToWrite);
-        // else if (lesson is mapped to the database then write any existing changes)
-        else if (
-            (lessonToWrite instanceof Aula)
-                && ((Aula) lessonFromDB).getIdInternal().equals(
-                    ((Aula) lessonToWrite).getIdInternal())) {
-
-            lessonFromDB.setDisciplinaExecucao(
-                lessonToWrite.getDisciplinaExecucao());
-            lessonFromDB.setTipo(lessonToWrite.getTipo());
-            // No need to werite it because it is already mapped.
-            //super.lockWrite(lessonToWrite);
-            // else throw an AlreadyExists exception.
-        } else
-            throw new ExistingPersistentException();
-    }
+    
 
     public void delete(IAula aula) throws ExcepcaoPersistencia {
         if (aula != null) {

@@ -27,45 +27,13 @@ import Dominio.IExecutionYear;
 import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.PeriodState;
 import Util.TipoCurso;
 
 public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPersistente
 {
 
-    public void lockWrite(ICursoExecucao cursoExecucaoToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        ICursoExecucao cursoExecucaoFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (cursoExecucaoToWrite == null)
-            return;
-
-        // Read cursoExecucao from database.
-        cursoExecucaoFromDB =
-            this.readByDegreeCurricularPlanAndExecutionYear(
-                cursoExecucaoToWrite.getCurricularPlan(),
-                cursoExecucaoToWrite.getExecutionYear());
-
-        // If cursoExecucao is not in database, then write it.
-        if (cursoExecucaoFromDB == null)
-            super.lockWrite(cursoExecucaoToWrite);
-        // else If the cursoExecucao is mapped to the database, then write any
-        // existing changes.
-        else if (
-            (cursoExecucaoToWrite instanceof CursoExecucao)
-                && ((CursoExecucao) cursoExecucaoFromDB).getIdInternal().equals(
-                    ((CursoExecucao) cursoExecucaoToWrite).getIdInternal()))
-        {
-            super.lockWrite(cursoExecucaoToWrite);
-            // else Throw an already existing exception
-        } else
-            throw new ExistingPersistentException();
-    }
-
+   
     public void delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia
     {
 
@@ -84,24 +52,13 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
         }
     }
 
-    /**
-	 * @see ServidorPersistente.ICursoExecucaoPersistente#readBySigla(String)
-	 * @deprecated
-	 */
-    public ICursoExecucao readBySigla(String sigla) throws ExcepcaoPersistencia
-    {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("degreeCurricularPlan.degree.sigla", sigla);
-        return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
-    }
-
+   
     /**
 	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYear(Dominio.IExecutionYear)
 	 */
     public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia
     {
-        //PersistenceBroker broker = ((HasBroker)
-        // odmg.currentTransaction()).getBroker();
+
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear.getYear());

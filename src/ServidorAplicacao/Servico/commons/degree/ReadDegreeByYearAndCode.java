@@ -1,11 +1,11 @@
 package ServidorAplicacao.Servico.commons.degree;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -14,25 +14,17 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadDegreeByYearAndCode implements IServico
+public class ReadDegreeByYearAndCode implements IService
 {
-    private static ReadDegreeByYearAndCode service = new ReadDegreeByYearAndCode();
+    
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadDegreeByYearAndCode getService()
+     * 
+     */
+    public ReadDegreeByYearAndCode()
     {
-        return service;
+        
     }
-
-    /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadDegreeByYearAndCode";
-    }
-
+   
     public InfoExecutionDegree run(String executionYearString, String degreeCode)
         throws NonExistingServiceException
     {
@@ -64,4 +56,5 @@ public class ReadDegreeByYearAndCode implements IServico
         return (InfoExecutionDegree) Cloner.get(executionDegree);
     }
 
+   
 }

@@ -12,15 +12,15 @@ package ServidorAplicacao.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  **/
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ExamExecutionCourse;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamExecutionCourse;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,28 +29,17 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class AssociateExecutionCourseToExam implements IServico {
+public class AssociateExecutionCourseToExam implements IService {
 
-	private static AssociateExecutionCourseToExam _servico = new AssociateExecutionCourseToExam();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static AssociateExecutionCourseToExam getService() {
-		return _servico;
-	}
+	
 
 	/**
 	 * The actor of this class.
 	 **/
-	private AssociateExecutionCourseToExam() {
+	public AssociateExecutionCourseToExam() {
 	}
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "AssociateExecutionCourseToExam";
-	}
+	
 
 	public Boolean run(InfoViewExamByDayAndShift infoViewExam, InfoExecutionCourse infoExecutionCourse)
 		throws FenixServiceException {
@@ -101,7 +90,7 @@ public class AssociateExecutionCourseToExam implements IServico {
 					executionCourseToBeAssociatedWithExam);
 
 			try {
-				sp.getIPersistentExamExecutionCourse().lockWrite(examExecutionCourse);
+				sp.getIPersistentExamExecutionCourse().simpleLockWrite(examExecutionCourse);
 			} catch (ExistingPersistentException ex) {
 				throw new ExistingServiceException(ex);
 			}

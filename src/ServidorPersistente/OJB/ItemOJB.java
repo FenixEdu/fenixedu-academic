@@ -20,7 +20,6 @@ import Dominio.ISection;
 import Dominio.Item;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
    
@@ -47,36 +46,7 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
 		}
 		
 		    
-    public void lockWrite(IItem item) throws ExcepcaoPersistencia {
-       
-    
-		IItem itemFromDB = null;
-			if (item == null)
-				// Should we throw an exception saying nothing to write or
-				// something of the sort?
-				// By default, if OJB received a null object it would complain.
-				return;
-
-			// read item		
-			itemFromDB =
-				this.readBySectionAndName(item.getSection(),item.getName());
-		
-
-			// if (item not in database) then write it
-			if (itemFromDB == null)
-				super.lockWrite(item);
-			// else if (item is mapped to the database then write any existing changes)
-			else if ((item instanceof Item) &&
-					 itemFromDB.getIdInternal().equals(
-					  item.getIdInternal())) {
-
-						super.lockWrite(item);
-				// No need to werite it because it is already mapped.
-				//super.lockWrite(lessonToWrite);
-				// else throw an AlreadyExists exception.
-			} else
-				throw new ExistingPersistentException();
-		}
+   
     
     
     

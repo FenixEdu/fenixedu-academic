@@ -17,12 +17,10 @@ import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.ITurma;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 public interface ITurmaPersistente extends IPersistentObject {
-	public void lockWrite(ITurma turma)
-		throws ExcepcaoPersistencia, ExistingPersistentException;
+	
 	public void delete(ITurma turma) throws ExcepcaoPersistencia;
 	
 	public List readAll() throws ExcepcaoPersistencia;

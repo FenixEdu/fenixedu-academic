@@ -17,7 +17,6 @@ import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartment
 {
@@ -28,33 +27,7 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 
    
 
-    public void escreverDepartamento(IDepartment departmentToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        IDepartment departmentFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (departmentToWrite == null)
-            return;
-
-        // Read department from database.
-        departmentFromDB = this.lerDepartamentoPorNome(departmentToWrite.getName());
-
-        // If department is not in database, then write it.
-        if (departmentFromDB == null)
-            super.lockWrite(departmentToWrite);
-        // else If the department is mapped to the database, then write any
-		// existing changes.
-        else if (departmentFromDB.getIdInternal().equals((departmentToWrite.getIdInternal())))
-        {
-            super.lockWrite(departmentToWrite);
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
-    }
-
+    
     public IDepartment lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia
     {
 

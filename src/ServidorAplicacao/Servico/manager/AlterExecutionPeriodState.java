@@ -4,9 +4,9 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import Dominio.IExecutionPeriod;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -18,29 +18,17 @@ import Util.PeriodState;
  * @author Luis Crus & Sara Ribeiro
  */
 
-public class AlterExecutionPeriodState implements IServico {
+public class AlterExecutionPeriodState implements IService {
 
-	private static AlterExecutionPeriodState _servico =
-		new AlterExecutionPeriodState();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static AlterExecutionPeriodState getService() {
-		return _servico;
-	}
+	
 
 	/**
 	 * The actor of this class.
 	 **/
-	private AlterExecutionPeriodState() {
+	public AlterExecutionPeriodState() {
 	}
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "AlterExecutionPeriodState";
-	}
+	
 
 	public Boolean run(
 		InfoExecutionPeriod infoExecutionPeriod,
@@ -65,18 +53,18 @@ public class AlterExecutionPeriodState implements IServico {
 			if (executionPeriod == null) {
 				throw new InvalidExecutionPeriod();
 			} else {
-				System.out.println("periodState.getStateCode()= " + periodState.getStateCode());
+				
 				if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
 					// Deactivate the current
 					IExecutionPeriod currentExecutionPeriod =
 						executionPeriodDAO.readActualExecutionPeriod();
-					System.out.println("Actual = " + currentExecutionPeriod);
-					executionPeriodDAO.lockWrite(currentExecutionPeriod);
+					
+					executionPeriodDAO.simpleLockWrite(currentExecutionPeriod);
 					currentExecutionPeriod.setState(new PeriodState(PeriodState.OPEN));
-					executionPeriodDAO.lockWrite(currentExecutionPeriod);					 
+									 
 				}
 				
-				executionPeriodDAO.lockWrite(executionPeriod);
+				executionPeriodDAO.simpleLockWrite(executionPeriod);
 				executionPeriod.setState(periodState);
 			}
 		} catch (ExcepcaoPersistencia ex) {
@@ -86,10 +74,7 @@ public class AlterExecutionPeriodState implements IServico {
 		return result;
 	}
 
-	/**
-	 * To change the template for this generated type comment go to
-	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-	 */
+	
 	public class InvalidExecutionPeriod extends FenixServiceException {
 
 		InvalidExecutionPeriod() {

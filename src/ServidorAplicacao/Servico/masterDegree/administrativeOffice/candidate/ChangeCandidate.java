@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
@@ -24,7 +25,6 @@ import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -34,33 +34,16 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.State;
 
-public class ChangeCandidate implements IServico
+public class ChangeCandidate implements IService
 {
 
-    private static ChangeCandidate servico = new ChangeCandidate();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ChangeCandidate getService()
-    {
-        return servico;
-    }
+    
 
     /**
 	 * The actor of this class.
 	 */
-    private ChangeCandidate()
+    public ChangeCandidate()
     {
-    }
-
-    /**
-	 * Returns the service name
-	 */
-
-    public final String getNome()
-    {
-        return "ChangeCandidate";
     }
 
     public InfoMasterDegreeCandidate run(Integer oldCandidateID, InfoMasterDegreeCandidate newCandidate)
@@ -195,7 +178,7 @@ public class ChangeCandidate implements IServico
             candidateSituationFromBD.setValidation(new State(State.INACTIVE));
 
             candidateSituation = new CandidateSituation();
-            sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+            sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
 
             Calendar calendar = Calendar.getInstance();
             candidateSituation.setDate(calendar.getTime());

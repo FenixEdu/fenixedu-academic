@@ -4,12 +4,12 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.Section;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -23,105 +23,114 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Fernanda Quitério
  */
-public class InsertSection implements IServico {
+public class InsertSection implements IService
+{
 
-	private static InsertSection service = new InsertSection();
+    public InsertSection()
+    {
+    }
 
-	public static InsertSection getService() {
+    private int organizeExistingSectionsOrder(ISection superiorSection, ISite site,
+            int insertSectionOrder) throws FenixServiceException
+    {
 
-		return service;
-	}
+        IPersistentSection persistentSection = null;
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentSection = persistentSuport.getIPersistentSection();
 
-	private InsertSection() {
-	}
+            List sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
 
-	public final String getNome() {
+            if (sectionsList != null)
+            {
 
-		return "InsertSection";
-	}
+                if (insertSectionOrder == -1)
+                {
+                    insertSectionOrder = sectionsList.size();
+                }
 
-	private int organizeExistingSectionsOrder(ISection superiorSection, ISite site, int insertSectionOrder)
-		throws FenixServiceException {
+                Iterator iterSections = sectionsList.iterator();
+                while (iterSections.hasNext())
+                {
 
-		IPersistentSection persistentSection = null;
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			persistentSection = persistentSuport.getIPersistentSection();
+                    ISection iterSection = (ISection) iterSections.next();
+                    int sectionOrder = iterSection.getSectionOrder().intValue();
 
-			List sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
+                    if (sectionOrder >= insertSectionOrder)
+                    {
+                        persistentSection.simpleLockWrite(iterSection);
+                        iterSection.setSectionOrder(new Integer(sectionOrder + 1));
 
-			if (sectionsList != null) {
+                    }
 
-				if (insertSectionOrder == -1) {
-					insertSectionOrder = sectionsList.size();
-				}
+                }
+            }
+        }
+        catch (ExistingPersistentException excepcaoPersistencia)
+        {
+            throw new ExistingServiceException(excepcaoPersistencia);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
 
-				Iterator iterSections = sectionsList.iterator();
-				while (iterSections.hasNext()) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+        return insertSectionOrder;
+    }
 
-					ISection iterSection = (ISection) iterSections.next();
-					int sectionOrder = iterSection.getSectionOrder().intValue();
+    //infoItem with an infoSection
 
-					if (sectionOrder >= insertSectionOrder) {
-						persistentSection.simpleLockWrite(iterSection);
-						iterSection.setSectionOrder(new Integer(sectionOrder + 1));
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String sectionName,
+            Integer sectionOrder) throws FenixServiceException
+    {
 
-					}
+        ISection section = null;
 
-				}
-			}
-		} catch (ExistingPersistentException excepcaoPersistencia) {
-			throw new ExistingServiceException(excepcaoPersistencia);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+        try
+        {
 
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-		return insertSectionOrder;
-	}
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 
-	//infoItem with an infoSection
+            ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
+            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
+                    executionCourse, false);
+            ISite iSite = persistentSite.readByExecutionCourse(iExecutionCourse);
 
-	public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String sectionName, Integer sectionOrder)
-		throws FenixServiceException {
+            ISection parentSection = null;
+            if (sectionCode != null)
+            {
+                parentSection = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
+            }
 
-		ISection section = null;
+            sectionOrder = new Integer(organizeExistingSectionsOrder(parentSection, iSite, sectionOrder
+                    .intValue()));
 
-		try {
+            Calendar calendario = Calendar.getInstance();
+            section = new Section();
+            persistentSection.simpleLockWrite(section);
+            section.setSuperiorSection(parentSection);
+            section.setSectionOrder(sectionOrder);
+            section.setName(sectionName);
+            section.setSite(iSite);
+            section.setLastModifiedDate(calendario.getTime());
 
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+        }
+        catch (ExistingPersistentException excepcaoPersistencia)
+        {
 
-			ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
-			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-			ISite iSite = persistentSite.readByExecutionCourse(iExecutionCourse);
+            throw new ExistingServiceException(excepcaoPersistencia);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
 
-			ISection parentSection = null;
-			if (sectionCode != null) {
-				parentSection = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
-			}
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
 
-			sectionOrder = new Integer(organizeExistingSectionsOrder(parentSection, iSite, sectionOrder.intValue()));
-
-			Calendar calendario = Calendar.getInstance();
-			section = new Section();
-			section.setSuperiorSection(parentSection);
-			section.setSectionOrder(sectionOrder);
-			section.setName(sectionName);
-			section.setSite(iSite);
-			section.setLastModifiedDate(calendario.getTime());
-
-			persistentSection.lockWrite(section);
-
-		} catch (ExistingPersistentException excepcaoPersistencia) {
-
-			throw new ExistingServiceException(excepcaoPersistencia);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-
-		return new Boolean(true);
-	}
+        return new Boolean(true);
+    }
 }

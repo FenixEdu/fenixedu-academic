@@ -61,10 +61,8 @@ import Dominio.Announcement;
 import Dominio.BibliographicReference;
 import Dominio.CurricularCourse;
 import Dominio.Evaluation;
-import Dominio.EvaluationExecutionCourse;
 import Dominio.Exam;
 import Dominio.ExecutionCourse;
-import Dominio.FinalEvaluation;
 import Dominio.GroupProperties;
 import Dominio.IAnnouncement;
 import Dominio.IAula;
@@ -73,7 +71,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
-import Dominio.IEvalutionExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IFinalEvaluation;
@@ -102,7 +99,6 @@ import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentEvaluation;
-import ServidorPersistente.IPersistentEvaluationExecutionCourse;
 import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentItem;
@@ -814,36 +810,7 @@ public class TeacherAdministrationSiteComponentBuilder
         }
 		}
 
-        if (!hasFinalEvaluation)
-        {
-            ISuportePersistente sp;
-            IFinalEvaluation finalEvaluation = null;
-            try
-            {
-                sp = SuportePersistenteOJB.getInstance();
-                IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-
-                finalEvaluation = new FinalEvaluation();
-                persistentEvaluation.lockWrite(finalEvaluation);
-
-                //associate final evaluation to execution course
-                IPersistentEvaluationExecutionCourse persistentEvaluationExecutionCourse =
-                    sp.getIPersistentEvaluationExecutionCourse();
-                IEvalutionExecutionCourse evalutionExecutionCourse = new EvaluationExecutionCourse();
-                evalutionExecutionCourse.setEvaluation(finalEvaluation);
-                evalutionExecutionCourse.setExecutionCourse(executionCourse);
-
-                persistentEvaluationExecutionCourse.lockWrite(evalutionExecutionCourse);
-            }
-            catch (ExcepcaoPersistencia e)
-            {
-                e.printStackTrace(System.out);
-                throw new FenixServiceException(e);
-            }
-
-            //add final evaluation to evaluation list
-            infoFinalEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(finalEvaluation));
-        }
+       
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("day.time"));

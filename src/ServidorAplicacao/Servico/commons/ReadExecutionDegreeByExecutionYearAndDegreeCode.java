@@ -1,12 +1,12 @@
 package ServidorAplicacao.Servico.commons;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ExecutionYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -18,29 +18,21 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IServico
+public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IService
 {
 
-    private static ReadExecutionDegreeByExecutionYearAndDegreeCode service =
-        new ReadExecutionDegreeByExecutionYearAndDegreeCode();
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionDegreeByExecutionYearAndDegreeCode getService()
+     * 
+     */
+    public ReadExecutionDegreeByExecutionYearAndDegreeCode()
     {
-        return service;
+     
     }
 
-    /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadExecutionDegreeByExecutionYearAndDegreeCode";
-    }
+    
 
     public InfoExecutionDegree run(String executionDegreeString, String degreeCode)
-        throws FenixServiceException
+            throws FenixServiceException
     {
 
         InfoExecutionDegree result = null;
@@ -52,8 +44,8 @@ public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IServico
             executionYear.setYear(executionDegreeString);
 
             ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-            ICursoExecucao executionDegree =
-                executionDegreeDAO.readByDegreeCodeAndExecutionYear(degreeCode, executionYear);
+            ICursoExecucao executionDegree = executionDegreeDAO.readByDegreeCodeAndExecutionYear(
+                    degreeCode, executionYear);
 
             if (executionDegree != null)
             {
@@ -67,33 +59,33 @@ public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IServico
 
         return result;
     }
-    
-	public InfoExecutionDegree run(Integer executionDegreeCode)
-		   throws FenixServiceException
-	   {
 
-		   InfoExecutionDegree result = null;
-		   try
-		   {
-			   ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    public InfoExecutionDegree run(Integer executionDegreeCode) throws FenixServiceException
+    {
 
-			   ICursoExecucao executionDegreeDomain = new CursoExecucao();
-				executionDegreeDomain.setIdInternal(executionDegreeCode);
+        InfoExecutionDegree result = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			   ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-			   ICursoExecucao executionDegree =
-				   (CursoExecucao) executionDegreeDAO.readByOId(executionDegreeDomain,false);
+            ICursoExecucao executionDegreeDomain = new CursoExecucao();
+            executionDegreeDomain.setIdInternal(executionDegreeCode);
 
-			   if (executionDegree != null)
-			   {
-				   result = (InfoExecutionDegree) Cloner.get(executionDegree);
-			   }
-		   }
-		   catch (ExcepcaoPersistencia ex)
-		   {
-			   throw new FenixServiceException(ex);
-		   }
+            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            ICursoExecucao executionDegree = (CursoExecucao) executionDegreeDAO.readByOId(
+                    executionDegreeDomain, false);
 
-		   return result;
-	   }
+            if (executionDegree != null)
+            {
+                result = (InfoExecutionDegree) Cloner.get(executionDegree);
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
+
+        return result;
+    }
+   
 }

@@ -39,6 +39,7 @@
 <!ENTITY student SYSTEM "repository_student.xml">
 <!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
 <!ENTITY erasmusMigration SYSTEM "repository_erasmus_migration.xml">
+<!ENTITY mathResponsiblesMigration SYSTEM "repository_math_responsibles.xml">
 ]>
 
 
@@ -81,6 +82,7 @@
     &teacher;
     &gaugingTests;
     &student;
-    &finalDegreeWork;
+    &finalDegreeWork;    
     &erasmusMigration;
+    &mathResponsiblesMigration;
 </descriptor-repository>

@@ -49,7 +49,7 @@ public class ReadCoordinationResponsibility implements IServico {
 				sp.getIPersistentCoordinator();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			ITeacher teacher =
-				persistentTeacher.readTeacherByUsernamePB(
+				persistentTeacher.readTeacherByUsername(
 					userView.getUtilizador());
 			if (teacher == null) {
 				throw new InvalidArgumentsServiceException("invalid teacher!");

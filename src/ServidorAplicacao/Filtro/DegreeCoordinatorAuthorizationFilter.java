@@ -87,7 +87,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
             sp = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 
             ICoordinator coordinator = persistentCoordinator

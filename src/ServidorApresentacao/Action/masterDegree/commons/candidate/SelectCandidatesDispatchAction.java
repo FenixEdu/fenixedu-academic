@@ -34,21 +34,13 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.SituationName;
 
 /**
- * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
- * 
- * 
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class SelectCandidatesDispatchAction extends DispatchAction
 {
 
-    public ActionForward prepareSelectCandidates(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -58,7 +50,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
-		Integer executionDegree = Integer.valueOf( request.getParameter("executionDegreeID"));
+        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
 
         if (executionYear == null)
         {
@@ -74,9 +66,11 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         Integer numerusClausus = null;
         try
         {
-            Object args[] = { executionDegree };
-            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView, "ReadNumerusClausus", args);
-        } catch (NonExistingServiceException e)
+            Object args[] = {executionDegree};
+            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadNumerusClausus", args);
+        }
+        catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(e);
         }
@@ -86,46 +80,33 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             errors.add("numerusClaususNotDefined", new ActionError("error.numerusClausus.notDefined"));
             saveErrors(request, errors);
             return mapping.findForward("NumerusClaususNotDefined");
-        } else
+        }
+        else
         {
             request.setAttribute("numerusClausus", numerusClausus);
         }
 
         //Create the Candidate Situation List
         List situationsList = new ArrayList();
-        situationsList.add(
-            new LabelValueBean(SituationName.ADMITIDO_STRING, SituationName.ADMITIDO_STRING));
-        situationsList.add(
-            new LabelValueBean(
-                SituationName.ADMITED_SPECIALIZATION_STRING,
+        situationsList.add(new LabelValueBean(SituationName.ADMITIDO_STRING,
+                SituationName.ADMITIDO_STRING));
+        situationsList.add(new LabelValueBean(SituationName.ADMITED_SPECIALIZATION_STRING,
                 SituationName.ADMITED_SPECIALIZATION_STRING));
-        situationsList.add(
-            new LabelValueBean(
-                SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING,
+        situationsList.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING,
                 SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING));
-        situationsList.add(
-            new LabelValueBean(
-                SituationName.ADMITED_CONDICIONAL_FINALIST_STRING,
+        situationsList.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING,
                 SituationName.ADMITED_CONDICIONAL_FINALIST_STRING));
-        situationsList.add(
-            new LabelValueBean(
-                SituationName.ADMITED_CONDICIONAL_OTHER_STRING,
+        situationsList.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_OTHER_STRING,
                 SituationName.ADMITED_CONDICIONAL_OTHER_STRING));
-        situationsList.add(
-            new LabelValueBean(SituationName.NAO_ACEITE_STRING, SituationName.NAO_ACEITE_STRING));
-        situationsList.add(
-            new LabelValueBean(SituationName.SUPLENTE_STRING, SituationName.SUPLENTE_STRING));
-        situationsList.add(
-            new LabelValueBean(
-                SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING,
+        situationsList.add(new LabelValueBean(SituationName.NAO_ACEITE_STRING,
+                SituationName.NAO_ACEITE_STRING));
+        situationsList.add(new LabelValueBean(SituationName.SUPLENTE_STRING,
+                SituationName.SUPLENTE_STRING));
+        situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING,
                 SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING));
-        situationsList.add(
-            new LabelValueBean(
-                SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING,
+        situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING,
                 SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING));
-        situationsList.add(
-            new LabelValueBean(
-                SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING,
+        situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING,
                 SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING));
 
         request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, situationsList);
@@ -135,23 +116,24 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         List activeSituations = new ArrayList();
         activeSituations.add(new SituationName(SituationName.PENDENT_CONFIRMADO));
 
-        Object args[] = {executionDegree, activeSituations };
+        Object args[] = {executionDegree, activeSituations};
 
         try
         {
-            candidateList =
-                (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadCandidatesForSelection", args);
+            candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadCandidatesForSelection", args);
 
-        } catch (NonExistingServiceException e)
+        }
+        catch (NonExistingServiceException e)
         {
             ActionErrors errors = new ActionErrors();
-            errors.add(
-                "nonExisting",
-                new ActionError("error.masterDegree.administrativeOffice.nonExistingCandidates"));
+            errors.add("nonExisting", new ActionError(
+                    "error.masterDegree.administrativeOffice.nonExistingCandidates"));
             saveErrors(request, errors);
             return mapping.getInputForward();
 
-        } catch (ExistingServiceException e)
+        }
+        catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
         }
@@ -180,17 +162,13 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         generateToken(request);
         saveToken(request);
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE ,executionDegree);
+        request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
         request.setAttribute("candidateList", candidateList);
         return mapping.findForward("PrepareSuccess");
     }
 
-    public ActionForward selectCandidates(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward selectCandidates(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -199,32 +177,31 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        if (!isTokenValid(request))
-        {
-            return mapping.findForward("BackError");
-        }
+        if (!isTokenValid(request)) { return mapping.findForward("BackError"); }
 
         String[] candidateList = (String[]) approvalForm.get("situations");
         String[] ids = (String[]) approvalForm.get("candidatesID");
         String[] remarks = (String[]) approvalForm.get("remarks");
         String executionYear = (String) approvalForm.get("executionYear");
         String degree = (String) approvalForm.get("degree");
-		Integer executionDegree = null;
-		executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-		/*if (request.getParameter("executionDegreeID") == null){
-			executionDegree = Integer.valueOf((String)request.getAttribute("executionDegreeID"));
-		}
-		else{
-			executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-		}*/
+        Integer executionDegree = null;
+        executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+        /*
+         * if (request.getParameter("executionDegreeID") == null){
+         * executionDegree =
+         * Integer.valueOf((String)request.getAttribute("executionDegreeID")); }
+         * else{ executionDegree =
+         * Integer.valueOf(request.getParameter("executionDegreeID")); }
+         */
         List candidatesAdmited = new ArrayList();
 
         try
         {
-            Object args[] = { candidateList, ids };
-            candidatesAdmited =
-                (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadAdmitedCandidates", args);
-        } catch (ExistingServiceException e)
+            Object args[] = {candidateList, ids};
+            candidatesAdmited = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadAdmitedCandidates", args);
+        }
+        catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
         }
@@ -234,16 +211,18 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         request.setAttribute("remarks", remarks);
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
-		request.setAttribute(SessionConstants.EXECUTION_DEGREE ,String.valueOf( executionDegree));
+        request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
         // Get Numerus Clausus
         Integer numerusClausus = null;
         try
         {
             //Object args[] = { executionYear, degree };
-			Object args[] = { executionDegree };
-            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView, "ReadNumerusClausus", args);
-        } catch (NonExistingServiceException e)
+            Object args[] = {executionDegree};
+            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadNumerusClausus", args);
+        }
+        catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(e);
         }
@@ -254,20 +233,13 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             return mapping.findForward("RequestConfirmation");
         }
 
-        if (hasSubstitutes(candidateList))
-        {
-            return mapping.findForward("OrderCandidates");
-        }
+        if (hasSubstitutes(candidateList)) { return mapping.findForward("OrderCandidates"); }
 
         return mapping.findForward("ChooseSuccess");
     }
 
-    public ActionForward next(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward next(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -275,10 +247,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         DynaActionForm approvalForm = (DynaActionForm) form;
 
-        if (!isTokenValid(request))
-        {
-            return mapping.findForward("BackError");
-        }
+        if (!isTokenValid(request)) { return mapping.findForward("BackError"); }
 
         String[] candidateList = (String[]) approvalForm.get("situations");
         String[] ids = (String[]) approvalForm.get("candidatesID");
@@ -295,12 +264,14 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null))
         {
-            Object args[] = { candidateList, ids };
+            Object args[] = {candidateList, ids};
             List result = null;
             try
             {
-                result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadSubstituteCandidates", args);
-            } catch (ExistingServiceException e)
+                result = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadSubstituteCandidates", args);
+            }
+            catch (ExistingServiceException e)
             {
                 throw new ExistingActionException(e);
             }
@@ -309,22 +280,20 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             {
                 request.setAttribute("candidateList", result);
                 return mapping.findForward("OrderCandidates");
-            } else
+            }
+            else
             {
                 return mapping.findForward("ChooseSuccess");
             }
-        } else
+        }
+        else
         {
             return mapping.findForward("Cancel");
         }
     }
 
-    public ActionForward getSubstituteCandidates(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward getSubstituteCandidates(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -336,7 +305,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         if (!isTokenValid(request))
         {
             return mapping.findForward("BackError");
-        } else
+        }
+        else
         {
             generateToken(request);
             saveToken(request);
@@ -353,11 +323,13 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         request.setAttribute("remarks", remarks);
 
         List result = null;
-        Object args[] = { ids };
+        Object args[] = {ids};
         try
         {
-            result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates", args);
-        } catch (ExistingServiceException e)
+            result = (List) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadCandidates", args);
+        }
+        catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
         }
@@ -366,12 +338,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         return mapping.findForward("OrderCandidatesReady");
     }
 
-    public ActionForward preparePresentation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward preparePresentation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -384,17 +352,14 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String[] ids = (String[]) resultForm.get("candidatesID");
         String[] remarks = (String[]) resultForm.get("remarks");
         String[] substitutes = (String[]) resultForm.get("substitutes");
-		String executionDegree = (String)request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-        if (!isTokenValid(request))
-        {
-            return mapping.findForward("BackError");
-        }
+        String executionDegree = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+        if (!isTokenValid(request)) { return mapping.findForward("BackError"); }
 
         request.setAttribute("situations", candidateList);
         request.setAttribute("candidatesID", ids);
         request.setAttribute("remarks", remarks);
         request.setAttribute("substitutes", substitutes);
-		request.setAttribute(SessionConstants.EXECUTION_DEGREE ,executionDegree);
+        request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
 
         resultForm.set("executionYear", resultForm.get("executionYear"));
         resultForm.set("degree", resultForm.get("degree"));
@@ -408,7 +373,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
                 saveErrors(request, errors);
                 return mapping.findForward("OrderCandidates");
             }
-        } catch (NumberFormatException e)
+        }
+        catch (NumberFormatException e)
         {
             ActionErrors errors = new ActionErrors();
             errors.add("nonExisting", new ActionError("error.numberError"));
@@ -418,11 +384,13 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         List candidates = new ArrayList();
 
-        Object args[] = { ids };
+        Object args[] = {ids};
         try
         {
-            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates", args);
-        } catch (ExistingServiceException e)
+            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates",
+                    args);
+        }
+        catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
         }
@@ -436,7 +404,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         if (request.getAttribute("confirmation") != null)
         {
             request.setAttribute("confirmation", request.getAttribute("confirmation"));
-        } else
+        }
+        else
         {
             request.setAttribute("confirmation", "YES");
             generateToken(request);
@@ -446,18 +415,21 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         //		
         //		Iterator iterator = result.iterator();
         //		while(iterator.hasNext()){
-        //			InfoCandidateApprovalGroup infoCandidateApprovalGroup = (InfoCandidateApprovalGroup) iterator.next();
-        //			Iterator iter = infoCandidateApprovalGroup.getCandidates().iterator();
+        //			InfoCandidateApprovalGroup infoCandidateApprovalGroup =
+        // (InfoCandidateApprovalGroup) iterator.next();
+        //			Iterator iter =
+        // infoCandidateApprovalGroup.getCandidates().iterator();
         //			System.out.println(infoCandidateApprovalGroup.getSituationName());
         //			while(iter.hasNext()){
-        //				InfoCandidateApproval infoCandidateApproval = (InfoCandidateApproval) iter.next();
+        //				InfoCandidateApproval infoCandidateApproval = (InfoCandidateApproval)
+        // iter.next();
         //				System.out.println("-----------");
-        //				System.out.println("   " + infoCandidateApproval.getIdInternal());
-        //				System.out.println("   " + infoCandidateApproval.getCandidateName());	 
-        //				System.out.println("   " + infoCandidateApproval.getRemarks());	 
-        //				System.out.println("   " + infoCandidateApproval.getSituationName());	 
-        //				System.out.println("   " + infoCandidateApproval.getOrderPosition());	 
-        //			}	 
+        //				System.out.println(" " + infoCandidateApproval.getIdInternal());
+        //				System.out.println(" " + infoCandidateApproval.getCandidateName());
+        //				System.out.println(" " + infoCandidateApproval.getRemarks());
+        //				System.out.println(" " + infoCandidateApproval.getSituationName());
+        //				System.out.println(" " + infoCandidateApproval.getOrderPosition());
+        //			}
         //		}
         //
         //
@@ -465,12 +437,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         return mapping.findForward("FinalPresentation");
     }
 
-    public ActionForward print(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -484,7 +452,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String[] remarks = (String[]) resultForm.get("remarks");
         String[] substitutes = (String[]) resultForm.get("substitutes");
         Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-        
 
         request.setAttribute("situations", candidateList);
         request.setAttribute("candidatesID", ids);
@@ -495,9 +462,11 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         try
         {
-            Object args[] = { ids };
-            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates", args);
-        } catch (ExistingServiceException e)
+            Object args[] = {ids};
+            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates",
+                    args);
+        }
+        catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
         }
@@ -508,18 +477,21 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         //		Iterator iterator = result.iterator();
         //		while(iterator.hasNext()){
-        //			InfoCandidateApprovalGroup infoCandidateApprovalGroup = (InfoCandidateApprovalGroup) iterator.next();
-        //			Iterator iter = infoCandidateApprovalGroup.getCandidates().iterator();
+        //			InfoCandidateApprovalGroup infoCandidateApprovalGroup =
+        // (InfoCandidateApprovalGroup) iterator.next();
+        //			Iterator iter =
+        // infoCandidateApprovalGroup.getCandidates().iterator();
         //			System.out.println(infoCandidateApprovalGroup.getSituationName());
         //			while(iter.hasNext()){
-        //				InfoCandidateApproval infoCandidateApproval = (InfoCandidateApproval) iter.next();
+        //				InfoCandidateApproval infoCandidateApproval = (InfoCandidateApproval)
+        // iter.next();
         //				System.out.println("-----------");
-        //				System.out.println("   " + infoCandidateApproval.getIdInternal());
-        //				System.out.println("   " + infoCandidateApproval.getCandidateName());	 
-        //				System.out.println("   " + infoCandidateApproval.getRemarks());	 
-        //				System.out.println("   " + infoCandidateApproval.getSituationName());	 
-        //				System.out.println("   " + infoCandidateApproval.getOrderPosition());	 
-        //			}	 
+        //				System.out.println(" " + infoCandidateApproval.getIdInternal());
+        //				System.out.println(" " + infoCandidateApproval.getCandidateName());
+        //				System.out.println(" " + infoCandidateApproval.getRemarks());
+        //				System.out.println(" " + infoCandidateApproval.getSituationName());
+        //				System.out.println(" " + infoCandidateApproval.getOrderPosition());
+        //			}
         //		}
 
         request.setAttribute("infoGroup", result);
@@ -528,11 +500,13 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         try
         {
-           // Object args[] = { resultForm.get("executionYear"), resultForm.get("degree")};
-		   Object args[] = {executionDegree};
-            infoExecutionDegree =
-                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
-        } catch (ExistingServiceException e)
+            // Object args[] = { resultForm.get("executionYear"),
+            // resultForm.get("degree")};
+            Object args[] = {executionDegree};
+            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
+        }
+        catch (ExistingServiceException e)
         {
             throw new ExistingActionException(e);
         }
@@ -542,7 +516,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         if (request.getAttribute("confirmation") != null)
         {
             request.setAttribute("confirmation", request.getAttribute("confirmation"));
-        } else
+        }
+        else
         {
             request.setAttribute("confirmation", "PRINT_PAGE");
         }
@@ -555,25 +530,22 @@ public class SelectCandidatesDispatchAction extends DispatchAction
      * @return
      */
     private boolean validSubstituteForm(String[] situations, String[] substitutes)
-        throws NumberFormatException
+            throws NumberFormatException
     {
         List aux = new ArrayList();
 
         for (int i = 0; i < situations.length; i++)
         {
             if ((situations[i].equals(SituationName.SUPLENTE_STRING))
-                || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
-                || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
-                || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)))
+                    || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
+                    || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
+                    || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)))
             {
                 aux.add(new Integer(substitutes[i]));
             }
         }
 
-        if (aux.size() == 0)
-        {
-            return true;
-        }
+        if (aux.size() == 0) { return true; }
 
         Collections.sort(aux);
 
@@ -582,30 +554,20 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         previous = (Integer) iterator.next();
 
-        if (previous.intValue() != 1)
-        {
-            return false;
-        }
+        if (previous.intValue() != 1) { return false; }
 
         while (iterator.hasNext())
         {
             Integer actual = (Integer) iterator.next();
 
-            if (actual.intValue() != (previous.intValue() + 1))
-            {
-                return false;
-            }
+            if (actual.intValue() != (previous.intValue() + 1)) { return false; }
             previous = actual;
         }
         return true;
     }
 
-    public ActionForward aprove(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward aprove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
 
         HttpSession session = request.getSession(false);
@@ -625,7 +587,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String[] ids = (String[]) substituteForm.get("candidatesID");
         String[] remarks = (String[]) substituteForm.get("remarks");
         String[] substitutes = (String[]) substituteForm.get("substitutes");
-		Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
 
         substituteForm.set("executionYear", substituteForm.get("executionYear"));
         substituteForm.set("degree", substituteForm.get("degree"));
@@ -633,11 +595,12 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null))
         {
 
-            Object args[] = { candidateList, ids, remarks, substitutes };
+            Object args[] = {candidateList, ids, remarks, substitutes};
             try
             {
                 ServiceManagerServiceFactory.executeService(userView, "ApproveCandidates", args);
-            } catch (ExistingServiceException e)
+            }
+            catch (ExistingServiceException e)
             {
                 throw new ExistingActionException(e);
             }
@@ -647,7 +610,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             request.setAttribute("situations", candidateList);
             request.setAttribute("remarks", remarks);
             request.setAttribute("confirmation", "NO");
-			request.setAttribute(SessionConstants.EXECUTION_DEGREE ,String.valueOf( executionDegree));
+            request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
             return mapping.findForward("ChooseSuccess");
         }
@@ -663,22 +626,22 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         Iterator iterator = result.iterator();
         while (iterator.hasNext())
         {
-            InfoCandidateApprovalGroup infoCandidateApprovalGroup =
-                (InfoCandidateApprovalGroup) iterator.next();
+            InfoCandidateApprovalGroup infoCandidateApprovalGroup = (InfoCandidateApprovalGroup) iterator
+                    .next();
             BeanComparator comparator = null;
 
             if ((infoCandidateApprovalGroup.getSituationName().equals(SituationName.ADMITIDO_STRING))
-                || (infoCandidateApprovalGroup
-                    .getSituationName()
-                    .equals(SituationName.ADMITED_SPECIALIZATION_STRING)))
+                    || (infoCandidateApprovalGroup.getSituationName()
+                            .equals(SituationName.ADMITED_SPECIALIZATION_STRING)))
             {
                 comparator = new BeanComparator("candidateName");
-            } else if (
-                infoCandidateApprovalGroup.getSituationName().equals(SituationName.SUPLENTE_STRING))
+            }
+            else if (infoCandidateApprovalGroup.getSituationName().equals(SituationName.SUPLENTE_STRING))
             {
                 comparator = new BeanComparator("orderPosition");
-            } else if (
-                infoCandidateApprovalGroup.getSituationName().equals(SituationName.NAO_ACEITE_STRING))
+            }
+            else if (infoCandidateApprovalGroup.getSituationName().equals(
+                    SituationName.NAO_ACEITE_STRING))
             {
                 comparator = new BeanComparator("candidateName");
             }
@@ -693,12 +656,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
      * @param substitutes
      * @return
      */
-    private List getLists(
-        String[] candidateList,
-        String[] ids,
-        String[] remarks,
-        String[] substitutes,
-        List candidates)
+    private List getLists(String[] candidateList, String[] ids, String[] remarks, String[] substitutes,
+            List candidates)
     {
         InfoCandidateApprovalGroup approvedList = new InfoCandidateApprovalGroup();
         approvedList.setSituationName(SituationName.ADMITIDO_STRING);
@@ -715,13 +674,14 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         for (int i = 0; i < candidateList.length; i++)
         {
             InfoCandidateApproval infoCandidateApproval = new InfoCandidateApproval();
-            infoCandidateApproval.setCandidateName(
-                ((InfoMasterDegreeCandidate) candidates.get(i)).getInfoPerson().getNome());
+            infoCandidateApproval.setCandidateName(((InfoMasterDegreeCandidate) candidates.get(i))
+                    .getInfoPerson().getNome());
             infoCandidateApproval.setIdInternal(new Integer(ids[i]));
             if ((substitutes[i] != null) && (substitutes[i].length() > 0))
             {
                 infoCandidateApproval.setOrderPosition(new Integer(substitutes[i]));
-            } else
+            }
+            else
             {
                 infoCandidateApproval.setOrderPosition(null);
             }
@@ -732,21 +692,22 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             if ((candidateList[i].equals(SituationName.ADMITED_SPECIALIZATION_STRING)))
             {
                 specializationList.getCandidates().add(infoCandidateApproval);
-            } else if (
-                (candidateList[i].equals(SituationName.ADMITIDO_STRING))
+            }
+            else if ((candidateList[i].equals(SituationName.ADMITIDO_STRING))
                     || (candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING))
                     || (candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING))
                     || (candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)))
             {
                 approvedList.getCandidates().add(infoCandidateApproval);
-            } else if (
-                (candidateList[i].equals(SituationName.SUPLENTE_STRING))
+            }
+            else if ((candidateList[i].equals(SituationName.SUPLENTE_STRING))
                     || (candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
                     || (candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
                     || (candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)))
             {
                 substitutesList.getCandidates().add(infoCandidateApproval);
-            } else if (candidateList[i].equals(SituationName.NAO_ACEITE_STRING))
+            }
+            else if (candidateList[i].equals(SituationName.NAO_ACEITE_STRING))
             {
                 notApprovedList.getCandidates().add(infoCandidateApproval);
             }
@@ -768,9 +729,9 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         for (i = 0; i < size; i++)
         {
             if (list[i].equals(SituationName.SUPLENTE_STRING)
-                || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)
-                || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
-                || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))
+                    || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)
+                    || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
+                    || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))
                 return true;
         }
         return false;

@@ -19,7 +19,6 @@ import Dominio.Country;
 import Dominio.ICountry;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCountry;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry
 {
@@ -28,37 +27,7 @@ public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry
     {
     }
 
-    public void writeCountry(ICountry countryToWrite)
-        throws ExcepcaoPersistencia, ExistingPersistentException
-    {
-
-        ICountry countryFromDB = null;
-
-        // If there is nothing to write, simply return.
-        if (countryToWrite == null)
-            return;
-
-        // Read country from database.
-        countryFromDB = this.readCountryByName(countryToWrite.getName());
-
-        // If country is not in database, then write it.
-        if (countryFromDB == null)
-            super.lockWrite(countryToWrite);
-        // else If the country is mapped to the database, then write any
-        // existing changes.
-        else if (
-            (countryToWrite instanceof Country)
-                && ((Country) countryFromDB).getIdInternal().equals(
-                    ((Country) countryToWrite).getIdInternal()))
-        {
-
-            countryFromDB.setCode(countryToWrite.getCode());
-            countryFromDB.setNationality(countryToWrite.getNationality());
-            // else Throw an already existing exception
-        }
-        else
-            throw new ExistingPersistentException();
-    }
+   
 
     public ICountry readCountryByName(String name) throws ExcepcaoPersistencia
     {

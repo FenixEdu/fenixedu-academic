@@ -3,11 +3,11 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.Site;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -19,43 +19,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class CreateSiteInExecutionCourse  implements IServico {
+public class CreateSiteInExecutionCourse implements IService
+{
 
-	private static CreateSiteInExecutionCourse service = new CreateSiteInExecutionCourse();
+    public CreateSiteInExecutionCourse()
+    {
+    }
 
-	public static CreateSiteInExecutionCourse getService() {
-		return service;
-	}
+    public void run(Integer executionCourseId) throws FenixServiceException
+    {
 
-	private CreateSiteInExecutionCourse() {
-	}
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-	public final String getNome() {
-		return "CreateSiteInExecutionCourse";
-	}
-	
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+            IExecutionCourse executionCourseToRead = new ExecutionCourse();
+            executionCourseToRead.setIdInternal(executionCourseId);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
+                    executionCourseToRead, false);
 
-	public void run(Integer executionCourseId) throws FenixServiceException {
-		
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-								
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-			IExecutionCourse executionCourseToRead = new ExecutionCourse();
-			executionCourseToRead.setIdInternal(executionCourseId);
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourseToRead, false);
-				
-			if(executionCourse == null)
-				throw new NonExistingServiceException("message.non.existing.execution.course", null);
-	
-			ISite site = new Site();
-			site.setExecutionCourse(executionCourse);
-			
-			persistentSite.lockWrite(site);
-					
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            if (executionCourse == null) { throw new NonExistingServiceException(
+                    "message.non.existing.execution.course", null); }
+            ISite site = new Site();
+            persistentSite.simpleLockWrite(site);
+            site.setExecutionCourse(executionCourse);
+
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }
