@@ -16,11 +16,11 @@ import ServidorApresentacao.Action.FenixAction;
  * @author ep15
  * @author Ivo Brandão
  */
-public class AnnouncementManagementFormAction extends FenixAction {
+public class AnnouncementManagementAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form,	
     	HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = getSession(request);
-		DynaActionForm announcementManagementForm = (DynaActionForm) session.getAttribute("announcementManagementForm");
+		DynaActionForm announcementManagementForm = (DynaActionForm) session.getAttribute("teacher.announcementManagementForm");
 		
         String option = (String) announcementManagementForm.get("option");
         int index = ((Integer) announcementManagementForm.get("index")).intValue();

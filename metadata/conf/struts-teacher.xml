@@ -213,9 +213,9 @@
 
 	<action path="/teacher/announcementManagement" forward="teacher.announcementManagement"/>
 
-	<action name="teacher.announcementManagementFormAction"
-    	type="ServidorApresentacao.Action.teacher.AnnouncementManagementFormAction"
-        path="/teacher/announcementManagementFormAction" input="teacher.announcementManagement"
+	<action name="teacher.announcementManagementAction"
+    	type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
+        path="/teacher/announcementManagementAction" input="teacher.announcementManagement"
         scope="request">
         <forward name="InsertAnnouncement" path="/teacher/insertAnnouncement.do" redirect = "true"/>
 		<forward name="EditAnnouncement" path="/teacher/editAnnouncement.do" redirect = "true"/>
