@@ -52,7 +52,7 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 
             while (iterator.hasNext()) {
                 ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-                System.out.println("EXECUTION_COURSE: " + executionDegree.getIdInternal());
+                //System.out.println("EXECUTION_COURSE: " + executionDegree.getIdInternal());
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                         .newInfoFromDomain(executionDegree);
                 if (executionDegree.getCurricularPlan() == null) {
