@@ -56,6 +56,7 @@ public class RemoverAulaDeTurnoFormAction extends FenixAction {
 	  		sessao.setAttribute("infoAulasDeTurno",infoAulas);
 	  }
 	  
+	  sessao.removeAttribute("editarAulasDeTurnoForm");
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

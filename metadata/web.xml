@@ -13,11 +13,7 @@
 	</filter-mapping>
 	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
-	    <url-pattern>/sop/index.do</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-	    <filter-name>indexFilter</filter-name>
-	    <url-pattern>/student/index.do</url-pattern>
+	    <url-pattern>/loginPage.jsp</url-pattern>
 	</filter-mapping>
 	
     <servlet>
