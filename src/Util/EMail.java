@@ -68,7 +68,10 @@ public class EMail
 				String bcc = (String) iter.next();
 				try
 				{
-					mensagem.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
+					if (bcc != null) {
+						mensagem.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
+					}
+					
 				} catch (AddressException e)
 				{
 					unsentMails.add(bcc);
@@ -79,7 +82,10 @@ public class EMail
 				String to = (String) iter.next();
 				try
 				{
-					mensagem.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+					if (to != null) {
+						mensagem.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+					}
+					
 				} catch (AddressException e)
 				{
 					unsentMails.add(to);
@@ -90,7 +96,10 @@ public class EMail
 				String cc = (String) iter.next();
 				try
 				{
-					mensagem.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+					if (cc != null) {
+						mensagem.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+					}
+					
 				} catch (AddressException e)
 				{
 					unsentMails.add(cc);
