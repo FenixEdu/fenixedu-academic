@@ -46,7 +46,7 @@
 <!-- EXECUTION COURSES LINK  -->
 <bean:size id="listSize" name="infoCurricularCourse" property="infoAssociatedExecutionCourses" />
 
-<logic:greaterThan name="listSize" value="1">
+<logic:greaterThan name="listSize" value="0">
 <div class="col_right">
   <table class="box" cellspacing="0">
 		<tr>

@@ -46,7 +46,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 		request.setAttribute("degreeID", degreeId);
 		
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-        request.setAttribute("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         GestorServicos gestorServicos = GestorServicos.manager();
         Object[] args = { degreeCurricularPlanId };

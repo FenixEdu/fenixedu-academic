@@ -26,7 +26,6 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão Create on 20/Nov/2003
@@ -49,6 +48,9 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
+		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+		request.setAttribute("degreeCurricularPlanID", request);
+		
         Integer curricularCourseId = getFromRequest("curricularCourseID", request);
         request.setAttribute("curricularCourseID", curricularCourseId);
 
