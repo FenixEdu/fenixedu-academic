@@ -21,18 +21,12 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ContextUtils {
 
 	public static final void setExecutionPeriodContext(HttpServletRequest request) {
-		System.out.println("## setExecutionPeriodContext - IN");
-		System.out.println("## executionPeriodOID in parameter - "+request.getParameter(SessionConstants.EXECUTION_PERIOD_OID));
-		System.out.println("## executionPeriodOID in attribute - "+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID));
-		
 		String executionPeriodOIDString =
 			(String) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD_OID);
-		System.out.println("ExecutionPeriod from request: " + executionPeriodOIDString);
 		if (executionPeriodOIDString == null) {
 			executionPeriodOIDString =
 				request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
-			System.out.println("ExecutionPeriod from parameter: " + executionPeriodOIDString);
 		}
 		
 		Integer executionPeriodOID = null;
@@ -70,7 +64,6 @@ public class ContextUtils {
 		// Place it in request
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
-		System.out.println("## setExecutionPeriodContext - OUT");			
 	}
 
 	/**

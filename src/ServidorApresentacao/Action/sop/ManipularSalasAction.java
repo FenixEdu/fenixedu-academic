@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +20,13 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.Util;
+import Util.TipoSala;
 
 /**
  * @author Nuno Antão
@@ -34,16 +38,54 @@ public class ManipularSalasAction extends FenixAction {
 	/**
 	 * @returns the name of the selected sala.
 	 **/
-	private InfoRoom getSelectedSala(ActionForm form, HttpServletRequest request) {
-		DynaActionForm posicaoSalaFormBean =
-			(DynaActionForm) form;
-		Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("index");
-		ArrayList listaSalasBean =
-			(ArrayList) request.getAttribute("publico.infoRooms");
-		InfoRoom sala =
-			(InfoRoom) listaSalasBean.get(salaSelecionada.intValue());
+	private InfoRoom getSelectedSala(
+		ActionForm form,
+		HttpServletRequest request)
+		throws FenixActionException {
 
+		DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
+		Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("index");
+
+		List listaSalasBean = getSalas(request);
+
+		InfoRoom sala = null;
+		if (listaSalasBean != null && !listaSalasBean.isEmpty()) {
+			Collections.sort(listaSalasBean);
+			sala = (InfoRoom) listaSalasBean.get(salaSelecionada.intValue());
+		}
 		return sala;
+	}
+
+	/**
+	 * @returns the name of the selected sala.
+	 **/
+	private List getSalas(HttpServletRequest request)
+		throws FenixActionException {
+
+		GestorServicos gestor = GestorServicos.manager();
+
+		Object argsSelectRooms[] =
+			{
+				 new InfoRoom(
+					readRequestValue(request, "name"),
+					readRequestValue(request, "building"),
+					readIntegerRequestValue(request, "floor"),
+					readTypeRoomRequestValue(request, "type"),
+					readIntegerRequestValue(request, "capacityNormal"),
+					readIntegerRequestValue(request, "capacityExame"))};
+
+		List listaSalasBean = null;
+		try {
+			listaSalasBean =
+				(List) gestor.executar(null, "SelectRooms", argsSelectRooms);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		if (listaSalasBean != null && !listaSalasBean.isEmpty()) {
+			Collections.sort(listaSalasBean);
+		}
+		return listaSalasBean;
 	}
 
 	/**
@@ -58,8 +100,7 @@ public class ManipularSalasAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			
-		
+
 		String parameter = request.getParameter("operation");
 
 		if (parameter.equals("Ver Sala")) {
@@ -124,25 +165,20 @@ public class ManipularSalasAction extends FenixAction {
 		// create the bean that holds the information about the sala to edit
 		DynaActionFormClass cl;
 
-		ModuleConfig moduleConfig =(ModuleConfig) mapping.getModuleConfig();
-		
-		FormBeanConfig formBeanConfig = moduleConfig.findFormBeanConfig("roomForm");
+		ModuleConfig moduleConfig = (ModuleConfig) mapping.getModuleConfig();
+
+		FormBeanConfig formBeanConfig =
+			moduleConfig.findFormBeanConfig("roomForm");
 		cl = DynaActionFormClass.createDynaActionFormClass(formBeanConfig);
-		
+
 		DynaActionForm criarSalaForm = (DynaActionForm) cl.newInstance();
 
 		criarSalaForm.set("name", salaBean.getNome());
 		criarSalaForm.set("building", salaBean.getEdificio());
-		criarSalaForm.set(
-			"floor",
-			String.valueOf(salaBean.getPiso().intValue()));
+		criarSalaForm.set("floor", String.valueOf(salaBean.getPiso().intValue()));
 		criarSalaForm.set("type", String.valueOf(salaBean.getTipo().getTipo()));
-		criarSalaForm.set(
-			"capacityNormal",
-			String.valueOf(salaBean.getCapacidadeNormal()));
-		criarSalaForm.set(
-			"capacityExame",
-			String.valueOf(salaBean.getCapacidadeExame()));
+		criarSalaForm.set("capacityNormal", String.valueOf(salaBean.getCapacidadeNormal()));
+		criarSalaForm.set("capacityExame", String.valueOf(salaBean.getCapacidadeExame()));
 
 		request.setAttribute("criarSalaForm", criarSalaForm);
 
@@ -158,11 +194,12 @@ public class ManipularSalasAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
 		HttpSession session = getSession(request);
-		ArrayList listaSalasBean =
-			(ArrayList) request.getAttribute("publico.infoRooms");
 		IUserView userView = (IUserView) session.getAttribute("UserView");
-		InfoRoom selectedSala = getSelectedSala(form,request);
+
+		ArrayList listaSalasBean = (ArrayList) getSalas(request);
+		InfoRoom selectedSala = getSelectedSala(form, request);
 
 		Object argsCriarSala[] = { new RoomKey(selectedSala.getNome())};
 		try {
@@ -170,20 +207,56 @@ public class ManipularSalasAction extends FenixAction {
 				userView,
 				"ApagarSala",
 				argsCriarSala);
-		} 
-		catch (notAuthorizedServiceDeleteException e) {
-			Object[] values = {"a sala","as aulas"};
-			throw new notAuthorizedActionDeleteException("errors.invalid.delete.with.objects",values);}
+		} catch (notAuthorizedServiceDeleteException e) {
+			Object[] values = { "a sala", "as aulas" };
+			throw new notAuthorizedActionDeleteException(
+				"errors.invalid.delete.with.objects",
+				values);
+		}
 
-
-		/* Actualiza a lista de salas no "scope" de sessao */
+		/* Actualiza a lista de salas no "scope" de request */
 		listaSalasBean.remove(selectedSala);
 		request.removeAttribute(mapping.getAttribute());
 
-		if (listaSalasBean.isEmpty())
+		if (listaSalasBean.isEmpty()) {
 			request.removeAttribute("publico.infoRooms");
+		} else {
+			request.setAttribute("publico.infoRooms", listaSalasBean);
+		}
 
 		return mapping.findForward("SalaApagada");
 	}
 
+	private String readRequestValue(HttpServletRequest request, String name) {
+		String obj = null;
+		if (request.getAttribute(name) != null
+			&& !((String) request.getAttribute(name)).equals(""))
+			obj = (String) request.getAttribute(name);
+		else if (
+			request.getParameter(name) != null
+				&& !request.getParameter(name).equals("") 
+				&& !request.getParameter(name).equals("null"))
+			obj = (String) request.getParameter(name);
+		return obj;
+	}
+
+	private Integer readIntegerRequestValue(
+		HttpServletRequest request,
+		String name) {
+		String obj = readRequestValue(request, name);
+		if (obj != null)
+			return new Integer(obj);
+		else
+			return null;
+	}
+
+	private TipoSala readTypeRoomRequestValue(
+		HttpServletRequest request,
+		String name) {
+		Integer obj = readIntegerRequestValue(request, name);
+		if (obj != null)
+			return new TipoSala(obj);
+		else
+			return null;
+	}
 }

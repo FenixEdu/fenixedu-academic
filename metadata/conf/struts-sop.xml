@@ -516,7 +516,7 @@
 
       <action path="/criarSalaForm"
       		  attribute="roomForm"
-              input="/criarSala.jsp"
+              input="/prepararSalaForm.do?method=prepareCreate"
 			  name="roomForm"
               scope="request"
               type="ServidorApresentacao.Action.sop.CriarSalaFormAction"

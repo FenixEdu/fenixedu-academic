@@ -15,6 +15,12 @@
           <td>
             <html:radio property="index" value="<%= (new Integer(i)).toString()%>"/>
             <html:hidden property="nome" value='<bean:write name="infoRoom" property="nome"/>'/>
+			<html:hidden property="name" value="<%= ""+request.getAttribute("name")%>"/>            
+			<html:hidden property="building" value="<%= ""+request.getAttribute("building")%>"/>
+			<html:hidden property="floor" value="<%= ""+request.getAttribute("floor")%>"/>
+			<html:hidden property="type" value="<%= ""+request.getAttribute("type")%>"/>
+			<html:hidden property="capacityNormal" value="<%= ""+request.getAttribute("capacityNormal")%>"/>
+			<html:hidden property="capacityExame" value="<%= ""+request.getAttribute("capacityExame")%>"/>
           </td>
           <td><bean:write name="infoRoom" property="nome"/></td>
         </tr>

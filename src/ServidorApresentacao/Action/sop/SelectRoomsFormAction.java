@@ -49,6 +49,12 @@ public class SelectRoomsFormAction extends FenixAction {
 						readIntegerFormValue(roomForm, "capacityNormal"),
 						readIntegerFormValue(roomForm, "capacityExame"))};
 
+			System.out.println("## selectRoomsArgs - name: "+readFormValue(roomForm, "name"));
+			System.out.println("## selectRoomsArgs - building: "+readFormValue(roomForm, "building"));
+			System.out.println("## selectRoomsArgs - floor: "+readIntegerFormValue(roomForm, "floor"));
+			System.out.println("## selectRoomsArgs - type: "+readTypeRoomFormValue(roomForm, "type"));
+			System.out.println("## selectRoomsArgs - capacityNormal: "+readIntegerFormValue(roomForm, "capacityNormal"));
+			System.out.println("## selectRoomsArgs - capacityExam: " +readIntegerFormValue(roomForm, "capacityExame"));			
 			List infoRooms;
 			try {
 				infoRooms =

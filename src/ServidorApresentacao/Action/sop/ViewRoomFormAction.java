@@ -18,7 +18,7 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -26,7 +26,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author tfc130
  */
-public class ViewRoomFormAction extends FenixAction {
+public class ViewRoomFormAction extends FenixContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
