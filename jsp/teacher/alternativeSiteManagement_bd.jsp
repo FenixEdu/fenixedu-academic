@@ -24,7 +24,7 @@
 <table>
 <tr>
 	<td>
-		<bean:message key="message.siteAddress"/>
+		<h2><bean:message key="message.siteAddress"/></h2>
 	</td>
 	<td>
 		<html:text property="siteAddress" size="30"/>
@@ -35,7 +35,7 @@
 </tr>	
 <tr>
 	<td>
-		<bean:message key="message.mailAddress"/>
+		<h2><bean:message key="message.mailAddress"/></h2>
 	</td>	
 	<td>
 		<html:text property="mail" size="30"/>

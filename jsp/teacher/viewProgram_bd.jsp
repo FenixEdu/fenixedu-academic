@@ -10,10 +10,10 @@
 </logic:notPresent>
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" >
 
-<bean:message key="title.program"/>
+<h3><bean:message key="title.program"/></h3>
 <table>
 <tr>
-	<td><bean:message key="label.program" />	
+	<td><h2><bean:message key="label.program" /></h2>	
 	</td>
 	<td>
 	<bean:define id="program" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program">

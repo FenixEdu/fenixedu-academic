@@ -5,13 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 	
-
+<h3><bean:message key="title.objectives"/></h3>
 <html:form action="/objectivesManagerDA">
 	<html:hidden property="page" value="1"/>
 <table>		
 	
 	<tr>
-		<td><bean:message key="label.generalObjectives" />	
+		<td><h2><bean:message key="label.generalObjectives" /></h2>	
 		</td>
 		<td><html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives" >
 	</html:text>
@@ -20,7 +20,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><bean:message key="label.operacionalObjectives" />
+		<td><h2><bean:message key="label.operacionalObjectives" /></h2>
 		</td>
 		<td><html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives" >
 	</html:text>

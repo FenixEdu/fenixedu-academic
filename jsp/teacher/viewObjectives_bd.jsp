@@ -10,10 +10,10 @@
 <jsp:include page="curriculumForm.jsp"/>
 </logic:notPresent>
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" >
-<bean:message key="title.objectives"/>
+<h3><bean:message key="title.objectives"/></h3>
 <table>
 <tr>
-	<td><bean:message key="label.generalObjectives" />	
+	<td><h2><bean:message key="label.generalObjectives" />	</h2>
 	</td>
 	<td>
 	<bean:define id="generalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives">
@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>	
-	<bean:message key="label.operacionalObjectives" />
+	<h2><bean:message key="label.operacionalObjectives" /></h2>
 	</td><td><bean:define id="operacionalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives">
 	</bean:define> 
 	<bean:write name="operacionalObjectives" />

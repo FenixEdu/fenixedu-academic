@@ -7,10 +7,11 @@
 		
 			<html:form action="/curriculumManagerDA">
 			<html:hidden property="page" value="1"/>	
+<h3><bean:message key="title.objectives" />	</h3>			
 <table>		
 	
 	<tr>
-		<td><bean:message key="label.generalObjectives" />	
+		<td><h2><bean:message key="label.generalObjectives" />	</h2>
 		</td>
 		<td><html:text  property="generalObjectives" >
 	</html:text>
@@ -19,7 +20,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><bean:message key="label.operacionalObjectives" />
+		<td><h2><bean:message key="label.operacionalObjectives" /></h2>
 		</td>
 		<td><html:text  property="operacionalObjectives" >
 	</html:text>
@@ -27,8 +28,11 @@
 		<td> <span class="error" ><html:errors property="operacionalObjectives"/></span>	
 		</td>
 	</tr>
-	<tr>
-		<td><bean:message key="label.program" />	
+</table>
+<h3><bean:message key="title.program" />	</h3>	
+<table>		
+<tr>
+		<td><h2><bean:message key="label.program" />	</h2>
 		</td>
 		<td><html:text  property="program" >
 	</html:text>
@@ -36,6 +40,9 @@
 		<td> <span class="error" ><html:errors property="program"/></span>	
 		</td>
 	</tr>
+</table>	
+	
+<h3><table>
 	<tr>
 		<td>
 			<html:reset  styleClass="inputbutton">
@@ -51,9 +58,5 @@
 		</td>
 		
 	</tr>
-	
-	
-	
-   
-</table>	
+</table></h3>	
 </html:form>
