@@ -20,7 +20,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.FenixUtil;
 import Util.beanUtils.FenixPropertyUtils;
 
 /**
