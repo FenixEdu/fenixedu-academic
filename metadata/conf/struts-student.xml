@@ -19,13 +19,12 @@
       <form-bean name="studentShiftEnrolmentForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
-      	<form-property name="method" type="java.lang.String"/>
+		<form-property name="studentNumber" type="java.lang.Integer"/>      			
+		<form-property name="degree" type="java.lang.Integer"/>
+		<form-property name="wantedCourse" type="java.lang.Integer"/>
+		<form-property name="removedCourse" type="java.lang.Integer"/>      			
 	    <form-property name="shifts" type="java.lang.Integer[]"/>
 	    <form-property name="class" type="java.lang.String"/>
-		<form-property name="degree" type="java.lang.String"/>
-		<form-property name="course" type="java.lang.String[]"/>
-		<form-property name="wantedCourse" type="java.lang.String[]"/>
-			<form-property name="previousWantedCourse" type="java.lang.String[]"/>
       </form-bean>
       
 <!--
@@ -150,15 +149,12 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-      <!-- page fronting actions -->
-<!--      <action path="/index" forward="/main.jsp"/> -->
+	<!-- page fronting actions -->
 		<action path="/cantEnroll" forward="definition.cant.enroll"/>
-      <action type="ServidorApresentacao.Action.commons.VoidAction"
-              path="/index">
-        <forward name="Success" path="df.page.main"/>
-      </action>
-
-<!--	  <action path="/index" forward="df.page.main"/> -->
+	    <action type="ServidorApresentacao.Action.commons.VoidAction"
+        	path="/index">
+        	<forward name="Success" path="df.page.main"/>
+        </action>
 
       <!-- SHIFT ENROLMENT -->
       <action type="ServidorApresentacao.Action.student.ViewEnrolmentAction" path="/viewEnrolment">
@@ -206,31 +202,33 @@
 		<forward name="cantEnroll" path="/cantEnroll.do"/>
       </action>
 
-      <!-- TODO: tdi-dev (bruno) -> redo this-->
+      <!-- Student Shift Enrolment Manager-->
 	  <action path="/studentShiftEnrolmentManager"
 	  	name="studentShiftEnrolmentForm"
-	  	attribute="studentShiftEnrolmentForm"
         type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
-		input="/studentShiftEnrolmentManager.do?method=enrollCourse&amp;firstTime=yes" 
+		input="/dotIstPortal.do?prefix=/student&amp;page=/index.do" 
         parameter="method"
-        scope="session"
-        validate="false">
-        <exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-          key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-          handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-        <exception type="ServidorAplicacao.Servico.student.WriteStudentAttendingCourses$AlreadyEnroledInGroupServiceException"
-          				   key="errors.student.already.enroled.in.group" path="/student/studentShiftEnrolmentManager.do?method=start&amp;firstTime=yes"/>
-        <exception type="ServidorAplicacao.Servico.student.WriteStudentAttendingCourses$AlreadyEnroledServiceException"
-          				   key="errors.student.already.enroled" path="/student/studentShiftEnrolmentManager.do?method=start&amp;firstTime=yes"/>
-                           
+        scope="request"
+        validate="false">                         
         <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
-	      
-        <forward name="selectCourses" path="show-courses-by-degree"/>
+		<forward name="selectCourses" path="show-courses-by-degree"/>
+      </action>
+      
+   	  <action path="/studentShiftEnrolmentManagerLoockup"
+	  	name="studentShiftEnrolmentForm"
+        type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerLookupDispatchAction"
+		input="/studentShiftEnrolmentManager.do?method=start" 
+		parameter="method"
+        scope="request"
+        validate="false">                           
+        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
+        <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
+    	<forward name="start" path="/studentShiftEnrolmentManager.do?method=start" />
+    	<forward name="selectCourses" path="show-courses-by-degree"/>
         <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
         <forward name="showAvailableShifts" path="show-available-shifts"/>
         <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment"/>
         <forward name="classTimeTable" path="/classTimeTable.jsp"/>
-        <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
       </action>
       
       <action 

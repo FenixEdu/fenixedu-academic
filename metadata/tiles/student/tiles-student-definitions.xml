@@ -6,7 +6,6 @@
 	  <put name="title" value=".IST - portalEstudante" />
 	  <put name="serviceName" value="Portal do Estudante" />	
 	  <put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
-<!--	  <put name="context-body" value=" "/> -->
 	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
 	  <put name="body" value=" " />
 	  <put name="footer" value="/student/commons/commonFooterStudent.jsp" />

@@ -105,7 +105,6 @@ public class DeleteStudentAttendingCourse implements IService
 			IFrequenta attend =
 				persistentAttends.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 			IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
-
 			if (studentGroupAttend != null)
 			{
 				throw new FenixServiceException("alreadyEnrolledInGroup");

@@ -1,100 +1,95 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="DataBeans.InfoDegree"%>
-<br/>
-<bean:define id="link">
-	<%= request.getContextPath() %>
-	/dotIstPortal.do?prefix=/student&amp;page=/index.do
-</bean:define>
-<html:link href='<%= link %>'>
-	<b>
-		Sair do processo de inscrição
-	</b>
-</html:link>
-<br/>
-<br/>
+<logic:notPresent name="infoShiftEnrollment" >
+	<span class="error"><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
+</logic:notPresent>
+<logic:present name="infoShiftEnrollment" >
 <div  align="center" >
-	<span class="error">
-		<html:errors />
-	</span>
-	<br/>
+	<span class="error"><html:errors /></span>
+	<br />
 	<p align="left">
 		<span class="error">ATENÇÃO: A INSCRIÇÃO EM TURNOS/TURMAS NÃO SUBSTITUI A INSCRIÇÃO EM DISCIPLINAS EFECTUADA NA <a href="http://secreta.ist.utl.pt/secretaria/" target="_blank">SECRETARIA</a>.</span>
 		<h2 class="redtxt" style="text-align:center">
-			Informações de utilização:
+			<bean:message key="label.useInformation" />:
 		</h2>
-		<ul style="text-align:left;">
-			<li>
-				Na primeira caixa estão presentes as disciplinas disponíveis para se inscrever, na segunda caixa estão presentes as disciplinas que deseja frequentar. 
-				Utilize os botões de adicionar disciplina e remover disciplina para actualizar a segunda caixa.
-			</li>
-			<li>
-				As disciplinas que deseja frequentar devem corresponder às disciplinas em que se inscreveu (ou vai inscrever) na aplicação habitual da secretaria.
-			</li>
-			<li>
-				Uma vez indicadas as disciplinas que pretende frequentar prossiga a inscrição em turmas utilizando o botão "Continuar inscrição".
-			</li>
-		</ul>
+		<bean:message key="message.student.shiftEnrollment" />
 	</p>
-	<html:form  action="studentShiftEnrolmentManager" method="POST">
-		<div class="infotable" style="width:70%;">
-			<html:hidden property="method" value="proceedToShiftEnrolment" />
-			<strong>
-				Escolha o curso das cadeiras que quer frequentar:
-			</strong>
-			<br/>
-			<%--
-				FIXME: Deverá ser com executionDegrees....
-			--%>
-			<html:select  property="degree" size="1" onchange="document.studentShiftEnrolmentForm.method.value='start';this.form.submit();" >
-				<html:options  collection="degreeList" property="infoDegreeCurricularPlan.infoDegree.sigla" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>				
-			</html:select>
-			<p style="text-align:left;margin-bottom:0px">
-				<b>
-					Disciplinas do curso selecionado:
-				</b>
-			</p>
 
-			<bean:size id="wantedCoursesSize" name="wantedInfoExecutionCourseList"/>
-
-			<html:select property="course" size="8" styleClass="courseEnroll">
-				<html:options collection="courseList" labelProperty="nome" property="idInternal"/>
-			</html:select>
-			<logic:lessThan name="wantedCoursesSize" value="8">
-				<p style="margin-top:1px">
-					<html:submit value="Adicionar Disciplina"  style="width:100%" onclick="this.form.method.value='addCourses'; return true;"/>
-				</p>
-			</logic:lessThan>
-		</div>
-		<br/>
-		<br/>
-		<div class="infotable" style="width:70%;">
-			<p style="text-align:left; margin-bottom:0px">
-				<b>
-					Disciplinas que vai frequentar:
-				</b>
-			</p>
-
-			<html:select property="wantedCourse" multiple="true" size="8" styleClass="courseEnroll">
-				<html:options  collection="wantedInfoExecutionCourseList"   labelProperty="nome"  property="idInternal"/>
-			</html:select>
-			<logic:notEqual name="wantedCoursesSize" value="0">
-				<p style="margin-top:1px">
-					<html:submit value="Remover Disciplina"  style="width:100%" onclick="this.form.method.value='removeCourses'; return true;"/>
-				</p>
-			</logic:notEqual>
-		</div>
-		<br/>
-		<br/>
-		<%-- hide select upper select --%>
-		<logic:iterate id="wantedExecutionCourse" name="wantedInfoExecutionCourseList" type="DataBeans.InfoObject">
-			<html:hidden property="previousWantedCourse" value="<%= wantedExecutionCourse.getIdInternal().toString() %>"/>
-		</logic:iterate>
-		<logic:notEqual name="wantedCoursesSize" value="0">
-			<html:submit value="Continuar inscrição" />
-		</logic:notEqual>			
+	<bean:define id="studentNumberToEnrollment" name="infoShiftEnrollment" property="infoStudent.number" />
+	<div class="infotable" style="width:95%;">		
+	<html:form action="/studentShiftEnrolmentManager" >
+		<html:hidden property="method" value="start" />
+		<html:hidden property="studentNumber" value="<%= studentNumberToEnrollment.toString() %>" />
+		<p style="text-align:left;margin-bottom:0px">
+			<b><bean:message key="label.chooseCourses" />:</b>
+		</p>			
+		<html:select property="degree" styleClass="degrees" size="1" onchange="this.form.method.value='start'; this.form.submit();" >
+			<html:optionsCollection name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList"/>				
+		</html:select>
 	</html:form>
+	<html:form action="/studentShiftEnrolmentManagerLoockup" >
+		<html:hidden property="studentNumber" value="<%= studentNumberToEnrollment.toString() %>" />
+		<p style="text-align:left;margin-bottom:0px">
+			<b><bean:message key="label.degreeSelected.courses" />:</b>
+		</p>
+		<bean:size id="wantedCoursesSize" name="infoShiftEnrollment" property="infoAttendingCourses"/>
+		<bean:define id="executionCourses" name="infoShiftEnrollment" property="infoExecutionCoursesList" />
+		<html:select property="wantedCourse" size="8" styleClass="courseEnroll">
+			<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
+		</html:select>
+		<p style="text-align:center;margin-top:1px">
+			<logic:lessThan name="wantedCoursesSize" value="8">			
+				<html:submit property="method" styleClass="inputbutton" style="width:100%">
+					<bean:message key="button.addCourse"/>
+				</html:submit>
+			</logic:lessThan>
+			<logic:greaterEqual name="wantedCoursesSize" value="8">
+				<br />
+				<span class="error"><bean:message key="message.maximum.number.curricular.courses.to.enroll" arg0="8"/></span>
+			</logic:greaterEqual>		
+		</p>
+	</div>
+	<br/>
+	<br/>
+
+	<div class="infotable" style="width:95%;">
+		<p style="text-align:left; margin-bottom:0px">
+			<b>
+				<bean:message key="label.attendCourses" />:
+			</b>
+		</p>
+		<bean:define id="attendingCourses" name="infoShiftEnrollment" property="infoAttendingCourses"/>
+		<html:select property="removedCourse" size="8" styleClass="courseEnroll">
+			<html:options collection="attendingCourses" labelProperty="nome"  property="idInternal"/>
+		</html:select>
+		<logic:notEqual name="wantedCoursesSize" value="0">
+			<p style="text-align:center;margin-top:1px">
+				<html:submit property="method" styleClass="inputbutton" style="width:100%">
+					<bean:message key="button.removeCourse"/>
+				</html:submit>
+			</p>
+		</logic:notEqual>
+	</div>
+	<br/>
+	<br/>
+	
+			
+	<logic:notEqual name="wantedCoursesSize" value="0">
+		<html:submit property="method" styleClass="inputbutton">
+			<bean:message key="button.continue.enrolment"/>
+		</html:submit>
+	</logic:notEqual>
+	<logic:equal name="wantedCoursesSize" value="0">
+		<p style="text-align:center;margin-top:1px">
+			<span class="error"><bean:message key="message.noStudentExecutionCourses" /><span class="error">		
+		</p>
+	</logic:equal>
+		
+	<html:submit property="method" styleClass="inputbutton" style="width:35%">
+		<bean:message key="button.exit.enrollment"/>
+	</html:submit>		
+	</html:form>
+
 </div>
+</logic:present>

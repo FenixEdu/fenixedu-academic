@@ -1,6 +1,6 @@
 /*
  * Created on 10/Fev/2004
- *
+ *  
  */
 package DataBeans;
 
@@ -8,9 +8,9 @@ import java.util.List;
 
 /**
  * @author Tânia Pousão
- *
- * This class keeps all information usefull for shift enrollment use case
  * 
+ * This class keeps all information usefull for shift enrollment use case
+ *  
  */
 public class InfoShiftEnrollment extends InfoObject
 {
@@ -20,7 +20,41 @@ public class InfoShiftEnrollment extends InfoObject
 	InfoExecutionDegree infoExecutionDegree;
 	List infoExecutionCoursesList;
 	List infoAttendingCourses;
-	
+
+	public String toString()
+	{
+		StringBuffer string = new StringBuffer();
+
+		string.append("[InfoShiftEnrollment ");
+		string.append("\ninfoStudent: ");
+		string.append(infoStudent.getNumber());
+		if (infoExecutionDegreesList != null)
+		{
+			string.append("\ninfoExecutionDegreesList: ");
+			string.append(infoExecutionDegreesList.size());
+		}
+		if (infoExecutionDegreesLabelsList != null)
+		{
+			string.append("\ninfoExecutionDegreesLabelsList: ");
+			string.append(infoExecutionDegreesLabelsList.size());
+		}
+		string.append("\ninfoExecutionDegree: ");
+		string.append(infoExecutionDegree.getIdInternal());
+		if (infoExecutionCoursesList != null)
+		{
+			string.append("\ninfoExecutionCoursesList: ");
+			string.append(infoExecutionCoursesList.size());
+		}
+		if (infoAttendingCourses != null)
+		{
+			string.append("\ninfoAttendingCourses: ");
+			string.append(infoAttendingCourses.size());
+		}
+		string.append("]");
+
+		return string.toString();
+	}
+
 	/**
 	 * @return Returns the infoStudent.
 	 */
@@ -30,7 +64,8 @@ public class InfoShiftEnrollment extends InfoObject
 	}
 
 	/**
-	 * @param infoStudent The infoStudent to set.
+	 * @param infoStudent
+	 *            The infoStudent to set.
 	 */
 	public void setInfoStudent(InfoStudent infoStudent)
 	{
@@ -46,7 +81,8 @@ public class InfoShiftEnrollment extends InfoObject
 	}
 
 	/**
-	 * @param infoExecutionDegreesLabelsList The infoExecutionDegreesLabelsList to set.
+	 * @param infoExecutionDegreesLabelsList
+	 *            The infoExecutionDegreesLabelsList to set.
 	 */
 	public void setInfoExecutionDegreesLabelsList(List infoExecutionDegreesLabelsList)
 	{
@@ -62,7 +98,8 @@ public class InfoShiftEnrollment extends InfoObject
 	}
 
 	/**
-	 * @param infoAttendingCourses The infoAttendingCourses to set.
+	 * @param infoAttendingCourses
+	 *            The infoAttendingCourses to set.
 	 */
 	public void setInfoAttendingCourses(List infoAttendingCourses)
 	{
@@ -78,7 +115,8 @@ public class InfoShiftEnrollment extends InfoObject
 	}
 
 	/**
-	 * @param infoExecutionCoursesList The infoExecutionCoursesList to set.
+	 * @param infoExecutionCoursesList
+	 *            The infoExecutionCoursesList to set.
 	 */
 	public void setInfoExecutionCoursesList(List infoExecutionCoursesList)
 	{
@@ -94,7 +132,8 @@ public class InfoShiftEnrollment extends InfoObject
 	}
 
 	/**
-	 * @param infoExecutionDegree The infoExecutionDegree to set.
+	 * @param infoExecutionDegree
+	 *            The infoExecutionDegree to set.
 	 */
 	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree)
 	{
@@ -110,7 +149,8 @@ public class InfoShiftEnrollment extends InfoObject
 	}
 
 	/**
-	 * @param infoExecutionDegreesList The infoExecutionDegreesList to set.
+	 * @param infoExecutionDegreesList
+	 *            The infoExecutionDegreesList to set.
 	 */
 	public void setInfoExecutionDegreesList(List infoExecutionDegreesList)
 	{
