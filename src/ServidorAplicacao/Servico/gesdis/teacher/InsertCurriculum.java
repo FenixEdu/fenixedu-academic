@@ -1,8 +1,7 @@
 /*
  * Created on 24/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
@@ -21,10 +20,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
- * @author jmota
+ * @author João Mota
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class InsertCurriculum implements IServico {
 

@@ -18,10 +18,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
- * @author jmota
+ * @author João Mota
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
  */
 public class EditEvaluation implements IServico {
 

@@ -11,7 +11,7 @@ package Dominio;
 /**
  *
  * @author  EP 15 - fjgc
- * @author jmota
+ * @author João Mota
  */
 public interface ICurriculum {
     String getGeneralObjectives();

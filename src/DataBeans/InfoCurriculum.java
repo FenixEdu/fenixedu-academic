@@ -1,14 +1,13 @@
 /*
  * Created on 14/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package DataBeans;
 
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class InfoCurriculum {
 	protected String generalObjectives;

@@ -2,11 +2,9 @@ package DataBeans;
 
 import java.sql.Timestamp;
 
-import DataBeans.*;
-
 /**
  * @author EP 15
- * @author jmota
+ * @author João Mota
  * @author Ivo Brandão
  */
 

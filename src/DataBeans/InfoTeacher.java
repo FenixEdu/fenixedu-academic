@@ -1,8 +1,7 @@
 /*
  * Created on 12/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package DataBeans;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class InfoTeacher {
 

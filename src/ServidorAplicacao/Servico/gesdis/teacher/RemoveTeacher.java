@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.gesdis.teacher;
 /**
- * @author jmota
+ * @author João Mota
  */
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;

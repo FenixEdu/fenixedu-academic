@@ -8,7 +8,7 @@ package Dominio;
 /**
  *
  * @author  EP 15 - fjgc
- * @author jmota
+ * @author João Mota
  */
 public class Curriculum implements ICurriculum {
 	protected String generalObjectives;

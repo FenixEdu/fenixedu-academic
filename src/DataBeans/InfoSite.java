@@ -5,7 +5,7 @@ package DataBeans;
  * This is the view class that contains information about the site domain objects.
  *
  * @author Joao Pereira
- * @author jmota
+ * @author João Mota
  * @author Ivo Brandão
  **/
 

@@ -8,7 +8,7 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 /**
  *
  * @author  EP15
- * @author jmota
+ * @author João Mota
  */
 
 import DataBeans.InfoAnnouncement;

@@ -1,15 +1,14 @@
 /*
  * Created on 6/Mar/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package ServidorAplicacao.Servico.exceptions;
 
 import ServidorAplicacao.FenixServiceException;
 
 /**
- * @author jmota
+ * @author João Mota
  */
 public class notAuthorizedServiceDeleteException
 	extends FenixServiceException {
