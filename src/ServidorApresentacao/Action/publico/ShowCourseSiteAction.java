@@ -57,7 +57,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
 		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
 		request.setAttribute("inEnglish", inEnglish);
 
-		Object[] args = { curricularCourseId, executionPeriodOId };
+		Object[] args = { curricularCourseId};
 
 		InfoCurriculum infoCurriculum = null;
 		try

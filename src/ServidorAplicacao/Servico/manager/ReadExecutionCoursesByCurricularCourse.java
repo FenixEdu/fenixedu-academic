@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -22,35 +22,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class ReadExecutionCoursesByCurricularCourse implements IServico
+public class ReadExecutionCoursesByCurricularCourse implements IService
 {
 
-    private static ReadExecutionCoursesByCurricularCourse service =
-        new ReadExecutionCoursesByCurricularCourse();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionCoursesByCurricularCourse getService()
-    {
-        return service;
-    }
+   
 
     /**
 	 * The constructor of this class.
 	 */
-    private ReadExecutionCoursesByCurricularCourse()
+    public ReadExecutionCoursesByCurricularCourse()
     {
     }
 
-    /**
-	 * Service name
-	 */
-    public final String getNome()
-    {
-        return "ReadExecutionCoursesByCurricularCourse";
-    }
-
+    
     /**
 	 * Executes the service. Returns the current collection of
 	 * infoExecutionCourses.
@@ -69,13 +53,16 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico
                     curricularCourseToRead,
                     false);
 
-            if (curricularCourse == null)
+            if (curricularCourse == null) {
+                
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+            }
 
             allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
 
-            if (allExecutionCourses == null || allExecutionCourses.isEmpty())
-                return allExecutionCourses;
+            if (allExecutionCourses == null || allExecutionCourses.isEmpty()) {
+                return allExecutionCourses;                
+            }
 
             // build the result of this service
             Iterator iterator = allExecutionCourses.iterator();
