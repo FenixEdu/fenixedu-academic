@@ -96,10 +96,6 @@
     </form>
 
 
-
-
-
-
    <!-- validation for the Choose Contributor Form -->
     <form name="chooseContributorForm">
       <field property="contributorNumber" depends="integer" page="1">
@@ -107,11 +103,6 @@
       </field>
     </form>
     
-
-
-
-
-
     <!-- validation for the Change Application Info Form-->
     <form name="changeCandidateForm">
       
@@ -266,7 +257,19 @@
       </field>
    </form>
 
+	<!-- validation for the Choose Certificate Info Form -->
+    <form name="chooseCertificateInfoForm">
+      
+      <field property="requesterNumber" depends="required, integer" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.requesterNumber" />
+      </field>
 
+      <field property="graduationType" depends="required" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.graduationType" />
+      </field>
+
+      
+    </form>
 
 
   </formset>

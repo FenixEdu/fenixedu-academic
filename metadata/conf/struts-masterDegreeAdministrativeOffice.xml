@@ -198,7 +198,18 @@
          <form-property name="year" type="java.lang.String" />
       </form-bean>
 
-    </form-beans>
+	  <!-- Bean to Choose the Information for the Certificate  -->
+      <form-bean name="chooseCertificateInfoForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="requesterNumber" type="java.lang.Integer" />
+			<form-property name="graduationType" type="java.lang.String" />
+      </form-bean>
+
+
+   </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
@@ -258,7 +269,14 @@
 			  >
 	         <forward name="Success" path="/guide/indexGuide.jsp"/> 
       </action>
-
+      
+      <action path="/certificateSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/certificate/indexCertificate.jsp"/> 
+      </action>
+	  
 	  <action path="/guideListingSection"
 		      parameter="method"
               type="ServidorApresentacao.Action.commons.VoidAction"
@@ -353,13 +371,6 @@
       
       
       
-      
-     
-      
-
-
-
-
       <!-- Dispatch Action to Create the Contributor Information -->
       <action path="/createContributorDispatchAction"
 	     attribute="createContributorForm"
@@ -568,7 +579,7 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
-	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="PrepareSuccess" path="/guide/chooseExecutionYearToCreateGuide.jsp"/>  
 	         <forward name="ChooseSuccess" path="/createGuideDispatchAction.do?method=prepare&amp;page=0"/> 
       </action>
 
@@ -583,7 +594,38 @@
 	         <forward name="PrintOneGuide" path="/guide/guideTemplate1.jsp"/> 
       </action>
 
+      <!-- Action to prepare the chooseCertificateInfoForm -->
+      <action path="/chooseCertificateInfoAction"
+	     attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	         input="/certificate/chooseCertificate.jsp"
+	      validate="true"
+		 parameter="method"
+  	         scope="request"
+      	      type="ServidorApresentacao.Action.certificate.ChooseCertificateInfoAction">
+   		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
+      	  <forward name="ChooseSuccess" path="/certificate/listCertificates.jsp"/>
+      </action>
 
+		<!-- Action to prepare the chooseCertificateInfoForm -->
+      <action path="/chooseDeclarationInfoAction"
+	     attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	         input="/certificate/chooseDeclaration.jsp"
+	      validate="true"
+		 parameter="method"
+  	         scope="request"
+      	      type="ServidorApresentacao.Action.certificate.ChooseDeclarationInfoAction">
+   		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	  <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
+      	  <forward name="ChooseSuccess" path="/certificate/showDeclarationList.jsp"/>
+          <forward name="ShowDeclarationTypes" path="/guide/chooseTypeDeclaration.jsp"/>  
+      </action>
 
     </action-mappings>
     

@@ -95,7 +95,7 @@ public abstract class SessionConstants {
 	public static final String MASTER_DEGREE_LIST = "master_degree_list";
 	public static final String MASTER_DEGREE_CANDIDATES_AMMOUNT = "master_degree_candidates_ammount";
 	public static final String MASTER_DEGREE_CANDIDATE_AMMOUNT = "master_degree_candidate_ammount";
-	
+	public static final String DECLARATION_LIST = "declaration_list";
 
 
 	// -------------------------------------------------------------------------------

@@ -16,5 +16,7 @@
         &nbsp;&nbsp;- <html:link page="/guideListingSection.do"><bean:message key="link.masterDegree.administrativeOffice.guideListing" /></html:link><br>
 	<br>
 	
+	 <html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" />
+    </html:link><br>
 
    
