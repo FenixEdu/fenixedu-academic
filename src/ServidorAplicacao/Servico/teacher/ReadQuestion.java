@@ -10,6 +10,7 @@ import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
+
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IMetadata;
@@ -32,8 +33,8 @@ import UtilTests.ParseQuestion;
  * @author Susana Fernandes
  */
 public class ReadQuestion implements IServico {
-
 	private static ReadQuestion service = new ReadQuestion();
+	private String path = new String();
 
 	public static ReadQuestion getService() {
 		return service;
@@ -46,8 +47,10 @@ public class ReadQuestion implements IServico {
 	public SiteView run(
 		Integer executionCourseId,
 		Integer metadataId,
-		Integer questionId)
+		Integer questionId,
+		String path)
 		throws FenixServiceException {
+		this.path = path.replace('\\', '/');
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -75,7 +78,10 @@ public class ReadQuestion implements IServico {
 			ParseMetadata p = new ParseMetadata();
 			try {
 				infoMetadata =
-					p.parseMetadata(metadata.getMetadataFile(), infoMetadata);
+					p.parseMetadata(
+						metadata.getMetadataFile(),
+						infoMetadata,
+						path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}
@@ -103,7 +109,8 @@ public class ReadQuestion implements IServico {
 				infoQuestion =
 					parse.parseQuestion(
 						infoQuestion.getXmlFile(),
-						infoQuestion);
+						infoQuestion,
+						path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}

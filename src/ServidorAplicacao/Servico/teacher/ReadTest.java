@@ -13,6 +13,7 @@ import DataBeans.InfoSiteTest;
 import DataBeans.InfoTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
+
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITest;
@@ -34,6 +35,7 @@ import UtilTests.ParseQuestion;
  */
 public class ReadTest implements IServico {
 	private static ReadTest service = new ReadTest();
+	private String path = new String();
 
 	public static ReadTest getService() {
 		return service;
@@ -43,9 +45,9 @@ public class ReadTest implements IServico {
 		return "ReadTest";
 	}
 
-	public SiteView run(Integer executionCourseId, Integer testId)
+	public SiteView run(Integer executionCourseId, Integer testId, String path)
 		throws FenixServiceException {
-
+		this.path = path.replace('\\', '/');
 		ISuportePersistente persistentSuport;
 		try {
 			persistentSuport = SuportePersistenteOJB.getInstance();
@@ -78,7 +80,11 @@ public class ReadTest implements IServico {
 				InfoTestQuestion infoTestQuestion =
 					Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
 				try {
-					infoTestQuestion.setQuestion(parse.parseQuestion(infoTestQuestion.getQuestion().getXmlFile(), infoTestQuestion.getQuestion()));
+					infoTestQuestion.setQuestion(
+						parse.parseQuestion(
+							infoTestQuestion.getQuestion().getXmlFile(),
+							infoTestQuestion.getQuestion(),
+							path));
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}

@@ -10,6 +10,7 @@ import java.util.List;
 
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.util.Cloner;
+
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -26,8 +27,9 @@ import UtilTests.ParseQuestion;
  * @author Susana Fernandes
  */
 public class ReadStudentDistributedTest implements IServico {
-
-	private static ReadStudentDistributedTest service = new ReadStudentDistributedTest();
+	private static ReadStudentDistributedTest service =
+		new ReadStudentDistributedTest();
+	private String path = new String();
 
 	public static ReadStudentDistributedTest getService() {
 		return service;
@@ -40,9 +42,10 @@ public class ReadStudentDistributedTest implements IServico {
 	public List run(
 		Integer executionCourseId,
 		Integer distributedTestId,
-		Integer studentId)
+		Integer studentId,
+		String path)
 		throws FenixServiceException {
-
+		this.path = path.replace('\\', '/');
 		ISuportePersistente persistentSuport;
 		List infoStudentTestQuestionList = new ArrayList();
 		try {
@@ -71,7 +74,8 @@ public class ReadStudentDistributedTest implements IServico {
 					.readByStudentAndDistributedTest(student, distributedTest);
 			Iterator it = studentTestQuestionList.iterator();
 			while (it.hasNext()) {
-				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
+				IStudentTestQuestion studentTestQuestion =
+					(IStudentTestQuestion) it.next();
 				InfoStudentTestQuestion infoStudentTestQuestion =
 					Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(
 						studentTestQuestion);
@@ -80,9 +84,10 @@ public class ReadStudentDistributedTest implements IServico {
 					infoStudentTestQuestion.setQuestion(
 						parse.parseQuestion(
 							infoStudentTestQuestion.getQuestion().getXmlFile(),
-							infoStudentTestQuestion.getQuestion()));
+							infoStudentTestQuestion.getQuestion(),
+							path));
 					infoStudentTestQuestion =
-						parse.getOptionsShuffle(infoStudentTestQuestion);
+						parse.getOptionsShuffle(infoStudentTestQuestion, path);
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}

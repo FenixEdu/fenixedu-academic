@@ -10,6 +10,7 @@ import DataBeans.InfoSiteTestQuestion;
 import DataBeans.InfoTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
+
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IQuestion;
@@ -33,8 +34,8 @@ import UtilTests.ParseQuestion;
  * @author Susana Fernandes
  */
 public class ReadTestQuestion implements IServico {
-
 	private static ReadTestQuestion service = new ReadTestQuestion();
+	private String path = new String();
 
 	public static ReadTestQuestion getService() {
 		return service;
@@ -47,9 +48,10 @@ public class ReadTestQuestion implements IServico {
 	public SiteView run(
 		Integer executionCourseId,
 		Integer testId,
-		Integer questionId)
+		Integer questionId,
+		String path)
 		throws FenixServiceException {
-
+		this.path = path.replace('\\', '/');
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -86,7 +88,8 @@ public class ReadTestQuestion implements IServico {
 				infoQuestion =
 					parse.parseQuestion(
 						infoQuestion.getXmlFile(),
-						infoQuestion);
+						infoQuestion,
+						path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}

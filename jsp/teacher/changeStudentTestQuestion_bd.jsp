@@ -37,7 +37,9 @@ function selectStudents() {
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="studentCode" value="<%=(pageContext.findAttribute("studentCode")).toString()%>"/>
 <html:hidden property="questionCode" value="<%=(pageContext.findAttribute("questionCode")).toString()%>"/>
-
+<table>
+	<tr><td class="infoop"><bean:message key="message.changeStudentTestQuestion.information" /></td></tr>
+</table>
 <br/>
 <br/>
 <table>

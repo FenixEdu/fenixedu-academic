@@ -11,6 +11,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.util.Cloner;
+
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -25,85 +26,99 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTestQuestionImage implements IServico
-{
+public class ReadStudentTestQuestionImage implements IServico {
+	private static ReadStudentTestQuestionImage service =
+		new ReadStudentTestQuestionImage();
+	private String path = new String();
 
-    private static ReadStudentTestQuestionImage service = new ReadStudentTestQuestionImage();
+	public static ReadStudentTestQuestionImage getService() {
+		return service;
+	}
 
-    public static ReadStudentTestQuestionImage getService()
-    {
-        return service;
-    }
+	public String getNome() {
+		return "ReadStudentTestQuestionImage";
+	}
 
-    public String getNome()
-    {
-        return "ReadStudentTestQuestionImage";
-    }
+	public String run(
+		String userName,
+		Integer distributedTestId,
+		Integer questionId,
+		Integer imageId,
+		String path)
+		throws FenixServiceException {
+		this.path = path.replace('\\', '/');
+		try {
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
+			IStudent student =
+				persistentSuport.getIPersistentStudent().readByUsername(
+					userName);
+			if (student == null)
+				throw new FenixServiceException();
 
-    public String run(String userName, Integer distributedTestId, Integer questionId, Integer imageId)
-        throws FenixServiceException
-    {
-        try
-        {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
-            if (student == null)
-                throw new FenixServiceException();
+			IDistributedTest distributedTest =
+				new DistributedTest(distributedTestId);
+			distributedTest =
+				(IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest()
+					.readByOId(
+					distributedTest,
+					false);
+			if (distributedTest == null)
+				throw new FenixServiceException();
 
-            IDistributedTest distributedTest = new DistributedTest(distributedTestId);
-            distributedTest =
-                (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
-                    distributedTest,
-                    false);
-            if (distributedTest == null)
-                throw new FenixServiceException();
+			List studentTestQuestionList =
+				(List) persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readByStudentAndDistributedTest(student, distributedTest);
 
-            List studentTestQuestionList =
-                persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
-                    student,
-                    distributedTest);
+			Iterator it = studentTestQuestionList.iterator();
+			while (it.hasNext()) {
+				IStudentTestQuestion studentTestQuestion =
+					(IStudentTestQuestion) it.next();
+				if (studentTestQuestion.getKeyQuestion().equals(questionId)) {
+					ParseQuestion parse = new ParseQuestion();
+					InfoStudentTestQuestion infoStudentTestQuestion =
+						Cloner
+							.copyIStudentTestQuestion2InfoStudentTestQuestion(
+							studentTestQuestion);
+					try {
+						infoStudentTestQuestion.setQuestion(
+							parse.parseQuestion(
+								infoStudentTestQuestion
+									.getQuestion()
+									.getXmlFile(),
+								infoStudentTestQuestion.getQuestion(),
+								path));
+						infoStudentTestQuestion =
+							parse.getOptionsShuffle(
+								infoStudentTestQuestion,
+								path);
+					} catch (Exception e) {
+						throw new FenixServiceException(e);
+					}
+					Iterator optionit =
+						infoStudentTestQuestion
+							.getQuestion()
+							.getOptions()
+							.iterator();
+					int imgIndex = 0;
+					while (optionit.hasNext()) {
+						LabelValueBean lvb = (LabelValueBean) optionit.next();
+						if (lvb.getLabel().startsWith("image/")) {
+							imgIndex++;
+							if (imgIndex == imageId.intValue())
+								return lvb.getValue();
+						}
+					}
+				}
 
-            Iterator it = studentTestQuestionList.iterator();
-            while (it.hasNext())
-            {
-                IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
-                if (studentTestQuestion.getKeyQuestion().equals(questionId))
-                {
-                    ParseQuestion parse = new ParseQuestion();
-                    InfoStudentTestQuestion infoStudentTestQuestion =
-                        Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
-                    try
-                    {
-                        infoStudentTestQuestion.setQuestion(
-                            parse.parseQuestion(
-                                infoStudentTestQuestion.getQuestion().getXmlFile(),
-                                infoStudentTestQuestion.getQuestion()));
-                        infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
-                    } catch (Exception e)
-                    {
-                        throw new FenixServiceException(e);
-                    }
-                    Iterator optionit = infoStudentTestQuestion.getQuestion().getOptions().iterator();
-                    int imgIndex = 0;
-                    while (optionit.hasNext())
-                    {
-                        LabelValueBean lvb = (LabelValueBean) optionit.next();
-                        if (lvb.getLabel().startsWith("image/"))
-                        {
-                            imgIndex++;
-                            if (imgIndex == imageId.intValue())
-                                return lvb.getValue();
-                        }
-                    }
-                }
+			}
 
-            }
-
-        } catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        }
-        return null;
-    }
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+		return null;
+	}
 
 }

@@ -98,6 +98,13 @@ function cleanSelect() {
 		<bean:define id="tipoBefore" name="shiftList" property="tipo.fullNameTipoAula"/>
 	</logic:iterate>
 </table>
-<html:submit styleClass="inputbutton"><bean:message key="link.student.room.distribution"/></html:submit>
-</logic:notEqual>
+<table><tr>
+<td><html:submit styleClass="inputbutton"><bean:message key="link.student.room.distribution"/></html:submit></td>
+</logic:notEqual></html:form>
+<html:form action="/testsManagement">
+<html:hidden property="page" value="0"/>
+<html:hidden property="method" value="testsFirstPage"/>
+<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<td><html:submit styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
 </html:form>
+</tr></table>

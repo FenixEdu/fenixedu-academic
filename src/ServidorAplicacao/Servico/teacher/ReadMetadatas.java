@@ -35,7 +35,7 @@ import UtilTests.ParseMetadata;
 public class ReadMetadatas implements IServico {
 
 	private static ReadMetadatas service = new ReadMetadatas();
-
+	private String path = new String();
 	public static ReadMetadatas getService() {
 		return service;
 	}
@@ -43,9 +43,9 @@ public class ReadMetadatas implements IServico {
 	public String getNome() {
 		return "ReadMetadatas";
 	}
-	public SiteView run(Integer executionCourseId)
+	public SiteView run(Integer executionCourseId, String path)
 		throws FenixServiceException {
-
+		this.path = path.replace('\\', '/');
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -64,7 +64,9 @@ public class ReadMetadatas implements IServico {
 			IPersistentMetadata persistentMetadata =
 				(IPersistentMetadata) persistentSuport.getIPersistentMetadata();
 
-			List metadatas =persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
+			List metadatas =
+				persistentMetadata.readByExecutionCourseAndVisibility(
+					executionCourse);
 			List result = new ArrayList();
 			Iterator iter = metadatas.iterator();
 			while (iter.hasNext()) {
@@ -76,7 +78,8 @@ public class ReadMetadatas implements IServico {
 					infoMetadata =
 						p.parseMetadata(
 							metadata.getMetadataFile(),
-							infoMetadata);
+							infoMetadata,
+							path);
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}

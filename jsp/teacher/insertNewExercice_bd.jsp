@@ -4,7 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
  
 <h2><bean:message key="title.importExercices"/></h2>
-
+<br/>
+<table>
+	<tr><td class="infoop"><bean:message key="message.insertNewExercice.information" /></td></tr>
+</table>
+<br/>
 <html:form action="/exercicesManagement" enctype="multipart/form-data">
 <html:hidden property="page" value="0"/>
 <html:hidden property="method" value="loadExerciceFiles"/>

@@ -34,9 +34,9 @@ import UtilTests.ParseQuestion;
  * @author Susana Fernandes
  */
 public class InsertStudentTestResponses implements IServico {
-
 	private static InsertStudentTestResponses service =
 		new InsertStudentTestResponses();
+	private String path = new String();
 
 	public static InsertStudentTestResponses getService() {
 		return service;
@@ -49,10 +49,11 @@ public class InsertStudentTestResponses implements IServico {
 	public boolean run(
 		String userName,
 		Integer distributedTestId,
-		String[] options)
+		String[] options,
+		String path)
 		throws FenixServiceException {
 		List infoStudentTestQuestionList = new ArrayList();
-
+		this.path = path.replace('\\', '/');
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -107,10 +108,12 @@ public class InsertStudentTestResponses implements IServico {
 									infoStudentTestQuestion
 										.getQuestion()
 										.getXmlFile(),
-									infoStudentTestQuestion.getQuestion()));
+									infoStudentTestQuestion.getQuestion(),
+									path));
 							infoStudentTestQuestion =
 								parse.getOptionsShuffle(
-									infoStudentTestQuestion);
+									infoStudentTestQuestion,
+									path);
 						} catch (Exception e) {
 							throw new FenixServiceException(e);
 						}

@@ -168,18 +168,34 @@ public class DeleteExercice implements IServico {
 				new URL(
 					"file://"
 						+ path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
+			String doctypePublic =
+				new String("-//Technical Superior Institute//DTD Test Metadata 1.1//EN");
 			String doctypeSystem =
 				new String(
-					"file://" + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
+					"metadataFile://"
+						+ path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
+			String auxFile = new String();
+			int index = metadataFile.indexOf("<!DOCTYPE");
+			if (index != -1) {
+				auxFile = metadataFile.substring(0, index);
+				int index2 = metadataFile.indexOf(">", index) + 1;
+				auxFile = metadataFile.substring(index2, metadataFile.length());
+			}
+			metadataFile = auxFile;
 
 			Transformer transformer =
 				tf.newTransformer(new StreamSource(xsl.openStream()));
 			transformer.setOutputProperty(
 				OutputKeys.DOCTYPE_SYSTEM,
 				doctypeSystem);
+			transformer.setOutputProperty(
+				OutputKeys.DOCTYPE_PUBLIC,
+				doctypePublic);
+			transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-LATIN-1");
 			transformer.setParameter("xmlDocument", xmlName);
 
 			Source source = new StreamSource(new StringReader(metadataFile));
+
 			transformer.transform(source, new StreamResult(result));
 
 		} catch (javax.xml.transform.TransformerConfigurationException e) {
@@ -189,6 +205,8 @@ public class DeleteExercice implements IServico {
 		} catch (FileNotFoundException e) {
 			throw new FenixServiceException(e);
 		} catch (IOException e) {
+			throw new FenixServiceException(e);
+		} catch (Exception e) {
 			throw new FenixServiceException(e);
 		}
 		return result.toString();

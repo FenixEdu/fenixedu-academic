@@ -19,6 +19,7 @@ import UtilTests.ParseQuestion;
  */
 public class ReadQuestionImage implements IServico {
 	private static ReadQuestionImage service = new ReadQuestionImage();
+	private String path = new String();
 
 	public static ReadQuestionImage getService() {
 		return service;
@@ -28,9 +29,9 @@ public class ReadQuestionImage implements IServico {
 		return "ReadQuestionImage";
 	}
 
-	public String run(Integer exerciceId, Integer imageId)
+	public String run(Integer exerciceId, Integer imageId, String path)
 		throws FenixServiceException {
-
+		this.path = path.replace('\\', '/');
 		ISuportePersistente persistentSuport;
 		try {
 			persistentSuport = SuportePersistenteOJB.getInstance();
@@ -48,7 +49,8 @@ public class ReadQuestionImage implements IServico {
 				image =
 					parse.parseQuestionImage(
 						question.getXmlFile(),
-						imageId.intValue());
+						imageId.intValue(),
+						path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}

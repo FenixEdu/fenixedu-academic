@@ -13,6 +13,7 @@ import DataBeans.InfoStudentTestQuestion;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
 import DataBeans.util.Cloner;
+
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -31,8 +32,8 @@ import UtilTests.ParseQuestion;
  * @author Susana Fernandes
  */
 public class ReadStudentTest implements IServico {
-
 	private static ReadStudentTest service = new ReadStudentTest();
+	private String path = new String();
 
 	public static ReadStudentTest getService() {
 		return service;
@@ -42,9 +43,14 @@ public class ReadStudentTest implements IServico {
 		return "ReadStudentTest";
 	}
 
-	public Object run(String userName, Integer distributedTestId, Boolean log)
+	public Object run(
+		String userName,
+		Integer distributedTestId,
+		Boolean log,
+		String path)
 		throws FenixServiceException {
 		List infoStudentTestQuestionList = new ArrayList();
+		this.path = path.replace('\\', '/');
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -82,9 +88,10 @@ public class ReadStudentTest implements IServico {
 					infoStudentTestQuestion.setQuestion(
 						parse.parseQuestion(
 							infoStudentTestQuestion.getQuestion().getXmlFile(),
-							infoStudentTestQuestion.getQuestion()));
+							infoStudentTestQuestion.getQuestion(),
+							path));
 					infoStudentTestQuestion =
-						parse.getOptionsShuffle(infoStudentTestQuestion);
+						parse.getOptionsShuffle(infoStudentTestQuestion, path);
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}

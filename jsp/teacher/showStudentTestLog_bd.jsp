@@ -13,9 +13,16 @@
 	</logic:empty>
 
 	<logic:notEmpty name="infoStudentTestLogList">
-		<table>
 		<logic:iterate id="log" name="infoStudentTestLogList" indexId="index">
 			<logic:equal name="index" value="0">
+			<bean:define id="number" name="log" property="infoStudent.number"/>
+			<h2><bean:message key="title.showStudentTestLog"/>&nbsp;<bean:write name="number"/></h2>
+			<br/>
+			<table>
+				<tr><td class="infoop"><bean:message key="message.showStudentTestLog.information" /></td></tr>
+			</table>
+			<br/>
+			<table>
 			<bean:define id="questionNumber" value="<%=(pageContext.findAttribute("questionNumber")).toString()%>"/>
 			<tr>
 				<td class="listClasses-header"><b>Data</b></td>

@@ -53,7 +53,7 @@ public class InsertTestAsNewTest implements IServico {
 				throw new InvalidArgumentsServiceException();
 			ITest test = new Test();
 
-			test.setTitle(oldTest.getTitle());
+			test.setTitle(oldTest.getTitle().concat(" (Duplicado)"));
 			test.setInformation(oldTest.getInformation());
 			test.setNumberOfQuestions(oldTest.getNumberOfQuestions());
 			test.setCreationDate(null);

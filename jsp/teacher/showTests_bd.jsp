@@ -17,6 +17,17 @@
 <logic:notEqual name="testsSize" value="0">
 <table>
 	<tr>
+		<td class="infoop"><bean:message key="message.showTests.information" /></td>
+	</tr>
+</table>
+<br/>
+<div class="gen-button">
+<html:link page="<%= "/testsManagement.do?method=prepareCreateTest&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+<bean:message key="link.createTest"/>
+</html:link></div>
+<br/>
+<table>
+	<tr>
 		<td class="listClasses-header"><bean:message key="label.test.title"/></td>
 		<td class="listClasses-header"><bean:message key="label.test.creationDate"/></td>
 		<td class="listClasses-header"><bean:message key="label.test.lastModifiedDate"/></td>

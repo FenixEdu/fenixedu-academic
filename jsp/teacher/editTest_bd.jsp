@@ -3,7 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.editTest"/></h2>
-
+<table>
+	<tr>
+		<td class="infoop"><bean:message key="message.editTest.information" /></td>
+	</tr>
+</table>
+<br/>
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>

@@ -9,13 +9,24 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
-
+<logic:present name="successfulDistribution">
+	<logic:equal name="successfulDistribution" value="true">
+		<span class="error"><bean:message key="message.successfulDistribution"/></span>
+	</logic:equal>
+</logic:present>
+<br/>
+<br/>
 <bean:size id="distrubutedTestsSize" name="component" property="infoDistributedTests"/>
 <logic:equal name="distrubutedTestsSize" value="0">
 	<span class="error"><bean:message key="message.tests.no.distributedTests"/></span>
 </logic:equal>
 <logic:notEqual name="distrubutedTestsSize" value="0">
-
+<table>
+	<tr>
+		<td class="infoop"><bean:message key="message.showDistributedTests.information" /></td>
+	</tr>
+</table>
+<br/>
 <table>
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.test.title"/></td>

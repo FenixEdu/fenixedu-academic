@@ -3,13 +3,18 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <h2><bean:message key="title.distributeTest"/></h2>
-
+<table>
+	<tr>
+		<td class="infoop"><bean:message key="message.distributeTest.information" /></td>
+	</tr>
+</table>
+<br/>
 <html:form action="/testDistribution">
 <html:hidden property="page" value="1"/>
 <html:hidden property="method" value="chooseDistributionFor"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
-
+<span class="error"><html:errors property="InvalidTime"/></span>
 <table>
 	<tr>
 		<td><bean:message key="label.test.information"/></td>
@@ -92,15 +97,13 @@
 <br/>
 <table align="center">
 	<tr>
-		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
-		</td>
+		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td>
 		</html:form>
-		<td><html:form action="/testsManagement">
-			<html:hidden property="page" value="0"/>
-			<html:hidden property="method" value="showTests"/>
-			<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-				<html:submit styleClass="inputbutton" property="action"><bean:message key="label.back"/></html:submit>
-		</td>
+		<html:form action="/testsManagement">
+		<html:hidden property="page" value="0"/>
+		<html:hidden property="method" value="showTests"/>
+		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+		<td><html:submit styleClass="inputbutton" property="action"><bean:message key="label.back"/></html:submit></td>
 		</html:form>
 	</tr>
 </table>

@@ -14,12 +14,10 @@
 <table>
 <tr>
 	<td><html:submit styleClass="inputbutton"><bean:message key="button.confirm"/></html:submit></td></html:form>
-	<td>
-		<html:form action="/exercicesManagement">
-		<html:hidden property="page" value="0"/>
-		<html:hidden property="method" value="exercicesFirstPage"/>
-		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-			<html:submit styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit>
-	</td></html:form>
+	<html:form action="/exercicesManagement">
+	<html:hidden property="page" value="0"/>
+	<html:hidden property="method" value="exercicesFirstPage"/>
+	<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+	<td><html:submit styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td></html:form>
 </tr>
 </table>

@@ -9,6 +9,12 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="infoStudentTestQuestionList" >
+	<logic:present name="successfulChanged">
+		<logic:equal name="successfulChanged" value="true">
+			<span class="error"><bean:message key="message.successfulChanged"/></span>
+		</logic:equal>
+	</logic:present>
+
 	<html:form action="/testsManagement">
 	<html:hidden property="method" value="showTestMarks"/>
 
@@ -23,8 +29,10 @@
 	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
 	<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
 	<html:hidden property="distributedTestCode" value="<%=distributedTestCode.toString() %>"/>
-	
-	
+	<table>
+	<tr><td class="infoop"><bean:message key="message.showStudentTest.information" /></td></tr>
+	</table>
+	<br/>
 		<h2><bean:write name="distributedTest" property="title"/></h2>
 		<b><bean:write name="distributedTest" property="testInformation"/></b>	
 	</center>

@@ -1,5 +1,8 @@
 <!-- imsmd_rootv1p2.dtd -->
 <!-- extension: The extension element is used to create extensions at anyplace in the XML instantiation.  If the extension contains only elements from this DTD, maintaining those content models, then additional elements do not need to be declared.  It is encouraged that extensions be created from the exisiting library of elements whenever possible.  -->
+
+<!ELEMENT extension ANY>
+
 <!ELEMENT lom (general?, lifecycle?, metametadata?, technical?, educational?, rights?, relation*, annotation*, classification*, ist?)>
   <!ELEMENT general (identifier?, title?, catalogentry*, language*, description*, keyword*, coverage*, structure?, aggregationlevel?, extension?)>
     <!ELEMENT identifier (#PCDATA)>
@@ -77,8 +80,8 @@
       <!ELEMENT taxon (id?, entry?, taxon?)>
         <!ELEMENT id (#PCDATA)>
 
-<!ELEMENT ist (area, discipline, subject, author?, members, level?)>
-	<!ELEMENT area (source, value)>
+<!ELEMENT ist (field, discipline, subject, author?, level?, members)>
+	<!ELEMENT field (source, value)>
 	<!ELEMENT discipline (source, value)>
 	<!ELEMENT subject (mainsubject, secondarysubject*)>
 		<!ELEMENT mainsubject (source, value)>

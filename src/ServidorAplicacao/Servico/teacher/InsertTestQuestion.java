@@ -35,6 +35,7 @@ import UtilTests.ParseQuestion;
  */
 public class InsertTestQuestion implements IServico {
 	private static InsertTestQuestion service = new InsertTestQuestion();
+	private String path = new String();
 
 	public static InsertTestQuestion getService() {
 		return service;
@@ -51,8 +52,10 @@ public class InsertTestQuestion implements IServico {
 		Integer testId,
 		Integer metadataId,
 		Integer questionOrder,
-		Integer questionValue)
+		Integer questionValue,
+		String path)
 		throws FenixServiceException {
+		this.path = path.replace('\\', '/');
 		try {
 
 			ISuportePersistente persistentSuport =
@@ -71,7 +74,10 @@ public class InsertTestQuestion implements IServico {
 			ParseMetadata p = new ParseMetadata();
 			try {
 				infoMetadata =
-					p.parseMetadata(metadata.getMetadataFile(), infoMetadata);
+					p.parseMetadata(
+						metadata.getMetadataFile(),
+						infoMetadata,
+						path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}
@@ -121,7 +127,8 @@ public class InsertTestQuestion implements IServico {
 					infoQuestion =
 						parseQuestion.parseQuestion(
 							infoQuestion.getXmlFile(),
-							infoQuestion);
+							infoQuestion,
+							path);
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}

@@ -37,6 +37,8 @@ import DataBeans.InfoStudentTestLog;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
+import DataBeans.comparators.CalendarDateComparator;
+import DataBeans.comparators.CalendarHourComparator;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
 
 import ServidorAplicacao.IUserView;
@@ -80,8 +82,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		SiteView siteView = null;
+		String path = getServlet().getServletContext().getRealPath("/");
 		try {
-			Object[] args = { executionCourseId, null };
+			Object[] args = { executionCourseId, null, path };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -163,8 +166,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		SiteView siteView = null;
 		Integer testCode = getCodeFromRequest(request, "testCode");
+		String path = getServlet().getServletContext().getRealPath("/");
 		try {
-			Object[] args = { executionCourseId, testCode };
+			Object[] args = { executionCourseId, testCode, path };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -200,8 +204,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		else
 			exerciceCode = new Integer(exerciceIdString);
 		SiteView siteView = null;
+		String path = getServlet().getServletContext().getRealPath("/");
 		try {
-			Object[] args = { executionCourseId, metadataCode, exerciceCode };
+			Object[] args =
+				{ executionCourseId, metadataCode, exerciceCode, path };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -213,7 +219,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		SiteView siteViewAux = null;
 		try {
-			Object[] args = { executionCourseId, testCode };
+			Object[] args = { executionCourseId, testCode, path };
 			siteViewAux =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -256,14 +262,15 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer questionOrder = getCodeFromRequest(request, "questionOrder");
 		Integer testCode = getCodeFromRequest(request, "testCode");
 		Integer questionValue = getCodeFromRequest(request, "questionValue");
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		Object[] arguments =
 			{
 				executionCourseId,
 				testCode,
 				metadataCode,
 				questionOrder,
-				questionValue };
+				questionValue,
+				path };
 		try {
 			ServiceUtils.executeService(
 				userView,
@@ -290,10 +297,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 		Integer questionCode = getCodeFromRequest(request, "questionCode");
 		Integer testCode = getCodeFromRequest(request, "testCode");
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		SiteView siteView = null;
 		try {
-			Object[] args = { executionCourseId, testCode, questionCode };
+			Object[] args = { executionCourseId, testCode, questionCode, path };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -305,7 +312,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		SiteView siteViewAux = null;
 		try {
-			Object[] args = { executionCourseId, testCode };
+			Object[] args = { executionCourseId, testCode, path };
 			siteViewAux =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -443,14 +450,14 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer testCode = getCodeFromRequest(request, "testCode");
 		request.setAttribute("objectCode", objectCode);
 		request.setAttribute("testCode", testCode);
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		SiteView siteView = null;
 		try {
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
 					"ReadTest",
-					new Object[] { objectCode, testCode });
+					new Object[] { objectCode, testCode, path });
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -501,10 +508,12 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		String studentCode = request.getParameter("studentCode");
 		Integer testCode = getCodeFromRequest(request, "testCode");
+		String path = getServlet().getServletContext().getRealPath("/");
 
 		String img = null;
 		if (studentCode != null && testCode != null) {
-			Object[] args = { studentCode, testCode, exerciceCode, imgCode };
+			Object[] args =
+				{ studentCode, testCode, exerciceCode, imgCode, path };
 			try {
 				img =
 					(String) ServiceUtils.executeService(
@@ -515,7 +524,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 				throw new FenixActionException(e);
 			}
 		} else {
-			Object[] args = { exerciceCode, imgCode };
+			Object[] args = { exerciceCode, imgCode, path};
 			try {
 				img =
 					(String) ServiceUtils.executeService(
@@ -557,7 +566,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 		Integer testCode = getCodeFromRequest(request, "testCode");
-		Object[] args = { executionCourseCode, testCode };
+		String path = getServlet().getServletContext().getRealPath("/");
+		Object[] args = { executionCourseCode, testCode, path };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -588,7 +598,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		Integer executionCourseCode = getCodeFromRequest(request, "objectCode");
 		Integer testCode = getCodeFromRequest(request, "testCode");
-		Object[] args = { executionCourseCode, testCode };
+		String path = getServlet().getServletContext().getRealPath("/");
+		Object[] args = { executionCourseCode, testCode, path };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -635,6 +646,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+
 		Integer objectCode = getCodeFromRequest(request, "objectCode");
 		Integer testCode = getCodeFromRequest(request, "testCode");
 
@@ -645,14 +660,35 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute(
 			"correctionAvailabilityList",
 			correctionAvailabilityList);
+		if ((((DynaActionForm) form).get("testType")).equals(""))
+			 ((DynaActionForm) form).set("testType", "1");
+		if ((((DynaActionForm) form).get("availableCorrection")).equals(""))
+			 ((DynaActionForm) form).set("availableCorrection", "3");
+		if ((((DynaActionForm) form).get("studentFeedback")).equals(""))
+			 ((DynaActionForm) form).set("studentFeedback", "true");
 
 		request.setAttribute("siteView", readSiteView(request));
+
+		if ((((DynaActionForm) form).get("testInformation")).equals("")) {
+			String path = getServlet().getServletContext().getRealPath("/");
+			Object[] args = { objectCode, testCode, path };
+			SiteView siteView = null;
+			try {
+				siteView =
+					(SiteView) ServiceUtils.executeService(
+						userView,
+						"ReadTest",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+
+			((DynaActionForm) form).set(
+				"testInformation",
+				createDefaultDistributedTestInfo(siteView));
+		}
 		request.setAttribute("testCode", testCode);
 		request.setAttribute("objectCode", objectCode);
-
-		((DynaActionForm) form).set("testType", "1");
-		((DynaActionForm) form).set("availableCorrection", "3");
-		((DynaActionForm) form).set("studentFeedback", "true");
 
 		return mapping.findForward("distributeTest");
 	}
@@ -663,17 +699,46 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		if (request.getParameter("shifts") != null)
+
+		if (request.getParameter("shifts") != null) {
+			if (!compareDates(request)) {
+				return prepareDistributeTest(mapping, form, request, response);
+			}
 			return chooseShifts(mapping, form, request, response);
-		else if (request.getParameter("students") != null)
+		} else if (request.getParameter("students") != null) {
+			if (!compareDates(request)) {
+				return prepareDistributeTest(mapping, form, request, response);
+			}
 			return chooseStudents(mapping, form, request, response);
-		else if (request.getParameter("addShifts") != null)
+		} else if (request.getParameter("addShifts") != null) {
+			if (!compareDates(request)) {
+				return prepareEditDistributedTest(
+					mapping,
+					form,
+					request,
+					response);
+			}
+
 			return chooseAddShifts(mapping, form, request, response);
-		else if (request.getParameter("addStudents") != null)
+		} else if (request.getParameter("addStudents") != null) {
+			if (!compareDates(request)) {
+				return prepareEditDistributedTest(
+					mapping,
+					form,
+					request,
+					response);
+			}
 			return chooseAddStudents(mapping, form, request, response);
-		else if (request.getParameter("save") != null)
+		} else if (request.getParameter("save") != null) {
+			if (!compareDates(request)) {
+				return prepareEditDistributedTest(
+					mapping,
+					form,
+					request,
+					response);
+			}
 			return editDistributedTest(mapping, form, request, response);
-		else
+		} else
 			return showDistributedTests(mapping, form, request, response);
 	}
 
@@ -775,7 +840,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 
 		String[] selected = request.getParameterValues("selected");
 		String insertByShifts = request.getParameter("insertByShifts");
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		Object[] args =
 			{
 				objectCode,
@@ -789,16 +854,20 @@ public class TestsManagementAction extends FenixDispatchAction {
 				new CorrectionAvailability(new Integer(availableCorrection)),
 				new Boolean(studentFeedback),
 				selected,
-				new Boolean(insertByShifts)};
+				new Boolean(insertByShifts),
+				path };
 
+		Boolean result = new Boolean(false);
 		try {
-			ServiceUtils.executeService(
-				userView,
-				"InsertDistributedTest",
-				args);
+			result =
+				(Boolean) ServiceUtils.executeService(
+					userView,
+					"InsertDistributedTest",
+					args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		request.setAttribute("successfulDistribution", result);
 		return showDistributedTests(mapping, form, request, response);
 	}
 
@@ -863,26 +932,62 @@ public class TestsManagementAction extends FenixDispatchAction {
 			"correctionAvailabilityList",
 			correctionAvailabilityList);
 
-		((DynaActionForm) form).set(
-			"testType",
-			((InfoSiteDistributedTest) siteView.getComponent())
-				.getInfoDistributedTest()
-				.getTestType()
-				.getType()
-				.toString());
-		((DynaActionForm) form).set(
-			"availableCorrection",
-			((InfoSiteDistributedTest) siteView.getComponent())
-				.getInfoDistributedTest()
-				.getCorrectionAvailability()
-				.getAvailability()
-				.toString());
-		((DynaActionForm) form).set(
-			"studentFeedback",
-			((InfoSiteDistributedTest) siteView.getComponent())
-				.getInfoDistributedTest()
-				.getStudentFeedback()
-				.toString());
+		if ((((DynaActionForm) form).get("testInformation")).equals(""))
+			((DynaActionForm) form).set(
+				"testInformation",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getTestInformation());
+		if ((((DynaActionForm) form).get("beginDateFormatted")).equals(""))
+			((DynaActionForm) form).set(
+				"beginDateFormatted",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getBeginDateFormatted());
+		if ((((DynaActionForm) form).get("beginHourFormatted")).equals(""))
+			((DynaActionForm) form).set(
+				"beginHourFormatted",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getBeginHourFormatted());
+
+		if ((((DynaActionForm) form).get("endDateFormatted")).equals(""))
+			((DynaActionForm) form).set(
+				"endDateFormatted",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getEndDateFormatted());
+
+		if ((((DynaActionForm) form).get("endHourFormatted")).equals(""))
+			((DynaActionForm) form).set(
+				"endHourFormatted",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getEndHourFormatted());
+
+		if ((((DynaActionForm) form).get("testType")).equals(""))
+			((DynaActionForm) form).set(
+				"testType",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getTestType()
+					.getType()
+					.toString());
+		if ((((DynaActionForm) form).get("availableCorrection")).equals(""))
+			((DynaActionForm) form).set(
+				"availableCorrection",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getCorrectionAvailability()
+					.getAvailability()
+					.toString());
+		if ((((DynaActionForm) form).get("studentFeedback")).equals(""))
+			((DynaActionForm) form).set(
+				"studentFeedback",
+				((InfoSiteDistributedTest) siteView.getComponent())
+					.getInfoDistributedTest()
+					.getStudentFeedback()
+					.toString());
 
 		request.setAttribute("distributedTestCode", distributedTestCode);
 		request.setAttribute("siteView", siteView);
@@ -984,7 +1089,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Calendar endHour = string2Hour(testEndHour);
 		String[] selected = request.getParameterValues("selected");
 		String insertByShifts = request.getParameter("insertByShifts");
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		Object[] args =
 			{
 				objectCode,
@@ -998,7 +1103,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 				new CorrectionAvailability(new Integer(availableCorrection)),
 				new Boolean(studentFeedback),
 				selected,
-				new Boolean(insertByShifts)};
+				new Boolean(insertByShifts),
+				path };
 
 		try {
 			ServiceUtils.executeService(userView, "EditDistributedTest", args);
@@ -1054,7 +1160,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer distributedTestCode =
 			getCodeFromRequest(request, "distributedTestCode");
 		Integer studentCode = getCodeFromRequest(request, "studentCode");
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		List infoStudentTestQuestionList = null;
 		try {
 			infoStudentTestQuestionList =
@@ -1064,7 +1170,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 					new Object[] {
 						objectCode,
 						distributedTestCode,
-						studentCode });
+						studentCode,
+						path });
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -1219,8 +1326,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		SiteView siteView = null;
+		String path = getServlet().getServletContext().getRealPath("/");
 		try {
-			Object[] args = { executionCourseId };
+			Object[] args = { executionCourseId, path };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -1265,7 +1373,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute("siteView", readSiteView(request));
 
 		if (!(metadataFile.getContentType().equals("text/xml"))) {
-			error(request, "error.badMetadataFile");
+			error(request, "FileNotExist", "error.badMetadataFile");
 			return mapping.findForward("insertNewExercice");
 		}
 
@@ -1273,7 +1381,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 			.getContentType()
 			.equals("application/x-zip-compressed"))
 			&& !(xmlZipFile.getContentType().equals("application/zip"))) {
-			error(request, "error.badXmlZipFile");
+			error(request, "FileNotExist", "error.badXmlZipFile");
 			return mapping.findForward("insertNewExercice");
 		}
 		String path = getServlet().getServletContext().getRealPath("/");
@@ -1382,9 +1490,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 		Integer distributedTestId =
 			getCodeFromRequest(request, "distributedTestCode");
 		SiteView siteView = null;
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		try {
-			Object[] args = { executionCourseId, distributedTestId };
+			Object[] args = { executionCourseId, distributedTestId, path };
 			siteView =
 				(SiteView) ServiceUtils.executeService(
 					userView,
@@ -1402,7 +1510,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute(
 			"studentCode",
 			getCodeFromRequest(request, "studentCode"));
-		request.setAttribute("changed", request.getAttribute("changed"));
+		request.setAttribute(
+			"successfulChanged",
+			request.getAttribute("successfulChanged"));
 		request.setAttribute(
 			"studentsType",
 			request.getAttribute("studentsType"));
@@ -1471,7 +1581,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		request.setAttribute("changed", result);
+		request.setAttribute("successfulChanged", result);
 		if (!result.booleanValue()) {
 			request.setAttribute("deleteVariation", delete);
 			request.setAttribute("studentsType", studentsType);
@@ -1482,37 +1592,12 @@ public class TestsManagementAction extends FenixDispatchAction {
 		return showStudentTest(mapping, form, request, response);
 	}
 
-	public ActionForward updateStudentTestQuestionMark(
-		ActionMapping mapping,
-		ActionForm form,
+	private void error(
 		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-
-		IUserView userView =
-			(IUserView) request.getSession(false).getAttribute(
-				SessionConstants.U_VIEW);
-
-		Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-		Integer distributedTestId =
-			getCodeFromRequest(request, "distributedTestCode");
-		try {
-			Object[] args = { executionCourseId, distributedTestId };
-			ServiceUtils.executeService(
-				userView,
-				"UpdateStudentTestQuestionMark",
-				args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		request.setAttribute("siteView", readSiteView(request));
-		return mapping.findForward("testsFirstPage");
-	}
-
-	private void error(HttpServletRequest request, String error) {
+		String errorProperty,
+		String error) {
 		ActionErrors actionErrors = new ActionErrors();
-		actionErrors.add("FileNotExist", new ActionError(error));
+		actionErrors.add(errorProperty, new ActionError(error));
 		saveErrors(request, actionErrors);
 	}
 
@@ -1583,4 +1668,52 @@ public class TestsManagementAction extends FenixDispatchAction {
 		result.set(Calendar.SECOND, new Integer(0).intValue());
 		return result;
 	}
+
+	private boolean compareDates(HttpServletRequest request) {
+		CalendarDateComparator dateComparator = new CalendarDateComparator();
+		CalendarHourComparator hourComparator = new CalendarHourComparator();
+		String testBeginDate = request.getParameter("beginDateFormatted");
+		String testBeginHour = request.getParameter("beginHourFormatted");
+		String testEndDate = request.getParameter("endDateFormatted");
+		String testEndHour = request.getParameter("endHourFormatted");
+
+		Calendar beginDate = string2Date(testBeginDate);
+		Calendar beginHour = string2Hour(testBeginHour);
+		Calendar endDate = string2Date(testEndDate);
+		Calendar endHour = string2Hour(testEndHour);
+		if (dateComparator.compare(beginDate, endDate) > 0) {
+			error(
+				request,
+				"InvalidTime",
+				"errors.lesson.invalid.time.interval");
+			return false;
+		}
+		if (dateComparator.compare(beginDate, endDate) == 0) {
+			if (hourComparator.compare(beginHour, endHour) >= 0) {
+				error(
+					request,
+					"InvalidTime",
+					"errors.lesson.invalid.time.interval");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private String createDefaultDistributedTestInfo(SiteView siteView) {
+		Integer numberOfQuestions =
+			((InfoSiteTest) siteView.getComponent())
+				.getInfoTest()
+				.getNumberOfQuestions();
+		String title =
+			((InfoSiteTest) siteView.getComponent()).getInfoTest().getTitle();
+		return new String(
+			"A '"
+				+ title
+				+ "' é constituida por "
+				+ numberOfQuestions
+				+ " pergunta(s). Uma pergunta certa vale a cotação indicada. Uma pergunta errada desconta 1/(número de opções-1) da cotação da pergunta.");
+
+	}
+
 }

@@ -3,8 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h2><bean:message key="title.insertTestQuestionInformation"/></h2>
 
+<table>
+	<tr>
+		<td class="infoop"><bean:message key="message.showExercice.information" /></td>
+	</tr>
+</table>
+<br/>
+<h2><bean:message key="title.insertTestQuestionInformation"/></h2>
+<br/>
 <logic:present name="siteView"> 
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
@@ -92,14 +99,15 @@
 <table>
 	<tr>
 		<td><html:submit styleClass="inputbutton"> <bean:message key="button.insert"/></html:submit></html:form></td>
-		<td>
 		<html:form action="/testsManagement">
 		<html:hidden property="page" value="0"/>
 		<html:hidden property="method" value="showAvailableQuestions"/>
 		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+		<td>
 			<html:submit styleClass="inputbutton"><bean:message key="link.goBack"/></html:submit>
 		</td>
+		
 	<tr/>
 </table>
 <br/>

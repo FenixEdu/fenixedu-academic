@@ -30,6 +30,10 @@
 				<logic:equal name="studentTestQuestionListIndex" value="0"><logic:equal name="studentTestQuestionIndex" value="0">
 					<h2><bean:write name="studentTestQuestion" property="distributedTest.title"/></h2>
 					<br/>
+					<table>
+					<tr><td class="infoop"><bean:message key="message.showTestMarks.information" /></td></tr>
+					</table>
+					<br/>
 					<br/>
 					<b>
 					<bean:size id="infoDistributedTestMarksSize" name="infoDistributedTestMarks"/>

@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.xerces.impl.dv.util.Base64;
+import org.apache.util.Base64;
 
 import DataBeans.InfoSiteDistributedTests;
 import DataBeans.InfoStudentTestQuestion;
@@ -127,6 +127,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 		String testCode = request.getParameter("testCode");
 		List infoStudentTestQuestionList = null;
+		String path = getServlet().getServletContext().getRealPath("/");
 		try {
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
@@ -135,7 +136,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 					new Object[] {
 						userView.getUtilizador(),
 						new Integer(testCode),
-						new Boolean(true)});
+						new Boolean(true),
+						path });
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -180,7 +182,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 		String exerciceIdString = request.getParameter("exerciceCode");
 		String imgCodeString = request.getParameter("imgCode");
 		String imgTypeString = request.getParameter("imgType");
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		String img = null;
 		try {
 			Object[] args =
@@ -188,7 +190,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 					userView.getUtilizador(),
 					new Integer(testCode),
 					new Integer(exerciceIdString),
-					new Integer(imgCodeString)};
+					new Integer(imgCodeString),
+					path };
 			img =
 				(String) ServiceUtils.executeService(
 					userView,
@@ -226,7 +229,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 		String[] options = (String[]) ((DynaActionForm) form).get("option");
 		String testCode = request.getParameter("testCode");
 		String objectCode = request.getParameter("objectCode");
-
+		String path = getServlet().getServletContext().getRealPath("/");
 		List infoStudentTestQuestionList;
 		Boolean sent = new Boolean(false);
 		try {
@@ -237,7 +240,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 					new Object[] {
 						userView.getUtilizador(),
 						new Integer(testCode),
-						options });
+						options,
+						path });
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
 					userView,
@@ -245,7 +249,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 					new Object[] {
 						userView.getUtilizador(),
 						new Integer(testCode),
-						new Boolean(false)});
+						new Boolean(false),
+						path });
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -345,6 +350,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String testCode = request.getParameter("testCode");
+		String path = getServlet().getServletContext().getRealPath("/");
 		List infoStudentTestQuestionList = null;
 		try {
 			infoStudentTestQuestionList =
@@ -354,7 +360,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 					new Object[] {
 						userView.getUtilizador(),
 						new Integer(testCode),
-						new Boolean(false)});
+						new Boolean(false),
+						path });
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -379,11 +386,16 @@ public class StudentTestsAction extends FenixDispatchAction {
 			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
 				- 1] =
 				infoStudentTestQuestion.getResponse().toString();
-		if (infoStudentTestQuestion.getTestQuestionMark()!=null)
-			classification = new Double(classification.doubleValue() + infoStudentTestQuestion.getTestQuestionMark().doubleValue());
+			if (infoStudentTestQuestion.getTestQuestionMark() != null)
+				classification =
+					new Double(
+						classification.doubleValue()
+							+ infoStudentTestQuestion
+								.getTestQuestionMark()
+								.doubleValue());
 		}
 		DecimalFormat df = new DecimalFormat("#0.##");
-		if (classification.doubleValue()<0)
+		if (classification.doubleValue() < 0)
 			classification = new Double(0);
 		request.setAttribute("classification", df.format(classification));
 		((DynaActionForm) form).set("option", option);

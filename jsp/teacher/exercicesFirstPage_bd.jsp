@@ -10,10 +10,20 @@
 		<span class="error"><bean:message key="message.sucessfullInsert"/></span>
 	</logic:equal>
 	<logic:notEqual name="badXmlsListSize" value="0">
-		<span class="error"><bean:message key="message.not.insertedList"/></span>
-		<table>
-		<logic:iterate id="xmlName" name="badXmls">
-			<tr><td><bean:write name="xmlName"/></td></tr>
+		<logic:iterate id="xmlName" name="badXmls" indexId="index">
+			<logic:equal name="index" value="0">
+				<logic:equal name="xmlName" value="badMetadata">
+					<span class="error"><bean:message key="message.not.insertedExercice"/></span>
+					<table>
+				</logic:equal>
+				<logic:notEqual name="xmlName" value="badMetadata">
+					<span class="error"><bean:message key="message.not.insertedList"/></span>
+					<table>
+				</logic:notEqual>
+			</logic:equal>
+			<logic:notEqual name="xmlName" value="badMetadata">
+				<tr><td><bean:write name="xmlName"/></td></tr>
+			</logic:notEqual>
 		</logic:iterate>
 		</table>
 	</logic:notEqual>
@@ -30,7 +40,10 @@
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
 <span class="error"><html:errors/></span>
-
+<table>
+	<tr><td class="infoop"><bean:message key="message.exercicesFirstPage.information" /></td></tr>
+</table>
+<br/>
 <bean:size id="metadatasSize" name="component" property="infoMetadatas"/>
 <logic:equal name="metadatasSize" value="0">
 	<span class="error"><bean:message key="message.tests.no.exercices"/></span>

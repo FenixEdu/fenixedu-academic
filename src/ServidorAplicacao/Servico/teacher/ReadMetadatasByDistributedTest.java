@@ -41,7 +41,7 @@ public class ReadMetadatasByDistributedTest implements IServico {
 
 	private static ReadMetadatasByDistributedTest service =
 		new ReadMetadatasByDistributedTest();
-
+	private String path = new String();
 	public static ReadMetadatasByDistributedTest getService() {
 		return service;
 	}
@@ -49,9 +49,12 @@ public class ReadMetadatasByDistributedTest implements IServico {
 	public String getNome() {
 		return "ReadMetadatasByDistributedTest";
 	}
-	public SiteView run(Integer executionCourseId, Integer distributedTestId)
+	public SiteView run(
+		Integer executionCourseId,
+		Integer distributedTestId,
+		String path)
 		throws FenixServiceException {
-
+		this.path = path.replace('\\', '/');
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
@@ -122,7 +125,8 @@ public class ReadMetadatasByDistributedTest implements IServico {
 							infoMetadata =
 								p.parseMetadata(
 									metadata.getMetadataFile(),
-									infoMetadata);
+									infoMetadata,
+									path);
 						} catch (Exception e) {
 							throw new FenixServiceException(e);
 						}

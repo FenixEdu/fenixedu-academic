@@ -130,16 +130,13 @@
 	<tr>
 		<td><html:submit styleClass="inputbutton" property="submit"><bean:message key="button.submitTest"/></html:submit></td>
 		<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td></html:form>
-		<td>
-			<html:form action="/studentTests">
-			<html:hidden property="method" value="viewTestsToDo"/>
-			<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
-			<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
-			<html:submit styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit>
-		</td></html:form>
+		<html:form action="/studentTests">
+		<html:hidden property="method" value="viewTestsToDo"/>
+		<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
+		<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
+		<td><html:submit styleClass="inputbutton" property="back"><bean:message key="button.back"/></html:submit></td></html:form>
 	</tr>
-	</table>
-	
+	</table>	
 	</logic:notEmpty>
 </logic:present>
 <center>

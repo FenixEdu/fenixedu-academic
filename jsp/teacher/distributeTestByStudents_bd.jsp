@@ -82,8 +82,14 @@ function cleanSelect() {
 		</tr>
 	</logic:iterate>
 </table>
-<html:submit styleClass="inputbutton"><bean:message key="link.student.room.distribution"/></html:submit>
-</html:form>
+<table><tr>
+<td><html:submit styleClass="inputbutton"><bean:message key="link.student.room.distribution"/></html:submit></td></html:form>
+<html:form action="/testsManagement">
+<html:hidden property="page" value="0"/>
+<html:hidden property="method" value="showTests"/>
+<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<td><html:submit styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td></html:form>
+</tr></table>
 </logic:notEqual>
 <logic:equal name="studentsSize" value="0">
 	<html:form action="/testsManagement">

@@ -10,8 +10,8 @@
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
 <span class="error"><html:errors/></span>
 
-<logic:present name="changed">
-	<logic:equal name="changed" value="false">
+<logic:present name="successfulChanged">
+	<logic:equal name="successfulChanged" value="false">
 		<span class="error"><bean:message key="message.exercice.no.variation"/></span>
 	</logic:equal>
 </logic:present> 
