@@ -54,6 +54,7 @@ import ServidorApresentacao.mapping.framework.SearchActionMapping;
  * 
  * 
  * 
+ * 
  * The properties are:
  * <ul>
  * <li><b>serviceName</b> is the service that do the search @link
@@ -105,34 +106,42 @@ public class SearchAction extends DispatchAction
 	 * Invokes the service <code>serviceName</code>.
 	 * 
 	 * @param mapping
-	 *                   should be an instance of
+	 *            should be an instance of
 	 * @see ServidorApresentacao.framework.actions.mappings.SearchActionMapping
 	 * @param form
 	 * @param request
 	 * @param response
 	 * @return if search result size equals to 1 returns <code>list-one</code> forward. <br>if search
-	 *              result size greater then 1 returns <code>list-many</code> forward. <br>if search
-	 *              result size equals to 0 returns <code>inputForward</code>
+	 *         result size greater then 1 returns <code>list-many</code> forward. <br>if search
+	 *         result size equals to 0 returns <code>inputForward</code>
 	 * 
 	 * @throws Exception
 	 * 
 	 * TODO: Some verifications should be done... not tested yet
 	 */
-    public ActionForward doSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
+    public ActionForward doSearch(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
     {
         SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
         Comparator beanComparator = getDefaultBeanComparator(searchActionMapping);
         return doSearch(searchActionMapping, form, request, response, beanComparator);
     }
 
-    private ActionForward doSearch(SearchActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response, Comparator comparator) throws Exception
+    private ActionForward doSearch(
+        SearchActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response,
+        Comparator comparator)
+        throws Exception
     {
         String serviceName = mapping.getServiceName();
         IUserView userView = SessionUtils.getUserView(request);
-        Map formProperties = BeanUtils.describe(form);
-        Object[] args = {formProperties};
+        Object[] args = getSearchServiceArgs(request, form);
         Collection result = (Collection) ServiceUtils.executeService(userView, serviceName, args);
         ActionForward actionForward = null;
         if (result.isEmpty())
@@ -143,8 +152,7 @@ public class SearchAction extends DispatchAction
             errors.add(notMessageKey, error);
             saveErrors(request, errors);
             actionForward = mapping.getInputForward();
-        }
-        else if (result.size() == 1)
+        } else if (result.size() == 1)
         {
             Iterator iterator = result.iterator();
             while (iterator.hasNext())
@@ -154,8 +162,7 @@ public class SearchAction extends DispatchAction
                 break;
             }
             actionForward = mapping.findForward("list-one");
-        }
-        else
+        } else
         {
             actionForward = mapping.findForward("list-many");
         }
@@ -169,6 +176,16 @@ public class SearchAction extends DispatchAction
         return actionForward;
     }
 
+    /**
+     * @param request
+     * @param form
+     * @return
+     */
+    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception
+    {
+		Map formProperties = BeanUtils.describe(form);
+        return new Object [] {formProperties};
+    }
     /**
 	 * @param searchActionMapping
 	 * @return
@@ -196,21 +213,35 @@ public class SearchAction extends DispatchAction
 	 * @param request
 	 * @param form
 	 */
-    protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
-            ActionForm form) throws Exception
+    protected void prepareFormConstants(
+        ActionMapping mapping,
+        HttpServletRequest request,
+        ActionForm form)
+        throws Exception
     {
     }
-    public ActionForward searchForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
+    public ActionForward searchForm(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
     {
         prepareFormConstants(mapping, request, form);
         return mapping.findForward("search-form");
     }
     /**
-     * Uses the request parameter sortBy to sort the result. Delegates on method @see SearchAction#doSearch(SearchActionMapping, ActionForm, HttpServletRequest, HttpServletResponse, Comparator)
-     */
-    public ActionForward sortBy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
+	 * Uses the request parameter sortBy to sort the result. Delegates on method
+	 * 
+	 * @see SearchAction#doSearch(SearchActionMapping, ActionForm, HttpServletRequest,
+	 *      HttpServletResponse, Comparator)
+	 */
+    public ActionForward sortBy(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
     {
         SearchActionMapping searchActionMapping = (SearchActionMapping) mapping;
         String sortBy = request.getParameter("sortBy");
@@ -219,8 +250,7 @@ public class SearchAction extends DispatchAction
         {
             BeanComparator beanComparator = new BeanComparator(sortBy);
             actionForward = doSearch(searchActionMapping, form, request, response, beanComparator);
-        }
-        else
+        } else
         {
             actionForward = doSearch(searchActionMapping, form, request, response);
         }
