@@ -18,12 +18,14 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.PeriodState;
 
 public class ExecutionPeriodOJBTest extends TestCaseOJB {
 	
@@ -124,7 +126,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 
 			List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
 			assertEquals(executionPeriods.isEmpty(), false);
-			assertEquals(executionPeriods.size(), 2);
+			assertEquals(8,executionPeriods.size());
 
 			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
@@ -161,17 +163,19 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			
 			persistentSupport.iniciarTransaccao();
 			executionPeriod = new ExecutionPeriod("2º Semestre", executionYear);
+			executionPeriod.setState(PeriodState.NOT_OPEN);
 			persistentExecutionPeriod.writeExecutionPeriod(executionPeriod);
 			persistentSupport.confirmarTransaccao();
 
 			persistentSupport.iniciarTransaccao();
 			List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
-			assertEquals(executionPeriods.size(), 3);
+			assertEquals(9, executionPeriods.size());
 			persistentSupport.confirmarTransaccao();
 
 			try {
 				persistentSupport.iniciarTransaccao();
 				executionPeriod = new ExecutionPeriod("2º Semestre", executionYear);
+				executionPeriod.setState(PeriodState.NOT_OPEN);
 				persistentExecutionPeriod.writeExecutionPeriod(executionPeriod);
 				persistentSupport.confirmarTransaccao();
 				fail("Write existing");
@@ -202,7 +206,21 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 	
 		
 	public void testReadActualExecutionPeriod(){
-		// FIXME: The method doesn't work it if there's more than one execution Period
+		IExecutionPeriod executionPeriod = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Acessing persistent layer!");
+		}
+		assertNotNull("Execution period is null!", executionPeriod);
+		IExecutionYear executionYear = new ExecutionYear("2002/2003");
+		IExecutionPeriod expectedExecutionPeriod = new ExecutionPeriod("2º Semestre",executionYear);
+		
+		assertEquals(expectedExecutionPeriod, executionPeriod);
+		assertEquals("Period State not equals to ACTUAL!",PeriodState.ACTUAL, executionPeriod.getState());
 	}
     
 }
