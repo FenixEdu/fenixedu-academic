@@ -15,8 +15,8 @@ create table SHIFT_PROFESSORSHIP (
 ----------------------------
 -- Table structure for CREDITS
 ----------------------------
-drop table if exists CREDITS;
-create table CREDITS (
+drop table if exists crd_CREDITS;
+create table crd_CREDITS (
    ID_INTERNAL int(11) not null auto_increment,
    ACK_OPT_LOCK int(11),
    KEY_EXECUTION_PERIOD int(11) not null,
@@ -26,6 +26,8 @@ create table CREDITS (
    LESSONS float,
    DEGREE_FINAL_PROJECT_STUDENTS float,
    OTHER_TYPE_CREDITS float,
+   CONTAINS_MANAGEMENT_POSITIONS tinyint(1),
+   CONTAINS_SERVICE_EXEMPTIONS_SITUATIONS tinyint(1),
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXECUTION_PERIOD, KEY_TEACHER))
    type=InnoDB;
@@ -81,8 +83,8 @@ create table CREDIT_LINE (
 -- Table structure for CREDITS_MANAGER_DEPARTMENT
 --  This table tells what departments that a person can manage the teacher credits.
 ----------------------------
-drop table if exists CREDITS_MANAGER_DEPARTMENT;
-create table CREDITS_MANAGER_DEPARTMENT (
+drop table if exists crd_CREDITS_MANAGER_DEPARTMENT;
+create table crd_CREDITS_MANAGER_DEPARTMENT (
    ID_INTERNAL int(11) not null auto_increment,
    ACK_OPT_LOCK int(11),
    KEY_PERSON int(11) not null,
@@ -106,8 +108,8 @@ create table CATEGORY (
    unique U1 (CODE))
    type=InnoDB;
 
-drop table if exists TEACHER_DEGREE_FINAL_PROJECT_STUDENT;
-create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
+drop table if exists crd_TEACHER_DEGREE_FINAL_PROJECT_STUDENT;
+create table crd_TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
    ID_INTERNAL int(11) not null auto_increment,
    ACK_OPT_LOCK int(11),
    PERCENTAGE float not null default '100.0',
@@ -121,8 +123,8 @@ create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
 
 
 
-drop table if exists TEACHER_INSTITUTION_WORK_TIME;
-create table TEACHER_INSTITUTION_WORK_TIME (
+drop table if exists crd_TEACHER_INSTITUTION_WORK_TIME;
+create table crd_TEACHER_INSTITUTION_WORK_TIME (
    ID_INTERNAL int(11) not null auto_increment,
    ACK_OPT_LOCK int(11),
    KEY_TEACHER int(11) not null,

@@ -44,9 +44,17 @@ public class ReadTeacherCreditsSheetAction extends Action
         throws Exception
     {
         IUserView userView = SessionUtils.getUserView(request);
+
+        DynaActionForm dynaForm = (DynaActionForm) form;        
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        DynaActionForm dynaForm = (DynaActionForm) form;
+        if (infoTeacher == null){
+            Integer teacherNumber = (Integer)dynaForm.get("teacherNumber");
+            infoTeacher = new InfoTeacher();
+            infoTeacher.setTeacherNumber(teacherNumber);
+        }
+
         Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
+     
         Object args[] = { infoTeacher, executionPeriodId };
         TeacherCreditsSheetDTO teacherCreditsSheetDTO =
             (TeacherCreditsSheetDTO) ServiceUtils.executeService(

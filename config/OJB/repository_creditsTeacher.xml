@@ -31,7 +31,7 @@
 
 
 <!-- Definitions for Dominio.Credits -->
-<class-descriptor class="Dominio.Credits" table="CREDITS">
+<class-descriptor class="Dominio.Credits" table="crd_CREDITS">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -48,6 +48,10 @@
       <field-descriptor name="institutionWorkTime" column="INSTITUTION_WORK_TIME" jdbc-type="DOUBLE"/>
 
       <field-descriptor name="otherTypeCredits" column="OTHER_TYPE_CREDITS" jdbc-type="DOUBLE"/>
+
+      <field-descriptor name="containsManagementPositions" column="CONTAINS_MANAGEMENT_POSITIONS" jdbc-type="BIT"/>
+
+      <field-descriptor name="containsServiceExemptionsSituations" column="CONTAINS_SERVICE_EXEMPTIONS_SITUATIONS" jdbc-type="BIT"/>
 
       <field-descriptor
       	name="ackOptLock"
@@ -129,7 +133,7 @@
 </class-descriptor>
 
 <!-- Definitions for Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent -->
-<class-descriptor class="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent" table="TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
+<class-descriptor class="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent" table="crd_TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
@@ -163,7 +167,7 @@
 
 
 <!-- Definitions for Dominio.teacher.workTime.TeacherInstitutionWorkTime -->
-<class-descriptor class="Dominio.teacher.workTime.TeacherInstitutionWorkTime"  table="TEACHER_INSTITUTION_WORK_TIME">
+<class-descriptor class="Dominio.teacher.workTime.TeacherInstitutionWorkTime"  table="crd_TEACHER_INSTITUTION_WORK_TIME">
 	
 	<field-descriptor	name="idInternal"  column="ID_INTERNAL" jdbc-type="INTEGER"
 						        primarykey="true" autoincrement="true"/>

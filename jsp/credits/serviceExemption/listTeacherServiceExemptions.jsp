@@ -17,7 +17,9 @@
 <html:link page="/prepareManagementPositionsManagement.do?method=doSearch" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 	<bean:message key="link.managementPositions.management"/>
 </html:link>
-<br />
+
+<h3><bean:message key="label.serviceExemptions.management"/></h3>
+
 <logic:notEmpty name="infoServiceExemptions">
 	<table width="100%" cellpadding="3">
 		<tr>

@@ -203,7 +203,7 @@
          name="manageableDepartmentCredits"
          element-class-ref="Dominio.Department"
          proxy="true"
-         indirection-table = "CREDITS_MANAGER_DEPARTMENT"
+         indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"
          auto-retrieve="true"
          refresh="true"
          auto-update="false"

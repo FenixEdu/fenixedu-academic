@@ -3428,12 +3428,11 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadCreditsTeacher</name>
-        <implementationClass>ServidorAplicacao.Servico.credits.ReadCreditsTeacher</implementationClass>
+        <name>ReadTeacherCredits</name>
+        <implementationClass>ServidorAplicacao.Servico.credits.ReadTeacherCredits</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CAFilter"/>
         </filterChains>
     </service>
     <service>

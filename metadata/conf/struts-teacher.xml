@@ -468,6 +468,7 @@
 		
 		<form-bean name="teacherCreditsSheetForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
+			<form-property name="teacherNumber" type="java.lang.Integer" />
 		</form-bean>
 
 		<!-- SUBMIT FINAL WORK PROPOSAL -->
@@ -1238,7 +1239,7 @@
         <!-- ================== USE CASE: View Teacher Credits Sheet ========================== -->
         <action path="/prepareTeacherCreditsSheet" 
             type="ServidorApresentacao.Action.teacher.credits.PrepareTeacherCreditsSheet">
-            <forward name="successfull-prepare" path="/showTeacherCreditsSheet.do"/>
+            <forward name="successfull-prepare" path="listTeacherCredits"/>
         </action>
         <action path="/showTeacherCreditsSheet" 
 	        name="teacherCreditsSheetForm"

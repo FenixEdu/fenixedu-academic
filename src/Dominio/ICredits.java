@@ -37,33 +37,38 @@ public interface ICredits extends IDomainObject
 
     /**
      * @param degreeFinalProjectStudents
-     *                   The degreeFinalProjectStudents to set.
+     *            The degreeFinalProjectStudents to set.
      */
-    public abstract void setDegreeFinalProjectStudents( Double degreeFinalProjectStudents );
+    public abstract void setDegreeFinalProjectStudents(Double degreeFinalProjectStudents);
 
-    void setExecutionPeriod( IExecutionPeriod executionPeriod );
+    void setExecutionPeriod(IExecutionPeriod executionPeriod);
 
     /**
      * @param institutionWorkTime
-     *                   The institutionWorkTime to set.
+     *            The institutionWorkTime to set.
      */
-    public abstract void setInstitutionWorkTime( Double institutionWorkTime );
+    public abstract void setInstitutionWorkTime(Double institutionWorkTime);
 
     /**
      * @param lessons
-     *                   The lessons to set.
+     *            The lessons to set.
      */
-    public abstract void setLessons( Double lessons );
+    public abstract void setLessons(Double lessons);
 
     /**
      * @param supportLessons
-     *                   The supportLessons to set.
+     *            The supportLessons to set.
      */
-    public abstract void setSupportLessons( Double supportLessons );
+    public abstract void setSupportLessons(Double supportLessons);
 
-    void setTeacher( ITeacher teacher );
-    
+    void setTeacher(ITeacher teacher);
+
     void setOtherTypeCredits(Double credits);
     Double getOtherTypeCredits();
+
+    Boolean getContainsServiceExemptionsSituations();
+    void setContainsServiceExemptionsSituations(Boolean containsServiceExemptionsSituations);
+    Boolean getContainsManagementPositions();
+    void setContainsManagementPositions(Boolean inSabattical);
 
 }

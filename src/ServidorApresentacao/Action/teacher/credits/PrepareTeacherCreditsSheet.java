@@ -4,9 +4,13 @@
  */
 package ServidorApresentacao.Action.teacher.credits;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,6 +37,14 @@ public class PrepareTeacherCreditsSheet extends Action
         Object args[] = {userView.getUtilizador()};
         InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByUsername", args);
         request.setAttribute("infoTeacher", infoTeacher);
+        
+        args[0] = infoTeacher.getIdInternal();
+        List infoCredits = (List) ServiceUtils.executeService(userView, "ReadTeacherCredits", args);
+        
+        request.setAttribute("infoCredits", infoCredits);
+        
+        BeanComparator descriptionComparator = new BeanComparator("infoExecutionPeriod.description");
+        Collections.sort(infoCredits, descriptionComparator);
         return mapping.findForward("successfull-prepare");
     }
 }

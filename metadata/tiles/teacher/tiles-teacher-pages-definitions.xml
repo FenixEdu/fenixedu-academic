@@ -132,6 +132,13 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/credits/showTeacherCreditsSheet.jsp"></put>
 	</definition>
+	<definition name="listTeacherCredits" 
+		extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/teacher/credits/listTeacherCredits.jsp"></put>
+	</definition>
+	
+
 	<!-- Enrollment -->
 	<definition name="firstPageTutorSection" 
 		extends="definition.teacher.two-column.extra-menu.tutor">

@@ -5,6 +5,9 @@
 <logic:present role="role.department.member">
 	<logic:present role="role.department.credits.manager">
 		<strong>&raquo; <bean:message key="link.group.teacher.title"/></strong>
+		<br />
+		<br />
+			
 		<ul>
 			<li>
 				<html:link page="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0">

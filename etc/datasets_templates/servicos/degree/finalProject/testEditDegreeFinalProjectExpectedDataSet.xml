@@ -228,7 +228,7 @@
   <ass_FUNCIONARIO codigoInterno='1578' chavePessoa='3309' numeroMecanografico='4308' chaveHorarioActual='0' antiguidade='1970-01-01'/>
   <ass_FUNCIONARIO codigoInterno='1593' chavePessoa='3325' numeroMecanografico='4324' chaveHorarioActual='0' antiguidade='1970-01-01'/>
   <!-- Added -->
-  <CREDITS_MANAGER_DEPARTMENT ID_INTERNAL='1' KEY_DEPARTMENT='7' KEY_PERSON='1'/>
+  <crd_CREDITS_MANAGER_DEPARTMENT ID_INTERNAL='1' KEY_DEPARTMENT='7' KEY_PERSON='1'/>
   
   <DEGREE_FINAL_PROJECT ID_INTERNAL='1' TITLE='Degree final project 1' KEY_EXECUTION_YEAR='1' />
   <DEGREE_FINAL_PROJECT ID_INTERNAL='2' TITLE='DFP 2' KEY_EXECUTION_YEAR='2' />

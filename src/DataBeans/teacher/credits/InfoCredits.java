@@ -17,7 +17,9 @@ public class InfoCredits extends InfoObject
     private Double lessons;
     private Double otherTypeCredits;
     private Double supportLessons;
-
+    private Boolean containsManagementPositions;
+    private Boolean containsServiceExemptionsSituations;
+    
     /**
      * @param double1
      * @return
@@ -167,6 +169,32 @@ public class InfoCredits extends InfoObject
     public void setSupportLessons(Double supportLessons)
     {
         this.supportLessons = supportLessons;
+    }
+
+    /**
+     * @return Returns the containsServiceExemptionsSituations.
+     */
+    public Boolean getContainsServiceExemptionsSituations()
+    {
+        return containsServiceExemptionsSituations;
+    }
+
+    /**
+     * @param containsServiceExemptionsSituations The containsServiceExemptionsSituations to set.
+     */
+    public void setContainsServiceExemptionsSituations(Boolean containsServiceExemptionsSituations)
+    {
+        this.containsServiceExemptionsSituations = containsServiceExemptionsSituations;
+    }
+
+    public Boolean getContainsManagementPositions()
+    {
+        return containsManagementPositions;
+    }
+
+    public void setContainsManagementPositions(Boolean containsManagementPositions)
+    {
+        this.containsManagementPositions = containsManagementPositions;
     }
 
 }

@@ -9,11 +9,14 @@ NEW FEATURES:
 -added to InfoAttendWithEnrollment a map with the shifts a student is enrolled in
 -added the shifts the students are enrolled in to the student list table and also to the excell file in the teacher and coordinator areas
 
+
 NOTES:
  
 -the bug [ #128 ] could be replicated in the Exam Enrollment Use cases
+
  	
 CHANGES:
+
 - changed in master-degree area the rounding of the total credits of "folha de apuramento final"
 - Updated exames period for the second semesters exams season of 2003/2004.
 - Filtered exams from list of evaluations of an execution course when reading all exams sorted by degree.	
@@ -26,7 +29,7 @@ CHANGES:
 - StoreItemFile is now a berserk service
 - ReadStudentsByCurricularCourse is now a berserk service
 - list of students of an execution course now displays "total number of enrollments" instead of "number of enrollments"
-
+- teachers can now view the list of credits of all execution periods with credits
 
 BUG FIXES:
 - fixed [#116 ]- www.ist.utl.pt/serviços/	

@@ -24,6 +24,25 @@
 			<bean:write name="infoCredits" property="otherTypeCreditsFormatted"/>						
 		</b>							
 		<bean:message key="label.credits.otherTypeCreditLine.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<b>		
+			<logic:equal name="infoCredits" property="containsManagementPositions" value="true">
+				<bean:message key="label.yes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
+			</logic:equal>					
+			<logic:equal name="infoCredits" property="containsManagementPositions" value="false">
+				<bean:message key="label.no" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
+			</logic:equal>					
+		</b>							
+		<bean:message key="label.credits.managementPositions.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<b>		
+			<logic:equal name="infoCredits" property="containsServiceExemptionsSituations" value="true">
+				<bean:message key="label.yes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
+			</logic:equal>					
+			<logic:equal name="infoCredits" property="containsServiceExemptionsSituations" value="false">
+				<bean:message key="label.no" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
+			</logic:equal>					
+		</b>							
+		<bean:message key="label.credits.serviceExemptionSituations.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		
 		
 </logic:present>
 <logic:notPresent name="infoCredits">

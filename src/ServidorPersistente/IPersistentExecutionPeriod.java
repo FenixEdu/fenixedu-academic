@@ -1,5 +1,6 @@
 package ServidorPersistente;
 
+import java.util.Date;
 import java.util.List;
 
 import Dominio.IExecutionPeriod;
@@ -82,4 +83,6 @@ public interface IPersistentExecutionPeriod extends IPersistentObject
 	 * @return
 	 */
     public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia;
+    
+    public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia;
 }

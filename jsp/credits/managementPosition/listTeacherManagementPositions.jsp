@@ -18,6 +18,9 @@
 	<bean:message key="link.serviceExemptions.management"/>
 </html:link>
 <br />
+
+<h3><bean:message key="label.managementPositions.management"/></h3>
+
 <logic:notEmpty name="infoManagementPositions">
 	<table width="100%" cellpadding="3">
 		<tr>

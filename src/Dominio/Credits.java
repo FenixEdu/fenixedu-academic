@@ -18,6 +18,10 @@ public class Credits extends DomainObject implements ICredits
     private Double lessons;
 
     private Double supportLessons;
+    
+    private Boolean containsManagementPositions;
+    
+    private Boolean containsServiceExemptionsSituations;
 
     private ITeacher teacher;
     
@@ -184,6 +188,38 @@ public class Credits extends DomainObject implements ICredits
     public void setOtherTypeCredits(Double otherTypeCredits)
     {
         this.otherTypeCredits = otherTypeCredits;
+    }
+
+    /**
+     * @return Returns the containsServiceExemptionsSituations.
+     */
+    public Boolean getContainsServiceExemptionsSituations()
+    {
+        return containsServiceExemptionsSituations;
+    }
+
+    /**
+     * @param containsServiceExemptionsSituations The containsServiceExemptionsSituations to set.
+     */
+    public void setContainsServiceExemptionsSituations(Boolean containsServiceExemptionsSituations)
+    {
+        this.containsServiceExemptionsSituations = containsServiceExemptionsSituations;
+    }
+
+    /**
+     * @return Returns the containsManagementPositions.
+     */
+    public Boolean getContainsManagementPositions()
+    {
+        return containsManagementPositions;
+    }
+
+    /**
+     * @param containsManagementPositions The containsManagementPositions to set.
+     */
+    public void setContainsManagementPositions(Boolean containsManagementPositions)
+    {
+        this.containsManagementPositions = containsManagementPositions;
     }
 
 }

@@ -26,4 +26,10 @@ public interface IPersistentCredits extends IPersistentObject
      * @return
      */
     public List readByTeachersAndExecutionPeriod(List teachersIds, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    public List readByTeacherAndExecutionPeriods(ITeacher teacher, List executionPeriod) throws ExcepcaoPersistencia;
+    
+    /**
+     * @param teacher
+     */
+    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

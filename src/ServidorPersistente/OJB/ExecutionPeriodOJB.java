@@ -1,6 +1,7 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -1125,6 +1126,18 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addNotEqualTo("state", PeriodState.CLOSED);
         criteria.addNotEqualTo("state", PeriodState.NOT_OPEN);
         criteria.addGreaterThan("semester", new Integer(0));
+        return queryList(ExecutionPeriod.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentExecutionPeriod#readExecutionPeriodsInTimePeriod(java.util.Date, java.util.Date)
+     */
+    public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        
+        criteria.addLessThan("beginDate", end);
+        criteria.addGreaterThan("endDate", start);
         return queryList(ExecutionPeriod.class, criteria);
     }
 }
