@@ -4,10 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.TipoCurso" %>
-
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
-		<td align="center" bgcolor="#FFFFFF" class="infoselected">
+		<td align="center" class="infoselected">
 			<strong>
 				<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 					<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>

@@ -6,15 +6,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.TipoCurso" %>
-
    <span class="error"><html:errors/></span>
-
     <bean:define id="degreeList" name="<%= SessionConstants.MASTER_DEGREE_LIST %>" scope="session" />
     <bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT %>" scope="session" />
 	<bean:define id="link">/chooseDegree.do?degree=</bean:define>
-
-    <%= ((List) degreeList).size()%> <bean:message key="label.masterDegree.administrativeOffice.degreesFound"/>        
-    <br><bean:message key="label.masterDegree.chooseOne"/><br>
+    <p><span class="emphasis"><%= ((List) degreeList).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.degreesFound"/></p>        
+    <p><bean:message key="label.masterDegree.chooseOne"/></p>
     <% if (((List) degreeList).size() != 0) { 
    	 	   List candidateAmmounts = (List) candidates;
 	       int i = 0; %>
