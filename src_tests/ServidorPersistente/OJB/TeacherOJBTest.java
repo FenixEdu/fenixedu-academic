@@ -126,32 +126,32 @@ public class TeacherOJBTest extends TestCaseOJB {
 		assertTrue(result.isEmpty());
 	}
 
-//	public void testReadTeacherByUsername() {
-//		ITeacher teacher = null;
-//
-//		//read existing
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			teacher = persistentTeacher.readTeacherByUsername("teacher1");
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-//			fail("testReadTeacherByUsername: confirmarTransaccao");
-//		}
-//		assertNotNull(teacher);
-//		assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-//		assertEquals(teacher.getResponsibleForExecutionCourses().size(), 2);
-//		assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
-//
-//		//read unexisting
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			teacher = persistentTeacher.readTeacherByUsername("teacher2");
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-//			fail("testReadTeacherByUsername: confirmarTransaccao");
-//		}
-//		assertNull(teacher);
-//	}
+	public void testReadTeacherByUsername() {
+		ITeacher teacher = null;
+
+		//read existing
+		try {
+			persistentSupport.iniciarTransaccao();
+			teacher = persistentTeacher.readTeacherByUsername("user");
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadTeacherByUsername: confirmarTransaccao");
+		}
+		assertNotNull(teacher);
+		assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
+		assertEquals(teacher.getResponsibleForExecutionCourses().size(), 2);
+		assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
+
+		//read unexisting
+		try {
+			persistentSupport.iniciarTransaccao();
+			teacher = persistentTeacher.readTeacherByUsername("teacher2");
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testReadTeacherByUsername: confirmarTransaccao");
+		}
+		assertNull(teacher);
+	}
 
 	public void testReadTeacherByNumber() {
 		ITeacher teacher = null;
@@ -228,37 +228,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		assertNotNull(list);
 	}
 
-//	public void testReadResponsableForExecutionCoursesByUsername() {
-//		List result = null;
-//
-//		//read existing
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			result =
-//				persistentTeacher.readResponsibleForExecutionCourses(
-//					"teacher1");
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-//			fail("testReadResponsibleForExecutionCoursesByUsername: readResponsableForExecutionCourses");
-//		}
-//		assertNotNull(result);
-//		assertEquals(result.size(), 2);
-//
-//		//read unexisting
-//		result = null;
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			result =
-//				persistentTeacher.readResponsibleForExecutionCourses(
-//					"teacherUnexisting");
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-//			fail("testReadResponsableForExecutionCoursesByUsername: readResponsableForExecutionCourses");
-//		}
-//		assertNotNull(result);
-//		assertEquals(result.isEmpty(), true);
-//	}
-
+	
 	public void testReadResponsableForExecutionCoursesByTeacherNumber() {
 		List result = null;
 
@@ -266,7 +236,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			result =
-				persistentTeacher.readResponsibleForExecutionCourses(
+				persistentTeacher.readResponsibleForExecutionCoursesByNumber(
 					new Integer("1"));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -280,8 +250,8 @@ public class TeacherOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			result =
-				persistentTeacher.readResponsibleForExecutionCourses(
-					new Integer("2"));
+				persistentTeacher.readResponsibleForExecutionCoursesByNumber(
+					new Integer("222"));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testReadResponsableForExecutionCoursesByTeacherNumber: readResponsableForExecutionCourses");
@@ -290,37 +260,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		assertEquals(result.isEmpty(), true);
 	}
 
-//	public void testReadProfessorShipsExecutionCoursesByUsername() {
-//		List result = null;
-//
-//		//read existing
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			result =
-//				persistentTeacher.readProfessorShipsExecutionCourses(
-//					"teacher1");
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-//			fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
-//		}
-//		assertNotNull(result);
-//		assertEquals(result.size(), 3);
-//
-//		//read unexisting
-//		result = null;
-//		try {
-//			persistentSupport.iniciarTransaccao();
-//			result =
-//				persistentTeacher.readProfessorShipsExecutionCourses(
-//					"teacherUnexisting");
-//			persistentSupport.confirmarTransaccao();
-//		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-//			fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
-//		}
-//		assertNotNull(result);
-//		assertEquals(result.isEmpty(), true);
-//	}
-
+	
 	public void testReadProfessorShipsExecutionCoursesByTeacherNumber() {
 		List result = null;
 
@@ -328,7 +268,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			result =
-				persistentTeacher.readProfessorShipsExecutionCourses(
+				persistentTeacher.readProfessorShipsExecutionCoursesByNumber(
 					new Integer("1"));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -342,7 +282,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 		try {
 			persistentSupport.iniciarTransaccao();
 			result =
-				persistentTeacher.readProfessorShipsExecutionCourses(
+				persistentTeacher.readProfessorShipsExecutionCoursesByNumber(
 					new Integer("2"));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {

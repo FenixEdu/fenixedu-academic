@@ -12,13 +12,12 @@ import java.util.List;
 import Dominio.ITeacher;
 public interface IPersistentTeacher {
 	
-//    public ITeacher readTeacherByUsername(String user) throws ExcepcaoPersistencia;
+    public ITeacher readTeacherByUsername(String user) throws ExcepcaoPersistencia;
     public ITeacher readTeacherByNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
     
-//    public List readResponsibleForExecutionCourses(String owner) throws ExcepcaoPersistencia;
-    public List readResponsibleForExecutionCourses(Integer teacherNumber)throws ExcepcaoPersistencia;
-//    public List readProfessorShipsExecutionCourses(String whoTeaches) throws ExcepcaoPersistencia;
-    public List readProfessorShipsExecutionCourses(Integer teacherNumber)throws ExcepcaoPersistencia;
+    
+    public List readResponsibleForExecutionCoursesByNumber(Integer teacherNumber)throws ExcepcaoPersistencia;
+    public List readProfessorShipsExecutionCoursesByNumber(Integer teacherNumber)throws ExcepcaoPersistencia;
     
     public void lockWrite(ITeacher teacher) throws ExcepcaoPersistencia;
     public void delete(ITeacher teacher) throws ExcepcaoPersistencia;
