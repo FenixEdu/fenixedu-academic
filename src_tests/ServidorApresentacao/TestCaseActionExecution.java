@@ -61,7 +61,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 				getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
 				getSuccessfulForward(), getSuccessfulForwardPath(),
 				getExistingAttributesListToVerifyInSuccessfulExecution(),
-				getNonExistingAttributesListToVerifyInSuccessfulExecution() );
+				getNonExistingAttributesListToVerifyInSuccessfulExecution(),
+				null );
 	}
 
 	public void testUnsuccessfulExecutionOfAction() {
@@ -70,7 +71,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 				(Map) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
 				getUnsuccessfulForward(), getUnsuccessfulForwardPath(), 
 				(Map) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
-				(Map) getNonExistingAttributesListToVerifyInUnsuccessfulExecution()	);
+				(Map) getNonExistingAttributesListToVerifyInUnsuccessfulExecution(),
+				getActionErrors() );
 	}
    
 	/**
@@ -81,7 +83,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param nonExistingAttributesList
 	 */
 	protected void doTest(Map itemsToPutInRequest, Map itemsToPutInSession, String forward,
-	String forwardPath, Map existingAttributesList, Map nonExistingAttributesList) {
+	String forwardPath, Map existingAttributesList, Map nonExistingAttributesList,
+	String[] actionErrors) {
 
 		String pathOfAction = getRequestPathInfoPathAction();
 		String nameOfAction = getRequestPathInfoNameAction();
@@ -119,8 +122,12 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 			{
 //			perform
 			actionPerform();
+			
 //			checks for errors
-			verifyNoActionErrors();
+			if (actionErrors == null)
+				verifyNoActionErrors();
+			else 
+				verifyActionErrors(actionErrors);
 
 //			checks forward			
 			if (forward != null) 
@@ -332,6 +339,14 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * This method must return a string identifying the forward path when the action executes unsuccessfuly.
 	 */
 	protected String getUnsuccessfulForwardPath() {
+		return null;
+	}
+
+	/**
+	 * This method must return a array of strings identifying the ActionErrors for
+	 * use with testUnsuccessfulExecutionOfAction.
+	 */
+	protected String[] getActionErrors() {
 		return null;
 	}
 

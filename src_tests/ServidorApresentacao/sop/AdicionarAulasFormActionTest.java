@@ -52,7 +52,7 @@ public class AdicionarAulasFormActionTest extends TestCaseActionExecution {
 	public void testSuccessfulExecutionOfAction() {
 
 		prepareRequest();
-		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), getSuccessfulForward(), null, null, null);
+		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), getSuccessfulForward(), null, null, null, null);
 
 	}
 

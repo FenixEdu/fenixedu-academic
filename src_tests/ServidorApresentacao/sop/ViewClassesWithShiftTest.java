@@ -79,7 +79,7 @@ public class ViewClassesWithShiftTest extends TestCaseActionExecution {
 		readShifts();
 		itemsInSession.put(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, this.infoShifts);
 		
-		doTest(itemsInRequest, itemsInSession, forward, null, null, null);
+		doTest(itemsInRequest, itemsInSession, forward, null, null, null, null);
 	}
 
 	private void readShifts() {
