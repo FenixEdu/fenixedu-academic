@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.FormPropertyConfig;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;

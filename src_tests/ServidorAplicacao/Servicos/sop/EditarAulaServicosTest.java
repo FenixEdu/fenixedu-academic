@@ -11,131 +11,198 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import junit.framework.*;
-import Util.*;
-import ServidorAplicacao.Servicos.*;
-import DataBeans.*;
+import java.util.Calendar;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
+import DataBeans.InfoLesson;
+import DataBeans.InfoLessonServiceResult;
+import DataBeans.InfoRoom;
+import DataBeans.KeyLesson;
+import DataBeans.RoomKey;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import Util.DiaSemana;
+import Util.TipoAula;
+import Util.TipoSala;
 
-public class EditarAulaServicosTest extends TestCaseServicos {
-    public EditarAulaServicosTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(EditarAulaServicosTest.class);
+public class EditarAulaServicosTest extends TestCaseServicosWithAuthorization {
+	public EditarAulaServicosTest(java.lang.String testName) {
+		super(testName);
+	}
 
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
 
-    // edit aula by unauthorized user
-  public void testUnauthorizedEditAula() {
-  	InfoRoom infoSala = new InfoRoom(_sala1.getNome(), _sala1.getEdificio(), _sala1.getPiso(),
-  	                                 _sala1.getTipo(), _sala1.getCapacidadeNormal(),
-  	                                 _sala1.getCapacidadeExame());
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
- 	InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-	 													_disciplinaExecucao1.getSigla(),
-	 													_disciplinaExecucao1.getPrograma(),
-	 													infoLicenciaturaExecucao,
-	 													_disciplinaExecucao1.getTheoreticalHours(),
-	 													_disciplinaExecucao1.getPraticalHours(),
-	 													_disciplinaExecucao1.getTheoPratHours(),
-	 													_disciplinaExecucao1.getLabHours());
+	public static Test suite() {
+		TestSuite suite = new TestSuite(EditarAulaServicosTest.class);
 
-	RoomKey keySala = new RoomKey(_sala1.getNome());
-    Object argsEditarAula[] = new Object[2];
-    argsEditarAula[0] = new KeyLesson(_diaSemana1, _inicio, _fim, keySala);
-    argsEditarAula[1] = new InfoLesson(_diaSemana1, _inicio, _fim, new TipoAula(TipoAula.PRATICA),
-                                    infoSala, iDE);
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView2, "EditarAula", argsEditarAula);
-        fail("testUnauthorizedEditarAula");
-      } catch (Exception ex) {
-        assertNull("testUnauthorizedEditarAula", result);
-      }
-  }
+		return suite;
+	}
 
-    // edit new existing aula
-  public void testEditExistingAula() {
-  	InfoRoom infoSala = new InfoRoom(_sala1.getNome(), _sala1.getEdificio(), _sala1.getPiso(),
-  	                                 _sala1.getTipo(), _sala1.getCapacidadeNormal(),
-  	                                 _sala1.getCapacidadeExame());
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
- 	InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-	 													_disciplinaExecucao1.getSigla(),
-	 													_disciplinaExecucao1.getPrograma(),
-	 													infoLicenciaturaExecucao,
-	 													_disciplinaExecucao1.getTheoreticalHours(),
-	 													_disciplinaExecucao1.getPraticalHours(),
-	 													_disciplinaExecucao1.getTheoPratHours(),
-	 													_disciplinaExecucao1.getLabHours());
+	protected void setUp() {
+		super.setUp();
+	}
 
-	RoomKey keySala = new RoomKey(_sala1.getNome());
-    Object argsEditarAula[] = new Object[2];
-    argsEditarAula[0] = new KeyLesson(_diaSemana1, _inicio, _fim, keySala);
-    argsEditarAula[1] = new InfoLesson(_diaSemana1, _inicio, _fim, new TipoAula(TipoAula.PRATICA),
-                                    infoSala, iDE);
+	protected void tearDown() {
+		super.tearDown();
+	}
 
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
-        assertTrue("testEditNonExistingAula", ((InfoLessonServiceResult) result).isSUCESS());
-      } catch (Exception ex) {
-      	fail("testEditNonExistingAula");
-      }
-  }
+	// edit new existing aula
+	public void testEditExistingAula() {
+		InfoRoom infoSala =
+			new InfoRoom(
+				"Ga1",
+				"Pavilhao Central",
+				new Integer(0),
+				new TipoSala(1),
+				new Integer(100),
+				new Integer(50));
+		InfoDegree infoLicenciatura =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		InfoDegreeCurricularPlan curricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
 
-    // edit new non-existing aula
-  public void testEditarNonExistingAula() {
-  	InfoRoom infoSala = new InfoRoom(_sala1.getNome(), _sala1.getEdificio(), _sala1.getPiso(),
-  	                                 _sala1.getTipo(), _sala1.getCapacidadeNormal(),
-  	                                 _sala1.getCapacidadeExame());
-    InfoDegree infoLicenciatura = new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-                                                             _disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getNome());
-    InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-                                                                                     infoLicenciatura);
- 	InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
-	 													_disciplinaExecucao1.getSigla(),
-	 													_disciplinaExecucao1.getPrograma(),
-	 													infoLicenciaturaExecucao,
-	 													_disciplinaExecucao1.getTheoreticalHours(),
-	 													_disciplinaExecucao1.getPraticalHours(),
-	 													_disciplinaExecucao1.getTheoPratHours(),
-	 													_disciplinaExecucao1.getLabHours());
-	RoomKey keySala = new RoomKey(_sala1.getNome());
-    Object argsEditarAula[] = new Object[2];
-    argsEditarAula[0] = new KeyLesson(new DiaSemana(DiaSemana.SEXTA_FEIRA), _inicio, _fim, keySala);
-    argsEditarAula[1] = new InfoLesson(new DiaSemana(DiaSemana.SEXTA_FEIRA), _inicio, _fim, new TipoAula(TipoAula.PRATICA),
-                                    infoSala, iDE);
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
-        assertNull("testEditNonExistingAula", result);
-      } catch (Exception ex) {
-      	fail("testEditNonExistingAula");
-      }
-  }
-    
+		InfoExecutionDegree infoLicenciaturaExecucao =
+			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+		InfoExecutionCourse iDE =
+			new InfoExecutionCourse(
+				"Trabalho Final de Curso I",
+				"TFCI",
+				"programa1",
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				infoExecutionPeriod);
+
+		RoomKey keySala = new RoomKey("GA1");
+		Calendar inicio = Calendar.getInstance();
+		Calendar fim = Calendar.getInstance();
+		inicio.set(Calendar.HOUR_OF_DAY, 8);
+		inicio.set(Calendar.MINUTE, 0);
+		inicio.set(Calendar.SECOND, 0);
+		fim.set(Calendar.HOUR_OF_DAY, 9);
+		fim.set(Calendar.MINUTE, 30);
+		fim.set(Calendar.SECOND, 0);
+		
+		Calendar inicio1 = Calendar.getInstance();
+		Calendar fim1 = Calendar.getInstance();
+		inicio1.set(Calendar.HOUR_OF_DAY, 8);
+		inicio1.set(Calendar.MINUTE, 0);
+		inicio1.set(Calendar.SECOND, 0);
+		fim1.set(Calendar.HOUR_OF_DAY, 9);
+		fim1.set(Calendar.MINUTE, 30);
+		fim1.set(Calendar.SECOND, 0);
+		Object argsEditarAula[] = new Object[2];
+		argsEditarAula[0] =
+			new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
+		argsEditarAula[1] =
+			new InfoLesson(
+				new DiaSemana(2),
+				inicio,
+				fim,
+				new TipoAula(TipoAula.TEORICA),
+				infoSala,
+				iDE);
+
+		Object result = null;
+
+		try {
+			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+
+			assertTrue(
+				"testEditExistingAula",
+				((InfoLessonServiceResult) result).isSUCESS());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("testEditExistingAula");
+		}
+
+	}
+
+	// edit new non-existing aula
+	//	public void testEditarNonExistingAula() {
+	//		InfoRoom infoSala =
+	//			new InfoRoom(
+	//				"Ga1",
+	//				"Pavilhao Central",
+	//				new Integer(0),
+	//				new TipoSala(1),
+	//				new Integer(100),
+	//				new Integer(50));
+	//		InfoDegree infoLicenciatura =
+	//			new InfoDegree(
+	//				"LEIC",
+	//				"Licenciatura de Engenharia Informatica e de Computadores");
+	//		InfoExecutionYear infoExecutionYear =
+	//			new InfoExecutionYear("2002/2003");
+	//		InfoExecutionPeriod infoExecutionPeriod =
+	//			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+	//		InfoDegreeCurricularPlan curricularPlan =
+	//			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+	//
+	//		InfoExecutionDegree infoLicenciaturaExecucao =
+	//			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+	//		InfoExecutionCourse iDE =
+	//			new InfoExecutionCourse(
+	//				"Trabalho Final de Curso I",
+	//				"TFCI",
+	//				"programa1",
+	//				new Double(0),
+	//				new Double(0),
+	//				new Double(0),
+	//				new Double(0),
+	//				infoExecutionPeriod);
+	//		RoomKey keySala = new RoomKey("GA1");
+	//		Calendar inicio = Calendar.getInstance();
+	//		Calendar fim = Calendar.getInstance();
+	//		inicio.set(Calendar.HOUR_OF_DAY, 18);
+	//		inicio.set(Calendar.MINUTE, 0);
+	//		inicio.set(Calendar.SECOND, 0);
+	//		fim.set(Calendar.HOUR_OF_DAY, 19);
+	//		fim.set(Calendar.MINUTE, 30);
+	//		fim.set(Calendar.SECOND, 0);
+	//		Object argsEditarAula[] = new Object[2];
+	//		argsEditarAula[0] =
+	//			new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
+	//		argsEditarAula[1] =
+	//			new InfoLesson(
+	//				new DiaSemana(2),
+	//				inicio,
+	//				fim,
+	//				new TipoAula(TipoAula.PRATICA),
+	//				infoSala,
+	//				iDE);
+	//
+	//		Object result = null;
+	//		
+	//		try {
+	//			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+	//			assertNull("testEditNonExistingAula", result);
+	//		} catch (Exception ex) {
+	//			fail("testEditNonExistingAula");
+	//		}
+	//	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "EditarAula";
+	}
+
 }

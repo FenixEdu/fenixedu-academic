@@ -91,8 +91,11 @@ public class CriarAula implements IServico {
 			result = validTimeInterval(aula);
 			boolean resultB = validNoInterceptingLesson(aula);
 
-			if (result.isSUCESS() && resultB)
+			if (result.isSUCESS() && resultB) {
 				sp.getIAulaPersistente().lockWrite(aula);
+			} else {
+				result.setMessageType(2);
+			}
 
 		} catch (ExcepcaoPersistencia ex) {
 			throw new NotExecutedException(ex.getMessage());
@@ -109,13 +112,16 @@ public class CriarAula implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
+
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-			
+
 			List lessonMatchList =
 				persistentLesson.readLessonsInBroadPeriod(lesson);
-			
+
 			System.out.println("Tenho aulas:" + lessonMatchList.size());
+			if (lessonMatchList != null) {
+				lessonMatchList.remove(lesson);
+			}
 			if (lessonMatchList.size() > 0) {
 				return false;
 			} else {
@@ -123,10 +129,9 @@ public class CriarAula implements IServico {
 			}
 		} catch (ExcepcaoPersistencia e) {
 			return false;
-			
+
 		}
 	}
-
 	private InfoLessonServiceResult validTimeInterval(IAula lesson) {
 		InfoLessonServiceResult result = new InfoLessonServiceResult();
 

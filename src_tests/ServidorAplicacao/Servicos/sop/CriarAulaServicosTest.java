@@ -157,10 +157,11 @@ public class CriarAulaServicosTest extends TestCaseServicos {
 		UserView userView = new UserView("user", privileges);
 		try {
 			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
+			fail("testCreateExistingLessonCompleteMatch");
 		
 		} catch (Exception ex) {
 			// all is ok
-			fail("testCreateExistingLessonCompleteMatch");
+			
 
 		}
 	}
@@ -212,9 +213,9 @@ public class CriarAulaServicosTest extends TestCaseServicos {
 		 UserView userView = new UserView("user", privileges);
 		 try {
 			 result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
-			
-		 } catch (Exception ex) {
 			fail("testCreateExistingLessonInterceptingMatch");
+		 } catch (Exception ex) {
+			ex.printStackTrace();
 		 }
 	 }
 
@@ -251,7 +252,7 @@ public class CriarAulaServicosTest extends TestCaseServicos {
 		fim.set(Calendar.SECOND, 0);
 		argsCriarAula[0] =
 			new InfoLesson(
-				new DiaSemana(2),
+				new DiaSemana(1),
 				inicio,
 				fim,
 				new TipoAula(1),

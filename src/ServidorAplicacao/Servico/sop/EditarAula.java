@@ -27,105 +27,117 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditarAula implements IServico {
 
-  private static EditarAula _servico = new EditarAula();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static EditarAula getService() {
-    return _servico;
-  }
+	private static EditarAula _servico = new EditarAula();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static EditarAula getService() {
+		return _servico;
+	}
 
-  /**
-   * The actor of this class.
-   **/
-  private EditarAula() { }
+	/**
+	 * The actor of this class.
+	 **/
+	private EditarAula() {
+	}
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "EditarAula";
-  }
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "EditarAula";
+	}
 
-  public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova) {
+	public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova) {
 
-    IAula aula = null;
-	InfoLessonServiceResult result = null;
+		IAula aula = null;
+		InfoLessonServiceResult result = null;
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      
-      ISala salaAntiga = sp.getISalaPersistente().readByName(aulaAntiga.getKeySala().getNomeSala());
-      ISala salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
-      aula = sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(aulaAntiga.getDiaSemana(),
-                    aulaAntiga.getInicio(), aulaAntiga.getFim(), salaAntiga);
-      
-	IAula newLesson =
-		new Aula(
-			aulaNova.getDiaSemana(),
-			aulaNova.getInicio(),
-			aulaNova.getFim(),
-			aulaNova.getTipo(),
-			salaNova,
-			null);
-      
-      if (aula != null) {
-		result = valid(newLesson);
-		boolean resultB = validNoInterceptingLesson(aula);
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-		if ( result.isSUCESS() && resultB ) {
-          aula.setDiaSemana(aulaNova.getDiaSemana());
-          aula.setInicio(aulaNova.getInicio());
-          aula.setFim(aulaNova.getFim());
-          aula.setTipo(aulaNova.getTipo());
-          aula.setSala(salaNova);
-          sp.getIAulaPersistente().lockWrite(aula);
+			ISala salaAntiga =
+				sp.getISalaPersistente().readByName(
+					aulaAntiga.getKeySala().getNomeSala());
+			ISala salaNova =
+				sp.getISalaPersistente().readByName(
+					aulaNova.getInfoSala().getNome());
+			aula =
+				sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(
+					aulaAntiga.getDiaSemana(),
+					aulaAntiga.getInicio(),
+					aulaAntiga.getFim(),
+					salaAntiga);
+
+			IAula newLesson =
+				new Aula(
+					aulaNova.getDiaSemana(),
+					aulaNova.getInicio(),
+					aulaNova.getFim(),
+					aulaNova.getTipo(),
+					salaNova,
+					null);
+
+			if (aula != null) {
+				result = valid(newLesson);
+				boolean resultB = validNoInterceptingLesson(newLesson);
+
+				if (result.isSUCESS() && resultB) {
+
+					aula.setDiaSemana(aulaNova.getDiaSemana());
+					aula.setInicio(aulaNova.getInicio());
+					aula.setFim(aulaNova.getFim());
+					aula.setTipo(aulaNova.getTipo());
+					aula.setSala(salaNova);
+					sp.getIAulaPersistente().lockWrite(aula);
+				} else {
+					result.setMessageType(2);
+				}
+			}
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
 		}
-		else {
-			result.setMessageType(2);
+
+		return result;
+	}
+
+	private InfoLessonServiceResult valid(IAula lesson) {
+		InfoLessonServiceResult result = new InfoLessonServiceResult();
+
+		if (lesson.getInicio().getTime().getTime()
+			>= lesson.getFim().getTime().getTime()) {
+			result.setMessageType(
+				InfoLessonServiceResult.INVALID_TIME_INTERVAL);
 		}
-      }
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-    }
-    
-    return result;
-  }
 
-  private InfoLessonServiceResult valid(IAula lesson) {
-	  InfoLessonServiceResult result = new InfoLessonServiceResult();
+		return result;
+	}
 
-	  if ( lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime() ) {
-		  result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
-	  }
+	/**
+		   * @param aula
+		   * @return InfoLessonServiceResult
+		   */
+	private boolean validNoInterceptingLesson(IAula lesson) {
 
-	  return result;
-  }
-  
-  
-  /**
-	   * @param aula
-	   * @return InfoLessonServiceResult
-	   */
-	  private boolean validNoInterceptingLesson(IAula lesson) {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-		  try {
-			  ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+
+			List lessonMatchList =
+				persistentLesson.readLessonsInBroadPeriod(lesson);
+
+			System.out.println("Tenho aulas:" + lessonMatchList.size());
 			
-			  IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-			
-			  List lessonMatchList =
-				  persistentLesson.readLessonsInBroadPeriod(lesson);
-			
-			  System.out.println("Tenho aulas:" + lessonMatchList.size());
-			  if (lessonMatchList.size() > 0) {
-				  return false;
-			  } else {
-				  return true;
-			  }
-		  } catch (ExcepcaoPersistencia e) {
-			  return false;
-			
-		  }
-	  }
+			if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) || (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
+				
+				return false;
+			} else {
+				return true;
+			}
+		} catch (ExcepcaoPersistencia e) {
+			return false;
+
+		}
+	}
 }

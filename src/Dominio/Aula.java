@@ -121,22 +121,13 @@ public class Aula implements IAula {
       resultado = getDiaSemana().equals(aula.getDiaSemana()) &&
                   (getInicio().get(Calendar.HOUR_OF_DAY) == aula.getInicio().get(Calendar.HOUR_OF_DAY)) &&
                   (getInicio().get(Calendar.MINUTE) == aula.getInicio().get(Calendar.MINUTE)) &&
-                  (getInicio().get(Calendar.SECOND) == aula.getInicio().get(Calendar.SECOND)) &&
+              
                   (getFim().get(Calendar.HOUR_OF_DAY) == aula.getFim().get(Calendar.HOUR_OF_DAY)) &&
                   (getFim().get(Calendar.MINUTE) == aula.getFim().get(Calendar.MINUTE)) &&
-                  (getFim().get(Calendar.SECOND) == aula.getFim().get(Calendar.SECOND)) &&
+                  
                   getSala().getNome().equals(aula.getSala().getNome()) &&
-                  getSala().getPiso().equals(aula.getSala().getPiso()) &&
-                  getSala().getTipo().equals(aula.getSala().getTipo()) &&
-                  getSala().getCapacidadeNormal().equals(aula.getSala().getCapacidadeNormal()) &&
-                  getSala().getCapacidadeExame().equals(aula.getSala().getCapacidadeExame()) &&
-                  getTipo().equals(aula.getTipo()) &&
-                  getDisciplinaExecucao().getNome().equals(aula.getDisciplinaExecucao().getNome()) &&
-                  getDisciplinaExecucao().getPrograma().equals(aula.getDisciplinaExecucao().getPrograma()) &&
-                  getDisciplinaExecucao().getSigla().equals(aula.getDisciplinaExecucao().getSigla()) &&
-                  getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo().equals(aula.getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo()) &&
-                  getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome().equals(aula.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getNome()) &&
-                  getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla().equals(aula.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla());
+                  getTipo().equals(aula.getTipo());
+//                 
     }
 
     return resultado;
@@ -146,8 +137,8 @@ public class Aula implements IAula {
     String result = "[AULA";
     result += ", codInt=" + _codigoInterno;
     result += ", diaSemana=" + _diaSemana;
-    result += ", inicio=" + _inicio;
-    result += ", fim=" + _fim;
+    result += ", inicio=" + _inicio.get(Calendar.HOUR_OF_DAY) +":"+_inicio.get(Calendar.MINUTE);
+    result += ", fim=" + _fim.get(Calendar.HOUR_OF_DAY) +":"+_fim.get(Calendar.MINUTE);;
     result += ", tipo=" + _tipo;
     result += ", chaveSala=" + _chaveSala;
     result += ", chaveDisciplinaExecucao=" + _chaveDisciplinaExecucao;

@@ -211,21 +211,21 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			oqlQuery += " where ( inicio >= $1 "
 				+ "and inicio <= $2 "
 				+ "and diaSemana = $3 "
-				+ "and sala = $4 ) "
+				+ "and sala.nome = $4 ) "
 				+ "or ( fim >= $5 "
 				+ "and fim <= $6 "
 				+ "and diaSemana = $7 "
-				+ "and sala = $8 )";
+				+ "and sala.nome = $8 )";
 
 			query.create(oqlQuery);
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala());
+			query.bind(lesson.getSala().getNome());
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
 			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala());
+			query.bind(lesson.getSala().getNome());
 
 			lessonList = (List) query.execute();
 			lockRead(lessonList);

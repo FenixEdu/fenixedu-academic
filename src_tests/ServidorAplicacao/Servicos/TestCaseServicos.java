@@ -465,12 +465,12 @@ public class TestCaseServicos extends TestCase {
 		try {
 			_userView = (IUserView) _gestor.executar(null, "Autenticacao", argsAutenticacao);
 		} catch (Exception ex) {
-			System.out.println("Servio no executado: " + ex);
+			System.out.println("Servico no executado: " + ex);
 		}
 		try {
 			_userView2 = (IUserView) _gestor.executar(null, "Autenticacao", argsAutenticacao2);
 		} catch (Exception ex) {
-			System.out.println("Servio no executado: " + ex);
+			System.out.println("Servico no executado: " + ex);
 		}
 	}
 
