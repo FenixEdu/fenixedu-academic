@@ -26,7 +26,7 @@
 	</table>
 	<br />
 	<h3 class="bluetxt"><bean:message key="message.studentReport.executionYear" />
-	<%--&nbsp;<bean:write name="executionYear" property="year" />--%>*</h3>
+	<%--&nbsp;<bean:write name="executionYear" property="year" />--%>2003/2004 * <%--HARDCODED, MAS TEMPORÁRIO... :s --%></h3>
 	<bean:define id="infoSiteEvaluationStatistics" name="infoSiteStudentCourseReport" property="infoSiteEvaluationStatistics"/>
 	<bean:define id="evaluated" name="infoSiteEvaluationStatistics" property="evaluated" type="java.lang.Integer"/>
 	<bean:define id="enrolled" name="infoSiteEvaluationStatistics" property="enrolled" type="java.lang.Integer"/>
