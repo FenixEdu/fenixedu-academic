@@ -2,6 +2,7 @@ package middleware.studentMigration;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,8 +18,10 @@ import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 import Dominio.Enrolment;
@@ -403,7 +406,14 @@ public class UpdateStudentEnrolments
 		if (!curricularCourse.getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan()))
 		{
 			curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourse(curricularCourse);
+
+			ComparatorChain comparatorChain = new ComparatorChain();
+//			comparatorChain.addComparator(new BeanComparator("curricularSemester.curricularYear.year"));
+//			comparatorChain.addComparator(new BeanComparator("curricularSemester.semester"));
+			comparatorChain.addComparator(new BeanComparator("curricularSemester.idInternal"));
+
 			if((curricularCourseScopes != null) && (!curricularCourseScopes.isEmpty())) {
+				Collections.sort(curricularCourseScopes, comparatorChain);
 				return (ICurricularCourseScope) curricularCourseScopes.get(0);
 			} else {
 				return null;
@@ -464,27 +474,25 @@ public class UpdateStudentEnrolments
 
 		ICurricularCourseScope curricularCourseScope = null;
 
-		if((curricularCourseScopes != null) && (!curricularCourseScopes.isEmpty())) {
+		if(curricularCourseScopes.size() == 1) {
+			curricularCourseScope = (ICurricularCourseScope) curricularCourseScopes.get(0);
+		} else {
 
-			if(curricularCourseScopes.size() == 1) {
+			curricularCourseScope = findScopeForBranch(curricularCourseScopes, branch);
+
+			if(curricularCourseScope == null) {
+				curricularCourseScope = findScopeForBranch(curricularCourseScopes, studentCurricularPlan.getBranch());
+			}
+
+			// null means Branch without name (tronco comum)
+			if(curricularCourseScope == null) {
+				curricularCourseScope = findScopeForBranch(curricularCourseScopes, null);
+			}
+
+			// if we can't find a scope and the degree of the course is diferent from the student's, them we ignore the branch
+			if( (curricularCourseScope == null) &&
+				(!studentCurricularPlan.getDegreeCurricularPlan().getDegree().equals(curricularCourse.getDegreeCurricularPlan().getDegree()))) {
 				curricularCourseScope = (ICurricularCourseScope) curricularCourseScopes.get(0);
-			} else {
-				curricularCourseScope = findScopeForBranch(curricularCourseScopes, branch);
-	
-				if(curricularCourseScope == null) {
-					curricularCourseScope = findScopeForBranch(curricularCourseScopes, studentCurricularPlan.getBranch());
-				}
-	
-				// null means Branch without name (tronco comum)
-				if(curricularCourseScope == null) {
-					curricularCourseScope = findScopeForBranch(curricularCourseScopes, null);
-				}
-	
-				// if we can't find a scope and the degree of the course is diferent from the student's, them we ignore the branch
-				if( (curricularCourseScope == null) &&
-					(!studentCurricularPlan.getDegreeCurricularPlan().getDegree().equals(curricularCourse.getDegreeCurricularPlan().getDegree()))) {
-					curricularCourseScope = (ICurricularCourseScope) curricularCourseScopes.get(0);
-				}
 			}
 		}
 		return curricularCourseScope;
