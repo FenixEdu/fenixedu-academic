@@ -878,6 +878,8 @@
 	         <forward name="OrderCandidatesReady" path="/candidate/displayChosenSelection.jsp"/> 
 	         <forward name="NumerusClaususNotDefined" path="/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&amp;page=0"/>  	         
 			 <forward name="BackError" path="/backErrorCandidateApprovalPage.do" redirect="true"/>  
+			 <forward name="PrintReady" path="/candidate/approvalDispatchTemplate.jsp" />  
+			 
 		</action>
 
       <action path="/backErrorCandidateApprovalPage"

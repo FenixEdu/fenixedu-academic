@@ -22,6 +22,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCandidateApproval;
 import DataBeans.InfoCandidateApprovalGroup;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -173,7 +174,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 		
 			
 		try {
-			Object args[] = { candidateList };
+			Object args[] = { candidateList , ids};
 			candidatesAdmited = (ArrayList) serviceManager.executar(userView, "ReadAdmitedCandidates", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e);
@@ -320,11 +321,9 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 
 		if (!isTokenValid(request)){
 			return mapping.findForward("BackError");
-		} else {
-			generateToken(request);
-			saveToken(request);
-		}
-
+		} 
+		
+		
 		request.setAttribute("situations", candidateList);
 		request.setAttribute("candidatesID", ids);
 		request.setAttribute("remarks", remarks);
@@ -368,8 +367,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 			request.setAttribute("confirmation", request.getAttribute("confirmation"));
 		} else {
 			request.setAttribute("confirmation", "YES");
-//			generateToken(request);
-//			saveToken(request);
+			generateToken(request);
+			saveToken(request);
 		}
 		
 
@@ -394,6 +393,86 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 //		
 		return mapping.findForward("FinalPresentation");	
 	}		
+	 
+	 
+	 
+	public ActionForward print(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
+	
+		HttpSession session = request.getSession(false);
+	
+		DynaActionForm resultForm = (DynaActionForm) form;
+				
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		GestorServicos serviceManager = GestorServicos.manager();
+	
+		String[] candidateList = (String[]) resultForm.get("situations");
+		String[] ids = (String[]) resultForm.get("candidatesID");
+		String[] remarks = (String[]) resultForm.get("remarks");
+		String[] substitutes = (String[]) resultForm.get("substitutes");
+	
+		
+
+		
+		request.setAttribute("situations", candidateList);
+		request.setAttribute("candidatesID", ids);
+		request.setAttribute("remarks", remarks);
+		request.setAttribute("substitutes", substitutes);
+
+		List candidates = new ArrayList();
+	
+			
+		try {
+			Object args[] = { ids };
+			candidates = (List) serviceManager.executar(userView, "ReadCandidates", args);					
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}			
+
+		List result = getLists(candidateList, ids, remarks, substitutes, candidates);
+		
+		sortLists(result);
+		
+		
+//		Iterator iterator = result.iterator();
+//		while(iterator.hasNext()){
+//			InfoCandidateApprovalGroup infoCandidateApprovalGroup = (InfoCandidateApprovalGroup) iterator.next();
+//			Iterator iter = infoCandidateApprovalGroup.getCandidates().iterator();
+//			System.out.println(infoCandidateApprovalGroup.getSituationName());
+//			while(iter.hasNext()){
+//				InfoCandidateApproval infoCandidateApproval = (InfoCandidateApproval) iter.next();
+//				System.out.println("-----------");
+//				System.out.println("   " + infoCandidateApproval.getIdInternal());
+//				System.out.println("   " + infoCandidateApproval.getCandidateName());	 
+//				System.out.println("   " + infoCandidateApproval.getRemarks());	 
+//				System.out.println("   " + infoCandidateApproval.getSituationName());	 
+//				System.out.println("   " + infoCandidateApproval.getOrderPosition());	 
+//			}	 
+//		}
+		
+		request.setAttribute("infoGroup", result);
+		
+		InfoExecutionDegree infoExecutionDegree = null;
+		
+		try {
+			Object args[] = { resultForm.get("executionYear"),  resultForm.get("degree")};
+			infoExecutionDegree = (InfoExecutionDegree) serviceManager.executar(userView, "ReadDegreeByYearAndCode", args);					
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}	
+
+		request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+		
+		if (request.getAttribute("confirmation") != null){
+			request.setAttribute("confirmation", request.getAttribute("confirmation"));
+		} else {
+			request.setAttribute("confirmation", "PRINT_PAGE");
+		}
+		return mapping.findForward("PrintReady");	
+	}		
+	 
 	 
 	 
 	 

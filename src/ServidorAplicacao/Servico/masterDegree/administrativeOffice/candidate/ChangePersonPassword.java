@@ -73,7 +73,6 @@ public class ChangePersonPassword implements IServico {
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person!");
 		
-		sp.getIPessoaPersistente().lockWrite(person);
 		person.setPassword(PasswordEncryptor.encryptPassword(password));
 	}
 }
