@@ -33,6 +33,11 @@
 					<bean:message key="link.teacherCreditsManagement"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link page="/teacherSearchForSummariesManagement.do?method=searchForm&amp;page=0">
+					<bean:message key="link.summaries"/>
+				</html:link>
+			</li>
 		</ul>
 		<br/>
 	</logic:present>

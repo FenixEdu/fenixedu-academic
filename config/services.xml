@@ -7595,6 +7595,77 @@
 			<chain name="ReadStudentCurricularPlansAccess"/>
         </filterChains>
     </service>
+    <service>
+        <name>ReadSummariesDepartmentAdmOffice</name>
+        <implementationClass>
+        	ServidorAplicacao.Servico.departmentAdmOffice.ReadSummaries
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>    
+    <service>
+        <name>PrepareInsertSummaryDepartment</name>
+        <implementationClass>
+        	ServidorAplicacao.Servico.departmentAdmOffice.PrepareInsertSummary
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>InsertSummaryDepartment</name>
+        <implementationClass>
+        	ServidorAplicacao.Servico.departmentAdmOffice.InsertSummary
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>DeleteSummaryDepartment</name>
+        <implementationClass>
+        	ServidorAplicacao.Servico.departmentAdmOffice.DeleteSummary
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>EditSummaryDepartment</name>
+        <implementationClass>
+        	ServidorAplicacao.Servico.departmentAdmOffice.EditSummary
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+        <name>ReadSummaryDepartment</name>
+        <implementationClass>
+        	ServidorAplicacao.Servico.departmentAdmOffice.ReadSummary
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
+    <service>
+		<name>ReadProfessorshipByTeacherIDandExecutionCourseIDDepartment</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.teacher.ReadProfessorshipByTeacherIDandExecutionCourseID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>		
+    <service>
+        <name>FindTeachersServiceForDepartmentOffice</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.searchers.FindTeachersService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>EmployeeBelongsToTeacherDepartment</filterChains>
+    </service>
+    <service>
+        <name>ReadLastSummary</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.departmentAdmOffice.ReadLastSummary</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
 	<service>
 		<name>ReadDegreeIdInternalByDegreeCode</name>
 		<implementationClass> 
@@ -7611,4 +7682,11 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
+	<service>
+        <name>ReadProfessorshipByTeacherNumberAndExecutionCourseID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.professorship.ReadProfessorshipByTeacherNumberAndExecutionCourseID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </service>
 </serviceDefinitions>

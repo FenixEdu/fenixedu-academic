@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,10 +40,10 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
      */
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
             HttpServletRequest request) throws FenixServiceException {
-
+    	
         List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(userView,
-                "ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId,
-                        actionForm.get("executionYearId") });
+                "ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId, actionForm.get("executionYearId")});
+        request.setAttribute("args", new TreeMap());
         return detailedInfoProfessorshipList;
     }
 

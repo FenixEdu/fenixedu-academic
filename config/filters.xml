@@ -722,6 +722,12 @@
     	<description/>
     	<isTransactional>true</isTransactional>
     </filter>
+        <filter>
+    	<name>EmployeeBelongsToTeacherDepartment</name>
+    	<implementationClass>ServidorAplicacao.Filtro.departmentAdmOffice.EmployeeBelongsToTeacherDepartment</implementationClass>
+    	<description>Verifies whether a given employee belongs to the same department the teacher does</description>
+    	<isTransactional>true</isTransactional>
+    </filter>
 	
 	<filter>
     	<name>StudentCurricularPlanOwnerAuthorization</name>
@@ -743,5 +749,4 @@
     	<description/>
     	<isTransactional>true</isTransactional>
     </filter>
-
 </filterDefinitions>

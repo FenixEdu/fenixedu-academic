@@ -16,9 +16,6 @@ import org.apache.commons.collections.FastHashMap;
 
 import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
-import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterException;
-import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
-import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.logging.ServiceExecutionLog;

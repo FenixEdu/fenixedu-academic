@@ -6,7 +6,9 @@
 package ServidorApresentacao.Action.teacher;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import sun.util.calendar.Gregorian;
 
 import DataBeans.InfoAttendWithEnrollment;
 import DataBeans.InfoAttendsSummary;
@@ -245,7 +249,13 @@ public class DownloadStudentList extends FenixAction {
         try {
             ServletOutputStream writer = response.getOutputStream();
             response.setContentType("plain/text");
-            response.setHeader("Content-disposition", "attachment; filename=listaDeAlunos.csv");
+            StringBuffer fileName= new StringBuffer();
+            Calendar now = new GregorianCalendar();
+            fileName.append("listaDeAlunos_");
+            fileName.append(infoExecutionCourse.getSigla()).append("_").append(now.get(Calendar.DAY_OF_MONTH));
+            fileName.append("-").append(now.get(Calendar.MONTH)).append("-").append(now.get(Calendar.YEAR));
+            fileName.append(".csv");
+            response.setHeader("Content-disposition", "attachment; filename="+fileName);
             writer.print(result);
             writer.flush();
             response.flushBuffer();

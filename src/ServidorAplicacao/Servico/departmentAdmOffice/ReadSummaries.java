@@ -1,8 +1,5 @@
-/*
- * Created on 21/Jul/2003
- */
 
-package ServidorAplicacao.Servico.teacher;
+package ServidorAplicacao.Servico.departmentAdmOffice;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,10 +22,13 @@ import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import Dominio.ISite;
 import Dominio.ISummary;
+import Dominio.ITeacher;
 import Dominio.ITurno;
 import Dominio.Professorship;
+import Dominio.Teacher;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -38,16 +38,16 @@ import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentSummary;
+import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
 /**
- * @author João Mota
- * @author Susana Fernandes 21/Jul/2003 fenix-head
- *         ServidorAplicacao.Servico.teacher
+ *  Manuel Pinto e João Figueiredo
  */
+
 public class ReadSummaries implements IServico {
 
     private static ReadSummaries service = new ReadSummaries();
@@ -73,26 +73,35 @@ public class ReadSummaries implements IServico {
     }
 
     public SiteView run(Integer executionCourseId, Integer summaryType, Integer shiftId,
-            Integer professorShiftId) throws FenixServiceException {
+            Integer teacherNumber) throws FenixServiceException {
 
-        try {
+        try {       	
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            
+            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+            
+            if(teacher == null)
+            	throw new FenixServiceException("no.shift");
+            
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseId);
+            
             if (executionCourse == null) {
                 throw new FenixServiceException("no.executionCourse");
             }
-
-            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-            ISite site = persistentSite.readByExecutionCourse(executionCourse);
-            if (site == null) {
-                throw new FenixServiceException("no.site");
-            }
-
+            
             //execution courses's lesson types for display to filter summary
             List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
+            
+            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+            ISite site = persistentSite.readByExecutionCourse(executionCourse);
+           
+            if (site == null) {
+                throw new FenixServiceException("no.site");
+            }	           
 
             //execution courses's shifts for display to filter summary
             ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
@@ -104,21 +113,6 @@ public class ReadSummaries implements IServico {
                     public Object transform(Object arg0) {
                         ITurno turno = (ITurno) arg0;
                         return Cloner.copyShift2InfoShift(turno);
-                    }
-                });
-            }
-
-            //execution courses's professorships for display to filter summary
-            IPersistentProfessorship persistentProfessorship = persistentSuport
-                    .getIPersistentProfessorship();
-            List professorships = persistentProfessorship.readByExecutionCourse(executionCourse);
-            List infoProfessorships = new ArrayList();
-            if (professorships != null && professorships.size() > 0) {
-                infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
-
-                    public Object transform(Object arg0) {
-                        IProfessorship professorship = (IProfessorship) arg0;
-                        return Cloner.copyIProfessorship2InfoProfessorship(professorship);
                     }
                 });
             }
@@ -156,17 +150,9 @@ public class ReadSummaries implements IServico {
                     summaries = allSummaries(summariesByShift, summariesByExecutionCourseByShift);
                 }
             }
-    
-            if (professorShiftId != null && professorShiftId.intValue() > 0) {
-                IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship
-                        .readByOID(Professorship.class, professorShiftId);
 
-                if (professorshipSelected == null || professorshipSelected.getTeacher() == null) {
-                    throw new FenixServiceException("no.shift");
-                }
-
-                List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse,
-                        professorshipSelected.getTeacher());
+            if (teacherNumber != null && teacherNumber.intValue() > 0) {          		
+                List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse, teacher);
 
                 if (summaries != null) {
                     summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
@@ -174,20 +160,30 @@ public class ReadSummaries implements IServico {
                     summaries = summariesByProfessorship;
                 }
             }
-
-            if (professorShiftId != null && professorShiftId.equals(new Integer(-1))) {
-                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse);
-
-                if (summaries != null) {
-                    summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
+            
+            List responsibleTeachers = executionCourse.getResponsibleTeachers();
+            boolean responsible = false;
+            for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
+				IResponsibleFor element = (IResponsibleFor) iter.next();
+				
+				if (element.getTeacher().equals(teacher)){
+					responsible = true;
+					break;
+				}
+			}
+            
+			if(responsible){
+				List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse);               
+                if (summaries != null) {                	          
+                	summaries.addAll(summariesByTeacher);
                 } else {
                     summaries = summariesByTeacher;
-                }
+                }	                      
             }
 
             if ((summaryType == null || summaryType.intValue() == 0)
                     && (shiftId == null || shiftId.intValue() == 0)
-                    && (professorShiftId == null || professorShiftId.intValue() == 0)) {
+                    && (teacherNumber == null || teacherNumber.intValue() == 0)) {
                 summaries = persistentSummary.readByExecutionCourseShifts(executionCourse);
                 List summariesByExecutionCourse = persistentSummary
                         .readByExecutionCourse(executionCourse);
@@ -204,13 +200,13 @@ public class ReadSummaries implements IServico {
                     result.add(infoSummary);
                 }
             }
-
+            
             InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
             bodyComponent.setInfoSummaries(result);
             bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
             bodyComponent.setLessonTypes(lessonTypes);
             bodyComponent.setInfoShifts(infoShifts);
-            bodyComponent.setInfoProfessorships(infoProfessorships);
+            bodyComponent.setInfoProfessorships(new ArrayList());
 
             TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
                     .getInstance();

@@ -13,7 +13,7 @@
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <bean:define id="lessonTypes" name="bodyComponent" property="lessonTypes" />
 <bean:define id="shifts" name="bodyComponent" property="infoShifts" />
-<bean:define id="professorships" name="bodyComponent" property="infoProfessorships" />
+
 
 <table width="100%">
 	<tr>
@@ -26,6 +26,7 @@
 <html:hidden property="page" value="1"/>
 <html:hidden property="method" value="showSummaries"/>
 <html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
+<html:hidden property="teacherNumber" value="<%= pageContext.findAttribute("teacherNumber").toString()%>"/>
 
 <table width="55%" border='0'>
 	<tr>
@@ -49,16 +50,6 @@
 			</html:select>		
 		</td>
 	</tr>
-	<tr>
-		<td width="15%"><bean:message key="label.teacher" /></td>
-		<td width="40%">
-			<html:select property="byTeacher" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
-				<html:option  value="0" key="label.showBy.all" />
-				<html:options collection="professorships" property="idInternal" labelProperty="infoTeacher.infoPerson.nome"/>
-				<html:option  value="-1" key="label.others"/>
-			</html:select>			
-		</td>
-	</tr>
 	<%--<tr>
 		<td colspan='2' align='center'>
 			<html:submit styleClass="inputbutton"><bean:message key="button.show"/></html:submit>		
@@ -69,7 +60,7 @@
 
 <div class="gen-button">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
-	<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+	<html:link page="<%= "/summariesManager.do?method=prepareInsertSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherNumber=" + pageContext.findAttribute("teacherNumber")%>">
 			<bean:message key="label.insertSummary" />
 	</html:link>
 </div>
@@ -129,24 +120,7 @@
 		   		</td>
 			</tr>		
 		</logic:notPresent>
-				
-		
-		<tr>
-			<td>
-				<logic:notEmpty name="summary" property="infoProfessorship">
-					<bean:message key="label.teacher.abbreviation" />&nbsp;				
-					<bean:write name="summary" property="infoProfessorship.infoTeacher.infoPerson.nome" />&nbsp;
-				</logic:notEmpty>
-				<logic:notEmpty name="summary" property="infoTeacher">
-					<bean:message key="label.teacher.abbreviation" />&nbsp;								
-					<bean:write name="summary" property="infoTeacher.infoPerson.nome" />&nbsp;			
-				</logic:notEmpty>
-				<logic:notEmpty name="summary" property="teacherName">
-					<bean:message key="label.teacher.abbreviation" />&nbsp;
-					<bean:write name="summary" property="teacherName" />&nbsp;			
-				</logic:notEmpty>				
-			</td>
-		</tr>
+					
 		<tr>
 			<td>
 				<logic:present name="summary" property="studentsNumber">			
@@ -184,13 +158,13 @@
 		  	<td>
 				<div class="gen-button">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
-					<html:link page="<%= "/summariesManager.do?method=prepareEditSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>">
+					<html:link page="<%= "/summariesManager.do?method=prepareEditSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode + "&amp;teacherNumber=" + pageContext.findAttribute("teacherNumber") %>">
 						<bean:message key="button.edit" /> 
 					</html:link>
 				</div>
 				<div class="gen-button">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
-					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
+					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode + "&amp;teacherNumber=" + pageContext.findAttribute("teacherNumber")%>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
 						<bean:message key="button.delete" />
 					</html:link>
 				</div>

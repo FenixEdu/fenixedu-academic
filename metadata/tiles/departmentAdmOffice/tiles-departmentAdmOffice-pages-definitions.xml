@@ -11,6 +11,32 @@
         <put name="body" value="/credits/creditsManagementIndex.jsp"/>
     </definition>
 
+    <!-- Department Summaries -->
+    
+	<definition name="insertSummary" extends="definition.teacher.summaryPage">
+		<put name="body" value="/departmentAdmOffice/teacher/insertSummary.jsp"></put>		
+	</definition>
+	<definition name="showSummaries" extends="definition.teacher.summaryPage">
+		<put name="body" value="/departmentAdmOffice/teacher/showSummaries.jsp"></put>		
+	</definition>
+	<definition name="editSummary" extends="definition.teacher.summaryPage">
+		<put name="body" value="/departmentAdmOffice/teacher/editSummary.jsp"></put>		
+	</definition>
+	<definition name="search-for-teacherExecutionCourseAssociation-body-summaries" 
+        extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.teacherSummaries"/>
+    </definition>
+    <definition name="show-teacher-professorships-for-management-summaries" 
+        extends="departmentAdmOffice.masterPage" >
+        <put name="body" 
+            value="/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagementSummaries.jsp"/>
+    </definition>
+    <definition name="search-for-teacherExecutionCourseAssociation-management-summaries" 
+        extends="departmentAdmOffice.masterPage">
+        <put name="body" value="search-for-teacherExecutionCourseAssociation-body-summaries"/>
+    </definition>
+    
+	<!-- *************** -->
 
     <definition name="search-for-teacherExecutionCourseAssociation-management" 
         extends="departmentAdmOffice.masterPage">
@@ -19,7 +45,7 @@
     <definition name="search-for-teacherExecutionCourseAssociation-body" 
         extends="teacher-search-form-layout">
         <put name="searchInfo" value="label.search.for.teacherExecutionCourseAssociation.management"/>
-    </definition>
+    </definition>  
     <definition name="show-teacher-professorships-for-management" 
         extends="departmentAdmOffice.masterPage" >
         <put name="body" 

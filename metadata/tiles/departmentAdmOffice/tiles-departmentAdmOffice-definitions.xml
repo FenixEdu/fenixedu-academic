@@ -13,6 +13,8 @@
       <put name="footer" value="/copyright.jsp" />
 	</definition>
 
+	<definition name="definition.teacher.summaryPage" extends="departmentAdmOffice.masterPage">
+	</definition>
 
 	<definition name="creditsManagement.masterPage" extends="departmentAdmOffice.masterPage">
 	  <put name="navLocal" value="/departmentAdmOffice/commons/localCreditsNavigationBar.jsp" />

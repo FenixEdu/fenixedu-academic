@@ -24,7 +24,7 @@
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insertSummary"/>
 	<html:hidden property="objectCode"/>
-	<html:hidden property="save"/>
+	<html:hidden property="teacherNumber" />
 	<html:hidden property="anotherDateVisible" />
 
 <!-- Shifts -->
@@ -150,8 +150,9 @@
 		<td><html:text property="studentsNumber" size="4"/></td>
 	</tr>
 </table>
+
 <br/>
-<br/>	
+<br/>
 <!-- Teachers -->
 
 <logic:equal name="loggedIsResponsible" value="true">
@@ -172,7 +173,7 @@
 		<tr>
 			<td><bean:message key="label.teacher.in" />:</td>
 			<td><html:radio property="teacher" value="0" /></td>
-			<td><bean:message key="label.number" />:</td><td><html:text property="teacherNumber" size="4" /></td>
+			<td><bean:message key="label.number" />:</td><td><html:text property="summaryOwnerNumber" size="4" /></td>
 		</tr>
 		<tr>
 			<td><bean:message key="label.teacher.out" />:</td>
@@ -185,6 +186,7 @@
 	<bean:define name="loggedTeacherProfessorship" id="loggedTeacherProfessorship"/>
 	<input type="hidden" name="teacher" value="<%=loggedTeacherProfessorship%>" />
 </logic:equal>
+
 <br/>
 <br/>		
 <table border="0">
@@ -201,14 +203,9 @@
 		<td colspan='2'><html:textarea rows="7" cols="50" property="summaryText"/></td>
 	</tr>
 </table>
-
 <br/>
-<br/>
-<html:submit styleClass="inputbutton" onclick="this.form.save.value='0'"><bean:message key="button.save"/>                    		         	
-</html:submit> 
-<html:submit styleClass="inputbutton" onclick="this.form.save.value='1'" ><bean:message key="button.save.new"/>                    		         	
-</html:submit> 
-<html:submit styleClass="inputbutton" onclick="this.form.save.value='2'"><bean:message key="button.save.equal"/>                    		         	
+<br/>	
+<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
 </html:submit> 
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
