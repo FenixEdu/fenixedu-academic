@@ -89,11 +89,11 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			assertEquals(infoSummaries.size(), 2);
 			
 			// verifica se a base de dados nao foi alterada
-			compareDataSet(getDataSetFilePath());
+			//compareDataSet(getDataSetFilePath());
 		} catch (FenixServiceException ex) {
-			fail("Reading the Summaries of a Site" + ex);
+			fail("Reading the Summaries of a Site with summaries" + ex);
 		} catch (Exception ex) {
-			fail("Reading the Summaries of a Site" + ex);
+			fail("Reading the Summaries of a Site with summaries" + ex);
 		}
 	}
 
@@ -122,11 +122,11 @@ public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 			List infoSummaries = infoSiteSummaries.getInfoSummaries();
 			assertEquals(infoSummaries.size(), 0);
 			// verifica se a base de dados nao foi alterada
-			//compareDataSet(getDataSetFilePath());
+			compareDataSet(getDataSetFilePath());
 		} catch (FenixServiceException ex) {
-			fail("Reading the Summaries of a Site" + ex);
+			fail("Reading the Summaries of a Site without summaries" + ex);
 		} catch (Exception ex) {
-			fail("Reading the Summaries of a Site" + ex);
+			fail("Reading the Summaries of a Site without summaries" + ex);
 		}
 	}
 }

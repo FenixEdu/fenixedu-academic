@@ -51,12 +51,6 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 		return args;
 	}
 
-	protected Object[] getTestSummarySuccessfullArguments() {
-
-		Object[] args = { new Integer(24), new Integer(281)};
-		return args;
-	}
-
 	protected Object[] getTestSummaryUnsuccessfullArguments() {
 
 		Object[] args = { new Integer(25), new Integer(261)};
@@ -70,6 +64,7 @@ public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	public void testSuccessfull() {
 
 		try {
+			
 			String[] args = getAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 

@@ -25,7 +25,7 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 
 	public void testSummaryBelongsExecutionCourse() {
 
-		Object serviceArguments[] = getTestSummarySuccessfullArguments();
+		Object serviceArguments[] = getAuthorizeArguments();
 
 		Object result = null;
 
@@ -41,11 +41,13 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 
 		}
 		catch (NotAuthorizedException ex) {
+			compareDataSet(getDataSetFilePath());
 			fail(
 				getNameOfServiceToBeTested()
 					+ "fail testSummaryBelongsExecutionCourse");
 		}
 		catch (Exception ex) {
+			compareDataSet(getDataSetFilePath());
 			fail(
 				getNameOfServiceToBeTested()
 					+ "fail testSummaryBelongsExecutionCourse");
@@ -89,6 +91,5 @@ public abstract class SummaryBelongsExecutionCourseTestCase
 	protected abstract String[] getUnauthorizedUser();
 	protected abstract String getApplication();
 
-	protected abstract Object[] getTestSummarySuccessfullArguments();
 	protected abstract Object[] getTestSummaryUnsuccessfullArguments();
 }

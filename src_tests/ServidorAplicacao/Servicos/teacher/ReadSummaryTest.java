@@ -61,15 +61,6 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 		return args;
 	}
 
-	protected Object[] getTestSummarySuccessfullArguments() {
-
-		Integer executionCourseId = new Integer(24);
-		Integer summaryId = new Integer(261);
-
-		Object[] args = { executionCourseId, summaryId };
-		return args;
-	}
-
 	protected Object[] getTestSummaryUnsuccessfullArguments() {
 
 		Integer executionCourseId = new Integer(25);
@@ -86,24 +77,25 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 	public void testSuccessfull() {
 
 		try {
+			
 			SiteView result = null;
 
 			String[] args = getAuthorizedUser();
 			IUserView userView = authenticateUser(args);
 
-			result =
-				(SiteView) gestor.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					getAuthorizeArguments());
-
-			ISummary newSummary = new Summary(new Integer(261));
+			ISummary newSummary = (ISummary) new Summary(new Integer(261));
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IPersistentSummary persistentSummary = sp.getIPersistentSummary();
 			newSummary =
 				(ISummary) persistentSummary.readByOId(newSummary, false);
 			sp.confirmarTransaccao();
+
+			result =
+				(SiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					getAuthorizeArguments());
 
 			InfoSiteSummary infoSiteSummary =
 				(InfoSiteSummary) result.getComponent();
