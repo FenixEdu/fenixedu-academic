@@ -7958,7 +7958,7 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
-	<service>
+    <service>
 		<name>ReadInfoRegistrationDeclaration</name>
 		<implementationClass>
 			ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration
@@ -7968,5 +7968,13 @@
 		<filterChains>
 			<chain name="DegreeAdministrativeOfficeAuthorization"/>
 		</filterChains>
+	</service>
+	<service>
+		<name>CopySiteExecutionCourse</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.gesdis.teacher.CopySiteExecutionCourse
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
 	</service>
 </serviceDefinitions>

@@ -606,9 +606,7 @@
         <form-bean name="confirmDeletePublicationForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
 			<form-property name="idInternal" type="java.lang.Integer" />
-        </form-bean>
-        
-        
+        </form-bean>                
         
         <!-- EXTERNAL ACTIVITY FORM -->
         <form-bean name="externalActivityForm" type="org.apache.struts.validator.DynaValidatorForm" 
@@ -745,6 +743,16 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>	
 		
+		<!-- ==================== Copy Site Execution Course ================== -->
+		<form-bean name="copySiteExecutionCourseForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">                 
+        	<form-property name="page" type="java.lang.Integer" initial="0"/>
+        	<form-property name="objectCode" type="java.lang.String" initial="0"/>
+        	<form-property name="executionPeriod" type="java.lang.String" initial="0"/>
+        	<form-property name="executionDegree" type="java.lang.String" initial="0"/>
+        	<form-property name="curYear" type="java.lang.String" initial="0"/>
+		</form-bean>	
 
     </form-beans>
 
@@ -1257,6 +1265,7 @@
             <forward name="showSummaries" path="showSummaries" />
             <forward name="doShowSummariesAction" path="/showSummaries.do?method=showSummaries&amp;page=0" />
             <forward name="insertSummary" path="insertSummary" />
+            <forward name="doPrepareInsertSummary" path="/summariesManager.do?method=prepareInsertSummary&amp;page=0" />
             <forward name="editSummary" path="editSummary" />
         </action>        
         <action name="summaryForm" path="/summariesManagerEditSummary" 
@@ -2008,6 +2017,19 @@
 			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
        		parameter="method">
        		<forward name="show-report" path="view-curriculum-historic"/>
+       	</action>
+       	
+       	<!-- ==================== Copy Site Execution Course ================== -->
+	    
+	    <action path="/copySiteExecutionCourse" name="copySiteExecutionCourseForm"
+       		type="ServidorApresentacao.Action.gesdis.CopySiteExecutionCourseAction"
+       		scope="request"
+			input="/teacherAdministrationViewer.do?method=instructions&amp;page=0"
+       		parameter="method">
+       		<forward name="chooseExecutionPeriod" path="choose-execution-period"/>
+       		<forward name="chooseExecDegreeAndCurYear" path="choose-exec-degree-and-cur-year"/>
+       		<forward name="viewExecutionCourses" path="view-execution-courses"/>
+       		<forward name="manageExecutionCourses" path="/teacherAdministrationViewer.do?method=instructions&amp;page=0"/>       		       		       		       		
        	</action>
 	    
     </action-mappings>
