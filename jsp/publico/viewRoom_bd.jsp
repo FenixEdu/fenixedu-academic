@@ -5,9 +5,12 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
+<bean:define id="component" name="siteView" property="component"/>
+<bean:define id="infoRoom" name="component" property="infoRoom" />
+<bean:define id="lessonList" name="component" property="infoLessons" />
 	<div id="invisible"><h2><bean:message key="title.info.room"/></h2></div>
 	<br/> 
-	<logic:present name="publico.infoRoom" >
+	<logic:present name="infoRoom" >
        	<div id="invisible"><table class="invisible" width="90%">
                 <tr>
                     <td class="listClasses-header"><bean:message key="property.room.name" /></td>
@@ -18,12 +21,12 @@
 					<td class="listClasses-header"><bean:message key="property.room.capacity.exame" /></td>
                 </tr>
                 <tr>
-                    <td class="listClasses"><bean:write name="publico.infoRoom" property="nome" /></td>
-                    <td class="listClasses"><bean:write name="publico.infoRoom" property="tipo" /></td>
-                    <td class="listClasses"><bean:write name="publico.infoRoom" property="edificio" /></td>
-					<td class="listClasses"><bean:write name="publico.infoRoom" property="piso" /></td>
-                    <td class="listClasses"><bean:write name="publico.infoRoom" property="capacidadeNormal" /></td>
-                    <td class="listClasses"><bean:write name="publico.infoRoom" property="capacidadeExame" /></td>
+                    <td class="listClasses"><bean:write name="infoRoom" property="nome" /></td>
+                    <td class="listClasses"><bean:write name="infoRoom" property="tipo" /></td>
+                    <td class="listClasses"><bean:write name="infoRoom" property="edificio" /></td>
+					<td class="listClasses"><bean:write name="infoRoom" property="piso" /></td>
+                    <td class="listClasses"><bean:write name="infoRoom" property="capacidadeNormal" /></td>
+                    <td class="listClasses"><bean:write name="infoRoom" property="capacidadeExame" /></td>
                 </tr>
             </table>
 		</div>
@@ -31,7 +34,7 @@
 		<br />
 	   	<app:gerarHorario name="lessonList" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
 	</logic:present>
-	<logic:notPresent name="publico.infoRoom" >
+	<logic:notPresent name="infoRoom" >
 		<table align="center">
 			<tr>
 				<td>
