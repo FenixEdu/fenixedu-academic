@@ -26,7 +26,7 @@
 ///**
 // * @author lmac1
 // *///guardei o nemo do curricular course mas nao sei s sera melhor lê-lo outra vez
-//public class ReadExecutionCourseToAssociateCurricularCoursesAction extends FenixAction {
+//public class ReadExecutionCoursesToAssociateCurricularCoursesAction extends FenixAction {
 //
 //public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 //
