@@ -9,9 +9,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoPerson;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
+import Dominio.Pessoa;
 import Dominio.student.ISchoolRegistrationInquiryAnswer;
 import Dominio.student.SchoolRegistrationInquiryAnswer;
 import ServidorAplicacao.Servico.UserView;
@@ -22,6 +25,7 @@ import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentSchoolRegistrationInquiryAnswer;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -38,7 +42,7 @@ public class SchoolRegistration implements IService {
         super();
     }
 
-    public void run(UserView userView, HashMap answers) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(UserView userView, HashMap answers, InfoPerson infoPerson) throws ExcepcaoPersistencia, FenixServiceException {
 
         ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
         String user = userView.getUtilizador();
@@ -88,5 +92,46 @@ public class SchoolRegistration implements IService {
             String key = (String) iterator.next();            
             schoolRegistrationInquiryAnswer.setAnswer(new Integer(key), new Boolean((String) answers.get(key)));
         }     
+    }
+    
+    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson)throws ExcepcaoPersistencia,
+    		FenixServiceException {
+        
+        IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
+        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,infoPerson.getIdInternal());
+        pessoaPersistente.simpleLockWrite(pessoa);
+        
+        pessoa.setCodigoFiscal(infoPerson.getCodigoFiscal());
+        pessoa.setCodigoPostal(infoPerson.getCodigoPostal());
+        pessoa.setConcelhoMorada(infoPerson.getConcelhoMorada());
+        pessoa.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
+        pessoa.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
+        pessoa.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
+        pessoa.setDistritoMorada(infoPerson.getDistritoMorada());
+        pessoa.setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
+        pessoa.setEmail(infoPerson.getEmail());
+        pessoa.setEnderecoWeb(infoPerson.getEnderecoWeb());
+        pessoa.setEstadoCivil(infoPerson.getEstadoCivil());
+        pessoa.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
+        pessoa.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
+        pessoa.setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
+        pessoa.setLocalidade(infoPerson.getLocalidade());
+        pessoa.setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
+        pessoa.setMorada(infoPerson.getMorada());
+        pessoa.setNacionalidade(infoPerson.getNacionalidade());
+        pessoa.setNascimento(infoPerson.getNascimento());
+        pessoa.setNome(infoPerson.getNome());
+        pessoa.setNomeMae(infoPerson.getNomeMae());
+        pessoa.setNomePai(infoPerson.getNomePai());
+        pessoa.setNumContribuinte(infoPerson.getNumContribuinte());
+        pessoa.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
+        pessoa.setPassword(infoPerson.getPassword());
+        pessoa.setProfissao(infoPerson.getProfissao());
+        pessoa.setSexo(infoPerson.getSexo());
+        pessoa.setTelefone(infoPerson.getTelefone());
+        pessoa.setTelemovel(infoPerson.getTelemovel());
+        pessoa.setTipoDocumentoIdentificacao(infoPerson.getTipoDocumentoIdentificacao());
+        pessoa.setUsername(infoPerson.getUsername());
+        
     }
 }
