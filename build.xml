@@ -405,7 +405,7 @@
     </target>
     
   
-    <target depends="compile-tests, load-dump-db"
+    <target depends="compile-tests, create-tables"
             description="Executa todos os testes da camada de aplicacao"
             name="run-tests-caplicacao">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -414,7 +414,7 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/DeleteCoordinatorsTestCase.java"/>
+                    <include name="**/ReadTeacherDegreeFina*.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
