@@ -1205,6 +1205,16 @@
 		<forward name="confirmation" path="confirmation"/>		
 	</action>
 
+	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
+	<action path="/manageCurricularCourseGroups"
+		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCouseGroupManagementDispatchAction"
+		parameter="method"
+		scope="request"
+	>
+		<forward name="viewGroups" path="viewCurricularCourseGroups"/>
+     </action>
+        
+        
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

@@ -17,16 +17,7 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
     public InfoAreaCurricularCourseGroup() {
     }
 
-    
-
-   
-
-   
-
-   
-
-    
-
+  
     public Integer getMaximumCredits() {
         return super.getMaximumValue();
     }
@@ -59,6 +50,24 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
         }
         return infoCurricularCourseGroup;
        
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /* (non-Javadoc)
+     * @see DataBeans.InfoCurricularCourseGroup#getType()
+     */
+    public String getType() {
+        
+        return "label.curricularCourseGroup.area";
     }
     
 }

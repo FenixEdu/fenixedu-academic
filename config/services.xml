@@ -6825,7 +6825,15 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
-
+	<service>
+        <name>ReadCurricularCourseGroupsByDegreeCurricularPlan</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement.ReadCurricularCourseGroupsByDegreeCurricularPlan</implementationClass>
+        <description>Returns a List of all curricular course groups of a degree curricular plan</description>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+        <isTransactional>true</isTransactional>
+    </service>
 
 <!-- =============================================================================================== -->
 <!-- =============================================================================================== -->

@@ -54,6 +54,8 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
         return resultado;
     }
 
+    public abstract String getType();
+    
     public InfoBranch getInfoBranch() {
         return infoBranch;
     }
@@ -127,7 +129,7 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
     /**
      * @return Returns the name.
      */
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
@@ -135,7 +137,7 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
      * @param name
      *            The name to set.
      */
-    protected void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

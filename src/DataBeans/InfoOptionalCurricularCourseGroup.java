@@ -66,4 +66,15 @@ public class InfoOptionalCurricularCourseGroup extends InfoCurricularCourseGroup
         }
         return infoCurricularCourseGroup;
     }
+
+
+
+
+    /* (non-Javadoc)
+     * @see DataBeans.InfoCurricularCourseGroup#getType()
+     */
+    public String getType() {
+        
+        return "label.curricularCourseGroup.optional";
+    }
 }

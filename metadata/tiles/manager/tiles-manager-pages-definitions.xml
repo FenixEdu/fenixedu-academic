@@ -277,4 +277,10 @@
 		<put name="body" value="/manager/generateFiles/confirmation.jsp" />
 		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
 	</definition>
+    
+    <!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->
+	<definition name="viewCurricularCourseGroups" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/curricularCourseGroups/viewCurricularCourseGroups.jsp" />
+        <put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
+	</definition>
 </tiles-definitions>

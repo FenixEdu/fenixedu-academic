@@ -15,12 +15,13 @@
 		</logic:present>		
 	</tr>
 </table>
-
+<bean:define id="degreeCurricularPlanId" name="infoDegreeCurricularPlan" property="idInternal"/>
 <ul style="list-style-type: square;">
 	<li><html:link page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&degreeId="  + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
 	<li><html:link page="<%="/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>
 	<li><html:link page="<%="/insertExecutionDegree.do?method=prepareInsert&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>
 	<li><html:link page="<%="/manageBranches.do?method=showBranches&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>"><bean:message key="label.manager.branches.management"/></html:link></li>
+	<li><html:link page="/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.curricularCourseGroups.management"/></html:link></li>
 </ul>
 
 <span class="error"><html:errors/></span>
