@@ -93,5 +93,6 @@ public interface ISuportePersistente {
 	
 	public IPersistentStudentGroupInfo getIPersistentStudentGroupInfo();
 	
+	public IPersistentTeacherShiftPercentage getIPersistentTeacherShiftPercentage();
 	
 }
