@@ -213,10 +213,12 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		String degree = (String) gratuityForm.get("degree");
 		Integer degreeId = Integer.valueOf(StringUtils.substringAfter(degree, "#"));
 		String degreeName = degree.substring(0, degree.indexOf("#"));
-		gratuityForm.set("degree", degreeName);
-		request.setAttribute("degree", degreeName);
+		gratuityForm.set("degreeName", degreeName);
+		request.setAttribute("degreeName", degreeName);
+		request.setAttribute("degree", degree);
 		request.setAttribute("executionYear", executionYear);
 
+		System.out.println("valores do form lidos");
 		InfoGratuityValues infoGratuityValues = null;
 		Object args[] = { degreeId };
 		try
@@ -234,29 +236,41 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 
 		if (infoGratuityValues == null)
 		{
+			System.out.println("propina nova");
 			infoGratuityValues = new InfoGratuityValues();
-			/*
-			 * InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-			 * infoExecutionYear.setYear(executionYear); InfoDegree infoDegree = new InfoDegree();
-			 * infoDegree.setNome(degreeName); InfoDegreeCurricularPlan infoDegreeCurricularPlan = new
-			 * InfoDegreeCurricularPlan(); infoDegreeCurricularPlan.setName(degreeCurricularPlan);
-			 * infoDegreeCurricularPlan.setInfoDegree(infoDegree); InfoExecutionDegree
-			 * infoExecutionDegree = new InfoExecutionDegree();
-			 * infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-			 * infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-			 *  
-			 */
 		}
-		fillForm(gratuityForm, infoGratuityValues);
-		request.setAttribute("infoPaymentPhases", infoGratuityValues.getInfoPaymentPhases());
+		if (request.getAttribute("infoPaymentPhases") == null)
+		{
+			System.out.println("primeira vez");
+
+			fillForm(gratuityForm, infoGratuityValues);
+			request.setAttribute("infoPaymentPhases", infoGratuityValues.getInfoPaymentPhases());
+		}
+		System.out.println("vai sair");
+
 		return mapping.findForward("insertGratuityData");
 	}
 
 	private void fillForm(DynaValidatorForm aForm, InfoGratuityValues infoGratuityValues)
 	{
-		aForm.set("annualValue", infoGratuityValues.getAnualValue());
-		aForm.set("scholarPart", infoGratuityValues.getScholarShipValue());
-		aForm.set("thesisPart", infoGratuityValues.getFinalProofValue());
+		if (infoGratuityValues.getIdInternal() != null)
+		{
+			aForm.set("gratuityId", infoGratuityValues.getIdInternal().toString());
+		}
+		System.out.println("preenchendo form");
+
+		if (infoGratuityValues.getAnualValue() != null)
+		{
+			aForm.set("annualValue", infoGratuityValues.getAnualValue().toString());
+		}
+		if (infoGratuityValues.getScholarShipValue() != null)
+		{
+			aForm.set("scholarPart", infoGratuityValues.getScholarShipValue().toString());
+		}
+		if (infoGratuityValues.getFinalProofValue() != null)
+		{
+			aForm.set("thesisPart", infoGratuityValues.getFinalProofValue().toString());
+		}
 		if (infoGratuityValues.getProofRequestPayment() != null
 			&& infoGratuityValues.getProofRequestPayment().equals(Boolean.TRUE))
 		{
@@ -264,11 +278,11 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		}
 		if (infoGratuityValues.getCourseValue() != null)
 		{
-			aForm.set("unitaryValueCourse", infoGratuityValues.getCourseValue());
+			aForm.set("unitaryValueCourse", infoGratuityValues.getCourseValue().toString());
 		}
-		else
+		else if (infoGratuityValues.getCreditValue() != null)
 		{
-			aForm.set("unitaryValueCredit", infoGratuityValues.getCreditValue());
+			aForm.set("unitaryValueCredit", infoGratuityValues.getCreditValue().toString());
 		}
 		if (infoGratuityValues.getEndPayment() != null)
 		{
@@ -288,7 +302,8 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		{
 			aForm.set("partialPayment", Boolean.TRUE);
 
-			if (infoGratuityValues.getRegistrationPayment().booleanValue())
+			if (infoGratuityValues.getRegistrationPayment() != null
+				&& infoGratuityValues.getRegistrationPayment().booleanValue())
 			{
 				aForm.set("registrationPayment", infoGratuityValues.getRegistrationPayment());
 
@@ -297,7 +312,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 				aForm.set(
 					"finalDateRegistrationPayment",
 					Data.format2DayMonthYear(infoPaymentPhase.getEndDate(), "/"));
-				aForm.set("registrationPaymentValue", infoPaymentPhase.getValue());
+				aForm.set("registrationValue", infoPaymentPhase.getValue().toString());
 				if (infoPaymentPhase.getStartDate() != null)
 				{
 					aForm.set(
@@ -309,6 +324,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 			}
 			Collections.sort(infoGratuityValues.getInfoPaymentPhases(), new BeanComparator("endDate"));
 		}
+
 	}
 
 	private void removeRegistrationPaymentFromPhases(InfoGratuityValues infoGratuityValues)
@@ -319,8 +335,8 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 			{
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
 
-				if (infoPaymentPhase.getDescription() != null
-					&& !infoPaymentPhase.getDescription().equals(
+				if (infoPaymentPhase.getDescription() == null
+					|| !infoPaymentPhase.getDescription().equals(
 						ServidorApresentacao
 							.Action
 							.masterDegree

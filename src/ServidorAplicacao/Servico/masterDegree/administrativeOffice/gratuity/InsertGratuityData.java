@@ -6,6 +6,7 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -22,7 +23,6 @@ import Dominio.IGratuitySituation;
 import Dominio.IGratuityValues;
 import Dominio.IPaymentPhase;
 import Dominio.IPessoa;
-import Dominio.IStudentCurricularPlan;
 import Dominio.PaymentPhase;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
@@ -55,13 +55,14 @@ public class InsertGratuityData implements IService
 	{
 		if (infoGratuityValues == null)
 		{
+			System.out.println("argumento null");
 			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
-
 		if (infoGratuityValues.getInfoExecutionDegree() == null
 			|| infoGratuityValues.getInfoExecutionDegree().getIdInternal() == null
 			|| infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue() <= 0)
 		{
+			System.out.println("executiondegree null");
 			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
 
@@ -70,24 +71,29 @@ public class InsertGratuityData implements IService
 			|| infoGratuityValues.getInfoEmployee().getPerson().getUsername() == null
 			|| infoGratuityValues.getInfoEmployee().getPerson().getUsername().length() <= 0)
 		{
+			System.out.println("employee null");
 			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
+		System.out.println("passou os argumentos");
 
 		ISuportePersistente sp = null;
 
 		validateGratuity(sp, infoGratuityValues);
+		System.out.println("validou a propina");
 
 		try
 		{
 			sp = SuportePersistenteOJB.getInstance();
-			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGrtuityValues();
+			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
 			IGratuityValues gratuityValues = new GratuityValues();
 			gratuityValues.setIdInternal(infoGratuityValues.getIdInternal());
 
 			gratuityValues = (IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, true);
-			if (gratuityValues == null) //it doesn't exists in database, then write it
+			if (gratuityValues == null) //it doesn't exist in database, then write it
 			{
+				System.out.println("propina nova");
+
 				gratuityValues = new GratuityValues();
 
 				//execution Degree
@@ -100,10 +106,14 @@ public class InsertGratuityData implements IService
 					(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
 				gratuityValues.setExecutionDegree(executionDegree);
 
-				persistentGratuityValues.lockWrite(gratuityValues);
+				persistentGratuityValues.simpleLockWrite(gratuityValues);
 			}
 
+			validatePaymentPhasesWithTransaction(sp, gratuityValues);
+			System.out.println("validou prestacoes sem transaccoes");
+
 			registerWhoAndWhen(sp, infoGratuityValues, gratuityValues);
+			System.out.println("colocou o autor da mudança da propina");
 
 			gratuityValues.setAnualValue(infoGratuityValues.getAnualValue());
 			gratuityValues.setScholarShipValue(infoGratuityValues.getScholarShipValue());
@@ -116,10 +126,13 @@ public class InsertGratuityData implements IService
 
 			//write all payment phases
 			writePaymentPhases(sp, infoGratuityValues, gratuityValues);
+			System.out.println("escreveu as prestacoes");
 
 			//update gratuity values in all student curricular plan that belong to this execution
 			// degree
 			updateStudentsGratuitySituation(sp, infoGratuityValues, gratuityValues);
+			System.out.println("actualizou situacoes de estudantes que se referem a esta propina");
+
 		}
 		catch (ExcepcaoPersistencia e)
 		{
@@ -160,6 +173,8 @@ public class InsertGratuityData implements IService
 			}
 		}
 
+		System.out.println("obteve o valor da propina: " + gratuityValue);
+
 		List paymentPhasesList = infoGratuityValues.getInfoPaymentPhases();
 		if (paymentPhasesList != null && paymentPhasesList.size() > 0)
 		{
@@ -169,26 +184,31 @@ public class InsertGratuityData implements IService
 			while (iterator.hasNext())
 			{
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
-				totalValuePaymentPhases = +infoPaymentPhase.getValue().floatValue();
+				totalValuePaymentPhases += infoPaymentPhase.getValue().floatValue();
 			}
 			if (totalValuePaymentPhases > gratuityValue.doubleValue())
 			{
+				System.out.println("valores de prestacoes sao maiores que o valor da propina");
+
 				throw new FenixServiceException("error.masterDegree.gatuyiuty.totalValuePaymentPhases");
 			}
+			System.out.println("os valores das prestacoes estao correctos");
 
 			//verify if all payment phases's dates are correct
 			validateDatesOfPaymentPhases(paymentPhasesList);
+			System.out.println("validou datas de prestacoes");
 
 			//registration Payment
-			if (infoGratuityValues.getRegistrationPayment().equals(Boolean.TRUE))
+			if (infoGratuityValues.getRegistrationPayment() != null
+				&& infoGratuityValues.getRegistrationPayment().equals(Boolean.TRUE))
 			{
 				iterator = paymentPhasesList.listIterator();
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 				infoPaymentPhase.setDescription(SessionConstants.REGISTRATION_PAYMENT);
+				System.out.println("mudou a descricao da prestacao de registo");
+
 			}
 		}
-
-		validatePaymentPhasesWithTransaction(sp, infoGratuityValues);
 	}
 
 	private void validateDatesOfPaymentPhases(List paymentPhasesList) throws FenixServiceException
@@ -205,6 +225,8 @@ public class InsertGratuityData implements IService
 				InfoPaymentPhase infoPaymentPhase2Compare = (InfoPaymentPhase) iterator.next();
 				if (!infoPaymentPhase.getEndDate().before(infoPaymentPhase2Compare.getStartDate()))
 				{
+					System.out.println("datas de prestacoes coincidentes");
+
 					throw new FenixServiceException("error.impossible.paymentPhaseWithWrongDates");
 				}
 				iterator.previous();
@@ -214,27 +236,25 @@ public class InsertGratuityData implements IService
 
 	private void validatePaymentPhasesWithTransaction(
 		ISuportePersistente sp,
-		InfoGratuityValues infoGratuityValues)
+		IGratuityValues gratuityValues)
 		throws FenixServiceException
 	{
-		//verify if any payment phase has any transactional associated
+		System.out.println("em validatePaymentPhasesWithTransaction");
+		//verify if any payment phase has any transaction associated
 		IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
-		if (infoGratuityValues.getInfoPaymentPhases() != null
-			|| infoGratuityValues.getInfoPaymentPhases().size() > 0)
+		if (gratuityValues.getPaymentPhaseList() != null
+			&& gratuityValues.getPaymentPhaseList().size() > 0)
 		{
-			ListIterator iterator = infoGratuityValues.getInfoPaymentPhases().listIterator();
+			ListIterator iterator = gratuityValues.getPaymentPhaseList().listIterator();
 			while (iterator.hasNext())
 			{
-				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
+				IPaymentPhase paymentPhase = (IPaymentPhase) iterator.next();
 
-				IPaymentPhase paymentPhase = new PaymentPhase();
-				paymentPhase.setIdInternal(infoPaymentPhase.getIdInternal());
-
-				paymentPhase = (IPaymentPhase) persistentPaymentPhase.readByOId(paymentPhase, false);
-				if (paymentPhase != null
-					&& paymentPhase.getTransactionList() != null
-					|| paymentPhase.getTransactionList().size() > 0)
+				if (paymentPhase.getTransactionList() != null
+					&& paymentPhase.getTransactionList().size() > 0)
 				{
+					System.out.println("ja existem transaccoes para as prestacoes");
+
 					throw new FenixServiceException("error.impossible.paymentPhaseWithTransactional");
 				}
 			}
@@ -276,13 +296,13 @@ public class InsertGratuityData implements IService
 			if (gratuityValues.getPaymentPhaseList() != null
 				&& gratuityValues.getPaymentPhaseList().size() > 0)
 			{
+				System.out.println("ha prestacoes, apagam-se");
 
 				persistentPaymentPhase.deletePaymentPhasesOfThisGratuity(gratuityValues.getIdInternal());
-
 			}
 
 			if (infoGratuityValues.getInfoPaymentPhases() != null
-				|| infoGratuityValues.getInfoPaymentPhases().size() > 0)
+				&& infoGratuityValues.getInfoPaymentPhases().size() > 0)
 			{
 				ListIterator iterator = infoGratuityValues.getInfoPaymentPhases().listIterator();
 				while (iterator.hasNext())
@@ -297,7 +317,7 @@ public class InsertGratuityData implements IService
 
 					paymentPhase.setGratuityValues(gratuityValues);
 
-					persistentPaymentPhase.lockWrite(paymentPhase);
+					persistentPaymentPhase.simpleLockWrite(paymentPhase);
 				}
 			}
 		}
@@ -319,35 +339,68 @@ public class InsertGratuityData implements IService
 		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 
 		List studentCurricularPlanList = null;
+		List gratuitySituationList = null;
 		try
 		{
-			//find all student curricular plan with the degree curricular plan that belongs to this
+			//find all students curricular plan with the degree curricular plan that belongs to this
 			// execution degree
-			studentCurricularPlanList =
-				persistentStudentCurricularPlan.readByDegreeCurricularPlan(
+
+			gratuitySituationList =
+				persistentGratuitySituation.readGratuitySituationsByDegreeCurricularPlan(
 					gratuityValues.getExecutionDegree().getCurricularPlan());
 
-			if (studentCurricularPlanList != null && studentCurricularPlanList.size() > 0)
+			Iterator iterGratuitySituation = gratuitySituationList.iterator();
+			while (iterGratuitySituation.hasNext())
 			{
-				ListIterator iterator = studentCurricularPlanList.listIterator();
-				//for each student curricular plan update the correspond gratuity situatuion
-				//with the gratuity values key
-				while (iterator.hasNext())
+				IGratuitySituation gratuitySituation = (IGratuitySituation) iterGratuitySituation.next();
+				if (gratuitySituation != null
+					&& (gratuitySituation.getGratuityValues() == null
+						|| (gratuityValues.getIdInternal() != null
+							&& !gratuitySituation.getGratuityValues().getIdInternal().equals(
+								gratuityValues.getIdInternal()))))
 				{
-					IStudentCurricularPlan studentCurricularPlan =
-						(IStudentCurricularPlan) iterator.next();
+					System.out.println("actualiza situacao de propina");
 
-					IGratuitySituation gratuitySituation =
-						persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlan(
-							studentCurricularPlan);
 					gratuitySituation.setGratuityValues(gratuityValues);
-
-					if (gratuitySituation.getGratuityValues() != null && !gratuitySituation.getGratuityValues().getIdInternal().equals(gratuityValues.getIdInternal()))
-					{
-						persistentGratuitySituation.simpleLockWrite(gratuitySituation);
-					}
+					persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 				}
 			}
+			
+			//			studentCurricularPlanList =
+			//				persistentStudentCurricularPlan.readByDegreeCurricularPlan(
+			//					gratuityValues.getExecutionDegree().getCurricularPlan());
+			//
+			//			if (studentCurricularPlanList != null && studentCurricularPlanList.size() > 0)
+			//			{
+			//				System.out.println("existem estudantes para este plano curricular");
+			//
+			//				ListIterator iterator = studentCurricularPlanList.listIterator();
+			//				//for each student curricular plan update the correspondent gratuity situatuion
+			//				//with the gratuity values key
+			//				while (iterator.hasNext())
+			//				{
+			//					IStudentCurricularPlan studentCurricularPlan =
+			//						(IStudentCurricularPlan) iterator.next();
+			//
+			//					IGratuitySituation gratuitySituation =
+			//						persistentGratuitySituation.readGratuitySituatuionByStudentCurricularPlan(
+			//							studentCurricularPlan);
+			//
+			//					// ler gratuity situation
+			//					
+			//					if (gratuitySituation != null
+			//						&& (gratuitySituation.getGratuityValues() == null
+			//							|| (gratuityValues.getIdInternal() != null
+			//								&& !gratuitySituation.getGratuityValues().getIdInternal().equals(
+			//									gratuityValues.getIdInternal()))))
+			//					{
+			//						System.out.println("actualiza situacao de propina");
+			//
+			//						gratuitySituation.setGratuityValues(gratuityValues);
+			//						persistentGratuitySituation.simpleLockWrite(gratuitySituation);
+			//					}
+			//				}
+			//			}
 		}
 		catch (ExcepcaoPersistencia e)
 		{

@@ -89,7 +89,7 @@ public class EditGratuitySituationById implements IServico
 					gratuityValues.setIdInternal(
 						infoGratuitySituation.getInfoGratuityValues().getIdInternal());
 					IPersistentGratuityValues persistentGratuityValues =
-						sp.getIPersistentGrtuityValues();
+						sp.getIPersistentGratuityValues();
 					gratuityValues =
 						(IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, false);
 					gratuitySituation.setGratuityValues(gratuityValues);

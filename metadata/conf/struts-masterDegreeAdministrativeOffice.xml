@@ -615,6 +615,8 @@
             <form-property name="executionYear" type="java.lang.String"/>
             <form-property name="specializationArea" type="java.lang.String"/>
             <form-property name="degree" type="java.lang.String"/>
+            <form-property name="degreeName" type="java.lang.String"/>
+            <form-property name="gratuityId" type="java.lang.String"/>
             <form-property name="annualValue" type="java.lang.String"/>
             <form-property name="scholarPart" type="java.lang.String"/>
             <form-property name="thesisPart" type="java.lang.String"/>
@@ -2137,9 +2139,9 @@
 	>
 	<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
 	<forward name="cancel" path="/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear&amp;page=0"/>  
+	<forward name="pgMainMenu" path="/gratuitySection.do"/>  
 	</action>
     </action-mappings>
-    
     
     
     <!-- ========== Controller Configuration ================================ -->

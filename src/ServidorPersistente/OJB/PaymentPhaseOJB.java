@@ -7,8 +7,10 @@ package ServidorPersistente.OJB;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.IGratuityValues;
 import Dominio.PaymentPhase;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentPaymentPhase;
@@ -47,4 +49,11 @@ public class PaymentPhaseOJB extends ObjectFenixOJB implements IPersistentPaymen
 		}
 	}
 
+	public List readByGratuityValues(IGratuityValues gratuityValues) throws ExcepcaoPersistencia{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("gratuityValues.idInternal", gratuityValues.getIdInternal());
+		
+		return (List) queryList(PaymentPhase.class, criteria);
+	}
+	
 }

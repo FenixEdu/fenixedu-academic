@@ -4,6 +4,9 @@
  */
 package ServidorPersistente;
 
+import java.util.List;
+
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IGratuitySituation;
 import Dominio.IStudentCurricularPlan;
 
@@ -14,4 +17,5 @@ import Dominio.IStudentCurricularPlan;
 public interface IPersistentGratuitySituation extends IPersistentObject
 {
 	public IGratuitySituation readGratuitySituatuionByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+	public List readGratuitySituationsByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 }

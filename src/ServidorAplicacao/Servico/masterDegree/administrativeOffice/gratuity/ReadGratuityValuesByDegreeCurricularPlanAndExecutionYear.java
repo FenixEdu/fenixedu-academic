@@ -4,6 +4,12 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import DataBeans.InfoGratuityValues;
 import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
@@ -11,6 +17,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IGratuityValues;
+import Dominio.IPaymentPhase;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -18,6 +25,7 @@ import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGratuityValues;
+import ServidorPersistente.IPersistentPaymentPhase;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -64,6 +72,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 
 		ISuportePersistente sp = null;
 		IGratuityValues gratuityValues = null;
+		List infoPaymentPhases = null;
 		try
 		{
 			sp = SuportePersistenteOJB.getInstance();
@@ -82,10 +91,19 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 
 			//read execution degree's gratuity values
-			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGrtuityValues();
+			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 			gratuityValues =
 				persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
-
+			if (gratuityValues != null)
+			{
+				//read payment phases for this gratuity value
+				IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
+				List paymentPhases = persistentPaymentPhase.readByGratuityValues(gratuityValues);
+				if (paymentPhases != null)
+				{
+				}
+			}
+			
 		}
 		catch (ExcepcaoPersistencia e)
 		{
@@ -97,6 +115,19 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 		if (gratuityValues != null)
 		{
 			infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
+			
+			infoPaymentPhases = new ArrayList();
+			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer()
+					{
+				public Object transform(Object input)
+				{
+					IPaymentPhase paymentPhase = (IPaymentPhase) input;
+					return Cloner.copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
+				}
+			}, infoPaymentPhases);
+			
+			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
+
 		}
 
 		return infoGratuityValues;

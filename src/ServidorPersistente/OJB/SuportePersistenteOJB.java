@@ -1021,7 +1021,7 @@ public class SuportePersistenteOJB
 		return new CreditsOJB();
 	}
 	
-	public IPersistentGratuityValues getIPersistentGrtuityValues() {
+	public IPersistentGratuityValues getIPersistentGratuityValues() {
 		return new GratuityValuesOJB();
 	}
 	public IPersistentGratuitySituation getIPersistentGratuitySituation() {

@@ -1363,7 +1363,7 @@
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="false">
+		proxy="true">
 		<inverse-foreignkey field-ref="keyGratuityValues"/>
 	 </collection-descriptor>   
 </class-descriptor>  

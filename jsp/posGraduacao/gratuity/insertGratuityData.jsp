@@ -10,12 +10,14 @@
 	<html:hidden property="page" value="2"/>
 	<html:hidden property="executionYear"/>
 	<html:hidden property="degree"/>
+	<html:hidden property="degreeName"/>
 	<html:hidden property="specializationArea"/>	
+	<html:hidden property="gratuityId"/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
 				<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>
-				<bean:define id="degreeLabel"><%=pageContext.findAttribute("degree")%></bean:define>
+				<bean:define id="degreeLabel"><%=pageContext.findAttribute("degreeName")%></bean:define>
 				<b><bean:message key="label.masterDegree.gratuity.executionYear" />:</b>&nbsp;<bean:write name="executionYearLabel" /><br />
 				<b><bean:message key="label.qualification.degree"/>:</b>&nbsp;<bean:write name="degreeLabel"/>
 <%--				<bean:define id="labelSpecializationArea"><%=pageContext.findAttribute("specializationArea")%></bean:define>
