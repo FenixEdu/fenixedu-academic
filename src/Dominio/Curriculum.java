@@ -16,16 +16,26 @@ public class Curriculum extends DomainObject implements ICurriculum {
 	protected String generalObjectivesEn;
 	protected String operacionalObjectivesEn;
 	protected String programEn;
+	protected String evaluationElements;
+	protected String evaluationElementsEn;
 	protected ICurricularCourse curricularCourse;
 	private Integer keyCurricularCourse;
+	/**
+	 * @return
+	 */
+
 	/** Creates a new instance of Curriculum */
 	public Curriculum() {
 	}
-	
+
 	public Curriculum(Integer idInternal) {
 		setIdInternal(idInternal);
-		}
-	public Curriculum(ICurricularCourse curricularCourse, String generalObjectives, String operacionalObjectives, String program) {
+	}
+	public Curriculum(
+		ICurricularCourse curricularCourse,
+		String generalObjectives,
+		String operacionalObjectives,
+		String program) {
 		setGeneralObjectives(generalObjectives);
 		setOperacionalObjectives(operacionalObjectives);
 		setProgram(program);
@@ -43,12 +53,37 @@ public class Curriculum extends DomainObject implements ICurriculum {
 		setOperacionalObjectivesEn(operacionalObjectivesEn);
 		setCurricularCourse(curricularCourse);
 	}
-	public Curriculum(ICurricularCourse curricularCourse, String program, String programEn) {
+	public Curriculum(
+		ICurricularCourse curricularCourse,
+		String program,
+		String programEn) {
 		setProgram(program);
 		setProgramEn(programEn);
 		setCurricularCourse(curricularCourse);
 	}
-	
+
+	public String getEvaluationElements() {
+		return evaluationElements;
+	}
+	/**
+	 * @param evaluationElements
+	 */
+	public void setEvaluationElements(String evaluationElements) {
+		this.evaluationElements = evaluationElements;
+	}
+	/**
+	 * @return
+	 */
+	public String getEvaluationElementsEn() {
+		return evaluationElementsEn;
+	}
+	/**
+	 * @param evaluationElementsEn
+	 */
+	public void setEvaluationElementsEn(String evaluationElementsEn) {
+		this.evaluationElementsEn = evaluationElementsEn;
+	}
+
 	public Integer getKeyCurricularCourse() {
 		return keyCurricularCourse;
 	}
@@ -83,7 +118,8 @@ public class Curriculum extends DomainObject implements ICurriculum {
 		boolean result = false;
 		if (obj instanceof ICurriculum) {
 			ICurriculum curriculum = (ICurriculum) obj;
-			result = getCurricularCourse().equals(curriculum.getCurricularCourse());
+			result =
+				getCurricularCourse().equals(curriculum.getCurricularCourse());
 		}
 		return result;
 	}
@@ -93,7 +129,8 @@ public class Curriculum extends DomainObject implements ICurriculum {
 		result += "Objectivos Operacionais" + getOperacionalObjectives();
 		result += "Objectivos gerais" + getGeneralObjectives();
 		result += "programa" + getProgram();
-		result += "Objectivos Operacionais em Inglês" + getOperacionalObjectivesEn();
+		result += "Objectivos Operacionais em Inglês"
+			+ getOperacionalObjectivesEn();
 		result += "Objectivos gerais em Inglês" + getGeneralObjectivesEn();
 		result += "programa em Inglês" + getProgramEn();
 		result += "curricular Course" + getCurricularCourse();
