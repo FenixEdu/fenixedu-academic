@@ -12,22 +12,23 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  * @author jmota
  */
 import org.apache.commons.beanutils.BeanUtils;
+
+import DataBeans.gesdis.AnnouncementView;
+import DataBeans.gesdis.SiteView;
 import Dominio.IAnnouncement;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.gesdis.AnnouncementView;
-import ServidorAplicacao.Servico.gesdis.SiteView;
 import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class DeleteAnnouncement implements IServico {
 
-	private static DeleteAnnouncement _servico = new DeleteAnnouncement();
+	private static DeleteAnnouncement service = new DeleteAnnouncement();
 
 	public static DeleteAnnouncement getService() {
 
-		return _servico;
+		return service;
 
 	}
 
