@@ -1,12 +1,12 @@
-# MySQL dump 8.14
-#
-# Host: localhost    Database: fenix
-#--------------------------------------------------------
-# Server version	3.23.39-max-nt
+-- MySQL dump 8.14
+--
+-- Host: localhost    Database: fenix
+----------------------------------------------------------
+-- Server version	3.23.39-max-nt
 
-#
-# Table structure for table 'ass_CARGO'
-#
+--
+-- Table structure for table 'ass_CARGO'
+--
 
 DROP TABLE IF EXISTS ass_CARGO;
 CREATE TABLE ass_CARGO (
@@ -15,9 +15,9 @@ CREATE TABLE ass_CARGO (
   PRIMARY KEY  (chaveCargo)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_CARGO'
-#
+--
+-- Dumping data for table 'ass_CARGO'
+--
 
 INSERT INTO ass_CARGO VALUES (1,'ALUNO');
 INSERT INTO ass_CARGO VALUES (2,'FUNCDOCENTE');
@@ -26,9 +26,9 @@ INSERT INTO ass_CARGO VALUES (4,'FUNCNAODOCENTE');
 INSERT INTO ass_CARGO VALUES (5,'GestaoAssiduidade');
 INSERT INTO ass_CARGO VALUES (6,'ConsultaAssiduidade');
 
-#
-# Table structure for table 'ass_CARGO_URL'
-#
+--
+-- Table structure for table 'ass_CARGO_URL'
+--
 
 DROP TABLE IF EXISTS ass_CARGO_URL;
 CREATE TABLE ass_CARGO_URL (
@@ -37,9 +37,9 @@ CREATE TABLE ass_CARGO_URL (
   PRIMARY KEY  (chaveCargo,chaveUrl)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_CARGO_URL'
-#
+--
+-- Dumping data for table 'ass_CARGO_URL'
+--
 
 INSERT INTO ass_CARGO_URL VALUES (1,1);
 INSERT INTO ass_CARGO_URL VALUES (2,1);
@@ -51,9 +51,9 @@ INSERT INTO ass_CARGO_URL VALUES (3,5);
 INSERT INTO ass_CARGO_URL VALUES (3,6);
 INSERT INTO ass_CARGO_URL VALUES (4,3);
 
-#
-# Table structure for table 'ass_CARTAO'
-#
+--
+-- Table structure for table 'ass_CARTAO'
+--
 
 DROP TABLE IF EXISTS ass_CARTAO;
 CREATE TABLE ass_CARTAO (
@@ -68,17 +68,17 @@ CREATE TABLE ass_CARTAO (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_CARTAO'
+--
+-- Dumping data for table 'ass_CARTAO'
 INSERT INTO ass_CARTAO VALUES (1,5592,1,'2003-01-01 00:00:00','2036-01-01 00:00:00',2036,'2003-02-13 11:34:56','invalido');
 INSERT INTO ass_CARTAO VALUES (2,900889,1,'2003-02-13 09:00:00','2003-12-31 23:59:00',2036,'2003-02-13 18:28:26','atribuido');
 
-#
+--
 
 
-#
-# Table structure for table 'ass_CENTRO_CUSTO'
-#
+--
+-- Table structure for table 'ass_CENTRO_CUSTO'
+--
 
 DROP TABLE IF EXISTS ass_CENTRO_CUSTO;
 CREATE TABLE ass_CENTRO_CUSTO (
@@ -91,9 +91,9 @@ CREATE TABLE ass_CENTRO_CUSTO (
   UNIQUE KEY sigla (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_CENTRO_CUSTO'
-#
+--
+-- Dumping data for table 'ass_CENTRO_CUSTO'
+--
 
 INSERT INTO ass_CENTRO_CUSTO VALUES (1,'0321','SERVIÇOS MATERIAIS E HUMANOS','REPARTICAO DE RECURSOS HUMANOS','SEC. PESSOAL DOC. E INVESTIGADOR');
 INSERT INTO ass_CENTRO_CUSTO VALUES (2,'','','','');
@@ -249,9 +249,9 @@ INSERT INTO ass_CENTRO_CUSTO VALUES (151,'1604','','INST.CIENCIA E ENG.MATERIAIS
 INSERT INTO ass_CENTRO_CUSTO VALUES (152,'1711','','CENTRO AMBIENTE E TECN.MARITIMOS','');
 INSERT INTO ass_CENTRO_CUSTO VALUES (153,'1102','','CENTRO DE ESTUDOS E HIDROSISTEMAS','');
 
-#
-# Table structure for table 'ass_FERIADO'
-#
+--
+-- Table structure for table 'ass_FERIADO'
+--
 
 DROP TABLE IF EXISTS ass_FERIADO;
 CREATE TABLE ass_FERIADO (
@@ -263,9 +263,9 @@ CREATE TABLE ass_FERIADO (
   UNIQUE KEY u1 (tipoFeriado,data)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_FERIADO'
-#
+--
+-- Dumping data for table 'ass_FERIADO'
+--
 
 INSERT INTO ass_FERIADO VALUES (1,'FIXO','Dia de Ano Novo','2003-01-01');
 INSERT INTO ass_FERIADO VALUES (2,'FIXO','Dia da Liberdade','2003-04-25');
@@ -294,9 +294,9 @@ INSERT INTO ass_FERIADO VALUES (28,'MOVEL','Dia de Páscoa','2003-04-20');
 INSERT INTO ass_FERIADO VALUES (29,'MOVEL','Dia de Sexta-feira Santa','2003-04-18');
 INSERT INTO ass_FERIADO VALUES (31,'MOVEL','Dia de Corpo de Deus','2003-06-19');
 
-#
-# Table structure for table 'ass_FERIAS'
-#
+--
+-- Table structure for table 'ass_FERIAS'
+--
 
 DROP TABLE IF EXISTS ass_FERIAS;
 CREATE TABLE ass_FERIAS (
@@ -316,14 +316,14 @@ CREATE TABLE ass_FERIAS (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_FERIAS'
-#
+--
+-- Dumping data for table 'ass_FERIAS'
+--
 
 
-#
-# Table structure for table 'ass_FUNC_NAO_DOCENTE'
-#
+--
+-- Table structure for table 'ass_FUNC_NAO_DOCENTE'
+--
 
 DROP TABLE IF EXISTS ass_FUNC_NAO_DOCENTE;
 CREATE TABLE ass_FUNC_NAO_DOCENTE (
@@ -333,15 +333,15 @@ CREATE TABLE ass_FUNC_NAO_DOCENTE (
   UNIQUE KEY u1 (chaveFuncionario)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_FUNC_NAO_DOCENTE'
-#
+--
+-- Dumping data for table 'ass_FUNC_NAO_DOCENTE'
+--
 
 INSERT INTO ass_FUNC_NAO_DOCENTE VALUES (1,1);
 
-#
-# Table structure for table 'ass_FUNCIONARIO'
-#
+--
+-- Table structure for table 'ass_FUNCIONARIO'
+--
 
 DROP TABLE IF EXISTS ass_FUNCIONARIO;
 CREATE TABLE ass_FUNCIONARIO (
@@ -365,14 +365,14 @@ CREATE TABLE ass_FUNCIONARIO (
   UNIQUE KEY u1 (numeroMecanografico)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_FUNCIONARIO'
-#
+--
+-- Dumping data for table 'ass_FUNCIONARIO'
+--
 INSERT INTO ass_FUNCIONARIO VALUES (1,11,5592,1078,'1970-01-01',0,0,92,0,'LISBOA',1,'1970-01-01','1970-01-01',0,'1970-01-01 01:00:00');
 
-#
-# Table structure for table 'ass_HORARIO'
-#
+--
+-- Table structure for table 'ass_HORARIO'
+--
 
 DROP TABLE IF EXISTS ass_HORARIO;
 CREATE TABLE ass_HORARIO (
@@ -405,17 +405,17 @@ CREATE TABLE ass_HORARIO (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
 
-#
-# Dumping data for table 'ass_HORARIO'
-#
+--
+-- Dumping data for table 'ass_HORARIO'
+--
 INSERT INTO ass_HORARIO VALUES (1077,3,1,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2003-01-01','2003-03-04',5,2,0,'2003-05-04 23:14:56');
 INSERT INTO ass_HORARIO VALUES (1078,7,1,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2003-03-05',NULL,5,2,0,'2003-05-04 23:14:56');
 
 
 
-#
-# Table structure for table 'ass_HORARIO_EXCEPCAO'
-#
+--
+-- Table structure for table 'ass_HORARIO_EXCEPCAO'
+--
 
 DROP TABLE IF EXISTS ass_HORARIO_EXCEPCAO;
 CREATE TABLE ass_HORARIO_EXCEPCAO (
@@ -448,14 +448,14 @@ CREATE TABLE ass_HORARIO_EXCEPCAO (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
 
-#
-# Dumping data for table 'ass_HORARIO_EXCEPCAO'
-#
+--
+-- Dumping data for table 'ass_HORARIO_EXCEPCAO'
+--
 
 
-#
-# Table structure for table 'ass_HORARIO_REGIME'
-#
+--
+-- Table structure for table 'ass_HORARIO_REGIME'
+--
 
 DROP TABLE IF EXISTS ass_HORARIO_REGIME;
 CREATE TABLE ass_HORARIO_REGIME (
@@ -464,14 +464,14 @@ CREATE TABLE ass_HORARIO_REGIME (
   PRIMARY KEY  (chaveHorario,chaveRegime)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_HORARIO_REGIME'
-#
+--
+-- Dumping data for table 'ass_HORARIO_REGIME'
+--
 
 
-#
-# Table structure for table 'ass_HORARIO_TIPO'
-#
+--
+-- Table structure for table 'ass_HORARIO_TIPO'
+--
 
 DROP TABLE IF EXISTS ass_HORARIO_TIPO;
 CREATE TABLE ass_HORARIO_TIPO (
@@ -497,9 +497,9 @@ CREATE TABLE ass_HORARIO_TIPO (
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
 
-#
-# Dumping data for table 'ass_HORARIO_TIPO'
-#
+--
+-- Dumping data for table 'ass_HORARIO_TIPO'
+--
 
 INSERT INTO ass_HORARIO_TIPO VALUES (1,'1/2S35IF','meioTempo',17.5,NULL,NULL,NULL,NULL,'1970-01-01 09:00:00','1970-01-01 12:30:00',NULL,NULL,NULL,NULL,NULL,NULL,'1970-01-01 07:00:00','1970-01-01 20:00:00');
 INSERT INTO ass_HORARIO_TIPO VALUES (2,'S35GA','flexivel',35,'1970-01-01 09:30:00','1970-01-01 11:30:00','1970-01-01 14:00:00','1970-01-01 16:00:00','1970-01-01 09:00:00','1970-01-01 12:30:00','1970-01-01 13:30:00','1970-01-01 17:00:00','1970-01-01 11:30:00','1970-01-01 14:00:00','01:00:00','00:01:00','1970-01-01 07:00:00','1970-01-01 23:59:00');
@@ -565,9 +565,9 @@ INSERT INTO ass_HORARIO_TIPO VALUES (61,'S35R1IFTE','especifico',30,NULL,NULL,NU
 INSERT INTO ass_HORARIO_TIPO VALUES (62,'S35R1JBTE','especifico',30,'1970-01-01 10:00:00','1970-01-01 12:00:00','1970-01-01 14:00:00','1970-01-01 16:00:00','1970-01-01 09:00:00','1970-01-01 12:30:00','1970-01-01 13:30:00','1970-01-01 16:00:00','1970-01-01 12:00:00','1970-01-01 14:00:00','01:00:00','00:01:00','1970-01-01 07:00:00','1970-01-01 23:59:00');
 INSERT INTO ass_HORARIO_TIPO VALUES (63,'S35R1JCTE','especifico',30,'1970-01-01 10:30:00','1970-01-01 12:30:00','1970-01-01 14:30:00','1970-01-01 16:30:00','1970-01-01 09:30:00','1970-01-01 12:30:00','1970-01-01 13:30:00','1970-01-01 16:30:00','1970-01-01 12:30:00','1970-01-01 14:30:00','01:00:00','00:01:00','1970-01-01 07:00:00','1970-01-01 23:59:00');
 
-#
-# Table structure for table 'ass_HORARIOEXCEPCAO_REGIME'
-#
+--
+-- Table structure for table 'ass_HORARIOEXCEPCAO_REGIME'
+--
 
 DROP TABLE IF EXISTS ass_HORARIOEXCEPCAO_REGIME;
 CREATE TABLE ass_HORARIOEXCEPCAO_REGIME (
@@ -576,14 +576,14 @@ CREATE TABLE ass_HORARIOEXCEPCAO_REGIME (
   PRIMARY KEY  (chaveHorario,chaveRegime)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_HORARIOEXCEPCAO_REGIME'
-#
+--
+-- Dumping data for table 'ass_HORARIOEXCEPCAO_REGIME'
+--
 
 
-#
-# Table structure for table 'ass_HORARIOTIPO_REGIME'
-#
+--
+-- Table structure for table 'ass_HORARIOTIPO_REGIME'
+--
 
 DROP TABLE IF EXISTS ass_HORARIOTIPO_REGIME;
 CREATE TABLE ass_HORARIOTIPO_REGIME (
@@ -592,9 +592,9 @@ CREATE TABLE ass_HORARIOTIPO_REGIME (
   PRIMARY KEY  (chaveHorarioTipo,chaveRegime)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_HORARIOTIPO_REGIME'
-#
+--
+-- Dumping data for table 'ass_HORARIOTIPO_REGIME'
+--
 
 INSERT INTO ass_HORARIOTIPO_REGIME VALUES (1,1);
 INSERT INTO ass_HORARIOTIPO_REGIME VALUES (1,3);
@@ -692,9 +692,9 @@ INSERT INTO ass_HORARIOTIPO_REGIME VALUES (61,3);
 INSERT INTO ass_HORARIOTIPO_REGIME VALUES (62,2);
 INSERT INTO ass_HORARIOTIPO_REGIME VALUES (63,2);
 
-#
-# Table structure for table 'ass_JUSTIFICACAO'
-#
+--
+-- Table structure for table 'ass_JUSTIFICACAO'
+--
 
 DROP TABLE IF EXISTS ass_JUSTIFICACAO;
 CREATE TABLE ass_JUSTIFICACAO (
@@ -711,18 +711,18 @@ CREATE TABLE ass_JUSTIFICACAO (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_JUSTIFICACAO'
-#
+--
+-- Dumping data for table 'ass_JUSTIFICACAO'
+--
 INSERT INTO ass_JUSTIFICACAO VALUES (44462,27,1,'2003-05-19','11:00:00','2003-05-19','13:00:00',NULL,1796,'2003-05-26 15:26:29');
 INSERT INTO ass_JUSTIFICACAO VALUES (44463,45,1,'2003-05-20','11:00:00','2003-05-20','12:00:00',NULL,1796,'2003-05-26 15:29:42');
 INSERT INTO ass_JUSTIFICACAO VALUES (91752,27,1,'2003-05-19','11:00:00','2003-05-19','13:00:00',NULL,1796,'2003-05-26 15:26:29');
 INSERT INTO ass_JUSTIFICACAO VALUES (91753,45,1,'2003-05-20','11:00:00','2003-05-20','12:00:00',NULL,1796,'2003-05-26 15:29:42');
 
 
-#
-# Table structure for table 'ass_MARCACAO_PONTO'
-#
+--
+-- Table structure for table 'ass_MARCACAO_PONTO'
+--
 
 DROP TABLE IF EXISTS ass_MARCACAO_PONTO;
 CREATE TABLE ass_MARCACAO_PONTO (
@@ -736,14 +736,14 @@ CREATE TABLE ass_MARCACAO_PONTO (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_MARCACAO_PONTO'
-#
+--
+-- Dumping data for table 'ass_MARCACAO_PONTO'
+--
 
 
-#
-# Table structure for table 'ass_MODALIDADE'
-#
+--
+-- Table structure for table 'ass_MODALIDADE'
+--
 
 DROP TABLE IF EXISTS ass_MODALIDADE;
 CREATE TABLE ass_MODALIDADE (
@@ -753,9 +753,9 @@ CREATE TABLE ass_MODALIDADE (
   UNIQUE KEY u1 (designacao)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_MODALIDADE'
-#
+--
+-- Dumping data for table 'ass_MODALIDADE'
+--
 
 INSERT INTO ass_MODALIDADE VALUES (5,'desfasado');
 INSERT INTO ass_MODALIDADE VALUES (2,'especifico');
@@ -765,9 +765,9 @@ INSERT INTO ass_MODALIDADE VALUES (4,'jornadaContinua');
 INSERT INTO ass_MODALIDADE VALUES (7,'meioTempo');
 INSERT INTO ass_MODALIDADE VALUES (3,'turnos');
 
-#
-# Table structure for table 'ass_PAISES'
-#
+--
+-- Table structure for table 'ass_PAISES'
+--
 
 DROP TABLE IF EXISTS ass_PAISES;
 CREATE TABLE ass_PAISES (
@@ -780,9 +780,9 @@ CREATE TABLE ass_PAISES (
   UNIQUE KEY U1 (codigoPais)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_PAISES'
-#
+--
+-- Dumping data for table 'ass_PAISES'
+--
 
 INSERT INTO ass_PAISES VALUES (1,1,'PORTUGAL','PORTUGUESA','PT');
 INSERT INTO ass_PAISES VALUES (2,2,'ESTRANGEIR','ESTRANGEIRA','');
@@ -833,9 +833,9 @@ INSERT INTO ass_PAISES VALUES (46,63,'COLOMBIA','COLOMBIANA','CO');
 INSERT INTO ass_PAISES VALUES (47,64,'ESLOVÁQUIA','ESLOVACO','SK');
 INSERT INTO ass_PAISES VALUES (48,65,'CHINA','CHINÊS','CN');
 
-#
-# Table structure for table 'ass_PARAM_FERIAS'
-#
+--
+-- Table structure for table 'ass_PARAM_FERIAS'
+--
 
 DROP TABLE IF EXISTS ass_PARAM_FERIAS;
 CREATE TABLE ass_PARAM_FERIAS (
@@ -846,9 +846,9 @@ CREATE TABLE ass_PARAM_FERIAS (
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_PARAM_FERIAS'
-#
+--
+-- Dumping data for table 'ass_PARAM_FERIAS'
+--
 
 INSERT INTO ass_PARAM_FERIAS VALUES (1,'FER','férias normais (artigo 2 DL 100/99)');
 INSERT INTO ass_PARAM_FERIAS VALUES (2,'FEB','férias por época baixa (artigo 7 DL 100/99)');
@@ -859,9 +859,9 @@ INSERT INTO ass_PARAM_FERIAS VALUES (6,'FTRANS','férias transferidas do ano ante
 INSERT INTO ass_PARAM_FERIAS VALUES (7,'FA42T','férias de antiguidade transferidas do ano anterior');
 INSERT INTO ass_PARAM_FERIAS VALUES (8,'FHET','férias por acréscimo de horas extraordinárias transferidas do ano anterior');
 
-#
-# Table structure for table 'ass_PARAM_JUSTIFICACAO'
-#
+--
+-- Table structure for table 'ass_PARAM_JUSTIFICACAO'
+--
 
 DROP TABLE IF EXISTS ass_PARAM_JUSTIFICACAO;
 CREATE TABLE ass_PARAM_JUSTIFICACAO (
@@ -877,9 +877,9 @@ CREATE TABLE ass_PARAM_JUSTIFICACAO (
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB; InnoDB free:';
 
-#
-# Dumping data for table 'ass_PARAM_JUSTIFICACAO'
-#
+--
+-- Dumping data for table 'ass_PARAM_JUSTIFICACAO'
+--
 
 INSERT INTO ass_PARAM_JUSTIFICACAO VALUES (1,'1/2 FÉR','1/2 dia de Férias (gozo de férias do p. ano)','JH','U','FER COR',0,'0000-00-00 00:00:00');
 INSERT INTO ass_PARAM_JUSTIFICACAO VALUES (2,'1/2A66','1/2 dia de Artº66','JH','U','FER COR',0,'0000-00-00 00:00:00');
@@ -954,9 +954,9 @@ INSERT INTO ass_PARAM_JUSTIFICACAO VALUES (70,'LMAR','Licença de Maternidade Alt
 INSERT INTO ass_PARAM_JUSTIFICACAO VALUES (71,'L.PAT','Licença  Parental por 15 dias','OC','T','DOENCAS',0,'0000-00-00 00:00:00');
 INSERT INTO ass_PARAM_JUSTIFICACAO VALUES (72,'1/2GREVE','1/2 dia de Greve','JH','U',NULL,0,'0000-00-00 00:00:00');
 
-#
-# Table structure for table 'ass_PARAM_REGULARIZACAO'
-#
+--
+-- Table structure for table 'ass_PARAM_REGULARIZACAO'
+--
 
 DROP TABLE IF EXISTS ass_PARAM_REGULARIZACAO;
 CREATE TABLE ass_PARAM_REGULARIZACAO (
@@ -969,9 +969,9 @@ CREATE TABLE ass_PARAM_REGULARIZACAO (
   UNIQUE KEY u1 (sigla)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_PARAM_REGULARIZACAO'
-#
+--
+-- Dumping data for table 'ass_PARAM_REGULARIZACAO'
+--
 
 INSERT INTO ass_PARAM_REGULARIZACAO VALUES (1,'CR','Cartão Rejeitado',0,'0000-00-00 00:00:00');
 INSERT INTO ass_PARAM_REGULARIZACAO VALUES (2,'CURSO','Curso de Formação',0,'0000-00-00 00:00:00');
@@ -981,9 +981,9 @@ INSERT INTO ass_PARAM_REGULARIZACAO VALUES (5,'FME','Falta por Esquecimento',0,'
 INSERT INTO ass_PARAM_REGULARIZACAO VALUES (6,'MA','Marcação a anular',0,'0000-00-00 00:00:00');
 INSERT INTO ass_PARAM_REGULARIZACAO VALUES (7,'SE','Serviço Externo',0,'0000-00-00 00:00:00');
 
-#
-# Table structure for table 'ass_PERIODO_FERIAS'
-#
+--
+-- Table structure for table 'ass_PERIODO_FERIAS'
+--
 
 DROP TABLE IF EXISTS ass_PERIODO_FERIAS;
 CREATE TABLE ass_PERIODO_FERIAS (
@@ -998,14 +998,14 @@ CREATE TABLE ass_PERIODO_FERIAS (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_PERIODO_FERIAS'
-#
+--
+-- Dumping data for table 'ass_PERIODO_FERIAS'
+--
 
 
-#
-# Table structure for table 'ass_PESSOA'
-#
+--
+-- Table structure for table 'ass_PESSOA'
+--
 
 DROP TABLE IF EXISTS ass_PESSOA;
 CREATE TABLE ass_PESSOA (
@@ -1046,15 +1046,15 @@ CREATE TABLE ass_PESSOA (
   UNIQUE KEY U1 (numeroDocumentoIdentificacao,tipoDocumentoIdentificacao)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_PESSOA'
-#
+--
+-- Dumping data for table 'ass_PESSOA'
+--
 
 INSERT INTO ass_PESSOA VALUES (3,'11526317',1,'LISBOA','2003-05-01','2003-05-01','FERNANDA TÂNIA ASSIDUIDADE',8,10,'2003-05-01','NOME DO PAI','NOME DA MAE','Portuguesa','Freguesia','Concelho','Distrito','Morada','localidade','0000-000','Localidade Codigo Postal','Frequesia morada','Concelho morada','Distrito morada','4544645592','4544645592','ciapl-fernanda@rnl.ist.utl.pt','','4544645592','ALUNAS LEIC','5592','11526317',1,'');
 
-#
-# Table structure for table 'ass_PESSOA_CARGO'
-#
+--
+-- Table structure for table 'ass_PESSOA_CARGO'
+--
 
 DROP TABLE IF EXISTS ass_PESSOA_CARGO;
 CREATE TABLE ass_PESSOA_CARGO (
@@ -1063,15 +1063,15 @@ CREATE TABLE ass_PESSOA_CARGO (
   PRIMARY KEY  (chavePessoa,chaveCargo)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_PESSOA_CARGO'
-#
+--
+-- Dumping data for table 'ass_PESSOA_CARGO'
+--
 
 INSERT INTO ass_PESSOA_CARGO VALUES (3,5);
 
-#
-# Table structure for table 'ass_REGIME'
-#
+--
+-- Table structure for table 'ass_REGIME'
+--
 
 DROP TABLE IF EXISTS ass_REGIME;
 CREATE TABLE ass_REGIME (
@@ -1081,9 +1081,9 @@ CREATE TABLE ass_REGIME (
   UNIQUE KEY u1 (designacao)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_REGIME'
-#
+--
+-- Dumping data for table 'ass_REGIME'
+--
 
 INSERT INTO ass_REGIME VALUES (6,'aleitacao');
 INSERT INTO ass_REGIME VALUES (5,'amamentacao');
@@ -1095,9 +1095,9 @@ INSERT INTO ass_REGIME VALUES (8,'motivosSaude');
 INSERT INTO ass_REGIME VALUES (1,'normal');
 INSERT INTO ass_REGIME VALUES (2,'trabalhadorEstudante');
 
-#
-# Table structure for table 'ass_REGULARIZACAO_MARCACAO'
-#
+--
+-- Table structure for table 'ass_REGULARIZACAO_MARCACAO'
+--
 
 DROP TABLE IF EXISTS ass_REGULARIZACAO_MARCACAO;
 CREATE TABLE ass_REGULARIZACAO_MARCACAO (
@@ -1110,15 +1110,15 @@ CREATE TABLE ass_REGULARIZACAO_MARCACAO (
   UNIQUE KEY u1 (chaveMarcacaoPonto)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_REGULARIZACAO_MARCACAO'
-#
+--
+-- Dumping data for table 'ass_REGULARIZACAO_MARCACAO'
+--
 
 
 
-#
-# Table structure for table 'ass_STATUS'
-#
+--
+-- Table structure for table 'ass_STATUS'
+--
 
 DROP TABLE IF EXISTS ass_STATUS;
 CREATE TABLE ass_STATUS (
@@ -1131,9 +1131,9 @@ CREATE TABLE ass_STATUS (
   UNIQUE KEY u1 (designacao)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_STATUS'
-#
+--
+-- Dumping data for table 'ass_STATUS'
+--
 
 INSERT INTO ass_STATUS VALUES (1,'CONTRATADO','Contratado','activo','true');
 INSERT INTO ass_STATUS VALUES (2,'APOSENTAD0','Aposentado','inactivo','false');
@@ -1152,9 +1152,9 @@ INSERT INTO ass_STATUS VALUES (14,'RESCOTECER','Rescisão de Contrato a Termo Cer
 INSERT INTO ass_STATUS VALUES (15,'MUDREGIM','Mudança de Regime','pendente','false');
 
 
-#
-# Table structure for table 'ass_UNIDADE_MARCACAO'
-#
+--
+-- Table structure for table 'ass_UNIDADE_MARCACAO'
+--
 
 DROP TABLE IF EXISTS ass_UNIDADE_MARCACAO;
 CREATE TABLE ass_UNIDADE_MARCACAO (
@@ -1165,9 +1165,9 @@ CREATE TABLE ass_UNIDADE_MARCACAO (
   PRIMARY KEY  (codigoInterno)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_UNIDADE_MARCACAO'
-#
+--
+-- Dumping data for table 'ass_UNIDADE_MARCACAO'
+--
 
 INSERT INTO ass_UNIDADE_MARCACAO VALUES (1,'TM_MEST','Pavilhão de Mestrado',10001);
 INSERT INTO ass_UNIDADE_MARCACAO VALUES (2,'TM_CENTR','Pavilhão Central',10002);
@@ -1178,9 +1178,9 @@ INSERT INTO ass_UNIDADE_MARCACAO VALUES (6,'TM_COMP','Complexo',10006);
 INSERT INTO ass_UNIDADE_MARCACAO VALUES (7,'TM_MINAS','Pavilhão de Minas',10007);
 INSERT INTO ass_UNIDADE_MARCACAO VALUES (8,'TM_QUIM','Pavilhão de Quimica',10008);
 
-#
-# Table structure for table 'ass_URL'
-#
+--
+-- Table structure for table 'ass_URL'
+--
 
 DROP TABLE IF EXISTS ass_URL;
 CREATE TABLE ass_URL (
@@ -1189,9 +1189,9 @@ CREATE TABLE ass_URL (
   PRIMARY KEY  (chaveUrl)
 ) TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
 
-#
-# Dumping data for table 'ass_URL'
-#
+--
+-- Dumping data for table 'ass_URL'
+--
 
 INSERT INTO ass_URL VALUES (1,'dadosEditar');
 INSERT INTO ass_URL VALUES (2,'dadosCriar');
