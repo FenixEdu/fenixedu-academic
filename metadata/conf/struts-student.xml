@@ -200,6 +200,7 @@
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
     	<forward name="prepareShiftEnrollment" path="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment" />
     	<forward name="showShiftsToEnroll" path="show-shifts-to-enroll" />
+    	<forward name="prepareEnrollmentViewWarning" path="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning"/>
       </action>
       
 	  <action path="/enrollStudentInShifts"

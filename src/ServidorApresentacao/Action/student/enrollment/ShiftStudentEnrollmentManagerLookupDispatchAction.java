@@ -346,13 +346,18 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends
     {
         return mapping.findForward("studentFirstPage");
     }
+    
+    public ActionForward prepareStartViewWarning(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return mapping.findForward("prepareEnrollmentViewWarning");
+    }
 
     protected Map getKeyMethodMap()
     {
         Map map = new HashMap();
         map.put("button.addCourse", "addCourses");
         map.put("button.removeCourse", "removeCourses");
-        map.put("button.continue.enrolment", "proceedToShiftEnrolment");
+        map.put("button.continue.enrolment", "prepareStartViewWarning");
         map.put("button.exit.enrollment", "exitEnrollment");
         map.put("label.class", "proceedToShiftEnrolment");
         map.put("link.shift.enrolement.edit", "proceedToShiftEnrolment");
