@@ -7,7 +7,7 @@ import org.apache.commons.collections.Transformer;
 import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @author Fernanda Quitério

@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.RoleType;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @author João Mota

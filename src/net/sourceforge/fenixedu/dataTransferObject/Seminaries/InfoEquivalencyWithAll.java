@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @author Fernanda Quitério

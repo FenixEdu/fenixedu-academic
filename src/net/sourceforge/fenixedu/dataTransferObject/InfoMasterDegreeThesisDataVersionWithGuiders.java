@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import org.apache.commons.collections.Transformer;
-
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.ITeacher;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author Fernanda Quitério Created on 6/Set/2004

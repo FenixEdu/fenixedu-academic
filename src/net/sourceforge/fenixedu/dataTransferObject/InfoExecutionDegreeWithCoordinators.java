@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import org.apache.commons.collections.Transformer;
-
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author Fernanda Quitério Created on 27/Jul/2004

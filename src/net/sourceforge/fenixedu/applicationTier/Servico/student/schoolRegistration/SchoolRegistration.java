@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.commons.collections.Predicate;
-
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.ICountry;
@@ -23,9 +23,6 @@ import net.sourceforge.fenixedu.domain.student.IPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.IResidenceCandidancies;
 import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -38,7 +35,10 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.RoleType;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Nuno Correia

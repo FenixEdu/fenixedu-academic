@@ -6,16 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico.inquiries;
 
 import java.util.List;
 
-import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author João Fialho & Rita Ferreira

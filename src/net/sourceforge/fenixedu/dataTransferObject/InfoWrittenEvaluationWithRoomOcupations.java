@@ -11,7 +11,7 @@ import org.apache.commons.collections.Transformer;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @author Tânia Pousão
