@@ -4,7 +4,6 @@
  */
 package Dominio;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * @author jpvl

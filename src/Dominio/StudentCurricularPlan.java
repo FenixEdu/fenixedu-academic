@@ -10,7 +10,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.degree.enrollment.INotNeedToEnrollInCurricularCourse;
-import Dominio.degree.enrollment.rules.IEnrollmentRule;
 import Dominio.enrollment.CurricularCourse2Enroll;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
