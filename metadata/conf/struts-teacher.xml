@@ -1559,6 +1559,19 @@
 		<forward name="successfull-read" path="view-teacher-information"/>
 	  </action>
 	  
+		<!-- ================== USE CASE: View Teacher Credits Sheet ========================== -->
+		<action path="/prepareTeacherCreditsSheet" 
+	  				type="ServidorApresentacao.Action.teacher.credits.PrepareTeacherCreditsSheet">
+			<forward name="successfull-prepare" path="/showTeacherCreditsSheet.do"/>
+	   	</action>
+		
+		<action path="/showTeacherCreditsSheet" 
+	  				type="ServidorApresentacao.Action.credits.ReadTeacherCreditsSheetAction">
+			<forward name="successfull-read" path="showTeacherCreditsSheet"/>
+	   	</action>
+	  
+	  <!-- ======================================================================== -->
+	  
 	</action-mappings>
 
 
