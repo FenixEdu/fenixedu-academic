@@ -14,6 +14,7 @@
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="title" type="java.lang.String"/>
 			<form-property name="information" type="java.lang.String"/>
+			<form-property name="option" type="java.lang.String"/>
 			<form-property name="objectCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
@@ -27,14 +28,6 @@
 			<form-property name="objectCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
-		<form-bean name="testEditionForm"
-			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
-			<form-property name="title" type="java.lang.String"/>
-			<form-property name="information" type="java.lang.String"/>
-			<form-property name="option" type="java.lang.String"/>
-			<form-property name="objectCode" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>
 		<form-bean name="testQuestionForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="testQuestionValue" type="java.lang.String"/>
@@ -42,6 +35,33 @@
 			<form-property name="testQuestionOrder" type="java.lang.String"/>
 			<form-property name="option" type="java.lang.String"/>
 			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="testDistributionForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="testBeginDate" type="java.lang.String"/>
+			<form-property name="testBeginHour" type="java.lang.String"/>
+			<form-property name="testEndDate" type="java.lang.String"/>
+			<form-property name="testEndHour" type="java.lang.String"/>
+			<form-property name="testType" type="java.lang.String" initial="1"/>
+			<form-property name="availableCorrection" type="java.lang.String" initial="1"/>
+			<form-property name="studentFeedback" type="java.lang.String" initial="true"/>
+			<form-property name="selectedShifts" type="java.lang.String" initial="Todos os Alunos"/>
+			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="testCode" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="distributedTestForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="beginDateFormatted" type="java.lang.String"/>
+			<form-property name="beginHourFormatted" type="java.lang.String"/>
+			<form-property name="endDateFormatted" type="java.lang.String"/>
+			<form-property name="endHourFormatted" type="java.lang.String"/>
+			<form-property name="testType" type="java.lang.String"/>
+			<form-property name="availableCorrection" type="java.lang.String"/>
+			<form-property name="studentFeedback" type="java.lang.String"/>
+			<form-property name="objectCode" type="java.lang.String"/>
+			<form-property name="testCode" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		<!-- summary form -->
@@ -230,6 +250,51 @@
         	dynamic="true">
 		</form-bean>	
 
+		<!-- GROUP FORMS  -->
+		<form-bean name="groupPropertiesForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">   
+			<form-property name="name" type="java.lang.String" />     
+			<form-property name="maximumCapacity" type="java.lang.String" />
+			<form-property name="minimumCapacity" type="java.lang.String" />
+			<form-property name="idealCapacity" type="java.lang.String" />
+			<form-property name="enrolmentPolicy" type="java.lang.String" />
+			<form-property name="shiftType" type="java.lang.String" />
+			<form-property name="groupMaximumNumber" type="java.lang.String" />
+			<form-property name="enrolmentBeginDay" type="java.lang.String" />
+			<form-property name="enrolmentEndDay" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+
+		</form-bean>  
+		
+		
+		<form-bean name="groupPropertiesForm1"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">   
+			<form-property name="name" type="java.lang.String" />     
+			<form-property name="maximumCapacity" type="java.lang.String" />
+			<form-property name="minimumCapacity" type="java.lang.String" />
+			<form-property name="idealCapacity" type="java.lang.String" />
+			<form-property name="enrolmentPolicy" type="java.lang.String" />
+			<form-property name="shiftType" type="java.lang.String" />
+			<form-property name="groupMaximumNumber" type="java.lang.String" />
+			<form-property name="enrolmentBeginDayFormatted" type="java.lang.String" />
+			<form-property name="enrolmentEndDayFormatted" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+
+		</form-bean>
+		
+		<form-bean name="studentGroupForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">        
+			<form-property name="groupNumber" type="java.lang.Integer" />
+			<form-property name="studentCodes" type="java.lang.Integer[]" />
+			<form-property name="studentNumbers" type="java.lang.Integer[]" />
+			<form-property name="shifts" type="java.lang.Integer[]" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			
+		</form-bean>
+	
 		<!-- GROUP FORMS  -->
 		<form-bean name="groupPropertiesForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -755,33 +820,29 @@
 				<forward name="createTest" path="/createTest.jsp"/>
 				<forward name="showAvailableQuestions" path="/showAvailableQuestions.jsp"/>
 				<forward name="showTests" path="/showTests.jsp"/>
-				<forward name="insertTestQuestion" path="/insertTestQuestion.jsp"/>
-				<forward name="editTestQuestion" path="/editTestQuestion.jsp"/>
+				<forward name="chooseDeleteTestAction" path="/chooseDeleteTestAction.jsp"/>
 		</action>
 		<action path="/questionsManagement"
 				name="questionForm"
-				input="/testsManagement.do?method=prepareInsertTestQuestion&amp;page=0"
+				input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0"
 				scope="request"
 				parameter="method"
 				type="ServidorApresentacao.Action.teacher.TestsManagementAction"
 				validate="true">
 				<forward name="showAvailableQuestions" path="/showAvailableQuestions.jsp"/>
-				<forward name="editTest" path="/editTest.jsp"/>
 				<forward name="insertTestQuestion" path="/insertTestQuestion.jsp"/>
-				<forward name="editTestQuestion" path="/editTestQuestion.jsp"/>
 		</action>
 		<action path="/testEdition"
-				name="testEditionForm"
+				name="testForm"
 				input="/testEdition.do?method=prepareEditTestHeader&amp;page=0"
 				scope="request"
 				parameter="method"
 				type="ServidorApresentacao.Action.teacher.TestsManagementAction"
 				validate="true">
 				<forward name="editTest" path="/editTest.jsp"/>
-				<forward name="showTests" path="/showTests.jsp"/>
-				<forward name="insertTestQuestion" path="/insertTestQuestion.jsp"/>
-				<forward name="editTestQuestion" path="/editTestQuestion.jsp"/>
 				<forward name="editTestHeader" path="/editTestHeader.jsp"/>
+				<forward name="showTests" path="/showTests.jsp"/>
+				<forward name="chooseEditTestAction" path="/chooseEditTestAction.jsp"/>
 		</action>
 		<action path="/testQuestionEdition"
 				name="testQuestionForm"
@@ -793,7 +854,26 @@
 				<forward name="editTestQuestion" path="/editTestQuestion.jsp"/>
 				<forward name="editTest" path="/editTest.jsp"/>
 		</action>
-		
+		<action path="/testDistribution"
+				name="testDistributionForm"
+				input="/testDistribution.do?method=prepareDistributeTest&amp;page=0"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TestsManagementAction"
+				validate="true">
+				<forward name="distributeTest" path="/distributeTest.jsp"/>
+				<forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
+		</action>
+		<action path="/distributedTestEdition"
+				name="distributedTestForm"
+				input="/distributedTestEdition.do?method=prepareEditDistributedTest&amp;page=0"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TestsManagementAction"
+				validate="true">
+				<forward name="editDistributedTest" path="/editDistributedTest.jsp"/>
+				<forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
+		</action>
 	<!-- End Action for Tests Administration Site -->
 		
 	<!-- Students list -->
@@ -925,6 +1005,39 @@
 		input="/createGroupProperties.do?method=prepareCreateGroupProperties&amp;page=0"
 		scope="request"
         type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
+       	validate="true"
+       	>  
+       	<forward name="insertGroupProperties" path="/insertGroupProperties.jsp"/>
+       	<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+	</action>    
+	
+	<action     
+		path="/editGroupProperties"
+		name="groupPropertiesForm1"
+		parameter="method"
+		input="/editGroupProperties.do?method=prepareEditGroupProperties&amp;page=0"      			
+		scope="request"
+     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"    
+       	validate="true"
+       		>
+       	<forward name="editGroupProperties" path="/editGroupProperties.jsp"/>
+		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+	</action>
+	
+	<action 
+		path="/deleteStudentGroup"
+ 		parameter="method"
+        type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+	    <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+    </action>
+	   
+	<action     
+		path="/createGroupProperties"
+		name="groupPropertiesForm"
+		parameter="method"      			
+		input="/createGroupProperties.do?method=prepareCreateGroupProperties&amp;page=0"
+		scope="request"
+        type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
        	validate="true">  
        	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -954,6 +1067,29 @@
 	    <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
     </action>
 
+	<action     
+		path="/insertStudentGroup"
+		name="studentGroupForm"
+		parameter="method"      			
+		scope="request"
+		input="/insertStudentGroup.do?method=prepareInsertStudentGroup&amp;page=0"
+		validate="true"
+     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+       	<forward name="insertStudentGroup" path="/insertStudentGroup.jsp"/>
+		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+	</action>
+	
+	<action     
+		path="/editStudentGroup"
+		name="studentGroupForm"
+		parameter="method"      			
+		scope="request"
+		validate="true"
+     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+       	<forward name="editStudentGroup" path="/editStudentGroup.jsp"/>
+		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+	</action>
+	
 	<action     
 		path="/insertStudentGroup"
 		name="studentGroupForm"

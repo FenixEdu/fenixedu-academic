@@ -15,16 +15,119 @@
 		<arg0 key="message.questionValue" resource="true"/>
 	</field>
    </form>
-   
-   <form name="testEditionForm">
-   	<field property="title" depends="required" page="1">
-    	<arg0 key="message.title" resource="true"/>
-    </field>
-   </form>
-   
+
    <form name="testQuestionForm">
 	<field property="testQuestionValue" depends="required, integer" page="1">
 		<arg0 key="message.questionValue" resource="true"/>
+	</field>
+   </form>
+   
+   <form name="testDistributionForm">
+	<field property="testBeginDate" depends="required, mask, date" page="1">
+		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+		<arg0 key="message.testBeginDate" resource="true"/>
+		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+	</field>
+	<field property="testEndDate" depends="required, mask, date" page="1">
+		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+		<arg0 key="message.testEndDate" resource="true"/>
+		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+	</field>
+	<field property="testBeginHour" depends="required, mask, date" page="1">
+		<msg name="date" key="error.invalid.hour"/>
+   		<msg name="mask" key="error.invalid.hour"/>   		
+   		<arg0 key="message.testBeginHour" resource="true"/>
+		<var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..):(.||..))$</var-value>
+        </var>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+	</field>
+	<field property="testEndHour" depends="required, mask, date" page="1">
+		<msg name="date" key="error.invalid.hour"/>
+   		<msg name="mask" key="error.invalid.hour"/>   		
+   		<arg0 key="message.testEndHour" resource="true"/>
+		<var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..):(.||..))$</var-value>
+        </var>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+	</field>
+   </form>
+   <form name="distributedTestForm">
+	<field property="testBeginDate" depends="required, mask, date" page="1">
+		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+		<arg0 key="message.testBeginDate" resource="true"/>
+		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+	</field>
+	<field property="testEndDate" depends="required, mask, date" page="1">
+		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+		<arg0 key="message.testEndDate" resource="true"/>
+		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+	</field>
+	<field property="testBeginHour" depends="required, mask, date" page="1">
+		<msg name="date" key="error.invalid.hour"/>
+   		<msg name="mask" key="error.invalid.hour"/>   		
+   		<arg0 key="message.testBeginHour" resource="true"/>
+		<var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..):(.||..))$</var-value>
+        </var>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+	</field>
+	<field property="testEndHour" depends="required, mask, date" page="1">
+		<msg name="date" key="error.invalid.hour"/>
+   		<msg name="mask" key="error.invalid.hour"/>   		
+   		<arg0 key="message.testEndHour" resource="true"/>
+		<var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..):(.||..))$</var-value>
+        </var>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
 	</field>
    </form>
    
@@ -358,6 +461,140 @@
         </var> 
       </field>
     </form>       
+    
+    
+	<!--GROUPS FORMS-->    
+    
+    
+    <!-- validation for the insertGroupPropertiesForm -->
+    
+   	<form name="groupPropertiesForm">
+   	
+   	<field property="name" depends="required" page="1">
+		<arg0 key="message.groupPropertiesName" resource="true"/>
+	</field>
+   	
+   
+   	<field property="maximumCapacity" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesMaximumCapacity" resource="true"/>
+	</field>
+		   
+	<field property="minimumCapacity" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesMinimumCapacity" resource="true"/>
+	</field>
+	
+	<field property="idealCapacity" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesIdealCapacity" resource="true"/>
+	</field>
+	
+	<field property="groupMaximumNumber" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesGroupMaximumNumber" resource="true"/>
+	</field>
+	
+	<field property="enrolmentBeginDay" depends="mask,date" page="1" >
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.groupPropertiesEnrolmentBeginDay" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+   	</field>
+   	
+	<field property="enrolmentEndDay" depends="mask,date" page="1" >
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.groupPropertiesEnrolmentEndDay" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+   	</field>	   
+   	
+   		<field property="shiftType" depends="integer" page="1">
+   	<arg0 key="message.groupPropertiesShiftType" resource="true"/>
+   	</field> 
+    </form>
+    
+    
+    
+    <!-- validation for the editGroupPropertiesForm -->
+    
+    
+    <form name="groupPropertiesForm1">
+   	
+   	<field property="name" depends="required" page="1">
+		<arg0 key="message.groupPropertiesName" resource="true"/>
+	</field>
+   	
+   
+   	<field property="maximumCapacity" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesMaximumCapacity" resource="true"/>
+	</field>
+		   
+	<field property="minimumCapacity" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesMinimumCapacity" resource="true"/>
+	</field>
+	
+	<field property="idealCapacity" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesIdealCapacity" resource="true"/>
+	</field>
+	
+	<field property="groupMaximumNumber" depends="integer" page="1">
+		<arg0 key="message.groupPropertiesGroupMaximumNumber" resource="true"/>
+	</field>
+	
+	<field property="enrolmentBeginDayFormatted" depends="mask,date" page="1" >
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.groupPropertiesEnrolmentBeginDay" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+   	</field>
+   	
+	<field property="enrolmentEndDayFormatted" depends="mask,date" page="1" >
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.groupPropertiesEnrolmentEndDay" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+   	</field>	   
+   	
+   		<field property="shiftType" depends="integer" page="1">
+   	<arg0 key="message.groupPropertiesShiftType" resource="true"/>
+   	</field> 
+    </form>
+    
+    
+    
+    <!-- validation for the insertStudentGroupForm -->
+   	
+   	<form name="studentGroupForm">
+   	<field property="groupNumber" depends="required,integer" page="1" >
+   		<arg0 key="message.insertStudentGroup.groupNumber" resource="true"/>
+   	</field>
+    </form>
+    
     
     
 	<!--GROUPS FORMS-->    

@@ -49,6 +49,7 @@ import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
 import ServidorPersistente.IPersistentDepartment;
+import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
@@ -596,5 +597,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentTestQuestion getIPersistentTestQuestion() {
 		return new TestQuestionOJB();
 	}
-
+	
+	public IPersistentDistributedTest getIPersistentDistributedTest(){
+		return new DistributedTestOJB();
+	}
 }

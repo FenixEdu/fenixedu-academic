@@ -25,6 +25,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDepartment;
 import DataBeans.InfoDepartmentCourse;
+import DataBeans.InfoDistributedTest;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
@@ -2480,7 +2481,13 @@ public abstract class Cloner {
 		infoTestQuestion.setQuestion(infoQuestion);
 		return infoTestQuestion;
 	}
-
-
+	
+	public static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest){
+		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
+		copyObjectProperties(infoDistributedTest,distributedTest);
+		InfoTest infoTest = copyITest2InfoTest(distributedTest.getTest());
+		infoDistributedTest.setInfoTest(infoTest);
+		return infoDistributedTest;
+	}
 	
 }
