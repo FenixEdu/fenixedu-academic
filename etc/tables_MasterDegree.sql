@@ -105,3 +105,20 @@ create table GUIDE_SITUATION(
    type=InnoDB;
 
    
+#----------------------------
+# Table structure for QUALIFICATION
+#----------------------------
+drop table if exists QUALIFICATION;
+create table QUALIFICATION(
+   ID_INTERNAL integer(11) not null auto_increment,
+   KEY_PERSON integer(11) not null ,
+   YEAR integer(11),
+   MARK varchar(200),
+   SCHOOL varchar(200),
+   TITLE varchar(200),
+   
+   primary key (ID_INTERNAL))
+   type=InnoDB;
+
+
+   

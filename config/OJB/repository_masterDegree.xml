@@ -491,5 +491,63 @@
  
  <!-- End of definitions for class CONTRIBUTOR -->
 
+
+
+<!-- Definitions for class QUALIFICATION -->
+
+      <class-descriptor
+              class="Dominio.Qualification"
+              table="QUALIFICATION"
+      >
+        <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />
+
+        <field-descriptor
+           name="year"
+           column="YEAR"
+           jdbc-type="INTEGER"
+         />
+ 
+         <field-descriptor
+            name="mark"
+            column="MARK"
+            jdbc-type="VARCHAR"
+         />
+         <field-descriptor 
+            name="school"
+            column="SCHOOL"
+            jdbc-type="VARCHAR"
+         />
+         <field-descriptor 
+            name="title"
+            column="TITLE"
+            jdbc-type="VARCHAR"
+         />
+         <field-descriptor 
+            name="personKey"
+            column="KEY_PERSON"
+            jdbc-type="INTEGER"
+         />
+
+	   <reference-descriptor
+         	name="person"
+         	class-ref="Dominio.Pessoa"
+         	proxy="true"
+			refresh="true"
+      	  >
+          <foreignkey field-ref="personKey"/>
+      </reference-descriptor>
+
+ 
+  </class-descriptor>
+ 
+ 
+ <!-- End of definitions for class QUALIFICATION -->
+
    
 <!-- Mapping of User defined classes ends here -->
