@@ -11,80 +11,110 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.List;
-
-import junit.framework.*;
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.Servicos.*;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 
-public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest extends TestCaseServicos {
-    public LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest.class);
+public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest
+	extends TestCaseReadServices {
+	public LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest(
+		java.lang.String testName) {
+		super(testName);
+	}
 
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
 
-  // read disciplinas by unauthorized user
-  public void testUnauthorizedReadDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular() {
-	InfoExecutionDegree iED = new InfoExecutionDegree(_cursoExecucao1.getAnoLectivo(), new InfoDegree(_curso1.getSigla(),_curso1.getNome()));
-  	Object argsLerDisciplinas[] = new Object[1];
-  	argsLerDisciplinas[0] = new CurricularYearAndSemesterAndInfoExecutionDegree(_disciplinaCurricular1.getCurricularYear(), _disciplinaCurricular1.getSemester(),iED);
+	public static Test suite() {
+		TestSuite suite =
+			new TestSuite(
+				LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosTest
+					.class);
 
-  	Object result = null;    
-      try {
-        result = _gestor.executar(_userView2, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinas);
-        fail("testUnauthorizedReadDisciplinas");
-      } catch (Exception ex) {
-        assertNull("testUnauthorizedReadDisciplinas", result);
-      }
-  }
+		return suite;
+	}
 
-  // read new existing disciplinas
-  public void testReadExistingDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular() {
-  	InfoExecutionDegree iED = new InfoExecutionDegree(_cursoExecucao1.getAnoLectivo(), new InfoDegree(_curso1.getSigla(),_curso1.getNome()));
-  	Object argsLerDisciplinas[] = new Object[1];
-  	argsLerDisciplinas[0] = new CurricularYearAndSemesterAndInfoExecutionDegree(_disciplinaCurricular1.getCurricularYear(),_disciplinaCurricular1.getSemester(),iED);
+	protected void setUp() {
+		super.setUp();
+	}
 
-  	Object result = null;
-      try {
-        result = _gestor.executar(_userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinas);
-        assertEquals("testLerExistingDisciplinas", ((List) result).size(), 1);
-      } catch (Exception ex) {
-      	fail("testLerExistingDisciplinas");
-      }
-  }
+	protected void tearDown() {
+		super.tearDown();
+	}
 
-  // read new non-existing disciplinas
-  public void testReadNonExistingDisciplinas() {
-  	InfoExecutionDegree iED = new InfoExecutionDegree("1900/1901", new InfoDegree(_curso1.getSigla(),_curso1.getNome()));
-  	Object argsLerDisciplinas[] = new Object[1];
-  	argsLerDisciplinas[0] = new CurricularYearAndSemesterAndInfoExecutionDegree(_disciplinaCurricular1.getCurricularYear(), _disciplinaCurricular1.getSemester(),iED);
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
 
-  	Object result = null;
-      try {
-        result = _gestor.executar(_userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", argsLerDisciplinas);
-        assertTrue("testLerNonExistingDisciplinas", ((List) result).isEmpty());
-      } catch (Exception ex) {
-      	fail("testLerNonExistingDisciplinas");
-      }
-  }
-    
+		return "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular";
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		InfoExecutionDegree infoExecutionDegree =
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan(
+					"plano1",
+					new InfoDegree(
+						"LEIC",
+						"Licenciatura de Engenharia Informatica e de Computadores")),
+				new InfoExecutionYear("2002/2003"));
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003"));
+		Integer curricularYear = new Integer(6);
+		Object[] result =
+			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		InfoExecutionDegree infoExecutionDegree =
+			new InfoExecutionDegree(
+				new InfoDegreeCurricularPlan(
+					"plano1",
+					new InfoDegree(
+						"LEIC",
+						"Licenciatura de Engenharia Informatica e de Computadores")),
+				new InfoExecutionYear("2002/2003"));
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003"));
+		Integer curricularYear = new Integer(1);
+		Object[] result =
+			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	 */
+	protected int getNumberOfItemsToRetrieve() {
+		return 1;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	 */
+	protected Object getObjectToCompare() {
+		return null;
+	}
+	protected boolean needsAuthorization() {
+		return true;
+	}
+
 }
