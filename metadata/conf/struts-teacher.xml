@@ -125,7 +125,7 @@
 		</form-bean> 		          
 	
 		<!-- Forms for credits -->
-		<form-bean name="executionCourseShiftsPercentageForm"
+<!--		<form-bean name="executionCourseShiftsPercentageForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">
 			<form-property name="objectCode" type="java.lang.Integer"/>
@@ -141,8 +141,8 @@
 			<form-property name="additionalCreditsJustification"  type="java.lang.String"/>						
 			<form-property name="teacherOID"  type="java.lang.String"/>			
 			<form-property name="method" type="java.lang.String"></form-property>       
-			<form-property name="page" type="java.lang.Integer"></form-property>               
-		</form-bean> 		          
+			<form-property name="page" type="java.lang.Integer"></form-property>                
+		</form-bean> -->
 
 		<form-bean name="roomDistributionForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -196,6 +196,8 @@
      <forward name="index" path="/index.do" redirect="true"/>
      <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>  
    	 <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+	 <forward name="creditsManagement" 
+	 		  path="/credits/creditsManagement.do?method=prepare&amp;page=0" contextRelative="true"/>
     </global-forwards>
 
 	<!-- ========== Action Mapping Definitions =============================== -->
@@ -370,7 +372,7 @@
 	</action>
 
 	<action	path="/manageExecutionCourses" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.execution-courses" />
-	<action	path="/manageCredits" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.credits" />	
+<!--	<action	path="/manageCredits" type="org.apache.struts.actions.ForwardAction" parameter="df.page.management.credits" />	 -->
 		
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
@@ -548,16 +550,16 @@
 	<!-- start of evaluation mappings -->
 	
 	<!-- Actions for Teacher credits -->
-	<action path="/creditsManagement" name="creditsTeacherForm" 
+<!--	<action path="/creditsManagement" name="creditsTeacherForm" 
 			input="/creditsManagement.do?page=0&amp;method=prepare"
 			type="ServidorApresentacao.Action.teacher.credits.TeacherCreditsDispatchAction"
 			parameter="method"
 			validate="true"
 			scope="request">
 		<forward name="showForm" path="df.page.management.credits" />
-	</action>
+	</action> -->
 	
-	<action 
+<!--	<action 
 		name="executionCourseShiftsPercentageForm"
 		input="/executionCourseShiftsPercentageManager.do?method=show"
 		path="/executionCourseShiftsPercentageManager"
@@ -567,7 +569,7 @@
 		validate="false">
        <forward name="showTable" path="df.teacher.showShiftsPercentageTable"/>
        <forward name="acceptSuccess" path="/creditsManagement.do?page=0&amp;method=prepare" redirect="true"/>
-	</action>	
+	</action>	 -->
 
 	<action path="/showStudentsEnrolledInExam"
 		scope="request"
