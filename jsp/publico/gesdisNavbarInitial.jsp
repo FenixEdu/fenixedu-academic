@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <div id="nav">
    <h3>Navega&ccedil;&atilde;o Local</h3>	
 <ul>	
@@ -35,17 +36,7 @@
 				</html:link></dd>	
   </dl>
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
-	<ul>
-<logic:iterate id="infoSection" name="<%= SessionConstants.SECTIONS %>" type="DataBeans.gesdis.InfoSection" indexId="index">
-
-
-
-<ul><li><html:link page="/viewSection.do" indexed="true" >
-	 <bean:write name="infoSection" property="name"/> 	
-</html:link></li></ul>	
-
-</logic:iterate>
-</ul>	
+<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" />
 </logic:present>	
 	
 </div>
