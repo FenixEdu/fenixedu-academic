@@ -167,14 +167,16 @@ public class ManipularSalasAction extends FenixAction {
 				argsCriarSala);
 		} 
 		catch (notAuthorizedServiceDeleteException e) {
-			Object[] values = {"A Sala","as aulas"};
+			Object[] values = {"a sala","as aulas"};
 			throw new notAuthorizedActionDeleteException("errors.invalid.delete.with.objects",values);}
 		catch (Exception e) {
-
+			//FIXME: a 1º vez que se tenta apagar uma sala ele entra aqui pq apanha uma java.util.ConcurrentModificationException 
+			
+			Object[] values = {"a sala","as aulas"};
 			ActionErrors actionErrors = new ActionErrors();
 			actionErrors.add(
 				"invalid.delete",
-				new ActionError("errors.invalid.room.delete"));
+				new ActionError("errors.invalid.delete.with.objects",values));
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 
