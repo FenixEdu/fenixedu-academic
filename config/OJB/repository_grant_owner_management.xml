@@ -138,6 +138,11 @@
 		column="MAX_PERIOD_DAYS"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="indicativeValue"
+		column="INDICATIVE_VALUE"
+		jdbc-type="DOUBLE"
+	/>
 	 <field-descriptor
 		name="source"
 		column="SOURCE"

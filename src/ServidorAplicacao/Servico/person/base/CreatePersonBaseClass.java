@@ -70,7 +70,6 @@ public class CreatePersonBaseClass
             //lock person for WRITE
             persistentPerson.simpleLockWrite(person);
 
-            //if (newPerson.getNome() != null)
             person.setNome(newPerson.getNome());
             if (newPerson.getNumeroDocumentoIdentificacao() != null)
                 person.setNumeroDocumentoIdentificacao(newPerson.getNumeroDocumentoIdentificacao());
