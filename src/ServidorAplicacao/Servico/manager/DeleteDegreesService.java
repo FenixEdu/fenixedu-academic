@@ -16,7 +16,7 @@ import ServidorPersistente.exceptions.CantDeletePersistentException;
 /**
  * @author lmac1
  */
-public class DeleteDegreesService implements IServico{
+public class DeleteDegreesService implements IServico {
 
 	private static DeleteDegreesService service = new DeleteDegreesService();
 
@@ -31,34 +31,33 @@ public class DeleteDegreesService implements IServico{
 		return "DeleteDegreesService";
 	}
 
-	public Boolean run(List degreesInternalIds)
-		throws FenixServiceException	 {
+	public Boolean run(List degreesInternalIds) throws FenixServiceException {
 
 		try {
-			
+
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            
-            Iterator iter=degreesInternalIds.iterator();
-            
-            while(iter.hasNext())
-            {
-           try{
-           
-            Integer internalId = (Integer)iter.next();
-			ICurso degree = persistentDegree.readByIdInternal(internalId);
-				if (degree != null)
-				persistentDegree.delete(degree);
-		   }catch (CantDeletePersistentException e) {
-					   throw new CantDeleteServiceException(e.getMessage(),e);
-            }
-            }	return new Boolean(true);	
-				
-		
-		}catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
+			ICursoPersistente persistentDegree = sp.getICursoPersistente();
+
+			Iterator iter = degreesInternalIds.iterator();
+
+			while (iter.hasNext()) {
+				try {
+
+					Integer internalId = (Integer) iter.next();
+					ICurso degree =
+						persistentDegree.readByIdInternal(internalId);
+					if (degree != null)
+						persistentDegree.delete(degree);
+				} catch (CantDeletePersistentException e) {
+					throw new CantDeleteServiceException(e.getMessage(), e);
+				}
 			}
-		
+			return new Boolean(true);
+
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
 	}
 
 }

@@ -7,7 +7,7 @@
 <logic:notEmpty name="<%= SessionConstants.INFO_DEGREES_LIST %>" >
 	<h2><bean:message key="label.manager.degrees" /></h2>
 		
-	<html:link page="/insert_degree.do"><b><bean:message key="label.manager.insert.degree" /></b></html:link>
+	<html:link page="/insertDegree.do"><b><bean:message key="label.manager.insert.degree" /></b></html:link>
 	<br>
 	<br>
  	     
@@ -44,7 +44,7 @@
 	 	</table>
 	<br>
 	 <br>	
-<input type="submit" value=<bean:message key="label.manager.delete.selected.degrees"/>>
+	<html:submit styleClass="inputbutton"><bean:message key="label.manager.delete.selected.degrees"/></html:submit>
 
 </html:form> 
 </logic:notEmpty>	 	
