@@ -24,7 +24,6 @@ import Dominio.Teacher;
 import Util.LeituraFicheiroFuncDocente;
 import Util.RoleType;
 
-
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -59,11 +58,10 @@ public class ServicoSeguroActualizarFuncsDocentes {
 
 	/** Executa a actualizacao da tabela FuncNaoDocente na Base de Dados */
 	public static void main(String[] args) throws Exception {
-		ServicoSeguroActualizarFuncsDocentes servico = new ServicoSeguroActualizarFuncsDocentes(args);
+		new ServicoSeguroActualizarFuncsDocentes(args);
 		LeituraFicheiroFuncDocente servicoLeitura = new LeituraFicheiroFuncDocente();
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		broker.clearCache();
-
 
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
@@ -73,89 +71,101 @@ public class ServicoSeguroActualizarFuncsDocentes {
 		System.out.println("A converter " + lista.size() + " Docentes ... ");
 		int newTeachers = 0;
 		int newRoles = 0;
-		
-		broker.beginTransaction();
 
 		/* Procurar chaveFuncionario correspondente e criar funcNaoDocente */
 		Iterator iteradorNovo = lista.iterator();
+		Integer numeroMecanografico = null;
+
+		broker.beginTransaction();
 		while (iteradorNovo.hasNext()) {
-			Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
+			try {
 
-			Integer numeroMecanografico = new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
-			String numeroDocumentoIdentificacao = (String) instanciaTemporaria.get("numeroDocumentoIdentificacao");
-			Integer tipoDocumentoIdentificacao = (Integer) instanciaTemporaria.get("tipoDocumentoIdentificacao");
-				
+				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
 
-			Criteria criteria = new Criteria();
-			Query query = null;
-			
-			criteria.addEqualTo("numeroMecanografico", numeroMecanografico);
-			query = new QueryByCriteria(Funcionario.class,criteria);
-			List resultFuncionario = (List) broker.getCollectionByQuery(query);	
+				numeroMecanografico = new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
 
+				//Read The Employee
+				Criteria criteria = new Criteria();
+				Query query = null;
+				Funcionario funcionario = getFuncionario(broker, numeroMecanografico, criteria);
 
-			if (resultFuncionario.size() == 0){
-				throw new Exception("Error Reading Existing Employee " + numeroMecanografico);
-			}
-			
-			// Read The Corresponding Person
-			criteria = new Criteria();
-			query = null;
-			
-			criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
-			criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao);
-			query = new QueryByCriteria(Pessoa.class,criteria);
-			List resultPerson = (List) broker.getCollectionByQuery(query);	
-
-			if (resultPerson.size() == 0){
-				throw new Exception("Error Reading Existing Person");
-			}
-			
-			Pessoa person = (Pessoa) resultPerson.get(0);
-			person.setUsername("D" + numeroMecanografico);
-			
-			// Check if Teacher Exists
-
-			criteria = new Criteria();
-			query = null;
-			
-			criteria.addEqualTo("teacherNumber", numeroMecanografico);
-			criteria.addEqualTo("keyPerson", person.getIdInternal());
-			query = new QueryByCriteria(Teacher.class,criteria);
-			List resultTeacher = (List) broker.getCollectionByQuery(query);	
-
-			if (resultTeacher.size() == 0){
-				ITeacher teacher = new Teacher();
-				teacher.setPerson(person);
-				teacher.setTeacherNumber(numeroMecanografico); 
-				broker.store(teacher);
-				newTeachers++;
-			}
-
-			IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.TEACHER, broker);
-			if (personRole == null){
-//				RoleFunctions.giveRole(person, RoleType.TEACHER, broker);
-					
+				// Check if Teacher Exists
 				criteria = new Criteria();
-				criteria.addEqualTo("roleType", RoleType.TEACHER);
-		
-				query = new QueryByCriteria(Role.class, criteria);
-				List result = (List) broker.getCollectionByQuery(query);
-		
-				if (result.size() == 0){
-					throw new Exception("Unknown Role !!!");
-				} else {
-					 person.getPersonRoles().add((IRole) result.get(0));
-				} 
-				newRoles++;
+				query = null;
+				criteria.addEqualTo("teacherNumber", numeroMecanografico);
+				//criteria.addEqualTo("keyPerson", person.getIdInternal());
+				query = new QueryByCriteria(Teacher.class, criteria);
+				List resultTeacher = (List) broker.getCollectionByQuery(query);
+
+				if (funcionario == null && resultTeacher.size() == 0) {
+					throw new Exception("Erro ao Ler o Funcionario " + numeroMecanografico);
+				}
+				if (funcionario == null && resultTeacher.size() != 0) {
+					throw new Exception(
+						"Erro ao Ler o Funcionario "
+							+ numeroMecanografico
+							+ " do docente "
+							+ ((ITeacher) resultTeacher.get(0)).getTeacherNumber());
+				}
+
+				ITeacher teacher = null;
+				if (resultTeacher.size() == 0) {
+					teacher = new Teacher();
+					teacher.setPerson(funcionario.getPerson());
+					teacher.setTeacherNumber(numeroMecanografico);
+					broker.store(teacher);
+					newTeachers++;
+				} else if (resultTeacher.size() == 1) {
+					teacher = (Teacher) resultTeacher.get(0);
+					if (!teacher.getPerson().equals(funcionario.getPerson())) {
+						teacher.setPerson(funcionario.getPerson());
+					}
+					broker.store(teacher);
+				}
+
+				IPersonRole personRole = RoleFunctions.readPersonRole((Pessoa) teacher.getPerson(), RoleType.TEACHER, broker);
+				if (personRole == null) {
+					criteria = new Criteria();
+					criteria.addEqualTo("roleType", RoleType.TEACHER);
+
+					query = new QueryByCriteria(Role.class, criteria);
+					List result = (List) broker.getCollectionByQuery(query);
+
+					if (result.size() == 0) {
+						throw new Exception("Unknown Role !!!");
+					} else {
+						teacher.getPerson().getPersonRoles().add((IRole) result.get(0));
+					}
+					newRoles++;
+				}
+				broker.store(teacher.getPerson());
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("\nError Migrating Employee " + numeroMecanografico + "\n");
+				//broker.abortTransaction();
+				//throw new Exception("\nError Migrating Employee " + numeroMecanografico + "\n" + e);
+				continue;
 			}
-			broker.store(person);
 		}
 		broker.commitTransaction();
+
 		System.out.println("New Teachers added : " + newTeachers);
 		System.out.println("New Roles added : " + newRoles);
 		System.out.println("  Done !");
 
 	}
 
+	private static Funcionario getFuncionario(PersistenceBroker broker, Integer numeroMecanografico, Criteria criteria)
+		throws Exception {
+		Query query;
+		criteria.addEqualTo("numeroMecanografico", numeroMecanografico);
+		query = new QueryByCriteria(Funcionario.class, criteria);
+		List resultFuncionario = (List) broker.getCollectionByQuery(query);
+
+		if (resultFuncionario.size() == 0) {
+			return null;
+			//throw new Exception("Error Reading Existing Employee " + numeroMecanografico);
+		}
+		return (Funcionario) resultFuncionario.get(0);
+	}
 }

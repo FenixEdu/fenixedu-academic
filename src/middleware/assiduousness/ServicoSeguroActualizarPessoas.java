@@ -40,47 +40,40 @@ public class ServicoSeguroActualizarPessoas {
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */
 	public static void main(String[] args) throws Exception {
 		ServicoSeguroActualizarPessoas servico = new ServicoSeguroActualizarPessoas(args);
-		Role role = null;
 		int newPersons = 0;
 		int newRoles = 0;
 
 		try {
-			servico._listaPessoas =
-				LeituraFicheiroPessoa.lerFicheiro(servico._ficheiro, servico._delimitador);
+			servico._listaPessoas = LeituraFicheiroPessoa.lerFicheiro(servico._ficheiro, servico._delimitador);
 		} catch (NotExecuteException nee) {
 			throw new NotExecuteException(nee.getMessage());
 		}
 
 		System.out.println("Converting Persons " + servico._listaPessoas.size() + " ... ");
 
-
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		broker.clearCache();
 		broker.beginTransaction();
-		
-		
-		try {
 
-			if (servico._listaPessoas != null) {
-				Iterator iterador = servico._listaPessoas.iterator();
-				Pessoa pessoaBD = null;
-	
-				/* ciclo que percorre a Collection de Pessoas */
-				while (iterador.hasNext()) {
-					
-					servico._pessoa = (Pessoa)iterador.next();
+		if (servico._listaPessoas != null) {
+			Iterator iterador = servico._listaPessoas.iterator();
+
+			/* ciclo que percorre a Collection de Pessoas */
+			while (iterador.hasNext()) {
+				try {
+					servico._pessoa = (Pessoa) iterador.next();
 
 					Criteria criteria = new Criteria();
 					Query query = null;
 
 					criteria.addEqualTo("numeroDocumentoIdentificacao", servico._pessoa.getNumeroDocumentoIdentificacao());
 					criteria.addEqualTo("tipoDocumentoIdentificacao", servico._pessoa.getTipoDocumentoIdentificacao());
-					query = new QueryByCriteria(Pessoa.class,criteria);
-					List result = (List) broker.getCollectionByQuery(query);	
-		
+					query = new QueryByCriteria(Pessoa.class, criteria);
+					List result = (List) broker.getCollectionByQuery(query);
+
 					IPessoa person2Write = null;
 					// A Pessoa nao Existe
-					if (result.size() == 0){
+					if (result.size() == 0) {
 						person2Write = (IPessoa) servico._pessoa;
 						newPersons++;
 					} else {
@@ -88,37 +81,42 @@ public class ServicoSeguroActualizarPessoas {
 						person2Write = (IPessoa) result.get(0);
 						updatePerson((Pessoa) person2Write, (Pessoa) servico._pessoa);
 					}
-					
+
 					IPersonRole personRole = RoleFunctions.readPersonRole((Pessoa) person2Write, RoleType.PERSON, broker);
-					if (personRole == null){
+					if (personRole == null) {
 						criteria = new Criteria();
 						query = null;
 						criteria.addEqualTo("roleType", RoleType.PERSON);
 						query = new QueryByCriteria(Role.class, criteria);
 
 						result = (List) broker.getCollectionByQuery(query);
-		
-						if (result.size() == 0){
+
+						if (result.size() == 0) {
 							throw new Exception("Role Desconhecido !!!");
 						} else {
-							if (person2Write.getPersonRoles() == null){
-								person2Write.setPersonRoles(new ArrayList()); 
+							if (person2Write.getPersonRoles() == null) {
+								person2Write.setPersonRoles(new ArrayList());
 							}
-							person2Write.getPersonRoles().add((Role) result.get(0)); 
+							person2Write.getPersonRoles().add((Role) result.get(0));
 							newRoles++;
 						}
-							  
+
 					}
-					if (person2Write.getEstadoCivil().getEstadoCivil().intValue() > 7){
-						System.out.println("Erro : " + person2Write.getEstadoCivil().getEstadoCivil().intValue());	
-					}					
-					
+					if (person2Write.getEstadoCivil().getEstadoCivil().intValue() > 7) {
+						System.out.println("Erro : " + person2Write.getEstadoCivil().getEstadoCivil().intValue());
+					}
+
 					broker.store(person2Write);
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("Erro a converter a pessoa " + servico._pessoa + "\n");
+					//broker.abortTransaction();
+					//throw new Exception("Erro a converter a pessoa " + servico._pessoa + "\n" + e);
+					continue;
 				}
 			}
-		} catch(Exception e){
-			throw new Exception("Erro a converter a pessoa " + servico._pessoa + "\n" + e);							
 		}
+
 		broker.commitTransaction();
 		System.out.println("New persons added : " + newPersons);
 		System.out.println("New Roles added : " + newRoles);
@@ -129,22 +127,19 @@ public class ServicoSeguroActualizarPessoas {
 	public Collection getListaPessoas() {
 		return _listaPessoas;
 	}
-	
-	
-	
-	private static void updatePerson(Pessoa person2Write, Pessoa person2Convert) throws Exception{
 
-		try{
+	private static void updatePerson(Pessoa person2Write, Pessoa person2Convert) throws Exception {
+
+		try {
 			// Password Backup
-			
+
 			String password = new String(person2Write.getPassword());
 			Integer internalCode = new Integer(person2Write.getIdInternal().intValue());
 			String username = new String(person2Write.getUsername());
 			String mobilePhone = new String(person2Write.getTelemovel());
 			String email = new String(person2Write.getEmail());
 			String url = new String(person2Write.getEnderecoWeb());
-			
-			
+
 			BeanUtils.copyProperties(person2Write, person2Convert);
 
 			person2Write.setIdInternal(internalCode);
@@ -153,13 +148,12 @@ public class ServicoSeguroActualizarPessoas {
 			person2Write.setEmail(email);
 			person2Write.setTelemovel(mobilePhone);
 			person2Write.setEnderecoWeb(url);
-			
-			
-		} catch(Exception e){
+
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());
 			throw new Exception(e);
 		}
 	}
-
 
 }
