@@ -95,8 +95,7 @@ public class WriteStudentAttendingCourses implements IService
 			Iterator i = infoExecutionCourseIds.iterator();
 			while (i.hasNext())
 			{
-//				Integer executionCourseId = (Integer) i.next();
-				Integer executionCourseId =new Integer( (String) i.next());
+				Integer executionCourseId = (Integer) i.next();
 				IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
