@@ -31,4 +31,26 @@ public class MWBranchOJB extends ObjectFenixOJB implements IPersistentMWBranch {
 	
 		return (MWBranch) queryObject(MWBranch.class, criteria);
 	}
+	
+	/**
+	 * @author Nuno Correia
+	 * @author Ricardo Rodrigues
+	 * 
+	 * @param degreeCode
+	 * @param branchName
+	 * @return
+	 * @throws PersistentMiddlewareSupportException
+	 * @throws ExcepcaoPersistencia
+	 */
+
+	public MWBranch readByDegreeCodeAndBranchName(Integer degreeCode, String branchName) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+	
+		criteria.addEqualTo("description", branchName);
+		criteria.addEqualTo("degreeCode", degreeCode);
+	
+		return (MWBranch) queryObject(MWBranch.class, criteria);
+	}
+    
 }
