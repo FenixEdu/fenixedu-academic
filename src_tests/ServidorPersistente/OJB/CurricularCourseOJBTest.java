@@ -50,7 +50,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         try {
             _suportePersistente.iniciarTransaccao();
             departmentCourse = disciplinaDepartamentoPersistente.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
-            degreeCurricularPlan = planoCurricularCursoPersistente.lerPlanoCurricularPorNomeESigla("plano1", "pc1");
+            degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano1");
             _suportePersistente.confirmarTransaccao();        	
         } catch(ExcepcaoPersistencia ex) {
             fail("testWriteCurricularCourse");
@@ -131,7 +131,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
-// -------------------------------------------------------------------------------------------------------------------------------------------
+//// -------------------------------------------------------------------------------------------------------------------------------------------
     public void testReadCurricularCourse() {
 
         ICurricularCourse dc = null;
@@ -165,7 +165,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         }
         assertNull(dc);
     }
-// -------------------------------------------------------------------------------------------------------------------------------------------
+//// -------------------------------------------------------------------------------------------------------------------------------------------
     public void testDeleteCurricularCourse() {
 
 		ICurricularCourse curricularCourse = null;
@@ -206,7 +206,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
             fail("testApagarDisciplinaCurricular: confirmarTransaccao_2");
         }
     }
-// -------------------------------------------------------------------------------------------------------------------------------------------
+//// -------------------------------------------------------------------------------------------------------------------------------------------
     public void testReadAllCurricularCourses() {
         ArrayList list = null;
 
