@@ -113,7 +113,8 @@ create table TEACHER (
    USERNAME varchar(20),
    `PASSWORD` varchar(16),
    TEACHER_NUMBER int(10) unsigned,
-   primary key (ID_INTERNAL))
+   primary key (ID_INTERNAL),
+   UNIQUE KEY U1 (TEACHER_NUMBER))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------------------

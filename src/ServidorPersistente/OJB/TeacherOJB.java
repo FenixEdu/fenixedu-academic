@@ -145,4 +145,21 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
+    
+	public List readAll() throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + Teacher.class.getName();
+            
+			query.create(oqlQuery);
+            
+			List result = (List) query.execute();
+			lockRead(result);
+            
+			return result;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+    
 }

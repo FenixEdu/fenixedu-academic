@@ -20,5 +20,6 @@ public interface IPersistentTeacher {
     public void lockWrite(ITeacher teacher) throws ExcepcaoPersistencia;
     public void delete(ITeacher teacher) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
+	public List readAll() throws ExcepcaoPersistencia;
     
 }

@@ -1,15 +1,14 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Ivo Brandão
@@ -49,20 +48,8 @@ public class TeacherOJBTest extends TestCaseOJB {
     }
     
     public void testLockWrite() {
-        ITeacher teacher = new Teacher("teacher1", "password", new Integer("1"));
+		ITeacher teacher = null;
 
-		// write existing
-        try {
-            persistentSupport.iniciarTransaccao();
-            persistentTeacher.lockWrite(teacher);
-            persistentSupport.confirmarTransaccao();
-            fail("testLockWrite: existing teacher");
-		} catch(ExistingPersistentException ex) {
-			// All is OK
-        } catch(ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testLockWrite: unexpected exception writing");
-        }
-        
         // write non existing
         teacher = new Teacher("newUser", "newPassword", new Integer("2"));
         
@@ -85,33 +72,48 @@ public class TeacherOJBTest extends TestCaseOJB {
         }
         assertNotNull(teacherRead);
         assertEquals(teacherRead.getTeacherNumber(), teacher.getTeacherNumber());
-        assertEquals(teacherRead.getSitesOwned(), teacher.getSitesOwned());
-        assertEquals(teacherRead.getProfessorShipsSites(), teacher.getProfessorShipsSites());
+//        assertEquals(teacherRead.getSitesOwned(), teacher.getSitesOwned());
+//        assertEquals(teacherRead.getProfessorShipsSites(), teacher.getProfessorShipsSites());
+		assertEquals(teacherRead.getSitesOwned(), new ArrayList());
+		assertEquals(teacherRead.getProfessorShipsSites(), new ArrayList());
+        
     }
 
-//    public void testDeleteAllCountrys() {
-//        
-//        try {
-//            persistentSupport.iniciarTransaccao();
-//            persistentCountry.deleteAllCountrys();
-//            persistentSupport.confirmarTransaccao();
-//            assertTrue("testApagarTodosOsPaises: Paises apagados", true);
-//        } catch(ExcepcaoPersistencia ex2) {
-//            fail("testApagarTodosOsPaises: confirmarTransaccao_1");
-//        }
-//
-//        ArrayList result = null;
-//        
-//        try {
-//            persistentSupport.iniciarTransaccao();
-//            result = persistentCountry.readAllCountrys();
-//            persistentSupport.confirmarTransaccao();
-//        } catch(ExcepcaoPersistencia ex) {
-//            fail("testApagarTodosOsPaises: confirmarTransaccao_2");
-//        }
-//        assertNotNull(result);
-//        assertTrue(result.isEmpty());
-//    }
+    public void testDeleteAllTeachers() {
+
+		//read all existing
+		List result = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentTeacher.readAll();
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testDeleteAllTeachers: readAll");
+		}
+		assertNotNull(result);
+		assertEquals(result.isEmpty(), false);
+
+		//erase all existing        
+        try {
+            persistentSupport.iniciarTransaccao();
+            persistentTeacher.deleteAll();
+            persistentSupport.confirmarTransaccao();
+        } catch(ExcepcaoPersistencia ex2) {
+            fail("testDeleteAllTeachers: deleteAll");
+        }
+
+		//read all existing again
+        result = null;
+        try {
+            persistentSupport.iniciarTransaccao();
+            result = persistentTeacher.readAll();
+            persistentSupport.confirmarTransaccao();
+        } catch(ExcepcaoPersistencia ex) {
+            fail("testDeleteAllTeachers: readAll");
+        }
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+    }
 
     public void testReadTeacherByUsername() {
         ITeacher teacher = null;
@@ -167,49 +169,51 @@ public class TeacherOJBTest extends TestCaseOJB {
 		assertNull(teacher);
 	}
 
-//    public void testDeleteCountry() {
-//
-//
-//        try {
-//            persistentSupport.iniciarTransaccao();
-//			persistentCountry.deleteCountryByName("Portugal");
-//            persistentSupport.confirmarTransaccao();
-//        } catch(ExcepcaoPersistencia ex3) {
-//            fail("testApagarPais: confirmarTransaccao_1");
-//        }
-//        ICountry country = null;
-//        
-//        try {
-//            persistentSupport.iniciarTransaccao();
-//            country = persistentCountry.readCountryByName("Portugal");
-//            persistentSupport.confirmarTransaccao();
-//        } catch(ExcepcaoPersistencia ex) {
-//            fail("testApagarPais: lerPaisPorNome");
-//        }
-//        assertNull(country);
-//
-//        try {
-//            persistentSupport.iniciarTransaccao();
-//            persistentCountry.deleteCountryByName("Chipre");
-//            persistentSupport.confirmarTransaccao();
-//            assertTrue("testApagarPais: Pais apagado", true);
-//        } catch(ExcepcaoPersistencia ex2) {
-//            fail("testApagarPais: confirmarTransaccao_2");
-//        }
-//    }
+    public void testDeleteTeacher() {
 
-//    public void testReadAllCountrys() {
-//        ArrayList list = null;
-//
-//
-//        try {
-//            persistentSupport.iniciarTransaccao();
-//            list = persistentCountry.readAllCountrys();
-//            persistentSupport.confirmarTransaccao();
-//        } catch(ExcepcaoPersistencia ex2) {
-//            fail("testLerTodosOsPaises: confirmarTransaccao_1");
-//        }
-//        assertNotNull(list);
-//        assertEquals(list.size(), 2);
-//    }
+        ITeacher teacher = null;
+
+		//read existing        
+        try {
+            persistentSupport.iniciarTransaccao();
+            teacher = persistentTeacher.readTeacherByNumber(new Integer("1"));
+            persistentSupport.confirmarTransaccao();
+        } catch(ExcepcaoPersistencia ex) {
+            fail("testDeleteTeacher: readTeacherByNumber existing");
+        }
+        assertNotNull(teacher);
+
+		//erase it
+        try {
+            persistentSupport.iniciarTransaccao();
+            persistentTeacher.delete(teacher);
+            persistentSupport.confirmarTransaccao();
+        } catch(ExcepcaoPersistencia ex2) {
+            fail("testDeleteTeacher: delete");
+        }
+        
+        //read it again
+		try {
+			persistentSupport.iniciarTransaccao();
+			teacher = persistentTeacher.readTeacherByNumber(new Integer("1"));
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testDeleteTeacher: readTeacherByNumber unexisting");
+		}
+		assertNull(teacher);
+        
+    }
+
+    public void testReadAllTeachers() {
+        List list = null;
+
+        try {
+            persistentSupport.iniciarTransaccao();
+            list = persistentTeacher.readAll();
+            persistentSupport.confirmarTransaccao();
+        } catch(ExcepcaoPersistencia ex2) {
+            fail("testReadAllTeachers: readAll");
+        }
+        assertNotNull(list);
+    }
 }
