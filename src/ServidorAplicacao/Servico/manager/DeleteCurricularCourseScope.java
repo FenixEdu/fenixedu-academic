@@ -3,8 +3,6 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.List;
-
 import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.IServico;

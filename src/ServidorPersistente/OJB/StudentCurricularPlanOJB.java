@@ -11,16 +11,12 @@ package ServidorPersistente.OJB;
  */
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.Enrolment;
 import Dominio.IBranch;
-import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;

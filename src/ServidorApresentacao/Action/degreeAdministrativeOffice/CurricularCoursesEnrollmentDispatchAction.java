@@ -49,7 +49,19 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		HttpServletResponse response)
 		throws Exception
 	{
+		getExecutionDegree(request);
+		
 		return mapping.findForward("prepareEnrollmentChooseStudent");
+	}
+
+	private String getExecutionDegree(HttpServletRequest request)
+	{
+		String executionDegreeId  = request.getParameter("executionDegreeId");
+		if(executionDegreeId == null) {
+			executionDegreeId = (String) request.getAttribute("executionDegreeId");
+		}
+		request.setAttribute("executionDegreeId", executionDegreeId);
+		return executionDegreeId;
 	}
 
 	public ActionForward start(
@@ -59,6 +71,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		HttpServletResponse response)
 		throws Exception
 	{
+		System.out.println("-->ja no outro action");
 		super.createToken(request);
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
 	}
@@ -75,8 +88,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
 
+		String executionDegreeId = getExecutionDegree(request);		
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
-		Object[] args = { null, null, studentNumber };
+		Object[] args = { executionDegreeId, null, studentNumber };
 		try
 		{
 			infoStudentEnrolmentContext =
@@ -186,8 +200,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
 		maintainEnrollmentState(request, studentNumber);
 
+		String executionDegreeId = getExecutionDegree(request);
 		List infoBranches = null;
-		Object[] args = { null, null, studentNumber };
+		Object[] args = { executionDegreeId, null, studentNumber };
 		try
 		{
 			infoBranches =
@@ -266,7 +281,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 		Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
 
-		Object[] args = { null, studentCurricularPlanId, specializationArea, secondaryArea };
+		String executionDegreeId = getExecutionDegree(request);
+		Object[] args = { executionDegreeId, studentCurricularPlanId, specializationArea, secondaryArea };
 		try
 		{
 			ServiceManagerServiceFactory.executeService(userView, "WriteStudentAreas", args);
@@ -329,7 +345,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		List toEnroll = Arrays.asList(curricularCoursesToEnroll);
 		if (toEnroll.size() == 1)
 		{
-			Object[] args = { null, studentCurricularPlanId, toEnroll.get(0), null };
+			String executionDegreeId = getExecutionDegree(request);
+			Object[] args = { executionDegreeId, studentCurricularPlanId, toEnroll.get(0), null };
 			try
 			{
 				ServiceManagerServiceFactory.executeService(userView, "WriteEnrolment", args);
@@ -373,7 +390,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer studentCurricularPlanId =
 				Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
-			Object[] args = { null, studentCurricularPlanId, (Integer) toUnenroll.get(0)};
+			String executionDegreeId = getExecutionDegree(request);
+			Object[] args = { executionDegreeId, studentCurricularPlanId, (Integer) toUnenroll.get(0)};
 			try
 			{
 				ServiceManagerServiceFactory.executeService(userView, "DeleteEnrolment", args);
@@ -406,8 +424,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
+		String executionDegreeId = getExecutionDegree(request);
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
-		Object[] args = { null, null, studentNumber };
+		Object[] args = { executionDegreeId, null, studentNumber };
 		try
 		{
 			infoStudentEnrolmentContext =
@@ -457,7 +476,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 
 		List curriculum = null;
-		Object args2[] = { null, studentCurricularPlanId };
+		Object args2[] = { executionDegreeId, studentCurricularPlanId };
 		try
 		{
 			curriculum =

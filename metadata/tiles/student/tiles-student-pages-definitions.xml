@@ -110,11 +110,18 @@
 	<definition name="definition.student.test" extends="definition.student.masterPage">
 		<put name="body" value="/student/test_bd.jsp" />		
 	</definition>
-
-
-
-	
-	
 	
 	<!-- END OF GROUPS DEFINITIONS -->
+
+	<!--  ******************* LEEC Enrollment ******************** -->
+	<definition name="df.page.prepareEnrollmentChooseAreas" extends="definition.student.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseAreas.jsp"/>
+	</definition>
+	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" extends="definition.student.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseCurricularCourses.jsp"/>
+	</definition>
+	<definition name="df.page.enrollmentConfirmation" extends="definition.student.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/enrollmentConfirmation.jsp"/>
+	</definition>
+
 </tiles-definitions>

@@ -76,12 +76,15 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				IStudent student = readStudent(id, sp);
 				if (student == null)
 				{
+					System.out.println("-->student false");
 					return false;
 				}
 
 				if (!verifyStudentLEEC(arguments, sp) || verifyStudentWithTutor(student, sp))
 				{
+					System.out.println("-->student nao é da leec");
 					return false;
+					
 				}
 			}
 			else
@@ -144,6 +147,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			exception.printStackTrace();
 			return false;
 		}
+		System.out.println("-->tem autorizacao");
 		return true;
 	}
 
@@ -205,7 +209,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 			degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla();
 		}
 
-		return new String("LEEC").equals(degreeCode);
+		return DEGREE_LEEC_CODE.equals(degreeCode);
 	}
 
 	/**
@@ -220,7 +224,8 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 
 		List tutors = persistentTutor.readTeachersByStudent(student);
 
-		return (tutors != null && tutors.size() >= 0);
+		System.out.println("-->aluno com tutor? " + (tutors != null && tutors.size() > 0));
+		return (tutors != null && tutors.size() > 0);
 	}
 
 	private ITeacher readTeacher(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia

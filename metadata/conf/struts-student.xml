@@ -108,8 +108,16 @@
         <form-property name="ids" type="java.lang.String" />
       </form-bean>
       
-	
-      
+	<!-- ******************* LEEC Enrollment **************** -->
+	<form-bean name="curricularCoursesEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="studentNumber" type="java.lang.String"/>
+		<form-property name="specializationArea" type="java.lang.Integer"/>
+		<form-property name="secondaryArea" type="java.lang.Integer"/>
+		<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
+		<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
+		<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
+		<form-property name="page" type="java.lang.Integer" initial="0"/>
+	</form-bean>
       
      </form-beans>
     
@@ -532,6 +540,37 @@
 			>
 			<forward name="viewGaugingTestsResults" path="definition.gaugingTestResults"/>
 		</action>  
+    
+    
+    	<!-- ********************* LEEC Enrollment ********************** -->
+    	<action	path="/studentCurricularCoursesEnrollment"
+				type="ServidorApresentacao.Action.student.enrollment.StudentCurricularCoursesEnrollmentDispatchAction"
+				name="curricularCoursesEnrollmentForm"				
+				parameter="method"
+				scope="request"
+				validate="false">
+
+			<forward name="curricularCoursesEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
+		</action>
+    	<action	path="/curricularCoursesEnrollment"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
+				name="curricularCoursesEnrollmentForm"				
+				parameter="method"
+				scope="request"
+				validate="true"
+				input="df.page.main">
+
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+				
+			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
+			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
+			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
+			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
+			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
+		</action>
+    
     
      </action-mappings>     
 

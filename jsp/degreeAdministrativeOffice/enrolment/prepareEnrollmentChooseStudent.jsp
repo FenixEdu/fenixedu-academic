@@ -6,6 +6,7 @@
 <html:form action="/curricularCoursesEnrollment" focus="studentNumber">
 	<html:hidden property="method" value="start"/>
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	<table>
 		<tr>
 			<td><bean:message key="label.choose.student"/>&nbsp;</td>

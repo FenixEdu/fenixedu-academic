@@ -3,9 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.TreeMap" %>
-
 <logic:present name="candidacies">
 	<h2>
 		<bean:message key="label.selectCandicaciesGrid.Title"/>

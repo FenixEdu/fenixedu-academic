@@ -6,7 +6,6 @@
 
 package ServidorPersistente.OJB;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -27,9 +26,7 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IFrequenta;
 import Dominio.ISite;
-import Dominio.ITurno;
 import Dominio.Professorship;
 import Dominio.Site;
 import ServidorPersistente.ExcepcaoPersistencia;

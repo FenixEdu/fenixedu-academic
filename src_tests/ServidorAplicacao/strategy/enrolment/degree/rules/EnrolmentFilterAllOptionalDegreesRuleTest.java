@@ -6,7 +6,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.ICurso;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.rules.EnrolmentFilterAllOptionalDegreesRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;

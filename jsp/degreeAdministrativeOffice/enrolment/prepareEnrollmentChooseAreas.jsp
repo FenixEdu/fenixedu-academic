@@ -12,6 +12,7 @@
 	<html:hidden property="executionPeriod" value="<%=pageContext.findAttribute("executionPeriod").toString()%>"/>
 	<html:hidden property="executionYear" value="<%=pageContext.findAttribute("executionYear").toString()%>"/>
 	<html:hidden property="studentCurricularPlanId" value="<%=pageContext.findAttribute("studentCurricularPlanId").toString()%>"/>
+	<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
