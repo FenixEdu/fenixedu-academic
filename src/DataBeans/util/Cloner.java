@@ -37,6 +37,7 @@ import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
+import DataBeans.InfoProfessorShip;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
 import DataBeans.InfoSection;
@@ -46,6 +47,7 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentGroupInfo;
 import DataBeans.InfoTeacher;
+import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.Announcement;
 import Dominio.Aula;
 import Dominio.BibliographicReference;
@@ -103,6 +105,7 @@ import Dominio.IGuideSituation;
 import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
+import Dominio.IProfessorship;
 import Dominio.IRole;
 import Dominio.ISala;
 import Dominio.ISection;
@@ -111,6 +114,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.IStudentGroupInfo;
 import Dominio.ITeacher;
+import Dominio.ITeacherShiftPercentage;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Item;
@@ -1890,5 +1894,33 @@ public abstract class Cloner {
 		infoEvaluation.setInfoExecutionCourse(infoExecutionCourse);
 
 		return infoEvaluation;
+	}
+	
+	public static InfoTeacherShiftPercentage copyITeacherShiftPercentage2InfoTeacherShiftPercentage(ITeacherShiftPercentage teacherShiftPercentage) {
+		InfoTeacherShiftPercentage infoTeacherShiftPercentage = new InfoTeacherShiftPercentage();
+		
+		InfoProfessorShip infoProfessorShip = Cloner.copyIProfessorShip2InfoProfessorShip(teacherShiftPercentage.getProfessorShip());
+		InfoShift infoShift = Cloner.copyIShift2InfoShift(teacherShiftPercentage.getShift());
+		
+		copyObjectProperties(infoTeacherShiftPercentage, teacherShiftPercentage);
+
+		infoTeacherShiftPercentage.setInfoProfesorShip(infoProfessorShip);
+		infoTeacherShiftPercentage.setInfoShift(infoShift);
+				
+		return infoTeacherShiftPercentage;
+	}
+	
+	private static InfoProfessorShip copyIProfessorShip2InfoProfessorShip(IProfessorship professorship) {
+		InfoProfessorShip infoProfessorShip = new InfoProfessorShip();
+		
+		InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(professorship.getTeacher());
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(professorship.getExecutionCourse());
+		
+		copyObjectProperties(infoProfessorShip, professorship);
+		
+		infoProfessorShip.setInfoTeacher(infoTeacher);
+		infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
+					
+		return infoProfessorShip;	
 	}
 }
