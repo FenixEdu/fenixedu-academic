@@ -21,7 +21,9 @@ import DataBeans.util.Cloner;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.publication.IPublication;
+import Dominio.publication.IPublicationTeacher;
 import Dominio.publication.Publication;
+import Dominio.publication.PublicationTeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -30,6 +32,8 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.publication.IPersistentPublication;
+import ServidorPersistente.publication.IPersistentPublicationTeacher;
+import Util.PublicationArea;
 import constants.publication.PublicationConstants;
 
 /**
@@ -56,8 +60,8 @@ public class InsertPublicationInTeacherList implements IServico {
         return "InsertPublicationInTeacherList";
     }
 
-    public SiteView run(Integer teacherId, Integer publicationId) throws FenixServiceException,
-            ExistingServiceException {
+    public SiteView run(Integer teacherId, Integer publicationId, String publicationArea)
+            throws FenixServiceException, ExistingServiceException {
         InfoSitePublications infoSitePublications = new InfoSitePublications();
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -71,19 +75,36 @@ public class InsertPublicationInTeacherList implements IServico {
             IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class,
                     publicationId);
 
-            List infoPublications = getInfoPublications(teacher, publication, persistentTeacher,
-                    persistentPublication);
+            IPersistentPublicationTeacher persistentPublicationTeacher = sp
+                    .getIPersistentPublicationTeacher();
+            IPublicationTeacher publicationTeacher = persistentPublicationTeacher
+                    .readByTeacherAndPublication(teacher, publication);
 
-            List infoPublicationCientifics = getInfoPublicationsType(infoPublications,
-                    PublicationConstants.CIENTIFIC);
+            if (publicationTeacher == null)
+                publicationTeacher = new PublicationTeacher();
 
-            List infoPublicationDidatics = getInfoPublicationsType(infoPublications,
-                    PublicationConstants.DIDATIC);
-
-            infoSitePublications.setInfoCientificPublications(infoPublicationCientifics);
-            infoSitePublications.setInfoDidaticPublications(infoPublicationDidatics);
-
-            return new SiteView(infoSitePublications);
+            persistentPublicationTeacher.simpleLockWrite(publicationTeacher);
+            publicationTeacher.setPublication(publication);
+            publicationTeacher.setTeacher(teacher);
+            publicationTeacher.setPublicationArea(PublicationArea.getEnum(publicationArea));
+            
+            
+            
+//            List infoPublications = getInfoPublications(teacher, publication, persistentTeacher,
+//                    persistentPublication);
+//
+//            List infoPublicationCientifics = getInfoPublicationsType(infoPublications,
+//                    PublicationConstants.CIENTIFIC);
+//
+//            List infoPublicationDidatics = getInfoPublicationsType(infoPublications,
+//                    PublicationConstants.DIDATIC);
+//
+//            infoSitePublications.setInfoCientificPublications(infoPublicationCientifics);
+//            infoSitePublications.setInfoDidaticPublications(infoPublicationDidatics);
+//
+//            return new SiteView(infoSitePublications);
+            
+            return null;
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
@@ -98,13 +119,11 @@ public class InsertPublicationInTeacherList implements IServico {
         Iterator iterator = publications.iterator();
         while (iterator.hasNext()) {
             IPublication publicationTeacher = (IPublication) iterator.next();
-            if (publicationTeacher.getIdInternal().intValue() == publication.getIdInternal().intValue()) {
+            if (publicationTeacher.getIdInternal().equals(publication.getIdInternal())) {
                 throw new ExistingServiceException();
             }
         }
 
-        //publications.add(publication);
-        //teacher.setTeacherPublications(publications);
         try {
             persistentTeacher.simpleLockWrite(teacher);
             persistentPublication.simpleLockWrite(publication);
