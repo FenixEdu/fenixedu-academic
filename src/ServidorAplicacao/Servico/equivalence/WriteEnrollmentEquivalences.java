@@ -44,6 +44,7 @@ import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.TipoCurso;
+import Util.enrollment.EnrollmentCondition;
 
 /**
  * @author David Santos in May 12, 2004
@@ -193,6 +194,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 			enrollmentToWrite.setExecutionPeriod(executionPeriod);
 			enrollmentToWrite.setStudentCurricularPlan(toStudentCurricularPlan);
 			enrollmentToWrite.setCreationDate(new Date());
+			enrollmentToWrite.setCondition(EnrollmentCondition.FINAL);
 		}
 
 		writeEnrollmentEvaluation(enrollmentToWrite, grade, userView);
