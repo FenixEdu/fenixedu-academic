@@ -8,9 +8,7 @@
 
 	<html:form action="/index">
 		<!-------------------------------------------------------------------->
-			<html:hidden  property="objectCode" value="<%= ""+request.getAttribute("objectCode")%>" />
-			<html:hidden  property="ePName" value="<%= ""+request.getAttribute("ePName")%>" />
-			<html:hidden  property="eYName" value="<%=""+request.getAttribute("eYName")%>" />
+			<html:hidden  property="executionPeriodOID" value="<%= ""+request.getAttribute("executionPeriodOID")%>" />
 		<!-------------------------------------------------------------------->
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -42,10 +40,10 @@
 	<br />
 </logic:present>
 
-	<li><html:link page="<%= "/index.do?method=prepare&amp;page=0&amp;ePName=" + request.getAttribute("ePName") + "&amp;eYName=" +request.getAttribute("eYName") %>" > <bean:message key="link.public.home"/> </html:link></li>
-	<li><html:link page="<%= "/chooseContextDA.do?method=preparePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext&amp;ePName=" + request.getAttribute("ePName") + "&amp;eYName=" +request.getAttribute("eYName") %>" > <bean:message key="link.classes.consult"/> </html:link></li>
-	<li><html:link page="<%= "/chooseContextDA.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;ePName=" + request.getAttribute("ePName") + "&amp;eYName=" +request.getAttribute("eYName") %>" > <bean:message key="link.executionCourse.consult"/> </html:link></li>
-	<li><html:link page="<%= "/prepareConsultRooms.do?ePName=" + request.getAttribute("ePName") + "&amp;eYName=" +request.getAttribute("eYName") %>" > <bean:message key="link.rooms.consult"/> </html:link></li>
-	<li><html:link page="<%= "/chooseExamsMapContextDA.do?method=prepare&amp;ePName=" + request.getAttribute("ePName") + "&amp;eYName=" +request.getAttribute("eYName") %>" ><bean:message key="link.exams.consult"/> </html:link></li>
+	<li><html:link page="<%= "/index.do?method=prepare&amp;page=0&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" > <bean:message key="link.public.home"/> </html:link></li>
+	<li><html:link page="<%= "/chooseContextDA.do?method=preparePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" > <bean:message key="link.classes.consult"/> </html:link></li>
+	<li><html:link page="<%= "/chooseContextDA.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" > <bean:message key="link.executionCourse.consult"/> </html:link></li>
+	<li><html:link page="<%= "/prepareConsultRooms.do?executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" > <bean:message key="link.rooms.consult"/> </html:link></li>
+	<li><html:link page="<%= "/chooseExamsMapContextDA.do?method=prepare&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" ><bean:message key="link.exams.consult"/> </html:link></li>
 
 </ul>

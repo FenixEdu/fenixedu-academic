@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
@@ -58,10 +59,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			firstPageComponent,
 			infoExecutionCourseCode,
 			null);
-		
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
-							
+
 		return mapping.findForward("sucess");
 	}
 
@@ -74,9 +72,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
 		readSiteView(request, announcementsComponent, null, null);
-
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
 
 		return mapping.findForward("sucess");
 	}
@@ -91,9 +86,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
 		readSiteView(request, objectivesComponent, null, null);
 
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
-
 		return mapping.findForward("sucess");
 	}
 
@@ -106,9 +98,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent programComponent = new InfoSiteProgram();
 		readSiteView(request, programComponent, null, null);
-
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
 
 		return mapping.findForward("sucess");
 	}
@@ -123,9 +112,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 		readSiteView(request, evaluationComponent, null, null);
 
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
-
 		return mapping.findForward("sucess");
 	}
 
@@ -138,9 +124,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent bibliographyComponent = new InfoSiteBibliography();
 		readSiteView(request, bibliographyComponent, null, null);
-
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
 
 		return mapping.findForward("sucess");
 	}
@@ -156,9 +139,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			new InfoSiteAssociatedCurricularCourses();
 		readSiteView(request, curricularCoursesComponent, null, null);
 
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
-
 		return mapping.findForward("sucess");
 	}
 
@@ -171,9 +151,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent timeTableComponent = new InfoSiteTimetable();
 		readSiteView(request, timeTableComponent, null, null);
-
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
 
 		return mapping.findForward("sucess");
 	}
@@ -188,9 +165,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		ISiteComponent shiftsComponent = new InfoSiteShifts();
 		readSiteView(request, shiftsComponent, null, null);
 
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
-
 		return mapping.findForward("sucess");
 	}
 
@@ -203,9 +177,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		ISiteComponent evaluationComponent = new InfoSiteEvaluation();
 		readSiteView(request, evaluationComponent, null, null);
-
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
 
 		return mapping.findForward("sucess");
 	}
@@ -223,28 +194,22 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		ISiteComponent sectionComponent = new InfoSiteSection();
 		readSiteView(request, sectionComponent, null, sectionIndex);
 
-		// Keep selected executionPeriod in request
-		RequestUtils.keepExecutionPeriodInRequest(request);
-
 		return mapping.findForward("sucess");
 	}
-	
+
 	public ActionForward summaries(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-				ISiteComponent summariesComponent = new InfoSiteSummaries();
-				readSiteView(request, summariesComponent, null, null);
+		ISiteComponent summariesComponent = new InfoSiteSummaries();
+		readSiteView(request, summariesComponent, null, null);
 
-				// Keep selected executionPeriod in request
-				RequestUtils.keepExecutionPeriodInRequest(request);
+		return mapping.findForward("sucess");
 
-				return mapping.findForward("sucess");
-
-		}
+	}
 
 	private void readSiteView(
 		HttpServletRequest request,
@@ -306,8 +271,16 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					"infoSection",
 					((InfoSiteSection) siteView.getComponent()).getSection());
 			}
+
+			// Keep selected executionPeriod in request
+			InfoExecutionPeriod infoExecutionPeriod =
+				RequestUtils.setExecutionContext(request);
+			RequestUtils.setExecutionPeriodToRequest(
+				request,
+				infoExecutionPeriod);
+
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("A disciplina",e);
+			throw new NonExistingActionException("A disciplina", e);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -353,9 +326,13 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 				request.setAttribute("objectCode", objectCode);
 				request.setAttribute("siteView", siteView);
-				
+
 				// Keep selected executionPeriod in request
-				RequestUtils.keepExecutionPeriodInRequest(request);
+				InfoExecutionPeriod infoExecutionPeriod =
+					RequestUtils.setExecutionContext(request);
+				RequestUtils.setExecutionPeriodToRequest(
+					request,
+					infoExecutionPeriod);
 
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException(e);

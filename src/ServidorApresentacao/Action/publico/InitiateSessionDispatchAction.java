@@ -20,9 +20,8 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -33,7 +32,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 
-public class InitiateSessionDispatchAction extends FenixDispatchAction {
+public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,
@@ -84,17 +83,19 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 		// Keep (selected or current) executionPeriod in request.
 		// If executionPeriod was previously selected,form has that value as default
 		InfoExecutionPeriod selectedExecutionPeriod =
-			RequestUtils.setExecutionContext(request);
-		RequestUtils.setExecutionPeriodToRequest(
-			request,
-			selectedExecutionPeriod);
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
 
 		if (selectedExecutionPeriod != null) {
+			System.out.println("Ha executionPeriod in request");
 			DynaActionForm indexForm = (DynaActionForm) form;
 			indexForm.set(
 				"index",
 				new Integer(
 					executionPeriods.indexOf((selectedExecutionPeriod))));
+		}
+		else {
+			System.out.println("ERROR - InitateSessionDA: No executionPeriod in request");
 		}
 		//----------------------------------------------------------		
 
@@ -130,9 +131,8 @@ public class InitiateSessionDispatchAction extends FenixDispatchAction {
 					index.intValue());
 
 			// Set selected executionPeriod in request
-			RequestUtils.setExecutionPeriodToRequest(
-				request,
-				selectedExecutionPeriod);
+			request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
+			request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());			
 		}
 
 		return mapping.findForward("choose");
