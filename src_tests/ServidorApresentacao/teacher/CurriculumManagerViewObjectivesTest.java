@@ -59,7 +59,7 @@ public class CurriculumManagerViewObjectivesTest
 	 * use with testUnsuccessfulExecutionOfAction.
 	 */
 	protected String[] getActionErrors() {
-		String[] result = { "FenixActionException" };
+		String[] result = { "java.lang.Exception" };
 		return result;
 	}
 
@@ -130,24 +130,23 @@ public class CurriculumManagerViewObjectivesTest
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
 		Map result = new HashMap();
-//		InfoExecutionYear infoExecutionYear =
-//			new InfoExecutionYear("2002/2003");
-//		InfoExecutionPeriod infoExecutionPeriod =
-//			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-//		InfoExecutionCourse infoExecutionCourse =
-//			new InfoExecutionCourse(
-//				"Trabalho Final de Curso I",
-//				"TFCI",
-//				"programa?",
-//				new Double(1.5),
-//				new Double(2),
-//				new Double(1.5),
-//				new Double(2),
-//				infoExecutionPeriod);
-//		InfoSite infoSite = new InfoSite(infoExecutionCourse);
-//		
-//		result.put(SessionConstants.INFO_SITE, infoSite);
-
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		InfoExecutionCourse infoExecutionCourse =
+			new InfoExecutionCourse(
+				"Programacao com Objectos",
+				"PO",
+				"programa?",
+				new Double(1.5),
+				new Double(1.5),
+				new Double(1.5),
+				new Double(1.5),
+				infoExecutionPeriod);
+		InfoSite infoSite = new InfoSite(infoExecutionCourse);
+		
+		result.put(SessionConstants.INFO_SITE, infoSite);
 		return result;
 	}
 
