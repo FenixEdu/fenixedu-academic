@@ -2,13 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
         <span class="error"><html:errors/></span>
 		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>" method="GET">
         	<input type="hidden" value="nextPagePublic" name="method"/>
+			<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+			
         	<html:hidden property="page" value="1"/>
-        	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
-			<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
          <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoop"><bean:message key="message.public.degree.choose"/></td>

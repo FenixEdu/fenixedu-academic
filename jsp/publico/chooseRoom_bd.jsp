@@ -4,17 +4,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <logic:present name="publico.infoRooms" >
   <h2><bean:message key="title.chooseRoom"/></h2>
   <br/>
   <span class="error"><html:errors/></span>	
 		<html:form action="/viewRoom.do" method="GET">
-		<!-------------------------------------------------------------------->
-			<html:hidden  property="ePName" value="<%= ""+request.getAttribute("ePName")%>" />
-			<html:hidden  property="eYName" value="<%=""+request.getAttribute("eYName")%>" />
-		<!-------------------------------------------------------------------->
-
+			<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+			
 			<html:hidden name="roomForm" property="name"/>
 			<html:hidden name="roomForm" property="building"/>
 			<html:hidden name="roomForm" property="floor"/>

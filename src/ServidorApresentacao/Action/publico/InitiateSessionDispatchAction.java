@@ -80,7 +80,6 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 		}
 		/*------------------------------------*/
 
-		// Keep (selected or current) executionPeriod in request.
 		// If executionPeriod was previously selected,form has that value as default
 		InfoExecutionPeriod selectedExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(

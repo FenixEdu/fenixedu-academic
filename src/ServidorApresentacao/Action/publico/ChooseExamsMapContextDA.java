@@ -21,14 +21,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
-import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -37,7 +36,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ChooseExamsMapContextDA extends DispatchAction {
+public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,
@@ -47,9 +46,10 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 		throws Exception {
 		HttpSession session = request.getSession(true);
 		if (session != null) {
-			
 
-			InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD);
 
 			/* Criar o bean de semestres */
 			ArrayList semestres = new ArrayList();
@@ -64,9 +64,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			curricularYearsList.add("3");
 			curricularYearsList.add("4");
 			curricularYearsList.add("5");
-			request.setAttribute(
-				"curricularYearList",
-				curricularYearsList);
+			request.setAttribute("curricularYearList", curricularYearsList);
 
 			/* Cria o form bean com as licenciaturas em execucao.*/
 			Object argsLerLicenciaturas[] =
@@ -121,9 +119,8 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 					new LabelValueBean(name, String.valueOf(index++)));
 			}
 
-
 			request.setAttribute("degreeList", licenciaturas);
-			RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);
+
 			return mapping.findForward("chooseExamsMapContext");
 		} else
 			throw new Exception();
@@ -145,8 +142,10 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
-			InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
-			
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD);
+
 			String[] selectedCurricularYears =
 				(String[]) chooseExamContextoForm.get(
 					"selectedCurricularYears");
@@ -166,34 +165,31 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			for (int i = 0; i < selectedCurricularYears.length; i++)
 				curricularYears.add(new Integer(selectedCurricularYears[i]));
 
-			request.setAttribute(
-				"curricularYearList",
-				curricularYears);
+			request.setAttribute("curricularYearList", curricularYears);
 
 			int index =
 				Integer.parseInt((String) chooseExamContextoForm.get("index"));
 
 			Object argsLerLicenciaturas[] =
-							{ infoExecutionPeriod.getInfoExecutionYear()};
+				{ infoExecutionPeriod.getInfoExecutionYear()};
 
 			List infoExecutionDegreeList =
-							(List) ServiceUtils.executeService(
-								null,
-								"ReadExecutionDegreesByExecutionYear",
-								argsLerLicenciaturas);
+				(List) ServiceUtils.executeService(
+					null,
+					"ReadExecutionDegreesByExecutionYear",
+					argsLerLicenciaturas);
 
 			Collections.sort(
 				infoExecutionDegreeList,
 				new ComparatorByNameForInfoExecutionDegree());
-			
+
 			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
-			
-			RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);
+
 			if (infoExecutionDegree != null) {
-				
-				RequestUtils.setExecutionDegreeToRequest(request,infoExecutionDegree);
-				
+				RequestUtils.setExecutionDegreeToRequest(
+					request,
+					infoExecutionDegree);
 			} else {
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}
@@ -220,8 +216,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 		HttpServletResponse response) {
 
 		List curricularYearList =
-			(List) request.getAttribute(
-				"curricularYearList");
+			(List) request.getAttribute("curricularYearList");
 
 		if (curricularYearList == null) {
 			curricularYearList = new ArrayList();
@@ -230,9 +225,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 			curricularYearList.add(new LabelValueBean("3º", "3"));
 			curricularYearList.add(new LabelValueBean("4º", "4"));
 			curricularYearList.add(new LabelValueBean("5º", "5"));
-			request.setAttribute(
-				"curricularYearList",
-				curricularYearList);
+			request.setAttribute("curricularYearList", curricularYearList);
 		}
 		return curricularYearList;
 	}
@@ -249,8 +242,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response) {
 
-		List semesterList =
-			(List) request.getAttribute("semesterList");
+		List semesterList = (List) request.getAttribute("semesterList");
 
 		if (semesterList == null) {
 
@@ -274,7 +266,9 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 		throws Exception {
 
 		List infoExecutionDegreeList = null;
-		InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
 		Object args[] = { infoExecutionPeriod.getInfoExecutionYear()};
 		infoExecutionDegreeList =
 			(List) ServiceUtils.executeService(
@@ -282,9 +276,7 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 				"ReadExecutionDegreesByExecutionYear",
 				args);
 
-		request.setAttribute(
-			"degreeList",
-			infoExecutionDegreeList);
+		request.setAttribute("degreeList", infoExecutionDegreeList);
 
 		return infoExecutionDegreeList;
 	}
@@ -315,31 +307,5 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 
 		}
 		return false;
-	}
-	
-	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
-		throws Exception {
-
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
-
-		// Read executionPeriod from request
-		InfoExecutionPeriod infoExecutionPeriod =
-			RequestUtils.getExecutionPeriodFromRequest(request);
-
-		// If executionPeriod not in request nor in DB, read current
-		if (infoExecutionPeriod == null) {
-			userView = SessionUtils.getUserView(request);
-			infoExecutionPeriod =
-				(InfoExecutionPeriod) ServiceUtils.executeService(
-					userView,
-					"ReadCurrentExecutionPeriod",
-					new Object[0]);
-		}
-
-		// Keep executionPeriod in request
-		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
-
-		return infoExecutionPeriod;
 	}
 }

@@ -16,16 +16,16 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 
 /**
  * @author tfc130
  */
-public class SelectRoomsFormAction extends FenixAction {
+public class SelectRoomsFormAction extends FenixContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -33,6 +33,12 @@ public class SelectRoomsFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+
+		try {
+			super.execute(mapping, form, request, response);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		DynaActionForm roomForm = (DynaActionForm) form;
 
@@ -59,9 +65,9 @@ public class SelectRoomsFormAction extends FenixAction {
 			throw new FenixActionException(e);
 		}
 
-		InfoExecutionPeriod infoExecutionPeriod = null;
-		infoExecutionPeriod = RequestUtils.setExecutionContext(request);
-		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);					
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
 
 		request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal());
 
@@ -74,9 +80,6 @@ public class SelectRoomsFormAction extends FenixAction {
 			saveErrors(request, errors);
 		} else if (infoRooms.size() == 1) {
 			InfoRoom infoRoom = (InfoRoom) infoRooms.get(0);
-
-			//			request.setAttribute("publico.infoRoom", infoRoom);
-
 			request.setAttribute(
 				"objectCode",
 				infoExecutionPeriod.getIdInternal().toString());

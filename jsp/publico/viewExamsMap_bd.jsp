@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <br/>
 <bean:define id="component" name="siteView" property="component"/>
 <table width="80%" align="center">

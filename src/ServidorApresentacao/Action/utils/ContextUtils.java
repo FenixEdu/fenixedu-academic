@@ -18,6 +18,10 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ContextUtils {
 
 	public static final void setExecutionPeriodContext(HttpServletRequest request) {
+		System.out.println("## setExecutionPeriodContext - IN");
+		System.out.println("## executionPeriodOID in parameter - "+request.getParameter(SessionConstants.EXECUTION_PERIOD_OID));
+		System.out.println("## executionPeriodOID in attribute - "+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID));
+		
 		String executionPeriodOIDString =
 			(String) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD_OID);
@@ -25,6 +29,7 @@ public class ContextUtils {
 			executionPeriodOIDString =
 				request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
 		}
+		
 		Integer executionPeriodOID = null;
 		if (executionPeriodOIDString != null) {
 			executionPeriodOID = new Integer(executionPeriodOIDString);
@@ -45,7 +50,8 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 		} else {
-			// Read currente execution period from database
+			System.out.println("## executionPeriodOID nao em lado nenhum, vai ler current");				
+			// Read current execution period from database
 			try {
 				infoExecutionPeriod =
 					(InfoExecutionPeriod) ServiceUtils.executeService(
@@ -57,9 +63,9 @@ public class ContextUtils {
 			}
 		}
 		// Place it in request
-		request.setAttribute(
-			SessionConstants.EXECUTION_PERIOD,
-			infoExecutionPeriod);
+		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+		System.out.println("## setExecutionPeriodContext - OUT");			
 	}
 
 }

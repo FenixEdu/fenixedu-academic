@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <ul>
-	<logic:present name="<% SessionConstants.EXECUTION_PERIOD%>" scope="request">
-		<h4><bean:write name="<% SessionConstants.EXECUTION_PERIOD%>" property="name"/> - <bean:write name="<% SessionConstants.EXECUTION_PERIOD%>" property="infoExecutionYear.year"/></h4><br />
+	<logic:present name="<%= SessionConstants.EXECUTION_PERIOD%>" scope="request">
+		<h4 align="center"><bean:write name="<%= SessionConstants.EXECUTION_PERIOD%>" property="name" scope="request"/> - <bean:write name="<%= SessionConstants.EXECUTION_PERIOD%>" property="infoExecutionYear.year" scope="request"/></h4><br />
 	</logic:present>
 	
 	<li><html:link page="<%= "/index.do?method=prepare&amp;page=0&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" > <bean:message key="link.public.home"/> </html:link></li>

@@ -19,17 +19,19 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.SiteView;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ViewExamsMapDA extends FenixDispatchAction {
+public class ViewExamsMapDA extends FenixContextDispatchAction {
 
 	public ActionForward view(
 		ActionMapping mapping,
@@ -45,15 +47,15 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 			List curricularYears =
 				(List) request.getAttribute("curricularYearList");
 
-			String executionPeriodName =
-				(String) request.getAttribute("ePName");
-			String executionYearName = (String) request.getAttribute("eYName");
-						
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD);
+
 			String degreeInitials =
 				(String) request.getAttribute("degreeInitials");
 			String nameDegreeCurricularPlan =
 				(String) request.getAttribute("nameDegreeCurricularPlan");
-			
+
 			if (degreeInitials == null) {
 				degreeInitials = request.getParameter("degreeInitials");
 			}
@@ -64,24 +66,25 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 			SiteView siteView = null;
 			ISiteComponent bodyComponent = new InfoSiteExamMap();
 			Object[] args =
-				{ bodyComponent,
-					 executionYearName,
-					 executionPeriodName,
-					 degreeInitials,
-					 nameDegreeCurricularPlan,
-					 curricularYears };
-			
+				{
+					bodyComponent,
+					infoExecutionPeriod.getInfoExecutionYear().getYear(),
+					infoExecutionPeriod.getName(),
+					degreeInitials,
+					nameDegreeCurricularPlan,
+					curricularYears };
+
 			try {
 				siteView =
-					(SiteView) gestor.executar(null, "ExamSiteComponentService", args);
+					(SiteView) gestor.executar(
+						null,
+						"ExamSiteComponentService",
+						args);
 			} catch (FenixServiceException e1) {
 				throw new FenixActionException(e1);
 			}
 
 			request.setAttribute("siteView", siteView);
-			request.setAttribute("ePName",executionPeriodName);
-			request.setAttribute("eYName",executionYearName);
-			
 		} else {
 			throw new FenixActionException();
 		}

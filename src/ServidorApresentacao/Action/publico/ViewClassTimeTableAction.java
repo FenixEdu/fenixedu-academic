@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.SiteView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
  *
  */
-public class ViewClassTimeTableAction extends Action {
+public class ViewClassTimeTableAction extends FenixContextAction {
 
 	/**
 	 * Constructor for ViewClassTimeTableAction.
@@ -37,21 +39,22 @@ public class ViewClassTimeTableAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+		try {
+			super.execute(mapping, form, request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		HttpSession session = request.getSession(true);
 		String className = request.getParameter("className");
 		String degreeInitials = (String) request.getAttribute("degreeInitials");
 		String nameDegreeCurricularPlan =
 			(String) request.getAttribute("nameDegreeCurricularPlan");
-		String year = request.getParameter("eYName");
-		String period = request.getParameter("ePName");
 
-		if (period == null) {
-			period = (String) request.getAttribute("ePName");
-		}
-		if (year == null) {
-			year = (String) request.getAttribute("eYName");
-		}
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+
 		if (degreeInitials == null) {
 			degreeInitials = request.getParameter("degreeInitials");
 		}
@@ -62,17 +65,17 @@ public class ViewClassTimeTableAction extends Action {
 		if (className == null)
 			return mapping.getInputForward();
 
-	
 		InfoSiteTimetable component = new InfoSiteTimetable();
 
 		Object[] args =
 			{
 				component,
-				year,
-				period,
+				infoExecutionPeriod.getInfoExecutionYear().getYear(),
+				infoExecutionPeriod.getName(),
 				degreeInitials,
 				nameDegreeCurricularPlan,
-				className, null };
+				className,
+				null };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -84,9 +87,7 @@ public class ViewClassTimeTableAction extends Action {
 			throw new FenixActionException(e1);
 		}
 		request.setAttribute("siteView", siteView);
-		request.setAttribute("className",className);
-		request.setAttribute("ePName", period);
-		request.setAttribute("eYName", year);
+		request.setAttribute("className", className);
 		return mapping.findForward("Sucess");
 	}
 }

@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <logic:present name="siteView" property="component" >	
 	<bean:define id="component" name="siteView" property="component" />	
 <table align="center">
@@ -20,7 +21,7 @@
 	<logic:iterate id="classview" name="component" property="classes" >
 		<tr>
 			<td class="listClasses">		
-			<html:link page="<%= "/viewClassTimeTable.do?ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" +pageContext.findAttribute("eYName")+ "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials") %>" paramId="className" paramName="classview" paramProperty="nome">
+			<html:link page="<%= "/viewClassTimeTable.do?executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;nameDegreeCurricularPlan=" +pageContext.findAttribute("nameDegreeCurricularPlan")+ "&amp;degreeInitials=" +pageContext.findAttribute("degreeInitials") %>" paramId="className" paramName="classview" paramProperty="nome">
 			<jsp:getProperty name="classview" property="nome"/>
 			</html:link>
 			</td>

@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -29,13 +28,12 @@ import DataBeans.RoomKey;
 import DataBeans.SiteView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
-public class SiteViewerDispatchAction extends FenixDispatchAction {
+public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
 	public ActionForward firstPage(
 		ActionMapping mapping,
@@ -297,13 +295,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					((InfoSiteSection) siteView.getComponent()).getSection());
 			}
 
-			// Keep selected executionPeriod in request
-			InfoExecutionPeriod infoExecutionPeriod =
-				RequestUtils.setExecutionContext(request);
-			RequestUtils.setExecutionPeriodToRequest(
-				request,
-				infoExecutionPeriod);
-
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("A disciplina", e);
 		} catch (FenixServiceException e) {
@@ -350,14 +341,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 				request.setAttribute("objectCode", objectCode);
 				request.setAttribute("siteView", siteView);
 
-				// Keep selected executionPeriod in request
-				InfoExecutionPeriod infoExecutionPeriod =
-					RequestUtils.setExecutionContext(request);
-				RequestUtils.setExecutionPeriodToRequest(
-					request,
-					infoExecutionPeriod);
-
-			} catch (NonExistingServiceException e) {
+		} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException(e);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);

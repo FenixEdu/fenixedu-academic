@@ -15,14 +15,15 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
  */
-public class PrepareSelectExecutionCourseAction extends FenixAction {
+public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -30,6 +31,11 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+		try {
+			super.execute(mapping, form, request, response);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		HttpSession session = request.getSession(true);
 
@@ -38,19 +44,18 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		InfoExecutionCourse executionCourse = new InfoExecutionCourse();
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			RequestUtils.getExecutionPeriodFromRequest(request);
-
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
+				
 		InfoExecutionDegree infoExecutionDegree =
 			RequestUtils.getExecutionDegreeFromRequest(
 				request,
 				infoExecutionPeriod.getInfoExecutionYear());
-				
+
 		executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-		
-		Integer curricularYear =
-			(Integer) request.getAttribute("curYear");
-		
-		
+
+		Integer curricularYear = (Integer) request.getAttribute("curYear");
+
 		Object argsSelectExecutionCourse[] =
 			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
@@ -64,8 +69,7 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		RequestUtils.setExecutionPeriodToRequest(request,infoExecutionPeriod);
+
 		request.setAttribute("exeCourseList", infoExecutionCourses);
 		return mapping.findForward("sucess");
 	}

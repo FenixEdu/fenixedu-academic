@@ -3,10 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
 <html:form action="/chooseExamsMapContextDA" method="GET">
-	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
-	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
+	<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
+
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="choose"/>
 

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
     <br/>
         <h2><bean:message key="title.choose.discipline" /></h2>
         <br/>
@@ -10,8 +11,7 @@
        		<input type="hidden" name="method" value="firstPage">
        		
        		<%-- hide previous form for validation matters --%>
-       		<html:hidden name="chooseSearchContextForm" property="ePName"/>
-			<html:hidden name="chooseSearchContextForm" property="eYName"/>
+			<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />			
 			<html:hidden name="chooseSearchContextForm" property="curYear"/>	
 			<html:hidden name="chooseSearchContextForm" property="index"/>	
         	

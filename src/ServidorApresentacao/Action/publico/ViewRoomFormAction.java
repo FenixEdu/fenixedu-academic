@@ -14,15 +14,15 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author tfc130
  */
-public class ViewRoomFormAction extends FenixAction {
+public class ViewRoomFormAction extends FenixContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -57,8 +57,8 @@ public class ViewRoomFormAction extends FenixAction {
 
 		request.setAttribute("publico.infoRoom", infoRoom);
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			RequestUtils.getExecutionPeriodFromRequest(request);
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+//			RequestUtils.getExecutionPeriodFromRequest(request);
 		Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
 
 		List lessons;

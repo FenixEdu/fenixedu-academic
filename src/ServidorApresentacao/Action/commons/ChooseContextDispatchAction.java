@@ -21,7 +21,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
@@ -31,6 +30,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -40,7 +40,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class ChooseContextDispatchAction extends DispatchAction {
+public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 
 	protected static final String INFO_DEGREE_INITIALS_PARAMETER =
 		"degreeInitials";
@@ -176,8 +176,8 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
 		InfoExecutionPeriod infoExecutionPeriod =
-			RequestUtils.setExecutionContext(request);
-		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
+			(InfoExecutionPeriod) request.getAttribute(
+				SessionConstants.EXECUTION_PERIOD);
 
 		//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
 		/* Criar o bean de semestres */
@@ -336,11 +336,9 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
-			InfoExecutionPeriod infoExecutionPeriod = null;
-			infoExecutionPeriod = RequestUtils.setExecutionContext(request);
-			RequestUtils.setExecutionPeriodToRequest(
-				request,
-				infoExecutionPeriod);
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD);
 
 			Integer semestre = infoExecutionPeriod.getSemester();
 			Integer anoCurricular =
@@ -450,7 +448,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		}
 		return semesterList;
 	}
-
 
 	/**
 	 * Method existencesOfInfoDegree.

@@ -7,9 +7,8 @@
 <logic:present name="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>" scope="request">
 
 	<html:form action="/index">
-		<!-------------------------------------------------------------------->
-			<html:hidden  property="executionPeriodOID" value="<%= ""+request.getAttribute("executionPeriodOID")%>" />
-		<!-------------------------------------------------------------------->
+		<html:hidden  property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+		
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 			    <td nowrap="nowrap" width="125">

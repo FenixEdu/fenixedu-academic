@@ -32,7 +32,7 @@ public abstract class FenixContextAction extends FenixAction {
 
 		ContextUtils.setExecutionPeriodContext(request);
 
-		return super.execute(mapping, actionForm, request, response);
+		return super.execute(mapping, actionForm, request, response);		
 	}
 
 }
