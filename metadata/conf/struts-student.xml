@@ -16,18 +16,17 @@
         <form-property name="certidao" type="java.lang.String"/>
       </form-bean> -->
       
-      <form-bean name="studentShiftEnrolmentForm"
-      			type="org.apache.struts.validator.DynaValidatorForm"
-      			dynamic="true">
-      	<form-property name="method" type="java.lang.String"/>
-	    <form-property name="shifts" type="java.lang.Integer[]"/>
-	    <form-property name="class" type="java.lang.String"/>
-		<form-property name="degree" type="java.lang.String"/>
-		<form-property name="course" type="java.lang.String[]"/>
-		<form-property name="wantedCourse" type="java.lang.String[]"/>
-		<form-property name="previousWantedCourse" type="java.lang.String[]"/>
-		
-      </form-bean>
+		<form-bean name="studentShiftEnrolmentForm"
+					type="org.apache.struts.validator.DynaValidatorForm"
+					dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="shifts" type="java.lang.Integer[]"/>
+			<form-property name="class" type="java.lang.String"/>
+			<form-property name="degree" type="java.lang.String"/>
+			<form-property name="course" type="java.lang.String[]"/>
+			<form-property name="wantedCourse" type="java.lang.String[]"/>
+			<form-property name="previousWantedCourse" type="java.lang.String[]"/>
+		</form-bean>
       
 <!--
 	  <form-bean name="curricularCourseEnrolmentForm"
@@ -176,30 +175,30 @@
       </action>
 
       <!-- TODO: tdi-dev (bruno) -> redo this-->
-	  <action name="studentShiftEnrolmentForm"
-        type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
-        path="/studentShiftEnrolmentManager"
-        input="/studentShiftEnrolmentManager.do?method=enrollCourse&amp;firstTime=yes" 
-        parameter="method"
-        scope="session"
-        validate="false">
+	  <action path="/studentShiftEnrolmentManager"
+	  				name="studentShiftEnrolmentForm"
+	  				attribute="studentShiftEnrolmentForm"
+					type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
+					input="/studentShiftEnrolmentManager.do?method=enrollCourse&amp;firstTime=yes" 
+					parameter="method"
+					scope="session"
+					validate="false">
         <exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
           handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
                            
-        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=enrollCourses&amp;firstTime=yes"/>
+        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
 	      
         <forward name="selectCourses" path="show-courses-by-degree"/>
         <forward name="selectClass" path="show-classes-for-shift-enrolment"/>
         <forward name="showAvailableShifts" path="show-available-shifts"/>
-        <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment"/>
+        <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=proceedToShiftEnrolment"/>
         <forward name="classTimeTable" path="/classTimeTable.jsp"/>
       </action>
       
       <action 
         type="ServidorApresentacao.Action.student.ViewStudentTimeTable"
-        path="/studentTimeTable"  
-        >
+        path="/studentTimeTable">
         <forward name="sucess" path="/classTimeTable.jsp"/>
       </action>
       
