@@ -61,8 +61,8 @@ CREATE TABLE GRANT_CONTRACT_REGIME (
   DATE_DISPATCH_CC date default NULL,
   DATE_SEND_DISPATCH_CD date default NULL,
   DATE_DISPATCH_CD date default NULL,
-  --DATE_ACCEPT_TERM date default NULL,
-  --KEY_GRANT_TYPE int(11) unsigned NOT NULL default '0',
+-- DATE_ACCEPT_TERM date default NULL,
+-- KEY_GRANT_TYPE int(11) unsigned NOT NULL default '0',
   KEY_GRANT_CONTRACT int(11) unsigned NOT NULL default '0',
   KEY_TEACHER int(11) unsigned,
   PRIMARY KEY  (ID_INTERNAL)
