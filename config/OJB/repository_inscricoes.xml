@@ -1227,9 +1227,9 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.AreaCientifica -->
+<!-- Definitions for Dominio.ScientificArea -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.AreaCientifica" table="AREA_CIENTIFICA">
+<class-descriptor class="Dominio.ScientificArea" table="SCIENTIFIC_AREA">
   <field-descriptor 
     name="idInternal"
     column="id_internal"
