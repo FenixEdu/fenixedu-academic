@@ -10,19 +10,21 @@ package Dominio;
  */
 import java.util.ArrayList;
 import java.util.List;
-public class Teacher extends Pessoa implements ITeacher {
+public class Teacher extends DomainObject implements ITeacher {
     private Integer teacherNumber;
     private List professorShipsExecutionCourses;
-    private List responsableForExecutionCourses;
+    private List responsibleForExecutionCourses;
+    private IPessoa person;
+    private Integer keyPerson;
+    
     /** Creates a new instance of Teacher */
     public Teacher() {
     }
-    public Teacher(String user, String password, Integer teacherNumber){
-		super.setUsername(user);
-		super.setPassword(password);
+    public Teacher(IPessoa person,Integer teacherNumber){
+		setPerson(person);
         setTeacherNumber(teacherNumber);
         setProfessorShipsExecutionCourses(new ArrayList());
-        setResponsableForExecutionCourses(new ArrayList());
+        setResponsibleForExecutionCourses(new ArrayList());
 
     }
     public boolean equals(Object obj) {
@@ -42,8 +44,8 @@ public class Teacher extends Pessoa implements ITeacher {
 	/**
 	 * @return List
 	 */
-	public List getResponsableForExecutionCourses() {
-		return responsableForExecutionCourses;
+	public List getResponsibleForExecutionCourses() {
+		return responsibleForExecutionCourses;
 	}
 
 	/**
@@ -65,8 +67,8 @@ public class Teacher extends Pessoa implements ITeacher {
 	 * Sets the responsableForExecutionCourses.
 	 * @param responsableForExecutionCourses The responsableForExecutionCourses to set
 	 */
-	public void setResponsableForExecutionCourses(List responsableForExecutionCourses) {
-		this.responsableForExecutionCourses = responsableForExecutionCourses;
+	public void setResponsibleForExecutionCourses(List responsableForExecutionCourses) {
+		this.responsibleForExecutionCourses = responsableForExecutionCourses;
 	}
 
 	/**
@@ -75,6 +77,36 @@ public class Teacher extends Pessoa implements ITeacher {
 	 */
 	public void setTeacherNumber(Integer teacherNumber) {
 		this.teacherNumber = teacherNumber;
+	}
+
+	/**
+	 * @return Integer
+	 */
+	public Integer getKeyPerson() {
+		return keyPerson;
+	}
+
+	/**
+	 * @return IPessoa
+	 */
+	public IPessoa getPerson() {
+		return person;
+	}
+
+	/**
+	 * Sets the keyPerson.
+	 * @param keyPerson The keyPerson to set
+	 */
+	public void setKeyPerson(Integer keyPerson) {
+		this.keyPerson = keyPerson;
+	}
+
+	/**
+	 * Sets the person.
+	 * @param person The person to set
+	 */
+	public void setPerson(IPessoa person) {
+		this.person = person;
 	}
 
 }

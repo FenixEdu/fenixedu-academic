@@ -236,8 +236,9 @@
    <class-descriptor
    	  class="Dominio.Teacher"
    	  table="TEACHER">
+   	  
       <field-descriptor id="1"
-         name="codigoInterno"
+         name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
@@ -249,12 +250,23 @@
          column="TEACHER_NUMBER"
          jdbc-type="INTEGER"
       />
-             
+      <field-descriptor id="3"
+         name="keyPerson"
+         column="KEY_PERSON"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor
+         name="person"
+         class-ref="Dominio.Pessoa"
+         proxy="true"
+      >
+         <foreignkey field-id-ref="3"/>
+      </reference-descriptor>       
   <!-- Para reflectir a relacao de 1..* entre Docente e Sitio de responsavel -->
   <collection-descriptor
-         name="responsableForExecutionCourses"
+         name="responsibleForExecutionCourses"
          element-class-ref="Dominio.DisciplinaExecucao"
-         indirection-table="RESPONSABLEFOR"
+         indirection-table="RESPONSIBLEFOR"
       >
          <fk-pointing-to-this-class column="ID_TEACHER"/>
          <fk-pointing-to-element-class column="ID_EXECUTIONCOURSE"/>

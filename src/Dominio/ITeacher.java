@@ -8,15 +8,15 @@ package Dominio;
  * @author Ivo Brandão
  */
 import java.util.List;
-public interface ITeacher extends IPessoa{
+public interface ITeacher {
     public Integer getTeacherNumber();
 
-//	overseenExecutionCourses
-	public List getResponsableForExecutionCourses();
+	public IPessoa getPerson();
+	public List getResponsibleForExecutionCourses();
 	public List getProfessorShipsExecutionCourses();
 
     public void setTeacherNumber(Integer number);
-
-	public void setResponsableForExecutionCourses(List executionCourses);
+	public void setPerson(IPessoa person);
+	public void setResponsibleForExecutionCourses(List executionCourses);
 	public void setProfessorShipsExecutionCourses(List executionCourses);
 }

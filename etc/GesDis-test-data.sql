@@ -61,11 +61,11 @@ INSERT INTO CURRICULUM VALUES (2, '25','bla','bla','bla');
 #
 
 DELETE FROM TEACHER;
-INSERT INTO TEACHER VALUES (1, 1);
-INSERT INTO TEACHER VALUES (2, 2);
-INSERT INTO TEACHER VALUES (3, 3);
-INSERT INTO TEACHER VALUES (4, 4);
-INSERT INTO TEACHER VALUES (5, 5);
+INSERT INTO TEACHER VALUES (1, 1,1);
+INSERT INTO TEACHER VALUES (2, 2,2);
+INSERT INTO TEACHER VALUES (3, 3,3);
+INSERT INTO TEACHER VALUES (4, 4,4);
+INSERT INTO TEACHER VALUES (5, 5,5);
 
 #
 # Data for table 'professorships'
@@ -77,12 +77,12 @@ INSERT INTO professorships VALUES (1, 25);
 INSERT INTO professorships VALUES (1, 26);
 
 #
-# Data for table 'responsablefor'
+# Data for table 'responsiblefor'
 #
 
-DELETE FROM responsablefor;
-INSERT INTO responsablefor VALUES (1, 25);
-INSERT INTO responsablefor VALUES (1, 26);
+DELETE FROM responsiblefor;
+INSERT INTO responsiblefor VALUES (1, 25);
+INSERT INTO responsiblefor VALUES (1, 26);
 
 #
 # Data for table 'announcement'

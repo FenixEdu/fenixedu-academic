@@ -50,10 +50,10 @@ create table item (
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
-# Table structure for responsablefor
+# Table structure for responsiblefor
 #----------------------------
-drop table if exists responsablefor;
-create table responsablefor (
+drop table if exists responsiblefor;
+create table responsiblefor (
    ID_TEACHER int(11) unsigned not null default '0',
    ID_EXECUTIONCOURSE int(11) unsigned not null default '0',
    primary key (ID_TEACHER, ID_EXECUTIONCOURSE))
