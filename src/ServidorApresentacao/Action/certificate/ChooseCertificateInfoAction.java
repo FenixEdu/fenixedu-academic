@@ -18,15 +18,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoExecutionYear;
+import DataBeans.InfoMasterDegreeProofVersion;
+import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoPrice;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
+import ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CertificateList;
 import Util.DocumentReason;
@@ -34,6 +37,7 @@ import Util.DocumentType;
 import Util.GraduationType;
 import Util.Specialization;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
@@ -113,6 +117,8 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			
 			//remove sessions variables
 			session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
+			session.removeAttribute( SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION);
+			session.removeAttribute( SessionConstants.MASTER_DEGREE_PROOF_HISTORY);
 			session.removeAttribute(SessionConstants.DEGREE_TYPE);
 			session.removeAttribute(SessionConstants.DATE);
 			session.removeAttribute(SessionConstants.DOCUMENT_REASON_LIST);
@@ -137,13 +143,14 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 	        
 			// output
 			InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+			InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
 			InfoExecutionYear infoExecutionYear = null;
 			
 			
 			//get informations
 			try {
 				infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "CreateDeclaration", args);
-
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Declaração", e);
 			}
@@ -153,12 +160,55 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			}
 				
 			else {
-				try {
-					infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView, "ReadCurrentExecutionYear", null);
-	
-				} catch (RuntimeException e) {
-					throw new RuntimeException("Error", e);
+				
+			try {
+				if (certificateString.equals( "Fim de curso de Mestrado discriminada com média") || certificateString.equals("Fim de curso de Mestrado simples"))
+				{
+					Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
+							try
+							{
+								infoMasterDegreeThesisDataVersion =
+									(InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
+										userView,
+										"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
+										argsMasterDegreeThesisDataVersion);
+							}
+							catch (NonExistingServiceException e)
+							{
+								throw new NonExistingActionException(
+									"O registo da tese ",e);
+
+							}
+							
+							
+					/* * * get master degree proof * * */
+					Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
+					try
+					{
+						infoMasterDegreeProofVersion =
+							(InfoMasterDegreeProofVersion) ServiceUtils.executeService(
+								userView,
+								"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
+								argsMasterDegreeProofVersion);
+					}
+					catch (NonExistingServiceException e)
+					{
+						throw new NonExistingActionException(
+							"O registo da tese ",
+							e);
+					}
+					catch (ScholarshipNotFinishedServiceException e)
+					{
+						throw new ScholarshipNotFinishedActionException("",e);
+					}
+					
 				}
+					
+				infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(userView, "ReadCurrentExecutionYear", null);
+	
+			} catch (RuntimeException e) {
+				throw new RuntimeException("Error", e);
+			}
 				Locale locale = new Locale("pt", "PT");
 				Date date = new Date();
 				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);				
@@ -170,7 +220,9 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 					session.setAttribute(SessionConstants.CERTIFICATE_TYPE, certificateString);	
 					session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);	
 					session.setAttribute(SessionConstants.DATE, formatedDate);	
-				return mapping.findForward("ChooseSuccess"); 
+					session.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION,infoMasterDegreeThesisDataVersion);
+					session.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY,infoMasterDegreeProofVersion);
+					return mapping.findForward("ChooseSuccess"); 
 			}
 			
 		  } else
