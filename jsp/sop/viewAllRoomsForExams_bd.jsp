@@ -11,7 +11,7 @@
 	<logic:iterate id="infoExamsMap" name="<%= SessionConstants.INFO_EXAMS_MAP_LIST%>">
 	<h2><bean:message key="title.view.room"/></h2>
 	<br />
-			<table width="95%">
+			<table width="100%">
                 <tr>
                     <td class="listClasses-header">
                         <bean:message key="property.room.name"/>
@@ -55,7 +55,7 @@
             </table>
 		<br />
 		<br />	
-		<div align="center"><app:generateExamsMap name="infoExamsMap" user="sop"/></div>
+		<app:generateExamsMap name="infoExamsMap" user="sop"/>
 		<br style="page-break-before:always;" />
 	</logic:iterate>
 </logic:present>

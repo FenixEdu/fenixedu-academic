@@ -9,7 +9,7 @@
 <logic:present name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
 	<logic:iterate id="infoViewAllExams" name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
 		<h2><bean:message key="title.exams.list"/></h2>
-	 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	 	<table width="100%" cellspacing="0">
 			<tr>
         		<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
 					<b>
@@ -29,7 +29,7 @@
 	    <br />
 	    <span class="error"><html:errors/></span>
 		<logic:notPresent name="infoViewAllExams" property="infoExecutionCourseAndExamsList">
-			<table align="center"  cellpadding='0' cellspacing='0'>
+			<table cellspacing="0">
 				<tr align="center">
 					<td>
 						<span class="error"><bean:message key="message.exams.none.for.executionDegree.CurricularYear.ExecutionPeriod"/></span>
@@ -38,30 +38,30 @@
 			</table>
 		</logic:notPresent>
 		<logic:present name="infoViewAllExams" property="infoExecutionCourseAndExamsList">		
-			<table>
+			<table width="100%" cellspacing="0">
 				<tr>
-					<td>
+					<td class="listClasses-header">
 						<bean:message key="property.course"/>
 					</td>
-					<td>
+					<td class="listClasses-header">
 						<bean:message key="property.number.students.attending.course"/>
 					</td>
-					<td>
+					<td class="listClasses-header">
 						<bean:message key="property.exam.1stExam"/>
 					</td>
-					<td>
+					<td class="listClasses-header">
 						<bean:message key="property.exam.2stExam"/>
 					</td>
 				</tr>
 				<logic:iterate id="infoExecutionCourseAndExams" name="infoViewAllExams" property="infoExecutionCourseAndExamsList">
-					<tr align="center">
-						<td>
+					<tr>
+						<td class="listClasses">
 							<bean:write name="infoExecutionCourseAndExams" property="infoExecutionCourse.nome"/>
 						</td>
-						<td>
+						<td class="listClasses">
 							<bean:write name="infoExecutionCourseAndExams" property="numberStudentesAttendingCourse"/>
 						</td>
-						<td>
+						<td class="listClasses">
 						 	<logic:present name="infoExecutionCourseAndExams" property="infoExam1">
 								<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam1.day">
 									<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam1().getDay().get(Calendar.YEAR) %> -
@@ -88,7 +88,7 @@
 						  		<bean:message key="message.exam.not.scheduled"/>
   						  	</logic:notPresent>							
 						</td>
-						<td>
+						<td class="listClasses">
 							<logic:present name="infoExecutionCourseAndExams" property="infoExam2">
 								<logic:notEmpty name="infoExecutionCourseAndExams" property="infoExam2.day">
 									<%= ((InfoExecutionCourseAndExams)infoExecutionCourseAndExams).getInfoExam2().getDay().get(Calendar.YEAR) %> -

@@ -14,78 +14,66 @@
     </tr>
 </table>
 <br/>
-
 <h2><bean:message key="title.exam.create"/></h2>
 <span class="error"><html:errors /></span>
-
 <html:form action="/createExam">
 	<html:hidden property="page" value="1"/>
 	<table cellpadding="0" cellspacing="2">
     	<tr>
-        	<td nowrap class="formTD" align="right">
-            	<bean:message key="property.exam.year"/>
+        	<td nowrap="nowrap" class="formTD">
+            	<bean:message key="property.exam.year"/>:
             </td>
-            <td nowrap class="formTD" align="left">
+            <td nowrap="nowrap" class="formTD">
             	<html:text property="year"/>
             </td>
-            <td nowrap class="formTD" align="right">
-            	<bean:message key="property.exam.month"/>
+            <td nowrap="nowrap" class="formTD">
+            	<bean:message key="property.exam.month"/>:
             </td>
-            <td nowrap class="formTD" align="left">
+            <td nowrap="nowrap" class="formTD">
             	<html:select property="month">
-		            <option value="" selected="selected">[Mês]</option>
+		            <option value="" selected="selected"></option>
 		            <html:options collection="<%= SessionConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
 	            </html:select>
             </td>
-            <td nowrap class="formTD" align="right">
-            	<bean:message key="property.exam.day"/>
+            <td nowrap="nowrap" class="formTD">
+            	<bean:message key="property.exam.day"/>:
             </td>
-            <td nowrap class="formTD" align="left">
+            <td nowrap="nowrap" class="formTD">
             	<html:select property="day">
-                	<option value="" selected="selected">[Dia]</option>
+                	<option value="" selected="selected"></option>
                     <html:options name="<%= SessionConstants.LABLELIST_DAYSOFMONTH %>"/>
                 </html:select>
             </td>
 		</tr>
         <tr>
-            <td nowrap="nowrap" class="formTD" align="right">
-                <bean:message key="property.exam.beginning"/>
+            <td nowrap="nowrap" class="formTD">
+                <bean:message key="property.exam.beginning"/>:
             </td>
-            <td nowrap="nowrap" align="left">
+            <td nowrap="nowrap">
             	<html:select property="beginning">
-                  	<option value="" selected="selected">[Turno]</option>                        
+                  	<option value="" selected="selected"></option>                        
                     <html:options name="<%= SessionConstants.LABLELIST_HOURS %>"/>
                 </html:select>
             </td>
        	</tr>
         <tr>
-            <td nowrap="nowrap" class="formTD" align="right">
-                <bean:message key="property.exam.season"/>
+            <td nowrap="nowrap" class="formTD">
+                <bean:message key="property.exam.season"/>:
             </td>
-            <td nowrap="nowrap" align="left">
+            <td nowrap="nowrap">
             	<html:select property="season">
-                  	<option value="" selected="selected">[Época]</option>           
+                  	<option value="" selected="selected"></option>           
 		            <html:options collection="<%= SessionConstants.LABLELIST_SEASONS %>" property="value" labelProperty="label"/>                  	             
                 </html:select>
             </td>
        	</tr>
 	</table>
-
 	<br/>
-    <table align="lef">
-    	<tr align="center">
-        	<td>
-        		<html:hidden property="method" value="create"/>
-            	<html:submit styleClass="inputbutton">
-              		<bean:message key="label.create"/>
-             	</html:submit>
-            </td>
-            <td width="20"> </td>
-            <td>
-            	<html:reset value="Limpar" styleClass="inputbutton">
-                	<bean:message key="label.clear"/>
-                </html:reset>
-            </td>
-		</tr>
-	</table>
+<html:hidden property="method" value="create"/>
+<html:submit styleClass="inputbutton">
+	<bean:message key="label.create"/>
+</html:submit>
+<html:reset value="Limpar" styleClass="inputbutton">
+<bean:message key="label.clear"/>
+</html:reset>
 </html:form>
