@@ -18,6 +18,7 @@ public class Site implements ISite {
 	private ISection initialSection;
 	private Integer keyInitialSection;
 	private List announcements;
+	
 	/** 
 	 * Construtor
 	 */
@@ -27,16 +28,23 @@ public class Site implements ISite {
 	/** 
 	 * Construtor
 	 */
-	public Site(
-		Integer internalCode,
-		IDisciplinaExecucao executionCourse,
-		Integer keyExecutionCourse) {
+	public Site(IDisciplinaExecucao executionCourse) {
 
-		this.internalCode = internalCode;
-		this.executionCourse = executionCourse;
-		this.keyExecutionCourse = keyExecutionCourse;
+		setExecutionCourse(executionCourse);
 	}
 
+	/** 
+	* Construtor
+	*/
+	
+	public Site(ISection initialSection, List sections, IDisciplinaExecucao executionCourse, List announcements){
+		setInitialSection(initialSection);
+		setSections(sections);
+		setExecutionCourse(executionCourse);
+		setAnnouncements(announcements);
+	}
+	
+	
 	/**
 	 * @return IDisciplinaExecucao
 	 */
