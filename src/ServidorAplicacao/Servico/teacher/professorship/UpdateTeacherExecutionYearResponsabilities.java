@@ -10,6 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionYear;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionYear;
@@ -27,8 +28,6 @@ import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author jpvl
