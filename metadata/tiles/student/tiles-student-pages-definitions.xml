@@ -20,7 +20,7 @@
 	<definition name="validate-confirm-shift-enrolment" extends="definition.student.one-column">
 		<put name="body" value="/student/validateAndConfirmShiftEnrolment_bd.jsp" />		
 	</definition>
-	<definition name="show-courses-by-degree" extends="definition.student.one-column">
+	<definition name="show-courses-by-degree" extends="definition.student.masterPage">
 	          <put name="body" value="/student/showCoursesByDegree.jsp" />
 	</definition>
 	
