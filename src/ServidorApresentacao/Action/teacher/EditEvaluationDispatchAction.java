@@ -92,10 +92,16 @@ public class EditEvaluationDispatchAction extends FenixDispatchAction {
 			
 			//get new infoEvaluation data from the form
 			DynaActionForm evaluationForm = (DynaActionForm) form;
-			
+			InfoExecutionCourse executionCourse = null;
 			String evaluationElements = (String) evaluationForm.get("evaluationElements");
+			if (oldEvaluation==null) {
+			 executionCourse = ((InfoSite) session.getAttribute(SessionConstants.INFO_SITE)).getInfoExecutionCourse();
 			
-			InfoEvaluation newEvaluation = new InfoEvaluation(oldEvaluation.getInfoExecutionCourse(),evaluationElements);
+			}
+			else {
+				executionCourse = oldEvaluation.getInfoExecutionCourse();
+			}
+			InfoEvaluation newEvaluation = new InfoEvaluation(executionCourse,evaluationElements);
 			
 			//get userView
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

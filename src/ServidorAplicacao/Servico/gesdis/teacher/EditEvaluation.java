@@ -11,9 +11,11 @@ import DataBeans.util.Cloner;
 import Dominio.IEvaluation;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author jmota
@@ -47,25 +49,42 @@ public class EditEvaluation implements IServico {
 		throws FenixServiceException {
 
 		try {
-			IEvaluation evaluationOld =
-				Cloner.copyInfoEvaluation2IEvaluation(infoEvaluationOld);
 			IEvaluation evaluationNew =
 				Cloner.copyInfoEvaluation2IEvaluation(infoEvaluationNew);
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			if (infoEvaluationOld != null) {
 
-			IEvaluation evaluationFromDB =
-				sp.getIPersistentEvaluation().readByExecutionCourse(
-					evaluationOld.getExecutionCourse());
+				IEvaluation evaluationOld =
+					Cloner.copyInfoEvaluation2IEvaluation(infoEvaluationOld);
 
-			if (evaluationFromDB != null) {
-				evaluationFromDB.setEvaluationElements(
-					evaluationNew.getEvaluationElements());
+				IEvaluation evaluationFromDB =
+					sp.getIPersistentEvaluation().readByExecutionCourse(
+						evaluationOld.getExecutionCourse());
+
+				if (evaluationFromDB != null) {
+					evaluationFromDB.setEvaluationElements(
+						evaluationNew.getEvaluationElements());
+				}
+				sp.getIPersistentEvaluation().lockWrite(evaluationFromDB);
+			} else {
+				
+				evaluationNew.setExecutionCourse(sp
+					.getIDisciplinaExecucaoPersistente()
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+						evaluationNew.getExecutionCourse().getSigla(),
+						evaluationNew
+							.getExecutionCourse()
+							.getExecutionPeriod()));
+
+				sp.getIPersistentEvaluation().lockWrite(evaluationNew);
 			}
-			sp.getIPersistentEvaluation().lockWrite(evaluationFromDB);
 			return new Boolean(true);
+		} catch (ExistingPersistentException e) {
+			throw new ExistingServiceException(e);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
+
 	}
 
 }
