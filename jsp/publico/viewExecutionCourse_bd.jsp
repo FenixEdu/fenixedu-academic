@@ -57,6 +57,7 @@
 <br/>
   </logic:present>
      <logic:present name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite">	
+     <logic:notEmpty 	name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite">	
      	<h2><bean:message key="message.siteAddress" /></h2>
 	<bean:define id="alternativeSite" name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite"/>
 	<html:link href="<%=(String)pageContext.findAttribute("alternativeSite") %>" target="_blank">
@@ -64,12 +65,16 @@
 	</html:link>
 			<br/>
 			<br/>
+</logic:notEmpty>			
 </logic:present>
      <logic:present name="<%= SessionConstants.INFO_SITE %>" property="introduction">
+     <logic:notEmpty name="<%= SessionConstants.INFO_SITE %>" property="introduction">
+     	
 	<h2><bean:message key="message.introduction" /></h2>
       <p><bean:write name="<%= SessionConstants.INFO_SITE %>" property="introduction" filter="false" /></p>
       <br/>
       <br/>
+      </logic:notEmpty>
 	</logic:present>	
 </logic:present>		
 
@@ -82,6 +87,7 @@
 	<html:link href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</html:link>
 </logic:notPresent>
 <logic:present name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>" >
+<logic:notEmpty name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>" >	
 <table>
 	<tr>
 		<th>
@@ -98,8 +104,10 @@
 	</logic:iterate>	
 </table>
 </BR>
+</logic:notEmpty>
 </logic:present>
 <logic:present name="<%= SessionConstants.TEACHERS_LIST %>" >
+<logic:notEmpty name="<%= SessionConstants.TEACHERS_LIST %>" >	
 <table>
 	<tr>
 		<th>
@@ -115,4 +123,5 @@
 		</tr>
 	</logic:iterate>	
 </table>
+</logic:notEmpty>
 </logic:present>

@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <span class="error"><html:errors/></span>	
 <logic:present name="<%= SessionConstants.INFO_SITES_LIST %>" scope="session">
+<logic:notEmpty name="<%= SessionConstants.INFO_SITES_LIST %>" >	
 	<h2><bean:message key="label.professorships" /></h2>
 		<table width="50%"cellpadding="0" border="0">
 			<tr>
@@ -25,4 +26,5 @@
 	 			<% index++; %>	
 				</logic:iterate>
 	 	</table>
+</logic:notEmpty>	 	
 </logic:present>

@@ -49,7 +49,7 @@
 </logic:present>	
 </div>
 <logic:present name="<%= SessionConstants.INFO_SITE %>" property="mail" >
-	
+<logic:notEmpty name="<%= SessionConstants.INFO_SITE %>" property="mail" >	
 <div id="nav">
    <h3 >Contacto</h3>	
  
@@ -58,4 +58,5 @@
 		<p class="contacto"><bean:write name="mail" /></p></html:link>
   	 
 </div>
+</logic:notEmpty>
 </logic:present>
