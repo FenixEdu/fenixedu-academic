@@ -26,14 +26,23 @@ public class Enrolment implements IEnrolment {
 		this.ojbConcreteClass = this.getClass().getName();
 	}
 
-	public Enrolment(
-		IStudentCurricularPlan studentCurricularPlan,
-		ICurricularCourse curricularCourse,
-		EnrolmentState state) {
+	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, EnrolmentState state) {
 		this();
 		setCurricularCourse(curricularCourse);
 		setStudentCurricularPlan(studentCurricularPlan);
 		setState(state);
+	}
+
+	public Enrolment(
+		IStudentCurricularPlan studentCurricularPlan,
+		ICurricularCourse curricularCourse,
+		EnrolmentState state,
+		IExecutionPeriod executionPeriod) {
+		this();
+		setCurricularCourse(curricularCourse);
+		setStudentCurricularPlan(studentCurricularPlan);
+		setState(state);
+		setExecutionPeriod(executionPeriod);
 	}
 
 	public boolean equals(Object obj) {
@@ -43,10 +52,8 @@ public class Enrolment implements IEnrolment {
 			IEnrolment enrolment = (IEnrolment) obj;
 
 			resultado =
-				this.getStudentCurricularPlan().equals(
-					enrolment.getStudentCurricularPlan())
-					&& this.getCurricularCourse().equals(
-						enrolment.getCurricularCourse())
+				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
+					&& this.getCurricularCourse().equals(enrolment.getCurricularCourse())
 					&& getExecutionPeriod().equals(enrolment.getExecutionPeriod());
 		}
 		return resultado;
@@ -56,6 +63,7 @@ public class Enrolment implements IEnrolment {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
 		result += "state = " + this.state + "; ";
+		result += "execution Period = " + this.executionPeriod + "; ";
 		result += "curricularCourse = " + this.curricularCourse + "]\n";
 		return result;
 	}

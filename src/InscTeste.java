@@ -75,10 +75,11 @@ public class InscTeste {
 
 		infoEnrolmentContext.getActualEnrolment().addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesEnroledByStudent());
 */
-		for(int i = 0; i < infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().size()-1; i++) {
+		for(int i = 0; i < 4; i++) {
 			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(i);
 			infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 		}
+
 
 //		InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().get(0);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
@@ -93,11 +94,12 @@ public class InscTeste {
 //		infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().get(5);
 //		infoEnrolmentContext.getActualEnrolment().add(infoCurricularCourseScope);
 
-		showActualEnrolments(infoEnrolmentContext);
 
 		Object serviceArgs10[] = {infoEnrolmentContext};
 		infoEnrolmentContext = executeService("ValidateActualEnrolment", serviceArgs10);
+		showActualEnrolments(infoEnrolmentContext);
 		showEnrolmentValidationResultMesages(infoEnrolmentContext);
+
 //		System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
 
 	}
