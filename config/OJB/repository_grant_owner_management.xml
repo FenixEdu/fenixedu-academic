@@ -190,6 +190,7 @@
 		class-ref="Dominio.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor> 
 	<reference-descriptor
 		name="grantContract"
 		class-ref="Dominio.grant.contract.GrantContract"
@@ -238,6 +239,7 @@
 		class-ref="Dominio.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>
 	<reference-descriptor
 		name="grantContract"
 		class-ref="Dominio.grant.contract.GrantContract"
