@@ -46,6 +46,9 @@
       <field-descriptor name="lessons" column="LESSONS" jdbc-type="DOUBLE"/>
       
       <field-descriptor name="institutionWorkTime" column="INSTITUTION_WORK_TIME" jdbc-type="DOUBLE"/>
+
+      <field-descriptor name="otherTypeCredits" column="OTHER_TYPE_CREDITS" jdbc-type="DOUBLE"/>
+
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -63,22 +66,17 @@
 </class-descriptor>
 
 
-<!-- Definitions for Dominio.CreditLine -->
-<class-descriptor class="Dominio.CreditLine" table="CREDIT_LINE">
+<!-- Definitions for credits.CreditLine -->
+<class-descriptor class="Dominio.credits.OtherTypeCreditLine" table="crd_OTHER_TYPE_CREDIT_LINE">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
-      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" access="anonymous"/>
+	  <field-descriptor name="keyExecutionPeriod" column="KEY_EXECUTION_PERIOD" jdbc-type="INTEGER" access="anonymous" />
 
       <field-descriptor name="credits" column="CREDITS" jdbc-type="DOUBLE"/>
-
-      <field-descriptor name="creditLineType" column="CREDIT_LINE_TYPE" conversion="ServidorPersistente.Conversores.CreditLineTypeFieldConversion" jdbc-type="INTEGER"/>
-
-      <field-descriptor name="explanation" column="EXPLANATION" jdbc-type="VARCHAR"/>
+      <field-descriptor name="reason" column="REASON" jdbc-type="VARCHAR"/>
       
-      <field-descriptor name="startDate" column="START_DATE" jdbc-type="DATE"/>
-      
-      <field-descriptor name="endDate" column="END_DATE" jdbc-type="DATE"/>
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -88,6 +86,9 @@
       
       <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
          <foreignkey field-ref="keyTeacher"/>
+      </reference-descriptor>
+      <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
+         <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>
 </class-descriptor>
 
