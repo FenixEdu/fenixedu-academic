@@ -120,4 +120,9 @@
 		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
 		<put name="body" value="/publico/viewRoom_bd.jsp"/>
 	</definition>
+	<definition name="df.notFound" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
+		<put name="body" value="/publico/notFound.jsp"/>
+	</definition>
+	
 </tiles-definitions>

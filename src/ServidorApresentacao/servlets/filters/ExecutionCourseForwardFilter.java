@@ -23,7 +23,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
  * @author Luis Cruz
  *  
  */
-public class ForwardFilter implements Filter {
+public class ExecutionCourseForwardFilter implements Filter {
 
     ServletContext servletContext;
 
@@ -31,14 +31,17 @@ public class ForwardFilter implements Filter {
 
     String forwardURI;
 
+    String notFoundURI;
+
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         this.servletContext = filterConfig.getServletContext();
 
         try {
-            forwardURI = filterConfig.getInitParameter("forwartURI");
+            forwardURI = filterConfig.getInitParameter("forwardURI");
+            notFoundURI = filterConfig.getInitParameter("notFoundURI");
         } catch (Exception e) {
-            System.out.println("Could not get init paramter 'forwartURI'.");
+            System.out.println("Could not get init paramter 'forwardURI'.");
         }
     }
 
@@ -52,30 +55,31 @@ public class ForwardFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        //String uri = request.getRequestURI();
-
         String uri = request.getRequestURI();
         String context = request.getContextPath();
         String[] tokens = uri.split("/");
         String executionCourseCode = tokens[tokens.length - 1];
 
         Object args[] = { executionCourseCode };
+        StringBuffer executionCourseSiteURI = new StringBuffer();
+        if (context.length() > 1) {
+            executionCourseSiteURI.append(context);
+        }
         try {
             Integer executionCourseOID = (Integer) ServiceUtils.executeService(null,
                     "ReadExecutionCourseOIDByCodeInLatestPeriod", args);
             if (executionCourseOID != null) {
-                StringBuffer executionCourseSiteURI = new StringBuffer();
-                if (context.length() > 1) {
-                    executionCourseSiteURI.append(context);
-                }
+
                 executionCourseSiteURI.append(forwardURI);
                 executionCourseSiteURI.append(executionCourseOID);
-                response.sendRedirect(executionCourseSiteURI.toString());
             } else {
-                response.sendRedirect(context);
+                executionCourseSiteURI.append(notFoundURI);
             }
+            response.sendRedirect(executionCourseSiteURI.toString());
         } catch (FenixServiceException e) {
-            throw new ServletException(e);
+            executionCourseSiteURI.append(notFoundURI);
+            response.sendRedirect(executionCourseSiteURI.toString());
+            e.printStackTrace();
         }
 
     }

@@ -7363,4 +7363,12 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
+	<service>
+		<name>ReadSchoolClassByNameInCurrentExecutionPeriod</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.publico.ReadSchoolClassByNameInCurrentExecutionPeriod
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
 </serviceDefinitions>

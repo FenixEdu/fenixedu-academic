@@ -22,7 +22,7 @@ public class SummaryUtils {
      */
     public SummaryUtils() {
         super();
-        // TODO Auto-generated constructor stub
+      
     }
 
     /**

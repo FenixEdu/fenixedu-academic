@@ -1,6 +1,7 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.List;
 
 import Util.PeriodState;
 import fileSuport.INode;
@@ -47,4 +48,10 @@ public interface IExecutionPeriod extends IDomainObject, INode {
      *            The previousExecutionPeriod to set.
      */
     public void setPreviousExecutionPeriod(IExecutionPeriod previousExecutionPeriod);
+    
+    public List getSchoolClasses() ;
+    /**
+     * @param schoolClasses The schoolClasses to set.
+     */
+    public void setSchoolClasses(List schoolClasses) ;
 }

@@ -131,22 +131,24 @@ public final class SessionUtils {
      * case-sensitive search.
      */
     public static void removeAttributtes(HttpSession session, String prefix) {
-        Enumeration attNames = session.getAttributeNames();
-        Vector toRemoveAtts = new Vector();
-        while (attNames.hasMoreElements()) {
-            String attName = (String) attNames.nextElement();
-            if (attName.startsWith(prefix)) {
-                toRemoveAtts.add(attName);
+        if (session != null) {
+            Enumeration attNames = session.getAttributeNames();
+            Vector toRemoveAtts = new Vector();
+            while (attNames.hasMoreElements()) {
+                String attName = (String) attNames.nextElement();
+                if (attName.startsWith(prefix)) {
+                    toRemoveAtts.add(attName);
+                }
             }
-        }
-        for (int i = 0; i < toRemoveAtts.size(); i++) {
-            session.removeAttribute((String) toRemoveAtts.elementAt(i));
+            for (int i = 0; i < toRemoveAtts.size(); i++) {
+                session.removeAttribute((String) toRemoveAtts.elementAt(i));
+            }
         }
     }
 
     /**
-     * @deprecated @param
-     *             request
+     * @deprecated
+     * @param request
      * @param mapping
      * @throws FenixActionException
      */

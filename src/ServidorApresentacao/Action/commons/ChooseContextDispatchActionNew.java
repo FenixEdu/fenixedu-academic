@@ -275,7 +275,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
     public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
@@ -291,8 +291,19 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
+        Integer index = null;
+        if (escolherContextoForm.get("index") != null
+                && !escolherContextoForm.get("index").equals("null")) {
 
-        Integer index = new Integer((String) escolherContextoForm.get("index"));
+            index = new Integer((String) escolherContextoForm.get("index"));
+        } else {
+            if (request.getParameter("index") != null && !request.getParameter("index").equals("null")) {
+
+                index = new Integer(request.getParameter("index"));
+            } else {
+                index = new Integer(0);
+            }
+        }
 
         request.setAttribute("curYear", anoCurricular);
         request.setAttribute("semester", semestre);

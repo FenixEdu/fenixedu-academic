@@ -1,14 +1,12 @@
 /*
  * Created on Jun 17, 2004
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package ServidorAplicacao.Servico.publication;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.publication.IPublicationType;
 import Dominio.publication.PublicationType;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -18,27 +16,17 @@ import ServidorPersistente.publication.IPersistentPublicationType;
 /**
  * @author TJBF & PFON
  * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
  */
-public class ReadPublicationType implements IServico {
+public class ReadPublicationType implements IService {
 
     /**
      *  
      */
     public ReadPublicationType() {
-        // TODO Auto-generated constructor stub
+      
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        // TODO Auto-generated method stub
-        return "ReadPublicationType";
-    }
+    
 
     public IPublicationType run(Integer publicationTypeId) throws FenixServiceException {
         ISuportePersistente sp;
@@ -51,7 +39,7 @@ public class ReadPublicationType implements IServico {
                     PublicationType.class, publicationTypeId);
             return publicationType;
         } catch (ExcepcaoPersistencia e) {
-            // TODO Auto-generated catch block
+           
             throw new FenixServiceException(e);
         }
     }

@@ -126,8 +126,7 @@ public abstract class CreditLine extends DomainObject implements ICreditLine, IC
      * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeUpdate(org.apache.ojb.broker.PersistenceBroker)
      */
     public void beforeUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
-        // TODO Auto-generated method stub
-
+        
     }
 
     protected abstract CreditsEvent getCreditEventGenerated();

@@ -1,6 +1,7 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.List;
 
 import Util.PeriodState;
 import fileSuport.INode;
@@ -31,6 +32,8 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
     private IExecutionPeriod previousExecutionPeriod;
 
     private Integer keyPreviousExecutionPeriod;
+    
+    private List schoolClasses;
 
     /**
      * Constructor for ExecutionPeriod.
@@ -242,5 +245,17 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
      */
     public void setKeyPreviousExecutionPeriod(Integer keyPreviousExecutionPeriod) {
         this.keyPreviousExecutionPeriod = keyPreviousExecutionPeriod;
+    }
+    /**
+     * @return Returns the schoolClasses.
+     */
+    public List getSchoolClasses() {
+        return schoolClasses;
+    }
+    /**
+     * @param schoolClasses The schoolClasses to set.
+     */
+    public void setSchoolClasses(List schoolClasses) {
+        this.schoolClasses = schoolClasses;
     }
 }

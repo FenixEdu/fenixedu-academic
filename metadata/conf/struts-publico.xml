@@ -181,6 +181,9 @@
     
     	<!-- null pointer exceptions from readByOId -->
  	  <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
+
+		<!-- page not found -->
+	   <action path="/notFound" forward="df.notFound"/> 
 	    <!-- page fronting actions -->
 
 	<action path="/index"
