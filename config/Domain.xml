@@ -27,10 +27,10 @@
           <reference store="nodestore" />
         </revisiondescriptorstore >
         <contentstore classname="slidestore.reference.JDBCContentStore" >
-          <parameter name="driver" >com.mysql.jdbc.Driver</parameter >
-          <parameter name="url" >mysql://localhost:3306/myDB</parameter >
-          <parameter name="user">root</parameter>
-          <parameter name="password"></parameter>
+          <parameter name="driver" >@db.slide.driver@</parameter >
+          <parameter name="url" >@db.slide.alias@</parameter >
+          <parameter name="user">@db.slide.user@</parameter>
+          <parameter name="password">@db.slide.pass@</parameter>
           <parameter name="rootpath" >files</parameter >
           
            
