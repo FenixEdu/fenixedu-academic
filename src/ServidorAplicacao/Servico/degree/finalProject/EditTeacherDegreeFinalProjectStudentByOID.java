@@ -7,6 +7,9 @@ package ServidorAplicacao.Servico.degree.finalProject;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import DataBeans.InfoObject;
 import DataBeans.InfoStudent;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
@@ -43,9 +46,20 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
 	 */
     public class StudentPercentageExceed extends FenixServiceException
     {
-        public StudentPercentageExceed()
+        private List infoTeacherDegreeFinalProjectStudentList;
+        /**
+         * @param infoTeacherDegreeFinalProjectStudentList
+         */
+        public StudentPercentageExceed(List infoTeacherDegreeFinalProjectStudentList)
         {
-            super();
+           this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
+        }
+        /**
+         * @return Returns the infoTeacherDegreeFinalProjectStudentList.
+         */
+        public List getInfoTeacherDegreeFinalProjectStudentList()
+        {
+            return this.infoTeacherDegreeFinalProjectStudentList;
         }
     }
     private static EditTeacherDegreeFinalProjectStudentByOID service = new EditTeacherDegreeFinalProjectStudentByOID();
@@ -66,8 +80,8 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
     protected IDomainObject clone2DomainObject(InfoObject infoObject)
     {
         InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
-        return Cloner.copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(
-                infoTeacherDegreeFinalProjectStudent);
+        return Cloner
+                .copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(infoTeacherDegreeFinalProjectStudent);
     }
 
     /*
@@ -115,7 +129,18 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             }
             if (percentage > 100)
             {
-                throw new StudentPercentageExceed();
+                List infoTeacherDegreeFinalProjectStudentList = (List) CollectionUtils.collect(
+                        teacherDegreeFinalProjectStudentList, new Transformer()
+                        {
+
+                            public Object transform(Object input)
+                            {
+                                ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) input;
+                                InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = Cloner.copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(teacherDegreeFinalProjectStudent);
+                                return infoTeacherDegreeFinalProjectStudent;
+                            }
+                        });
+                throw new StudentPercentageExceed(infoTeacherDegreeFinalProjectStudentList);
             }
         }
         catch (ExcepcaoPersistencia e)
@@ -123,12 +148,11 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
-    }
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
+    } /*
+	    * (non-Javadoc)
+	    * 
+	    * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+	    */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
@@ -167,8 +191,8 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         IPersistentTeacherDegreeFinalProjectStudent teacherDFPStudentDAO = sp
                 .getIPersistentTeacherDegreeFinalProjectStudent();
 
-        teacherDegreeFinalProjectStudent = teacherDFPStudentDAO.readByUnique(
-                teacherDegreeFinalProjectStudent);
+        teacherDegreeFinalProjectStudent = teacherDFPStudentDAO
+                .readByUnique(teacherDegreeFinalProjectStudent);
 
         return teacherDegreeFinalProjectStudent;
     }
