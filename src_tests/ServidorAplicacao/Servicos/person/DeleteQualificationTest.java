@@ -4,18 +4,12 @@
 
 package ServidorAplicacao.Servicos.person;
 
-import java.util.Date;
-
-import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import DataBeans.person.InfoQualification;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import Util.EstadoCivil;
-import Util.Sexo;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author Barbosa
@@ -52,7 +46,6 @@ public class DeleteQualificationTest
 	 */
 	protected String getDataSetFilePath() {
 		return "etc/datasets/servicos/person/testDeleteQualificationDataSet.xml";
-		//TODO MUDAR PARA O XML CORRECTO
 	}
 	/*
 	 * (non-Javadoc)
@@ -158,7 +151,7 @@ public class DeleteQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/person/testExpectedDeleteGOMQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteGOMQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -184,7 +177,7 @@ public class DeleteQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/person/testExpectedDeleteTQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteTQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -214,7 +207,7 @@ public class DeleteQualificationTest
 			fail("Delete Qualification Unsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -241,7 +234,7 @@ public class DeleteQualificationTest
 			fail("Delete Qualification Unsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -272,7 +265,7 @@ public class DeleteQualificationTest
 			fail("Delete Qualification Unsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -305,7 +298,7 @@ public class DeleteQualificationTest
 		} catch (NotAuthorizedException e) {
 			fail("DeleteQualificationUnsuccessfull: " + e);
 		} catch (FenixServiceException e) {
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
