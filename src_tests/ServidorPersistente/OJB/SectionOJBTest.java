@@ -13,8 +13,6 @@ package ServidorPersistente.OJB;
  * @author lmac1
  */
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.IDisciplinaExecucao;
@@ -65,29 +63,28 @@ public class SectionOJBTest extends TestCaseOJB {
 	super.tearDown();
   }
   
-	/** 
-	 * Test of readBySiteAndSectionAndName() method, of class ServidorPersistente.OJB.SectionOJB.
-	 */
-    public void testReadBySiteAndSectionAndName() {
+  /** Test of readBySiteAndSectionAndName() method, of class ServidorPersistente.OJB.SectionOJB.*/
+
+  
+  
+	public void testReadBySiteAndSectionAndName() {
 	
 	ISection section = null;
 	ISite site = null;
 	ISection superiorSection = null;
+	ISection supSection2 = null;
 	IDisciplinaExecucao executionCourse = null;
-	ISection section1 = null;
 	
-	//	read existing section with superiorSection
+	//	read existing section without superiorSection
 	
 
 	try {
 		 persistentSupport.iniciarTransaccao();
+
 		 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		 assertNotNull(executionCourse);
-	    
 		 site = persistentSite.readByExecutionCourse(executionCourse);
 		 assertNotNull(site);
-		
-	    
 		 section = persistentSection.readBySiteAndSectionAndName(site, superiorSection,"Seccao1deTFCI");
 
 		 persistentSupport.confirmarTransaccao();
@@ -102,7 +99,7 @@ public class SectionOJBTest extends TestCaseOJB {
 		
 		 assertEquals(section.getName(), "Seccao1deTFCI");
 		 assertEquals(section.getSite(), site);
-		 assertEquals(section.getSuperiorSection(), null);
+		 assertEquals(section.getSuperiorSection(), superiorSection);
 		 
 		 System.out.println("Acabei a 1ª parte do teste");
 	
@@ -116,108 +113,80 @@ public class SectionOJBTest extends TestCaseOJB {
 		executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
 		assertNotNull(executionCourse);
 	    
-	    site = persistentSite.readByExecutionCourse(executionCourse);
+		site = persistentSite.readByExecutionCourse(executionCourse);
 		assertNotNull(site);
 	
 		superiorSection = persistentSection.readBySiteAndSectionAndName(site, null,"Seccao1dePO");	
 		assertNotNull(superiorSection);
+		
 		assertEquals(superiorSection.getName(), "Seccao1dePO");
 		assertEquals(superiorSection.getSite(), site);
 		assertEquals(superiorSection.getSuperiorSection(), null);
+		
 		System.out.println("superiorSection: " +superiorSection);
 		System.out.println("superiorSection internal Code: " + ((Section) superiorSection).getInternalCode());
 		
 		
-	    section1= persistentSection.readBySiteAndSectionAndName(site, superiorSection,"SubSeccao2dePO");
+		section= persistentSection.readBySiteAndSectionAndName(site, superiorSection,"SubSeccao2dePO");
 
 		persistentSupport.confirmarTransaccao();
 		}
 	
 	catch (ExcepcaoPersistencia ex) 
-	    {
-	      fail("testReadBySiteAndSectionAndName:fail read existing section ");
-	    }
+		{
+		  fail("testReadBySiteAndSectionAndName:fail read existing section ");
+		}
 		
-	    assertNotNull(section1);
+		assertNotNull(section);
 		
-		assertEquals(section1.getName(), "SubSeccao2dePO");
-		assertEquals(section1.getSite(), site);
-		assertEquals(section1.getSuperiorSection(), superiorSection);
+		assertEquals(section.getName(), "SubSeccao2dePO");
+		assertEquals(section.getSite(), site);
+		assertEquals(section.getSuperiorSection(), superiorSection);
 	
 		System.out.println("Acabei a 2ª parte do teste");
-     //read existing subSection with superiorSection and without inferiorSections
-//
-//
-//		
-//	try {
-//		 persistentSupport.iniciarTransaccao();
-//		 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
-//	     assertNotNull(executionCourse);
-//	    
-//		 site = persistentSite.readByExecutionCourse(executionCourse);
-//		 assertNotNull(site);
-//	
-//		 superiorSection = persistentSection.readBySiteAndSectionAndName(site, null,"Seccao1dePO");
-//		 
-//		 section = persistentSection.readBySiteAndSectionAndName(site, superiorSection,"SubSeccao2dePO");
-//		 
-//		 persistentSupport.confirmarTransaccao();
-//		}
-//	
-//	catch (ExcepcaoPersistencia ex) 
-//		{
-//		 fail("testReadBySiteAndSectionAndName:fail read existing section ");
-//		}
-//	
-//		assertNotNull(section);
-//		
-//		assertEquals(section.getName(), "SubSeccao2dePO");
-//		assertEquals(section.getSectionOrder().intValue(), 1);
-//		assertEquals(section.getLastModifiedDate(), Date.valueOf("2003-01-25"));
-//		assertEquals(section.getSite(), site);
-//		assertEquals(section.getSuperiorSection(), superiorSection);
-//		assertEquals(section.getInferiorSections(), inferiorSections);
-//		assertEquals(section.getItems(),itens);
-//
-//
-
-//	inferiorSections.add("subSection1");
-//	inferiorSections.add("subSection2");
-//	
-//	itens.add("item11");
-//	itens.add("item12");
-//	itens.add("item21");
-	
-	// read unexisting section
+     
+    
+     
+	// read unexisting section (unexisting name)
 	try {
-	  persistentSupport.iniciarTransaccao();
-	  section = persistentSection.readBySiteAndSectionAndName(site , null , "section5");
-	  persistentSupport.confirmarTransaccao();
-	  assertNull("testReadBySiteAndSectionAndName:fail read unexisting section", section);
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testreadBySiteAndSectionAndName:fail read unexisting section");
-	}
-}
-	
-	public void testReadBySite() {
-
-		List result = null;
-
-		try {
 			persistentSupport.iniciarTransaccao();
-			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+	  
+			executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
 			assertNotNull(executionCourse);
 	    
-			ISite site = persistentSite.readByExecutionCourse(executionCourse);
+			site = persistentSite.readByExecutionCourse(executionCourse);
 			assertNotNull(site);
-			
-			result = persistentSection.readBySite(site);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testReadBySite: readBySite:" + excepcaoPersistencia);
-		}
-		assertNotNull(result);
-		assertEquals(result.isEmpty(), false);
-	}
 	
+			section = persistentSection.readBySiteAndSectionAndName(site , null , "section5");
+			persistentSupport.confirmarTransaccao();
+			assertNull("testReadBySiteAndSectionAndName:fail read unexisting section", section);
+		} catch (ExcepcaoPersistencia ex) {
+		fail("testreadBySiteAndSectionAndName:fail read unexisting section");
+		}
+	
+	
+   //	read unexisting section (section doesnt belong to the site)
+   try {
+		 persistentSupport.iniciarTransaccao();
+		 section = persistentSection.readBySiteAndSectionAndName(site , null , "seccao1deTFCI");
+		 persistentSupport.confirmarTransaccao();
+		 assertNull("testReadBySiteAndSectionAndName:fail read unexisting section", section);
+	   } catch (ExcepcaoPersistencia ex) {
+		 fail("testreadBySiteAndSectionAndName:fail read unexisting section");
+	   }
+
+
+	   //	read unexisting section (section doesnt belong to the superiorSection)
+	   try {
+			 persistentSupport.iniciarTransaccao();
+			 supSection2= persistentSection.readBySiteAndSectionAndName(site, null,"SubSeccao2dePO");
+			 section = persistentSection.readBySiteAndSectionAndName(site , supSection2 , "seccao1dePO");
+			 persistentSupport.confirmarTransaccao();
+			 assertNull("testReadBySiteAndSectionAndName:fail read unexisting section", section);
+		   } catch (ExcepcaoPersistencia ex) {
+			 fail("testreadBySiteAndSectionAndName:fail read unexisting section");
+		   }
+
 }
+}
+
