@@ -55,7 +55,6 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		dynaForm.set("code", oldInfoCurricularCourse.getCode());
 
 		dynaForm.set("type", oldInfoCurricularCourse.getType().getCurricularCourseType().toString());
-		System.out.println("type"+oldInfoCurricularCourse.getType().getCurricularCourseType());
 
 		dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
 

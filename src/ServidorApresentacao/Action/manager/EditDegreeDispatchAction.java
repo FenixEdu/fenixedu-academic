@@ -54,8 +54,8 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 				
 		TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
 
-		readDegreeForm.set("name", (String) oldInfoDegree.getNome());
-		readDegreeForm.set("code", (String) oldInfoDegree.getSigla());
+		readDegreeForm.set("name", oldInfoDegree.getNome());
+		readDegreeForm.set("code", oldInfoDegree.getSigla());
 		readDegreeForm.set("degreeType", degreeType.getTipoCurso());
 		return mapping.findForward("editDegree");
 	}
