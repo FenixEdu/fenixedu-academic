@@ -15,9 +15,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
+import Util.TipoSala;
 
-public class LerSalaServicosTest extends TestCaseServicos {
+public class LerSalaServicosTest extends TestCaseReadServices {
 	public LerSalaServicosTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -40,55 +41,51 @@ public class LerSalaServicosTest extends TestCaseServicos {
 		super.tearDown();
 	}
 
-	// read sala by unauthorized user
-	public void testUnauthorizedReadSala() {
-		Object argsLerSala[] = new Object[1];
-		argsLerSala[0] = new RoomKey("Ga1");
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView2, "LerSala", argsLerSala);
-			fail("testUnauthorizedReadSala");
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedReadSala", result);
-		}
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "LerSala";
 	}
 
-	public void testReadExistingSala() {
-		// read existing Sala
-		Object argsLerSala[] = new Object[1];
-		argsLerSala[0] = new RoomKey("Ga1");
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, "LerSala", argsLerSala);
-			InfoRoom infoSala =
-				new InfoRoom(
-					_sala1.getNome(),
-					_sala1.getEdificio(),
-					_sala1.getPiso(),
-					_sala1.getTipo(),
-					_sala1.getCapacidadeNormal(),
-					_sala1.getCapacidadeExame());
-			assertEquals("testReadExistingSala", infoSala, result);
-		} catch (Exception ex) {
-			System.out.println("E a excepcao foi...");
-			fail("testReadExistingSala " + ex);
-		}
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		RoomKey keySala = new RoomKey("xpto");
+		Object[] result = { keySala };
+		return result;
 	}
 
-	public void testReadUnexistingSala() {
-		// read unexisting Sala
-		Object argsLerSala[] = new Object[1];
-		argsLerSala[0] = new RoomKey("Ga6");
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		RoomKey keySala = new RoomKey("GA1");
+		Object[] result = { keySala };
+		return result;
+	}
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, "LerSala", argsLerSala);
-			assertNull("testReadExistingSala", result);
-		} catch (Exception ex) {
-			fail("testReadExistingSala");
-		}
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	 */
+	protected int getNumberOfItemsToRetrieve() {
+		return 1;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	 */
+	protected Object getObjectToCompare() {
+		InfoRoom infoRoom =
+			new InfoRoom(
+				"Ga1",
+				"Pavilhao Central",
+				new Integer(0),
+				new TipoSala(1),
+				new Integer(100),
+				new Integer(50));
+		return infoRoom;
 	}
 
 }
