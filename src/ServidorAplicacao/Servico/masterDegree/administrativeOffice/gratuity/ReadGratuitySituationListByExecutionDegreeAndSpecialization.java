@@ -118,13 +118,13 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				persistentGratuitySituation.readGratuitySituationListByExecutionDegreeAndSpecialization(
 					executionDegree,
 					specialization);
-						
+
 			List infoGratuitySituationList = new ArrayList();
 			double totalPayedValue = 0;
 			double totalRemaingValue = 0;
 
 			if (gratuitySituationList != null && gratuitySituationList.size() > 0)
-			{				
+			{
 				ListIterator listIterator = gratuitySituationList.listIterator();
 				//while it is cloner each element of the list
 				//it is calculate the total values of payed and remaning values.
@@ -134,7 +134,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 					InfoGratuitySituation infoGratuitySituation =
 						Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
-
+					System.out.println(infoGratuitySituation);
 					//find gratuity's payed value
 					calculateGratuityPayedValue(sp, infoGratuitySituation);
 
@@ -143,7 +143,8 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 					fillSituationType(infoGratuitySituation);
 
-					if (gratuitySituationType == null || infoGratuitySituation.getSituationType().equals(gratuitySituationType))
+					if (gratuitySituationType == null
+						|| infoGratuitySituation.getSituationType().equals(gratuitySituationType))
 					{
 						infoGratuitySituationList.add(infoGratuitySituation);
 
@@ -154,7 +155,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 							totalRemaingValue + infoGratuitySituation.getRemainingValue().doubleValue();
 					}
 				}
-			} 
+			}
 
 			//build the result that is a hash map with a list, total payed and remaining value
 			result = new HashMap();
@@ -311,24 +312,31 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				double exemptionDiscount =
 					infoGratuitySituation.getRemainingValue().doubleValue()
 						* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
-				infoGratuitySituation.setRemainingValue(
-					new Double(
-						infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount));
+				double newValue =
+					infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount;
+				infoGratuitySituation.setRemainingValue(new Double(newValue));
+				System.out.println("Isencção");
 			}
 		}
 	}
 
 	private void fillSituationType(InfoGratuitySituation infoGratuitySituation)
 	{
-		if (infoGratuitySituation.getRemainingValue().longValue() < infoGratuitySituation.getPayedValue().longValue())
+		//infoGratuitySituation.getRemainingValue() contains the total value that a student has to
+		// payed.
+		if (infoGratuitySituation.getRemainingValue().longValue()
+			> infoGratuitySituation.getPayedValue().longValue())
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.DEBTOR);
 		}
-		else if (infoGratuitySituation.getRemainingValue().equals(infoGratuitySituation.getPayedValue()))
+		else if (
+			infoGratuitySituation.getRemainingValue().equals(infoGratuitySituation.getPayedValue()))
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.REGULARIZED);
 		}
-		else if (infoGratuitySituation.getRemainingValue().longValue() > infoGratuitySituation.getPayedValue().longValue())		
+		else if (
+			infoGratuitySituation.getRemainingValue().longValue()
+				< infoGratuitySituation.getPayedValue().longValue())
 		{
 			infoGratuitySituation.setSituationType(GratuitySituationType.CREDITOR);
 		}
