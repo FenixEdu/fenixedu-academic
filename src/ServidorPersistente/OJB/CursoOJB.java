@@ -22,7 +22,6 @@ import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
@@ -81,7 +80,6 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
     public void delete(ICurso licenciatura) throws ExcepcaoPersistencia {
 		try {
 			IDegreeCurricularPlan degreeCurricularPlan = null;
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 			DegreeCurricularPlanOJB degreeCurricularPlanOJB = new DegreeCurricularPlanOJB();
 			String oqlQuery = "select all from " + DegreeCurricularPlan.class.getName();
 			oqlQuery += " where degree.nome = $1 ";

@@ -51,7 +51,6 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
       
 	public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia {
 			try {
-				IItem item = null;
 				String oqlQuery = "select sectionItem from " + Item.class.getName();
 				oqlQuery += " where section.name = $1 " ; 
 				oqlQuery +=	" and section.site.executionCourse.code = $2";
