@@ -17,6 +17,7 @@ import Dominio.IExecutionYear;
 import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.ISite;
+import Dominio.Item;
 import Dominio.Section;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -173,4 +174,97 @@ public class ItemOJBTest extends TestCaseOJB {
 			fail("testReadAllItemsBySection:fail read unexisting itemsList");
 		}
 	}
+	
+	
+	
+
+	/** Test of deleteAll method, of class ServidorPersistente.OJB.ItemOJB. */
+		
+			public void testDeleteAll() {
+				List allItems = null;
+			
+			// delete existing Sites
+			try {
+				
+				persistentSupport.iniciarTransaccao();
+				persistentItem.deleteAll();
+				persistentSupport.confirmarTransaccao();
+			
+				persistentSupport.iniciarTransaccao();
+				allItems= persistentItem.readAllItemsBySection(section2);
+				allItems.addAll(persistentItem.readAllItemsBySection(section));	
+				persistentSupport.confirmarTransaccao();
+			
+				} catch (ExcepcaoPersistencia ex) {
+					fail("testDeleteAll:fail deleting all items");
+				}
+				assertEquals("testDeleteAll:delete all items",0, allItems.size());
+			
+				
+			}
+		
+		
+
+	/** Test of delete method, of class ServidorPersistente.OJB.ItemOJB. */
+
+		public void testDelete() {
+			IItem itemToDelete = null;
+
+			//delete Item
+
+			try {
+				persistentSupport.iniciarTransaccao();
+				itemToDelete = persistentItem.readBySectionAndName(section2,"Item1deTFCI");
+				assertNotNull(itemToDelete);
+				persistentItem.delete(itemToDelete);
+				persistentSupport.confirmarTransaccao();
+
+			//read deleted Item				 
+				persistentSupport.iniciarTransaccao();
+				IItem itemDeleted = persistentItem.readBySectionAndName(section2,"Item1deTFCI");
+				assertNull(itemDeleted);
+				persistentSupport.confirmarTransaccao();
+
+			} catch (ExcepcaoPersistencia ex) {
+			 fail("testDelete:fail delete existing item");
+		}
+	
+		}
+		
+
+
+		/** Test of lockWrite method, of class ServidorPersistente.OJB.ItemOJB. */
+
+		public void testLockWrite() {
+			
+			
+			IItem itemToWrite = null;
+			
+			itemToWrite = new Item("Item2dePO",section,new Integer(1),"ItemInformation",new Boolean(true));
+		
+			try {
+				
+			
+			//	 write Item
+	 
+				persistentSupport.iniciarTransaccao();
+				persistentItem.lockWrite(itemToWrite);
+				persistentSupport.confirmarTransaccao();
+			
+			
+
+			//read Item
+				persistentSupport.iniciarTransaccao();
+				IItem itemWritten = persistentItem.readBySectionAndName(section,"Item2dePO");
+				assertNotNull(itemWritten);
+				persistentSupport.confirmarTransaccao();
+
+			
+				} catch (ExcepcaoPersistencia ex) {
+			 fail("testLockWrite:fail writting a item");
+			}
+	
+
+		}
+		
 }
