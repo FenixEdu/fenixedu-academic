@@ -35,82 +35,82 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
+ *  
  */
 public class ReadStudentsEnrolledInExam implements IServico {
-	private static ReadStudentsEnrolledInExam service = new ReadStudentsEnrolledInExam();
+    private static ReadStudentsEnrolledInExam service = new ReadStudentsEnrolledInExam();
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ReadStudentsEnrolledInExam getService() {
-		return service;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadStudentsEnrolledInExam getService() {
+        return service;
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadStudentsEnrolledInExam";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadStudentsEnrolledInExam";
+    }
 
-	public Object run(Integer executionCourseCode, Integer examCode) throws FenixServiceException {
-		try {
+    public Object run(Integer executionCourseCode, Integer examCode)
+            throws FenixServiceException {
+        try {
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExam persistentExam = sp.getIPersistentExam();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIPersistentExecutionCourse();
-			IPersistentSite persistentSite = sp.getIPersistentSite();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExam persistentExam = sp.getIPersistentExam();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            IPersistentSite persistentSite = sp.getIPersistentSite();
 
-			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
+            IPersistentExamStudentRoom examStudentRoomDAO = sp
+                    .getIPersistentExamStudentRoom();
 
-			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(
-					new ExecutionCourse(executionCourseCode),
-					false);
-			ISite site = persistentSite.readByExecutionCourse(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            ISite site = persistentSite.readByExecutionCourse(executionCourse);
 
-			IExam exam = new Exam();
-			exam.setIdInternal(examCode);
-			exam = (IExam) persistentExam.readByOId(exam, false);
+            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
 
-			List examStudentRoomList = examStudentRoomDAO.readBy(exam);
+            List examStudentRoomList = examStudentRoomDAO.readBy(exam);
 
-			List infoExamStudentRoomList =
-				(List) CollectionUtils.collect(examStudentRoomList, new Transformer() {
+            List infoExamStudentRoomList = (List) CollectionUtils.collect(
+                    examStudentRoomList, new Transformer() {
 
-				public Object transform(Object input) {
-					ExamStudentRoom examStudentRoom = (ExamStudentRoom) input;
-					return Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
-				}
-			});
+                        public Object transform(Object input) {
+                            ExamStudentRoom examStudentRoom = (ExamStudentRoom) input;
+                            return Cloner
+                                    .copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
+                        }
+                    });
 
-			List infoStudents = new ArrayList();
-			Iterator iter = examStudentRoomList.iterator();
-			while (iter.hasNext()) {
-				IStudent student = ((IExamStudentRoom) iter.next()).getStudent();
-				InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
-				infoStudents.add(infoStudent);
-			}
-			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
-			ISiteComponent component =
-				new InfoSiteTeacherStudentsEnrolledList(
-					infoStudents,
-					infoExam,
-					infoExamStudentRoomList);
+            List infoStudents = new ArrayList();
+            Iterator iter = examStudentRoomList.iterator();
+            while (iter.hasNext()) {
+                IStudent student = ((IExamStudentRoom) iter.next())
+                        .getStudent();
+                InfoStudent infoStudent = Cloner
+                        .copyIStudent2InfoStudent(student);
+                infoStudents.add(infoStudent);
+            }
+            InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+            ISiteComponent component = new InfoSiteTeacherStudentsEnrolledList(
+                    infoStudents, infoExam, infoExamStudentRoomList);
 
-			TeacherAdministrationSiteComponentBuilder componentBuilder =
-				TeacherAdministrationSiteComponentBuilder.getInstance();
-			ISiteComponent commonComponent =
-				componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+            TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
+                    .getInstance();
+            ISiteComponent commonComponent = componentBuilder.getComponent(
+                    new InfoSiteCommon(), site, null, null, null);
 
-			TeacherAdministrationSiteView siteView =
-				new TeacherAdministrationSiteView(commonComponent, component);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
+                    commonComponent, component);
+            return siteView;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	}
+    }
 }

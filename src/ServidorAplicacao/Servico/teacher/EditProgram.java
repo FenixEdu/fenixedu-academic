@@ -25,101 +25,92 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  * Modified by Tânia Pousão at 2/Dez/2003
  */
-public class EditProgram implements IServico
-{
+public class EditProgram implements IServico {
 
     private static EditProgram service = new EditProgram();
-    public static EditProgram getService()
-    {
+
+    public static EditProgram getService() {
         return service;
     }
 
-    private EditProgram()
-    {
+    private EditProgram() {
     }
-    public final String getNome()
-    {
+
+    public final String getNome() {
         return "EditProgram";
     }
 
-    public boolean run(
-        Integer infoExecutionCourseCode,
-        Integer infoCurricularCourseCode,
-        InfoCurriculum infoCurriculumNew, 
-		String username)
-        throws FenixServiceException
-    {
+    public boolean run(Integer infoExecutionCourseCode,
+            Integer infoCurricularCourseCode, InfoCurriculum infoCurriculumNew,
+            String username) throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             //Person who change all information
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPessoa person = persistentPerson.lerPessoaPorUsername(username);
-            if (person == null)
-            {
+            if (person == null) {
                 throw new NonExistingServiceException("noPerson");
             }
 
             //inexistent new information
-            if (infoCurriculumNew == null)
-            {
+            if (infoCurriculumNew == null) {
                 throw new FenixServiceException("nullCurriculum");
             }
 
             //Curricular Course
-            if (infoCurricularCourseCode == null)
-            {
+            if (infoCurricularCourseCode == null) {
                 throw new FenixServiceException("nullCurricularCourseCode");
             }
 
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp
+                    .getIPersistentCurricularCourse();
 
-            ICurricularCourse curricularCourse =
-                (ICurricularCourse) persistentCurricularCourse.readByOId(
-                    new CurricularCourse(infoCurricularCourseCode),
-                    false);
-            if (curricularCourse == null)
-            {
+            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+                    .readByOID(CurricularCourse.class, infoCurricularCourseCode);
+            if (curricularCourse == null) {
                 throw new NonExistingServiceException("noCurricularCourse");
             }
 
             //Curriculum
-            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-            ICurriculum curriculum =
-                persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+            IPersistentCurriculum persistentCurriculum = sp
+                    .getIPersistentCurriculum();
+            ICurriculum curriculum = persistentCurriculum
+                    .readCurriculumByCurricularCourse(curricularCourse);
 
             //information doesn't exists, so it's necessary create it
-            if (curriculum == null)
-            {
+            if (curriculum == null) {
                 curriculum = new Curriculum();
 
                 Calendar today = Calendar.getInstance();
                 curriculum.setLastModificationDate(today.getTime());
             }
 
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
-            // modification of curriculum is made in context of an execution year
-            if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
-                && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate()))
-            {
-            	persistentCurriculum.simpleLockWrite(curriculum);
-            	
+            IPersistentExecutionYear persistentExecutionYear = sp
+                    .getIPersistentExecutionYear();
+            IExecutionYear currentExecutionYear = persistentExecutionYear
+                    .readCurrentExecutionYear();
+            // modification of curriculum is made in context of an execution
+            // year
+            if (!curriculum.getLastModificationDate().before(
+                    currentExecutionYear.getBeginDate())
+                    && !curriculum.getLastModificationDate().after(
+                            currentExecutionYear.getEndDate())) {
+                persistentCurriculum.simpleLockWrite(curriculum);
+
                 // let's edit curriculum
                 curriculum.setCurricularCourse(curricularCourse);
 
-				curriculum.setProgram(infoCurriculumNew.getProgram());
-				curriculum.setProgramEn(infoCurriculumNew.getProgramEn());
+                curriculum.setProgram(infoCurriculumNew.getProgram());
+                curriculum.setProgramEn(infoCurriculumNew.getProgramEn());
 
                 curriculum.setPersonWhoAltered(person);
 
                 Calendar today = Calendar.getInstance();
                 curriculum.setLastModificationDate(today.getTime());
                 System.out.println(".........................");
-            } else
-            {
+            } else {
                 // creates new information
                 ICurriculum newCurriculum = new Curriculum();
                 persistentCurriculum.simpleLockWrite(newCurriculum);
@@ -135,8 +126,7 @@ public class EditProgram implements IServico
                 newCurriculum.setLastModificationDate(today.getTime());
                 System.out.println("--------------------------------");
             }
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
         return true;

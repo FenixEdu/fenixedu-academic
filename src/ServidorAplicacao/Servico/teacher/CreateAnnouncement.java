@@ -19,96 +19,79 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author  Fernanda Quitério
+ * @author Fernanda Quitério
  *  
  */
 public class CreateAnnouncement implements IService {
 
-	private ISuportePersistente persistentSupport = null;
-	private IPersistentAnnouncement persistentAnnouncement = null;
+    private ISuportePersistente persistentSupport = null;
 
-	
-	
-	
-	public CreateAnnouncement() {
-	}
-	
+    private IPersistentAnnouncement persistentAnnouncement = null;
 
-	private void checkIfAnnouncementExists(
-		String announcementTitle,
-		ISite announcementSite,
-		Timestamp currentDate)
-		throws FenixServiceException {
-		IAnnouncement announcement = null;
-		persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
+    public CreateAnnouncement() {
+    }
 
-		try {
-			announcement =
-				persistentAnnouncement
-					.readAnnouncementByTitleAndCreationDateAndSite(
-					announcementTitle,
-					currentDate,
-					announcementSite);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
+    private void checkIfAnnouncementExists(String announcementTitle,
+            ISite announcementSite, Timestamp currentDate)
+            throws FenixServiceException {
+        IAnnouncement announcement = null;
+        persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 
-		if (announcement != null)
-			throw new ExistingServiceException();
-	}
-	/**
-	 * Executes the service.
-	 */
-	public boolean run(
-		Integer infoExecutionCourseCode,
-		String newAnnouncementTitle,
-		String newAnnouncementInformation)
-		throws FenixServiceException {
-		ISite site = null;
+        try {
+            announcement = persistentAnnouncement
+                    .readAnnouncementByTitleAndCreationDateAndSite(
+                            announcementTitle, currentDate, announcementSite);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
 
-		//retrieve current date
-		Calendar calendar = Calendar.getInstance();
-//		calendar.set(Calendar.HOUR_OF_DAY,0);
-//		calendar.set(Calendar.MINUTE,0);
-//		calendar.set(Calendar.SECOND,0);
-//		calendar.set(Calendar.MILLISECOND,0);
-		
+        if (announcement != null)
+            throw new ExistingServiceException();
+    }
 
-		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSupport.getIPersistentExecutionCourse();
-			IPersistentSite persistentSite =
-				persistentSupport.getIPersistentSite();
+    /**
+     * Executes the service.
+     */
+    public boolean run(Integer infoExecutionCourseCode,
+            String newAnnouncementTitle, String newAnnouncementInformation)
+            throws FenixServiceException {
+        ISite site = null;
 
-			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(
-					new ExecutionCourse(infoExecutionCourseCode),
-					false);
-			site = persistentSite.readByExecutionCourse(executionCourse);
+        //retrieve current date
+        Calendar calendar = Calendar.getInstance();
+        //		calendar.set(Calendar.HOUR_OF_DAY,0);
+        //		calendar.set(Calendar.MINUTE,0);
+        //		calendar.set(Calendar.SECOND,0);
+        //		calendar.set(Calendar.MILLISECOND,0);
 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
+        try {
+            persistentSupport = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                    .getIPersistentExecutionCourse();
+            IPersistentSite persistentSite = persistentSupport
+                    .getIPersistentSite();
 
-		checkIfAnnouncementExists(
-			newAnnouncementTitle,
-			site,
-			new Timestamp(calendar.getTime().getTime()));
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            site = persistentSite.readByExecutionCourse(executionCourse);
 
-		try {
-			IAnnouncement newAnnouncement =
-				new Announcement(
-					newAnnouncementTitle,
-					new Timestamp(calendar.getTime().getTime()),
-					new Timestamp(calendar.getTime().getTime()),
-					newAnnouncementInformation,
-					site);
-			persistentAnnouncement.simpleLockWrite(newAnnouncement);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
-		return true;
-	}
+        checkIfAnnouncementExists(newAnnouncementTitle, site, new Timestamp(
+                calendar.getTime().getTime()));
+
+        try {
+            IAnnouncement newAnnouncement = new Announcement(
+                    newAnnouncementTitle, new Timestamp(calendar.getTime()
+                            .getTime()), new Timestamp(calendar.getTime()
+                            .getTime()), newAnnouncementInformation, site);
+            persistentAnnouncement.simpleLockWrite(newAnnouncement);
+
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
+        return true;
+    }
 }

@@ -28,98 +28,103 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 
-public class PrepareEditStudentGroupMembers  implements IServico {
+public class PrepareEditStudentGroupMembers implements IServico {
 
-	private static PrepareEditStudentGroupMembers service =
-			new PrepareEditStudentGroupMembers();
+    private static PrepareEditStudentGroupMembers service = new PrepareEditStudentGroupMembers();
 
-	/**
-		* The singleton access method of this class.
-		*/
-	public static PrepareEditStudentGroupMembers getService() {
-		return service;
-	}
-	/**
-	 * The constructor of this class.
-	 */
-	private PrepareEditStudentGroupMembers() {
-	}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome() {
-		return "PrepareEditStudentGroupMembers";
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static PrepareEditStudentGroupMembers getService() {
+        return service;
+    }
 
-	/**
-	 * Executes the service.
-	 */
+    /**
+     * The constructor of this class.
+     */
+    private PrepareEditStudentGroupMembers() {
+    }
 
-	public List run(Integer executionCourseCode,Integer studentGroupCode)
-		throws FenixServiceException {
+    /**
+     * The name of the service
+     */
+    public final String getNome() {
+        return "PrepareEditStudentGroupMembers";
+    }
 
-		IFrequentaPersistente persistentAttend = null;
-		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-		IPersistentStudentGroup persistentStudentGroup = null;
-		IPersistentExecutionCourse persistentExecutionCourse = null;
-		List frequentas = new ArrayList();
-		List infoStudentList = new ArrayList();
-				
-		try {
-			
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			persistentExecutionCourse = ps.getIPersistentExecutionCourse();
-			persistentAttend = ps.getIFrequentaPersistente();
-			persistentStudentGroup = ps.getIPersistentStudentGroup();
-			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
-			
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseCode),false);
-			IStudentGroup studentGroup = (IStudentGroup)ps.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
-			
-			
-			frequentas = persistentAttend.readByExecutionCourse(executionCourse);
-			
-			List allStudentsGroups =persistentStudentGroup.readAllStudentGroupByGroupProperties(studentGroup.getGroupProperties());
-			
-			List allStudentGroupAttend=null;
-			
-			Iterator iterator = allStudentsGroups.iterator();
-			while (iterator.hasNext()) 
-			{
-				
-				allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next()); 
-				
-				Iterator iterator2 = allStudentGroupAttend.iterator();
-				IFrequenta frequenta = null;
-				while(iterator2.hasNext())
-				{
-				
-					frequenta =((IStudentGroupAttend)iterator2.next()).getAttend();
-					if(frequentas.contains(frequenta))
-					{
-						frequentas.remove(frequenta);
-					}
-				}
-			}
-				
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		  }
-		
-		IStudent student = null;
-		Iterator iterator3 = frequentas.iterator();
+    /**
+     * Executes the service.
+     */
 
-		while (iterator3.hasNext()) 
-		{
-			
-			student = ((IFrequenta) iterator3.next()).getAluno();
-			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));		
-		}
-		return infoStudentList;
-		
-	}
+    public List run(Integer executionCourseCode, Integer studentGroupCode)
+            throws FenixServiceException {
+
+        IFrequentaPersistente persistentAttend = null;
+        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+        IPersistentStudentGroup persistentStudentGroup = null;
+        IPersistentExecutionCourse persistentExecutionCourse = null;
+        List frequentas = new ArrayList();
+        List infoStudentList = new ArrayList();
+
+        try {
+
+            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            persistentExecutionCourse = ps.getIPersistentExecutionCourse();
+            persistentAttend = ps.getIFrequentaPersistente();
+            persistentStudentGroup = ps.getIPersistentStudentGroup();
+            persistentStudentGroupAttend = ps
+                    .getIPersistentStudentGroupAttend();
+
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            IStudentGroup studentGroup = (IStudentGroup) ps
+                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
+                            studentGroupCode);
+
+            frequentas = persistentAttend
+                    .readByExecutionCourse(executionCourse);
+
+            List allStudentsGroups = persistentStudentGroup
+                    .readAllStudentGroupByGroupProperties(studentGroup
+                            .getGroupProperties());
+
+            List allStudentGroupAttend = null;
+
+            Iterator iterator = allStudentsGroups.iterator();
+            while (iterator.hasNext()) {
+
+                allStudentGroupAttend = persistentStudentGroupAttend
+                        .readAllByStudentGroup((IStudentGroup) iterator.next());
+
+                Iterator iterator2 = allStudentGroupAttend.iterator();
+                IFrequenta frequenta = null;
+                while (iterator2.hasNext()) {
+
+                    frequenta = ((IStudentGroupAttend) iterator2.next())
+                            .getAttend();
+                    if (frequentas.contains(frequenta)) {
+                        frequentas.remove(frequenta);
+                    }
+                }
+            }
+
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
+
+        IStudent student = null;
+        Iterator iterator3 = frequentas.iterator();
+
+        while (iterator3.hasNext()) {
+
+            student = ((IFrequenta) iterator3.next()).getAluno();
+            infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+        }
+        return infoStudentList;
+
+    }
 }
 

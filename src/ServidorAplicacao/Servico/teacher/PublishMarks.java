@@ -32,55 +32,55 @@ import ServidorPersistente.sms.IPersistentSentSms;
 /**
  * @author Fernanda Quitério
  */
-public class PublishMarks implements IService
-{
+public class PublishMarks implements IService {
 
-    public PublishMarks()
-    {
+    public PublishMarks() {
 
     }
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
-            Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente, FenixServiceException
-    {
+    public Object run(Integer executionCourseCode, Integer evaluationCode,
+            String publishmentMessage, Boolean sendSMS, String announcementTitle)
+            throws ExcepcaoInexistente, FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentSentSms persistentSentSms = sp.getIPersistentSentSms();
+            IPersistentSentSms persistentSentSms = sp.getIPersistentSentSms();
 
             //Execution Course
-            IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
+
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO
+                    .readByOID(ExecutionCourse.class, executionCourseCode);
 
             //Site
             IPersistentSite siteDAO = sp.getIPersistentSite();
             ISite site = siteDAO.readByExecutionCourse(executionCourse);
 
             //		find what type of evaluation we are dealing with
-            IEvaluation evaluation = new Evaluation(evaluationCode);
-            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-            evaluation = (IEvaluation) persistentEvaluation.readByOId(evaluation, true);
+            IPersistentEvaluation persistentEvaluation = sp
+                    .getIPersistentEvaluation();
+            IEvaluation evaluation = (IEvaluation) persistentEvaluation
+                    .readByOID(Evaluation.class, evaluationCode);
             persistentEvaluation.simpleLockWrite(evaluation);
 
-            if (publishmentMessage == null || publishmentMessage.length() == 0)
-            {
+            if (publishmentMessage == null || publishmentMessage.length() == 0) {
                 evaluation.setPublishmentMessage(" ");
-            }
-            else
-            {
+            } else {
                 evaluation.setPublishmentMessage(publishmentMessage);
 
                 // create announcement
                 Calendar calendar = Calendar.getInstance();
 
                 IAnnouncement announcement = new Announcement();
-                IPersistentAnnouncement persistentAnnouncement = sp.getIPersistentAnnouncement();
+                IPersistentAnnouncement persistentAnnouncement = sp
+                        .getIPersistentAnnouncement();
                 persistentAnnouncement.simpleLockWrite(announcement);
                 announcement.setInformation(publishmentMessage);
-                announcement.setCreationDate(new Timestamp(calendar.getTimeInMillis()));
-                announcement.setLastModifiedDate(new Timestamp(calendar.getTimeInMillis()));
+                announcement.setCreationDate(new Timestamp(calendar
+                        .getTimeInMillis()));
+                announcement.setLastModifiedDate(new Timestamp(calendar
+                        .getTimeInMillis()));
                 announcement.setSite(site);
                 announcement.setTitle(announcementTitle);
 
@@ -90,43 +90,48 @@ public class PublishMarks implements IService
             IPersistentMark persistentMark = sp.getIPersistentMark();
             List marksList = persistentMark.readBy(evaluation);
             ListIterator iterMarks = marksList.listIterator();
-            while (iterMarks.hasNext())
-            {
+            while (iterMarks.hasNext()) {
 
                 IMark mark = (IMark) iterMarks.next();
 
-                if (!mark.getMark().equals(mark.getPublishedMark()))
-                {
+                if (!mark.getMark().equals(mark.getPublishedMark())) {
                     // update published mark
                     persistentMark.simpleLockWrite(mark);
                     mark.setPublishedMark(mark.getMark());
-                    if (sendSMS != null && sendSMS.booleanValue())
-                    {
-                	if (mark.getAttend().getAluno().getPerson().getTelemovel () != null || mark.getAttend().getAluno().getPerson().getTelemovel ().length() == 9 )
-					{
-						String StringDestinationNumber = mark.getAttend().getAluno().getPerson().getTelemovel();
-						
-						if (StringDestinationNumber.startsWith("96") || StringDestinationNumber.startsWith("91")||StringDestinationNumber.startsWith("93"))
-						{
+                    if (sendSMS != null && sendSMS.booleanValue()) {
+                        if (mark.getAttend().getAluno().getPerson()
+                                .getTelemovel() != null
+                                || mark.getAttend().getAluno().getPerson()
+                                        .getTelemovel().length() == 9) {
+                            String StringDestinationNumber = mark.getAttend()
+                                    .getAluno().getPerson().getTelemovel();
 
-						  try
-						  { 
-							 SmsUtil.getInstance().sendSmsWithoutDeliveryReports(Integer.valueOf (StringDestinationNumber), evaluation.getPublishmentMessage() +" "+ mark.getMark());
-						  }
-						  catch (FenixUtilException e1)
-						  {
-						
-							  throw new SmsNotSentServiceException("error.person.sendSms");
-						  }
+                            if (StringDestinationNumber.startsWith("96")
+                                    || StringDestinationNumber.startsWith("91")
+                                    || StringDestinationNumber.startsWith("93")) {
 
-                    	}
+                                try {
+                                    SmsUtil
+                                            .getInstance()
+                                            .sendSmsWithoutDeliveryReports(
+                                                    Integer
+                                                            .valueOf(StringDestinationNumber),
+                                                    evaluation
+                                                            .getPublishmentMessage()
+                                                            + " "
+                                                            + mark.getMark());
+                                } catch (FenixUtilException e1) {
+
+                                    throw new SmsNotSentServiceException(
+                                            "error.person.sendSms");
+                                }
+
+                            }
+                        }
                     }
                 }
             }
-          }
-		}
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
             throw new FenixServiceException("error.impossiblePublishMarks");
         }

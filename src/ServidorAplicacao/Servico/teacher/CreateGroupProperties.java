@@ -25,56 +25,47 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  *  
  */
 
-public class CreateGroupProperties implements IService
-{
+public class CreateGroupProperties implements IService {
 
-    
     /**
-	 * The constructor of this class.
-	 */
-    public CreateGroupProperties()
-    {
+     * The constructor of this class.
+     */
+    public CreateGroupProperties() {
     }
-    
 
     /**
-	 * Executes the service.
-	 */
-    public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
-        throws FenixServiceException
-    {
+     * Executes the service.
+     */
+    public boolean run(Integer executionCourseCode,
+            InfoGroupProperties infoGroupProperties)
+            throws FenixServiceException {
 
         IExecutionCourse executionCourse = null;
-        try
-        {
+        try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse =
-                persistentSupport.getIPersistentExecutionCourse();
-            IPersistentGroupProperties persistentGroupProperties =
-                persistentSupport.getIPersistentGroupProperties();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                    .getIPersistentExecutionCourse();
+            IPersistentGroupProperties persistentGroupProperties = persistentSupport
+                    .getIPersistentGroupProperties();
 
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(executionCourseCode),
-                    false);
+            executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseCode);
 
-            infoGroupProperties.setInfoExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
+            infoGroupProperties
+                    .setInfoExecutionCourse((InfoExecutionCourse) Cloner
+                            .get(executionCourse));
 
-            IGroupProperties newGroupProperties =
-                Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
+            IGroupProperties newGroupProperties = Cloner
+                    .copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
 
             persistentGroupProperties.simpleLockWrite(newGroupProperties);
 
-        }
-        catch (ExistingPersistentException excepcaoPersistencia)
-        {
+        } catch (ExistingPersistentException excepcaoPersistencia) {
             throw new ExistingServiceException(excepcaoPersistencia);
 
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
         return true;

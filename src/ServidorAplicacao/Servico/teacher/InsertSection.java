@@ -23,56 +23,47 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Fernanda Quitério
  */
-public class InsertSection implements IService
-{
+public class InsertSection implements IService {
 
-    public InsertSection()
-    {
+    public InsertSection() {
     }
 
-    private int organizeExistingSectionsOrder(ISection superiorSection, ISite site,
-            int insertSectionOrder) throws FenixServiceException
-    {
+    private int organizeExistingSectionsOrder(ISection superiorSection,
+            ISite site, int insertSectionOrder) throws FenixServiceException {
 
         IPersistentSection persistentSection = null;
-        try
-        {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
             persistentSection = persistentSuport.getIPersistentSection();
 
-            List sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
+            List sectionsList = persistentSection.readBySiteAndSection(site,
+                    superiorSection);
 
-            if (sectionsList != null)
-            {
+            if (sectionsList != null) {
 
-                if (insertSectionOrder == -1)
-                {
+                if (insertSectionOrder == -1) {
                     insertSectionOrder = sectionsList.size();
                 }
 
                 Iterator iterSections = sectionsList.iterator();
-                while (iterSections.hasNext())
-                {
+                while (iterSections.hasNext()) {
 
                     ISection iterSection = (ISection) iterSections.next();
                     int sectionOrder = iterSection.getSectionOrder().intValue();
 
-                    if (sectionOrder >= insertSectionOrder)
-                    {
+                    if (sectionOrder >= insertSectionOrder) {
                         persistentSection.simpleLockWrite(iterSection);
-                        iterSection.setSectionOrder(new Integer(sectionOrder + 1));
+                        iterSection.setSectionOrder(new Integer(
+                                sectionOrder + 1));
 
                     }
 
                 }
             }
-        }
-        catch (ExistingPersistentException excepcaoPersistencia)
-        {
+        } catch (ExistingPersistentException excepcaoPersistencia) {
             throw new ExistingServiceException(excepcaoPersistencia);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
             throw new FenixServiceException(excepcaoPersistencia);
         }
@@ -81,34 +72,36 @@ public class InsertSection implements IService
 
     //infoItem with an infoSection
 
-    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String sectionName,
-            Integer sectionOrder) throws FenixServiceException
-    {
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode,
+            String sectionName, Integer sectionOrder)
+            throws FenixServiceException {
 
         ISection section = null;
 
-        try
-        {
+        try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+            IPersistentSite persistentSite = persistentSuport
+                    .getIPersistentSite();
+            IPersistentSection persistentSection = persistentSuport
+                    .getIPersistentSection();
 
-            ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
-            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    executionCourse, false);
-            ISite iSite = persistentSite.readByExecutionCourse(iExecutionCourse);
+            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            ISite iSite = persistentSite
+                    .readByExecutionCourse(iExecutionCourse);
 
             ISection parentSection = null;
-            if (sectionCode != null)
-            {
-                parentSection = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
+            if (sectionCode != null) {
+                parentSection = (ISection) persistentSection.readByOID(
+                        Section.class, sectionCode);
             }
 
-            sectionOrder = new Integer(organizeExistingSectionsOrder(parentSection, iSite, sectionOrder
-                    .intValue()));
+            sectionOrder = new Integer(organizeExistingSectionsOrder(
+                    parentSection, iSite, sectionOrder.intValue()));
 
             Calendar calendario = Calendar.getInstance();
             section = new Section();
@@ -119,14 +112,10 @@ public class InsertSection implements IService
             section.setSite(iSite);
             section.setLastModifiedDate(calendario.getTime());
 
-        }
-        catch (ExistingPersistentException excepcaoPersistencia)
-        {
+        } catch (ExistingPersistentException excepcaoPersistencia) {
 
             throw new ExistingServiceException(excepcaoPersistencia);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
             throw new FenixServiceException(excepcaoPersistencia);
         }

@@ -16,51 +16,49 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Fernanda Quitério
  */
-public class EditEvaluation implements IService
-{
+public class EditEvaluation implements IService {
 
-    public EditEvaluation()
-    {
+    public EditEvaluation() {
     }
 
-    public boolean run(Integer infoExecutionCourseCode, Integer infoEvaluationMethodCode,
-            InfoEvaluationMethod infoEvaluationMethod) throws FenixServiceException
-    {
+    public boolean run(Integer infoExecutionCourseCode,
+            Integer infoEvaluationMethodCode,
+            InfoEvaluationMethod infoEvaluationMethod)
+            throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IExecutionCourse executionCourse = new ExecutionCourse();
             executionCourse.setIdInternal(infoExecutionCourseCode);
 
-            IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
+            IPersistentEvaluationMethod persistentEvaluationMethod = sp
+                    .getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod = persistentEvaluationMethod
                     .readByIdExecutionCourse(executionCourse);
 
-            if (evaluationMethod == null)
-            {
+            if (evaluationMethod == null) {
                 evaluationMethod = new EvaluationMethod();
                 persistentEvaluationMethod.simpleLockWrite(evaluationMethod);
                 evaluationMethod.setKeyExecutionCourse(infoExecutionCourseCode);
 
                 IPersistentExecutionCourse persistenteExecutionCourse = sp
                         .getIPersistentExecutionCourse();
-                evaluationMethod.setExecutionCourse((IExecutionCourse) persistenteExecutionCourse
-                        .readByOId(executionCourse, false));
-            }
-            else
-            {
+                evaluationMethod
+                        .setExecutionCourse((IExecutionCourse) persistenteExecutionCourse
+                                .readByOID(ExecutionCourse.class,
+                                        infoExecutionCourseCode));
+            } else {
 
                 persistentEvaluationMethod.simpleLockWrite(evaluationMethod);
             }
 
-            evaluationMethod.setEvaluationElements(infoEvaluationMethod.getEvaluationElements());
-            evaluationMethod.setEvaluationElementsEn(infoEvaluationMethod.getEvaluationElementsEn());
+            evaluationMethod.setEvaluationElements(infoEvaluationMethod
+                    .getEvaluationElements());
+            evaluationMethod.setEvaluationElementsEn(infoEvaluationMethod
+                    .getEvaluationElementsEn());
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
         return true;

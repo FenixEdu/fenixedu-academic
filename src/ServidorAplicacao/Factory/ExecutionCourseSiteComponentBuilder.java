@@ -139,8 +139,9 @@ public class ExecutionCourseSiteComponentBuilder {
                     (InfoSiteCommon) commonComponent, sectionIndex);
         } else if (component instanceof InfoSiteEvaluation) {
             return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
-        } else if (component instanceof InfoSiteSummaries) { return getInfoSiteSummaries(
-                (InfoSiteSummaries) component, site); }
+        } else if (component instanceof InfoSiteSummaries) {
+            return getInfoSiteSummaries((InfoSiteSummaries) component, site);
+        }
         return null;
     }
 
@@ -219,12 +220,11 @@ public class ExecutionCourseSiteComponentBuilder {
 
             if (component.getShiftId() != null
                     && component.getShiftId().intValue() > 0) {
-                ITurno shiftSelected = new Turno();
-                shiftSelected.setIdInternal(component.getShiftId());
-                shiftSelected = (ITurno) persistentShift.readByOId(
-                        shiftSelected, false);
-                if (shiftSelected == null) { throw new FenixServiceException(
-                        "no.shift"); }
+                ITurno shiftSelected = (ITurno) persistentShift.readByOID(
+                        Turno.class, component.getShiftId());
+                if (shiftSelected == null) {
+                    throw new FenixServiceException("no.shift");
+                }
 
                 List summariesByShift = persistentSummary.readByShift(
                         executionCourse, shiftSelected);
@@ -244,14 +244,14 @@ public class ExecutionCourseSiteComponentBuilder {
 
             if (component.getTeacherId() != null
                     && component.getTeacherId().intValue() > 0) {
-                IProfessorship professorshipSelected = new Professorship();
-                professorshipSelected.setIdInternal(component.getTeacherId());
-                professorshipSelected = (IProfessorship) persistentProfessorship
-                        .readByOId(professorshipSelected, false);
+                IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship
+                        .readByOID(Professorship.class, component
+                                .getTeacherId());
 
                 if (professorshipSelected == null
-                        || professorshipSelected.getTeacher() == null) { throw new FenixServiceException(
-                        "no.shift"); }
+                        || professorshipSelected.getTeacher() == null) {
+                    throw new FenixServiceException("no.shift");
+                }
 
                 List summariesByProfessorship = persistentSummary
                         .readByTeacher(executionCourse, professorshipSelected
@@ -420,15 +420,16 @@ public class ExecutionCourseSiteComponentBuilder {
                                 Calendar.MINUTE));
                         endLesson.set(Calendar.SECOND, 00);
 
-                        
-						if (summary.getSummaryType().equals(shift.getTipo())
-							&& dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana().getDiaSemana().intValue()
-							&& !beginLesson.after(dateAndHourSummary) && endLesson.after(dateAndHourSummary))
-						{
-							removeSummary = false;
-						}
-					}
-				}
+                        if (summary.getSummaryType().equals(shift.getTipo())
+                                && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson
+                                        .getDiaSemana().getDiaSemana()
+                                        .intValue()
+                                && !beginLesson.after(dateAndHourSummary)
+                                && endLesson.after(dateAndHourSummary)) {
+                            removeSummary = false;
+                        }
+                    }
+                }
 
                 if (removeSummary) {
                     summariesByShift.remove(summary);
@@ -443,12 +444,16 @@ public class ExecutionCourseSiteComponentBuilder {
         List allSummaries = new ArrayList();
 
         if (summaries == null || summaries.size() <= 0) {
-            if (summariesByExecutionCourse == null) { return new ArrayList(); }
+            if (summariesByExecutionCourse == null) {
+                return new ArrayList();
+            }
             return summariesByExecutionCourse;
         }
 
         if (summariesByExecutionCourse == null
-                || summariesByExecutionCourse.size() <= 0) { return summaries; }
+                || summariesByExecutionCourse.size() <= 0) {
+            return summaries;
+        }
 
         List intersection = (List) CollectionUtils.intersection(summaries,
                 summariesByExecutionCourse);
@@ -459,7 +464,9 @@ public class ExecutionCourseSiteComponentBuilder {
                 summariesByExecutionCourse, intersection));
         allSummaries.addAll(intersection);
 
-        if (allSummaries == null) { return new ArrayList(); }
+        if (allSummaries == null) {
+            return new ArrayList();
+        }
         return allSummaries;
     }
 
@@ -610,7 +617,8 @@ public class ExecutionCourseSiteComponentBuilder {
                     for (int j = 0; j < lessons.size(); j++)
                         infoLessons
                                 .add(InfoLessonWithInfoRoomAndInfoExecutionCourse
-                                        .newInfoFromDomain((IAula) lessons.get(j)));
+                                        .newInfoFromDomain((IAula) lessons
+                                                .get(j)));
 
                     shiftWithAssociatedClassesAndLessons
                             .setInfoLessons(infoLessons);
@@ -894,25 +902,25 @@ public class ExecutionCourseSiteComponentBuilder {
         List infoCurricularCourseScopeList;
         List infoCurricularCourseList = new ArrayList();
         if (executionCourse.getAssociatedCurricularCourses() != null)
-                for (int i = 0; i < executionCourse
-                        .getAssociatedCurricularCourses().size(); i++) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
-                            .getAssociatedCurricularCourses().get(i);
-                    InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
-                    infoCurricularCourseScopeList = new ArrayList();
-                    for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
-                                .getScopes().get(j);
-                        InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
-                        infoCurricularCourseScopeList
-                                .add(infoCurricularCourseScope);
-                    }
-
-                    infoCurricularCourse
-                            .setInfoScopes(infoCurricularCourseScopeList);
-                    infoCurricularCourseList.add(infoCurricularCourse);
-
+            for (int i = 0; i < executionCourse
+                    .getAssociatedCurricularCourses().size(); i++) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
+                        .getAssociatedCurricularCourses().get(i);
+                InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
+                infoCurricularCourseScopeList = new ArrayList();
+                for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
+                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
+                            .getScopes().get(j);
+                    InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
+                    infoCurricularCourseScopeList
+                            .add(infoCurricularCourseScope);
                 }
+
+                infoCurricularCourse
+                        .setInfoScopes(infoCurricularCourseScopeList);
+                infoCurricularCourseList.add(infoCurricularCourse);
+
+            }
         return infoCurricularCourseList;
     }
 

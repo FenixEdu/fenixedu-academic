@@ -39,18 +39,22 @@ public class EditExamEnrollment implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
 
-            IExam exam = new Exam();
-            exam.setIdInternal(examCode);
+            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode,
+                    true);
+            if (exam == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
-            exam = (IExam) persistentExam.readByOId(exam, true);
-            if (exam == null) { throw new InvalidArgumentsServiceException(); }
-
-            if ((exam.getEnrollmentBeginDay() == null
-                    || exam.getEnrollmentBeginTime() == null) 
-                || (!equalDates(beginDate, beginTime, exam.getEnrollmentBeginDay(), exam.getEnrollmentBeginTime()))) {
+            if ((exam.getEnrollmentBeginDay() == null || exam
+                    .getEnrollmentBeginTime() == null)
+                    || (!equalDates(beginDate, beginTime, exam
+                            .getEnrollmentBeginDay(), exam
+                            .getEnrollmentBeginTime()))) {
                 if (!verifyDates(Calendar.getInstance(),
-                        Calendar.getInstance(), beginDate, beginTime)) { throw new InvalidTimeIntervalServiceException(
-                        "error.beginDate.sooner.today"); }
+                        Calendar.getInstance(), beginDate, beginTime)) {
+                    throw new InvalidTimeIntervalServiceException(
+                            "error.beginDate.sooner.today");
+                }
             }
 
             persistentExam.simpleLockWrite(exam);
@@ -61,12 +65,16 @@ public class EditExamEnrollment implements IService {
 
             if (!verifyDates(exam.getEnrollmentBeginDay(), exam
                     .getEnrollmentBeginTime(), exam.getEnrollmentEndDay(), exam
-                    .getEnrollmentEndTime())) { throw new InvalidTimeIntervalServiceException(
-                    "error.endDate.sooner.beginDate"); }
+                    .getEnrollmentEndTime())) {
+                throw new InvalidTimeIntervalServiceException(
+                        "error.endDate.sooner.beginDate");
+            }
 
             if (!verifyDates(exam.getEnrollmentEndDay(), exam
-                    .getEnrollmentEndTime(), exam.getDay(), exam.getBeginning())) { throw new InvalidTimeIntervalServiceException(
-                    "error.examDate.sooner.endDate"); }
+                    .getEnrollmentEndTime(), exam.getDay(), exam.getBeginning())) {
+                throw new InvalidTimeIntervalServiceException(
+                        "error.examDate.sooner.endDate");
+            }
 
             result = new Boolean(true);
 
@@ -86,7 +94,7 @@ public class EditExamEnrollment implements IService {
         begin.set(Calendar.HOUR_OF_DAY, beginTime.get(Calendar.HOUR_OF_DAY));
         begin.set(Calendar.MINUTE, beginTime.get(Calendar.MINUTE));
         begin.set(Calendar.SECOND, 0);
-        
+
         Calendar end = Calendar.getInstance();
         end.set(Calendar.YEAR, endDay.get(Calendar.YEAR));
         end.set(Calendar.MONTH, endDay.get(Calendar.MONTH));
@@ -97,7 +105,7 @@ public class EditExamEnrollment implements IService {
 
         return begin.getTimeInMillis() < end.getTimeInMillis();
     }
-    
+
     private boolean equalDates(Calendar beginDay, Calendar beginTime,
             Calendar endDay, Calendar endTime) {
         Calendar begin = Calendar.getInstance();
@@ -107,7 +115,7 @@ public class EditExamEnrollment implements IService {
         begin.set(Calendar.HOUR_OF_DAY, beginTime.get(Calendar.HOUR_OF_DAY));
         begin.set(Calendar.MINUTE, beginTime.get(Calendar.MINUTE));
         begin.set(Calendar.SECOND, 0);
-        
+
         Calendar end = Calendar.getInstance();
         end.set(Calendar.YEAR, endDay.get(Calendar.YEAR));
         end.set(Calendar.MONTH, endDay.get(Calendar.MONTH));

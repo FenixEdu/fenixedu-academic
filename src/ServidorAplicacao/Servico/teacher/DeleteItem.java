@@ -1,4 +1,5 @@
 package ServidorAplicacao.Servico.teacher;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,64 +14,66 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import fileSuport.FileSuport;
 import fileSuport.IFileSuport;
+
 /**
- * @author  Fernanda Quitério
- * 
+ * @author Fernanda Quitério
+ *  
  */
 public class DeleteItem implements IServico {
-	private static DeleteItem service = new DeleteItem();
-	public static DeleteItem getService() {
-		return service;
-	}
+    private static DeleteItem service = new DeleteItem();
 
-	private DeleteItem() {
-	}
+    public static DeleteItem getService() {
+        return service;
+    }
 
-	public final String getNome() {
-		return "DeleteItem";
-	}
+    private DeleteItem() {
+    }
 
-	public Boolean run(Integer infoExecutionCourseCode, Integer itemCode)
-		throws FenixServiceException {
-		try {
+    public final String getNome() {
+        return "DeleteItem";
+    }
 
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-			IPersistentItem persistentItem =
-				persistentSuport.getIPersistentItem();
-			IItem deletedItem =
-				(IItem) persistentItem.readByOId(new Item(itemCode), false);
-			if (deletedItem == null) {
-				return new Boolean(true);
-			}
-			IFileSuport fileSuport = FileSuport.getInstance();
-            long size=1;
-			
-			size = fileSuport.getDirectorySize(deletedItem.getSlideName());
-           			
-			if (size>0) {
-				throw new notAuthorizedServiceDeleteException();
-			}
-			Integer orderOfDeletedItem = deletedItem.getItemOrder();
-			persistentItem.delete(deletedItem);
+    public Boolean run(Integer infoExecutionCourseCode, Integer itemCode)
+            throws FenixServiceException {
+        try {
 
-			persistentSuport.confirmarTransaccao();
-			persistentSuport.iniciarTransaccao();
-			List itemsList = null;
-			itemsList =
-				persistentItem.readAllItemsBySection(deletedItem.getSection());
-			Iterator iterItems = itemsList.iterator();
-			while (iterItems.hasNext()) {
-				IItem item = (IItem) iterItems.next();
-				Integer itemOrder = item.getItemOrder();
-				if (itemOrder.intValue() > orderOfDeletedItem.intValue()) {
-					persistentItem.simpleLockWrite(item);
-					item.setItemOrder(new Integer(itemOrder.intValue() - 1));
-				}
-			}
-			return new Boolean(true);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentItem persistentItem = persistentSuport
+                    .getIPersistentItem();
+            IItem deletedItem = (IItem) persistentItem.readByOID(Item.class,
+                    itemCode);
+            if (deletedItem == null) {
+                return new Boolean(true);
+            }
+            IFileSuport fileSuport = FileSuport.getInstance();
+            long size = 1;
+
+            size = fileSuport.getDirectorySize(deletedItem.getSlideName());
+
+            if (size > 0) {
+                throw new notAuthorizedServiceDeleteException();
+            }
+            Integer orderOfDeletedItem = deletedItem.getItemOrder();
+            persistentItem.delete(deletedItem);
+
+            persistentSuport.confirmarTransaccao();
+            persistentSuport.iniciarTransaccao();
+            List itemsList = null;
+            itemsList = persistentItem.readAllItemsBySection(deletedItem
+                    .getSection());
+            Iterator iterItems = itemsList.iterator();
+            while (iterItems.hasNext()) {
+                IItem item = (IItem) iterItems.next();
+                Integer itemOrder = item.getItemOrder();
+                if (itemOrder.intValue() > orderOfDeletedItem.intValue()) {
+                    persistentItem.simpleLockWrite(item);
+                    item.setItemOrder(new Integer(itemOrder.intValue() - 1));
+                }
+            }
+            return new Boolean(true);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

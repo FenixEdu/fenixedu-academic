@@ -20,46 +20,42 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Fernanda Quitério
  */
-public class AssociateTeacher implements IService
-{
+public class AssociateTeacher implements IService {
 
     /**
      * The Actor of this class.
      */
-    public AssociateTeacher()
-    {
+    public AssociateTeacher() {
     }
 
     /**
      * Executes the service.
      */
     public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber)
-            throws FenixServiceException
-    {
-        try
-        {
+            throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentProfessorship persistentProfessorship = sp
+                    .getIPersistentProfessorship();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
 
             ITeacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
-            if (iTeacher == null) { throw new InvalidArgumentsServiceException(); }
-            ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
-            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    executionCourse, false);
+            if (iTeacher == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+
+            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
             IProfessorship professorship = new Professorship();
             persistentProfessorship.simpleLockWrite(professorship);
 
             professorship.setTeacher(iTeacher);
             professorship.setExecutionCourse(iExecutionCourse);
-        }
-        catch (ExistingPersistentException ex)
-        {
+        } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
         return true;

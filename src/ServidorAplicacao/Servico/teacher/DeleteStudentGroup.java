@@ -20,46 +20,52 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class DeleteStudentGroup implements IServico {
-	private static DeleteStudentGroup service = new DeleteStudentGroup();
-	public static DeleteStudentGroup getService() {
-		return service;
-	}
-	
-	private DeleteStudentGroup() {
-	}
-	
-	public final String getNome() {
-		return "DeleteStudentGroup";
-	}
-	
-	public Boolean run(Integer executionCourseCode,Integer studentGroupCode) throws FenixServiceException {
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+    private static DeleteStudentGroup service = new DeleteStudentGroup();
 
-			IPersistentStudentGroup persistentStudentGroup = persistentSuport.getIPersistentStudentGroup();
-			IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
+    public static DeleteStudentGroup getService() {
+        return service;
+    }
 
-			IStudentGroup deletedStudentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
-			
-			if (deletedStudentGroup == null) {
-				throw new ExistingServiceException();
-			}
-			
-			List studentGroupAttendList = persistentStudentGroupAttend.readAllByStudentGroup(deletedStudentGroup);
-			
-			if(studentGroupAttendList.size()!=0)
-				throw new InvalidSituationServiceException();
-					
-			persistentStudentGroup.delete(deletedStudentGroup);
-							
-		} 
-		catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return new Boolean(true);
-	}
+    private DeleteStudentGroup() {
+    }
+
+    public final String getNome() {
+        return "DeleteStudentGroup";
+    }
+
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode)
+            throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+
+            IPersistentStudentGroup persistentStudentGroup = persistentSuport
+                    .getIPersistentStudentGroup();
+            IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
+                    .getIPersistentStudentGroupAttend();
+
+            IStudentGroup deletedStudentGroup = (IStudentGroup) persistentStudentGroup
+                    .readByOID(StudentGroup.class, studentGroupCode);
+
+            if (deletedStudentGroup == null) {
+                throw new ExistingServiceException();
+            }
+
+            List studentGroupAttendList = persistentStudentGroupAttend
+                    .readAllByStudentGroup(deletedStudentGroup);
+
+            if (studentGroupAttendList.size() != 0) {
+                throw new InvalidSituationServiceException();
+            }
+            persistentStudentGroup.delete(deletedStudentGroup);
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return new Boolean(true);
+    }
 }
 

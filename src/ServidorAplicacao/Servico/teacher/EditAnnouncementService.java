@@ -54,7 +54,9 @@ public class EditAnnouncementService implements IService {
                         .getMessage());
             }
 
-            if (announcement != null) { throw new ExistingServiceException(); }
+            if (announcement != null) {
+                throw new ExistingServiceException();
+            }
         }
     }
 
@@ -77,10 +79,12 @@ public class EditAnnouncementService implements IService {
                     .getIPersistentAnnouncement();
 
             // read announcement
-            IAnnouncement announcement = new Announcement(announcementCode);
-            iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOId(
-                    announcement, true);
-            if (iAnnouncement == null) { throw new InvalidArgumentsServiceException(); }
+
+            iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(
+                    Announcement.class, announcementCode, true);
+            if (iAnnouncement == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
             String announcementOldTitle = iAnnouncement.getTitle();
             date = iAnnouncement.getCreationDate();

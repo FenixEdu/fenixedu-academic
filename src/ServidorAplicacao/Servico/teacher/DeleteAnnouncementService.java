@@ -1,8 +1,8 @@
 package ServidorAplicacao.Servico.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Announcement;
 import Dominio.IAnnouncement;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentAnnouncement;
@@ -11,41 +11,31 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério
- * 
+ *  
  */
-public class DeleteAnnouncementService implements IServico {
+public class DeleteAnnouncementService implements IService {
 
-	private static DeleteAnnouncementService service = new DeleteAnnouncementService();
+    public DeleteAnnouncementService() {
+    }
 
-	public static DeleteAnnouncementService getService() {
-		return service;
-	}
+    public boolean run(Integer infoExecutionCourseCode, Integer announcementCode)
+            throws FenixServiceException {
 
-	private DeleteAnnouncementService() {
-	}
+        try {
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentAnnouncement persistentAnnouncement = persistentSupport
+                    .getIPersistentAnnouncement();
 
-	public final String getNome() {
-		return "DeleteAnnouncementService";
-	}
+            IAnnouncement iAnnouncement = (IAnnouncement) persistentAnnouncement
+                    .readByOID(Announcement.class, announcementCode);
 
-	public boolean run(
-		Integer infoExecutionCourseCode,
-		Integer announcementCode)
-		throws FenixServiceException {
-
-		try {
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentAnnouncement persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
-
-			Announcement announcement = new Announcement(announcementCode);
-			IAnnouncement iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOId(announcement, false);
-
-			if (iAnnouncement != null)
-				persistentAnnouncement.delete(announcement);
-
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return true;
-	}
+            if (iAnnouncement != null) {
+                persistentAnnouncement.delete(iAnnouncement);
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return true;
+    }
 }

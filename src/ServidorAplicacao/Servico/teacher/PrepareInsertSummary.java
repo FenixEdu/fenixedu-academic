@@ -56,16 +56,17 @@ public class PrepareInsertSummary implements IService {
             IPersistentExecutionCourse persistentExecutionCourse = sp
                     .getIPersistentExecutionCourse();
 
-            IExecutionCourse executionCourse = new ExecutionCourse();
-            executionCourse.setIdInternal(executionCourseId);
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOId(executionCourse, false);
-            if (executionCourse == null) { throw new FenixServiceException(
-                    "no.executionCourse"); }
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new FenixServiceException("no.executionCourse");
+            }
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
             ISite site = persistentSite.readByExecutionCourse(executionCourse);
-            if (site == null) { throw new FenixServiceException("no.site"); }
+            if (site == null) {
+                throw new FenixServiceException("no.site");
+            }
 
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             List shifts = persistentShift
@@ -135,7 +136,7 @@ public class PrepareInsertSummary implements IService {
             bodyComponent.setInfoProfessorships(infoProfessorships);
             bodyComponent.setInfoRooms(infoRooms);
             bodyComponent.setTeacherId(professorshipSelect);
-            
+
             TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
                     .getInstance();
             ISiteComponent commonComponent = componentBuilder.getComponent(

@@ -29,88 +29,99 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 
 public class InsertStudentGroupMembers implements IService {
 
-	
-	/**
-	 * The constructor of this class.
-	 */
-	public InsertStudentGroupMembers() {
-	}
-	
+    /**
+     * The constructor of this class.
+     */
+    public InsertStudentGroupMembers() {
+    }
 
-	/**
-	 * Executes the service.
-	 */
+    /**
+     * Executes the service.
+     */
 
-	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, List studentCodes) throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,
+            List studentCodes) throws FenixServiceException {
 
-		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-		IPersistentStudentGroup persistentStudentGroup = null;
-		IFrequentaPersistente persistentAttend = null;
-		IPersistentStudent persistentStudent = null;
-		try {
+        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+        IPersistentStudentGroup persistentStudentGroup = null;
+        IFrequentaPersistente persistentAttend = null;
+        IPersistentStudent persistentStudent = null;
+        try {
 
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
 
-			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-			persistentStudent = persistentSupport.getIPersistentStudent();
-			persistentAttend = persistentSupport.getIFrequentaPersistente();
-			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
+            persistentStudentGroup = persistentSupport
+                    .getIPersistentStudentGroup();
+            persistentStudent = persistentSupport.getIPersistentStudent();
+            persistentAttend = persistentSupport.getIFrequentaPersistente();
+            persistentStudentGroupAttend = persistentSupport
+                    .getIPersistentStudentGroupAttend();
 
-			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
+                    .readByOID(StudentGroup.class, studentGroupCode);
 
-			if (studentGroup == null)
-				throw new ExistingServiceException();
+            if (studentGroup == null) {
+                throw new ExistingServiceException();
+            }
 
-			
-			IGroupProperties groupProperties = studentGroup.getGroupProperties();
-			List allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
+            IGroupProperties groupProperties = studentGroup
+                    .getGroupProperties();
+            List allStudentGroup = persistentStudentGroup
+                    .readAllStudentGroupByGroupProperties(groupProperties);
 
-			Iterator iterGroups = allStudentGroup.iterator();
+            Iterator iterGroups = allStudentGroup.iterator();
 
-			while (iterGroups.hasNext()) {
-				IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups.next();
-				IStudentGroupAttend newStudentGroupAttend = null;
-				Iterator iterator = studentCodes.iterator();
+            while (iterGroups.hasNext()) {
+                IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups
+                        .next();
+                IStudentGroupAttend newStudentGroupAttend = null;
+                Iterator iterator = studentCodes.iterator();
 
-				while (iterator.hasNext()) {
-					IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iterator.next()), false);
+                while (iterator.hasNext()) {
+                    IStudent student = (IStudent) persistentStudent.readByOID(
+                            Student.class, (Integer) iterator.next());
 
-					IFrequenta attend =
-						persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
+                    IFrequenta attend = persistentAttend
+                            .readByAlunoAndDisciplinaExecucao(student,
+                                    groupProperties.getExecutionCourse());
 
-					newStudentGroupAttend = persistentStudentGroupAttend.readBy(existingStudentGroup, attend);
+                    newStudentGroupAttend = persistentStudentGroupAttend
+                            .readBy(existingStudentGroup, attend);
 
-					if (newStudentGroupAttend != null)
-						throw new InvalidSituationServiceException();
+                    if (newStudentGroupAttend != null)
+                        throw new InvalidSituationServiceException();
 
-				}
-			}
+                }
+            }
 
-			Iterator iter = studentCodes.iterator();
+            Iterator iter = studentCodes.iterator();
 
-			while (iter.hasNext()) {
+            while (iter.hasNext()) {
 
-				IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iter.next()), false);
+                IStudent student = (IStudent) persistentStudent.readByOID(
+                        Student.class, (Integer) iter.next());
 
-				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
+                IFrequenta attend = persistentAttend
+                        .readByAlunoAndDisciplinaExecucao(student,
+                                groupProperties.getExecutionCourse());
 
-				IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(studentGroup, attend);
+                IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(
+                        studentGroup, attend);
 
-				persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
-			}
+                persistentStudentGroupAttend
+                        .simpleLockWrite(notExistingSGAttend);
+            }
 
-			
-		
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
-
-		return new Boolean(true);
-	}
+        return new Boolean(true);
+    }
 }

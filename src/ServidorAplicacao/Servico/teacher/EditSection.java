@@ -24,11 +24,9 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Fernanda Quitério
  */
-public class EditSection implements IService
-{
+public class EditSection implements IService {
 
-    public EditSection()
-    {
+    public EditSection() {
     }
 
     /**
@@ -40,66 +38,59 @@ public class EditSection implements IService
 
     //	this method reorders some sections but not the section that we are
     // editing
-    private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder, ISection superiorSection,
-            ISite site) throws FenixServiceException
-    {
+    private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder,
+            ISection superiorSection, ISite site) throws FenixServiceException {
 
-        try
-        {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentSection persistentSection = persistentSuport
+                    .getIPersistentSection();
 
             List sectionsList = null;
-            sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
+            sectionsList = persistentSection.readBySiteAndSection(site,
+                    superiorSection);
 
             Iterator iterSections = sectionsList.iterator();
 
-            if (newOrder.intValue() == -2)
-            {
+            if (newOrder.intValue() == -2) {
                 newOrder = new Integer(sectionsList.size() - 1);
             }
 
-            if (newOrder.intValue() - oldOrder.intValue() > 0)
-            {
-                while (iterSections.hasNext())
-                {
+            if (newOrder.intValue() - oldOrder.intValue() > 0) {
+                while (iterSections.hasNext()) {
 
                     ISection iterSection = (ISection) iterSections.next();
-                    int iterSectionOrder = iterSection.getSectionOrder().intValue();
+                    int iterSectionOrder = iterSection.getSectionOrder()
+                            .intValue();
 
                     if (iterSectionOrder > oldOrder.intValue()
-                            && iterSectionOrder <= newOrder.intValue())
-                    {
+                            && iterSectionOrder <= newOrder.intValue()) {
                         persistentSection.simpleLockWrite(iterSection);
-                        iterSection.setSectionOrder(new Integer(iterSectionOrder - 1));
+                        iterSection.setSectionOrder(new Integer(
+                                iterSectionOrder - 1));
                     }
                 }
-            }
-            else
-            {
-                while (iterSections.hasNext())
-                {
+            } else {
+                while (iterSections.hasNext()) {
                     ISection iterSection = (ISection) iterSections.next();
 
-                    int iterSectionOrder = iterSection.getSectionOrder().intValue();
+                    int iterSectionOrder = iterSection.getSectionOrder()
+                            .intValue();
 
                     if (iterSectionOrder >= newOrder.intValue()
-                            && iterSectionOrder < oldOrder.intValue())
-                    {
+                            && iterSectionOrder < oldOrder.intValue()) {
 
                         persistentSection.simpleLockWrite(iterSection);
-                        iterSection.setSectionOrder(new Integer(iterSectionOrder + 1));
+                        iterSection.setSectionOrder(new Integer(
+                                iterSectionOrder + 1));
                     }
                 }
             }
-        }
-        catch (ExistingPersistentException excepcaoPersistencia)
-        {
+        } catch (ExistingPersistentException excepcaoPersistencia) {
 
             throw new ExistingServiceException(excepcaoPersistencia);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
         return newOrder;
@@ -108,33 +99,37 @@ public class EditSection implements IService
     /**
      * Executes the service.
      */
-    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String newSectionName,
-            Integer newOrder) throws FenixServiceException
-    {
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode,
+            String newSectionName, Integer newOrder)
+            throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            ISection iSection = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
+            ISection iSection = (ISection) persistentSection.readByOID(
+                    Section.class, sectionCode);
 
-            if (iSection == null) { throw new NonExistingServiceException(); }
+            if (iSection == null) {
+                throw new NonExistingServiceException();
+            }
             persistentSection.simpleLockWrite(iSection);
             iSection.setName(newSectionName);
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(infoExecutionCourseCode), false);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
 
-            ISite site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
+            ISite site = sp.getIPersistentSite().readByExecutionCourse(
+                    executionCourse);
 
             InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
             Integer oldOrder = infoSection.getSectionOrder();
 
-            if (newOrder != oldOrder)
-            {
-                newOrder = organizeSectionsOrder(newOrder, oldOrder, iSection.getSuperiorSection(), site);
+            if (newOrder != oldOrder) {
+                newOrder = organizeSectionsOrder(newOrder, oldOrder, iSection
+                        .getSuperiorSection(), site);
             }
 
             //			persistentSection.lockWrite(iSection);
@@ -142,13 +137,9 @@ public class EditSection implements IService
             iSection.setName(newSectionName);
             iSection.setSectionOrder(newOrder);
 
-        }
-        catch (ExistingPersistentException e)
-        {
+        } catch (ExistingPersistentException e) {
             throw new ExistingServiceException(e);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

@@ -21,58 +21,47 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Fernanda Quitério
  */
-public class InsertItem implements IService
-{
+public class InsertItem implements IService {
 
-    public InsertItem()
-    {
+    public InsertItem() {
 
     }
 
     private int organizeExistingItemsOrder(ISection section, int insertItemOrder)
-            throws FenixServiceException
-    {
+            throws FenixServiceException {
 
         IPersistentItem persistentItem = null;
-        try
-        {
+        try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
 
             persistentItem = persistentSuport.getIPersistentItem();
 
             List itemsList = persistentItem.readAllItemsBySection(section);
 
-            if (itemsList != null)
-            {
+            if (itemsList != null) {
 
-                if (insertItemOrder == -1)
-                {
+                if (insertItemOrder == -1) {
                     insertItemOrder = itemsList.size();
                 }
 
                 Iterator iterItems = itemsList.iterator();
-                while (iterItems.hasNext())
-                {
+                while (iterItems.hasNext()) {
 
                     IItem item = (IItem) iterItems.next();
                     int itemOrder = item.getItemOrder().intValue();
 
-                    if (itemOrder >= insertItemOrder)
-                    {
+                    if (itemOrder >= insertItemOrder) {
                         persistentItem.simpleLockWrite(item);
                         item.setItemOrder(new Integer(itemOrder + 1));
                     }
                 }
             }
-        }
-        catch (ExistingPersistentException excepcaoPersistencia)
-        {
+        } catch (ExistingPersistentException excepcaoPersistencia) {
 
             throw new ExistingServiceException(excepcaoPersistencia);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
             throw new FenixServiceException(excepcaoPersistencia);
         }
@@ -81,38 +70,35 @@ public class InsertItem implements IService
 
     //infoItem with an infoSection
 
-    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem)
-            throws FenixServiceException
-    {
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode,
+            InfoItem infoItem) throws FenixServiceException {
 
         IItem item = null;
         ISection section = null;
 
-        try
-        {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-            IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
-            
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentSection persistentSection = persistentSuport
+                    .getIPersistentSection();
+            IPersistentItem persistentItem = persistentSuport
+                    .getIPersistentItem();
 
-            section = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
+            section = (ISection) persistentSection.readByOID(Section.class,
+                    sectionCode);
 
             infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
             item = Cloner.copyInfoItem2IItem(infoItem);
             persistentItem.simpleLockWrite(item);
-            Integer itemOrder = new Integer(organizeExistingItemsOrder(section, infoItem.getItemOrder()
-                    .intValue()));
-            
+            Integer itemOrder = new Integer(organizeExistingItemsOrder(section,
+                    infoItem.getItemOrder().intValue()));
+
             item.setItemOrder(itemOrder);
 
-        }
-        catch (ExistingPersistentException e)
-        {
+        } catch (ExistingPersistentException e) {
 
             throw new ExistingServiceException(e);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
             throw new FenixServiceException(excepcaoPersistencia);
         }

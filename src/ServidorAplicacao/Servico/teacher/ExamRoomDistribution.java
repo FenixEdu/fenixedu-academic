@@ -63,10 +63,10 @@ public class ExamRoomDistribution implements IService {
                     .getIFrequentaPersistente();
             IPersistentExamStudentRoom persistentExamStudentRoom = sp
                     .getIPersistentExamStudentRoom();
-            IExam exam = (IExam) persistentExam.readByOId(new Exam(examCode),
-                    false);
-            if (exam == null) { throw new InvalidArgumentsServiceException(
-                    "exam"); }
+            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
+            if (exam == null) {
+                throw new InvalidArgumentsServiceException("exam");
+            }
 
             if (!enrolledStudents.booleanValue()
                     || exam.getEnrollmentEndDay() == null) {
@@ -75,8 +75,10 @@ public class ExamRoomDistribution implements IService {
                 //                Calendar twoWeeksBeforeExam = (Calendar) examDay.clone();
                 //                twoWeeksBeforeExam.add(Calendar.DATE, -14);
 
-                if (today.after(examDay)) { throw new FenixServiceException(
-                        ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD); }
+                if (today.after(examDay)) {
+                    throw new FenixServiceException(
+                            ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
+                }
 
                 List executionCourses = exam.getAssociatedExecutionCourses();
                 Iterator iterCourse = executionCourses.iterator();
@@ -108,8 +110,10 @@ public class ExamRoomDistribution implements IService {
                 Calendar examDay = exam.getDay();
                 Calendar today = Calendar.getInstance();
 
-                if (today.after(examDay) || today.before(endEnrollmentDay)) { throw new FenixServiceException(
-                        ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD); }
+                if (today.after(examDay) || today.before(endEnrollmentDay)) {
+                    throw new FenixServiceException(
+                            ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
+                }
 
                 List examStudentRoomList = persistentExamStudentRoom
                         .readBy(exam);
@@ -126,14 +130,16 @@ public class ExamRoomDistribution implements IService {
             Iterator iterRoom = uniqueRooms.iterator();
             List rooms = new ArrayList();
             while (iterRoom.hasNext()) {
-                ISala room = (ISala) persistentRoom.readByOId(new Sala(
-                        (Integer) iterRoom.next()), false);
-                if (room == null) { throw new InvalidArgumentsServiceException(
-                        "room"); }
+                ISala room = (ISala) persistentRoom.readByOID(Sala.class,
+                        (Integer) iterRoom.next());
+                if (room == null) {
+                    throw new InvalidArgumentsServiceException("room");
+                }
                 rooms.add(room);
             }
-            if (!exam.getAssociatedRooms().containsAll(rooms)) { throw new InvalidArgumentsServiceException(
-                    "rooms"); }
+            if (!exam.getAssociatedRooms().containsAll(rooms)) {
+                throw new InvalidArgumentsServiceException("rooms");
+            }
 
             Iterator iter = rooms.iterator();
             while (iter.hasNext()) {
@@ -166,8 +172,9 @@ public class ExamRoomDistribution implements IService {
                     i++;
                 }
             }
-            if (students.size() > 0) { throw new InvalidArgumentsServiceException(
-                    "students"); }
+            if (students.size() > 0) {
+                throw new InvalidArgumentsServiceException("students");
+            }
             result = new Boolean(true);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -195,7 +202,8 @@ public class ExamRoomDistribution implements IService {
         Iterator iter = initialList.iterator();
         while (iter.hasNext()) {
             Object object = iter.next();
-            if (!finalList.contains(object)) finalList.add(object);
+            if (!finalList.contains(object))
+                finalList.add(object);
         }
         return finalList;
     }

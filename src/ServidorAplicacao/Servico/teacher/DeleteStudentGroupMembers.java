@@ -29,80 +29,90 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 
 public class DeleteStudentGroupMembers implements IServico {
 
-	
-	private static DeleteStudentGroupMembers service = new DeleteStudentGroupMembers();
+    private static DeleteStudentGroupMembers service = new DeleteStudentGroupMembers();
 
-	/**
-		* The singleton access method of this class.
-		*/
-	public static DeleteStudentGroupMembers getService() {
-		return service;
-	}
-	/**
-	 * The constructor of this class.
-	 */
-	private DeleteStudentGroupMembers() {}
-	/**
-	 * The name of the service
-	 */
-	public final String getNome() {
-		return "DeleteStudentGroupMembers";
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static DeleteStudentGroupMembers getService() {
+        return service;
+    }
 
+    /**
+     * The constructor of this class.
+     */
+    private DeleteStudentGroupMembers() {
+    }
 
-	/**
-	 * Executes the service.
-	 */
+    /**
+     * The name of the service
+     */
+    public final String getNome() {
+        return "DeleteStudentGroupMembers";
+    }
 
-	public boolean run(Integer executionCourseCode, Integer studentGroupCode,List studentUsernames) throws FenixServiceException {
-		
-		
-		IPersistentExecutionCourse persistentExecutionCourse = null;
-		IPersistentStudentGroup persistentStudentGroup = null;
-		IFrequentaPersistente persistentAttend = null;
-		IPersistentStudent persistentStudent = null;
-		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-		
-		
-		try {
-			
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			
-			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-			persistentAttend = persistentSupport.getIFrequentaPersistente();
-			persistentStudent = persistentSupport.getIPersistentStudent();
-			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
-		
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseCode),false);
-			IStudentGroup studentGroup =(IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
-			
-			if(studentGroup==null)
-				throw new ExistingServiceException();
-			
-			Iterator iterator = studentUsernames.iterator();
-			
-			while (iterator.hasNext()) {
-				IStudent student =  persistentStudent.readByUsername(iterator.next().toString());
-				
-				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);
-				
-				IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup,attend); 
-				if(oldStudentGroupAttend!=null)				
-					persistentStudentGroupAttend.delete(oldStudentGroupAttend);
-				else
-					throw new InvalidSituationServiceException();
-			}
+    /**
+     * Executes the service.
+     */
 
-		}
-		catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
-		return true;
-	}
+    public boolean run(Integer executionCourseCode, Integer studentGroupCode,
+            List studentUsernames) throws FenixServiceException {
+
+        IPersistentExecutionCourse persistentExecutionCourse = null;
+        IPersistentStudentGroup persistentStudentGroup = null;
+        IFrequentaPersistente persistentAttend = null;
+        IPersistentStudent persistentStudent = null;
+        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+
+        try {
+
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
+
+            persistentExecutionCourse = persistentSupport
+                    .getIPersistentExecutionCourse();
+            persistentAttend = persistentSupport.getIFrequentaPersistente();
+            persistentStudent = persistentSupport.getIPersistentStudent();
+            persistentStudentGroup = persistentSupport
+                    .getIPersistentStudentGroup();
+            persistentStudentGroupAttend = persistentSupport
+                    .getIPersistentStudentGroupAttend();
+
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
+                    .readByOID(StudentGroup.class, studentGroupCode);
+
+            if (studentGroup == null) {
+                throw new ExistingServiceException();
+            }
+            Iterator iterator = studentUsernames.iterator();
+
+            while (iterator.hasNext()) {
+                IStudent student = persistentStudent.readByUsername(iterator
+                        .next().toString());
+
+                IFrequenta attend = persistentAttend
+                        .readByAlunoAndDisciplinaExecucao(student,
+                                executionCourse);
+
+                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                        .readBy(studentGroup, attend);
+                if (oldStudentGroupAttend != null) {
+                    persistentStudentGroupAttend.delete(oldStudentGroupAttend);
+                } else {
+                    throw new InvalidSituationServiceException();
+                }
+            }
+
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
+        return true;
+    }
 }

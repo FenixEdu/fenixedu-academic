@@ -64,8 +64,8 @@ public class ReadExecutionCourseProjects implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IExecutionCourse executionCourse = (IExecutionCourse) sp
-                    .getIPersistentExecutionCourse().readByOId(
-                            new ExecutionCourse(executionCourseCode), false);
+                    .getIPersistentExecutionCourse().readByOID(
+                            ExecutionCourse.class, executionCourseCode);
 
             List executionCourseProjects = sp.getIPersistentGroupProperties()
                     .readAllGroupPropertiesByExecutionCourse(executionCourse);
@@ -82,8 +82,9 @@ public class ReadExecutionCourseProjects implements IServico {
                     //infoGroupPropertiesList
                     //.add(Cloner
                     //.copyIGroupProperties2InfoGroupProperties(groupProperties));
-                    
-                    InfoGroupProperties infoGroupProperties = InfoGroupProperties.newInfoFromDomain(groupProperties);
+
+                    InfoGroupProperties infoGroupProperties = InfoGroupProperties
+                            .newInfoFromDomain(groupProperties);
                     infoGroupPropertiesList.add(infoGroupProperties);
                 }
 

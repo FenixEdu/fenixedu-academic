@@ -15,27 +15,24 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Fernanda Quitério
  */
-public class EditCustomizationOptions implements IService
-{
+public class EditCustomizationOptions implements IService {
 
-    public EditCustomizationOptions()
-    {
+    public EditCustomizationOptions() {
     }
 
     public boolean run(Integer infoExecutionCourseCode, InfoSite infoSiteNew)
-            throws FenixServiceException
-    {
+            throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
 
             ISite siteOld = null;
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new ExecutionCourse(infoExecutionCourseCode), false);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
             siteOld = persistentSite.readByExecutionCourse(executionCourse);
 
             persistentSite.simpleLockWrite(siteOld);
@@ -45,9 +42,7 @@ public class EditCustomizationOptions implements IService
             siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
             siteOld.setIntroduction(infoSiteNew.getIntroduction());
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
         return true;

@@ -42,10 +42,8 @@ public class DeleteGroupProperties implements IService
 			ISuportePersistente sp = (ISuportePersistente) SuportePersistenteOJB.getInstance();
 			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
 
-			IGroupProperties groupProperties = new GroupProperties();
-			groupProperties.setIdInternal(groupPropertiesId);
-			groupProperties = (IGroupProperties) persistentGroupProperties.readByOId(groupProperties,
-					false);
+			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(GroupProperties.class,
+			        groupPropertiesId);
 
 			if (groupProperties != null)
 			{

@@ -17,52 +17,53 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author João Mota
  * @author Susana Fernandes
- *
- * 21/Jul/2003
- * fenix-head
- * ServidorAplicacao.Servico.teacher
  * 
+ * 21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher
+ *  
  */
 public class DeleteSummary implements IServico {
 
-	private static DeleteSummary service = new DeleteSummary();
+    private static DeleteSummary service = new DeleteSummary();
 
-	public static DeleteSummary getService() {
+    public static DeleteSummary getService() {
 
-		return service;
-	}
+        return service;
+    }
 
-	/**
-	 * 
-	 */
-	public DeleteSummary() {
-	}
+    /**
+     *  
+     */
+    public DeleteSummary() {
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "DeleteSummary";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "DeleteSummary";
+    }
 
-	public boolean run(Integer executionCourseId, Integer summaryId) throws FenixServiceException {
-		
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-		
-			IPersistentSummary persistentSummary =
-				persistentSuport.getIPersistentSummary();
-				
-			ISummary summary = new Summary(summaryId);
-			summary=(ISummary) persistentSummary.readByOId(summary,true);
-			if (summary!=null) {			
-				persistentSummary.delete(summary);			
-			}
-			return true;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+    public boolean run(Integer executionCourseId, Integer summaryId)
+            throws FenixServiceException {
+
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+
+            IPersistentSummary persistentSummary = persistentSuport
+                    .getIPersistentSummary();
+
+            ISummary summary = (ISummary) persistentSummary.readByOID(
+                    Summary.class, summaryId, true);
+            if (summary != null) {
+                persistentSummary.delete(summary);
+            }
+            return true;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

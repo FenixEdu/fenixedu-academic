@@ -38,91 +38,85 @@ import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
  * @author Sergio Montelobo
  *  
  */
-public class EditTeacherInformation implements IService
-{
+public class EditTeacherInformation implements IService {
     /**
-	 *  
-	 */
-    public EditTeacherInformation()
-    {}
+     *  
+     */
+    public EditTeacherInformation() {
+    }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "EditTeacherInformation";
     }
 
     /**
-	 * Executes the service.
-	 */
-    public Boolean run(
-        InfoServiceProviderRegime infoServiceProviderRegime,
-        InfoWeeklyOcupation infoWeeklyOcupation,
-        List infoOrientations,
-        List infoPublicationsNumbers)
-        throws FenixServiceException
-    {
-        try
-        {
+     * Executes the service.
+     */
+    public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime,
+            InfoWeeklyOcupation infoWeeklyOcupation, List infoOrientations,
+            List infoPublicationsNumbers) throws FenixServiceException {
+        try {
             Date date = Calendar.getInstance().getTime();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IPersistentServiceProviderRegime persistentServiceProviderRegime =
-                sp.getIPersistentServiceProviderRegime();
-            Integer serviceProviderRegimeId = infoServiceProviderRegime.getIdInternal();
-            IServiceProviderRegime serviceProviderRegimeToLock =
-                (IServiceProviderRegime) persistentServiceProviderRegime.readByOId(
-                    new ServiceProviderRegime(serviceProviderRegimeId),
-                    true);
-            IServiceProviderRegime newServiceProviderRegime =
-                Cloner.copyInfoServiceProviderRegime2IServiceProviderRegime(infoServiceProviderRegime);
+            IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
+                    .getIPersistentServiceProviderRegime();
+            Integer serviceProviderRegimeId = infoServiceProviderRegime
+                    .getIdInternal();
+            IServiceProviderRegime serviceProviderRegimeToLock = (IServiceProviderRegime) persistentServiceProviderRegime
+                    .readByOID(ServiceProviderRegime.class,
+                            serviceProviderRegimeId, true);
+            IServiceProviderRegime newServiceProviderRegime = Cloner
+                    .copyInfoServiceProviderRegime2IServiceProviderRegime(infoServiceProviderRegime);
 
-            if (serviceProviderRegimeToLock == null)
-            {
+            if (serviceProviderRegimeToLock == null) {
                 serviceProviderRegimeToLock = new ServiceProviderRegime();
-                persistentServiceProviderRegime.simpleLockWrite(serviceProviderRegimeToLock);
+                persistentServiceProviderRegime
+                        .simpleLockWrite(serviceProviderRegimeToLock);
             }
             Integer ackOptLock = serviceProviderRegimeToLock.getAckOptLock();
-            PropertyUtils.copyProperties(serviceProviderRegimeToLock, newServiceProviderRegime);
+            PropertyUtils.copyProperties(serviceProviderRegimeToLock,
+                    newServiceProviderRegime);
             serviceProviderRegimeToLock.setAckOptLock(ackOptLock);
             serviceProviderRegimeToLock.setLastModificationDate(date);
 
-            IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
+            IPersistentWeeklyOcupation persistentWeeklyOcupation = sp
+                    .getIPersistentWeeklyOcupation();
             Integer weeklyOcupationId = infoWeeklyOcupation.getIdInternal();
-            IWeeklyOcupation weeklyOcupationToLock =
-                (IWeeklyOcupation) persistentWeeklyOcupation.readByOId(
-                    new WeeklyOcupation(weeklyOcupationId),
-                    true);
-            IWeeklyOcupation newWeeklyOcupation =
-                Cloner.copyInfoWeeklyOcupation2IWeeklyOcupation(infoWeeklyOcupation);
+            IWeeklyOcupation weeklyOcupationToLock = (IWeeklyOcupation) persistentWeeklyOcupation
+                    .readByOID(WeeklyOcupation.class, weeklyOcupationId, true);
+            IWeeklyOcupation newWeeklyOcupation = Cloner
+                    .copyInfoWeeklyOcupation2IWeeklyOcupation(infoWeeklyOcupation);
 
-            if (weeklyOcupationToLock == null)
-            {
+            if (weeklyOcupationToLock == null) {
                 weeklyOcupationToLock = new WeeklyOcupation();
-                persistentWeeklyOcupation.simpleLockWrite(weeklyOcupationToLock);
+                persistentWeeklyOcupation
+                        .simpleLockWrite(weeklyOcupationToLock);
             }
             ackOptLock = weeklyOcupationToLock.getAckOptLock();
-            PropertyUtils.copyProperties(weeklyOcupationToLock, newWeeklyOcupation);
+            PropertyUtils.copyProperties(weeklyOcupationToLock,
+                    newWeeklyOcupation);
             weeklyOcupationToLock.setAckOptLock(ackOptLock);
             weeklyOcupationToLock.setLastModificationDate(date);
 
-            IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
+            IPersistentOrientation persistentOrientation = sp
+                    .getIPersistentOrientation();
             Iterator iter = infoOrientations.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 InfoOrientation infoOrientation = (InfoOrientation) iter.next();
                 Integer orientationId = infoOrientation.getIdInternal();
-                IOrientation orientationToLock =
-                    (IOrientation) persistentOrientation.readByOId(new Orientation(orientationId), true);
+                IOrientation orientationToLock = (IOrientation) persistentOrientation
+                        .readByOID(Orientation.class, orientationId, true);
 
-                IOrientation newOrientation = Cloner.copyInfoOrientation2IOrientation(infoOrientation);
+                IOrientation newOrientation = Cloner
+                        .copyInfoOrientation2IOrientation(infoOrientation);
 
-                if (orientationToLock == null)
-                {
+                if (orientationToLock == null) {
                     orientationToLock = new Orientation();
                     persistentOrientation.simpleLockWrite(orientationToLock);
                 }
@@ -132,35 +126,35 @@ public class EditTeacherInformation implements IService
                 orientationToLock.setLastModificationDate(date);
             }
 
-            IPersistentPublicationsNumber persistentPublicationsNumber =
-                sp.getIPersistentPublicationsNumber();
+            IPersistentPublicationsNumber persistentPublicationsNumber = sp
+                    .getIPersistentPublicationsNumber();
             iter = infoPublicationsNumbers.iterator();
-            while (iter.hasNext())
-            {
-                InfoPublicationsNumber infoPublicationsNumber = (InfoPublicationsNumber) iter.next();
-                Integer publicationsNumberId = infoPublicationsNumber.getIdInternal();
-                IPublicationsNumber publicationsNumberToLock =
-                    (IPublicationsNumber) persistentPublicationsNumber.readByOId(
-                        new PublicationsNumber(publicationsNumberId),
-                        true);
-                IPublicationsNumber newPublicationsNumber =
-                    Cloner.copyInfoPublicationsNumber2IPublicationsNumber(infoPublicationsNumber);
+            while (iter.hasNext()) {
+                InfoPublicationsNumber infoPublicationsNumber = (InfoPublicationsNumber) iter
+                        .next();
+                Integer publicationsNumberId = infoPublicationsNumber
+                        .getIdInternal();
+                IPublicationsNumber publicationsNumberToLock = (IPublicationsNumber) persistentPublicationsNumber
+                        .readByOID(PublicationsNumber.class,
+                                publicationsNumberId, true);
+                IPublicationsNumber newPublicationsNumber = Cloner
+                        .copyInfoPublicationsNumber2IPublicationsNumber(infoPublicationsNumber);
 
-                if (publicationsNumberToLock == null)
-                {
+                if (publicationsNumberToLock == null) {
                     publicationsNumberToLock = new PublicationsNumber();
-                    persistentPublicationsNumber.simpleLockWrite(publicationsNumberToLock);
+                    persistentPublicationsNumber
+                            .simpleLockWrite(publicationsNumberToLock);
                 }
                 ackOptLock = publicationsNumberToLock.getAckOptLock();
-                PropertyUtils.copyProperties(publicationsNumberToLock, newPublicationsNumber);
+                PropertyUtils.copyProperties(publicationsNumberToLock,
+                        newPublicationsNumber);
                 publicationsNumberToLock.setAckOptLock(ackOptLock);
                 publicationsNumberToLock.setLastModificationDate(date);
             }
             // TODO: faltam os cargos de gestão
 
             return new Boolean(true);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new FenixServiceException(e);
         }
     }

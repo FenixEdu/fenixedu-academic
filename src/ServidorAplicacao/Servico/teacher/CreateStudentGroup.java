@@ -35,35 +35,32 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author ansr & scpo
  */
 
-public class CreateStudentGroup implements IService
-{
+public class CreateStudentGroup implements IService {
 
     private IPersistentStudentGroup persistentStudentGroup = null;
 
     /**
      * The constructor of this class.
      */
-    public CreateStudentGroup()
-    {
+    public CreateStudentGroup() {
     }
 
-    private void checkIfStudentGroupExists(Integer groupNumber, IGroupProperties groupProperties)
-            throws FenixServiceException
-    {
+    private void checkIfStudentGroupExists(Integer groupNumber,
+            IGroupProperties groupProperties) throws FenixServiceException {
 
         IStudentGroup studentGroup = null;
 
-        try
-        {
+        try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
+            persistentStudentGroup = persistentSupport
+                    .getIPersistentStudentGroup();
 
-            studentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(
-                    groupProperties, groupNumber);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+            studentGroup = persistentStudentGroup
+                    .readStudentGroupByGroupPropertiesAndGroupNumber(
+                            groupProperties, groupNumber);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
 
@@ -75,9 +72,9 @@ public class CreateStudentGroup implements IService
      * Executes the service.
      */
 
-    public boolean run(Integer executionCourseCode, Integer groupNumber, Integer groupPropertiesCode,
-            Integer shiftCode, List studentCodes) throws FenixServiceException
-    {
+    public boolean run(Integer executionCourseCode, Integer groupNumber,
+            Integer groupPropertiesCode, Integer shiftCode, List studentCodes)
+            throws FenixServiceException {
 
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         IPersistentGroupProperties persistentGroupProperites = null;
@@ -86,48 +83,54 @@ public class CreateStudentGroup implements IService
         IFrequentaPersistente persistentAttend = null;
         IPersistentStudentGroup persistentStudentGroup = null;
 
-        try
-        {
+        try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
 
-            persistentGroupProperites = persistentSupport.getIPersistentGroupProperties();
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperites.readByOId(
-                    new GroupProperties(groupPropertiesCode), false);
+            persistentGroupProperites = persistentSupport
+                    .getIPersistentGroupProperties();
+            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperites
+                    .readByOID(GroupProperties.class, groupPropertiesCode);
 
             persistentShift = persistentSupport.getITurnoPersistente();
-            ITurno shift = (ITurno) persistentShift.readByOId(new Turno(shiftCode), false);
+            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
+                    shiftCode);
 
             checkIfStudentGroupExists(groupNumber, groupProperties);
 
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-            IStudentGroup newStudentGroup = new StudentGroup(groupNumber, groupProperties, shift);
+            persistentStudentGroup = persistentSupport
+                    .getIPersistentStudentGroup();
+            IStudentGroup newStudentGroup = new StudentGroup(groupNumber,
+                    groupProperties, shift);
             persistentStudentGroup.simpleLockWrite(newStudentGroup);
 
             persistentStudent = persistentSupport.getIPersistentStudent();
             persistentAttend = persistentSupport.getIFrequentaPersistente();
-            persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
+            persistentStudentGroupAttend = persistentSupport
+                    .getIPersistentStudentGroupAttend();
 
             List allStudentGroup = persistentStudentGroup
                     .readAllStudentGroupByGroupProperties(groupProperties);
 
             Iterator iterGroups = allStudentGroup.iterator();
 
-            while (iterGroups.hasNext())
-            {
-                IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups.next();
+            while (iterGroups.hasNext()) {
+                IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups
+                        .next();
                 IStudentGroupAttend newStudentGroupAttend = null;
                 Iterator iterator = studentCodes.iterator();
 
-                while (iterator.hasNext())
-                {
-                    IStudent student = persistentStudent.readByUsername((String) iterator.next());
+                while (iterator.hasNext()) {
+                    IStudent student = persistentStudent
+                            .readByUsername((String) iterator.next());
 
-                    IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
-                            groupProperties.getExecutionCourse());
+                    IFrequenta attend = persistentAttend
+                            .readByAlunoAndDisciplinaExecucao(student,
+                                    groupProperties.getExecutionCourse());
 
-                    newStudentGroupAttend = persistentStudentGroupAttend.readBy(existingStudentGroup,
-                            attend);
+                    newStudentGroupAttend = persistentStudentGroupAttend
+                            .readBy(existingStudentGroup, attend);
 
                     if (newStudentGroupAttend != null)
                         throw new InvalidSituationServiceException();
@@ -137,22 +140,23 @@ public class CreateStudentGroup implements IService
 
             Iterator iter = studentCodes.iterator();
 
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
 
-                IStudent student = persistentStudent.readByUsername((String) iter.next());
+                IStudent student = persistentStudent
+                        .readByUsername((String) iter.next());
 
-                IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
-                        groupProperties.getExecutionCourse());
+                IFrequenta attend = persistentAttend
+                        .readByAlunoAndDisciplinaExecucao(student,
+                                groupProperties.getExecutionCourse());
 
-                IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(newStudentGroup, attend);
+                IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(
+                        newStudentGroup, attend);
 
-                persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
+                persistentStudentGroupAttend
+                        .simpleLockWrite(notExistingSGAttend);
             }
 
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
         return true;
