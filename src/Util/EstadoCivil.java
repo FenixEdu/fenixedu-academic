@@ -26,13 +26,15 @@ public class EstadoCivil {
     public static final int VIUVO = 4;
     public static final int SEPARADO = 5;
     public static final int UNIAO_DE_FACTO = 6;
+    public static final int DESCONHECIDO = 7;
     
     public static final String SOLTEIRO_STRING = "Solteiro";
     public static final String CASADO_STRING = "Casado";
     public static final String DIVORCIADO_STRING = "Divorciado";
     public static final String VIUVO_STRING = "Viúvo";
     public static final String SEPARADO_STRING = "Separado";
-    public static final String UNIAO_DE_FACTO_STRING = "União de Facto";
+	public static final String UNIAO_DE_FACTO_STRING = "União de Facto";
+	public static final String DESCONHECIDO_STRING = "Desconhecido";
 	public static final String DEFAULT = "[Escolha uma Situação]";
     
     private Integer estadoCivil;
@@ -66,6 +68,7 @@ public class EstadoCivil {
 		if (estadoCivil.equals(EstadoCivil.VIUVO_STRING)) this.estadoCivil = new Integer(EstadoCivil.VIUVO);
 		if (estadoCivil.equals(EstadoCivil.SEPARADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.SEPARADO);
 		if (estadoCivil.equals(EstadoCivil.UNIAO_DE_FACTO_STRING)) this.estadoCivil = new Integer(EstadoCivil.UNIAO_DE_FACTO);
+		if (estadoCivil.equals(EstadoCivil.DESCONHECIDO_STRING)) this.estadoCivil = new Integer(EstadoCivil.DESCONHECIDO);
 		else this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
     }
 
@@ -78,6 +81,7 @@ public class EstadoCivil {
 		result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, EstadoCivil.VIUVO_STRING));
 		result.add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, EstadoCivil.SEPARADO_STRING));
 		result.add(new LabelValueBean(EstadoCivil.UNIAO_DE_FACTO_STRING, EstadoCivil.UNIAO_DE_FACTO_STRING));
+		result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING, EstadoCivil.DESCONHECIDO_STRING));
 		return result;	
     }
     
@@ -87,7 +91,8 @@ public class EstadoCivil {
 	    if (estadoCivil.intValue()== EstadoCivil.DIVORCIADO) return EstadoCivil.DIVORCIADO_STRING;
 	    if (estadoCivil.intValue()== EstadoCivil.VIUVO) return EstadoCivil.VIUVO_STRING;
 	    if (estadoCivil.intValue()== EstadoCivil.SEPARADO) return EstadoCivil.SEPARADO_STRING;
-	    if (estadoCivil.intValue()== EstadoCivil.UNIAO_DE_FACTO) return EstadoCivil.UNIAO_DE_FACTO_STRING;
+		if (estadoCivil.intValue()== EstadoCivil.UNIAO_DE_FACTO) return EstadoCivil.UNIAO_DE_FACTO_STRING;
+		if (estadoCivil.intValue()== EstadoCivil.DESCONHECIDO) return EstadoCivil.DESCONHECIDO_STRING;
 	    return null; 
     }        
     
