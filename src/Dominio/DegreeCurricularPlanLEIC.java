@@ -13,7 +13,6 @@ import Dominio.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import Dominio.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import Dominio.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import Dominio.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
-import Dominio.degree.enrollment.rules.SecretaryEnrollmentRule;
 import Dominio.degree.enrollment.rules.SpecificLEICEnrollmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
@@ -70,7 +69,7 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlan implements ID
 
         List result = new ArrayList();
 
-        result.add(new SecretaryEnrollmentRule(studentCurricularPlan));
+        //result.add(new SecretaryEnrollmentRule(studentCurricularPlan));
         result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
