@@ -210,6 +210,10 @@ a:hover {
 	background-color: #b5bdd6;
 	}
 
+select.courseEnroll {
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	width: 100%;
+	}
 /*****************************************************************
 	TABLE Classes: Info TD + Info TD with Icons + ListClasses
 ******************************************************************/

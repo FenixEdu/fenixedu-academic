@@ -125,7 +125,7 @@
 				Disciplinas do curso selecionado:
 			</b>
 		</p>
-		<html:select property="course" size="8" style="width:100%;font-size:9px">
+		<html:select property="course" size="8" styleClass="courseEnroll">
 			<html:options collection="courseList" labelProperty="nome" property="idInternal"/>
 		</html:select>
 		<p style="margin-top:1px">
@@ -140,7 +140,7 @@
 				Disciplinas que vai frequentar:
 			</b>
 		</p>
-		<html:select property="wantedCourse" multiple="false" size="8" style="width:100%;font-size:9px">
+		<html:select property="wantedCourse" multiple="false" size="8" styleClass="courseEnroll">
 			<html:options  collection="wantedCourse"   labelProperty="nome"  property="idInternal"/>
 		</html:select>
 		<p style="margin-top:1px">
