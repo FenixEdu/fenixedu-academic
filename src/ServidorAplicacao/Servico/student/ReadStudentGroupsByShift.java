@@ -30,60 +30,53 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadStudentGroupsByShift implements IServico{
 	
-		private static ReadStudentGroupsByShift _servico = new ReadStudentGroupsByShift();
-		
-		/**
-		* The singleton access method of this class.
-		**/
+	private static ReadStudentGroupsByShift servico = new ReadStudentGroupsByShift();
+	
+	/**
+	* The singleton access method of this class.
+	**/
 			
-		public static ReadStudentGroupsByShift getService() {
-			return _servico;
-		}
+	public static ReadStudentGroupsByShift getService() {
+		return servico;
+	}
 
-		/**
-		* The actor of this class.
-		**/
-		private ReadStudentGroupsByShift() {
-		}
+	/**
+	* The actor of this class.
+	**/
+	private ReadStudentGroupsByShift() {
+	}
 
-		/**
-		* Returns service name */
-		public final String getNome() {
-			return "ReadStudentGroupsByShift";
-		}
+	/**
+	* Returns service name 
+	* */
+	public final String getNome() {
+		return "ReadStudentGroupsByShift";
+	}
 
-		public List run(String name, Integer shiftCode, Integer executionCourseCode) {
-			
-			List studentGroupsList = null;
-			try 
-			{
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+	public List run(String name, Integer shiftCode, Integer executionCourseCode) {
+	
+		List studentGroupsList = null;
+		try 
+		{
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+	
+			IDisciplinaExecucao executionCourse =(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode), false);
+			ITurno shift = (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode),false);
+			IGroupProperties groupProperties = sp.getIPersistentGroupProperties().readGroupPropertiesByExecutionCourseAndName(executionCourse,name);
 				
-				IDisciplinaExecucao executionCourse =(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode), false);
-				
-				ITurno shift = (ITurno)sp.getITurnoPersistente().readByOId(new Turno(shiftCode),false);
-				
-				IGroupProperties groupProperties = sp.getIPersistentGroupProperties().readGroupPropertiesByExecutionCourseAndName(executionCourse,name);
-				
-				studentGroupsList = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupPropertiesAndShift(groupProperties,shift);
+			studentGroupsList = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupPropertiesAndShift(groupProperties,shift);
 				 
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+		  }
 				
-				} catch (ExcepcaoPersistencia ex) {
-						ex.printStackTrace();
-				}
-				
-			List infoStudentGroupsList = new ArrayList(studentGroupsList.size());
-			Iterator iter = studentGroupsList.iterator();
-		
-			while(iter.hasNext())
-					infoStudentGroupsList.add(Cloner.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iter.next()));				
+		List infoStudentGroupsList = new ArrayList(studentGroupsList.size());
+		Iterator iter = studentGroupsList.iterator();
+		while(iter.hasNext())
+			infoStudentGroupsList.add(Cloner.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iter.next()));				
 			
-					
-			return infoStudentGroupsList;
+		return infoStudentGroupsList;
 			
-			}
-
-
-
+	}
 
 }

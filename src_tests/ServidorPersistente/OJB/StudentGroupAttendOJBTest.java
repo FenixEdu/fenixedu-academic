@@ -94,17 +94,14 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 
 			IExecutionPeriod executionPeriod =persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucao executionCourse1 =persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII",executionPeriod);
+			IDisciplinaExecucao executionCourse1 = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII",executionPeriod);
 			IDisciplinaExecucao executionCourse2 = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","MEEC");
 		
-		
-					
 			groupProperties1 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse1,"nameC");
-			
 			IGroupProperties groupProperties2 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse2,"nameB");
-			System.out.println("EXECUTIONCOURSE2"+executionCourse2);
+			
 			ITurno shift = persistentShift.readByNameAndExecutionCourse("turno_po_teorico",executionCourse2);
-			System.out.println("TURNO"+shift);
+			
 			studentGroup1 = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(1),null);
 			studentGroup2 = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties2,new Integer(3),shift);
 			

@@ -26,12 +26,14 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
+
 public class CreateGroupProperties implements IServico {
 
 	private ISuportePersistente persistentSupport = null;
 	private IPersistentGroupProperties persistentGroupProperties = null;
 
 	private static CreateGroupProperties service = new CreateGroupProperties();
+
 	/**
 	 * The singleton access method of this class.
 	 */
@@ -52,6 +54,7 @@ public class CreateGroupProperties implements IServico {
 
 	private void checkIfGroupPropertiestExists(String name, IDisciplinaExecucao executionCourse)
 		throws FenixServiceException {
+
 		IGroupProperties groupProperties = null;
 		persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 
@@ -68,12 +71,10 @@ public class CreateGroupProperties implements IServico {
 	/**
 	 * Executes the service.
 	 */
-	public boolean run(
-		Integer executionCourseCode,
-		InfoGroupProperties infoGroupProperties)
+	public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
 		throws FenixServiceException {
 			
-			IDisciplinaExecucao executionCourse=null;
+		IDisciplinaExecucao executionCourse = null;
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();

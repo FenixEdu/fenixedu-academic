@@ -45,6 +45,7 @@ public class DeleteStudentGroup implements IServico {
 			IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
 
 			IStudentGroup deletedStudentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
+		
 			if (deletedStudentGroup == null) {
 				return new Boolean(true);
 			}

@@ -33,8 +33,10 @@ public class IndividualGroupStrategy extends EnrolmentGroupPolicyStrategy implem
 		boolean result = false;
 		
 		if(studentGroup == null)
+		{
 			if(checkNumberOfGroups(groupProperties))
 				result=true;
+		}
 		else
 		{	
 			List listStudentGroupAttend = null;
@@ -48,9 +50,7 @@ public class IndividualGroupStrategy extends EnrolmentGroupPolicyStrategy implem
 				ex.printStackTrace();
 			}
 			int nrOfElements = listStudentGroupAttend.size();
-			
-			
-			if(nrOfElements < groupProperties.getMaximumCapacity().intValue())
+			if(numberOfStudentsToEnrole==1 && nrOfElements < groupProperties.getMaximumCapacity().intValue())
 				result = true;
 		}
 		
