@@ -30,6 +30,10 @@
 
 <h3><bean:message key="label.manager.degreeCurricularPlans"/></h3>
 
+<span class="error"><html:errors/></span>
+
+<br>
+
 <logic:empty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">
 <i><bean:message key="label.manager.degreeCurricularPlans.nonExisting"/></i>
 </logic:empty>
@@ -58,8 +62,7 @@
 		<td class="listClasses"><html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
 		</td>
 	 </tr>
-</logic:iterate>				
-<span class="error"><html:errors/></span>		
+</logic:iterate>						
 </table>
 <br>
 <br>	

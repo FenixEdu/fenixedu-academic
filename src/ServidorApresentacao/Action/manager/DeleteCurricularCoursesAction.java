@@ -69,7 +69,6 @@ public class DeleteCurricularCoursesAction extends FenixAction {
 				}
 				saveErrors(request, actionErrors);
 		}
-		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 		return mapping.findForward("readDegreeCurricularPlan");
 	}
 

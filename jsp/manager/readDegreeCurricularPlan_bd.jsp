@@ -31,12 +31,14 @@
 </logic:empty>
 
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
+<bean:define id="degreeId" name="degreeId"/>
 
 <logic:present name="curricularCoursesList" scope="request">
 <logic:notEmpty name="curricularCoursesList">
 	
 	<html:form action="/deleteCurricularCourses" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+		<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
@@ -83,6 +85,7 @@
 	
 	<html:form action="/deleteExecutionDegrees" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+		<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
