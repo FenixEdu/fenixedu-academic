@@ -1,6 +1,6 @@
 /*
  * Created on 16/Dez/2002
- *
+ *  
  */
 package middleware.studentMigration.ileecDataMigration;
 
@@ -21,7 +21,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IPrecedence;
-import Dominio.IRestriction;
 import Dominio.IRestrictionByCurricularCourse;
 import Dominio.Precedence;
 import Dominio.RestrictionDoneCurricularCourse;
@@ -38,23 +37,26 @@ import Util.PrecedenceScopeToApply;
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- *
+ *  
  */
 public class migrateILeecPrecedenceDataByCurricularCourse
 {
 
 	public static int fenixPrecedenceCreated = 0;
+	public static int fenixRestrictionCreated = 0;
 
 	public static void main(String[] args)
 	{
 
 		try
 		{
+			System.out.println("INICIO");
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			migratePrecedenciasDisciplinaDisciplinaIleec(sp);
 
 			System.out.println("Created Precedences: " + fenixPrecedenceCreated);
+			System.out.println("Created Restrictions: " + fenixRestrictionCreated);
 			System.out.println("FIM");
 		}
 		catch (ExcepcaoPersistencia e)
@@ -65,7 +67,6 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 	}
 
 	/**
-	 * 
 	 * @throws Exception
 	 */
 	public static void migratePrecedenciasDisciplinaDisciplinaIleec(ISuportePersistente sp)
@@ -112,7 +113,6 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 	}
 
 	/**
-	 * 
 	 * @param sp
 	 * @param ileecDisciplinaComPrecedencia
 	 * @param ileecDisciplinaPrecedente
@@ -152,7 +152,7 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 			if ((listaPrecedencias == null) || (listaPrecedencias.isEmpty()))
 			{
 
-				fenixPrecedenceCreated++;
+				//fenixPrecedenceCreated++;
 				IPrecedence precedence = createPrecedence(fenixDisciplinaComPrecedencia, true);
 				IRestrictionByCurricularCourse restriction =
 					createRestriction(fenixDisciplinaPrecedente, precedence, true);
@@ -160,10 +160,9 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 			}
 			else
 			{
-				//System.out.println("Tipo de precedencia: " + ); 
+
 				if (ileecDisciplinaComPrecedencia.getTipoPrecedencia().equals(new Integer(1)))
 				{
-					System.out.println("vou TENTAR criar uma precedencia do tipo OU");
 					IPrecedence precedence = createPrecedence(fenixDisciplinaComPrecedencia, false);
 					IRestrictionByCurricularCourse restriction =
 						createRestriction(fenixDisciplinaPrecedente, precedence, false);
@@ -176,13 +175,10 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 					{
 						precedence = createPrecedence(fenixDisciplinaComPrecedencia, true);
 						restriction = createRestriction(fenixDisciplinaPrecedente, precedence, true);
-
-						System.out.println("vou CRIAR uma precedencia do tipo OU");
 					}
 				}
 				else
 				{
-					System.out.println("vou TENTAR criar uma precedencia do tipo E");
 					IPrecedence precedence = (IPrecedence) listaPrecedencias.get(0);
 					IRestrictionByCurricularCourse restriction =
 						createRestriction(fenixDisciplinaPrecedente, precedence, false);
@@ -191,7 +187,6 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 					if (!existingRestrictions(listRestrictions, restriction))
 					{
 						restriction = createRestriction(fenixDisciplinaPrecedente, precedence, true);
-						System.out.println("vou CRIAR uma precedencia do tipo E");
 					}
 				}
 			}
@@ -214,7 +209,10 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 
 		sp.iniciarTransaccao();
 		if (lockPrecedence)
+		{
 			pPrecedencia.simpleLockWrite(precedence);
+			fenixPrecedenceCreated++;
+		}
 
 		precedence.setCurricularCourse(curricularCourse);
 		precedence.setPrecedenceScopeToApply(PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
@@ -235,7 +233,10 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 		IRestrictionByCurricularCourse restriction = restriction = new RestrictionDoneCurricularCourse();
 		sp.iniciarTransaccao();
 		if (lockRestriction)
+		{
 			pRestricao.simpleLockWrite(restriction);
+			fenixRestrictionCreated++;
+		}
 
 		restriction.setPrecedence(precedence);
 		restriction.setPrecedentCurricularCourse(curricularCourse);
@@ -245,7 +246,6 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 	}
 
 	/**
-	 * 
 	 * @param persistentMiddlewareSupportOJB
 	 * @param curricularCourseId
 	 * @return
@@ -276,7 +276,6 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 	}
 
 	/**
-	 * 
 	 * @param sp
 	 * @param curricularCourseCode
 	 * @return
@@ -321,11 +320,11 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 	}
 
 	/**
-	* @param degreeCode
-	* @param fenixPersistentSuport
-	* @return
-	* @throws Throwable
-	*/
+	 * @param degreeCode
+	 * @param fenixPersistentSuport
+	 * @return @throws
+	 *         Throwable
+	 */
 	private static IDegreeCurricularPlan getDegreeCurricularPlan(
 		Integer degreeCode,
 		ISuportePersistente fenixPersistentSuport)
@@ -355,7 +354,6 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 	}
 
 	/**
-	 * 
 	 * @param listRestrictions
 	 * @param restriction
 	 * @return
@@ -384,36 +382,36 @@ public class migrateILeecPrecedenceDataByCurricularCourse
 	}
 
 	/**
-	 * 
 	 * @param listPrecedences
 	 * @param precedence
 	 * @return
 	 */
-	public static boolean existingPrecedence(List listPrecedences, IPrecedence precedence) throws ExcepcaoPersistencia
+	public static boolean existingPrecedence(List listPrecedences, IPrecedence precedence)
+		throws ExcepcaoPersistencia
 	{
 		Iterator iterator = listPrecedences.iterator();
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		
+
 		while (iterator.hasNext())
 		{
 			sp.iniciarTransaccao();
 			IPrecedence prec = (IPrecedence) iterator.next();
 			if (precedence.equals(prec))
 			{
-				System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-				System.out.println("precedencia existente vou retornar TRUE");
-				//System.out.println("CC: " + prec.getCurricularCourse());
-				//System.out.println("Restricao: "+ prec.getRestrictions());
-				IRestriction r;
-				r = (IRestriction) precedence;
-				System.out.println(r);
-			
-				System.out.println("------------------------------------------------------");
-				//System.out.println("CC: " + precedence.getCurricularCourse());
-				//System.out.println("Restricao: "+ precedence.getRestrictions());
-				r = (IRestriction) prec;
-				System.out.println(r);
-				System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				//				System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+				//				System.out.println("precedencia existente vou retornar TRUE");
+				//				//System.out.println("CC: " + prec.getCurricularCourse());
+				//				//System.out.println("Restricao: "+ prec.getRestrictions());
+				//				IRestriction r;
+				//				r = (IRestriction) precedence;
+				//				System.out.println(r);
+				//			
+				//				System.out.println("------------------------------------------------------");
+				//				//System.out.println("CC: " + precedence.getCurricularCourse());
+				//				//System.out.println("Restricao: "+ precedence.getRestrictions());
+				//				r = (IRestriction) prec;
+				//				System.out.println(r);
+				//				System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 				return true;
 			}
 			sp.confirmarTransaccao();

@@ -1,8 +1,6 @@
 /*
  * Created on 18/Dez/2002
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package middleware.studentMigration.ileecDataMigration;
 
@@ -43,7 +41,9 @@ import Util.PrecedenceScopeToApply;
  */
 public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 {
-
+	public static int fenixPrecedenceCreated = 0;
+	public static int fenixRestrictionCreated = 0;
+	
 	public static void main(String[] args)
 	{
 
@@ -52,7 +52,8 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			migratePrecedenciasDisciplinaDisciplinaIleec(sp);
-
+			System.out.println("Created Precedences: " + fenixPrecedenceCreated);
+			System.out.println("Created Restrictions: " + fenixRestrictionCreated);
 			System.out.println("FIM");
 		}
 		catch (ExcepcaoPersistencia e)
@@ -140,7 +141,6 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 
 			if ((listaPrecedencias == null) || (listaPrecedencias.isEmpty()))
 			{
-				System.out.println("vou criar uma precedencia");
 				IPrecedence precedence = createPrecedence(fenixDisciplinaComPrecedencia, true);
 				IRestrictionByNumberOfCurricularCourses restriction =
 					createRestriction(numberOfDoneCurricularCourses, precedence, true);
@@ -148,10 +148,8 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 			}
 			else
 			{
-				//System.out.println("Tipo de precedencia: " + ); 
 				if (ileecDisciplinaComPrecedencia.getTipoPrecedencia().equals(new Integer(1)))
 				{
-					System.out.println("vou Tentar criar uma precedencia do tipo OU");
 					IPrecedence precedence = createPrecedence(fenixDisciplinaComPrecedencia, false);
 
 					IRestrictionByNumberOfCurricularCourses restriction =
@@ -166,12 +164,10 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 						precedence = createPrecedence(fenixDisciplinaComPrecedencia, true);
 						restriction = createRestriction(numberOfDoneCurricularCourses, precedence, true);
 
-						System.out.println("vou CRIAR uma precedencia do tipo OU");
 					}
 				}
 				else
 				{
-					System.out.println("vou Tentar criar uma precedencia do tipo E");
 					IPrecedence precedence = (IPrecedence) listaPrecedencias.get(0);
 					IRestrictionByNumberOfCurricularCourses restriction =
 						createRestriction(numberOfDoneCurricularCourses, precedence, false);
@@ -180,8 +176,6 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 					if (!existingRestrictions(listRestrictions, restriction))
 					{
 						restriction = createRestriction(numberOfDoneCurricularCourses, precedence, true);
-						System.out.println("vou CRIAR uma precedencia do tipo E");
-
 					}
 				}
 			}
@@ -204,7 +198,10 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 
 		sp.iniciarTransaccao();
 		if (lockPrecedence)
+		{
+			fenixPrecedenceCreated++;
 			pPrecedencia.simpleLockWrite(precedence);
+		}
 
 		precedence.setCurricularCourse(curricularCourse);
 		precedence.setPrecedenceScopeToApply(PrecedenceScopeToApply.TO_APPLY_TO_SPAN);
@@ -227,7 +224,10 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 
 		sp.iniciarTransaccao();
 		if (lockRestriction)
+		{
+			fenixRestrictionCreated++;
 			pRestricao.simpleLockWrite(restriction);
+		}
 
 		restriction.setPrecedence(precedence);
 		restriction.setNumberOfCurricularCourses(numberOfDoneCurricularCourses);
@@ -374,12 +374,7 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 				return false;
 
 			if (restr.equals(restriction))
-			{
-				System.out.println("As restricoes sao iguais");
-				System.out.println(restriction);
-				System.out.println(restr);
 				return true;
-			}
 		}
 
 		return false;
@@ -398,14 +393,7 @@ public class migrateILeecPrecedenceDataByNumberOfDoneCurricularCourses
 		{
 			IPrecedence prec = (IPrecedence) iterator.next();
 			if (precedence.equals(prec))
-			{
-				System.out.println("As precedencias sao iguais");
-				System.out.println("########## PRECEDENCIA 1 ############");
-				System.out.println(precedence);
-				System.out.println("########## PRECEDENCIA 2 ############");
-				System.out.println(prec);
 				return true;
-			}
 		}
 
 		return false;
