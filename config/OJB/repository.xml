@@ -41,6 +41,7 @@
 <!ENTITY curricularCourseEquivalence SYSTEM "repository_curricular_course_equivalence.xml">
 <!ENTITY branch SYSTEM "repository_branch.xml">
 <!ENTITY executionYear SYSTEM "repository_execution_year.xml">
+<!ENTITY schoolRegistrationInquiryAnswer SYSTEM "repository_school_registration_inquiry_answer.xml">
 ]>
 
 
@@ -87,4 +88,5 @@
 	&curricularCourseEquivalence;
     &branch;
     &executionYear;
+	&schoolRegistrationInquiryAnswer;
 </descriptor-repository>
