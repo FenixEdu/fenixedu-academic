@@ -120,11 +120,15 @@ public class ReadStudentShiftEnrolment implements IServico {
 
 		//TODO: (tdi-dev) -> edgar.goncalves - ask if the null in the
 		//ServiceManager call is important...
+		
+		
 		List courses =
 			(List) ReadDisciplinesByStudent.getService().run(
 				infoShiftStudentEnrolment.getInfoStudent().getNumber(),
 				infoShiftStudentEnrolment.getInfoStudent().getDegreeType());
-
+		
+		
+		infoShiftStudentEnrolment.setEnrolledExecutionCourses(courses);
 		//*********************************************************************
 		//Get the classes to wich the student is entitled to be in, 
 		//  in the current execution year:

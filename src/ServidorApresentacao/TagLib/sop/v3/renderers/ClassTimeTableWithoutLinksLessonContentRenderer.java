@@ -20,7 +20,7 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 
 		strBuffer.append(lesson.getInfoDisciplinaExecucao().getSigla());
-
+		strBuffer.append("&nbsp;");
 		List infoShiftList = lesson.getInfoShiftList();
 		for (int index = 0; index < infoShiftList.size(); index++) {
 			strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(

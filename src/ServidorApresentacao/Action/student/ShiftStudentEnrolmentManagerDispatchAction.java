@@ -109,14 +109,14 @@ class InfoShiftDividedList extends ArrayList {
 				Iterator subIt = mainE.getList().iterator();
 				while (subIt.hasNext()) {
 					subE = (Element) subIt.next();
-					if (subE.getType().equals(shift.getTipo().getSiglaTipoAula())) {
+					if (subE.getType().equals(shift.getTipo().getFullNameTipoAula())) {
 						// ok, found shift type list, let's add the shift
 						subE.add(info);
 						return true;
 					}
 				}
 				// ups, subtype doesn't exist . create and add
-				subE = new Element(shift.getTipo().getSiglaTipoAula());
+				subE = new Element(shift.getTipo().getFullNameTipoAula());
 				subE.add(info);
 				mainE.add(subE);
 				return true;
@@ -124,7 +124,7 @@ class InfoShiftDividedList extends ArrayList {
 		}
 		// main type doesn't exist iet...
 		mainE = new Element(type);
-		subE = new Element(shift.getTipo().getSiglaTipoAula());
+		subE = new Element(shift.getTipo().getFullNameTipoAula());
 		subE.add(info);
 		mainE.add(subE);
 		this.add(mainE);
@@ -422,8 +422,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment =
 			(InfoShiftStudentEnrolment) session.getAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
 
-		System.out.println("CurrentEnrolment" + infoShiftStudentEnrolment.getCurrentEnrolment());
-		System.out.println("dividedList" + infoShiftStudentEnrolment.getDividedList());
+		
 		//		dividedList
 		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
 		//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
@@ -460,7 +459,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		}
 		//request.setAttribute(wantedClass, filter)
 		infoShiftStudentEnrolment.setDividedList(infoShiftDividedList);
-		System.out.println("CurrentEnrolment" + infoShiftStudentEnrolment.getCurrentEnrolment());
+		
 
 		session.setAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY, infoShiftStudentEnrolment);
 		initializeForm(infoShiftStudentEnrolment, (DynaActionForm) form);

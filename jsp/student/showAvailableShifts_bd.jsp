@@ -7,7 +7,7 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="DataBeans.InfoLesson" %>
 <h3>
-<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">Ver Horário</html:link>
+<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">Visualizar Turmas e Horário</html:link>
 </h3>
 
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
@@ -22,7 +22,7 @@
 			<logic:present name="infoStudentShiftEnrolment">
 				<!-- aqui falta scope ? -->
 				<h3>
-					Turnos onde estás inscrito:
+					Turnos onde está inscrito:
 				</h3>
 				
 				<logic:iterate id="enroledShift" name="infoStudentShiftEnrolment"  property="currentEnrolment" offset="0" length="1" type="DataBeans.InfoShift">
@@ -43,13 +43,13 @@
 					</logic:notEqual>
 					<blockquote>
 						<b>
-							Nome:
+							Disciplina:
 						</b>
-						<bean:write name="enroledShift" property="nome"/>
+						<bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/>
 						<b>
 							Tipo:
 						</b>
-						<bean:write name="enroledShift" property="tipo.siglaTipoAula"/>
+						<bean:write name="enroledShift" property="tipo.fullNameTipoAula"/>
 						<br />
 						<blockquote>
 						
@@ -72,7 +72,7 @@
 							
 				<br /> 
 				<h3>
-					Turnos onde te podes inscrever:
+					Turnos onde se pode inscrever:
 				</h3>
 				<html:form action="studentShiftEnrolmentManager">
 					<html:hidden property="method" value="validateAndConfirmShiftEnrolment"/>
@@ -80,13 +80,13 @@
 					<logic:notEmpty name="infoStudentShiftEnrolment" property="dividedList"	>							
 					<logic:iterate name="infoStudentShiftEnrolment"  id="list" property="dividedList" indexId="courseIndex">
 						<br />
-						Disciplina:
+					<b>	Disciplina:</b>
 						<bean:write name="list" property="type"/>
 						<br />
-						Turnos
+					<b>	Turnos </b>
 						<logic:iterate name="list" id="sublist" property="list" indexId="groupIndex">
 						<br />
-							Tipo:
+						<b>	Tipo: </b>
 							<bean:write name="sublist" property="type"/>
 							<br />
 							<logic:iterate name="sublist" id="shiftWithLessons" property="list" >
@@ -94,13 +94,11 @@
 								<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
 								&nbsp
 								<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />
-								<bean:write name="shiftWithLessons" property="infoShift.nome"/>
-								: 
-								(Capacidade
-								<bean:write name="shiftWithLessons" property="infoShift.availabilityFinal"/>
-								)
-								<br />
-								<blockquote>
+								<%--<bean:write name="shiftWithLessons" property="infoShift.nome"/>
+								: --%>
+								
+								
+								
 									<logic:iterate id="lesson" name="shiftWithLessons" property="infoLessons">
 										<bean:write name="lesson" property="diaSemana"/>
 										das

@@ -15,7 +15,10 @@ import java.util.List;
  */
 public class InfoShiftStudentEnrolment {
 	
-	
+	/**
+	 * List with the executionCourses in which the student is enrolled
+	 */
+	private List enrolledExecutionCourses;
 	/**
 	 * List with the student lessons for the time table display
 	 */
@@ -78,6 +81,20 @@ public class InfoShiftStudentEnrolment {
      * Element containing the information about the student that is enroling
      */
 	private InfoStudent InfoStudent;
+
+	/**
+	 * @return
+	 */
+	public List getEnrolledExecutionCourses() {
+		return enrolledExecutionCourses;
+	}
+
+	/**
+	 * @param enrolledExecutionCourses
+	 */
+	public void setEnrolledExecutionCourses(List enrolledExecutionCourses) {
+		this.enrolledExecutionCourses = enrolledExecutionCourses;
+	}
 
 	/**
 	 * @return

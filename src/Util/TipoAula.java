@@ -91,6 +91,26 @@ public class TipoAula implements Comparable {
 		return "Error: Invalid lesson type";
 	}
 
+	public String getFullNameTipoAula() {
+			int value = this.tipo.intValue();
+			switch (value) {
+				case TEORICA :
+					return "Teórica";
+				case PRATICA :
+					return "Prática";
+				case TEORICO_PRATICA :
+					return "TeoricoPrática";
+				case LABORATORIAL :
+					return "Laboratorial";
+				case DUVIDAS :
+					return "Dúvidas";
+				case RESERVA :
+					return "Reserva";
+			}
+			return "Error: Invalid lesson type";
+		}
+
+
 	public int compareTo(Object arg0) {
 		// T(1) < TP(3) < P(2) < L(4) < D(5) < R(6)
 		TipoAula tipoAula = (TipoAula) arg0;
