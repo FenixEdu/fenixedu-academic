@@ -18,7 +18,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrollmentState;
@@ -44,8 +43,6 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
 
         sp = SuportePersistenteOJB.getInstance();
         IPersistentStudent pStudent = sp.getIPersistentStudent();
-        IPessoaPersistente pPerson = sp.getIPessoaPersistente();
-
         List studentsList = pStudent.readAllBetweenNumbers(fromNumber, toNumber);
 
         for (int iter = 0; iter < studentsList.size(); iter++) {

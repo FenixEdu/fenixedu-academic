@@ -140,8 +140,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
             Integer degreeId = (Integer) chooseExamContextoForm.get("degreeID");
 
-            Integer executionDegreeId = (Integer) chooseExamContextoForm.get("executionDegreeID");
-
             if ((selectAllCurricularYears != null) && selectAllCurricularYears.booleanValue()) {
                 String[] allCurricularYears = { "1", "2", "3", "4", "5" };
                 selectedCurricularYears = allCurricularYears;

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -13,10 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.ISiteComponent;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoSiteClasses;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
@@ -44,19 +41,14 @@ public class ViewClassesActionNew extends FenixContextAction {
             e.printStackTrace();
         }
 
-        HttpSession session = request.getSession(true);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-        //        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree)
-        // request
-        //                .getAttribute(SessionConstants.EXECUTION_DEGREE);
+        
 
         InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request,
                 infoExecutionPeriod.getInfoExecutionYear());
-        //   session.setAttribute(SessionConstants.EXECUTION_DEGREE,
-        // infoExecutionDegree);
-
+      
         Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
@@ -77,7 +69,6 @@ public class ViewClassesActionNew extends FenixContextAction {
 
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 
-        ISiteComponent component = new InfoSiteClasses();
         List classList = new ArrayList();
         Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
         try {

@@ -11,9 +11,7 @@ import org.apache.commons.collections.Transformer;
 
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.IExecutionCourse;
 import Dominio.ISala;
-import ServidorPersistente.middleware.MigrationExecutionCourse;
 import ServidorPersistente.middleware.MigrationLesson;
 import ServidorPersistente.middleware.Utils.LessonTypeUtils;
 import Util.DiaSemana;
@@ -48,13 +46,6 @@ public class TransformerMigrationLessonToIAula implements Transformer {
                 lesson.setDiaSemana(conversorDiaSemana(migrationLesson.getDay()));
                 lesson.setTipo(LessonTypeUtils.convertLessonType(migrationLesson.getLessonType()));
                 lesson.setSala(getRoomFromName(migrationLesson.getRoom()));
-
-                MigrationExecutionCourse migrationExecutionCourse = migrationLesson
-                        .getMigrationExecutionCourse();
-                TransformerMigrationExecutionCourse2ExecutionCourse transf = new TransformerMigrationExecutionCourse2ExecutionCourse();
-                IExecutionCourse executionCourse = (IExecutionCourse) transf
-                        .transform(migrationExecutionCourse);
-                //                lesson.setDisciplinaExecucao(executionCourse);
 
                 migrationLesson.setLesson(lesson);
             } else {

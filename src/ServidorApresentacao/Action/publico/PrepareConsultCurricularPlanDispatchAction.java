@@ -36,13 +36,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
         DynaActionForm indexForm = (DynaActionForm) form;
 
-        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
         request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
-        Integer executionYear = (Integer) indexForm.get("indice");
-
-        Integer semestre = infoExecutionPeriod.getSemester();
-        Integer anoCurricular = (Integer) indexForm.get("curYear");
-
         Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
         if (degreeCurricularPlanId == null)
             degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
@@ -54,13 +48,10 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         request.setAttribute("degreeID", degreeId);
 
         Integer index = (Integer) indexForm.get("index");
-        Integer curricularYear = (Integer) indexForm.get("curYear");
         request.setAttribute("index", index);
         indexForm.set("index", index);
 
-        /* ------------------------------------ */
-
-        /* Criar o bean de anos curricutares */
+      
         List anosCurriculares = new ArrayList();
         anosCurriculares.add(new LabelValueBean("Todos os anos", ""));
         anosCurriculares.add(new LabelValueBean("1 º", "1"));
@@ -233,17 +224,12 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         HttpSession session = request.getSession(true);
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
         InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-        InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-
         Integer executionYear = (Integer) escolherContextoForm.get("indice");
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
         infoExecutionYear.setIdInternal(executionYear);
         infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
 
         Integer semestre = infoExecutionPeriod.getSemester();
-        Integer anoCurricular = (Integer) escolherContextoForm.get("curYear");
-
         Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
         if (degreeCurricularPlanId == null)
             degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));

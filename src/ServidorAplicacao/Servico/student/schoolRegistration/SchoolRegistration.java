@@ -57,7 +57,6 @@ public class SchoolRegistration implements IService {
         ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
         IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
         String username = userView.getUtilizador();
-        Integer studentNumber = new Integer(username.substring(1));
         IStudent student = persistentStudent.readByUsername(username);
         IPessoaPersistente pessoaPersistente = suportePersistente.getIPessoaPersistente();
 

@@ -168,12 +168,11 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
                 return chooseFinal(mapping, form, request, response);
 
-            } else {
-                request.setAttribute("studentCurricularPlans", infoStudentCurricularPlanList);
-                request.setAttribute("path", "Certificate");
-
-                return mapping.findForward("ChooseStudentCurricularPlan");
             }
+            request.setAttribute("studentCurricularPlans", infoStudentCurricularPlanList);
+            request.setAttribute("path", "Certificate");
+
+            return mapping.findForward("ChooseStudentCurricularPlan");
 
         }
         throw new Exception();
@@ -192,8 +191,6 @@ public class ChooseCertificateInfoAction extends DispatchAction {
             session.removeAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY);
             session.removeAttribute(SessionConstants.DEGREE_TYPE);
             session.removeAttribute(SessionConstants.DATE);
-
-            DynaActionForm chooseDeclaration = (DynaActionForm) form;
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -275,14 +272,6 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
         throw new Exception();
 
-    }
-
-    private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = (String) request.getAttribute(parameter);
-        }
-        return parameterString;
     }
 
 }

@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -33,9 +32,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        DynaActionForm chooseDegreeContextForm = (DynaActionForm) form;
         Boolean inEnglish = new Boolean(false);
-        //	chooseDegreeContextForm.set("inEnglish",inEnglish);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
         InfoExecutionYear infoExecutionYear = null;

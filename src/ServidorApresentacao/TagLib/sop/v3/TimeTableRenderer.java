@@ -143,21 +143,6 @@ public class TimeTableRenderer {
     }
 
     /**
-     * Method getEmptyLessonSlotNumber.
-     * 
-     * @param lessonSlotListResolved
-     * @return int
-     */
-    private int getEmptyLessonSlotNumber(InfoLessonWrapper[] lessonSlotList) {
-        int emptyLessonSlot = 0;
-        for (int index = 0; index < lessonSlotList.length; index++) {
-            if (lessonSlotList[index] == null)
-                emptyLessonSlot++;
-        }
-        return emptyLessonSlot;
-    }
-
-    /**
      * 
      * @param infoLessonWrapper
      *            may be null
@@ -218,9 +203,6 @@ public class TimeTableRenderer {
                         break;
                     }
                 }
-                //				}else{
-                //						
-                //				}
 
             }
         }
@@ -240,9 +222,8 @@ public class TimeTableRenderer {
          */
         if ((slotIndex != dayColumn.getMaxColisionSize().intValue() - 1)
                 && ((slotColisions != null) && (infoLessonWrapper == null)
-                        && (slotColisions[slotIndex + 1] != null)
-                //&& (slotColisions[slotIndex + 1].getInfoLesson() != null))) {
-                && (slotColisions[slotIndex + 1].getInfoShowOccupation() != null))) {
+                        && (slotColisions[slotIndex + 1] != null) && (slotColisions[slotIndex + 1]
+                        .getInfoShowOccupation() != null))) {
             strBuffer.append("_lesson");
         }
 
@@ -286,16 +267,12 @@ public class TimeTableRenderer {
             InfoLessonWrapper infoLessonWrapper = lessonSlot.getInfoLessonWrapper();
 
             if (infoLessonWrapper.isLocked()) {
-                //				System.out.println(
-                //					"***************** Tenho uma disciplina locked at "
-                //						+ infoLessonWrapper.getSlotIndex());
                 list[infoLessonWrapper.getSlotIndex()] = infoLessonWrapper;
             } else {
                 lessonSlotNotLocked.add(infoLessonWrapper);
             }
         }
 
-        /* Ordena pelo tamanho */
         Collections.sort(lessonSlotNotLocked);
 
         Iterator lessonSlotNotLockedIterator = lessonSlotNotLocked.iterator();
@@ -305,7 +282,6 @@ public class TimeTableRenderer {
             for (int index = 0; index < list.length; index++) {
                 if (list[index] == null) {
                     list[index] = infoLessonWrapper;
-                    //					System.out.println("Lockei em " + index);
                     infoLessonWrapper.setLocked(true, index);
                     break;
                 }

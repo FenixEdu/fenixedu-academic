@@ -215,8 +215,6 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
     private static final String DATA_SEPARATOR = "\t";
 
-    private static final String EMPTY = "-";
-
     public GeneratePaymentLettersFileByExecutionYearID() {
 
     }
@@ -227,8 +225,6 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
      * @throws FenixServiceException
      */
     public void run(Integer executionYearID) throws FenixServiceException {
-
-        StringBuffer outgoingSibsPaymentFile = new StringBuffer();
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -429,7 +425,6 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
         // add total payment line
         String sibsPaymentCode = determineTotalPaymentCode(studentCurricularPlan);
-        Date startDate = gratuitySituation.getGratuityValues().getStartPayment();
         Date endDate = gratuitySituation.getGratuityValues().getEndPayment();
 
         if (endDate.before(Calendar.getInstance().getTime()) == true) {

@@ -44,8 +44,8 @@ public class LerAulasDeSalaEmSemestre implements IService {
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IExecutionPeriod executionPeriod = null;
             if (executionPeriodId != null) {
-                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(
-                        new ExecutionPeriod(executionPeriodId), false);
+                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                        ExecutionPeriod.class, executionPeriodId, false);
             } else {
                 executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
             }

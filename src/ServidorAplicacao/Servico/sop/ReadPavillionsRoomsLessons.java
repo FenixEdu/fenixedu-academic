@@ -10,10 +10,8 @@ package ServidorAplicacao.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  */
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
@@ -52,8 +50,6 @@ public class ReadPavillionsRoomsLessons implements IService {
     public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod) {
 
         final List infoViewRoomScheduleList = new ArrayList();
-        final Map roomViews = new HashMap();
-
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

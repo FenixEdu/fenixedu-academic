@@ -88,8 +88,6 @@ public class EditDistributedTest implements IService {
                     || dateComparator.compare(distributedTest.getEndDate(), endDate) != 0
                     || hourComparator.compare(distributedTest.getEndHour(), endHour) != 0) {
 
-                List students = persistentSuport.getIPersistentStudentTestQuestion()
-                        .readStudentsByDistributedTest(distributedTest);
                 advisory = createTestAdvisory(distributedTest);
                 persistentSuport.getIPersistentAdvisory().simpleLockWrite(advisory);
                 distributedTest.setBeginDate(beginDate);

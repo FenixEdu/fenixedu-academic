@@ -64,7 +64,7 @@ public class InsertGratuityData implements IService {
 
         ISuportePersistente sp = null;
 
-        Double gratuityValue = validateGratuity(sp, infoGratuityValues);
+         validateGratuity(sp, infoGratuityValues);
 
         try {
             sp = SuportePersistenteOJB.getInstance();

@@ -17,7 +17,6 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoCurriculum;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteSection;
@@ -26,7 +25,6 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -63,9 +61,6 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
         indexForm.set("indice", (Integer) indexForm.get("indice"));
         indexForm.set("curYear", curricularYear);
-        InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-
         Object[] args = { curricularCourseId };
 
         InfoCurriculum infoCurriculum = null;

@@ -130,8 +130,6 @@ public class ManageBranchesDA extends FenixDispatchAction {
 
         Object args[] = { branchesIds, new Boolean(true) };
 
-        List errorCodes = new ArrayList();
-
         try {
             ServiceUtils.executeService(userView, "DeleteBranches", args);
         } catch (FenixServiceException fenixServiceException) {

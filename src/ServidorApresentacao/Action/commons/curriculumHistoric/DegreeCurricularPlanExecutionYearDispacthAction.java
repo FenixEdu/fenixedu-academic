@@ -84,7 +84,6 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
         DynaActionForm actionForm = (DynaActionForm) form;
         String executionYearID = (String) actionForm.get("executionYearID");
         String degreeCurricularPlanID = (String) actionForm.get("degreeCurricularPlanID");
-        Object[] args = { new Integer(degreeCurricularPlanID) };
         Object[] args2 = { new Integer(degreeCurricularPlanID), new Integer(executionYearID) };
 
         InfoDegreeCurricularPlanWithCurricularCourseScopes result = null;

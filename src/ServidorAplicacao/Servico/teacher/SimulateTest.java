@@ -4,7 +4,6 @@
 
 package ServidorAplicacao.Servico.teacher;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +32,6 @@ import ServidorAplicacao.strategy.tests.IQuestionCorrectionStrategyFactory;
 import ServidorAplicacao.strategy.tests.QuestionCorrectionStrategyFactory;
 import ServidorAplicacao.strategy.tests.strategys.IQuestionCorrectionStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.tests.CorrectionAvailability;
@@ -102,10 +100,6 @@ public class SimulateTest implements IService {
             Iterator it = infoStudentTestQuestionList.iterator();
             if (infoStudentTestQuestionList.size() == 0)
                 return null;
-            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
-                    .getIPersistentStudentTestQuestion();
-            ParseQuestion parse = new ParseQuestion();
-
             while (it.hasNext()) {
 
                 InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) it.next();
@@ -132,7 +126,6 @@ public class SimulateTest implements IService {
                                     .getMark(infoStudentTestQuestion);
                         }
                         totalMark += infoStudentTestQuestion.getTestQuestionMark().doubleValue();
-                        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                     } else {
                         notResponseNumber++;

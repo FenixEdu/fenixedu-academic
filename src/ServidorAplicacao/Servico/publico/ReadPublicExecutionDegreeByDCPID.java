@@ -79,7 +79,6 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
             throws FenixServiceException {
 
         ICursoExecucao executionDegrees = null;
-        List result = new ArrayList();
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

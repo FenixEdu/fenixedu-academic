@@ -35,7 +35,6 @@ import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -305,10 +304,8 @@ public class MergeExecutionCourses implements IService {
      */
     private void copyAttends(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
-        IFrequentaPersistente persistentAttend = ps.getIFrequentaPersistente();
-        //List sourceAttends = persistentAttend.readByExecutionCourse(source);
+        
         List sourceAttends = source.getAttends();
-        List attendsToDelete = new ArrayList();
         Map alreadyAttendingDestination = new HashMap();
         for (int i = 0; i < destination.getAttends().size(); i++) {
             IFrequenta attend = (IFrequenta) destination.getAttends().get(i);

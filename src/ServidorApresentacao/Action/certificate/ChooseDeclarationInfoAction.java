@@ -64,7 +64,6 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            String anoLectivo;
             DynaActionForm chooseDeclaration = (DynaActionForm) form;
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -115,12 +114,11 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 
                 return chooseFinal(mapping, form, request, response);
 
-            } else {
-                request.setAttribute("studentCurricularPlans", infoStudentCurricularPlanList);
-                request.setAttribute("path", "Declaration");
-
-                return mapping.findForward("ChooseStudentCurricularPlan");
             }
+            request.setAttribute("studentCurricularPlans", infoStudentCurricularPlanList);
+            request.setAttribute("path", "Declaration");
+
+            return mapping.findForward("ChooseStudentCurricularPlan");
 
         }
         throw new Exception();
@@ -140,8 +138,6 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 
         if (session != null) {
             String anoLectivo;
-            DynaActionForm chooseDeclaration = (DynaActionForm) form;
-
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);

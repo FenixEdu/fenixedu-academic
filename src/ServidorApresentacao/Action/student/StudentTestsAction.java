@@ -116,11 +116,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         Collections.sort(infoStudentTestQuestionList);
         request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
-        int numQuestions = ((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
-                .getDistributedTest().getNumberOfQuestions().intValue();
-
-        String[] userResponse = new String[numQuestions];
-
         for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
             InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList
                     .get(i);
@@ -269,9 +264,6 @@ public class StudentTestsAction extends FenixDispatchAction {
         request.setAttribute("testCode", testCode);
 
         if (infoSiteStudentTestFeedback != null) {
-            int numQuestions = ((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
-                    .getDistributedTest().getNumberOfQuestions().intValue();
-
             for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
                 InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList
                         .get(i);
@@ -340,9 +332,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 
         Collections.sort(infoStudentTestQuestionList);
         request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
-
-        int numQuestions = ((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
-                .getDistributedTest().getNumberOfQuestions().intValue();
 
         Double classification = new Double(0);
         for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {

@@ -103,15 +103,12 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         // default
         DynaActionForm indexForm = (DynaActionForm) actionForm;
 
-        InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
         InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
-        Integer anoCurricular = (Integer) getFromRequest("curYear", request);
-
         Integer curricularYear = (Integer) indexForm.get("curYear");
 
         if (selectedExecutionPeriod != null) {
-            // DynaActionForm indexForm = (DynaActionForm) actionForm;
+           
             indexForm.set("indice", (Integer) indexForm.get("indice"));
             indexForm.set("curYear", new Integer(anosCurriculares.indexOf(anosCurriculares
                     .get(curricularYear.intValue()))));

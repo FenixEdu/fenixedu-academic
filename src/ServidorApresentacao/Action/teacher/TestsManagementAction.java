@@ -986,12 +986,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         }
         Collections.sort(infoStudentTestQuestionList);
         request.setAttribute("infoStudentTestQuestionList", infoStudentTestQuestionList);
-        int numQuestions = ((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
-                .getDistributedTest().getNumberOfQuestions().intValue();
-
         double classification = 0;
-
-        String[] userResponse = new String[numQuestions];
 
         for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
             InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList
@@ -1237,9 +1232,6 @@ public class TestsManagementAction extends FenixDispatchAction {
             infoStudentList = (List) ServiceUtils.executeService(userView, "ReadStudentsByIdArray",
                     new Object[] { executionCourseId, result });
 
-            Object[] args = { executionCourseId, distributedTestId, request.getContextPath(),
-                    metadataId, studentId, new TestQuestionChangesType(new Integer(changesType)),
-                    new Boolean(delete), new TestQuestionStudentsChangesType(new Integer(studentsType)) };
             advisoryId = (Integer) ServiceUtils.executeService(userView, "CreateStudentTestAdvisory",
                     new Object[] { executionCourseId, distributedTestId, request.getContextPath() });
             for (int times = 0; times < 3; times++) {
@@ -1342,11 +1334,6 @@ public class TestsManagementAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        int numQuestions = ((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
-                .getDistributedTest().getNumberOfQuestions().intValue();
-
-        String[] userResponse = new String[numQuestions];
-
         for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
             InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList
                     .get(i);
@@ -1443,9 +1430,6 @@ public class TestsManagementAction extends FenixDispatchAction {
         if (infoSiteStudentTestFeedback != null) {
             List infoStudentTestQuestionList = infoSiteStudentTestFeedback
                     .getInfoStudentTestQuestionList();
-            int numQuestions = ((InfoStudentTestQuestion) infoStudentTestQuestionList.get(0))
-                    .getDistributedTest().getNumberOfQuestions().intValue();
-
             for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
                 InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList
                         .get(i);
