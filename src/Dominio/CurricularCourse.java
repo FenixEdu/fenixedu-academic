@@ -88,8 +88,8 @@ public class CurricularCourse implements ICurricularCourse{
     result += ", Semester=" + semester;
     result += ", Name=" + name;
     result += ", Code=" + code;
-    result += ", Department Course=" + departmentCourse;
-    result += ", Degree Curricular Plan=" + degreeCurricularPlan;
+//    result += ", Department Course=" + departmentCourse;
+//    result += ", Degree Curricular Plan=" + degreeCurricularPlan;
     result += "]";
     return result;
   }

@@ -93,6 +93,11 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
             fail("testWriteCurricularCourse: confirmarTransaccao_1");
         } catch(ExistingPersistentException ex) {
 			// All Is OK
+			try {
+				persistentSupport.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia e) {
+				e.printStackTrace();
+			}
 		} catch(ExcepcaoPersistencia ex) {
 			fail("testWriteCurricularCourse: unexpected exception");
 		}
@@ -129,8 +134,12 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
         assertTrue(dc2.getTheoPratHours().equals(curricularCourse.getTheoPratHours()));
         assertTrue(dc2.getTheoreticalHours().equals(curricularCourse.getTheoreticalHours()));
         assertTrue(dc2.getSemester().equals(curricularCourse.getSemester()));
-        assertNotNull(dc2.getAssociatedExecutionCourses());
- 		assertTrue(dc2.getAssociatedExecutionCourses().size() == 0);
+        //////////////////////////////////////////////////////////////
+        // With as of version rc1 of OJB list is null when empty
+        //assertNotNull(dc2.getAssociatedExecutionCourses());
+ 		//assertTrue(dc2.getAssociatedExecutionCourses().size() == 0);
+		assertNull(dc2.getAssociatedExecutionCourses());
+		//////////////////////////////////////////////////////////////
     }
 // -------------------------------------------------------------------------------------------------------------------------------------------
     public void testDeleteAllCurricularCourses() {

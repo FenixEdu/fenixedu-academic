@@ -82,7 +82,6 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			executionPeriod = null;
 			executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("Semestre", executionYear);
 			assertNull(executionPeriod);
-
 			
 			persistentSupport.confirmarTransaccao();
 	   } catch (ExcepcaoPersistencia ex) {
@@ -193,18 +192,9 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			persistentSupport.confirmarTransaccao();
 			
 			persistentSupport.iniciarTransaccao();
-
-
 			List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
-			assertEquals(executionPeriods.isEmpty(), false);
-			
-			// The result is one because one of the Execution Periods has classes and execution
-			// courses associated, and so it cannot be deleted
-			assertEquals(executionPeriods.size(), 1);
-
+			assertEquals(1, executionPeriods.size());
 			persistentSupport.confirmarTransaccao();
-			
-			
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
 	   }

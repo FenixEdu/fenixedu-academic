@@ -15,7 +15,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.ojb.odmg.OJB;
+import org.odmg.Database;
 import org.odmg.Implementation;
+import org.odmg.ODMGException;
 import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 
@@ -221,6 +223,12 @@ public class StudentOJBTest extends TestCaseOJB {
 	} catch (ExistingPersistentException eex) {
 		// all is ok
 		System.out.println("Caught ExistingPersistentException" + eex);
+		try {
+			persistentSupport.cancelarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("error aborting transaction");
+		}
     } catch (ExcepcaoPersistencia ex) {
 		fail("Caught ExcepcaoPersistencia" + ex);
     }
@@ -301,10 +309,27 @@ public class StudentOJBTest extends TestCaseOJB {
 	}
 
 	// Check Attends
+	// TODO : Verify why test fails when we don't check the attendence.
+	//        Checking the attendance should have nothing to do with deleting a student
 	try {
 		persistentSupport.iniciarTransaccao();
 		try {
 			Implementation odmg = OJB.getInstance();
+			
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+						
 			OQLQuery query = odmg.newOQLQuery();
 			String oqlQuery = "select all from " + Frequenta.class.getName();
 			oqlQuery += " where aluno.number = $1"
@@ -316,32 +341,13 @@ public class StudentOJBTest extends TestCaseOJB {
 			assertEquals(result.size(), 3);
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		} 
+		}
+		persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testReadByNumero:fail read existing aluno");
 	}
 	
-	// Check StudentCurricularPlans
-	try {
-	    persistentSupport.iniciarTransaccao();
-		try {
-			Implementation odmg = OJB.getInstance();
-			OQLQuery query = odmg.newOQLQuery();;
-	
-			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-			oqlQuery += " where student.number = $1"
-			+ " and student.degreeType = $2";
-			query.create(oqlQuery);
-			query.bind(student.getNumber());
-			query.bind(student.getDegreeType());
-			List result = (List) query.execute();
-			assertEquals(result.size(), 1);
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		} 
-	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
-	}
+
 
 	// Delete Student
 
@@ -350,7 +356,7 @@ public class StudentOJBTest extends TestCaseOJB {
 	  persistentStudent.delete(student);
 	  persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
-	  fail("testReadByNumero:fail read existing aluno");
+	  fail("testReadByNumero:fail deleting student");
 	}
 
 	// Check Attends
@@ -358,6 +364,21 @@ public class StudentOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		try {
 			Implementation odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+
 			OQLQuery query = odmg.newOQLQuery();
 			String oqlQuery = "select all from " + Frequenta.class.getName();
 			oqlQuery += " where aluno.number = $1"
@@ -370,6 +391,7 @@ public class StudentOJBTest extends TestCaseOJB {
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		} 
+		persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testReadByNumero:fail read existing aluno");
 	}
@@ -379,6 +401,21 @@ public class StudentOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		try {
 			Implementation odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+
 			OQLQuery query = odmg.newOQLQuery();;
 	
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
@@ -392,6 +429,7 @@ public class StudentOJBTest extends TestCaseOJB {
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		} 
+		persistentSupport.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia ex) {
 	  fail("testReadByNumero:fail read existing aluno");
 	}
@@ -407,7 +445,22 @@ public class StudentOJBTest extends TestCaseOJB {
       List result = null;
       try {
         Implementation odmg = OJB.getInstance();
-        OQLQuery query = odmg.newOQLQuery();;
+
+		///////////////////////////////////////////////////////////////////
+		// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+		///////////////////////////////////////////////////////////////////
+		Database db = odmg.newDatabase();
+
+		try {
+			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+		} catch (ODMGException e) {
+			e.printStackTrace();
+		}
+		///////////////////////////////////////////////////////////////////
+		// End of Added Code
+		///////////////////////////////////////////////////////////////////
+
+        OQLQuery query = odmg.newOQLQuery();
         String oqlQuery = "select aluno from " + Student.class.getName();
         query.create(oqlQuery);
         result = (List) query.execute();

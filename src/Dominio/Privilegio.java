@@ -61,8 +61,9 @@ public class Privilegio implements IPrivilegio {
         if (obj instanceof IPrivilegio) {
             IPrivilegio privilegio = (IPrivilegio) obj;
             
-            result = getPessoa().equals(privilegio.getPessoa()) &&
-                     getServico().equals(privilegio.getServico());
+            
+            result = ((getPessoa() != null ) && (getPessoa().equals(privilegio.getPessoa()))) &&
+                     ((getServico() != null) && (getServico().equals(privilegio.getServico())));
         }
         
         return result;

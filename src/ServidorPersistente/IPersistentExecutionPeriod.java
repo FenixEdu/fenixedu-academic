@@ -54,4 +54,5 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	public IExecutionPeriod readByNameAndExecutionYear(
 		String executionPeriodName,
 		IExecutionYear executionYear) throws ExcepcaoPersistencia;
+
 }

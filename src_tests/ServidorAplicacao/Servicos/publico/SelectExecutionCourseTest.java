@@ -143,10 +143,17 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 			this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
 			this.curricularYear = new Integer(2);
 
-			if (!hasExecutionCourses)
+			if (!hasExecutionCourses) {
 				sp.getIDisciplinaExecucaoPersistente().apagarTodasAsDisciplinasExecucao();
+			}
 
 			sp.confirmarTransaccao();
+
+			if (!hasExecutionCourses) {
+				sp.iniciarTransaccao();
+				List listOfAllExecutionCourses = sp.getIDisciplinaExecucaoPersistente().readAll();
+				sp.confirmarTransaccao();
+			}
 
 		} catch (ExcepcaoPersistencia excepcao) {
 			try {

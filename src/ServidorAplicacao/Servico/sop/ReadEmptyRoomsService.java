@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoLesson;
@@ -75,12 +74,14 @@ public class ReadEmptyRoomsService implements IServico {
 			Iterator roomListIterator = roomList.iterator();
 			
 			List infoRoomList = new ArrayList();
-			infoRoomList = ListUtils.predicatedList(infoRoomList, new RoomLessonPredicate());			
+			//infoRoomList = ListUtils.predicatedList(infoRoomList, new RoomLessonPredicate());			
 			
 			while (roomListIterator.hasNext()) {
 				ISala element = (ISala) roomListIterator.next();
 				try{
-					infoRoomList.add(Cloner.copyRoom2InfoRoom(element));					
+					InfoRoom infoRoomElement = Cloner.copyRoom2InfoRoom(element);
+					if ((new RoomLessonPredicate()).evaluate(infoRoomElement))
+						infoRoomList.add(infoRoom);
 				}catch (IllegalArgumentException e){
 					// ignored
 				}

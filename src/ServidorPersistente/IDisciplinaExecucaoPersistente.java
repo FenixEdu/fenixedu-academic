@@ -8,6 +8,7 @@ import Dominio.IExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
+	public List readAll() throws ExcepcaoPersistencia;
 	public boolean apagarTodasAsDisciplinasExecucao();
 	public void escreverDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia, ExistingPersistentException;
 

@@ -74,6 +74,19 @@ public class DisciplinaExecucaoOJB
 			throw new ExistingPersistentException();
 	}
 
+	// TODO : Write test for this method
+	public List readAll() throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
 	public IDisciplinaExecucao readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 		String sigla,
 		String anoLectivo,
@@ -111,6 +124,17 @@ public class DisciplinaExecucaoOJB
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
 		List resultList = new ArrayList();
+
+		try {
+			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+
+
 		try {
 
 			String oqlQuery =

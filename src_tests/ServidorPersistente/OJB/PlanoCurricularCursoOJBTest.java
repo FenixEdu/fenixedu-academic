@@ -14,7 +14,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.ojb.odmg.OJB;
+import org.odmg.Database;
 import org.odmg.Implementation;
+import org.odmg.ODMGException;
 import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 
@@ -193,6 +195,21 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing Execution Degree
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where curricularPlan.name = $1 ";
@@ -206,6 +223,21 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing CurricularCourse
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CurricularCourse.class.getName();
 			oqlQuery += " where degreeCurricularPlan.name = $1 ";
@@ -241,6 +273,21 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing Execution Degree
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+			
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where curricularPlan.name = $1 ";
@@ -254,6 +301,21 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing CurricularCourse
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+			
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CurricularCourse.class.getName();
 			oqlQuery += " where degreeCurricularPlan.name = $1 ";
@@ -306,6 +368,21 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing Execution Degree
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////			
+			
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			query.create(oqlQuery);
@@ -315,6 +392,21 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing CurricularCourse
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+			
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CurricularCourse.class.getName();
 			query.create(oqlQuery);
@@ -346,6 +438,22 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing Execution Degree
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+
+
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CursoExecucao.class.getName();
 			query.create(oqlQuery);
@@ -355,6 +463,22 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 	
 			// Check existing CurricularCourse
 			odmg = OJB.getInstance();
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			db = odmg.newDatabase();
+
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////
+
+
 			query = odmg.newOQLQuery();
 			oqlQuery = "select all from " + CurricularCourse.class.getName();
 			query.create(oqlQuery);

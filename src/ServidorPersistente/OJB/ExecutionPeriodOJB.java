@@ -57,7 +57,7 @@ public class ExecutionPeriodOJB
 	public void writeExecutionPeriod(IExecutionPeriod executionPeriodToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 
-			IExecutionPeriod executionPeriodFromDB = null;
+		IExecutionPeriod executionPeriodFromDB = null;
 
 		// If there is nothing to write, simply return.
 		if (executionPeriodToWrite == null)
@@ -75,8 +75,11 @@ public class ExecutionPeriodOJB
 		// else If the execution period is mapped to the database, then write any existing changes.
 		else if (
 			(executionPeriodToWrite instanceof ExecutionPeriod)
-				&& ((ExecutionPeriod) executionPeriodFromDB).getInternalCode().equals(
-					((ExecutionPeriod) executionPeriodToWrite).getInternalCode())) {
+				&& ((ExecutionPeriod) executionPeriodFromDB)
+					.getInternalCode()
+					.equals(
+					((ExecutionPeriod) executionPeriodToWrite)
+						.getInternalCode())) {
 			super.lockWrite(executionPeriodToWrite);
 			// else Throw an already existing exception
 		} else
@@ -90,13 +93,23 @@ public class ExecutionPeriodOJB
 		List executionCourses = new ArrayList();
 		List classes = new ArrayList();
 		try {
-			executionCourses = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
-			classes = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionPeriod(executionPeriod);
 
-			if(classes.isEmpty() && executionCourses.isEmpty())
+			executionCourses =
+				SuportePersistenteOJB
+					.getInstance()
+					.getIDisciplinaExecucaoPersistente()
+					.readByExecutionPeriod(executionPeriod);
+			classes =
+				SuportePersistenteOJB
+					.getInstance()
+					.getITurmaPersistente()
+					.readByExecutionPeriod(executionPeriod);
+
+			if (classes.isEmpty() && executionCourses.isEmpty()) {
 				super.delete(executionPeriod);
-			else return false;
-				
+			} else
+				return false;
+
 		} catch (ExcepcaoPersistencia e) {
 			return false;
 		}
@@ -107,13 +120,11 @@ public class ExecutionPeriodOJB
 	 */
 	public boolean deleteAll() {
 		try {
-			
 			String oqlQuery =
 				"select all from " + ExecutionPeriod.class.getName();
-
 			query.create(oqlQuery);
-
 			List result = (List) query.execute();
+
 			Iterator iter = result.iterator();
 			while (iter.hasNext()) {
 				IExecutionPeriod executionPeriod =

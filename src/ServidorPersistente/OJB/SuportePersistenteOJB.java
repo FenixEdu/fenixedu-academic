@@ -11,6 +11,8 @@ package ServidorPersistente.OJB;
  * @author  ars
  */
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
 import org.odmg.Database;
 import org.odmg.Implementation;
@@ -82,10 +84,30 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	public void iniciarTransaccao() throws ExcepcaoPersistencia {
+		
 		try {
 			//System.out.println("SuportePersistente.OJB::iniciarTransaccao()");
-			Database db = _odmg.newDatabase();
-			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+
+			///////////////////////////////////////////////////////////////////
+			// Removed Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			//Database db = _odmg.newDatabase();
+			///////////////////////////////////////////////////////////////////
+			// End of Removed Code
+			///////////////////////////////////////////////////////////////////
+
+			///////////////////////////////////////////////////////////////////
+			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+			///////////////////////////////////////////////////////////////////
+			Database db = _odmg.getDatabase(null);
+			if (db == null) {
+			///////////////////////////////////////////////////////////////////
+			// End of Added Code
+			///////////////////////////////////////////////////////////////////				
+				db = _odmg.newDatabase();
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			}
+
 			Transaction tx = _odmg.newTransaction();
 			tx.begin();
 		} catch (ODMGException ex1) {
@@ -107,9 +129,17 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 				System.out.println(
 					"SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
-				tx.commit();
+				///////////////////////////////////////////////////////////////////
+				// Cache must be cleared because of OJB bug.
+				///////////////////////////////////////////////////////////////////
+				PersistenceBroker broker = ((HasBroker) tx).getBroker();
+				broker.clearCache();
+				//broker.removeFromCache(obj);
+				///////////////////////////////////////////////////////////////////
+				
+				tx.commit();				
 				_odmg.getDatabase(null).close();
-			}
+			}			
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.CLOSE_DATABASE,

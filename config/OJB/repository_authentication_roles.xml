@@ -179,7 +179,7 @@
     <reference-descriptor
          name="pais"
          class-ref="Dominio.Country"
-         proxy="true"
+         proxy="false"
     >
          <foreignkey field-id-ref="29"/>
     </reference-descriptor>
@@ -227,7 +227,7 @@
       <reference-descriptor
          name="person"
          class-ref="Dominio.Pessoa"
-         proxy="true"
+         proxy="false"
 	  >
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>

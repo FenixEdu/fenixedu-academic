@@ -18,8 +18,6 @@ import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
-import Dominio.Frequenta;
-import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -125,6 +123,23 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
     
      
     public void delete(IStudent student) throws ExcepcaoPersistencia {
+		// Delete all Attends
+		// FIXME : Taken out temporaraly because it's provoking a concurrent modification exception
+//		try {
+//			String oqlQuery = "select all from " + Frequenta.class.getName();
+//			oqlQuery += " where aluno.number = $1"
+//			+ " and aluno.degreeType = $2";
+//			query.create(oqlQuery);
+//			query.bind(student.getNumber());
+//			query.bind(student.getDegreeType());
+//			List result = (List) query.execute();
+//			ListIterator iterator = result.listIterator();
+//			while(iterator.hasNext())
+//				SuportePersistenteOJB.getInstance().getIFrequentaPersistente().delete((IFrequenta) iterator.next());
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+
     	// Delete all Student Curricular Plans
 		try {
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
@@ -141,23 +156,6 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 
-    	// Delete all Attends
-		try {
-			String oqlQuery = "select all from " + Frequenta.class.getName();
-			oqlQuery += " where aluno.number = $1"
-			+ " and aluno.degreeType = $2";
-			query.create(oqlQuery);
-			query.bind(student.getNumber());
-			query.bind(student.getDegreeType());
-			List result = (List) query.execute();
-			ListIterator iterator = result.listIterator();
-			while(iterator.hasNext())
-				SuportePersistenteOJB.getInstance().getIFrequentaPersistente().delete((IFrequenta) iterator.next());
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-    	
-    	
     	// Delete Student
         super.delete(student);
     }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
@@ -65,15 +64,11 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 
 		Object argsReadCurricularCourseListOfExecutionCourse[] =
 			new Object[1];
-
 		Object result = null;
-
 		//execution course with 1 curricularCourses associated
 		this.prepareTestCase(true);
-
 		argsReadCurricularCourseListOfExecutionCourse[0] =
 			this.infoExecutionCourse;
-
 		try {
 			result =
 				_gestor.executar(
@@ -88,9 +83,10 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 		} catch (Exception ex) {
 			fail("testReadAll: executionCourse with 1 curricularCourses: " + ex);
 		}
-
+		
 		// Empty database - no curricularCourses of selected executionCourse
 		this.prepareTestCase(false);
+
 		try {
 			result =
 				_gestor.executar(
@@ -104,22 +100,17 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 		} catch (Exception ex) {
 			fail("testReadAll: no curricularCourses of executionCourse: " + ex);
 		}
-	
 	}
 
 	private void prepareTestCase(
 		boolean hasCurricularCourses) {
-
 		ISuportePersistente sp = null;
-
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
-
 			ICursoPersistente cursoPersistente = sp.getICursoPersistente();
 			ICurso degree = cursoPersistente.readBySigla("LEIC");
 			assertNotNull(degree);
-
 			IPlanoCurricularCursoPersistente planoCurricularCursoPersistente =
 				sp.getIPlanoCurricularCursoPersistente();
 			IPlanoCurricularCurso degreeCurricularPlan =
@@ -133,7 +124,6 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 			IExecutionYear executionYear =
 				persistenExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-
 			ICursoExecucaoPersistente cursoExecucaoPersistente =
 				sp.getICursoExecucaoPersistente();
 			ICursoExecucao executionDegree =
@@ -150,7 +140,6 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 					"2º Semestre",
 					executionYear);
 			assertNotNull(executionPeriod);
-
 			IDisciplinaExecucaoPersistente disciplinaExecucaoPersistente =
 				sp.getIDisciplinaExecucaoPersistente();
 			IDisciplinaExecucao executionCourse =
@@ -159,22 +148,23 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 					"TFCI",
 					executionPeriod);
 			assertNotNull(executionCourse);
-
-			if (!hasCurricularCourses)
-				executionCourse.setAssociatedCurricularCourses(null);
+			
+			if (!hasCurricularCourses) {
+				sp.getIPersistentCurricularCourse().deleteAllCurricularCourse();
+				//executionCourse.setAssociatedCurricularCourses(null);
+			}
 
 			this.infoExecutionCourse =
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(
 					executionCourse);
-
 			sp.confirmarTransaccao();
-
 		} catch (ExcepcaoPersistencia excepcao) {
 			try {
 				sp.cancelarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
 				fail("ligarSuportePersistente: cancelarTransaccao: " + ex);
 			}
+			System.out.println("44");
 			fail("ligarSuportePersistente: confirmarTransaccao: " + excepcao);
 		}
 	}

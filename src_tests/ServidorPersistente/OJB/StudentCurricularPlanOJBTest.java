@@ -150,6 +150,12 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
             fail("testWriteExisting: Expected an Exception");
         } catch (ExistingPersistentException ex) {
 			assertNotNull("testWriteExisting", ex);
+			try {
+				persistentSupport.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia e) {
+				fail("aborting transaction");
+				e.printStackTrace();
+			}
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testWriteExisting: Unexpected Exception");
 		}
@@ -252,6 +258,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
          	assertNotNull(studentCurricularPlan);
          
             persistentSupport.iniciarTransaccao();
+			studentCurricularPlan = null;
             persistentStudentCurricularPlan.deleteAll();
             persistentSupport.confirmarTransaccao();
             

@@ -107,10 +107,10 @@
     <message-resources parameter="ServidorApresentacao.ApplicationResources" />
     
     <!-- ========== Plug Ins Configuration ================================= -->
-    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+ <!--   <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-default.xml"/>
-    </plug-in>
+    </plug-in> -->
 
 </struts-config>
 

@@ -109,6 +109,11 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			fail("Write Existing: Expected an Excpetion");
 	   	} catch (ExistingPersistentException ex) {
 			// All is ok
+			try {
+				persistentSupport.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia e) {
+				e.printStackTrace();
+			}
 		} catch (ExcepcaoPersistencia ex) {
 			 fail("Write Existing: Unexpected Exception");
 		}
@@ -159,9 +164,10 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 	
 	public void testDeleteAll(){
 		try {
+
 			persistentSupport.iniciarTransaccao();
 			IExecutionYear executionYear = new ExecutionYear("2000");
-			persistentExecutionYear.writeExecutionYear(executionYear);
+			persistentExecutionYear.writeExecutionYear(executionYear);			
 			persistentSupport.confirmarTransaccao();
 			
 			persistentSupport.iniciarTransaccao();
@@ -183,7 +189,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 			
 			
 	   } catch (ExcepcaoPersistencia ex) {
-			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");
+			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item" + ex);
 	   }
 	}
 		

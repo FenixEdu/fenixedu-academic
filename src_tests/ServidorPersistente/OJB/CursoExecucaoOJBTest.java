@@ -12,7 +12,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.ojb.odmg.OJB;
+import org.odmg.Database;
 import org.odmg.Implementation;
+import org.odmg.ODMGException;
 import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 
@@ -28,216 +30,283 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-
 /**
  *
  * @author rpfi
  */
 public class CursoExecucaoOJBTest extends TestCaseOJB {
-	
-	SuportePersistenteOJB persistentSupport = null; 
+
+	SuportePersistenteOJB persistentSupport = null;
 	IPersistentExecutionYear persistentExecutionYear = null;
 	ICursoExecucaoPersistente persistentExecutionDegree = null;
 	ICursoPersistente persistentDegree = null;
 	IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
-    
-    public CursoExecucaoOJBTest(java.lang.String testName) {
-        super(testName);
-    }
-    
-    public static void main(java.lang.String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CursoExecucaoOJBTest.class);
-        
-        return suite;
-    }    
-    
-  protected void setUp() {
-    super.setUp();
-	try {
-		persistentSupport = SuportePersistenteOJB.getInstance();
-	} catch (ExcepcaoPersistencia e) {
-		e.printStackTrace();
-		fail("Error");
+
+	public CursoExecucaoOJBTest(java.lang.String testName) {
+		super(testName);
 	}
-	persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
-	persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-	persistentDegreeCurricularPlan = persistentSupport.getIPlanoCurricularCursoPersistente();
-	persistentDegree = persistentSupport.getICursoPersistente();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
-    
-  /** Test of readByCursoAndAnoLectivo method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
-  public void testReadAllExecutionDegreesByExecutionYear() {
-    List executionDegrees = null;
-    IExecutionYear executionYear = null;
-    // read existing CursoExecucao
-    try {
-      persistentSupport.iniciarTransaccao();
-      
-      executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-      assertNotNull(executionYear);
-      executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear);
-      persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByCursoAndAnoLectivo:fail read existing cursoExecucao");
-    }
-    assertEquals("testReadByCursoAndAnoLectivo:read existing cursoExecucao",1 ,executionDegrees.size());
-  }
 
-  // write new non-existing cursoExecucao
-  public void testCreateNonExistingCursoExecucao() {
-    try {
-    	persistentSupport.iniciarTransaccao();
-    	ICurso degree = persistentDegree.readBySigla("LEEC");
-    	assertNotNull(degree);
-		IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
-		assertNotNull(degreeCurricularPlan);
-		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-		assertNotNull(executionYear);
-    	persistentSupport.confirmarTransaccao();
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
 
-    	ICursoExecucao executionDegree = new CursoExecucao(executionYear, degreeCurricularPlan);
+	public static Test suite() {
+		TestSuite suite = new TestSuite(CursoExecucaoOJBTest.class);
 
-        persistentSupport.iniciarTransaccao();
-        persistentExecutionDegree.lockWrite(executionDegree);
-        persistentSupport.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testCreateNonExistingCursoExecucao"); 
-    }
-  }
+		return suite;
+	}
 
-  // write new existing cursoExecucao
-  public void testCreateExistingCursoExecucao(){
-	try {
-		persistentSupport.iniciarTransaccao();
-		ICurso degree = persistentDegree.readBySigla("LEIC");
-		assertNotNull(degree);
+	protected void setUp() {
+		super.setUp();
+		try {
+			persistentSupport = SuportePersistenteOJB.getInstance();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			fail("Error");
+		}
+		persistentExecutionDegree =
+			persistentSupport.getICursoExecucaoPersistente();
+		persistentExecutionYear =
+			persistentSupport.getIPersistentExecutionYear();
+		persistentDegreeCurricularPlan =
+			persistentSupport.getIPlanoCurricularCursoPersistente();
+		persistentDegree = persistentSupport.getICursoPersistente();
+	}
 
-		IPlanoCurricularCurso degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
-		assertNotNull(degreeCurricularPlan);
-		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-		assertNotNull(executionYear);
-		persistentSupport.confirmarTransaccao();
+	protected void tearDown() {
+		super.tearDown();
+	}
 
-		ICursoExecucao executionDegree = new CursoExecucao(executionYear, degreeCurricularPlan);
+	/** Test of readByCursoAndAnoLectivo method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
+	public void testReadAllExecutionDegreesByExecutionYear() {
+		List executionDegrees = null;
+		IExecutionYear executionYear = null;
+		// read existing CursoExecucao
+		try {
+			persistentSupport.iniciarTransaccao();
 
-		persistentSupport.iniciarTransaccao();
-		persistentExecutionDegree.lockWrite(executionDegree);
-		persistentSupport.confirmarTransaccao();
-		fail("testCreateNonExistingCursoExecucao");	
-	} catch (ExistingPersistentException ex) {
-	   // All is OK
-	} catch (ExcepcaoPersistencia ex) {
-		fail("testCreateNonExistingCursoExecucao: unexpected exception");
-  	}
-  }
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+			executionDegrees =
+				persistentExecutionDegree.readByExecutionYear(executionYear);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testReadByCursoAndAnoLectivo:fail read existing cursoExecucao");
+		}
+		assertEquals(
+			"testReadByCursoAndAnoLectivo:read existing cursoExecucao",
+			1,
+			executionDegrees.size());
+	}
 
-  /** Test of write method, of class ServidorPersistente.OJB.ItemOJB. */
-  public void testWriteExistingChangedObject() {
-	IPlanoCurricularCurso degreeCurricularPlan1 = null;
-	IExecutionYear executionYear1 = null;
-	IExecutionYear executionYear2 = null;
-	ICursoExecucao executionDegree = null;
+	// write new non-existing cursoExecucao
+	public void testCreateNonExistingCursoExecucao() {
+		try {
+			persistentSupport.iniciarTransaccao();
+			ICurso degree = persistentDegree.readBySigla("LEEC");
+			assertNotNull(degree);
+			IPlanoCurricularCurso degreeCurricularPlan =
+				persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano2",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			IExecutionYear executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+			persistentSupport.confirmarTransaccao();
 
-	try {
-		persistentSupport.iniciarTransaccao();
-		ICurso degree = persistentDegree.readBySigla("LEIC");
-		assertNotNull(degree);
+			ICursoExecucao executionDegree =
+				new CursoExecucao(executionYear, degreeCurricularPlan);
 
-		degreeCurricularPlan1 = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
-		assertNotNull(degreeCurricularPlan1);
-		
-		executionYear1 = persistentExecutionYear.readExecutionYearByName("2002/2003");
-		assertNotNull(executionYear1);
+			persistentSupport.iniciarTransaccao();
+			persistentExecutionDegree.lockWrite(executionDegree);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testCreateNonExistingCursoExecucao");
+		}
+	}
 
-		executionYear2 = persistentExecutionYear.readExecutionYearByName("2003/2004");
-		assertNotNull(executionYear2);
-		
-		executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear1);
-		executionDegree.setExecutionYear(executionYear2);
+	// write new existing cursoExecucao
+	public void testCreateExistingCursoExecucao() {
+		try {
+			persistentSupport.iniciarTransaccao();
+			ICurso degree = persistentDegree.readBySigla("LEIC");
+			assertNotNull(degree);
 
-		persistentSupport.confirmarTransaccao();
+			IPlanoCurricularCurso degreeCurricularPlan =
+				persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			IExecutionYear executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+			persistentSupport.confirmarTransaccao();
 
-		persistentSupport.iniciarTransaccao();
-		ICursoExecucao executionDegreeTemp = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear2);		
-		persistentSupport.confirmarTransaccao();
-		assertEquals(executionDegreeTemp, executionDegree);
+			ICursoExecucao executionDegree =
+				new CursoExecucao(executionYear, degreeCurricularPlan);
 
-	} catch (ExcepcaoPersistencia ex) {
-		fail("testWriteExistingChangedObject");
-	}		
+			persistentSupport.iniciarTransaccao();
+			persistentExecutionDegree.lockWrite(executionDegree);
+			persistentSupport.confirmarTransaccao();
+			fail("testCreateNonExistingCursoExecucao");
+		} catch (ExistingPersistentException ex) {
+			// All is OK
+			try {
+				persistentSupport.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia e) {
+				e.printStackTrace();
+			}
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testCreateNonExistingCursoExecucao: unexpected exception");
+		}
+	}
 
-  }
+	/** Test of write method, of class ServidorPersistente.OJB.ItemOJB. */
+	public void testWriteExistingChangedObject() {
+		IPlanoCurricularCurso degreeCurricularPlan1 = null;
+		IExecutionYear executionYear1 = null;
+		IExecutionYear executionYear2 = null;
+		ICursoExecucao executionDegree = null;
 
-  /** Test of delete method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
-  public void testDeleteCursoExecucao() {
-	IPlanoCurricularCurso degreeCurricularPlan = null;
-	IExecutionYear executionYear = null;
-	ICursoExecucao executionDegree = null;
-  	
-    try {
-		persistentSupport.iniciarTransaccao();
-		ICurso degree = persistentDegree.readBySigla("LEIC");
-		assertNotNull(degree);
+		try {
+			persistentSupport.iniciarTransaccao();
+			ICurso degree = persistentDegree.readBySigla("LEIC");
+			assertNotNull(degree);
 
-		degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
-		assertNotNull(degreeCurricularPlan);
-		executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-		assertNotNull(executionYear);
-		executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);		
-    	persistentSupport.confirmarTransaccao();
+			degreeCurricularPlan1 =
+				persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan1);
 
-      persistentSupport.iniciarTransaccao();
-	  assertEquals(SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionDegree(executionDegree).isEmpty(), false);
+			executionYear1 =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear1);
 
-      persistentExecutionDegree.delete(executionDegree);
-      persistentSupport.confirmarTransaccao();
+			executionYear2 =
+				persistentExecutionYear.readExecutionYearByName("2003/2004");
+			assertNotNull(executionYear2);
 
-      persistentSupport.iniciarTransaccao();
-      ICursoExecucao executionDegreeTemp = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
-	  assertNull(executionDegreeTemp);
-	  assertEquals(SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionDegree(executionDegree).size(), 0);
+			executionDegree =
+				persistentExecutionDegree
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan1,
+					executionYear1);
+			executionDegree.setExecutionYear(executionYear2);
 
-      persistentSupport.confirmarTransaccao();
-      
-      
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testDeleteCursoExecucao");
-    }
-  }
+			persistentSupport.confirmarTransaccao();
 
+			persistentSupport.iniciarTransaccao();
+			ICursoExecucao executionDegreeTemp =
+				persistentExecutionDegree
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan1,
+					executionYear2);
+			persistentSupport.confirmarTransaccao();
+			assertEquals(executionDegreeTemp, executionDegree);
 
-  /** Test of deleteAll method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
-  public void testDeleteAll() {
-    try {
-      persistentSupport.iniciarTransaccao();
-      persistentExecutionDegree.deleteAll();
-      persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testWriteExistingChangedObject");
+		}
 
-      persistentSupport.iniciarTransaccao();
-      List result = null;
-      try {
-        Implementation odmg = OJB.getInstance();
-        OQLQuery query = odmg.newOQLQuery();;
-        String oqlQuery = "select all from " + CursoExecucao.class.getName();
-        query.create(oqlQuery);
-        result = (List) query.execute();
-      } catch (QueryException ex) {
-        throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-      }
-      persistentSupport.confirmarTransaccao();
-      assertNotNull(result);
-      assertTrue(result.isEmpty());
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testDeleteItem");
-    }
-  }
+	}
+
+	/** Test of delete method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
+	public void testDeleteCursoExecucao() {
+		IPlanoCurricularCurso degreeCurricularPlan = null;
+		IExecutionYear executionYear = null;
+		ICursoExecucao executionDegree = null;
+
+		try {
+			persistentSupport.iniciarTransaccao();
+			ICurso degree = persistentDegree.readBySigla("LEIC");
+			assertNotNull(degree);
+
+			degreeCurricularPlan =
+				persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano1",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+			executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+			executionDegree =
+				persistentExecutionDegree
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
+			assertNotNull(executionDegree);
+			persistentSupport.confirmarTransaccao();
+
+			persistentSupport.iniciarTransaccao();
+			persistentExecutionDegree.delete(executionDegree);
+			persistentSupport.confirmarTransaccao();
+
+			persistentSupport.iniciarTransaccao();
+			ICursoExecucao executionDegreeTemp =
+				persistentExecutionDegree
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
+			assertNull(executionDegreeTemp);
+			assertEquals(
+				SuportePersistenteOJB
+					.getInstance()
+					.getITurmaPersistente()
+					.readByExecutionDegree(executionDegree)
+					.size(),
+				0);
+
+			persistentSupport.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testDeleteCursoExecucao");
+		}
+	}
+
+	/** Test of deleteAll method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
+	public void testDeleteAll() {
+		try {
+			persistentSupport.iniciarTransaccao();
+			persistentExecutionDegree.deleteAll();
+			persistentSupport.confirmarTransaccao();
+
+			persistentSupport.iniciarTransaccao();
+			List result = null;
+			try {
+				Implementation odmg = OJB.getInstance();
+
+				///////////////////////////////////////////////////////////////////
+				// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+				///////////////////////////////////////////////////////////////////
+				Database db = odmg.newDatabase();
+
+				try {
+					db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+				} catch (ODMGException e) {
+					e.printStackTrace();
+				}
+				///////////////////////////////////////////////////////////////////
+				// End of Added Code
+				///////////////////////////////////////////////////////////////////
+
+				OQLQuery query = odmg.newOQLQuery();
+				;
+				String oqlQuery =
+					"select all from " + CursoExecucao.class.getName();
+				query.create(oqlQuery);
+				result = (List) query.execute();
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
+			persistentSupport.confirmarTransaccao();
+			assertNotNull(result);
+			assertTrue(result.isEmpty());
+		} catch (ExcepcaoPersistencia ex) {
+			fail("testDeleteItem");
+		}
+	}
 
 }

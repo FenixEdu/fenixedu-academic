@@ -4,7 +4,8 @@
 
 <!-- defining entities for include-files -->
 <!DOCTYPE descriptor-repository SYSTEM "repository.dtd" [
-<!ENTITY user SYSTEM "repository_user.xml">
+<!ENTITY database SYSTEM "repository_database.xml">
+<!ENTITY internal SYSTEM "repository_internal.xml">
 <!ENTITY secretaria SYSTEM "repository_secretaria.xml">
 <!ENTITY inscricoes SYSTEM "repository_inscricoes.xml">
 <!ENTITY sop SYSTEM "repository_sop.xml">
@@ -12,29 +13,18 @@
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY gesdis SYSTEM "repository_gesdis.xml">
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
-<!ENTITY internal SYSTEM "repository_internal.xml">
-
-
 ]>
 
 
-<descriptor-repository version="0.9.5" isolation-level="serializable">
-<!-- The Default JDBC Connection. If a class-descriptor does not specify its own JDBC Connection,
-     the Connection specified here will be used. -->
+<descriptor-repository version="1.0" isolation-level="serializable">
 
-   <jdbc-connection-descriptor
-   		platform="MySQL"
-   		jdbc-level="2.0"
-   		driver="com.mysql.jdbc.Driver"
-   		protocol="jdbc"
-   		subprotocol="mysql"
-   		dbalias="//localhost:3306/ciapl"
-   		username="root"
-   		password=""
-   />
+    <!-- include all used database connections -->
+    &database;
+
+    <!-- include ojb internal mappings here -->
+    &internal;
 
     <!-- include user defined mappings here -->
-    &user;
     &secretaria;
     &inscricoes;
     &sop;
@@ -42,7 +32,5 @@
     &sopload;
     &gesdis;
     &authentication-roles;
-    <!-- include ojb internal mappings here -->
-    &internal;
 
 </descriptor-repository>

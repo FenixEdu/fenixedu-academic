@@ -19,7 +19,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.ojb.odmg.OJB;
+import org.odmg.Database;
 import org.odmg.Implementation;
+import org.odmg.ODMGException;
 import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 
@@ -369,6 +371,21 @@ public class AulaOJBTest extends TestCaseOJB {
       List result = null;
       try {
         Implementation odmg = OJB.getInstance();
+
+		///////////////////////////////////////////////////////////////////
+		// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
+		///////////////////////////////////////////////////////////////////
+		Database db = odmg.newDatabase();
+
+		try {
+			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+		} catch (ODMGException e) {
+			e.printStackTrace();
+		}
+		///////////////////////////////////////////////////////////////////
+		// End of Added Code
+		///////////////////////////////////////////////////////////////////
+        
         OQLQuery query = odmg.newOQLQuery();;
         String oqlQuery = "select aula from " + Aula.class.getName();
         query.create(oqlQuery);
