@@ -10,6 +10,12 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 
+	<form-bean name="teacher.announcementManagementForm"
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="index" type="java.lang.Integer" />
+		<form-property name="option" type="java.lang.String" />
+	</form-bean>
+
 	<!--
 	
 	<form-bean name="autenticacaoForm"
@@ -95,10 +101,6 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
 		<form-property name="numeroDocente" type="java.lang.String" />
-	</form-bean>
-        
-        <form-bean name="docente.gestaoAnunciosForm"
-		type="ServidorApresentacao.Action.FenixActionForm">
 	</form-bean>
         
 	<form-bean name="docente.inserirAnuncioForm"
@@ -197,6 +199,15 @@
 	</action>
 
 	<action path="/teacher/announcementManagement" forward="teacher.announcementManagement"/>
+
+	<action name="teacher.announcementManagementFormAction"
+    	type="ServidorApresentacao.Action.teacher.AnnouncementManagementFormAction"
+        path="/teacher/announcementManagementForm" input="teacher.announcementManagement"
+        scope="request">
+        <forward name="InsertAnnouncement" path="/teacher/inserirAnuncio.do" redirect = "true"/>
+		<forward name="EditAnnouncement" path="/teacher/editarAnuncio.do" redirect = "true"/>
+		<forward name="DeleteAnnouncement" path="/teacher/apagarAnuncio.do" redirect = "true"/>
+	</action>
 
 	<!--
 	<action path="/index" forward="/obterSitios.do"/>
@@ -421,19 +432,6 @@
 				redirect="true"/>
 		<forward name="docenteDissociado" path="/docente/obterSitio.do"
 				redirect="true"/>
-	</action>
-        
-        <action name="docente.gestaoAnunciosForm"
-                type="ServidorApresentacao.Action.Docente.GestaoAnunciosFormAction"
-                path="/docente/gestaoAnunciosForm"
-                input="docente.announcementManagement"
-                scope="request">
-            <forward name="InserirAnuncio" path="/docente/inserirAnuncio.do"
-		redirect = "true"/>
-            <forward name="EditarAnuncio" path="/docente/editarAnuncio.do"
-		redirect = "true"/>
-            <forward name="ApagarAnuncio" path="/docente/apagarAnuncio.do"
-		redirect = "true"/>
 	</action>
         
         <action path="/docente/inserirAnuncio" forward="docente.inserirAnuncio"/>
