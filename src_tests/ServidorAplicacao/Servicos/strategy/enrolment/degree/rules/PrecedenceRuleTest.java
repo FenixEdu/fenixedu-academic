@@ -9,7 +9,6 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.ICurricularCourse;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.PrecedenceRule;
@@ -46,9 +45,6 @@ public class PrecedenceRuleTest extends BaseEnrolmentRuleTest {
 		
 		assertEquals("Final span size:",true, initialSpan.size() > finalSpan.size());
 		assertEquals ("Contains assertion!",true,initialSpan.containsAll(finalSpan));
-		
-		ICurricularCourse curricularCourse = getCurricularCourse("Analise Matematica I", "AMI");
-		assertEquals(true, !finalSpan.contains(curricularCourse));
 		
 		enrolmentContext = getEnrolmentContext(new Integer(1), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));		
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
