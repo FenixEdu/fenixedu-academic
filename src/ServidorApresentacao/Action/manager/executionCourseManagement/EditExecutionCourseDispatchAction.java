@@ -243,6 +243,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 
         Integer executionPeriodId =
             Integer.valueOf((String) executionCourseForm.get("executionPeriodId"));
+         getAndSetStringToRequest(request, "executionPeriodName");
         request.setAttribute("executionPeriodId", executionPeriodId.toString());
        
 
@@ -308,10 +309,11 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
         throws FenixActionException
     {
         IUserView userView = SessionUtils.getUserView(request);
-
+         getAndSetStringToRequest(request, "executionPeriodId");
       
         String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
-      
+        getAndSetStringToRequest(request, "executionPeriodName");
+         getAndSetStringToRequest(request, "executionDegreeName");
 
         Object args[] = { Integer.valueOf(executionCourseId)};
 
@@ -349,6 +351,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
         String executionPeriodId = getAndSetStringToRequest(request, "executionPeriodId");
         String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
         String executionDegreeName = getAndSetStringToRequest(request, "executionDegreeName");
+         getAndSetStringToRequest(request, "executionPeriodName");
         //		List internalIds = Arrays.asList((Integer[])
 		// deleteForm.get("internalIds"));
 
