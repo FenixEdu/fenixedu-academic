@@ -245,7 +245,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 						if (monthElem.intValue() == currentMonth.get(Calendar.MONTH)) {
 							itemsFile = itemsFile.concat("<a href=\"" + currentMonthFileName + "\">" + monthLinkString.toString() + "</a>");
 						} else {
-							//							shtml
 							itemsFile =
 								itemsFile.concat(
 									"<a href=\""
@@ -280,7 +279,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				if (monthLink.intValue() == currentMonth.get(Calendar.MONTH)) {
 					fileForFTP = currentMonthFileName;
 				} else {
-					//					shtml
 					fileForFTP = infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html";
 				}
 				Ftp.enviarFicheiro("/IstFtpServerConfig.properties", fileForFTP, infoWebSiteSection.getName() + "_principal/");
@@ -481,13 +479,11 @@ public class SendWebSiteSectionFileToServer implements IServico {
 		String currentMonthFileName) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
-		//		calendar.setTime(infoWebSiteItem.getOnlineBeginDay());
 
 		String fileName = null;
 		if (calendar.get(Calendar.MONTH) == currentMonth.get(Calendar.MONTH)) {
 			fileName = currentMonthFileName;
 		} else {
-			//			shtml
 			fileName = infoWebSiteSection.getName() + "-" + new Mes(calendar.get(Calendar.MONTH) + 1) + ".html";
 		}
 
