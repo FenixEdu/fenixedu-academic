@@ -49,8 +49,7 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpSession session = request.getSession(false);
 
 		DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
-		
-		System.out.println("page depois de insert: "+insertBibliographicReferenceForm.get("page"));
+				
 		
 		String title = (String) insertBibliographicReferenceForm.get("title");
 		String authors =
@@ -242,7 +241,6 @@ public class BibliographicReferenceManagerDispatchAction
 
 		
 		DynaActionForm bibRefForm= (DynaActionForm) form;
-		System.out.println("page: "+bibRefForm.get("page"));
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
@@ -262,10 +260,15 @@ public class BibliographicReferenceManagerDispatchAction
 				(ArrayList) gestor.executar(
 					userView,
 					"ReadBibliographicReference",
-					args);
+					args);		
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		
+		if(references.size() == 0) {
+			return mapping.findForward("editBibliographicReference");						
+		}		
+		
 		session.setAttribute(
 			SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST,
 			references);
@@ -280,12 +283,8 @@ public class BibliographicReferenceManagerDispatchAction
 		throws FenixActionException {
 
 		DynaValidatorForm referenceForm = (DynaValidatorForm) form;
-				
-		
-		String method = request.getParameter("method");
+								
 		String index = request.getParameter("index");
-
-		System.out.println("method: " + method + " index: " + index);
 
 		HttpSession session = request.getSession();
 

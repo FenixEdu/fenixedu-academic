@@ -88,10 +88,7 @@ public class BibliographicReferenceOJB
 					.getYear());
 			List result = (List) query.execute();
 			lockRead(result);
-			if (result.size() == 0)
-				return null;
-			else
-				return result;
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
