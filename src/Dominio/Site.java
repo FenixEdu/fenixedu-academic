@@ -17,8 +17,6 @@ public class Site implements ISite {
 	private List sections;
 	private ISection initialSection;
 	private Integer keyInitialSection;
-	private List responsibleTeachers;
-	private List lecturingTeachers;
 	private List announcements;
 	/** 
 	 * Construtor
@@ -111,19 +109,7 @@ public class Site implements ISite {
 		return initialSection;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getLecturingTeachers() {
-		return lecturingTeachers;
-	}
-
-	/**
-	 * @return List
-	 */
-	public List getResponsibleTeachers() {
-		return responsibleTeachers;
-	}
+	
 
 	/**
 	 * @return List
@@ -148,21 +134,7 @@ public class Site implements ISite {
 		this.initialSection = initialSection;
 	}
 
-	/**
-	 * Sets the lecturingTeachers.
-	 * @param lecturingTeachers The lecturingTeachers to set
-	 */
-	public void setLecturingTeachers(List lecturingTeachers) {
-		this.lecturingTeachers = lecturingTeachers;
-	}
-
-	/**
-	 * Sets the responsibleTeachers.
-	 * @param responsibleTeachers The responsibleTeachers to set
-	 */
-	public void setResponsibleTeachers(List responsibleTeachers) {
-		this.responsibleTeachers = responsibleTeachers;
-	}
+	
 
 	/**
 	 * Sets the sections.

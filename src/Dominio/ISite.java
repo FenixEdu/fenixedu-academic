@@ -15,8 +15,6 @@ public interface ISite {
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
 	List getSections();
 	ISection getInitialSection();
-	List getResponsibleTeachers();
-	List getLecturingTeachers();
 	List getAnnouncements();
 
 }
