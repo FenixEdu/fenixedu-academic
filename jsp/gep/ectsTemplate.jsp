@@ -4,7 +4,7 @@
 
 <%-- EXAMPLE CASE --%>
 <h2>Licenciatura em Arquitectura</h2>
-<table width="90%" cellspacing="0">
+<table class="ects_headertable" width="90%" cellspacing="0">
 	<tr>
 		<td width ="200px"><strong>Anual/Semestral:</strong></td>
 		<td colspan="4">Semestral</td>
@@ -41,7 +41,7 @@
 	</tr>
 </table>
 <br />
-<table width="90%" cellspacing="0">
+<table id="ects" width="90%" cellspacing="0">
 	<tr>
 		<td colspan="7"><strong>Carga hor&aacute;ria semanal: </strong></td>
 	</tr>
