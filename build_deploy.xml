@@ -39,14 +39,14 @@
 		
 		<!-- Compile fenix web client generate war -->
 		<ant antfile="build_jboss.xml" target="jar-web-client" />
-		<move file="${deploy.jars}/${deploy.war.web-client}" tofile="${deploy.jars}/fenix.war" />
+		<move file="${deploy.jars}/${deploy.jar.web-client}" tofile="${deploy.jars}/fenix.war" />
 		
 		<!-- Compile www.apl web client generate war -->
 		<delete file="build.properties"/>
 		<move file="build_wwwapl.properties" tofile="build.properties" />
 		<ant antfile="build_jboss.xml" target="clean-web-client" />
 		<ant antfile="build_jboss.xml" target="jar-web-client" />
-		<move file="${deploy.jars}/${deploy.war.web-client}" tofile="${deploy.jars}/wwwapl.war" />
+		<move file="${deploy.jars}/${deploy.jar.web-client}" tofile="${deploy.jars}/wwwapl.war" />
 
 		<!-- Restore original build.properties -->
 		<move file="build.properties_backup"  tofile="build.properties" overwrite="true" />
