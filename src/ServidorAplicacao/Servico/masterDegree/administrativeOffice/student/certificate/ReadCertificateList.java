@@ -49,8 +49,6 @@ public class ReadCertificateList implements IServico {
 			ISuportePersistente sp = null;
 			List certificates = null;
 			
-		System.out.println("lista vazia..." + types.size());
-			
 			try {
 				sp = SuportePersistenteOJB.getInstance();
 		
@@ -62,7 +60,7 @@ public class ReadCertificateList implements IServico {
 				newEx.fillInStackTrace();
 				throw newEx;
 			} 
-System.out.println("lista vazia..." + certificates.size());
+
 			if (certificates == null) 
 				throw new ExcepcaoInexistente("No Certificates Found !!");
 		

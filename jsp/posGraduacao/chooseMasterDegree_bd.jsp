@@ -31,8 +31,9 @@
 		<input type="hidden" name="method" value="chooseMasterDegree"/>
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
+	<logic:present name="jspTitle">
 		<html:hidden property="jspTitle" value="<%= pageContext.findAttribute("jspTitle").toString() %>" />
-		
+	</logic:present>
 		<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
 	</html:form>
 </logic:present>

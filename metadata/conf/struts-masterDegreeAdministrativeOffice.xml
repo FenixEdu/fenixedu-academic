@@ -341,15 +341,34 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
               validate="true">
-	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
-	         <forward name="ChooseSuccess" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>  
+	         <forward name="PrepareSuccess" path="/student/chooseExecutionYearToDegreeStudentList.jsp"/>  
+	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToDegreeStudentList.do?method=prepareChooseMasterDegree&amp;page=0"/>  
       </action>
 
-
-
-
-
+      <!-- Choose Master Degree To List the students by degree -->
+      <action path="/chooseMasterDegreeToDegreeStudentList"
+      		  input="/student/chooseMasterDegreeToDegreeStudentList.jsp"
+		      attribute="chooseMasterDegreeForm"
+		      name="chooseMasterDegreeForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/student/chooseMasterDegreeToDegreeStudentList.jsp"/>  
+	         <forward name="ChooseSuccess" path="/displayStudentListByDegree.do?method=prepareReading&amp;page=0"/>
+      </action>
       
+      <!-- List the students by Degree -->
+      <action path="/displayStudentListByDegree"
+      		  input="/student/displayStudentListByDegree.jsp"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.StudentListingByDegreeDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/>  
+	  </action>
+    
+  
       <!-- action to choose a Execution Year to create a candidate -->
       <action attribute="chooseExecutionYearForm"
       		  input="/chooseExecutionYear.jsp"
@@ -365,7 +384,6 @@
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="CreateReady" path="/createCandidateDispatchAction.do?method=prepare&amp;page=0"/>  
       </action>
-      
       
       
       <!-- action to create a candidate -->
