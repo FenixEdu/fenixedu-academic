@@ -18,6 +18,10 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
+import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+
 public abstract class ServiceTestCase extends TestCase {
 
 	public ServiceTestCase(String name) {
@@ -80,9 +84,30 @@ public abstract class ServiceTestCase extends TestCase {
 //		}
 	}
 
+	protected IUserView authenticateUser(
+		String userName,
+		String passwd,
+		String application) {
+		SuportePersistenteOJB.resetInstance();
+
+		String args[] = { userName, passwd, application };
+
+		try {
+			return (IUserView) GestorServicos.manager().executar(
+					null,
+					"Autenticacao",
+					args);
+		} catch (Exception ex) {
+			fail("Authenticating User!" + ex);
+			return null;
+			
+		}
+	}
+
 	protected String getBackUpDataSetFilePath() {
 		return "etc/testBackup.xml";
 	}
 
 	protected abstract String getDataSetFilePath();
+
 }
