@@ -2,12 +2,14 @@
  * ITeacher.java
  */
 package Dominio;
+
+
 /**
  *
  * @author  EP15
  * @author Ivo Brandão
  */
-public interface ITeacher {
+public interface ITeacher extends IDomainObject {
     public Integer getTeacherNumber();
 
 	public IPessoa getPerson();
