@@ -117,9 +117,6 @@ public class PrepareDegreesListByStudentNumber implements IService {
                 || studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome() == null) {
             return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
         }
-
-//        final Integer degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-//                .getIdInternal();
         
         final Integer degreeCurricularPlanCode = studentCurricularPlan.getDegreeCurricularPlan().getIdInternal();
         
