@@ -25,6 +25,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
@@ -158,24 +159,27 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		while (iterator.hasNext()) {
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 
-			ICurricularCourse curricularCourse = enrolment.getCurricularCourseScope().getCurricularCourse();
-			IDegreeCurricularPlan currentDegreeCurricularPlan = currentStudentCurricularPlan.getDegreeCurricularPlan();
-
-			ICurricularCourse curricularCourseFromCurrentDegreeCurricularPlan = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(curricularCourse, currentDegreeCurricularPlan, fenixPersistentSuport);
-			
-			if (curricularCourseFromCurrentDegreeCurricularPlan == null)
+			if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			{
-				continue;
-			}
+				ICurricularCourse curricularCourse = enrolment.getCurricularCourseScope().getCurricularCourse();
+				IDegreeCurricularPlan currentDegreeCurricularPlan = currentStudentCurricularPlan.getDegreeCurricularPlan();
 
-			ICurricularCourseScope curricularCourseScope = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseScope(enrolment, curricularCourseFromCurrentDegreeCurricularPlan);
-			if (curricularCourseScope == null)
-			{
-				System.out.println("[ERROR 304] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] in period [year: " + enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().toString() + " semester: " + enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().toString() + "]!");
-				continue;
-			}
+				ICurricularCourse curricularCourseFromCurrentDegreeCurricularPlan = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(curricularCourse, currentDegreeCurricularPlan, fenixPersistentSuport);
+				
+				if (curricularCourseFromCurrentDegreeCurricularPlan == null)
+				{
+					continue;
+				}
 
-			MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, curricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+				ICurricularCourseScope curricularCourseScope = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseScope(enrolment, curricularCourseFromCurrentDegreeCurricularPlan);
+				if (curricularCourseScope == null)
+				{
+					System.out.println("[ERROR 304] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] in period [year: " + enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().toString() + " semester: " + enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().toString() + "]!");
+					continue;
+				}
+
+				MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, curricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+			}
 		}
 	}
 

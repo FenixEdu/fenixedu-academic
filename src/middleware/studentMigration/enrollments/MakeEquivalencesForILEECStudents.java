@@ -15,6 +15,7 @@ import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
+import Dominio.CurricularCourse;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.ICurricularCourse;
@@ -35,6 +36,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DegreeCurricularPlanState;
+import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 
 /**
@@ -74,7 +76,7 @@ public class MakeEquivalencesForILEECStudents
 			Iterator iterator = result.iterator();
 			while (iterator.hasNext()) {
 				student = (IStudent) iterator.next();
-//				System.out.println("[INFO] Updating student with number [" + student.getNumber() + "]...");
+				System.out.println("[INFO] Updating student with number [" + student.getNumber() + "]...");
 				fenixPersistentSuport.iniciarTransaccao();
 				MakeEquivalencesForILEECStudents.makeEquivalences(student, fenixPersistentSuport);
 				fenixPersistentSuport.confirmarTransaccao();
@@ -203,32 +205,36 @@ public class MakeEquivalencesForILEECStudents
 	 */
 	private static void writeAndUpdateEquivalences(IStudent student, IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		List pastEnrolments = pastStudentCurricularPlan.getEnrolments();
+//		List pastEnrolments = pastStudentCurricularPlan.getEnrolments();
+		List pastEnrolments = MakeEquivalencesForILEECStudents.solveSpecificCase(pastStudentCurricularPlan, currentStudentCurricularPlan, fenixPersistentSuport);
 		Iterator iterator = pastEnrolments.iterator();
 		while (iterator.hasNext()) {
 
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-
-			if(!MakeEquivalencesForILEECStudents.alreadyHasEquivalence(enrolment, currentStudentCurricularPlan, fenixPersistentSuport))
+			
+			if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			{
-				ICurricularCourse newCurricularCourse = MakeEquivalencesForILEECStudents.getCurricularCourse(enrolment, fenixPersistentSuport);
-				if(newCurricularCourse == null)
+				if(!MakeEquivalencesForILEECStudents.alreadyHasEquivalence(enrolment, currentStudentCurricularPlan, fenixPersistentSuport))
 				{
-					continue;
+					ICurricularCourse newCurricularCourse = MakeEquivalencesForILEECStudents.getCurricularCourse(enrolment, fenixPersistentSuport);
+					if(newCurricularCourse == null)
+					{
+						continue;
+					}
+					
+					ICurricularCourseScope newCurricularCourseScope = MakeEquivalencesForILEECStudents.getCurricularCourseScope(enrolment, newCurricularCourse, fenixPersistentSuport);
+					if(newCurricularCourseScope == null)
+					{
+						continue;
+					}
+					
+					IEnrolment enrolmentWriten = MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+					if(enrolmentWriten == null)
+					{
+						continue;
+					}
+					MakeEquivalencesForILEECStudents.writeEquivalences(enrolment, enrolmentWriten, fenixPersistentSuport);
 				}
-	
-				ICurricularCourseScope newCurricularCourseScope = MakeEquivalencesForILEECStudents.getCurricularCourseScope(enrolment, newCurricularCourse, fenixPersistentSuport);
-				if(newCurricularCourseScope == null)
-				{
-					continue;
-				}
-	
-				IEnrolment enrolmentWriten = MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
-				if(enrolmentWriten == null)
-				{
-					continue;
-				}
-				MakeEquivalencesForILEECStudents.writeEquivalences(enrolment, enrolmentWriten, fenixPersistentSuport);
 			}
 		}
 	}
@@ -582,5 +588,85 @@ public class MakeEquivalencesForILEECStudents
 			result = true;
 		}
 		return result;
+	}
+
+	/**
+	 * @param pastStudentCurricularPlan
+	 * @param currentStudentCurricularPlan
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Throwable
+	 */
+	private static List solveSpecificCase(IStudentCurricularPlan pastStudentCurricularPlan, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IEnrolment enrolmentInSE = null;
+		IEnrolment enrolmentInSH = null;
+		List newListOfEnrollments = null;
+
+		List pastEnrolments = pastStudentCurricularPlan.getEnrolments();
+		Iterator iterator = pastEnrolments.iterator();
+		while (iterator.hasNext())
+		{
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			if(enrolment.getCurricularCourseScope().getCurricularCourse().getCode().equals("SE") && enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+			{
+				enrolmentInSE = enrolment;
+			} else if(enrolment.getCurricularCourseScope().getCurricularCourse().getCode().equals("SH") && enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+			{
+				enrolmentInSH = enrolment;
+			}
+		}
+
+		if(enrolmentInSE != null && enrolmentInSH != null)
+		{
+			ICurricularCourse curricularCourseCriteria = new CurricularCourse();
+			curricularCourseCriteria.setCode("W9");
+			curricularCourseCriteria.setName("ELECTRÓNICA II");
+
+			ICurricularCourse newCurricularCourse = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(curricularCourseCriteria, currentStudentCurricularPlan.getDegreeCurricularPlan(), fenixPersistentSuport);
+
+			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
+
+			IEnrolment enrolmentWriten = MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+
+			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSE, enrolmentWriten, fenixPersistentSuport);
+			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSH, enrolmentWriten, fenixPersistentSuport);
+			
+			newListOfEnrollments = new ArrayList();
+			newListOfEnrollments.addAll(pastEnrolments);
+			newListOfEnrollments.remove(enrolmentInSE);
+			newListOfEnrollments.remove(enrolmentInSH);
+
+			System.out.println("PASSEI NO enrolmentInSE e enrolmentInSH");
+		} else if(enrolmentInSE != null && enrolmentInSH == null)
+		{
+			ICurricularCourse curricularCourseCriteria = new CurricularCourse();
+			curricularCourseCriteria.setCode("ASM");
+			curricularCourseCriteria.setName("PROPRIEDADES ELECTROMAGNÉTICAS DOS MATERIAIS");
+
+			ICurricularCourse newCurricularCourse = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseFromCurrentDegreeCurricularPlan(curricularCourseCriteria, currentStudentCurricularPlan.getDegreeCurricularPlan(), fenixPersistentSuport);
+
+			ICurricularCourseScope newCurricularCourseScope = (ICurricularCourseScope) newCurricularCourse.getScopes().get(0);
+
+			IEnrolment enrolmentWriten = MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolmentInSE, newCurricularCourseScope, currentStudentCurricularPlan, fenixPersistentSuport);
+
+			MakeEquivalencesForILEECStudents.writeEquivalences(enrolmentInSE, enrolmentWriten, fenixPersistentSuport);
+
+			newListOfEnrollments = new ArrayList();
+			newListOfEnrollments.addAll(pastEnrolments);
+			newListOfEnrollments.remove(enrolmentInSH);
+
+			System.out.println("PASSEI NO enrolmentInSH");
+		} else
+		{
+			newListOfEnrollments = pastEnrolments;
+		}
+		
+		MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.clear();
+		MakeEquivalencesForAllStudentsPastEnrolments.enrollmentEvaluationsCreated.clear();
+		MakeEquivalencesForILEECStudents.enrolmentEquivalencesCreated.clear();
+		MakeEquivalencesForILEECStudents.equivalentEnrolmentForEnrolmentEquivalencesCreated.clear();
+		
+		return newListOfEnrollments;
 	}
 }
