@@ -251,7 +251,6 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 
-
 			<form-bean name="listGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="spanNumber" type="java.lang.Integer"/>
@@ -275,6 +274,17 @@
 				<form-property name="endContract" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
+
+			<form-bean name="grantOwnerStatsForm"
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="filterType" type="java.lang.Integer"/>
+				<form-property name="beginContract" type="java.lang.String"/>
+				<form-property name="endContract" type="java.lang.String"/>
+				<form-property name="project" type="java.lang.String"/>
+				<form-property name="costcenter" type="java.lang.String"/>
+				<form-property name="grantType" type="java.lang.Integer"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
 				
 			<form-bean name="correctGrantOwner" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -283,6 +293,7 @@
 				<form-property name="documentIdType" type="java.lang.Integer"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
+
 			<form-bean name="correctGrantContract" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="grantOwnerNumber" type="java.lang.String"/>
@@ -744,6 +755,17 @@
     </action>
 
 
+    <!-- ===================== USE CASE: GRANT OWNER STATS ============================== -->
+	<action path="/grantOwnerStats" 
+			input="/grantOwnerStats.do?page=0&amp;method=actionStart"
+			name="grantOwnerStatsForm" 
+			scope="request"
+   			parameter="method"
+		    validate="true"
+   			type="ServidorApresentacao.Action.grant.stat.GrantOwnerStatsAction">
+   			<forward name="grantowner-stats-options" path="grantOwnerStatsOptions"/>
+   			<forward name="grantowner-stats-results" path="grantOwnerStatsResults"/>
+    </action>
 
     <!-- ===================== USE CASE: CORRECT GRANT OWNER============================== -->
 	<action path="/correctGrantOwner" 

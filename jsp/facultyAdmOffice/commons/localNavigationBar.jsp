@@ -63,6 +63,16 @@
 	</ul>
 	
 	<br/>
+	<strong>&raquo; <bean:message key="link.grant.stats"/></strong>	
+	<ul>
+		<li>
+			<html:link page="/grantOwnerStats.do?method=actionStart">
+		    	<bean:message key="link.grant.owner.stats"/>
+		    </html:link>
+		</li>
+	</ul>
+	
+	<br/>
 	<strong>&raquo; <bean:message key="link.grant.correction"/></strong>	
 	<ul>
 		<li>

@@ -117,6 +117,14 @@
 		<put name="body" value="/facultyAdmOffice/grant/list/listGrantContractByCriteria.jsp"></put>
 	</definition>
 
+	<!-- GRANT STATS -->
+	<definition name="grantOwnerStatsOptions" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/stat/ShowGrantOwnerStatsOptions.jsp"></put>
+	</definition>
+	<definition name="grantOwnerStatsResults" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/stat/ShowGrantOwnerStatsResult.jsp"></put>
+	</definition>
+
 	<!-- GRANT CORRECTIONS -->
 	<definition name="correctGrantOwner" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/correction/grantOwnerCorrection.jsp"></put>
