@@ -59,7 +59,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
 				} catch (FenixServiceException e) {
 					throw new FenixActionException();
 				}
-				if (passwordPrint.booleanValue())
+				if ((passwordPrint != null) && passwordPrint.booleanValue())
 					infoMasterDegreeCandidate.getInfoPerson().setPassword(infoGuide.getInfoPerson().getPassword());
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 				
@@ -80,7 +80,46 @@ public class PrintGuideDispatchAction extends DispatchAction {
 
 	}
 		
+	public ActionForward print(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
 
+		
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			DynaActionForm createContributorForm = (DynaActionForm) form;
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+			
+			Integer number = new Integer(request.getParameter("number"));
+			Integer year = new Integer(request.getParameter("year"));
+			Integer version = new Integer(request.getParameter("version"));
+
+			InfoGuide infoGuide = null;			
+			try {
+				Object args[] = { number, year, version };
+				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException();
+			}
+
+			Locale locale = new Locale("pt", "PT");
+			Date date = new Date();
+
+			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+			session.setAttribute(SessionConstants.DATE, formatedDate);	
+			
+			session.setAttribute(SessionConstants.GUIDE, infoGuide);		
+			
+			return mapping.findForward("PrintOneGuide");
+		  } else
+			throw new Exception();   
+
+	}
 
 	  
 }

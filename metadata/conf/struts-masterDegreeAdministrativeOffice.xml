@@ -417,7 +417,7 @@
       </action>
 
 
-      <!-- action to choose a guide -->
+      <!-- action to edit a guide's Information -->
       <action attribute="editGuideInformationForm"
       		  input="/guide/editGuideInformation.jsp"
       	      name="editGuideInformationForm"
@@ -426,13 +426,16 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.EditGuideDispatchAction"
               validate="true">
+       		 <exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
          <forward name="PrepareReady" path="/guide/editGuideInformation.jsp"/> 
          <forward name="EditInformationSuccess" path="/guide/visualizeGuide.jsp"/> 
       </action>
 
 
 
-	  <!-- Action to Edit a Guide Situation -->
+	  <!-- Action to Edit a Guide's Situation -->
       <action attribute="editGuideSituationForm"
       		  input="/guide/editGuideSituation.jsp"
       	      name="editGuideSituationForm"
@@ -473,6 +476,7 @@
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.PrintGuideDispatchAction"
 			  >
 	         <forward name="PrintReady" path="/guide/printGuide.jsp"/> 
+	         <forward name="PrintOneGuide" path="/guide/guideTemplate1.jsp"/> 
       </action>
 
 

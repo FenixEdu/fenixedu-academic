@@ -541,18 +541,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoMasterDegreeCandidate infoMasterDegreeCandidateInSession = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
 
-
-			// Clear the Session
-			session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
-			session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
-			session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
-			session.removeAttribute(SessionConstants.SEX_LIST_KEY);
-			session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
-			session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
-			session.removeAttribute(SessionConstants.YEARS_KEY);
-			session.removeAttribute(SessionConstants.EXPIRATION_YEARS_KEY);
-			session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
-
 			infoMasterDegreeCandidateInSession.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
 	
 System.out.println("New Password: " + infoMasterDegreeCandidateInSession.getInfoPerson().getPassword());

@@ -81,10 +81,6 @@
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
-		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
     
     <!-- ========== Global Forward Definitions =============================== -->
@@ -99,7 +95,11 @@
       <!-- page fronting actions -->
       <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/personMainPage.jsp"/>
       <action path="/changePasswordForward" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/changePassword.jsp"/>
-     
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
+      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
+
+
+
 
 	  <!-- Action for home portal -->
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>

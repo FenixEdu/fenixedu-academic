@@ -21,7 +21,7 @@
           <table border="0" width="100%" height="100" align="center" cellpadding="0" cellspacing="0">
             <tr> 
               <td width="50" height="100">
-               <img src="/posgrad/Imagens/istlogo2.gif" width="50" height="104" border="0"/> 
+               <img src="<%= request.getContextPath() %>/posGraduacao/guide/images/istlogo.gif" width="50" height="104" border="0"/> 
               </td>
               <td>
                 &nbsp;

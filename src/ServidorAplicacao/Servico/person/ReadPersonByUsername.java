@@ -74,7 +74,7 @@ public class ReadPersonByUsername implements IServico {
 			throw new ExcepcaoInexistente("Unknown Person !!");	
 	
 		InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(person);
-		
+
 		return infoPerson;
     }
 }

@@ -30,8 +30,10 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
 import Util.EstadoCivil;
@@ -53,62 +55,67 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
+
+		// Clear the Session
+		session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
+		session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
+		session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
+		session.removeAttribute(SessionConstants.SEX_LIST_KEY);
+		session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
+		session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
+		session.removeAttribute(SessionConstants.YEARS_KEY);
+		session.removeAttribute(SessionConstants.EXPIRATION_YEARS_KEY);
+		session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
+
+
 		// Create Dates
 
 		Calendar birthDate = Calendar.getInstance();
 		Calendar idDocumentIssueDate = Calendar.getInstance();
 		Calendar idDocumentExpirationDate = Calendar.getInstance();
 
-		birthDate.set(
-			new Integer(
-				((String) changePersonalInformationForm.get("birthYear")))
-				.intValue(),
-			new Integer(
-				((String) changePersonalInformationForm.get("birthMonth")))
-				.intValue(),
-			new Integer(
-				((String) changePersonalInformationForm.get("birthDay")))
-				.intValue());
+		InfoPerson infoPerson = new InfoPerson();
 
-		idDocumentIssueDate.set(
-			new Integer(
-				((String) changePersonalInformationForm
-					.get("idIssueDateYear")))
-				.intValue(),
-			new Integer(
-				((String) changePersonalInformationForm
-					.get("idIssueDateMonth")))
-				.intValue(),
-			new Integer(
-				((String) changePersonalInformationForm.get("idIssueDateDay")))
-				.intValue());
 
-		idDocumentExpirationDate.set(
-			new Integer(
-				((String) changePersonalInformationForm
-					.get("idExpirationDateYear")))
-				.intValue(),
-			new Integer(
-				((String) changePersonalInformationForm
-					.get("idExpirationDateMonth")))
-				.intValue(),
-			new Integer(
-				((String) changePersonalInformationForm
-					.get("idExpirationDateDay")))
-				.intValue());
+		Integer day = new Integer((String) changePersonalInformationForm.get("birthDay"));
+		Integer month = new Integer((String) changePersonalInformationForm.get("birthMonth"));
+		Integer year = new Integer((String) changePersonalInformationForm.get("birthYear"));
+		
+		if ((day.equals(new Integer(-1))) || (month.equals(new Integer(-1))) || (year.equals(new Integer(-1))))
+				infoPerson.setNascimento(null);
+		else {
+			birthDate.set(year.intValue(),month.intValue(), day.intValue());
+			infoPerson.setNascimento(birthDate.getTime());			
+		}
+
+		day = new Integer((String) changePersonalInformationForm.get("idIssueDateDay"));
+		month = new Integer((String) changePersonalInformationForm.get("idIssueDateMonth"));
+		year = new Integer((String) changePersonalInformationForm.get("idIssueDateYear"));
+	
+		if ((day.equals(new Integer(-1))) || (month.equals(new Integer(-1))) || (year.equals(new Integer(-1))))
+				infoPerson.setDataEmissaoDocumentoIdentificacao(null);
+		else {
+			idDocumentIssueDate.set(year.intValue(),month.intValue(), day.intValue());
+			infoPerson.setDataEmissaoDocumentoIdentificacao(idDocumentIssueDate.getTime());
+		}
+			
+		day = new Integer((String) changePersonalInformationForm.get("idExpirationDateDay"));
+		month = new Integer((String) changePersonalInformationForm.get("idExpirationDateMonth"));
+		year = new Integer((String) changePersonalInformationForm.get("idExpirationDateYear"));
+
+		if ((day.equals(new Integer(-1))) || (month.equals(new Integer(-1))) || (year.equals(new Integer(-1))))
+				infoPerson.setDataValidadeDocumentoIdentificacao(null);
+		else {
+			idDocumentExpirationDate.set(year.intValue(),month.intValue(), day.intValue());
+			infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
+		}
+			
 
 		InfoCountry nationality = new InfoCountry();
 		nationality.setNationality(
 			(String) changePersonalInformationForm.get("nationality"));
 
 		Object changeArgs[] = new Object[2];
-		InfoPerson infoPerson = new InfoPerson();
-
-		infoPerson.setDataEmissaoDocumentoIdentificacao(
-			idDocumentIssueDate.getTime());
-		infoPerson.setDataValidadeDocumentoIdentificacao(
-			idDocumentExpirationDate.getTime());
-		infoPerson.setNascimento(birthDate.getTime());
 
 		infoPerson.setTipoDocumentoIdentificacao(
 			new TipoDocumentoIdentificacao(
@@ -121,11 +128,20 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 			(String) changePersonalInformationForm.get(
 				"identificationDocumentIssuePlace"));
 		infoPerson.setNome((String) changePersonalInformationForm.get("name"));
-		infoPerson.setSexo(
-			new Sexo((String) changePersonalInformationForm.get("sex")));
-		infoPerson.setEstadoCivil(
-			new EstadoCivil(
-				(String) changePersonalInformationForm.get("maritalStatus")));
+		
+		String aux = (String) changePersonalInformationForm.get("sex"); 
+		if ((aux == null) || (aux.length() == 0))
+			infoPerson.setSexo(null);
+		else 
+			infoPerson.setSexo(new Sexo(aux));
+			
+		aux = (String) changePersonalInformationForm.get("maritalStatus"); 
+		if ((aux == null) || (aux.length() == 0))
+			infoPerson.setEstadoCivil(null);
+		else 
+			infoPerson.setEstadoCivil(new EstadoCivil(aux));
+
+
 		infoPerson.setInfoPais(nationality);
 		infoPerson.setNomePai(
 			(String) changePersonalInformationForm.get("fatherName"));
@@ -201,8 +217,11 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		changeArgs[0] = userView;
 
 		Object result = null;
-
-		result = gestor.executar(userView, "ReadPersonByUsername", changeArgs);
+		try {
+			result = gestor.executar(userView, "ReadPersonByUsername", changeArgs);
+		} catch(FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
 		InfoPerson infoPerson = (InfoPerson) result;
 
@@ -345,9 +364,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		if (infoPerson.getSexo() != null)
 			changePersonalInfoForm.set("sex", infoPerson.getSexo().toString());
 		if (infoPerson.getEstadoCivil() != null)
-			changePersonalInfoForm.set(
-				"maritalStatus",
-				infoPerson.getEstadoCivil().toString());
+			changePersonalInfoForm.set("maritalStatus", infoPerson.getEstadoCivil().toString());
 
 		// Get List of available Countries
 		result = null;
@@ -367,12 +384,8 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 		}
 		
 		session.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-		session.setAttribute(
-			SessionConstants.MARITAL_STATUS_LIST_KEY,
-			new EstadoCivil().toArrayList());
-		session.setAttribute(
-			SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-			TipoDocumentoIdentificacao.toArrayList());
+		session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY,new EstadoCivil().toArrayList());
+		session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,TipoDocumentoIdentificacao.toArrayList());
 		session.setAttribute(SessionConstants.SEX_LIST_KEY, new Sexo().toArrayList());
 		session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
 		session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());

@@ -36,7 +36,7 @@
 
        <br/>
            <td align="right">
-             <html:submit value="Editar" styleClass="button" property="ok"/>
+             <html:submit value="Alterar" styleClass="button" property="ok"/>
              <html:reset value="Limpar" styleClass="button"/>
          </td>
     </html:form>

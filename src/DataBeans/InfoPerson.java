@@ -133,17 +133,36 @@ public class InfoPerson {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		StringBuffer buffer = new StringBuffer("[InfoPerson ,");
-		buffer.append("Numero de identificacao=");
-		buffer.append(this.getNumeroDocumentoIdentificacao());
-		buffer.append(", Tipo documento identificacao=");
-		buffer.append(this.getTipoDocumentoIdentificacao());
-		buffer.append(",Nome=");
-		buffer.append(this.getNome());
-		buffer.append(",Password=");
-		buffer.append(this.getPassword());
-		buffer.append("]");
-		return buffer.toString();
+		String result = "Person :\n";
+		result += "\n  - Identification Document Number : "+ numeroDocumentoIdentificacao;
+		result += "\n  - Identification Document Type : "+ tipoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Place : "+ localEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Date : "+ dataEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Expiration Date : "+ dataValidadeDocumentoIdentificacao;
+		result += "\n  - Name : " + nome;
+		result += "\n  - Birth : " + nascimento;
+		result += "\n  - Father Name : " + nomePai;
+		result += "\n  - Mother Name : " + nomeMae;
+		result += "\n  - Nationality : " + nacionalidade;
+		result += "\n  - Birth Place Parish : " + freguesiaNaturalidade;
+		result += "\n  - Birth Place Municipality : " + concelhoNaturalidade;
+		result += "\n  - Birth Place District : " + distritoNaturalidade;
+		result += "\n  - Address : " + morada;
+		result += "\n  - Place : " + localidade;
+		result += "\n  - Post Code : " + codigoPostal;
+		result += "\n  - Address Parish : " + freguesiaMorada;
+		result += "\n  - Address Municipality : " + concelhoMorada;
+		result += "\n  - Address District : " + distritoMorada;
+		result += "\n  - Telephone : " + telefone;
+		result += "\n  - MobilePhone : " + telemovel;
+		result += "\n  - E-Mail : " + email;
+		result += "\n  - HomePage : " + enderecoWeb;
+		result += "\n  - Contributor Number : " + numContribuinte;
+		result += "\n  - Username : " + username;
+		result += "\n  - Password : " + password;
+		result += "\n  - Occupation : " + profissao;
+		result += "\n  - Codigo Fiscal : " + codigoFiscal;
+		return result;
 	}
 
 

@@ -34,90 +34,81 @@
         <arg0 key="Este" resource="false" />
       </field>
 
-<!--
-      
-      <field property="name" depends="required" page="1">
+
+      <field property="name" depends="required" page="2">
         <arg0 key="label.person.name" />
       </field>
 
-      <field property="areaOfAreaCode" depends="required" page="1">
+      <field property="areaOfAreaCode" depends="required" page="2">
         <arg0 key="label.person.areaOfPostCode" />
       </field>
       
-      <field property="fatherName" depends="required" page="1">
+      <field property="fatherName" depends="required" page="2">
         <arg0 key="label.person.fatherName" />
       </field>
       
-      <field property="motherName" depends="required" page="1">
+      <field property="motherName" depends="required" page="2">
         <arg0 key="label.person.motherName" />
       </field>
       
-      <field property="birthPlaceParish" depends="required" page="1">
+      <field property="birthPlaceParish" depends="required" page="2">
         <arg0 key="label.person.birthPlaceParish" />
       </field>
       
-      <field property="birthPlaceMunicipality" depends="required" page="1">
+      <field property="birthPlaceMunicipality" depends="required" page="2">
         <arg0 key="label.person.birthPlaceMunicipality" />
       </field>
       
-      <field property="birthPlaceDistrict" depends="required" page="1">
+      <field property="birthPlaceDistrict" depends="required" page="2">
         <arg0 key="label.person.birthPlaceDistrict" />
       </field>
       
-      <field property="identificationDocumentNumber" depends="required" page="1">
+      <field property="identificationDocumentNumber" depends="required" page="2">
         <arg0 key="label.person.identificationDocumentNumber" />
       </field>
       
-      <field property="identificationDocumentIssuePlace" depends="required" page="1">
+      <field property="identificationDocumentIssuePlace" depends="required" page="2">
         <arg0 key="label.person.identificationDocumentIssuePlace" />
       </field>
       
-      <field property="address" depends="required" page="1">
+      <field property="address" depends="required" page="2">
         <arg0 key="label.person.address" />
       </field>
       
-      <field property="place" depends="required" page="1">
+      <field property="place" depends="required" page="2">
         <arg0 key="label.person.place" />
       </field>
       
-      <field property="postCode" depends="required" page="1">
+      <field property="postCode" depends="required" page="2">
         <arg0 key="label.person.postCode" />
       </field>
       
-      <field property="addressParish" depends="required" page="1">
+      <field property="addressParish" depends="required" page="2">
         <arg0 key="label.person.addressParish" />
       </field>
       
-      <field property="addressMunicipality" depends="required" page="1">
+      <field property="addressMunicipality" depends="required" page="2">
         <arg0 key="label.person.addressMunicipality" />
       </field>
       
-      <field property="addressDistrict" depends="required" page="1">
+      <field property="addressDistrict" depends="required" page="2">
         <arg0 key="label.person.addressDistrict" />
       </field>
       
-      <field property="telephone" depends="required,integer" page="1">
+      <field property="telephone" depends="integer" page="2">
         <arg0 key="label.person.telephone" />
       </field>
       
-      <field property="mobilePhone" depends="required,integer" page="1">
-        <arg0 key="label.person.mobilePhone" />
-      </field>
-      
-      <field property="email" depends="email" page="1">
-        <arg0 key="Este" resource="false" />
-      </field>
-
-      <field property="contributorNumber" depends="required,integer" page="1">
+      <field property="contributorNumber" depends="required,integer" page="2">
         <arg0 key="label.person.contributorNumber" />
       </field>
 	
-      <field property="occupation" depends="required" page="1">
+      <field property="occupation" depends="required" page="2">
         <arg0 key="label.person.occupation" />
       </field>
 	
         <field property="birthYear"
-               depends="required,validateDate" page="1">
+               depends="required,validateDate" page="2">
                   <arg0 key="Data de Nascimento" />
                   <var>
                      <var-name>month</var-name>
@@ -130,7 +121,7 @@
         </field>
 
         <field property="idIssueDateYear"
-               depends="required,validateDate" page="1">
+               depends="required,validateDate" page="2">
                   <arg0 key="Data de Emissao do Documento de Identificacao" />
                   <var>
                      <var-name>month</var-name>
@@ -143,7 +134,7 @@
         </field>
 
         <field property="idExpirationDateYear"
-               depends="required,validateDate" page="1">
+               depends="required,validateDate" page="2">
                   <arg0 key="Data de Validade do Documento de Identificacao" />
                   <var>
                      <var-name>month</var-name>
@@ -155,7 +146,7 @@
                   </var>
         </field>
 
-      <field property="postCode" depends="mask" page="1">
+      <field property="postCode" depends="mask" page="2">
         <msg name="mask" key="errors.invalid.zipCode"/>
         <var>
         	<var-name>mask</var-name>
@@ -165,10 +156,10 @@
       </field>
       
       
-      <field property="sex" depends="required" page="1">
+      <field property="sex" depends="required" page="2">
         <arg0 key="label.person.sex" />
       </field>
--->      
+
     </form>
 
 

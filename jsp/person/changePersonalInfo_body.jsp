@@ -19,10 +19,13 @@
    <table>
    		<bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
     	<html:form action="/changePersonalInfoDispatchAction?method=change">
-   	    <html:hidden property="page" value="1"/>
+
    	    
        	<html:hidden property="name" />
       	<html:hidden property="username" />
+      	<html:hidden property="identificationDocumentType" />
+      	<html:hidden property="identificationDocumentNumber" />
+
    	  
         <tr>
           <td colspan="2"><h2><bean:message key="label.person.title.changePersonalInfo" /></h2></td>
@@ -33,6 +36,7 @@
                    (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)) && 
                    (userView.getCandidateView().changeablePersonalInfo())) { %>
 
+        	    <html:hidden property="page" value="2"/>
                 <!-- Estado Civil -->
                 <tr>
                  <td><bean:message key="label.person.maritalStatus" /></td>
@@ -84,11 +88,6 @@
                  <td><bean:message key="label.person.birthPlaceDistrict" /></td>
                   <td><html:text property="birthPlaceDistrict"/></td>
                 </tr>
-                <!-- Numero do Documento de Identificacao -->
-                <tr>
-                 <td><bean:message key="label.person.identificationDocumentNumber" /></td>
-                  <td><html:text property="identificationDocumentNumber"/></td>
-                </tr>
                 <!-- Local de Emissao do Documento de Identificacao -->
                 <tr>
                  <td><bean:message key="label.person.identificationDocumentIssuePlace" /></td>
@@ -126,15 +125,6 @@
                 </tr>
         
         
-                <!-- Tipo do Documento de Identificacao -->
-                <tr>
-                 <td><bean:message key="label.person.identificationDocumentType" /></td>
-                 <td>
-                    <html:select property="identificationDocumentType">
-                        <html:options collection="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY %>" property="value" labelProperty="label"/>
-                     </html:select>          
-                 </td>
-                </tr>
                 <!-- Morada -->
                 <tr>
                  <td><bean:message key="label.person.address" /></td>
@@ -236,6 +226,7 @@
               	<html:hidden property="idExpirationDateMonth" />
               	<html:hidden property="idExpirationDateYear" />
               	<html:hidden property="areaOfAreaCode" />
+       	   	    <html:hidden property="page" value="1"/>
          	<% } %>
 
 

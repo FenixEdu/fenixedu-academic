@@ -94,12 +94,14 @@ public class GuideSituationOJB extends ObjectFenixOJB implements IPersistentGuid
 			String oqlQuery = "select all from " + GuideSituation.class.getName()
 							+ " where guide.number = $1"
 							+ " and guide.year = $2"
-							+ " and situation = $3";
+							+ " and guide.version = $3"
+							+ " and situation = $4";
 			
 			query.create(oqlQuery);
 
 			query.bind(guide.getNumber());
 			query.bind(guide.getYear());
+			query.bind(guide.getVersion());
 			query.bind(situationOfGuide.getSituation());
 			
 

@@ -24,6 +24,12 @@
             <td><bean:write name="masterDegreeCandidate" property="candidateNumber"/></td>
           </tr>
 
+          <!-- Specialization -->
+          <tr>
+            <td><bean:message key="label.candidate.specialization" /></td>
+            <td><bean:write name="masterDegreeCandidate" property="specialization"/></td>
+          </tr>
+
           <tr></tr>
           <tr></tr>      
           <tr></tr>

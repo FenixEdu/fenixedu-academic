@@ -238,6 +238,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
 			String password = null;
 			// Get the information
+			
+			session.removeAttribute(SessionConstants.PRINT_PASSWORD);
 
 			String othersRemarks = (String) createGuideForm.get("othersRemarks");
 			String othersPriceString = (String) createGuideForm.get("othersPrice");
@@ -246,7 +248,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			String paymentType = (String) createGuideForm.get("paymentType");
 			
 			
-			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
+//			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
 			
 			// Check if the Guide will have a "Payed" situation and if the payment type has been chosen
 			

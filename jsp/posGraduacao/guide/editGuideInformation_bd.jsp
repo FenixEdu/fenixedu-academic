@@ -24,8 +24,10 @@
 	  />
 	 </strong>
   	 <br>
+  	 <br>
       <span class="error"><html:errors/></span>
       <br>
+  	 <br>
 
      <table>
           <tr>
@@ -62,8 +64,11 @@
 	</table>
 
 	<br>
+	
+	<bean:define id="link">/editGuideInformation.do?method=editGuideInformation<%= "&" %>page=0<%= "&" %>year=<bean:write name="year"/><%= "&" %>number=<bean:write name="number"/><%= "&" %>version=<bean:write name="version"/>
+    </bean:define>
 
-    <html:form action="/editGuideInformation.do?method=editGuideInformation">
+    <html:form action='<%= pageContext.findAttribute("link").toString() %>'>
 
 	<table>
       <tr> 

@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.contributor;
 
 import DataBeans.InfoContributor;
+import DataBeans.util.Cloner;
 import Dominio.Contributor;
 import Dominio.IContributor;
 import ServidorAplicacao.FenixServiceException;
@@ -44,7 +45,7 @@ public class EditContributor implements IServico {
 		return "EditContributor";
 	}
 
-	public void run(InfoContributor infoContributor, Integer contributorNumber, String contributorName, String contributorAddress) throws Exception{
+	public InfoContributor run(InfoContributor infoContributor, Integer contributorNumber, String contributorName, String contributorAddress) throws Exception{
 
 		IContributor contributorBD = new Contributor();
 		
@@ -71,5 +72,7 @@ public class EditContributor implements IServico {
 			newEx.fillInStackTrace();
 			throw newEx;
 		} 
+		
+		return Cloner.copyIContributor2InfoContributor(contributorBD);
 	}
 }

@@ -37,9 +37,14 @@ public class GuideEntryOJB extends ObjectFenixOJB implements IPersistentGuideEnt
 						guideEntryToWrite.getDocumentType(),
 						guideEntryToWrite.getDescription());
 
+
+
 		// if (guideEntry not in database) then write it
-		if (guideEntryBD == null)
+		if (guideEntryBD == null) {
 			super.lockWrite(guideEntryToWrite);
+			return;
+			
+		}
 		// else if (guideEntry is mapped to the database then write any existing changes)
 		else if ((guideEntryToWrite instanceof IGuideEntry) &&
 				 ((GuideEntry) guideEntryBD).getInternalCode().equals(
@@ -54,8 +59,10 @@ public class GuideEntryOJB extends ObjectFenixOJB implements IPersistentGuideEnt
 			// No need to werite it because it is already mapped.
 			//super.lockWrite(lessonToWrite);
 			// else throw an AlreadyExists exception.
-		} else
+		} else {
 			throw new ExistingPersistentException();
+		}
+			
 	}
 
 	public void delete(IGuideEntry guideEntry) throws ExcepcaoPersistencia {
@@ -86,14 +93,16 @@ public class GuideEntryOJB extends ObjectFenixOJB implements IPersistentGuideEnt
 			String oqlQuery = "select all from " + GuideEntry.class.getName()
 							+ " where guide.number = $1"
 							+ " and guide.year = $2"
-							+ " and graduationType = $3"
-							+ " and documentType = $4"
-							+ " and description = $5";
+							+ " and guide.version = $3"
+							+ " and graduationType = $4"
+							+ " and documentType = $5"
+							+ " and description = $6";
 			
 			query.create(oqlQuery);
 
 			query.bind(guide.getNumber());
 			query.bind(guide.getYear());
+			query.bind(guide.getVersion());
 			query.bind(graduationType.getType());
 			query.bind(documentType.getType());
 			query.bind(description);

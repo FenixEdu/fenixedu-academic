@@ -24,7 +24,7 @@
 				   arg2='<%= pageContext.findAttribute("year").toString() %>' 
 	  />
 	 </strong>
-	 	
+	 
      <table>
      
 
@@ -168,6 +168,15 @@
         				<bean:message key="link.masterDegree.administrativeOffice.changeGuideInformation" />
         			</html:link>
         		</td>
+        		
+	       		<td width="30%">
+        			<bean:define id="linkPrintGuide">/printGuide.do?method=print<bean:write name="arguments"/>
+                	</bean:define>
+        			<html:link page='<%= pageContext.findAttribute("linkPrintGuide").toString() %>' target="_blank">
+        				<bean:message key="link.masterDegree.administrativeOffice.printGuide" />
+        			</html:link>
+        		</td>
+        		
         		</tr>
         	</table> 
         	<% } else { %>

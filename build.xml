@@ -103,11 +103,16 @@
 	    	dir="${webapp.metadata}"
 	    	propertyFile="build.properties">
 	    	<include name="**/**/*.xml"/>
+	    	<include name="**/**/ApplicationResources.properties"/>
+	    	
 		  <replacefilter 
 		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
 		    token="@db.user@" 
 		    property="db.user"/>
+		  <replacefilter 
+		    token="@login.page@" 
+		    property="login.page"/>
 		  <replacefilter 
 		    token="@db.pass@" 
 		    property="db.pass"/>

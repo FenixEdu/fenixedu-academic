@@ -199,13 +199,14 @@ public class ListContributorsDispatchAction extends DispatchAction {
 			String contributorAddress = (String) editContributorForm.get("contributorAddress");
 			
 			Object args[] = { infoContributor, contributorNumber , contributorName, contributorAddress};
+			InfoContributor newInfoContributor = null;
 			try {
-				serviceManager.executar(userView, "EditContributor", args);
+				newInfoContributor = (InfoContributor) serviceManager.executar(userView, "EditContributor", args);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException("O Contribuinte", e);
 			}
 			
-			session.removeAttribute(SessionConstants.CONTRIBUTOR);
+			session.setAttribute(SessionConstants.CONTRIBUTOR, newInfoContributor);
 			return mapping.findForward("EditSuccess");
 			
 		} else
