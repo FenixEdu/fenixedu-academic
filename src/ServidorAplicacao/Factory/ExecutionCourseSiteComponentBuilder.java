@@ -26,6 +26,7 @@ import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
@@ -42,6 +43,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEvaluation;
+import Dominio.IExam;
 import Dominio.IItem;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -124,8 +126,29 @@ public class ExecutionCourseSiteComponentBuilder {
 				site,
 				(InfoSiteCommon) commonComponent,
 				sectionIndex);
+		} else if (component instanceof InfoSiteExam) {
+			return getInfoSiteExam((InfoSiteExam) component, site);
 		}
 		return null;
+	}
+
+	/**
+	 * @param exam
+	 * @param site
+	 * @return
+	 */
+	private ISiteComponent getInfoSiteExam(InfoSiteExam component, ISite site) {
+		
+		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+		List exams = executionCourse.getAssociatedExams();
+		List infoExams = new ArrayList();
+		Iterator iter = exams.iterator();
+		while (iter.hasNext()){
+			IExam exam = (IExam) iter.next();
+			infoExams.add(Cloner.copyIExam2InfoExam(exam));
+		}
+		component.setInfoExams(infoExams);
+		return component;
 	}
 
 	/**
