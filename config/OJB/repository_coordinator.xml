@@ -1,0 +1,44 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+<!-- Definitions for Dominio.Coordinator -->
+   <class-descriptor
+   	  class="Dominio.Coordinator"
+   	  table="COORDINATOR"
+   >
+      <field-descriptor 
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+     <field-descriptor
+		name="responsible"
+		column="RESPONSIBLE"
+		jdbc-type="BIT"
+	/>
+      <field-descriptor
+		name="keyTeacher"
+		column="KEY_TEACHER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyExecutionDegree"
+		column="KEY_EXECUTION_DEGREE"
+		jdbc-type="INTEGER"
+	/>
+    <reference-descriptor
+			name="executionDegree"
+			class-ref="Dominio.CursoExecucao"
+			proxy="true">
+		<foreignkey field-ref="keyExecutionDegree"/>
+	</reference-descriptor>   
+	 <reference-descriptor
+			name="teacher"
+			class-ref="Dominio.Teacher"
+			proxy="true">
+		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>   
+   </class-descriptor>
+<!-- Mapping of User defined classses ends here -->
