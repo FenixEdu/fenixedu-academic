@@ -6,6 +6,7 @@
 <html:form action="/manipularSalas">
   <center> <b> <bean:message key="manipularSalas.titleSuccess"/> </b> </center>
   <br/>
+  <span class="error"><html:errors/></span>
   <logic:present name="publico.infoRooms" scope="session">
     <table align="center" border=1 cellpadding='5'>
       <%! int i; %>

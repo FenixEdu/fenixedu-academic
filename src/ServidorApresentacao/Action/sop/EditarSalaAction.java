@@ -15,7 +15,9 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 
@@ -38,7 +40,8 @@ public class EditarSalaAction extends FenixAction {
 			(ArrayList) session.getAttribute("publico.infoRooms");
 		DynaActionForm posicaoSalaFormBean =
 			(DynaActionForm) session.getAttribute("posicaoFormBean");
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView userView =
+			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		DynaActionForm salaBean = (DynaActionForm) form;
 
@@ -47,18 +50,23 @@ public class EditarSalaAction extends FenixAction {
 				(String) salaBean.get("name"),
 				(String) salaBean.get("building"),
 				new Integer((String) salaBean.get("floor")),
-				new TipoSala(new Integer((String)salaBean.get("type"))),
-				new Integer((String)salaBean.get("capacityNormal")),
+				new TipoSala(new Integer((String) salaBean.get("type"))),
+				new Integer((String) salaBean.get("capacityNormal")),
 				new Integer((String) salaBean.get("capacityExame")));
 
 		Object argsCriarSala[] =
 			{
 				new RoomKey((String) session.getAttribute("previousNameSala")),
 				sala };
-		GestorServicos.manager().executar(
-			userView,
-			"EditarSala",
-			argsCriarSala);
+
+		try {
+			GestorServicos.manager().executar(
+				userView,
+				"EditarSala",
+				argsCriarSala);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException("A Sala", e);
+		}
 
 		session.removeAttribute("previousNameSala");
 

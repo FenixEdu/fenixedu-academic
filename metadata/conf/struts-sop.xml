@@ -392,13 +392,15 @@
         <forward name="EditarSala" path="/editarSala.jsp" />
       </action>
 
-      <action 
-      	attribute="criarSalaForm"
-      		input="/manipularSalas.jsp"
-	      path="/editarSala"
-	      name="roomForm"
+      <action attribute="criarSalaForm"
+      		  input="/manipularSalas.jsp"
+	          path="/editarSala"
+	          name="roomForm"
               scope="request"
               type="ServidorApresentacao.Action.sop.EditarSalaAction">
+         <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                    />
         <forward name="Sucesso" path="/manipularSalas.jsp" />
       </action>
 

@@ -52,7 +52,6 @@ public class CriarSalaFormAction extends Action {
 			try {
 				gestor.executar(userView, "CriarSala", argsCriarSala);
 			} catch (ExistingServiceException e) {
-				System.out.println("================1");
 				throw new ExistingActionException("A Sala", e);
 			} 
 			return mapping.findForward("Sucesso");

@@ -15,6 +15,7 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -41,7 +42,8 @@ public class EditarSala implements IServico {
     return "EditarSala";
   }
 
-  public Object run(RoomKey salaAntiga, InfoRoom salaNova) {
+  public Object run(RoomKey salaAntiga, InfoRoom salaNova)
+  	throws ExistingServiceException {
 
     ISala sala = null;
     boolean result = false;
@@ -50,6 +52,13 @@ public class EditarSala implements IServico {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
       sala = sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
+
+      if (!sala.getNome().equals(salaNova.getNome())) { 
+		  ISala roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
+	  	if (roomWithSameName != null)
+			throw new ExistingServiceException();
+      }
+
       if (sala != null) {
           sala.setNome(salaNova.getNome());
           sala.setEdificio(salaNova.getEdificio());
