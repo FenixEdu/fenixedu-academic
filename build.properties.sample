@@ -18,7 +18,8 @@ db.user=root
 db.pass=
 db.alias=//localhost:3306/ciapl
 login.page=https://fenix.ist.utl.pt/loginPage.jsp
-
+#application must be intranet or (extranet = <empty string>)
+application=extranet
 validation.doctype=<!DOCTYPE form-validation PUBLIC \n \
                      "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN" \n \
                      "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
