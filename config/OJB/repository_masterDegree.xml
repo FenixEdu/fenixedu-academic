@@ -64,6 +64,11 @@
 	     column="SPECIALIZATION_AREA"
 	     jdbc-type="VARCHAR"
 	  />
+	  <field-descriptor id="11"
+	     name="substituteOrder"
+	     column="SUBSTITUTE_ORDER"
+	     jdbc-type="INTEGER"
+	  />
 
       	  <reference-descriptor
          	name="person"
@@ -91,7 +96,10 @@
            <inverse-foreignkey field-ref="candidateKey"/>
          </collection-descriptor>
 
-
+   		<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+     	
 	</class-descriptor>
 
 <!-- End of definitions for class MASTER_DEGREE_CANDIDATE -->
@@ -100,9 +108,9 @@
 
 	<class-descriptor
 		class="Dominio.CandidateSituation"
-		table="CANDIDATE_SITUATION"
-	>
-	  <field-descriptor id="1"
+		table="CANDIDATE_SITUATION">
+
+      <field-descriptor
 	     name="internalCode"    
 	     column="ID_INTERNAL"  
 	     jdbc-type="INTEGER"
@@ -110,33 +118,33 @@
 	     autoincrement="true"
 	  />
 	 
-	  <field-descriptor id="2"
+	  <field-descriptor
 	     name="date"
 	     column="DATE"
 	     jdbc-type="DATE"
 	  />
 	  
-	  <field-descriptor id="3"
+	  <field-descriptor
 	     name="remarks"
 	     column="REMARKS"
 	     jdbc-type="CLOB"
 	      conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	  />
 	  
-	  <field-descriptor id="4"
+	  <field-descriptor
 	     name="validation"
 	     column="VALIDATION"
 	     jdbc-type="INTEGER"
 	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
 	  />
 	  
-	  <field-descriptor id="5"
+	  <field-descriptor
 	     name="candidateKey"
 	     column="CANDIDATE_KEY"
 	     jdbc-type="INTEGER"
 	  />
 
-	  <field-descriptor id="6"
+	  <field-descriptor
 	     name="situation"
 	     column="SITUATION"
 	     jdbc-type="INTEGER"
@@ -147,12 +155,14 @@
          	name="masterDegreeCandidate"
          	class-ref="Dominio.MasterDegreeCandidate"
          	proxy="true"
-			refresh="true"
-      	  >
-          <foreignkey field-id-ref="5"/>
-          </reference-descriptor>
-         
-
+			refresh="true">
+          <foreignkey field-ref="candidateKey"/>
+      </reference-descriptor>
+		
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+     	
 	</class-descriptor>
           
 <!-- End of Definitions for class CANDIDATE_SITUATION -->
