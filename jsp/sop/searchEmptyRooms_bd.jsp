@@ -14,7 +14,8 @@
                     </td>
                     <td nowrap class="formTD">
                         <html:select property="weekDay"  size="1">
-                        	<option value="1" selected="selected">Todos os dias</option>
+                            <!-- TODO : Change query to allow wildcards with weekdays (all weekdays)-->
+                        	<option value="1" selected="selected">Dia da Semana</option>
                             <html:options collection="weekDays" property="value" labelProperty="label"/>
                         </html:select>
                    </td>
