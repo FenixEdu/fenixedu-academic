@@ -578,4 +578,20 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new CurricularCourseEquivalenceRestrictionOJB();
 	}
 
+	public IPersistentMetadata getIPersistentMetadata() {
+		return new MetadataOJB();
+	}
+
+	public IPersistentQuestion getIPersistentQuestion() {
+		return new QuestionOJB();
+	}
+
+	public IPersistentTest getIPersistentTest() {
+		return new TestOJB();
+	}
+
+	public IPersistentTestQuestion getIPersistentTestQuestion() {
+		return new TestQuestionOJB();
+	}
+
 }
