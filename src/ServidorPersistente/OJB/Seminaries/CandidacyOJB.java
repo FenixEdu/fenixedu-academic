@@ -56,7 +56,8 @@ public class CandidacyOJB extends ObjectFenixOJB implements IPersistentSeminaryC
 		Integer case4Id,
 		Integer case5Id,
 		Integer curricularCourseID,
-		Integer degreeID)
+		Integer degreeID,
+		Boolean approved)
 		throws ExcepcaoPersistencia
 	{
 		Criteria criteria= new Criteria();
@@ -68,6 +69,8 @@ public class CandidacyOJB extends ObjectFenixOJB implements IPersistentSeminaryC
 			criteria.addEqualTo("curricular_course_id_internal", curricularCourseID);
 		if (themeID.intValue() != -1)
 			criteria.addEqualTo("seminary_theme_id_internal", themeID);
+		if (approved != null)
+			criteria.addEqualTo("approved", approved);
 		if (degreeID.intValue() != -1)
 		{
 			Criteria criteriaDegree= new Criteria();

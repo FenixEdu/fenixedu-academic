@@ -4,10 +4,9 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Servico.commons;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import ServidorAplicacao.IServico;
 import Util.EMail;
 /**
@@ -38,7 +37,14 @@ public class SendMail implements IServico
 		return "commons.SendMail";
 	}
 	//returns the list of the e-mail addresses to which it wasn't possible to deliver the mail
-	public List run(List toList, String fromName, String from, String subject, String text)
+	public List run(
+		List toList,
+		List ccList,
+		List bccList,
+		String fromName,
+		String from,
+		String subject,
+		String text)
 	{
 		if (bundle == null)
 		{
@@ -49,21 +55,12 @@ public class SendMail implements IServico
 			}
 			catch (Exception e)
 			{
-                // the default server
-				SendMail.mailServer = "mail.adm";
+				// the default server
+				SendMail.mailServer= "mail.adm";
 			}
 		}
-		List failedMails= new LinkedList();
-		for (Iterator iter= toList.iterator(); iter.hasNext();)
-		{
-			String composedFrom= new String();
-			String to= (String) iter.next();
-			if (!fromName.equals(""))
-				composedFrom= "\"" + fromName + "\"" + " <" + from + ">";
-			EMail email= new EMail(SendMail.mailServer, composedFrom);
-			if (!email.send(to, subject, text))
-				failedMails.add(to);
-		}
+		List failedMails;
+		failedMails= EMail.send(SendMail.mailServer, fromName, from, subject, toList, ccList, bccList, text);
 		return failedMails;
 	}
 }

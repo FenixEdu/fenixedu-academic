@@ -147,6 +147,14 @@ public class SendMailToAllStudents extends FenixDispatchAction
 		Integer curricularCourseID;
 		Integer degreeID;
 		Integer seminaryID;
+        Boolean approved= null;
+        //
+        //
+        String stringApproved= (String) request.getParameter("approved");
+        if (stringApproved != null && (stringApproved.equals("true") || stringApproved.equals("false")))
+            approved= new Boolean(stringApproved);
+        //
+        //        
 		try
 		{
 			themeID= new Integer((String) request.getParameter("themeID"));
@@ -238,7 +246,8 @@ public class SendMailToAllStudents extends FenixDispatchAction
 				case4Id,
 				case5Id,
 				curricularCourseID,
-				degreeID };
+				degreeID,
+                approved };
 		return arguments;
 	}
 	public ActionForward sendMailCandidacies(
@@ -318,17 +327,21 @@ public class SendMailToAllStudents extends FenixDispatchAction
 			}
 			// and finnaly, let us send the emaaaaaaaails !
 			List toList= new LinkedList();
+            List bccList= new LinkedList();
+            toList.add(from);
+            List ccList = new LinkedList();            
 			for (Iterator iter= candidaciesExtendedInfo.iterator(); iter.hasNext();)
 			{
 				InfoStudent infoStudent= ((InfoCandidacyDetails) iter.next()).getStudent();
-				toList.add(infoStudent.getInfoPerson().getEmail());
+                bccList.add(infoStudent.getInfoPerson().getEmail());
 			}
-			Object[] argsSendMails= { toList, fromName, from, subject, text };
-			failedEmails= (List) gestor.executar(userView, "commons.SendMail", argsSendMails);
+            Object[] argsSendMails= { toList, ccList,bccList,fromName, from, subject, text };
+            failedEmails= (List) gestor.executar(userView, "commons.SendMail", argsSendMails);
 		}
 		catch (Exception e)
 		{
-			throw new FenixActionException();
+            e.printStackTrace();
+			throw new FenixActionException(e);
 		}
 		ActionErrors actionErrors= new ActionErrors();
 		for (Iterator iter= failedEmails.iterator(); iter.hasNext();)
@@ -421,13 +434,16 @@ public class SendMailToAllStudents extends FenixDispatchAction
 				//
 				// and finnaly, let us send the emaaaaaaaails !
 				//
-				List toList= new LinkedList();
+				List bccList= new LinkedList();
+                List toList = new LinkedList();
+                toList.add(from);
+                List ccList = new LinkedList();
 				for (Iterator iter= infoSiteStudents.getStudents().iterator(); iter.hasNext();)
 				{
 					InfoStudent infoStudent= (InfoStudent) iter.next();
-					toList.add(infoStudent.getInfoPerson().getEmail());
+					bccList.add(infoStudent.getInfoPerson().getEmail());
 				}
-				Object[] argsSendMails= { toList, fromName, from, subject, text };
+				Object[] argsSendMails= { toList, ccList,bccList,fromName, from, subject, text };
 				failedEmails= (List) gestor.executar(userView, "commons.SendMail", argsSendMails);
 			}
 			catch (FenixServiceException e)

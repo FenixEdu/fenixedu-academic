@@ -6,6 +6,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.TreeMap" %>
 
+<span class="error"><html:errors/></span>
 	<logic:present name="seminaries">
 		<logic:present name="cases">
 			<logic:present name="modalities">
@@ -173,19 +174,24 @@
 										</html:select>
 									</td>
 								</tr>
-								<%--
 								<tr>
 									<td>
+										<bean:message key="label.onlyApproved"/>
 									</td>
 									<td>
 										<html:select property="approved">
 											<html:option value="-1" key="label.approved.all">
+												<bean:message key="label.approved.all"/>
+											</html:option>
 											<html:option value="true" key="label.approved.yes">
+												<bean:message key="label.approved.yes"/>
+											</html:option>
 											<html:option value="false" key="label.approved.no">
+												<bean:message key="label.approved.no"/>
+											</html:option>
 										</html:select>
 									</td>
 								</tr>
-								--%>
 								<tr>
 									<td>
 										<html:submit style="width:50%" styleClass="button" value="OK" property="submition"/>

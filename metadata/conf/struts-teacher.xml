@@ -328,6 +328,7 @@
 			<form-property name="modalityID" type="java.lang.Integer" />
 			<form-property name="courseID" type="java.lang.Integer" />
 			<form-property name="themeID" type="java.lang.Integer" />
+			<form-property name="approved" type="java.lang.String" />
 		</form-bean>
 
 		<form-bean name="sendMailForm"
@@ -352,6 +353,7 @@
 			<form-property name="modalityID" type="java.lang.Integer" />
 			<form-property name="courseID" type="java.lang.Integer" />
 			<form-property name="themeID" type="java.lang.Integer" />
+			<form-property name="approved" type="java.lang.String" />
 		</form-bean>
 
 		<form-bean name="studentsByCurricularCourseForm"

@@ -55,7 +55,8 @@ public class ReadCandidacies implements IServico
 		Integer case4Id,
 		Integer case5Id,
 		Integer curricularCourseID,
-		Integer degreeID)
+		Integer degreeID,
+        Boolean approved)
 		throws BDException
 	{
 		List infoCandidacies= new LinkedList();
@@ -74,7 +75,8 @@ public class ReadCandidacies implements IServico
 					case4Id,
 					case5Id,
 					curricularCourseID,
-					degreeID);
+					degreeID,
+                    approved);
 			for (Iterator iterator= candidacies.iterator(); iterator.hasNext();)
 			{
 				ICandidacy candidacy= (ICandidacy) iterator.next();

@@ -31,6 +31,7 @@ public interface IPersistentSeminaryCandidacy extends IPersistentObject
 		Integer case4Id,
 		Integer case5Id,
 		Integer curricularCourseID,
-		Integer degreeID)
+		Integer degreeID,
+        Boolean approved)
 		throws ExcepcaoPersistencia;
 }

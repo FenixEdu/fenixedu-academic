@@ -8,16 +8,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionPeriod;
@@ -59,15 +56,14 @@ public class ShowCandidacies extends FenixAction
 		Integer curricularCourseID;
 		Integer degreeID;
 		Integer seminaryID;
-        Boolean approved;
-        try
-        {
-            approved = new Boolean ((String)request.getParameter("approved")); 
-        }
-        catch (Exception ex)
-        {
-            //the boolean is null (high impedance :) )
-        }
+		Boolean approved= null;
+		//
+		//
+		String stringApproved= (String) request.getParameter("approved");
+		if (stringApproved != null && (stringApproved.equals("true") || stringApproved.equals("false")))
+			approved= new Boolean(stringApproved);
+		//
+		//
 		try
 		{
 			themeID= new Integer((String) request.getParameter("themeID"));
@@ -159,7 +155,8 @@ public class ShowCandidacies extends FenixAction
 				case4Id,
 				case5Id,
 				curricularCourseID,
-				degreeID };
+				degreeID,
+				approved };
 		return arguments;
 	}
 	public ActionForward execute(
@@ -251,7 +248,8 @@ public class ShowCandidacies extends FenixAction
 		}
 		catch (Exception e)
 		{
-			throw new FenixActionException();
+			e.printStackTrace();
+			throw new FenixActionException(e);
 		}
 		this.setAvaliableOptionsForInputQueries(request, userView);
 		request.setAttribute("candidacies", candidaciesExtendedInfo);
@@ -328,13 +326,13 @@ public class ShowCandidacies extends FenixAction
 			else
 				if (infoDegreeCurricularPlan.getName().endsWith("2003/2004"))
 				{
-                    String newName = new String();
-                    newName = infoDegreeCurricularPlan.getName().replaceAll("2003/2004","");
-                    infoDegreeCurricularPlan.setName(newName);
-                    avaliableCurricularPlans.add(infoDegreeCurricularPlan);
+					String newName= new String();
+					newName= infoDegreeCurricularPlan.getName().replaceAll("2003/2004", "");
+					infoDegreeCurricularPlan.setName(newName);
+					avaliableCurricularPlans.add(infoDegreeCurricularPlan);
 				}
 		}
-        Collections.sort(avaliableCurricularPlans, new BeanComparator("name"));
+		Collections.sort(avaliableCurricularPlans, new BeanComparator("name"));
 		request.setAttribute("seminaries", seminaries);
 		request.setAttribute("cases", cases);
 		request.setAttribute("degrees", avaliableCurricularPlans);

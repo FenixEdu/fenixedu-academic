@@ -16,7 +16,7 @@
 
 
 
-
+<span class="error"><html:errors/></span>
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 

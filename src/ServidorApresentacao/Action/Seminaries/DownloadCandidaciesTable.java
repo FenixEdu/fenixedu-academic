@@ -40,7 +40,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class DownloadCandidaciesTable extends FenixAction
 {
 	static final String COLUMNS_HEADERS=
-		"Nº\tNome\tMédia\tCadeiras Feitas\tE-Mail\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
+		"Nº\tNome\tMédia\tCadeiras Feitas\tAprovado\tE-Mail\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
 	Object[] getReadCandidaciesArgs(HttpServletRequest request) throws FenixActionException
 	{
 		Integer modalityID;
@@ -53,6 +53,14 @@ public class DownloadCandidaciesTable extends FenixAction
 		Integer curricularCourseID;
 		Integer degreeID;
 		Integer seminaryID;
+		Boolean approved=null;
+		//
+		//
+		String stringApproved= (String) request.getParameter("approved");
+		if (stringApproved != null && (stringApproved.equals("true") || stringApproved.equals("false")))
+			approved= new Boolean(stringApproved);
+		//
+		//
 		try
 		{
 			themeID= new Integer((String) request.getParameter("themeID"));
@@ -144,7 +152,8 @@ public class DownloadCandidaciesTable extends FenixAction
 				case4Id,
 				case5Id,
 				curricularCourseID,
-				degreeID };
+				degreeID,
+				approved };
 		return arguments;
 	}
 	public ActionForward execute(
@@ -214,10 +223,16 @@ public class DownloadCandidaciesTable extends FenixAction
 				//
 				document += "\"" + student.getNumber() + "\"" + "\t";
 				document += "\"" + student.getInfoPerson().getNome() + "\"" + "\t";
-                document += "\"" + studentCurricularPlan.getClassification() + "\"" + "\t";
-                document += "\"" + studentCurricularPlan.getCompletedCourses() + "\"" + "\t";    
-                document += "\"" + student.getInfoPerson().getEmail() + "\"" + "\t";
-				document += "\"" + seminary.getName() + "\"" + "\t";            
+				document += "\"" + studentCurricularPlan.getClassification() + "\"" + "\t";
+				document += "\"" + studentCurricularPlan.getCompletedCourses() + "\"" + "\t";
+				String friendlyBoolean;
+				if (candidacy.getApproved().booleanValue())
+					friendlyBoolean= "Sim";
+				else
+					friendlyBoolean= "Não";
+				document += "\"" + friendlyBoolean + "\"" + "\t";
+				document += "\"" + student.getInfoPerson().getEmail() + "\"" + "\t";
+				document += "\"" + seminary.getName() + "\"" + "\t";
 				document += "\""
 					+ curricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla()
 					+ "\""

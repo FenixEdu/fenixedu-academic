@@ -60,7 +60,8 @@ public class SelectCandidacies extends FenixDispatchAction
 					wildcard,
 					wildcard,
 					wildcard,
-					wildcard };
+					wildcard,
+                    null };
 			GestorServicos gestor= GestorServicos.manager();
 			candidacies= (List) gestor.executar(userView, "Seminaries.ReadCandidacies", argsReadCandidacies);
 			for (Iterator iterator= candidacies.iterator(); iterator.hasNext();)

@@ -54,6 +54,7 @@
 	<html:hidden property="modalityID" />
 	<html:hidden property="courseID" />
 	<html:hidden property="themeID" />  
+	<html:hidden property="approved" />  
 
    <html:submit property="submition"><bean:message key="button.sendMail"/></html:submit>
 </html:form>
