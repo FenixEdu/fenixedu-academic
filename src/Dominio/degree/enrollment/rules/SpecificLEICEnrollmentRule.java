@@ -478,7 +478,7 @@ public class SpecificLEICEnrollmentRule implements IEnrollmentRule {
         boolean isSecundaryAreaDone = isAreaDone(studentCurricularPlan.getSecundaryBranch().getSecondaryCredits(),
                 creditsInSecundaryArea);
 
-        List finalListOfCurricularCourses = null;
+        List finalListOfCurricularCourses = new ArrayList();
 
         if (!isSpecializationAreaDone) {
             finalListOfCurricularCourses.addAll(getSpecializationAreaCurricularCourses(studentCurricularPlan));
