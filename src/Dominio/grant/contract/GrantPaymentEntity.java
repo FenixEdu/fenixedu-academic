@@ -4,6 +4,7 @@
 package Dominio.grant.contract;
 
 import Dominio.DomainObject;
+import Dominio.ITeacher;
 
 /**
  * @author pica
@@ -14,6 +15,8 @@ public abstract class GrantPaymentEntity extends DomainObject implements IGrantP
     protected Integer number;
     protected String designation;
     protected String ojbConcreteClass;
+    private ITeacher responsibleTeacher;
+    private Integer keyResponsibleTeacher;
     
     /**
      * Constructor
@@ -71,4 +74,36 @@ public abstract class GrantPaymentEntity extends DomainObject implements IGrantP
 		this.ojbConcreteClass = ojbConcreteClass;
 	}
 	
+	/**
+	 * @return Returns the keyResponsibleTeacher.
+	 */
+	public Integer getKeyResponsibleTeacher()
+	{
+		return keyResponsibleTeacher;
+	}
+
+	/**
+	 * @param keyResponsibleTeacher The keyResponsibleTeacher to set.
+	 */
+	public void setKeyResponsibleTeacher(Integer keyResponsibleTeacher)
+	{
+		this.keyResponsibleTeacher = keyResponsibleTeacher;
+	}
+
+	/**
+	 * @return Returns the responsibleTeacher.
+	 */
+	public ITeacher getResponsibleTeacher()
+	{
+		return responsibleTeacher;
+	}
+
+	/**
+	 * @param responsibleTeacher The responsibleTeacher to set.
+	 */
+	public void setResponsibleTeacher(ITeacher responsibleTeacher)
+	{
+		this.responsibleTeacher = responsibleTeacher;
+	}
+
 }

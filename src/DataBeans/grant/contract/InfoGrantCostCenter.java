@@ -3,7 +3,6 @@
  */
 package DataBeans.grant.contract;
 
-
 /**
  * @author pica
  * @author barbosa

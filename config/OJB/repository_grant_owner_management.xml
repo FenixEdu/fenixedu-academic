@@ -294,13 +294,13 @@
 		name="keyResponsibleTeacher"
 		column="KEY_TEACHER"
 		jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
+	  />
+	  <reference-descriptor
 		name="responsibleTeacher"
 		class-ref="Dominio.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyResponsibleTeacher"/>
-	</reference-descriptor>
+	  </reference-descriptor>
    </class-descriptor>
 
 <!-- ************************************************************** -->
@@ -340,6 +340,17 @@
       	jdbc-type="VARCHAR"
       	locking="true"
       />
+       <field-descriptor
+		name="keyResponsibleTeacher"
+		column="KEY_TEACHER"
+		jdbc-type="INTEGER"
+	  />
+	  <reference-descriptor
+		name="responsibleTeacher"
+		class-ref="Dominio.Teacher"
+		proxy="true">
+		<foreignkey field-ref="keyResponsibleTeacher"/>
+	  </reference-descriptor>
    </class-descriptor>
 
 <!-- ************************************************************** -->
@@ -381,6 +392,17 @@
       	jdbc-type="VARCHAR"
       	locking="true"
       />
+      <field-descriptor
+		name="keyResponsibleTeacher"
+		column="KEY_TEACHER"
+		jdbc-type="INTEGER"
+	  />
+	  <reference-descriptor
+		name="responsibleTeacher"
+		class-ref="Dominio.Teacher"
+		proxy="true">
+		<foreignkey field-ref="keyResponsibleTeacher"/>
+	  </reference-descriptor>
    </class-descriptor>
    
 <!-- ************************************************************** -->

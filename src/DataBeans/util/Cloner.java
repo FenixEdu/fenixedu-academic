@@ -611,7 +611,8 @@ public abstract class Cloner
 		return infoExecutionDegree;
 
 	}
-	/** Method copyInfoExecutionYear2IExecutionYear.
+	/**
+	 * Method copyInfoExecutionYear2IExecutionYear.
 	 * 
 	 * @param infoExecutionYear
 	 * @return IExecutionYear
@@ -959,13 +960,13 @@ public abstract class Cloner
 	public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
 	{
 		InfoGrantContract infoGrantContract = null;
-        IGrantOwner grantOwner = null;
+		IGrantOwner grantOwner = null;
 
 		if (grantContract != null)
 		{
 			infoGrantContract = new InfoGrantContract();
 			InfoGrantOwner infoGrantOwner = null;
-            grantOwner = grantContract.getGrantOwner();
+			grantOwner = grantContract.getGrantOwner();
 			if (grantOwner != null)
 				infoGrantOwner = Cloner.copyIGrantOwner2InfoGrantOwner(grantOwner);
 			InfoGrantType infoGrantType = null;
@@ -1087,15 +1088,10 @@ public abstract class Cloner
 		{
 			infoGrantProject = new InfoGrantProject();
 			copyObjectProperties(infoGrantProject, grantProject);
-
-			InfoTeacher infoResponsibleTeacher =
-				Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());
-
-			infoGrantProject.setInfoResponsibleTeacher(infoResponsibleTeacher);
 		}
 		return infoGrantProject;
 	}
-    
+
 	/**
 	 * Method copyInfoGrantProjectTeacher2IGrantProject.
 	 * 
@@ -1110,16 +1106,10 @@ public abstract class Cloner
 		{
 			grantProject = new GrantProject();
 			copyObjectProperties(grantProject, infoGrantProject);
-
-			ITeacher responsibleTeacher =
-				Cloner.copyInfoTeacher2Teacher(infoGrantProject.getInfoResponsibleTeacher());
-
-			grantProject.setResponsibleTeacher(responsibleTeacher);
 		}
-
 		return grantProject;
 	}
-    
+
 	/**
 	 * Method copyIGrantCostCenter2InfoGrantCostCenter.
 	 * 
@@ -1135,7 +1125,6 @@ public abstract class Cloner
 			infoGrantCostCenter = new InfoGrantCostCenter();
 			copyObjectProperties(infoGrantCostCenter, grantCostCenter);
 		}
-
 		return infoGrantCostCenter;
 	}
 
@@ -1154,10 +1143,9 @@ public abstract class Cloner
 			grantCostCenter = new GrantCostCenter();
 			copyObjectProperties(grantCostCenter, infoGrantCostCenter);
 		}
-
 		return grantCostCenter;
 	}
-    
+
 	/**
 	 * Method copyIGrantPaymentEntity2InfoGrantPaymentEntity.
 	 * 
@@ -1170,17 +1158,21 @@ public abstract class Cloner
 
 		if (grantPaymentEntity != null)
 		{
-            if(grantPaymentEntity instanceof GrantCostCenter)
-            	infoGrantPaymentEntity = new InfoGrantCostCenter();
-            else if(grantPaymentEntity instanceof GrantProject)
-                infoGrantPaymentEntity = new InfoGrantProject();
-            
+			if (grantPaymentEntity instanceof GrantCostCenter)
+				infoGrantPaymentEntity = new InfoGrantCostCenter();
+			else if (grantPaymentEntity instanceof GrantProject)
+				infoGrantPaymentEntity = new InfoGrantProject();
+
 			copyObjectProperties(infoGrantPaymentEntity, grantPaymentEntity);
+
+			InfoTeacher infoResponsibleTeacher =
+				Cloner.copyITeacher2InfoTeacher(grantPaymentEntity.getResponsibleTeacher());
+			infoGrantPaymentEntity.setInfoResponsibleTeacher(infoResponsibleTeacher);
 		}
 
 		return infoGrantPaymentEntity;
 	}
-    
+
 	/**
 	 * Method copyInfoGrantPaymentEntity2IGrantPaymentEntity.
 	 * 
@@ -1193,17 +1185,22 @@ public abstract class Cloner
 
 		if (infoGrantPaymentEntity != null)
 		{
-            if(infoGrantPaymentEntity instanceof InfoGrantCostCenter)
-                grantPaymentEntity = new GrantCostCenter();
-            else if(infoGrantPaymentEntity instanceof InfoGrantProject)
-                grantPaymentEntity = new GrantProject();
-            
-			copyObjectProperties(grantPaymentEntity, infoGrantPaymentEntity);
-		}
+			if (infoGrantPaymentEntity instanceof InfoGrantCostCenter)
+				grantPaymentEntity = new GrantCostCenter();
+			else if (infoGrantPaymentEntity instanceof InfoGrantProject)
+				grantPaymentEntity = new GrantProject();
 
+			copyObjectProperties(grantPaymentEntity, infoGrantPaymentEntity);
+			if (infoGrantPaymentEntity.getInfoResponsibleTeacher() != null)
+			{
+				ITeacher responsibleTeacher =
+					Cloner.copyInfoTeacher2Teacher(infoGrantPaymentEntity.getInfoResponsibleTeacher());
+				grantPaymentEntity.setResponsibleTeacher(responsibleTeacher);
+			}
+		}
 		return grantPaymentEntity;
 	}
-    
+
 	/**
 	 * Method copyIGrantPart2InfoGrantPart.
 	 * 
@@ -1219,13 +1216,12 @@ public abstract class Cloner
 			infoGrantPart = new InfoGrantPart();
 			copyObjectProperties(infoGrantPart, grantPart);
 
-			
 			InfoGrantSubsidy infoGrantSubsidy =
 				Cloner.copyIGrantSubsidy2InfoGrantSubsidy(grantPart.getGrantSubsidy());
 			InfoTeacher infoResponsibleTeacher =
 				Cloner.copyITeacher2InfoTeacher(grantPart.getResponsibleTeacher());
-            InfoGrantPaymentEntity infoGrantPaymentEntity =
-            Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPart.getGrantPaymentEntity());
+			InfoGrantPaymentEntity infoGrantPaymentEntity =
+				Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPart.getGrantPaymentEntity());
 			infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
 			infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
 			infoGrantPart.setInfoResponsibleTeacher(infoResponsibleTeacher);
@@ -1233,7 +1229,7 @@ public abstract class Cloner
 
 		return infoGrantPart;
 	}
-    
+
 	/**
 	 * Method copyInfoGrantPart2IGrantPart.
 	 * 
@@ -1263,8 +1259,8 @@ public abstract class Cloner
 		}
 
 		return grantPart;
-	}  
-    
+	}
+
 	/**
 	 * Method copyIGrantSubsidy2InfoGrantSubsidy.
 	 * 
@@ -1286,7 +1282,7 @@ public abstract class Cloner
 		}
 		return infoGrantSubsidy;
 	}
-    
+
 	/**
 	 * Method copyInfoGrantSubsidy2IGrantSubsidy.
 	 * 
@@ -1307,9 +1303,8 @@ public abstract class Cloner
 			grantSubsidy.setGrantContract(grantContract);
 		}
 		return grantSubsidy;
-	}  
-    
-    
+	}
+
 	/**
 	 * @param advisory
 	 * @return
@@ -2430,11 +2425,11 @@ public abstract class Cloner
 		IBranch branch = Cloner.copyInfoBranch2IBranch(infoStudentCurricularPlan.getInfoBranch());
 
 		IBranch secundaryBranch = null;
-        if (infoStudentCurricularPlan.getInfoSecundaryBranch() != null)
-        {
+		if (infoStudentCurricularPlan.getInfoSecundaryBranch() != null)
+		{
 			secundaryBranch =
-			Cloner.copyInfoBranch2IBranch(infoStudentCurricularPlan.getInfoSecundaryBranch());
-        }
+				Cloner.copyInfoBranch2IBranch(infoStudentCurricularPlan.getInfoSecundaryBranch());
+		}
 		IDegreeCurricularPlan degreeCurricularPlan =
 			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
 				infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
@@ -3302,10 +3297,11 @@ public abstract class Cloner
 	//by gedl AT rnl DOT ist DOT utl DOT pt (August the 3rd, 2003)
 	public static InfoModality copyIModality2InfoModality(IModality modality)
 	{
-        if (modality == null) {
-            return null;
-            
-        }
+		if (modality == null)
+		{
+			return null;
+
+		}
 		InfoModality infoModality = new InfoModality();
 		copyObjectProperties(infoModality, modality);
 
@@ -3335,18 +3331,18 @@ public abstract class Cloner
 		return infoCaseStudy;
 	}
 
-    //by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
-    public static InfoEquivalency copyIEquivalency2InfoEquivalency(ICourseEquivalency equivalency)
-    {
-        InfoEquivalency infoEquivalency = new InfoEquivalency();
-      
-        infoEquivalency.setIdInternal(equivalency.getIdInternal());
-        infoEquivalency.setModalityIdInternal(equivalency.getModalityIdInternal());
-        infoEquivalency.setSeminaryIdInternal(equivalency.getSeminaryIdInternal());
-        infoEquivalency.setSeminaryName(equivalency.getSeminary().getName());
-        infoEquivalency.setHasCaseStudy(equivalency.getSeminary().getHasCaseStudy());
-        infoEquivalency.setHasTheme(equivalency.getSeminary().getHasTheme());
-        infoEquivalency.setCurricularCourseIdInternal(equivalency.getCurricularCourseIdInternal());
+	//by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
+	public static InfoEquivalency copyIEquivalency2InfoEquivalency(ICourseEquivalency equivalency)
+	{
+		InfoEquivalency infoEquivalency = new InfoEquivalency();
+
+		infoEquivalency.setIdInternal(equivalency.getIdInternal());
+		infoEquivalency.setModalityIdInternal(equivalency.getModalityIdInternal());
+		infoEquivalency.setSeminaryIdInternal(equivalency.getSeminaryIdInternal());
+		infoEquivalency.setSeminaryName(equivalency.getSeminary().getName());
+		infoEquivalency.setHasCaseStudy(equivalency.getSeminary().getHasCaseStudy());
+		infoEquivalency.setHasTheme(equivalency.getSeminary().getHasTheme());
+		infoEquivalency.setCurricularCourseIdInternal(equivalency.getCurricularCourseIdInternal());
 
 		infoEquivalency.setCurricularCourse(
 			Cloner.copyCurricularCourse2InfoCurricularCourse(equivalency.getCurricularCourse()));
@@ -3363,33 +3359,32 @@ public abstract class Cloner
 		return infoEquivalency;
 	}
 
-    //  by gedl AT rnl DOT ist DOT utl DOT pt (July the 31th, 2003)
-    public static InfoSeminary copyISeminary2InfoSeminary(ISeminary seminary)
-    {
-        InfoSeminary infoSeminary = null;
-        if (seminary != null)
-        {
-            infoSeminary = new InfoSeminary();
+	//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 31th, 2003)
+	public static InfoSeminary copyISeminary2InfoSeminary(ISeminary seminary)
+	{
+		InfoSeminary infoSeminary = null;
+		if (seminary != null)
+		{
+			infoSeminary = new InfoSeminary();
 			infoSeminary.setEnrollmentBeginDate(seminary.getEnrollmentBeginDate());
 			infoSeminary.setEnrollmentBeginTime(seminary.getEnrollmentBeginTime());
 			infoSeminary.setEnrollmentEndDate(seminary.getEnrollmentEndDate());
-			infoSeminary.setEnrollmentEndTime(seminary.getEnrollmentEndTime());            
-            infoSeminary.setDescription(seminary.getDescription());
-            infoSeminary.setIdInternal(seminary.getIdInternal());
-            infoSeminary.setName(seminary.getName());
-            infoSeminary.setHasCaseStudy(seminary.getHasCaseStudy());
-            infoSeminary.setHasThemes(seminary.getHasTheme());
-            infoSeminary.setAllowedCandidaciesPerStudent(seminary.getAllowedCandidaciesPerStudent());
-            List equivalencies = new LinkedList();
-            for (Iterator iterator = seminary.getEquivalencies().iterator(); iterator.hasNext();)
-            {
-                ICourseEquivalency courseEquivalency = (ICourseEquivalency) iterator.next();
-                InfoEquivalency infoEquivalency = copyIEquivalency2InfoEquivalency(courseEquivalency);
-                equivalencies.add(infoEquivalency);
-            }
-            infoSeminary.setEquivalencies(equivalencies);
-        }
-        
+			infoSeminary.setEnrollmentEndTime(seminary.getEnrollmentEndTime());
+			infoSeminary.setDescription(seminary.getDescription());
+			infoSeminary.setIdInternal(seminary.getIdInternal());
+			infoSeminary.setName(seminary.getName());
+			infoSeminary.setHasCaseStudy(seminary.getHasCaseStudy());
+			infoSeminary.setHasThemes(seminary.getHasTheme());
+			infoSeminary.setAllowedCandidaciesPerStudent(seminary.getAllowedCandidaciesPerStudent());
+			List equivalencies = new LinkedList();
+			for (Iterator iterator = seminary.getEquivalencies().iterator(); iterator.hasNext();)
+			{
+				ICourseEquivalency courseEquivalency = (ICourseEquivalency) iterator.next();
+				InfoEquivalency infoEquivalency = copyIEquivalency2InfoEquivalency(courseEquivalency);
+				equivalencies.add(infoEquivalency);
+			}
+			infoSeminary.setEquivalencies(equivalencies);
+		}
 
 		return infoSeminary;
 	}
@@ -3962,23 +3957,23 @@ public abstract class Cloner
 		return listInfoExternalPersons;
 	}
 
-    public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson)
-    {
-        List listExternalPersons = new ArrayList();
+	public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson)
+	{
+		List listExternalPersons = new ArrayList();
 
-        Iterator iterListInfoExternalPerson = listInfoExternalPerson.iterator();
+		Iterator iterListInfoExternalPerson = listInfoExternalPerson.iterator();
 
-        while (iterListInfoExternalPerson.hasNext())
-        {
-            InfoExternalPerson infoExternalPerson =
-                (InfoExternalPerson) iterListInfoExternalPerson.next();
-            IExternalPerson externalPerson =
-                Cloner.copyInfoExternalPerson2IExternalPerson(infoExternalPerson);
-            listExternalPersons.add(externalPerson);
-        }
+		while (iterListInfoExternalPerson.hasNext())
+		{
+			InfoExternalPerson infoExternalPerson =
+				(InfoExternalPerson) iterListInfoExternalPerson.next();
+			IExternalPerson externalPerson =
+				Cloner.copyInfoExternalPerson2IExternalPerson(infoExternalPerson);
+			listExternalPersons.add(externalPerson);
+		}
 
-        return listExternalPersons;
-    }
+		return listExternalPersons;
+	}
 
 	public static List copyListITeacher2ListInfoTeacher(List listITeacher)
 	{
@@ -4363,15 +4358,15 @@ public abstract class Cloner
 		return orientation;
 	}
 
-    public static InfoPublicationsNumber copyIPublicationsNumber2InfoPublicationsNumber(IPublicationsNumber publicationsNumber)
-    {
-        InfoPublicationsNumber infoPublicationsNumber = new InfoPublicationsNumber();
-        InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(publicationsNumber.getTeacher());
-        copyObjectProperties(infoPublicationsNumber, publicationsNumber);
+	public static InfoPublicationsNumber copyIPublicationsNumber2InfoPublicationsNumber(IPublicationsNumber publicationsNumber)
+	{
+		InfoPublicationsNumber infoPublicationsNumber = new InfoPublicationsNumber();
+		InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(publicationsNumber.getTeacher());
+		copyObjectProperties(infoPublicationsNumber, publicationsNumber);
 
-        infoPublicationsNumber.setInfoTeacher(infoTeacher);
-        return infoPublicationsNumber;
-    }
+		infoPublicationsNumber.setInfoTeacher(infoTeacher);
+		return infoPublicationsNumber;
+	}
 
 	public static IPublicationsNumber copyInfoPublicationsNumber2IPublicationsNumber(InfoPublicationsNumber infoPublicationsNumber)
 	{

@@ -25,37 +25,40 @@ import ServidorPersistente.grant.IPersistentGrantPart;
  */
 public class ReadAllGrantPartsByGrantSubsidy implements IService
 {
-    /**
-     * The constructor of this class.
-     */
-    public ReadAllGrantPartsByGrantSubsidy()
-    {
-    }
+	/**
+	 * The constructor of this class.
+	 */
+	public ReadAllGrantPartsByGrantSubsidy()
+	{
+	}
 
-    public List run(Integer grantSubsidyId) throws FenixServiceException
-    {
-        List result = null;
-        IPersistentGrantPart pgp = null;
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            pgp = sp.getIPersistentGrantPart();
-            List grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
-            
-            result = (List) CollectionUtils.collect(grantParts, new Transformer()
-                {
-                public Object transform(Object o)
-                {
-                    IGrantPart grantPart = (IGrantPart) o;
-                    return Cloner.copyIGrantPart2InfoGrantPart(grantPart);
-                }
-            });
-            
-        } catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e.getMessage());
-        }
+	public List run(Integer grantSubsidyId) throws FenixServiceException
+	{
+		List result = null;
+		IPersistentGrantPart pgp = null;
+		try
+		{
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			pgp = sp.getIPersistentGrantPart();
+			List grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
 
-        return result;
-    }
+            if(grantParts != null)
+            {    
+			result = (List) CollectionUtils.collect(grantParts, new Transformer()
+			{
+				public Object transform(Object o)
+				{
+					IGrantPart grantPart = (IGrantPart) o;
+					return Cloner.copyIGrantPart2InfoGrantPart(grantPart);
+				}
+			});
+            }
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			throw new FenixServiceException(e.getMessage());
+		}
+
+		return result;
+	}
 }

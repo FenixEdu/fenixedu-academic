@@ -11,5 +11,4 @@ import Dominio.IDomainObject;
  */
 public interface IGrantCostCenter extends IDomainObject
 {
-	
 }

@@ -4,6 +4,7 @@
 package DataBeans.grant.contract;
 
 import DataBeans.InfoObject;
+import DataBeans.InfoTeacher;
 
 /**
  * @author pica
@@ -14,6 +15,7 @@ public class InfoGrantPaymentEntity extends InfoObject
     private Integer number;
     private String designation;
     private String ojbConcreteClass;
+    private InfoTeacher infoResponsibleTeacher;
 	
 	public InfoGrantPaymentEntity()
 	{
@@ -66,6 +68,22 @@ public class InfoGrantPaymentEntity extends InfoObject
 	public void setOjbConcreteClass(String ojbConcreteClass)
 	{
 		this.ojbConcreteClass = ojbConcreteClass;
+	}
+
+	/**
+	 * @return Returns the infoResponsibleTeacher.
+	 */
+	public InfoTeacher getInfoResponsibleTeacher()
+	{
+		return infoResponsibleTeacher;
+	}
+
+	/**
+	 * @param infoResponsibleTeacher The infoResponsibleTeacher to set.
+	 */
+	public void setInfoResponsibleTeacher(InfoTeacher infoResponsibleTeacher)
+	{
+		this.infoResponsibleTeacher = infoResponsibleTeacher;
 	}
 
 }

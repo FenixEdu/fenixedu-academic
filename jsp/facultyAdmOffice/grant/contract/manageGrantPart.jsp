@@ -33,6 +33,9 @@
         <td class="listClasses-header">
             <bean:message key="label.grant.part.grantPaymentEntity.designation"/>
         </td>
+        <td class="listClasses-header">
+            <bean:message key="label.grant.part.responsibleTeacher.number"/>
+        </td>
         <td class="listClasses-header">&nbsp;</td>
         <td class="listClasses-header">&nbsp;</td>
     </tr>   
@@ -42,11 +45,16 @@
             <td class="listClasses">&nbsp;
 	        	<logic:present name="infoGrantPart" property="percentage">
 		            <bean:write name="infoGrantPart" property="percentage"/>
-	            </logic:present>&nbsp;
+	            </logic:present>
             </td>
             <td class="listClasses">&nbsp;
 	        	<logic:present name="infoGrantPart" property="infoGrantPaymentEntity">
 		            <bean:write name="infoGrantPart" property="infoGrantPaymentEntity.designation"/>
+	            </logic:present>
+            </td>
+            <td class="listClasses">&nbsp;
+	        	<logic:present name="infoGrantPart" property="infoResponsibleTeacher">
+		            <bean:write name="infoGrantPart" property="infoResponsibleTeacher.teacherNumber"/>
 	            </logic:present>
             </td>
             <td class="listClasses">
