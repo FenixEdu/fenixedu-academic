@@ -27,8 +27,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jmota
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class InsertCurriculumServiceTest extends TestCaseCreateServices {
 
@@ -123,16 +121,21 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(
 					"IP",
 					executionPeriod);
-			
+
 			sp.confirmarTransaccao();
-			InfoExecutionCourse infoExecutionCourse =Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse); 
-		
+			InfoExecutionCourse infoExecutionCourse =
+				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+					executionCourse);
+
 			oldCurriculum = new InfoCurriculum();
 			oldCurriculum.setGeneralObjectives("bla");
 			oldCurriculum.setOperacionalObjectives("bla");
-			oldCurriculum.setProgram("bça");
+			oldCurriculum.setProgram("bla");
+			oldCurriculum.setGeneralObjectivesEn(null);
+			oldCurriculum.setOperacionalObjectivesEn(null);
+			oldCurriculum.setProgramEn(null);
 			oldCurriculum.setInfoExecutionCourse(infoExecutionCourse);
-			
+
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
 			e.printStackTrace();
@@ -145,7 +148,7 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-		
+
 		return null;
 	}
 

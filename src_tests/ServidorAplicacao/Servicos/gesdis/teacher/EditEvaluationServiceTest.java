@@ -88,7 +88,8 @@ public class EditEvaluationServiceTest extends TestCaseDeleteAndEditServices {
 			
 		InfoEvaluation infoEvaluationOld = Cloner.copyIEvaluation2InfoEvaluation(evaluation);	
 		InfoEvaluation infoEvaluationNew = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
-		infoEvaluationNew.setEvaluationElements("xpto");		
+		infoEvaluationNew.setEvaluationElements("xpto");
+		infoEvaluationNew.setEvaluationElementsEn("xpto em inglês");		
 		Object[] args = { infoEvaluationOld, infoEvaluationNew};
 		return args;
 		

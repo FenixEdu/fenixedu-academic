@@ -24,8 +24,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jmota
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class EditCurriculumServiceTest extends TestCaseDeleteAndEditServices {
 
@@ -91,6 +89,7 @@ public class EditCurriculumServiceTest extends TestCaseDeleteAndEditServices {
 			oldCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 			newCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 			newCurriculum.setGeneralObjectives("blablablabla");
+			newCurriculum.setGeneralObjectivesEn(null);
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
 			e.printStackTrace();
