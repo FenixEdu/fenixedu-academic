@@ -39,8 +39,6 @@ public class ChooseExecutionCourseAction
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("It got lost here############################################");
-		
 		super.execute(mapping, form, request, response);
 
 		//HttpSession session = request.getSession(false);
@@ -67,12 +65,10 @@ public class ChooseExecutionCourseAction
 			request.setAttribute(
 				SessionConstants.EXECUTION_COURSE,
 				infoCourse);
-			System.out.println("forwardChoose");
 			return mapping.findForward("forwardChoose");
 		} else {
 			request.removeAttribute(SessionConstants.EXECUTION_COURSE);
 			//request.removeAttribute(SessionConstants.CLASS_VIEW);
-			System.out.println("showForm");
 			return mapping.findForward("showForm");
 		}
 	}

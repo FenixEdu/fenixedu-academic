@@ -29,20 +29,16 @@ public class AddExecutionCourseToExamAction extends FenixDateAndTimeContextActio
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("####################### AddExecutionCourseToExamAction ########################");
-		
 		//HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		InfoExecutionCourse executionCourse =
 			(InfoExecutionCourse) request.getAttribute(
 				SessionConstants.EXECUTION_COURSE);
-		System.out.println("executionCourse=" + executionCourse);
 
 		InfoViewExamByDayAndShift infoViewExams =
 			(InfoViewExamByDayAndShift) request.getSession().getAttribute(
 				SessionConstants.INFO_VIEW_EXAM);
-		System.out.println("infoViewExams=" + infoViewExams);
 
 		// Create new association between exam and executionCourse
 		Object argsCreateExam[] = { infoViewExams, executionCourse };
