@@ -56,9 +56,9 @@ public class ViewExamsByDayAndShiftDispatchAction extends FenixDateAndTimeDispat
 
         Calendar examDateAndTime = RequestContextUtil.getExamDateAndTimeContext(request);
         RequestContextUtil.setExamDateAndTimeContext(request, examDateAndTime);
-
+        
         InfoViewExam infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
-
+        
         List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
 
         if (infoExams != null && infoExams.size() == 0)
@@ -204,24 +204,28 @@ public class ViewExamsByDayAndShiftDispatchAction extends FenixDateAndTimeDispat
         throws Exception
     {
 
-        HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);
 
         //List infoViewExams =
         //	(List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+//        Calendar examDateAndTime = RequestContextUtil.getExamDateAndTimeContext(request);
+//        InfoViewExam infoViewExams;
+//        try
+//        {
+//            infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
+//        } catch (FenixServiceException e1)
+//        {
+//            throw new FenixActionException(e1);
+//        }
         Calendar examDateAndTime = RequestContextUtil.getExamDateAndTimeContext(request);
-        InfoViewExam infoViewExams;
-        try
-        {
-            infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
-        } catch (FenixServiceException e1)
-        {
-            throw new FenixActionException(e1);
-        }
+        RequestContextUtil.setExamDateAndTimeContext(request, examDateAndTime);
+
+        InfoViewExam infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
         List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
 
         Integer indexExam = new Integer(request.getParameter("indexExam"));
 
+        HttpSession session = request.getSession(false);
         session.setAttribute(SessionConstants.INFO_VIEW_EXAM, infoExams.get(indexExam.intValue()));
 
         request.setAttribute("input", "viewExamsByDayAndShift");

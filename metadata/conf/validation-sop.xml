@@ -24,7 +24,7 @@
 			<arg0 key="property.exam.month"/>
 		</field>
 		<field property="year" depends="required, validateDate, integer" page="1">
-			<arg0 key="data"/>
+			<arg0 key="property.exam.year"/>
                   <var>
                      <var-name>month</var-name>
                      <var-value>month</var-value>

@@ -13,9 +13,17 @@ NOTES:
  	e	  mysql fenix < guias20022004.sql > guias20022004_result.txt
  	
 CHANGES:
- na pos-graduação na "folha de apuramento final" sobre o arredondamento do total de créditos	
+ na pos-graduação na "folha de apuramento final" sobre o arredondamento do total de créditos
+ - Updated exames period for the second semesters exams season of 2003/2004.
+- Filtered exams from list of evaluations of an execution course when reading all exams sorted by degree.	
 
 BUG FIXES:
  bug número 116 - www.ist.utl.pt/serviços/	
  bug nas migrações de pessoas do IST. 
+- Corrected input forward for create exams mapping on SOP's interface.
+- Corrected sucessful forward for create exams mapping on SOP's interface to avoid stack overflow.
+- Fixed validation of selecting a context for listing exams by day and shift.
+- Added missing validation message to selection of execution course on SOP's interface for creating exams.
+- Added context forwarding (of execution period) for choosing exams context by day and shift.
+ 
 KNOWN ISSUES:

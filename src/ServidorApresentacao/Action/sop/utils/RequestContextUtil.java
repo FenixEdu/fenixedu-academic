@@ -53,9 +53,22 @@ public class RequestContextUtil {
 	public static void setExamDateAndTimeContext(
 		HttpServletRequest request,
 		Calendar examDateAndTime) {
+		/*
+		 * Note: this may seem a little strange, however if the calendar is
+		 *       not initialized with the current date and time values, when
+		 *       it is placed in request the web-container alters the hour
+		 *       to adjust it to local winter/summer time.
+		 */
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, examDateAndTime.get(Calendar.YEAR));
+		calendar.set(Calendar.MONTH, examDateAndTime.get(Calendar.MONTH));
+		calendar.set(Calendar.DAY_OF_MONTH, examDateAndTime.get(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, examDateAndTime.get(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, examDateAndTime.get(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, examDateAndTime.get(Calendar.SECOND));
 		request.setAttribute(
 			SessionConstants.EXAM_DATEANDTIME,
-			examDateAndTime);
+			calendar);
 	}
 
 	/**

@@ -91,8 +91,8 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
         String roomId = request.getParameter("roomId");
         request.setAttribute("roomId", index.toString());
 
-        System.out.println("index= [" + index + "]");
-		System.out.println("roomId= [" + roomId + "]");
+        //System.out.println("index= [" + index + "]");
+		//System.out.println("roomId= [" + roomId + "]");
         
         // Reset indexForm value
         DynaActionForm selectRoomIndexForm = (DynaActionForm) form;

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -64,10 +63,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
 
 			if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty())
 			{
-				ComparatorChain comparator = new ComparatorChain();
-				comparator.addComparator(new BeanComparator("orientatorName"), true);
-				comparator.addComparator(new BeanComparator("title"), true);
-				Collections.sort(finalDegreeWorkProposalHeaders, comparator);
+				Collections.sort(finalDegreeWorkProposalHeaders, new BeanComparator("proposalNumber"));
 				
 				request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
 			}

@@ -49,7 +49,7 @@ public class DefineExamCommentActionDA
 		//		SessionConstants.INFO_EXAMS_MAP);
 		InfoExamsMap infoExamsMap = getExamsMap(request);
 		request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
-		System.out.println("infoExamsMap=" + infoExamsMap);
+		//System.out.println("infoExamsMap=" + infoExamsMap);
 
 		Integer indexExecutionCourse =
 			new Integer(request.getParameter("indexExecutionCourse"));

@@ -13,6 +13,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -52,6 +55,7 @@ public class ChooseExecutionCourseAction
 		List infoCourseList = SessionUtils.getExecutionCourses(request);
 
 		String courseInitials = (String) chooseCourseForm.get("courseInitials");
+		Integer page = (Integer) chooseCourseForm.get("page");
 
 		if (courseInitials != null && !courseInitials.equals("")) {
 			InfoExecutionCourse infoCourse = new InfoExecutionCourse();
@@ -67,8 +71,15 @@ public class ChooseExecutionCourseAction
 				infoCourse);
 			return mapping.findForward("forwardChoose");
 		} else {
-			request.removeAttribute(SessionConstants.EXECUTION_COURSE);
-			//request.removeAttribute(SessionConstants.CLASS_VIEW);
+			if (page != null && page.intValue() > 1)
+			{
+				request.removeAttribute(SessionConstants.EXECUTION_COURSE);
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add(
+						"label.choose.executionCourse",
+						new ActionError("label.choose.executionCourse"));
+				saveErrors(request, actionErrors);
+			}
 			return mapping.findForward("showForm");
 		}
 	}

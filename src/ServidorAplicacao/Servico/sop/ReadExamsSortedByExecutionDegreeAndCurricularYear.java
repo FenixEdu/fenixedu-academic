@@ -20,6 +20,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoViewAllExams;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
+import Dominio.IEvaluation;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -116,16 +117,21 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
 
                         for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++)
                         {
-                            IExam exam = (IExam) executionCourse.getAssociatedExams().get(j);
-                            if (exam.getSeason().getseason().intValue() == Season.SEASON1)
+                            IEvaluation evaluation = (IEvaluation) executionCourse.getAssociatedExams().get(j);
+                            
+                            if (evaluation instanceof IExam)
                             {
-                                infoExecutionCourseAndExams.setInfoExam1(
-                                    Cloner.copyIExam2InfoExam(exam));
-                            }
-                            else if (exam.getSeason().getseason().intValue() == Season.SEASON2)
-                            {
-                                infoExecutionCourseAndExams.setInfoExam2(
-                                    Cloner.copyIExam2InfoExam(exam));
+                            	IExam exam = (IExam) evaluation;
+                            	if (exam.getSeason().getseason().intValue() == Season.SEASON1)
+                            	{
+                            		infoExecutionCourseAndExams.setInfoExam1(
+                            				Cloner.copyIExam2InfoExam(exam));
+                            	}
+                            	else if (exam.getSeason().getseason().intValue() == Season.SEASON2)
+                            	{
+                            		infoExecutionCourseAndExams.setInfoExam2(
+                            				Cloner.copyIExam2InfoExam(exam));
+                            	}
                             }
                         }
 

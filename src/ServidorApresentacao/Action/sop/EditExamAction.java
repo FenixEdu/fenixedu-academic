@@ -82,7 +82,7 @@ public class EditExamAction
         InfoExecutionCourse infoExecutionCourse =
             (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-        System.out.println("infoExecutionCourse= " + infoExecutionCourse);
+        //System.out.println("infoExecutionCourse= " + infoExecutionCourse);
 
         Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
@@ -96,7 +96,7 @@ public class EditExamAction
                 userView,
                 "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
                 args);
-        System.out.println("infoViewOldExam" + infoViewOldExam);
+        //System.out.println("infoViewOldExam" + infoViewOldExam);
 
         // Put everything back in request in case an exception occores so the
         // edit exams page can be viewed again.
@@ -126,7 +126,7 @@ public class EditExamAction
             throw new InterceptingRoomsActionException("O exame de " + season, ex);
         }
 
-        System.out.println("input=" + input);
+        //System.out.println("input=" + input);
         return mapping.findForward(input);
     }
 

@@ -250,9 +250,9 @@ public class ManageShiftDA
             }
 
             Object args[] = { lessonOIDs };
-            System.out.println("Starting delete.");
+            //System.out.println("Starting delete.");
             ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", args);
-            System.out.println("Done deleting.");
+            //System.out.println("Done deleting.");
 
             return mapping.findForward("EditShift");
 

@@ -70,7 +70,7 @@ public class EditExamRoomsDA
         InfoExecutionCourse infoExecutionCourse =
             (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-        System.out.println("infoExecutionCourse= " + infoExecutionCourse);
+        //System.out.println("infoExecutionCourse= " + infoExecutionCourse);
 
         Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
@@ -94,7 +94,7 @@ public class EditExamRoomsDA
         {
             throw new FenixActionException(e);
         }
-        System.out.println("infoViewOldExam" + infoExam);
+        //System.out.println("infoViewOldExam" + infoExam);
 
         List examRooms = infoExam.getAssociatedRooms();
 
@@ -170,7 +170,7 @@ public class EditExamRoomsDA
         InfoExecutionCourse infoExecutionCourse =
             (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-        System.out.println("infoExecutionCourse= " + infoExecutionCourse);
+        //System.out.println("infoExecutionCourse= " + infoExecutionCourse);
 
         Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
@@ -194,7 +194,7 @@ public class EditExamRoomsDA
         {
             throw new FenixActionException(e);
         }
-        System.out.println("infoViewOldExam" + infoExam);
+        //System.out.println("infoViewOldExam" + infoExam);
 
         String[] rooms = (String[]) editExamRoomsForm.get("selectedRooms");
         List roomsToSet = new ArrayList();

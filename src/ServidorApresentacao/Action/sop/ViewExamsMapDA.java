@@ -255,7 +255,7 @@ public class ViewExamsMapDA
 		InfoExamsMap infoExamsMap =
 			(InfoExamsMap) request.getAttribute(
 				SessionConstants.INFO_EXAMS_MAP);
-		System.out.println("infoExamsMap= " + infoExamsMap);
+		//System.out.println("infoExamsMap= " + infoExamsMap);
 
 		Integer indexExecutionCourse =
 			new Integer(request.getParameter("indexExecutionCourse"));

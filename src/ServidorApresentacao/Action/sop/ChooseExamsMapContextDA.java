@@ -188,7 +188,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 			request.setAttribute(
 				SessionConstants.CURRICULAR_YEARS_LIST,
 				curricularYears);
-			System.out.println("CURRICULAR_YEARS_LIST= " + curricularYears);
+			//System.out.println("CURRICULAR_YEARS_LIST= " + curricularYears);
 
 			int index =
 				Integer.parseInt((String) chooseExamContextoForm.get("index"));

@@ -74,7 +74,7 @@ public class ManageExecutionCourseDA
 				SessionConstants.EXECUTION_COURSE);
 
 		DynaActionForm editExecutionCourseForm = (DynaActionForm) form;
-		System.out.println("editExecutionCourseForm.get('theoreticalHours')= " + editExecutionCourseForm.get("theoreticalHours"));
+		//System.out.println("editExecutionCourseForm.get('theoreticalHours')= " + editExecutionCourseForm.get("theoreticalHours"));
 		infoExecutionCourse.setTheoreticalHours(
 			new Double((String) editExecutionCourseForm.get("theoreticalHours")));
 		infoExecutionCourse.setTheoPratHours(

@@ -19,16 +19,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
+public class ChooseExamDayAndShiftDispatchAction extends FenixContextDispatchAction {
 
 	public ActionForward prepare(
 		ActionMapping mapping,
