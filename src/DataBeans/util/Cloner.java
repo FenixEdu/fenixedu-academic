@@ -1432,7 +1432,7 @@ public abstract class Cloner {
 	public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
 
 		InfoBranch infoBranch = new InfoBranch();
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;        
+         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;        
         //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 25/Set/2003
         if (branch != null)
         {

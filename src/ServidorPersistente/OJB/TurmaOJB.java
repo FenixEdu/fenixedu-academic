@@ -136,15 +136,6 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		throws ExcepcaoPersistencia {
 		try {
 
-			System.out.println(
-				"###########################################################");
-			System.out.println("### read class list");
-			System.out.println(
-				"###   executionPeriod" + executionPeriod.getIdInternal());
-			System.out.println("###   curricularYear" + curricularYear);
-			System.out.println(
-				"###   executionDegree" + executionDegree.getIdInternal());
-			System.out.println("###");
 
 			String oqlQuery = "select turmas from " + Turma.class.getName();
 			oqlQuery += " where executionPeriod.executionYear.year = $1"

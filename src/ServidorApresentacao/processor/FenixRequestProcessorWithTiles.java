@@ -34,8 +34,6 @@ public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
 			&& (uri.indexOf("/publico/index.do") == -1))) {
 			
 			if ((session == null) || (session.isNew()) && ((session!= null)&&(!session.getAttributeNames().hasMoreElements()))) {
-				System.out.println("Session!"+ session.isNew());
-				System.out.println(uri);
 				ActionErrors errors = new ActionErrors();
 
 				errors.add(

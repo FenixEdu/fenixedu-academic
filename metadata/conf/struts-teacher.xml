@@ -1217,6 +1217,7 @@
               scope="request">
         <forward name="showEmailForm" path="showEmailForm"/>
         <forward name="mailSent" path="/studentsByCurricularCourse.do?method=readStudents"/>
+		 <forward name="mailCandidaciesSent" path="/showCandidacies.do"/>
       </action>
 	</action-mappings>
 

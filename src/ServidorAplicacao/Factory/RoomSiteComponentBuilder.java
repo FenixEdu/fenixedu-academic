@@ -71,8 +71,6 @@ public class RoomSiteComponentBuilder {
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 				IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-				System.out.println("room"+room); // a null
-				System.out.println("executionPeriod"+executionPeriod);
 				List lessonList =
 					lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
 

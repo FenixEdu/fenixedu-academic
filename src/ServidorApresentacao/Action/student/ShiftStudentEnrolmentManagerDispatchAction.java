@@ -425,7 +425,6 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 		if (wantedCourses.size() <= 8) {
 			//Build up the arrayList
-			System.out.println("AttendingCourses:" + wantedCourses.size());
 
 			Boolean attendenceChanged = writeAttendingCourses(userView, infoStudent, wantedCourses);
 

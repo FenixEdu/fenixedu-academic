@@ -78,8 +78,7 @@ public class ReadPavillionsRoomsLessons implements IServico {
 				CollectionUtils.addAll(rooms,iterator);
 			}
 
-			System.out.println("### Pavilhoes - "+pavillions.size());
-			System.out.println("### Salas - "+rooms.size());			
+	
 			// Read rooms classes
 			for (int i = 0; i < rooms.size(); i++) {
 				InfoViewRoomSchedule infoViewRoomSchedule =

@@ -601,10 +601,6 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		List studentAllowedClasses) {
 		Iterator iterator = shiftClasses.iterator();
 
-		System.out.println(
-			"Student Allowed Classes:" + studentAllowedClasses.size());
-		System.out.println("Shift Classes: " + shiftClasses.size());
-
 		while (iterator.hasNext()) {
 			InfoClass thisClass = (InfoClass) iterator.next();
 			Iterator iterator2 = studentAllowedClasses.iterator();

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-
+<logic:present name="siteView">
 <bean:define id="component" name="siteView" property="commonComponent" />
 <bean:define id="executionCourse" name="component" property="executionCourse" />
 <ul>
@@ -37,3 +37,4 @@
 <ul>
 <li><html:link href="<%= request.getContextPath()+"/publico/viewSiteExecutionCourse.do?method=firstPage" %>" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal" target="_blank">Ver Página da Disciplina</html:link>
 </ul>
+</logic:present>

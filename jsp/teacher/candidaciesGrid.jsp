@@ -213,6 +213,12 @@
 										Nome
 									</td>
 									<td class="listClasses-header">
+										Média
+									</td>
+									<td class="listClasses-header">
+										Cadeiras Feitas
+									</td>
+									<td class="listClasses-header">
 										E-Mail
 									</td>
 									<td class="listClasses-header">
@@ -272,6 +278,12 @@
 										String lastName = names[names.length-1];
 										out.print(firstName + " " + lastName);
 										%>
+									</td>
+									<td class="listClasses">
+										<bean:write name="candidacy" property="classification"/>
+									</td>
+									<td class="listClasses">
+										<bean:write name="candidacy" property="completedCourses"/>
 									</td>
 									<td class="listClasses">
 										<a href=mailto:<%=candidacy.getStudent().getInfoPerson().getEmail()%>>

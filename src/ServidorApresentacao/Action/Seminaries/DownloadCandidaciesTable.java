@@ -8,18 +8,16 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoStudent;
+import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.SiteView;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCaseStudy;
@@ -41,7 +39,8 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class DownloadCandidaciesTable extends FenixAction
 {
-    static final String COLUMNS_HEADERS="Nº\tNome\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
+	static final String COLUMNS_HEADERS=
+		"Nº\tNome\tMédia\tCadeiras Feitas\tE-Mail\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
 	Object[] getReadCandidaciesArgs(HttpServletRequest request) throws FenixActionException
 	{
 		Integer modalityID;
@@ -155,7 +154,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		HttpServletResponse response)
 		throws FenixActionException
 	{
-        String document = DownloadCandidaciesTable.COLUMNS_HEADERS + "\n"; 
+		String document= DownloadCandidaciesTable.COLUMNS_HEADERS + "\n";
 		HttpSession session= this.getSession(request);
 		IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		//
@@ -176,6 +175,7 @@ public class DownloadCandidaciesTable extends FenixAction
 				String motivation= null;
 				InfoSeminary seminary= null;
 				List casesChoices= null;
+				InfoStudentCurricularPlan studentCurricularPlan= null;
 				List cases= new LinkedList();
 				InfoCandidacy candidacy= (InfoCandidacy) iterator.next();
 				Object[] argsReadStudent= { candidacy.getStudentIdInternal()};
@@ -184,6 +184,12 @@ public class DownloadCandidaciesTable extends FenixAction
 				Object[] argsReadModality= { candidacy.getModalityIdInternal()};
 				Object[] argsReadSeminary= { candidacy.getSeminaryIdInternal()};
 				student= (InfoStudent) gestor.executar(userView, "student.ReadStudentById", argsReadStudent);
+				Object[] argsReadCurricularPlan= { student.getNumber(), student.getDegreeType()};
+				studentCurricularPlan=
+					(InfoStudentCurricularPlan) gestor.executar(
+						userView,
+						"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+						argsReadCurricularPlan);
 				curricularCourse=
 					(InfoCurricularCourse) ((SiteView) gestor
 						.executar(userView, "ReadCurricularCourseByOIdService", argsReadCurricularCourse))
@@ -206,43 +212,47 @@ public class DownloadCandidaciesTable extends FenixAction
 					cases.add(infoCaseStudy);
 				}
 				//
-                document+="\""+student.getNumber()+"\""+"\t";               
-                document+="\""+student.getInfoPerson().getNome()+"\""+"\t";                
-                document+="\""+seminary.getName()+"\""+"\t"; 
-                document+="\""+curricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla()+"\""+"\t";                
-                document+="\""+curricularCourse.getName()+"\""+"\t";              
-                document+="\""+modality.getName()+"\""+"\t";
-                if (theme!=null)                
-                    document+="\""+theme.getName()+"\""+"\t";
-                else
-                    document+="\""+"N/A\"\t";               
-                document+="\""+candidacy.getMotivation()+"\""+"\t";
-                for (Iterator casesIterator= cases.iterator(); casesIterator.hasNext();)
+				document += "\"" + student.getNumber() + "\"" + "\t";
+				document += "\"" + student.getInfoPerson().getNome() + "\"" + "\t";
+                document += "\"" + studentCurricularPlan.getClassification() + "\"" + "\t";
+                document += "\"" + studentCurricularPlan.getCompletedCourses() + "\"" + "\t";    
+                document += "\"" + student.getInfoPerson().getEmail() + "\"" + "\t";
+				document += "\"" + seminary.getName() + "\"" + "\t";            
+				document += "\""
+					+ curricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla()
+					+ "\""
+					+ "\t";
+				document += "\"" + curricularCourse.getName() + "\"" + "\t";
+				document += "\"" + modality.getName() + "\"" + "\t";
+				if (theme != null)
+					document += "\"" + theme.getName() + "\"" + "\t";
+				else
+					document += "\"" + "N/A\"\t";
+				document += "\"" + candidacy.getMotivation() + "\"" + "\t";
+				for (Iterator casesIterator= cases.iterator(); casesIterator.hasNext();)
 				{
 					InfoCaseStudy caseStudy= (InfoCaseStudy) casesIterator.next();
-                    document+="\""+caseStudy.getName()+"\""+"\t";                    
+					document += "\"" + caseStudy.getName() + "\"" + "\t";
 				}
-                document+="\n";
-             }
+				document += "\n";
+			}
 		}
 		catch (Exception e)
 		{
 			throw new FenixActionException();
 		}
-        try
+		try
 		{
-			ServletOutputStream writer = response.getOutputStream();
-            response.setContentType("application/vnd.ms-excel");
-            writer.print(document);
-            writer.flush();
-            response.flushBuffer();
+			ServletOutputStream writer= response.getOutputStream();
+			response.setContentType("application/vnd.ms-excel");
+			writer.print(document);
+			writer.flush();
+			response.flushBuffer();
 		}
 		catch (IOException e1)
 		{
-            throw new FenixActionException();
+			throw new FenixActionException();
 		}
-
 		return null;
 	}
-
 }

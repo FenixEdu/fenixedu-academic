@@ -86,7 +86,6 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 				SessionConstants.EXECUTION_PERIOD);
 
 		if (selectedExecutionPeriod != null) {
-			System.out.println("Ha executionPeriod in request");
 			DynaActionForm indexForm = (DynaActionForm) form;
 			indexForm.set(
 				"index",

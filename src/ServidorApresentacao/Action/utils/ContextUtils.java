@@ -64,7 +64,7 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("## executionPeriodOID nao em lado nenhum, vai ler current");
+		
 			// Read current execution period from database
 			try {
 				infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(null, "ReadCurrentExecutionPeriod", new Object[0]);
@@ -86,9 +86,7 @@ public class ContextUtils {
 	 * @param request
 	 */
 	public static void setExecutionDegreeContext(HttpServletRequest request) {
-		String executionDegreeOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
-
-System.out.println("ExecutionDegree from request: " + executionDegreeOIDString);
+	String executionDegreeOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
 
 		if ((executionDegreeOIDString == null) || (executionDegreeOIDString.length() == 0)) {
 			executionDegreeOIDString = request.getParameter(SessionConstants.EXECUTION_DEGREE_OID);
@@ -97,10 +95,6 @@ System.out.println("ExecutionDegree from request: " + executionDegreeOIDString);
 			if ((executionDegreeOIDString == null) || (executionDegreeOIDString.length() == 0)) {
 				request.setAttribute(SessionConstants.EXECUTION_DEGREE, null);
 			}
-			
-			
-System.out.println("ExecutionDegree from parameter: " + executionDegreeOIDString);
-
 		}
 
 		Integer executionDegreeOID = null;
@@ -133,10 +127,8 @@ System.out.println("ExecutionDegree from parameter: " + executionDegreeOIDString
 	 */
 	public static void setCurricularYearContext(HttpServletRequest request) {
 		String curricularYearOIDString = (String) request.getAttribute(SessionConstants.CURRICULAR_YEAR_OID);
-		System.out.println("Curricular Year from request: " + curricularYearOIDString);
 		if (curricularYearOIDString == null) {
 			curricularYearOIDString = request.getParameter(SessionConstants.CURRICULAR_YEAR_OID);
-			System.out.println("Curricular Year from parameter: " + curricularYearOIDString);
 		}
 
 		Integer curricularYearOID = null;
@@ -169,15 +161,12 @@ System.out.println("ExecutionDegree from parameter: " + executionDegreeOIDString
 	 * @param request
 	 */
 	public static void setExecutionCourseContext(HttpServletRequest request) {
-		String executionCourseOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_COURSE_OID);
-		System.out.println("ExecutionCourse from request: " + executionCourseOIDString);
+				String executionCourseOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_COURSE_OID);
 		if (executionCourseOIDString == null) {
-			executionCourseOIDString = request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
-			System.out.println("ExecutionCourse from parameter: " + executionCourseOIDString);
+						executionCourseOIDString = request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
 		}
 
 		Integer executionCourseOID = null;
-		System.out.println("executionCourseOID" + executionCourseOID);
 		if (executionCourseOIDString != null && !executionCourseOIDString.equals("") && !executionCourseOIDString.equals("null")) {
 			executionCourseOID = new Integer(executionCourseOIDString);
 		}
@@ -207,10 +196,8 @@ System.out.println("ExecutionDegree from parameter: " + executionDegreeOIDString
 	 */
 	public static void setShiftContext(HttpServletRequest request) {
 		String shiftOIDString = (String) request.getAttribute(SessionConstants.SHIFT_OID);
-		System.out.println("Shift from request: " + shiftOIDString);
 		if (shiftOIDString == null) {
 			shiftOIDString = request.getParameter(SessionConstants.SHIFT_OID);
-			System.out.println("Shift from parameter: " + shiftOIDString);
 		}
 
 		Integer shiftOID = null;
@@ -283,10 +270,8 @@ System.out.println("ExecutionDegree from parameter: " + executionDegreeOIDString
 	 */
 	public static void setClassContext(HttpServletRequest request) {
 		String classOIDString = (String) request.getAttribute(SessionConstants.CLASS_VIEW_OID);
-		System.out.println("Class from request: " + classOIDString);
 		if (classOIDString == null) {
 			classOIDString = request.getParameter(SessionConstants.CLASS_VIEW_OID);
-			System.out.println("Class from parameter: " + classOIDString);
 		}
 
 		Integer classOID = null;
@@ -314,11 +299,9 @@ System.out.println("ExecutionDegree from parameter: " + executionDegreeOIDString
 	 * @param request
 	 */
 	public static void setLessonContext(HttpServletRequest request) {
-		String lessonOIDString = (String) request.getAttribute(SessionConstants.LESSON_OID);
-		System.out.println("Lesson from request: " + lessonOIDString);
+			String lessonOIDString = (String) request.getAttribute(SessionConstants.LESSON_OID);
 		if (lessonOIDString == null) {
 			lessonOIDString = request.getParameter(SessionConstants.LESSON_OID);
-			System.out.println("Lesson from parameter: " + lessonOIDString);
 		}
 
 		Integer lessonOID = null;
