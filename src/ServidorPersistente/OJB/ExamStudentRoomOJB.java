@@ -50,12 +50,12 @@ public class ExamStudentRoomOJB extends ObjectFenixOJB implements IPersistentExa
 		return queryList(ExamStudentRoom.class, criteria);
 	}
 
-	public List readBy(IExam exam, IStudent student)
+	public IExamStudentRoom readBy(IExam exam, IStudent student)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyExam", exam.getIdInternal());
 		criteria.addEqualTo("keyStudent", student.getIdInternal());
-		return queryList(ExamStudentRoom.class, criteria);
+		return (IExamStudentRoom) queryObject(ExamStudentRoom.class, criteria);
 	}
 
 	public List readBy(IStudent student, ISala room)
@@ -66,13 +66,13 @@ public class ExamStudentRoomOJB extends ObjectFenixOJB implements IPersistentExa
 		return queryList(ExamStudentRoom.class, criteria);
 	}
 
-	public ExamStudentRoom readBy(IExam exam, IStudent student, ISala room)
+	public IExamStudentRoom readBy(IExam exam, IStudent student, ISala room)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyExam", exam.getIdInternal());
 		criteria.addEqualTo("keyRoom", room.getIdInternal());
 		criteria.addEqualTo("keyStudent", student.getIdInternal());
-		return (ExamStudentRoom) queryObject(ExamStudentRoom.class, criteria);
+		return (IExamStudentRoom) queryObject(ExamStudentRoom.class, criteria);
 	}
 
 	public void delete(IExamStudentRoom examStudentRoom)

@@ -27,13 +27,13 @@ public interface IPersistentExamStudentRoom extends IPersistentObject {
 
 	public List readBy(IExam exam, ISala room) throws ExcepcaoPersistencia;
 
-	public List readBy(IExam exam, IStudent student)
+	public IExamStudentRoom readBy(IExam exam, IStudent student)
 		throws ExcepcaoPersistencia;
 
 	public List readBy(IStudent student, ISala room)
 		throws ExcepcaoPersistencia;
 
-	public ExamStudentRoom readBy(IExam exam, IStudent student, ISala room)
+	public IExamStudentRoom readBy(IExam exam, IStudent student, ISala room)
 		throws ExcepcaoPersistencia;
 
 	public void delete(IExamStudentRoom examStudentRoom)
