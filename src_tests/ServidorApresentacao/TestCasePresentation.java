@@ -14,7 +14,7 @@ import servletunit.struts.MockStrutsTestCase;
 import Tools.dbaccess;
 public class TestCasePresentation extends MockStrutsTestCase {
 
-	private dbaccess _dbAcessPoint = null;
+	private dbaccess dbAcessPoint = null;
 
 	public TestCasePresentation(String testName) {
 		super(testName);
@@ -33,23 +33,22 @@ public class TestCasePresentation extends MockStrutsTestCase {
 		// and loads the database with the data set required to run
 		// the test cases.
 		try {
-			_dbAcessPoint = new dbaccess();
-			_dbAcessPoint.openConnection();
-			_dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-			_dbAcessPoint.loadDataBase("etc/testDataSet.xml");
-			_dbAcessPoint.closeConnection();
+			this.dbAcessPoint = new dbaccess();
+			this.dbAcessPoint.openConnection();
+			this.dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+			this.dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+			this.dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println("Setup failed: " + ex);
 			fail("Setting up!");
 		}
-
 	}
 
 	protected void tearDown() {
 		try {
-			_dbAcessPoint.openConnection();
-			_dbAcessPoint.loadDataBase("etc/testBackup.xml");
-			_dbAcessPoint.closeConnection();
+			dbAcessPoint.openConnection();
+			dbAcessPoint.loadDataBase("etc/testBackup.xml");
+			dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println("Tear down failed: " + ex);
 		}
