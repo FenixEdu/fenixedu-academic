@@ -6,7 +6,6 @@
  */
 package ServidorApresentacao.sop;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +49,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 
 	
 	protected String getServletConfigFile() {
-			return "/WEB-INF/tests/web-sop.xml";
+			return "/WEB-INF/web.xml";
 		}
 	public void testUnAuthorizedAddClassShift() {
 				
@@ -99,13 +98,13 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 		String[] errors = { "error.exception.existing" };
 		verifyActionErrors(errors);
 		
-		verifyForwardPath("/viewShiftList.jsp");
+		verifyInputForward();
 
 	}
 
+
+	 
 	public void testAuthorizedAddClassShift() {
-		
-		
 		/**
 		 * prepare session 
 		 */
@@ -221,8 +220,6 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 		addRequestParameter("method", "removeClassShift");
 
 		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		
 		setNotAuthorizedUser();
 		
 		//fills the form
@@ -312,8 +309,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 		
 		GestorServicos manager = GestorServicos.manager();
 		
-		Integer curricularYear = new Integer(2);
-		Object args[] =
+    	Object args[] =
 			{ infoClass.getNome(), infoExecutionDegree, getInfoExecutionPeriod()};
 		List classInfoShiftList = null;
 		try {
@@ -386,7 +382,7 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 	}
 
 	public void testAuthorizedViewClassShift() {
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
+		
 		
 		//set request path
 		setRequestPathInfo("sop", "/ClassShiftManagerDA");
@@ -417,7 +413,6 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentationSop
 
 
 		// read executionCourses from executionDegree
-		GestorServicos manager = GestorServicos.manager();
 
 		//puts old classview in session
 		InfoClass infoClass =

@@ -6,7 +6,6 @@
  */
 package ServidorApresentacao.sop;
 
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,7 @@ import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.ClassesManagerDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.TipoCurso;
 
 /**
  * @author João Mota
@@ -50,7 +50,7 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentationSopPor
 
 	
 	protected String getServletConfigFile() {
-			return "/WEB-INF/tests/web-sop.xml";
+			return "/WEB-INF/web.xml";
 		}
 	public void testUnAuthorizedListClasses() {
 		
@@ -107,7 +107,7 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentationSopPor
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -165,8 +165,6 @@ public class ClassesManagerDispatchActionTest extends TestCasePresentationSopPor
 		HttpSession session,
 		List existingAttributesList,
 		List nonExistingAttributesList) {
-		Enumeration attNames = session.getAttributeNames();
-
 		verifySessionAttributes(session, existingAttributesList, true);
 		verifySessionAttributes(session, nonExistingAttributesList, false);
 	}
