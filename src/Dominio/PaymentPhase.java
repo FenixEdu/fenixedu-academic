@@ -21,6 +21,8 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	private Integer keyGratuityValues;
 	
 	
+	
+	
 	/**
 	 * @return Returns the description.
 	 */

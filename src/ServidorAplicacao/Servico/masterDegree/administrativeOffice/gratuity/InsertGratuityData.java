@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -15,6 +16,7 @@ import Dominio.GratuityValues;
 import Dominio.ICursoExecucao;
 import Dominio.IEmployee;
 import Dominio.IGratuityValues;
+import Dominio.IPaymentPhase;
 import Dominio.IPessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -23,6 +25,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentGratuityValues;
+import ServidorPersistente.IPersistentPaymentPhase;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -135,19 +138,11 @@ public class InsertGratuityData implements IServico
 			gratuityValues.setProofRequestPayment(infoGratuityValues.getProofRequestPayment());
 			gratuityValues.setStartPayment(infoGratuityValues.getStartPayment());
 			gratuityValues.setEndPayment(infoGratuityValues.getEndPayment());
-			
-//			
-//			private Double anualValue;
-//			private Double scholarShipValue;
-//			private Double finalProofValue;
-//			private Double courseValue;
-//			private Double creditValue;
-//			private Boolean proofRequestPayment;
-//			private Date startPayment;
-//			private Date endPayment;
+
 
 			//TODO: write all payment phases
-
+			writePaymentPhases(sp, infoGratuityValues);
+			
 			//TODO: update gratuity values in all student curricular plan that belong to this execution
 			// degree
 
@@ -160,8 +155,6 @@ public class InsertGratuityData implements IServico
 
 		return Boolean.TRUE;
 	}
-
-
 
 	private void validateGratuity(InfoGratuityValues infoGratuityValues) throws FenixServiceException
 	{
@@ -213,4 +206,17 @@ public class InsertGratuityData implements IServico
 			}
 		}
 	}
+	
+	private void writePaymentPhases(ISuportePersistente sp, InfoGratuityValues infoGratuityValues)
+	{
+		IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
+		
+		ListIterator iterator = infoGratuityValues.getInfoPaymentPhases().listIterator();
+		while (iterator.hasNext())
+		{
+			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
+			
+			//IPaymentPhase paymentPhase = new Pay
+		}		
+	}	
 }
