@@ -52,7 +52,7 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	/**
 	 * @return Returns the employeeKey.
 	 */
-	public Integer getEmployeeKey()
+	public Integer getKeyEmployee()
 	{
 		return keyEmployee;
 	}
@@ -60,7 +60,7 @@ public class GratuitySituation extends DomainObject implements IGratuitySituatio
 	/**
 	 * @param employeeKey The employeeKey to set.
 	 */
-	public void setEmployeeKey(Integer employeeKey)
+	public void setKeyEmployee(Integer employeeKey)
 	{
 		this.keyEmployee = employeeKey;
 	}

@@ -2,6 +2,7 @@ package DataBeans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Fernanda Quitério 10/Jan/2004
@@ -16,6 +17,8 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 
 	private InfoGratuityValues infoGratuityValues;
 
+	private List transactionList;
+	
 	public String toString()
 	{
 		StringBuffer object = new StringBuffer();
@@ -36,6 +39,24 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 
 		return object.toString();
 	}
+	
+	/**
+	 * @return Returns the transactionList.
+	 */
+	public List getTransactionList()
+	{
+		return transactionList;
+	}
+
+	/**
+	 * @param transactionList The transactionList to set.
+	 */
+	public void setTransactionList(List transactionList)
+	{
+		this.transactionList = transactionList;
+	}
+	
+	
 	/**
 	 * @return Returns the description.
 	 */

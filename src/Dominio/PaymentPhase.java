@@ -5,6 +5,7 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Tânia Pousão
@@ -20,7 +21,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 	private IGratuityValues gratuityValues;
 	private Integer keyGratuityValues;
 	
-	
+	private List transactionList;
 	
 	
 	/**
@@ -119,6 +120,23 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase
 		this.keyGratuityValues = keyGratuityValues;
 	}
 
+	/**
+	 * @return Returns the transactionList.
+	 */
+	public List getTransactionList()
+	{
+		return transactionList;
+	}
+
+	/**
+	 * @param transactionList The transactionList to set.
+	 */
+	public void setTransactionList(List transactionList)
+	{
+		this.transactionList = transactionList;
+	}
+	
+	
 	public String toString()
 	{
 		//TODO: to make

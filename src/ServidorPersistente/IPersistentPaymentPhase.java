@@ -4,11 +4,12 @@
  */
 package ServidorPersistente;
 
+
 /**
  * @author Tânia Pousão
  *
  */
 public interface IPersistentPaymentPhase extends IPersistentObject
 {
-
+	public void deletePaymentPhasesOfThisGratuity(Integer gratuityValuesID) throws ExcepcaoPersistencia;
 }
