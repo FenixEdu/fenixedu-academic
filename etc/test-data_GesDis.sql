@@ -5,7 +5,7 @@
 #
 #---------
 DELETE FROM SITE;
-INSERT INTO SITE VALUES (1, '24', 2, 'http://www.ist.utl.pt','joao@ist.utl.pt');
+INSERT INTO SITE VALUES (1, '24', 7, 'http://www.ist.utl.pt','joao@ist.utl.pt');
 INSERT INTO SITE VALUES (2, '25', null, null, null);
 INSERT INTO SITE VALUES (3, '26', null, null, null);
 INSERT INTO SITE VALUES (4, '27', null, null, null);
@@ -24,21 +24,21 @@ INSERT INTO SITE VALUES (10,'33', null, null, null);
 #
 #---------
 DELETE FROM SECTION;
-INSERT INTO SECTION VALUES (1, 'Seccao1dePO',0,4,null,'2003-01-21');
-INSERT INTO SECTION VALUES (2, 'Seccao1deTFCI',0,1,null,'2003-01-22');
-INSERT INTO SECTION VALUES (3, 'SubSeccao1dePO',0,4,1,'2003-01-23');
-INSERT INTO SECTION VALUES (4, 'SubSeccao2dePO',1,4,1,'2003-01-25');
-INSERT INTO SECTION VALUES (5, 'SubSubSeccao1dePO',0,4,3,'2003-01-26');
 
+INSERT INTO SECTION VALUES (3, 'SubSeccao1dePO',0,4,6,'2003-01-23');
+INSERT INTO SECTION VALUES (4, 'SubSeccao2dePO',1,4,6,'2003-01-25');
+INSERT INTO SECTION VALUES (5, 'SubSubSeccao1dePO',0,4,3,'2003-01-26');
+INSERT INTO SECTION VALUES (6, 'Seccao1dePO',0,4,null,'2003-01-21');
+INSERT INTO SECTION VALUES (7, 'Seccao1deTFCI',0,1,null,'2003-01-22');
 
 #
 # Data for table 'ITEM'
 #
 #---------
 DELETE FROM ITEM;
-INSERT INTO ITEM VALUES (1,'Item1dePO',0,'item1 da seccao1dePO',1,1);
-INSERT INTO ITEM VALUES (2,'Item1deTFCI',0,'item1 da seccao1deTFCI',1,2);
-INSERT INTO ITEM VALUES (3,'Item2deTFCI',1,'item2 da seccao1deTFCI',0,2);
+INSERT INTO ITEM VALUES (1,'Item1dePO',0,'item1 da seccao1dePO',1,6);
+INSERT INTO ITEM VALUES (2,'Item1deTFCI',0,'item1 da seccao1deTFCI',1,7);
+INSERT INTO ITEM VALUES (3,'Item2deTFCI',1,'item2 da seccao1deTFCI',0,7);
 #
 # Data for table 'CURRICULUM'
 #
@@ -46,7 +46,6 @@ INSERT INTO ITEM VALUES (3,'Item2deTFCI',1,'item2 da seccao1deTFCI',0,2);
 DELETE FROM CURRICULUM;
 INSERT INTO CURRICULUM VALUES (2, '25', 'bla','bla','bla');
 INSERT INTO CURRICULUM VALUES (1, '24','bla','bla','bla');
-
 
 #
 # Data for table 'TEACHER'
