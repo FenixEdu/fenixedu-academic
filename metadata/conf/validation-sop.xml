@@ -702,14 +702,14 @@
 
   <!-- Validation for chooseContextForm Form -->
     <form name="selectMultipleItemsForm">
-        <field property="selectedItems" depends="requiered" page="1">
+        <field property="selectedItems" depends="required" page="1">
 	        <arg0 key="ano curricular" resource="true"/>
         </field>
     </form>
 
   <!-- Validation for chooseContextForm Form -->
     <form name="searchExecutionCourse">
-        <field property="executionPeriodOID" depends="requiered" page="1">
+        <field property="executionPeriodOID" depends="required" page="1">
 	        <arg0 key="property.executionPeriod" resource="true"/>
         </field>
       <field property="executionDegreeOID" depends="integer" page="1">
