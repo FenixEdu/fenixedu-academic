@@ -321,7 +321,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		lesson = null;
 
        _suportePersistente.iniciarTransaccao();
-       lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(_diaSemana1, _inicio, _fim, _sala1);
+       lesson = _aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
        _suportePersistente.confirmarTransaccao();
 
       assertNull("testDeleteAula", lesson);
@@ -371,7 +371,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		executionCourse1 = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		assertNotNull(executionCourse1);
 
-		executionCourse2 = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "LEEC");
+		executionCourse2 = _disciplinaExecucaoPersistente.readBySiglaAndAnoLectivoAndSiglaLicenciatura("RCII", "2002/2003", "LEEC");
 		assertNotNull(executionCourse2);
 
         lessons = _aulaPersistente.readByExecutionCourse(executionCourse1);

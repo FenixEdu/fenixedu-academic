@@ -144,12 +144,10 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 	public void testDeleteAll(){
 		try {
 			_suportePersistente.iniciarTransaccao();
-			executionYear = new ExecutionYear("2000");
+			IExecutionYear executionYear = new ExecutionYear("2000");
 			persistentExecutionYear.writeExecutionYear(executionYear);
 			_suportePersistente.confirmarTransaccao();
 			
-			
-						
 			_suportePersistente.iniciarTransaccao();
 			List executionYears = persistentExecutionYear.readAllExecutionYear();
 			assertEquals(executionYears.size(), 3);
