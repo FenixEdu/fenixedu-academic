@@ -2,13 +2,23 @@ package ServidorAplicacao.Servicos.teacher;
 
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoSiteCommon;
+import DataBeans.SiteView;
+import Dominio.Announcement;
+import Dominio.IAnnouncement;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
+ * NOTA: TODO... os pré filtros ainda não verificam se um anúncio pertence à disciplina. Devido a isso
+ * alguns dos testes seguintes podem falhar.
  */
 public class ReadAnnouncementTest
 	extends AnnouncementBelongsToExecutionCourseTest {
@@ -22,32 +32,51 @@ public class ReadAnnouncementTest
 	}
 
 	protected String getApplication() {
-		return "EXTRANET";
-	}
-
-	protected String getDataSetFilePath() {
-		return "etc/testReadAnnouncementDataSet.xml";
+		return Autenticacao.EXTRANET;
 	}
 
 	protected String getNameOfServiceToBeTested() {
 		return "TeacherAdministrationSiteComponentService";
 	}
 
+	protected String getDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testReadAnnouncementDataSet.xml";
+	}
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccessfullDataSetFilePath()
+	 */
+	protected String getExpectedUnsuccessfullDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testExpectedReadAnnouncementDataSet.xml";
+	}
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
+		 */
 	protected String[] getAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
-
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
+	 */
 	protected String[] getUnauthorizedUser() {
 		String[] args = { "nmsn", "pass", getApplication()};
 		return args;
 	}
-
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
+	 */
 	protected String[] getNonTeacherUser() {
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
 	}
-
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+	 */
 	protected Object[] getAuthorizeArguments() {
 		Integer infoExecutionCourseCode = new Integer(24);
 		Integer infoSiteCode = new Integer(1);
@@ -66,13 +95,17 @@ public class ReadAnnouncementTest
 				obj2 };
 		return args;
 	}
-
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getAnnouncementUnsuccessfullArguments()
+	 */
 	protected Object[] getAnnouncementUnsuccessfullArguments() {
 		Integer infoExecutionCourseCode = new Integer(24);
 		Integer infoSiteCode = new Integer(1);
 		InfoSiteCommon commonComponent = new InfoSiteCommon();
 		InfoAnnouncement bodyComponent = new InfoAnnouncement();
 		Integer announcementCode = new Integer(5);
+		//TODO.. erro.. os pré filtros ainda não verificam se o anuncio pertence à disciplina
 		Object obj2 = null;
 
 		Object[] args =
@@ -86,20 +119,89 @@ public class ReadAnnouncementTest
 		return args;
 	}
 
-	protected String getExpectedUnsuccessfullDataSetFilePath() {
-		return "";
-	}
-
+	/*
+	 * Teste de leitura com sucesso de um anúncio.
+	 */
 	public void testReadAnnouncementSuccessfull() {
 		try {
-			boolean result = false;
+			//Argumentos do serviço
+			Integer infoExecutionCourseCode = new Integer(24);
+			Integer infoSiteCode = new Integer(1);
+			InfoSiteCommon commonComponent = new InfoSiteCommon();
+			InfoAnnouncement bodyComponent = new InfoAnnouncement();
+			Integer announcementCode = new Integer(1);
+			Object obj2 = null;
+			Object[] argserv =
+				{
+					infoExecutionCourseCode,
+					commonComponent,
+					bodyComponent,
+					infoSiteCode,
+					announcementCode,
+					obj2 };
+
+			//Utilizador Válido
 			String[] args = getAuthorizedUser();
 			IUserView id = authenticateUser(args);
 
-			gestor.executar(
-				id,
-				getNameOfServiceToBeTested(),
-				getAuthorizeArguments());
+			//Execução do serviço
+			SiteView siteView = null;
+			siteView =
+				(SiteView) gestor.executar(
+					id,
+					getNameOfServiceToBeTested(),
+					argserv);
+
+			//Leu alguma coisa?
+			if (siteView == null) {
+				fail("Reading an Announcement for a Site.");
+			}
+
+			//Anuncio lido pelo serviço
+			InfoAnnouncement info = (InfoAnnouncement) siteView.getComponent();
+
+			//Verificar se o que foi lido pelo serviço está correcto
+			try {
+				//Anuncio lido
+				Announcement readannouncement =
+					new Announcement(announcementCode);
+				IAnnouncement iAnnouncement = null;
+
+				//Ler o anúncio da base de dados.
+				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+				sp.iniciarTransaccao();
+				iAnnouncement =
+					(IAnnouncement) sp.getIPersistentAnnouncement().readByOId(
+						readannouncement,
+						false);
+				sp.confirmarTransaccao();
+
+				//Se o anúncio não existir..?!?!?!
+				if (iAnnouncement == null) {
+					fail("Reading an Announcement for a Site.");
+				}
+
+				//Verificar se o anúncio esta correcto
+				assertEquals(iAnnouncement.getTitle(), info.getTitle());
+				assertEquals(
+					iAnnouncement.getInformation(),
+					info.getInformation());
+				assertEquals(
+					info.getLastModifiedDate(),
+					iAnnouncement.getLastModifiedDate());
+				assertEquals(
+					info.getIdInternal(),
+					iAnnouncement.getIdInternal());
+				assertEquals(
+					iAnnouncement.getCreationDate(),
+					info.getCreationDate());
+
+			} catch (ExcepcaoPersistencia e) {
+				fail("Reading an Announcement for a Site " + e);
+			}
+
+			//Verificar se a base de dados foi alterada
+			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
 
 			System.out.println(
 				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
@@ -111,27 +213,50 @@ public class ReadAnnouncementTest
 			fail("Reading an Announcement for a Site " + e);
 		}
 	}
-	
-/*
+
+	/*
+	 * Leitura de um anúncio que não existe
+	 */
 	public void testReadAnnouncementUnsuccessfull() {
 		try {
-			boolean result = false;
+			//Argumentos inválidos.. anúncio inexistente
+			Integer infoExecutionCourseCode = new Integer(24);
+			Integer infoSiteCode = new Integer(1);
+			InfoSiteCommon commonComponent = new InfoSiteCommon();
+			InfoAnnouncement bodyComponent = new InfoAnnouncement();
+			Integer announcementCode = new Integer(121312);
+			Object obj2 = null;
+			Object[] argserv =
+				{
+					infoExecutionCourseCode,
+					commonComponent,
+					bodyComponent,
+					infoSiteCode,
+					announcementCode,
+					obj2 };
+
+			//Utilizador válido
 			String[] args = getAuthorizedUser();
 			IUserView id = authenticateUser(args);
 
-			gestor.executar(
-				id,
-				getNameOfServiceToBeTested(),
-			getAnnouncementUnsuccessfullArguments());
+			//Execução do serviço
+			gestor.executar(id, getNameOfServiceToBeTested(), argserv);
 
 			fail("Reading an Announcement for a Site ");
-
-		} catch (FenixServiceException e) {
+		} catch (NotAuthorizedException e) {
+			/*
+			 * Levantada a excepção pelos pré-flitros. O serviço não
+			 * chega a ser chamado.
+			 */
+			//Verificar se a base de dados foi alterada
+			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
 			System.out.println(
 				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
+		} catch (FenixServiceException e) {
+			fail("Reading an Announcement for a Site " + e);
 		} catch (Exception e) {
 			fail("Reading an Announcement for a Site " + e);
 		}
-	}*/
+	}
 }
