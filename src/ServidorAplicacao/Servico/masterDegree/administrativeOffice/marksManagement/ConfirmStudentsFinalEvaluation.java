@@ -1,16 +1,14 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagement;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import DataBeans.InfoCurricularCourseScope;
-import DataBeans.util.Cloner;
-import Dominio.CurricularCourseScope;
-import Dominio.Enrolment;
-import Dominio.EnrolmentEvaluation;
+import Dominio.CurricularCourse;
 import Dominio.Funcionario;
-import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
@@ -18,7 +16,7 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPessoaPersistente;
@@ -59,11 +57,11 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		return _servico;
 	}
 
-	public Boolean run(Integer scopeCode, IUserView userView) throws FenixServiceException {
+	public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView) throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
+			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
 			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
@@ -72,22 +70,20 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 			Funcionario employee = readEmployee(person);
 
-			//	get curricularCourseScope for enrolmentEvaluation
-			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-			curricularCourseScope.setIdInternal(scopeCode);
-			curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
+			ICurricularCourse curricularCourse = new CurricularCourse();
+			curricularCourse.setIdInternal(curricularCourseCode);
+			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
 
-			//			this becomes necessary to use criteria
-			InfoCurricularCourseScope infoCurricularCourseScope =
-				Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-			ICurricularCourseScope curricularCourseScopeForCriteria =
-				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
-
-			IEnrolment enrolment = new Enrolment();
-			enrolment.setCurricularCourseScope(curricularCourseScopeForCriteria);
-			IEnrolmentEvaluation enrolmentEvaluationForCriteria = new EnrolmentEvaluation();
-			enrolmentEvaluationForCriteria.setEnrolment(enrolment);
-			List enrolmentEvaluations = persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluationForCriteria);
+			List enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse, yearString);
+			List enrolmentEvaluations = new ArrayList();
+			Iterator iterEnrolment = enrolments.listIterator();
+			while (iterEnrolment.hasNext()) {
+				IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
+				List allEnrolmentEvaluations = (List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
+				IEnrolmentEvaluation enrolmentEvaluation =
+					(IEnrolmentEvaluation) allEnrolmentEvaluations.get(allEnrolmentEvaluations.size() - 1);
+				enrolmentEvaluations.add(enrolmentEvaluation);
+			}
 
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 				ListIterator iterEnrolmentEvaluations = enrolmentEvaluations.listIterator();

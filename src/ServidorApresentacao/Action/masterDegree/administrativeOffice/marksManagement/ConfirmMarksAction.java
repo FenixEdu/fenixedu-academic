@@ -41,11 +41,12 @@ public class ConfirmMarksAction extends DispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-
-		Integer scopeCode = getScopeCodeFromRequestAndSetOther(request);
+		setAttributesFromRequest(request);
+		Integer curricularCourseCode = new Integer((String) getFromRequest("courseID", request));
+		String executionYear = (String) getFromRequest("executionYear", request);
 
 		// Get students final evaluation			
-		Object args[] = { scopeCode };
+		Object args[] = { curricularCourseCode, executionYear };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
@@ -100,34 +101,27 @@ public class ConfirmMarksAction extends DispatchAction {
 		errors.add(arg0, new ActionError(arg1));
 		saveErrors(request, errors);
 	}
-
-	private Integer getScopeCodeFromRequestAndSetOther(HttpServletRequest request) {
-		String executionYear = (String) getFromRequest("executionYear", request);
-		String degree = (String) getFromRequest("degree", request);
-		String curricularCourse = (String) getFromRequest("curricularCourse", request);
-		Integer scopeCode = new Integer((String) getFromRequest("scopeCode", request));
-
-		request.setAttribute("executionYear", executionYear);
-		request.setAttribute("degree", degree);
-		request.setAttribute("curricularCourse", curricularCourse);
-		request.setAttribute("scopeCode", scopeCode);
-		return scopeCode;
+	private void setAttributesFromRequest(HttpServletRequest request) {
+		request.setAttribute("executionYear", (String) getFromRequest("executionYear", request));
+		request.setAttribute("degree", (String) getFromRequest("degree", request));
+		request.setAttribute("curricularCourse", (String) getFromRequest("curricularCourse", request));
+		request.setAttribute("courseID", (String) getFromRequest("courseID", request));
 	}
 
 	public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-
-		Integer scopeCode = getScopeCodeFromRequestAndSetOther(request);
+		setAttributesFromRequest(request);
+		Integer curricularCourseCode = new Integer((String) getFromRequest("courseID", request));
+		String executionYear = (String) getFromRequest("executionYear", request);
 
 		//		set final evaluation to final state
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] = { scopeCode, userView };
+		Object args[] = { curricularCourseCode, executionYear, userView };
 		GestorServicos serviceManager = GestorServicos.manager();
-		Boolean result = null;
 		try {
-			result = (Boolean) serviceManager.executar(userView, "ConfirmStudentsFinalEvaluation", args);
+			serviceManager.executar(userView, "ConfirmStudentsFinalEvaluation", args);
 		} catch (NonExistingServiceException e) {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);

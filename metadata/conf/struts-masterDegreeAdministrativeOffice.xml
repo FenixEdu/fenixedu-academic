@@ -918,9 +918,7 @@
       <action path="/chooseExecutionYearToManageMarks"
       		  input="chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
-		      name="chooseExecutionYearForm"
 		      parameter="method"
-		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
@@ -931,9 +929,7 @@
       <action path="/chooseMasterDegreeToManageMarks"
       		  input="/marksManagement/chooseMasterDegreeToManageMarks.jsp"
 		      attribute="chooseMasterDegreeForm"
-		      name="chooseMasterDegreeForm"
 		      parameter="method"
-		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseMasterDegreeToManageMarks.jsp"/>  

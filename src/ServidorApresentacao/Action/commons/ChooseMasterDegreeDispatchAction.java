@@ -1,18 +1,19 @@
 package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.validator.DynaValidatorForm;
 
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -59,6 +60,8 @@ public class ChooseMasterDegreeDispatchAction extends DispatchAction {
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e);
 		}
+		Collections.sort(degreeList, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+
 
 		request.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 
@@ -72,14 +75,9 @@ public class ChooseMasterDegreeDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			String executionYear = getFromRequest("executionYear", request);
-
-			DynaValidatorForm masterDegreeForm = (DynaValidatorForm) form;
-			String masterDegree = (String) masterDegreeForm.get("masterDegree");
-
 			request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 			request.setAttribute("executionYear", getFromRequest("executionYear", request));
-			request.setAttribute("degree", masterDegree);
+			request.setAttribute("degree", getFromRequest("masterDegree", request));
 
 			return mapping.findForward("ChooseSuccess");
 	}

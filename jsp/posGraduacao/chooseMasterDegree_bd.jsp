@@ -14,26 +14,27 @@
 	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
 	<br />
 	</logic:present>
-	<bean:message key="title.masterDegree.administrativeOffice.chooseDegree" />
+	<bean:message key="title.masterDegree.administrativeOffice.chooseMasterDegree" />
+	<br /><br />
 	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
-	<html:form action="<%=path%>">
-		<table>
-		   <!-- MasterDegree -->
-		   <tr>
-			 <td><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</td>
-			 <td><html:select property="masterDegree">
-					<html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="infoDegreeCurricularPlan.infoDegree.sigla" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
-				 </html:select>
-			 </td>
-		   </tr>
-		</table>
-		<br />
-		<input type="hidden" name="method" value="chooseMasterDegree"/>
-		<html:hidden property="page" value="1"/>
-		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
-	<logic:present name="jspTitle">
-		<html:hidden property="jspTitle" value="<%= pageContext.findAttribute("jspTitle").toString() %>" />
-	</logic:present>
-		<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
-	</html:form>
+	<table>
+	   <!-- MasterDegree -->
+		<logic:iterate id="masterDegreeElem" name="<%= SessionConstants.DEGREE_LIST %>" type="DataBeans.InfoExecutionDegree">
+			<tr>
+				<td>
+					<logic:present name="jspTitle">
+						<html:link page="<%= path + ".do?method=chooseMasterDegree&amp;degree=" + masterDegreeElem.getInfoDegreeCurricularPlan().getInfoDegree().getSigla() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") %>">
+							<bean:message key="label.masterDegree.administrativeOffice.masterDegree"/>&nbsp;<bean:write name="masterDegreeElem" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+						</html:link>
+					</logic:present>
+					<logic:notPresent name="jspTitle">
+						<html:link page="<%= path + ".do?method=chooseMasterDegree&amp;degree=" + masterDegreeElem.getInfoDegreeCurricularPlan().getInfoDegree().getSigla() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") %>">
+							<bean:message key="label.masterDegree.administrativeOffice.masterDegree"/>&nbsp;<bean:write name="masterDegreeElem" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+						</html:link>
+					</logic:notPresent>
+				</td>
+	   		</tr>
+	   	</logic:iterate>
+	</table>
+	<br />
 </logic:present>

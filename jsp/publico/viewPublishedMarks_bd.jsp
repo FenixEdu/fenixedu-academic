@@ -8,6 +8,8 @@
 <%@ page import="Util.Data" %>
 <%@ page import="Util.EvaluationType" %>
 <logic:present name="siteView">
+<bean:message key="classification.nonOfficial.information" />
+<br />
 <bean:define id="marksListComponent" name="siteView" property="component" type="DataBeans.InfoSiteMarks"/>
 <bean:define id="infoEvaluation" name="marksListComponent" property="infoEvaluation" type="DataBeans.InfoEvaluation"/>
 <span class="error"><html:errors/></span>

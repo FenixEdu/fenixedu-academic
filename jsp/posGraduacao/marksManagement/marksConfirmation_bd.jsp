@@ -15,6 +15,11 @@
 	<bean:define id="teacher" name="infoSiteEnrolmentEvaluation" property="infoTeacher"/>
 	<bean:define id="availableEvaluationDate" name="infoSiteEnrolmentEvaluation" property="lastEvaluationDate"/>
 	<html:form action="/marksConfirmation">
+		<html:hidden property="method" value="confirm" />
+		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
+		<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
+		<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
+		<html:hidden property="courseID" value="<%= pageContext.findAttribute("courseID").toString() %>" />	
 	    <table>        
 			<tr>
 				<td class="listClasses-header">
@@ -64,11 +69,6 @@
 			</tr>
 	    </table>
 		<br /><br />
-		<html:hidden property="method" value="confirm" />
-		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
-		<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
-		<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
-		<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("scopeCode").toString() %>" />
 	 	<html:submit styleClass="inputbutton">
 			<bean:message key="button.confirm"/>
 	  	</html:submit>

@@ -11,11 +11,9 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
-import Dominio.CurricularCourseScope;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Funcionario;
-import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -32,7 +30,6 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrat
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
@@ -72,13 +69,12 @@ public class InsertStudentsFinalEvaluation implements IServico {
 		return _servico;
 	}
 
-	public List run(Integer scopeCode, List evaluations, Integer teacherNumber, Date evaluationDate, IUserView userView)
+	public List run(List evaluations, Integer teacherNumber, Date evaluationDate, IUserView userView)
 		throws FenixServiceException {
 
 		List infoEvaluationsWithError = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -91,11 +87,6 @@ public class InsertStudentsFinalEvaluation implements IServico {
 			//			employee
 			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 			Funcionario employee = readEmployee(person);
-
-			//			curricular Course Scope
-			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-			curricularCourseScope.setIdInternal(scopeCode);
-			curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
 
 			infoEvaluationsWithError = new ArrayList();
 			Calendar calendario = Calendar.getInstance();

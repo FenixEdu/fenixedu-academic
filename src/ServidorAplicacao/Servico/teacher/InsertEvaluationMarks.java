@@ -139,6 +139,7 @@ public class InsertEvaluationMarks implements IServico {
 									mark.setEvaluation(evaluation);
 									mark.setMark(infoMark.getMark());
 									mark.setPublishedMark(infoMark.getPublishedMark());
+	
 								} else {
 									persistentMark.simpleLockWrite(mark);
 									mark.setMark(infoMark.getMark());

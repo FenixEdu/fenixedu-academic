@@ -13,6 +13,12 @@
 <span class="error"><html:errors/></span>
 <logic:present name="infoSiteEnrolmentEvaluation">
 	<html:form action="/marksSubmission" >  
+		<html:hidden property="page" value="1"/>	
+		<html:hidden property="method" value="submit" />
+		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
+		<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
+		<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
+		<html:hidden property="courseID" value="<%= pageContext.findAttribute("courseID").toString() %>" />
 	    <table>
 			<tr>
 				<td>
@@ -70,15 +76,7 @@
 				</tr>
 	    	</logic:iterate>
 	    </table>
-		<br /><br />
-		
-		<html:hidden property="page" value="1"/>	
-		<html:hidden property="method" value="submit" />
-		<html:hidden property="executionYear" value="<%= pageContext.findAttribute("executionYear").toString() %>" />
-		<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
-		<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
-		<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("scopeCode").toString() %>" />
-	
+		<br /><br />	
 	 	<html:submit styleClass="inputbutton">
 			<bean:message key="button.save"/>
 	  	</html:submit>

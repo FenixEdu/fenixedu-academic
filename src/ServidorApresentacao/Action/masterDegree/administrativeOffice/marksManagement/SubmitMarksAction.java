@@ -47,11 +47,12 @@ public class SubmitMarksAction extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 
-		Integer scopeCode = getScopeCodeFromRequestAndSetOther(request);
+		setAttributesFromRequest(request);
+		Integer curricularCourseCode = new Integer(getFromRequest("courseID", request));
 		String year = getFromRequest("executionYear", request);
 
 		// Get students List			
-		Object args[] = { scopeCode, year };
+		Object args[] = { curricularCourseCode, year };
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
@@ -104,17 +105,16 @@ public class SubmitMarksAction extends DispatchAction {
 		saveErrors(request, errors);
 	}
 
-	private Integer getScopeCodeFromRequestAndSetOther(HttpServletRequest request) {
+	private void setAttributesFromRequest(HttpServletRequest request) {
 		String executionYear = getFromRequest("executionYear", request);
 		String degree = getFromRequest("degree", request);
 		String curricularCourse = getFromRequest("curricularCourse", request);
-		Integer scopeCode = new Integer(getFromRequest("scopeCode", request));
+		Integer curricularCourseCode = new Integer(getFromRequest("courseID", request));
 
 		request.setAttribute("executionYear", executionYear);
 		request.setAttribute("degree", degree);
 		request.setAttribute("curricularCourse", curricularCourse);
-		request.setAttribute("scopeCode", scopeCode);
-		return scopeCode;
+		request.setAttribute("courseID", curricularCourseCode);
 	}
 
 	public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -122,7 +122,7 @@ public class SubmitMarksAction extends DispatchAction {
 
 		HttpSession session = request.getSession(false);
 
-		Integer scopeCode = getScopeCodeFromRequestAndSetOther(request);
+		setAttributesFromRequest(request);
 
 		List evaluations = new ArrayList();
 		Integer sizeList = new Integer(getFromRequest("sizeList", request));
@@ -146,7 +146,7 @@ public class SubmitMarksAction extends DispatchAction {
 
 		//		Insert final evaluation
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] = { scopeCode, evaluations, teacherNumber, evaluationDate, userView };
+		Object args[] = { evaluations, teacherNumber, evaluationDate, userView };
 		GestorServicos serviceManager = GestorServicos.manager();
 		List evaluationsWithError = null;
 		try {

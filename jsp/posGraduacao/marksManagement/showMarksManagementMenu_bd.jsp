@@ -11,7 +11,7 @@
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
 
-<%-- don't forget to take above parameters - executionYear, degree, curricularCourse and scopeCode - 
+<%-- don't forget to take above parameters - executionYear, degree, curricularCourse and courseID - 
 	to actions to maintain jsp state --%>
 <ul>
     <li>
@@ -19,12 +19,12 @@
     		<bean:message key="link.masterDegree.administrativeOffice.marksView" />
 		</html:link>
 	</li>
-    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") %>">
+    <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksSubmission" />
     	</html:link>
     </li>
     <li>
-		<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") %>">
+		<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksConfirmation" />
 		</html:link>
 	</li>

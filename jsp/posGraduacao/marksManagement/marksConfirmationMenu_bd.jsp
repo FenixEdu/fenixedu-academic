@@ -45,14 +45,6 @@
     </table>
     <br />
     <table>
-<%--		<tr>
-			<td>
-				<bean:message key="label.data.avaliacao"/>:
-			</td>
-			<td> 
-				<bean:write name="availableEvaluationDate"/>
-			</td>
-		</tr> --%>
 		<tr>
 			<td colspan="2">
 				<b><bean:message key="label.masterDegree.administrativeOffice.responsibleTeacher" /></b>
@@ -71,12 +63,11 @@
 		</tr>
     </table>
 	<br />
-	<html:link target="_blank" page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") + "&amp;useCase=print" %>">
+	<html:link target="_blank" page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") + "&amp;useCase=print" %>">
 		<bean:message key="link.masterDegree.administrativeOffice.print" />
 	</html:link>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") + "&amp;useCase=confirm" %>">
+	<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("courseID") + "&amp;useCase=confirm" %>">
 		<bean:message key="link.masterDegree.administrativeOffice.marksConfirmation" />
 	</html:link>
-		
 </logic:present>   

@@ -1,11 +1,13 @@
 package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -48,6 +50,7 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction {
 			}
 			request.setAttribute("jspTitle", messages.getMessage((String) request.getParameter("jspTitle")));
 
+			Collections.sort(executionYearList, new BeanComparator("label"));
 			request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearList);
 						
 			return mapping.findForward("PrepareSuccess");
