@@ -15,10 +15,10 @@ import junit.framework.TestSuite;
 import DataBeans.InfoPerson;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import Util.TipoCurso;
 
-public class ReadOtherCoursesWithShiftsTest extends TestCaseServicos {
+public class ReadOtherCoursesWithShiftsTest extends TestCaseReadServices {
 
 	private InfoPerson infoPerson = null;
 	private InfoStudent infoStudent = null;
@@ -47,7 +47,7 @@ public class ReadOtherCoursesWithShiftsTest extends TestCaseServicos {
   }
 
 // FIXME : The service seens to be REALLY messed up
-
+// Wrong Arguments passed
   protected String getNameOfServiceToBeTested() {
 	  return "ReadOtherCoursesWithShifts";
   }
