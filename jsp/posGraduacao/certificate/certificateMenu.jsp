@@ -7,10 +7,12 @@
 </ul>
     <p><b><bean:message key="label.coordinator.student" /></b></p>
 <ul>
-    <li><html:link page="/chooseCertificateInfoAction.do?method=prepare&page=0"><bean:message key="link.certificate" /></html:link></li>
-    <li><html:link page="/chooseDeclarationInfoAction.do?method=prepare&page=0"><bean:message key="link.declarations" /></html:link></li>
-    <li><html:link page="/chooseFinalResultInfoAction.do?method=prepare&page=0"><bean:message key="link.finalResult" /></html:link></li>
-    <li><html:link page="/enrollment.do"><bean:message key="link.masterDegree.enrollment"/></html:link></li>    
+	<blockquote>
+	    <li><html:link page="/chooseCertificateInfoAction.do?method=prepare&page=0"><bean:message key="link.certificate" /></html:link></li>
+	    <li><html:link page="/chooseDeclarationInfoAction.do?method=prepare&page=0"><bean:message key="link.declarations" /></html:link></li>
+	    <li><html:link page="/chooseFinalResultInfoAction.do?method=prepare&page=0"><bean:message key="link.finalResult" /></html:link></li>
+	    <li><html:link page="/enrollment.do"><bean:message key="link.masterDegree.enrollment"/></html:link></li>    
+	</blockquote>
 </ul>
 <ul>
     <li><html:link page="/chooseExecutionYearToManageMarks.do?method=prepareChooseExecutionYear&jspTitle=title.masterDegree.administrativeOffice.marksManagement"><bean:message key="link.masterDegree.administrativeOffice.marksManagement" /></html:link></li>
