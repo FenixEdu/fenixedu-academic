@@ -9,7 +9,7 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 	
-	  
+	 
      <!--curriculum forms --> 
      <form-bean name="executionCourseCurriculumForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
@@ -110,7 +110,7 @@
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
 
 	<!-- ========== Global Forward Definitions =============================== -->
@@ -292,8 +292,8 @@
 		input="/viewSection.jsp"
 		path="/createSection"
 		type="ServidorApresentacao.Action.teacher.InsertSectionAction"
-        validate="false"	>    
-       <forward name="viewSite" path="/viewSite.do"/>
+        validate="false">    
+       <forward name="viewSite" path="/viewSite.jsp"/>
 	</action>
 
 	<!-- Edit Section -->
@@ -305,6 +305,14 @@
         validate="false" >
        <forward name="editSection" path="/editSection.do?method=edit"/>
        <forward name="viewSite" path="/viewSite.do"/>
+	</action>
+	
+	<action name="sectionForm"
+		input="/viewSection.jsp"
+		path="/prepareInsertSection"
+		type="ServidorApresentacao.Action.teacher.PrepareInsertSectionAction"
+        validate="false">    
+       <forward name="createSection" path="/createSection.jsp"/>
 	</action>
 	
 	<!-- Section viewer -->
