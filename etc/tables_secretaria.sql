@@ -43,7 +43,7 @@ CREATE TABLE EXECUTION_COURSE (
   KEY_EXECUTION_PERIOD int(11) unsigned NOT NULL,
   COMMENT text,  
   PRIMARY KEY  (ID_INTERNAL),
-  UNIQUE KEY U1 (ID_INTERNAL, CODE, KEY_EXECUTION_PERIOD)
+  UNIQUE KEY U1 (CODE, KEY_EXECUTION_PERIOD)
 ) TYPE=InnoDB;
 
 #---------------------------------------------------------------
