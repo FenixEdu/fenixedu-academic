@@ -7,7 +7,6 @@ import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.Section;
@@ -122,9 +121,7 @@ public class EditSection implements IServico {
 		Integer newOrder)
 		throws FenixServiceException {
 
-		ISection superiorSection = null;
-		IItem item = null;
-		ISection newSuperiorSection = null;
+		
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse =
