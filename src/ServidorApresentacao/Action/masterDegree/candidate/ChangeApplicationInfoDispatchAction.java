@@ -24,8 +24,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoMasterDegreeCandidate;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.SituationName;
 
@@ -54,9 +56,12 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 	  newMasterDegreeCandidate.setMajorDegreeYear((Integer) changeApplicationInfoForm.get("majorDegreeYear"));
 	             
 	  changeArgs[0] = newMasterDegreeCandidate;
-
-	  gestor.executar(userView, "ChangeApplicationInfo", changeArgs);
-
+		
+	  try {
+	  	  gestor.executar(userView, "ChangeApplicationInfo", changeArgs);
+	  } catch(FenixServiceException e) {
+	  	throw new FenixActionException(e);
+	  }
 	  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
 	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, newMasterDegreeCandidate);
  

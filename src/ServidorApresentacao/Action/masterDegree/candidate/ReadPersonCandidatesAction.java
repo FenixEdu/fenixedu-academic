@@ -22,8 +22,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoMasterDegreeCandidate;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction {
@@ -42,8 +44,13 @@ public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base
 	  
       Object args[] = new Object[1];
 	  args[0] = userView;
-	  
-      List candidates = (List) gestor.executar(userView, "ReadPersonCandidates", args);
+	  List candidates = null;
+	  try {
+	      candidates = (List) gestor.executar(userView, "ReadPersonCandidates", args);
+	  } catch(FenixServiceException e) {
+	  	throw new FenixActionException(e);
+	  	
+	  }
 	  if (candidates.size() == 1) {
 	  	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, (InfoMasterDegreeCandidate) candidates.get(0));
 		return mapping.findForward("Success");

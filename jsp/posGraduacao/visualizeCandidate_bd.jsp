@@ -24,6 +24,11 @@
             <td><bean:message key="label.person.username" /></td>
             <td><bean:write name="personalInfo" property="username"/></td>
           </tr>
+		  <!-- Application Number -->
+          <tr>
+            <td><bean:message key="label.candidate.candidateNumber" /></td>
+            <td><bean:write name="masterDegreeCandidate" property="candidateNumber"/></td>
+          </tr>
 
           <tr></tr>
           <tr></tr>      
