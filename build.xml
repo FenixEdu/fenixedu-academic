@@ -492,6 +492,7 @@
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
+classpath="${lib}/mysql-connector-java-3.0.7.jar"
         >
         DROP DATABASE IF EXISTS ${db.name};
         CREATE DATABASE ${db.name};
@@ -522,6 +523,7 @@
             userid="${db.assiduousness.user}"
             password="${db.assiduousness.pass}"
             encoding="${encoding}"
+	    classpath="${lib}/mysql-connector-java-3.0.7.jar"
         >
         DROP DATABASE IF EXISTS ${db.assiduousness.name};
         CREATE DATABASE ${db.assiduousness.name};
@@ -552,6 +554,7 @@
             userid="${db.personFilter.user}"
             password="${db.personFilter.pass}"
             encoding="${encoding}"
+	    classpath="${lib}/mysql-connector-java-3.0.7.jar"
         >
         DROP DATABASE IF EXISTS ${db.personFilter.name};
         CREATE DATABASE ${db.personFilter.name};
@@ -901,6 +904,7 @@
 	</target>
 
 	<target name="validate-xml">
+	<!--
 		<xmlvalidate warn="false" failonerror="false">
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
@@ -909,6 +913,7 @@
 					<exclude name="**/Domain.xml"/>			
 				</fileset>
 		</xmlvalidate>
+-->
 	</target> 
 	
 	
