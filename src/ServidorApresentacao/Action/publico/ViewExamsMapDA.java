@@ -18,7 +18,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -79,7 +78,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction
 							
 			InfoExecutionDegree infoExecutionDegree =
 						(InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-			request.setAttribute("infoDegreeCurricularPlan",(InfoDegreeCurricularPlan)infoExecutionDegree.getInfoDegreeCurricularPlan());
+			request.setAttribute("infoDegreeCurricularPlan",infoExecutionDegree.getInfoDegreeCurricularPlan());
 			
 			request.setAttribute(
 						SessionConstants.EXECUTION_DEGREE,

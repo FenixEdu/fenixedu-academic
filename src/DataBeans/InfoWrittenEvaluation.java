@@ -189,7 +189,7 @@ public class InfoWrittenEvaluation extends InfoEvaluation{
             if(writtenEvaluation instanceof IExam) {
                 infoWrittenEvaluation = InfoExam.newInfoFromDomain((IExam) writtenEvaluation);
             } else if(writtenEvaluation instanceof IWrittenTest) {
-                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((IWrittenTest)writtenEvaluation);
+                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain(writtenEvaluation);
             } else {
                 infoWrittenEvaluation = new InfoWrittenEvaluation();
                 infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
