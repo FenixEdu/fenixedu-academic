@@ -44,7 +44,6 @@ public abstract class ServiceTestCase extends TestCase {
 	}
 
 	protected IDatabaseConnection getConnection() throws Exception {
-
 		Class driverClass = Class.forName("com.mysql.jdbc.Driver");
 		Connection jdbcConnection = DriverManager.getConnection("jdbc:mysql://localhost/ciapl", "root", "");
 		return new DatabaseConnection(jdbcConnection);
@@ -220,9 +219,8 @@ public abstract class ServiceTestCase extends TestCase {
 	 */
 	private LinkedList readServiceTableNamesToFilter() {
 		LinkedList listTableNamesToFilter = new LinkedList();
-		LinkedList defaultListTableNamesToFilter = new LinkedList();
 		String stringTableNamesToFilter = "";
-		String defaultStringTableNamesToFilter = "";
+	
 
 		try {
 			ResourceBundle bundle = new PropertyResourceBundle(new FileInputStream(getTableNamesToFilterFilePath()));

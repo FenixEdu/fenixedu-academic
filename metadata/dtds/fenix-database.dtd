@@ -177,7 +177,7 @@
     OJB_DMAP*,
     ass_REGULARIZACAO_MARCACAO*,
     ass_HORARIO_TIPO*,
-    ROLE*,
+   ROLE*,
     SEMINARY*)>
 
 <!ELEMENT OJB_NRM EMPTY>
@@ -2008,4 +2008,15 @@
     description CDATA #IMPLIED
     allowed_candidacies_per_student CDATA #IMPLIED
 >
+
+
+
+
+
+
+
+
+
+
+
 

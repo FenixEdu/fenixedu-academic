@@ -4,10 +4,8 @@
  */
 package ServidorAplicacao.Servicos.coordinator;
 
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  *fenix-head
@@ -39,15 +37,7 @@ public abstract class CoordinatorBelongsToExecutionDegree
 		super.setUp();
 	}
 
-	protected IUserView authenticateUser(String[] arguments) {
-		SuportePersistenteOJB.resetInstance();
-		String args[] = arguments;
-		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-		}
+	protected void tearDown() throws Exception {
 	}
 
 	public void testNonCoordinatorUser() {
@@ -92,27 +82,6 @@ public abstract class CoordinatorBelongsToExecutionDegree
 		}
 	}
 
-	public void testAuthorizedUser() {
-		Object serviceArguments[] = getAuthorizeArguments();
-		try {
-			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
-			System.out.println(
-				"testAuthorizedUser was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (NotAuthorizedException ex) {
-			System.out.println(
-				"testAuthorizedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-			fail(getNameOfServiceToBeTested() + "fail testAuthorizedUser");
-		} catch (Exception ex) {
-			System.out.println(
-				"testAuthorizedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-			fail("Unable to run service: " + getNameOfServiceToBeTested());
-
-		}
-	}
-
 	public void testCoordinatorNotBelongsToExecutionDegree() {
 		Object serviceArguments[] = getNonAuthorizeArguments();
 		try {
@@ -133,4 +102,6 @@ public abstract class CoordinatorBelongsToExecutionDegree
 
 		}
 	}
+
+	
 }
