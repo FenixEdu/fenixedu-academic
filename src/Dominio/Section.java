@@ -31,18 +31,16 @@ public class Section implements ISection {
 	/** 
 	 * Construtor
 	 */
-	public Section(Integer internalCode, String name, Integer order, Date lastModifiedDate, 
-		ISite site, Integer keySite, ISection superiorSection, List inferiorSections, List items) {
+	public Section(String name, Integer order, Date lastModifiedDate, 
+		ISite site, ISection superiorSection, List inferiorSections, List items) {
 
-		this.internalCode = internalCode;
-		this.name = name;
-		this.sectionOrder = order;
-		this.lastModifiedDate = lastModifiedDate;
-		this.site = site;
-		this.keySite = keySite;
-		this.superiorSection = superiorSection;
-		this.inferiorSections = inferiorSections;
-		this.items = items;
+		setName(name);
+		setSectionOrder(order);
+		setLastModifiedDate(lastModifiedDate);
+		setSite(site);
+		setSuperiorSection(superiorSection);
+		setInferiorSections(inferiorSections);
+		setItems(items);
 	}
 
 	/**
