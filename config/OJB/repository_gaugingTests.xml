@@ -41,6 +41,12 @@
         <field-descriptor name="wrong" column="WRONG" jdbc-type="INTEGER" />
         <field-descriptor name="cf" column="CF" jdbc-type="VARCHAR" 
             conversion="ServidorPersistente.Conversores.JavaString2FloatFieldConversion" />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
         <reference-descriptor name="student" class-ref="Dominio.Student" proxy="true">
             <foreignkey field-ref="keyStudent"/>
         </reference-descriptor>

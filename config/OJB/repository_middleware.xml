@@ -89,18 +89,18 @@
     column="answer7"
     jdbc-type="CHAR"
   />
-
-
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="middlewarePerson"
 			class-ref="middleware.middlewareDomain.MWPessoa"
 			proxy="false">
 		<foreignkey field-ref="documentidnumber"/>
 	</reference-descriptor>
-
-
-
 </class-descriptor>
 
 <class-descriptor 
@@ -268,8 +268,12 @@
     column="financialRepCode"
     jdbc-type="VARCHAR"
   />
-
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 
@@ -299,14 +303,18 @@
     column="description"
     jdbc-type="VARCHAR"
   />
-
   <field-descriptor id="4"
     name="idInternal"
     column="id_internal"
     jdbc-type="INTEGER"
 	primarykey="true"    
   />
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 
@@ -331,7 +339,12 @@
     column="universityCode"
     jdbc-type="VARCHAR"
   />
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -409,7 +422,12 @@
     jdbc-type="INTEGER"
 	primarykey="true"    
   />
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -489,13 +507,24 @@
     autoincrement="true"
     primarykey="true"
   />
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 
 <class-descriptor class="middleware.middlewareDomain.MWDegreeTranslation"  table="mw_DEGREE_TRANSLATION">
 	<field-descriptor name="degreeCode" column="ADM_DEGREE_CODE" jdbc-type="INTEGER" primarykey="true"/>
 	<field-descriptor name="keyDegree" column="KEY_DEGREE" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor name="degree" class-ref="Dominio.Curso" proxy="false">
 		<foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>
@@ -507,6 +536,12 @@
 	<field-descriptor name="degreeCode" column="DEGREE_CODE" jdbc-type="INTEGER"/>	
 	<field-descriptor name="className" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	<field-descriptor name="average" column="AVERAGE" jdbc-type="FLOAT"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree" table="mw_CURRICULAR_COURSE_OUTSIDE_STUDENT_DEGREE">
@@ -532,6 +567,12 @@
     column="keyCurricularCourse"
     jdbc-type="INTEGER"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <reference-descriptor
 	name="curricularCourse"
 	class-ref="Dominio.CurricularCourse"
@@ -543,6 +584,12 @@
 <class-descriptor class="middleware.middlewareDomain.MWUniversity" table="mw_UNIVERSITY">
 	<field-descriptor name="universityCode" column="universityCode" jdbc-type="VARCHAR" primarykey="true"/>
 	<field-descriptor name="universityName" column="universityName" jdbc-type="VARCHAR"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <!-- ********************************************************************************************************************************************** -->
@@ -550,12 +597,24 @@
 <class-descriptor class="middleware.middlewareDomain.MWAreaCientificaIleec" table="mw_AREAS_CIENTIFICAS_ILEEC">
   <field-descriptor name="idAreaCientifica" column="id_area_cientifica" jdbc-type="INTEGER" primarykey="true"/>
   <field-descriptor name="nome" column="nome" jdbc-type="VARCHAR"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWAreaEspecializacaoIleec" table="mw_AREAS_ESPECIALIZACAO_ILEEC">
   <field-descriptor name="idAreaEspecializacao" column="id_area_especializacao" jdbc-type="INTEGER" primarykey="true"/>
   <field-descriptor name="nome" column="nome" jdbc-type="VARCHAR"/>
   <field-descriptor name="maxCreditos" column="max_creditos" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWAreaSecundariaIleec" table="mw_AREAS_SECUNDARIAS_ILEEC">
@@ -563,6 +622,12 @@
   <field-descriptor name="idAreaEspecializacao" column="id_area_especializacao" jdbc-type="INTEGER"/>
   <field-descriptor name="nome" column="nome" jdbc-type="VARCHAR"/>
   <field-descriptor name="maxCreditos" column="max_creditos" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWDisciplinaIleec" table="mw_DISCIPLINAS_ILEEC">
@@ -577,11 +642,23 @@
   <field-descriptor name="tipoPrecedencia" column="tipo_precedencia" jdbc-type="INTEGER"/>
   <field-descriptor name="inscObrigatoria" column="insc_obrigatoria" jdbc-type="INTEGER"/>
   <field-descriptor name="funciona" column="funciona" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWDisciplinaGrupoIleec" table="mw_DISCIPLINA_GRUPO_ILEEC">
   <field-descriptor name="idDisciplina" column="id_disciplina" jdbc-type="INTEGER" primarykey="true"/>
   <field-descriptor name="idGrupo" column="id_grupo" jdbc-type="INTEGER" primarykey="true"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWEquivalenciaIleec" table="mw_EQUIVALENCIAS_ILEEC">
@@ -592,6 +669,12 @@
   <field-descriptor name="idAreaCientifica" column="id_area_cientifica" jdbc-type="INTEGER"/>
   <field-descriptor name="idAreaSecundaria" column="id_area_secundaria" jdbc-type="INTEGER"/>
   <field-descriptor name="idAreaEspecializacao" column="id_area_especializacao" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWGrupoIleec" table="mw_GRUPOS_ILEEC">
@@ -600,26 +683,56 @@
   <field-descriptor name="idAreaSecundaria" column="id_area_secundaria" jdbc-type="INTEGER"/>
   <field-descriptor name="maxCreditos" column="max_creditos" jdbc-type="INTEGER"/>
   <field-descriptor name="minCreditos" column="min_creditos" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWPrecedenciaDisciplinaDisciplinaIleec" table="mw_PRECEDENCIAS_DISCIPLINA_DISCIPLINA_ILEEC">
   <field-descriptor name="idDisciplina" column="id_disciplina" jdbc-type="INTEGER" primarykey="true"/>
   <field-descriptor name="idPrecedente" column="id_precedente" jdbc-type="INTEGER" primarykey="true"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWPrecedenciaNumeroDisciplinasIleec" table="mw_PRECEDENCIAS_NUMERO_DISCIPLINAS_ILEEC">
   <field-descriptor name="idDisciplina" column="id_disciplina" jdbc-type="INTEGER" primarykey="true"/>
   <field-descriptor name="numeroDisciplinas" column="numero_disciplinas" jdbc-type="INTEGER" primarykey="true"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWTipoEquivalenciaIleec" table="mw_TIPOS_EQUIVALENCIA_ILEEC">
   <field-descriptor name="tipoEquivalencia" column="tipo_equivalencia" jdbc-type="INTEGER" primarykey="true"/>
   <field-descriptor name="descricao" column="descricao" jdbc-type="VARCHAR"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor class="middleware.middlewareDomain.MWTipoPrecendenciaIleec" table="mw_TIPOS_PRECENDENCIA_ILEEC">
   <field-descriptor name="tipoPrecedencia" column="tipo_precedencia" jdbc-type="INTEGER" primarykey="true"/>
   <field-descriptor name="descricao" column="descricao" jdbc-type="VARCHAR"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <!-- ********************************************************************************************************************************************** -->

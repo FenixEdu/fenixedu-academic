@@ -26,6 +26,12 @@
          column="ALLOWED_CANDIDACIES_PER_STUDENT"
     	  jdbc-type="INTEGER"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 	<collection-descriptor
          name="equivalencies"
@@ -64,6 +70,12 @@
         column="MODALITY_ID_INTERNAL"
         jdbc-type="INTEGER"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
      <reference-descriptor
          name="seminary"
@@ -124,6 +136,12 @@
          column="NAME"
     	  jdbc-type="VARCHAR"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     	 
 </class-descriptor>
 
@@ -155,6 +173,12 @@
          column="SHORT_NAME"
     	  jdbc-type="VARCHAR"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 	  <collection-descriptor
         name="caseStudies"
@@ -201,6 +225,12 @@
          column="seminary_theme_id_internal"
     	  jdbc-type="INTEGER"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
      <reference-descriptor
          name="seminaryTheme"
@@ -275,6 +305,12 @@
         column="APPROVED"
         jdbc-type="BIT"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 	<!-- Choosen case studies -->
       <collection-descriptor
@@ -308,5 +344,11 @@
          name="order"
          column="PREFERENCE_ORDER"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
 </class-descriptor>

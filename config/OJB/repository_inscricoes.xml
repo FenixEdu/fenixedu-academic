@@ -25,6 +25,12 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<collection-descriptor
 			name="degreeCurricularPlans"
 			element-class-ref="Dominio.DegreeCurricularPlan"
@@ -116,6 +122,12 @@
    	column="DESCRIPTION_EN"
     jdbc-type="LONGVARCHAR"
   />	  
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="degree"
 			class-ref="Dominio.Curso"
@@ -164,6 +176,12 @@
 		jdbc-type="DATE"
 		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 	<reference-descriptor
 			name="degreeCurricularPlan"
@@ -269,6 +287,12 @@
 		column="KEY_SCIENTIFIC_AREA"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="university"
 			class-ref="Dominio.University"
@@ -392,6 +416,12 @@
 		jdbc-type="TIMESTAMP"
 		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
@@ -465,6 +495,12 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -531,6 +567,12 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -603,6 +645,12 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversion"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -645,6 +693,12 @@
 		column="YEAR"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -668,6 +722,12 @@
 		column="SEMESTER"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="curricularYear"
 			class-ref="Dominio.CurricularYear"
@@ -739,6 +799,12 @@
 		column="SECONDARY_CREDITS"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="Dominio.DegreeCurricularPlan"
@@ -794,6 +860,12 @@
 		column="KEY_ENROLMENT"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 		name="enrolment"
 		class-ref="Dominio.Enrolment"
@@ -829,6 +901,12 @@
 		column="KEY_EQUIVALENT_ENROLMENT"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 		name="enrolmentEquivalence"
 		class-ref="Dominio.EnrolmentEquivalence"
@@ -932,6 +1010,12 @@
 		jdbc-type="INTEGER"
 	/>
 -->	
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
@@ -984,6 +1068,12 @@
 		column="MAX_NAC_TO_ENROL"
 		jdbc-type="INTEGER"
 	/>	
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -1007,6 +1097,12 @@
 		column="KEY_OPTIONAL_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="possibleCurricularCourse"
 			class-ref="Dominio.CurricularCourse"
@@ -1093,6 +1189,12 @@
 		column="KEY_ENROLMENT"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="personResponsibleForGrade"
 			class-ref="Dominio.Pessoa"
@@ -1131,6 +1233,12 @@
 		column="KEY_CURRICULAR_COURSE"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 		name="curricularCourse"
 		class-ref="Dominio.CurricularCourse"
@@ -1171,6 +1279,12 @@
 		column="YEAR_OF_EQUIVALENCE"
 		jdbc-type="VARCHAR"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 		name="equivalentCurricularCourse"
 		class-ref="Dominio.CurricularCourse"
@@ -1218,6 +1332,12 @@
 		column="MAXIMUM_CREDITS"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="branch"
 			class-ref="Dominio.Branch"
@@ -1253,6 +1373,12 @@
     column="name"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 </class-descriptor>
 
@@ -1278,6 +1404,12 @@
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <!-- Mapping of User defined classes ends here -->

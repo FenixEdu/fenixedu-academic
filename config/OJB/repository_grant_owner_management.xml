@@ -16,6 +16,12 @@
          primarykey="true"
          autoincrement="true"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
        <field-descriptor
 		name="keyPerson"
 		column="KEY_PERSON"
@@ -58,6 +64,12 @@
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
 	 <field-descriptor
 		name="contractNumber"
@@ -118,6 +130,12 @@
          primarykey="true"
          autoincrement="true"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
        <field-descriptor
 		name="name"
 		column="NAME"
@@ -170,6 +188,12 @@
          primarykey="true"
          autoincrement="true"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
        <field-descriptor
 		name="beginDate"
 		column="DATE_BEGIN"
@@ -218,6 +242,12 @@
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
        <field-descriptor
 		name="beginDate"

@@ -44,6 +44,12 @@
          jdbc-type="DATE"
          conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="degree"
          class-ref="Dominio.Curso"

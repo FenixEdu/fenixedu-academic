@@ -20,6 +20,12 @@
 	<field-descriptor name="entity" column="ENTITY" jdbc-type="VARCHAR" nullable="true"/>
 	<field-descriptor name="function" column="FUNCTION" jdbc-type="VARCHAR" nullable="true"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
@@ -41,6 +47,12 @@
 	    <foreignkey field-ref="keyCategory"/>
     </reference-descriptor>
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
@@ -59,6 +71,12 @@
     				  jdbc-type="TIMESTAMP"
     				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
@@ -73,6 +91,12 @@
     				  jdbc-type="TIMESTAMP"
     				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
@@ -90,6 +114,12 @@
     				  jdbc-type="TIMESTAMP"
     				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/> 				
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
@@ -109,6 +139,12 @@
     <field-descriptor name="numberOfStudents" column="NUMBER_OF_STUDENTS" jdbc-type="INTEGER"/>
     <field-descriptor name="description" column="DESCRIPTION" jdbc-type="LONGVARCHAR"/>    				  
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
@@ -128,6 +164,12 @@
     <field-descriptor name="national" column="NATIONAL" jdbc-type="INTEGER"/>
     <field-descriptor name="international" column="INTERNATIONAL" jdbc-type="INTEGER"/>
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
@@ -148,6 +190,12 @@
   					  column="PUBLICATION"
   					  jdbc-type="LONGVARCHAR"/>
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>

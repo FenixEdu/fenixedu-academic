@@ -13,6 +13,12 @@
       <field-descriptor name="keyShift" column="KEY_SHIFT" jdbc-type="INTEGER"/>
 
       <field-descriptor name="percentage" column="PERCENTAGE" jdbc-type="DOUBLE"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       
       <reference-descriptor name="professorship" class-ref="Dominio.Professorship">
          <foreignkey field-ref="keyProfessorship"/>
@@ -40,6 +46,12 @@
       <field-descriptor name="lessons" column="LESSONS" jdbc-type="DOUBLE"/>
       
       <field-descriptor name="institutionWorkTime" column="INSTITUTION_WORK_TIME" jdbc-type="DOUBLE"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
       <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
          <foreignkey field-ref="keyTeacher"/>
@@ -67,6 +79,12 @@
       <field-descriptor name="startDate" column="START_DATE" jdbc-type="DATE"/>
       
       <field-descriptor name="endDate" column="END_DATE" jdbc-type="DATE"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       
       <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
          <foreignkey field-ref="keyTeacher"/>
@@ -86,6 +104,12 @@
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
       <field-descriptor name="keyStudent" column="KEY_STUDENT" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
       <reference-descriptor name="executionYear" class-ref="Dominio.ExecutionYear">
          <foreignkey field-ref="keyExecutionYear"/>
@@ -120,6 +144,12 @@
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
 	<field-descriptor name="keyExecutionPeriod" column="KEY_EXECUTION_PERIOD" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	
 	<reference-descriptor name="teacher"  class-ref="Dominio.Teacher">
 		<foreignkey field-ref="keyTeacher"/>
@@ -143,5 +173,11 @@
 
       <field-descriptor name="shortName" column="SHORT_NAME" jdbc-type="VARCHAR"/>
       <field-descriptor name="canBeExecutionCourseResponsible" column="CAN_BE_EXECUTION_COURSE_RESPONSIBLE" jdbc-type="BIT"/>      
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 

@@ -140,6 +140,12 @@
     column="Ingles_data_act"
     jdbc-type="TIMESTAMP"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -219,6 +225,12 @@
     column="objectivos_op"
     jdbc-type="LONGVARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -327,6 +339,12 @@
     column="objectivos_op"
      jdbc-type="LONGVARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
  
 </class-descriptor>
 
@@ -382,81 +400,10 @@
     column="Observacoes"
     jdbc-type="LONGVARCHAR"
   />
- 
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

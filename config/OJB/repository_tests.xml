@@ -25,6 +25,12 @@
         column="VISIBILITY"
         jdbc-type="BIT"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <reference-descriptor
          name="executionCourse"
          class-ref="Dominio.ExecutionCourse"
@@ -69,6 +75,12 @@
         column="VISIBILITY"
         jdbc-type="BIT"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
          name="metadata"
          class-ref="Dominio.Metadata"
@@ -125,6 +137,12 @@
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
          name="executionCourse"
          class-ref="Dominio.ExecutionCourse"
@@ -169,6 +187,12 @@
         column="KEY_TEST"
         jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
          name="question"
          class-ref="Dominio.Question"
@@ -262,6 +286,12 @@
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
          name="executionCourse"
          class-ref="Dominio.ExecutionCourse"
@@ -318,6 +348,12 @@
         name="optionShuffle"
         column="OPTION_SHUFFLE"
         jdbc-type="LONGVARCHAR"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
      <reference-descriptor
         name="student"
         class-ref="Dominio.Student">
@@ -371,6 +407,12 @@
          column="EVENT"
     	 jdbc-type="LONGVARCHAR"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <reference-descriptor
          name="student"
          class-ref="Dominio.Student"

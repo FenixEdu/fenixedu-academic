@@ -1,7 +1,3 @@
-
-
-
-
 <!-- Definitions for . -->
 <class-descriptor 
   class="middleware.almeida.Almeida_coddisc"
@@ -13,6 +9,12 @@
     jdbc-type="INTEGER"
     primarykey="true"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <field-descriptor id="2"
     name="coddis"
     column="coddis"

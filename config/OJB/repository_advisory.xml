@@ -45,6 +45,12 @@
          column="ONLY_SHOW_ONCE"
          jdbc-type="BIT"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<attribute
      	attribute-name="cacheable"
      	attribute-value="false" />

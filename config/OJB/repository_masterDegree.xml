@@ -79,6 +79,12 @@
 	     column="GIVEN_CREDITS_REMARKS"
      	 jdbc-type="LONGVARCHAR"/>
 	  />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
       	  <reference-descriptor
          	name="person"
@@ -160,6 +166,12 @@
 	     jdbc-type="INTEGER"
 	     conversion="ServidorPersistente.Conversores.JavaSituationName2SqlSituationNameFieldConversion"
 	  />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	  
 	  <reference-descriptor
          	name="masterDegreeCandidate"
@@ -212,6 +224,12 @@
 	     column="PRICE"
 	     jdbc-type="DOUBLE"
 	  />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	  
 	 </class-descriptor>
 	 
@@ -299,6 +317,12 @@
          refresh="true"
          jdbc-type="DATE"
 	 />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	 
  	  <reference-descriptor
          	name="contributor"
@@ -401,6 +425,12 @@
 	     column="QUANTITY"
 	     jdbc-type="INTEGER"
 	  />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	  
 	   <reference-descriptor
          	name="guide"
@@ -458,6 +488,12 @@
 	     jdbc-type="INTEGER"
 	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
 	  />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	  
 	   <reference-descriptor
          	name="guide"
@@ -503,6 +539,12 @@
             column="CONTRIBUTOR_ADDRESS"
             jdbc-type="VARCHAR"
          />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
  
   </class-descriptor>
  
@@ -555,6 +597,12 @@
             column="KEY_PERSON"
             jdbc-type="INTEGER"
          />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 	   <reference-descriptor
          	name="person"
@@ -614,6 +662,12 @@
 		    column="REMARKS"
             jdbc-type="LONGVARCHAR"
          />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 	   <reference-descriptor
          	name="studentCurricularPlan"
@@ -658,6 +712,12 @@
            column="KEY_CURRICULAR_COURSE_SCOPE"
            jdbc-type="INTEGER"
         />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
         
 	   <reference-descriptor
          	name="masterDegreeCandidate"
@@ -698,6 +758,12 @@
            column="KEY_STUDENT_CURRICULAR_PLAN"  
            jdbc-type="INTEGER"
         />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
         
     <collection-descriptor
          name="masterDegreeProofVersions"
@@ -775,6 +841,12 @@
 	     jdbc-type="INTEGER"
 	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
 	  	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
                 
         <collection-descriptor
         	name="guiders"
@@ -914,6 +986,12 @@
 	     jdbc-type="INTEGER"
 	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
 	  	/>  
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 		<reference-descriptor
         	name="masterDegreeThesis"
@@ -988,6 +1066,12 @@
            column="KEY_WORK_LOCATION"  
            jdbc-type="INTEGER"
         />          
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 		<reference-descriptor
         	name="person"
@@ -1045,6 +1129,12 @@
          jdbc-type="DATE"
           conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
 	 />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
  	  <reference-descriptor
          	name="guide"
          	class-ref="Dominio.Guide"
@@ -1117,6 +1207,12 @@
 	     column="REIMBURSEMENT_GUIDE_STATE"
          jdbc-type="INTEGER"         		 conversion="ServidorPersistente.Conversores.JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion"
 	 />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
  	  <reference-descriptor
          	name="reimbursementGuide"
          	class-ref="Dominio.reimbursementGuide.ReimbursementGuide"
@@ -1157,6 +1253,12 @@
            column="NAME"  
            jdbc-type="VARCHAR"
         />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
                
  </class-descriptor>  
    

@@ -23,6 +23,12 @@
 		column="CODE"
 		jdbc-type="VARCHAR"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 <!--	<collection-descriptor
 			name="disciplinasAssociadas"
 			element-class-ref="Dominio.DisciplinaDepartamento"
@@ -57,6 +63,12 @@
 		column="KEY_DEPARTMENT"
 		jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
 			name="departamento"
 			class-ref="Dominio.Department"

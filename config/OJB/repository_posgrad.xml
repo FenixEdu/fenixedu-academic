@@ -1,10 +1,4 @@
-
-
-
-
 <!-- Definitions for . -->
-
-
 <class-descriptor 
   class="middleware.posgrad.Posgrad_aluno_mestrado"
   table="posgrad_aluno_mestrado"
@@ -65,6 +59,12 @@
     column="observacoes"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -98,6 +98,12 @@
     column="codigoInternoRamo"
     jdbc-type="INTEGER"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -290,6 +296,12 @@
     column="media"
     jdbc-type="DOUBLE"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -327,6 +339,12 @@
     column="valido"
     jdbc-type="TINYINT"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -344,6 +362,12 @@
     column="cargoNome"
     jdbc-type="CHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -366,6 +390,12 @@
     column="anoLectivo"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -393,6 +423,12 @@
     column="anoLectivo"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -440,6 +476,12 @@
     column="creditos"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -468,39 +510,37 @@
     column="creditos"
     jdbc-type="DOUBLE"
   />
-  
   <field-descriptor id="7"
     name="sigla"
     column="sigla"
     jdbc-type="VARCHAR"
   />
-  
-  
   <field-descriptor id="8"
     name="tipo"
     column="tipo"
     jdbc-type="VARCHAR"
   />
-  
   <field-descriptor id="9"
     name="codigoCurricularCourse"
     column="codigoCurricularCourse"
     jdbc-type="INTEGER"
   />
-  
   <field-descriptor id="10"
     name="optativa"
     column="optativa"
     jdbc-type="VARCHAR"
   />
-
   <field-descriptor id="11"
     name="semestre"
     column="semestre"
     jdbc-type="INTEGER"
   />
-  
-  
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -538,6 +578,12 @@
     column="nome"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -610,6 +656,12 @@
     column="observacoes"
     jdbc-type="LONGVARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -632,6 +684,12 @@
     column="codigoTabela"
     jdbc-type="INTEGER"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -664,6 +722,12 @@
     column="numeroPrestacao"
     jdbc-type="INTEGER"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -816,6 +880,12 @@
     column="password"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -843,6 +913,12 @@
     column="data"
     jdbc-type="DATE"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -860,6 +936,12 @@
     column="situacao"
     jdbc-type="CHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -892,8 +974,10 @@
     column="valido"
     jdbc-type="INTEGER"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
-
-
-
-

@@ -46,6 +46,12 @@
          name="style"
          column="STYLE"
     	 jdbc-type="VARCHAR"/>		 	 
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	
     <reference-descriptor
          name="executionCourse"
@@ -95,6 +101,12 @@
         column="KEY_SITE"
         jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	
     <reference-descriptor
          name="site"
@@ -150,6 +162,12 @@
          name="lastModifiedDate"
          column="LAST_MODIFIED_DATE"
          jdbc-type="DATE"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
       <reference-descriptor
          name="site"
@@ -212,6 +230,12 @@
          column="KEY_SECTION"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="section"
          class-ref="Dominio.Section"
@@ -273,6 +297,12 @@
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	
     <reference-descriptor
          name="executionCourse"
@@ -304,6 +334,12 @@
     <field-descriptor name="place" column="PLACE" jdbc-type="VARCHAR" />
     
 	<field-descriptor name="keyProfessorship" column="KEY_PROFESSORSHIP" jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 
 	<reference-descriptor name="professorship"  class-ref="Dominio.Professorship">
 		<foreignkey field-ref="keyProfessorship"/>
@@ -322,6 +358,12 @@
         primarykey="true"
         autoincrement="true"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <field-descriptor
         name="keyCurricularCourse"
         column="KEY_CURRICULAR_COURSE"
@@ -414,6 +456,12 @@
          column="EVALUATION_ELEMENTS_EN"
     	  jdbc-type="LONGVARCHAR"
         />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
         
     <reference-descriptor
          name="executionCourse"
@@ -435,6 +483,12 @@
 		primarykey="true"
         autoincrement="true"
 		/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<field-descriptor 
         name="keyTeacher"
         column="KEY_TEACHER"
@@ -495,6 +549,12 @@
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
          name="teacher"
          class-ref="Dominio.Teacher"
@@ -560,6 +620,12 @@
         jdbc-type="INTEGER"
          conversion="ServidorPersistente.Conversores.TipoAula2EnumTipoAulaFieldConversion"
 	/>	
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <reference-descriptor
          name="executionCourse"
          class-ref="Dominio.ExecutionCourse"
@@ -602,6 +668,12 @@
          column="KEY_GROUP_PROPERTIES"
     	  jdbc-type="INTEGER"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
         
     <reference-descriptor
          name="shift"
@@ -649,6 +721,12 @@
          column="KEY_STUDENT_GROUP"
     	  jdbc-type="INTEGER"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
         
     <reference-descriptor
          name="attend"
@@ -753,6 +831,12 @@
          column="KEY_EXECUTION_COURSE"
     	  jdbc-type="INTEGER"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
             
     <reference-descriptor
          name="executionCourse"
@@ -783,6 +867,12 @@
     				  column="LAST_MODIFICATION_DATE" 
     				  jdbc-type="TIMESTAMP"
     				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>  					  
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<reference-descriptor
          name="executionCourse"
          class-ref="Dominio.ExecutionCourse"

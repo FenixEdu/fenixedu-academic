@@ -13,6 +13,12 @@
          primarykey="true"
          autoincrement="true"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
      <field-descriptor
 		name="responsible"
 		column="RESPONSIBLE"
@@ -54,6 +60,12 @@
 	        primarykey="true"
 	        autoincrement="true"
 	    />   	
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 			<field-descriptor
 				name="degreeKey"
 				column="KEY_DEGREE"

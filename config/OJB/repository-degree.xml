@@ -6,7 +6,12 @@
 	  <field-descriptor name="keyExecutionYear" column="KEY_EXECUTION_YEAR" jdbc-type="INTEGER" />
 
 	  <field-descriptor  name="title" column="TITLE" jdbc-type="VARCHAR" />
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	  <reference-descriptor
 			name="executionYear"
 			class-ref="Dominio.ExecutionYear"
@@ -27,6 +32,12 @@
 	  <field-descriptor  name="coOrientation" column="CO_ORIENTATION" jdbc-type="BIT" />
 
 	  <field-descriptor  name="percentage" column="PERCENTAGE" jdbc-type="DOUBLE"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	  <reference-descriptor
 			name="teacher"
 			class-ref="Dominio.Teacher"
@@ -38,7 +49,5 @@
 			class-ref="Dominio.degree.finalProject.DegreeFinalProject"
 			proxy="false">
 		<foreignkey field-ref="keyDegreeFinalProject"/>
-	 </reference-descriptor>   
-
- </class-descriptor>  
-   
+	 </reference-descriptor>
+ </class-descriptor>

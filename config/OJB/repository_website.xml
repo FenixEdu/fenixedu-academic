@@ -34,6 +34,12 @@
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
@@ -67,6 +73,12 @@
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 	
 <!-- ******************************************************************************************************************************* -->
@@ -112,6 +124,12 @@
          name="keyWebSite"
          column="KEY_WEBSITE"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
       <reference-descriptor
          name="webSite"
@@ -207,7 +225,12 @@
          column="KEY_WEBSITE_SECTION"
          jdbc-type="INTEGER"
       />
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="editor"
          class-ref="Dominio.Pessoa"
@@ -215,7 +238,6 @@
       >
          <foreignkey field-ref="keyEditor"/>
       </reference-descriptor>
-
       <reference-descriptor
          name="webSiteSection"
          class-ref="Dominio.WebSiteSection"

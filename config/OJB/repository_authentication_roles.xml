@@ -10,6 +10,12 @@
         primarykey="true"
         autoincrement="true"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
     <field-descriptor
         name="numeroDocumentoIdentificacao"
         column="DOCUMENT_ID_NUMBER"
@@ -273,6 +279,12 @@
         jdbc-type="VARCHAR"
         id="4"
     />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 <!--
     <collection-descriptor
          name="rolePersons"
@@ -316,7 +328,12 @@
 		nullable="false"
         jdbc-type="INTEGER"
     />
-
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="role"
          class-ref="Dominio.Role"
@@ -375,6 +392,12 @@
          column="KEY_STUDENT_KIND"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="person"
          class-ref="Dominio.Pessoa"
@@ -401,7 +424,12 @@
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"/>
-      
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />      
       <field-descriptor
          name="teacherNumber"
          column="TEACHER_NUMBER"

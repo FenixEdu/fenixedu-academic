@@ -42,6 +42,12 @@
          column="HORAS_MAXIMAS"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
    </class-descriptor>
 
 <!-- Definitions for Dominio.SOPAulas -->
@@ -101,6 +107,12 @@
          column="FIXA"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
    </class-descriptor>
 
 <!-- Definitions for Dominio.SOPDisciplinas -->
@@ -124,6 +136,12 @@
          name="nome"
          column="NOME"
          jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
    </class-descriptor>
 
@@ -168,6 +186,11 @@
          column="LAB_HOURS"
          jdbc-type="DOUBLE"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
    </class-descriptor>
-
 <!-- Mapping of User defined classes ends here -->

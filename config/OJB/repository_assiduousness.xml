@@ -11,6 +11,12 @@
     primarykey="true"
     autoincrement="true"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <field-descriptor id="1"
     name="chaveFuncionario"
     column="chaveFuncionario"
@@ -35,6 +41,12 @@
     primarykey="true"
     autoincrement="true"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <field-descriptor id="1"
     name="keyPerson"
     column="chavePessoa"
@@ -84,6 +96,12 @@
     primarykey="true"
     autoincrement="true"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <field-descriptor id="1"
     name="keyEmployee"
     column="chaveFuncionario"
@@ -187,6 +205,12 @@
   	column="codigoInterno" 
   	jdbc-type="INTEGER"
     primarykey="true" autoincrement="true"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <field-descriptor 
   	name="sigla" 
   	column="sigla" 
@@ -213,6 +237,12 @@
   	column="codigoInterno" 
   	jdbc-type="INTEGER"
     primarykey="true" autoincrement="true"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <field-descriptor 
   	name="sigla" 
   	column="sigla" 

@@ -10,6 +10,12 @@
     primarykey="true"
     autoincrement="true"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
   <field-descriptor id="1"
     name="code"
     column="CODE"
@@ -103,6 +109,12 @@
     column="OBSERV"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -126,6 +138,12 @@
     column="NAME"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 
 <class-descriptor 
@@ -213,6 +231,12 @@
     column="codUniversidade"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
 <class-descriptor 
   class="middleware.almeida.Almeida_curram"
@@ -244,4 +268,10 @@
     column="descri"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>

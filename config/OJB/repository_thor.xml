@@ -1,10 +1,4 @@
-
-
-
-
 <!-- Definitions for . -->
-
-
 <class-descriptor 
   class="middleware.thor.Atribuicaodisciplinas"
   table="AtribuicaoDisciplinas"
@@ -59,10 +53,13 @@
     column="SalaPreferencial"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
-
-
-
 
 <class-descriptor 
   class="middleware.thor.Aulas"
@@ -119,10 +116,13 @@
     column="Fixa"
     jdbc-type="TINYINT"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
-
-
-
 
 <class-descriptor 
   class="middleware.thor.Disciplinas"
@@ -179,52 +179,13 @@
     column="Epoca_Fim"
     jdbc-type="SMALLINT"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <class-descriptor 
   class="middleware.thor.Turmas"
@@ -250,40 +211,10 @@
     column="Epoca_Fim"
     jdbc-type="VARCHAR"
   />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 </class-descriptor>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,7 +2,7 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for Dominio.Sala -->
-   <class-descriptor
+<class-descriptor
    	  class="Dominio.Sala"
    	  table="ROOM"
    >
@@ -44,10 +44,16 @@
          column="EXAM_CAPACITY"
          jdbc-type="INTEGER"
       />
-   </class-descriptor>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+</class-descriptor>
 
 <!-- Definitions for Dominio.Turma -->
-   <class-descriptor
+<class-descriptor
    	  class="Dominio.Turma"
    	  table="CLASS"
    >
@@ -63,7 +69,6 @@
          column="NAME"
          jdbc-type="VARCHAR"
       />
-           
       <field-descriptor id="3"
          name="anoCurricular"
          column="CURRICULAR_YEAR"
@@ -74,27 +79,29 @@
          column="KEY_EXECUTION_DEGREE"
          jdbc-type="INTEGER"
       />
-
       <field-descriptor id="5"
          name="keyExecutionPeriod"
          column="KEY_EXECUTION_PERIOD"
          jdbc-type="INTEGER"
-      />    
-     
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="executionDegree"
          class-ref="Dominio.CursoExecucao"
       >
          <foreignkey field-id-ref="4"/>
       </reference-descriptor>
-            
       <reference-descriptor
          name="executionPeriod"
          class-ref="Dominio.ExecutionPeriod"
       >
          <foreignkey field-id-ref="5"/>
       </reference-descriptor>      
-
      <collection-descriptor
 			name="associatedShifts"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -106,8 +113,7 @@
 		<fk-pointing-to-this-class column="KEY_CLASS"/>
 		<fk-pointing-to-element-class column="KEY_SHIFT"/>
 	</collection-descriptor>      
-
-   </class-descriptor>
+</class-descriptor>
 
 <!-- Definitions for Dominio.Turno -->
    <class-descriptor
@@ -149,12 +155,17 @@
          column="AVAILLABILITY_FINAL"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="disciplinaExecucao"
          class-ref="Dominio.ExecutionCourse">
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
-      
      <collection-descriptor
 			name="associatedShiftProfessorship"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
@@ -186,7 +197,7 @@
 		<fk-pointing-to-this-class column="KEY_SHIFT"/>
 		<fk-pointing-to-element-class column="KEY_CLASS"/>
 	</collection-descriptor>
-   </class-descriptor>
+</class-descriptor>
 
 <!-- Definitions for Dominio.Aula -->
    <class-descriptor
@@ -239,6 +250,12 @@
          column="KEY_EXECUTION_PERIOD"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="sala"
          class-ref="Dominio.Sala"
@@ -257,10 +274,10 @@
       >
          <foreignkey field-id-ref="8"/>
       </reference-descriptor>     
-   </class-descriptor>
+</class-descriptor>
 
 <!-- Definitions for Dominio.TurmaTurno -->
-   <class-descriptor
+<class-descriptor
    	  class="Dominio.TurmaTurno"
    	  table="CLASS_SHIFT"
    >
@@ -280,6 +297,12 @@
          name="chaveTurno"
          column="KEY_SHIFT"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
       <reference-descriptor
          name="turma"
@@ -319,6 +342,12 @@
          name="keyStudent"
          column="KEY_STUDENT"
          jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="shift"
          class-ref="Dominio.Turno">
@@ -355,6 +384,12 @@
          name="chaveAula"
          column="KEY_LESSON"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
       <reference-descriptor
          name="turno"
@@ -399,6 +434,12 @@
          column="KEY_ENROLMENT"
          jdbc-type="INTEGER"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="aluno"
          class-ref="Dominio.Student"
@@ -438,6 +479,12 @@
          name="ojbConcreteClass"
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
 </class-descriptor>
 
@@ -513,6 +560,12 @@
          column="PUBLISHMENT_MESSAGE"
         jdbc-type="VARCHAR"
       />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.ExecutionCourse"
@@ -547,6 +600,12 @@
       <field-descriptor name="keyExam" column="KEY_EVALUATION"  jdbc-type="INTEGER"/>      
       <field-descriptor name="keyStudent" column="KEY_STUDENT"  jdbc-type="INTEGER"/>      
       <field-descriptor name="keyRoom" column="KEY_ROOM"  jdbc-type="INTEGER"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor name="exam" class-ref="Dominio.Exam" proxy="false">
          <foreignkey field-ref="keyExam"/>
       </reference-descriptor> 
@@ -574,7 +633,13 @@
          name="ojbConcreteClass"
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
-      />      
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	  <collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.ExecutionCourse"
@@ -621,7 +686,12 @@
          column="KEY_EVALUATION"
          jdbc-type="INTEGER"
       />
-     
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
       <reference-descriptor
          name="attend"
          class-ref="Dominio.Frequenta"
@@ -629,7 +699,6 @@
       >
          <foreignkey field-ref="keyAttend"/>
       </reference-descriptor> 
-      
       <reference-descriptor
          name="evaluation"
          class-ref="Dominio.Evaluation"
@@ -637,12 +706,7 @@
          <!-- proxy="true" -->
          <foreignkey field-ref="keyEvaluation"/>
       </reference-descriptor> 
-      
-   </class-descriptor> 
-
-
-
-
+</class-descriptor> 
 
 <!-- Definitions for Dominio.ExamExecutionCourse -->
    <class-descriptor
@@ -665,6 +729,12 @@
          name="keyExecutionCourse"
          column="KEY_EXECUTION_COURSE"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
       <reference-descriptor
          name="exam"
@@ -705,6 +775,12 @@
          name="keyExecutionCourse"
          column="KEY_EXECUTION_COURSE"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
       <reference-descriptor
          name="evaluation"

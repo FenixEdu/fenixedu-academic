@@ -1,5 +1,4 @@
 <class-descriptor class="Dominio.Publication" table="PUBLICATION">
-
     <extent-class class-ref="Dominio.InternationalJournalArticle"/>
     <extent-class class-ref="Dominio.InternationalConference"/>
     <extent-class class-ref="Dominio.NacionalConference"/>
@@ -32,6 +31,12 @@
 	<field-descriptor name="university" column="UNIVERSITY" jdbc-type="VARCHAR" nullable="false"/>
 	<field-descriptor name="volume" column="VOLUME" jdbc-type="INTEGER" nullable="false"/>
 	<field-descriptor name="year" column="YEAR" jdbc-type="INTEGER" nullable="false"/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
 	<collection-descriptor name="restrictions" element-class-ref="Dominio.Restriction" proxy="true">
        <inverse-foreignkey field-ref="keyPrecedence"/>
     </collection-descriptor>
