@@ -119,7 +119,6 @@
         dynamic="true">
         <form-property name="executionCourseInternalCode" type="java.lang.Integer"/>
         <form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
-        <form-property name="shiftProfessorshipsPercentages"  type="java.lang.Double[]"/> 
         <form-property name="method" type="java.lang.String"></form-property>       
 	</form-bean> 		          
 	
@@ -298,14 +297,14 @@
 	<action	path="/index"
         type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
 		>    
-      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>         
-<!--		<forward name="viewProfessorships" path="df.page.viewProfessorships"/> -->
+      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>      
+<!--		<forward name="viewProfessorships" path="df.page.viewProfessorships"/> -->    
 	</action>
 	
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
-	  <forward name="viewSite" path="/viewSite.jsp"/>   
-   <!--		<forward name="viewSite" path="df.page.initial.management.execution_course"/> -->
+  <forward name="viewSite" path="/viewSite.jsp"/>    
+	<!--		<forward name="viewSite" path="df.page.initial.management.execution_course"/>-->
 	</action>
 	
 	<!-- Insert Section -->
@@ -451,6 +450,7 @@
 		validate="false"
         >
        <forward name="showTable" path="df.teacher.showShiftsPercentageTable"/>
+        <forward name="acceptSuccess" path="df.page.viewProfessorships"/>
 	</action>	
 	<!-- End of Actions for Teacher credits -->	
 	</action-mappings>
