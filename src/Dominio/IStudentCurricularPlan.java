@@ -52,6 +52,7 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType) throws ExcepcaoPersistencia;
 	public List getStudentApprovedEnrollments();
 	public List getStudentEnrolledEnrollments();
+	public List getStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 	public List getStudentTemporarilyEnrolledEnrollments();
 	public Integer getMinimumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfCoursesToEnroll();
