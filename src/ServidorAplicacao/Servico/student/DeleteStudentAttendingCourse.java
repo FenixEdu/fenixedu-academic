@@ -119,7 +119,8 @@ public class DeleteStudentAttendingCourse implements IService
 
 				List shiftAttendsToDelete =
 					persistentShiftStudent.readByStudentAndExecutionCourse(student, executionCourse);
-				if (shiftAttendsToDelete != null)
+				
+				if (shiftAttendsToDelete != null && shiftAttendsToDelete.size() > 0)
 				{
 					throw new FenixServiceException("alreadyEnrolledInShift");
 				}
@@ -128,6 +129,7 @@ public class DeleteStudentAttendingCourse implements IService
 		}
 		catch (ExcepcaoPersistencia e)
 		{
+			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}
 	}
