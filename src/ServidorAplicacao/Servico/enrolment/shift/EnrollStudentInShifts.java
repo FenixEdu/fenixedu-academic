@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.enrollment.shift.ShiftEnrollmentErrorReport;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
@@ -33,7 +34,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class EnrollStudentInShifts implements IService
 {
-    //TODO: change the return object to an error object
+    
     public class StudentNotFoundServiceException extends FenixServiceException
     {
 
@@ -53,7 +54,8 @@ public class EnrollStudentInShifts implements IService
      *         StudentNotFoundServiceException
      * @throws FenixServiceException
      */
-    public List run(Integer studentId, final List shiftIdsToEnroll)
+    public ShiftEnrollmentErrorReport run(Integer studentId,
+            final List shiftIdsToEnroll)
             throws StudentNotFoundServiceException, FenixServiceException
     {
         try
@@ -65,7 +67,8 @@ public class EnrollStudentInShifts implements IService
                     .getITurnoAlunoPersistente();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp
                     .getIPersistentExecutionPeriod();
-            List errors = new ArrayList();
+            ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
+
             if (shiftIdsToEnroll != null && !shiftIdsToEnroll.isEmpty())
             {
                 IStudent student = (IStudent) persistentStudent.readByOId(
@@ -92,13 +95,13 @@ public class EnrollStudentInShifts implements IService
                             filteredShiftsIdsToEnroll);
                 }
                 enrollStudentsInShifts(student, filteredShiftsIdsToEnroll,
-                        errors, persistentShift, persistentShiftStudent);
-                unEnrollStudentsInShifts(shiftsToUnEnroll, errors,
+                        errorReport, persistentShift, persistentShiftStudent);
+                unEnrollStudentsInShifts(shiftsToUnEnroll, errorReport,
                         persistentShiftStudent);
 
             }
 
-            return errors;
+            return errorReport;
         }
         catch (ExcepcaoPersistencia e)
         {
@@ -111,7 +114,8 @@ public class EnrollStudentInShifts implements IService
      * @param errors
      * @param persistentShiftStudent
      */
-    private void unEnrollStudentsInShifts(List shiftsToUnEnroll, List errors,
+    private void unEnrollStudentsInShifts(List shiftsToUnEnroll,
+            ShiftEnrollmentErrorReport errorReport,
             ITurnoAlunoPersistente persistentShiftStudent)
             throws ExcepcaoPersistencia
     {
@@ -133,7 +137,8 @@ public class EnrollStudentInShifts implements IService
      * @throws ExcepcaoPersistencia
      */
     private void enrollStudentsInShifts(IStudent student,
-            List filteredShiftsIdsToEnroll, List errors,
+            List filteredShiftsIdsToEnroll,
+            ShiftEnrollmentErrorReport errorReport,
             ITurnoPersistente persistentShift,
             ITurnoAlunoPersistente persistentShiftStudent)
             throws ExcepcaoPersistencia
@@ -146,7 +151,7 @@ public class EnrollStudentInShifts implements IService
                     new Turno(shiftId), false);
             if (shift == null)
             {
-                errors.add(shiftId);
+                errorReport.getUnExistingShifts().add(shiftId);
             }
             else
             {
@@ -160,7 +165,7 @@ public class EnrollStudentInShifts implements IService
                 }
                 else
                 {
-                    errors.add(Cloner.get(shift));
+                    errorReport.getUnAvailableShifts().add(Cloner.get(shift));
                 }
 
             }

@@ -32,7 +32,6 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
-import Util.TipoCurso;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
