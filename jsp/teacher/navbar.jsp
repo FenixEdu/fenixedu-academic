@@ -23,9 +23,12 @@
 <li><html:link page="/programManagerDA.do?method=acessProgram">
 	<bean:message key="link.program"/>
 </html:link></li>
-<%--<li><html:link page="/viewEvaluation.do?method=viewEvaluation">
+<li><html:link page="/viewEvaluation.do?method=viewEvaluation">
 	<bean:message key="link.evaluation"/>
-</html:link></li>--%>
+</html:link></li>
+<li><html:link page="/viewExams.do">
+	<bean:message key="link.exams"/>
+</html:link></li>
 <li><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference&page=0">
 	<bean:message key="link.bibliography"/>
 </html:link></li>
