@@ -76,6 +76,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject
     /** Creates a new instance of ObjectFenixOJB */
     public ObjectFenixOJB()
     {
+		
         try
         {
             odmg = SuportePersistenteOJB.getInstance().getImplementation();
@@ -99,7 +100,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject
                 e.printStackTrace();
             }
         }
-
+		
         query = odmg.newOQLQuery();
 
     }

@@ -170,13 +170,13 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
 			oqlQuery += " where student.number = $1";
 			oqlQuery += " and student.degreeType = $2";
-			oqlQuery += " and currentState = $3";
+			//oqlQuery += " and currentState = $3";
 			oqlQuery += " and specialization = $4";
 
 			query.create(oqlQuery);
 			query.bind(studentNumber);
 			query.bind(degreeType);
-			query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
+			//query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
 			query.bind(specialization.getSpecialization());
 
 			List result = (List) query.execute();
@@ -284,6 +284,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		return queryList(StudentCurricularPlan.class, criteria);
 	}
 
+
 	public IStudentCurricularPlan readByStudentDegreeCurricularPlanAndState(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state) throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
@@ -292,4 +293,5 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		criteria.addEqualTo("currentState", state);
 		return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
 	}
+	
 }
