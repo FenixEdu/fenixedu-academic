@@ -131,4 +131,18 @@ public abstract class RequestUtils {
 
 		return infoSite;
 	}
+	
+	public static final List getSectionsFromRequest(HttpServletRequest request) throws FenixActionException {
+		List sections = null;
+		try {
+					InfoSite infoSite = getSiteFromRequest(request);
+					Object[] args= {infoSite};
+					sections = (List) ServiceUtils.executeService(null,"ReadSections",args);
+			
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+		
+		return sections;
+	}
 }
