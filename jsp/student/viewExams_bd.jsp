@@ -9,7 +9,7 @@
 
 <logic:empty name="examsToEnroll" >
 	<logic:empty name="examsEnrolled">
-		<h2><bean:message key="message.no.exams.to.enroll"/></h2>
+		<span class="error"><bean:message key="message.no.exams.to.enroll"/></span>
 	</logic:empty>
 </logic:empty>
 
