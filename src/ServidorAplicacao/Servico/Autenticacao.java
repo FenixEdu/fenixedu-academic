@@ -137,10 +137,10 @@ public class Autenticacao implements IServico {
 		managementAssiduousness.setRoleType(RoleType.MANAGEMENT_ASSIDUOUSNESS);		
 		rolesIntranet.add(managementAssiduousness);
 
-		if (application.equals(Autenticacao.INTRANET)){
+		if (application.equalsIgnoreCase(Autenticacao.INTRANET)){
 			Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);
 			userView.setRoles(roles);	
-		}else if (application.equals("") || application.equals(Autenticacao.EXTRANET)){
+		}else if (application.equals("") || application.equalsIgnoreCase(Autenticacao.EXTRANET)){
 			userView.getRoles().removeAll(rolesIntranet);
 		}
 		return userView;
