@@ -109,7 +109,7 @@ public class ChangePersonalInfoDispatchActionChangeMethodTest
 		requestParameters.put("webSite","www.Fenix.com");
 		requestParameters.put("contributorNumber","132456");
 		requestParameters.put("occupation","None");
-		requestParameters.put("username","nmsn");
+		requestParameters.put("username","nuno");
 		requestParameters.put("areaOfAreaCode","none");
 
 		return requestParameters;

@@ -131,7 +131,7 @@ public class ChangePersonalInfo implements IServico {
 		try {
             sp.getIPessoaPersistente().escreverPessoa(person);
 	    } catch (ExcepcaoPersistencia ex) {
-	      FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+	      FenixServiceException newEx = new FenixServiceException("Persistence layer error " + ex);
 	      newEx.fillInStackTrace();
 	      throw newEx;
 	    }
