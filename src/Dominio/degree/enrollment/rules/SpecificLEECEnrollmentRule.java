@@ -700,15 +700,6 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
         return false;
 
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
     
     private List filter(IStudentCurricularPlan studentCurricularPlan,
             List curricularCoursesToBeEnrolledIn,
