@@ -1307,7 +1307,6 @@ public class ConversorSOP {
 							sp.confirmarTransaccao();
 							migrationShift.setMigrated(true);
 						} catch (ExistingPersistentException e) {
-							System.out.println("AQUI");
 							try {
 								sp.cancelarTransaccao();
 							} catch (ExcepcaoPersistencia ex) {
@@ -1354,7 +1353,6 @@ public class ConversorSOP {
 								classShiftAuxList.add(
 									clazz.toString() + shift.toString());
 							} catch (ExistingPersistentException e) {
-								System.out.println("AQUI2");
 								try {
 									sp.cancelarTransaccao();
 								} catch (ExcepcaoPersistencia ex) {
