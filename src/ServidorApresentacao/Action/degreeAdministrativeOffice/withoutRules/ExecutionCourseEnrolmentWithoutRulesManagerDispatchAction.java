@@ -77,7 +77,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 
         //execution years
         List executionPeriods = null;
-        Object[] args = {};
+        Object[] args = {new TipoCurso(new Integer(degreeType))};
         try {
             executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
                     "ReadExecutionPeriodsEnrollmentFenix", args);
