@@ -21,7 +21,13 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurma;
+import Dominio.ITurmaTurno;
+import Dominio.ITurno;
+import Dominio.ITurnoAula;
 import Dominio.Turma;
+import Dominio.TurmaTurno;
+import Dominio.Turno;
+import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -305,6 +311,11 @@ public class ExecutionPeriodOJB
 					executionDegrees));
 		}
 
+		criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
 		// Lessons
 		List lessonsToTransfer = queryList(Aula.class, criteria);
 		List lessons = new ArrayList();
@@ -318,6 +329,47 @@ public class ExecutionPeriodOJB
 		}
 
 		// Shifts
+		List shiftsToTransfer = queryList(Turno.class, criteria);
+		List shifts = new ArrayList();
+		for (int i = 0; i < shiftsToTransfer.size(); i++) {
+			shifts.add(
+				createShift(
+					shiftsToTransfer.get(i),
+					executionPeriodToImportDataTo,
+					transferAllData,
+					executionCourses));
+		}
+
+		criteria = new Criteria();
+		criteria.addEqualTo(
+			"turno.disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		// Shifts-Lessons
+		List shiftsLessonsToTransfer = queryList(TurnoAula.class, criteria);
+		List shiftsLessons = new ArrayList();
+		for (int i = 0; i < shiftsLessonsToTransfer.size(); i++) {
+			shiftsLessons.add(
+				createShiftLesson(
+					shiftsLessonsToTransfer.get(i),
+					executionPeriodToImportDataTo,
+					transferAllData,
+					shifts,
+					lessons));
+		}
+
+		// Classes-Shifts
+		List classesShiftsToTransfer = queryList(TurmaTurno.class, criteria);
+		List classesShifts = new ArrayList();
+		for (int i = 0; i < classesShiftsToTransfer.size(); i++) {
+			classesShifts.add(
+				createClassShift(
+					classesShiftsToTransfer.get(i),
+					executionPeriodToImportDataTo,
+					transferAllData,
+					classes,
+					shifts));
+		}
 
 		// Exams
 
@@ -329,21 +381,69 @@ public class ExecutionPeriodOJB
 		Criteria criteria = new Criteria();
 
 		criteria.addEqualTo(
+			"turma.executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+
+		// Classes-Shifts
+		List classesShifts = queryList(TurmaTurno.class, criteria);
+		for (int i = 0; i < classesShifts.size(); i++) {
+			ITurmaTurno classeShiftToDelete = (ITurmaTurno) classesShifts.get(i);
+			SuportePersistenteOJB
+				.getInstance()
+				.getITurmaTurnoPersistente()
+				.deleteByOID(
+				TurmaTurno.class,
+				classeShiftToDelete.getIdInternal());
+		}
+
+		criteria = new Criteria();
+		criteria.addEqualTo(
+			"turno.disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+
+		// Shifts-Lessons
+		List shiftsLessons = queryList(TurnoAula.class, criteria);
+		for (int i = 0; i < shiftsLessons.size(); i++) {
+			ITurnoAula shiftLessonToDelete = (ITurnoAula) shiftsLessons.get(i);
+			SuportePersistenteOJB
+				.getInstance()
+				.getITurnoAulaPersistente()
+				.deleteByOID(
+				TurnoAula.class,
+				shiftLessonToDelete.getIdInternal());
+		}
+
+		criteria = new Criteria();
+		criteria.addEqualTo(
 			"disciplinaExecucao.executionPeriod.idInternal",
 			executionPeriod.getIdInternal());
+
+		// Shifts
+		List shifts = queryList(Turno.class, criteria);
+		for (int i = 0; i < shifts.size(); i++) {
+			ITurno shiftToDelete = (ITurno) shifts.get(i);
+			SuportePersistenteOJB
+				.getInstance()
+				.getITurnoPersistente()
+				.deleteByOID(
+				Turno.class,
+				shiftToDelete.getIdInternal());
+		}
 
 		// Lessons
 		List lessons = queryList(Aula.class, criteria);
 		for (int i = 0; i < lessons.size(); i++) {
 			IAula lessonToDelete = (IAula) lessons.get(i);
-			SuportePersistenteOJB.getInstance().getIAulaPersistente().deleteByOID(
-				Aula.class, lessonToDelete.getIdInternal());
+			SuportePersistenteOJB
+				.getInstance()
+				.getIAulaPersistente()
+				.deleteByOID(
+				Aula.class,
+				lessonToDelete.getIdInternal());
 		}
-		
-		// Shifts
-		
+
 		// Exams
-		
+
 		// Whatever else needs to be deleted
 
 		criteria = new Criteria();
@@ -369,7 +469,7 @@ public class ExecutionPeriodOJB
 			SuportePersistenteOJB.getInstance().getITurmaPersistente().delete(
 				classToDelete);
 		}
-		
+
 	}
 
 	private CursoExecucao createExecutionDegree(
@@ -511,13 +611,13 @@ public class ExecutionPeriodOJB
 		return classToCreate;
 	}
 
-	private Aula createLesson(
+	private IAula createLesson(
 		Object arg0,
 		IExecutionPeriod executionPeriodToImportDataTo,
 		Boolean transferAllData,
 		List executionCourses)
 		throws ExcepcaoPersistencia {
-		Aula lessonToTransfer = (Aula) arg0;
+		IAula lessonToTransfer = (IAula) arg0;
 		Aula lessonToCreate = new Aula();
 
 		DisciplinaExecucao executionCourse =
@@ -548,7 +648,122 @@ public class ExecutionPeriodOJB
 		}
 
 		return lessonToCreate;
+	}
 
+	private ITurno createShift(
+		Object arg0,
+		IExecutionPeriod executionPeriodToImportDataTo,
+		Boolean transferAllData,
+		List executionCourses)
+		throws ExcepcaoPersistencia {
+		ITurno shiftToTransfer = (ITurno) arg0;
+		ITurno shiftToCreate = new Turno();
+
+		DisciplinaExecucao executionCourse =
+			(DisciplinaExecucao) CollectionUtils.find(
+				executionCourses,
+				new PREDICATE_EXECUTION_COURSE(
+					executionPeriodToImportDataTo,
+					shiftToTransfer.getDisciplinaExecucao()));
+
+		shiftToCreate.setAssociatedLessons(new ArrayList());
+		// TODO : find out what this is, and decide what to do with it.
+		shiftToCreate.setAssociatedTeacherProfessorShipPercentage(
+			new ArrayList());
+		shiftToCreate.setDisciplinaExecucao(executionCourse);
+		shiftToCreate.setIdInternal(null);
+		shiftToCreate.setLotacao(shiftToTransfer.getLotacao());
+		shiftToCreate.setNome(shiftToTransfer.getNome());
+		shiftToCreate.setTipo(shiftToTransfer.getTipo());
+
+		try {
+			// It's Ok to just write it with no verification because:
+			//   - all date from this execution period has been cleared
+			//   - suposedly all data related to the other execution period
+			//     is correct.
+			lockWrite(shiftToCreate);
+		} catch (ExcepcaoPersistencia e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return shiftToCreate;
+	}
+
+	private ITurnoAula createShiftLesson(
+		Object arg0,
+		IExecutionPeriod executionPeriodToImportDataTo,
+		Boolean transferAllData,
+		List shifts,
+		List lessons)
+		throws ExcepcaoPersistencia {
+		ITurnoAula shiftLessonToTransfer = (ITurnoAula) arg0;
+		ITurnoAula shiftLessonToCreate = new TurnoAula();
+
+		ITurno shift =
+			(ITurno) CollectionUtils.find(
+				shifts,
+				new PREDICATE_SHIFT(shiftLessonToTransfer.getTurno()));
+
+		IAula lesson =
+			(IAula) CollectionUtils.find(
+				lessons,
+				new PREDICATE_LESSON(shiftLessonToTransfer.getAula()));
+
+		shiftLessonToCreate.setAula(lesson);
+		shiftLessonToCreate.setIdInternal(null);
+		shiftLessonToCreate.setTurno(shift);
+
+		try {
+			// It's Ok to just write it with no verification because:
+			//   - all date from this execution period has been cleared
+			//   - suposedly all data related to the other execution period
+			//     is correct.
+			lockWrite(shiftLessonToCreate);
+		} catch (ExcepcaoPersistencia e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return shiftLessonToCreate;
+	}
+
+	private ITurmaTurno createClassShift(
+		Object arg0,
+		IExecutionPeriod executionPeriodToImportDataTo,
+		Boolean transferAllData,
+		List classes,
+		List shifts)
+		throws ExcepcaoPersistencia {
+		ITurmaTurno classShiftToTransfer = (ITurmaTurno) arg0;
+		ITurmaTurno classShiftToCreate = new TurmaTurno();
+
+		ITurma ourClass =
+			(ITurma) CollectionUtils.find(
+				classes,
+				new PREDICATE_CLASS(classShiftToTransfer.getTurma()));
+
+		ITurno shift =
+			(ITurno) CollectionUtils.find(
+				shifts,
+				new PREDICATE_SHIFT(classShiftToTransfer.getTurno()));
+
+		classShiftToCreate.setIdInternal(null);
+		classShiftToCreate.setTurma(ourClass);
+		classShiftToCreate.setTurno(shift);
+
+		try {
+			// It's Ok to just write it with no verification because:
+			//   - all date from this execution period has been cleared
+			//   - suposedly all data related to the other execution period
+			//     is correct.
+			lockWrite(classShiftToCreate);
+		} catch (ExcepcaoPersistencia e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return classShiftToCreate;
 	}
 
 	private class PREDICATE_EXECUTION_DEGREE implements Predicate {
@@ -597,6 +812,58 @@ public class ExecutionPeriodOJB
 						.getExecutionPeriod()
 						.getExecutionYear()
 						.getYear());
+		}
+	}
+
+	private class PREDICATE_LESSON implements Predicate {
+
+		private IAula lesson;
+
+		public PREDICATE_LESSON(IAula lesson) {
+			this.lesson = lesson;
+		}
+
+		public boolean evaluate(Object arg0) {
+			IAula lesson = (IAula) arg0;
+
+			return this.lesson.getDiaSemana().getDiaSemana().equals(
+				lesson.getDiaSemana().getDiaSemana())
+				&& this.lesson.getInicio().equals(lesson.getInicio())
+				&& this.lesson.getFim().equals(lesson.getFim())
+				&& this.lesson.getSala().getNome().equals(
+					lesson.getSala().getNome());
+		}
+	}
+
+	private class PREDICATE_SHIFT implements Predicate {
+
+		private ITurno shift;
+
+		public PREDICATE_SHIFT(ITurno shift) {
+			this.shift = shift;
+		}
+
+		public boolean evaluate(Object arg0) {
+			ITurno shift = (ITurno) arg0;
+
+			return this.shift.getNome().equals(shift.getNome());
+		}
+	}
+
+	private class PREDICATE_CLASS implements Predicate {
+
+		private ITurma ourClass;
+
+		public PREDICATE_CLASS(ITurma ourClass) {
+			this.ourClass = ourClass;
+		}
+
+		public boolean evaluate(Object arg0) {
+			ITurma ourClass = (ITurma) arg0;
+
+			return this.ourClass.getNome().equals(ourClass.getNome())
+				&& this.ourClass.getExecutionDegree().getCurricularPlan().getDegree().getSigla().equals(
+				ourClass.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
 		}
 	}
 
