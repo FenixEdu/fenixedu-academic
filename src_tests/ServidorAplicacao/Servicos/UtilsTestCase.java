@@ -40,7 +40,7 @@ public class UtilsTestCase {
 			List propertiesValues = new ArrayList();
 			if (object.getClass().equals(infoType)) {
 				for (int i = 0; i < values.length && encontrou; i++) {
-					Object object2 = PropertyUtils.getSimpleProperty(objects.get(i), property);
+					Object object2 = PropertyUtils.getProperty(objects.get(i), property);
 					propertiesValues.add(object2);
 					encontrou = Arrays.asList(values).contains(object2);
 
