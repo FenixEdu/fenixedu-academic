@@ -42,6 +42,32 @@ public class Util {
 				"Pavilhão Novas Licenciaturas",
 				"Pavilhão Novas Licenciaturas"));
 		edificios.add(new LabelValueBean("Pavilhão Pós-Graduação", "Pavilhão Pós-Graduação"));
+		edificios.add(
+			new LabelValueBean(
+				"Pavilhão de Electricidade",
+				"Pavilhão de Electricidade"));
+		edificios.add(
+			new LabelValueBean(
+				"Pavilhão de Mecânica I",
+				"Pavilhão de Mecânica I"));
+		edificios.add(
+			new LabelValueBean("Pavilhão Mecânica II", "Pavilhão Mecânica II"));
+
+		edificios.add(
+			new LabelValueBean(
+				"Pavilhão de Mecânica III",
+				"Pavilhão de Mecânica III"));
+
+		edificios.add(
+			new LabelValueBean(
+				"Pavilhão Pós-Graduação",
+				"Pavilhão Pós-Graduação"));
+				
+		edificios.add(
+			new LabelValueBean(
+				"Pavilhão de Química",
+				"Pavilhão de Química"));
+
 		edificios.add(new LabelValueBean("Torre Norte", "Torre Norte"));
 		edificios.add(new LabelValueBean("Torre Sul", "Torre Sul"));
 		edificios.add(

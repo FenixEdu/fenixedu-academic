@@ -61,16 +61,18 @@ public class TimeTableRenderer {
 			hourIndex++) {
 
 			strBuffer.append("<tr class='timeTable_line'>\r\n");
-			strBuffer.append("<td class='horariosHoras");
-			if (hourIndex == 0)
-				strBuffer.append("_first");
-			if (hourIndex == timeTable.getNumberOfHours().intValue() - 1) {
-				strBuffer.append("_bottom");
+			strBuffer.append("<td width='15%' class='horariosHoras");
+			if (hourIndex == 0){
+				strBuffer.append("_first'>");
+			}else if (hourIndex == timeTable.getNumberOfHours().intValue() - 1) {
+				strBuffer.append("_bottom'>");
+			}else{
+				strBuffer.append("'>");
 			}
-
-			strBuffer.append("'>").append(
+			strBuffer.append(
 				getHourLabelByIndex(hourIndex)).append(
 				"</td>\r\n");
+			
 
 			/* iterate over days */
 			for (int dayIndex = 0;
@@ -308,7 +310,7 @@ public class TimeTableRenderer {
 	 */
 	private void renderHeader(StringBuffer strBuffer) {
 
-		strBuffer.append("<td width='15%'> &nbsp; </td>\r\n");
+		strBuffer.append("<td class='horarioHeader_blank' width='15%'>horas/dias</td>\r\n");
 
 		for (int index = 0;
 			index < this.timeTable.getNumberOfDays().intValue();

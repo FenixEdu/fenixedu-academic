@@ -9,6 +9,7 @@
 package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -95,6 +97,8 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 				licenciaturas.add(new LabelValueBean("escolher", ""));
 
+				Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+				
 				Iterator iterator = executionDegreeList.iterator();
 
 				int index = 0;

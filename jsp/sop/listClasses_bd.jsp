@@ -28,6 +28,10 @@
 				<bean:message key="label.delete"/>
 			</th>				
 		</tr>		
+
+		  <bean:define id="deleteConfirm">
+			return confirm('<bean:message key="message.confirm.delete.class"/>')
+		  </bean:define>
 			<logic:iterate id="classView" name="classesList" scope="request">
 		<tr>
 		  <td nowrap="nowrap" class="listClasses">
@@ -41,9 +45,12 @@
 			    </div>
 		    </html:link>
 		  </td>
+		  
+
+		  
 		  <td nowrap="nowrap" class="listClasses">
 			<div align="center">
-			  <html:link paramId="className" paramName="classView" paramProperty="nome" href="ClassManagerDA.do?method=deleteClass">
+			  <html:link paramId="className" paramName="classView" paramProperty="nome" href="ClassManagerDA.do?method=deleteClass" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 			    <bean:message key="label.delete"/>
 			  </html:link>
 		      </div></td>

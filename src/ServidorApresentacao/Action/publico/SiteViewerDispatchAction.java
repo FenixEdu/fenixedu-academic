@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
+import DataBeans.comparators.ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
@@ -173,6 +175,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 				if(infoShifts != null && !infoShifts.isEmpty()) {
 //					System.out.println("publico.infoShifts não é vazio... :)");
+					Collections.sort(infoShifts, new ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons());
 					session.setAttribute("publico.infoShifts", infoShifts);
 				} else {
 //					System.out.println("publico.infoShifts é vazio... :(");

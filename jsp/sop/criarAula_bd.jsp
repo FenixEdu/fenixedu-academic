@@ -36,7 +36,6 @@
                             <html:options name="horas"/>
                         </html:select> :
                         <html:select property="minutosInicio" size="1">
-                        	<option value="" selected="selected">[Minutos]</option>                        
                             <html:options name="minutos"/>
                         </html:select>
                     </td>
@@ -51,7 +50,6 @@
                             <html:options name="horas"/>
                         </html:select> :
                         <html:select property="minutosFim"  size="1">
-                        	<option value="" selected="selected">[Minutos]</option>                        
                             <html:options name="minutos"/>
                         </html:select>
                     </td> 
