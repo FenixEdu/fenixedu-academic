@@ -5,26 +5,36 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-
+<span class="error"><html:errors property="error.default"/></span>
 <html:form action="/editSection">
-
+<html:hidden property="page" value="1"/>
 <table align="center">
 	<tr>
 		<td>
 			<bean:message key="message.sectionName"/>
 		</td>
 		<td>
-			<html:textarea rows="2" cols="50" name="<%=SessionConstants.INFO_SECTION %>" property="name" />
+			<html:text name="<%=SessionConstants.INFO_SECTION %>" property="name" />
+			<span class="error"><html:errors property="name"/></span>
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<bean:message key="message.sectionOrder"/>
-		</td>
-		<td>
-			<html:text size="5" name="<%=SessionConstants.INFO_SECTION %>" property="sectionOrder"/>
-		</td>
-	</tr>
+	<logic:present name="<%= SessionConstants.CHILDREN_SECTIONS %>">
+	<td>		
+		<bean:message key="message.sectionOrder"/>		
+	</td>
+	<td>
+		<html:select name="sectionForm" property="sectionOrder">
+			<html:options collection="<%= SessionConstants.CHILDREN_SECTIONS %>" property="name"/>
+			<html:option value="(Fim)"/>
+		</html:select>
+			<span class="error"><html:errors property="sectionOrder"/></span>
+	</td>
+	</logic:present>
+	<logic:notPresent name="<%= SessionConstants.CHILDREN_SECTIONS %>">
+		<html:hidden property="sectionOrder" value="0"/>
+	</logic:notPresent>
+</tr>
 <%--
 	<tr>
 		<td>
@@ -67,15 +77,16 @@
 	--%>
 	<tr>
 		<td>
-			<html:reset  styleClass="inputbutton">
-				<bean:message key="label.clear"/>
-			</html:reset>			
-		</td>
-		<td>
 			<html:submit styleClass="inputbutton">
 				<bean:message key="button.save"/>
 			</html:submit>
 		</td>
+		<td>
+			<html:reset  styleClass="inputbutton">
+				<bean:message key="label.clear"/>
+			</html:reset>			
+		</td>
+		
 	</tr>
 </table>
 

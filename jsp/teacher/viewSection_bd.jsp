@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-
+<span class="error"><html:errors /></span>
 <h2><bean:write name="<%=SessionConstants.INFO_SECTION %>" property="name"/></h2>
 <table	width="50%" cellpadding="0" border="0">
 	<tr> 
