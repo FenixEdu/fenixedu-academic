@@ -1,5 +1,6 @@
 /*
- * Group.java
+ * Created on 9/Mai/2003
+ *
  */
 package Dominio;
 

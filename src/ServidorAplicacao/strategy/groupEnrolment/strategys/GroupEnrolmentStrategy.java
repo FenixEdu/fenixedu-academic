@@ -15,7 +15,6 @@ import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITurno;
-import Dominio.StudentGroupAttend;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
@@ -232,23 +231,53 @@ public abstract class GroupEnrolmentStrategy
 	public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,IStudentGroup studentGroup) throws ExcepcaoPersistencia {
 		
 			boolean result = false;
+			Integer minimumCapacity = groupProperties.getMinimumCapacity();	
+		   	
+		   	if(minimumCapacity == null)
+				result = true;
+			else
+			{
+			
+				List allStudentGroupAttend = new ArrayList();
+				try {
 				
+					ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+					IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
+		
+					allStudentGroupAttend = (List) persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+		
+				} catch (ExcepcaoPersistencia ex){
+					throw ex;
+				  }	
+		
+				int numberOfGroupElements = allStudentGroupAttend.size();
+				
+				
+				//se o nr de elementos do grupo for maior que o nr minimo,entao podemos desinscrever o aluno,caso contrario nao
+				if(numberOfGroupElements > minimumCapacity.intValue())
+					result = true;
+			
+			}
+			return result;
+		}
+		
+		
+		
+		public boolean checkIfStudentGroupIsEmpty(IStudentGroupAttend studentGroupAttend,IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+		
+			boolean result = false;
 			List allStudentGroupAttend = new ArrayList();
 			try {
+				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+				IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
 		
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
-		
-			allStudentGroupAttend = (List) persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+				allStudentGroupAttend = (List) persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
 		
 			} catch (ExcepcaoPersistencia ex){
 				throw ex;
-			}	
+			  }	
 		
-			int numberOfGroupElements = allStudentGroupAttend.size();
-		
-//			se o nr de elementos do grupo for maior que o nr minimo,entao podemos desinscrever o aluno,caso contrario nao
-			if(numberOfGroupElements > groupProperties.getMinimumCapacity().intValue())
+			if(allStudentGroupAttend.size()==1 && allStudentGroupAttend.contains(studentGroupAttend))
 				result = true;
 		
 			return result;

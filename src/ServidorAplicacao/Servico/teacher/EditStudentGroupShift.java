@@ -53,7 +53,7 @@ public class EditStudentGroupShift implements IServico {
 	 * Executes the service.
 	 */
 
-	public Boolean run(Integer studentGroupCode,Integer newShiftCode)
+	public Boolean run(Integer executionCourseCode, Integer studentGroupCode,Integer newShiftCode)
 		throws FenixServiceException {
 
 		

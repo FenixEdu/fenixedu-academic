@@ -45,7 +45,7 @@
 																
 				<bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>
 							
-				<%System.out.println("INFO SHIFT - "+((InfoShift)infoShift).getInfoLessons().size());%>
+				
 					
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>

@@ -1,8 +1,6 @@
 /*
  * Created on 12/Mai/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorPersistente.OJB;
 
@@ -23,8 +21,6 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGroupProperties{
 	
@@ -38,12 +34,11 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 	
 	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IDisciplinaExecucao executionCourse,String name) throws ExcepcaoPersistencia {
 
-			Criteria criteria1 = new Criteria(); 
-			Criteria criteria2 = new Criteria(); 
-			criteria1.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
-			criteria2.addEqualTo("name", name);
-			criteria1.addAndCriteria(criteria2);	
-			return (IGroupProperties) queryObject(GroupProperties.class, criteria1);
+			Criteria criteria = new Criteria(); 
+			criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
+			criteria.addEqualTo("name", name);
+			criteria.addAndCriteria(criteria);	
+			return (IGroupProperties) queryObject(GroupProperties.class, criteria);
 		}
 		
 	public List readAll() throws ExcepcaoPersistencia {

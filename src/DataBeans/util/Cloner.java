@@ -68,6 +68,8 @@ import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
+import DataBeans.InfoTest;
+import DataBeans.InfoTestQuestion;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCaseStudy;
 import DataBeans.Seminaries.InfoCaseStudyChoice;
@@ -75,8 +77,6 @@ import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
-import DataBeans.InfoTest;
-import DataBeans.InfoTestQuestion;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.*;
@@ -117,7 +117,8 @@ public abstract class Cloner {
 	 */
 	public static IDisciplinaExecucao copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
+		IExecutionPeriod executionPeriod =
+			Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
 
 		copyObjectProperties(executionCourse, infoExecutionCourse);
 
@@ -127,7 +128,8 @@ public abstract class Cloner {
 
 	public static InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IDisciplinaExecucao executionCourse) {
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
+		InfoExecutionPeriod infoExecutionPeriod =
+			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
 
 		copyObjectProperties(infoExecutionCourse, executionCourse);
 
@@ -587,7 +589,8 @@ public abstract class Cloner {
 	public static IMasterDegreeCandidate copyInfoMasterDegreeCandidate2IMasterDegreCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
 		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 		IPessoa person = Cloner.copyInfoPerson2IPerson(infoMasterDegreeCandidate.getInfoPerson());
-		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoMasterDegreeCandidate.getInfoExecutionDegree());
+		ICursoExecucao executionDegree =
+			Cloner.copyInfoExecutionDegree2ExecutionDegree(infoMasterDegreeCandidate.getInfoExecutionDegree());
 		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
 
 		masterDegreeCandidate.setPerson(person);
@@ -606,7 +609,8 @@ public abstract class Cloner {
 
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
 
-		InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(masterDegreeCandidate.getExecutionDegree());
+		InfoExecutionDegree infoExecutionDegree =
+			Cloner.copyIExecutionDegree2InfoExecutionDegree(masterDegreeCandidate.getExecutionDegree());
 		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
 		InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(masterDegreeCandidate.getPerson());
@@ -649,7 +653,8 @@ public abstract class Cloner {
 
 	public static IBibliographicReference copyInfoBibliographicReference2IBibliographicReference(InfoBibliographicReference infoBibliographicReference) {
 		IBibliographicReference bibliographicReference = new BibliographicReference();
-		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoBibliographicReference.getInfoExecutionCourse());
+		IDisciplinaExecucao executionCourse =
+			Cloner.copyInfoExecutionCourse2ExecutionCourse(infoBibliographicReference.getInfoExecutionCourse());
 		copyObjectProperties(bibliographicReference, infoBibliographicReference);
 		bibliographicReference.setExecutionCourse(executionCourse);
 		return bibliographicReference;
@@ -657,7 +662,8 @@ public abstract class Cloner {
 
 	public static InfoBibliographicReference copyIBibliographicReference2InfoBibliographicReference(IBibliographicReference bibliographicReference) {
 		InfoBibliographicReference infoBibliographicReference = new InfoBibliographicReference();
-		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(bibliographicReference.getExecutionCourse());
+		InfoExecutionCourse infoExecutionCourse =
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(bibliographicReference.getExecutionCourse());
 		copyObjectProperties(infoBibliographicReference, bibliographicReference);
 		infoBibliographicReference.setInfoExecutionCourse(infoExecutionCourse);
 		return infoBibliographicReference;
@@ -1008,7 +1014,8 @@ public abstract class Cloner {
 	public static ICurriculum copyInfoCurriculum2ICurriculum(InfoCurriculum infoCurriculum) {
 		ICurriculum curriculum = new Curriculum();
 
-		ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurriculum.getInfoCurricularCourse());
+		ICurricularCourse curricularCourse =
+			Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurriculum.getInfoCurricularCourse());
 
 		copyObjectProperties(curriculum, infoCurriculum);
 		curriculum.setCurricularCourse(curricularCourse);
@@ -1163,7 +1170,8 @@ public abstract class Cloner {
 		if (guide.getGuideSituations() != null) {
 			Iterator iterator = guide.getGuideSituations().iterator();
 			while (iterator.hasNext()) {
-				InfoGuideSituation infoGuideSituation = Cloner.copyIGuideSituation2InfoGuideSituation((IGuideSituation) iterator.next());
+				InfoGuideSituation infoGuideSituation =
+					Cloner.copyIGuideSituation2InfoGuideSituation((IGuideSituation) iterator.next());
 				infoGuideSituations.add(infoGuideSituation);
 
 				// Check to see if this is the active Situation
@@ -1342,8 +1350,10 @@ public abstract class Cloner {
 
 		InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
 
-		InfoCurricularCourse infoCurricularCourse = copyCurricularCourse2InfoCurricularCourse(curricularCourseScope.getCurricularCourse());
-		InfoCurricularSemester infoCurricularSemester = copyCurricularSemester2InfoCurricularSemester(curricularCourseScope.getCurricularSemester());
+		InfoCurricularCourse infoCurricularCourse =
+			copyCurricularCourse2InfoCurricularCourse(curricularCourseScope.getCurricularCourse());
+		InfoCurricularSemester infoCurricularSemester =
+			copyCurricularSemester2InfoCurricularSemester(curricularCourseScope.getCurricularSemester());
 		InfoBranch infoBranch = copyIBranch2InfoBranch(curricularCourseScope.getBranch());
 
 		copyObjectProperties(infoCurricularCourseScope, curricularCourseScope);
@@ -1364,8 +1374,10 @@ public abstract class Cloner {
 
 		ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
 
-		ICurricularCourse curricularCourse = copyInfoCurricularCourse2CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse());
-		ICurricularSemester curricularSemester = copyInfoCurricularSemester2CurricularSemester(infoCurricularCourseScope.getInfoCurricularSemester());
+		ICurricularCourse curricularCourse =
+			copyInfoCurricularCourse2CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse());
+		ICurricularSemester curricularSemester =
+			copyInfoCurricularSemester2CurricularSemester(infoCurricularCourseScope.getInfoCurricularSemester());
 		IBranch branch = copyInfoBranch2IBranch(infoCurricularCourseScope.getInfoBranch());
 
 		copyObjectProperties(curricularCourseScope, infoCurricularCourseScope);
@@ -1536,7 +1548,8 @@ public abstract class Cloner {
 			Iterator iterator = enrolmentEvaluationsList.iterator();
 			while (iterator.hasNext()) {
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-				InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation =
+					Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 				infoEnrolmentEvaluationsList.add(infoEnrolmentEvaluation);
 			}
 		}
@@ -1544,7 +1557,8 @@ public abstract class Cloner {
 		if (enrolment instanceof IEnrolmentInOptionalCurricularCourse) {
 			infoEnrolment = new InfoEnrolmentInOptionalCurricularCourse();
 			infoCurricularCourseOption =
-				Cloner.copyCurricularCourse2InfoCurricularCourse(((IEnrolmentInOptionalCurricularCourse) enrolment).getCurricularCourseForOption());
+				Cloner.copyCurricularCourse2InfoCurricularCourse(
+					((IEnrolmentInOptionalCurricularCourse) enrolment).getCurricularCourseForOption());
 			((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment).setInfoCurricularCourseForOption(infoCurricularCourseOption);
 		} else if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
 			infoEnrolment = new InfoEnrolmentInExtraCurricularCourse();
@@ -1706,7 +1720,8 @@ public abstract class Cloner {
 	public static IEvaluationMethod copyInfoEvaluationMethod2IEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
 
 		IEvaluationMethod evaluationMethod = new EvaluationMethod();
-		ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoEvaluationMethod.getInfoCurricularCourse());
+		ICurricularCourse curricularCourse =
+			Cloner.copyInfoCurricularCourse2CurricularCourse(infoEvaluationMethod.getInfoCurricularCourse());
 
 		copyObjectProperties(evaluationMethod, infoEvaluationMethod);
 
@@ -1718,7 +1733,8 @@ public abstract class Cloner {
 	public static InfoEvaluationMethod copyIEvaluationMethod2InfoEvaluationMethod(IEvaluationMethod evaluationMethod) {
 
 		InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
-		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(evaluationMethod.getCurricularCourse());
+		InfoCurricularCourse infoCurricularCourse =
+			Cloner.copyCurricularCourse2InfoCurricularCourse(evaluationMethod.getCurricularCourse());
 
 		copyObjectProperties(infoEvaluationMethod, evaluationMethod);
 
@@ -2026,7 +2042,8 @@ public abstract class Cloner {
 		IGratuity gratuity = new Gratuity();
 		copyObjectProperties(gratuity, infoGratuity);
 
-		gratuity.setStudentCurricularPlan(Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoGratuity.getInfoStudentCurricularPlan()));
+		gratuity.setStudentCurricularPlan(
+			Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoGratuity.getInfoStudentCurricularPlan()));
 		return gratuity;
 	}
 
@@ -2040,7 +2057,8 @@ public abstract class Cloner {
 		InfoGratuity infoGratuity = new InfoGratuity();
 		copyObjectProperties(infoGratuity, gratuity);
 
-		infoGratuity.setInfoStudentCurricularPlan(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(gratuity.getStudentCurricularPlan()));
+		infoGratuity.setInfoStudentCurricularPlan(
+			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(gratuity.getStudentCurricularPlan()));
 		return infoGratuity;
 	}
 
@@ -2136,17 +2154,17 @@ public abstract class Cloner {
 	public static InfoStudentGroup copyIStudentGroup2InfoStudentGroup(IStudentGroup studentGroup) {
 		InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
 		InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
+		InfoShift infoShift = new InfoShift();
 
 		infoGroupProperties = copyIGroupProperties2InfoGroupProperties(studentGroup.getGroupProperties());
-		if (studentGroup.getShift() != null) {
-			InfoShift infoShift = new InfoShift();
-			infoShift = copyIShift2InfoShift(studentGroup.getShift());
-			infoStudentGroup.setInfoShift(infoShift);
 
-		}
+		infoShift = copyIShift2InfoShift(studentGroup.getShift());
+
 		infoStudentGroup.setGroupNumber(studentGroup.getGroupNumber());
 		infoStudentGroup.setIdInternal(studentGroup.getIdInternal());
 		infoStudentGroup.setInfoGroupProperties(infoGroupProperties);
+		infoStudentGroup.setInfoShift(infoShift);
+
 		return infoStudentGroup;
 	}
 
@@ -2157,17 +2175,12 @@ public abstract class Cloner {
 	*/
 
 	public static IStudentGroup copyInfoStudentGroup2IStudentGroup(InfoStudentGroup infoStudentGroup) {
+
 		IStudentGroup studentGroup = new StudentGroup();
 		IGroupProperties groupProperties = new GroupProperties();
-
-		if (infoStudentGroup.getInfoShift() != null) {
-			ITurno shift = new Turno();
-			shift = copyInfoShift2IShift(infoStudentGroup.getInfoShift());
-			studentGroup.setShift(shift);
-
-		}
-
+		ITurno shift = new Turno();
 		groupProperties = copyInfoGroupProperties2IGroupProperties(infoStudentGroup.getInfoGroupProperties());
+		shift = copyInfoShift2IShift(infoStudentGroup.getInfoShift());
 		studentGroup.setGroupNumber(infoStudentGroup.getGroupNumber());
 		studentGroup.setIdInternal(infoStudentGroup.getIdInternal());
 		studentGroup.setGroupProperties(groupProperties);

@@ -1623,6 +1623,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 		HttpSession session = request.getSession(false);
+		
 		String groupPropertiesCodeString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -1793,12 +1794,14 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 		Boolean result;
 		HttpSession session = request.getSession(false);
+		
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		Integer objectCode = getObjectCode(request);
 		String studentGroupCodeString =
 			(String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		Object[] args = { studentGroupCode };
+		Object[] args = { objectCode, studentGroupCode };
 		GestorServicos gestorServicos = GestorServicos.manager();
 		try {
 			gestorServicos.executar(userView, "DeleteStudentGroup", args);
@@ -1879,20 +1882,32 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
+			
+		System.out.println("---------------ENTRA NA ACCAO CREATE STUDENT GROUP");	
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Integer objectCode = getObjectCode(request);
+		
 		String groupPropertiesCodeString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		System.out.println("GROUP PROPERTIES CODE "+groupPropertiesCode);
+		
+		
 		DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
+		
 		List studentCodes =
 			Arrays.asList(
 				(Integer[]) insertStudentGroupForm.get("studentCodes"));
+		System.out.println("STUDENT CODES "+studentCodes);
+		
 		String groupNumberString =
 			(String) insertStudentGroupForm.get("groupNumber");
 		Integer groupNumber = new Integer(groupNumberString);
+		System.out.println("GROUP NUMBER "+groupNumber);
+		
 		String newShiftString = (String) insertStudentGroupForm.get("shift");
+		
 		if (newShiftString.equals("")) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
@@ -1905,17 +1920,20 @@ public class TeacherAdministrationViewerDispatchAction
 			return prepareCreateStudentGroup(mapping, form, request, response);
 		} else {
 			Integer shiftCode = new Integer(newShiftString);
+			System.out.println("SHIFT CODE "+shiftCode);
 			Object args[] =
 				{
+					objectCode,
 					groupNumber,
 					groupPropertiesCode,
 					shiftCode,
-					studentCodes,
-					objectCode };
+					studentCodes };
 			GestorServicos gestor = GestorServicos.manager();
 			Boolean result;
+			System.out.println("ANTES DO TRY PARA EXECUTAR O SERVICO!!!");
 			try {
 				gestor.executar(userView, "CreateStudentGroup", args);
+				System.out.println("DEPOIS DO TRY PARA EXECUTAR O SERVICO!!!");
 			} catch (ExistingServiceException e) {
 				ActionErrors actionErrors = new ActionErrors();
 				ActionError error = null;
@@ -2007,7 +2025,7 @@ public class TeacherAdministrationViewerDispatchAction
 			return viewProjectStudentGroups(mapping, form, request, response);
 		} else {
 			Integer newShiftCode = new Integer(newShiftString);
-			Object args[] = { studentGroupCode, newShiftCode };
+			Object args[] = {objectCode, studentGroupCode, newShiftCode };
 			GestorServicos gestor = GestorServicos.manager();
 			Boolean result;
 			try {
@@ -2099,7 +2117,7 @@ public class TeacherAdministrationViewerDispatchAction
 			Arrays.asList(
 				(Integer[]) insertStudentGroupForm.get("studentCodes"));
 
-		Object args[] = { studentGroupCode, studentCodes, objectCode };
+		Object args[] = { objectCode, studentGroupCode, studentCodes };
 		GestorServicos gestor = GestorServicos.manager();
 		Boolean result;
 		try {
@@ -2128,7 +2146,7 @@ public class TeacherAdministrationViewerDispatchAction
 			Arrays.asList(
 				(String[]) deleteStudentGroupForm.get("studentsToRemove"));
 
-			Object args[] = { studentGroupCode, studentUsernames, objectCode };
+			Object args[] = { objectCode, studentGroupCode, studentUsernames };
 				GestorServicos gestor = GestorServicos.manager();
 				Boolean result;
 				try {

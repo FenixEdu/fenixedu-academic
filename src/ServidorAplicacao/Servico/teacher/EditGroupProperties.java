@@ -93,9 +93,11 @@ public class EditGroupProperties implements IServico{
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 			List allStudentsGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
 			
+			
 			Integer groupMaximumNumber = infoGroupProperties.getGroupMaximumNumber();
 			Integer maximumCapacity = infoGroupProperties.getMaximumCapacity();
 			Integer minimumCapacity = infoGroupProperties.getMinimumCapacity();
+			System.out.println("MINIMUM CAPACITY "+minimumCapacity);
 			
 			if(groupMaximumNumber!=null)
 			{
@@ -150,6 +152,7 @@ public class EditGroupProperties implements IServico{
 						return errors;
 					}
 				}
+				else
 				if(minimumCapacity==null && maximumCapacity!=null)		
 				{	
 					if(size>maximumCapacity.intValue())
@@ -158,6 +161,7 @@ public class EditGroupProperties implements IServico{
 						return errors;
 					}
 				}
+				else
 				if(size>maximumCapacity.intValue()||size<minimumCapacity.intValue())
 				{
 					errors.add(new NonValidChangeServiceException());

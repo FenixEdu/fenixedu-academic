@@ -59,7 +59,7 @@ public class InsertStudentGroupMembers implements IServico {
 	 * Executes the service.
 	 */
 
-	public void run(Integer studentGroupCode,List studentCodes,Integer executionCourseCode) throws FenixServiceException {
+	public void run(Integer executionCourseCode,Integer studentGroupCode,List studentCodes) throws FenixServiceException {
 		
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentStudentGroup persistentStudentGroup = null;

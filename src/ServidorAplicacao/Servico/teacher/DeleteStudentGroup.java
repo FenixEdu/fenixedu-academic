@@ -34,7 +34,7 @@ public class DeleteStudentGroup implements IServico {
 		return "DeleteStudentGroup";
 	}
 	
-	public void run(Integer studentGroupCode) throws FenixServiceException {
+	public void run(Integer executionCourseCode,Integer studentGroupCode) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 

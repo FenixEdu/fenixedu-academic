@@ -57,7 +57,7 @@ public class DeleteStudentGroupMembers implements IServico {
 	 * Executes the service.
 	 */
 
-	public void run(Integer studentGroupCode,List studentUsernames,Integer executionCourseCode) throws FenixServiceException {
+	public void run(Integer executionCourseCode, Integer studentGroupCode,List studentUsernames) throws FenixServiceException {
 		
 		
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;

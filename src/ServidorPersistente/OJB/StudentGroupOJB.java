@@ -27,25 +27,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
 
 
-//	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumberAndShift(IGroupProperties groupProperties,Integer studentGroupNumber,ITurno shift) throws ExcepcaoPersistencia {
-//
-//		
-//		Criteria criteria1 = new Criteria();
-//		Criteria criteria2 = new Criteria();
-//		
-//		
-//		criteria1.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
-//		criteria2.addEqualTo("groupNumber",studentGroupNumber);
-//		criteria1.addAndCriteria(criteria2);
-//		if(shift!=null)
-//		{
-//			Criteria criteria3 = new Criteria();
-//			criteria3.addEqualTo("keyShift",shift.getIdInternal());
-//			criteria1.addAndCriteria(criteria3);
-//		}
-//		return (IStudentGroup) queryObject(StudentGroup.class, criteria1);
-//	}
-	
+
 	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(IGroupProperties groupProperties,Integer studentGroupNumber) throws ExcepcaoPersistencia {
 
 		
@@ -69,17 +51,12 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 	
 	public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,ITurno shift) throws ExcepcaoPersistencia {
 
-			Criteria criteria1 = new Criteria();
-		
-			criteria1.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
-			if(shift!=null)
-			{
-					Criteria criteria2 = new Criteria();
-					criteria2.addEqualTo("keyShift",shift.getIdInternal());
-					criteria1.addAndCriteria(criteria2);
-			}
-		
-			return (List) queryList(StudentGroup.class, criteria1);
+			Criteria criteria = new Criteria();
+		   		
+			criteria.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
+			criteria.addEqualTo("keyShift",shift.getIdInternal());
+			
+			return (List) queryList(StudentGroup.class, criteria);
 		}
 			
 	public List readAll() throws ExcepcaoPersistencia {

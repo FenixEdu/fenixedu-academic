@@ -57,7 +57,6 @@ public class GroupSiteComponentBuilder {
 		Integer groupPropertiesCode)
 		throws FenixServiceException {
 
-		// updateSite(executionYearName, executionPeriodName, executionCourseName);
 
 		if (component instanceof InfoSiteProjects) {
 			return getInfoSiteProjectsName((InfoSiteProjects) component,executionCourseCode);

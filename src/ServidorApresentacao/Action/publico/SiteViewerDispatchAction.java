@@ -483,7 +483,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 					.getExecutionCourse()
 					.getIdInternal());
 			Integer executionCode = (Integer)request.getAttribute("executionCourseCode");
-			System.out.println("NO READ_SITE GROUP VIEWER"+executionCode);
 			request.setAttribute(
 				"executionPeriodCode",
 				((InfoSiteCommon) siteView.getCommonComponent())

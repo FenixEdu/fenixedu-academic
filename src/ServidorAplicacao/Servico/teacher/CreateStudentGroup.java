@@ -94,9 +94,11 @@ public class CreateStudentGroup implements IServico {
 	 * Executes the service.
 	 */
 
-	public void run(Integer groupNumber, Integer groupPropertiesCode, Integer shiftCode,List studentCodes,Integer executionCourseCode)
+	public void run(Integer executionCourseCode,Integer groupNumber, Integer groupPropertiesCode, Integer shiftCode,List studentCodes)
 		throws FenixServiceException {
 
+
+		System.out.println("---------------ENTRA NO SERVICO CREATE STUDENT GROUP");
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentGroupProperties persistentGroupProperites = null;

@@ -75,20 +75,23 @@ public class UnEnrollStudentInGroup implements IServico {
 			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 			
-			boolean result = strategy.checkNumberOfGroupElements(groupProperties,studentGroup);	
+			boolean resultNumber = strategy.checkNumberOfGroupElements(groupProperties,studentGroup);
+			boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(studentGroupAttendToDelete,studentGroup);
 			
 			List allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
 					
-			if (result && allStudentGroupAttend.contains(studentGroupAttendToDelete))
+			if (resultNumber && allStudentGroupAttend.contains(studentGroupAttendToDelete))
 			{ 
 				persistentStudentGroupAttend.delete(studentGroupAttendToDelete);
+				if(resultEmpty)
+					persistentStudentGroup.delete(studentGroup);
 				return new Integer(1);
 							
 			} else {
-				if(!result && !allStudentGroupAttend.contains(studentGroupAttendToDelete)){
+				if(!resultNumber && !allStudentGroupAttend.contains(studentGroupAttendToDelete)){
 					return new Integer(0);
 				} else {
-					if(!result)
+					if(!resultNumber)
 						return new Integer(2);
 					else
 						return new Integer(3);
