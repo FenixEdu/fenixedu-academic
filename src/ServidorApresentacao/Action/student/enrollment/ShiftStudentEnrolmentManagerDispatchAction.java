@@ -70,14 +70,14 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 		//TODO:FIXME:THIS IS JUST A TEMPORARY BYPASS TO PREVENT 1ST YEAR STUDENTS FROM ENROLLING IN
 		// SHIFTS
-		if ((new Integer(userView.getUtilizador().substring(1))).intValue() > 53227)
-		{
-			errors.add(
-				"notAuthorizedShiftEnrollment",
-				new ActionError("error.notAuthorized.ShiftEnrollment"));
-			saveErrors(request, errors);
-			return mapping.findForward("studentFirstPage");
-		}
+//		if ((new Integer(userView.getUtilizador().substring(1))).intValue() > 53227)
+//		{
+//			errors.add(
+//				"notAuthorizedShiftEnrollment",
+//				new ActionError("error.notAuthorized.ShiftEnrollment"));
+//			saveErrors(request, errors);
+//			return mapping.findForward("studentFirstPage");
+//		}
 
 		DynaActionForm enrolmentForm = (DynaActionForm) form;
 		Integer executionDegreeIdChosen = (Integer) enrolmentForm.get("degree");
