@@ -31,14 +31,19 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         {
             ISuportePersistente persistentSuport;
             persistentSuport = SuportePersistenteOJB.getInstance();
+            
             IPersistentResponsibleFor responsibleForDAO = persistentSuport
                             .getIPersistentResponsibleFor();
             IPersistentProfessorship persistentProfessorship = persistentSuport
                             .getIPersistentProfessorship();
             IPersistentTeacher teacherDAO = persistentSuport.getIPersistentTeacher();
+            
             ITeacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
+            
             List professorships = persistentProfessorship.readByTeacher(teacher);
+            
             final List responsibleFors = responsibleForDAO.readByTeacher(teacher);
+            
             List detailedProfessorshipList = getDetailedProfessorships(professorships, responsibleFors,
                             persistentSuport);
             return detailedProfessorshipList;

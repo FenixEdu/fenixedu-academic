@@ -11,9 +11,10 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.InfoProfessorship;
+import DataBeans.InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod;
 import DataBeans.teacher.professorship.DetailedProfessorship;
-import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
@@ -50,8 +51,10 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
                     public Object transform(Object input)
                     {
                         IProfessorship professorship = (IProfessorship) input;
-                        InfoProfessorship infoProfessorShip = Cloner
-                                .copyIProfessorship2InfoProfessorship(professorship);
+                        //CLONER
+                        //InfoProfessorship infoProfessorShip = Cloner
+                                //.copyIProfessorship2InfoProfessorship(professorship);
+                        InfoProfessorship infoProfessorShip = InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod.newInfoFromDomain(professorship);
 
                         List executionCourseCurricularCoursesList = getInfoCurricularCourses(professorship
                                 .getExecutionCourse());
@@ -82,8 +85,10 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
                                     public Object transform(Object input)
                                     {
                                         ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                                        InfoCurricularCourse infoCurricularCourse = Cloner
-                                                .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                                        //CLONER
+                                        //InfoCurricularCourse infoCurricularCourse = Cloner
+                                                //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                                        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
                                         return infoCurricularCourse;
                                     }
                                 });
