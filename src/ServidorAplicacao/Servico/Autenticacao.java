@@ -131,7 +131,7 @@ public class Autenticacao implements IServico {
 		masterDegreeAdministrativeOffice.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		
 		rolesIntranet.add(masterDegreeAdministrativeOffice);
-		System.out.println("======================"+application);
+
 		if (application.equals(INTRANET)){
 			Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);
 			userView.setRoles(roles);	
