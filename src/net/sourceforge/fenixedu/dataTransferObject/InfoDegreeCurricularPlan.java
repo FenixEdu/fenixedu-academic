@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import net.sourceforge.fenixedu.util.MarkType;
  * 19/Mar/2003
  */
 public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
+
+	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private InfoDegree infoDegree;
 
@@ -83,6 +86,21 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         result += "Descrição = " + this.description + ";";
         result += "]";
         return result;
+    }
+
+    public String getLabel() {
+		final String degreeName = infoDegree.getNome();
+		final String initialDateString = simpleDateFormat.format(initialDate);
+
+		final int labelSize = degreeName.length() + initialDateString.length() + name.length() + 4;
+
+		final StringBuilder stringBuilder = new StringBuilder(labelSize);
+		stringBuilder.append(degreeName);
+		stringBuilder.append(" ");
+		stringBuilder.append(initialDateString);
+		stringBuilder.append(" - ");
+		stringBuilder.append(name);
+        return stringBuilder.toString();
     }
 
     /**

@@ -8629,4 +8629,36 @@
 			<chain name="ManagementAssiduousnessAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadDegreeCurricularPlansByDegreeType</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegreeType
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+		</filterChains>
+	</service>
+	<service>
+		<name>CreateStudentCurricularPlan</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>TransferEnrollments</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferEnrollments
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>

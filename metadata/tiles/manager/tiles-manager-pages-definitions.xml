@@ -379,5 +379,11 @@
 	<definition name="show-student-curricular-plan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/studentCurricularPlan.jsp" />
 	</definition>
+	<definition name="create-student-curricular-plan" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/createStudentCurricularPlan.jsp" />
+	</definition>
+	<definition name="transfer-enrollments" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/transferEnrollments.jsp" />
+	</definition>
 
 </tiles-definitions>

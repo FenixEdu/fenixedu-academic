@@ -5,11 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,30 +21,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * 
  * Created at 4/Set/2003, 13:55:41
- *  
+ * 
  */
 public class ReadDegreeCurricularPlans implements IService {
 
-    /**
-     * Executes the service. Returns the current InfoDegreeCurricularPlan.
-     */
-    public List run() throws FenixServiceException {
-        List curricularPlans = new LinkedList();
-        List infoCurricularPlans = new LinkedList();
+	/**
+	 * Executes the service. Returns the current InfoDegreeCurricularPlan.
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List run() throws ExcepcaoPersistencia {
+		final ISuportePersistente sp = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            curricularPlans = sp.getIPersistentDegreeCurricularPlan().readAll();
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		final List curricularPlans = sp.getIPersistentDegreeCurricularPlan().readAll();
+		final List infoCurricularPlans = new ArrayList(curricularPlans.size());
 
-        for (Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
-            IDegreeCurricularPlan curricularPlan = (IDegreeCurricularPlan) iter.next();
-
-            infoCurricularPlans
-                    .add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(curricularPlan));
-        }
-        return infoCurricularPlans;
-    }
+		for (final Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
+			final IDegreeCurricularPlan curricularPlan = (IDegreeCurricularPlan) iter.next();
+			infoCurricularPlans.add(InfoDegreeCurricularPlanWithDegree
+					.newInfoFromDomain(curricularPlan));
+		}
+		return infoCurricularPlans;
+	}
 }

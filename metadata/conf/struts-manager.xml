@@ -448,6 +448,9 @@
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentCurricularPlanState" type="java.lang.String"/>
 			<form-property name="selectedStudentCurricularPlanId" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanId" type="java.lang.String"/>
+			<form-property name="startDate" type="java.lang.String"/>
+			<form-property name="enrollmentIDsToTransfer" type="java.lang.String[]"/>
 		</form-bean>
 		
     </form-beans>
@@ -1556,7 +1559,15 @@
 				name="studentCurricularPlanForm"
 				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageStudentCurricularPlanDA"
 				scope="request">
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException"
+					key="exception.student.does.not.exist"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException"
+					key="student.curricular.plan.already.exists"
+					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="show" path="show-student-curricular-plan"/>
+			<forward name="createStudentCurricularPlan" path="create-student-curricular-plan"/>
+			<forward name="transferEnrollments" path="transfer-enrollments"/>
 		</action>
 
 	</action-mappings>
