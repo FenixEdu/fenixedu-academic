@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
@@ -36,7 +35,6 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			InfoClass infoClass = new InfoClass();
 
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) session.getAttribute(
