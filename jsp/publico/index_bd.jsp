@@ -5,7 +5,8 @@
 <h1><bean:message key="label.section.name" /></h1> 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   		<tr>
-    		<td class="infoop"><strong>Consultar Turmas</strong>
+    		<td class="infoop">
+    			<html:link page="/chooseContextDA.do?method=prepare&amp;nextPage=classSearch&amp;inputPage=chooseContext" ><strong><bean:message key="link.classes.consult"/></strong></html:link>
     		</td>
   		</tr>
 	</table>
@@ -17,7 +18,7 @@ O semestre é o actual.
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
-    		<td class="infoop"><strong>Consultar disciplinas</strong></td>
+    		<td class="infoop"><html:link page="/chooseContextDA.do?method=prepare&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext"><strong><bean:message key="link.executionCourse.consult"/></strong></html:link></td>
   		</tr>
 	</table>
 <br />
@@ -28,7 +29,7 @@ turnos, horário e carga curricular
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
-    		<td class="infoop"><strong>Consultar salas</strong></td>
+    		<td class="infoop"><html:link page="/prepareConsultRooms.do"><strong><bean:message key="link.rooms.consult"/></strong></html:link></td>
   		</tr>
 	</table>
 <br />
