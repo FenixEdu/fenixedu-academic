@@ -6063,4 +6063,13 @@
             <chain name=""/>
         </filterChains>-->
     </service>
+    <service>
+        <name>ReadStudentsByPerson</name>
+        <implementationClass>ServidorAplicacao.Servico.commons.student.ReadStudentsByPerson</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.commons.student;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
@@ -29,6 +31,7 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author David Santos
  */
 
 public class CurriculumDispatchAction extends DispatchAction
@@ -57,26 +60,15 @@ public class CurriculumDispatchAction extends DispatchAction
 		try
 		{
 			Object args[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID)};
-			result =
-				(ArrayList) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadStudentCurriculum",
-					args);
-		}
-		catch (NotAuthorizedException e)
+			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurriculum", args);
+		} catch (NotAuthorizedException e)
 		{
 			return mapping.findForward("NotAuthorized");
 		}
 
-		//		BeanComparator curricularYear = new
-		// BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year");
-		//		BeanComparator semester = new
-		// BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester");
 		BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
 		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
 		ComparatorChain chainComparator = new ComparatorChain();
-		//		chainComparator.addComparator(curricularYear);
-		//		chainComparator.addComparator(semester);
 		chainComparator.addComparator(courseName);
 		chainComparator.addComparator(executionYear);
 
@@ -87,12 +79,8 @@ public class CurriculumDispatchAction extends DispatchAction
 		{
 			Object args[] = { Integer.valueOf(studentCurricularPlanID)};
 			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadStudentCurricularPlan",
-					args);
-		}
-		catch (ExistingServiceException e)
+				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlan", args);
+		} catch (ExistingServiceException e)
 		{
 			throw new ExistingActionException(e);
 		}
@@ -115,61 +103,60 @@ public class CurriculumDispatchAction extends DispatchAction
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String studentNumber = getStudent(request);
-		InfoStudent infoStudent = null;
+		List infoStudents = null;
+
 		if (studentNumber == null)
 		{
 			try
 			{
-				Object args[] = { userView.getUtilizador()};
-				infoStudent =
-					(InfoStudent) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadStudentByUsername",
-						args);
-			}
-			catch (FenixServiceException e)
+				Object args1[] = { userView.getUtilizador()};
+				InfoPerson infoPerson =
+					(InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", args1);
+
+				Object args2[] = { infoPerson };
+				infoStudents = (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsByPerson", args2);
+			} catch (FenixServiceException e)
 			{
 				throw new FenixActionException(e);
 			}
-		}
-		else
+		} else
 		{
 			try
 			{
-				Object args[] = { Integer.valueOf(studentNumber) };
-				infoStudent =
+				Object args[] = { Integer.valueOf(studentNumber)};
+				InfoStudent infoStudent =
 					(InfoStudent) ServiceManagerServiceFactory.executeService(
 						userView,
 						"ReadStudentByNumberAndAllDegreeTypes",
 						args);
-			}
-			catch (FenixServiceException e)
+				infoStudents = new ArrayList();
+				infoStudents.add(infoStudent);
+			} catch (FenixServiceException e)
 			{
 				throw new FenixActionException(e);
 			}
 
 		}
 
-		List result = null;
-		if (infoStudent != null)
+		List result = new ArrayList();
+		if (infoStudents != null)
 		{
-			try
+			Iterator iterator = infoStudents.iterator();
+			while (iterator.hasNext())
 			{
-				Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType()};
-				result =
-					(ArrayList) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadStudentCurricularPlans",
-						args);
-			}
-			catch (NonExistingServiceException e)
-			{
-				result = new ArrayList();
+				InfoStudent infoStudent = (InfoStudent) iterator.next();
+				try
+				{
+					Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType()};
+					List resultTemp =
+						(ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlans", args);
+					result.addAll(resultTemp);
+				} catch (NonExistingServiceException e)
+				{
+				}
 			}
 		}
-		if(result == null) {
-			result = new ArrayList();
-		}
+
 		getExecutionDegree(request);
 
 		request.setAttribute("studentCPs", result);
