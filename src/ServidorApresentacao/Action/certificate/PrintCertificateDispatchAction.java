@@ -104,14 +104,18 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 					throw new NonExistingActionException("Inscrição", e);
 				}
 
-				if (enrolmentList.size() == 0){
+			/*	if (enrolmentList.size() == 0){
 					ActionErrors errors = new ActionErrors();
 					errors.add("AlunoNãoExiste",
 						new ActionError("error.enrolment.notExist"));
+					System.out.println("entrei aqui");
 					saveErrors(request, errors);
 					return new ActionForward(mapping.getInput());
-				}
-				anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+				}*/
+				if (enrolmentList.size() == 0)
+					anoLectivo= infoExecutionYear.getYear(); 
+				else	
+					anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
 				
 				if (certificate.equals("Matrícula"))
 							session.setAttribute(SessionConstants.MATRICULA, certificate.toUpperCase());
