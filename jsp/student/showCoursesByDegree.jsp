@@ -86,10 +86,10 @@
 	<html:form  action="studentShiftEnrolmentManager" method="POST">
 		<html:hidden property="method" value="proceedToShiftEnrolment" />
 		<strong>
-			Escolhe o curso das cadeiras a que te queres inscrever:
+			Escolha o curso das cadeiras que quer frequentar:
 		</strong>
 		<br/>
-		<html:select property="degree" size="1"onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';selectAll();document.studentShiftEnrolmentForm.submit();">
+		<html:select property="degree" size="1"onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';selectAll();document.studentShiftEnrolmentForm.submit();" >
 			<logic:iterate  id="executionDegree" name="degreeList">
 				<bean:define id="deg" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree"/>
 				<option value="<%= ((InfoDegree)deg).getSigla() %>">
@@ -102,27 +102,7 @@
 		<%--
 <bean:define id="wantedCourseList" name="wantedCourseList" property="wantedCourseList" type="java.util.ArrayList"/>
 --%>
-		<table>
-			<tr>
-				<th>
-					Disciplinas do curso selecionado:
-				</th>
-				<th>
-				</th>
-				<th>
-					Disciplinas a que estás inscrito:
-				</th>
-			</tr>
-			<tr>
-				<td>
-					<html:select property="course" size="12">
-						<html:options collection="courseList" labelProperty="nome" property="idInternal"/>
-					</html:select>
-					<br/>
-					<br/>
-					<input type=button value="Adicionar Disciplina" onclick="addToList(wantedCourse,course[course.selectedIndex].text,course[course.selectedIndex].value);" />
-				</td>
-				<td>
+<%--				<td>
 					Actualiza a coluna
 					<br />
 					da direita para
@@ -137,22 +117,33 @@
 					<br />
 					botões abaixo.
 					<br />
-					<br />
+					<br />	
 					Lembra-te que podes
 					<br />
 					modificar a tua escolha
 					<br />
 					posteriormente!
-				</td>
-				<td>
-					<html:select property="wantedCourse" multiple="false" size="12">
-						<html:options  collection="wantedCourse"   labelProperty="nome"  property="idInternal"/>
+				</td> --%>
+
+		<table width="80%" align="center">
+			<tr>
+				<td align="left">
+					<b>Disciplinas do curso selecionado:</b>
+					<html:select property="course" size="12" style="width:100%">
+						<html:options collection="courseList" labelProperty="nome" property="idInternal"/>
 					</html:select>
-					<br/>
-					<br/>
-					<input type="button"  value="Remover Disciplina" onclick="removeFromList(wantedCourse);selectFirst();"/>
+					<input type="button" value="Adicionar Disciplina" onclick="addToList(wantedCourse,course[course.selectedIndex].text,course[course.selectedIndex].value);" style="width:100%"/>
 				</td>
 			</tr>
+			<tr>
+				<td align="left">
+					<b>Disciplinas que vai frequentar:</b>
+					<html:select property="wantedCourse" multiple="false" size="12" style="width:100%">
+						<html:options  collection="wantedCourse"   labelProperty="nome"  property="idInternal"/>
+					</html:select>
+					<input type="button"  value="Remover Disciplina" onclick="removeFromList(wantedCourse);selectFirst();" size="12" style="width:100%"/>
+				</td>
+			<tr/>
 		</table>
 		<br />
 		<%-- Can't put form.submit into onclick in a submit button --%>
