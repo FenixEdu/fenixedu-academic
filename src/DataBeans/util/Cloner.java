@@ -1509,11 +1509,13 @@ public abstract class Cloner {
     public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
 
         IBranch branch = new Branch();
-        IDegreeCurricularPlan degreeCurricularPlan = Cloner
-                .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoBranch
-                        .getInfoDegreeCurricularPlan());
-        copyObjectProperties(branch, infoBranch);
-        branch.setDegreeCurricularPlan(degreeCurricularPlan);
+        if(infoBranch != null) {
+	        IDegreeCurricularPlan degreeCurricularPlan = Cloner
+	                .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoBranch
+	                        .getInfoDegreeCurricularPlan());
+	        copyObjectProperties(branch, infoBranch);
+	        branch.setDegreeCurricularPlan(degreeCurricularPlan);
+        }
         return branch;
     }
 

@@ -293,7 +293,8 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                             infoStudentCurricularPlan);
 
                         session.setAttribute(SessionConstants.DATE, formatedDate);
-                        if (infoStudentCurricularPlan.getInfoBranch().getName().length() != 0)
+                        if (infoStudentCurricularPlan.getInfoBranch() != null && 
+                                infoStudentCurricularPlan.getInfoBranch().getName().length() != 0)
                             session.setAttribute(
                                 SessionConstants.INFO_BRANCH,
                                 infoStudentCurricularPlan.getInfoBranch().getName());

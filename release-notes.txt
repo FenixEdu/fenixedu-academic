@@ -37,6 +37,7 @@ BUG FIXES:
 - Website manager Portal - fixed links for other portals in events and news pages
 - Department office portal - fixed wrong argument for service call
 - Department office portal - fixed class ProfessorShip method afterInsert. It was generating nullPointerException 
+- Master Degree Portal - fixed date of end of scholarship
 
 KNOWN ISSUES:
 =============

@@ -1,15 +1,16 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoEnrolmentEvaluation;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
-import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrollmentState;
@@ -62,7 +63,8 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 	
 	public Date dateOfEndOfScholarship(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia{
 		
-		Calendar date = null;
+	    Date date = null;
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
 		
 //		float studentCredits = 0;
 //		
@@ -75,52 +77,30 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		while(iterator.hasNext()){
 			IEnrollment enrolment = (IEnrollment) iterator.next();
 			if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)){
-				Iterator evaluations = enrolment.getEvaluations().iterator();
-				while(evaluations.hasNext()){
-					IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) evaluations.next(); 
-					if (evaluation.getExamDate() == null){
-						continue;
-					}
-					
-					if (date == null){
-						date = Calendar.getInstance();
-						date.setTime(evaluation.getExamDate());
-						continue;
-					}
-					
-					Calendar examDate = Calendar.getInstance();
-					examDate.setTime(evaluation.getExamDate());
-					if (examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR)){
-						date.setTime(evaluation.getExamDate());
-						continue;
-					}
-					if ((examDate.get(Calendar.MONTH) > date.get(Calendar.MONTH )) &&
-						(examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR ))){
-							date.setTime(evaluation.getExamDate());
-							continue;
-					}
-					if ((examDate.get(Calendar.MONTH) > date.get(Calendar.MONTH )) &&
-						(examDate.get(Calendar.YEAR) == date.get(Calendar.YEAR ))){
-							date.setTime(evaluation.getExamDate());
-							continue;
-					}					
-					if ((examDate.get(Calendar.DAY_OF_MONTH) > date.get(Calendar.DAY_OF_MONTH )) &&
-						(examDate.get(Calendar.MONTH) > date.get(Calendar.MONTH )) &&
-						(examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR ))){
-							date.setTime(evaluation.getExamDate());
-							continue;
-					}
-					if ((examDate.get(Calendar.DAY_OF_MONTH) > date.get(Calendar.DAY_OF_MONTH )) &&
-						(examDate.get(Calendar.MONTH) == date.get(Calendar.MONTH )) &&
-						(examDate.get(Calendar.YEAR) == date.get(Calendar.YEAR ))){
-							date.setTime(evaluation.getExamDate());
-							continue;
-					}
-					
+			    
+			    try {
+                    infoEnrolmentEvaluation  = GetEnrolmentGrade.getService().run(enrolment);
+                } catch (FenixServiceException e) {
+                    e.printStackTrace();
+                    continue;
+                }
+			    
+				if (infoEnrolmentEvaluation.getExamDate() == null){
+					continue;
 				}
+				
+				if (date == null){
+				    date = new Date(infoEnrolmentEvaluation.getExamDate().getTime());
+					continue;
+				}
+                
+				if(infoEnrolmentEvaluation.getExamDate().after(date)) {
+				    date.setTime(infoEnrolmentEvaluation.getExamDate().getTime());
+				}
+				
 			}
 		}
-		return date.getTime();
+		return date;
 	}
 
 
