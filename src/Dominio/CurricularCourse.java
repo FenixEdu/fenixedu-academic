@@ -1,6 +1,5 @@
 package Dominio;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -10,12 +9,11 @@ import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
 /**
- * @author dcs-rjao
- * 
- * 20/Mar/2003
+ * @author David Santos on Jul 12, 2004
  */
 
 public class CurricularCourse extends DomainObject implements ICurricularCourse {
+
     private Integer departmentCourseKey;
 
     private Integer degreeCurricularPlanKey;
@@ -71,612 +69,337 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
     private Boolean mandatoryEnrollment;
 
-    public CurricularCourse(Integer idInternal) {
-        setIdInternal(idInternal);
-
-    }
-
     public CurricularCourse() {
-
-        setCode(null);
-        setCredits(null);
-        setDegreeCurricularPlan(null);
-        setDegreeCurricularPlanKey(null);
-        setDepartmentCourse(null);
-        setDepartmentCourseKey(null);
-        setLabHours(null);
-        setName(null);
-        setPraticalHours(null);
-        setTheoPratHours(null);
-        setTheoreticalHours(null);
-        setAssociatedExecutionCourses(null);
-        setScopes(null);
-    }
-
-    /**
-     * @deprecated
-     */
-    public CurricularCourse(Double credits, Double theoreticalHours,
-            Double praticalHours, Double theoPratHours, Double labHours,
-            Integer curricularYear, Integer semester, String name, String code,
-            IDisciplinaDepartamento departmentCourse,
-            IDegreeCurricularPlan degreeCurricularPlan) {
-
-        this();
-        setCode(code);
-        setCredits(credits);
-        setDegreeCurricularPlan(degreeCurricularPlan);
-        setDepartmentCourse(departmentCourse);
-        setLabHours(labHours);
-        setName(name);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-        setTheoreticalHours(theoreticalHours);
-    }
-
-    public CurricularCourse(Double credits, Double theoreticalHours,
-            Double praticalHours, Double theoPratHours, Double labHours,
-            String name, String code, IDisciplinaDepartamento departmentCourse,
-            IDegreeCurricularPlan degreeCurricularPlan) {
-
-        this();
-        setCode(code);
-        setCredits(credits);
-        setDegreeCurricularPlan(degreeCurricularPlan);
-        setDepartmentCourse(departmentCourse);
-        setLabHours(labHours);
-        setName(name);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-        setTheoreticalHours(theoreticalHours);
-    }
-
-    public CurricularCourse(Double credits, Double theoreticalHours,
-            Double praticalHours, Double theoPratHours, Double labHours,
-            String name, String code, IDisciplinaDepartamento departmentCourse,
-            IDegreeCurricularPlan degreeCurricularPlan,
-            CurricularCourseType type) {
-
-        this();
-        setCode(code);
-        setCredits(credits);
-        setDegreeCurricularPlan(degreeCurricularPlan);
-        setDepartmentCourse(departmentCourse);
-        setLabHours(labHours);
-        setName(name);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-        setTheoreticalHours(theoreticalHours);
-        setType(type);
     }
 
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof ICurricularCourse) {
             ICurricularCourse dc = (ICurricularCourse) obj;
-            resultado = getDegreeCurricularPlan().equals(
-                    dc.getDegreeCurricularPlan())
-                    && getName().equals(dc.getName())
-                    && getCode().equals(dc.getCode());
+            resultado = getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan())
+                    && getName().equals(dc.getName()) && getCode().equals(dc.getCode());
         }
         return resultado;
     }
 
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("[").append(this.getClass()).append(":").append(
-                "idInternal = ").append(this.getIdInternal())
-                .append(";name = ").append(this.name).append(";code = ")
-                .append(this.code).append("\n degreeCurricularPlan = ").append(
-                        this.getDegreeCurricularPlan()).append(";type = ")
-                .append(this.type);
+        stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
+                this.getIdInternal()).append(";name = ").append(this.name).append(";code = ").append(
+                this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan())
+                .append(";type = ").append(this.type);
         return stringBuffer.toString();
     }
 
-    /**
-     * Returns the code.
-     * 
-     * @return String
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Returns the credits.
-     * 
-     * @return double
-     */
-    public Double getCredits() {
-        return credits;
-    }
-
-    /**
-     * Returns the degreeCurricularPlan.
-     * 
-     * @return IDegreeCurricularPlan
-     */
-    public IDegreeCurricularPlan getDegreeCurricularPlan() {
-        return degreeCurricularPlan;
-    }
-
-    /**
-     * Returns the degreeCurricularPlanKey.
-     * 
-     * @return int
-     */
-    public Integer getDegreeCurricularPlanKey() {
-        return degreeCurricularPlanKey;
-    }
-
-    /**
-     * Returns the departmentCourse.
-     * 
-     * @return IDisciplinaDepartamento
-     */
-    public IDisciplinaDepartamento getDepartmentCourse() {
-        return departmentCourse;
-    }
-
-    /**
-     * Returns the departmentCourseKey.
-     * 
-     * @return int
-     */
-    public Integer getDepartmentCourseKey() {
-        return departmentCourseKey;
-    }
-
-    /**
-     * Returns the labHours.
-     * 
-     * @return double
-     */
-    public Double getLabHours() {
-        return labHours;
-    }
-
-    /**
-     * Returns the name.
-     * 
-     * @return String
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Returns the praticalHours.
-     * 
-     * @return double
-     */
-    public Double getPraticalHours() {
-        return praticalHours;
-    }
-
-    /**
-     * Returns the theoPratHours.
-     * 
-     * @return double
-     */
-    public Double getTheoPratHours() {
-        return theoPratHours;
-    }
-
-    /**
-     * Returns the theoreticalHours.
-     * 
-     * @return double
-     */
-    public Double getTheoreticalHours() {
-        return theoreticalHours;
-    }
-
-    /**
-     * Sets the code.
-     * 
-     * @param code
-     *            The code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * Sets the degreeCurricularPlan.
-     * 
-     * @param degreeCurricularPlan
-     *            The degreeCurricularPlan to set
-     */
-    public void setDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) {
-        this.degreeCurricularPlan = degreeCurricularPlan;
-    }
-
-    /**
-     * Sets the degreeCurricularPlanKey.
-     * 
-     * @param degreeCurricularPlanKey
-     *            The degreeCurricularPlanKey to set
-     */
-    public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey) {
-        this.degreeCurricularPlanKey = degreeCurricularPlanKey;
-    }
-
-    /**
-     * Sets the departmentCourse.
-     * 
-     * @param departmentCourse
-     *            The departmentCourse to set
-     */
-    public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse) {
-        this.departmentCourse = departmentCourse;
-    }
-
-    /**
-     * Sets the departmentCourseKey.
-     * 
-     * @param departmentCourseKey
-     *            The departmentCourseKey to set
-     */
-    public void setDepartmentCourseKey(Integer departmentCourseKey) {
-        this.departmentCourseKey = departmentCourseKey;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            The name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Returns the associatedExecutionCourses.
-     * 
-     * @return List
-     */
     public List getAssociatedExecutionCourses() {
         return associatedExecutionCourses;
     }
 
-    /**
-     * Sets the associatedExecutionCourses.
-     * 
-     * @param associatedExecutionCourses
-     *            The associatedExecutionCourses to set
-     */
     public void setAssociatedExecutionCourses(List associatedExecutionCourses) {
         this.associatedExecutionCourses = associatedExecutionCourses;
     }
 
-    /**
-     * Sets the credits.
-     * 
-     * @param credits
-     *            The credits to set
-     */
+    public Boolean getBasic() {
+        return basic;
+    }
+
+    public void setBasic(Boolean basic) {
+        this.basic = basic;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Double getCredits() {
+        return credits;
+    }
+
     public void setCredits(Double credits) {
         this.credits = credits;
-    }
-
-    /**
-     * Sets the labHours.
-     * 
-     * @param labHours
-     *            The labHours to set
-     */
-    public void setLabHours(Double labHours) {
-        this.labHours = labHours;
-    }
-
-    /**
-     * Sets the praticalHours.
-     * 
-     * @param praticalHours
-     *            The praticalHours to set
-     */
-    public void setPraticalHours(Double praticalHours) {
-        this.praticalHours = praticalHours;
-    }
-
-    /**
-     * Sets the theoPratHours.
-     * 
-     * @param theoPratHours
-     *            The theoPratHours to set
-     */
-    public void setTheoPratHours(Double theoPratHours) {
-        this.theoPratHours = theoPratHours;
-    }
-
-    /**
-     * Sets the theoreticalHours.
-     * 
-     * @param theoreticalHours
-     *            The theoreticalHours to set
-     */
-    public void setTheoreticalHours(Double theoreticalHours) {
-        this.theoreticalHours = theoreticalHours;
-    }
-
-    /**
-     * @return List
-     */
-    public List getScopes() {
-        return scopes;
-    }
-
-    /**
-     * Sets the scopes.
-     * 
-     * @param scopes
-     *            The scopes to set
-     */
-    public void setScopes(List scopes) {
-        this.scopes = scopes;
-    }
-
-    /**
-     * @return CurricularCourseType
-     */
-    public CurricularCourseType getType() {
-        return type;
-    }
-
-    /**
-     * Sets the type.
-     * 
-     * @param type
-     *            The type to set
-     */
-    public void setType(CurricularCourseType type) {
-        this.type = type;
     }
 
     public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
         return curricularCourseExecutionScope;
     }
 
+    public void setCurricularCourseExecutionScope(
+            CurricularCourseExecutionScope curricularCourseExecutionScope) {
+        this.curricularCourseExecutionScope = curricularCourseExecutionScope;
+    }
+
+    public IDegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
+
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
+    }
+
+    public Integer getDegreeCurricularPlanKey() {
+        return degreeCurricularPlanKey;
+    }
+
+    public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey) {
+        this.degreeCurricularPlanKey = degreeCurricularPlanKey;
+    }
+
+    public IDisciplinaDepartamento getDepartmentCourse() {
+        return departmentCourse;
+    }
+
+    public void setDepartmentCourse(IDisciplinaDepartamento departmentCourse) {
+        this.departmentCourse = departmentCourse;
+    }
+
+    public Integer getDepartmentCourseKey() {
+        return departmentCourseKey;
+    }
+
+    public void setDepartmentCourseKey(Integer departmentCourseKey) {
+        this.departmentCourseKey = departmentCourseKey;
+    }
+
+    public Double getEctsCredits() {
+        return ectsCredits;
+    }
+
+    public void setEctsCredits(Double ectsCredits) {
+        this.ectsCredits = ectsCredits;
+    }
+
+    public Integer getEnrollmentWeigth() {
+        return enrollmentWeigth;
+    }
+
+    public void setEnrollmentWeigth(Integer enrollmentWeigth) {
+        this.enrollmentWeigth = enrollmentWeigth;
+    }
+
+    public Integer getKeyScientificArea() {
+        return keyScientificArea;
+    }
+
+    public void setKeyScientificArea(Integer keyScientificArea) {
+        this.keyScientificArea = keyScientificArea;
+    }
+
+    public Double getLabHours() {
+        return labHours;
+    }
+
+    public void setLabHours(Double labHours) {
+        this.labHours = labHours;
+    }
+
     public Boolean getMandatory() {
         return mandatory;
     }
 
-    /**
-     * @return
-     */
-    public Boolean getBasic() {
-        return basic;
+    public void setMandatory(Boolean mandatory) {
+        this.mandatory = mandatory;
     }
 
-    /**
-     * @param basic
-     */
-    public void setBasic(Boolean basic) {
-        this.basic = basic;
+    public Boolean getMandatoryEnrollment() {
+        return mandatoryEnrollment;
     }
 
-    public boolean curricularCourseIsMandatory() {
-        return mandatory.booleanValue();
+    public void setMandatoryEnrollment(Boolean mandatoryEnrollment) {
+        this.mandatoryEnrollment = mandatoryEnrollment;
     }
 
-    public void setCurricularCourseExecutionScope(
-            CurricularCourseExecutionScope scope) {
-        curricularCourseExecutionScope = scope;
+    public Integer getMaximumValueForAcumulatedEnrollments() {
+        return maximumValueForAcumulatedEnrollments;
     }
 
-    public void setMandatory(Boolean boolean1) {
-        mandatory = boolean1;
+    public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments) {
+        this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
+    }
+
+    public Integer getMinimumValueForAcumulatedEnrollments() {
+        return minimumValueForAcumulatedEnrollments;
+    }
+
+    public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments) {
+        this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getPraticalHours() {
+        return praticalHours;
+    }
+
+    public void setPraticalHours(Double praticalHours) {
+        this.praticalHours = praticalHours;
+    }
+
+    public IScientificArea getScientificArea() {
+        return scientificArea;
+    }
+
+    public void setScientificArea(IScientificArea scientificArea) {
+        this.scientificArea = scientificArea;
+    }
+
+    public List getScopes() {
+        return scopes;
+    }
+
+    public void setScopes(List scopes) {
+        this.scopes = scopes;
+    }
+
+    public Double getTheoPratHours() {
+        return theoPratHours;
+    }
+
+    public void setTheoPratHours(Double theoPratHours) {
+        this.theoPratHours = theoPratHours;
+    }
+
+    public Double getTheoreticalHours() {
+        return theoreticalHours;
+    }
+
+    public void setTheoreticalHours(Double theoreticalHours) {
+        this.theoreticalHours = theoreticalHours;
+    }
+
+    public CurricularCourseType getType() {
+        return type;
+    }
+
+    public void setType(CurricularCourseType type) {
+        this.type = type;
     }
 
     public IUniversity getUniversity() {
         return university;
     }
 
+    public void setUniversity(IUniversity university) {
+        this.university = university;
+    }
+
     public Integer getUniversityKey() {
         return universityKey;
     }
 
-    public void setUniversity(IUniversity code) {
-        university = code;
+    public void setUniversityKey(Integer universityKey) {
+        this.universityKey = universityKey;
     }
 
-    public void setUniversityKey(Integer integer) {
-        universityKey = integer;
-    }
-
-    //	Nuno Correia & Ricardo Rodrigues
-    /**
-     * @return
-     */
-    public Integer getKeyScientificArea() {
-        return keyScientificArea;
-    }
-
-    /**
-     * @param keyScientificArea
-     */
-    public void setKeyScientificArea(Integer keyScientificArea) {
-        this.keyScientificArea = keyScientificArea;
-    }
-
-    /**
-     * @return
-     */
-    public IScientificArea getScientificArea() {
-        return scientificArea;
-    }
-
-    /**
-     * @param scientificArea
-     */
-    public void setScientificArea(IScientificArea scientificArea) {
-        this.scientificArea = scientificArea;
-    }
-
-    /**
-     * @return Returns the ectsCredits.
-     */
-    public Double getEctsCredits() {
-        return ectsCredits;
-    }
-
-    /**
-     * @param ectsCredits
-     *            The ectsCredits to set.
-     */
-    public void setEctsCredits(Double ectsCredits) {
-        this.ectsCredits = ectsCredits;
-    }
-
-    /**
-     * @return Returns the enrollmentWeigth.
-     */
-    public Integer getEnrollmentWeigth() {
-        return enrollmentWeigth;
-    }
-
-    /**
-     * @param enrollmentWeigth
-     *            The enrollmentWeigth to set.
-     */
-    public void setEnrollmentWeigth(Integer enrollmentWeigth) {
-        this.enrollmentWeigth = enrollmentWeigth;
-    }
-
-    /**
-     * @return Returns the maximumValueForAcumulatedEnrollments.
-     */
-    public Integer getMaximumValueForAcumulatedEnrollments() {
-        return maximumValueForAcumulatedEnrollments;
-    }
-
-    /**
-     * @param maximumValueForAcumulatedEnrollments
-     *            The maximumValueForAcumulatedEnrollments to set.
-     */
-    public void setMaximumValueForAcumulatedEnrollments(
-            Integer maximumValueForAcumulatedEnrollments) {
-        this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
-    }
-
-    /**
-     * @return Returns the minimumValueForAcumulatedEnrollments.
-     */
-    public Integer getMinimumValueForAcumulatedEnrollments() {
-        return minimumValueForAcumulatedEnrollments;
-    }
-
-    /**
-     * @param minimumValueForAcumulatedEnrollments
-     *            The minimumValueForAcumulatedEnrollments to set.
-     */
-    public void setMinimumValueForAcumulatedEnrollments(
-            Integer minimumValueForAcumulatedEnrollments) {
-        this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
-    }
-
-    /**
-     * @return Returns the weigth.
-     */
     public Double getWeigth() {
         return weigth;
     }
 
-    /**
-     * @param weigth
-     *            The weigth to set.
-     */
     public void setWeigth(Double weigth) {
         this.weigth = weigth;
     }
 
-    /**
-     * @return Returns the mandatoryEnrollment.
-     */
-    public Boolean getMandatoryEnrollment() {
-        return mandatoryEnrollment;
-    }
-
-    /**
-     * @param mandatoryEnrollment
-     *            The mandatoryEnrollment to set.
-     */
-    public void setMandatoryEnrollment(Boolean mandatoryEnrollment) {
-        this.mandatoryEnrollment = mandatoryEnrollment;
-    }
-
-    public ICurricularCourseScope getCurricularCourseScope(IBranch branch,
-            Integer curricularSemester) {
-        ICurricularCourseScope curricularCourseScope = null;
-        Iterator iterator = this.getScopes().iterator();
-        while (iterator.hasNext()) {
-            ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) iterator
-                    .next();
-            if (curricularCourseScope2.getBranch().equals(branch)
-                    && curricularCourseScope2.getCurricularSemester()
-                            .getSemester().equals(curricularSemester)) {
-                curricularCourseScope = curricularCourseScope2;
-                break;
-            }
-        }
-        return curricularCourseScope;
-    }
-
-    public ICurricularYear getCurricularYearByBranchAndSemester(IBranch branch,
-            Integer semester) {
-        if (this.getScopes().size() == 1) {
-            return ((ICurricularCourseScope) this.getScopes().get(0))
-                    .getCurricularSemester().getCurricularYear();
-        }
-        ICurricularYear maxCurricularYear = new CurricularYear(new Integer(0));
-        ICurricularYear actualCurricularYear = null;
-
-        Iterator iterator = this.getScopes().iterator();
-        while (iterator.hasNext()) {
-            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator
-                    .next();
-            actualCurricularYear = curricularCourseScope
-                    .getCurricularSemester().getCurricularYear();
-
-            if (maxCurricularYear.getYear().intValue() < actualCurricularYear
-                    .getYear().intValue()) {
-                if (branch != null
-                        && semester != null
-                        && curricularCourseScope.getBranch().equals(branch)
-                        && curricularCourseScope.getCurricularSemester()
-                                .getSemester().equals(semester)) {
-                    maxCurricularYear = actualCurricularYear;
-                }
-
-                if (branch != null && semester == null
-                        && curricularCourseScope.getBranch().equals(branch)) {
-                    maxCurricularYear = actualCurricularYear;
-                }
-                if (branch == null
-                        && semester != null
-                        && curricularCourseScope.getCurricularSemester()
-                                .getSemester().equals(semester)) {
-                    maxCurricularYear = actualCurricularYear;
-                }
-                if (branch == null && semester == null) {
-                    maxCurricularYear = actualCurricularYear;
-                }
-            }
-        }
-        return maxCurricularYear;
-
+    public boolean curricularCourseIsMandatory() {
+        return getMandatory().booleanValue();
     }
 
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
 
+    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,
+            final Integer semester) {
+
+        if (this.getScopes().size() == 1) {
+            return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester()
+                    .getCurricularYear();
+        }
+
+        ICurricularYear curricularYearToReturn = null;
+        List curricularCourseScopesFound = null;
+        ICurricularCourseScope curricularCourseScopeFound = null;
+        boolean foundInBranchButNotInSemester = false;
+        boolean notFoundInBranch = false;
+        boolean notFoundInSemester = false;
+
+        if (branch != null) {
+            curricularCourseScopesFound = (List) CollectionUtils.select(this.getScopes(),
+                    new Predicate() {
+                        public boolean evaluate(Object arg0) {
+                            return ((ICurricularCourseScope) arg0).getBranch().equals(branch);
+                        }
+                    });
+
+            if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
+
+                if (semester != null) {
+                    curricularCourseScopeFound = (ICurricularCourseScope) CollectionUtils.find(
+                            curricularCourseScopesFound, new Predicate() {
+                                public boolean evaluate(Object arg0) {
+                                    return ((ICurricularCourseScope) arg0).getCurricularSemester()
+                                            .getSemester().equals(semester);
+                                }
+                            });
+
+                    if (curricularCourseScopeFound != null) {
+                        curricularYearToReturn = curricularCourseScopeFound.getCurricularSemester()
+                                .getCurricularYear();
+                    } else {
+                        foundInBranchButNotInSemester = true;
+                    }
+                } else {
+                    foundInBranchButNotInSemester = true;
+                }
+            } else {
+                notFoundInBranch = true;
+            }
+        } else {
+            notFoundInBranch = true;
+        }
+
+        if (foundInBranchButNotInSemester) {
+            curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound);
+        }
+
+        if (notFoundInBranch) {
+
+            if (semester != null) {
+                curricularCourseScopesFound = (List) CollectionUtils.select(this.getScopes(),
+                        new Predicate() {
+                            public boolean evaluate(Object arg0) {
+                                return ((ICurricularCourseScope) arg0).getCurricularSemester()
+                                        .getSemester().equals(semester);
+                            }
+                        });
+
+                if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
+                    curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound);
+                } else {
+                    notFoundInSemester = true;
+                }
+            } else {
+                notFoundInSemester = true;
+            }
+        }
+
+        if (notFoundInSemester) {
+            curricularYearToReturn = getCurricularYearWithLowerYear(this.getScopes());
+        }
+
+        return curricularYearToReturn;
+    }
+
     public String getCurricularCourseUniqueKeyForEnrollment() {
-        return this.getCode() + this.getName()
-                + this.getDegreeCurricularPlan().getDegree().getNome()
+        return this.getCode() + this.getName() + this.getDegreeCurricularPlan().getDegree().getNome()
                 + this.getDegreeCurricularPlan().getDegree().getTipoCurso();
     }
 
@@ -686,13 +409,35 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
         List result = (List) CollectionUtils.select(scopes, new Predicate() {
             public boolean evaluate(Object obj) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-                return (curricularCourseScope.getCurricularSemester()
-                        .getSemester().equals(semester) && curricularCourseScope
+                return (curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope
                         .isActive().booleanValue());
             }
         });
 
         return !result.isEmpty();
+    }
+
+    private ICurricularYear getCurricularYearWithLowerYear(List listOfScopes) {
+
+        ICurricularYear maxCurricularYear = new CurricularYear();
+        maxCurricularYear.setYear(new Integer(10));
+
+        ICurricularYear actualCurricularYear = null;
+
+        int size = listOfScopes.size();
+
+        for (int i = 0; i < size; i++) {
+
+            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) listOfScopes.get(i);
+            actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
+
+            if (maxCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()) {
+
+                maxCurricularYear = actualCurricularYear;
+            }
+        }
+
+        return maxCurricularYear;
     }
 
     // -------------------------------------------------------------

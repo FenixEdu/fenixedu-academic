@@ -6,9 +6,7 @@ import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
 /**
- * @author dcs-rjao
- *
- * 20/Mar/2003
+ * @author David Santos on Jul 12, 2004
  */
 
 public interface ICurricularCourse extends IDomainObject {
@@ -52,22 +50,21 @@ public interface ICurricularCourse extends IDomainObject {
 	public CurricularCourseExecutionScope getCurricularCourseExecutionScope();
 	public Boolean getMandatory();
 	public IUniversity getUniversity();
-	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester);
 	public Boolean getBasic();
 	public IScientificArea getScientificArea();
 	public Double getEctsCredits();
-	public Integer getEnrollmentWeigth();
-	public Integer getMaximumValueForAcumulatedEnrollments();
-	public Integer getMinimumValueForAcumulatedEnrollments();
 	public Double getWeigth();
 	public Boolean getMandatoryEnrollment();
 
-	public ICurricularYear getCurricularYearByBranchAndSemester(IBranch branch, Integer semester);
 	public boolean curricularCourseIsMandatory();
 
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
+	public Integer getEnrollmentWeigth();
+	public Integer getMaximumValueForAcumulatedEnrollments();
+	public Integer getMinimumValueForAcumulatedEnrollments();
+	public ICurricularYear getCurricularYearByBranchAndSemester(IBranch branch, Integer semester);
 	public String getCurricularCourseUniqueKeyForEnrollment();
 	public boolean hasActiveScopeInGivenSemester(final Integer semester);
 	// -------------------------------------------------------------
