@@ -34,14 +34,13 @@
 				</td>			
 				<td class="listClasses"><html:link page="/readDegree.do" paramId="idInternal" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
 				</td>
-				
 				<% index++; %>
 	 		</tr>
 	 				
 				</logic:iterate>
+			<span class="error"><html:errors /></span>
 				
-	 	       <span class="error"><html:errors /></span>
-              
+				
 	 	</table>
 	<br>
 	 <br>	

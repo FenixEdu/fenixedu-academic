@@ -51,10 +51,10 @@ public class DeleteDegreesAction extends FenixAction{
 		try {
 			Boolean result = (Boolean) manager.executar(userView, "DeleteDegreesService", args);
 		session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);	
-			System.out.println("APAGOU OU NAO"+result);
+			
 		} 
 		catch (CantDeleteServiceException e) {
-     	    throw new CantDeleteActionException(e);
+     	    throw new CantDeleteActionException(e.getMessage(),e);
      	     }
 		catch (FenixServiceException fenixServiceException) {
 	    	throw new FenixActionException(fenixServiceException.getMessage());

@@ -43,19 +43,18 @@ public class DeleteDegreesService implements IServico{
             
             while(iter.hasNext())
             {
+           try{
+           
             Integer internalId = (Integer)iter.next();
 			ICurso degree = persistentDegree.readByIdInternal(internalId);
-			System.out.println("DEGREE"+degree);
 				if (degree != null)
 				persistentDegree.delete(degree);
-		
-		
+		   }catch (CantDeletePersistentException e) {
+					   throw new CantDeleteServiceException(e.getMessage(),e);
             }
-            
-				return new Boolean(true);	
-		   
-		}catch (CantDeletePersistentException e) {
-			throw new CantDeleteServiceException(e);
+            }	return new Boolean(true);	
+				
+		
 		}catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 			}

@@ -113,7 +113,7 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 				super.delete(degree);
 
 			else
-				throw new CantDeletePersistentException();
+				throw new CantDeletePersistentException(degree.getNome());
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

@@ -11,7 +11,4 @@
 	<definition name="df.page.main-page" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/welcomScreen.jsp" />
 	</definition>
-	<definition name="df.page.degrees-to-delete" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/degreesToDelete_bd.jsp" />
-	</definition>
 </tiles-definitions>
