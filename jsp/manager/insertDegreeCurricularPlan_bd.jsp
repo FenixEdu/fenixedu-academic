@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<%--<logic:present name="degreeId" >--%>
 <h2><bean:message key="label.manager.insert.degreeCurricularPlan" /></h2>
 <br>
 
@@ -11,9 +10,7 @@
 <html:form action="/insertDegreeCurricularPlan" method ="get">
 	    
 	<html:hidden property="page" value="1"/>
-	<%--<bean:define id="degreeId" name="degreeId" />
-<html:hidden  property="degreeId" />--%>
-
+	
 <tr>
 	<td>
 		<bean:message key="message.manager.degree.curricular.plan.name"/>
