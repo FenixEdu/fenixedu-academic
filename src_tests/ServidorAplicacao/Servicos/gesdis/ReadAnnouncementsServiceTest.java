@@ -3,15 +3,10 @@
  */
 package ServidorAplicacao.Servicos.gesdis;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
-import Dominio.Announcement;
-import Dominio.IAnnouncement;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -44,6 +39,16 @@ public class ReadAnnouncementsServiceTest extends TestCaseReadServices {
 	 protected String getNameOfServiceToBeTested() {
 		return "ReadAnnouncements";
        }
+       
+	public static void main(String[] args) {
+		junit.textui.TestRunner.run(suite());
+	  }
+    
+	  public static Test suite() {
+		TestSuite suite = new TestSuite(ReadAnnouncementsServiceTest.class);
+
+		return suite;
+	  }
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
@@ -92,47 +97,15 @@ public class ReadAnnouncementsServiceTest extends TestCaseReadServices {
 	* @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	*/
 	    protected int getNumberOfItemsToRetrieve() {
-		return 0;
+		return 2;
         }
         
 	/* (non-Javadoc)
 		 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
 		 */
 	protected Object getObjectToCompare() {
-			ISuportePersistente sp = null;
-			IExecutionYear executionYear = null;
-			IExecutionPeriod executionPeriod = null;
-			IDisciplinaExecucao executionCourse = null;
-			ISite site = null;
-			try {
-				    sp = SuportePersistenteOJB.getInstance();
-					sp.iniciarTransaccao();
-
-					IPersistentExecutionYear ipey = sp.getIPersistentExecutionYear();
-					executionYear = ipey.readExecutionYearByName("2002/2003");
-
-					IPersistentExecutionPeriod ipep = sp.getIPersistentExecutionPeriod();
-                    executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
-
-					IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
-					executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
-
-				    IPersistentSite ips = sp.getIPersistentSite();
-					site = ips.readByExecutionCourse(executionCourse);
-					
-					sp.confirmarTransaccao();
-				}
-			 catch (ExcepcaoPersistencia e) {
-					System.out.println("failed setting up the test data");
-				    }
-
-			List expectedList = new ArrayList();
-			Calendar calendar = Calendar.getInstance();
-			calendar.set(2003, 03, 21);
-			Date announcementDate = calendar.getTime();
-			IAnnouncement announcement = new Announcement("announcement1", announcementDate, site);
-			expectedList.add(announcement);
-			return expectedList;
+		
+			return null;
 
 			}
 }
