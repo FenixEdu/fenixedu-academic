@@ -75,6 +75,7 @@ create table BRANCH (
    BRANCH_CODE varchar(50) not null,
    BRANCH_NAME varchar(255) not null,
    KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
+   BRANCH_ACRONYM varchar(50) not null,
    primary key (ID_INTERNAL),
    index U2 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN),
    unique U1 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
@@ -261,14 +262,14 @@ create table PRECEDENCE (
 -- ----------------------------
 --  Table structure for RESTRICTION
 -- ----------------------------
--- DROP TABLE IF EXISTS RESTRICTION;
--- CREATE TABLE RESTRICTION (
---  ID_INTERNAL int(11) NOT NULL auto_increment,
---  CLASS_NAME varchar(250) NOT NULL,
---  KEY_PRECEDENCE int(11) not null,
---  KEY_CURRICULAR_COURSE int (11),
---  NUMBER_OF_CURRICULAR_COURSE_DONE int(11),
---  primary key (ID_INTERNAL)) TYPE=InnoDB;
+DROP TABLE IF EXISTS RESTRICTION;
+CREATE TABLE RESTRICTION (
+  ID_INTERNAL int(11) NOT NULL auto_increment,
+  CLASS_NAME varchar(250) NOT NULL,
+  KEY_PRECEDENCE int(11) not null,
+  KEY_CURRICULAR_COURSE int (11),
+  NUMBER_OF_CURRICULAR_COURSE_DONE int(11),
+  primary key (ID_INTERNAL)) TYPE=InnoDB;
 
 -- ----------------------------
 --  Table structure for EXECUTION_PERIOD
